@@ -90,11 +90,11 @@ define([
                 spyOn(sut, "track");
                 spyOn(mocks.store['common/utils/mediator'], "emit");
 
-                $(".js-search-tool-list").html("<li><a data-weather-id='292177' data-weather-city='Ufa'></a></li>");
+                $(".js-search-tool-list").html("<li><a class='active'></a><a data-weather-id='292177' data-weather-city='Ufa'></a></li>");
 
                 sut.init();
 
-                bean.fire($(".js-search-tool-list a")[0], "click");
+                bean.fire($(".js-search-tool-list a")[1], "click");
 
                 expect(sut.pushData).toHaveBeenCalled();
                 expect(mocks.store['common/utils/mediator'].emit).toHaveBeenCalledWith('autocomplete:fetch',
@@ -105,6 +105,7 @@ define([
                     }
                 );
                 expect(sut.track).toHaveBeenCalledWith('Ufa');
+                expect($(".active").length).toEqual(1);
             });
 
             it("should not push data after enter without selecting from the list", function() {

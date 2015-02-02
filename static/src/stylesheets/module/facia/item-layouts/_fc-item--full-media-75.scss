@@ -65,12 +65,15 @@ Full item with 75% width media.
         }
 
         .fc-item__content {
-            @include flex-basis(initial);
             width: auto;
             max-width: gs-span(6);
 
             @include mq(desktop) {
                 max-width: gs-span(8);
+            }
+
+            .has-flex-wrap & {
+                @include flex-basis(auto);
             }
         }
 

@@ -11,6 +11,7 @@ require([
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/robust',
     'common/utils/storage',
     'common/utils/template',
     'common/utils/url',
@@ -27,5 +28,6 @@ require([
     'common/modules/lazyload',
     'common/modules/ui/images',
     'common/modules/ui/tabs',
-    'common/modules/user-prefs'
+    'common/modules/user-prefs',
+    'common/views/svgs'
 ], function () {});

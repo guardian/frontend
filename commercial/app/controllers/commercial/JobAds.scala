@@ -18,7 +18,7 @@ object JobAds extends Controller with implicits.Requests {
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
 
-          jsonFormat.result(views.html.jobs(jobs.take(2), omnitureId, clickMacro))
+          jsonFormat.result(views.html.jobs.jobs(jobs.take(2), omnitureId, clickMacro))
         }
       }
     }

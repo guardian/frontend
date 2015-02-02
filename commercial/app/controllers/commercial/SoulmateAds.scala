@@ -17,7 +17,7 @@ object SoulmateAds extends Controller with implicits.Requests {
         case members => Cached(componentMaxAge) {
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
-          jsonFormat.result(views.html.soulmates(members, omnitureId, clickMacro))
+          jsonFormat.result(views.html.soulmates.soulmates(members, omnitureId, clickMacro))
         }
       }
     }

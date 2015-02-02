@@ -6,7 +6,7 @@ define([
     config,
     Cookie,
     detect
-) {
+    ) {
 
     function openForesee() {
         require(['js!foresee']);
