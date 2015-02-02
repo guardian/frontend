@@ -153,6 +153,22 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
+.fc-slice--t-t-mpu {
+    @include mq(tablet, desktop) {
+        .fc-slice__item {
+            width: 25%;
+
+            .fc-item__title {
+                @include fs-headline(2, true);
+            }
+        }
+
+        .fc-slice__item--mpu-candidate {
+            width: 50%;
+        }
+    }
+}
+
 .fc-slice--t-tl-mpu {
     @include mq(tablet, $until: desktop) {
         > .fc-slice__item {
