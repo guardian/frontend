@@ -104,7 +104,9 @@ object Frontend extends Build with Prototypes {
       dfpAxis,
       anorm,
       jdbc
-    )
+    ),
+    routesImport += "bindables._",
+    routesImport += "org.joda.time.LocalDate"
   )
 
   val faciaTool = application("facia-tool").dependsOn(commonWithTests).aggregate(common).settings(

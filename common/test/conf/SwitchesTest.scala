@@ -18,13 +18,15 @@ class SwitchesTest extends FlatSpec with Matchers {
   they should "have a description" in {
     Switches.all foreach {
       case Switch(_, _, description, _, _) => description.trim should not be("")
+      case TimerSwitch(_, _, description, _, _, _) => description.trim should not be("")
     }
   }
-  
+
   // If you are wondering why this test has failed then read, https://github.com/guardian/frontend/pull/2711
   they should "be deleted once expired" in {
     Switches.all foreach {
       case Switch(_, id, _, _, sellByDate) => assert(sellByDate.isAfter(new LocalDate()), id)
+      case TimerSwitch(_, id, _, _, sellByDate, _) => assert(sellByDate.isAfter(new LocalDate()), id)
     }
   }
 }
