@@ -115,8 +115,8 @@ object AuFriendlyFormat {
     val timezone = edition.timezone
 
     edition.id match {
-      case "AU" => date.toString(DateTimeFormat.forPattern("HH.mm").withZone(timezone)) + " AEST"
-      case _ => date.toString(DateTimeFormat.forPattern("HH.mm z").withZone(timezone))
+      case "AU" => date.toString(DateTimeFormat.forPattern("HH:mm").withZone(timezone)) + " AEST"
+      case _ => date.toString(DateTimeFormat.forPattern("HH:mm z").withZone(timezone))
     }
   }
 }
