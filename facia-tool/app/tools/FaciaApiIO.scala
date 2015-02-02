@@ -9,7 +9,6 @@ import org.joda.time.DateTime
 import play.api.libs.json.{JsValue, Json}
 import services.S3FrontsApi
 import play.api.libs.json._
-
 import scala.concurrent.Future
 import scala.util.Try
 

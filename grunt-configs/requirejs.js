@@ -3,30 +3,37 @@ module.exports = function(grunt, options) {
         options: {
             baseUrl: 'static/src/javascripts',
             paths: {
-                bootsraps:    'bootstraps',
-                admin:        'projects/admin',
-                common:       'projects/common',
-                facia:        'projects/facia',
-                membership:   'projects/membership',
-                bean:         'components/bean/bean',
-                bonzo:        'components/bonzo/bonzo',
-                enhancer:     'components/enhancer/enhancer',
-                EventEmitter: 'components/eventEmitter/EventEmitter',
-                fastclick:    'components/fastclick/fastclick',
-                fence:        'components/fence/fence',
-                imager:       'components/imager.js/container',
-                lodash:       'components/lodash-amd',
-                picturefill:  'components/picturefill/picturefill',
-                Promise:      'components/native-promise-only/npo.src',
-                qwery:        'components/qwery/qwery',
-                raven:        'components/raven-js/raven',
-                react:        'components/react/react',
-                reqwest:      'components/reqwest/reqwest',
-                omniture:     '../../public/javascripts/vendor/omniture',
-                socketio:     'components/socket.io-client/socket.io',
-                stripe:       '../../public/javascripts/vendor/stripe/stripe.min',
+                admin:                'projects/admin',
+                common:               'projects/common',
+                facia:                'projects/facia',
+                membership:           'projects/membership',
+                bean:                 'components/bean/bean',
+                bonzo:                'components/bonzo/bonzo',
+                enhancer:             'components/enhancer/enhancer',
+                EventEmitter:         'components/eventEmitter/EventEmitter',
+                fastclick:            'components/fastclick/fastclick',
+                fence:                'components/fence/fence',
+                imager:               'components/imager.js/container',
+                lodash:               'components/lodash-amd',
+                picturefill:          'components/picturefill/picturefill',
+                Promise:              'components/native-promise-only/npo.src',
+                qwery:                'components/qwery/qwery',
+                raven:                'components/raven-js/raven',
+                react:                'components/react/react',
+                reqwest:              'components/reqwest/reqwest',
+                omniture:             '../../public/javascripts/vendor/omniture',
+                socketio:             'components/socket.io-client/socket.io',
+                stripe:               '../../public/javascripts/vendor/stripe/stripe.min',
+                svgs:                 '../../../common/conf/assets/inline-svgs',
+                videojs:              'components/videojs/video',
+                videojsads:           'components/videojs-contrib-ads/videojs.ads',
+                videojsembed:         'components/videojs-embed/videojs.embed',
+                videojsima:           'components/videojs-ima/videojs.ima',
+                videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
+                videojsplaylist:      'components/videojs-playlist-audio/videojs.playlist',
                 // plugins
-                text:         'components/requirejs-text/text'
+                text:                 'components/requirejs-text/text',
+                inlineSvg:            'components/requirejs-inline-svg/inlineSvg'
             },
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
@@ -50,21 +57,24 @@ module.exports = function(grunt, options) {
                     {
                         name: 'core',
                         exclude: [
-                            'text'
+                            'text',
+                            'inlineSvg'
                         ]
                     },
                     {
                         name: 'bootstraps/app',
                         exclude: [
                             'core',
-                            'text'
+                            'text',
+                            'inlineSvg'
                         ]
                     },
                     {
                         name: 'bootstraps/commercial',
                         exclude: [
                             'core',
-                            'text'
+                            'text',
+                            'inlineSvg'
                         ]
                     }
                 ]
@@ -77,7 +87,8 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -88,7 +99,8 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -99,7 +111,8 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -110,7 +123,8 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -122,7 +136,8 @@ module.exports = function(grunt, options) {
                     'core',
                     'bootstraps/app',
                     '../../public/javascripts/vendor/stripe/stripe.min',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -151,16 +166,6 @@ module.exports = function(grunt, options) {
             options: {
                 name: 'bootstraps/video-player',
                 out: options.staticTargetDir + 'javascripts/bootstraps/video-player.js',
-                paths: {
-                    vast: 'components/vast-client-js/vast-client',
-                    videojs: 'components/videojs/video',
-                    videojsads: 'components/videojs-contrib-ads/videojs.ads',
-                    videojsvast: 'components/videojs-vast/videojs.vast',
-                    videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
-                    videojsplaylist: 'components/videojs-playlist-audio/videojs.playlist',
-                    videojsembed: 'components/videojs-embed/videojs.embed',
-                    videoinit: 'projects/video/modules/video-init'
-                },
                 shim: {
                     videojs: {
                         exports: 'videojs'
@@ -168,8 +173,8 @@ module.exports = function(grunt, options) {
                     videojsads: {
                         deps: ['videojs']
                     },
-                    videojsvast: {
-                        deps: ['vast', 'videojs', 'videoinit']
+                    videojsima: {
+                        deps: ['videojs']
                     },
                     videojsplaylist: {
                         deps: ['videojs']
@@ -188,28 +193,25 @@ module.exports = function(grunt, options) {
             options: {
                 name: 'bootstraps/video-embed',
                 out: options.staticTargetDir + 'javascripts/bootstraps/video-embed.js',
-                paths: {
-                    qwery:        'components/qwery/qwery',
-                    common:       'projects/common',
-                    bean:         'components/bean/bean',
-                    bonzo:        'components/bonzo/bonzo',
-                    lodash:       'components/lodash-amd',
-                    videojs:      'components/videojs/video',
-                    videojsembed: 'components/videojs-embed/videojs.embed',
-                    text:         'components/requirejs-text/text'
-                },
                 shim: {
                     videojs: {
                         exports: 'videojs'
                     },
                     videojsembed: {
                         deps: ['videojs']
+                    },
+                    imager: {
+                        deps: ['components/imager.js/imager'],
+                        exports: 'Imager'
+                    },
+                    omniture: {
+                        exports: 's'
                     }
                 },
                 exclude: [
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ],
-                wrapShim: true,
                 optimize: 'none',
                 generateSourceMaps: true,
                 preserveLicenseComments: false
@@ -222,7 +224,8 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -234,7 +237,8 @@ module.exports = function(grunt, options) {
                     'core',
                     'bootstraps/app',
                     'bootstraps/commercial',
-                    'text'
+                    'text',
+                    'inlineSvg'
                 ]
             }
         }

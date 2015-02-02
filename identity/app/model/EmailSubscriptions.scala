@@ -67,6 +67,57 @@ object EmailSubscriptions {
     )
   )
 
+  def cultureEmails(subscribedListIds: Iterable[String] = None) = List(
+    // Culture
+    EmailSubscription(
+      "Sleeve notes",
+      "culture",
+      "Music",
+      "Everything you need to know from the Guardian's music site, squeezed into one handy email.",
+      "Every Friday",
+      "39",
+      8,
+      subscribedTo = subscribedListIds.exists{ x => x == "39" }
+    ),
+    EmailSubscription(
+      "Close up",
+      "culture",
+      "Film",
+      "Every Thursday, rely on Close up to bring you Guardian film news, reviews and much, much more.",
+      "Every Thursday",
+      "40",
+      5,
+      subscribedTo = subscribedListIds.exists{ x => x == "40" }
+    ),
+    EmailSubscription(
+      "Film Today",
+      "culture",
+      "Film",
+      "Our film editors recap the top headlines each weekday and deliver them straight to your inbox in time for your evening commute.",
+      "Everyday",
+      "1950",
+      5,
+      subscribedTo = subscribedListIds.exists{ x => x == "1950" }
+    ),
+    EmailSubscription(
+      "Bookmarks",
+      "culture",
+      "Weekly email from the books team",
+      "A weekly email from the books team with our pick of the latest news, views and reviews, delivered to your inbox every Thursday.",
+      "Once a week",
+      "3039",
+      subscribedTo = subscribedListIds.exists{ x => x == "3039" }
+    ),
+    EmailSubscription(
+      "Art Weekly",
+      "culture",
+      "Art and design",
+      "For your art world low-down, sign up to the Guardian's Art Weekly email and get all the latest news, reviews and comment delivered straight to your inbox.",
+      "",
+      "99"
+    )
+  )
+
   def apply(subscribedListIds: Iterable[String] = None): EmailSubscriptions = EmailSubscriptions(List(
     // News
     EmailSubscription(
@@ -207,55 +258,6 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "248" }
     ),
 
-    // Culture
-    EmailSubscription(
-      "Sleeve notes",
-      "culture",
-      "Music",
-      "Everything you need to know from the Guardian's music site, squeezed into one handy email.",
-      "Every Friday",
-      "39",
-      8,
-      subscribedTo = subscribedListIds.exists{ x => x == "39" }
-    ),
-    EmailSubscription(
-      "Close up",
-      "culture",
-      "Film",
-      "Every Thursday, rely on Close up to bring you Guardian film news, reviews and much, much more.",
-      "Every Thursday",
-      "40",
-      5,
-      subscribedTo = subscribedListIds.exists{ x => x == "40" }
-    ),
-    EmailSubscription(
-      "Film Today",
-      "culture",
-      "Film",
-      "Our film editors recap the top headlines each weekday and deliver them straight to your inbox in time for your evening commute.",
-      "Everyday",
-      "1950",
-      5,
-      subscribedTo = subscribedListIds.exists{ x => x == "1950" }
-    ),
-    EmailSubscription(
-      "Book club",
-      "culture",
-      "Books",
-      "Hosted by John Mullan, the Guardian book club considers a book a month via a weekly column and live Q&A session. Be the first to find out about forthcoming events and featured authors.",
-      "Every Sunday",
-      "131",
-      subscribedTo = subscribedListIds.exists{ x => x == "131" }
-    ),
-    EmailSubscription(
-      "Art Weekly",
-      "culture",
-      "Art and design",
-      "For your art world low-down, sign up to the Guardian's Art Weekly email and get all the latest news, reviews and comment delivered straight to your inbox.",
-      "",
-      "99"
-    ),
-
     // Sport
     EmailSubscription(
       "The Breakdown",
@@ -275,5 +277,5 @@ object EmailSubscriptions {
       "220",
       subscribedTo = subscribedListIds.exists{ x => x == "220" }
     )
-  ) ++ australianEmails(subscribedListIds))
+  ) ++ australianEmails(subscribedListIds) ++ cultureEmails(subscribedListIds))
 }

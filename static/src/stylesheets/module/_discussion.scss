@@ -185,6 +185,12 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
+.discussion__pagination--bottom {
+    .pagination {
+        border-top: 1px solid colour(neutral-4);
+    }
+}
+
 .d-discussion__meta {
     @include fs-textSans(3);
     float: left;
@@ -1150,11 +1156,17 @@ $comment-recommend-button-size: 19px;
             color: #ffffff;
         }
     }
+    .discussion__comment-box--bottom & {
+        margin-top: 0;
+    }
 }
 
 .d-comment-box--top-level {
     @include mq(leftCol) {
         padding-top: $gs-baseline * 2;
+        .discussion__comment-box--bottom & {
+            padding-top: 0;
+        }
     }
 }
 

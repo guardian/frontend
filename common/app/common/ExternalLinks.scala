@@ -16,4 +16,8 @@ object ExternalLinks {
   def external(url: String) = Try(Option(new URI(url).getHost).exists({ host => !GuardianDomains.exists({ domain =>
     host == domain || host.endsWith(s".$domain")
   })})).getOrElse(false)
+
+  def internalPath(url: String) = if (external(url)) None else Try {
+    Option(new URI(url).getPath)
+  }.toOption.flatten
 }

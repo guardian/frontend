@@ -97,13 +97,15 @@ private object CacheKey extends implicits.Requests {
 
   // if you have incompatible changes you can invalidate the cache
   // simply by changing the version
-  private val version = "1"
+  private val version = "2"
 
   def apply(r: RequestHeader): String = {
     val build = if (IncludeBuildNumberInMemcachedKey.isSwitchedOn) ManifestData.build else ""
     val upstreamCacheKey = r.headers.get("X-Gu-Cache-Key").getOrElse("")
+    // The origin is already included in X-Gu-Cache-Key, but this header doesn't appear in CODE.
+    val originKey = r.headers.get("Origin").getOrElse("")
     val edition = Edition(r).id
-    sha256Hex(s"${r.host}${r.uri} $edition $upstreamCacheKey $build $version")
+    sha256Hex(s"${r.host}${r.uri} $edition $upstreamCacheKey $build $version $originKey")
   }
 }
 

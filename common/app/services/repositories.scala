@@ -1,18 +1,19 @@
 package services
 
-import conf.Switches._
-import model._
-import conf.LiveContentApi
-import model.Section
+import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.model.{ItemResponse, SearchResponse, Section => ApiSection}
 import common._
-import com.gu.contentapi.client.model.{SearchResponse, ItemResponse, Section => ApiSection}
+import conf.Configuration.commercial.expiredAdFeatureUrl
+import conf.LiveContentApi
+import conf.LiveContentApi.getResponse
+import conf.Switches._
+import contentapi.{QueryDefaults, SectionTagLookUp, SectionsLookUp}
+import model.{Section, _}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import contentapi.{SectionTagLookUp, SectionsLookUp, QueryDefaults}
-import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
-import com.gu.contentapi.client.GuardianContentApiError
-import LiveContentApi.getResponse
+
+import scala.concurrent.Future
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
@@ -128,8 +129,9 @@ trait Index extends ConciergeRepository with QueryDefaults {
       val page = maybeSection.map(s => section(s, response)) orElse
         response.tag.flatMap(t => tag(response, pageNum)) orElse
         response.section.map(s => section(s, response))
-      if (AdFeatureExpirySwitch.isSwitchedOn && page.exists (_.page.isExpiredAdvertisementFeature)) {
-        Right(Gone)
+      if (AdFeatureExpirySwitch.isSwitchedOn &&
+        page.exists(_.page.isExpiredAdvertisementFeature)) {
+        Right(MovedPermanently(expiredAdFeatureUrl))
       } else {
         ModelOrResult(page, response, maybeSection)
       }

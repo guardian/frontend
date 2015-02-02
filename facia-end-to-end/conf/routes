@@ -51,10 +51,12 @@ POST          /press/draft/*path         controllers.FaciaToolController.pressDr
 
 GET           /front/lastmodified/*path  controllers.FaciaToolController.getLastModified(path)
 
-GET           /collection/*id            controllers.FaciaToolController.readBlock(id)
+GET           /collection/*id            controllers.FaciaToolController.getCollection(id)
 POST          /edits                     controllers.FaciaToolController.collectionEdits
 GET           /collection                controllers.FaciaToolController.listCollections
 GET           /config                    controllers.FaciaToolController.getConfig
+
+POST          /treats/*collectionId      controllers.FaciaToolController.treatEdits(collectionId)
 
 # endpoints for proxying https
 GET           /switches                  controllers.SwitchesProxy.getSwitches()

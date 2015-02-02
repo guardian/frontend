@@ -1,0 +1,25 @@
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import common.ExternalLinks.internalPath
+@import crosswords.{CrosswordGrid, CrosswordTreat, TodaysCrosswordGrid}
+
+@if(containerDefinition.collectionEssentials.treats.nonEmpty) {
+    <ul class="treats__container">
+    @containerDefinition.collectionEssentials.treats.zipWithIndex.map { case (treat, index) =>
+        @defining(LinkTo(treat).getOrElse("")) { link =>
+            <li class="treats__list-item">
+                @if(internalPath(link).contains("/crosswords")) {
+                    <a class="treats__crossword-link" data-link-name="treat | @{index + 1}" href="@link">
+                        @CrosswordTreat.fromCrosswordGrid(TodaysCrosswordGrid.get.getOrElse(CrosswordGrid.DefaultTreat))
+                        <span class="treats__treat">@treat.headline</span>
+                    </a>
+                } else {
+                    <a href="@link" data-link-name="treat | @{index + 1} | @treat.headline" class="treats__treat">@treat.headline</a>
+                }
+            </li>
+        }
+    }
+    </ul>
+
+}

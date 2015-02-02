@@ -1,7 +1,7 @@
 @(player: model.AudioPlayer)
 
 <div class="gu-media-wrapper gu-media-wrapper--audio @if(player.audio.isPodcast) {gu-media-wrapper--podcast}">
-    <audio controls="controls" class="gu-media gu-media--audio js-gu-media" data-title="@player.title"
+    <audio controls="controls" class="gu-media gu-media--audio js-gu-media--enhance" data-title="@player.title"
         data-duration="@player.audioElement.duration.toString()" data-media-id="@player.audioElement.id"
         data-auto-play="@player.autoPlay">
 

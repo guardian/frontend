@@ -31,7 +31,7 @@ object Multi
       val content = requestedContent flatMap {
         case "jobs" =>
           JobsAgent.jobsTargetedAt(segment).headOption map {
-            views.html.jobFragments.job(_, clickMacro)
+            views.html.jobs.jobFragment(_, clickMacro)
           }
         case "books" =>
           BestsellersAgent.bestsellersTargetedAt(segment).headOption map {
@@ -39,18 +39,18 @@ object Multi
           }
         case "travel" =>
           TravelOffersAgent.offersTargetedAt(segment).headOption map {
-            views.html.travelOfferFragments.travelOffer(_, clickMacro)
+            views.html.travel.travelFragment(_, clickMacro)
           }
         case "masterclasses" =>
           MasterClassAgent.masterclassesTargetedAt(segment).headOption map {
-            views.html.masterClasses.masterClass(_, clickMacro)
+            views.html.masterClasses.masterClassFragment(_, clickMacro)
           }
         case "soulmates" =>
           for {
             woman <- SoulmatesWomenAgent.sample(1).headOption
             man <- SoulmatesMenAgent.sample(1).headOption
           } yield {
-            views.html.soulmateFragments.soulmates(Random.shuffle(Seq(woman, man)), clickMacro)
+            views.html.soulmates.soulmateFragment(Random.shuffle(Seq(woman, man)), clickMacro)
           }
         case _ => None
       }

@@ -1,5 +1,6 @@
 define([
     'lodash/arrays/compact',
+    'lodash/arrays/uniq',
     'lodash/collections/map',
     'lodash/objects/isArray',
     'lodash/objects/merge',
@@ -7,13 +8,14 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
-    'common/modules/commercial/tags/audience-science',
-    'common/modules/commercial/tags/audience-science-gateway',
-    'common/modules/commercial/tags/criteo',
+    'common/modules/commercial/third-party-tags/audience-science',
+    'common/modules/commercial/third-party-tags/audience-science-gateway',
+    'common/modules/commercial/third-party-tags/criteo',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab'
 ], function (
     compact,
+    uniq,
     map,
     isArray,
     merge,
@@ -91,7 +93,7 @@ define([
                 co:      parseIds(page.authorIds),
                 bl:      parseIds(page.blogIds),
                 ms:      formatTarget(page.source),
-                tn:      compact([page.sponsorshipType].concat(parseIds(page.tones))),
+                tn:      uniq(compact([page.sponsorshipType].concat(parseIds(page.tones)))),
                 // round video duration up to nearest 30 multiple
                 vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
             }, audienceScienceGateway.getSegments(), criteo.getSegments());

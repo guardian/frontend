@@ -46,15 +46,4 @@ import test.ConfiguredTestSuite
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"html\"")
   }
-
-  "test can return jsonp when callback supplied" in {
-    val callbackName = "theCallbackName"
-    val fakeRequest = FakeRequest(GET, s"/admin/football/player/card/date/attack/237670/19/20140101?callback=${callbackName}")
-      .withHeaders("host" -> "localhost:9000")
-      .withHeaders("Origin" -> "www.theguorigin.com")
-    val Some(result) = route(fakeRequest)
-    status(result) should equal(OK)
-    contentType(result).get should be ("application/javascript")
-    contentAsString(result) should startWith(s"""${callbackName}({\"html\"""") // the callback
-  }
 }

@@ -43,7 +43,7 @@ define([
     return function() {
 
         var model = vars.model = {
-            layout: new Layout(),
+            layout: null,
             alert: ko.observable(),
             modalDialog: modalDialog,
             switches: ko.observable(),
@@ -98,6 +98,7 @@ define([
                 }
                 model.switches(switches);
 
+
                 vars.state.config = config;
 
                 var frontInURL = parseQueryParams(window.location.search).front;
@@ -117,6 +118,8 @@ define([
                 }
             }, vars.CONST.configSettingsPollMs, true)
             .done(function() {
+                model.layout = new Layout();
+
                 var wasPopstate = false;
                 window.onpopstate = function() {
                     wasPopstate = true;

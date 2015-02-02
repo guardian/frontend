@@ -1,24 +1,19 @@
-<div class="front-container" data-bind="css: {
-    'live-mode': liveMode,
-    'draft-mode': !liveMode(),
-    'attention': confirmSendingAlert()
-}">
-    <div class="modes" data-bind="
-        css: {
-            'live-mode': liveMode(),
-            'draft-mode': !liveMode()
-        }">
+<div class="front-container" data-bind="css: frontMode">
+    <div class="modes">
         <a class="draft-mode" data-bind="
             click: setModeDraft,
-            css: {active: !liveMode()},
-            text: confirmSendingAlert() ? 'Breaking News' : 'Draft front'"></a
+            css: {active: mode() === 'draft'}">Draft front</a
        ><a class="live-mode" data-bind="
             click: setModeLive,
-            css: {active: liveMode}">Live front</a>
-        <a class="preview" target="preview" data-bind="
+            css: {active: mode() === 'live'}">Live front</a
+       ><a class="treats-mode active" data-bind="visible: mode() === 'treats'">Treats</a
+       ><a class="breaking-mode active" data-bind="visible: confirmSendingAlert()">Breaking News</a
+       ><a class="preview" target="preview" data-bind="
             attr: { href: previewUrl },
-            text: liveMode() ? 'View live' : 'Preview draft',
-            visible: front"></a>
+            visible: front">
+            <span data-bind="if: mode() === 'live'">View live</span>
+            <span data-bind="if: mode() === 'draft'">Preview draft</span>
+        </a>
         <!-- ko if: front -->
         <a class='performances' target='_blank' data-bind="
             attr: { href: ophanPerformances },
@@ -43,6 +38,12 @@
     <!-- ko ifnot: confirmSendingAlert() -->
         <div class="col__inner front-selector">
             <select data-bind="options: $root.fronts, value: front, optionsCaption: 'choose a front...'"></select>
+            <span class="collapse-expand-all" data-bind="css: {
+                expanded: allExpanded
+            }, click: toggleAll">
+                <span class="expand">expand all <i class="fa fa-chevron-up"></i></span>
+                <span class="collapse">collapse all <i class="fa fa-chevron-down"></i></span>
+            </span>
         </div>
     <!-- /ko -->
 

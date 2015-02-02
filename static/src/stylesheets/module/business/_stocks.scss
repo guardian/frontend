@@ -58,11 +58,19 @@ $stocks-icon-height: 10px;
 @include stock('level', status-neutral, market-same);
 
 .stocks__stock-value {
-    display: table-cell;
+    display: inline-block;
     padding-left: 6px;
     padding-right: $gs-gutter;
-    min-width: gs-span(2) + $gs-gutter;
+    min-width: 60%;
     border-right: 1px dotted guss-colour(neutral-3, $pasteup-palette);
+
+    @include mq(mobileLandscape) {
+        min-width: 35%;
+    }
+
+    @include mq(tablet) {
+        min-width: gs-span(2) + $gs-gutter;
+    }
 
     @include mq(leftCol) {
         display: block;

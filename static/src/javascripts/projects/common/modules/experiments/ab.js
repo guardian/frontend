@@ -11,12 +11,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/history-tags',
-    'common/modules/experiments/tests/history-containers',
-    'common/modules/experiments/tests/join-us-navigation',
-    'common/modules/experiments/tests/sticky-container-titles',
-    'common/modules/experiments/tests/weather-component'
+    'common/modules/experiments/tests/high-commercial-component'
 ], function (
     raven,
     filter,
@@ -30,22 +25,12 @@ define([
     mediator,
     store,
     mvtCookie,
-    HighCommercialComponent,
-    HistoryTags,
-    HistoryContainers,
-    JoinUsNavigation,
-    StickyContainerTitles,
-    Weather
+    HighCommercialComponent
 ) {
 
     var ab,
         TESTS = [
-            new HighCommercialComponent(),
-            new HistoryTags(),
-            new HistoryContainers(),
-            new JoinUsNavigation(),
-            new StickyContainerTitles(),
-            new Weather()
+            new HighCommercialComponent()
         ],
         participationsKey = 'gu.ab.participations';
 

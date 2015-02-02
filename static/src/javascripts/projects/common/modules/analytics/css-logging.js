@@ -4,6 +4,7 @@ define([
     'common/utils/detect',
     'common/utils/url',
     'common/utils/scan',
+    'common/utils/mediator',
     'common/modules/analytics/beacon'
 ], function (
     _,
@@ -11,9 +12,11 @@ define([
     detect,
     url,
     scan,
+    mediator,
     beacon
 ) {
-    var stripRx = new RegExp(/\:(active|hover|visited)/g);
+    var rxPsuedoClass = new RegExp(/:+[^\s\,]+/g),
+        rxSeparator = new RegExp(/\s*,\s*/g);
 
     function getStylesheets() {
         return _.chain(document.styleSheets)
@@ -26,7 +29,7 @@ define([
             .value();
     }
 
-    function randomStylesheet() {
+    function getRandomStylesheet() {
         var stylesheets = getStylesheets(),
             stylesheetLengths = scan(
                 stylesheets.map(function (sheet) { return _.values(sheet.rules || sheet.cssRules).length; }),
@@ -40,7 +43,7 @@ define([
     }
 
     function sendReport(stylesheet, allRules) {
-        var sampleSize = 200,
+        var sampleSize = 1000,
             offset,
             rules = _.chain(stylesheet.rules || stylesheet.cssRules)
                 .map(function (r) { return r && r.selectorText; })
@@ -54,7 +57,11 @@ define([
 
         beacon.postJson('/css', JSON.stringify({
             selectors: rules.reduce(function (isUsed, rule) {
-                isUsed[rule] = !!document.querySelector(rule.replace(stripRx, ''));
+                _.each(rule.replace(rxPsuedoClass, '').split(rxSeparator), function (s) {
+                    if (_.isUndefined(isUsed[s])) {
+                        isUsed[s] = !!document.querySelector(s);
+                    }
+                });
                 return isUsed;
             }, {}),
             contentType: config.page.contentType,
@@ -64,15 +71,29 @@ define([
         }), allRules);
     }
 
-    function sendReports(sendAll) {
-        setTimeout(function () {
-            _.each(sendAll ? getStylesheets() : [randomStylesheet()], function (stylesheet) {
-                sendReport(stylesheet, sendAll);
-            });
-        }, 3000);
+    function makeSender(sendAll) {
+        return function (clickSpec) {
+            if (!clickSpec || clickSpec.samePage) {
+                setTimeout(function () {
+                    _.each(sendAll ? getStylesheets() : [getRandomStylesheet()], function (stylesheet) {
+                        sendReport(stylesheet, sendAll);
+                    });
+                }, sendAll ? 0 : _.random(0, 3000));
+            }
+        };
     }
 
-    return {
-        run: sendReports
+    return function (sendAll) {
+        var sender;
+
+        sendAll = sendAll || window.location.hash === '#csslogging';
+
+        if (sendAll || _.random(1, 5000) === 1) {
+            sender = makeSender(sendAll);
+            sender();
+            mediator.on('module:clickstream:interaction', sender);
+            mediator.on('module:clickstream:click', sender);
+            return true;
+        }
     };
 });

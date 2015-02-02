@@ -19,6 +19,7 @@ define([
             });
         }
     }
+
     return deferToAnalytics;
 
 }); // define

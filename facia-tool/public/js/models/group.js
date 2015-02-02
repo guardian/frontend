@@ -38,7 +38,7 @@ define([
                 targetItem: targetItem,
                 targetGroup: this,
                 sourceContext: sourceItem.front,
-                targetContext: targetItem.front,
+                targetContext: this.front,
                 isAfter: true
             });
         };

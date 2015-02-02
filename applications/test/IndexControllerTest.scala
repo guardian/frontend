@@ -9,7 +9,6 @@ import conf.Switches.MemcachedSwitch
 @DoNotDiscover class IndexControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll with ConfiguredTestSuite{
 
   val section = "books"
-  val callbackName = "aFunction"
 
   override def beforeAll(): Unit = {
     MemcachedSwitch.switchOff()
@@ -23,16 +22,6 @@ import conf.Switches.MemcachedSwitch
   "Index Controller" should "200 when content type is front" in {
     val result = controllers.IndexController.render(section)(TestRequest(s"/$section"))
     status(result) should be(200)
-  }
-
-  it should "return JSONP when callback is supplied to front" in {
-    val fakeRequest = TestRequest(s"/$section?callback=$callbackName")
-      .withHeaders("host" -> "localhost:9000")
-
-    val result = controllers.IndexController.render(section)(fakeRequest)
-    status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
-    contentAsString(result) should startWith(s"""$callbackName({\"html\"""")
   }
 
   it should "return JSON when .json format is supplied to front" in {
@@ -71,16 +60,6 @@ import conf.Switches.MemcachedSwitch
 
     status(result) should be (302)
     header("Location", result).get should be ("/music/2013/oct/11/david-byrne-internet-content-world")
-  }
-
-  it should "return JSONP when callback is supplied to front trails" in {
-    val fakeRequest = FakeRequest(GET, s"$section/trails?callback=$callbackName")
-      .withHeaders("host" -> "localhost:9000")
-
-    val result = controllers.IndexController.renderTrails(section)(fakeRequest)
-    status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
-    contentAsString(result) should startWith(s"""$callbackName({\"html\"""")
   }
 
   it should "return JSON when .json format is supplied to front trails" in {

@@ -14,11 +14,15 @@ case class SectionLink(zone: String, title: String, breadcrumbTitle: String, hre
 }
 
 case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
-  def currentFor(page: MetaData): Boolean = name.currentFor(page) ||
-    links.exists(_.currentFor(page)) || exactFor(page)
+  def currentFor(page: MetaData): Boolean = {
+    name.currentFor(page) ||
+      links.exists(_.currentFor(page)) || exactFor(page)
+  }
 
-  def currentForIncludingAllTags(page: MetaData): Boolean = name.currentForIncludingAllTags(page) ||
-    links.exists(_.currentForIncludingAllTags(page))
+  def currentForIncludingAllTags(page: MetaData): Boolean = {
+    name.currentForIncludingAllTags(page) ||
+      links.exists(_.currentForIncludingAllTags(page))
+  }
 
   def searchForCurrentSublink(page: MetaData)(implicit request: RequestHeader): Option[SectionLink] = {
     val localHrefs = links.map(_.href)
@@ -49,6 +53,7 @@ trait Navigation {
   val environment = SectionLink("environment", "environment", "Environment", "/environment")
   val media = SectionLink("media", "media", "Media", "/media")
   val education = SectionLink("education", "education", "Education", "/education")
+  val teachersNetwork = SectionLink("education", "teacher network", "Teacher network", "/teacher-network")
   val students = SectionLink("education", "students", "Students", "/education/students")
   val society = SectionLink("society", "society", "Society", "/society")
   val development = SectionLink("globaldevelopment", "global development", "Global development", "/global-development")
@@ -63,6 +68,7 @@ trait Navigation {
   val africa = SectionLink("world", "africa", "Africa", "/world/africa")
   val middleEast = SectionLink("world", "middle east", "Middle east", "/world/middleeast")
   val video = SectionLink("video", "video", "Video", "/video")
+  val guardianProfessional = SectionLink("guardian-professional", "guardian professional", "Guardian Professional", "/guardian-professional")
   val observer = SectionLink("observer", "the observer", "The Observer", "/observer")
   val todaysPaper = SectionLink("news", "today's paper", "Today's Paper", "/theguardian")
 
@@ -117,7 +123,7 @@ trait Navigation {
 
   //Technology
   val technologyblog = SectionLink("technology", "technology blog", "Technology blog", "/technology/blog")
-  val games = SectionLink("technology", "games", "Games", "/technology/games")
+  val games = SectionLink("culture", "games", "Games", "/technology/games")
   val gamesblog = SectionLink("technology", "games blog", "Games blog", "/technology/gamesblog")
   val appsblog = SectionLink("technology", "apps blog", "Apps blog", "/technology/appsblog")
   val askjack = SectionLink("technology", "ask jack", "Ask Jack blog", "/technology/askjack")
@@ -157,7 +163,7 @@ trait Navigation {
   val lostinshowbiz = SectionLink("lifeandstyle", "lost in showbiz", "Lost in showbiz", "/lifeandstyle/lostinshowbiz")
   val women = SectionLink("lifeandstyle", "women", "Women", "/lifeandstyle/women")
   val relationships = SectionLink("lifeandstyle", "relationships", "Relationships", "/lifeandstyle/relationships")
-  val healthandwellbeing = SectionLink("lifeandstyle", "health", "Health", "/lifeandstyle/health-and-wellbeing")
+  val healthandwellbeing = SectionLink("lifeandstyle", "health & fitness", "Health & fitness", "/lifeandstyle/health-and-wellbeing")
   val loveAndSex = SectionLink("lifeandstyle", "love & sex", "Love & sex", "/lifeandstyle/love-and-sex")
   val homeAndGarden = SectionLink("lifeandstyle", "home & garden", "Home & garden", "/lifeandstyle/home-and-garden")
 
@@ -210,12 +216,30 @@ object Breadcrumbs {
 // helper for the views
 object Navigation {
 
+  /** I have no idea how all of this works - it's really nasty, but I don't want to try to fix it all before launch
+    * (or before lunch, for that matter).
+    *
+    * I'm providing a manual override for games here, which actually belongs to the technology section, but in the nav
+    * is supposed to appear below culture.
+    */
+  val BafflingNavigationLookUpOverrides = Map(
+    "technology/games" -> "/culture"
+  )
+
+  def navFromOverride(navigation: Seq[NavItem], page: MetaData) = {
+    BafflingNavigationLookUpOverrides.get(page.id) flatMap { navHref =>
+      navigation.find(_.name.href == navHref)
+    }
+  }
+
   def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = page.customSignPosting orElse
+    navFromOverride(navigation, page) orElse
     navigation.find(_.exactFor(page)) orElse
     navigation.find(_.currentFor(page)) orElse                /* This searches the top level nav for tags in the page */
     navigation.find(_.currentForIncludingAllTags(page))       /* This searches the whole nav for tags in the page */
 
-  def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
+  def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] =
+    topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
   def rotatedLocalNav(topSection: NavItem, metaData: MetaData)(implicit request: RequestHeader): Seq[SectionLink] =
     topSection.searchForCurrentSublink(metaData) match {
@@ -228,5 +252,6 @@ object Navigation {
 
   def isEditionFront(topSection: NavItem): Boolean = ("/" :: Edition.editionFronts).contains(topSection.name.href)
 
-  def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] = Navigation.topLevelItem(navigation, metaData).map(_.links).getOrElse(List())
+  def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] =
+    Navigation.topLevelItem(navigation, metaData).map(_.links).getOrElse(List())
 }

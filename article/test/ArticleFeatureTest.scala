@@ -649,7 +649,7 @@ import collection.JavaConversions._
         Then("I should see three breadcrumbs")
         $(".breadcrumb .signposting__item").size() should be(2)
 
-        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Comment"))
+        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Opinion"))
         link.length should be > 0
         val link2 = browser.find(".breadcrumb .signposting__item a", withText().contains("Heritage"))
         link2.length should be > 0

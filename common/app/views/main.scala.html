@@ -12,20 +12,25 @@
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
-@defining(metaData match {
-    case c: model.Content if c.shouldHideAdverts => { false }
-    case _ => { true }
-}) { showAdverts =>
-@defining(Edition(request)) { edition =>
+@defining((
+    metaData match {
+        case c: model.Content if c.shouldHideAdverts => { false }
+        case _ => { true }
+    },
+    Edition(request),
+    Edition(request).id == "UK" && (
+        (AppleAdNetworkFrontSwitch.isSwitchedOnAndActive && metaData.id == "uk") ||
+        (AppleAdCultureFrontSwitch.isSwitchedOnAndActive && metaData.id == "uk/culture")
+    )
+)) { case (showAdverts, edition, adBelowNav) =>
     <body
         id="top"
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin(edition)),
             ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty),
-            ("childrens-books-site", metaData.section == "childrens-books-site")))"
+            ("childrens-books-site", metaData.section == "childrens-books-site"),
+            ("ad-below-nav", adBelowNav)))"
         itemscope itemtype="http://schema.org/WebPage">
-
-        <div style="-webkit-transform: translateZ(0)" class="desktop-only">@* hack to fix fonts in win/chrome with font-smoothing disabled *@</div>
 
         @fragments.message(metaData)
 
@@ -37,6 +42,10 @@
 
         @fragments.header(metaData)
 
+        @if(showAdverts && adBelowNav) {
+            @fragments.commercial.topBannerBelowNav()
+        }
+
         @if(showAdverts) {
             @fragments.commercial.topBannerMobile()
         }
@@ -44,7 +53,9 @@
         <div id="maincontent" tabindex="0"></div>
 
         @if(BreakingNewsSwitch.isSwitchedOn) {
-            <div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in"></div>
+            <div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in"
+                 data-link-name="breaking news"
+                 data-component="breaking-news"></div>
         }
 
         @body
@@ -61,5 +72,4 @@
 
     </body>
     </html>
-}
 }

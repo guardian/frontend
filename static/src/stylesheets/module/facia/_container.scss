@@ -57,6 +57,10 @@ $header-image-size-desktop: 100px;
     .show-more--hidden & {
         display: none;
     }
+
+    @if($old-ie) {
+        clear: left;
+    }
 }
 
 .fc-container__header,
@@ -135,7 +139,7 @@ $header-image-size-desktop: 100px;
 
     @include mq(tablet, leftCol) {
         float: left;
-        width: gs-span(6) + $gs-gutter;
+        width: gs-span(4);
     }
 
     @include mq(leftCol, wide) {
@@ -145,7 +149,7 @@ $header-image-size-desktop: 100px;
     .has-page-skin & {
         @include mq(wide) {
             float: left;
-            width: gs-span(6) + $gs-gutter;
+            width: gs-span(4);
         }
     }
 
@@ -387,6 +391,7 @@ $header-image-size-desktop: 100px;
 
         .has-page-skin & {
             margin-left: 0;
+            clear: left;
         }
     }
 

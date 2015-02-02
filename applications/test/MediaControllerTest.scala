@@ -6,21 +6,10 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 @DoNotDiscover class MediaControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   val videoUrl = "uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
-  val callbackName = "aFunction"
 
   "Media Controller" should "200 when content type is video" in {
     val result = controllers.MediaController.render(videoUrl)(TestRequest(videoUrl))
     status(result) should be(200)
-  }
-
-  it should "return JSONP when callback is supplied" in {
-    val fakeRequest = TestRequest(s"${videoUrl}?callback=$callbackName")
-      .withHeaders("host" -> "localhost:9000")
-
-    val result = controllers.MediaController.render(videoUrl)(fakeRequest)
-    status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
-    contentAsString(result) should startWith(s"""${callbackName}({\"config\"""")
   }
 
   it should "return JSON when .json format is supplied" in {

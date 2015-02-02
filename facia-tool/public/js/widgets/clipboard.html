@@ -1,0 +1,15 @@
+<div class="col__inner clipboard-container">
+    <div class="title title--clipboard">clipboard</div>
+    <div class="clipboard" data-bind="with: group">
+        <div class="droppable" data-bind="
+            makeDropabble: true,
+            click: pasteItem,
+            css: {
+                underDrag: underDrag() && !underControlDrag(),
+                underControlDrag: underDrag() && underControlDrag()
+            }">
+            <div data-bind="template: {name: 'template_article', foreach: items}"></div>
+            <div class="group-separator"></div>
+        </div>
+    </div>
+</div>

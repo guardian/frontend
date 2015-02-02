@@ -34,11 +34,9 @@ fi
 #http://stackoverflow.com/questions/5374455/what-does-java-option-xmx-stand-for
 jvm_mem="-Xmx$((physical_mem / 2 / 1024))m"
 
-#http://stackoverflow.com/questions/12114174/what-does-xxmaxpermsize-do
-perm_size="-XX:MaxPermSize=$((physical_mem / 3 / 1024))m"
 
 if [ -z $FRONTEND_JVM_ARGS ]; then
-    FRONTEND_JVM_ARGS="$jvm_mem $perm_size -XX:ReservedCodeCacheSize=128m -XX:+UseConcMarkSweepGC -Djava.awt.headless=true -XX:NewRatio=4"
+    FRONTEND_JVM_ARGS="$jvm_mem -XX:MaxPermSize=256M -XX:ReservedCodeCacheSize=128m -XX:+UseConcMarkSweepGC -Djava.awt.headless=true -XX:NewRatio=4"
 fi
 
 echo ''

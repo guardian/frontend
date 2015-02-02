@@ -102,6 +102,8 @@ trait FrontJson extends ExecutionContexts with Logging {
       .flatMap(Content.fromPressedJson)
     val results = (json \ "results").asOpt[List[JsValue]].getOrElse(Nil)
       .flatMap(Content.fromPressedJson)
+    val treats = (json \ "treats").asOpt[List[JsValue]].getOrElse(Nil)
+      .flatMap(Content.fromPressedJson)
 
     val lastUpdated = (json \ "lastUpdated").asOpt[String]
     val updatedBy = (json \ "updatedBy").asOpt[String]
@@ -112,6 +114,7 @@ trait FrontJson extends ExecutionContexts with Logging {
       editorsPicks=editorsPicks,
       mostViewed=mostViewed,
       results=results,
+      treats=treats,
       displayName=displayName,
       href=href,
       lastUpdated=lastUpdated,

@@ -1,5 +1,7 @@
 .search-tool__input {
     display: block;
+    position: relative;
+    z-index: 4;
     background-color: transparent;
     border: 0;
     border-bottom: 1px solid transparent; // To allow for focus state
@@ -48,12 +50,14 @@
     display: block;
     @include fs-headline(2);
 
-    @include mq($until: leftCol) {
+    @include mq(tablet, leftCol) {
         padding-left: $gs-gutter / 4;
     }
 
     .has-page-skin & {
-        padding-left: $gs-gutter / 4;
+        @include mq(wide) {
+            padding-left: $gs-gutter / 4;
+        }
     }
 
     &:hover,

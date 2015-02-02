@@ -3,11 +3,22 @@
 }
 
 .creative--scrollable-mpu {
-    display: block;
-    height: 250px;
-    @include box-sizing(border-box);
-    border: 1px solid colour(neutral-5);
-    background: none 0 0 repeat;
+    .creative--scrollable-mpu-inner {
+        width: 300px;
+        height: 250px;
+        overflow: hidden;
+        position: relative;
+    }
+    .creative--scrollable-mpu-image {
+        display: block;
+        height: 100%;
+        width: 300px;
+        position: absolute;
+        top: 0;
+        @include box-sizing(border-box);
+        border: 1px solid colour(neutral-5);
+        background: none 0 0 repeat;
+    }
 }
 
 .creative--branded-component {
@@ -29,6 +40,7 @@
     }
     .creative__marque {
         display: block;
+        fill: color(neutral-1);
     }
     .creative__marque-title {
         margin-left: 2px;
@@ -239,9 +251,37 @@
             @include transform(rotate(360deg));
         }
     }
-    
+
+    .ad-exp__open-chevron {
+        position: absolute;
+        z-index: 4;
+        bottom: 0;
+        left: 50%;
+        border: 1px solid #ffffff;
+        border-width: 1px 1px 0;
+        background: colour(neutral-1);
+        color: #ffffff;
+        opacity: .5;
+        padding: $gs-baseline/2 0 0;
+        width: gs-span(1);
+        margin-left: $gs-gutter*-1.5;
+        text-align: center;
+        @include fs-textSans(1);
+        @include border-radius($gs-gutter $gs-gutter 0 0);
+        @include transition(all 1s ease);
+
+        &.chevron-down {
+            @include transform(translate(0, 100px));
+        }
+        .i {
+            display: block;
+            margin: 2px auto 0;
+        }
+    }
+
     .slide-1 {
         z-index: 1;
+        overflow: hidden;
     }
 
     .ad-exp-collapse__slide {
@@ -362,7 +402,7 @@
             display: none;
         }
     }
-    
+
     .top-banner-ad-container--mobile & {
         height: auto;
         padding-top: 0;
@@ -375,6 +415,38 @@
 
     .gs-container {
         height: 100%;
+    }
+
+    .fluid250_video {
+        position: absolute;
+        z-index: 10;
+        margin-left: 0;
+        margin-top: 0;
+
+        &.fluid250_video--vert-pos-top {
+            top: 0;
+        }
+        &.fluid250_video--vert-pos-center {
+            top: 50%;
+            /* Magic number of video height/2 */
+            margin-top: -115px;
+        }
+        &.fluid250_video--vert-pos-bottom {
+            top: auto;
+            bottom: 0;
+        }
+        &.fluid250_video--horiz-pos-left {
+            left: 0;
+        }
+        &.fluid250_video--horiz-pos-center {
+            /* Magic number of video width/2 */
+            margin-left: -205px;
+            left: 50%;
+        }
+        &.fluid250_video--horiz-pos-right {
+            left: auto;
+            right: 0;
+        }
     }
 
     .fluid250_layer {
