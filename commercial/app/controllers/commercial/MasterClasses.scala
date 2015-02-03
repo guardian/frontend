@@ -19,7 +19,7 @@ object MasterClasses extends Controller with implicits.Requests {
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
 
-          jsonFormat.result(views.html.masterclasses(masterclasses.take(4), omnitureId, clickMacro))
+          jsonFormat.result(views.html.masterClasses.masterClasses(masterclasses.take(4), omnitureId, clickMacro))
         }
       }
     }
