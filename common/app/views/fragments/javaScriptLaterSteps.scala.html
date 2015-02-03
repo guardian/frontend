@@ -127,7 +127,8 @@
                 var ua = navigator.userAgent, fontSmoothingEnabled = null, cookie = document.cookie, canvasNode, ctx, alpha, x, y;
 
                 // If we've already run this test, return the result.
-                if (cookie.indexOf('GU_fonts_smoothing') !== -1) {
+                // This can be force-overidden using a '#check-smoothing' hash fragment.
+                if (cookie.indexOf('GU_fonts_smoothing') !== -1 && window.location.hash !== '#check-smoothing') {
                     return cookie.indexOf('GU_fonts_smoothing=on') !== -1;
                 }
 
