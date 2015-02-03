@@ -30,6 +30,9 @@ define([
         fileFormat    = detect.getFontFormatSupport(navigator.userAgent);
 
     return {
+        disable: function () {
+            cookies.add('GU_fonts', 'off', 365);
+        },
         disabled: function () {
             return (cookies.get('GU_fonts') === 'off');
         },
@@ -97,6 +100,9 @@ define([
                         }
                     });
                 });
+            } else {
+                // font-smoothing is disabled, so disable fonts
+                this.disable();
             }
         }
 
