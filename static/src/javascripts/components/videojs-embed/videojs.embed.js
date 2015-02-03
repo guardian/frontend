@@ -87,11 +87,13 @@ define([
 
 
         videojs.ViewOnGuardian = function (player) {
-            var button = new videojs.ViewOnGuardianButton(player, {
+            var videoUrl = $('meta[itemprop=url]').attr("content"),
+                videoTitle = $('meta[itemprop=name]').attr("content"),
+                button = new videojs.ViewOnGuardianButton(player, {
                 location: options.location,
                 el: videojs.Component.prototype.createEl(null, {
                     className: 'vjs-view-on-guardian vjs-control',
-                    innerHTML: '<a href="http://www.theguardian.com/' + $('meta[itemprop=url]').attr("content") + '" target="_parent" class="vjs-title">' + $('meta[itemprop=name]').attr("content") + '</a><a href="http://www.theguardian.com/' + $('meta[itemprop=url]').attr("content") + '" target="_parent" class="vjs-control-content" data-link-name="embed-to-guardian">' + svgs('marque36icon') +'</a>',
+                    innerHTML: '<a href="http://www.theguardian.com/' + videoUrl + '" target="_parent" class="vjs-title">' + videoTitle + '</a><a href="http://www.theguardian.com/' + videoUrl + '" target="_parent" class="vjs-control-content" data-link-name="embed-to-guardian">' + svgs('marque36icon') +'</a>',
                     role: 'button'
                 })
             });

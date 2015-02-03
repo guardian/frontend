@@ -725,19 +725,23 @@ $ima-controls-height: 70px;
 .vjs-view-on-guardian {
     position: fixed;
     width: 100%;
-    top: 0;
-    left: 0;
     height: $gs-baseline*4;
     box-sizing: border-box;
     background-color: rgba(25, 25, 25, .8);
     padding: $gs-baseline/2 $gs-baseline;
     box-sizing: border-box;
-    transition: opacity .15s ease-out;
-    opacity: 1;
     display: none;
+    @include transition(top .8s);
+    transition-delay: 1s;
+    left: 0;
+    top: $gs-baseline*-4;
 
-    .vjs-playing & {
-        opacity: 0;
+    .gu-media-wrapper:hover .vjs-mousemoved &,
+    .vjs-paused &,
+    &:hover {
+        top: 0;
+        @include transition(top 0s);
+        transition-delay: 0s;
     }
 
     .gu-video-embed & {
@@ -751,8 +755,8 @@ $ima-controls-height: 70px;
     }
 
     .vjs-title {
-        margin-top: 7px;
-        @include fs-bodyHeading(1);
+        margin-top: 10px;
+        font-size: 14px;
         color: #ffffff;
         display: inline-block;
         max-width: 90%;
@@ -762,7 +766,6 @@ $ima-controls-height: 70px;
         &:hover {
             color: colour(media-default);
         }
-
     }
 
     svg {
