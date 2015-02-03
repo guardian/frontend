@@ -90,7 +90,7 @@ define([
                 id: id,
                 text: {
                     hidden: $('.js-button-text', $el).text(),
-                    displayed: "Less"
+                    displayed: 'Less'
                 },
                 state: state
             };
