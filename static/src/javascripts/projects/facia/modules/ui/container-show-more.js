@@ -109,9 +109,8 @@ define([
             });
 
             mediator.on('module:clickstream:click', function (clickSpec) {
-                console.log(clickSpec.el);
                 var pair = _.find(containersWithButtons, function (pair) {
-                    return pair[1].$el[0] === clickSpec.el;
+                    return pair[1].$el[0] === clickSpec.target;
                 });
                 if (pair) {
                     showMore(pair[0], pair[1]);
