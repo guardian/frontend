@@ -50,7 +50,7 @@ define([
 
                 // Now we want to load them. Query the `style.webfont` elements
                 // for each font's URI, if it's not already been loaded from `localStorage`
-                $('.webfont:not([data-cache-full])').each(function (webfont) {
+                $('.webfont:not([data-loaded-from])').each(function (webfont) {
                     var $webFont      = bonzo(webfont),
                         fontFile      = $webFont.data('cache-file-' + (detect.fontHinting === 'Off' ? '' : 'hinted-' + detect.fontHinting + '-') + fileFormat),
                         minBreakpoint = $webFont.data('min-breakpoint');
@@ -83,7 +83,7 @@ define([
                                 fontName = fontInfo[2];
 
                             // Insert the css from the response into the style element on the page…
-                            $webFont.text(resp.css).attr('data-cache-full', 'data-cache-full');
+                            $webFont.text(resp.css).attr('data-loaded-from', 'ajax');
 
                             // …then clear out any old fonts
                             storage.local.clearByPrefix(storagePrefix + fontName.replace(/(CleartypeHinted|AutoHinted)$/, ''));

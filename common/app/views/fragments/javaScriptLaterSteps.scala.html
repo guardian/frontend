@@ -90,7 +90,7 @@
 
                             if (storedCachedCss) {
                                 font.innerHTML = JSON.parse(storedCachedCss).value;
-                                font.setAttribute('data-cache-full', 'data-cache-full');
+                                font.setAttribute('data-loaded-from', 'local');
                             }
                         }
                     }
