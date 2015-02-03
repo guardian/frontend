@@ -6,6 +6,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/request-animation-frame',
     'common/utils/storage',
     'common/utils/to-array',
     'common/modules/analytics/beacon',
@@ -23,13 +24,14 @@ define([
     config,
     detect,
     mediator,
+    requestAnimationFrame,
     storage,
     toArray,
     beacon,
     stocks,
     GeoMostPopularFront,
     ContainerToggle,
-    ContainerShowMore,
+    containerShowMore,
     snaps,
     weather
 ) {
@@ -42,16 +44,9 @@ define([
             },
 
             showContainerShowMore: function () {
-                var containerShowMoreAdd = function () {
-                    var c = document;
-
-                    $('.js-container--fc-show-more', c).each(function (container) {
-                        new ContainerShowMore(container).addShowMoreButton();
-                    });
-                };
                 mediator.addListeners({
-                    'modules:container:rendered': containerShowMoreAdd,
-                    'page:front:ready': containerShowMoreAdd
+                    'modules:container:rendered': containerShowMore,
+                    'page:front:ready': containerShowMore
                 });
             },
 
