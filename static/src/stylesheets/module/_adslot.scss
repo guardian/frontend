@@ -46,12 +46,20 @@
 /**
  * Banner ads
  */
+
+.js-on {
+    .top-banner-ad-container--desktop.top-banner-ad-container--above-nav,
+    .ad-below-nav .ad-slot--top-below-nav {
+        display: none;
+    }
+}
+
 .top-banner-ad-container--mobile {
     background-color: #f0f0f0;
 }
 .top-banner-ad-container--desktop {
     background-color: colour(neutral-8);
-    border-bottom: 2px solid colour(neutral-4);
+    border-bottom: 1px solid colour(neutral-4);
     display: none;
 
     .ad-slot__label {
