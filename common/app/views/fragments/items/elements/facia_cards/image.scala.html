@@ -1,10 +1,27 @@
 @(imageContainer: model.ImageContainer, inlineImage: Boolean = false, maxWidth: Int = 940, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None)(implicit request: RequestHeader)
 
+@import layout.Source
 @import views.support.ImgSrc
 
 <div class="fc-item__media-wrapper">
-    <div class="fc-item__image-container u-responsive-ratio @if(inlineImage) {inlined-image}">
-        <img sizes="@widthsByBreakpoint.map(_.sizesString).getOrElse(ImgSrc.sizes(imageContainer))"
-             srcset="@ImgSrc.srcset(imageContainer, maxWidth)">
-    </div>
+    <picture class="fc-item__image-container u-responsive-ratio @if(inlineImage) {inlined-image}">
+        @widthsByBreakpoint.map { widths =>
+            @widths.sources.map {
+                case Source(Some(minWidth), width) => {
+                    <source media="(min-width: @{minWidth}px)" srcset="@ImgSrc.getUrl(imageContainer, width)">
+                }
+
+                case Source(None, width) => {
+                    <source srcset="@ImgSrc.getUrl(imageContainer, width)">
+                }
+            }
+        }
+
+        @if(inlineImage) {
+            <img src="@ImgSrc.getSmallest(imageContainer)" />
+        } else {
+            <img srcset="@ImgSrc.getSmallest(imageContainer)" />
+        }
+
+    </picture>
 </div>

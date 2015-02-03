@@ -2,6 +2,7 @@ package layout
 
 import cards._
 import BrowserWidth._
+import views.support.Profile
 import scalaz.syntax.std.option._
 
 object WidthsByBreakpoint {
@@ -59,4 +60,34 @@ case class WidthsByBreakpoint(
       case (Some(imageWidth), None) =>
         imageWidth.toString
     } mkString ", "
+
+  def breakpoints = Seq(
+    Desktop,
+    Tablet,
+    Mobile
+  ) zip Seq(desktop, tablet, mobile) map BreakpointWidth.tupled
+
+  val MaximumMobileImageWidth = 620
+  val SourcesToEmitOnMobile = 3
+
+  def sources = breakpoints flatMap {
+    case BreakpointWidth(breakpoint, Some(PixelWidth(pixels))) =>
+      Seq(
+        Source(breakpoint.minWidth, pixels)
+      )
+
+    case BreakpointWidth(Mobile, Some(PercentageWidth(percentage))) =>
+      val widths = Profile.imageWidths.sorted.reverse.dropWhile(_ > MaximumMobileImageWidth).take(SourcesToEmitOnMobile)
+      val minWidths = widths.map(_.some).drop(1) ++ Seq(None)
+
+      (widths zip minWidths) map { case (width, minWidth) =>
+        Source(minWidth, width)
+      }
+
+    case _ => Seq.empty
+  }
 }
+
+case class Source(minWidth: Option[Int], pixelWidth: Int)
+
+case class BreakpointWidth(breakpoint: Breakpoint, width: Option[BrowserWidth])

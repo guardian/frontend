@@ -3,7 +3,6 @@ package layout
 object BrowserWidth {
   implicit class RichInt(n: Int) {
     def px = PixelWidth(n)
-
     def perc = PercentageWidth(n)
   }
 }
