@@ -108,7 +108,8 @@ define([
                 renderToDom(pair[0], pair[1]);
             });
 
-            mediator.on('module:clickstream:interaction', function (clickSpec) {
+            mediator.on('module:clickstream:click', function (clickSpec) {
+                console.log(clickSpec.el);
                 var pair = _.find(containersWithButtons, function (pair) {
                     return pair[1].$el[0] === clickSpec.el;
                 });
