@@ -11,7 +11,7 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
 
         beforeEach(function() {
             sinon.spy(mediator, 'emit');
-           date = new Date;
+            date = new Date;
         });
 
         afterEach(function() {
@@ -23,6 +23,7 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
             }
             storage.local.setWindow(window);
             mediator.emit.restore();
+            storage.local.isStorageAvailable = function() { return true; };
         });
 
         function setWindowLocalStorage(winLocalStorage) {
@@ -44,6 +45,7 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
                 setItem: sinon.stub().throws()
             });
             expect(storage.local.isAvailable()).toBeFalsy();
+            expect(storage.local.isStorageAvailable()).toBeFalsy();
         });
 
         it('should save and retrieve data', function() {
@@ -128,6 +130,7 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
                     key = 'foo',
                     value = 'bar',
                     removeItemSpy = sinon.spy();
+
                 setWindowLocalStorage({
                     getItem: sinon.stub().returns('{"value":"' + value + '","expires":"' + expires.toISOString() + '"}'),
                     removeItem: removeItemSpy
@@ -139,8 +142,7 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
                 expect(storage.local.get(key)).toBe(value);
                 expect(removeItemSpy).not.toHaveBeenCalledWith(key);
             });
-
-        })
+        });
 
         describe('Saving and retriving different data types', function() {
 
@@ -163,8 +165,6 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
             it('String data', function() {
                 testSetAndGet('foo', 'bar', '{"value": "bar"}');
             });
-            
         });
-       
     });
 });
