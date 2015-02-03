@@ -65,7 +65,7 @@
 
         @if(FontSwitch.isSwitchedOn) {
 
-            @* make it possible to turn off fonts with `#fonts-off` *@
+            @* make it possible to toggle fonts with `#fonts-off/on` *@
             var cookieData = 'GU_fonts=off; domain=.theguardian.com; path=/';
             if (window.location.hash === '#fonts-off') {
                 document.cookie = cookieData + '; max-age=' + (60 * 60 * 24 * 365);
@@ -73,30 +73,34 @@
                 document.cookie = cookieData + '; expires=Thu, 01 Jan 1970 00:00:00 GMT' ;
             }
 
-            @* If fonts are not disabled, try and load them from localStorage. *@
-            if (document.cookie.indexOf('GU_fonts=off') === -1) {
-                try {
-                    var storedFontFormat = localStorage['gu.fonts.format'];
+            @* If fonts are not toggled off, try and load them from localStorage. *@
+            function loadFontsFromStorage () {
+                var storedFontFormat = localStorage['gu.fonts.format'],
+                    fonts, fontFormat, font;
 
-                    if (storedFontFormat) {
-                        var fonts = document.querySelectorAll('.webfont'),
-                            fontFormat = JSON.parse(storedFontFormat).value;
+                if (storedFontFormat) {
+                    try {
+                        fonts = document.querySelectorAll('.webfont');
+                        fontFormat = JSON.parse(storedFontFormat).value;
 
                         for (var i = 0, j = fonts.length; i < j; ++i) {
-                            var font = fonts[i],
+                            font = fonts[i],
                                 dataAttrName = 'data-cache-file-' + (fontHinting === 'Off' ? '' : 'hinted-' + fontHinting + '-') + fontFormat,
                                 nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
-                                storedCachedCss = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
+                                fontData = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
 
-                            if (storedCachedCss) {
-                                font.innerHTML = JSON.parse(storedCachedCss).value;
+                            if (fontData) {
+                                font.innerHTML = JSON.parse(fontData).value;
                                 font.setAttribute('data-loaded-from', 'local');
                             }
                         }
-                    }
-                } catch (e) {}
+                    } catch (e) {}
+                }
             }
 
+            if (document.cookie.indexOf('GU_fonts=off') === -1) {
+                loadFontsFromStorage();
+            }
         }
 
         @if(InlineCriticalCss.isSwitchedOn && !play.Play.isDev()) {
