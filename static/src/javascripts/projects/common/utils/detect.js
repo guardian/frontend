@@ -351,7 +351,7 @@ define([
             version;
 
         if (windowsNT) {
-            var version = parseFloat(windowsNT[1], 10);
+            version = parseFloat(windowsNT[1], 10);
             // For Windows XP-7
             if (version >= 5.1 && version <= 6.1) {
                 if (/Chrome/.exec(ua) && version < 6.0) {
@@ -361,7 +361,7 @@ define([
                     // All others use cleartype
                     hinting = 'Cleartype';
                 }
-            };
+            }
         }
         return hinting;
     }
@@ -371,25 +371,25 @@ define([
     // [*major* hackery](http://stackoverflow.com/questions/5427315/disable-cleartype-text-anti-aliasing-in-ie9#tab-top)),
     // we only test non-IE, and only on windows. Everyone else we assume `true`.
     function fontSmoothing() {
-        var ua = navigator.userAgent;
+        var ua = navigator.userAgent, canvasNode, ctx, alpha, x, y;
 
         // If Windows desktop and not IE…
         if (/Windows NT (\d\.\d+)/.exec(ua) && !/MSIE|Trident/.exec(ua)) {
             try {
                 // Create a 35x35 Canvas block.
-                var canvasNode = document.createElement('canvas');
-                canvasNode.width = "35";
-                canvasNode.height = "35";
+                canvasNode = document.createElement('canvas');
+                canvasNode.width = '35';
+                canvasNode.height = '35';
                 canvasNode.style.display = 'none';
                 document.documentElement.appendChild(canvasNode);
 
                 // Draw a black '@', in 32px Arial, onto it.
-                var ctx = canvasNode.getContext('2d');
-                ctx.textBaseline = "top";
-                ctx.font = "32px Arial";
-                ctx.fillStyle = "black";
-                ctx.strokeStyle = "black";
-                ctx.fillText("@", 0, 0);
+                ctx = canvasNode.getContext('2d');
+                ctx.textBaseline = 'top';
+                ctx.font = '32px Arial';
+                ctx.fillStyle = 'black';
+                ctx.strokeStyle = 'black';
+                ctx.fillText('@', 0, 0);
 
                 // Search the top left-hand corner of the canvas from left to
                 // right, top to bottom, until we find a non-black pixel (most
@@ -397,10 +397,10 @@ define([
                 //
                 // - no point in searching the whole thing, so keep it as short
                 //   as possible.
-                for (var x = 0; x <= 16; x++) {
-                    for (var y = 0; y <= 16; y++) {
+                for (x = 0; x <= 16; x++) {
+                    for (y = 0; y <= 16; y++) {
 
-                        var alpha = ctx.getImageData(x, y, 1, 1).data[3];
+                        alpha = ctx.getImageData(x, y, 1, 1).data[3];
 
                         if (alpha > 0 && alpha < 255) {
                             // font-smoothing must be on…
