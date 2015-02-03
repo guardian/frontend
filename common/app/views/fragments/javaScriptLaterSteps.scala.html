@@ -39,8 +39,8 @@
 
         if (!isModern) { return false; }
 
-        // Determine what type of font-hinting we want.
         @* Duplicated in /static/src/javascripts/projects/common/utils/detect.js *@
+        // Determine what type of font-hinting we want.
         var fontHinting = function () {
             var ua = navigator.userAgent,
                 windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
@@ -49,13 +49,13 @@
 
             if (windowsNT) {
                 var version = parseFloat(windowsNT[1], 10);
-                @* For Windows XP-7 *@
+                // For Windows XP-7
                 if (version >= 5.1 && version <= 6.1) {
                     if (/Chrome/.exec(ua) && version < 6.0) {
-                        @* Chrome on windows XP wants auto-hinting *@
+                        // Chrome on windows XP wants auto-hinting
                         hinting = 'Auto';
                     } else {
-                        @* All others use cleartype *@
+                        // All others use cleartype
                         hinting = 'Cleartype';
                     }
                 };
@@ -127,7 +127,7 @@
                 // If Windows desktop and not IE…
                 if (/Windows NT (\d\.\d+)/.exec(ua) && !/MSIE|Trident/.exec(ua)) {
                     try {
-                        @* Create a 35x35 Canvas block. *@
+                        // Create a 35x35 Canvas block.
                         canvasNode = document.createElement('canvas');
                         canvasNode.width = '35';
                         canvasNode.height = '35';
