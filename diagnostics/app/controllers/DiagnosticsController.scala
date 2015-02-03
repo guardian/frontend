@@ -62,7 +62,6 @@ object DiagnosticsController extends Controller with Logging {
   def cssOptions = postOptions
 
   private def postOptions: Action[AnyContent] = Action { implicit request =>
-    println("OPTioNSSSSSSSSSSSS")
     TinyResponse.noContent(Some("POST, OPTIONS"))
   }
 }
