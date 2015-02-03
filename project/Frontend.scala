@@ -37,7 +37,8 @@ object Frontend extends Build with Prototypes {
       scalaz,
       shadeMemcached,
       snappyJava,
-      ws
+      ws,
+      faciaFapiScalaClient
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
