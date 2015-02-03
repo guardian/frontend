@@ -256,6 +256,8 @@ case class FaciaContainer(
 
   def hasShowMore = containerLayout.exists(_.hasShowMore)
 
+  def hasDesktopShowMore = containerLayout.exists(_.hasDesktopShowMore)
+
   def hasMobileOnlyShowMore =
     containerLayout.exists(layout => layout.hasMobileShowMore && !layout.hasDesktopShowMore)
 
