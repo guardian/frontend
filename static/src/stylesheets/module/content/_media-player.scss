@@ -723,41 +723,56 @@ $ima-controls-height: 70px;
 }
 
 .vjs-view-on-guardian {
-    cursor: pointer;
     position: fixed;
-    display: none;
-    top: $gs-baseline;
-    left: $gs-gutter*3/5;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: $gs-baseline*4;
+    box-sizing: border-box;
     background-color: rgba(25, 25, 25, .8);
     padding: $gs-baseline/2 $gs-baseline;
-    @include border-radius(100px);
+    box-sizing: border-box;
+    transition: opacity .15s ease-out;
+    opacity: 1;
+    display: none;
 
-    .vjs-control-text {
-        color: #ffffff;
-        display: block;
-        padding-left: $gs-baseline*2;
+    .vjs-playing & {
+        opacity: 0;
     }
 
-    .gu-video-embed:hover & {
+    .gu-video-embed & {
         display: block;
+    }
+
+    .vjs-control-content {
+        position: absolute;
+        top: $gs-baseline/3;
+        right: $gs-baseline*4;
+    }
+
+    .vjs-title {
+        margin-top: 7px;
+        @include fs-bodyHeading(1);
+        color: #ffffff;
+        display: inline-block;
+        max-width: 90%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        &:hover {
+            color: colour(media-default);
+        }
+
     }
 
     svg {
         top: 3px;
         left: 7px;
-        width: 22px;
-        height: 22px;
+        width: 32px;
+        height: 32px;
         fill: #ffffff;
-    }
 
-    &:hover {
-        .vjs-control-text {
-            color: colour(media-default);
-        }
-        .vjs-control-content {
-            text-decoration: none;
-        }
-        svg {
+        &:hover {
             fill: colour(media-default);
         }
     }
