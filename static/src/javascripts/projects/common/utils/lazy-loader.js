@@ -51,5 +51,5 @@ define([
     return {
         add: addLazyLoader,
         addScrolling: addScrollingLazyLoader
-    }
+    };
 });
