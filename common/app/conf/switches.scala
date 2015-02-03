@@ -114,7 +114,7 @@ object Switches {
 
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
-    safeState = Off, sellByDate = never
+    safeState = On, sellByDate = never
   )
 
   val DoubleCacheTimesSwitch = Switch("Performance", "double-cache-times",

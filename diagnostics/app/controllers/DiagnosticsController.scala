@@ -11,6 +11,14 @@ import model.TinyResponse
 
 object DiagnosticsController extends Controller with Logging {
 
+
+  def acceptBeaconOptions = postOptions
+
+  def acceptBeacon = Action { implicit request =>
+    countsFromQueryString(request)
+    TinyResponse.ok
+  }
+
   def js = Action { implicit request =>
     JavaScript.report(request)
     TinyResponse.gif
@@ -34,8 +42,12 @@ object DiagnosticsController extends Controller with Logging {
 
   // e.g.  .../counts?c=pv&c=vv&c=ve
   def analyticsCounts() = Action { implicit request =>
-    request.queryString.getOrElse("c", Nil).foreach(Analytics.report)
+    countsFromQueryString(request)
     TinyResponse.gif
+  }
+
+  private def countsFromQueryString(request: Request[AnyContent]): Unit = {
+    request.queryString.getOrElse("c", Nil).foreach(Analytics.report)
   }
 
   private lazy val jsonParser = parse.tolerantJson(1024 *1024)
@@ -47,7 +59,10 @@ object DiagnosticsController extends Controller with Logging {
     TinyResponse.noContent()
   }
 
-  def cssOptions = Action { implicit request =>
+  def cssOptions = postOptions
+
+  private def postOptions: Action[AnyContent] = Action { implicit request =>
+    println("OPTioNSSSSSSSSSSSS")
     TinyResponse.noContent(Some("POST, OPTIONS"))
   }
 }

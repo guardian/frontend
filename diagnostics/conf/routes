@@ -2,16 +2,19 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET        /_healthcheck                    conf.HealthCheck.healthcheck()
+GET            /_healthcheck               conf.HealthCheck.healthcheck()
 
-GET        /js.gif                          controllers.DiagnosticsController.js
-GET        /ab.gif                          controllers.DiagnosticsController.ab
+GET            /js.gif                     controllers.DiagnosticsController.js
+GET            /ab.gif                     controllers.DiagnosticsController.ab
 
-GET        /count/$path<.+>.gif             controllers.DiagnosticsController.analytics(path)
+GET            /count/$path<.+>.gif        controllers.DiagnosticsController.analytics(path)
 
-GET        /counts.gif                      controllers.DiagnosticsController.analyticsCounts()
+GET            /counts.gif                 controllers.DiagnosticsController.analyticsCounts()
 
-GET        /robots.txt                      controllers.Assets.at(path="/public", file="robots.txt")
+GET            /robots.txt                 controllers.Assets.at(path="/public", file="robots.txt")
 
-POST       /css                             controllers.DiagnosticsController.css
-OPTIONS    /css                             controllers.DiagnosticsController.cssOptions
+POST           /css                        controllers.DiagnosticsController.css
+OPTIONS        /css                        controllers.DiagnosticsController.cssOptions
+
+POST           /accept-beacon              controllers.DiagnosticsController.acceptBeacon
+OPTIONS        /accept-beacon              controllers.DiagnosticsController.acceptBeaconOptions
