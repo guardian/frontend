@@ -172,21 +172,13 @@ define([
         },
 
         bindEvents: function () {
-            bean.on(qwery('.js-weather-input')[0], 'click', function (e) {
-                e.preventDefault();
-                this.toggleControls(true);
-            }.bind(this));
-            bean.on(qwery('.js-close-location')[0], 'click', function (e) {
-                e.preventDefault();
-                this.toggleControls(false);
-            }.bind(this));
             bean.on(qwery('.js-toggle-forecast')[0], 'click', function (e) {
                 e.preventDefault();
                 this.toggleForecast();
             }.bind(this));
 
-            mediator.once('autocomplete:fetch', this.saveDeleteLocalStorage.bind(this));
-            mediator.once('autocomplete:remove', this.toggleControls.bind(this));
+            mediator.on('autocomplete:fetch', this.saveDeleteLocalStorage.bind(this));
+            mediator.on('autocomplete:remove', this.toggleControls.bind(this));
         },
 
         toggleControls: function (value) {

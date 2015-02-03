@@ -45,13 +45,16 @@ define([
             },
 
             handleClick: function (e) {
-                var ancestor = $.ancestor(e.target,'search-tool__link');
+                var list         = $.ancestor(e.target,'search-tool__link'),
+                    clickTarget  = $(e.target);
 
-                if (ancestor) {
+                if (clickTarget.hasClass('js-weather-input')) {
                     e.preventDefault();
-
+                    mediator.emit('autocomplete:remove', true);
+                } else if (list) {
+                    e.preventDefault();
                     $('.active').removeClass('active');
-                    $(ancestor).addClass('active');
+                    $(list).addClass('active');
                     this.pushData();
                 } else {
                     mediator.emit('autocomplete:remove', false);
