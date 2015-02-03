@@ -39,7 +39,7 @@
 
         if (!isModern) { return false; }
 
-        @* Determine if what type of font-hinting we want. *@
+        // Determine what type of font-hinting we want.
         @* Duplicated in /static/src/javascripts/projects/common/utils/detect.js *@
         var fontHinting = function () {
             var ua = navigator.userAgent,
@@ -64,16 +64,22 @@
         }();
 
         @if(FontSwitch.isSwitchedOn) {
-
-            @* make it possible to toggle fonts with `#fonts-off/on` *@
+            // Check to see if you should get webfonts, and then try to load them from localStorage if so
             var cookieData = 'GU_fonts=off; domain=.theguardian.com; path=/';
-            if (window.location.hash === '#fonts-off') {
+
+            function disableFonts () {
                 document.cookie = cookieData + '; max-age=' + (60 * 60 * 24 * 365);
-            } else if (window.location.hash === '#fonts-on') {
-                document.cookie = cookieData + '; expires=Thu, 01 Jan 1970 00:00:00 GMT' ;
             }
 
-            @* If fonts are not toggled off, try and load them from localStorage. *@
+            function enableFonts () {
+                document.cookie = cookieData + '; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            }
+
+            function fontsEnabled () {
+                return document.cookie.indexOf('GU_fonts=off') === -1;
+            }
+
+            // If fonts are not toggled off, try and load them from localStorage.
             function loadFontsFromStorage () {
                 var storedFontFormat = localStorage['gu.fonts.format'],
                     fonts, fontFormat, font;
@@ -98,8 +104,97 @@
                 }
             }
 
-            if (document.cookie.indexOf('GU_fonts=off') === -1) {
-                loadFontsFromStorage();
+
+            // Detect whether browser is smoothing its fonts.
+            // Technique adapted from @zoltandulac's [clever hack](http://www.useragentman.com/blog/2009/11/29/how-to-detect-font-smoothing-using-javascript).
+            // Because IE always uses clear-type (unless you've done some
+            // [*major* hackery](http://stackoverflow.com/questions/5427315/disable-cleartype-text-anti-aliasing-in-ie9#tab-top)),
+            // we only test non-IE, and only on windows. Everyone else we assume `true`.
+            function fontSmoothingEnabled () {
+                var ua = navigator.userAgent, fontSmoothingEnabled = null, cookie = document.cookie, canvasNode, ctx, alpha, x, y;
+
+                // If we've already run this test, return the result.
+                if (cookie.indexOf('GU_fonts_smoothing') !== -1) {
+                    return cookie.indexOf('GU_fonts_smoothing=on') !== -1;
+                }
+
+                // Internal function to store font-smoothing state for 30 days
+                function saveFontSmoothing (state) {
+                    state = state ? 'on' : 'off';
+                    cookie = 'GU_fonts_smoothing= ' + state + '; domain=.theguardian.com; path=/; max-age=' + (60 * 60 * 24 * 30);
+                }
+
+                // If Windows desktop and not IE…
+                if (/Windows NT (\d\.\d+)/.exec(ua) && !/MSIE|Trident/.exec(ua)) {
+                    try {
+                        @* Create a 35x35 Canvas block. *@
+                        canvasNode = document.createElement('canvas');
+                        canvasNode.width = '35';
+                        canvasNode.height = '35';
+                        canvasNode.style.display = 'none';
+                        document.documentElement.appendChild(canvasNode);
+
+                        // Draw a black '@', in 32px Arial, onto it.
+                        ctx = canvasNode.getContext('2d');
+                        ctx.textBaseline = 'top';
+                        ctx.font = '32px Arial';
+                        ctx.fillStyle = 'black';
+                        ctx.strokeStyle = 'black';
+                        ctx.fillText('@@', 0, 0);
+
+
+                        // Search the top left-hand corner of the canvas from left to
+                        // right, top to bottom, until we find a non-black pixel (most
+                        // likely). If so we return true.
+
+                        // - no point in searching the whole thing, so keep it as short
+                        // as possible.
+                        for (x = 0; x <= 16; x++) {
+                            for (y = 0; y <= 16; y++) {
+
+                                alpha = ctx.getImageData(x, y, 1, 1).data[3];
+
+                                if (alpha > 0 && alpha < 255) {
+                                    // font-smoothing must be on
+                                    // save this info for 30 days
+                                    saveFontSmoothing(true);
+                                    return true;
+                                }
+                            }
+
+                        }
+
+                        // Didn't find any non-black pixels - return false.
+                        saveFontSmoothing(false);
+                        return false;
+                    } catch (ex) {
+                        // Something went wrong (for example, non-blink Opera cannot use
+                        // the canvas fillText() method) so we assume false for safety's
+                        // sake.
+                        saveFontSmoothing(false);
+                        return false;
+                    }
+                } else {
+                    // You're not on Windows or you're using IE, so we assume true
+                    return true;
+                }
+            }
+
+            // Make it possible to toggle fonts with `#fonts-off/on`.
+            if (window.location.hash === '#fonts-off') {
+                disableFonts();
+            } else if (window.location.hash === '#fonts-on') {
+                enableFonts();
+            }
+
+            // Finally, if we're meant to use fonts, check they'll render ok
+            // and try and then load them from storage. If they won't, disable them entirely.
+            if (fontsEnabled()) {
+                if (fontSmoothingEnabled()) {
+                    loadFontsFromStorage();
+                } else {
+                    disableFonts();
+                }
             }
         }
 

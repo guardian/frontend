@@ -366,64 +366,6 @@ define([
         return hinting;
     }
 
-    // Technique lifted from @zoltandulac's [clever hack](http://www.useragentman.com/blog/2009/11/29/how-to-detect-font-smoothing-using-javascript).
-    // Because IE always uses clear-type (unless you've done some
-    // [*major* hackery](http://stackoverflow.com/questions/5427315/disable-cleartype-text-anti-aliasing-in-ie9#tab-top)),
-    // we only test non-IE, and only on windows. Everyone else we assume `true`.
-    function fontSmoothing() {
-        var ua = navigator.userAgent, canvasNode, ctx, alpha, x, y;
-
-        // If Windows desktop and not IE…
-        if (/Windows NT (\d\.\d+)/.exec(ua) && !/MSIE|Trident/.exec(ua)) {
-            try {
-                // Create a 35x35 Canvas block.
-                canvasNode = document.createElement('canvas');
-                canvasNode.width = '35';
-                canvasNode.height = '35';
-                canvasNode.style.display = 'none';
-                document.documentElement.appendChild(canvasNode);
-
-                // Draw a black '@', in 32px Arial, onto it.
-                ctx = canvasNode.getContext('2d');
-                ctx.textBaseline = 'top';
-                ctx.font = '32px Arial';
-                ctx.fillStyle = 'black';
-                ctx.strokeStyle = 'black';
-                ctx.fillText('@', 0, 0);
-
-                // Search the top left-hand corner of the canvas from left to
-                // right, top to bottom, until we find a non-black pixel (most
-                // likely).  If so we return true.
-                //
-                // - no point in searching the whole thing, so keep it as short
-                //   as possible.
-                for (x = 0; x <= 16; x++) {
-                    for (y = 0; y <= 16; y++) {
-
-                        alpha = ctx.getImageData(x, y, 1, 1).data[3];
-
-                        if (alpha > 0 && alpha < 255) {
-                            // font-smoothing must be on…
-                            return true;
-                        }
-                    }
-
-                }
-
-                // Didn't find any non-black pixels - return false.
-                return false;
-            } catch (ex) {
-                // Something went wrong (for example, non-blink Opera cannot use
-                // the canvas fillText() method) so we assume false for safety's
-                // sake.
-                return false;
-            }
-        } else {
-            // You're not on Windows or you're using IE, so we assume true
-            return true;
-        }
-    }
-
     function isModernBrowser() {
         return window.guardian.isModernBrowser;
     }
@@ -449,7 +391,6 @@ define([
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
         fontHinting: fontHinting(),
-        fontSmoothing: fontSmoothing,
         isModernBrowser: isModernBrowser
     };
 
