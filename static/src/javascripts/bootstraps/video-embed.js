@@ -72,7 +72,7 @@ define([
     }
 
     function addTitleBar() {
-        $('.vjs-control-bar').after('<div class="vjs-title-bar"><a href="http://www.theguardian.com/' + config.page.pageId + '" target="_parent" class="vjs-title" data-link-name="embed-to-guardian">' + config.page.webTitle + '</a><a href="http://www.theguardian.com/' + config.page.pageId + '" target="_parent" class="vjs-control-content" data-link-name="embed-to-guardian">' + svgs('marque36icon') +'</a></div>');
+        $('.vjs-control-bar').after('<div class="vjs-title-bar"><a href="http://www.theguardian.com/' + config.page.pageId + '" target="_parent" class="vjs-title" data-link-name="embed-to-guardian">' + config.page.webTitle + '</a><a href="http://www.theguardian.com/' + config.page.pageId + '" target="_parent" class="vjs-control-content" data-link-name="embed-to-guardian">' + svgs('marque36icon') + '</a></div>');
     }
 
     function initPlayer() {
