@@ -10,12 +10,13 @@ define([
 
     return {
         init: function () {
-            var clickData = [];
             if (!!navigator.sendBeacon) {
                 // sm = simple metrics
                 beacon.beaconCounts('sm-page-view');
 
                 mediator.on('module:clickstream:click', function (spec) {
+
+                    var clickData = [];
 
                     if (spec.samePage) {
                         // people who clicked something but will stay on this page
