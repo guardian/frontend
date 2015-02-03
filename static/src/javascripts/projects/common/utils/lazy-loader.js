@@ -9,14 +9,17 @@ define([
 ) {
 
     var lazyLoaders = [],
-        doLazyLoadersThrottled = _.throttle(doLazyLoaders, 200, {leading: false, trailing: true});
+        doLazyLoadersThrottled = _.throttle(doLazyLoaders, 200, {leading: false, trailing: true}),
+        doLazyLoadersDebounced = _.debounce(doLazyLoaders, 2000); // used on load for edge-case where user doesn't scroll
 
     function addLazyLoader(conditionFn, loadFn) {
         // calls `loadFn` when `conditionFn` is true
-        lazyLoaders.push({conditionFn: conditionFn, loadFn: loadFn});
+        var lazyLoader = {conditionFn: conditionFn, loadFn: loadFn};
+        lazyLoaders.push(lazyLoader);
         if (lazyLoaders.length === 1) {
             mediator.on('window:scroll', doLazyLoadersThrottled);
         }
+        doLazyLoadersDebounced();
     }
 
     function addScrollingLazyLoader(el, distanceThreshold, loadFn) {
@@ -33,13 +36,13 @@ define([
     }
 
     function doLazyLoaders() {
-        var loaded = _.filter(lazyLoaders, function(lazyLoader) {
+        lazyLoaders = _.filter(lazyLoaders, function(lazyLoader) {
             if (lazyLoader.conditionFn()) {
                 lazyLoader.loadFn();
+            } else {
                 return true;
             }
         });
-        lazyLoaders = _.difference(lazyLoaders, loaded);
         if (lazyLoaders.length === 0) {
             mediator.off('window:scroll', doLazyLoadersThrottled);
         }
