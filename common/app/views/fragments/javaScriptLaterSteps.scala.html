@@ -65,44 +65,7 @@
 
         @if(FontSwitch.isSwitchedOn) {
 
-            @* Loads webfonts by inserting standard stylesheet `link` element into the DOM *@
-            function loadFontsAsynchronously() {
-                var scripts    = document.getElementsByTagName('script'),
-                    thisScript = scripts[scripts.length - 1],
-                    fonts      = document.createElement('link');
-
-                fonts.rel       = 'stylesheet';
-                fonts.className = 'webfonts';
-                @* show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE *@
-                fonts.href      = guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
-                window.setTimeout(function() {
-                    thisScript.parentNode.insertBefore(fonts, thisScript);
-                }, 0);
-            }
-
-            @* Load fonts from local storage. *@
-            function loadFontsFromStorage() {
-                var storedFontFormat = localStorage['gu.fonts.format'];
-
-                if (storedFontFormat) {
-                    var fonts      = document.querySelectorAll('.webfont'),
-                        fontFormat = JSON.parse(storedFontFormat).value;
-
-                    for (var i = 0, j = fonts.length; i < j; ++i) {
-                        var font            = fonts[i],
-                            dataAttrName    = 'data-cache-file-' + (fontHinting === 'Off' ? '' : 'hinted-' + fontHinting + '-') + fontFormat,
-                            nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
-                            storedCachedCss = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
-
-                        if (storedCachedCss) {
-                            font.innerHTML = JSON.parse(storedCachedCss).value;
-                            font.setAttribute('data-cache-full', 'data-cache-full');
-                        }
-                    }
-                }
-            }
-
-            @* ability to turn off fonts with `#fonts-off` *@
+            @* make it possible to turn off fonts with `#fonts-off` *@
             var cookieData = 'GU_fonts=off; domain=.theguardian.com; path=/';
             if (window.location.hash === '#fonts-off') {
                 document.cookie = cookieData + '; max-age=' + (60 * 60 * 24 * 365);
@@ -110,13 +73,28 @@
                 document.cookie = cookieData + '; expires=Thu, 01 Jan 1970 00:00:00 GMT' ;
             }
 
-            @* If fonts are not disabled in the cookie *@
+            @* If fonts are not disabled, try and load them from localStorage. *@
             if (document.cookie.indexOf('GU_fonts=off') === -1) {
                 try {
-                    loadFontsFromStorage();
-                } catch (e) {
-                    loadFontsAsynchronously();
-                }
+                    var storedFontFormat = localStorage['gu.fonts.format'];
+
+                    if (storedFontFormat) {
+                        var fonts = document.querySelectorAll('.webfont'),
+                            fontFormat = JSON.parse(storedFontFormat).value;
+
+                        for (var i = 0, j = fonts.length; i < j; ++i) {
+                            var font = fonts[i],
+                                dataAttrName = 'data-cache-file-' + (fontHinting === 'Off' ? '' : 'hinted-' + fontHinting + '-') + fontFormat,
+                                nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
+                                storedCachedCss = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
+
+                            if (storedCachedCss) {
+                                font.innerHTML = JSON.parse(storedCachedCss).value;
+                                font.setAttribute('data-cache-full', 'data-cache-full');
+                            }
+                        }
+                    }
+                } catch (e) {}
             }
 
         }
