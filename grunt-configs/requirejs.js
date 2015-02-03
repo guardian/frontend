@@ -184,7 +184,6 @@ module.exports = function(grunt, options) {
                 },
                 wrapShim: true,
                 exclude: [
-                    'core',
                     'text',
                     'inlineSvg'
                 ],
