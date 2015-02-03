@@ -6,8 +6,7 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/template',
-    'common/modules/user-prefs',
-    'text!facia/views/button-show-more.html'
+    'common/modules/user-prefs'
 ], function (
     bean,
     bonzo,
@@ -16,21 +15,11 @@ define([
     _,
     $,
     template,
-    userPrefs,
-    showMoreBtn
+    userPrefs
 ) {
     var className = 'fc-show-more--hidden',
         textHook = 'js-button-text',
         prefName = 'section-states';
-
-    function getButtonTextByState($container) {
-        var containerTitle = $container.data('title') || '';
-
-        return {
-            'hidden': 'More ' + containerTitle,
-            'displayed': 'Less'
-        };
-    }
 
     function setButtonState(button, state) {
         var text = button.text[state];
@@ -78,38 +67,33 @@ define([
 
     function renderToDom($container, button) {
         fastdom.write(function () {
-            if (button.mobileOnly) {
-                $container.addClass('fc-show-more--mobile-only');
-            }
-
             $container.addClass(className)
-                .append(button.$el)
                 .removeClass('js-container--fc-show-more')
                 .toggleClass(className, button.state === 'hidden');
+            // Initialise state, as it might be different from what was rendered server side based on localstorage prefs
+            setButtonState(button, button.state);
         });
     }
 
     function makeButton($container) {
-        var id = $container.attr('data-id'),
-            buttonText = getButtonTextByState($container),
-            itemsHiddenOnDesktop = qwery('.js-hide', $container).length > 0,
-            itemsHiddenOnMobile  = qwery('.js-hide-on-mobile', $container).length > 0,
-            state = readPrefs(id),
-            $button = $.create(template(showMoreBtn, {
-                type: buttonText[state],
-                dataLink: buttonText.displayed
-            })),
-            button;
+        var id,
+            state,
+            button,
+            $el = $('.js-show-more-button', $container);
 
-        if (itemsHiddenOnDesktop || itemsHiddenOnMobile) {
+        if ($el) {
+            id = $container.attr('data-id');
+            state = readPrefs(id);
+
             button = {
-                $el: $button,
+                $el: $el,
                 id: id,
-                text: buttonText,
-                mobileOnly: !itemsHiddenOnDesktop,
+                text: {
+                    hidden: $('.js-button-test', $el).text(),
+                    displayed: "Less"
+                },
                 state: state
             };
-            setButtonState(button, state);
             return button;
         }
     }
