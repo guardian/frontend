@@ -1,20 +1,18 @@
 define([
-    'bean',
     'bonzo',
     'fastdom',
     'qwery',
     'common/utils/_',
     'common/utils/$',
-    'common/utils/template',
+    'common/utils/mediator',
     'common/modules/user-prefs'
 ], function (
-    bean,
     bonzo,
     fastdom,
     qwery,
     _,
     $,
-    template,
+    mediator,
     userPrefs
 ) {
     var className = 'fc-show-more--hidden',
@@ -110,11 +108,9 @@ define([
                 renderToDom(pair[0], pair[1]);
             });
 
-            bean.on(document.body, 'click', _.map(_.filter(buttons), function (button) {
-                return button.$el[0];
-            }), function (event) {
+            mediator.on('module:clickstream:interaction', function (clickSpec) {
                 var pair = _.find(containersWithButtons, function (pair) {
-                    return pair[1].$el[0] === event.currentTarget;
+                    return pair[1].$el[0] === clickSpec.el;
                 });
                 if (pair) {
                     showMore(pair[0], pair[1]);
