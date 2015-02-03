@@ -30,14 +30,15 @@ define([
         fileFormat    = detect.getFontFormatSupport(navigator.userAgent);
 
     return {
+        disabled: function () {
+            return (cookies.get('GU_fonts') === 'off');
+        },
         load: function () {
             // If any of the following conditions are met, we just leave it and
             // `return false`:
             // - fonts switch is off
-            // - fonts have already been loaded by inserting `link` elements
-            //   from `javaScriptLaterSteps.scala.html#loadFontsAsynchronously`
             // - user has switched off fonts with a cookie
-            if (!config.switches.webFonts || qwery('.webfonts').length || cookies.get('GU_fonts') === 'off') {
+            if (!config.switches.webFonts || this.disabled()) {
                 return false;
             }
 
