@@ -1,7 +1,7 @@
 package controllers
 
 import common.ExecutionContexts
-import frontpress.FrontPress
+import frontpress.{FapiFrontPress, FrontPress}
 import model.NoCache
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
@@ -16,8 +16,23 @@ object Application extends Controller with ExecutionContexts {
     NoCache(Ok(ConfigAgent.contentsAsJsonString).withHeaders("Content-Type" -> "application/json"))
   }
 
-  def generateLivePressedFor(path: String) = Action.async { request =>
-    FrontPress.pressLiveByPathId(path).map(Json.stringify(_))
+  def generateFrontJson() = Action.async { request =>
+    FapiFrontPress.generateFrontJsonFromFapiClient()
+      .map(Json.prettyPrint)
       .map(Ok.apply(_))
-      .map(NoCache.apply)}
+      .map(NoCache.apply)
+      .fold(
+        apiError => InternalServerError,
+        successJson => successJson
+      )}
+
+  def generateLivePressedFor(collectionId: String) = Action.async { request =>
+    FapiFrontPress.generateCollectionJsonFromFapiClient(collectionId)
+      .map(Json.prettyPrint)
+      .map(Ok.apply(_))
+      .map(NoCache.apply)
+      .fold(
+        apiError => InternalServerError,
+        successJson => successJson.withHeaders("Content-Type" -> "application/json")
+      )}
 }
