@@ -32,7 +32,7 @@ define([
                     }
 
                     // people who clicked on the "more from this series" component
-                    if (/| series /.test(spec.tag)) {
+                    if (/\| series \|/.test(spec.tag)) {
                         clickData.push('sm-clicked-series-component');
                     }
 
