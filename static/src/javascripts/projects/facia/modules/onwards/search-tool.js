@@ -37,7 +37,7 @@ define([
 
             bindEvents: function () {
                 bean.on(document.body, 'keyup', this.handleKeyEvents.bind(this));
-                bean.on(document.body, 'click', '.js-search-tool-list a', this.handleClick.bind(this));
+                bean.on(document.body, 'click', this.handleClick.bind(this));
             },
 
             hasInputValueChanged: function () {
@@ -45,11 +45,17 @@ define([
             },
 
             handleClick: function (e) {
-                e.preventDefault();
+                var ancestor = $.ancestor(e.target,'search-tool__link');
 
-                $('.active').removeClass('active');
-                $(e.currentTarget).addClass('active');
-                this.pushData();
+                if (ancestor) {
+                    e.preventDefault();
+
+                    $('.active').removeClass('active');
+                    $(ancestor).addClass('active');
+                    this.pushData();
+                } else {
+                    mediator.emit('autocomplete:remove', false);
+                }
             },
 
             pushData: function () {

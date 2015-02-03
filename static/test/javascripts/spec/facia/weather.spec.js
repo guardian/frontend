@@ -16,6 +16,7 @@ define([
 
     return new Injector()
         .store('common/utils/config')
+        .store('common/utils/mediator')
         .require(['facia/modules/onwards/weather', 'mocks'], function (sut, mocks) {
             describe('Weather component', function () {
                 var container,

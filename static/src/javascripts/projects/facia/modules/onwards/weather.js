@@ -185,7 +185,8 @@ define([
                 this.toggleForecast();
             }.bind(this));
 
-            mediator.on('autocomplete:fetch', this.saveDeleteLocalStorage.bind(this));
+            mediator.once('autocomplete:fetch', this.saveDeleteLocalStorage.bind(this));
+            mediator.once('autocomplete:remove', this.toggleControls.bind(this));
         },
 
         toggleControls: function (value) {
