@@ -55,8 +55,8 @@ define([
     }
 
     function renderCounts(counts, indexedElements) {
-        counts.forEach(function (c) {
-            fastdom.read(function () {
+        fastdom.read(function () {
+            counts.forEach(function (c) {
                 _.forEach(indexedElements[c.id], function (node) {
                     var format,
                         $node = bonzo(node),
@@ -87,12 +87,12 @@ define([
                     });
                 });
             });
-        });
 
-        // This is the only way to ensure that this event is fired after all the comment counts have been rendered to
-        // the DOM.
-        fastdom.write(function () {
-            mediator.emit('modules:commentcount:loaded', counts);
+            // This is the only way to ensure that this event is fired after all the comment counts have been rendered to
+            // the DOM.
+            fastdom.write(function () {
+                mediator.emit('modules:commentcount:loaded', counts);
+            });
         });
     }
 
