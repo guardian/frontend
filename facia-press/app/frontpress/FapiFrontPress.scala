@@ -54,7 +54,6 @@ object FapiFrontPress extends TestClient with QueryDefaults {
 
   implicit val frontFormat = Json.format[Front]
 
-  implicit val trailMetaDataFormat = Json.format[TrailMetaData]
   implicit val trailFormat = Json.format[Trail]
   implicit val groupFormat = Json.format[Group]
   implicit val newCollectionFormat = Json.format[Collection]
