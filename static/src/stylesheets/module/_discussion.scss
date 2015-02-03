@@ -103,6 +103,26 @@ $avatarPadding: $gs-gutter / 2;
     margin: 0;
 }
 
+.d-discussion__size-message {
+    display: none;
+}
+
+.discussion--pagesize-msg-show {
+
+    .d-discussion__size-message {
+        @include fs-textSans(2);
+        margin-bottom: $gs-baseline * 2 / 3;
+        border-top: 1px solid colour(neutral-4);
+        padding-top: $gs-baseline;
+        color: colour(neutral-2);
+        display: block;
+
+        & + .d-comment {
+            border-top: 0;
+        }
+    }
+}
+
 .discussion__heading {
     margin-bottom: 0;
     padding-top: 0;
@@ -142,8 +162,6 @@ $avatarPadding: $gs-gutter / 2;
         display: block;
     }
 }
-
-
 
 .discussion__show-button {
     display: none;

@@ -2,8 +2,9 @@
   "name": "frontend-common-js",
   "version": "0.1.0 ",
   "dependencies": {
-    "bean": "~1.0.4",
+    "bean": "~1.0.14",
     "eventEmitter": "~4.2.6",
+    "fastdom": "0.8.5",
     "imager.js": "oncletom/Imager.js#feature-separation",
     "lodash-amd": "~2.4.1",
     "fence": "~0.2.11",
