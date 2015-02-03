@@ -67,6 +67,23 @@ define([
         bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
     }
 
+    function initEndSlate(player) {
+        var endSlate = new Component(),
+            endState = 'vjs-has-ended';
+
+        endSlate.endpoint = "http://api.nextgen.guardianapps.co.uk/video/end-slate/section/uk-news.json?shortUrl=http://gu.com/p/45e76";
+        endSlate.fetch(player.el(), 'html');
+
+        player.one(events.constructEventName('content:play', player), function () {
+            player.on('ended', function () {
+                bonzo(player.el()).addClass(endState);
+            });
+        });
+        player.on('playing', function () {
+            bonzo(player.el()).removeClass(endState);
+        });
+    }
+
     function initPlayer() {
 
         videojs.plugin('fullscreener', fullscreener);
@@ -118,6 +135,8 @@ define([
 
                     new Omniture(window.s).go();
                 }
+
+                initEndSlate(player);
             });
 
             mouseMoveIdle = _.debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
