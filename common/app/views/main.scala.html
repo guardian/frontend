@@ -37,6 +37,9 @@
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
         @if(showAdverts) {
+            @if(adBelowNav) {
+                <style type="text/css">.top-banner-ad-container--desktop #dfp-ad--top-above-nav {padding-bottom:0; min-height:0; height: 0;} .top-banner-ad-container--below-nav #dfp-ad--top-below-nav {min-height: 42px;}</style>
+            }
             @fragments.commercial.topBanner()
         }
 

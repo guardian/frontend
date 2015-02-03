@@ -12,6 +12,7 @@ module.exports = function(grunt, options) {
                 enhancer:             'components/enhancer/enhancer',
                 EventEmitter:         'components/eventEmitter/EventEmitter',
                 fastclick:            'components/fastclick/fastclick',
+                fastdom:              'components/fastdom/index',
                 fence:                'components/fence/fence',
                 imager:               'components/imager.js/container',
                 lodash:               'components/lodash-amd',
