@@ -76,7 +76,7 @@ define([
     Omniture,
     register,
     ScrollDepth,
-    cssLogging,
+    logCss,
     userAdTargeting,
     crosswordThumbnails,
     CommentCount,
@@ -406,8 +406,15 @@ define([
 
             runCssLogging: function () {
                 if (config.switches.cssLogging) {
-                    mediator.on('page:common:ready', cssLogging);
+                    mediator.on('page:common:ready', logCss);
                 }
+            },
+
+            initPublicApi: function () {
+                // BE CAREFUL what you expose here...
+                window.guardian.api = {
+                    logCss: logCss
+                };
             }
 
         },
@@ -448,6 +455,8 @@ define([
             robust('c-onward',          function () { modules.transcludeOnwardContent(); });
             robust('c-overlay',         function () { modules.initOpenOverlayOnClick(); });
             robust('c-css-logging',     function () { modules.runCssLogging(); });
+            robust('c-public-api',      function () { modules.initPublicApi(); });
+
             robust('c-crosswords',      function () { crosswordThumbnails.init(); });
 
             robust('c-ready', function () { mediator.emit('page:common:ready'); });

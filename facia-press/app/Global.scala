@@ -56,6 +56,7 @@ object Global extends GlobalSettings
   }
 
   override def onStop(app: play.api.Application) {
+    ToolPressQueueWorker.stop()
     super.onStop(app)
   }
 }
