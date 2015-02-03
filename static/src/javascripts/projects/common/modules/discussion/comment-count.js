@@ -35,9 +35,9 @@ define([
     function getElementsIndexedById(context) {
         var elements = qwery('[' + attributeName + ']', context);
 
-        return _.zipObject(_.map(elements, function (el) {
+        return _.groupBy(elements, function (el) {
             return bonzo(el).attr(attributeName);
-        }), elements);
+        });
     }
 
     function getContentIds(indexedElements) {
@@ -57,33 +57,34 @@ define([
     function renderCounts(counts, indexedElements) {
         counts.forEach(function (c) {
             fastdom.read(function () {
-                var node = indexedElements[c.id],
-                    format,
-                    $node = bonzo(node),
-                    commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
-                    url = $node.attr('data-discussion-url') || getContentUrl(node),
-                    $container,
-                    meta,
-                    html;
+                _.forEach(indexedElements[c.id], function (node) {
+                    var format,
+                        $node = bonzo(node),
+                        commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
+                        url = $node.attr('data-discussion-url') || getContentUrl(node),
+                        $container,
+                        meta,
+                        html;
 
-                if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
-                    return; // Discussion is closed and had no comments, we don't want to show a comment count
-                }
-                $node.removeClass('u-h');
+                    if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
+                        return; // Discussion is closed and had no comments, we don't want to show a comment count
+                    }
+                    $node.removeClass('u-h');
 
-                format = $node.data('commentcount-format');
-                html = template(templates[format] || defaultTemplate, {
-                    url: url,
-                    count: formatters.integerCommas(c.count),
-                    label: commentOrComments
-                });
+                    format = $node.data('commentcount-format');
+                    html = template(templates[format] || defaultTemplate, {
+                        url: url,
+                        count: formatters.integerCommas(c.count),
+                        label: commentOrComments
+                    });
 
-                meta = qwery('.js-item__meta', node);
-                $container = meta.length ? bonzo(meta) : $node;
+                    meta = qwery('.js-item__meta', node);
+                    $container = meta.length ? bonzo(meta) : $node;
 
-                fastdom.write(function () {
-                    $container.append(html);
-                    $node.removeAttr(attributeName);
+                    fastdom.write(function () {
+                        $container.append(html);
+                        $node.removeAttr(attributeName);
+                    });
                 });
             });
         });
