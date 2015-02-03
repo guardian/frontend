@@ -1,3 +1,4 @@
+/*jshint -W024 */
 define([
     'bean',
     'bonzo',
@@ -7,6 +8,7 @@ define([
 
     'common/utils/$',
     'common/utils/ajax-promise',
+    'common/utils/config',
     'common/utils/mediator',
     'common/utils/scroller',
 
@@ -24,6 +26,7 @@ define([
 
     $,
     ajaxPromise,
+    config,
     mediator,
     scroller,
 
@@ -151,27 +154,32 @@ Comments.prototype.fetchComments = function(options) {
         queryParams.maxResponses = 3;
     }
 
-    // If the caller specified truncation, do not load all comments.
-    if (options.shouldTruncate && queryParams.pageSize === 'All') {
-        queryParams.pageSize = 10;
-    }
-
-    var promise;
-    if (queryParams.pageSize === 'All') {
-        promise = new WholeDiscussion({
-            discussionId: this.options.discussionId,
-            orderBy: queryParams.orderBy,
-            displayThreaded: queryParams.displayThreaded,
-            maxResponses: queryParams.maxResponses
-        }).loadAllComments();
-    } else {
-        promise = ajaxPromise({
+    var promise,
+        ajaxParams = {
             url: url,
             type: 'json',
             method: 'get',
             crossOrigin: true,
             data: queryParams
-        });
+        };
+    if (this.isAllPageSizeActive()) {
+        promise = new WholeDiscussion({
+            discussionId: this.options.discussionId,
+            orderBy: queryParams.orderBy,
+            displayThreaded: queryParams.displayThreaded,
+            maxResponses: queryParams.maxResponses
+        }).loadAllComments().catch(function() {
+            this.wholeDiscussionErrors = true;
+            queryParams.pageSize = 100;
+            return ajaxPromise(ajaxParams);
+            }.bind(this));
+    } else {
+        // It is possible that the user has chosen to view all comments,
+        // but the WholeDiscussion module has failed. Fall back to 100 comments.
+        if (queryParams.pageSize === 'All') {
+            queryParams.pageSize = 100;
+        }
+        promise = ajaxPromise(ajaxParams);
     }
     return promise.then(this.renderComments.bind(this)).then(this.goToPermalink.bind(this, options.comment));
 };
@@ -438,6 +446,19 @@ Comments.prototype.addUser = function(user) {
 
 Comments.prototype.relativeDates = function() {
     relativedates.init();
+};
+
+Comments.prototype.isAllPageSizeActive = function() {
+    return config.switches.discussionAllPageSize &&
+    this.options.pagesize === 'All' &&
+    !this.wholeDiscussionErrors;
+};
+
+Comments.prototype.shouldShowPageSizeMessage = function() {
+    // Similar to above, but tells the loader that the fallback size should be used.
+    return config.switches.discussionAllPageSize &&
+    this.options.pagesize === 'All' &&
+    this.wholeDiscussionErrors;
 };
 
 return Comments;
