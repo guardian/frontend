@@ -506,6 +506,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val MissingVideoEndcodingsJobSwitch = Switch("Feature", "check-for-missing-video-encodings",
+    "If this switch is switched on then the job will run which will check all video content for missing encodings",
+     safeState = Off, sellByDate = never
+  )
+
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",

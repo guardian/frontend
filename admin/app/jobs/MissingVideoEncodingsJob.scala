@@ -2,7 +2,7 @@ package jobs
 
 import common.{Edition, Logging, ExecutionContexts, AkkaAgent}
 import scala.language.postfixOps
-import conf.LiveContentApi
+import conf.{Switches, LiveContentApi}
 import LiveContentApi.getResponse
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.Content
@@ -32,7 +32,12 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
   }
 
   def run () {
+      if( Switches.MissingVideoEndcodingsJobSwitch.isSwitchedOn ) {
+          checkForMissingEncodings()
+      }
+  }
 
+  private def checkForMissingEncodings() {
      log.info("Checking for missing video encodings")
 
      val apiVideoResponse = getResponse(LiveContentApi.search(Edition.defaultEdition)
@@ -66,23 +71,25 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
      missingEncodingsData.onSuccess{case missingEncodings =>
        missingEncodings.foreach { case (title, url, encoding) =>
          DynamoDbStore.haveSeenMissingEncoding(encoding, url) map {
-           case true => log.info(s"Already seen missing encoding: $encoding for url: $url")
+           case true => log.debug(s"Already seen missing encoding: $encoding for url: $url")
            case false =>
-             log.info(s"Send notification for missing encoding: $encoding for url: $url")
+             log.info(s"Send notification for missing video encoding: $encoding for url: $url")
              MissingVideoEncodings.sendMessage(encoding, url, title)
              DynamoDbStore.storeMissingEncoding(encoding, url)
          }
        }
-       videoEncodingsAgent.send( old => old+("missing-encodings" -> missingEncodings))
+       videoEncodingsAgent.send( old => old + ("missing-encodings" -> missingEncodings) )
      }
   }
 }
 
-object Video extends Logging {
+object
+Video extends Logging {
   def apply(delegate: Content) = {
     new Video(delegate)
   }
 }
+
 class Video(delegate: Content) {
   lazy val body = delegate.safeFields("body")
   lazy val webTitle: String = delegate.webTitle
