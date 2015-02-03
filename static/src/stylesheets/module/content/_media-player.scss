@@ -37,6 +37,10 @@ $ima-controls-height: 70px;
     position: relative;
 }
 
+.gu-video-embed-html {
+    overflow-y: auto;
+}
+
 /* VJS
    ========================================================================== */
 .vjs-tech {
@@ -714,6 +718,47 @@ $ima-controls-height: 70px;
 
         .vjs-control-text {
             color: colour(media-default);
+        }
+    }
+}
+
+.vjs-view-on-guardian {
+    cursor: pointer;
+    position: fixed;
+    display: none;
+    top: $gs-baseline;
+    left: $gs-gutter*3/5;
+    background-color: rgba(25, 25, 25, .8);
+    padding: $gs-baseline/2 $gs-baseline;
+    @include border-radius(100px);
+
+    .vjs-control-text {
+        color: #ffffff;
+        display: block;
+        padding-left: $gs-baseline*2;
+    }
+
+    .gu-video-embed:hover & {
+        display: block;
+    }
+
+    svg {
+        top: 3px;
+        left: 7px;
+        width: 22px;
+        height: 22px;
+        fill: #ffffff;
+    }
+
+    &:hover {
+        .vjs-control-text {
+            color: colour(media-default);
+        }
+        .vjs-control-content {
+            text-decoration: none;
+        }
+        svg {
+            fill: colour(media-default);
         }
     }
 }
