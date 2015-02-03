@@ -60,13 +60,13 @@ define([
             // Run this code only if we haven't already inserted
             // the username in the header
             if (!$container.hasClass('is-signed-in')) {
-                fastdom.write(function() {
+                fastdom.write(function () {
                     $content.text(user.displayName);
                     $container.addClass('is-signed-in');
                 });
             }
 
-            fastdom.write(function() {
+            fastdom.write(function () {
                 $popup.html(
                     '<ul class="popup popup__group popup--profile" data-link-name="Sub Sections" data-test-id="popup-profile">' +
                         this.menuListItem('Comment activity', this.opts.url + '/user/id/' + user.id) +
@@ -75,12 +75,12 @@ define([
                         this.menuListItem('Change password', this.opts.url + '/password/change') +
                         this.menuListItem('Sign out', this.opts.url + '/signout') +
                     '</ul>'
-                )
+                );
             });
         } else {
-            fastdom.write(function() {
+            fastdom.write(function () {
                 $popup.remove();
-            })
+            });
         }
 
         this.emitLoadedEvent(user);

@@ -22,7 +22,7 @@ define([
             var megaNav     = $('.js-transfuse'),
                 placeholder = $('.' + megaNav.attr('data-transfuse-target'));
 
-            fastdom.write(function() {
+            fastdom.write(function () {
                 placeholder.html(megaNav.html());
             });
         },
@@ -36,10 +36,10 @@ define([
                 var target = $('.' + e.currentTarget.getAttribute('data-target-nav'));
 
                 e.preventDefault();
-                fastdom.write(function() {
+                fastdom.write(function () {
                     target.toggleClass('navigation--expanded navigation--collapsed');
                     mediator.emit(target.hasClass('navigation--expanded') ? 'modules:nav:open' : 'modules:nav:close');
-                })
+                });
             });
         }
     };

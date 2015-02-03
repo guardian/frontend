@@ -65,16 +65,16 @@ define([
             // Unload any search placeholders elsewhere in the DOM
             Array.prototype.forEach.call(document.querySelectorAll('.js-search-placeholder'), function (c) {
                 if (c !== container) {
-                    fastdom.write(function() {
+                    fastdom.write(function () {
                         c.innerHTML = '';
-                    })
+                    });
                 }
             });
 
             // Load the Google search monolith, if not already present in this context.
             // We have to re-run their script each time we do this.
             if (!container.innerHTML) {
-                fastdom.write(function() {
+                fastdom.write(function () {
                     container.innerHTML = '' +
                         '<div class="search-box" role="search">' +
                             '<gcse:searchbox></gcse:searchbox>' +
@@ -88,9 +88,9 @@ define([
                 s.async = true;
                 s.src = gcsUrl;
                 x = document.getElementsByTagName('script')[0];
-                fastdom.write(function() {
+                fastdom.write(function () {
                     x.parentNode.insertBefore(s, x);
-                })
+                });
             }
         };
 

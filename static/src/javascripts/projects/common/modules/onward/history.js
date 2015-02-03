@@ -371,7 +371,7 @@ define([
 
         if (tags.length) {
             tagsHTML = template(viewMegaNav, {tags: tags.map(tagHtml).join('')});
-            fastdom.write(function() {
+            fastdom.write(function () {
                 getMegaNav().prepend(tagsHTML);
             });
             inMegaNav = true;
@@ -380,7 +380,7 @@ define([
 
     function removeFromMegaNav() {
         getMegaNav().each(function () {
-            fastdom.write(function() {
+            fastdom.write(function () {
                 $('.js-global-navigation__section--history', this).remove();
             });
         });
