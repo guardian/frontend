@@ -2,4 +2,5 @@ GET        /_healthcheck        conf.HealthCheck.healthcheck()
 GET        /                    controllers.Application.index
 GET        /debug/config        controllers.Application.showCurrentConfig
 
+GET        /pressed/fronts      controllers.Application.generateFrontJson()
 GET        /pressed/live/*id      controllers.Application.generateLivePressedFor(id)
