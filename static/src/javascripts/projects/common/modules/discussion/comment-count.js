@@ -7,10 +7,7 @@ define([
     'common/utils/_',
     'common/utils/ajax',
     'common/utils/formatters',
-    'common/utils/mediator',
-    'common/utils/template',
-    'text!common/views/discussion/comment-count.html',
-    'text!common/views/discussion/comment-count--content.html'
+    'common/utils/mediator'
 ], function (
     bonzo,
     fastdom,
@@ -20,17 +17,10 @@ define([
     _,
     ajax,
     formatters,
-    mediator,
-    template,
-    commentCountTemplate,
-    commentCountContentTemplate
+    mediator
 ) {
     var attributeName = 'data-discussion-id',
-        countUrl = '/discussion/comment-counts.json?shortUrls=',
-        templates = {
-            content: commentCountContentTemplate
-        },
-        defaultTemplate = commentCountTemplate;
+        countUrl = '/discussion/comment-counts.json?shortUrls=';
 
     function getElementsIndexedById(context) {
         var elements = qwery('[' + attributeName + ']', context);
