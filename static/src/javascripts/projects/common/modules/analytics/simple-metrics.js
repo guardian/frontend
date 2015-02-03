@@ -20,7 +20,6 @@ define([
                     if (spec.samePage) {
                         // people who clicked something but will stay on this page
                         clickData.push('sm-interaction-on-same-page');
-                        beacon.beaconCounts('');
                     } else if (spec.sameHost) {
                         // people who will view another Guardian page
                         clickData.push('sm-another-guardian-page');
