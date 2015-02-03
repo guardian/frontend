@@ -2,11 +2,15 @@
 define([
     'knockout',
     'models/group',
+    'modules/cache',
+    'modules/copied-article',
     'utils/mediator',
     'utils/update-scrollables'
 ], function (
     ko,
     Group,
+    cache,
+    copiedArticle,
     mediator,
     updateScrollables
 ) {
@@ -39,7 +43,18 @@ define([
         this.listeners = listeners;
 
         listeners.on('ui:open', this.onUIOpen.bind(this));
+        listeners.on('copied-article:change', this.onCopiedChange.bind(this));
+
+        this.hasCopiedArticle = ko.observable(false).extend({ notify: 'always' });
+        this.inCopiedArticle = ko.pureComputed(this.getCopiedArticle, this);
+        this.dropdownOpen = ko.observable(false);
     }
+
+    Clipboard.prototype.getCopiedArticle = function () {
+        var inMemory = this.hasCopiedArticle() && copiedArticle.peek();
+
+        return inMemory ? inMemory.displayName : null;
+    };
 
     Clipboard.prototype.elementHasFocus = function (meta) {
         return meta === this.uiOpenElement();
@@ -52,6 +67,17 @@ define([
         updateClipboardScrollable(article ? {
             targetGroup: article.group
         } : null);
+    };
+
+    Clipboard.prototype.onCopiedChange = function (hasArticle) {
+        this.hasCopiedArticle(hasArticle);
+        if (!hasArticle) {
+            this.dropdownOpen(false);
+        }
+    };
+
+    Clipboard.prototype.flushCopiedArticles = function () {
+        copiedArticle.flush();
     };
 
     return Clipboard;
