@@ -2,15 +2,29 @@ define([
     'bonzo',
     'lodash/main',
     'common/utils/mediator'
-], function(
+], function (
     bonzo,
     _,
     mediator
 ) {
 
     var lazyLoaders = [],
-        doLazyLoadersThrottled = _.throttle(doLazyLoaders, 200, {leading: false, trailing: true}),
-        doLazyLoadersDebounced = _.debounce(doLazyLoaders, 2000); // used on load for edge-case where user doesn't scroll
+        doLazyLoadersThrottled, doLazyLoadersDebounced,
+        doLazyLoaders = function () {
+            lazyLoaders = _.filter(lazyLoaders, function (lazyLoader) {
+                if (lazyLoader.conditionFn()) {
+                    lazyLoader.loadFn();
+                } else {
+                    return true;
+                }
+            });
+            if (lazyLoaders.length === 0) {
+                mediator.off('window:scroll', doLazyLoadersThrottled);
+            }
+        };
+
+    doLazyLoadersThrottled = _.throttle(doLazyLoaders, 200, {leading: false, trailing: true});
+    doLazyLoadersDebounced = _.debounce(doLazyLoaders, 2000); // used on load for edge-case where user doesn't scroll
 
     function addLazyLoader(conditionFn, loadFn) {
         // calls `loadFn` when `conditionFn` is true
@@ -25,7 +39,7 @@ define([
     function addScrollingLazyLoader(el, distanceThreshold, loadFn) {
         // calls `loadFn` when `scrollTop` is within `distanceThreshold` of `el`
         var $el = bonzo(el),
-            conditionFn = function() {
+            conditionFn = function () {
                 var scrollTop = bonzo(document.body).scrollTop(),
                     elOffset = $el.offset(),
                     loadAfter = elOffset.top - distanceThreshold,
@@ -33,19 +47,6 @@ define([
                 return scrollTop > loadAfter && scrollTop < loadBefore;
             };
         addLazyLoader(conditionFn, loadFn);
-    }
-
-    function doLazyLoaders() {
-        lazyLoaders = _.filter(lazyLoaders, function(lazyLoader) {
-            if (lazyLoader.conditionFn()) {
-                lazyLoader.loadFn();
-            } else {
-                return true;
-            }
-        });
-        if (lazyLoaders.length === 0) {
-            mediator.off('window:scroll', doLazyLoadersThrottled);
-        }
     }
 
     return {

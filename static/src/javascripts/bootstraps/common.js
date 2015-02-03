@@ -200,7 +200,7 @@ define([
                 }
             },
 
-            initOnwardContent: function() {
+            initOnwardContent: function () {
                 if (!config.switches.lazyLoadOnwards || window.location.hash) {
                     modules.transcludeOnwardContent();
                 } else {
