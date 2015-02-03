@@ -119,7 +119,7 @@
             }
 
             // Detect whether browser is smoothing its fonts.
-            // Technique adapted from @zoltandulac's [clever hack](http://www.useragentman.com/blog/2009/11/29/how-to-detect-font-smoothing-using-javascript).
+            // Technique adapted from @@zoltandulac's [clever hack](http://www.useragentman.com/blog/2009/11/29/how-to-detect-font-smoothing-using-javascript).
             // Because IE always uses clear-type (unless you've done some
             // [*major* hackery](http://stackoverflow.com/questions/5427315/disable-cleartype-text-anti-aliasing-in-ie9#tab-top)),
             // we only test non-IE, and only on windows. Everyone else we assume `true`.
@@ -147,7 +147,7 @@
                         canvasNode.style.display = 'none';
                         document.documentElement.appendChild(canvasNode);
 
-                        // Draw a black '@', in 32px Arial, onto it.
+                        // Draw a black '@@', in 32px Arial, onto it.
                         ctx = canvasNode.getContext('2d');
                         ctx.textBaseline = 'top';
                         ctx.font = '32px Arial';
