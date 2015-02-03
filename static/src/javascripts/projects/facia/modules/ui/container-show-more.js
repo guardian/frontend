@@ -1,20 +1,20 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'qwery',
     'common/utils/_',
     'common/utils/$',
-    'common/utils/request-animation-frame',
     'common/utils/template',
     'common/modules/user-prefs',
     'text!facia/views/button-show-more.html'
 ], function (
     bean,
     bonzo,
+    fastdom,
     qwery,
     _,
     $,
-    requestAnimationFrame,
     template,
     userPrefs,
     showMoreBtn
@@ -64,7 +64,7 @@ define([
     }
 
     function showMore($container, button) {
-        requestAnimationFrame(function () {
+        fastdom.write(function () {
             /**
              * Do not remove: it should retain context for the click stream module, which recurses upwards through
              * DOM nodes.
@@ -77,7 +77,7 @@ define([
     }
 
     function renderToDom($container, button) {
-        requestAnimationFrame(function () {
+        fastdom.write(function () {
             if (button.mobileOnly) {
                 $container.addClass('fc-show-more--mobile-only');
             }
@@ -115,25 +115,27 @@ define([
     }
 
     return function () {
-        var containers = qwery('.js-container--fc-show-more').map(bonzo),
-            buttons = _.map(containers, makeButton),
-            containersWithButtons = _.filter(_.zip(containers, buttons), function (pair) {
-                return pair[1];
+        fastdom.read(function () {
+            var containers = qwery('.js-container--fc-show-more').map(bonzo),
+                buttons = _.map(containers, makeButton),
+                containersWithButtons = _.filter(_.zip(containers, buttons), function (pair) {
+                    return pair[1];
+                });
+
+            _.forEach(containersWithButtons, function (pair) {
+                renderToDom(pair[0], pair[1]);
             });
 
-        _.forEach(containersWithButtons, function (pair) {
-            renderToDom(pair[0], pair[1]);
-        });
-
-        bean.on(document.body, 'click', _.map(_.filter(buttons), function (button) {
-            return button.$el[0];
-        }), function (event) {
-            var pair = _.find(containersWithButtons, function (pair) {
-                return pair[1].$el[0] === event.currentTarget;
+            bean.on(document.body, 'click', _.map(_.filter(buttons), function (button) {
+                return button.$el[0];
+            }), function (event) {
+                var pair = _.find(containersWithButtons, function (pair) {
+                    return pair[1].$el[0] === event.currentTarget;
+                });
+                if (pair) {
+                    showMore(pair[0], pair[1]);
+                }
             });
-            if (pair) {
-                showMore(pair[0], pair[1]);
-            }
         });
     };
 });
