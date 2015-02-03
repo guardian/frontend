@@ -38,7 +38,8 @@ define([
             // `return false`:
             // - fonts switch is off
             // - user has/we have switched off fonts with a cookie
-            if (!config.switches.webFonts || this.disabled()) {
+            // - fonts have been loaded asynchronously by injecting a `link`
+            if (!config.switches.webFonts || this.disabled() || qwery('.webfonts').length) {
                 return false;
             }
 

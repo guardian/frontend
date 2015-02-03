@@ -79,31 +79,44 @@
                 return document.cookie.indexOf('GU_fonts=off') === -1;
             }
 
-            // If fonts are not toggled off, try and load them from localStorage.
+            // Load fonts from `localStorage`.
             function loadFontsFromStorage () {
                 var storedFontFormat = localStorage['gu.fonts.format'],
                     fonts, fontFormat, font;
 
                 if (storedFontFormat) {
-                    try {
-                        fonts = document.querySelectorAll('.webfont');
-                        fontFormat = JSON.parse(storedFontFormat).value;
+                    fonts = document.querySelectorAll('.webfont');
+                    fontFormat = JSON.parse(storedFontFormat).value;
 
-                        for (var i = 0, j = fonts.length; i < j; ++i) {
-                            font = fonts[i],
-                                dataAttrName = 'data-cache-file-' + (fontHinting === 'Off' ? '' : 'hinted-' + fontHinting + '-') + fontFormat,
-                                nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
-                                fontData = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
+                    for (var i = 0, j = fonts.length; i < j; ++i) {
+                        font = fonts[i],
+                            dataAttrName = 'data-cache-file-' + (fontHinting === 'Off' ? '' : 'hinted-' + fontHinting + '-') + fontFormat,
+                            nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
+                            fontData = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
 
-                            if (fontData) {
-                                font.innerHTML = JSON.parse(fontData).value;
-                                font.setAttribute('data-loaded-from', 'local');
-                            }
+                        if (fontData) {
+                            font.innerHTML = JSON.parse(fontData).value;
+                            font.setAttribute('data-loaded-from', 'local');
                         }
-                    } catch (e) {}
+                    }
                 }
             }
 
+            // Load fonts by injecting a `link` element.
+            function loadFontsAsynchronously () {
+                var scripts = document.getElementsByTagName('script'),
+                    thisScript = scripts[scripts.length - 1],
+                    fonts = document.createElement('link');
+
+                fonts.rel = 'stylesheet';
+                fonts.className = 'webfonts';
+
+                // show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE
+                fonts.href = guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
+                window.setTimeout(function() {
+                    thisScript.parentNode.insertBefore(fonts, thisScript);
+                }, 0);
+            }
 
             // Detect whether browser is smoothing its fonts.
             // Technique adapted from @zoltandulac's [clever hack](http://www.useragentman.com/blog/2009/11/29/how-to-detect-font-smoothing-using-javascript).
@@ -188,10 +201,16 @@
             }
 
             // Finally, if we're meant to use fonts, check they'll render ok
-            // and try and then load them from storage. If they won't, disable them entirely.
+            // and then try and load them from storage. If that fails (i.e. likely lack of
+            // support), inject a standard stylesheet `link` to load them.
+            // If they won't render properly (no smoothing), disable them entirely.
             if (fontsEnabled()) {
                 if (fontSmoothingEnabled()) {
-                    loadFontsFromStorage();
+                    try {
+                        loadFontsFromStorage();
+                    } catch (e) {
+                        loadFontsAsynchronously();
+                    }
                 } else {
                     disableFonts();
                 }
