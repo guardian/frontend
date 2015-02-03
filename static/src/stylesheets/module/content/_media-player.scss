@@ -722,19 +722,20 @@ $ima-controls-height: 70px;
     }
 }
 
-.vjs-view-on-guardian {
+.vjs-title-bar {
     position: fixed;
     width: 100%;
     height: $gs-baseline*4;
     box-sizing: border-box;
     background-color: rgba(25, 25, 25, .8);
     padding: $gs-baseline/2 $gs-baseline;
-    box-sizing: border-box;
-    display: none;
+    @include fs-textSans(3);
+    font-weight: bold;
     @include transition(top .8s);
     transition-delay: 1s;
     left: 0;
     top: $gs-baseline*-4;
+    z-index: 4;
 
     .gu-media-wrapper:hover .vjs-mousemoved &,
     .vjs-paused &,
@@ -744,10 +745,6 @@ $ima-controls-height: 70px;
         transition-delay: 0s;
     }
 
-    .gu-video-embed & {
-        display: block;
-    }
-
     .vjs-control-content {
         position: absolute;
         top: $gs-baseline/3;
@@ -755,7 +752,7 @@ $ima-controls-height: 70px;
     }
 
     .vjs-title {
-        margin-top: 10px;
+        margin-top: $gs-baseline*2/3;
         font-size: 14px;
         color: #ffffff;
         display: inline-block;

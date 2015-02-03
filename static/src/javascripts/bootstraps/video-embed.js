@@ -6,11 +6,13 @@ define([
     'videojs',
     'videojsembed',
     'common/utils/_',
+    'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
     'common/modules/analytics/omniture',
     'common/modules/video/tech-order',
     'common/modules/video/events',
+    'common/views/svgs',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
@@ -19,11 +21,13 @@ define([
     videojs,
     videojsembed,
     _,
+    $,
     config,
     deferToAnalytics,
     Omniture,
     techOrder,
     events,
+    svgs,
     loadingTmpl
     ) {
 
@@ -67,6 +71,10 @@ define([
         bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
     }
 
+    function addTitleBar() {
+        $('.vjs-control-bar').after('<div class="vjs-title-bar"><a href="http://www.theguardian.com/' + config.page.pageId + '" target="_parent" class="vjs-title" data-link-name="embed-to-guardian">' + config.page.webTitle + '</a><a href="http://www.theguardian.com/' + config.page.pageId + '" target="_parent" class="vjs-control-content" data-link-name="embed-to-guardian">' + svgs('marque36icon') +'</a></div>');
+    }
+
     function initPlayer() {
 
         videojs.plugin('fullscreener', fullscreener);
@@ -98,6 +106,7 @@ define([
                 var vol;
 
                 initLoadingSpinner(player);
+                addTitleBar();
                 events.bindGlobalEvents(player);
 
                 // unglitching the volume on first load

@@ -1,10 +1,4 @@
-define([
-    'common/utils/$',
-    'common/views/svgs'
-], function (
-    $,
-    svgs
-) {
+(function(){
     videojs.plugin('embed', function(options) {
 
         if (!options.embeddable) { return false; }
@@ -79,27 +73,6 @@ define([
             this.overlay.toggle();
         };
 
-        videojs.ViewOnGuardianButton = videojs.Button.extend({
-            init: function (player, options) {
-                videojs.Button.call(this, player, options);
-            }
-        });
-
-
-        videojs.ViewOnGuardian = function (player) {
-            var videoUrl = $('meta[itemprop=url]').attr("content"),
-                videoTitle = $('meta[itemprop=name]').attr("content"),
-                button = new videojs.ViewOnGuardianButton(player, {
-                location: options.location,
-                el: videojs.Component.prototype.createEl(null, {
-                    className: 'vjs-view-on-guardian vjs-control',
-                    innerHTML: '<a href="http://www.theguardian.com/' + videoUrl + '" target="_parent" class="vjs-title">' + videoTitle + '</a><a href="http://www.theguardian.com/' + videoUrl + '" target="_parent" class="vjs-control-content" data-link-name="embed-to-guardian">' + svgs('marque36icon') +'</a>',
-                    role: 'button'
-                })
-            });
-            player.controlBar.addChild(button);
-        };
-
         player.ready(function() {
             var button = new videojs.EmbedButton(player, {
                 location: options.location,
@@ -111,8 +84,7 @@ define([
             });
 
             player.controlBar.addChild(button);
-            videojs.ViewOnGuardian(player);
         });
 
     });
-});
+})();
