@@ -116,16 +116,16 @@ define([
                         el = bonzo.create(template(alertHtml, article));
 
                         bean.on($('.js-breaking-news__item__close', el)[0], 'click', function () {
-                            fastdom.write(function() {
+                            fastdom.write(function () {
                                 $(el).hide();
-                            })
+                            });
                             hiddenIds[article.id] = true;
                             storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
                         });
 
-                        fastdom.write(function() {
+                        fastdom.write(function () {
                             $breakingNews.append(el);
-                        })
+                        });
 
                         if (hiddenIds[article.id] === false) {
                             alertDelay = 0;
@@ -133,24 +133,24 @@ define([
                     });
 
                     setTimeout(function () {
-                        var message = 'breaking news alert shown' + (alertDelay ? '' : ' 2 or more times');
+                        var message = 'breaking news alert shown' + (alertDelay ? '' : ' 2 or more times'), $breakingNewsSpectre;
 
                         $body = $body || bonzo(document.body);
                         $breakingNewsSpectre = bonzo(bonzo.create($breakingNews[0])).addClass('breaking-news--spectre').removeClass('breaking-news--hidden');
 
-                        fastdom.write(function() {
+                        fastdom.write(function () {
                             $body.append($breakingNewsSpectre);
                         });
 
                         if (!alertDelay) {
-                            fastdom.write(function() {
+                            fastdom.write(function () {
                                 $breakingNews.removeClass('breaking-news--fade-in');
-                            })
+                            });
                         }
 
-                        fastdom.write(function() {
+                        fastdom.write(function () {
                             $breakingNews.removeClass('breaking-news--hidden');
-                        })
+                        });
 
                         s.eVar36 = message;
                         s.eVar72 = _.map(alerts, function (article) { return article.headline; }).join(' | ');
