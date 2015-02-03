@@ -28,7 +28,7 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
   def getReport(report: String): List[(String, String, String)] = videoEncodingsAgent().get(report).getOrElse(List(("Not","Yet","Ready")))
   def doesEncodingExist(encodingUrl: String) : Future[Boolean]= {
      val response = WS.url(encodingUrl).head()
-     response.map { r => r.status == 404 }
+     response.map { r => r.status == 404 || r.status == 500}
   }
 
   def run () {
