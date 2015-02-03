@@ -23,6 +23,7 @@ define([
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
+    'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/crosswords/thumbnails',
     'common/modules/discussion/comment-count',
@@ -77,6 +78,7 @@ define([
     register,
     ScrollDepth,
     logCss,
+    simpleMetrics,
     userAdTargeting,
     crosswordThumbnails,
     CommentCount,
@@ -410,6 +412,12 @@ define([
                 }
             },
 
+            initSimpleMetrics: function () {
+                mediator.on('page:common:ready', function () {
+                    simpleMetrics.init();
+                });
+            },
+
             initPublicApi: function () {
                 // BE CAREFUL what you expose here...
                 window.guardian.api = {
@@ -456,6 +464,7 @@ define([
             robust('c-overlay',         function () { modules.initOpenOverlayOnClick(); });
             robust('c-css-logging',     function () { modules.runCssLogging(); });
             robust('c-public-api',      function () { modules.initPublicApi(); });
+            robust('c-simple-metrics',  function () { modules.initSimpleMetrics(); });
 
             robust('c-crosswords',      function () { crosswordThumbnails.init(); });
 
