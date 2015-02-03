@@ -24,7 +24,7 @@ define([
     function setButtonState(button, state) {
         var text = button.text[state];
         $('.' + textHook, button.$el).text(text);
-        button.$el.attr('data-link-name', text)
+        button.$el.attr('data-link-name', state === 'displayed' ? 'less' : 'more')
             .toggleClass('button--primary', state !== 'displayed')
             .toggleClass('button--tertiary', state === 'displayed');
         $('.i', button.$el).toggleClass('i-plus-white', state !== 'displayed')
