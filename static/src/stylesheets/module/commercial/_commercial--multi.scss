@@ -93,7 +93,7 @@ Multi component (AKA Frankenponent)
 
 .commercial--multi__body {
     position: relative;
-    padding: $gs-gutter/4 $gs-baseline/2 $gs-baseline * 2.5;
+    padding: 0 $gs-baseline/2 $gs-baseline * 2.5;
 
     @include mq(mobileLandscape) {
         min-height: gs-height(3);
