@@ -77,7 +77,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       }
     }
 
-    Jobs.schedule("VideoEncodingsJob", "0 0/10 * * * ?") {
+    Jobs.schedule("VideoEncodingsJob", "0 0/15 * * * ?") {
       log.info("Starting VideoEncodingsJob")
       VideoEncodingsJob.run()
     }

@@ -17,13 +17,11 @@ object DynamoDbStore extends Logging with ExecutionContexts {
 
   def storeMissingEncoding(videoSrc: String, webUrl: String): Unit = {
 
-    log.info("++ Storing src: %s".format(videoSrc))
-
     val updateItemRequest = new UpdateItemRequest()
       .withTableName(tableName)
       .withKey(Map[String, AttributeValue](
-      ("video_src", new AttributeValue().withS(videoSrc)),
-      ("web_url", new AttributeValue().withS(webUrl))
+        ("video_src", new AttributeValue().withS(videoSrc)),
+        ("web_url", new AttributeValue().withS(webUrl))
     ).asJava)
 
     client.updateItemFuture(updateItemRequest) onFailure {
@@ -33,22 +31,18 @@ object DynamoDbStore extends Logging with ExecutionContexts {
     }
   }
 
-
   def haveSeenMissingEncoding(videoSrc: String, webUrl: String): Future[Boolean] = {
-
-    log.info(s"++ Looking for $videoSrc")
 
     val getItemRequest = new GetItemRequest()
       .withTableName(tableName)
       .withKey(Map[String, AttributeValue](
-      ("video_src", new model.AttributeValue().withS(videoSrc)),
-      ("web_url", new model.AttributeValue().withS(webUrl))
+        ("video_src", new model.AttributeValue().withS(videoSrc)),
+        ("web_url", new model.AttributeValue().withS(webUrl))
     ).asJava)
 
     val getItemResultFuture = client.getItemFuture(getItemRequest)
 
     getItemResultFuture map { result =>
-      log.info("++ Got a possibly resulty thingy")
       Option(result.getItem).isDefined
     }
   }

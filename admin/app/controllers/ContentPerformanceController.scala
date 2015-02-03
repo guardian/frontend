@@ -207,7 +207,6 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
       case _ => NoCache(Ok( views.html.missingVideoEncodings( "PROD", videoEncodingsReport) ) )
     }
  }
-
 }
 
 

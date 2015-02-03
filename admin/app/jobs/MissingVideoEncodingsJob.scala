@@ -68,23 +68,22 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
        }
      ).map(_.flatten)
 
-     missingEncodingsData.onSuccess{case missingEncodings =>
-       missingEncodings.foreach { case (title, url, encoding) =>
-         DynamoDbStore.haveSeenMissingEncoding(encoding, url) map {
-           case true => log.debug(s"Already seen missing encoding: $encoding for url: $url")
-           case false =>
-             log.info(s"Send notification for missing video encoding: $encoding for url: $url")
-             MissingVideoEncodings.sendMessage(encoding, url, title)
-             DynamoDbStore.storeMissingEncoding(encoding, url)
+     missingEncodingsData.onSuccess{ case missingEncodings =>
+         missingEncodings.foreach { case (title, url, encoding) =>
+             DynamoDbStore.haveSeenMissingEncoding(encoding, url) map {
+                case true => log.debug(s"Already seen missing encoding: $encoding for url: $url")
+                case false =>
+                  log.info(s"Send notification for missing video encoding: $encoding for url: $url")
+                  MissingVideoEncodings.sendMessage(encoding, url, title)
+                  DynamoDbStore.storeMissingEncoding(encoding, url)
+             }
          }
-       }
-       videoEncodingsAgent.send( old => old + ("missing-encodings" -> missingEncodings) )
+         videoEncodingsAgent.send( old => old + ("missing-encodings" -> missingEncodings) )
      }
   }
 }
 
-object
-Video extends Logging {
+object Video extends Logging {
   def apply(delegate: Content) = {
     new Video(delegate)
   }
@@ -104,8 +103,3 @@ class Video(delegate: Content) {
     }
   }
 }
-
-
-
-
-
