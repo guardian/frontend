@@ -73,7 +73,7 @@ define([
                         url:               fontFile,
                         type:              'jsonp',
                         jsonpCallbackName: 'guFont',
-                        success:            function (resp) {
+                        success:           function (resp) {
 
                             // If the response is no good, record an error and go.
                             if (!resp) {
