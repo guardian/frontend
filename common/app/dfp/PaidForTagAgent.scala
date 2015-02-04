@@ -40,12 +40,8 @@ trait PaidForTagAgent {
     def editionMatches(maybeEdition: Option[Edition], dfpTag: PaidForTag): Boolean = {
       maybeEdition.isEmpty || maybeEdition.exists { edition =>
         dfpTag.lineItems exists { lineItem =>
-          val editionIds = lineItem.targeting.customTargetSets.flatMap {
-            _.targets filter {
-              _.isEditionTag
-            } flatMap (_.values.map(_.toLowerCase))
-          }.distinct
-          editionIds.isEmpty || editionIds.contains(edition.id.toLowerCase)
+          val editions = lineItem.targeting.editions
+          editions.isEmpty || editions.contains(edition)
         }
       }
     }
