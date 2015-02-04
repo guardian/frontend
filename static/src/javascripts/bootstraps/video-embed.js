@@ -9,11 +9,13 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
+    'common/utils/template',
     'common/modules/analytics/omniture',
     'common/modules/video/tech-order',
     'common/modules/video/events',
     'common/views/svgs',
-    'text!common/views/ui/loading.html'
+    'text!common/views/ui/loading.html',
+    'text!common/views/media/titlebar.html'
 ], function (
     bean,
     bonzo,
@@ -24,12 +26,16 @@ define([
     $,
     config,
     deferToAnalytics,
+    template,
     Omniture,
     techOrder,
     events,
     svgs,
-    loadingTmpl
+    loadingTmpl,
+    titlebarTmpl
     ) {
+
+    var omniture = new Omniture(window.s);
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -72,7 +78,20 @@ define([
     }
 
     function addTitleBar() {
-        $('.vjs-control-bar').after('<div class="vjs-title-bar"><a href="http://www.theguardian.com/' + config.page.pageId + '" target="_parent" class="vjs-title" data-link-name="embed-to-guardian">' + config.page.webTitle + '</a><a href="http://www.theguardian.com/' + config.page.pageId + '" target="_parent" class="vjs-control-content" data-link-name="embed-to-guardian">' + svgs('marque36icon') + '</a></div>');
+        var data = {
+            webTitle: config.page.webTitle,
+            pageId: config.page.pageId,
+            icon: svgs('marque36icon')
+        }
+        $('.vjs-control-bar').after(template(titlebarTmpl, data));
+        bean.on($('.vjs-title-bar')[0], 'click', function(e){
+            omniture.logTag({
+                tag: 'Embed | title bar',
+                sameHost: false,
+                samePage: false,
+                target: e.target
+            });
+        });
     }
 
     function initPlayer() {
@@ -118,6 +137,7 @@ define([
 
                 player.fullscreener();
 
+
                 if (config.switches.thirdPartyEmbedTracking) {
                     deferToAnalytics(function () {
                         events.initOphanTracking(player, mediaId);
@@ -125,7 +145,7 @@ define([
                         events.bindContentEvents(player);
                     });
 
-                    new Omniture(window.s).go();
+                    omniture.go();
                 }
             });
 
