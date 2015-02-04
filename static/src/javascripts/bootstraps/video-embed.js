@@ -84,7 +84,7 @@ define([
             icon: svgs('marque36icon')
         };
         $('.vjs-control-bar').after(template(titlebarTmpl, data));
-        bean.on($('.vjs-title-bar')[0], 'click', function(e){
+        bean.on($('.vjs-title-bar')[0], 'click', function (e) {
             omniture.logTag({
                 tag: 'Embed | title bar',
                 sameHost: false,
@@ -136,7 +136,6 @@ define([
                 }
 
                 player.fullscreener();
-
 
                 if (config.switches.thirdPartyEmbedTracking) {
                     deferToAnalytics(function () {
