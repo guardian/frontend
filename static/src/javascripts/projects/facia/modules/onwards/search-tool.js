@@ -45,19 +45,27 @@ define([
             },
 
             handleClick: function (e) {
-                var list         = $.ancestor(e.target,'search-tool__link'),
-                    clickTarget  = $(e.target);
+                var isInput = $(e.target).hasClass('js-weather-input'),
+                    isLink  = this.isLink(e.target);
 
-                if (clickTarget.hasClass('js-weather-input')) {
+                if (isInput) {
                     e.preventDefault();
                     mediator.emit('autocomplete:remove', true);
-                } else if (list) {
+                } else if (isLink) {
                     e.preventDefault();
                     $('.active').removeClass('active');
-                    $(list).addClass('active');
+                    $(isLink).addClass('active');
                     this.pushData();
                 } else {
                     mediator.emit('autocomplete:remove', false);
+                }
+            },
+
+            isLink: function (target) {
+                if ($(target).hasClass('search-tool__link')) {
+                    return target;
+                } else {
+                    return $.ancestor(target,'search-tool__link')
                 }
             },
 
