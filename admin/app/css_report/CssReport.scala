@@ -35,22 +35,36 @@ object CssReport extends ExecutionContexts {
   }
 
   def report(day: LocalDate): Future[Seq[SelectorReport]] = {
-    dynamoDbClient.scanFuture(new ScanRequest()
-      .withTableName(TableName)
-      .withScanFilter(Map[String, Condition](
+    def runQuery(startKey: Option[java.util.Map[String, AttributeValue]]): Future[Seq[SelectorReport]] = {
+      dynamoDbClient.scanFuture(new ScanRequest()
+        .withTableName(TableName)
+        .withScanFilter(Map[String, Condition](
         "day" -> new Condition()
           .withComparisonOperator(ComparisonOperator.EQ)
           .withAttributeValueList(new AttributeValue().withS(day.toString(DateFormat)))
       ))
-      .withAttributesToGet("selector", "used", "unused")
-    ) map { result =>
-      result.getItems map { item =>
-        SelectorReport(
-          item.get("selector").getS,
-          Try(item.get("used").getN.toInt) getOrElse 0,
-          Try(item.get("unused").getN.toInt) getOrElse 0
-        )
+        .withAttributesToGet("selector", "used", "unused")
+        .withExclusiveStartKey(startKey.orNull)
+      ) flatMap { result =>
+        val reports = result.getItems map { item =>
+          SelectorReport(
+            item.get("selector").getS,
+            Try(item.get("used").getN.toInt) getOrElse 0,
+            Try(item.get("unused").getN.toInt) getOrElse 0
+          )
+        }
+
+        Option(result.getLastEvaluatedKey) match {
+          case Some(key) =>
+            runQuery(Some(key)) map { nextReports =>
+              reports ++ nextReports
+            }
+
+          case None => Future.successful(reports)
+        }
       }
     }
+
+    runQuery(None)
   }
 }
