@@ -9,7 +9,7 @@ define([
 ) {
 
     var lazyLoaders = [],
-        scrollTop = 0, getScrollTop = function() { return scrollTop; },
+        scrollTop = 0, getScrollTop = function () { return scrollTop; },
         doLazyLoadersThrottled, doLazyLoadersDebounced,
         doLazyLoaders = function () {
             if (lazyLoaders.length > 0) {
