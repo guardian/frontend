@@ -124,18 +124,18 @@
             // [*major* hackery](http://stackoverflow.com/questions/5427315/disable-cleartype-text-anti-aliasing-in-ie9#tab-top)),
             // we only test non-IE, and only on windows. Everyone else we assume `true`.
             function fontSmoothingEnabled () {
-                var ua = navigator.userAgent, fontSmoothingEnabled = null, cookie = document.cookie, canvasNode, ctx, alpha, x, y;
+                var ua = navigator.userAgent, fontSmoothingEnabled = null, canvasNode, ctx, alpha, x, y;
 
                 // If we've already run this test, return the result.
                 // This can be force-overidden using a '#check-smoothing' hash fragment.
-                if (cookie.indexOf('GU_fonts_smoothing') !== -1 && window.location.hash !== '#check-smoothing') {
-                    return cookie.indexOf('GU_fonts_smoothing=on') !== -1;
+                if (document.cookie.indexOf('GU_fonts_smoothing') !== -1 && window.location.hash !== '#check-smoothing') {
+                    return document.cookie.indexOf('GU_fonts_smoothing=on') !== -1;
                 }
 
                 // Internal function to store font-smoothing state for 30 days
                 function saveFontSmoothing (state) {
                     state = state ? 'on' : 'off';
-                    cookie = 'GU_fonts_smoothing= ' + state + '; domain=' + location.hostname + '; path=/; max-age=' + (60 * 60 * 24 * 30);
+                    document.cookie = 'GU_fonts_smoothing= ' + state + '; domain=' + location.hostname + '; path=/; max-age=' + (60 * 60 * 24 * 30);
                 }
 
                 // If Windows desktop and not IE…
