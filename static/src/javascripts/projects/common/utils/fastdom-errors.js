@@ -12,7 +12,7 @@ function (
     fastdom.onError = function (error) {
         raven.captureException(error), {
             tags: {
-                javascript: 'fastdom'
+                feature: 'fastdom'
             }
         });
     };
