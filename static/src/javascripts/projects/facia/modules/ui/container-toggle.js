@@ -1,11 +1,13 @@
 /* jscs:disable disallowDanglingUnderscores */
 define([
+    'bean',
     'bonzo',
     'fastdom',
     'common/utils/$',
     'common/utils/mediator',
     'common/modules/user-prefs'
 ], function (
+    bean,
     bonzo,
     fastdom,
     $,
@@ -68,7 +70,7 @@ define([
                 });
 
                 mediator.on('module:clickstream:click', function (clickSpec) {
-                    if (clickSpec.target == _$button[0]) {
+                    if (clickSpec.target === _$button[0]) {
                         fastdom.write(function () {
                             _state = (_state === 'displayed') ? 'hidden' : 'displayed';
                             // add/remove rolled class
