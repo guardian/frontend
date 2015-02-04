@@ -17,7 +17,7 @@ object ExpiringActions extends implicits.Dates with implicits.Requests with Exec
 
     val loginTarget: Call = routes.OAuthLoginController.login()
 
-    override def sendForAuth[A](request:RequestHeader) =
+    override def sendForAuth[A](request:RequestHeader): Result =
       if (request.isXmlHttpRequest)
         Forbidden.withNewSession
       else
