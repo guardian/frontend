@@ -31,9 +31,15 @@ object Metric extends Logging {
     ("iphone-6-start", CountMetric("iphone-6-start")),
     ("iphone-6-end", CountMetric("iphone-6-end")),
     ("iphone-6-timeout", CountMetric("iphone-6-timeout")),
-    ("iphone-4-start", CountMetric("iphone-4-start")),
-    ("iphone-4-end", CountMetric("iphone-4-end")),
-    ("iphone-4-timeout", CountMetric("iphone-4-timeout")),
+
+    ("iphone-4-start-a", CountMetric("iphone-4-start-a")),
+    ("iphone-4-end-a", CountMetric("iphone-4-end-a")),
+    ("iphone-4-timeout-a", CountMetric("iphone-4-timeout-a")),
+
+    ("iphone-4-start-b", CountMetric("iphone-4-start-b")),
+    ("iphone-4-end-b", CountMetric("iphone-4-end-b")),
+    ("iphone-4-timeout-b", CountMetric("iphone-4-timeout-b")),
+
 
     ("dnt", CountMetric("do-not-track")),
 

@@ -1,10 +1,12 @@
 define([
     'bean',
+    'fastdom',
     'lodash/functions/throttle',
     'common/utils/$',
     'common/utils/config'
 ], function (
     bean,
+    fastdom,
     throttle,
     $,
     config
@@ -63,26 +65,32 @@ define([
             // Unload any search placeholders elsewhere in the DOM
             Array.prototype.forEach.call(document.querySelectorAll('.js-search-placeholder'), function (c) {
                 if (c !== container) {
-                    c.innerHTML = '';
+                    fastdom.write(function () {
+                        c.innerHTML = '';
+                    });
                 }
             });
 
             // Load the Google search monolith, if not already present in this context.
             // We have to re-run their script each time we do this.
             if (!container.innerHTML) {
-                container.innerHTML = '' +
-                    '<div class="search-box" role="search">' +
-                        '<gcse:searchbox></gcse:searchbox>' +
-                    '</div>' +
-                    '<div class="search-results" data-link-name="search">' +
-                        '<gcse:searchresults></gcse:searchresults>' +
-                    '</div>';
+                fastdom.write(function () {
+                    container.innerHTML = '' +
+                        '<div class="search-box" role="search">' +
+                            '<gcse:searchbox></gcse:searchbox>' +
+                        '</div>' +
+                        '<div class="search-results" data-link-name="search">' +
+                            '<gcse:searchresults></gcse:searchresults>' +
+                        '</div>';
+                });
 
                 s = document.createElement('script');
                 s.async = true;
                 s.src = gcsUrl;
                 x = document.getElementsByTagName('script')[0];
-                x.parentNode.insertBefore(s, x);
+                fastdom.write(function () {
+                    x.parentNode.insertBefore(s, x);
+                });
             }
         };
 

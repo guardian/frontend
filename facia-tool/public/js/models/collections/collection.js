@@ -331,7 +331,7 @@ define([
         }
         this.state.hasExtraActions(true);
 
-        list = list.slice(0, 5);
+        list = list.slice(0, this.front.maxArticlesInHistory);
         this.history(_.map(list, function (opts) {
             return new Article(_.extend(opts, {
                 uneditable: true,
