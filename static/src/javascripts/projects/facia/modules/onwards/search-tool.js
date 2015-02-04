@@ -18,6 +18,7 @@ define([
             $input     = null,
             oldQuery   = '',
             newQuery   = '',
+            inputTmp   = '',
             keyCodeMap = {
                 13: 'enter',
                 38: 'up',
@@ -38,6 +39,8 @@ define([
             bindEvents: function () {
                 bean.on(document.body, 'keyup', this.handleKeyEvents.bind(this));
                 bean.on(document.body, 'click', this.handleClick.bind(this));
+
+                mediator.on('autocomplete:toggle', this.toggleControls.bind(this));
             },
 
             hasInputValueChanged: function () {
@@ -45,19 +48,19 @@ define([
             },
 
             handleClick: function (e) {
-                var isInput = $(e.target).hasClass('js-weather-input'),
+                var isInput = $(e.target).hasClass('js-search-tool-input'),
                     isLink  = this.isLink(e.target);
 
                 if (isInput) {
                     e.preventDefault();
-                    mediator.emit('autocomplete:remove', true);
+                    mediator.emit('autocomplete:toggle', true);
                 } else if (isLink) {
                     e.preventDefault();
                     $('.active').removeClass('active');
                     $(isLink).addClass('active');
                     this.pushData();
                 } else {
-                    mediator.emit('autocomplete:remove', false);
+                    mediator.emit('autocomplete:toggle', false);
                 }
             },
 
@@ -66,6 +69,27 @@ define([
                     return target;
                 } else {
                     return $.ancestor(target, 'js-search-tool-link');
+                }
+            },
+
+            toggleControls: function (value) {
+                var $input    = $('.js-search-tool-input')[0],
+                    $location = $('.js-search-tool'),
+                    $close    = $('.js-close-location'),
+                    $edit     = $('.js-edit-location');
+
+                if (value) {
+                    inputTmp = $input.value;
+                    $location.addClass('is-editing');
+                    $input.setSelectionRange(0, $input.value.length);
+                    $close.removeClass('u-h');
+                    $edit.addClass('u-h');
+                } else {
+                    $location.removeClass('is-editing');
+                    this.clear();
+                    this.setInputValue(inputTmp);
+                    $close.addClass('u-h');
+                    $edit.removeClass('u-h');
                 }
             },
 

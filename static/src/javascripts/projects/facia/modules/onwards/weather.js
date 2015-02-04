@@ -178,27 +178,6 @@ define([
             }.bind(this));
 
             mediator.on('autocomplete:fetch', this.saveDeleteLocalStorage.bind(this));
-            mediator.on('autocomplete:remove', this.toggleControls.bind(this));
-        },
-
-        toggleControls: function (value) {
-            var $input    = $('.js-weather-input')[0],
-                $location = $('.weather__location'),
-                $close    = $('.js-close-location'),
-                $edit     = $('.js-edit-location');
-
-            if (value) {
-                $location.addClass('is-editing');
-                $input.setSelectionRange(0, $input.value.length);
-                $close.removeClass('u-h');
-                $edit.addClass('u-h');
-            } else {
-                $location.removeClass('is-editing');
-                searchTool.clear();
-                searchTool.setInputValue(city ? city : this.getUserLocation().city);
-                $close.addClass('u-h');
-                $edit.removeClass('u-h');
-            }
         },
 
         toggleForecast: function () {
@@ -254,7 +233,7 @@ define([
                     .attr('title', weatherData.weatherText);
 
                 // Close editing
-                this.toggleControls();
+                mediator.emit('autocomplete:toggle', false);
             };
         },
 

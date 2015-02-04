@@ -89,7 +89,7 @@ define([
                 spyOn(mocks.store['common/utils/mediator'], "emit");
 
                 sut.handleClick({target: $('body')[0]});
-                expect(mocks.store['common/utils/mediator'].emit).toHaveBeenCalledWith('autocomplete:remove', false);
+                expect(mocks.store['common/utils/mediator'].emit).toHaveBeenCalledWith('autocomplete:toggle', false);
             });
 
             it("should push data after click on list item", function() {
