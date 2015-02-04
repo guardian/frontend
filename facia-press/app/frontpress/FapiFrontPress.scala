@@ -12,7 +12,7 @@ import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.api.models._
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
 import com.gu.facia.client.models.{Trail, TrailMetaData}
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
 import conf.Configuration
 import contentapi.QueryDefaults
 import play.api.libs.json._
@@ -35,7 +35,7 @@ trait TestClient extends ExecutionContexts {
   implicit val apiClient: ApiClient = ApiClient("aws-frontend-store", "FRANCIS", AmazonSdkS3Client(amazonS3Client))
 }
 
-object FapiFrontPress extends TestClient with QueryDefaults {
+object FapiFrontPress extends TestClient with QueryDefaults with Logging {
   implicit val frontImageFormat = Json.format[FrontImage]
   implicit object frontPriorityFormat extends Format[FrontPriority] {
     def reads(json: JsValue) = (json \ "type").transform[JsString](Reads.JsStringReads) match {
