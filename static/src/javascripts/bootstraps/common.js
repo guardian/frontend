@@ -427,6 +427,8 @@ define([
 
         },
 
+        /* jshint undef: true */
+        /* global guardian */
         inTestGroup = config.switches.iphoneConfidence && guardian.isIphone4 && guardian.inTestBucket,
 
         ready = function () {
