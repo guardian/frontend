@@ -17,7 +17,9 @@ define([
 ) {
     // This size effectively determines how many calls this module needs to make.
     // Number of ajax calls = number of comments / comments per page
-    var commentsPerPage = 50, concurrentLimit = 3;
+    var commentsPerPage = 50,
+        concurrentLimit = 3,
+        maximumCommentCount = 1000;
 
     // A basic Promise queue based on: http://talks.joneisen.me/presentation-javascript-concurrency-patterns/refactoru-9-23-2014.slide#25
     function runConcurrently(workFunction, items) {
@@ -69,6 +71,11 @@ define([
         this.discussionContainer = $('ul', bonzo.create(resp.commentsHtml)).empty();
         this.postedCommentHtml = resp.postedCommentHtml;
         this.lastPage = resp.lastPage;
+
+        // Decide if this discussion is too big to load the remaining pages for.
+        if (resp.commentCount > maximumCommentCount) {
+            throw new Error('Discussion comment count too large');
+        }
 
         // Return a collection of the indices of the remaining pages.
         return _.range(2, this.lastPage + 1);

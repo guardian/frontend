@@ -45,7 +45,7 @@
             font-family: Menlo, Courier, monospace;
             font-size: 12px;
             line-height: 17px;
-            padding: 65px 0 200px 0;
+            padding-top: 65px;
         }
         .alphas {
             margin: 15px;
@@ -111,57 +111,56 @@
     var delimRx = new RegExp('[a-z0-9\-\_]+', 'i'),
 
         elSelectors = React.createClass({
+            componentDidMount: function() {
+                window.addEventListener("hashchange", this.onhashchange);
+            },
+            componentWillUnmount: function() {
+                window.removeEventListener('hashchange', this.onhashchange);
+            },
+            onhashchange: function() {
+                this.setState(getHashParams());
+            },
             getInitialState: function() {
-                window.onhashchange = (function() {
-                    this.setState(getHashParams());
-                }).bind(this);
-
                 return getHashParams();
             },
             handleClick: function(e) {
-                var state = {
-                        filter: undefined,
-                        starts: undefined
-                    };
+                var hp = getHashParams(),
+                    $target = $(e.target);
 
-                if (e.target.tagName.toLocaleLowerCase() === 'span') {
-                    state[e.target.className || 'filter'] = e.target.innerText;
+                if ($target.prop("tagName") === 'SPAN') {
+                    hp.filter = $target.text();
                 }
 
-                this.setState(state);
-                setHashParams(state);
+                setHashParams(hp);
             },
             render: function() {
                 var filter = this.state.filter,
-                    starts = this.state.starts;
-
-                return React.DOM.div({onClick: this.handleClick}, [
-                    React.DOM.div({className: 'css-reports-navbar__inner'}, [
-                        React.createElement(dayPicker, this.props),
-                        React.DOM.div({className: 'alphas'},
-                            _.reduce('abcdefghijklmnopqrstuvwxyz', function(acc, a, i) {
-                                acc['_' + i] = React.DOM.span({className: 'starts'}, a);
-                                return acc;
-                            }, {})
-                        )
-                    ]),
-                    React.DOM.div({className: 'selectors'},
-                        _.chain(this.props.selectors)
+                    results = _.chain(this.props.selectors)
                         .filter(function(p) {
-                            var tokens = p[0];
-
-                            return (!filter || tokens.indexOf(filter) > -1) &&
-                                   (!starts || (tokens[0] || '').toLowerCase().indexOf(starts) === 0 ||
-                                               (tokens[1] || '').toLowerCase().indexOf(starts) === 0);
+                            return !filter || _.find(p[0], function(token) { return token.toLowerCase().indexOf(filter) === 0; });
                         })
-                        .reduce(function(acc, p, i) {
-                            acc['_' + i] = React.createElement(elSelector, {
+                        .reduce(function(acc, p) {
+                            acc[p[2]] = React.createElement(elSelector, {
                                 selector: p,
                                 filter: filter
                             });
                             return acc;
                         }, {})
-                        .value()
+                        .value();
+
+                return React.DOM.div({onClick: this.handleClick}, [
+                    React.DOM.div({className: 'css-reports-navbar__inner'}, [
+                        React.createElement(filterInput, this.state),
+                        React.createElement(dayPicker, this.props),
+                        React.DOM.div({className: 'alphas'},
+                            _.reduce('abcdefghijklmnopqrstuvwxyz', function(acc, a) {
+                                acc[a] = React.DOM.span({}, a);
+                                return acc;
+                            }, {})
+                        )
+                    ]),
+                    React.DOM.div({className: 'selectors'},
+                        _.isEmpty(results) ? React.DOM.div(null, 'No selectors matched: ' + filter) : results
                     )
                 ]);
             }
@@ -174,12 +173,12 @@
 
                 return React.DOM.div({className: 'selector' + (usages.used > 0 ? ' used' : '')}, [
                     React.DOM.span({className: 'tally'}, usages.unused + usages.used),
-                    React.DOM.span({},
+                    React.DOM.span(null,
                         _.reduce(this.props.selector[0], function(acc, k, i) {
-                            acc['_' + i] = k.match(delimRx) ? React.DOM.span({}, k) : React.createElement(elSelectorPart, {
+                            acc['_' + i] = k.match(delimRx) ? React.createElement(elSelectorPart, {
                                 part: k,
                                 filter: filter
-                            });
+                            }) : React.DOM.span(null, k);
                             return acc;
                         }, {})
                     )
@@ -190,27 +189,36 @@
         elSelectorPart = React.createClass({
             render: function() {
                 return React.DOM.span({
-                    className: this.props.part === this.props.filter ? 'active' : null
+                    className: this.props.part.indexOf(this.props.filter) === 0 ? 'active' : null
                 }, this.props.part);
             }
         }),
 
-        dayPicker = React.createClass({
-            getInitialState: function() {
-                return {value: this.props.day};
+        filterInput = React.createClass({
+            handleChange: function (event) {
+                setHashParams(_.extend(getHashParams(), {filter: event.target.value}));
             },
-            handleChange: function () {
-                setHashParams({day: event.target.value});
+            render: function() {
+                return React.DOM.input({
+                    value: this.props.filter,
+                    onChange: this.handleChange
+                }, null);
+            }
+        }),
+
+        dayPicker = React.createClass({
+            handleChange: function (event) {
+                setHashParams(_.extend(getHashParams(), {day: event.target.value}));
                 location.reload();
             },
             render: function() {
                 return React.DOM.select({
                         className: 'days',
-                        value: this.state.value,
+                        value: this.props.day,
                         onChange: this.handleChange
                     },
                     _.reduce(this.props.days, function(acc, d) {
-                        acc[d] = React.DOM.option({}, d);
+                        acc[d] = React.DOM.option(null, d);
                         return acc;
                     }, {})
                 );
@@ -246,9 +254,10 @@
     function getHashParams() {
         return _.chain(window.location.hash.slice(1).split('&'))
             .map(function(kv) { return kv.split('='); })
-            .filter(function(kv) { return kv[1]; })
             .reduce(function(acc, kv) {
-                acc[kv[0]] = decodeURIComponent(kv[1].replace(/\+/g, ' '));
+                if (kv[0]) {
+                    acc[kv[0]] = decodeURIComponent((kv[1] || '').replace(/\+/g, ' ')).toLowerCase();
+                }
                 return acc;
             }, {})
             .value();
@@ -256,8 +265,8 @@
 
     function setHashParams(obj) {
         window.location.hash = _.reduce(obj, function(acc, v, k) {
-            if (v) {
-                acc.push(k + '=' + encodeURIComponent(v));
+            if (k) {
+                acc.push(k + '=' + encodeURIComponent((v || '').toLowerCase()));
             }
             return acc;
         }, []).join('&');
@@ -276,7 +285,7 @@
                         .pairs()
                         .sortBy()
                         .map(function(s) {
-                            return [tokenise(s[0], delimRx), s[1]]
+                            return [tokenise(s[0], delimRx), s[1], s[0]]
                         })
                         .value(),
                     days: days,
