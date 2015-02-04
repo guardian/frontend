@@ -5,6 +5,7 @@
 
 <div class="fc-item__media-wrapper">
     <picture class="fc-item__image-container u-responsive-ratio @if(inlineImage) {inlined-image}">
+        <!--[if IE 9]><video style="display: none;"><![endif]-->
         @widthsByBreakpoint.map { widths =>
             @widths.sources.map {
                 case Source(Some(minWidth), width) => {
@@ -22,6 +23,6 @@
         } else {
             <img srcset="@ImgSrc.getSmallest(imageContainer)" />
         }
-
+        <!--[if IE 9]></video><![endif]-->
     </picture>
 </div>
