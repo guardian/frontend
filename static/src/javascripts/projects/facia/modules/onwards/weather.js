@@ -45,7 +45,6 @@ define([
     var $weather       = null,
         $holder        = null,
         searchTool     = null,
-        city           = '',
         prefName       = 'weather-location';
 
     return {
