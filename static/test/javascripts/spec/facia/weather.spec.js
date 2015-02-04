@@ -228,7 +228,7 @@ define([
                     spyOn(sut, "addSearch").and.callThrough();
 
                     var mockWeatherData = {
-                            html: '<div class="weather">' +
+                            html: '<div class="weather js-weather">' +
                                 '<input class="js-weather-input" value="{{city}}"/>' +
                                 '<span class="js-weather-temp">4°C</span>' +
                                 '<span class="js-weather-icon inline-weather-31"></span>'
@@ -247,7 +247,7 @@ define([
                     expect(sut.addSearch).toHaveBeenCalled();
 
                     mockWeatherData = {
-                        html: '<div class="weather">' +
+                        html: '<div class="weather js-weather">' +
                             '<input class="js-weather-input" value="{{city}}"/>' +
                             '<span class="js-weather-temp">6°C</span>' +
                             '<span class="js-weather-icon inline-weather-12"></span>'
