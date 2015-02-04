@@ -109,16 +109,22 @@ define([
             }
         },
 
+        /* jshint undef: true */
+        /* global guardian */
+        inTestGroup = config.switches.iphoneConfidence && guardian.isIphone4 && guardian.inTestBucket,
+
         ready = function () {
             if (!this.initialised) {
                 this.initialised = true;
-                modules.showSnaps();
-                modules.showContainerShowMore();
-                modules.showContainerToggle();
-                modules.upgradeMostPopularToGeo();
-                stocks();
+                if (!inTestGroup) {
+                    modules.showSnaps();
+                    modules.showContainerShowMore();
+                    modules.showContainerToggle();
+                    modules.upgradeMostPopularToGeo();
+                    stocks();
+                    modules.showWeather();
+                }
                 modules.iPhoneConfidenceCheck();
-                modules.showWeather();
             }
             mediator.emit('page:front:ready');
         };
