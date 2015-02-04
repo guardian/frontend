@@ -15,7 +15,7 @@ define(function () {
     }
 
     function handle (event, eventObject) {
-        return !_.find(registeredListeners[event], function (handler) {
+        return !_.some(registeredListeners[event], function (handler) {
             // Stop when a callback return false
             return handler.callback.call(handler.scope || this, eventObject) === false;
         });
