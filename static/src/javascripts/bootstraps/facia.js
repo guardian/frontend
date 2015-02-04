@@ -1,6 +1,5 @@
 define([
     'bonzo',
-    'fastdom',
     'qwery',
     // Common libraries
     'common/utils/_',
@@ -21,7 +20,6 @@ define([
     'facia/modules/onwards/weather'
 ], function (
     bonzo,
-    fastdom,
     qwery,
     _,
     $,
@@ -56,10 +54,8 @@ define([
 
             showContainerToggle: function () {
                 var containerToggleAdd = function (context) {
-                        fastdom.read(function () {
-                            $('.js-container--toggle', $(context || document)[0]).each(function (container) {
-                                new ContainerToggle(container).addToggle();
-                            });
+                        $('.js-container--toggle', $(context || document)[0]).each(function (container) {
+                            new ContainerToggle(container).addToggle();
                         });
                     };
                 mediator.addListeners({

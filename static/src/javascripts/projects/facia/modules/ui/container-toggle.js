@@ -70,24 +70,22 @@ define([
 
         this.addToggle =  function () {
             // append toggle button
-            fastdom.read(function () {
-                var id = _$container.attr('data-id'),
-                    $containerHeader = $('.js-container__header', _$container[0]);
+            var id = _$container.attr('data-id'),
+                $containerHeader = $('.js-container__header', _$container[0]);
 
-                fastdom.write(function () {
-                    $containerHeader.append(_$button);
-                    _$container
-                        .removeClass('js-container--toggle')
-                        .addClass('fc-container--has-toggle');
-                    _readPrefs(id);
-                });
+            fastdom.write(function () {
+                $containerHeader.append(_$button);
+                _$container
+                    .removeClass('js-container--toggle')
+                    .addClass('fc-container--has-toggle');
+                _readPrefs(id);
+            });
 
-                mediator.on('module:clickstream:click', function (clickSpec) {
-                    if (clickSpec.target === _$button[0]) {
-                        setState((_state === 'displayed') ? 'hidden' : 'displayed');
-                        _updatePref(id, _state);
-                    }
-                });
+            mediator.on('module:clickstream:click', function (clickSpec) {
+                if (clickSpec.target === _$button[0]) {
+                    setState((_state === 'displayed') ? 'hidden' : 'displayed');
+                    _updatePref(id, _state);
+                }
             });
         };
     };
