@@ -97,8 +97,8 @@ define([
                 spyOn(sut, "track");
                 spyOn(mocks.store['common/utils/mediator'], "emit");
 
-                $(".js-search-tool-list").html("<li><a class='search-tool__link active'></a>" +
-                    "<a class='search-tool__link' data-weather-id='292177' data-weather-city='Ufa'><span></span></a></li>");
+                $(".js-search-tool-list").html("<li><a class='js-search-tool-link search-tool__link active'></a>" +
+                    "<a class='js-search-tool-link search-tool__link' data-weather-id='292177' data-weather-city='Ufa'><span></span></a></li>");
 
                 sut.init();
 
@@ -180,10 +180,11 @@ define([
                 expect(sut.fetchData).not.toHaveBeenCalled();
             });
 
-            xit("should clear after pushing data", function() {
+            it("should clear after pushing data", function() {
                 spyOn(sut, "destroy");
+                spyOn(sut, "track");
 
-                $(".js-search-tool-list").html('<li><a class="active"></a></li>');
+                $(".js-search-tool-list").html('<li><a class="active" data-weather-city="test2"></a></li>');
 
                 sut.init();
 

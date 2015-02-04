@@ -240,7 +240,7 @@ define([
 
                     $weather = $('.weather');
 
-                    expect($(".js-weather-input", $weather).val()).toEqual('London');
+                    expect($(".js-search-tool-input", $weather).val()).toEqual('London');
                     expect($(".js-weather-temp", $weather).text()).toEqual('4°C');
                     expect($(".js-weather-icon", $weather).hasClass('i-weather-' + mockWeatherData["weatherIcon"])).toBeTruthy();
                 });
