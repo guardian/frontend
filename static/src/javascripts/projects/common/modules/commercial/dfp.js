@@ -258,6 +258,10 @@ define([
                     .defineSizeMapping(sizeMapping)
                     .setTargeting('slot', slotTarget);
 
+            if ($adSlot.data('series')) {
+                slot.setTargeting('se', parseKeywords($adSlot.data('series')));
+            }
+
             if ($adSlot.data('keywords')) {
                 slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
             }
