@@ -56,14 +56,15 @@ define([
         userPrefs.remove('front-trailblocks');
 
         function setState(state) {
+            _state = state;
             fastdom.write(function () {
                 // add/remove rolled class
-                _$container[state === 'displayed' ? 'removeClass' : 'addClass']('fc-container--rolled-up');
+                _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('fc-container--rolled-up');
                 // data-link-name is inverted, as happens before clickstream
-                _$button.attr('data-link-name', _toggleText[state === 'displayed' ? 'hidden' : 'displayed']);
-                buttonText.text(_toggleText[state]);
+                _$button.attr('data-link-name', _toggleText[_state === 'displayed' ? 'hidden' : 'displayed']);
+                buttonText.text(_toggleText[_state]);
                 // hide/show the badge
-                adSlotBadge.css('display', state === 'hidden' ? 'none' : 'block');
+                adSlotBadge.css('display', _state === 'hidden' ? 'none' : 'block');
             });
         }
 
