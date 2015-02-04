@@ -12,18 +12,16 @@ define([
         scrollTop = 0, getScrollTop = function () { return scrollTop; },
         doLazyLoadersThrottled, doLazyLoadersDebounced,
         doLazyLoaders = function () {
-            if (lazyLoaders.length > 0) {
-                scrollTop = bonzo(document.body).scrollTop();
-                lazyLoaders = _.filter(lazyLoaders, function (lazyLoader) {
-                    if (lazyLoader.conditionFn()) {
-                        lazyLoader.loadFn();
-                    } else {
-                        return true;
-                    }
-                });
-                if (lazyLoaders.length === 0) {
-                    mediator.off('window:scroll', doLazyLoadersThrottled);
+            scrollTop = bonzo(document.body).scrollTop();
+            lazyLoaders = _.filter(lazyLoaders, function (lazyLoader) {
+                if (lazyLoader.conditionFn()) {
+                    lazyLoader.loadFn();
+                } else {
+                    return true;
                 }
+            });
+            if (lazyLoaders.length === 0) {
+                mediator.off('window:scroll', doLazyLoadersThrottled);
             }
         };
 
