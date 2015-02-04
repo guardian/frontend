@@ -12,6 +12,10 @@ import scala.util.Try
 import DynamoDb._
 
 import scalaz.std.list._
+import scalaz.std.anyVal._
+import scalaz.std.map._
+import scalaz.std.tuple._
+import scalaz.syntax.traverse._
 
 case class SelectorReport(selector: String, used: Int, unused: Int)
 
@@ -53,6 +57,23 @@ object CssReport extends ExecutionContexts {
           Try(item.get("used").getN.toInt) getOrElse 0,
           Try(item.get("unused").getN.toInt) getOrElse 0
         )
+      }
+    }
+  }
+
+  def aggregateReport: Future[List[SelectorReport]] = {
+    dynamoDbClient.sumScan[Map[String, (Int, Int)]](new ScanRequest()
+      .withTableName(TableName)
+      .withAttributesToGet("selector", "used", "unused")
+    ) { result =>
+      result.getItems.toList.foldMap({ item =>
+        Map(
+          item.get("selector").getS -> (Try(item.get("used").getN.toInt) getOrElse 0, Try(item.get("unused").getN.toInt) getOrElse 0)
+        )
+      })
+    } map { aggregates =>
+      aggregates.toList.sortBy(_._1) map {
+        case (selector, (used, unused)) => SelectorReport(selector, used, unused)
       }
     }
   }
