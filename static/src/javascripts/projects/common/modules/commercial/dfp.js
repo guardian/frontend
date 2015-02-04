@@ -292,7 +292,7 @@ define([
                 callbacks[size] && callbacks[size](event, $slot);
 
                 if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
-                    $slot.parent().css('display','block');
+                    $slot.parent().css('display', 'block');
                 }
             }
         },
