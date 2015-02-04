@@ -19,7 +19,6 @@ define([
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
     'bootstraps/article',
-    'common/modules/analytics/live-blog-metrics',
     'common/utils/robust'
 ], function (
     bean,
@@ -42,7 +41,6 @@ define([
     NotificationCounter,
     RelativeDates,
     article,
-    LiveBlogMetrics,
     robust
 ) {
     'use strict';
@@ -246,7 +244,6 @@ define([
         robust('lb-autoupdate', function () { modules.createAutoUpdate(); });
         robust('lb-timestamp',  function () { modules.keepTimestampsCurrent(); });
         robust('lb-updates',    function () { modules.handleUpdates(); });
-        robust('lb-metrics',    function () { LiveBlogMetrics.init(); });
 
         // re-use modules from article bootstrap
         robust('lb-article',    function () { article.modules.initOpenCta(); });

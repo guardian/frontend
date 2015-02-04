@@ -1,7 +1,8 @@
 package conf
 
 import common._
-import org.joda.time.{DateTime, Days, LocalDate}
+import conf.Configuration.environment
+import org.joda.time._
 import play.api.Play.current
 import play.api.libs.ws.WS
 import play.api.{Application, Plugin}
@@ -10,12 +11,12 @@ sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
 
-case class Switch( group: String,
-                   name: String,
-                   description: String,
-                   safeState: SwitchState,
-                   sellByDate: LocalDate
-                   ) extends Switchable with Initializable[Switch] {
+trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
+  val group: String
+  val name: String
+  val description: String
+  val safeState: SwitchState
+  val sellByDate: LocalDate
 
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
@@ -41,9 +42,31 @@ case class Switch( group: String,
   Switch.switches.send(this :: _)
 }
 
+case class Switch(group: String,
+                  name: String,
+                  description: String,
+                  safeState: SwitchState,
+                  sellByDate: LocalDate
+                   ) extends SwitchTrait
+
+case class TimerSwitch(group: String,
+                       name: String,
+                       description: String,
+                       safeState: SwitchState,
+                       sellByDate: LocalDate,
+                       activePeriods: Seq[Interval]
+                        ) extends SwitchTrait with Logging {
+
+  def isSwitchedOnAndActive: Boolean = {
+    val active = activePeriods.exists(_.containsNow())
+    log.info(s"TimedSwitch $name switched on $isSwitchedOn active $active")
+    isSwitchedOn && (environment.isNonProd || active)
+  }
+}
+
 object Switch {
-  private val switches = AkkaAgent[List[Switch]](Nil)
-  def allSwitches: Seq[Switch] = switches.get()
+  val switches = AkkaAgent[List[SwitchTrait]](Nil)
+  def allSwitches: Seq[SwitchTrait] = switches.get()
 }
 
 object Switches {
@@ -59,24 +82,11 @@ object Switches {
     sellByDate = never
   )
 
-  val RssServerSwitch = Switch("Performance", "rss-server",
-    "If this switch is on then RSS traffic will be redirected to RSS server",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 2, 1)
-  )
-
   val CircuitBreakerSwitch = Switch("Performance", "circuit-breaker",
     "If this switch is switched on then the Content API circuit breaker will be operational",
     safeState = Off,
     sellByDate = never
   )
-
-  val ForceHttpResponseCodeSwitch = Switch("Performance", "force-response-codes",
-    "If this switch is switched on and you specify the correct header, then you can force a specific http response code",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 2, 1)
-  )
-
 
   val MemcachedSwitch = Switch("Performance", "memcached-action",
     "If this switch is switched on then the MemcacheAction will be operational",
@@ -99,7 +109,7 @@ object Switches {
   val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
     "If this switch is switched on then the preview server requires login",
     safeState = On,
-    sellByDate = new LocalDate(2015, 1, 31)
+    sellByDate = new LocalDate(2015, 2, 26)
   )
 
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
@@ -144,7 +154,7 @@ object Switches {
 
   val DiscussionSwitch = Switch("Performance", "discussion",
     "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
-    safeState = Off, sellByDate = never
+    safeState = On, sellByDate = never
   )
 
   val DiscussionPageSizeSwitch = Switch("Performance", "discussion-page-size",
@@ -209,6 +219,10 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val AmaaSwitch = Switch("Commercial", "amaa",
+    "AMAA tracking",
+    safeState = Off, sellByDate = never)
+
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
     safeState = Off, sellByDate = never
@@ -231,12 +245,6 @@ object Switches {
   val ImrWorldwideSwitch = Switch("Commercial", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = never)
-
-  val targetMediaMathShutdownDate = new LocalDate(2015, 2, 1)
-
-  val MediaMathSwitch = Switch("Commercial", "media-math",
-    "Enable Media Math audience segment tracking",
-    safeState = Off, sellByDate = targetMediaMathShutdownDate)
 
   val KruxSwitch = Switch("Commercial", "krux",
     "Enable Krux Control Tag",
@@ -275,12 +283,44 @@ object Switches {
     safeState = Off, sellByDate = never)
 
   val AdFeatureExpirySwitch = Switch("Commercial", "enable-expire-ad-features",
-    "If this switch is on, ad features with expired line items will return 410s.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 4))
+    "If this switch is on, expired ad features will be redirected.",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
+
+  val LegacyAdFeatureExpirySwitch = Switch("Commercial", "enable-expire-legacy-ad-features",
+    "If this switch is on, expired legacy ad features will be redirected.",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
 
   val EditionAwareLogoSlots = Switch("Commercial", "edition-aware-logo-slots",
     "If this switch is on, logo slots will honour visitor's edition.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 4))
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
+
+  private def dateInFebruary(day: Int): Interval =
+    new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
+
+  val AppleAdNetworkFrontSwitch = TimerSwitch("Commercial", "apple-ads-on-network-front",
+    "If this switch is on, Apple ads will appear on the network front during active periods.",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
+    activePeriods = Seq(
+      dateInFebruary(5),
+      dateInFebruary(7),
+      dateInFebruary(8),
+      dateInFebruary(10),
+      dateInFebruary(11),
+      dateInFebruary(12)
+    )
+  )
+
+  val AppleAdCultureFrontSwitch = TimerSwitch("Commercial", "apple-ads-on-culture-front",
+    "If this switch is on, Apple ads will appear on the culture front during active periods.",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
+    activePeriods = Seq(
+      dateInFebruary(7),
+      dateInFebruary(8),
+      dateInFebruary(9),
+      dateInFebruary(11),
+      dateInFebruary(12)
+    )
+  )
 
   // Monitoring
 
@@ -331,17 +371,9 @@ object Switches {
     sellByDate = never
   )
 
-  val HardcodedSectionTagLookUp = Switch(
-    "Feature",
-    "hardcoded-section-tag-lookup",
-    "Hardcoded section tag id lookup (uk-news palaver)",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 1, 31)
-  )
-
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
-    safeState = On, sellByDate = new LocalDate(2015, 1, 31))
+    safeState = On, sellByDate = never)
 
   val OutbrainSwitch = Switch("Feature", "outbrain",
     "Enable the Outbrain content recommendation widget.",
@@ -353,7 +385,7 @@ object Switches {
 
   val ReleaseMessageSwitch = Switch("Feature", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new LocalDate(2015, 1, 31)
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   val GeoMostPopular = Switch("Feature", "geo-most-popular",
@@ -418,18 +450,12 @@ object Switches {
 
   val WeatherSwitch = Switch("Feature", "weather",
     "If this is switched on then the weather component is displayed",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 1)
+    safeState = Off, sellByDate = never
   )
 
   val HistoryTags = Switch("Feature", "history-tags",
     "If this is switched on then personalised history tags are shown in the meganav",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
-  )
-
-  // actually just here to make us remove this in the future
-  val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
-    "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
-    safeState = On, sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
@@ -475,16 +501,26 @@ object Switches {
     safeState = On, sellByDate = new LocalDate(2015, 2, 28)
   )
 
+  val DiscussionAllPageSizeSwitch = Switch("Feature", "discussion-all-page-size",
+    "If this is switched on then users will have the option to load all comments",
+    safeState = Off, sellByDate = never
+  )
+
+  val MissingVideoEndcodingsJobSwitch = Switch("Feature", "check-for-missing-video-encodings",
+    "If this switch is switched on then the job will run which will check all video content for missing encodings",
+     safeState = Off, sellByDate = never
+  )
+
+  val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
+    "If this is switched on then lazy load the related and series containers on content pages",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 17)
+  )
+
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
     safeState = Off, sellByDate = never
-  )
-
-  val FaciaToolPaneOptions = Switch("Facia", "facia-tool-pane-options",
-    "If this switch is on facia tool will display more options for panes",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   val ToolSparklines = Switch("Facia", "facia-tool-sparklines",
@@ -537,9 +573,9 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
-  def all: Seq[Switch] = Switch.allSwitches
+  def all: Seq[SwitchTrait] = Switch.allSwitches
 
-  def grouped: List[(String, Seq[Switch])] = {
+  def grouped: List[(String, Seq[SwitchTrait])] = {
     val sortedSwitches = all.groupBy(_.group).map { case (key, value) => (key, value.sortBy(_.name)) }
     sortedSwitches.toList.sortBy(_._1)
   }

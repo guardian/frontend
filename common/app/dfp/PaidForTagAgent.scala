@@ -4,7 +4,7 @@ import java.net.URLDecoder
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import common.Edition
-import conf.Switches.EditionAwareLogoSlots
+import conf.Switches.{EditionAwareLogoSlots, LegacyAdFeatureExpirySwitch}
 import model.Tag
 import model.`package`.frontKeywordIds
 
@@ -40,12 +40,8 @@ trait PaidForTagAgent {
     def editionMatches(maybeEdition: Option[Edition], dfpTag: PaidForTag): Boolean = {
       maybeEdition.isEmpty || maybeEdition.exists { edition =>
         dfpTag.lineItems exists { lineItem =>
-          val editionIds = lineItem.targeting.customTargetSets.flatMap {
-            _.targets filter {
-              _.isEditionTag
-            } flatMap (_.values.map(_.toLowerCase))
-          }.distinct
-          editionIds.isEmpty || editionIds.contains(edition.id.toLowerCase)
+          val editions = lineItem.targeting.editions
+          editions.isEmpty || editions.contains(edition)
         }
       }
     }
@@ -172,15 +168,39 @@ trait PaidForTagAgent {
     findContainerCapiTagIdAndDfpTag(config) map (_.capiTagId)
   }
 
-  def isExpiredAdvertisementFeature(capiTags: Seq[Tag],
+  private def isExpiredAdvertisementFeature(pageId: String,
+                                            hasAdFeatureTone: Boolean,
+                                            maybeDfpTag: => Option[PaidForTag],
                                     maybeSectionId: Option[String]): Boolean = {
-    if (isPreview) false
-    else {
-      val lineItems = findWinningTagPair(allAdFeatureTags, capiTags, maybeSectionId, None) map {
-        _.dfpTag.lineItems
-      } getOrElse Nil
-      lineItems.nonEmpty && (lineItems forall (_.endTime exists (_.isBeforeNow)))
-    }
+
+    val lineItems = maybeDfpTag map (_.lineItems) getOrElse Nil
+
+    def hasExpired(lineItem: GuLineItem): Boolean = lineItem.endTime exists (_.isBeforeNow)
+
+    lazy val isExpiredLegacyAdFeature =
+      LegacyAdFeatureExpirySwitch.isSwitchedOn &&
+        lineItems.isEmpty && hasAdFeatureTone && pageId != "tone/advertisement-features"
+
+    (!isPreview) &&
+      (isExpiredLegacyAdFeature || (lineItems.nonEmpty && (lineItems forall hasExpired)))
+  }
+
+  def isExpiredAdvertisementFeature(pageId: String,
+                                    capiTags: Seq[Tag],
+                                    maybeSectionId: Option[String]): Boolean = {
+    lazy val hasAdFeatureTone = capiTags exists (_.id == "tone/advertisement-features")
+    lazy val maybeDfpTag =
+      findWinningTagPair(allAdFeatureTags, capiTags, maybeSectionId, None) map (_.dfpTag)
+    isExpiredAdvertisementFeature(pageId, hasAdFeatureTone, maybeDfpTag, maybeSectionId)
+  }
+
+  def isExpiredAdvertisementFeatureFront(pageId: String,
+                                         keywordIds: Seq[String],
+                                         maybeSectionId: Option[String]): Boolean = {
+    lazy val maybeDfpTag = keywordIds.flatMap { keywordId =>
+      findWinningDfpTag(allAdFeatureTags, keywordId, maybeSectionId, maybeEdition = None)
+    }.headOption
+    isExpiredAdvertisementFeature(pageId, hasAdFeatureTone = false, maybeDfpTag, maybeSectionId)
   }
 
   private def hasMultiplesOfAPaidForType(capiTags: Seq[Tag],

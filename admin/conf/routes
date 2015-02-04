@@ -44,6 +44,7 @@ GET         /analytics/confidence                                               
 GET         /analytics/google-referrers                                                        controllers.admin.GoogleReferrerController.renderGoogleReferrerDashboard()
 GET         /analytics/content/gallery                                                         controllers.admin.ContentPerformanceController.renderGalleryDashboard()
 GET         /analytics/content/liveblog                                                        controllers.admin.ContentPerformanceController.renderLiveBlogDashboard()
+GET         /analytics/content/video                                                           controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
 GET         /analytics/omniture/segments/:rsid                                                 controllers.admin.OmnitureReportController.getSegments(rsid)
 GET         /analytics/omniture/*reportName                                                    controllers.admin.OmnitureReportController.getReport(reportName)
 
@@ -120,3 +121,8 @@ GET         /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id     
 GET         /admin/football/fronts/match/:matchId                                              controllers.admin.FrontsController.bigMatchSpecial(matchId)
 
 GET         /admin/football/api/squad/:teamId                                                  controllers.admin.PlayerController.squad(teamId: String)
+
+# css reports
+GET         /css-reports                                                                       controllers.admin.CssReportController.entry
+GET         /css-reports.json                                                                  controllers.admin.CssReportController.index
+GET         /css-reports/:date.json                                                            controllers.admin.CssReportController.report(date: LocalDate)

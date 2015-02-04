@@ -11,7 +11,7 @@ object Dependencies {
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
   val apacheCommonsMath3 = "org.apache.commons" % "commons-math3" % "3.2"
-  val awsSdk = "com.amazonaws" % "aws-java-sdk" % "1.8.7"
+  val awsSdk = "com.amazonaws" % "aws-java-sdk" % "1.9.16"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val contentApiClient = "com.gu" %% "content-api-client" % "5.1"

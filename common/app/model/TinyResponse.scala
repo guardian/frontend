@@ -12,4 +12,6 @@ object TinyResponse extends Results {
   def noContent(allowedMethods: Option[String] = None)(implicit request: RequestHeader): Result = {
     Cors(NoCache(NoContent), allowedMethods)
   }
+
+  def ok(implicit request: RequestHeader): Result = Cors(NoCache(Ok("")))
 }

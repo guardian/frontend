@@ -2,10 +2,13 @@ package dfp
 
 import java.net.URLEncoder
 
+import common.Edition
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
+
+import scala.annotation.tailrec
 
 case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
@@ -158,9 +161,14 @@ case class GuTargeting(adUnits: Seq[GuAdUnit],
     testValues.headOption
   }
 
-  def hasAdTestTargetting = adTestValue.isDefined
+  val editions: Seq[Edition] = {
+    val targets = customTargetSets flatMap (_.targets filter (_.isEditionTag))
+    targets flatMap (_.values) flatMap Edition.byId
+  }
 
-  def targetsR2Only = customTargetSets exists (_.targetsR2Only)
+  val hasAdTestTargetting: Boolean = adTestValue.isDefined
+
+  val targetsR2Only: Boolean = customTargetSets exists (_.targetsR2Only)
 }
 
 object GuTargeting {
@@ -197,6 +205,7 @@ case class GuLineItem(id: Long,
 
   val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
   val isExpired = endTime.exists(_.isBeforeNow)
+  val isExpiredRecently = isExpired && endTime.exists(_.isAfter(DateTime.now().minusWeeks(1)))
   val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(DateTime.now().plusMonths(1)))
 
   val paidForTags: Seq[String] = targeting.customTargetSets.flatMap { targetSet =>
@@ -260,6 +269,7 @@ case class GuCreativeTemplate(id: Long,
 
   val example: Option[String] = creatives.headOption map { creative =>
 
+    @tailrec
     def replaceParameters(html: String, args: Seq[(String, String)]): String = {
       if (args.isEmpty) html
       else {

@@ -2,8 +2,9 @@
   "name": "frontend-common-js",
   "version": "0.1.0 ",
   "dependencies": {
-    "bean": "~1.0.4",
+    "bean": "~1.0.14",
     "eventEmitter": "~4.2.6",
+    "fastdom": "0.8.5",
     "imager.js": "oncletom/Imager.js#feature-separation",
     "lodash-amd": "~2.4.1",
     "fence": "~0.2.11",
@@ -11,7 +12,7 @@
     "curl": "~0.8.9",
     "qwery": "3.4.2",
     "react": "0.11.2",
-    "reqwest": "guardian/reqwest#master",
+    "reqwest": "1.1.5",
     "enhancer": "0.1.1",
     "videojs": "guardian/video.js#158221b5d997a184972fbf038c9eebdb676d30c8",
     "videojs-contrib-ads": "videojs/videojs-contrib-ads#f44387a4d2fd939f9a665762917e2fa6fc8838d7",
@@ -19,11 +20,11 @@
     "socket.io-client": "~1.1.0",
     "raven-js": "~1.1.16",
     "videojs-playlist-audio": "*",
-    "fastclick": "guardian/fastclick#master",
+    "fastclick": "1.0.6",
     "requirejs-text": "~2.0.12",
     "native-promise-only": "guardian/native-promise-only#master",
     "videojs-embed": "~0.3.1",
-    "videojs-ima": "guardian/videojs-ima#e0fa524afb91ebf8bf539096e6bedd1a02800db4"
+    "videojs-ima": "guardian/videojs-ima#0ec1a99d42fa2471601d2f17cbdb4aaf06565634"
   },
   "resolutions": {
     "videojs": "158221b5d997a184972fbf038c9eebdb676d30c8"

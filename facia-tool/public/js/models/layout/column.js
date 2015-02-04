@@ -44,8 +44,6 @@ define([
         }
         this.isFront = ko.computed(isType.bind(this, 'front'), this);
         this.isLatest = ko.computed(isType.bind(this, 'latest'), this);
-        this.isOphan = ko.computed(isType.bind(this, 'ophan'), this);
-        this.isIframe = ko.computed(isType.bind(this, 'iframe'), this);
         this.isTreats = ko.computed(isType.bind(this, 'treats'), this);
         this.isClipboard = ko.computed(isType.bind(this, 'clipboard'), this);
 

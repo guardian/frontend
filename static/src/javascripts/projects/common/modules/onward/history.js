@@ -3,6 +3,7 @@
  Description: Gets and sets users reading history
  */
 define([
+    'fastdom',
     'common/utils/$',
     'common/utils/_',
     'common/utils/config',
@@ -12,6 +13,7 @@ define([
     'text!common/views/history/tag.html',
     'text!common/views/history/mega-nav.html'
 ], function (
+    fastdom,
     $,
     _,
     config,
@@ -93,19 +95,19 @@ define([
             'science/sifting-the-evidence', 'science/the-lay-scientist', 'small-business-network', 'social-care-network', 'society',
             'society/children', 'society/communities', 'society/health', 'society/list/allsocietykeywords', 'society/localgovernment',
             'society/social-care', 'society/voluntarysector', 'sport/blog', 'sport/boxing', 'sport/cricket',
-            'sport/cycling', 'sport/formulaone', 'sport/golf', 'sport/horse-racing', 'sport/rugby-union',
+            'sport/cycling', 'sport/formulaone', 'sport/golf', 'sport/horse-racing', 'sport/rugby-union', 'sport/rugbyleague',
             'sport/series/sports-quiz-of-the-week', 'sport/series/the-gifs-that-keep-giving', 'sport/tennis', 'sport/us-sport', 'stage',
             'stage/dance-blog', 'stage/theatreblog', 'teacher-network/teacher-network', 'technology', 'technology/askjack',
             'technology/comment', 'technology/gadgets', 'technology/games', 'technology/internet', 'technology/it',
             'technology/news', 'technology/series/techweekly', 'technology/telecoms', 'theguardian', 'theguardian/mainsection/obituaries',
             'theguardian/series/guardiancommentcartoon', 'theguardian/series/guardianwitness-assignments', 'theguardian/series/otherlives', 'tone/albumreview', 'tone/comment',
-            'tone/livereview', 'travel', 'travel/bookatrip', 'travel/europe', 'travel/hotels',
+            'tone/obituaries', 'tone/livereview', 'travel', 'travel/bookatrip', 'travel/europe', 'travel/hotels',
             'travel/lateoffers', 'travel/places', 'travel/restaurants', 'travel/series/lets-go-to', 'travel/series/readers-travel-tips',
             'travel/shortbreaks', 'travel/typesoftrip', 'travel/uk', 'travel/usa', 'tv-and-radio',
             'tv-and-radio/series/broadchurch-2-episode-by-episode', 'tv-and-radio/series/doctor-who-episode-by-episode', 'tv-and-radio/series/homeland-episode-by-episode', 'tv-and-radio/series/spiral-episode-by-episode-guide', 'tv-and-radio/series/stream-on',
             'tv-and-radio/series/the-fall-episode-by-episode', 'tv-and-radio/series/the-walking-dead-episode-by-episode', 'uk/technology', 'video', 'weekly',
             'women-in-leadership', 'world/africa', 'world/americas', 'world/asia', 'world/europe-news',
-            'world/middleeast', 'world/series/eyewitness'
+            'world/middleeast', 'world/series/eyewitness', 'uk/scotland', 'uk/wales', 'uk/northernireland', 'uk/the-northerner', 'cartoons/archive', 'theguardian'
         ],
 
         editions = [
@@ -359,7 +361,7 @@ define([
     }
 
     function showInMegaNav() {
-        var tags;
+        var tags, tagsHTML;
 
         if (getSummary().showInMegaNav === false) { return; }
 
@@ -368,18 +370,19 @@ define([
         tags = getPopularFiltered();
 
         if (tags.length) {
-            getMegaNav().prepend(
-                template(viewMegaNav, {
-                    tags: tags.map(tagHtml).join('')
-                })
-            );
+            tagsHTML = template(viewMegaNav, {tags: tags.map(tagHtml).join('')});
+            fastdom.write(function () {
+                getMegaNav().prepend(tagsHTML);
+            });
             inMegaNav = true;
         }
     }
 
     function removeFromMegaNav() {
         getMegaNav().each(function () {
-            $('.js-global-navigation__section--history', this).remove();
+            fastdom.write(function () {
+                $('.js-global-navigation__section--history', this).remove();
+            });
         });
         inMegaNav = false;
     }

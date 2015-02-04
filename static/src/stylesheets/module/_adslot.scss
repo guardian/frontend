@@ -46,6 +46,14 @@
 /**
  * Banner ads
  */
+
+.js-on {
+    .top-banner-ad-container--desktop.top-banner-ad-container--above-nav,
+    .ad-below-nav .ad-slot--top-below-nav {
+        display: none;
+    }
+}
+
 .top-banner-ad-container--mobile {
     background-color: #f0f0f0;
 }
@@ -54,11 +62,10 @@
     border-bottom: 2px solid colour(neutral-4);
     display: none;
 
-    @include mq(tablet) {
-        .js-on & {
-            display: block;
-        }
+    &.top-banner-ad-container--below-nav {
+        border-bottom: 0;
     }
+
     .ad-slot__label {
         /* this is the minimum width of possible ads sizes */
         width: 728px;
@@ -75,6 +82,20 @@
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
         @include transition(height 1s cubic-bezier(0, 0, 0, .985));
+    }
+}
+.top-banner-ad-container--above-nav {
+    @include mq(tablet) {
+        .js-on & {
+            display: block;
+        }
+    }
+}
+.top-banner-ad-container--below-nav {
+    @include mq(desktop) {
+        .js-on & {
+            display: block;
+        }
     }
 }
 .ad-slot--top-banner-ad {
@@ -99,6 +120,14 @@
         min-height: 90 + ($gs-row-height / 2);
         padding-bottom: $gs-row-height / 2;
 
+        .ad-below-nav & {
+            min-height: 0;
+            padding-bottom: 0;
+
+            > div:last-of-type {
+                margin-bottom: $gs-row-height / 2;
+            }
+        }
         @include mq(tablet) {
             .js-on & {
                 display: block;
@@ -326,17 +355,18 @@
 }
 .ad-slot--adbadge {
     .ad-slot--paid-for-badge__header,
-    .ad-slot--paid-for-badge__label,
     .ad-slot--paid-for-badge__help {
         color: colour(neutral-2-contrasted);
     }
 }
 .ad-slot--im {
     @include box-sizing(border-box);
-    padding-right: $gs-gutter;
-    width: 50%;
-    max-width: $left-column-wide + $gs-gutter;
+    max-width: 50%;
     float: left;
+
+    @include mq(mobileLandscape) {
+        max-width: $left-column-wide + $gs-gutter;
+    }
 }
 .ad-slot--fobadge.ad-slot--im {
     min-width: gs-span(2) + $gs-gutter;
@@ -396,7 +426,7 @@
         padding-left: $gs-gutter / 2;
     }
 
-    .container--has-toggle & {
+    .fc-container--has-toggle & {
         @include mq(tablet, $until: leftCol) {
             margin-right: gs-span(1);
         }
@@ -471,7 +501,7 @@
                 float: right;
             }
         }
-        .has-page-skin .container--has-toggle & {
+        .has-page-skin .fc-container--has-toggle & {
             margin-right: gs-span(1);
         }
     }

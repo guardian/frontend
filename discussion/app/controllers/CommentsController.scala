@@ -56,10 +56,11 @@ object CommentsController extends DiscussionController {
       Cached(60) {
         if (request.isJson) {
           JsonComponent(
-            "commentsHtml" -> views.html.discussionComments.commentsList(page, false).toString,
+            "commentsHtml" -> views.html.discussionComments.commentsList(page, renderPagination = false).toString,
             "paginationHtml" -> views.html.fragments.commentPagination(page).toString,
             "postedCommentHtml" -> views.html.fragments.comment(BlankComment()).toString,
-            "currentCommentCount" -> page.comments.length
+            "lastPage" -> comments.pagination.lastPage,
+            "commentCount" -> comments.commentCount
           )
         } else {
           Ok(views.html.discussionComments.discussionPage(page))

@@ -1,11 +1,13 @@
 define([
     'bean',
     'qwery',
+    'fastdom',
     'common/utils/mediator',
     'common/utils/$'
 ], function (
     bean,
     qwery,
+    fastdom,
     mediator,
     $
 ) {
@@ -19,7 +21,10 @@ define([
         addMegaNavMenu: function () {
             var megaNav     = $('.js-transfuse'),
                 placeholder = $('.' + megaNav.attr('data-transfuse-target'));
-            placeholder.html(megaNav.html());
+
+            fastdom.write(function () {
+                placeholder.html(megaNav.html());
+            });
         },
 
         replaceAllSectionsLink: function () {
@@ -31,8 +36,10 @@ define([
                 var target = $('.' + e.currentTarget.getAttribute('data-target-nav'));
 
                 e.preventDefault();
-                target.toggleClass('navigation--expanded navigation--collapsed');
-                mediator.emit(target.hasClass('navigation--expanded') ? 'modules:nav:open' : 'modules:nav:close');
+                fastdom.write(function () {
+                    target.toggleClass('navigation--expanded navigation--collapsed');
+                    mediator.emit(target.hasClass('navigation--expanded') ? 'modules:nav:open' : 'modules:nav:close');
+                });
             });
         }
     };
