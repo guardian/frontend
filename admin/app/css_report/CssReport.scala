@@ -11,6 +11,8 @@ import scala.concurrent.Future
 import scala.util.Try
 import DynamoDb._
 
+import scalaz.std.list._
+
 case class SelectorReport(selector: String, used: Int, unused: Int)
 
 object CssReport extends ExecutionContexts {
