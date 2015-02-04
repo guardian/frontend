@@ -10,7 +10,7 @@ function (
     raven
 ) {
     fastdom.onError = function (error) {
-        raven.captureException(new Error('Error inside fastdom: ' + error), {
+        raven.captureException(error), {
             tags: {
                 javascript: 'fastdom'
             }
