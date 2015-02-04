@@ -11,6 +11,7 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
+    'common/utils/proximity-loader',
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/url',
@@ -66,6 +67,7 @@ define([
     config,
     cookies,
     detect,
+    proximityLoader,
     mediator,
     template,
     url,
@@ -171,6 +173,17 @@ define([
                 new Related(opts).renderRelatedComponent();
             },
 
+            initRelated: function () {
+                if (!config.switches.lazyLoadOnwards || window.location.hash) {
+                    modules.transcludeRelated();
+                } else {
+                    var relatedEl = qwery('.js-related')[0];
+                    if (relatedEl) {
+                        proximityLoader.add(relatedEl, 1500, modules.transcludeRelated);
+                    }
+                }
+            },
+
             transcludePopular: function () {
                 if (!config.page.isFront) {
                     new Popular().init();
@@ -184,6 +197,17 @@ define([
                     $('.js-onward').each(function (c) {
                         new TonalComponent().fetch(c, 'html');
                     });
+                }
+            },
+
+            initOnwardContent: function () {
+                if (!config.switches.lazyLoadOnwards || window.location.hash) {
+                    modules.transcludeOnwardContent();
+                } else {
+                    var onwardEl = qwery('.js-onward')[0];
+                    if (onwardEl) {
+                        proximityLoader.add(onwardEl, 1500, modules.transcludeOnwardContent);
+                    }
                 }
             },
 
@@ -432,7 +456,6 @@ define([
         inTestGroup = config.switches.iphoneConfidence && guardian.isIphone4 && guardian.inTestBucket,
 
         ready = function () {
-
             if (!inTestGroup) {
                 robust('c-fonts',           modules.loadFonts);
                 robust('c-identity',        modules.initId);
@@ -465,18 +488,16 @@ define([
             robust('c-tag-links',       modules.showMoreTagsLink);
             robust('c-smart-banner',    modules.showSmartBanner);
             robust('c-log-stats',       modules.logLiveStats);
-            robust('c-analytics',       modules.loadAnalytics); // TODO - don't turn me off in this test
+            robust('c-analytics',       modules.loadAnalytics);
             robust('c-cookies',         modules.cleanupCookies);
             robust('c-popular',         modules.transcludePopular);
-            robust('c-related',         modules.transcludeRelated);
-            robust('c-onward',          modules.transcludeOnwardContent);
+            robust('c-related',         modules.initRelated);
+            robust('c-onward',          modules.initOnwardContent);
             robust('c-overlay',         modules.initOpenOverlayOnClick);
             robust('c-css-logging',     modules.runCssLogging);
             robust('c-public-api',      modules.initPublicApi);
             robust('c-simple-metrics',  modules.initSimpleMetrics);
-
             robust('c-crosswords',      crosswordThumbnails.init);
-
             robust('c-ready',           function () { mediator.emit('page:common:ready'); });
         };
 
