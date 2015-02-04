@@ -9,17 +9,21 @@ define([
 ) {
 
     var lazyLoaders = [],
+        scrollTop = 0, getScrollTop = function() { return scrollTop; },
         doLazyLoadersThrottled, doLazyLoadersDebounced,
         doLazyLoaders = function () {
-            lazyLoaders = _.filter(lazyLoaders, function (lazyLoader) {
-                if (lazyLoader.conditionFn()) {
-                    lazyLoader.loadFn();
-                } else {
-                    return true;
+            if (lazyLoaders.length > 0) {
+                scrollTop = bonzo(document.body).scrollTop();
+                lazyLoaders = _.filter(lazyLoaders, function (lazyLoader) {
+                    if (lazyLoader.conditionFn()) {
+                        lazyLoader.loadFn();
+                    } else {
+                        return true;
+                    }
+                });
+                if (lazyLoaders.length === 0) {
+                    mediator.off('window:scroll', doLazyLoadersThrottled);
                 }
-            });
-            if (lazyLoaders.length === 0) {
-                mediator.off('window:scroll', doLazyLoadersThrottled);
             }
         };
 
@@ -40,7 +44,7 @@ define([
         // calls `loadFn` when `scrollTop` is within `distanceThreshold` of `el`
         var $el = bonzo(el),
             conditionFn = function () {
-                var scrollTop = bonzo(document.body).scrollTop(),
+                var scrollTop = getScrollTop(),
                     elOffset = $el.offset(),
                     loadAfter = elOffset.top - distanceThreshold,
                     loadBefore = elOffset.top + elOffset.height + distanceThreshold;
