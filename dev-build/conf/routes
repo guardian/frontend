@@ -202,6 +202,12 @@ GET         /troubleshoot/test                                                  
 GET         /redirects                                                                                               controllers.admin.RedirectController.redirect()
 POST        /redirect-post                                                                                           controllers.admin.RedirectController.redirectPost()
 
+# css reports
+GET         /css-reports                                                                                             controllers.admin.CssReportController.entry
+GET         /css-reports.json                                                                                        controllers.admin.CssReportController.index
+GET         /css-reports/:date.json                                                                                  controllers.admin.CssReportController.report(date: org.joda.time.LocalDate)
+
+
 # Football admin
 
 GET         /admin/football                                                                                          controllers.admin.SiteController.index
