@@ -22,6 +22,8 @@ define([
                 + '<span class="fc-container__toggle__text">Hide</span>'
                 + '</button>'
             )),
+            adSlotBadge = $('.ad-slot--paid-for-badge', container),
+            buttonText = $('.fc-container__toggle__text', _$button[0]),
             _prefName = 'container-states',
             _toggleText = {
                 hidden: 'Show',
@@ -46,19 +48,29 @@ define([
                 // update user prefs
                 var prefs = userPrefs.get(_prefName);
                 if (prefs && prefs[id]) {
-                    bean.fire(_$button[0], 'click');
+                    setState('hidden');
                 }
             };
 
         // delete old key
         userPrefs.remove('front-trailblocks');
 
+        function setState(state) {
+            fastdom.write(function () {
+                // add/remove rolled class
+                _$container[state === 'displayed' ? 'removeClass' : 'addClass']('fc-container--rolled-up');
+                // data-link-name is inverted, as happens before clickstream
+                _$button.attr('data-link-name', _toggleText[state === 'displayed' ? 'hidden' : 'displayed']);
+                buttonText.text(_toggleText[state]);
+                // hide/show the badge
+                adSlotBadge.css('display', state === 'hidden' ? 'none' : 'block');
+            });
+        }
+
         this.addToggle =  function () {
             // append toggle button
             fastdom.read(function () {
                 var id = _$container.attr('data-id'),
-                    adSlotBadge = $('.ad-slot--paid-for-badge', container),
-                    buttonText = $('.fc-container__toggle__text', _$button[0]),
                     $containerHeader = $('.js-container__header', _$container[0]);
 
                 fastdom.write(function () {
@@ -71,17 +83,8 @@ define([
 
                 mediator.on('module:clickstream:click', function (clickSpec) {
                     if (clickSpec.target === _$button[0]) {
-                        fastdom.write(function () {
-                            _state = (_state === 'displayed') ? 'hidden' : 'displayed';
-                            // add/remove rolled class
-                            _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('fc-container--rolled-up');
-                            // data-link-name is inverted, as happens before clickstream
-                            _$button.attr('data-link-name', _toggleText[_state === 'displayed' ? 'hidden' : 'displayed']);
-                            buttonText.text(_toggleText[_state]);
-                            // hide/show the badge
-                            adSlotBadge.css('display', _state === 'hidden' ? 'none' : 'block');
-                            _updatePref(id, _state);
-                        });
+                        setState((_state === 'displayed') ? 'hidden' : 'displayed');
+                        _updatePref(id, _state);
                     }
                 });
             });
