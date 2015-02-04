@@ -62,10 +62,10 @@ define([
             },
 
             isLink: function (target) {
-                if ($(target).hasClass('search-tool__link')) {
+                if ($(target).hasClass('js-search-tool-link')) {
                     return target;
                 } else {
-                    return $.ancestor(target,'search-tool__link')
+                    return $.ancestor(target,'js-search-tool-link')
                 }
             },
 
@@ -210,7 +210,7 @@ define([
 
                     li.className = 'search-tool__item';
                     li.innerHTML = '<a role="button" href="#' + item.id + '"' +
-                        ' id="' + index + 'sti" class="search-tool__link' + (index === 0 ? ' active"' : '"') +
+                        ' id="' + index + 'sti" class="js-search-tool-link search-tool__link' + (index === 0 ? ' active"' : '"') +
                         ' data-link-name="weather-search-tool" data-weather-id="' + item.id + '" data-weather-city="' + item.city + '">' +
                         item.city + ' <span class="search-tool__meta">' + item.country + '</span></a>';
 
