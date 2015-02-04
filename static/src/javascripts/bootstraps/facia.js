@@ -2,6 +2,7 @@ define([
     'bonzo',
     'qwery',
     // Common libraries
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -20,6 +21,7 @@ define([
 ], function (
     bonzo,
     qwery,
+    _,
     $,
     config,
     detect,
@@ -51,21 +53,14 @@ define([
             },
 
             showContainerToggle: function () {
-                var c = document,
-                    containerToggleAdd = function () {
-                        $('.js-container--toggle', c).each(function (container) {
+                var containerToggleAdd = function (context) {
+                        $('.js-container--toggle', $(context || document)[0]).each(function (container) {
                             new ContainerToggle(container).addToggle();
                         });
                     };
                 mediator.addListeners({
                     'page:front:ready': containerToggleAdd,
-                    'ui:container-toggle:add':  containerToggleAdd,
-                    'modules:geomostpopular:ready': containerToggleAdd
-                });
-                mediator.on(/page:front:ready|ui:container-toggle:add|modules:geomostpopular:ready/, function () {
-                    $('.js-container--toggle', c).each(function (container) {
-                        new ContainerToggle(container).addToggle();
-                    });
+                    'modules:geomostpopular:ready': _.partial(containerToggleAdd, '.js-popular-trails')
                 });
             },
 
