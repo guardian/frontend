@@ -54,7 +54,9 @@ define([
         this.addToggle =  function () {
             // append toggle button
             fastdom.read(function () {
-                var id = _$container.attr('data-id');
+                var id = _$container.attr('data-id'),
+                    adSlotBadge = $('.ad-slot--paid-for-badge', container),
+                    buttonText = $('.fc-container__toggle__text', _$button[0]);
 
                 fastdom.write(function () {
                     $('.js-container__header', _$container[0]).append(_$button);
@@ -72,9 +74,9 @@ define([
                             _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('fc-container--rolled-up');
                             // data-link-name is inverted, as happens before clickstream
                             _$button.attr('data-link-name', _toggleText[_state === 'displayed' ? 'hidden' : 'displayed']);
-                            $('.fc-container__toggle__text', _$button[0]).text(_toggleText[_state]);
+                            buttonText.text(_toggleText[_state]);
                             // hide/show the badge
-                            $('.ad-slot--paid-for-badge', container).css('display', _state === 'hidden' ? 'none' : 'block');
+                            adSlotBadge.css('display', _state === 'hidden' ? 'none' : 'block');
                             _updatePref(id, _state);
                         });
                     }
