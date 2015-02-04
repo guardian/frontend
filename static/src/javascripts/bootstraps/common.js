@@ -11,7 +11,7 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
-    'common/utils/lazy-loader',
+    'common/utils/proximity-loader',
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/url',
@@ -67,7 +67,7 @@ define([
     config,
     cookies,
     detect,
-    lazyLoader,
+    proximityLoader,
     mediator,
     template,
     url,
@@ -179,7 +179,7 @@ define([
                 } else {
                     var relatedEl = qwery('.js-related')[0];
                     if (relatedEl) {
-                        lazyLoader.addScrolling(relatedEl, 1500, modules.transcludeRelated);
+                        proximityLoader.add(relatedEl, 1500, modules.transcludeRelated);
                     }
                 }
             },
@@ -206,7 +206,7 @@ define([
                 } else {
                     var onwardEl = qwery('.js-onward')[0];
                     if (onwardEl) {
-                        lazyLoader.addScrolling(onwardEl, 1500, modules.transcludeOnwardContent);
+                        proximityLoader.add(onwardEl, 1500, modules.transcludeOnwardContent);
                     }
                 }
             },
