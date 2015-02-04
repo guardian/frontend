@@ -56,10 +56,11 @@ define([
             fastdom.read(function () {
                 var id = _$container.attr('data-id'),
                     adSlotBadge = $('.ad-slot--paid-for-badge', container),
-                    buttonText = $('.fc-container__toggle__text', _$button[0]);
+                    buttonText = $('.fc-container__toggle__text', _$button[0]),
+                    $containerHeader = $('.js-container__header', _$container[0]);
 
                 fastdom.write(function () {
-                    $('.js-container__header', _$container[0]).append(_$button);
+                    $containerHeader.append(_$button);
                     _$container
                         .removeClass('js-container--toggle')
                         .addClass('fc-container--has-toggle');
