@@ -65,7 +65,7 @@ define([
                 if ($(target).hasClass('js-search-tool-link')) {
                     return target;
                 } else {
-                    return $.ancestor(target,'js-search-tool-link')
+                    return $.ancestor(target, 'js-search-tool-link');
                 }
             },
 
