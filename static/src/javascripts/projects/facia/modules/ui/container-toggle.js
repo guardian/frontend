@@ -22,7 +22,6 @@ define([
                 + '<span class="fc-container__toggle__text">Hide</span>'
                 + '</button>'
             )),
-            adSlotBadge = $('.ad-slot--paid-for-badge', container),
             buttonText = $('.fc-container__toggle__text', _$button[0]),
             _prefName = 'container-states',
             _toggleText = {
@@ -56,7 +55,10 @@ define([
         userPrefs.remove('front-trailblocks');
 
         function setState(state) {
+            var adSlotBadge = $('.ad-slot--paid-for-badge', container);
+
             _state = state;
+
             fastdom.write(function () {
                 // add/remove rolled class
                 _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('fc-container--rolled-up');
