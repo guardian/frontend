@@ -52,7 +52,7 @@ define([
             $el = bonzo(el),
             prefix = 'facia-snap-point--';
 
-        breakpoints =[
+        breakpoints = [
             { width: 0,   name: 'tiny' },
             { width: 180, name: 'mini' },
             { width: 220, name: 'small' },
