@@ -4,13 +4,12 @@
 define([
     'fastdom',
     'raven'
-],
-function (
+], function (
     fastdom,
     raven
 ) {
     fastdom.onError = function (error) {
-        raven.captureException(error), {
+        raven.captureException(error, {
             tags: {
                 feature: 'fastdom'
             }
