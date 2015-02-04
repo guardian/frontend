@@ -26,8 +26,9 @@ object Application extends Controller with ExecutionContexts {
         successJson => successJson
       )}
 
-  def generateLivePressedFor(collectionId: String) = Action.async { request =>
-    FapiFrontPress.generateCollectionJsonFromFapiClient(collectionId)
+  def generateLivePressedFor(path: String) = Action.async { request =>
+    FapiFrontPress.getPressedFrontForPath(path)
+      .map(Json.toJson(_))
       .map(Json.prettyPrint)
       .map(Ok.apply(_))
       .map(NoCache.apply)
