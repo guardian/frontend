@@ -17,6 +17,8 @@ GET         /count/$prefix<.+>.gif                                              
 GET         /counts.gif                                                                                              controllers.DiagnosticsController.analyticsCounts()
 POST        /css                                                                                                     controllers.DiagnosticsController.css
 OPTIONS     /css                                                                                                     controllers.DiagnosticsController.cssOptions
+POST        /accept-beacon                                                                                           controllers.DiagnosticsController.acceptBeacon
+OPTIONS     /accept-beacon                                                                                           controllers.DiagnosticsController.acceptBeaconOptions
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.

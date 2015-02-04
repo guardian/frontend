@@ -10,10 +10,6 @@ define([
             viewModel: { require: 'widgets/latest' },
             template: { require: 'text!widgets/latest.html' }
         });
-        ko.components.register('iframe-widget', {
-            viewModel: { require: 'widgets/iframe' },
-            template: { require: 'text!widgets/iframe.html' }
-        });
         ko.components.register('search-controls', {
             viewModel: {
                 createViewModel: function (params) {

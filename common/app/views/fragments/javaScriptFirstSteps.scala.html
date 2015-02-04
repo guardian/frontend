@@ -194,9 +194,19 @@
 
 </script>
 
-@* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
-@* also delete iPhoneConfidenceCheck inside of facia.js *@
+
+<script>
+    guardian.isIphone6 = false;
+    guardian.isIphone4 = false;
+    guardian.inTestBucket = Math.floor(Math.random() * 2 + 1) === 1;
+</script>
+
 @if(IphoneConfidence.isSwitchedOn && Seq("uk", "us", "au").contains(item.id)) {
+
+    @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
+    @* also delete iPhoneConfidenceCheck inside of facia.js *@
+
+
     @* see http://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions *@
     <script>
         if (navigator.platform === 'iPhone') {
@@ -209,7 +219,11 @@
             }
 
             if (guardian.isIphone4) {
-                (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-4-start.gif';
+                if (guardian.inTestBucket) {
+                    (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-4-start-b.gif';
+                } else {
+                    (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-4-start-a.gif';
+                }
             }
         }
     </script>
