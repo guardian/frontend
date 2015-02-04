@@ -12,19 +12,33 @@
             position: fixed;
             width: 100%;
             top: 0;
-            left: 0;
+            right: 0;
             padding-left: 15px;
             background: #fff;
             box-shadow: 0px 0px 5px #999;
         }
-        .css-reports-navbar .title {
+        .css-reports-navbar > * {
             float: right;
-            margin: 10px 0;
+            margin: 10px 20px 10px 0;
+            line-height: 30px;
+            font-size: 12px;
+            color: #999;
+        }
+        .css-reports-navbar .title {
             color: #666;
             font-size: 20px;
+            margin-top: 8px;
+        }
+        .css-reports-navbar__inner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #fff;
+            border-right: 1px solid #eee;
+            height: 49px;
+            overflow: hidden;
         }
         .days {
-            float: right;
             margin: 16px 20px 0 10px;
         }
         .selectors {
@@ -34,7 +48,7 @@
             padding: 65px 0 200px 0;
         }
         .alphas {
-            margin: 15px 0;
+            margin: 15px;
             float: left;
         }
         .alphas span {
@@ -83,6 +97,14 @@
     <script src="@routes.Assets.at("javascripts/components/react/react.js")"></script>
     <script src="@routes.Assets.at("javascripts/components/lodash/lodash.js")"></script>
 
+    <div class="css-reports-navbar">
+        <div>
+            bookmarklet:
+            <a href="javascript:(function()%7Bif(window.guardian)%7Bwindow.guardian.api.logCss(true)%7Delse%7Bconsole.log('Not a guardian page%3F')%7D%7D)()">Log CSS</a>
+        </div>
+    <div class="title">CSS selector usage</div>
+    </div>
+
     <div class="js-selectors">Loading...</div>
 
     <script>
@@ -114,9 +136,8 @@
                     starts = this.state.starts;
 
                 return React.DOM.div({onClick: this.handleClick}, [
-                    React.DOM.div({className: 'css-reports-navbar'}, [
+                    React.DOM.div({className: 'css-reports-navbar__inner'}, [
                         React.createElement(dayPicker, this.props),
-                        React.DOM.div({className: 'title'}, 'CSS selector usage :'),
                         React.DOM.div({className: 'alphas'},
                             _.reduce('abcdefghijklmnopqrstuvwxyz', function(acc, a, i) {
                                 acc['_' + i] = React.DOM.span({className: 'starts'}, a);

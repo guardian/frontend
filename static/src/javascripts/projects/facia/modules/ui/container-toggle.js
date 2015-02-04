@@ -1,3 +1,4 @@
+/* jscs:disable disallowDanglingUnderscores */
 define([
     'bean',
     'bonzo',
@@ -9,10 +10,7 @@ define([
     $,
     userPrefs
 ) {
-
     return function (container) {
-        /* jscs:disable disallowDanglingUnderscores */
-
         var _$container = bonzo(container),
             _$button = bonzo(bonzo.create(
                 '<button class="fc-container__toggle" data-link-name="Show">'
@@ -71,7 +69,5 @@ define([
             });
             _readPrefs(_$container);
         };
-
     };
-
 });

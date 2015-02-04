@@ -6,6 +6,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/request-animation-frame',
     'common/utils/storage',
     'common/utils/to-array',
     'common/modules/analytics/beacon',
@@ -23,13 +24,14 @@ define([
     config,
     detect,
     mediator,
+    requestAnimationFrame,
     storage,
     toArray,
     beacon,
     stocks,
     GeoMostPopularFront,
     ContainerToggle,
-    ContainerShowMore,
+    containerShowMore,
     snaps,
     weather
 ) {
@@ -42,16 +44,9 @@ define([
             },
 
             showContainerShowMore: function () {
-                var containerShowMoreAdd = function () {
-                    var c = document;
-
-                    $('.js-container--fc-show-more', c).each(function (container) {
-                        new ContainerShowMore(container).addShowMoreButton();
-                    });
-                };
                 mediator.addListeners({
-                    'modules:container:rendered': containerShowMoreAdd,
-                    'page:front:ready': containerShowMoreAdd
+                    'modules:container:rendered': containerShowMore,
+                    'page:front:ready': containerShowMore
                 });
             },
 
@@ -93,10 +88,13 @@ define([
                             }, 5000);
                         }
                         if (guardian.isIphone4) {
-                            beacon.counts('iphone-4-end');
-                            setTimeout(function () {
-                                beacon.counts('iphone-4-timeout');
-                            }, 5000);
+                            if (guardian.inTestBucket) {
+                                beacon.counts('iphone-4-end-b');
+                                setTimeout(function () { beacon.counts('iphone-4-timeout-b'); }, 5000);
+                            } else {
+                                beacon.counts('iphone-4-end-a');
+                                setTimeout(function () { beacon.counts('iphone-4-timeout-a'); }, 5000);
+                            }
                         }
                     });
                 }

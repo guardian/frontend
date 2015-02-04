@@ -32,9 +32,6 @@ GET           /commercial                controllers.FaciaToolController.collect
 GET           /training                  controllers.FaciaToolController.collectionEditor(priority="training")
 
 
-GET           /editorial/2               controllers.FaciaToolController.multiPane(panes:Int=2)
-GET           /editorial/3               controllers.FaciaToolController.multiPane(panes:Int=3)
-
 GET           /editorial/config          controllers.FaciaToolController.configEditor(priority="editorial")
 GET           /commercial/config         controllers.FaciaToolController.configEditor(priority="commercial")
 GET           /training/config           controllers.FaciaToolController.configEditor(priority="training")

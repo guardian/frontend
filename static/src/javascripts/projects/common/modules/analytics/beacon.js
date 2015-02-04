@@ -10,6 +10,23 @@ define([
     ajax
 ) {
 
+    var canBeacon = !!navigator.sendBeacon;
+
+    function buildCounts(keys) {
+        return map(isArray(keys) ? keys : [keys], function (key) {
+            return 'c=' + key;
+        }).join('&');
+    }
+
+    // note, support is reasonably limited https://developer.mozilla.org/en-US/docs/Web/API/navigator.sendBeacon
+    function beaconCounts(keys) {
+        var url;
+        if (canBeacon) {
+            url = config.page.beaconUrl + '/accept-beacon?' + buildCounts(keys);
+            return navigator.sendBeacon(url, '');
+        }
+    }
+
     return {
         fire: function (path) {
             var img = new Image();
@@ -20,7 +37,7 @@ define([
         postJson: function (path, jsonString, forceAjax) {
             var url = (config.page.beaconUrl || '').replace(/^\/\//, window.location.protocol + '//') + path;
 
-            if ('sendBeacon' in navigator && !forceAjax) {
+            if (canBeacon && !forceAjax) {
                 window.addEventListener('unload', function () {
                     navigator.sendBeacon(url, jsonString);
                 }, false);
@@ -36,12 +53,15 @@ define([
             }
         },
         counts: function (keys) {
-            var query = map(isArray(keys) ? keys : [keys], function (key) {
-                return 'c=' + key;
-            }).join('&');
+            if (canBeacon) {
+                return beaconCounts(keys);
+            } else {
+                var query = buildCounts(keys);
+                return this.fire('/counts.gif?' + query);
+            }
+        },
 
-            return this.fire('/counts.gif?' + query);
-        }
+        beaconCounts: beaconCounts
     };
 
 });

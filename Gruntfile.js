@@ -27,7 +27,8 @@ module.exports = function (grunt) {
                 scsslint: 'grunt-scss-lint',
                 cssmetrics: 'grunt-css-metrics',
                 assetmonitor: 'grunt-asset-monitor',
-                px_to_rem: 'grunt-px-to-rem'
+                px_to_rem: 'grunt-px-to-rem',
+                frequency_graph: 'grunt-frequency-graph'
             }
         }
     });
