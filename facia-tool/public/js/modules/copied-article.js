@@ -1,8 +1,10 @@
 /* global _: true */
 define([
-    'modules/vars'
+    'modules/vars',
+    'utils/mediator'
 ], function(
-    vars
+    vars,
+    mediator
 ) {
     var storage = window.localStorage,
         storageKeyCopied ='gu.fronts-tool.copied';
@@ -10,18 +12,26 @@ define([
     return {
         flush: function() {
             storage.removeItem(storageKeyCopied);
+            mediator.emit('copied-article:change', false);
         },
 
         set: function(article) {
             var group = article.group || {},
-                front = group.front;
+                front = group.front,
+                title = article.meta.snapType() === 'latest' ? '{ ' + article.meta.customKicker() + ' }' : article.meta.headline();
+
+            if (!title && article.fields) {
+                title = article.fields.headline();
+            }
 
             storage.setItem(storageKeyCopied, JSON.stringify({
                 article: article.get(),
                 groupIndex: group.index,
                 frontPosition: front ? front.position() : undefined,
-                groupParentId: group.parent ? group.parent.id : undefined
+                groupParentId: group.parent ? group.parent.id : undefined,
+                displayName: title
             }));
+            mediator.emit('copied-article:change', true);
         },
 
         get: function(detachFromSource) {
@@ -48,6 +58,14 @@ define([
             }) : undefined;
 
             return obj.article;
+        },
+
+        peek: function() {
+            var obj = storage.getItem(storageKeyCopied);
+
+            if (obj) {
+                return JSON.parse(obj);
+            }
         }
     };
 });

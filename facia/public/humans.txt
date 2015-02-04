@@ -50,6 +50,10 @@ Location: London, UK
 Developer: Matt Osborn
 Location: London, UK
 
+Developer: Josh Holder
+Twitter: @Josh_H
+Location: London, UK
+
 Developer: Robert Berry
 Twitter: @RobJamesBerry
 From: Manchester, UK
@@ -58,7 +62,7 @@ Developer: Justin Pinner
 Twitter: @_JustinPinner
 
 Client-side Developer: Alex Sanders
-Location: London/Noriwch
+Location: London/Norwich
 Twitter: @asanders
 
 Director of Digital Strategy: Wolfgang Blau

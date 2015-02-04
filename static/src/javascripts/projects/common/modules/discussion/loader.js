@@ -112,7 +112,7 @@ Loader.prototype.initMainComments = function() {
             container = $('.js-discussion-pagination', toolbarEl).empty();
 
         // When the pagesize is 'All', do not show any pagination.
-        if (this.comments.options.pagesize !== 'All') {
+        if (!this.comments.isAllPageSizeActive()) {
             container.html(newPagination);
         }
     }.bind(this));
@@ -154,16 +154,24 @@ Loader.prototype.initMainComments = function() {
         this.loadComments({
             comment: commentId,
             shouldTruncate: shouldTruncate})
-            .catch(function(err) {
-                var reportMsg = 'Comments failed to load: ' + ('status' in err ? err.status : '');
+            .catch(function(error) {
+                var reportMsg = 'Comments failed to load: ',
+                    request = error.request;
+                if (error.message === 'Request is aborted: timeout') {
+                    reportMsg += 'XHR timeout';
+                } else if (error.message) {
+                    reportMsg += error.message;
+                } else {
+                    reportMsg += 'status' in request ? request.status : '';
+                }
                 raven.captureMessage(reportMsg, {
                     tags: {
                         contentType: 'comments',
                         discussionId: this.getDiscussionId(),
-                        status: 'status' in err ? err.status : '',
-                        readyState: 'readyState' in err ? err.readyState : '',
-                        response: 'response' in err ? err.response : '',
-                        statusText: 'status' in err ? err.statusText : ''
+                        status: 'status' in request ? request.status : '',
+                        readyState: 'readyState' in request ? request.readyState : '',
+                        response: 'response' in request ? request.response : '',
+                        statusText: 'status' in request ? request.statusText : ''
                     }
                 });
             }.bind(this));
@@ -394,6 +402,11 @@ Loader.prototype.loadComments = function(options) {
 
     this.setState('loading');
 
+    // If the caller specified truncation, do not load all comments.
+    if (options && options.shouldTruncate && this.comments.isAllPageSizeActive()) {
+        options.pageSize = 10;
+    }
+
     return this.comments.fetchComments(options)
     .then(function(){
         this.removeState('loading');
@@ -403,13 +416,18 @@ Loader.prototype.loadComments = function(options) {
             // do not call removeTruncation because it could invoke another fetch.
             this.removeState('truncated');
         }
+        if (this.comments.shouldShowPageSizeMessage()){
+            this.setState('pagesize-msg-show');
+        } else {
+            this.removeState('pagesize-msg-show');
+        }
     }.bind(this));
 };
 
 Loader.prototype.removeTruncation = function() {
 
     // When the pagesize is 'All', the full page is not yet loaded, so load the comments.
-    if (this.comments.options.pagesize === 'All') {
+    if (this.comments.isAllPageSizeActive()) {
         this.loadComments();
     } else {
         this.removeState('truncated');

@@ -4,7 +4,7 @@ import java.net.URLDecoder
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import common.Edition
-import conf.Switches.EditionAwareLogoSlots
+import conf.Switches.{EditionAwareLogoSlots, LegacyAdFeatureExpirySwitch}
 import model.Tag
 import model.`package`.frontKeywordIds
 
@@ -40,12 +40,8 @@ trait PaidForTagAgent {
     def editionMatches(maybeEdition: Option[Edition], dfpTag: PaidForTag): Boolean = {
       maybeEdition.isEmpty || maybeEdition.exists { edition =>
         dfpTag.lineItems exists { lineItem =>
-          val editionIds = lineItem.targeting.customTargetSets.flatMap {
-            _.targets filter {
-              _.isEditionTag
-            } flatMap (_.values.map(_.toLowerCase))
-          }.distinct
-          editionIds.isEmpty || editionIds.contains(edition.id.toLowerCase)
+          val editions = lineItem.targeting.editions
+          editions.isEmpty || editions.contains(edition)
         }
       }
     }
@@ -177,15 +173,16 @@ trait PaidForTagAgent {
                                             maybeDfpTag: => Option[PaidForTag],
                                     maybeSectionId: Option[String]): Boolean = {
 
-    def hasExpired(lineItem: GuLineItem): Boolean = lineItem.endTime exists (_.isBeforeNow)
-
-    lazy val isAdFeatureToneTagPage = pageId == "tone/advertisement-features"
-
     val lineItems = maybeDfpTag map (_.lineItems) getOrElse Nil
 
+    def hasExpired(lineItem: GuLineItem): Boolean = lineItem.endTime exists (_.isBeforeNow)
+
+    lazy val isExpiredLegacyAdFeature =
+      LegacyAdFeatureExpirySwitch.isSwitchedOn &&
+        lineItems.isEmpty && hasAdFeatureTone && pageId != "tone/advertisement-features"
+
     (!isPreview) &&
-      ((lineItems.isEmpty && hasAdFeatureTone && !isAdFeatureToneTagPage) ||
-        lineItems.nonEmpty && (lineItems forall hasExpired))
+      (isExpiredLegacyAdFeature || (lineItems.nonEmpty && (lineItems forall hasExpired)))
   }
 
   def isExpiredAdvertisementFeature(pageId: String,

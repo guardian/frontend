@@ -2,10 +2,12 @@ define([
     'bonzo',
     'qwery',
     // Common libraries
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/request-animation-frame',
     'common/utils/storage',
     'common/utils/to-array',
     'common/modules/analytics/beacon',
@@ -19,17 +21,19 @@ define([
 ], function (
     bonzo,
     qwery,
+    _,
     $,
     config,
     detect,
     mediator,
+    requestAnimationFrame,
     storage,
     toArray,
     beacon,
     stocks,
     GeoMostPopularFront,
     ContainerToggle,
-    ContainerShowMore,
+    containerShowMore,
     snaps,
     weather
 ) {
@@ -42,35 +46,21 @@ define([
             },
 
             showContainerShowMore: function () {
-                var containerShowMoreAdd = function () {
-                    var c = document;
-
-                    $('.js-container--fc-show-more', c).each(function (container) {
-                        new ContainerShowMore(container).addShowMoreButton();
-                    });
-                };
                 mediator.addListeners({
-                    'modules:container:rendered': containerShowMoreAdd,
-                    'page:front:ready': containerShowMoreAdd
+                    'modules:container:rendered': containerShowMore,
+                    'page:front:ready': containerShowMore
                 });
             },
 
             showContainerToggle: function () {
-                var c = document,
-                    containerToggleAdd = function () {
-                        $('.js-container--toggle', c).each(function (container) {
+                var containerToggleAdd = function (context) {
+                        $('.js-container--toggle', $(context || document)[0]).each(function (container) {
                             new ContainerToggle(container).addToggle();
                         });
                     };
                 mediator.addListeners({
                     'page:front:ready': containerToggleAdd,
-                    'ui:container-toggle:add':  containerToggleAdd,
-                    'modules:geomostpopular:ready': containerToggleAdd
-                });
-                mediator.on(/page:front:ready|ui:container-toggle:add|modules:geomostpopular:ready/, function () {
-                    $('.js-container--toggle', c).each(function (container) {
-                        new ContainerToggle(container).addToggle();
-                    });
+                    'modules:geomostpopular:ready': _.partial(containerToggleAdd, '.js-popular-trails')
                 });
             },
 
@@ -93,10 +83,13 @@ define([
                             }, 5000);
                         }
                         if (guardian.isIphone4) {
-                            beacon.counts('iphone-4-end');
-                            setTimeout(function () {
-                                beacon.counts('iphone-4-timeout');
-                            }, 5000);
+                            if (guardian.inTestBucket) {
+                                beacon.counts('iphone-4-end-b');
+                                setTimeout(function () { beacon.counts('iphone-4-timeout-b'); }, 5000);
+                            } else {
+                                beacon.counts('iphone-4-end-a');
+                                setTimeout(function () { beacon.counts('iphone-4-timeout-a'); }, 5000);
+                            }
                         }
                     });
                 }
