@@ -1,8 +1,8 @@
 package conf
 
 import common._
-import org.joda.time.DateTime._
-import org.joda.time.{DateTimeZone, DateTime, Days, LocalDate}
+import conf.Configuration.environment
+import org.joda.time._
 import play.api.Play.current
 import play.api.libs.ws.WS
 import play.api.{Application, Plugin}
@@ -49,22 +49,18 @@ case class Switch(group: String,
                   sellByDate: LocalDate
                    ) extends SwitchTrait
 
-case class TimedSwitch(group: String,
+case class TimerSwitch(group: String,
                        name: String,
                        description: String,
                        safeState: SwitchState,
                        sellByDate: LocalDate,
-                       activeTimes: Seq[(DateTime, DateTime)]
+                       activePeriods: Seq[Interval]
                         ) extends SwitchTrait with Logging {
 
   def isSwitchedOnAndActive: Boolean = {
-    val active = activeTimes.exists {
-      case (start, end) =>
-        val rightNow = now()
-        rightNow.isAfter(start) && rightNow.isBefore(end)
-    }
+    val active = activePeriods.exists(_.containsNow())
     log.info(s"TimedSwitch $name switched on $isSwitchedOn active $active")
-    isSwitchedOn && active
+    isSwitchedOn && (environment.isNonProd || active)
   }
 }
 
@@ -84,12 +80,6 @@ object Switches {
     "If this switch is on then we will request more items for larger tag pages",
     safeState = Off,
     sellByDate = never
-  )
-
-  val RssServerSwitch = Switch("Performance", "rss-server",
-    "If this switch is on then RSS traffic will be redirected to RSS server",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 2, 1)
   )
 
   val CircuitBreakerSwitch = Switch("Performance", "circuit-breaker",
@@ -164,7 +154,7 @@ object Switches {
 
   val DiscussionSwitch = Switch("Performance", "discussion",
     "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
-    safeState = Off, sellByDate = never
+    safeState = On, sellByDate = never
   )
 
   val DiscussionPageSizeSwitch = Switch("Performance", "discussion-page-size",
@@ -293,19 +283,42 @@ object Switches {
     safeState = Off, sellByDate = never)
 
   val AdFeatureExpirySwitch = Switch("Commercial", "enable-expire-ad-features",
-    "If this switch is on, ad features with expired line items will return 410s.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 4))
+    "If this switch is on, expired ad features will be redirected.",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
+
+  val LegacyAdFeatureExpirySwitch = Switch("Commercial", "enable-expire-legacy-ad-features",
+    "If this switch is on, expired legacy ad features will be redirected.",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
 
   val EditionAwareLogoSlots = Switch("Commercial", "edition-aware-logo-slots",
     "If this switch is on, logo slots will honour visitor's edition.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 4))
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
 
-  val AppleAdSwitch = TimedSwitch("Commercial", "apple-ads",
-    "If this switch is on, Apple ads will appear during active periods.",
+  private def dateInFebruary(day: Int): Interval =
+    new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
+
+  val AppleAdNetworkFrontSwitch = TimerSwitch("Commercial", "apple-ads-on-network-front",
+    "If this switch is on, Apple ads will appear on the network front during active periods.",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
-    activeTimes = Seq(
-      (new DateTime(2015, 1, 1, 0, 1, DateTimeZone.UTC),
-        new DateTime(2015, 3, 1, 0, 1, DateTimeZone.UTC))
+    activePeriods = Seq(
+      dateInFebruary(5),
+      dateInFebruary(7),
+      dateInFebruary(8),
+      dateInFebruary(10),
+      dateInFebruary(11),
+      dateInFebruary(12)
+    )
+  )
+
+  val AppleAdCultureFrontSwitch = TimerSwitch("Commercial", "apple-ads-on-culture-front",
+    "If this switch is on, Apple ads will appear on the culture front during active periods.",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
+    activePeriods = Seq(
+      dateInFebruary(7),
+      dateInFebruary(8),
+      dateInFebruary(9),
+      dateInFebruary(11),
+      dateInFebruary(12)
     )
   )
 
@@ -356,14 +369,6 @@ object Switches {
     "Fixtures and results container on football tag pages",
     safeState = On,
     sellByDate = never
-  )
-
-  val HardcodedSectionTagLookUp = Switch(
-    "Feature",
-    "hardcoded-section-tag-lookup",
-    "Hardcoded section tag id lookup (uk-news palaver)",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 1, 31)
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
@@ -506,11 +511,6 @@ object Switches {
   val ToolDisable = Switch("Facia", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
     safeState = Off, sellByDate = never
-  )
-
-  val FaciaToolPaneOptions = Switch("Facia", "facia-tool-pane-options",
-    "If this switch is on facia tool will display more options for panes",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   val ToolSparklines = Switch("Facia", "facia-tool-sparklines",
