@@ -491,8 +491,8 @@ define([
             robust('c-analytics',       modules.loadAnalytics);
             robust('c-cookies',         modules.cleanupCookies);
             robust('c-popular',         modules.transcludePopular);
-            robust('c-related',         modules.transcludeRelated);
-            robust('c-onward',          modules.transcludeOnwardContent);
+            robust('c-related',         modules.initRelated);
+            robust('c-onward',          modules.initOnwardContent);
             robust('c-overlay',         modules.initOpenOverlayOnClick);
             robust('c-css-logging',     modules.runCssLogging);
             robust('c-public-api',      modules.initPublicApi);
