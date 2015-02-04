@@ -83,8 +83,7 @@
             display: none;
         }
     }
-    .i-marque-54,
-    .i-marque-54-blue {
+    .i-marque-54 {
         display: none;
 
         @include mq(leftCol) {
@@ -130,7 +129,6 @@
     top: -5px;
 
     @include mq(leftCol) {
-        text-align: center;
         min-width: 54px;
     }
 }

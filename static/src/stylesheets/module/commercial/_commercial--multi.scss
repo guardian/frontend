@@ -13,6 +13,23 @@ Multi component (AKA Frankenponent)
     .fc-container__header__title {
         color: colour(neutral-1);
     }
+    
+    .commercial__title__logo {
+        top: 0;
+        left: $gs-gutter/4;
+        
+        @include mq(leftCol) {
+            left: 0;
+        }
+    }
+    
+    .i-marque-54-blue {
+        display: none;
+
+        @include mq(leftCol) {
+            display: block;
+        }
+    }
 }
 
 .commercial--multi {
