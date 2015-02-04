@@ -92,8 +92,6 @@ define([
                 'id': location.id,
                 'city': location.city
             });
-
-            city = location.city;
         },
 
         getDefaultLocation: function () {
@@ -106,7 +104,6 @@ define([
                     .then(function (response) {
                         this.fetchWeatherData(response);
                         this.track(response.city);
-                        city = response.city;
                     }.bind(this))
                     .fail(function (err, msg) {
                         raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
@@ -134,7 +131,6 @@ define([
 
         clearLocation: function () {
             userPrefs.remove(prefName);
-            city = '';
             searchTool.setInputValue();
         },
 

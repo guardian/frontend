@@ -116,7 +116,7 @@ define([
                 mediator.emit('autocomplete:fetch', data);
                 this.setInputValue();
                 this.track(data.city);
-
+                inputTmp = data.city;
                 $input.blur();
 
                 // Clear all after timeout because of the tracking we can't remove everything straight away
