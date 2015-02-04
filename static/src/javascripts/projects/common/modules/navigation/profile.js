@@ -66,17 +66,16 @@ define([
                 });
             }
 
-            fastdom.write(function () {
-                $popup.html(
+            $popup.html(
                     '<ul class="popup popup__group popup--profile" data-link-name="Sub Sections" data-test-id="popup-profile">' +
-                        this.menuListItem('Comment activity', this.opts.url + '/user/id/' + user.id) +
-                        this.menuListItem('Edit profile', this.opts.url + '/public/edit') +
-                        this.menuListItem('Email preferences', this.opts.url + '/email-prefs') +
-                        this.menuListItem('Change password', this.opts.url + '/password/change') +
-                        this.menuListItem('Sign out', this.opts.url + '/signout') +
+                    this.menuListItem('Comment activity', this.opts.url + '/user/id/' + user.id) +
+                    this.menuListItem('Edit profile', this.opts.url + '/public/edit') +
+                    this.menuListItem('Email preferences', this.opts.url + '/email-prefs') +
+                    this.menuListItem('Change password', this.opts.url + '/password/change') +
+                    this.menuListItem('Sign out', this.opts.url + '/signout') +
                     '</ul>'
-                );
-            });
+            );
+
         } else {
             fastdom.write(function () {
                 $popup.remove();
