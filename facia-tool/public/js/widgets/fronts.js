@@ -33,6 +33,7 @@ define([
         this.listeners = listeners;
         this.mode = ko.observable(params.mode || 'draft');
         this.flattenGroups = ko.observable(params.mode === 'treats');
+        this.maxArticlesInHistory = this.confirmSendingAlert() ? 20 : 5;
 
         this.front.subscribe(this.onFrontChange.bind(this));
         this.mode.subscribe(this.onModeChange.bind(this));
@@ -298,6 +299,9 @@ define([
             // TODO uncomment when we want to restrict to snap link
             // return 'Sorry, you can only add links to treats.';
             return false;
+        }
+        if (this.confirmSendingAlert() && item.group && (item.group.items().length !== 1 || item.group.items()[0] !== item)) {
+            return 'You can only have one article in this collection.';
         }
     };
 

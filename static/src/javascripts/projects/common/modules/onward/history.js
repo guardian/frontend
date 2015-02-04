@@ -3,6 +3,7 @@
  Description: Gets and sets users reading history
  */
 define([
+    'fastdom',
     'common/utils/$',
     'common/utils/_',
     'common/utils/config',
@@ -12,6 +13,7 @@ define([
     'text!common/views/history/tag.html',
     'text!common/views/history/mega-nav.html'
 ], function (
+    fastdom,
     $,
     _,
     config,
@@ -359,7 +361,7 @@ define([
     }
 
     function showInMegaNav() {
-        var tags;
+        var tags, tagsHTML;
 
         if (getSummary().showInMegaNav === false) { return; }
 
@@ -368,18 +370,19 @@ define([
         tags = getPopularFiltered();
 
         if (tags.length) {
-            getMegaNav().prepend(
-                template(viewMegaNav, {
-                    tags: tags.map(tagHtml).join('')
-                })
-            );
+            tagsHTML = template(viewMegaNav, {tags: tags.map(tagHtml).join('')});
+            fastdom.write(function () {
+                getMegaNav().prepend(tagsHTML);
+            });
             inMegaNav = true;
         }
     }
 
     function removeFromMegaNav() {
         getMegaNav().each(function () {
-            $('.js-global-navigation__section--history', this).remove();
+            fastdom.write(function () {
+                $('.js-global-navigation__section--history', this).remove();
+            });
         });
         inMegaNav = false;
     }

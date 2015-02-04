@@ -201,10 +201,12 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
   def renderVideoEncodingsDashboard() = AuthActions.AuthActionTest { request =>
 
     val videoEncodingsReport = jobs.VideoEncodingsJob.getReport("missing-encodings")
+
+
     videoEncodingsReport match {
-      case List() => NoCache(Ok("There are no reported encodings missing as of: %s".format(missingVideoEncodingDateTimeFormat.print(DateTime.now())) ))
-      case List(("Not", "Yet", "Ready")) => NoCache(Ok("Missing video encoding: report has not yet generated"))
-      case _ => NoCache(Ok( views.html.missingVideoEncodings( "PROD", videoEncodingsReport) ) )
+      case Some(Nil) => NoCache(Ok(s"There are no reported encodings missing as of: ${missingVideoEncodingDateTimeFormat.print(DateTime.now())}" ))
+      case Some(videoEncodings)=> NoCache(Ok( views.html.missingVideoEncodings( "PROD", videoEncodings) ) )
+      case None => NoCache(Ok("Missing video encoding: report has not yet generated"))
     }
  }
 }

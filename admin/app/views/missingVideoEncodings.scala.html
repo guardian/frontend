@@ -1,4 +1,6 @@
-@(env: String, encodingData: List[(String, String, String)])
+@import jobs.MissingEncoding
+
+@(env: String, encodingData: List[MissingEncoding])
 
     @admin_main("Videos with missing encodings", env, isAuthed = true )  {
 
@@ -14,10 +16,10 @@
             </tr>
         </thead>
         <tbody>
-        @encodingData.map { case (title, url, encoding) =>
+        @encodingData.map { encoding =>
         <tr>
-            <td><a href="@{url}">@{title}</a></td>
-            <td>@{encoding}</td>
+            <td><a href="@{encoding.url}">@{encoding.title}</a></td>
+            <td>@{encoding.encodingSrc}</td>
         </tr>
         }
         </tbody>

@@ -22,10 +22,10 @@ import model.diagnostics.video.DynamoDbStore
 
 object VideoEncodingsJob extends ExecutionContexts with Logging  {
 
-  private val videoEncodingsAgent = AkkaAgent[Map[String, List[(String, String, String)]]](Map.empty)
+  private val videoEncodingsAgent = AkkaAgent[Map[String, List[MissingEncoding]]](Map.empty)
   implicit val timeout = Timeout(5 seconds)
 
-  def getReport(report: String): List[(String, String, String)] = videoEncodingsAgent().get(report).getOrElse(List(("Not","Yet","Ready")))
+  def getReport(report: String): Option[List[MissingEncoding]] = videoEncodingsAgent().get(report)
   def doesEncodingExist(encodingUrl: String) : Future[Boolean]= {
      val response = WS.url(encodingUrl).head()
      response.map { r => r.status == 404 || r.status == 500}
@@ -63,22 +63,25 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
            }
          }).map(_.flatten)
          missingEncodingsForVideo.map {
-           missingEncodings => missingEncodings.map{ missingEncoding => (video.webTitle, video.webUrl, missingEncoding) }
+           missingEncodings => missingEncodings.map{ missingEncoding => MissingEncoding(video, missingEncoding) }
          }
        }
      ).map(_.flatten)
 
+
+
      missingEncodingsData.onSuccess{ case missingEncodings =>
-         missingEncodings.foreach { case (title, url, encoding) =>
-             DynamoDbStore.haveSeenMissingEncoding(encoding, url) map {
-                case true => log.debug(s"Already seen missing encoding: $encoding for url: $url")
+
+         missingEncodings.map { case missingEncoding: MissingEncoding =>
+             DynamoDbStore.haveSeenMissingEncoding(missingEncoding.encodingSrc, missingEncoding.url) map {
+                case true => log.debug(s"Already seen missing encoding: ${missingEncoding.encodingSrc} for url: ${missingEncoding.url}")
                 case false =>
-                  log.info(s"Send notification for missing video encoding: $encoding for url: $url")
-                  MissingVideoEncodings.sendMessage(encoding, url, title)
-                  DynamoDbStore.storeMissingEncoding(encoding, url)
+                  log.info(s"Send notification for missing video encoding: ${missingEncoding.encodingSrc} for url: ${missingEncoding.url}")
+                  MissingVideoEncodings.sendMessage(missingEncoding.encodingSrc, missingEncoding.url, missingEncoding.title)
+                  DynamoDbStore.storeMissingEncoding(missingEncoding.encodingSrc, missingEncoding.url)
              }
          }
-         videoEncodingsAgent.send( old => old + ("missing-encodings" -> missingEncodings) )
+         videoEncodingsAgent.send( old => old + ("missing-encodings" -> List()) )
      }
   }
 }
@@ -102,4 +105,17 @@ class Video(delegate: Content) {
         (source \\ "@src").text.trim()
     }
   }
+}
+
+/*
+object MissingEncoding {
+  def apply(video: Video, encodingSrc: String) = {
+    new MissingEncoding(video, encodingSrc)
+  }
+}
+*/
+
+case class MissingEncoding(video: Video, encodingSrc: String) {
+  lazy val url = video.webUrl
+  lazy val title = video.webTitle
 }

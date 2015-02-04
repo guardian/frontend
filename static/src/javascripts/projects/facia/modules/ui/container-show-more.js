@@ -1,109 +1,121 @@
 define([
-    'bean',
     'bonzo',
+    'fastdom',
     'qwery',
+    'common/utils/_',
     'common/utils/$',
-    'common/utils/template',
-    'common/modules/user-prefs',
-    'text!facia/views/button-show-more.html'
+    'common/utils/mediator',
+    'common/modules/user-prefs'
 ], function (
-    bean,
     bonzo,
+    fastdom,
     qwery,
+    _,
     $,
-    template,
-    userPrefs,
-    showMoreBtn
+    mediator,
+    userPrefs
 ) {
-    return function (container) {
-        var $container           = bonzo(container),
-            itemsHiddenOnDesktop = qwery('.js-hide', $container).length > 0,
-            itemsHiddenOnMobile  = qwery('.js-hide-on-mobile', $container).length > 0,
-            className            = 'fc-show-more--hidden',
-            textHook             = 'js-button-text',
-            $button              = null,
-            state                = 'hidden',
-            prefName             = 'section-states',
-            buttonText           = {},
-            self                 = this;
+    var className = 'fc-show-more--hidden',
+        textHook = 'js-button-text',
+        prefName = 'section-states';
 
-        this.addShowMoreButton = function () {
-            var tmpTitle = this.getContainerTitle();
+    function setButtonState(button, state) {
+        var text = button.text[state];
+        $('.' + textHook, button.$el).text(text);
+        button.$el.attr('data-link-name', state === 'displayed' ? 'less' : 'more')
+            .toggleClass('button--primary', state !== 'displayed')
+            .toggleClass('button--tertiary', state === 'displayed');
+        $('.i', button.$el).toggleClass('i-plus-white', state !== 'displayed')
+            .toggleClass('i-minus-blue', state === 'displayed');
+    }
 
-            buttonText = {
-                'hidden': 'More ' + tmpTitle,
-                'displayed': 'Less ' + tmpTitle
-            };
+    function updatePref(containerId, state) {
+        var prefs = userPrefs.get(prefName, {
+            type: 'session'
+        }) || {};
+        if (state !== 'displayed') {
+            delete prefs[containerId];
+        } else {
+            prefs[containerId] = 'more';
+        }
+        userPrefs.set(prefName, prefs, {
+            type: 'session'
+        });
+    }
 
-            $button = $.create(template(showMoreBtn, {
-                type: buttonText[state],
-                dataLink: buttonText.displayed
-            }));
+    function readPrefs(containerId) {
+        var prefs = userPrefs.get(prefName, {
+            type: 'session'
+        });
+        return (prefs && prefs[containerId]) ? 'displayed' : 'hidden';
+    }
 
-            if (itemsHiddenOnMobile || itemsHiddenOnDesktop) {
-                if (!itemsHiddenOnDesktop) {
-                    $container.addClass('fc-show-more--mobile-only');
-                }
-
-                $container.addClass(className)
-                    .append($button)
-                    .removeClass('js-container--fc-show-more');
-                bean.on($button[0], 'click', showMore);
-            }
-
-            this.readPrefs($container);
-        };
-
-        this.getContainerTitle = function () {
-            return $container.data('title') || '';
-        };
-
-        this.changeButtonText = function () {
-            $('.' + textHook, $button).text((state === 'hidden') ? buttonText[state] : buttonText[state].split(' ')[0]);
-        };
-
-        this.changeButtonState = function () {
-            $button.attr('data-link-name', buttonText[(state === 'displayed') ? 'hidden' : 'displayed'])
-                .toggleClass('button--primary', state !== 'displayed')
-                .toggleClass('button--tertiary', state === 'displayed');
-            $('.i', $button).toggleClass('i-plus-white', state !== 'displayed')
-                .toggleClass('i-minus-blue', state === 'displayed');
-        };
-
-        this.updatePref = function ($container, state) {
-            // update user prefs
-            var prefs = userPrefs.get(prefName, { type: 'session' }),
-                prefValue = $container.attr('data-id');
-            if (state !== 'displayed') {
-                delete prefs[prefValue];
-            } else {
-                if (!prefs) {
-                    prefs = {};
-                }
-                prefs[prefValue] = 'more';
-            }
-            userPrefs.set(prefName, prefs, { type: 'session' });
-        };
-
-        this.readPrefs = function ($container) {
-            // update user prefs
-            var prefs = userPrefs.get(prefName, { type: 'session' });
-            if (prefs && prefs[$container.attr('data-id')]) {
-                bean.fire($button[0], 'click');
-            }
-        };
-
-        function showMore() {
+    function showMore($container, button) {
+        fastdom.write(function () {
             /**
              * Do not remove: it should retain context for the click stream module, which recurses upwards through
              * DOM nodes.
              */
-            $container.toggleClass(className, state === 'displayed');
-            state = (state === 'hidden') ? 'displayed' : 'hidden';
-            self.changeButtonText();
-            self.changeButtonState();
+            $container.toggleClass(className, button.state === 'displayed');
+            button.state = (button.state === 'hidden') ? 'displayed' : 'hidden';
+            setButtonState(button, button.state);
+            updatePref(button.id, button.state);
+        });
+    }
 
-            self.updatePref($container, state);
+    function renderToDom($container, button) {
+        fastdom.write(function () {
+            $container.addClass(className)
+                .removeClass('js-container--fc-show-more')
+                .toggleClass(className, button.state === 'hidden');
+            // Initialise state, as it might be different from what was rendered server side based on localstorage prefs
+            setButtonState(button, button.state);
+        });
+    }
+
+    function makeButton($container) {
+        var id,
+            state,
+            button,
+            $el = $('.js-show-more-button', $container);
+
+        if ($el) {
+            id = $container.attr('data-id');
+            state = readPrefs(id);
+
+            button = {
+                $el: $el,
+                id: id,
+                text: {
+                    hidden: $('.js-button-text', $el).text(),
+                    displayed: 'Less'
+                },
+                state: state
+            };
+            return button;
         }
+    }
+
+    return function () {
+        fastdom.read(function () {
+            var containers = qwery('.js-container--fc-show-more').map(bonzo),
+                buttons = _.map(containers, makeButton),
+                containersWithButtons = _.filter(_.zip(containers, buttons), function (pair) {
+                    return pair[1];
+                });
+
+            _.forEach(containersWithButtons, function (pair) {
+                renderToDom(pair[0], pair[1]);
+            });
+
+            mediator.on('module:clickstream:click', function (clickSpec) {
+                var pair = _.find(containersWithButtons, function (pair) {
+                    return pair[1].$el[0] === clickSpec.target;
+                });
+                if (pair) {
+                    showMore(pair[0], pair[1]);
+                }
+            });
+        });
     };
 });
