@@ -3,14 +3,12 @@ define([
     'bonzo',
     'common/utils/$',
     'common/utils/ajax',
-    'common/utils/template',
     'helpers/injector'
 ], function (
     bean,
     bonzo,
     $,
     ajax,
-    template,
     Injector
     ) {
 
@@ -227,12 +225,15 @@ define([
                 });
 
                 it("should add weather component to the DOM", function () {
+                    spyOn(sut, "bindEvents");
+                    spyOn(sut, "addSearch").and.callThrough();
+
                     var mockWeatherData = {
-                            weatherIcon: 3,
-                            temperature: {
-                                imperial: "39°F",
-                                metric: "4°C"
-                            }
+                            html: '<div class="weather">' +
+                                '<input class="js-weather-input" value="{{city}}"/>' +
+                                '<span class="js-weather-temp">4°C</span>' +
+                                '<span class="js-weather-icon inline-weather-31"></span>'
+
                         },
                         mockCity = 'London';
 
@@ -242,7 +243,29 @@ define([
 
                     expect($(".js-search-tool-input", $weather).val()).toEqual('London');
                     expect($(".js-weather-temp", $weather).text()).toEqual('4°C');
-                    expect($(".js-weather-icon", $weather).hasClass('i-weather-' + mockWeatherData["weatherIcon"])).toBeTruthy();
+                    expect($(".inline-weather-31", $weather).length).toEqual(1);
+                    expect(sut.bindEvents).toHaveBeenCalled();
+                    expect(sut.addSearch).toHaveBeenCalled();
+
+                    mockWeatherData = {
+                        html: '<div class="weather">' +
+                            '<input class="js-weather-input" value="{{city}}"/>' +
+                            '<span class="js-weather-temp">6°C</span>' +
+                            '<span class="js-weather-icon inline-weather-12"></span>'
+
+                    };
+                    mockCity = 'Sydney';
+
+                    var $body = $('body');
+                    $body.html('');
+                    $body.append(container);
+
+                    sut.render(mockWeatherData, mockCity);
+                    expect($(".js-weather-input", $body).val()).toEqual('Sydney');
+                    expect($(".js-weather-temp", $body).text()).toEqual('6°C');
+                    expect($(".inline-weather-12", $body).length).toEqual(1);
+                    expect(sut.bindEvents.calls.count()).toEqual(1);
+                    expect(sut.addSearch.calls.count()).toEqual(1);
                 });
 
                 it("should fetch the forecast data", function () {

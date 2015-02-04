@@ -2,7 +2,7 @@
   "name": "frontend-common-js",
   "version": "0.1.0 ",
   "dependencies": {
-    "bean": "~1.0.4",
+    "bean": "~1.0.14",
     "eventEmitter": "~4.2.6",
     "fastdom": "0.8.5",
     "imager.js": "oncletom/Imager.js#feature-separation",
@@ -12,7 +12,7 @@
     "curl": "~0.8.9",
     "qwery": "3.4.2",
     "react": "0.11.2",
-    "reqwest": "guardian/reqwest#master",
+    "reqwest": "1.1.5",
     "enhancer": "0.1.1",
     "videojs": "guardian/video.js#158221b5d997a184972fbf038c9eebdb676d30c8",
     "videojs-contrib-ads": "videojs/videojs-contrib-ads#f44387a4d2fd939f9a665762917e2fa6fc8838d7",
