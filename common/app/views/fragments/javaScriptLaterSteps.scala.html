@@ -65,7 +65,7 @@
 
         @if(FontSwitch.isSwitchedOn) {
             // Check to see if you should get webfonts, and then try to load them from localStorage if so
-            var cookieData = 'GU_fonts=off; domain=.theguardian.com; path=/';
+            var cookieData = 'GU_fonts=off; domain=' + location.hostname + '; path=/';
 
             function disableFonts () {
                 document.cookie = cookieData + '; max-age=' + (60 * 60 * 24 * 365);
