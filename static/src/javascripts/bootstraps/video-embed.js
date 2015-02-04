@@ -6,12 +6,17 @@ define([
     'videojs',
     'videojsembed',
     'common/utils/_',
+    'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
+    'common/utils/template',
     'common/modules/analytics/omniture',
+    'common/modules/component',
     'common/modules/video/tech-order',
     'common/modules/video/events',
-    'text!common/views/ui/loading.html'
+    'common/views/svgs',
+    'text!common/views/ui/loading.html',
+    'text!common/views/media/titlebar.html'
 ], function (
     bean,
     bonzo,
@@ -19,13 +24,20 @@ define([
     videojs,
     videojsembed,
     _,
+    $,
     config,
     deferToAnalytics,
+    template,
     Omniture,
+    Component,
     techOrder,
     events,
-    loadingTmpl
+    svgs,
+    loadingTmpl,
+    titlebarTmpl
     ) {
+
+    var omniture = new Omniture(window.s);
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -65,6 +77,23 @@ define([
 
         bean.on(clickbox, 'click', events.click.bind(player));
         bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
+    }
+
+    function addTitleBar() {
+        var data = {
+            webTitle: config.page.webTitle,
+            pageId: config.page.pageId,
+            icon: svgs('marque36icon')
+        };
+        $('.vjs-control-bar').after(template(titlebarTmpl, data));
+        bean.on($('.vjs-title-bar')[0], 'click', function (e) {
+            omniture.logTag({
+                tag: 'Embed | title bar',
+                sameHost: false,
+                samePage: false,
+                target: e.target
+            });
+        });
     }
 
     function initEndSlate(player) {
@@ -115,6 +144,7 @@ define([
                 var vol;
 
                 initLoadingSpinner(player);
+                addTitleBar();
                 events.bindGlobalEvents(player);
 
                 // unglitching the volume on first load
@@ -133,10 +163,9 @@ define([
                         events.bindContentEvents(player);
                     });
 
-                    new Omniture(window.s).go();
+                    omniture.go();
+                    initEndSlate(player);
                 }
-
-                initEndSlate(player);
             });
 
             mouseMoveIdle = _.debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);

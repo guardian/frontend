@@ -23,6 +23,12 @@ $c-soulmates-high: colour(neutral-1);
         }
     }
 
+    .commercial__body {
+        @include mq(wide) {
+            padding-bottom: $gs-baseline*2.5;
+        }
+    }
+
     .i-soulmates-title-background {
         padding-top: $gs-baseline*2;
         background-repeat: no-repeat;

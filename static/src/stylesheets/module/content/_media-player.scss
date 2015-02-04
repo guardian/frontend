@@ -37,6 +37,10 @@ $ima-controls-height: 70px;
     position: relative;
 }
 
+.gu-video-embed-html {
+    overflow-y: auto;
+}
+
 /* VJS
    ========================================================================== */
 .vjs-tech {
@@ -718,6 +722,62 @@ $ima-controls-height: 70px;
     }
 }
 
+.vjs-title-bar {
+    position: fixed;
+    width: 100%;
+    height: $gs-baseline*4;
+    box-sizing: border-box;
+    background-color: rgba(25, 25, 25, .8);
+    padding: $gs-baseline/2 $gs-baseline;
+    @include fs-textSans(3);
+    font-weight: bold;
+    @include transition(top .8s);
+    transition-delay: 1s;
+    left: 0;
+    top: $gs-baseline*-4;
+    z-index: 4;
+
+    .gu-media-wrapper:hover .vjs-mousemoved &,
+    .vjs-paused &,
+    &:hover {
+        top: 0;
+        @include transition(top 0s);
+        transition-delay: 0s;
+    }
+
+    .vjs-control-content {
+        position: absolute;
+        top: $gs-baseline/3;
+        right: $gs-baseline*4;
+    }
+
+    .vjs-title {
+        margin-top: $gs-baseline*2/3;
+        font-size: 14px;
+        color: #ffffff;
+        display: inline-block;
+        max-width: 90%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        &:hover {
+            color: colour(media-default);
+        }
+    }
+
+    svg {
+        top: 3px;
+        left: 7px;
+        width: 32px;
+        height: 32px;
+        fill: #ffffff;
+
+        &:hover {
+            fill: colour(media-default);
+        }
+    }
+}
+
 /* VJS: SKIP AD OVERLAY
    ========================================================================== */
 .vjs-ads-skip {
@@ -772,7 +832,7 @@ $ima-controls-height: 70px;
 /* End slate
    ========================================================================== */
 .end-slate-container {
-    display: none;
+//    display: none;
     position: absolute;
     z-index: 2;
     width: 100%;

@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'lodash/objects/assign',
     'common/utils/ajax',
     'common/utils/mediator',
@@ -8,6 +9,7 @@ define([
 ], function (
     bean,
     bonzo,
+    fastdom,
     assign,
     ajax,
     mediator,
@@ -58,21 +60,26 @@ define([
             // Run this code only if we haven't already inserted
             // the username in the header
             if (!$container.hasClass('is-signed-in')) {
-                $content.text(user.displayName);
-                $container.addClass('is-signed-in');
+                fastdom.write(function () {
+                    $content.text(user.displayName);
+                    $container.addClass('is-signed-in');
+                });
             }
 
             $popup.html(
-                '<ul class="popup popup__group popup--profile" data-link-name="Sub Sections" data-test-id="popup-profile">' +
+                    '<ul class="popup popup__group popup--profile" data-link-name="Sub Sections" data-test-id="popup-profile">' +
                     this.menuListItem('Comment activity', this.opts.url + '/user/id/' + user.id) +
                     this.menuListItem('Edit profile', this.opts.url + '/public/edit') +
                     this.menuListItem('Email preferences', this.opts.url + '/email-prefs') +
                     this.menuListItem('Change password', this.opts.url + '/password/change') +
                     this.menuListItem('Sign out', this.opts.url + '/signout') +
-                '</ul>'
+                    '</ul>'
             );
+
         } else {
-            $popup.remove();
+            fastdom.write(function () {
+                $popup.remove();
+            });
         }
 
         this.emitLoadedEvent(user);
