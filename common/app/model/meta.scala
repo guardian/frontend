@@ -18,9 +18,6 @@ trait MetaData extends Tags {
 
   lazy val canonicalUrl: Option[String] = None
 
-  // i.e. show the link back to the desktop site
-  def hasClassicVersion: Boolean = !special
-
   // Special means "Next Gen platform only".
   private lazy val special = id.contains("-sp-")
 
@@ -54,7 +51,6 @@ trait MetaData extends Tags {
     ("isFront", JsBoolean(isFront)),
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
     ("isSurging", JsString(isSurging.mkString(","))),
-    ("hasClassicVersion", JsBoolean(hasClassicVersion)),
     ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature)),
     ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path)),
     ("videoJsVpaidSwf", JsString(conf.Static("flash/components/video-js-vpaid/video-js.swf").path))

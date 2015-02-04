@@ -22,7 +22,6 @@ GET        /related/*path.json                        controllers.RelatedControl
 
 GET        /popular-in-tag/*tag.json                  controllers.PopularInTag.render(tag)
 
-GET        /preference/platform/:platform             controllers.ChangeViewController.render(platform, page)
 GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)
 GET        /preference/front-alphas/:optAction        controllers.ChangeAlphaController.render(optAction, page)
 
