@@ -8,6 +8,9 @@ object dynamodb {
     def updateItemFuture(updateItemRequest: UpdateItemRequest) =
       asFuture[UpdateItemRequest, UpdateItemResult](dynamoDbClient.updateItemAsync(updateItemRequest, _))
 
+    def getItemFuture(getItemRequest: GetItemRequest) =
+      asFuture[GetItemRequest, GetItemResult](dynamoDbClient.getItemAsync(getItemRequest, _))
+
     def queryFuture(queryRequest: QueryRequest) =
       asFuture[QueryRequest, QueryResult](dynamoDbClient.queryAsync(queryRequest, _))
 

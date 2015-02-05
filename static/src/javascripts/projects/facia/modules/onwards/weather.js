@@ -241,8 +241,8 @@ define([
 
         attachToDOM: function (tmpl, city) {
             $holder = $('.js-container--first .js-container__header');
-            $holder.empty();
-            $holder.html(tmpl.replace(new RegExp('{{city}}', 'g'), city));
+            $('.js-weather', $holder).remove();
+            $holder.append(tmpl.replace(new RegExp('{{city}}', 'g'), city));
         },
 
         renderForecast: function (forecastData) {
