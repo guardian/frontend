@@ -97,7 +97,7 @@ define([
                 spyOn(sut, "track");
                 spyOn(mocks.store['common/utils/mediator'], "emit");
 
-                $(".js-search-tool-list").html("<li><a class='active'></a><a data-weather-id='292177' data-weather-city='Ufa'></a></li>");
+                $(".js-search-tool-list").html("<li><a class='js-search-tool-link active'></a><a class='js-search-tool-link' data-weather-id='292177' data-weather-city='Ufa'><span></span></a></li>");
                 sut.init();
 
                 bean.fire($(".js-search-tool-list span")[0], "click");
