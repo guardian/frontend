@@ -177,10 +177,8 @@ object ImgSrc {
     }
   }
 
-  def getSmallest(imageContainer: ImageContainer): Option[String] = {
-    Profile.all.filter(_.height == None).sortBy(_.width).headOption flatMap { smallestProfile =>
-      srcForProfile(smallestProfile, imageContainer)
-    }
+  def getFallbackUrl(imageContainer: ImageContainer, profile: Profile = Item300): Option[String] = {
+    srcForProfile(profile, imageContainer)
   }
 }
 

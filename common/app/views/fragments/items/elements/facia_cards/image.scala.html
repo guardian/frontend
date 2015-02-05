@@ -20,9 +20,9 @@
         <!--[if IE 9]></video><![endif]-->
 
         @if(inlineImage) {
-            <img src="@ImgSrc.getSmallest(imageContainer)" />
+            <img src="@ImgSrc.getFallbackUrl(imageContainer)" />
         } else {
-            <img srcset="@ImgSrc.getSmallest(imageContainer)" />
+            <img srcset="@ImgSrc.getFallbackUrl(imageContainer)" />
         }
     </picture>
 </div>
