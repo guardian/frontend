@@ -110,24 +110,24 @@
     (function (isModernEnough) {
         if(isModernEnough) {
             function setMedia (styleSheet, sheets) {
-            sheets || (sheets = window.document.styleSheets);
+                sheets || (sheets = window.document.styleSheets);
 
-            for (var i = 0, totalSheets = sheets.length; i < totalSheets ; i++) {
-                var sheet = sheets[i];
-                if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1 ) {
-                    styleSheet.media = "screen";
-                    return true;
+                for (var i = 0, totalSheets = sheets.length; i < totalSheets ; i++) {
+                    var sheet = sheets[i];
+                    if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1 ) {
+                        styleSheet.media = "screen";
+                        return true;
+                    }
+                }
+                setTimeout(setMedia.bind(this, styleSheet, sheets));
+            }
+
+            function useCss () {
+                var styleSheets = document.querySelectorAll('link[media="only x"]');
+                for (var i = 0, totalStyleSheets = styleSheets.length; i < totalStyleSheets ; i++) {
+                    setMedia(styleSheets[i]);
                 }
             }
-            setTimeout(setMedia.bind(this, styleSheet, sheets));
-        }
-
-        function useCss () {
-            var styleSheets = document.querySelectorAll('link[media="only x"]');
-            for (var i = 0, totalStyleSheets = styleSheets.length; i < totalStyleSheets ; i++) {
-                setMedia(styleSheets[i]);
-            }
-        }
 
         useCss();
         }
