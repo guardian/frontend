@@ -103,8 +103,13 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def renderFrontJsonLite(path: String) = MemcachedAction{ implicit request =>
+    val cacheTime = path match {
+      case p if p.startsWith("breaking-news") => 10
+      case _ => 60
+    }
+
     frontJson.getAsJsValue(path).map{ json =>
-      Cached(60)(Cors(JsonComponent(FrontJsonLite.get(json))))
+      Cached(cacheTime)(Cors(JsonComponent(FrontJsonLite.get(json))))
     }
   }
 

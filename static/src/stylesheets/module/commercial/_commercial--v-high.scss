@@ -14,6 +14,15 @@
         width: 100%;
         width: calc(100% + #{$gs-gutter/2});
     }
+
+    &.commercial--tone-books {
+        width: gs-span(2);
+
+        .lineitem__image {
+            max-width: 100%;
+            margin: 0;
+        }
+    }
 }
 
 .commercial--v-high__header {

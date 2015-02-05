@@ -1,0 +1,27 @@
+@import jobs.MissingEncoding
+
+@(env: String, encodingData: List[MissingEncoding])
+
+    @admin_main("Videos with missing encodings", env, isAuthed = true )  {
+
+    <h1>The following return 404s</h1>
+    <br/>
+
+
+    <table class="table table-bordered table-striped table--asset">
+        <thead>
+            <tr>
+                <th class="table__head">Content</th>
+                <th class="table__head">Missing encoding asset</th>
+            </tr>
+        </thead>
+        <tbody>
+        @encodingData.map { encoding =>
+        <tr>
+            <td><a href="@{encoding.url}">@{encoding.title}</a></td>
+            <td>@{encoding.encodingSrc}</td>
+        </tr>
+        }
+        </tbody>
+    </table>
+    }

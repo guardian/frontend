@@ -22,4 +22,4 @@ bundle config --delete without
 bundle install --binstubs dev/gems/bin --path dev/gems
 npm install
 
-grunt "$@"
+grunt --stack --no-color "$@"
