@@ -919,6 +919,11 @@ $ima-controls-height: 70px;
 .end-slate-container__header {
     height: gs-height(1);
     padding-left: $gs-gutter/2;
+    margin-bottom: $gs-baseline;
+
+    .gu-video-embed & {
+        margin-bottom: 0;
+    }
 }
 .end-slate-container__heading {
     padding-top: $gs-baseline/3;
