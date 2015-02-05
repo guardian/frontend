@@ -91,14 +91,7 @@ define([
                     expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
                     expect(getParaWithSpaceStub).toHaveBeenCalledOnce();
                 });
-
-                it('should insert two inline ad slots if less than desktop', function () {
-                    $style.html('body:after{ content: "mobile"}');
-                    articleBodyAdverts.init();
-                    expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
-                    expect(qwery('#dfp-ad--inline2', $fixturesContainer).length).toBe(1);
-                });
-
+                
                 it('should insert an inline merchandising slot if page has one', function () {
                     mocks.store['common/utils/config'].page.hasInlineMerchandise = true;
                     articleBodyAdverts.init();
