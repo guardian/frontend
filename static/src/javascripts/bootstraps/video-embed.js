@@ -102,7 +102,7 @@ define([
 
         endSlate.endpoint = $('.js-gu-media--enhance').first().attr('data-end-slate');
         endSlate.fetch(player.el(), 'html').then(function endslateTracking() {
-            $('.end-slate-container .fc-item__action').each(function endslateTracking(e) {e.href += "?CMP=embed_endslate";})
+            $('.end-slate-container .fc-item__action').each(function endslateTracking(e) { e.href += '?CMP=embed_endslate'; });
             bean.on($('.end-slate-container')[0], 'click', function (e) {
                 omniture.logTag({
                     tag: 'Embed | endslate',
