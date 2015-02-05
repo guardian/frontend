@@ -17,12 +17,12 @@
                 }
             }
         }
+        <!--[if IE 9]></video><![endif]-->
 
         @if(inlineImage) {
             <img src="@ImgSrc.getSmallest(imageContainer)" />
         } else {
             <img srcset="@ImgSrc.getSmallest(imageContainer)" />
         }
-        <!--[if IE 9]></video><![endif]-->
     </picture>
 </div>
