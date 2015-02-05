@@ -29,6 +29,7 @@ define([
             .value();
 
         if (all) {
+            console.log(rules.length)
             return rules;
         } else {
             len = rules.length;
