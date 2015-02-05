@@ -134,7 +134,9 @@
                         return true;
                     }
                 }
-                setTimeout(setMedia.bind(this, styleSheet, sheets));
+                setTimeout(function () {
+                    setMedia(styleSheet, sheets);
+                });
             }
 
             function useCss () {
