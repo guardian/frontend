@@ -56,6 +56,9 @@
 *@
 <!--[if (lt IE 9)&(!IEMobile)]>
     <link rel="stylesheet" type="text/css" href="@Static(Static.css.headOldIE(projectName))" media="only x" />
+    <noscript>
+        <link rel="stylesheet" type="text/css" href="@Static(Static.css.headOldIE(projectName))" />
+    </noscript>
 <![endif]-->
 @*
   - Include IE 9 [(IE 9)]
@@ -63,6 +66,9 @@
 *@
 <!--[if (IE 9)&(!IEMobile)]>
     <link rel="stylesheet" type="text/css" href="@Static(Static.css.headIE9(projectName))" media="only x" />
+    <noscript>
+        <link rel="stylesheet" type="text/css" href="@Static(Static.css.headIE9(projectName))" />
+    </noscript>
 <![endif]-->
 
 @*
@@ -71,6 +77,9 @@
 *@
 <!--[if (IE 9)&(!IEMobile)]>
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/ie9.global.css")" media="only x" />
+    <noscript>
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/ie9.global.css")" />
+    </noscript>
 <![endif]-->
 
 @*
@@ -78,7 +87,10 @@
   - Exclude IE Mobile [&(!IEMobile)]
 *@
 <!--[if (lt IE 9)&(!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.global.css")" />
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.global.css")" media="only x" />
+    <noscript>
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.global.css")" />
+    </noscript>
 <![endif]-->
 
 @*
@@ -87,6 +99,9 @@
 *@
 <!--[if IEMobile]>
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" media="only x" />
+    <noscript>
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
+    </noscript>
 <![endif]-->
 
 @*
