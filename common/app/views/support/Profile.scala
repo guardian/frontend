@@ -104,7 +104,7 @@ object Profile {
     SeoOptimisedContentImage
   )
 
-  // used to build the list of urls for srcset
+  // used to determine image widths for <picture>
   lazy val images: Seq[Profile]  = Seq(
     Item120,
     Item140,
