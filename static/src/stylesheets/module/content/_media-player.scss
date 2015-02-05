@@ -868,7 +868,7 @@ $ima-controls-height: 70px;
     }
 
     @include mq(wide) {
-        max-width:gs-span(8);
+        max-width: gs-span(8);
     }
 
     .gu-video-embed & {
