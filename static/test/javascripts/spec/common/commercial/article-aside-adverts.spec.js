@@ -89,13 +89,6 @@ define([
                     expect(articleAsideAdverts.init()).toBe(false);
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
                 });
-
-                it('should not add ad slot to hidden column', function () {
-                    $('.js-secondary-column', $fixturesContainer).css('display', 'none');
-                    articleAsideAdverts.init();
-                    expect($('.ad-slot', $fixturesContainer).length).toBe(0);
-                });
-
             });
 
         });
