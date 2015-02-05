@@ -1,5 +1,4 @@
 @(page: model.MetaData, showNav: Boolean=true)(implicit request: RequestHeader)
-@import views.support.HasClassicVersion
 
 @import conf.Switches._
 @import org.joda.time.DateTime
@@ -9,7 +8,7 @@
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
 
-    @if(ReleaseMessageSwitch.isSwitchedOn && HasClassicVersion(page)) {
+    @if(ReleaseMessageSwitch.isSwitchedOn) {
         <div class="site-message--footer is-hidden js-footer-message" data-link-name="release message">
             <div class="gs-container">
                 <div class="site-message__inner">
@@ -125,11 +124,6 @@
             <li class="colophon__item"><a data-link-name="privacy" href="/help/privacy-policy">privacy policy</a></li>
             <li class="colophon__item"><a data-link-name="cookie" href="/info/cookies">cookie policy</a></li>
             <li class="colophon__item"><a data-link-name="securedrop" href="https://securedrop.theguardian.com/">securedrop</a></li>
-
-            @if(HasClassicVersion(page)) {
-                <li class="colophon__item hide-on-mobile">@fragments.mainSiteLink(page, label = "use current version")</li>
-                <li class="colophon__item mobile-only">@fragments.mainSiteLink(page, label = "desktop site")</li>
-            }
         }
         </ul>
         <div class="l-footer__misc">

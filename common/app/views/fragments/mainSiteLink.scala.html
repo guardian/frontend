@@ -1,9 +1,0 @@
-@(item: model.MetaData, label: String = "Current version")(implicit request: RequestHeader)
-@import common._
-@import common.ClassicLink
-
-<a class="js-main-site-link" rel="nofollow"
-    href="@ClassicLink(item)"
-    data-link-name="classic version @Edition(request).id">
-    @label
-</a>
