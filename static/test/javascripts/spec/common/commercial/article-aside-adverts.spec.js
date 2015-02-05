@@ -90,7 +90,7 @@ define([
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
                 });
 
-                it('should not add ad slot to hidden column', function () {
+                xit('should not add ad slot to hidden column', function () {
                     $('.content__secondary-column', $fixturesContainer).css('display', 'none');
                     articleAsideAdverts.init();
                     expect($('.ad-slot', $fixturesContainer).length).toBe(0);

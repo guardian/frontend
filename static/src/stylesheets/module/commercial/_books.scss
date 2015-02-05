@@ -90,9 +90,3 @@
     @include fs-header(2);
     margin-bottom: $gs-baseline;
 }
-
-/* High relevance only, works for DFP book items */
-.commercial--tone-books.commercial--v-high .lineitem__image {
-    max-width: 50%;
-    margin: 0;
-}

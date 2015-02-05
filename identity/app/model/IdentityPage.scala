@@ -6,8 +6,6 @@ import tracking.Omniture
 class IdentityPage(id: String, webTitle: String, analyticsName: String, overridenMetadata: Option[Map[String, JsValue]] = None)
   extends Page(id, "identity", webTitle, analyticsName) {
 
-  override val hasClassicVersion: Boolean = false
-
   override def metaData: Map[String, JsValue] =
     overridenMetadata.getOrElse(super.metaData)
 }

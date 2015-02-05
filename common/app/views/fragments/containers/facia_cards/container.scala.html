@@ -1,10 +1,10 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties = model.FrontProperties.empty)(implicit request: RequestHeader)
 
-@import views.support.GetClasses
-@import views.html.fragments.containers.facia_cards.{standardContainer, navListContainer, navMediaListContainer, mostPopularContainer}
-@import slices.{Dynamic, Fixed, NavList, NavMediaList, MostPopular}
-@import fragments.containers.facia_cards.containerMetaData
+@import dfp.{Keyword, Series}
 @import layout.MetaDataHeader
+@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList}
+@import views.html.fragments.containers.facia_cards.{containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
+@import views.support.GetClasses
 
 @defining(containerDefinition.displayName, containerDefinition.faciaComponentName) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
@@ -17,8 +17,11 @@
              class="@GetClasses.forContainerDefinition(containerDefinition)"
              data-link-name="@{containerDefinition.index + 1} | @componentName"
              data-id="@containerDefinition.dataId"
-             @containerDefinition.commercialOptions.sponsorshipTag.map { keyword =>
-                 data-keywords="@keyword"
+             @for(tag <- containerDefinition.commercialOptions.sponsorshipTag) {
+                 @tag.tagType match {
+                     case Series => { data-series="@{tag.tagId}" }
+                     case Keyword => { data-keywords="@{tag.tagId}" }
+                 }
              }
              @containerDefinition.commercialOptions.sponsorshipType.map { sponsorshipType =>
                  data-sponsorship="@sponsorshipType"
