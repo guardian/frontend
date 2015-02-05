@@ -59,7 +59,7 @@ define([
                     mediator.emit('autocomplete:toggle', true);
                 } else if (isLink) {
                     e.preventDefault();
-                    $('.active').removeClass('active');
+                    $('.active', $list).removeClass('active');
                     $(isLink).addClass('active');
                     this.pushData();
                 } else {
