@@ -189,7 +189,7 @@ object FaciaContainer {
     None,
     None,
     false,
-    false,
+    config.config.showTimestamps.exists(identity),
     None
   )
 
