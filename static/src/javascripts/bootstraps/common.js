@@ -11,6 +11,7 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
+    'common/utils/proximity-loader',
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/url',
@@ -23,6 +24,7 @@ define([
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
+    'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/crosswords/thumbnails',
     'common/modules/discussion/comment-count',
@@ -65,6 +67,7 @@ define([
     config,
     cookies,
     detect,
+    proximityLoader,
     mediator,
     template,
     url,
@@ -77,6 +80,7 @@ define([
     register,
     ScrollDepth,
     logCss,
+    simpleMetrics,
     userAdTargeting,
     crosswordThumbnails,
     CommentCount,
@@ -169,6 +173,17 @@ define([
                 new Related(opts).renderRelatedComponent();
             },
 
+            initRelated: function () {
+                if (!config.switches.lazyLoadOnwards || window.location.hash) {
+                    modules.transcludeRelated();
+                } else {
+                    var relatedEl = qwery('.js-related')[0];
+                    if (relatedEl) {
+                        proximityLoader.add(relatedEl, 1500, modules.transcludeRelated);
+                    }
+                }
+            },
+
             transcludePopular: function () {
                 if (!config.page.isFront) {
                     new Popular().init();
@@ -182,6 +197,17 @@ define([
                     $('.js-onward').each(function (c) {
                         new TonalComponent().fetch(c, 'html');
                     });
+                }
+            },
+
+            initOnwardContent: function () {
+                if (!config.switches.lazyLoadOnwards || window.location.hash) {
+                    modules.transcludeOnwardContent();
+                } else {
+                    var onwardEl = qwery('.js-onward')[0];
+                    if (onwardEl) {
+                        proximityLoader.add(onwardEl, 1500, modules.transcludeOnwardContent);
+                    }
                 }
             },
 
@@ -238,7 +264,7 @@ define([
             },
 
             cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
             },
 
             // display a flash message to devices over 600px who don't have the mobile cookie
@@ -410,6 +436,12 @@ define([
                 }
             },
 
+            initSimpleMetrics: function () {
+                mediator.on('page:common:ready', function () {
+                    simpleMetrics.init();
+                });
+            },
+
             initPublicApi: function () {
                 // BE CAREFUL what you expose here...
                 window.guardian.api = {
@@ -418,48 +450,48 @@ define([
             }
 
         },
+
         ready = function () {
-            robust('c-fonts',           function () { modules.loadFonts(); });
-            robust('c-identity',        function () { modules.initId(); });
-            robust('c-adverts',         function () { modules.initUserAdTargeting(); });
-            robust('c-discussion',      function () { modules.initDiscussion(); });
-            robust('c-fast-click',      function () { modules.initFastClick(); });
-            robust('c-test-cookie',     function () { modules.testCookie(); });
-            robust('c-ad-cookie',       function () { modules.adTestCookie(); });
-            robust('c-event-listeners', function () { modules.windowEventListeners(); });
-            robust('c-breaking-news',   function () { modules.loadBreakingNews(); });
-            robust('c-shares',          function () { modules.initShareCounts(); });
-            robust('c-block-link',      function () { modules.initialiseFauxBlockLink(); });
-            robust('c-iframe',          function () { modules.checkIframe(); });
-            robust('c-tabs',            function () { modules.showTabs(); });
-            robust('c-top-nav',         function () { modules.initialiseTopNavItems(); });
-            robust('c-init-nav',        function () { modules.initialiseNavigation(); });
-            robust('c-toggles',         function () { modules.showToggles(); });
-            robust('c-dates',           function () { modules.showRelativeDates(); });
-            robust('c-clickstream',     function () { modules.initClickstream(); });
-            robust('c-release-message', function () { modules.displayReleaseMessage(); });
-            robust('c-history',         function () { modules.updateHistory(); });
-            robust('c-sign-in',         function () { modules.initAutoSignin(); });
-            robust('c-interactive',     function () { modules.augmentInteractive(); });
-            robust('c-history-nav',     function () { modules.showHistoryInMegaNav(); });
-            robust('c-forsee',          function () { modules.runForseeSurvey(); });
-            robust('c-start-register',  function () { modules.startRegister(); });
-            robust('c-comments',        function () { modules.repositionComments(); });
-            robust('c-tag-links',       function () { modules.showMoreTagsLink(); });
-            robust('c-smart-banner',    function () { modules.showSmartBanner(); });
-            robust('c-log-stats',       function () { modules.logLiveStats(); });
-            robust('c-analytics',       function () { modules.loadAnalytics(); });
-            robust('c-cookies',         function () { modules.cleanupCookies(); });
-            robust('c-popular',         function () { modules.transcludePopular(); });
-            robust('c-related',         function () { modules.transcludeRelated(); });
-            robust('c-onward',          function () { modules.transcludeOnwardContent(); });
-            robust('c-overlay',         function () { modules.initOpenOverlayOnClick(); });
-            robust('c-css-logging',     function () { modules.runCssLogging(); });
-            robust('c-public-api',      function () { modules.initPublicApi(); });
-
-            robust('c-crosswords',      function () { crosswordThumbnails.init(); });
-
-            robust('c-ready', function () { mediator.emit('page:common:ready'); });
+            robust('c-fonts',           modules.loadFonts);
+            robust('c-identity',        modules.initId);
+            robust('c-adverts',         modules.initUserAdTargeting);
+            robust('c-discussion',      modules.initDiscussion);
+            robust('c-fast-click',      modules.initFastClick);
+            robust('c-test-cookie',     modules.testCookie);
+            robust('c-ad-cookie',       modules.adTestCookie);
+            robust('c-event-listeners', modules.windowEventListeners);
+            robust('c-breaking-news',   modules.loadBreakingNews);
+            robust('c-shares',          modules.initShareCounts);
+            robust('c-block-link',      modules.initialiseFauxBlockLink);
+            robust('c-iframe',          modules.checkIframe);
+            robust('c-tabs',            modules.showTabs);
+            robust('c-top-nav',         modules.initialiseTopNavItems);
+            robust('c-init-nav',        modules.initialiseNavigation);
+            robust('c-toggles',         modules.showToggles);
+            robust('c-dates',           modules.showRelativeDates);
+            robust('c-clickstream',     modules.initClickstream);
+            robust('c-release-message', modules.displayReleaseMessage);
+            robust('c-history',         modules.updateHistory);
+            robust('c-sign-in', modules.initAutoSignin);
+            robust('c-interactive', modules.augmentInteractive);
+            robust('c-history-nav', modules.showHistoryInMegaNav);
+            robust('c-forsee', modules.runForseeSurvey);
+            robust('c-start-register', modules.startRegister);
+            robust('c-comments', modules.repositionComments);
+            robust('c-tag-links', modules.showMoreTagsLink);
+            robust('c-smart-banner', modules.showSmartBanner);
+            robust('c-log-stats', modules.logLiveStats);
+            robust('c-analytics',       modules.loadAnalytics);
+            robust('c-cookies', modules.cleanupCookies);
+            robust('c-popular', modules.transcludePopular);
+            robust('c-related', modules.initRelated);
+            robust('c-onward', modules.initOnwardContent);
+            robust('c-overlay', modules.initOpenOverlayOnClick);
+            robust('c-css-logging', modules.runCssLogging);
+            robust('c-public-api', modules.initPublicApi);
+            robust('c-simple-metrics', modules.initSimpleMetrics);
+            robust('c-crosswords', crosswordThumbnails.init);
+            robust('c-ready',           function () { mediator.emit('page:common:ready'); });
         };
 
     return {

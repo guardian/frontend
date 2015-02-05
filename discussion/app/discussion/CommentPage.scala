@@ -18,6 +18,7 @@ trait CommentPage extends Page {
   lazy val orderBy = discussionComments.orderBy
   lazy val isClosedForRecommendation = discussion.isClosedForRecommendation
   lazy val switches = discussionComments.switches
+  lazy val isLargeDiscussion = commentCount > 1000
 }
 
 case class ThreadedCommentPage(val discussionComments: DiscussionComments)

@@ -11,8 +11,10 @@ define([
             .then(function (value) {
                 resolve(value);
             })
-            .fail(function (err) {
-                reject(err);
+            .fail(function (request, text, err) {
+                var error = err ? err : new Error(text);
+                error.request = request;
+                reject(error);
             });
         });
         return promise;

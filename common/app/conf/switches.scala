@@ -506,16 +506,21 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val MissingVideoEndcodingsJobSwitch = Switch("Feature", "check-for-missing-video-encodings",
+    "If this switch is switched on then the job will run which will check all video content for missing encodings",
+     safeState = Off, sellByDate = never
+  )
+
+  val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
+    "If this is switched on then lazy load the related and series containers on content pages",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 17)
+  )
+
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
     safeState = Off, sellByDate = never
-  )
-
-  val FaciaToolPaneOptions = Switch("Facia", "facia-tool-pane-options",
-    "If this switch is on facia tool will display more options for panes",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   val ToolSparklines = Switch("Facia", "facia-tool-sparklines",

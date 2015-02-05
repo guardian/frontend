@@ -1,0 +1,16 @@
+@(containerTitle: String)
+
+@import views.support.RenderClasses
+
+<button class="@RenderClasses(Map(
+    ("button", true),
+    ("button--medium", true),
+    ("button--show-more", true),
+    ("button--primary", true),
+    ("collection__show-more", true),
+    ("js-show-more-button", true)
+))"
+        data-test-id="show-more"
+        data-link-name="more">
+    <i class="i i-plus-white"></i><span class="js-button-text">More @containerTitle</span>
+</button>
