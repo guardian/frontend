@@ -256,13 +256,30 @@ define([
         );
     }
 
-    function getBreakpoint(includeTweakpoint) {
-        var documentWidth = getDocumentWidth();
+    /** TEMPORARY: I'm going to update lodash in a separate pull request. */
+    function takeWhile(xs, f) {
+        var acc = [],
+            i,
+            size = xs.length;
 
-        var breakpoint = _.last(_.takeWhile(breakpoints, function (bp) {
+        for (i = 0; i < size; i++) {
+            if (f(xs[i])) {
+                acc.push(xs[i]);
+            } else {
+                break;
+            }
+        }
+
+        return acc;
+    }
+
+    function getBreakpoint(includeTweakpoint) {
+        var documentWidth = getDocumentWidth(),
+            index,
+            breakpoint = _.last(takeWhile(breakpoints, function (bp) {
             return bp.width <= documentWidth;
         })).name;
-
+        
         if (!includeTweakpoint) {
             index = _.findIndex(breakpoints, function (b) {
                 return b.name === breakpoint;
