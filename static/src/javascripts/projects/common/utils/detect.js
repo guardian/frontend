@@ -277,9 +277,8 @@ define([
         var documentWidth = getDocumentWidth(),
             index,
             breakpoint = _.last(takeWhile(breakpoints, function (bp) {
-            return bp.width <= documentWidth;
-        })).name;
-        
+                return bp.width <= documentWidth;
+            })).name;
         if (!includeTweakpoint) {
             index = _.findIndex(breakpoints, function (b) {
                 return b.name === breakpoint;
