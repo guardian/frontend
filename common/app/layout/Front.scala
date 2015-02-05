@@ -2,7 +2,7 @@ package layout
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import conf.Switches
-import dfp.DfpAgent
+import dfp.{DfpAgent, SponsorshipTag}
 import model._
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
@@ -13,7 +13,7 @@ import scala.Function._
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
-  val empty = ContainerLayoutContext(Set.empty, false)
+  val empty = ContainerLayoutContext(Set.empty, hideCutOuts = false)
 }
 
 case class ContainerLayoutContext(
@@ -99,20 +99,12 @@ object ContainerCommercialOptions {
     DfpAgent.sponsorshipType(config)
   )
 
-  def fromMetaData(metaData: MetaData) = ContainerCommercialOptions(
-    metaData.isSponsored(),
-    metaData.isAdvertisementFeature,
-    metaData.isFoundationSupported,
-    metaData.sponsor,
-    metaData.sponsorshipType
-  )
-
   val empty = ContainerCommercialOptions(
-    false,
-    false,
-    false,
-    None,
-    None
+    isSponsored = false,
+    isAdvertisementFeature = false,
+    isFoundationSupported = false,
+    sponsorshipTag = None,
+    sponsorshipType = None
   )
 }
 
@@ -120,7 +112,7 @@ case class ContainerCommercialOptions(
   isSponsored: Boolean,
   isAdvertisementFeature: Boolean,
   isFoundationSupported: Boolean,
-  sponsorshipTag: Option[String],
+  sponsorshipTag: Option[SponsorshipTag],
   sponsorshipType: Option[String]
 ) {
   val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
@@ -188,8 +180,8 @@ object FaciaContainer {
     },
     None,
     None,
-    false,
-    false,
+    hideToggle = false,
+    showTimestamps = false,
     None
   )
 
@@ -233,7 +225,7 @@ case class FaciaContainer(
   }
 
   def latestUpdate = (collectionEssentials.items.map(_.webPublicationDate) ++
-    collectionEssentials.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
+    collectionEssentials.lastUpdated.map(DateTime.parse)).sortBy(-_.getMillis).headOption
 
   def items = collectionEssentials.items
 

@@ -51,8 +51,12 @@ define([
                 slotTarget  = badgeConfig.namePrefix + 'badge',
                 name        = slotTarget + (++badgeConfig.count),
                 $adSlot     = bonzo(createAdSlot(
-                    name, ['paid-for-badge', 'paid-for-badge--front'], opts.keywords, slotTarget
-                ));
+                                name,
+                                ['paid-for-badge', 'paid-for-badge--front'],
+                                opts.series,
+                                opts.keywords,
+                                slotTarget
+                              ));
 
             addPreBadge($adSlot, badgeConfig.header, opts.sponsor);
             $('.js-container__header', container)
@@ -87,6 +91,7 @@ define([
                         $container.data('sponsorship'),
                         {
                             sponsor:  $container.data('sponsor'),
+                            series:   $container.data('series'),
                             keywords: $container.data('keywords')
                         }
                     );
@@ -111,6 +116,7 @@ define([
                         $container.data('sponsorship'),
                         {
                             sponsor:  $container.data('sponsor'),
+                            series:   $container.data('series'),
                             keywords: $container.data('keywords')
                         }
                     );
