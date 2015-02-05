@@ -98,7 +98,7 @@ define([
 
     function initEndSlate(player) {
         var endSlate = new Component(),
-            endState = 'vjs-has-ended';
+            endState = 'vjs-has-ended',
             endpointHost = config.page.externalEmbedHost;
 
         endSlate.endpoint = endpointHost + $('.js-gu-media--enhance').first().attr('data-end-slate');
