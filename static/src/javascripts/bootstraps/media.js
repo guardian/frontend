@@ -190,7 +190,7 @@ define([
             plugins: {
                 embed: {
                     embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',
-                    location: config.page.externalEmbedHost + (embedPath ? embedPath : config.page.pageId)
+                    location: config.page.externalEmbedHost + "/embed/video/" + (embedPath ? embedPath : config.page.pageId)
                 }
             }
         });
