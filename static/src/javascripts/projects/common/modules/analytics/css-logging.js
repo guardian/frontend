@@ -44,7 +44,7 @@ define([
             .filter(function (sheet) {
                 return sheet &&
                     _.values(sheet.rules || sheet.cssRules).length > 0 &&
-                    (!sheet.ownerNode || sheet.ownerNode.className !== 'webfont') &&
+                    (!sheet.ownerNode || sheet.ownerNode.className.indexOf('gu-loggable') > -1) &&
                     (!sheet.href || sheet.href.match(/\/\/(localhost|assets\.guim\.co\.uk)/));
             })
             .value();
