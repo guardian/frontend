@@ -83,8 +83,8 @@ define([
 
     // Caches a bonzo object/array of comments, so that they can be re-assembled when the load is complete.
     WholeDiscussion.prototype.storeCommentPage = function (response, page) {
-        var container = $('.d-thread--comments', bonzo.create(response.commentsHtml));
-        var comments = $('.d-comment--top-level', container);
+        var container = $('.d-thread--comments', bonzo.create(response.commentsHtml)),
+            comments = $('.d-comment--top-level', container);
         if (this.params.orderBy === 'newest') {
 
             comments = comments.map(function (comment) {
