@@ -100,14 +100,23 @@ define([
         var endSlate = new Component(),
             endState = 'vjs-has-ended';
 
-        endSlate.endpoint = "http://api.nextgen.guardianapps.co.uk/video/end-slate/section/uk-news.json?shortUrl=http://gu.com/p/45e76";
-        endSlate.fetch(player.el(), 'html');
-
-        player.one(events.constructEventName('content:play', player), function () {
-            player.on('ended', function () {
-                bonzo(player.el()).addClass(endState);
+        endSlate.endpoint = $('.js-gu-media--enhance').first().attr('data-end-slate');
+        endSlate.fetch(player.el(), 'html').then(function endslateTracking() {
+            $('.end-slate-container .fc-item__action').each(function endslateTracking(e) {e.href += "?CMP=embed_endslate";})
+            bean.on($('.end-slate-container')[0], 'click', function (e) {
+                omniture.logTag({
+                    tag: 'Embed | endslate',
+                    sameHost: false,
+                    samePage: false,
+                    target: e.target
+                });
             });
         });
+
+        player.on('ended', function () {
+            bonzo(player.el()).addClass(endState);
+        });
+
         player.on('playing', function () {
             bonzo(player.el()).removeClass(endState);
         });
@@ -145,6 +154,8 @@ define([
 
                 initLoadingSpinner(player);
                 addTitleBar();
+                initEndSlate(player);
+
                 events.bindGlobalEvents(player);
 
                 // unglitching the volume on first load
@@ -164,7 +175,6 @@ define([
                     });
 
                     omniture.go();
-                    initEndSlate(player);
                 }
             });
 
