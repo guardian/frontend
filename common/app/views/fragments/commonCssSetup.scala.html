@@ -62,7 +62,7 @@
   - Exclude IE Mobile [&(!IEMobile)]
 *@
 <!--[if (IE 9)&(!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static(Static.css.headIE9(projectName))" />
+    <link rel="stylesheet" type="text/css" href="@Static(Static.css.headIE9(projectName))" media="only x" />
 <![endif]-->
 
 @*
@@ -70,7 +70,7 @@
   - Exclude IE Mobile [&(!IEMobile)]
 *@
 <!--[if (IE 9)&(!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/ie9.global.css")" />
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/ie9.global.css")" media="only x" />
 <![endif]-->
 
 @*
@@ -86,5 +86,17 @@
   - Note: does not include IE10 on Windows Phone 8 (which does not support conditional comments)
 *@
 <!--[if IEMobile]>
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" media="only x" />
 <![endif]-->
+
+@*
+  - Include any browser [<!-->]
+  - Exclude IE < 10 [(gt IE 9)]
+  - Exclude IE Mobile [&(!IEMobile)]
+*@
+<!--[if (gt IE 9)&(!IEMobile)]><!-->
+    <link rel="stylesheet" data-reload="global" type="text/css" href="@Static("stylesheets/global.css")" media="only x" id="global-css" />
+    <noscript>
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
+    </noscript>
+<!--<![endif]-->

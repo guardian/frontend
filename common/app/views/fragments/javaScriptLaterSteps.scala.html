@@ -117,25 +117,33 @@
 
         }
 
-        @if(InlineCriticalCss.isSwitchedOn && !play.Play.isDev()) {
-            function loadCssFromStorage() {
-                var c = null, s, head;
+        // The main global.css is loaded by a `link` with media of "only x".
+        // This means the browser requests it, but doesn't block rendering on it,
+        // since this media is not 'x'. Once it's loaded (appears in
+        // `window.document.styleSheets`),  `media` is set to `all` so the browser
+        // uses it.
+        function setMedia (styleSheet, sheets) {
+            sheets || (sheets = window.document.styleSheets);
 
-                try {
-                    c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key');
-                } catch(e) { }
-                if (c) {
-                    s = document.createElement('style');
-                    head = document.getElementsByTagName('head')[0];
-                    s.innerHTML = c;
-                    s.setAttribute('data-loaded-from', 'local');
-                    head.appendChild(s);
-                    guardian.css.loaded = true;
+            for (var i = 0, totalSheets = sheets.length; i < totalSheets ; i++) {
+                var sheet = sheets[i];
+                if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1 ) {
+                    styleSheet.media = "all";
+                    return true;
                 }
             }
-
-            loadCssFromStorage();
+            setTimeout(setMedia.bind(this, styleSheet, sheets));
         }
+
+        function useCss () {
+            var styleSheets = document.head.querySelectorAll('link[media="only x"]');
+            for (var i = 0, totalStyleSheets = styleSheets.length; i < totalStyleSheets ; i++) {
+                setMedia(styleSheets[i]);
+            }
+        }
+
+        useCss();
+
 
     })(guardian.isModernBrowser);
 
