@@ -163,7 +163,7 @@ object Switches {
   )
 
   val DiscussionTimeoutSwitch = Switch("Performance", "discussion-timeout",
-    "An experimental switch to investigate whether discussion calls should be timed out within 2000ms",
+    "An experimental switch to investigate whether discussion calls should be timed out within 5000ms",
     safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
