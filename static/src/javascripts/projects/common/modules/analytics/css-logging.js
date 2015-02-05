@@ -19,14 +19,16 @@ define([
         rxPsuedoClass = new RegExp(/:+[^\s\,]+/g),
         rxSeparator = new RegExp(/\s*,\s*/g);
 
-    function getSelectors(all) {
+    function getRules(all) {
         var rand,
             len,
             rules = _.chain(getStylesheets())
-            .pluck('rules' || 'cssRules')
-            .map(_.values)
-            .flatten()
-            .value();
+                .pluck('rules' || 'cssRules')
+                .map(_.values)
+                .flatten()
+                .map(function (r) { return r && r.selectorText; })
+                .compact()
+                .value();
 
         if (all) {
             return rules;
@@ -48,42 +50,34 @@ define([
             .value();
     }
 
-    function sendReport(rules, forceAjax) {
-        beacon.postJson('/css', JSON.stringify({
-            selectors: _.chain(rules)
-                .map(function (r) { return r && r.selectorText; })
-                .compact()
-                .reduce(function (isUsed, rule) {
-                    _.each(rule.replace(rxPsuedoClass, '').split(rxSeparator), function (s) {
-                        if (_.isUndefined(isUsed[s])) {
-                            isUsed[s] = !!document.querySelector(s);
-                        }
-                    });
-                    return isUsed;
-                }, {})
-                .value(),
-            contentType: config.page.contentType,
-            breakpoint: detect.getBreakpoint()
-        }), forceAjax);
-    }
-
-    function makeSender(sendAll) {
+    function makeSender(all) {
         return _.debounce(function (clickSpec) {
             if (!clickSpec || clickSpec.samePage) {
                 setTimeout(function () {
-                    sendReport(getSelectors(sendAll), sendAll);
-                }, sendAll ? 0 : _.random(0, 3000));
+                    beacon.postJson('/css', JSON.stringify({
+                        selectors: getRules(all).reduce(function (isUsed, rule) {
+                            _.each(rule.replace(rxPsuedoClass, '').split(rxSeparator), function (r) {
+                                if (_.isUndefined(isUsed[r])) {
+                                    isUsed[r] = !!document.querySelector(r);
+                                }
+                            });
+                            return isUsed;
+                        }, {}),
+                        contentType: config.page.contentType,
+                        breakpoint: detect.getBreakpoint()
+                    }), all);
+                }, all ? 0 : _.random(0, 3000));
             }
-        }, 300);
+        }, 500);
     }
 
-    return function (sendAll) {
+    return function (all) {
         var sender;
 
-        sendAll = sendAll || window.location.hash === '#csslogging';
+        all = all || window.location.hash === '#csslogging';
 
-        if (sendAll || _.random(1, 2500) === 1) {
-            sender = makeSender(sendAll);
+        if (all || _.random(1, 2500) === 1) {
+            sender = makeSender(all);
             sender();
             mediator.on('module:clickstream:interaction', sender);
             mediator.on('module:clickstream:click', sender);
