@@ -25,7 +25,7 @@
     "native-promise-only": "guardian/native-promise-only#master",
     "videojs-embed": "~0.3.1",
     "videojs-ima": "guardian/videojs-ima#0ec1a99d42fa2471601d2f17cbdb4aaf06565634",
-    "picturefill": "~2.2.0"
+    "picturefill": "guardian/picturefill#master"
   },
   "resolutions": {
     "videojs": "158221b5d997a184972fbf038c9eebdb676d30c8"
