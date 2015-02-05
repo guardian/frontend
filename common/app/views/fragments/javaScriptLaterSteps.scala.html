@@ -117,34 +117,6 @@
 
         }
 
-        // The main global.css is loaded by a `link` with media of "only x".
-        // This means the browser requests it, but doesn't block rendering on it,
-        // since this media is not 'x'. Once it's loaded (appears in
-        // `window.document.styleSheets`),  `media` is set to `all` so the browser
-        // uses it.
-        function setMedia (styleSheet, sheets) {
-            sheets || (sheets = window.document.styleSheets);
-
-            for (var i = 0, totalSheets = sheets.length; i < totalSheets ; i++) {
-                var sheet = sheets[i];
-                if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1 ) {
-                    styleSheet.media = "all";
-                    return true;
-                }
-            }
-            setTimeout(setMedia.bind(this, styleSheet, sheets));
-        }
-
-        function useCss () {
-            var styleSheets = document.head.querySelectorAll('link[media="only x"]');
-            for (var i = 0, totalStyleSheets = styleSheets.length; i < totalStyleSheets ; i++) {
-                setMedia(styleSheets[i]);
-            }
-        }
-
-        useCss();
-
-
     })(guardian.isModernBrowser);
 
     @* inline curl *@
