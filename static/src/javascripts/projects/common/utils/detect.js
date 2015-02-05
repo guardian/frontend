@@ -36,7 +36,8 @@ define([
             },
             {
                 name: 'phablet',
-                isTweakpoint: true
+                isTweakpoint: true,
+                width: 660
             },
             {
                 name: 'tablet',
@@ -246,14 +247,21 @@ define([
         return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
     }
 
+    function getDocumentWidth() {
+        var d = document.documentElement;
+        return Math.max(
+            d.clientWidth,
+            d.offsetWidth,
+            d.scrollWidth
+        );
+    }
+
     function getBreakpoint(includeTweakpoint) {
-        // default to mobile
-        var breakpoint = (
-                window.getComputedStyle
-                    ? window.getComputedStyle(document.body, ':after').getPropertyValue('content')
-                    : document.getElementsByTagName('head')[0].currentStyle.fontFamily
-            ).replace(/['",]/g, '') || 'mobile',
-            index;
+        var documentWidth = getDocumentWidth();
+
+        var breakpoint = _.last(_.takeWhile(breakpoints, function (bp) {
+            return bp.width <= documentWidth;
+        })).name;
 
         if (!includeTweakpoint) {
             index = _.findIndex(breakpoints, function (b) {
