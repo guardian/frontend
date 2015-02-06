@@ -12,7 +12,7 @@ define([
     return function () {
         var $firstContainer = $('.js-insert-team-stats-after');
 
-        if ($firstContainer) {
+        if ($firstContainer.length) {
             ajax({
                 url: '/' + config.page.pageId + '/fixtures-and-results-container',
                 type: 'json',
