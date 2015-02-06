@@ -77,41 +77,41 @@
         // since this media is not 'x'. Once it's loaded (appears in
         // `window.document.styleSheets`),  `media` is set to `all` so the browser
         // uses it. Very much inspired by https://github.com/filamentgroup/loadCSS.
-        (function (isModernEnough) {
-            if(isModernEnough) {
-                function setMedia (styleSheet, styleSheets) {
-                    styleSheets || (styleSheets = window.document.styleSheets);
+        (function () {
+            function setMedia (styleSheet, styleSheets) {
+                styleSheets || (styleSheets = window.document.styleSheets);
 
-                    for (var i = 0, totalSheets = styleSheets.length; i < totalSheets ; i++) {
-                        var sheet = styleSheets[i];
-                        if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1 ) {
-                            styleSheet.media = "screen";
-                            return true;
-                        }
+                for (var i = 0, totalSheets = styleSheets.length; i < totalSheets ; i++) {
+                    var sheet = styleSheets[i];
+                    if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1 ) {
+                        styleSheet.media = "screen";
+                        return true;
                     }
-                    setTimeout(function () {
-                        setMedia(styleSheet, styleSheets);
-                    });
                 }
+                setTimeout(function () {
+                    setMedia(styleSheet, styleSheets);
+                });
+            }
 
-                function useCss () {
-                    var styleSheets = document.querySelectorAll('link[media="only x"]');
-                    for (var i = 0, totalStyleSheets = styleSheets.length; i < totalStyleSheets ; i++) {
+            function useCss () {
+                var styleSheets = document.getElementsByTagName('link');
+                for (var i = 0, totalStyleSheets = styleSheets.length; i < totalStyleSheets ; i++) {
+                    if (styleSheets[i].getAttribute('media') === 'only x') {
                         setMedia(styleSheets[i]);
                     }
                 }
-
-                useCss();
-
-                // TEMPORARY: Tidy up localStorage - can remove after a bit
-                try {
-                    Object.keys(localStorage).forEach(function(key) {
-                        if (key.match(/^gu.css./g)) {
-                            localStorage.removeItem(key);
-                        }
-                    });
-                } catch (e) {};
             }
-        })('querySelectorAll' in document)
+
+            useCss();
+
+            // TEMPORARY: Tidy up localStorage - can remove after a bit
+            try {
+                Object.keys(localStorage).forEach(function(key) {
+                    if (key.match(/^gu.css./g)) {
+                        localStorage.removeItem(key);
+                    }
+                });
+            } catch (e) {};
+        })()
     </script>
 }
