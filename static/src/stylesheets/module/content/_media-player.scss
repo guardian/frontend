@@ -911,14 +911,14 @@ $ima-controls-height: 70px;
             border-top: 1px solid colour(neutral-2);
         }
 
-        @include mq(mobileLandscape) {
-            .vjs-has-ended & {
-                display: block;
-            }
-        }
-
         @include mq(tablet, desktop) {
             top: 20%;
+        }
+    }
+
+    @include mq(mobileLandscape) {
+        .gu-video-embed .vjs-has-ended & {
+            display: block;
         }
     }
 }
