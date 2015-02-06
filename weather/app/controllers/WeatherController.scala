@@ -1,7 +1,7 @@
 package controllers
 
 import common.{JsonComponent, ExecutionContexts}
-import model.{NoCache, Cached}
+import model.{Cached}
 import play.api.mvc.{Action, Controller}
 import models.CityId
 import weather.WeatherApi
@@ -13,7 +13,7 @@ object WeatherController extends Controller with ExecutionContexts {
 
   def forCity(cityId: String) = Action.async{ implicit request =>
     WeatherApi.getWeatherForCityId(CityId(cityId)).map{ weather =>
-      NoCache(JsonComponent(views.html.cityWeather(weather)))
+      Cached(10.minutes)(JsonComponent(views.html.cityWeather(weather)))
     }
   }
 
@@ -21,7 +21,7 @@ object WeatherController extends Controller with ExecutionContexts {
     WeatherApi.getForecastForCityId(CityId(cityId)).map({ forecastDays =>
       val response = forecastDays.map(models.ForecastResponse.fromAccuweather).filterByIndex(_ % 3 == 1).take(5)
 
-      NoCache(JsonComponent(views.html.cityForecast(response)))
+      Cached(10.minutes)(JsonComponent(views.html.cityForecast(response)))
     })
   }
 }
