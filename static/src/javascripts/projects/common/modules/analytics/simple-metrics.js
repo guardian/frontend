@@ -36,6 +36,11 @@ define([
                         clickData.push('sm-clicked-series-component');
                     }
 
+                    // people who clicked on the bottom "most popular" component (righthand popular not included)
+                    if (/\| most popular \|/.test(spec.tag)) {
+                        clickData.push('sm-clicked-most-popular-component');
+                    }
+
                     if (clickData.length > 0) {
                         beacon.beaconCounts(clickData);
                     }

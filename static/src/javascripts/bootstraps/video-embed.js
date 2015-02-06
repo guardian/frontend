@@ -11,6 +11,7 @@ define([
     'common/utils/defer-to-analytics',
     'common/utils/template',
     'common/modules/analytics/omniture',
+    'common/modules/component',
     'common/modules/video/tech-order',
     'common/modules/video/events',
     'common/views/svgs',
@@ -28,6 +29,7 @@ define([
     deferToAnalytics,
     template,
     Omniture,
+    Component,
     techOrder,
     events,
     svgs,
@@ -94,6 +96,32 @@ define([
         });
     }
 
+    function initEndSlate(player) {
+        var endSlate = new Component(),
+            endState = 'vjs-has-ended';
+
+        endSlate.endpoint = $('.js-gu-media--enhance').first().attr('data-end-slate');
+        endSlate.fetch(player.el(), 'html').then(function () {
+            $('.end-slate-container .fc-item__action').each(function (e) { e.href += '?CMP=embed_endslate'; });
+            bean.on($('.end-slate-container')[0], 'click', function (e) {
+                omniture.logTag({
+                    tag: 'Embed | endslate',
+                    sameHost: false,
+                    samePage: false,
+                    target: e.target
+                });
+            });
+        });
+
+        player.on('ended', function () {
+            bonzo(player.el()).addClass(endState);
+        });
+
+        player.on('playing', function () {
+            bonzo(player.el()).removeClass(endState);
+        });
+    }
+
     function initPlayer() {
 
         videojs.plugin('fullscreener', fullscreener);
@@ -126,6 +154,8 @@ define([
 
                 initLoadingSpinner(player);
                 addTitleBar();
+                initEndSlate(player);
+
                 events.bindGlobalEvents(player);
 
                 // unglitching the volume on first load

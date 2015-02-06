@@ -45,7 +45,7 @@ define([
                         contentType: 'Article'
                     };
 
-                    fixtures.render(fixturesConfig);
+                    $fixturesContainer = fixtures.render(fixturesConfig);
                 });
 
                 afterEach(function () {
@@ -89,13 +89,6 @@ define([
                     expect(articleAsideAdverts.init()).toBe(false);
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
                 });
-
-                it('should not add ad slot to hidden column', function () {
-                    $('.content__secondary-column', $fixturesContainer).css('display', 'none');
-                    articleAsideAdverts.init();
-                    expect($('.ad-slot', $fixturesContainer).length).toBe(0);
-                });
-
             });
 
         });

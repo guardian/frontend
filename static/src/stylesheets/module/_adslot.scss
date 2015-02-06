@@ -63,7 +63,16 @@
     display: none;
 
     &.top-banner-ad-container--below-nav {
-        border-bottom: 0;
+        border-bottom-width: 1px;
+
+        .ad-slot--top-banner-ad {
+            width: 970px;
+            padding-left: 0;
+        }
+
+        .ad-slot__label {
+            width: 100%;
+        }
     }
 
     .ad-slot__label {

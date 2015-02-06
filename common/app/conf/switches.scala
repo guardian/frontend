@@ -162,6 +162,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val DiscussionTimeoutSwitch = Switch("Performance", "discussion-timeout",
+    "An experimental switch to investigate whether discussion calls should be timed out within 5000ms",
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
+  )
+
   val OpenCtaSwitch = Switch("Performance", "open-cta",
     "If this switch is on, will see a CTA to comments on the right hand side. Turn this off if the Open API is blowing up.",
     safeState = Off, sellByDate = never

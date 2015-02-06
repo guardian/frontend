@@ -9,6 +9,13 @@ import org.joda.time.LocalDate
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
 import scala.util.Try
+import DynamoDb._
+
+import scalaz.std.list._
+import scalaz.std.anyVal._
+import scalaz.std.map._
+import scalaz.std.tuple._
+import scalaz.syntax.traverse._
 
 case class SelectorReport(selector: String, used: Int, unused: Int)
 
@@ -34,37 +41,40 @@ object CssReport extends ExecutionContexts {
     }
   }
 
-  def report(day: LocalDate): Future[Seq[SelectorReport]] = {
-    def runQuery(startKey: Option[java.util.Map[String, AttributeValue]]): Future[Seq[SelectorReport]] = {
-      dynamoDbClient.scanFuture(new ScanRequest()
-        .withTableName(TableName)
-        .withScanFilter(Map[String, Condition](
-        "day" -> new Condition()
-          .withComparisonOperator(ComparisonOperator.EQ)
-          .withAttributeValueList(new AttributeValue().withS(day.toString(DateFormat)))
-      ))
-        .withAttributesToGet("selector", "used", "unused")
-        .withExclusiveStartKey(startKey.orNull)
-      ) flatMap { result =>
-        val reports = result.getItems map { item =>
-          SelectorReport(
-            item.get("selector").getS,
-            Try(item.get("used").getN.toInt) getOrElse 0,
-            Try(item.get("unused").getN.toInt) getOrElse 0
-          )
-        }
-
-        Option(result.getLastEvaluatedKey) match {
-          case Some(key) =>
-            runQuery(Some(key)) map { nextReports =>
-              reports ++ nextReports
-            }
-
-          case None => Future.successful(reports)
-        }
+  def report(day: LocalDate): Future[List[SelectorReport]] = {
+    dynamoDbClient.sumScan[List[SelectorReport]](new ScanRequest()
+      .withTableName(TableName)
+      .withScanFilter(Map[String, Condition](
+      "day" -> new Condition()
+        .withComparisonOperator(ComparisonOperator.EQ)
+        .withAttributeValueList(new AttributeValue().withS(day.toString(DateFormat)))
+    ))
+      .withAttributesToGet("selector", "used", "unused")
+    ) { result =>
+      result.getItems.toList map { item =>
+        SelectorReport(
+          item.get("selector").getS,
+          Try(item.get("used").getN.toInt) getOrElse 0,
+          Try(item.get("unused").getN.toInt) getOrElse 0
+        )
       }
     }
+  }
 
-    runQuery(None)
+  def aggregateReport: Future[List[SelectorReport]] = {
+    dynamoDbClient.sumScan[Map[String, (Int, Int)]](new ScanRequest()
+      .withTableName(TableName)
+      .withAttributesToGet("selector", "used", "unused")
+    ) { result =>
+      result.getItems.toList.foldMap({ item =>
+        Map(
+          item.get("selector").getS -> (Try(item.get("used").getN.toInt) getOrElse 0, Try(item.get("unused").getN.toInt) getOrElse 0)
+        )
+      })
+    } map { aggregates =>
+      aggregates.toList.sortBy(_._1) map {
+        case (selector, (used, unused)) => SelectorReport(selector, used, unused)
+      }
+    }
   }
 }

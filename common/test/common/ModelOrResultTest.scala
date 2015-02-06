@@ -73,16 +73,15 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
     headers(notFound).apply("X-Accel-Redirect") should be("/applications/the/id")
   }
 
-  it should "Redirect to classic if it is an unsupported content type" in {
-    val redirectedToClassic = Future {
+  it should "404 if it is an unsupported content type" in {
+    val notFound = Future {
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testContent))
       ).right.get
     }
 
-    status(redirectedToClassic) should be(303)
-    headers(redirectedToClassic).get("Location").get should be("http://www.guardian.co.uk/canonical?view=classic")
+    status(notFound) should be(404)
   }
 
   it should "internal redirect to a tag if it has shown up at the wrong server" in {

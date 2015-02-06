@@ -302,7 +302,7 @@
             dataType: "json"
         }).done(function(res) {
             if (res.days && res.days.length) {
-                fetchSelectors(_.chain(res.days).sortBy().reverse().value());
+                fetchSelectors(_.chain(res.days).sortBy().reverse().value().concat('all'));
             } else {
                 console.log("No day data available.")
             }
