@@ -70,37 +70,39 @@
     @fragments.stylesheetLink("stylesheets/global.css", "global")
 <!--<![endif]-->
 
-<script>
-    // The css is loaded by the `link`s above but with media of "only x".
-    // This means the browser requests it, but doesn't block rendering on it,
-    // since this media is not 'x'. Once it's loaded (appears in
-    // `window.document.styleSheets`),  `media` is set to `all` so the browser
-    // uses it. Very much inspired by https://github.com/filamentgroup/loadCSS.
-    (function (isModernEnough) {
-        if(isModernEnough) {
-            function setMedia (styleSheet, styleSheets) {
-                styleSheets || (styleSheets = window.document.styleSheets);
+@if(InlineCriticalCss.isSwitchedOn) {
+    <script>
+        // The css is loaded by the `link`s above but with media of "only x".
+        // This means the browser requests it, but doesn't block rendering on it,
+        // since this media is not 'x'. Once it's loaded (appears in
+        // `window.document.styleSheets`),  `media` is set to `all` so the browser
+        // uses it. Very much inspired by https://github.com/filamentgroup/loadCSS.
+        (function (isModernEnough) {
+            if(isModernEnough) {
+                function setMedia (styleSheet, styleSheets) {
+                    styleSheets || (styleSheets = window.document.styleSheets);
 
-                for (var i = 0, totalSheets = styleSheets.length; i < totalSheets ; i++) {
-                    var sheet = styleSheets[i];
-                    if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1 ) {
-                        styleSheet.media = "screen";
-                        return true;
+                    for (var i = 0, totalSheets = styleSheets.length; i < totalSheets ; i++) {
+                        var sheet = styleSheets[i];
+                        if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1 ) {
+                            styleSheet.media = "screen";
+                            return true;
+                        }
+                    }
+                    setTimeout(function () {
+                        setMedia(styleSheet, styleSheets);
+                    });
+                }
+
+                function useCss () {
+                    var styleSheets = document.querySelectorAll('link[media="only x"]');
+                    for (var i = 0, totalStyleSheets = styleSheets.length; i < totalStyleSheets ; i++) {
+                        setMedia(styleSheets[i]);
                     }
                 }
-                setTimeout(function () {
-                    setMedia(styleSheet, styleSheets);
-                });
-            }
 
-            function useCss () {
-                var styleSheets = document.querySelectorAll('link[media="only x"]');
-                for (var i = 0, totalStyleSheets = styleSheets.length; i < totalStyleSheets ; i++) {
-                    setMedia(styleSheets[i]);
-                }
+            useCss();
             }
-
-        useCss();
-        }
-    })('querySelectorAll' in document)
-</script>
+        })('querySelectorAll' in document)
+    </script>
+}
