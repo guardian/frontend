@@ -117,6 +117,27 @@
 
         }
 
+        @if(InlineCriticalCss.isSwitchedOn && !play.Play.isDev()) {
+            function loadCssFromStorage() {
+                var c = null, s, head;
+
+                try {
+                    c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key');
+                } catch(e) { }
+                if (c) {
+                    s = document.createElement('style');
+                    head = document.getElementsByTagName('head')[0];
+                    s.innerHTML = c;
+                    s.setAttribute('data-loaded-from', 'local');
+                    s.className = "js-loggable";
+                    head.appendChild(s);
+                    guardian.css.loaded = true;
+                }
+            }
+
+            loadCssFromStorage();
+        }
+
     })(guardian.isModernBrowser);
 
     @* inline curl *@
