@@ -23,7 +23,8 @@ define([
         var rand,
             len,
             rules = _.chain(getStylesheets())
-                .pluck('rules' || 'cssRules')
+                .map(function (s) { return s.rules || s.cssRules; })
+                .compact()
                 .map(_.values)
                 .flatten()
                 .map(function (r) { return r && r.selectorText; })
@@ -44,7 +45,7 @@ define([
             .filter(function (sheet) {
                 return sheet &&
                     _.values(sheet.rules || sheet.cssRules).length > 0 &&
-                    (!sheet.ownerNode || sheet.ownerNode.className !== 'webfont') &&
+                    (!sheet.ownerNode || sheet.ownerNode.nodeName !== 'STYLE' || sheet.ownerNode.className.indexOf('js-loggable') > -1) &&
                     (!sheet.href || sheet.href.match(/\/\/(localhost|assets\.guim\.co\.uk)/));
             })
             .value();
