@@ -185,8 +185,19 @@ define([
             },
 
             transcludePopular: function () {
+                new Popular().init();
+            },
+
+            initPopular: function () {
                 if (!config.page.isFront) {
-                    new Popular().init();
+                    if (!config.switches.lazyLoadOnwards || window.location.hash) {
+                        modules.transcludePopular();
+                    } else {
+                        var onwardEl = qwery('.js-popular-trails')[0];
+                        if (onwardEl) {
+                            proximityLoader.add(onwardEl, 1500, modules.transcludePopular);
+                        }
+                    }
                 }
             },
 
@@ -483,7 +494,7 @@ define([
             robust('c-log-stats', modules.logLiveStats);
             robust('c-analytics',       modules.loadAnalytics);
             robust('c-cookies', modules.cleanupCookies);
-            robust('c-popular', modules.transcludePopular);
+            robust('c-popular', modules.initPopular);
             robust('c-related', modules.initRelated);
             robust('c-onward', modules.initOnwardContent);
             robust('c-overlay', modules.initOpenOverlayOnClick);

@@ -9,10 +9,11 @@ define([
 ) {
 
     var items = [],
-        scrollTop = 0, getScrollTop = function () { return scrollTop; },
+        scroll = {top:0, bottom: 0},
         doProximityLoadingThrottled, doProximityLoadingDebounced,
         doProximityLoading = function () {
-            scrollTop = bonzo(document.body).scrollTop();
+            scroll.top = bonzo(document.body).scrollTop();
+            scroll.bottom = scroll.top + bonzo.viewport().height;
             items = _.filter(items, function (item) {
                 if (item.conditionFn()) {
                     item.loadFn();
@@ -39,14 +40,13 @@ define([
     }
 
     function addProximityLoader(el, distanceThreshold, loadFn) {
-        // calls `loadFn` when `scrollTop` is within `distanceThreshold` of `el`
+        // calls `loadFn` when screen is within `distanceThreshold` of `el`
         var $el = bonzo(el),
             conditionFn = function () {
-                var scrollTop = getScrollTop(),
-                    elOffset = $el.offset(),
+                var elOffset = $el.offset(),
                     loadAfter = elOffset.top - distanceThreshold,
                     loadBefore = elOffset.top + elOffset.height + distanceThreshold;
-                return scrollTop > loadAfter && scrollTop < loadBefore;
+                return scroll.top > loadAfter && scroll.bottom < loadBefore;
             };
         addItem(conditionFn, loadFn);
     }

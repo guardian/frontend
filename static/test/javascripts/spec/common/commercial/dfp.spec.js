@@ -165,24 +165,6 @@ define([
                         });
                 });
 
-                it('should refresh on breakpoint changed', function (done) {
-                    dfp.init({ resizeTimeout: 1 });
-                    window.googletag.cmd.forEach(function (func) { func(); });
-                    // change breakpoint
-                    $style.html('body:after { content: "mobile"; }');
-                    // 'resize'
-                    mocks.store['common/utils/mediator'].emit('window:resize');
-                    waitsForAndRuns(
-                        function () {
-                            return googletag.pubads().refresh.called;
-                        },
-                        function () {
-                            expect(googletag.pubads().refresh.firstCall.args[0].length).toBe(2);
-                            done();
-                        }
-                    );
-                });
-
                 it('should display ads', function () {
                     dfp.init();
                     window.googletag.cmd.forEach(function (func) { func(); });

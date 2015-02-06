@@ -73,6 +73,7 @@ GET         /metrics/errors/5xx                                                 
 GET         /metrics/memory                                                                    controllers.admin.MetricsController.renderMemory()
 GET         /metrics/assets                                                                    controllers.admin.MetricsController.renderAssets()
 GET         /metrics/googlebot/404                                                             controllers.admin.MetricsController.renderGooglebot404s()
+GET         /metrics/afg                                                                       controllers.admin.MetricsController.renderAfg()
 
 # Radiator
 GET         /radiator                                                                          controllers.admin.RadiatorController.renderRadiator()

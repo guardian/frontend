@@ -6,7 +6,6 @@ class OnwardTestSuite extends Suites (
   new controllers.ChangeEditionControllerTest,
   new model.TopStoriesFeatureTest,
   new services.OnwardHealthcheckTest,
-  new ChangeViewControllerTest,
   new MostPopularControllerTest,
   new MostPopularFeatureTest,
   new MostViewedVideoTest,
