@@ -23,7 +23,8 @@ define([
         var rand,
             len,
             rules = _.chain(getStylesheets())
-                .pluck('rules' || 'cssRules')
+                .map(function(s) { return s.rules || s.cssRules; })
+                .compact()
                 .map(_.values)
                 .flatten()
                 .map(function (r) { return r && r.selectorText; })
