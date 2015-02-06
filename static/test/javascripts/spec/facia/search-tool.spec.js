@@ -85,15 +85,22 @@ define([
                 expect(sut.getListOfResults).toHaveBeenCalledWith(stubEvent);
             });
 
+            it("should close search tool if not clicked on the list", function() {
+                spyOn(mocks.store['common/utils/mediator'], "emit");
+
+                sut.handleClick({target: $('body')[0]});
+                expect(mocks.store['common/utils/mediator'].emit).toHaveBeenCalledWith('autocomplete:toggle', false);
+            });
+
             it("should push data after click on list item", function() {
                 spyOn(sut, "pushData").and.callThrough();
                 spyOn(sut, "track");
                 spyOn(mocks.store['common/utils/mediator'], "emit");
 
-                $(".js-search-tool-list").html("<li><a class='active'></a><a data-weather-id='292177' data-weather-city='Ufa'></a></li>");
+                $(".js-search-tool-list").html("<li><a class='js-search-tool-link active'></a><a class='js-search-tool-link' data-weather-id='292177' data-weather-city='Ufa'><span></span></a></li>");
                 sut.init();
 
-                bean.fire($(".js-search-tool-list a")[1], "click");
+                bean.fire($(".js-search-tool-list span")[0], "click");
 
                 expect(sut.pushData).toHaveBeenCalled();
                 expect(mocks.store['common/utils/mediator'].emit).toHaveBeenCalledWith('autocomplete:fetch',
@@ -171,10 +178,11 @@ define([
                 expect(sut.fetchData).not.toHaveBeenCalled();
             });
 
-            xit("should clear after pushing data", function() {
+            it("should clear after pushing data", function() {
                 spyOn(sut, "destroy");
+                spyOn(sut, "track");
 
-                $(".js-search-tool-list").html('<li><a class="active"></a></li>');
+                $(".js-search-tool-list").html('<li><a class="active" data-weather-city="test2"></a></li>');
 
                 sut.init();
 
