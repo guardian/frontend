@@ -36,6 +36,7 @@ define([
                 'video:75': 'event23',
                 'video:end': 'event18',
                 'audio:end': 'event20',
+                'video:fullscreen': 'eventfoo',
                 // extra events with no set ordering
                 duration: 'event57'
             };
@@ -176,6 +177,7 @@ define([
             player.one('video:play:75', this.sendNamedEvent.bind(this, 'video:75'));
             player.one('video:content:end', this.sendNamedEvent.bind(this, 'video:end'));
             player.one('audio:content:end', this.sendNamedEvent.bind(this, 'audio:end'));
+            player.on('player:fullscreen', this.sendNamedEvent.bind(this, 'video:fullscreen'));
         };
     }
     return OmnitureMedia;

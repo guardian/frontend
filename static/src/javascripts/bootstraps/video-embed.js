@@ -79,6 +79,14 @@ define([
         bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
     }
 
+
+    function bindFullscreenEvent() {
+        player.on('fullscreenchange', function(){
+            if(this.isFullScreen()) { player.trigger('video:fullscreen'); }
+        })
+    }
+
+
     function addTitleBar() {
         var data = {
             webTitle: config.page.webTitle,
