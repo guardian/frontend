@@ -36,7 +36,7 @@ define([
                 'video:75': 'event23',
                 'video:end': 'event18',
                 'audio:end': 'event20',
-                'video:fullscreen': 'eventfoo',
+                'video:fullscreen': 'event96',
                 // extra events with no set ordering
                 duration: 'event57'
             };

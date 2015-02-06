@@ -14,6 +14,7 @@ define([
     'common/modules/component',
     'common/modules/video/tech-order',
     'common/modules/video/events',
+    'common/modules/video/fullscreener',
     'common/views/svgs',
     'text!common/views/ui/loading.html',
     'text!common/views/media/titlebar.html'
@@ -32,6 +33,7 @@ define([
     Component,
     techOrder,
     events,
+    fullscreener,
     svgs,
     loadingTmpl,
     titlebarTmpl
@@ -57,35 +59,6 @@ define([
 
         return player;
     }
-
-    function fullscreener() {
-        var player = this,
-            clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0],
-            events = {
-                click: function (e) {
-                    this.paused() ? this.play() : this.pause();
-                    e.stop();
-                },
-                dblclick: function (e) {
-                    e.stop();
-                    this.isFullScreen() ? this.exitFullscreen() : this.requestFullscreen();
-                }
-            };
-
-        bonzo(clickbox)
-            .appendTo(player.contentEl());
-
-        bean.on(clickbox, 'click', events.click.bind(player));
-        bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
-    }
-
-
-    function bindFullscreenEvent() {
-        player.on('fullscreenchange', function(){
-            if(this.isFullScreen()) { player.trigger('video:fullscreen'); }
-        })
-    }
-
 
     function addTitleBar() {
         var data = {
