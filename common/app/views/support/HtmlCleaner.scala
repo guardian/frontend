@@ -36,6 +36,21 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
+case class R2VideoCleaner(article: Article) extends HtmlCleaner {
+
+override def clean(document: Document): Document = {
+
+    val legacyVideos = document.getElementsByTag("video").filter(_.hasClass("gu-video")).filter(_.parent().tagName() != "figure")
+
+    legacyVideos.foreach( videoElement => {
+      videoElement.wrap("<figure class=\"test element element-video\"></figure>")
+    })
+
+    document
+  }
+
+}
+
 case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
@@ -109,9 +124,11 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
         findVideoApiElement(mediaId).foreach{ videoElement =>
           element.attr("data-block-video-ads", videoElement.blockVideoAds.toString)
-          element.attr("data-embeddable", videoElement.embeddable.toString)
-          if(!canonicalUrl.isEmpty) {
+          if(!canonicalUrl.isEmpty && videoElement.embeddable) {
+            element.attr("data-embeddable", "true")
             element.attr("data-embed-path", new URL(canonicalUrl).getPath.stripPrefix("/"))
+          } else {
+            element.attr("data-embeddable", "false")
           }
         }
       }
