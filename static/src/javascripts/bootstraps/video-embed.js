@@ -98,10 +98,9 @@ define([
 
     function initEndSlate(player) {
         var endSlate = new Component(),
-            endState = 'vjs-has-ended',
-            endpointHost = config.page.externalEmbedHost;
+            endState = 'vjs-has-ended';
 
-        endSlate.endpoint = endpointHost + $('.js-gu-media--enhance').first().attr('data-end-slate');
+        endSlate.endpoint = config.page.externalEmbedHost + $('.js-gu-media--enhance').first().attr('data-end-slate');
 
         endSlate.fetch(player.el(), 'html').then(function () {
             $('.end-slate-container .fc-item__action').each(function (e) { e.href += '?CMP=embed_endslate'; });
