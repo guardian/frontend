@@ -10,7 +10,7 @@ object ForecastResponse {
 
   def fromAccuweather(forecastResponse: accuweather.ForecastResponse): ForecastResponse = {
     ForecastResponse(
-      forecastResponse.EpochDateTime * 1000,
+      forecastResponse.EpochDateTime,
       forecastResponse.WeatherIcon,
       forecastResponse.IconPhrase,
       forecastResponse.Temperature.Unit match {
@@ -37,5 +37,5 @@ case class ForecastResponse(
     }
   }
 
-  def hourString = new DateTime(epochDateTime).toString("HH:00")
+  def hourString = new DateTime(epochDateTime * 1000).toString("HH:00")
 }
