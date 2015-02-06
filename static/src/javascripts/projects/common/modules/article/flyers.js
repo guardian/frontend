@@ -51,7 +51,7 @@ define([
             minBelow: 250,
             selectors: {
                 ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 200},
-                ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 300},
+                ' > *:not(p):not(h2):not(blockquote)': {minAbove: 35, minBelow: 300},
                 ' .ad-slot': {minAbove: 150, minBelow: 200},
                 ' .element-rich-link': {minAbove: 500, minBelow: 500}
             }
