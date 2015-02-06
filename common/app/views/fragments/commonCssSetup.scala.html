@@ -124,18 +124,18 @@
     // uses it. Very much inspired by https://github.com/filamentgroup/loadCSS.
     (function (isModernEnough) {
         if(isModernEnough) {
-            function setMedia (styleSheet, sheets) {
-                sheets || (sheets = window.document.styleSheets);
+            function setMedia (styleSheet, styleSheets) {
+                styleSheets || (styleSheets = window.document.styleSheets);
 
-                for (var i = 0, totalSheets = sheets.length; i < totalSheets ; i++) {
-                    var sheet = sheets[i];
+                for (var i = 0, totalSheets = styleSheets.length; i < totalSheets ; i++) {
+                    var sheet = styleSheets[i];
                     if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1 ) {
                         styleSheet.media = "screen";
                         return true;
                     }
                 }
                 setTimeout(function () {
-                    setMedia(styleSheet, sheets);
+                    setMedia(styleSheet, styleSheets);
                 });
             }
 
