@@ -23,9 +23,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/user-prefs',
-    'facia/modules/onwards/search-tool',
-    'text!facia/views/weather.html',
-    'text!facia/views/weather-forecast.html'
+    'facia/modules/onwards/search-tool'
 ], function (
     bean,
     qwery,
@@ -37,13 +35,10 @@ define([
     mediator,
     template,
     userPrefs,
-    SearchTool,
-    weatherTemplate,
-    forecastTemplate
+    SearchTool
     ) {
 
-    var $weather       = null,
-        $holder        = null,
+    var $holder        = null,
         searchTool     = null,
         city           = '',
         prefName       = 'weather-location';
@@ -172,15 +167,15 @@ define([
         },
 
         bindEvents: function () {
-            bean.on(qwery('.js-weather-input')[0], 'click', function (e) {
+            bean.on(document.body, 'click', '.js-weather-input', function (e) {
                 e.preventDefault();
                 this.toggleControls(true);
             }.bind(this));
-            bean.on(qwery('.js-close-location')[0], 'click', function (e) {
+            bean.on(document.body, 'click', '.js-close-location', function (e) {
                 e.preventDefault();
                 this.toggleControls(false);
             }.bind(this));
-            bean.on(qwery('.js-toggle-forecast')[0], 'click', function (e) {
+            bean.on(document.body, 'click', '.js-toggle-forecast', function (e) {
                 e.preventDefault();
                 this.toggleForecast();
             }.bind(this));
@@ -233,61 +228,28 @@ define([
         },
 
         render: function (weatherData, city) {
-            $weather = $('.weather');
-            $holder = $('.js-container--first .js-container__header');
+            this.attachToDOM(weatherData.html, city);
 
-            $weather = $.create(template(weatherTemplate, {
-                location: city,
-                icon: weatherData.weatherIcon,
-                description: weatherData.weatherText,
-                tempNow: this.getTemperature(weatherData)
-            }));
-
-            $weather.appendTo($holder);
             this.bindEvents();
             this.addSearch();
 
             this.render = function (weatherData, city) {
-                $weather = $('.weather .js-weather-current');
-
-                var $weatherIcon = $('.js-weather-icon', $weather);
-
-                $('.js-weather-temp', $weather).text(this.getTemperature(weatherData));
-                searchTool.setInputValue(city);
-
-                // Replace number in weather icon class
-                $weatherIcon.attr('class', $weatherIcon.attr('class').replace(/(\d+)/g,
-                    weatherData.weatherIcon))
-                    .attr('title', weatherData.weatherText);
-
-                // Close editing
-                this.toggleControls();
+                this.attachToDOM(weatherData.html, city);
+                searchTool.bindElements($('.js-search-tool'));
             };
+        },
+
+        attachToDOM: function (tmpl, city) {
+            $holder = $('.js-container--first .js-container__header');
+            $('.js-weather', $holder).remove();
+            $holder.append(tmpl.replace(new RegExp('{{city}}', 'g'), city));
         },
 
         renderForecast: function (forecastData) {
             var $forecastHolder = $('.js-weather-forecast'),
-                $forecast       = null,
-                docFragment     = document.createDocumentFragment(),
-                i;
+                tmpl            = forecastData.html;
 
-            $forecastHolder.empty();
-
-            for (i in forecastData) {
-                $forecast = $.create(template(forecastTemplate, {
-                    'forecast-time': new Date(forecastData[i].epochDateTime * 1000).getHours(),
-                    'forecast-temp': forecastData[i].temperature[this.getUnits()],
-                    'forecast-icon': forecastData[i].weatherIcon,
-                    'forecast-desc': forecastData[i].weatherText,
-                    'forecast-num': parseInt(i, 10) + 1
-                }));
-
-                docFragment.appendChild($forecast[0]);
-            }
-
-            $forecastHolder.each(function (item) {
-                $(item).append(docFragment.cloneNode(true));
-            });
+            $forecastHolder.empty().html(tmpl);
         }
     };
 });

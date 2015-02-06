@@ -89,7 +89,6 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
 
   def withHost(path: String) = s"http://localhost:$port$path"
 
-  def classicVersionLink(path: String) = s"http://localhost:$port/preference/platform/classic?page=${URLEncoder.encode(s"$path?view=classic", "UTF-8")}"
 }
 
 trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrowserPerSuite with HtmlUnitFactory {

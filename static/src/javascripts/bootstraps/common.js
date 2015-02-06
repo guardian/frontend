@@ -462,12 +462,7 @@ define([
 
         },
 
-        /* jshint undef: true */
-        /* global guardian */
-        inTestGroup = config.switches.iphoneConfidence && guardian.isIphone4 && guardian.inTestBucket,
-
         ready = function () {
-
             robust('c-fonts',           modules.loadFonts);
             robust('c-identity',        modules.initId);
             robust('c-adverts',         modules.initUserAdTargeting);
@@ -488,33 +483,25 @@ define([
             robust('c-clickstream',     modules.initClickstream);
             robust('c-release-message', modules.displayReleaseMessage);
             robust('c-history',         modules.updateHistory);
-
-            if (!inTestGroup) {
-                robust('c-sign-in', modules.initAutoSignin);
-                robust('c-interactive', modules.augmentInteractive);
-                robust('c-history-nav', modules.showHistoryInMegaNav);
-                robust('c-forsee', modules.runForseeSurvey);
-                robust('c-start-register', modules.startRegister);
-                robust('c-comments', modules.repositionComments);
-                robust('c-tag-links', modules.showMoreTagsLink);
-                robust('c-smart-banner', modules.showSmartBanner);
-                robust('c-log-stats', modules.logLiveStats);
-            }
-
+            robust('c-sign-in', modules.initAutoSignin);
+            robust('c-interactive', modules.augmentInteractive);
+            robust('c-history-nav', modules.showHistoryInMegaNav);
+            robust('c-forsee', modules.runForseeSurvey);
+            robust('c-start-register', modules.startRegister);
+            robust('c-comments', modules.repositionComments);
+            robust('c-tag-links', modules.showMoreTagsLink);
+            robust('c-smart-banner', modules.showSmartBanner);
+            robust('c-log-stats', modules.logLiveStats);
             robust('c-analytics',       modules.loadAnalytics);
-
-            if (!inTestGroup) {
-                robust('c-cookies', modules.cleanupCookies);
-                robust('c-popular', modules.initPopular);
-                robust('c-related', modules.initRelated);
-                robust('c-onward', modules.initOnwardContent);
-                robust('c-overlay', modules.initOpenOverlayOnClick);
-                robust('c-css-logging', modules.runCssLogging);
-                robust('c-public-api', modules.initPublicApi);
-                robust('c-simple-metrics', modules.initSimpleMetrics);
-                robust('c-crosswords', crosswordThumbnails.init);
-            }
-
+            robust('c-cookies', modules.cleanupCookies);
+            robust('c-popular', modules.initPopular);
+            robust('c-related', modules.initRelated);
+            robust('c-onward', modules.initOnwardContent);
+            robust('c-overlay', modules.initOpenOverlayOnClick);
+            robust('c-css-logging', modules.runCssLogging);
+            robust('c-public-api', modules.initPublicApi);
+            robust('c-simple-metrics', modules.initSimpleMetrics);
+            robust('c-crosswords', crosswordThumbnails.init);
             robust('c-ready',           function () { mediator.emit('page:common:ready'); });
         };
 

@@ -36,7 +36,6 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
       ("isSSL", JsBoolean(Configuration.environment.secure)),
       ("assetsPath", JsString(Configuration.assets.path)),
       ("hasPageSkin", JsBoolean(metaData.hasPageSkin(edition))),
-      ("showClassicVersion", JsBoolean(HasClassicVersion(metaData))),
       ("shouldHideAdverts", JsBoolean(metaData match {
         case c: Content if c.shouldHideAdverts => true
         case _ => false

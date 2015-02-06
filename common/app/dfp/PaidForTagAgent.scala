@@ -164,8 +164,10 @@ trait PaidForTagAgent {
     findWinningTagPair(currentPaidForTags, capiTags, maybeSectionId, None) map (_.capiTag)
   }
 
-  def sponsorshipTag(config: CollectionConfig): Option[String] = {
-    findContainerCapiTagIdAndDfpTag(config) map (_.capiTagId)
+  def sponsorshipTag(config: CollectionConfig): Option[SponsorshipTag] = {
+    findContainerCapiTagIdAndDfpTag(config) map { tagPair =>
+      SponsorshipTag(tagPair.dfpTag.tagType, tagPair.capiTagId)
+    }
   }
 
   private def isExpiredAdvertisementFeature(pageId: String,
@@ -243,3 +245,5 @@ trait PaidForTagAgent {
 sealed case class CapiTagAndDfpTag(capiTag: Tag, dfpTag: PaidForTag)
 
 sealed case class CapiTagIdAndDfpTag(capiTagId: String, dfpTag: PaidForTag)
+
+case class SponsorshipTag(tagType: TagType, tagId: String)

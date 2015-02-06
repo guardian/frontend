@@ -258,6 +258,10 @@ define([
                     .defineSizeMapping(sizeMapping)
                     .setTargeting('slot', slotTarget);
 
+            if ($adSlot.data('series')) {
+                slot.setTargeting('se', parseKeywords($adSlot.data('series')));
+            }
+
             if ($adSlot.data('keywords')) {
                 slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
             }
@@ -290,6 +294,10 @@ define([
                 size = event.size.join(',');
                 // is there a callback for this size
                 callbacks[size] && callbacks[size](event, $slot);
+
+                if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
+                    $slot.parent().css('display', 'block');
+                }
             }
         },
         allAdsRendered = function (slotId) {

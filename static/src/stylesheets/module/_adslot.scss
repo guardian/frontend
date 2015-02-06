@@ -46,6 +46,14 @@
 /**
  * Banner ads
  */
+
+.js-on {
+    .top-banner-ad-container--desktop.top-banner-ad-container--above-nav,
+    .ad-below-nav .ad-slot--top-below-nav {
+        display: none;
+    }
+}
+
 .top-banner-ad-container--mobile {
     background-color: #f0f0f0;
 }
@@ -53,6 +61,19 @@
     background-color: colour(neutral-8);
     border-bottom: 2px solid colour(neutral-4);
     display: none;
+
+    &.top-banner-ad-container--below-nav {
+        border-bottom-width: 1px;
+
+        .ad-slot--top-banner-ad {
+            width: 970px;
+            padding-left: 0;
+        }
+
+        .ad-slot__label {
+            width: 100%;
+        }
+    }
 
     .ad-slot__label {
         /* this is the minimum width of possible ads sizes */
@@ -343,7 +364,6 @@
 }
 .ad-slot--adbadge {
     .ad-slot--paid-for-badge__header,
-    .ad-slot--paid-for-badge__label,
     .ad-slot--paid-for-badge__help {
         color: colour(neutral-2-contrasted);
     }

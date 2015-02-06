@@ -25,11 +25,17 @@ OPTIONS     /accept-beacon                                                      
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: CrosswordType, id: Int)
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
 
-#Weather
-GET         /weather/city/:id.json                                                                                   controllers.WeatherController.forCityId(id)
+#Weather - OLD
+GET         /weather/city/:id.json                                                                                   controllers.WeatherController.forCity(id)
 GET         /weather/city.json                                                                                       controllers.LocationsController.whatIsMyCity()
 GET         /weather/locations                                                                                       controllers.LocationsController.findCity(query: String)
 GET         /weather/forecast/:id.json                                                                               controllers.WeatherController.forecastForCityId(id)
+
+#Weather
+GET         /weatherapi/city/:id.json                                                                                controllers.WeatherController.forCity(id)
+GET         /weatherapi/city.json                                                                                    controllers.LocationsController.whatIsMyCity()
+GET         /weatherapi/locations                                                                                    controllers.LocationsController.findCity(query: String)
+GET         /weatherapi/forecast/:id.json                                                                            controllers.WeatherController.forecastForCityId(id)
 
 # Analytics
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
@@ -80,7 +86,6 @@ GET         /top-stories/trails.json                                            
 GET         /related/*path.json                                                                                      controllers.RelatedController.render(path)
 GET         /popular-in-tag/*tag.json                                                                                controllers.PopularInTag.render(tag)
 
-GET         /preference/platform/:platform                                                                           controllers.ChangeViewController.render(platform, page)
 GET         /preference/edition/:edition                                                                             controllers.ChangeEditionController.render(edition)
 GET         /preference/front-alphas/:optAction                                                                      controllers.ChangeAlphaController.render(optAction, page)
 
@@ -195,6 +200,12 @@ GET         /troubleshoot/pages                                                 
 GET         /troubleshoot/test                                                                                       controllers.admin.TroubleshooterController.test(id, testPath)
 GET         /redirects                                                                                               controllers.admin.RedirectController.redirect()
 POST        /redirect-post                                                                                           controllers.admin.RedirectController.redirectPost()
+
+# css reports
+GET         /css-reports                                                                                             controllers.admin.CssReportController.entry
+GET         /css-reports.json                                                                                        controllers.admin.CssReportController.index
+GET         /css-reports/:date.json                                                                                  controllers.admin.CssReportController.report(date: org.joda.time.LocalDate)
+
 
 # Football admin
 
