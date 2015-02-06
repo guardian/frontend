@@ -918,7 +918,7 @@ $ima-controls-height: 70px;
 
     @include mq(mobileLandscape) {
         .gu-video-embed .vjs-has-ended & {
-            display: block !important;
+            display: block;
         }
     }
 }
