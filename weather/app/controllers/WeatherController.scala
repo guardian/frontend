@@ -1,7 +1,7 @@
 package controllers
 
 import common.{JsonComponent, ExecutionContexts}
-import model.{Cached}
+import model.Cached
 import play.api.mvc.{Action, Controller}
 import models.CityId
 import weather.WeatherApi
