@@ -94,22 +94,10 @@
 <![endif]-->
 
 @*
-  - Include IE Mobile [IEMobile]
-  - Note: does not include IE10 on Windows Phone 8 (which does not support conditional comments)
-*@
-<!--[if IEMobile]>
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" media="only x" />
-    <noscript>
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
-    </noscript>
-<![endif]-->
-
-@*
   - Include any browser [<!-->]
   - Exclude IE < 10 [(gt IE 9)]
-  - Exclude IE Mobile [&(!IEMobile)]
 *@
-<!--[if (gt IE 9)&(!IEMobile)]><!-->
+<!--[if (gt IE 9)]><!-->
     <link rel="stylesheet" data-reload="global" type="text/css" href="@Static("stylesheets/global.css")" media="only x" />
     <noscript>
         <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
