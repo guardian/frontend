@@ -19,8 +19,8 @@
     },
     Edition(request),
     Edition(request).id == "UK" && (
-        (AppleAdNetworkFrontSwitch.isSwitchedOnAndActive && metaData.id == "uk") ||
-        (AppleAdCultureFrontSwitch.isSwitchedOnAndActive && metaData.id == "uk/culture")
+        (AppleAdNetworkFrontSwitch.isSwitchedOn && metaData.id == "uk") ||
+        (AppleAdCultureFrontSwitch.isSwitchedOn && metaData.id == "uk/culture")
     )
 )) { case (showAdverts, edition, adBelowNav) =>
     <body

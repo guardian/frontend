@@ -302,30 +302,13 @@ object Switches {
   private def dateInFebruary(day: Int): Interval =
     new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
 
-  val AppleAdNetworkFrontSwitch = TimerSwitch("Commercial", "apple-ads-on-network-front",
+  val AppleAdNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-network-front",
     "If this switch is on, Apple ads will appear on the network front during active periods.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
-    activePeriods = Seq(
-      dateInFebruary(5),
-      dateInFebruary(7),
-      dateInFebruary(8),
-      dateInFebruary(10),
-      dateInFebruary(11),
-      dateInFebruary(12)
-    )
-  )
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1))
 
-  val AppleAdCultureFrontSwitch = TimerSwitch("Commercial", "apple-ads-on-culture-front",
+  val AppleAdCultureFrontSwitch = Switch("Commercial", "apple-ads-on-culture-front",
     "If this switch is on, Apple ads will appear on the culture front during active periods.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
-    activePeriods = Seq(
-      dateInFebruary(7),
-      dateInFebruary(8),
-      dateInFebruary(9),
-      dateInFebruary(11),
-      dateInFebruary(12)
-    )
-  )
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1))
 
   // Monitoring
 
