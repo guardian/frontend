@@ -188,7 +188,7 @@ define([
                 new Popular().init();
             },
 
-            initPopular: function() {
+            initPopular: function () {
                 if (!config.page.isFront) {
                     if (!config.switches.lazyLoadOnwards || window.location.hash) {
                         modules.transcludePopular();
