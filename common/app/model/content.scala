@@ -544,8 +544,6 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
     "twitter:card" -> "summary"
   )
 
-  override lazy val hasClassicVersion: Boolean = super.hasClassicVersion && !(section == "football")
-
   private lazy val cricketMetaData = if (isCricketLiveBlog && conf.Switches.CricketScoresSwitch.isSwitchedOn) {
     Map(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
   } else {
@@ -595,8 +593,6 @@ object Audio {
 }
 
 class Video(content: ApiContentWithMeta) extends Media(content) {
-
-  override lazy val hasClassicVersion = false
 
   override lazy val contentType = GuardianContentTypes.Video
 

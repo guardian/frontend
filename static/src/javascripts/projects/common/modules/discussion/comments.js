@@ -160,6 +160,7 @@ Comments.prototype.fetchComments = function(options) {
             type: 'json',
             method: 'get',
             crossOrigin: true,
+            timeout: config.switches.discussionTimeout ? 5000 : 0,
             data: queryParams
         };
     if (this.isAllPageSizeActive()) {

@@ -125,9 +125,10 @@ trait PaidForTagAgent {
       val stopWords = Set("newest", "order-by", "published", "search", "tag", "use-date")
 
       config.apiQuery map { encodedQuery =>
+        def negativeClause(token: String): Boolean = token.startsWith("-")
         val query = URLDecoder.decode(encodedQuery, "utf-8")
         val tokens = query.split( """\?|&|=|\(|\)|\||\,""")
-        (tokens filterNot stopWords.contains flatMap frontKeywordIds).toSeq
+        (tokens filterNot negativeClause filterNot stopWords.contains flatMap frontKeywordIds).toSeq
       } getOrElse Nil
     }
 
