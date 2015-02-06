@@ -100,7 +100,8 @@ define([
         var endSlate = new Component(),
             endState = 'vjs-has-ended';
 
-        endSlate.endpoint = $('.js-gu-media--enhance').first().attr('data-end-slate');
+        endSlate.endpoint = config.page.externalEmbedHost + $('.js-gu-media--enhance').first().attr('data-end-slate');
+
         endSlate.fetch(player.el(), 'html').then(function () {
             $('.end-slate-container .fc-item__action').each(function (e) { e.href += '?CMP=embed_endslate'; });
             bean.on($('.end-slate-container')[0], 'click', function (e) {
