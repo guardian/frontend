@@ -70,7 +70,7 @@
     @fragments.stylesheetLink("stylesheets/global.css", "global")
 <!--<![endif]-->
 
-@if(InlineCriticalCss.isSwitchedOn) {
+@if(AsyncCss.isSwitchedOn) {
     <script>
         // The css is loaded by the `link`s above but with media of "only x".
         // This means the browser requests it, but doesn't block rendering on it,
