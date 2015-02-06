@@ -11,6 +11,8 @@ import org.scalatest.{FlatSpec, Matchers}
 
     go to theguardian("/books/2014/oct/15/dylan-thomas-in-fitzrovia-griff-rhys-jones")
 
+    scrollToBottom()
+
     withClue("Should show the 'most popular' component") {
       first("[data-test-id='popular-in']").isDisplayed should be (true)
     }
