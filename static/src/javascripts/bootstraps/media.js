@@ -234,8 +234,6 @@ define([
                         events.bindContentEvents(player);
                     }
 
-                    bindFullscreenEvent(player);
-
                     if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
                         initEndSlate(player, endSlateUri);
                     }
