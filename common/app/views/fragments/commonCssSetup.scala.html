@@ -37,6 +37,24 @@
 </style>
 
 @*
+  - Include IE < 9 [(lt IE 9)]
+  - Exclude IE Mobile [&(!IEMobile)]
+*@
+<!--[if (lt IE 9)&(!IEMobile)]>
+    @fragments.stylesheetLink(Static.css.headOldIE(projectName))
+    @fragments.stylesheetLink("stylesheets/old-ie.global.css")
+<![endif]-->
+
+@*
+  - Include IE 9 [(IE 9)]
+  - Exclude IE Mobile [&(!IEMobile)]
+*@
+<!--[if (IE 9)&(!IEMobile)]>
+    @fragments.stylesheetLink(Static.css.headIE9(projectName))
+    @fragments.stylesheetLink("stylesheets/ie9.global.css")
+<![endif]-->
+
+@*
   - Include all browsers [<!-->]
   - Exclude IE < 10 [(gt IE 9)]
   - Include IE Mobile [|(IEMobile)]
@@ -49,59 +67,7 @@
         @Html(Static.css.head(projectName))
     </style>
 }
-<!--<![endif]-->
-@*
-  - Include IE < 9 [(lt IE 9)]
-  - Exclude IE Mobile [&(!IEMobile)]
-*@
-<!--[if (lt IE 9)&(!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static(Static.css.headOldIE(projectName))" media="only x" />
-    <noscript>
-        <link rel="stylesheet" type="text/css" href="@Static(Static.css.headOldIE(projectName))" />
-    </noscript>
-<![endif]-->
-@*
-  - Include IE 9 [(IE 9)]
-  - Exclude IE Mobile [&(!IEMobile)]
-*@
-<!--[if (IE 9)&(!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static(Static.css.headIE9(projectName))" media="only x" />
-    <noscript>
-        <link rel="stylesheet" type="text/css" href="@Static(Static.css.headIE9(projectName))" />
-    </noscript>
-<![endif]-->
-
-@*
-  - Include IE 9 [(IE 9)]
-  - Exclude IE Mobile [&(!IEMobile)]
-*@
-<!--[if (IE 9)&(!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/ie9.global.css")" media="only x" />
-    <noscript>
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/ie9.global.css")" />
-    </noscript>
-<![endif]-->
-
-@*
-  - Include IE < 9 [(lt IE 9)]
-  - Exclude IE Mobile [&(!IEMobile)]
-*@
-<!--[if (lt IE 9)&(!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.global.css")" media="only x" />
-    <noscript>
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.global.css")" />
-    </noscript>
-<![endif]-->
-
-@*
-  - Include any browser [<!-->]
-  - Exclude IE < 10 [(gt IE 9)]
-*@
-<!--[if (gt IE 9)]><!-->
-    <link rel="stylesheet" data-reload="global" type="text/css" href="@Static("stylesheets/global.css")" media="only x" />
-    <noscript>
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
-    </noscript>
+    @fragments.stylesheetLink("stylesheets/global.css", "global")
 <!--<![endif]-->
 
 <script>
