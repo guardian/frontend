@@ -71,7 +71,7 @@ define([
 
         getWeatherData: function (url) {
             return ajax({
-                url: url,
+                url: url + '?edition=' + config.page.pageId,
                 type: 'json',
                 method: 'get',
                 crossOrigin: true
