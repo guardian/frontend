@@ -31,7 +31,6 @@
 
             // Check the stylesheet has downloaded, then set media to `screen`. If not, go again.
             function setMedia (styleSheet) {
-                console.info('chcecking')
                 for (var i = 0, totalSheets = documentStyleSheets.length; i < totalSheets ; i++) {
                     var sheet = documentStyleSheets[i];
                     if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1) {
