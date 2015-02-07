@@ -75,15 +75,15 @@
         // The css is loaded by the `link`s above but with media of "only x".
         // This means the browser requests it, but doesn't block rendering on it,
         // since this media is not 'x'. Once it's loaded (appears in
-        // `window.document.styleSheets`),  `media` is set to `all` so the browser
+        // `window.document.styleSheets`),  `media` is set to `screen` so the browser
         // uses it. Very much inspired by https://github.com/filamentgroup/loadCSS.
-        (function () {
-            function setMedia (styleSheet, styleSheets) {
-                styleSheets || (styleSheets = window.document.styleSheets);
+        (function (styleSheetLinks, documentStyleSheets) {
 
-                for (var i = 0, totalSheets = styleSheets.length; i < totalSheets ; i++) {
-                    var sheet = styleSheets[i];
-                    if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1 ) {
+            // Check the stylesheet has downloaded, then set media to `screen`. If not, go again.
+            function setMedia (styleSheet) {
+                for (var i = 0, totalSheets = documentStyleSheets.length; i < totalSheets ; i++) {
+                    var sheet = documentStyleSheets[i];
+                    if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1) {
                         styleSheet.media = "screen";
                         return true;
                     }
@@ -93,15 +93,16 @@
                 });
             }
 
+            // Watching for load on all `link` elements with media of `only x`
             function useCss () {
-                var styleSheets = document.getElementsByTagName('link');
-                for (var i = 0, totalStyleSheets = styleSheets.length; i < totalStyleSheets ; i++) {
-                    if (styleSheets[i].getAttribute('media') === 'only x') {
-                        setMedia(styleSheets[i]);
+                for (var i = 0, totalStyleSheetLinks = styleSheetLinks.length; i < totalStyleSheetLinks ; i++) {
+                    if (styleSheetLinks[i].getAttribute('media') === 'only x') {
+                        setMedia(styleSheetLinks[i]);
                     }
                 }
             }
 
+            // GO!
             useCss();
 
             // TEMPORARY: Tidy up localStorage - can remove after a bit
@@ -112,6 +113,6 @@
                     }
                 });
             } catch (e) {};
-        })()
+        })(document.getElementsByTagName('link'), window.document.styleSheets)
     </script>
 }
