@@ -42,7 +42,7 @@
                 setTimeout(setMedia, null, styleSheet);
             }
 
-            // Watching for load on all `link` elements with media of `only x`
+            // Watch for load on all `link` elements with media of `only x`
             function useCss () {
                 for (var i = 0, totalStyleSheetLinks = styleSheetLinks.length; i < totalStyleSheetLinks ; i++) {
                     if (styleSheetLinks[i].getAttribute('media') === 'only x') {
