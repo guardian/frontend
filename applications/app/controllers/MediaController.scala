@@ -1,25 +1,21 @@
 package controllers
 
-import com.gu.contentapi.client.model.ItemResponse
-import conf._
+import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
 import common._
+import conf.LiveContentApi.getResponse
+import conf._
 import model._
-import play.api.mvc.{ Content => _, _ }
-import scala.concurrent.Future
+import play.api.mvc.{Content => _, _}
 import views.support.RenderOtherStatus
-import LiveContentApi.getResponse
+
+import scala.concurrent.Future
 
 case class MediaPage(media: Media, related: RelatedContent)
 
-object MediaController extends Controller with Logging with ExecutionContexts {
+object MediaController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
-  def render(path: String) = Action.async { implicit request =>
-    lookup(path) map {
-      case Left(model) => renderMedia(model)
-      case Right(other) => RenderOtherStatus(other)
-    }
-  }
+  def render(path: String) = Action.async { implicit request => renderItem(path) }
 
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
@@ -32,7 +28,7 @@ object MediaController extends Controller with Logging with ExecutionContexts {
     )
 
     val result = response map { response =>
-      val mediaOption: Option[Media] = response.content filter { content => content.isAudio || content.isVideo } map {
+      val mediaOption: Option[Media] = response.content.filter(isSupported).map {
         case a if a.isAudio => Audio(a)
         case v => Video(v)
       }
@@ -49,4 +45,12 @@ object MediaController extends Controller with Logging with ExecutionContexts {
     val jsonResponse = () => views.html.fragments.mediaBody(model)
     renderFormat(htmlResponse, jsonResponse, model.media, Switches.all)
   }
+
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = lookup(path) map {
+    case Left(model) => renderMedia(model)
+    case Right(other) => RenderOtherStatus(other)
+  }
+
+  private def isSupported(c: ApiContent) = c.isVideo || c.isAudio
+  override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 }

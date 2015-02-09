@@ -29,6 +29,7 @@ define([
                     localStorage.clear();
                     mocks.store['common/utils/config'].switches = {};
                     mocks.store['common/utils/config'].switches.weather = true;
+                    mocks.store['common/utils/config'].page.edition = 'uk';
                 });
 
                 afterEach(function () {
