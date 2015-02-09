@@ -5,10 +5,11 @@
 <head>
     <meta charset="utf-8" />
     <title>@Html(metaData.webTitle)</title>
+    @fragments.stylesheetsLoad(projectName)
 
     @fragments.javaScriptFirstSteps(metaData)
 
-    @fragments.stylesheetsLoad(projectName)
+    @fragments.stylesheetsUse()
 
     @fragments.javaScriptLaterSteps(metaData)
 </head>
