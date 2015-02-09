@@ -1,4 +1,4 @@
-@(metaData: model.MetaData, projectName: Option[String] = None, curlPaths: Map[String, String] = Map(), hideUi: Boolean = false)(head: Html)(body: Html)(implicit request: RequestHeader)
+@(metaData: model.MetaData, projectName: Option[String] = None, curlPaths: Map[String, String] = Map())(head: Html)(body: Html)(implicit request: RequestHeader)
 
 @import conf.Switches._
 @import common.{Edition, Navigation}
@@ -22,8 +22,8 @@
         (AppleAdNetworkFrontSwitch.isSwitchedOn && metaData.id == "uk") ||
         (AppleAdCultureFrontSwitch.isSwitchedOn && metaData.id == "uk/culture")
     ),
-    !hideUi && HideInteractiveUi.isSwitchedOn
-)) { case (showAdverts, edition, adBelowNav, showUi) =>
+    metaData.hideUi && HideInteractiveUi.isSwitchedOn
+)) { case (showAdverts, edition, adBelowNav, hideUi) =>
     <body
         id="top"
         class="@RenderClasses(Map(
@@ -37,7 +37,7 @@
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(showUi) {
+        @if(!hideUi) {
             @if(showAdverts) {
                 @fragments.commercial.topBanner()
             }
@@ -63,14 +63,14 @@
 
         @body
 
-        @if(showUi) {
+        @if(!hideUi) {
             @fragments.footer(metaData)
         }
         @fragments.analytics(metaData)
 
         @fragments.footerJavaScript()
 
-        @if(showUi) {
+        @if(!hideUi) {
             @fragments.commercial.pageSkin()
         }
     </body>

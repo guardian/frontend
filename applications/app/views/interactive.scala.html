@@ -2,7 +2,7 @@
 @import conf.Switches.HideInteractiveUi
 
 @defining(model.interactive.hideUi && HideInteractiveUi.isSwitchedOn) { hideUi =>
-    @main(model.interactive, hideUi = hideUi) { }{
+    @main(model.interactive) { }{
 
         @if(hideUi) {
             @model.interactive.body.map { body =>

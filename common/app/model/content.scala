@@ -738,9 +738,9 @@ class Interactive(content: ApiContentWithMeta) extends Content(content) {
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
 
   override lazy val metaData: Map[String, JsValue] = super.metaData + ("contentType" -> JsString(contentType))
-  lazy val hideUi: Boolean = body.map{ b =>
+  override lazy val hideUi: Boolean = body.exists{ b =>
       Jsoup.parseBodyFragment(b).body().getElementsByClass("element-interactive").attr("data-interactive").contains("/visuals/")
-    }.getOrElse(false)
+    }
 }
 
 object Interactive {

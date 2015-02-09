@@ -365,7 +365,7 @@ object Switches {
   )
 
   val HideInteractiveUi = Switch("Feature", "hide-interactive-ui",
-    "If this is switched on interactives can be rendered without page funiture.",
+    "If this is switched on interactives can be rendered without page furniture.",
     safeState = On, sellByDate = new LocalDate(2015, 2, 28)
   )
 
