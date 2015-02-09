@@ -1,3 +1,17 @@
+@include keyframes(spinner) {
+    from {
+        @include rotate(0deg);
+    }
+
+    to {
+        @include rotate(360deg);
+    }
+}
+
+.show-more__loading i {
+    @include animation(spinner linear 1.5s infinite);
+}
+
 /**
  *  Everything below is pure magic. Trying to even out the different baseline of Guardian font.
  */

@@ -4,6 +4,8 @@ define([
     'qwery',
     'common/utils/_',
     'common/utils/$',
+    'common/utils/ajax',
+    'common/utils/config',
     'common/utils/mediator',
     'common/modules/user-prefs'
 ], function (
@@ -12,6 +14,8 @@ define([
     qwery,
     _,
     $,
+    ajax,
+    config,
     mediator,
     userPrefs
 ) {
@@ -73,6 +77,21 @@ define([
         });
     }
 
+    function loadShowMore(pageId, containerId) {
+        return ajax({
+            url: '/' + pageId + '/show-more/' + containerId + '.json',
+            crossOrigin: true
+        });
+    }
+
+    function loadShowMoreForContainer($container, button) {
+        var id = $container.attr('data-id');
+
+        loadShowMore(config.page.pageId, id).then(function (response) {
+            
+        });
+    }
+
     function makeButton($container) {
         var id,
             state,
@@ -90,7 +109,8 @@ define([
                     hidden: $('.js-button-text', $el).text(),
                     displayed: 'Less'
                 },
-                state: state
+                state: state,
+                promise: null
             };
             return button;
         }
