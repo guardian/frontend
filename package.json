@@ -19,7 +19,7 @@
     "grunt-contrib-watch": "0.6.1",
     "grunt-csdevmode": "0.1.2",
     "grunt-css-metrics": "0.1.2",
-    "grunt-frequency-graph": "^0.1.5",
+    "grunt-frequency-graph": "^0.1.6",
     "grunt-hologram": "0.0.4",
     "grunt-jscs": "0.7.1",
     "grunt-karma": "0.9.0",

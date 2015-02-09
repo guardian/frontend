@@ -15,7 +15,9 @@ module.exports = function(grunt, options) {
             envPrefix: 'AWS',
             profile: 'nextgen',
             bucket: 'aws-frontend-metrics',
-            bucketKey: 'frequency/index.html'
+            bucketKey: 'frequency/index.html',
+            fullPage: false,
+            costDays: 15
         },
         files: {}
     };
