@@ -62,14 +62,20 @@
         .byline,
         .content__dateline,
         .meta__numbers .sharecount__heading,
-        .meta__numbers .sharecount__value {
+        .meta__numbers .sharecount__value,
+        .submeta__head {
             color: #ffffff;
         }
 
-        .meta__social,
+        .byline,
         .content__meta-container,
+        .content__secondary-column--media,
+        .content__dateline,
+        .fc-item:before,
+        .meta__social,
+        .meta__numbers,
         .most-viewed-container--media,
-        .content__secondary-column--media {
+        .submeta {
             border-color: mix(colour(news-support-6), #ffffff, 70%);
         }
 
