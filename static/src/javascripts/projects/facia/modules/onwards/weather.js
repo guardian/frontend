@@ -174,18 +174,6 @@ define([
             $('.weather').toggleClass('is-expanded');
         },
 
-        getUnits: function () {
-            if (config.page.edition === 'US') {
-                return 'imperial';
-            }
-
-            return 'metric';
-        },
-
-        getTemperature: function (weatherData) {
-            return weatherData.temperature[this.getUnits()];
-        },
-
         addSearch: function () {
             searchTool = new SearchTool({
                 container: $('.js-search-tool'),
