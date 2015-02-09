@@ -4,7 +4,7 @@ import java.net.URLDecoder
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import common.Edition
-import conf.Switches.{EditionAwareLogoSlots, LegacyAdFeatureExpirySwitch}
+import conf.Switches.LegacyAdFeatureExpirySwitch
 import model.Tag
 import model.`package`.frontKeywordIds
 
@@ -49,7 +49,7 @@ trait PaidForTagAgent {
     dfpTags find { dfpTag =>
       tagMatches(capiTagId, dfpTag) &&
         sectionMatches(maybeSectionId, dfpTag) &&
-        (EditionAwareLogoSlots.isSwitchedOff || editionMatches(maybeEdition, dfpTag))
+        editionMatches(maybeEdition, dfpTag)
     }
   }
 
