@@ -1,10 +1,9 @@
 package controllers
 
-import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
+import com.gu.contentapi.client.model.ItemResponse
 import common._
 import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi.getResponse
-import conf.Switches.AdFeatureExpirySwitch
 import conf._
 import model._
 import play.api.mvc._
@@ -31,8 +30,7 @@ object InteractiveController extends Controller with RendersItemResponse with Lo
       val interactive = response.content map { Interactive(_) }
       val page = interactive.map(i => InteractivePage(i, RelatedContent(i, response)))
 
-      if (AdFeatureExpirySwitch.isSwitchedOn &&
-        interactive.exists(_.isExpiredAdvertisementFeature)) {
+      if (interactive.exists(_.isExpiredAdvertisementFeature)) {
         Right(MovedPermanently(expiredAdFeatureUrl))
       } else {
         ModelOrResult(page, response)
