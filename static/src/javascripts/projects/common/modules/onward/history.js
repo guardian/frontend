@@ -402,9 +402,9 @@ define([
     }
 
     function removeFromMegaNav() {
-        getMegaNav().each(function () {
+        getMegaNav().each(function (megaNav) {
             fastdom.write(function () {
-                $('.js-global-navigation__section--history', this).remove();
+                $('.js-global-navigation__section--history', megaNav).remove();
             });
         });
         inMegaNav = false;
