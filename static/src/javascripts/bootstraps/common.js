@@ -129,7 +129,9 @@ define([
             },
 
             initFastClick: function () {
-                FastClick.attach(document.body);
+                if (config.switches.iphoneConfidence && guardian.isIphone4 && guardian.inTestBucket) {
+                    FastClick.attach(document.body);
+                }
             },
 
             initialiseFauxBlockLink: function () {
