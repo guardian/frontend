@@ -114,20 +114,9 @@ define([
             event.target.firstChild.id.indexOf('flash_api') > 0;
     }
 
-    function initPlayer() {
+    function initPlayButtons(root) {
 
-        // When possible, use our CDN instead of a third party (zencoder).
-        if (config.page.videoJsFlashSwf) {
-            videojs.options.flash.swf = config.page.videoJsFlashSwf;
-        }
-        videojs.plugin('adSkipCountdown', events.adSkipCountdown);
-        videojs.plugin('fullscreener', fullscreener);
-
-        $('.js-gu-media--enhance').each(function (el) {
-            enhanceVideo(el, false);
-        });
-
-        $('.js-video-play-button').each(function (el) {
+        $('.js-video-play-button', root).each(function (el) {
             var $el = bonzo(el);
             $el.removeClass('media__placeholder--hidden').addClass('media__placeholder--active');
             bean.on(el, 'click', function () {
@@ -141,6 +130,24 @@ define([
                 enhanceVideo($('video', player).get(0), true);
             });
         });
+    }
+
+    function initPlayer() {
+
+        // When possible, use our CDN instead of a third party (zencoder).
+        if (config.page.videoJsFlashSwf) {
+            videojs.options.flash.swf = config.page.videoJsFlashSwf;
+        }
+        videojs.plugin('adSkipCountdown', events.adSkipCountdown);
+        videojs.plugin('fullscreener', fullscreener);
+
+        $('.js-gu-media--enhance').each(function (el) {
+            enhanceVideo(el, false);
+        });
+
+        initPlayButtons(document.body);
+
+        mediator.on('modules:related:loaded', initPlayButtons);
     }
 
     function enhanceVideo(el, autoplay) {
@@ -330,8 +337,6 @@ define([
         }
         initMoreInSection();
         initMostViewedMedia();
-
-        mediator.emit('page:media:ready');
     }
 
     return {

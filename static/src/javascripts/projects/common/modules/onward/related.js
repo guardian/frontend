@@ -72,7 +72,6 @@ define([
                 expanded: false,
                 showCount: false
             }).init();
-            mediator.emit('modules:related:loaded');
 
         } else if (fetchRelated) {
 
@@ -106,7 +105,7 @@ define([
                         new Expandable({dom: relatedTrails, expanded: false, showCount: false}).init();
                         // upgrade images
                         images.upgrade(relatedTrails);
-                        mediator.emit('modules:related:loaded');
+                        mediator.emit('modules:related:loaded', container);
                         register.end(componentName);
                     },
                     error: function () {
