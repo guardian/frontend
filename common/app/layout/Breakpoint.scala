@@ -6,6 +6,9 @@ sealed trait Breakpoint {
   val minWidth: Option[Int]
 }
 
+// Please keep these in sync with:
+//   stylesheets/_vars.scss
+//   javascripts/utils/detect.js
 case object Mobile extends Breakpoint {
   val minWidth = None
 }
