@@ -42,4 +42,40 @@
             }
         }
     }
+
+    &.content--media {
+        .content__main,
+        .tonal__standfirst,
+        .content__standfirst {
+            background-color: colour(news-support-6);
+            color: #ffffff;
+        }
+
+        a.tone-colour {
+            color: colour(news-support-1);
+
+            &:hover {
+                color: mix(colour(news-support-1), #ffffff, 70%);
+            }
+        }
+
+        .byline,
+        .content__dateline,
+        .meta__numbers .sharecount__heading,
+        .meta__numbers .sharecount__value {
+            color: #ffffff;
+        }
+
+        .meta__social,
+        .content__meta-container,
+        .most-viewed-container--media,
+        .content__secondary-column--media {
+            border-color: mix(colour(news-support-6), #ffffff, 70%);
+        }
+
+        .button--tag {
+            background-color: mix(colour(news-support-6), colour(neutral-1), 70%);
+            border-color: mix(colour(news-support-6), colour(neutral-1), 70%);
+        }
+    }
 }
