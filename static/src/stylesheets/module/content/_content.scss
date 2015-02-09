@@ -674,7 +674,7 @@
 
     .button {
         padding-top: 1px;
-        margin-right: $gs-gutter/5;
+        margin-right: 0;
 
         .tonal--tone-media & {
             border: 0;
@@ -695,6 +695,11 @@
             .inline-mail svg {
                 margin-top: $gs-baseline/4;
             }
+        }
+
+        @include mq(leftCol, wide) {
+            max-width: $left-column;
+            word-wrap
         }
     }
 
