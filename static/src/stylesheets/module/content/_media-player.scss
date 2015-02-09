@@ -711,6 +711,10 @@ $ima-controls-height: 70px;
         display: block;
     }
 
+    .element--supporting & {
+        display: none;
+    }
+
     &:hover {
         .vjs-control-content::before {
             @include icon(embed--tone-media);
