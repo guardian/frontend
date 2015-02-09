@@ -12,6 +12,7 @@ object WidthsByBreakpoint {
   )
 
   val Tablet = Map[CardType, BrowserWidth](
+    (MediaList, 140.px),
     (Fluid, 140.px),
     (Standard, 160.px),
     (Third, 220.px),
@@ -24,6 +25,7 @@ object WidthsByBreakpoint {
   )
 
   val Desktop = Map[CardType, BrowserWidth](
+    (MediaList, 140.px),
     (Fluid, 188.px),
     (Standard, 220.px),
     (Third, 300.px),
