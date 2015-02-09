@@ -162,7 +162,7 @@ define([
         },
 
         bindEvents: function () {
-            bean.on(qwery('body')[0], 'click', '.js-toggle-forecast', function (e) {
+            bean.on(document.body, 'click', '.js-toggle-forecast', function (e) {
                 e.preventDefault();
                 this.toggleForecast();
             }.bind(this));
