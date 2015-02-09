@@ -19,7 +19,8 @@
 }
 
 .tonal--tone-media .tonal__main--tone-media,
-.tonal--tone-podcast .tonal__main--tone-podcast {
+.tonal--tone-podcast .tonal__main--tone-podcast,
+.tonal--tone-special-report .tonal__main--tone-special-report {
     .sharecount__heading .i {
         @include icon(share-android--white);
         opacity: .6;
