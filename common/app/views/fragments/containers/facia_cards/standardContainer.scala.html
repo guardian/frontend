@@ -20,8 +20,6 @@
             @slice(sliceWithCards, containerDefinition.index)
         }
 
-        @showMore(containerLayout.remainingCards, containerDefinition.index)
-
         @if(containerDefinition.hasShowMore) {
             @showMoreButton(containerDefinition.displayName getOrElse "")
         }
