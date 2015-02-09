@@ -24,7 +24,7 @@ object FaciaDraftController extends FaciaController with RendersItemResponse {
       renderFrontPressResult(path)
   }
 
-  override def canRender(item: ItemResponse): Boolean =
-    controllers.IndexController.canRender(item) ||
-    item.section.orElse(item.tag).orElse(item.content).isEmpty // TODO slightly hacky way of figuring out it is a facia page
+  override def canRender(path: String): Boolean = ConfigAgent.getPathIds.contains(path)
+
+  override def canRender(item: ItemResponse): Boolean = controllers.IndexController.canRender(item)
 }

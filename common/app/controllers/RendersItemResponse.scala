@@ -16,6 +16,8 @@ trait RendersItemResponse {
 
   def canRender(item: ItemResponse): Boolean
 
+  def canRender(path: String): Boolean = false
+
 }
 
 class ItemResponseController(val controllers: RendersItemResponse*) extends Controller with ExecutionContexts {
@@ -23,10 +25,12 @@ class ItemResponseController(val controllers: RendersItemResponse*) extends Cont
   def render(path: String) = Action.async{ implicit request =>
     val itemRequest = LiveContentApi.item(path, Edition(request))
 
-    LiveContentApi.getResponse(itemRequest).flatMap{ response =>
-      controllers.find(_.canRender(response))
-        .map(_.renderItem(path))
-        .getOrElse(successful(NoCache(NotFound)))
+    controllers.find(_.canRender(path)).map(_.renderItem(path)).getOrElse {
+      LiveContentApi.getResponse(itemRequest).flatMap { response =>
+        controllers.find(_.canRender(response))
+          .map(_.renderItem(path))
+          .getOrElse(successful(NoCache(NotFound)))
+      }
     }
   }
 }
