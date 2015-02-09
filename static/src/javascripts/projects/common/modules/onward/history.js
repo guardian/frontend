@@ -131,7 +131,18 @@ define([
             {tid: 'seriesId',   tname: 'series'},
             {tid: 'authorIds',  tname: 'author'}
         ],
-
+        buckets = [
+            {
+                desc: 'Tags from articles',
+                indexInRecord: 1,
+                weight: 1
+            },
+            {
+                desc: 'Tags from fronts',
+                indexInRecord: 2,
+                weight: 1 // increase this, to favour direct visits to fronts/tag pages
+            }
+        ],
         summaryPeriodDays = 30,
         forgetUniquesAfter = 10,
         historySize = 50,
@@ -166,18 +177,16 @@ define([
     }
 
     function getSummary() {
-        if (summaryCache) {
-            return summaryCache;
-        }
+        if (!summaryCache) {
+            summaryCache = storage.local.get(storageKeySummary);
 
-        summaryCache = storage.local.get(storageKeySummary);
-
-        if (!_.isObject(summaryCache) || !_.isObject(summaryCache.tags) || !_.isNumber(summaryCache.periodEnd)) {
-            summaryCache = {
-                periodEnd: today,
-                tags: {},
-                showInMegaNav: true
-            };
+            if (!_.isObject(summaryCache) || !_.isObject(summaryCache.tags) || !_.isNumber(summaryCache.periodEnd)) {
+                summaryCache = {
+                    periodEnd: today,
+                    tags: {},
+                    showInMegaNav: true
+                };
+            }
         }
         return summaryCache;
     }
@@ -202,25 +211,27 @@ define([
         if (updateBy !== 0) {
             summary.periodEnd = newToday;
 
-            _.each(summary.tags, function (nameAndFreqs, tid) {
-                var freqs = _.chain(nameAndFreqs[1])
-                    .map(function (freq) {
-                        var newAge = freq[0] + updateBy;
-                        return newAge < summaryPeriodDays && newAge >= 0 ? [newAge, freq[1]] : false;
+            _.each(summary.tags, function (record, tid) {
+                var result = _.chain(buckets)
+                    .map(function (bucket) {
+                        var visits = _.chain(record[bucket.indexInRecord])
+                            .map(function (day) {
+                                var newAge = day[0] + updateBy;
+                                return newAge < summaryPeriodDays && newAge >= 0 ? [newAge, day[1]] : false;
+                            })
+                            .compact()
+                            .value();
+
+                        return (visits.length > 1 || (visits.length === 1 && visits[0][0] < forgetUniquesAfter)) ? visits : [];
                     })
-                    .compact()
                     .value();
 
-                if (freqs.length > 1 || (freqs.length === 1 && freqs[0][0] < forgetUniquesAfter)) {
-                    summary.tags[tid] = [nameAndFreqs[0], freqs];
+                if (_.some(result, function (r) { return r.length; })) {
+                    summary.tags[tid] = [record[0]].concat(result);
                 } else {
                     delete summary.tags[tid];
                 }
             });
-
-            if (_.isEmpty(summary.tags)) {
-                summary.periodEnd = newToday;
-            }
         }
 
         return summary;
@@ -239,21 +250,21 @@ define([
 
         return _.chain(tids)
             .map(function (tid) {
-                var nameAndFreqs = tags[tid],
-                    freqs = nameAndFreqs[1];
+                var record = tags[tid],
+                    rank = _.reduce(buckets, function (rank, bucket) {
+                        return rank + tally(record[bucket.indexInRecord], bucket.weight);
+                    }, 0);
 
-                if (freqs.length) {
-                    return {
-                        keep: [tid, nameAndFreqs[0]],
-                        rank: tally(freqs)
-                    };
-                }
+                return {
+                    idAndName: [tid, record[0]],
+                    rank: rank
+                };
             })
             .compact()
             .sortBy('rank')
             .last(number || 100)
             .reverse()
-            .pluck('keep')
+            .pluck('idAndName')
             .value();
     }
 
@@ -267,9 +278,9 @@ define([
         return popularFilteredCache;
     }
 
-    function tally(freqs) {
-        return _.reduce(freqs, function (tally, freq) {
-            return tally + (9 + freq[1]) * (summaryPeriodDays - freq[0]);
+    function tally(visits, weight) {
+        return _.reduce(visits, function (tally, day) {
+            return tally + weight * (9 + day[1]) * (summaryPeriodDays - day[0]);
         }, 0);
     }
 
@@ -277,14 +288,18 @@ define([
         return (str || '').split(',')[0];
     }
 
-    function collapseTag(t) {
-        t = t.replace(/^\/|\/$/g, '');
-        if (t.match(isEditionalisedRx)) {
-            t = t.replace(stripEditionRx, '');
+    function collapsePath(t) {
+        if (t) {
+            t = t.replace(/^\/|\/$/g, '');
+            if (t.match(isEditionalisedRx)) {
+                t = t.replace(stripEditionRx, '');
+            }
+            t = t.split('/');
+            t = t.length === 2 && t[0] === t[1] ? [t[0]] : t;
+            return t.join('/');
+        } else {
+            return '';
         }
-        t = t.split('/');
-        t = t.length === 2 && t[0] === t[1] ? [t[0]] : t;
-        return t.join('/');
     }
 
     function reset() {
@@ -315,34 +330,42 @@ define([
     }
 
     function logSummary(pageConfig, mockToday) {
-        var summary = pruneSummary(getSummary(), mockToday);
+        var summary = pruneSummary(getSummary(), mockToday),
+            page = collapsePath(pageConfig.pageId),
+            isFront = false;
 
         _.chain(pageMeta)
-            .reduceRight(function (tags, tag) {
-                var tid = firstCsv(pageConfig[tag.tid]),
+            .reduceRight(function (tagMeta, tag) {
+                var tid = collapsePath(firstCsv(pageConfig[tag.tid])),
                     tname = tid && firstCsv(pageConfig[tag.tname]);
 
                 if (tid && tname) {
-                    tags[collapseTag(tid)] = tname;
+                    tagMeta[tid] = tname;
                 }
-                return tags;
+                isFront = isFront || tid === page;
+                return tagMeta;
             }, {})
             .each(function (tname, tid) {
-                var nameAndFreqs = summary.tags[tid],
-                    freqs = nameAndFreqs && nameAndFreqs[1],
-                    freq = freqs && _.find(freqs, function (freq) { return freq[0] === 0; });
+                var record = summary.tags[tid] || [],
+                    visits,
+                    today;
 
-                if (freq) {
-                    freq[1] = freq[1] + 1;
-                } else if (freqs) {
-                    freqs.unshift([0, 1]);
+                _.forEach(buckets, function (bucket) {
+                    record[bucket.indexInRecord] = record[bucket.indexInRecord] || [];
+                });
+
+                record[0] = tname;
+
+                visits = record[isFront ? 2 : 1];
+                today = _.find(visits, function (day) { return day[0] === 0; });
+
+                if (today) {
+                    today[1] = today[1] + 1;
                 } else {
-                    summary.tags[tid] = [tname, [[0, 1]]];
+                    visits.unshift([0, 1]);
                 }
 
-                if (nameAndFreqs) {
-                    nameAndFreqs[0] = tname;
-                }
+                summary.tags[tid] = record;
             });
 
         saveSummary(summary);
@@ -350,7 +373,7 @@ define([
 
     function getTopNavItems() {
         topNavItemsCache = topNavItemsCache || $('.js-navigation-header .js-top-navigation a').map(function (item) {
-            return collapseTag(url.getPath($(item).attr('href')));
+            return collapsePath(url.getPath($(item).attr('href')));
         });
 
         return topNavItemsCache;
