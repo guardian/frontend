@@ -64,8 +64,8 @@ define([
                             });
                             return isUsed;
                         }, {}),
-                        contentType: config.page.contentType,
-                        breakpoint: detect.getBreakpoint()
+                        contentType: config.page.contentType || 'unknown',
+                        breakpoint: detect.getBreakpoint() || 'unknown'
                     }), all);
                 }, all ? 0 : _.random(0, 3000));
             }
