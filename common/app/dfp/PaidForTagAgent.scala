@@ -178,14 +178,15 @@ trait PaidForTagAgent {
 
     val lineItems = maybeDfpTag map (_.lineItems) getOrElse Nil
 
-    def hasExpired(lineItem: GuLineItem): Boolean = lineItem.endTime exists (_.isBeforeNow)
-
     lazy val isExpiredLegacyAdFeature =
       LegacyAdFeatureExpirySwitch.isSwitchedOn &&
         lineItems.isEmpty && hasAdFeatureTone && pageId != "tone/advertisement-features"
 
-    (!isPreview) &&
-      (isExpiredLegacyAdFeature || (lineItems.nonEmpty && (lineItems forall hasExpired)))
+    lazy val isExpiredAdFeature = lineItems.nonEmpty && (lineItems forall { lineItem =>
+      lineItem.endTime exists (_.isBeforeNow)
+    })
+
+    !isPreview && (isExpiredLegacyAdFeature || isExpiredAdFeature)
   }
 
   def isExpiredAdvertisementFeature(pageId: String,
