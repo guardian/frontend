@@ -53,16 +53,6 @@ case class WidthsByBreakpoint(
   tablet: Option[BrowserWidth],
   desktop: Option[BrowserWidth]
 ) {
-  // as used by the 'sizes' attribute of img
-  def sizesString =
-    Seq(desktop, tablet, mobile) zip Seq(980.some, 740.some, None) collect {
-      case (Some(imageWidth), Some(breakpoint)) =>
-        s"(min-width: ${breakpoint}px) $imageWidth"
-
-      case (Some(imageWidth), None) =>
-        imageWidth.toString
-    } mkString ", "
-
   def breakpoints = Seq(
     Desktop,
     Tablet,
