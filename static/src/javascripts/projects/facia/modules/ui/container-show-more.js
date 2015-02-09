@@ -29,15 +29,15 @@ define([
 
     function setButtonState(button, state) {
         var text = button.text[state];
-        $('.' + textHook, button.$el).html(text);
+        button.$textEl.html(text);
         button.$el.attr('data-link-name', state === STATE_DISPLAYED ? 'less' : 'more')
             .toggleClass('button--primary', state !== STATE_DISPLAYED)
             .toggleClass('button--tertiary', state === STATE_DISPLAYED)
             .toggleClass(buttonSpinnerClass, state === STATE_LOADING);
-        $('.i', button.$el).toggleClass('i-plus-white', state !== STATE_DISPLAYED)
+        button.$iconEl.toggleClass('i-plus-white', state !== STATE_DISPLAYED)
             .toggleClass('i-minus-blue', state === STATE_DISPLAYED);
+        button.$container.toggleClass(className, state !== STATE_DISPLAYED);
         button.state = state;
-        button.$container.toggleClass(className, button.state === STATE_DISPLAYED);
     }
 
     function updatePref(containerId, state) {
@@ -89,22 +89,29 @@ define([
         });
     }
 
+    function dedupShowMore(html) {
+        // TODO dedup
+        return html;
+    }
+
     function loadShowMoreForContainer(button) {
         fastdom.write(function () {
             setButtonState(button, STATE_LOADING);
         });
 
         loadShowMore(config.page.pageId, button.id).then(function (response) {
+            var dedupedShowMore = dedupShowMore(response.html);
             fastdom.write(function () {
+                button.$placeholder.replaceWith(dedupedShowMore);
                 setButtonState(button, STATE_DISPLAYED);
             });
             button.isLoaded = true;
-
-            console.log(response);
-        }, function (error) {
+        }).fail(function (error, msg) {
             fastdom.write(function () {
                 setButtonState(button, STATE_HIDDEN);
             });
+
+            // TODO flash error message here
 
             console.log(error);
         });
@@ -118,11 +125,15 @@ define([
 
         if ($el) {
             id = $container.attr('data-id');
-            state = readPrefs(id);
+            //state = readPrefs(id);
+            state = STATE_HIDDEN;
 
             button = {
                 $el: $el,
                 $container: $container,
+                $iconEl: $('.i', $el),
+                $placeholder: $('.js-show-more-placeholder', $container),
+                $textEl: $('.' + textHook, $el),
                 id: id,
                 text: {
                     hidden: $('.js-button-text', $el).text(),
