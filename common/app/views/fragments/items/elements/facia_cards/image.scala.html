@@ -5,6 +5,7 @@
 
 <div class="fc-item__media-wrapper">
     <picture class="fc-item__image-container u-responsive-ratio @if(inlineImage) {inlined-image}">
+        @* IE9 needs a <video> wrapper for <picture> to work *@
         <!--[if IE 9]><video style="display: none;"><![endif]-->
         @widthsByBreakpoint.map { widths =>
             @widths.sources.map {
