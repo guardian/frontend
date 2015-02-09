@@ -8,7 +8,7 @@
     }
 }
 
-.show-more__loading i {
+.collection__show-more--loading i {
     @include animation(spinner linear 1.5s infinite);
 }
 

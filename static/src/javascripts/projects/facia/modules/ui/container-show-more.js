@@ -21,23 +21,30 @@ define([
 ) {
     var className = 'fc-show-more--hidden',
         textHook = 'js-button-text',
-        prefName = 'section-states';
+        prefName = 'section-states',
+        buttonSpinnerClass = 'collection__show-more--loading',
+        STATE_DISPLAYED = 'displayed',
+        STATE_HIDDEN = 'hidden',
+        STATE_LOADING = 'loading';
 
     function setButtonState(button, state) {
         var text = button.text[state];
-        $('.' + textHook, button.$el).text(text);
-        button.$el.attr('data-link-name', state === 'displayed' ? 'less' : 'more')
-            .toggleClass('button--primary', state !== 'displayed')
-            .toggleClass('button--tertiary', state === 'displayed');
-        $('.i', button.$el).toggleClass('i-plus-white', state !== 'displayed')
-            .toggleClass('i-minus-blue', state === 'displayed');
+        $('.' + textHook, button.$el).html(text);
+        button.$el.attr('data-link-name', state === STATE_DISPLAYED ? 'less' : 'more')
+            .toggleClass('button--primary', state !== STATE_DISPLAYED)
+            .toggleClass('button--tertiary', state === STATE_DISPLAYED)
+            .toggleClass(buttonSpinnerClass, state === STATE_LOADING);
+        $('.i', button.$el).toggleClass('i-plus-white', state !== STATE_DISPLAYED)
+            .toggleClass('i-minus-blue', state === STATE_DISPLAYED);
+        button.state = state;
+        button.$container.toggleClass(className, button.state === STATE_DISPLAYED);
     }
 
     function updatePref(containerId, state) {
         var prefs = userPrefs.get(prefName, {
             type: 'session'
         }) || {};
-        if (state !== 'displayed') {
+        if (state !== STATE_DISPLAYED) {
             delete prefs[containerId];
         } else {
             prefs[containerId] = 'more';
@@ -51,27 +58,25 @@ define([
         var prefs = userPrefs.get(prefName, {
             type: 'session'
         });
-        return (prefs && prefs[containerId]) ? 'displayed' : 'hidden';
+        return (prefs && prefs[containerId]) ? STATE_DISPLAYED : STATE_HIDDEN;
     }
 
-    function showMore($container, button) {
+    function showMore(button) {
         fastdom.write(function () {
             /**
              * Do not remove: it should retain context for the click stream module, which recurses upwards through
              * DOM nodes.
              */
-            $container.toggleClass(className, button.state === 'displayed');
-            button.state = (button.state === 'hidden') ? 'displayed' : 'hidden';
-            setButtonState(button, button.state);
+            setButtonState(button, (button.state === STATE_HIDDEN) ? STATE_DISPLAYED : STATE_HIDDEN);
             updatePref(button.id, button.state);
         });
     }
 
-    function renderToDom($container, button) {
+    function renderToDom(button) {
         fastdom.write(function () {
-            $container.addClass(className)
+            button.$container.addClass(className)
                 .removeClass('js-container--fc-show-more')
-                .toggleClass(className, button.state === 'hidden');
+                .toggleClass(className, button.state === STATE_HIDDEN);
             // Initialise state, as it might be different from what was rendered server side based on localstorage prefs
             setButtonState(button, button.state);
         });
@@ -84,11 +89,24 @@ define([
         });
     }
 
-    function loadShowMoreForContainer($container, button) {
-        var id = $container.attr('data-id');
+    function loadShowMoreForContainer(button) {
+        fastdom.write(function () {
+            setButtonState(button, STATE_LOADING);
+        });
 
-        loadShowMore(config.page.pageId, id).then(function (response) {
-            
+        loadShowMore(config.page.pageId, button.id).then(function (response) {
+            fastdom.write(function () {
+                setButtonState(button, STATE_DISPLAYED);
+            });
+            button.isLoaded = true;
+
+            console.log(response);
+        }, function (error) {
+            fastdom.write(function () {
+                setButtonState(button, STATE_HIDDEN);
+            });
+
+            console.log(error);
         });
     }
 
@@ -104,13 +122,15 @@ define([
 
             button = {
                 $el: $el,
+                $container: $container,
                 id: id,
                 text: {
                     hidden: $('.js-button-text', $el).text(),
-                    displayed: 'Less'
+                    displayed: 'Less',
+                    loading: 'Loading&hellip;'
                 },
                 state: state,
-                promise: null
+                isLoaded: false
             };
             return button;
         }
@@ -119,21 +139,20 @@ define([
     return function () {
         fastdom.read(function () {
             var containers = qwery('.js-container--fc-show-more').map(bonzo),
-                buttons = _.map(containers, makeButton),
-                containersWithButtons = _.filter(_.zip(containers, buttons), function (pair) {
-                    return pair[1];
-                });
+                buttons = _.filter(_.map(containers, makeButton));
 
-            _.forEach(containersWithButtons, function (pair) {
-                renderToDom(pair[0], pair[1]);
-            });
+            _.forEach(buttons, renderToDom);
 
             mediator.on('module:clickstream:click', function (clickSpec) {
-                var pair = _.find(containersWithButtons, function (pair) {
-                    return pair[1].$el[0] === clickSpec.target;
+                var clickedButton = _.find(buttons, function (button) {
+                    return button.$el[0] === clickSpec.target;
                 });
-                if (pair) {
-                    showMore(pair[0], pair[1]);
+                if (clickedButton && clickedButton.state !== STATE_LOADING) {
+                    if (clickedButton.isLoaded) {
+                        showMore(clickedButton);
+                    } else {
+                        loadShowMoreForContainer(clickedButton);
+                    }
                 }
             });
         });
