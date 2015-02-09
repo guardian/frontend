@@ -15,7 +15,7 @@
             background-color: $colour;
 
             @if $titleColor {
-                .commercial__title,
+                .commercial__title
                 a {
                     color: $titleColor;
                 }
@@ -32,6 +32,7 @@
             .commercial__title {
                 a {
                     color: $colour;
+                    fill: $colour;
                 }
             }
         }

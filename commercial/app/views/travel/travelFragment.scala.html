@@ -3,10 +3,12 @@
 <li class="lineitem lineitem--multi">
     <div class="commercial--travel commercial--tone-travel">
         <div class="commercial--multi__header">
-            <a href="@clickMacro@Configuration.commercial.travel_url/" data-link-name="merchandising-hybrid-travel-visit-all">
-                <i class="i i-holidayoffers-logo-colour i-commercial-brand"></i>
-                <span class="u-h">Holiday Offers</span>
-            </a>
+            <h4 class="commercial__title">
+                <a href="@clickMacro@Configuration.commercial.travel_url/" data-link-name="merchandising-hybrid-travel-visit-all">
+                    @fragments.inlineSvg("holidayoffers-logo-26", "commercial", List("commercial--tone-holidayoffers-logo"))
+                    <span class="u-h">Holiday Offers</span>
+                </a>
+            </h4>
         </div>
         <div class="commercial--multi__body">
             <a class="lineitem__link" href="@clickMacro@travelOffer.offerUrl">
