@@ -65,6 +65,11 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
         Sponsored, Keyword,
         adUnitPaths = Seq("theguardian.com/spinach"),
         sponsor = Some("Squeegee")
+      ),
+      paidForTag(
+        targetedName = "sixnations",
+        paidForType = Sponsored,
+        tagType = Keyword
       )
     )
 
@@ -458,6 +463,11 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     forEvery(apiQueries) { q =>
       TestPaidForTagAgent.isSponsored(apiQuery(q)) should be(false)
     }
+  }
+
+  it should "be false for a container built from a query with a negative clause" in {
+    val q = "search?tag=sport/rugby-union,-sport/sixnations"
+    TestPaidForTagAgent.isSponsored(apiQuery(q)) should be(false)
   }
 
   "isFoundationSupported" should "be true for a foundation-supported page" in {

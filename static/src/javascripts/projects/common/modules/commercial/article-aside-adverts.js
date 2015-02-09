@@ -42,6 +42,10 @@ define([
             adType = 'right-small';
         }
 
+        if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {
+            $('.js-components-container', '.js-secondary-column').addClass('u-h');
+        }
+
         return $(opts.adSlotContainerSelector)
             .append(createAdSlot(adType, 'mpu-banner-ad'));
     }

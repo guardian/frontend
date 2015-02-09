@@ -40,7 +40,6 @@ define([
 
     var $holder        = null,
         searchTool     = null,
-        city           = '',
         prefName       = 'weather-location';
 
     return {
@@ -72,7 +71,7 @@ define([
 
         getWeatherData: function (url) {
             return ajax({
-                url: url,
+                url: url + '?edition=' + config.page.edition.toLowerCase(),
                 type: 'json',
                 method: 'get',
                 crossOrigin: true
@@ -87,8 +86,6 @@ define([
                 'id': location.id,
                 'city': location.city
             });
-
-            city = location.city;
         },
 
         getDefaultLocation: function () {
@@ -101,7 +98,6 @@ define([
                     .then(function (response) {
                         this.fetchWeatherData(response);
                         this.track(response.city);
-                        city = response.city;
                     }.bind(this))
                     .fail(function (err, msg) {
                         raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
@@ -129,7 +125,6 @@ define([
 
         clearLocation: function () {
             userPrefs.remove(prefName);
-            city = '';
             searchTool.setInputValue();
         },
 
@@ -167,15 +162,7 @@ define([
         },
 
         bindEvents: function () {
-            bean.on(document.body, 'click', '.js-weather-input', function (e) {
-                e.preventDefault();
-                this.toggleControls(true);
-            }.bind(this));
-            bean.on(document.body, 'click', '.js-close-location', function (e) {
-                e.preventDefault();
-                this.toggleControls(false);
-            }.bind(this));
-            bean.on(document.body, 'click', '.js-toggle-forecast', function (e) {
+            bean.on(qwery('.js-toggle-forecast')[0], 'click', function (e) {
                 e.preventDefault();
                 this.toggleForecast();
             }.bind(this));
@@ -183,40 +170,8 @@ define([
             mediator.on('autocomplete:fetch', this.saveDeleteLocalStorage.bind(this));
         },
 
-        toggleControls: function (value) {
-            var $input    = $('.js-weather-input')[0],
-                $location = $('.weather__location'),
-                $close    = $('.js-close-location'),
-                $edit     = $('.js-edit-location');
-
-            if (value) {
-                $location.addClass('is-editing');
-                $input.setSelectionRange(0, $input.value.length);
-                $close.removeClass('u-h');
-                $edit.addClass('u-h');
-            } else {
-                $location.removeClass('is-editing');
-                searchTool.clear();
-                searchTool.setInputValue(city ? city : this.getUserLocation().city);
-                $close.addClass('u-h');
-                $edit.removeClass('u-h');
-            }
-        },
-
         toggleForecast: function () {
             $('.weather').toggleClass('is-expanded');
-        },
-
-        getUnits: function () {
-            if (config.page.edition === 'US') {
-                return 'imperial';
-            }
-
-            return 'metric';
-        },
-
-        getTemperature: function (weatherData) {
-            return weatherData.temperature[this.getUnits()];
         },
 
         addSearch: function () {

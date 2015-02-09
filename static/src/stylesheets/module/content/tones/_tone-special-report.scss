@@ -1,0 +1,87 @@
+@include tone-content-icons(special-report, 'white');
+
+@include tone-content(
+    special-report, // $tone
+    colour(news-support-6), // $tonal__header-background
+    #ffffff, // $tonal__header-text
+    colour(news-support-1), // $tonal__header-link
+    200, // $tonal__headline-weight
+    #ffffff, // $tonal__headline-colour
+    colour(news-support-1), // $tonal__headline-accent
+    lighten(colour(news-support-6), 5%), // $tonal__standfirst-background
+    #ffffff, // $tonal__standfirst-text
+    #ffffff, // $tonal__standfirst-link
+    #ffffff, // $tonal__article-background
+    colour(news-support-6) // $tonal__article-link
+);
+
+.tonal--tone-special-report {
+    // Interactives need help because their headers are not tonal
+    &.content--interactive {
+        .commentcount i {
+            @extend %i-comment--tone-neutral2;
+
+            @if $svg-support {
+                .svg & {
+                    @extend %svg-i-comment--tone-neutral2;
+                }
+            }
+        }
+
+        .tone-colour,
+        .content__section-label__link {
+            color: colour(news-support-1);
+        }
+
+        .u-underline {
+            color: colour(news-support-1);
+            border-bottom-color: rgba(colour(news-support-1), .3);
+
+            &:hover {
+                border-bottom-color: rgba(colour(news-support-1), .7);
+            }
+        }
+    }
+
+    &.content--media {
+        .content__main,
+        .tonal__standfirst,
+        .content__standfirst {
+            background-color: colour(news-support-6);
+            color: #ffffff;
+        }
+
+        a.tone-colour {
+            color: colour(news-support-1);
+
+            &:hover {
+                color: mix(colour(news-support-1), #ffffff, 70%);
+            }
+        }
+
+        .byline,
+        .content__dateline,
+        .meta__numbers .sharecount__heading,
+        .meta__numbers .sharecount__value,
+        .submeta__head {
+            color: #ffffff;
+        }
+
+        .byline,
+        .content__meta-container,
+        .content__secondary-column--media,
+        .content__dateline,
+        .fc-item:before,
+        .meta__social,
+        .meta__numbers,
+        .most-viewed-container--media,
+        .submeta {
+            border-color: mix(colour(news-support-6), #ffffff, 70%);
+        }
+
+        .button--tag {
+            background-color: mix(colour(news-support-6), colour(neutral-1), 70%);
+            border-color: mix(colour(news-support-6), colour(neutral-1), 70%);
+        }
+    }
+}

@@ -2,11 +2,13 @@ package controllers.admin
 
 import common.{ExecutionContexts, Logging}
 import controllers.AuthLogging
+import play.api.libs.ws.WS
 import play.api.mvc.Controller
 import tools._
 import model.NoCache
 import conf.Configuration
 import tools.CloudWatch._
+import play.api.Play.current
 
 object MetricsController extends Controller with Logging with AuthLogging with ExecutionContexts {
   // We only do PROD metrics
@@ -53,5 +55,11 @@ object MetricsController extends Controller with Logging with AuthLogging with E
 
   def renderAssets() = AuthActions.AuthActionTest.async { request =>
     AssetMetrics.assets.map(metrics => NoCache(Ok(views.html.staticAssets(stage, metrics))))
+  }
+
+  def renderAfg() = AuthActions.AuthActionTest.async { request =>
+    WS.url("https://s3-eu-west-1.amazonaws.com/aws-frontend-metrics/frequency/index.html").get() map { response =>
+      NoCache(Ok(views.html.afg(stage, response.body)))
+    }
   }
 }

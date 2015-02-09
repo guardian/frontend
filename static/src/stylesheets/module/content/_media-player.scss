@@ -861,7 +861,7 @@ $ima-controls-height: 70px;
         padding-bottom: $gs-baseline;
     }
 
-    @include mq($until: mobileLandscape) {
+    @include mq($until: tablet) {
         .vjs-has-ended & {
             display: none;
         }
@@ -913,6 +913,12 @@ $ima-controls-height: 70px;
 
         @include mq(tablet, desktop) {
             top: 20%;
+        }
+    }
+
+    @include mq(mobileLandscape) {
+        .gu-video-embed .vjs-has-ended & {
+            display: block;
         }
     }
 }

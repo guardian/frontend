@@ -76,6 +76,10 @@
     .tone-review--item & .fc-item__headline {
         @include icon(quote-white, false);
     }
+
+    .tone-special-report--item & .fc-item__headline {
+        @include icon(quote-white, false);
+    }
 }
 
 .tone-external--item .fc-item__title:before {

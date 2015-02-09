@@ -142,6 +142,11 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val AsyncCss = Switch("Performance", "async-css",
+    "If this switch is on CSS will be loaded with media set to 'only x' and updated to 'all' when the stylesheet has loaded using javascript. Disabling it will use standard link elements.",
+    safeState = On, sellByDate = never
+  )
+
   val ShowAllArticleEmbedsSwitch = Switch("Performance", "show-all-embeds",
     "If switched on then all embeds will be shown inside article bodies",
     safeState = On, sellByDate = never
@@ -302,30 +307,13 @@ object Switches {
   private def dateInFebruary(day: Int): Interval =
     new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
 
-  val AppleAdNetworkFrontSwitch = TimerSwitch("Commercial", "apple-ads-on-network-front",
+  val AppleAdNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-network-front",
     "If this switch is on, Apple ads will appear on the network front during active periods.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
-    activePeriods = Seq(
-      dateInFebruary(5),
-      dateInFebruary(7),
-      dateInFebruary(8),
-      dateInFebruary(10),
-      dateInFebruary(11),
-      dateInFebruary(12)
-    )
-  )
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1))
 
-  val AppleAdCultureFrontSwitch = TimerSwitch("Commercial", "apple-ads-on-culture-front",
+  val AppleAdCultureFrontSwitch = Switch("Commercial", "apple-ads-on-culture-front",
     "If this switch is on, Apple ads will appear on the culture front during active periods.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
-    activePeriods = Seq(
-      dateInFebruary(7),
-      dateInFebruary(8),
-      dateInFebruary(9),
-      dateInFebruary(11),
-      dateInFebruary(12)
-    )
-  )
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1))
 
   // Monitoring
 
@@ -351,7 +339,7 @@ object Switches {
 
   val CssLogging = Switch("Monitoring", "css-logging",
     "If this is on, then a subset of clients will post css selector information for diagnostics.",
-    safeState = Off, new LocalDate(2015, 2, 28)
+    safeState = On, new LocalDate(2015, 2, 28)
   )
 
   val ThirdPartyEmbedTracking = Switch("Monitoring", "third-party-embed-tracking",
