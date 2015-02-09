@@ -699,7 +699,6 @@
 
         @include mq(leftCol, wide) {
             max-width: $left-column;
-            word-wrap
         }
     }
 
