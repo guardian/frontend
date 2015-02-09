@@ -67,8 +67,9 @@ define([
         // Add the first page of comments to the discussion object.
         this.storeCommentPage(resp, 1);
 
-        // Keep the container so it can be easily reduced.
-        this.discussionContainer = $('.d-thread--comments', bonzo.create(resp.commentsHtml)).empty();
+        // Keep a copy of the comments thread and discussion container so it can be easily reduced later.
+        this.discussionContainer = bonzo.create(resp.commentsHtml);
+        this.commentsThread = $('.d-thread--comments', this.discussionContainer).empty();
         this.postedCommentHtml = resp.postedCommentHtml;
         this.lastPage = resp.lastPage;
 
@@ -133,15 +134,15 @@ define([
             this.discussion.reverse();
         }
 
-        var comments = this.discussion.reduce(function (result, comments) {
+        this.discussion.reduce(function (result, comments) {
             result.append(comments);
             return result;
-        }, this.discussionContainer);
+        }, this.commentsThread);
 
         return {
             paginationHtml: '',
             postedCommentHtml: this.postedCommentHtml,
-            commentsHtml: comments.html(),
+            commentsHtml: this.discussionContainer.html(),
             lastPage: this.lastPage
         };
     };
