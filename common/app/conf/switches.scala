@@ -291,10 +291,6 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  val EditionAwareLogoSlots = Switch("Commercial", "edition-aware-logo-slots",
-    "If this switch is on, logo slots will honour visitor's edition.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
-
   private def dateInFebruary(day: Int): Interval =
     new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
 

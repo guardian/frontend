@@ -4,7 +4,6 @@ import java.net.URLDecoder
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import common.Edition
-import conf.Switches.EditionAwareLogoSlots
 import model.Tag
 import model.`package`.frontKeywordIds
 
