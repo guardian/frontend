@@ -214,8 +214,13 @@ define([
                 // preroll for videos only
                 if (mediaType === 'video') {
 
+                    if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
+                        initEndSlate(player, endSlateUri);
+                    }
+
                     player.fullscreener();
-                    // Init plugins
+
+                    // do ads last so if the ad blocker throws an exception it doesn't stop anything else
                     if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
                         events.bindPrerollEvents(player);
                         player.adSkipCountdown(15);
@@ -234,9 +239,6 @@ define([
                         events.bindContentEvents(player);
                     }
 
-                    if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
-                        initEndSlate(player, endSlateUri);
-                    }
                 } else {
                     player.playlist({
                         mediaType: 'audio',
