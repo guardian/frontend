@@ -1,5 +1,6 @@
 package views.support
 
+import layout.BrowserWidth
 import model.{Content, MetaData, ImageContainer, ImageAsset}
 import conf.Switches.{ImageServerSwitch, PngResizingSwitch}
 import java.net.URI
@@ -71,6 +72,7 @@ object Item460 extends Profile(width = Some(460))
 object Item620 extends Profile(width = Some(620))
 object Item640 extends Profile(width = Some(640))
 object Item700 extends Profile(width = Some(700))
+object Item860 extends Profile(width = Some(860))
 object Item940 extends Profile(width = Some(940))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
 object Video460 extends VideoProfile(width = Some(460), height = Some(276)) // 5:3
@@ -101,6 +103,21 @@ object Profile {
     Item940,
     SeoOptimisedContentImage
   )
+
+  // used to determine image widths for <picture>
+  lazy val images: Seq[Profile]  = Seq(
+    Item120,
+    Item140,
+    Item220,
+    Item300,
+    Item460,
+    Item620,
+    Item700,
+    Item860,
+    Item940
+  )
+
+  lazy val imageWidths: Seq[Int] = images.flatMap(_.width)
 }
 
 object ImgSrc {
@@ -144,6 +161,24 @@ object ImgSrc {
     sortedProfiles.find(_.width.getOrElse(0) >= maxWidth).orElse(sortedProfiles.reverse.headOption).flatMap{ profile =>
       imager(imageContainer, profile)
     }
+  }
+
+  private def srcForProfile(profile: Profile, imageContainer: ImageContainer) = {
+    profile.elementFor(imageContainer).flatMap(_.url).map{ largestImage =>
+      ImgSrc(largestImage, profile)
+    }
+  }
+
+  def getUrl(imageContainer: ImageContainer, maxWidth: Int): Option[String] = {
+    // get largest profile closest to the width
+    val sortedProfiles = Profile.all.filter(_.height == None).sortBy(_.width)
+    sortedProfiles.find(_.width.getOrElse(0) >= maxWidth).orElse(sortedProfiles.reverse.headOption).flatMap{ profile =>
+      srcForProfile(profile, imageContainer)
+    }
+  }
+
+  def getFallbackUrl(imageContainer: ImageContainer, profile: Profile = Item300): Option[String] = {
+    srcForProfile(profile, imageContainer)
   }
 }
 
