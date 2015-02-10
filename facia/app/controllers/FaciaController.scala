@@ -5,7 +5,6 @@ import common.FaciaMetrics._
 import common._
 import common.editions.EditionalisedSections
 import conf.Configuration.commercial.expiredAdFeatureUrl
-import conf.Switches._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
@@ -130,7 +129,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             ).as("text/xml; charset=utf-8")
           else if (request.isJson)
             JsonFront(faciaPage)
-          else if (AdFeatureExpirySwitch.isSwitchedOn && faciaPage.isExpiredAdvertisementFeature)
+          else if (faciaPage.isExpiredAdvertisementFeature)
             MovedPermanently(expiredAdFeatureUrl)
           else
             Ok(views.html.front(faciaPage))

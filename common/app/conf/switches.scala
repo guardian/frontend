@@ -59,7 +59,6 @@ case class TimerSwitch(group: String,
 
   def isSwitchedOnAndActive: Boolean = {
     val active = activePeriods.exists(_.containsNow())
-    log.info(s"TimedSwitch $name switched on $isSwitchedOn active $active")
     isSwitchedOn && (environment.isNonProd || active)
   }
 }
@@ -286,18 +285,6 @@ object Switches {
   val GuBookshopFeedsSwitch = Switch("Commercial", "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
-
-  val AdFeatureExpirySwitch = Switch("Commercial", "enable-expire-ad-features",
-    "If this switch is on, expired ad features will be redirected.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
-
-  val LegacyAdFeatureExpirySwitch = Switch("Commercial", "enable-expire-legacy-ad-features",
-    "If this switch is on, expired legacy ad features will be redirected.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
-
-  val EditionAwareLogoSlots = Switch("Commercial", "edition-aware-logo-slots",
-    "If this switch is on, logo slots will honour visitor's edition.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
 
   private def dateInFebruary(day: Int): Interval =
     new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
