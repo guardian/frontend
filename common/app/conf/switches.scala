@@ -59,7 +59,6 @@ case class TimerSwitch(group: String,
 
   def isSwitchedOnAndActive: Boolean = {
     val active = activePeriods.exists(_.containsNow())
-    log.info(s"TimedSwitch $name switched on $isSwitchedOn active $active")
     isSwitchedOn && (environment.isNonProd || active)
   }
 }

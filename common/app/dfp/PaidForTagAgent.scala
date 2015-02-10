@@ -49,7 +49,7 @@ trait PaidForTagAgent {
     dfpTags find { dfpTag =>
       tagMatches(capiTagId, dfpTag) &&
         sectionMatches(maybeSectionId, dfpTag) &&
-        (EditionAwareLogoSlots.isSwitchedOff || editionMatches(maybeEdition, dfpTag))
+        editionMatches(maybeEdition, dfpTag)
     }
   }
 
