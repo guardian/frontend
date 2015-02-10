@@ -16,7 +16,6 @@ module.exports = function(grunt, options) {
                 fence:                'components/fence/fence',
                 imager:               'components/imager.js/container',
                 lodash:               'components/lodash-amd',
-                picturefill:          'components/picturefill/picturefill',
                 Promise:              'components/native-promise-only/npo.src',
                 qwery:                'components/qwery/qwery',
                 raven:                'components/raven-js/raven',

@@ -53,8 +53,7 @@ data-test-id="facia-card"
                                 <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span></span></div>
                                 @image(
                                     fallbackImage.imageContainer,
-                                    inlineImage = containerIndex == 0 && index < 4,
-                                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                                    inlineImage = containerIndex == 0 && index < 4
                                 )
                             </div>
                         }
@@ -71,19 +70,11 @@ data-test-id="facia-card"
             }
 
             case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
-                @image(
-                    fallbackImage.imageContainer,
-                    inlineImage = containerIndex == 0 && index < 4,
-                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
-                )
+                @image(fallbackImage.imageContainer, inlineImage = containerIndex == 0 && index < 4)
             }
 
             case Some(InlineImage(imageContainer)) => {
-                @image(
-                    imageContainer,
-                    inlineImage = containerIndex == 0 && index < 4,
-                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
-                )
+                @image(imageContainer, inlineImage = containerIndex == 0 && index < 4)
             }
 
             case _ => { }
