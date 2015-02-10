@@ -20,7 +20,12 @@
 .content__headline:before,
 .caption--img:before,
 #dfp-ad--top-above-nav,
-.ad-slot__label {
+.ad-slot__label,
+.gallery-lightbox,
+.element-rich-link,
+.element-pullquote,
+.site-message,
+.breaking-news {
     display: none !important;
 }
 
@@ -34,6 +39,10 @@
     height: auto !important;
     background-color: #ffffff !important;
     color: #000000 !important;
+}
+
+.content__meta-container {
+    position: static;
 }
 
 .responsive-img,
