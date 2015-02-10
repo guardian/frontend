@@ -194,9 +194,7 @@ define([
                 this.attachToDOM(weatherData.html, city);
                 searchTool.bindElements($('.js-search-tool'));
 
-                console.log('Detect: ', detect.isBreakpoint({max: 'mobile'}));
                 if (detect.isBreakpoint({max: 'phablet'})) {
-                    console.log('move');
                     window.scrollTo(0,0);
                 }
             };
