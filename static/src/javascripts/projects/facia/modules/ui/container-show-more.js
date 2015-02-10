@@ -1,7 +1,6 @@
 define([
     'bonzo',
     'fastdom',
-    'Promise',
     'qwery',
     'common/utils/_',
     'common/utils/$',
@@ -12,7 +11,6 @@ define([
 ], function (
     bonzo,
     fastdom,
-    Promise,
     qwery,
     _,
     $,
