@@ -2,10 +2,10 @@
 @import conf.Switches._
 
 @if(AsyncCss.isSwitchedOn) {
-    <link crossorigin="anonymous" rel="stylesheet" @if(reload){data-reload="@reload"} type="text/css" href="@Static(stylesheet)" media="only x" />
+    <link rel="stylesheet" @if(reload){data-reload="@reload"} type="text/css" href="@Static(stylesheet)" media="only x" />
     <noscript>
         <link rel="stylesheet" type="text/css" href="@Static(stylesheet)" />
     </noscript>
 } else {
-    <link crossorigin="anonymous" rel="stylesheet" @if(reload){data-reload="@reload"} type="text/css" href="@Static(stylesheet)" />
+    <link rel="stylesheet" @if(reload){data-reload="@reload"} type="text/css" href="@Static(stylesheet)" />
 }
