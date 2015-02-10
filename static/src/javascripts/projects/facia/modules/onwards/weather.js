@@ -195,7 +195,7 @@ define([
                 searchTool.bindElements($('.js-search-tool'));
 
                 if (detect.isBreakpoint({max: 'phablet'})) {
-                    window.scrollTo(0,0);
+                    window.scrollTo(0, 0);
                 }
             };
         },
