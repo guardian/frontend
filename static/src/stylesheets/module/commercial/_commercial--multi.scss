@@ -43,6 +43,13 @@ Multi component (AKA Frankenponent)
             max-height: 40px;
         }
     }
+    
+    .commercial--multi__body {
+        .lineitem__title {
+            font-size: 14px;
+            line-height: $gs-baseline*1.5;
+        }
+    }
 
     .commercial--soulmates {
         .commercial--multi__body {
@@ -68,6 +75,11 @@ Multi component (AKA Frankenponent)
     .commercial__title {
         text-align: left;
         min-height: $gs-baseline * 2.5;
+        margin: $gs-baseline/3 0 (-$gs-baseline/1.5);
+        
+        .commercial--soulmates & {
+            margin: 0;
+        }
 
         .i-guardian-logo-commercial,
         .i-commercial-brand {
@@ -79,16 +91,6 @@ Multi component (AKA Frankenponent)
             color: colour(neutral-1);
             fill: colour(neutral-1);
         }
-
-        &.i-soulmates-title-background {
-            height: 56px;
-            text-align: right;
-
-            .i-soulmates-logo {
-                margin-top: $gs-baseline*2.5;
-                margin-right: $gs-gutter*1.5;
-            }
-        }
     }
 }
 
@@ -97,7 +99,7 @@ Multi component (AKA Frankenponent)
     padding: 0 $gs-baseline/2 $gs-baseline * 2.5;
 
     @include mq(mobileLandscape) {
-        min-height: gs-height(3);
+        min-height: gs-height(3) + 5px;
     }
 }
 
@@ -138,10 +140,6 @@ Multi component (AKA Frankenponent)
             display: block;
         }
         width: 25%;
-    }
-
-    .lineitem__title {
-        line-height: $gs-baseline*1.5;
     }
 
     .lineitem__image {
