@@ -9,7 +9,6 @@ define([
     raven
 ) {
     fastdom.onError = function (error) {
-        console.error("Error within fastdom", error);
         raven.captureException(error, {
             tags: {
                 feature: 'fastdom'
