@@ -45,7 +45,7 @@ data-test-id="facia-card"
                     )) { player =>
                         <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
                             <div class="fc-item__video-container">
-                                @video(player, false)
+                                @video(player, false, item.cardTypes.showVideoEndSlate)
                             </div>
                         </div>
                         @fallback.map { fallbackImage =>
@@ -53,7 +53,8 @@ data-test-id="facia-card"
                                 <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span></span></div>
                                 @image(
                                     fallbackImage.imageContainer,
-                                    inlineImage = containerIndex == 0 && index < 4
+                                    inlineImage = containerIndex == 0 && index < 4,
+                                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
                                 )
                             </div>
                         }
@@ -70,11 +71,19 @@ data-test-id="facia-card"
             }
 
             case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
-                @image(fallbackImage.imageContainer, inlineImage = containerIndex == 0 && index < 4)
+                @image(
+                    fallbackImage.imageContainer,
+                    inlineImage = containerIndex == 0 && index < 4,
+                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                )
             }
 
             case Some(InlineImage(imageContainer)) => {
-                @image(imageContainer, inlineImage = containerIndex == 0 && index < 4)
+                @image(
+                    imageContainer,
+                    inlineImage = containerIndex == 0 && index < 4,
+                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                )
             }
 
             case _ => { }

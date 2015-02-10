@@ -3,11 +3,6 @@ package layout
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import model.Trail
 
-sealed trait Breakpoint
-
-case object Mobile extends Breakpoint
-case object Desktop extends Breakpoint
-
 object FaciaCardAndIndex {
   /** If creating a Card off the cuff (i.e., outside of the normal Facia front construction code */
   def fromTrail(trail: Trail, itemClasses: ItemClasses, index: Int) = FaciaCardAndIndex(

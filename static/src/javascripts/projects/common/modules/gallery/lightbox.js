@@ -129,6 +129,8 @@ define([
 
     GalleryLightbox.prototype.generateImgHTML = function (img, i) {
         var blockShortUrl = config.page.shortUrl,
+            currentImage = GalleryLightbox.prototype.getImgSrc(img, '700', '700'),
+            urlPrefix = currentImage.indexOf('//') === 0 ? 'http:' : '',
             shareItems = [{
                 'text': 'Facebook',
                 'css': 'facebook',
@@ -140,7 +142,7 @@ define([
             }, {
                 'text': 'Pinterest',
                 'css': 'pinterest',
-                'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + GalleryLightbox.prototype.getImgSrc(img, '700', '700'))
+                'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + urlPrefix + currentImage)
             }];
 
         return template(blockSharingTpl.replace(/^\s+|\s+$/gm, ''), {

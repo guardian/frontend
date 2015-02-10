@@ -4,13 +4,14 @@ import common.Edition
 import common.editions.Us
 import org.joda.time.DateTime
 import play.api.libs.json.Json
+import play.api.mvc.RequestHeader
 
 object ForecastResponse {
   implicit val jsonWrites = Json.writes[ForecastResponse]
 
   def fromAccuweather(forecastResponse: accuweather.ForecastResponse): ForecastResponse = {
     ForecastResponse(
-      forecastResponse.EpochDateTime * 1000,
+      forecastResponse.EpochDateTime,
       forecastResponse.WeatherIcon,
       forecastResponse.IconPhrase,
       forecastResponse.Temperature.Unit match {
@@ -37,5 +38,8 @@ case class ForecastResponse(
     }
   }
 
-  def hourString = new DateTime(epochDateTime).toString("HH:00")
+  def hourString(implicit request: RequestHeader) = {
+    val edition = Edition(request)
+    new DateTime(epochDateTime * 1000).withZone(edition.timezone).toString("HH:00")
+  }
 }
