@@ -20,6 +20,7 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/user-prefs',
@@ -32,6 +33,7 @@ define([
     $,
     ajax,
     config,
+    detect,
     mediator,
     template,
     userPrefs,
@@ -191,6 +193,12 @@ define([
             this.render = function (weatherData, city) {
                 this.attachToDOM(weatherData.html, city);
                 searchTool.bindElements($('.js-search-tool'));
+
+                console.log('Detect: ', detect.isBreakpoint({max: 'mobile'}));
+                if (detect.isBreakpoint({max: 'phablet'})) {
+                    console.log('move');
+                    window.scrollTo(0,0);
+                }
             };
         },
 
