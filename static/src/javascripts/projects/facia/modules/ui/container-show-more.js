@@ -23,6 +23,8 @@ define([
         textHook = 'js-button-text',
         prefName = 'section-states',
         buttonSpinnerClass = 'collection__show-more--loading',
+        ARTICLE_ID_ATTRIBUTE = 'data-id',
+        ITEM_SELECTOR = '.js-fc-item',
         STATE_DISPLAYED = 'displayed',
         STATE_HIDDEN = 'hidden',
         STATE_LOADING = 'loading';
@@ -89,9 +91,17 @@ define([
         });
     }
 
-    function dedupShowMore(html) {
-        // TODO dedup
-        return html;
+    function dedupShowMore($container, html) {
+        var seenArticles = itemsByArticleId($container),
+            $html = bonzo.create(html);
+
+        $(ITEM_SELECTOR, $html).each(function ($article) {
+            if (_.has(seenArticles, $article.attr(ARTICLE_ID_ATTRIBUTE))) {
+                $article.remove();
+            }
+        });
+
+        return $html;
     }
 
     function loadShowMoreForContainer(button) {
@@ -100,7 +110,7 @@ define([
         });
 
         loadShowMore(config.page.pageId, button.id).then(function (response) {
-            var dedupedShowMore = dedupShowMore(response.html);
+            var dedupedShowMore = dedupShowMore(button.$container, response.html);
             fastdom.write(function () {
                 button.$placeholder.replaceWith(dedupedShowMore);
                 setButtonState(button, STATE_DISPLAYED);
@@ -114,6 +124,12 @@ define([
             // TODO flash error message here
 
             console.log(error);
+        });
+    }
+
+    function itemsByArticleId($el) {
+        return _.groupBy(qwery(ITEM_SELECTOR, $el), function (el) {
+            return bonzo(el).attr(ARTICLE_ID_ATTRIBUTE);
         });
     }
 
