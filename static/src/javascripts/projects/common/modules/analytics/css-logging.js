@@ -46,7 +46,8 @@ define([
                 return sheet &&
                     _.values(sheet.rules || sheet.cssRules).length > 0 &&
                     (!sheet.ownerNode || sheet.ownerNode.nodeName !== 'STYLE' || sheet.ownerNode.className.indexOf('js-loggable') > -1) &&
-                    (!sheet.href || sheet.href.match(/\/\/(localhost|assets\.guim\.co\.uk)/));
+                    (!sheet.href || sheet.href.match(/\/\/(localhost|assets\.guim\.co\.uk)/)) &&
+                    (!sheet.media || sheet.media.mediaText !== 'print');
             })
             .value();
     }
@@ -64,8 +65,8 @@ define([
                             });
                             return isUsed;
                         }, {}),
-                        contentType: config.page.contentType,
-                        breakpoint: detect.getBreakpoint()
+                        contentType: config.page.contentType || 'unknown',
+                        breakpoint: detect.getBreakpoint() || 'unknown'
                     }), all);
                 }, all ? 0 : _.random(0, 3000));
             }
