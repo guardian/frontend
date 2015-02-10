@@ -123,10 +123,34 @@ define([
                 setButtonState(button, STATE_HIDDEN);
             });
 
-            // TODO flash error message here
-
-            console.log(error);
+            showErrorMessage(button);
         });
+    }
+
+    function hideErrorMessage(button) {
+        if (button.$errorMessage)
+            button.$errorMessage.hide();
+    }
+
+    function showErrorMessage(button) {
+        var text;
+
+        if (button.$errorMessage) {
+            fastdom.write(function () {
+                button.$errorMessage.show();
+            });
+
+        } else {
+            text = button.text(STATE_DISPLAYED).toLowerCase();
+
+            button.$errorMessage = bonzo.create(
+                '<div class="show-more__error-message">Sorry, failed to load ' + text + '. Please try again&hellip;</div>'
+            );
+
+            fastdom.write(function () {
+                button.$errorMessage.insertAfter(button.$el);
+            });
+        }
     }
 
     function itemsByArticleId($el) {
@@ -158,7 +182,8 @@ define([
                     loading: 'Loading&hellip;'
                 },
                 state: state,
-                isLoaded: false
+                isLoaded: false,
+                $errorMessage: null
             };
 
             if (state === STATE_DISPLAYED) {
@@ -184,6 +209,7 @@ define([
                     if (clickedButton.isLoaded) {
                         showMore(clickedButton);
                     } else {
+                        hideErrorMessage(clickedButton);
                         loadShowMoreForContainer(clickedButton);
                     }
                 }
