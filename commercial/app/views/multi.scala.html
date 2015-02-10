@@ -1,12 +1,17 @@
 @(fragments: Seq[Html], omnitureId: Option[String])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-07")) { case (version, date) =>
-    <div class="fc-container fc-container--commercial-multi" data-link-name="creative | blended component | @omnitureId">
-        <div class="fc-container__inner">
-            <div class="fc-container__header">
-                <h2 class="fc-container__header__title">From across the guardian</h2>
+    <div class="fc-container fc-container--commercial-multi commercial--tone-brand" data-link-name="creative | blended component | @omnitureId">
+        <div class="commercial__inner">
+            <div class="commercial__header">
+                <div class="commercial__header__inner">
+                    <h3 class="commercial__title">
+                        <i class="i i-marque-54"></i>
+                        <span class="commercial__title__logo">from across the guardian</span>
+                    </h3>
+                </div>
             </div>
-            <div class="fc-container__body">
+            <div class="fc-container__body commercial__body">
                 <div class="commercial commercial--multi">
                     <ul class="lineitems">@fragments</ul>
                 </div>

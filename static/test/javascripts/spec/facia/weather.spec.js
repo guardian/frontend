@@ -203,7 +203,7 @@ define([
                     mocks.store['common/utils/config'].page.weatherapiurl = '/weather/city';
 
                     sut.fetchWeatherData(data);
-                    expect(sut.getWeatherData).toHaveBeenCalledWith("/weather/city/1.json");
+                    expect(sut.getWeatherData).toHaveBeenCalledWith("/weather/city/1.json?_edition=uk");
                 });
 
                 it("should call render function after fetching the weather data", function (done) {

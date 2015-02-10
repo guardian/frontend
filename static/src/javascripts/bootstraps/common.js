@@ -1,4 +1,6 @@
 /* jshint nonew: false */
+/* jshint undef: true */
+/* global guardian */
 /* TODO - fix module constructors so we can remove the above jshint override */
 define([
     'bean',
@@ -129,6 +131,9 @@ define([
             },
 
             initFastClick: function () {
+                if (config.switches.iphoneConfidence && guardian.isIphone4 && guardian.inTestBucket) {
+                    return;
+                }
                 FastClick.attach(document.body);
             },
 
