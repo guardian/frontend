@@ -142,8 +142,7 @@ define([
 
         if ($el) {
             id = $container.attr('data-id');
-            //state = readPrefs(id);
-            state = STATE_HIDDEN;
+            state = readPrefs(id);
 
             button = {
                 $el: $el,
@@ -160,6 +159,11 @@ define([
                 state: state,
                 isLoaded: false
             };
+
+            if (state === STATE_DISPLAYED) {
+                loadShowMoreForContainer(button);
+            }
+
             return button;
         }
     }
