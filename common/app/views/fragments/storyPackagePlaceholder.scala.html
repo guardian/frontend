@@ -16,7 +16,8 @@
         </aside>
     } else {
         <aside class="@classes.mkString(" ") js-related hide-on-childrens-books-site" role="complementary" data-test-id="related-content">
-            @container(related.related, "related content", "related-content")
+        @* TODO progressive enhancement *@
+        @container(Nil, "related content", "related-content")
         </aside>
     }
 }

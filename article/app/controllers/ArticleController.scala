@@ -67,7 +67,6 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
     val response: Future[ItemResponse] = getResponse(LiveContentApi.item(path, edition)
-      .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showTags("all")
       .showFields("all")
       .showReferences("all")

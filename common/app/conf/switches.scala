@@ -132,11 +132,6 @@ object Switches {
      safeState = On, sellByDate = never
   )
 
-  val AjaxRelatedContentSwitch = Switch("Performance", "ajax-related-content",
-    "If this switch is turned on then related be loaded via ajax and not inline. Also requires related-content switch to be on.",
-    safeState = On, sellByDate = never
-  )
-
   val InlineCriticalCss = Switch("Performance", "inline-critical-css",
     "If this switch is on critical CSS will be inlined into the head of the document.",
     safeState = On, sellByDate = never
@@ -616,9 +611,4 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
   override def onStop() {
     Jobs.deschedule("SwitchBoardRefreshJob")
   }
-}
-
-// not really a switch, but I need to use this combination of switches in a number of place.
-object InlineRelatedContentSwitch {
-  def isSwitchedOn: Boolean = Switches.RelatedContentSwitch.isSwitchedOn && Switches.AjaxRelatedContentSwitch.isSwitchedOff
 }
