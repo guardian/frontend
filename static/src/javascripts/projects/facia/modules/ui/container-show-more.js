@@ -1,6 +1,7 @@
 define([
     'bonzo',
     'fastdom',
+    'Promise',
     'qwery',
     'common/utils/_',
     'common/utils/$',
@@ -11,6 +12,7 @@ define([
 ], function (
     bonzo,
     fastdom,
+    Promise,
     qwery,
     _,
     $,
@@ -118,7 +120,7 @@ define([
                 updatePref(button.id, button.state);
             });
             button.isLoaded = true;
-        }).fail(function (error, msg) {
+        }, function (error, msg) {
             fastdom.write(function () {
                 setButtonState(button, STATE_HIDDEN);
             });
@@ -127,30 +129,30 @@ define([
         });
     }
 
-    function hideErrorMessage(button) {
-        if (button.$errorMessage)
-            button.$errorMessage.hide();
+    function hideErrorMessage($errorMessage) {
+        fastdom.write(function () {
+            $errorMessage.addClass('show-more__error-message--invisible');
+        });
     }
 
     function showErrorMessage(button) {
-        var text;
-
         if (button.$errorMessage) {
-            fastdom.write(function () {
-                button.$errorMessage.show();
-            });
-
-        } else {
-            text = button.text(STATE_DISPLAYED).toLowerCase();
-
-            button.$errorMessage = bonzo.create(
-                '<div class="show-more__error-message">Sorry, failed to load ' + text + '. Please try again&hellip;</div>'
-            );
-
-            fastdom.write(function () {
-                button.$errorMessage.insertAfter(button.$el);
-            });
+            button.$errorMessage.remove();
         }
+
+        button.$errorMessage = bonzo(bonzo.create(
+            '<div class="show-more__error-message">' +
+                'Sorry, failed to load more stories. Please try again.' +
+            '</div>'
+        ));
+
+        fastdom.write(function () {
+            button.$errorMessage.insertAfter(button.$el);
+
+            setTimeout(function () {
+                hideErrorMessage(button.$errorMessage);
+            }, 5000);
+        });
     }
 
     function itemsByArticleId($el) {
@@ -209,7 +211,9 @@ define([
                     if (clickedButton.isLoaded) {
                         showMore(clickedButton);
                     } else {
-                        hideErrorMessage(clickedButton);
+                        if (clickedButton.$errorMessage) {
+                            clickedButton.$errorMessage.hide();
+                        }
                         loadShowMoreForContainer(clickedButton);
                     }
                 }

@@ -12,6 +12,19 @@
     @include animation(spinner linear 1.5s infinite);
 }
 
+.show-more__error-message {
+    @include fs-textSans(3);
+    @include transition(opacity 1.5s);
+    color: colour(status-negative);
+    display: inline-block;
+    padding-top: $gs-baseline / 2;
+    opacity: 1;
+}
+
+.show-more__error-message--invisible {
+    opacity: 0;
+}
+
 /**
  *  Everything below is pure magic. Trying to even out the different baseline of Guardian font.
  */
