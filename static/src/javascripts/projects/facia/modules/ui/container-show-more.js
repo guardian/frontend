@@ -95,8 +95,9 @@ define([
         var seenArticles = itemsByArticleId($container),
             $html = bonzo.create(html);
 
-        $(ITEM_SELECTOR, $html).each(function ($article) {
-            if (_.has(seenArticles, $article.attr(ARTICLE_ID_ATTRIBUTE))) {
+        $(ITEM_SELECTOR, $html).each(function (article) {
+            var $article = bonzo(article);
+            if ($article.attr(ARTICLE_ID_ATTRIBUTE) in seenArticles) {
                 $article.remove();
             }
         });
