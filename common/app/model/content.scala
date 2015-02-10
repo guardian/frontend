@@ -739,7 +739,7 @@ class Interactive(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val metaData: Map[String, JsValue] = super.metaData + ("contentType" -> JsString(contentType))
   override lazy val hideUi: Boolean = body.exists{ b =>
-      Jsoup.parseBodyFragment(b).body().getElementsByClass("element-interactive").attr("data-interactive").contains("/visuals/")
+      Jsoup.parseBodyFragment(b).body().getElementsByClass("element-interactive").attr("data-interactive").contains("/visuals-blank-page/")
     }
 }
 
