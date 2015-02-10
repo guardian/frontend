@@ -4,7 +4,7 @@ import java.net.URLDecoder
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import common.Edition
-import conf.Switches.{EditionAwareLogoSlots, LegacyAdFeatureExpirySwitch}
+import conf.Switches.LegacyAdFeatureExpirySwitch
 import model.Tag
 import model.`package`.frontKeywordIds
 
@@ -49,7 +49,7 @@ trait PaidForTagAgent {
     dfpTags find { dfpTag =>
       tagMatches(capiTagId, dfpTag) &&
         sectionMatches(maybeSectionId, dfpTag) &&
-        (EditionAwareLogoSlots.isSwitchedOff || editionMatches(maybeEdition, dfpTag))
+        editionMatches(maybeEdition, dfpTag)
     }
   }
 
@@ -125,9 +125,10 @@ trait PaidForTagAgent {
       val stopWords = Set("newest", "order-by", "published", "search", "tag", "use-date")
 
       config.apiQuery map { encodedQuery =>
+        def negativeClause(token: String): Boolean = token.startsWith("-")
         val query = URLDecoder.decode(encodedQuery, "utf-8")
         val tokens = query.split( """\?|&|=|\(|\)|\||\,""")
-        (tokens filterNot stopWords.contains flatMap frontKeywordIds).toSeq
+        (tokens filterNot negativeClause filterNot stopWords.contains flatMap frontKeywordIds).toSeq
       } getOrElse Nil
     }
 
@@ -164,8 +165,10 @@ trait PaidForTagAgent {
     findWinningTagPair(currentPaidForTags, capiTags, maybeSectionId, None) map (_.capiTag)
   }
 
-  def sponsorshipTag(config: CollectionConfig): Option[String] = {
-    findContainerCapiTagIdAndDfpTag(config) map (_.capiTagId)
+  def sponsorshipTag(config: CollectionConfig): Option[SponsorshipTag] = {
+    findContainerCapiTagIdAndDfpTag(config) map { tagPair =>
+      SponsorshipTag(tagPair.dfpTag.tagType, tagPair.capiTagId)
+    }
   }
 
   private def isExpiredAdvertisementFeature(pageId: String,
@@ -175,14 +178,15 @@ trait PaidForTagAgent {
 
     val lineItems = maybeDfpTag map (_.lineItems) getOrElse Nil
 
-    def hasExpired(lineItem: GuLineItem): Boolean = lineItem.endTime exists (_.isBeforeNow)
-
     lazy val isExpiredLegacyAdFeature =
       LegacyAdFeatureExpirySwitch.isSwitchedOn &&
         lineItems.isEmpty && hasAdFeatureTone && pageId != "tone/advertisement-features"
 
-    (!isPreview) &&
-      (isExpiredLegacyAdFeature || (lineItems.nonEmpty && (lineItems forall hasExpired)))
+    lazy val isExpiredAdFeature = lineItems.nonEmpty && (lineItems forall { lineItem =>
+      lineItem.endTime exists (_.isBeforeNow)
+    })
+
+    !isPreview && (isExpiredLegacyAdFeature || isExpiredAdFeature)
   }
 
   def isExpiredAdvertisementFeature(pageId: String,
@@ -243,3 +247,5 @@ trait PaidForTagAgent {
 sealed case class CapiTagAndDfpTag(capiTag: Tag, dfpTag: PaidForTag)
 
 sealed case class CapiTagIdAndDfpTag(capiTagId: String, dfpTag: PaidForTag)
+
+case class SponsorshipTag(tagType: TagType, tagId: String)

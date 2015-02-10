@@ -45,7 +45,7 @@ data-test-id="facia-card"
                     )) { player =>
                         <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
                             <div class="fc-item__video-container">
-                                @video(player, false)
+                                @video(player, false, item.cardTypes.showVideoEndSlate)
                             </div>
                         </div>
                         @fallback.map { fallbackImage =>

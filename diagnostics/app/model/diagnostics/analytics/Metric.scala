@@ -47,7 +47,8 @@ object Metric extends Logging {
     ("sm-interaction-on-same-page", CountMetric("sm-interaction-on-same-page")),
     ("sm-another-guardian-page", CountMetric("sm-another-guardian-page")),
     ("sm-clicked-related-content", CountMetric("sm-clicked-related-content")),
-    ("sm-clicked-series-component", CountMetric("sm-clicked-series-component"))
+    ("sm-clicked-series-component", CountMetric("sm-clicked-series-component")),
+    ("sm-clicked-most-popular-component", CountMetric("sm-clicked-most-popular-component"))
   )
 
   //just here so that when you delete this you see this comment and delete the 'iphone' metrics above

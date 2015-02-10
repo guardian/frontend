@@ -131,7 +131,7 @@ define([
             });
         }
 
-        if (remove !== false && sourceGroup && !sourceGroup.keepCopy && sourceGroup !== targetGroup) {
+        if (remove !== false && sourceGroup && !sourceGroup.keepCopy && sourceGroup !== targetGroup && sourceGroup.items) {
             removeById(sourceGroup.items, id); // for immediate UI effect
         }
     }

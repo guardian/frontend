@@ -11,8 +11,10 @@ define([
     'common/utils/defer-to-analytics',
     'common/utils/template',
     'common/modules/analytics/omniture',
+    'common/modules/component',
     'common/modules/video/tech-order',
     'common/modules/video/events',
+    'common/modules/video/fullscreener',
     'common/views/svgs',
     'text!common/views/ui/loading.html',
     'text!common/views/media/titlebar.html'
@@ -28,8 +30,10 @@ define([
     deferToAnalytics,
     template,
     Omniture,
+    Component,
     techOrder,
     events,
+    fullscreener,
     svgs,
     loadingTmpl,
     titlebarTmpl
@@ -56,27 +60,6 @@ define([
         return player;
     }
 
-    function fullscreener() {
-        var player = this,
-            clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0],
-            events = {
-                click: function (e) {
-                    this.paused() ? this.play() : this.pause();
-                    e.stop();
-                },
-                dblclick: function (e) {
-                    e.stop();
-                    this.isFullScreen() ? this.exitFullscreen() : this.requestFullscreen();
-                }
-            };
-
-        bonzo(clickbox)
-            .appendTo(player.contentEl());
-
-        bean.on(clickbox, 'click', events.click.bind(player));
-        bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
-    }
-
     function addTitleBar() {
         var data = {
             webTitle: config.page.webTitle,
@@ -91,6 +74,33 @@ define([
                 samePage: false,
                 target: e.target
             });
+        });
+    }
+
+    function initEndSlate(player) {
+        var endSlate = new Component(),
+            endState = 'vjs-has-ended';
+
+        endSlate.endpoint = config.page.externalEmbedHost + $('.js-gu-media--enhance').first().attr('data-end-slate');
+
+        endSlate.fetch(player.el(), 'html').then(function () {
+            $('.end-slate-container .fc-item__action').each(function (e) { e.href += '?CMP=embed_endslate'; });
+            bean.on($('.end-slate-container')[0], 'click', function (e) {
+                omniture.logTag({
+                    tag: 'Embed | endslate',
+                    sameHost: false,
+                    samePage: false,
+                    target: e.target
+                });
+            });
+        });
+
+        player.on('ended', function () {
+            bonzo(player.el()).addClass(endState);
+        });
+
+        player.on('playing', function () {
+            bonzo(player.el()).removeClass(endState);
         });
     }
 
@@ -126,6 +136,8 @@ define([
 
                 initLoadingSpinner(player);
                 addTitleBar();
+                initEndSlate(player);
+
                 events.bindGlobalEvents(player);
 
                 // unglitching the volume on first load

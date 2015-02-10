@@ -37,6 +37,4 @@ class FootballPage(
   analyticsName,
   pagination,
   description
-) {
-  override val hasClassicVersion: Boolean = false
-}
+)

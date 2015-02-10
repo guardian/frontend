@@ -36,7 +36,8 @@ define([
             },
             {
                 name: 'phablet',
-                isTweakpoint: true
+                isTweakpoint: true,
+                width: 660
             },
             {
                 name: 'tablet',
@@ -246,15 +247,37 @@ define([
         return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
     }
 
-    function getBreakpoint(includeTweakpoint) {
-        // default to mobile
-        var breakpoint = (
-                window.getComputedStyle
-                    ? window.getComputedStyle(document.body, ':after').getPropertyValue('content')
-                    : document.getElementsByTagName('head')[0].currentStyle.fontFamily
-            ).replace(/['",]/g, '') || 'mobile',
-            index;
+    function getViewportWidth() {
+        var w = window,
+            d = document,
+            e = d.documentElement,
+            g = d.getElementsByTagName('body')[0];
+        return w.innerWidth || e.clientWidth || g.clientWidth;
+    }
 
+    /** TEMPORARY: I'm going to update lodash in a separate pull request. */
+    function takeWhile(xs, f) {
+        var acc = [],
+            i,
+            size = xs.length;
+
+        for (i = 0; i < size; i++) {
+            if (f(xs[i])) {
+                acc.push(xs[i]);
+            } else {
+                break;
+            }
+        }
+
+        return acc;
+    }
+
+    function getBreakpoint(includeTweakpoint) {
+        var viewportWidth = getViewportWidth(),
+            index,
+            breakpoint = _.last(takeWhile(breakpoints, function (bp) {
+                return bp.width <= viewportWidth;
+            })).name;
         if (!includeTweakpoint) {
             index = _.findIndex(breakpoints, function (b) {
                 return b.name === breakpoint;
