@@ -24,6 +24,14 @@
     max-width: none;
 }
 
+.identity-wrapper--with-membership {
+    @include mq($until: desktop) {
+        .tabs__tab {
+            width: auto;
+        }
+    }
+}
+
 .identity-header {
     @include mq(tablet) {
         margin-left: $gs-gutter;

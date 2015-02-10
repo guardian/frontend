@@ -6,61 +6,61 @@ define([
     'membership/payment-form'
 ], function (bean, $, ajax, config, PaymentForm) {
 
-    var PAYMENT_FORM = '.js-mem-stripe-form';
-    var CARD_DETAILS = '.js-mem-card-details';
-    var CHANGE_CARD = '.js-mem-change-card';
-    var CARD_DETAILS_FORM_CONTAINER = '.js-mem-card-details-form-container';
-    var CARD_CHANGE_SUCCESS_MSG = '.js-mem-card-change-success-msg';
-    var CARD_LAST4 = '.js-mem-card-last4';
-    var CARD_TYPE = '.js-mem-card-type';
-    var PACKAGE_COST = '.js-mem-package-cost';
-    var PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end';
-    var PACKAGE_CURRENT_PERIOD_START = '.js-mem-current-period-start';
-    var PACKAGE_INTERVAL = '.js-mem-plan-interval';
-    var DETAILS_MEMBERSHIP_TIER_ICON_CURRENT = '.js-mem-icon-current';
-    var DETAILS_JOIN_DATE = '.js-mem-join-date';
-    var DETAILS_MEMBER_NUM_TEXT = '.js-mem-number';
-    var NOTIFICATION_CANCEL = '.js-mem-cancel-tier';
-    var NOTIFICATION_CHANGE = '.js-mem-change-tier';
-    var MEMBER_DETAILS = '.js-mem-details';
-    var DETAILS_MEMBER_NUMBER_CONTAINER = '.js-mem-number-container';
-    var MEMBERSHIP_TAB = '.js-mem-tab';
-    var MEMBERSHIP_TIER = '.js-mem-tier';
-    var UP_SELL = '.js-mem-up-sell';
-    var MEMBER_INFO = '.js-mem-info';
-    var LOADER = '.js-mem-loader';
-    var CLOSED_CLASSNAME = 'is-closed';
-    var IS_HIDDEN_CLASSNAME = 'is-hidden';
-    var CTA_DISABLED_CLASSNAME = 'membership-cta--disabled';
+    var PAYMENT_FORM = '.js-mem-stripe-form',
+        CARD_DETAILS = '.js-mem-card-details',
+        CHANGE_CARD = '.js-mem-change-card',
+        CARD_DETAILS_FORM_CONTAINER = '.js-mem-card-details-form-container',
+        CARD_CHANGE_SUCCESS_MSG = '.js-mem-card-change-success-msg',
+        CARD_LAST4 = '.js-mem-card-last4',
+        CARD_TYPE = '.js-mem-card-type',
+        PACKAGE_COST = '.js-mem-package-cost',
+        PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end',
+        PACKAGE_CURRENT_PERIOD_START = '.js-mem-current-period-start',
+        PACKAGE_INTERVAL = '.js-mem-plan-interval',
+        DETAILS_MEMBERSHIP_TIER_ICON_CURRENT = '.js-mem-icon-current',
+        DETAILS_JOIN_DATE = '.js-mem-join-date',
+        DETAILS_MEMBER_NUM_TEXT = '.js-mem-number',
+        NOTIFICATION_CANCEL = '.js-mem-cancel-tier',
+        NOTIFICATION_CHANGE = '.js-mem-change-tier',
+        MEMBER_DETAILS = '.js-mem-details',
+        DETAILS_MEMBER_NUMBER_CONTAINER = '.js-mem-number-container',
+        MEMBERSHIP_TAB = '.js-mem-tab',
+        MEMBERSHIP_TIER = '.js-mem-tier',
+        UP_SELL = '.js-mem-up-sell',
+        MEMBER_INFO = '.js-mem-info',
+        LOADER = '.js-mem-loader',
+        CLOSED_CLASSNAME = 'is-closed',
+        IS_HIDDEN_CLASSNAME = 'is-hidden',
+        CTA_DISABLED_CLASSNAME = 'membership-cta--disabled';
 
-    function formatAmount (amount) {
+    function formatAmount(amount) {
         return amount ? '£' + (amount / 100).toFixed(2) : 'FREE';
     }
 
-    function formatDate (timestamp) {
-        var date = new Date(timestamp);
-        var months = [
-            'January',
-            'Feburary',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
-        ];
-        var day = date.getDate();
-        var month = months[date.getMonth()];
-        var year = date.getFullYear();
+    function formatDate(timestamp) {
+        var date = new Date(timestamp),
+            months = [
+                'January',
+                'Feburary',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+            ],
+            day = date.getDate(),
+            month = months[date.getMonth()],
+            year = date.getFullYear();
 
         return [day, month, year].join(' ');
     }
 
-    var fetchUserDetails = function () {
+    function fetchUserDetails() {
         ajax({
             url: config.page.membershipUrl + '/user/me/details',
             crossOrigin: true,
@@ -78,30 +78,30 @@ define([
                 displayMembershipUpSell();
             }
         });
-    };
+    }
 
-    var hideLoader = function () {
-      $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
-    };
+    function hideLoader() {
+        $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
+    }
 
-    var setupPaymentForm = function () {
+    function setupPaymentForm() {
         (new PaymentForm()).init($(PAYMENT_FORM)[0], function (newCard) {
             toggleForm(false);
             updateCard(newCard);
             $(CARD_CHANGE_SUCCESS_MSG).removeClass(IS_HIDDEN_CLASSNAME);
         });
-    };
+    }
 
-    var addToggleFormListener = function () {
+    function addToggleFormListener() {
         bean.on($(CHANGE_CARD)[0], 'click', function () {
             toggleForm();
             $(CARD_CHANGE_SUCCESS_MSG).addClass(IS_HIDDEN_CLASSNAME);
         });
-    };
+    }
 
-    var populateUserDetails = function (userDetails) {
-        var intervalText = userDetails.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual';
-        var notificationTypeSelector;
+    function populateUserDetails(userDetails) {
+        var intervalText = userDetails.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual',
+            notificationTypeSelector;
 
         $(MEMBERSHIP_TIER).text(userDetails.tier);
         $(PACKAGE_COST).text(formatAmount(userDetails.subscription.plan.amount));
@@ -134,16 +134,16 @@ define([
         }
 
         $(MEMBER_INFO).removeClass(IS_HIDDEN_CLASSNAME);
-    };
+    }
 
-    var displayMembershipUpSell = function () {
+    function displayMembershipUpSell() {
         $(UP_SELL).removeClass(IS_HIDDEN_CLASSNAME);
-    };
+    }
 
-    var addSpriteCss = function () {
-        var spriteSheetUrl = $(MEMBERSHIP_TAB).data('sprite-url');
-        var $head = $('head');
-        var link = document.createElement('link');
+    function addSpriteCss() {
+        var spriteSheetUrl = $(MEMBERSHIP_TAB).data('sprite-url'),
+            $head = $('head'),
+            link = document.createElement('link');
 
         link.id = 'membership-sprite';
         link.rel = 'stylesheet';
@@ -151,11 +151,11 @@ define([
         link.href = spriteSheetUrl;
         link.media = 'all';
         $head.append(link);
-    };
+    }
 
-    var toggleForm = function (show) {
-        var $cont = $(CARD_DETAILS_FORM_CONTAINER);
-        var $button = $(CHANGE_CARD);
+    function toggleForm(show) {
+        var $cont = $(CARD_DETAILS_FORM_CONTAINER),
+            $button = $(CHANGE_CARD);
 
         show = show !== undefined ? show : $cont.hasClass(CLOSED_CLASSNAME);
 
@@ -166,22 +166,22 @@ define([
             $cont.addClass(CLOSED_CLASSNAME);
             $button.removeClass(CTA_DISABLED_CLASSNAME).text('Change card');
         }
-    };
+    }
 
-    var updateCard = function (card) {
-        var cardTypeClassName;
-        var $cardTypeElem;
+    function updateCard(card) {
+        var cardTypeClassName,
+            $cardTypeElem;
 
         cardTypeClassName = card.type.toLowerCase().replace(' ', '-');
         $cardTypeElem = $(CARD_TYPE);
         $(CARD_LAST4).text(card.last4);
         $cardTypeElem[0].className = $cardTypeElem[0].className.replace(/\bi-\S+/g, '');
         $cardTypeElem.addClass('i-' + cardTypeClassName);
-    };
+    }
 
-    var init = function () {
+    function init() {
         fetchUserDetails();
-    };
+    }
 
     return {
         init: init
