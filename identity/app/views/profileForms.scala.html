@@ -37,9 +37,9 @@
         <ol class="tabs__container js-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
             @tab(1, "Public", "/public/edit", None)
 
-            @tab(2, "Account details", "/account/edit", Some("edit-account-details"))
+            @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab")
 
-            @tab(3, "Membership", "/membership/edit", None, hidden=true, "js-memebership-tab-button")
+            @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab")
         </ol>
 
         <div class="tabs__content">
