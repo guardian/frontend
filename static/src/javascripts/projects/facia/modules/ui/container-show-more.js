@@ -118,7 +118,7 @@ define([
                 updatePref(button.id, button.state);
             });
             button.isLoaded = true;
-        }, function (error, msg) {
+        }, function () {
             fastdom.write(function () {
                 setButtonState(button, STATE_HIDDEN);
             });
