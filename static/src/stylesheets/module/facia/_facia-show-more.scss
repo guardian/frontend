@@ -25,6 +25,10 @@
     opacity: 0;
 }
 
+.js-off .button--show-more {
+    display: none;
+}
+
 /**
  *  Everything below is pure magic. Trying to even out the different baseline of Guardian font.
  */
