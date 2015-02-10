@@ -115,6 +115,7 @@ define([
             fastdom.write(function () {
                 button.$placeholder.replaceWith(dedupedShowMore);
                 setButtonState(button, STATE_DISPLAYED);
+                updatePref(button.id, button.state);
             });
             button.isLoaded = true;
         }).fail(function (error, msg) {
