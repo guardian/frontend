@@ -130,12 +130,8 @@ define([
     GalleryLightbox.prototype.generateImgHTML = function (img, i) {
         var blockShortUrl = config.page.shortUrl,
             currentImage = GalleryLightbox.prototype.getImgSrc(img, '700', '700'),
-            urlPrefix,
-            shareItems;
-
-        if (/^\/\//.exec(currentImage) === '//') { urlPrefix = 'http:'; }
-
-        shareItems = [{
+            urlPrefix = currentImage.indexOf('//') === 0 ? 'http:' : '',
+            shareItems = [{
                 'text': 'Facebook',
                 'css': 'facebook',
                 'url': 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(blockShortUrl + '/sfb#img-' + i)
