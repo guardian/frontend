@@ -3,11 +3,11 @@ package model
 import common.`package`._
 
 case class ShareLink (
-                       text: String,
-                       css: String,
-                       userMessage: String,
-                       href: String
-                       )
+  text: String,
+  css: String,
+  userMessage: String,
+  href: String
+)
 
 trait ShareLinks { self: Content =>
 
