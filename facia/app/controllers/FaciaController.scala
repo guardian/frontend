@@ -5,7 +5,6 @@ import common.FaciaMetrics._
 import common._
 import common.editions.EditionalisedSections
 import conf.Configuration.commercial.expiredAdFeatureUrl
-import conf.Switches
 import conf.Switches._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer}
@@ -113,7 +112,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }
   }
 
-  private def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
+  private[controllers] def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
     val futureResult = for {
       maybeFaciaPage <- frontJson.get(path)
     } yield maybeFaciaPage match {

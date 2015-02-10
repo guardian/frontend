@@ -21,8 +21,9 @@
     Edition(request).id == "UK" && (
         (AppleAdNetworkFrontSwitch.isSwitchedOn && metaData.id == "uk") ||
         (AppleAdCultureFrontSwitch.isSwitchedOn && metaData.id == "uk/culture")
-    )
-)) { case (showAdverts, edition, adBelowNav) =>
+    ),
+    metaData.hideUi && HideInteractiveUi.isSwitchedOn
+)) { case (showAdverts, edition, adBelowNav, hideUi) =>
     <body
         id="top"
         class="@RenderClasses(Map(
@@ -36,40 +37,42 @@
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(showAdverts) {
-            @fragments.commercial.topBanner()
-        }
+        @if(!hideUi) {
+            @if(showAdverts) {
+                @fragments.commercial.topBanner()
+            }
 
-        @fragments.header(metaData)
+            @fragments.header(metaData)
 
-        @if(showAdverts && adBelowNav) {
-            @fragments.commercial.topBannerBelowNav()
-        }
+            @if(showAdverts && adBelowNav) {
+                @fragments.commercial.topBannerBelowNav()
+            }
 
-        @if(showAdverts) {
-            @fragments.commercial.topBannerMobile()
-        }
+            @if(showAdverts) {
+                @fragments.commercial.topBannerMobile()
+            }
 
-        <div id="maincontent" tabindex="0"></div>
+            <div id="maincontent" tabindex="0"></div>
 
-        @if(BreakingNewsSwitch.isSwitchedOn) {
-            <div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in"
-                 data-link-name="breaking news"
-                 data-component="breaking-news"></div>
+            @if(BreakingNewsSwitch.isSwitchedOn) {
+                <div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in"
+                data-link-name="breaking news"
+                data-component="breaking-news"></div>
+            }
         }
 
         @body
 
-        @fragments.footer(metaData)
-
-        @fragments.loadCss()
-
+        @if(!hideUi) {
+            @fragments.footer(metaData)
+        }
         @fragments.analytics(metaData)
 
         @fragments.footerJavaScript()
 
-        @fragments.commercial.pageSkin()
-
+        @if(!hideUi) {
+            @fragments.commercial.pageSkin()
+        }
     </body>
     </html>
 }

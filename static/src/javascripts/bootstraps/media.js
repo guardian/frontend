@@ -15,6 +15,7 @@ define([
     'common/modules/component',
     'common/modules/ui/images',
     'common/modules/video/events',
+    'common/modules/video/fullscreener',
     'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
     'text!common/views/ui/loading.html'
@@ -34,6 +35,7 @@ define([
     Component,
     images,
     events,
+    fullscreener,
     supportedBrowsers,
     techOrder,
     loadingTmpl
@@ -56,27 +58,6 @@ define([
         };
 
         return 'http://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
-    }
-
-    function fullscreener() {
-        var player = this,
-            clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0],
-            events = {
-                click: function (e) {
-                    this.paused() ? this.play() : this.pause();
-                    e.stop();
-                },
-                dblclick: function (e) {
-                    e.stop();
-                    this.isFullScreen() ? this.exitFullscreen() : this.requestFullscreen();
-                }
-            };
-
-        bonzo(clickbox)
-            .appendTo(player.contentEl());
-
-        bean.on(clickbox, 'click', events.click.bind(player));
-        bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
     }
 
     function initLoadingSpinner(player) {

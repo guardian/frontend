@@ -37,6 +37,24 @@
 </style>
 
 @*
+  - Include IE < 9 [(lt IE 9)]
+  - Exclude IE Mobile [&(!IEMobile)]
+*@
+<!--[if (lt IE 9)&(!IEMobile)]>
+    @fragments.stylesheetLink(Static.css.headOldIE(projectName))
+    @fragments.stylesheetLink("stylesheets/old-ie.global.css")
+<![endif]-->
+
+@*
+  - Include IE 9 [(IE 9)]
+  - Exclude IE Mobile [&(!IEMobile)]
+*@
+<!--[if (IE 9)&(!IEMobile)]>
+    @fragments.stylesheetLink(Static.css.headIE9(projectName))
+    @fragments.stylesheetLink("stylesheets/ie9.global.css")
+<![endif]-->
+
+@*
   - Include all browsers [<!-->]
   - Exclude IE < 10 [(gt IE 9)]
   - Include IE Mobile [|(IEMobile)]
@@ -49,42 +67,58 @@
         @Html(Static.css.head(projectName))
     </style>
 }
+    @fragments.stylesheetLink("stylesheets/global.css", "global")
 <!--<![endif]-->
-@*
-  - Include IE < 9 [(lt IE 9)]
-  - Exclude IE Mobile [&(!IEMobile)]
-*@
-<!--[if (lt IE 9)&(!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static(Static.css.headOldIE(projectName))" />
-<![endif]-->
-@*
-  - Include IE 9 [(IE 9)]
-  - Exclude IE Mobile [&(!IEMobile)]
-*@
-<!--[if (IE 9)&(!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static(Static.css.headIE9(projectName))" />
-<![endif]-->
 
-@*
-  - Include IE 9 [(IE 9)]
-  - Exclude IE Mobile [&(!IEMobile)]
-*@
-<!--[if (IE 9)&(!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/ie9.global.css")" />
-<![endif]-->
+@* https://dev.opera.com/articles/opera-mini-and-javascript/#detectingmini *@
+<script>
+if (Object.prototype.toString.call(window.operamini) === "[object OperaMini]") {
+    document.querySelector('link[href$="global.css"]').href = '@Static("stylesheets/global.px.css")';
+}
+</script>
 
-@*
-  - Include IE < 9 [(lt IE 9)]
-  - Exclude IE Mobile [&(!IEMobile)]
-*@
-<!--[if (lt IE 9)&(!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.global.css")" />
-<![endif]-->
+@if(AsyncCss.isSwitchedOn) {
+    <script>
+        // The css is loaded by the `link`s above but with media of "only x".
+        // This means the browser requests it, but doesn't block rendering on it,
+        // since this media is not 'x'. Once it's loaded (appears in
+        // `window.document.styleSheets`),  `media` is set to `all` so the browser
+        // uses it. Very much inspired by https://github.com/filamentgroup/loadCSS.
+        (function () {
+            function setMedia (styleSheet, styleSheets) {
+                styleSheets || (styleSheets = window.document.styleSheets);
 
-@*
-  - Include IE Mobile [IEMobile]
-  - Note: does not include IE10 on Windows Phone 8 (which does not support conditional comments)
-*@
-<!--[if IEMobile]>
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
-<![endif]-->
+                for (var i = 0, totalSheets = styleSheets.length; i < totalSheets ; i++) {
+                    var sheet = styleSheets[i];
+                    if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1 ) {
+                        styleSheet.media = "screen";
+                        return true;
+                    }
+                }
+                setTimeout(function () {
+                    setMedia(styleSheet, styleSheets);
+                });
+            }
+
+            function useCss () {
+                var styleSheets = document.getElementsByTagName('link');
+                for (var i = 0, totalStyleSheets = styleSheets.length; i < totalStyleSheets ; i++) {
+                    if (styleSheets[i].getAttribute('media') === 'only x') {
+                        setMedia(styleSheets[i]);
+                    }
+                }
+            }
+
+            useCss();
+
+            // TEMPORARY: Tidy up localStorage - can remove after a bit
+            try {
+                Object.keys(localStorage).forEach(function(key) {
+                    if (key.match(/^gu.css./g)) {
+                        localStorage.removeItem(key);
+                    }
+                });
+            } catch (e) {};
+        })()
+    </script>
+}

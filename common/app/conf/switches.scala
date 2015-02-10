@@ -142,6 +142,11 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val AsyncCss = Switch("Performance", "async-css",
+    "If this switch is on CSS will be loaded with media set to 'only x' and updated to 'all' when the stylesheet has loaded using javascript. Disabling it will use standard link elements.",
+    safeState = On, sellByDate = never
+  )
+
   val ShowAllArticleEmbedsSwitch = Switch("Performance", "show-all-embeds",
     "If switched on then all embeds will be shown inside article bodies",
     safeState = On, sellByDate = never
@@ -357,6 +362,11 @@ object Switches {
     "Fixtures and results container on football tag pages",
     safeState = On,
     sellByDate = never
+  )
+
+  val HideInteractiveUi = Switch("Feature", "hide-interactive-ui",
+    "If this is switched on interactives can be rendered without page furniture.",
+    safeState = On, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
