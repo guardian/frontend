@@ -27,7 +27,8 @@ define([
         ITEM_SELECTOR = '.js-fc-item',
         STATE_DISPLAYED = 'displayed',
         STATE_HIDDEN = 'hidden',
-        STATE_LOADING = 'loading';
+        STATE_LOADING = 'loading',
+        REQUEST_TIMEOUT = 5000;
 
     function setButtonState(button, state) {
         var text = button.text[state];
@@ -87,7 +88,8 @@ define([
     function loadShowMore(pageId, containerId) {
         return ajax({
             url: '/' + pageId + '/show-more/' + containerId + '.json',
-            crossOrigin: true
+            crossOrigin: true,
+            timeout: REQUEST_TIMEOUT
         });
     }
 
