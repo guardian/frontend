@@ -41,7 +41,7 @@ define([
         var date = new Date(timestamp),
             months = [
                 'January',
-                'Feburary',
+                'February',
                 'March',
                 'April',
                 'May',
