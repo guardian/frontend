@@ -158,6 +158,7 @@ define([
         initPlayButtons(document.body);
 
         mediator.on('modules:related:loaded', initPlayButtons);
+        mediator.on('page:media:moreinloaded', initPlayButtons);
     }
 
     function enhanceVideo(el, autoplay) {
@@ -322,6 +323,7 @@ define([
 
         section.fetch(attachTo).then(function () {
             images.upgrade(attachTo);
+            mediator.emit('page:media:moreinloaded', attachTo);
         });
     }
 
