@@ -4,7 +4,7 @@ define([
     'qwery',
     'common/utils/_',
     'common/utils/$',
-    'common/utils/ajax',
+    'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/user-prefs'
@@ -118,7 +118,7 @@ define([
                 updatePref(button.id, button.state);
             });
             button.isLoaded = true;
-        }, function () {
+        }).catch(function () {
             fastdom.write(function () {
                 setButtonState(button, STATE_HIDDEN);
             });
