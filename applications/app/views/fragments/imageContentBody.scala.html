@@ -13,7 +13,8 @@
             <div class="gs-container">
                 <div class="content__main-column content__main-column--image">
 
-                    @fragments.img(image.mainPicture, isImageContent = true)
+                    @fragments.img(image.mainPicture, isImageContent = true,
+                        isLightboxable = image.isMainMediaLightboxable)
 
                     @fragments.contentMeta(image)
 

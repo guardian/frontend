@@ -20,9 +20,9 @@
             @slice(sliceWithCards, containerDefinition.index)
         }
 
-        @showMore(containerLayout.remainingCards, containerDefinition.index)
-
         @if(containerDefinition.hasShowMore) {
+            <div class="js-show-more-placeholder"></div>
+
             @showMoreButton(containerDefinition.displayName getOrElse "")
         }
     </div>

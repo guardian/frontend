@@ -185,12 +185,12 @@ object FaciaContainer {
     None
   )
 
-  def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
+  def forStoryPackage(dataId: String, items: Seq[Trail], title: String, href: Option[String] = None) = {
     FaciaContainer(
       index = 2,
       container = Fixed(ContainerDefinition.fastForNumberOfItems(items.size)),
       config = ContainerDisplayConfig.withDefaults(CollectionConfigWithId(dataId, CollectionConfig.emptyConfig)),
-      collectionEssentials = CollectionEssentials(items take 8, Nil, Some(title), None, None, None),
+      collectionEssentials = CollectionEssentials(items take 8, Nil, Some(title), href, None, None),
       componentId = None
     ).withTimeStamps
   }

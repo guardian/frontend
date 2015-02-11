@@ -41,6 +41,10 @@
     .tonal--tone-media & {
         fill: colour(media-default);
     }
+
+    .tonal--tone-special-report & {
+        fill: colour(news-support-6);
+    }
 }
 
 .no-svg {

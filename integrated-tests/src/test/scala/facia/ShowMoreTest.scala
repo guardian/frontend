@@ -2,6 +2,7 @@ package facia
 
 import driver.Driver
 import org.scalatest.tags.Retryable
+import org.scalatest.time.{Milliseconds, Span}
 import org.scalatest.{FlatSpec, Matchers}
 
 
@@ -11,26 +12,30 @@ import org.scalatest.{FlatSpec, Matchers}
 
     go to theguardian("/uk")
 
+    def getNumberOfVisibleArticles() = countMatchingVisible("[data-test-id=facia-card]")
+
     withClue("Should show the 'show more' button") {
       first("[data-test-id='show-more']").isDisplayed should be (true)
     }
 
     withClue("Should show the hidden items once cta is clicked") {
-      val hiddenItem = first(".js-hide")
-
-      hiddenItem.isDisplayed should be(false)
+      val articlesBefore = getNumberOfVisibleArticles()
 
       clickOn(first("[data-test-id='show-more']"))
 
-      hiddenItem.isDisplayed should be(true)
+      implicitlyWait(Span(1000, Milliseconds))
+
+      getNumberOfVisibleArticles() should be.>(articlesBefore)
     }
 
     withClue("Should hide items once cta is clicked again") {
-      val hiddenItem = first(".js-hide")
+      val articlesBefore = getNumberOfVisibleArticles()
 
       clickOn(first("[data-test-id='show-more']"))
 
-      hiddenItem.isDisplayed should be(false)
+      implicitlyWait(Span(100, Milliseconds))
+
+      getNumberOfVisibleArticles() should be.<(articlesBefore)
     }
   }
 }

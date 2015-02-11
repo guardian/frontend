@@ -57,11 +57,7 @@ itemscope itemtype="http://schema.org/Comment">
                     <i class="i i-comment-anchor"></i>
                 </a>
             </div>
-            @if(comment.profile.isStaff){
-                <span class="d-comment__author-label">Staff</span>
-            }else { @if(comment.profile.isContributor) {
-                <span class="d-comment__author-label">Contributor</span>}
-            }
+            @fragments.commentBadges(comment)
         </div>
 
 
