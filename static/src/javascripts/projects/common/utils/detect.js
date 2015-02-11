@@ -365,6 +365,8 @@ define([
         return 'WebSocket' in window;
     }
 
+    // Determine if what type of font-hinting we want.
+    // Duplicated in /common/app/views/fragments/javaScriptLaterSteps.scala.html
     function fontHinting() {
         var ua = navigator.userAgent,
             windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
@@ -373,12 +375,14 @@ define([
 
         if (windowsNT) {
             version = parseFloat(windowsNT[1], 10);
-            // windows XP
+            // For Windows XP-7
             if (version >= 5.1 && version <= 6.1) {
                 if (/Chrome/.exec(ua) && version < 6.0) {
-                    hinting = 'Auto'; // Chrome on windows XP want auto-hinting
+                    // Chrome on windows XP wants auto-hinting
+                    hinting = 'Auto';
                 } else {
-                    hinting = 'Cleartype'; // All other use cleartype
+                    // All others use cleartype
+                    hinting = 'Cleartype';
                 }
             }
         }

@@ -25,7 +25,6 @@ object EmbedController extends Controller with Logging with ExecutionContexts {
     log.info(s"Fetching video: $path for edition $edition")
 
     val response: Future[ItemResponse] = getResponse(LiveContentApi.item(path, edition)
-      .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showFields("all")
     )
 

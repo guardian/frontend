@@ -707,6 +707,8 @@ trait Lightboxable extends Content {
   lazy val bodyFiltered = bodyImages.filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
   lazy val lightboxImages: Seq[ImageContainer] = mainFiltered ++ bodyFiltered
 
+  lazy val isMainMediaLightboxable = !mainFiltered.isEmpty
+
   lazy val lightbox: JsObject = {
     val imageContainers = lightboxImages.filter(_.largestEditorialCrop.nonEmpty)
     val imageJson = imageContainers.map { imgContainer =>

@@ -428,10 +428,6 @@ $header-image-size-desktop: 100px;
         top: 13px;
         left: 50%;
         margin-left: -12px;
-
-        .container--rolled-up & {
-            @include transform(rotate(0));
-        }
     }
 
     @include mq(tablet) {

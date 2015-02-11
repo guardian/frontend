@@ -4,7 +4,6 @@ import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
 import common._
 import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi.getResponse
-import conf.Switches.AdFeatureExpirySwitch
 import conf._
 import model._
 import org.jsoup.nodes.Document
@@ -67,16 +66,12 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
     val response: Future[ItemResponse] = getResponse(LiveContentApi.item(path, edition)
-      .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
     )
 
     val result = response map { response =>
-      val storyPackage = response.storyPackage map { Content(_) }
-      val related = response.relatedContent map { Content(_) }
-
 
       val supportedContent = response.content.filter(isSupported).map(Content(_))
       val content: Option[ArticleWithStoryPackage] = supportedContent.map {
@@ -84,8 +79,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
         case article: Article => ArticlePage(article, RelatedContent(article, response))
       }
 
-      if (AdFeatureExpirySwitch.isSwitchedOn &&
-        content.exists(_.article.isExpiredAdvertisementFeature)) {
+      if (content.exists(_.article.isExpiredAdvertisementFeature)) {
         Right(MovedPermanently(expiredAdFeatureUrl))
       } else {
         ModelOrResult(content, response)

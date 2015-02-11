@@ -84,6 +84,7 @@ GET         /most-read-day.json                                                 
 GET         /top-stories.json                                                                                        controllers.TopStoriesController.renderTopStories()
 GET         /top-stories/trails.json                                                                                 controllers.TopStoriesController.renderTrails()
 GET         /related/*path.json                                                                                      controllers.RelatedController.render(path)
+GET         /related/*path                                                                                           controllers.RelatedController.renderHtml(path)
 GET         /popular-in-tag/*tag.json                                                                                controllers.PopularInTag.render(tag)
 
 GET         /preference/edition/:edition                                                                             controllers.ChangeEditionController.render(edition)

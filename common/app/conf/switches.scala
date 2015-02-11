@@ -59,7 +59,6 @@ case class TimerSwitch(group: String,
 
   def isSwitchedOnAndActive: Boolean = {
     val active = activePeriods.exists(_.containsNow())
-    log.info(s"TimedSwitch $name switched on $isSwitchedOn active $active")
     isSwitchedOn && (environment.isNonProd || active)
   }
 }
@@ -130,11 +129,6 @@ object Switches {
   val FlyerSwitch = Switch("Performance", "flyers",
     "If this switch is turned off then flyers will not be shown. Turn off to help handle exceptional load.",
      safeState = On, sellByDate = never
-  )
-
-  val AjaxRelatedContentSwitch = Switch("Performance", "ajax-related-content",
-    "If this switch is turned on then related be loaded via ajax and not inline. Also requires related-content switch to be on.",
-    safeState = On, sellByDate = never
   )
 
   val InlineCriticalCss = Switch("Performance", "inline-critical-css",
@@ -292,14 +286,6 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  val AdFeatureExpirySwitch = Switch("Commercial", "enable-expire-ad-features",
-    "If this switch is on, expired ad features will be redirected.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
-
-  val LegacyAdFeatureExpirySwitch = Switch("Commercial", "enable-expire-legacy-ad-features",
-    "If this switch is on, expired legacy ad features will be redirected.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
-
   private def dateInFebruary(day: Int): Interval =
     new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
 
@@ -449,7 +435,7 @@ object Switches {
 
   val HistoryTags = Switch("Feature", "history-tags",
     "If this is switched on then personalised history tags are shown in the meganav",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
+    safeState = Off, sellByDate = never
   )
 
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
@@ -612,9 +598,4 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
   override def onStop() {
     Jobs.deschedule("SwitchBoardRefreshJob")
   }
-}
-
-// not really a switch, but I need to use this combination of switches in a number of place.
-object InlineRelatedContentSwitch {
-  def isSwitchedOn: Boolean = Switches.RelatedContentSwitch.isSwitchedOn && Switches.AjaxRelatedContentSwitch.isSwitchedOff
 }

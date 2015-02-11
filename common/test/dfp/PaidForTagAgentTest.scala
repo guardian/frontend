@@ -4,7 +4,6 @@ import com.gu.contentapi.client.model.{Tag => ApiTag}
 import com.gu.facia.client.models.CollectionConfigJson
 import common.Edition.defaultEdition
 import common.editions.Us
-import conf.Switches.LegacyAdFeatureExpirySwitch
 import model.Tag
 import org.joda.time.DateTime
 import org.scalatest.Inspectors._
@@ -567,7 +566,6 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
   }
 
   it should "be true for a page with ad-feature tone and no logo" in {
-    LegacyAdFeatureExpirySwitch.switchOn()
     val tags = Seq(adFeatureTone)
     TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(true)
   }

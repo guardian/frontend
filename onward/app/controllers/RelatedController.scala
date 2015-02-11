@@ -11,6 +11,14 @@ import slices.{Fixed, FixedContainers}
 import scala.concurrent.duration._
 
 object RelatedController extends Controller with Related with Logging with ExecutionContexts {
+
+  private val page = new Page(
+    "related-content",
+    "related-content",
+    "Related content",
+    "GFE:Related content"
+  )
+
   def renderHtml(path: String) = render(path)
   def render(path: String) = MemcachedAction { implicit request =>
     val edition = Edition(request)
@@ -27,20 +35,16 @@ object RelatedController extends Controller with Related with Logging with Execu
     val properties = FrontProperties.empty
     val config = CollectionConfigJson.withDefaults(displayName = displayName)
 
-    val html = views.html.fragments.containers.facia_cards.container(
-      FaciaContainer(
-        1,
-        Fixed(FixedContainers.fixedMediumFastXII),
-        CollectionConfigWithId(dataId, config),
-        CollectionEssentials(trails take 8, Nil, displayName, None, None, None)
-      ).withTimeStamps,
-      properties
-    )(request)
+    val container: FaciaContainer = FaciaContainer(1,
+      Fixed(FixedContainers.fixedMediumFastXII),
+      CollectionConfigWithId(dataId, config),
+      CollectionEssentials(trails take 8, Nil, displayName, None, None, None)
+    ).withTimeStamps
 
     if (request.isJson) {
-      JsonComponent("html" -> html)
+      JsonComponent("html" -> views.html.fragments.containers.facia_cards.container(container, properties))
     } else {
-      Ok(html)
+      Ok(views.html.relatedContent(page, container.items))
     }
   }
 }

@@ -47,8 +47,8 @@ define([
 
             showContainerShowMore: function () {
                 mediator.addListeners({
-                    'modules:container:rendered': containerShowMore,
-                    'page:front:ready': containerShowMore
+                    'modules:container:rendered': containerShowMore.init,
+                    'page:front:ready': containerShowMore.init
                 });
             },
 
