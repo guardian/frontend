@@ -169,6 +169,26 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       }
   }
 
+  def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
+    for {
+      maybeFaciaPage <- frontJson.get(path)
+    } yield {
+      val maybeResponse = for {
+        faciaPage <- maybeFaciaPage
+        (container, index) <- faciaPage.front.containers.zipWithIndex.find(_._1.dataId == collectionId)
+        containerLayout <- container.containerLayout
+      } yield {
+        Cached(faciaPage) {
+          JsonComponent(views.html.fragments.containers.facia_cards.showMore(
+            containerLayout.remainingCards,
+            index
+          ))
+        }
+      }
+      maybeResponse getOrElse Cached(60)(NotFound)
+    }
+  }
+
   def renderFrontCollection(frontId: String, collectionId: String, version: String) = MemcachedAction { implicit request =>
     log.info(s"Serving collection $collectionId on front $frontId")
 

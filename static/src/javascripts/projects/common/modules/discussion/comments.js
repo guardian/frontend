@@ -1,4 +1,3 @@
-/*jshint -W024 */
 define([
     'bean',
     'bonzo',
