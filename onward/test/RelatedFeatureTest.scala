@@ -24,29 +24,8 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       goTo("/related/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey") { browser =>
         import browser._
         Then("I should see the related links")
-        $(".fc-item") should have length 8
-
+        $("[itemprop=mainContentOfPage]").find("li") should have length 8
       }
     }
-
-    scenario("Shows article metadata for each related link") {
-
-      Given("there is an article 'Woman tortured during burglary tells of waterboarding ordeal'")
-      goTo("/related/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey") { browser =>
-        import browser._
-        Then("I should see the headline, trail text for each of the first five related links")
-
-        //We cannot guarantee what exactly gets returned from the content api as related is an algorithm
-        //so just checking that items exist and not their values
-
-        val article = findFirst("li")
-        article.findFirst("a").getAttribute("href").length should be > 0
-        article.findFirst("h2").getText.length should be > 0
-        article.findFirst("time").getAttribute("data-timestamp") should not be empty
-
-        findFirst("ul").find(".fc-item__title").size should be > 0
-      }
-    }
-
   }
 }

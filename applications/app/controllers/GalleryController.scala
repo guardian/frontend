@@ -44,7 +44,6 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
     val edition = Edition(request)
     log.info(s"Fetching gallery: $path for edition $edition")
     getResponse(LiveContentApi.item(path, edition)
-      .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showFields("all")
     ).map{response =>
         val gallery = response.content.filter(isSupported).map(Gallery(_))

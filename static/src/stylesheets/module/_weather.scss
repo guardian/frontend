@@ -331,6 +331,11 @@ i.weather__close-icon {
         display: block;
     }
 
+    .weather__icon {
+        display: inline-block;
+        vertical-align: bottom;
+    }
+
     .weather__icon svg {
         display: block;
 

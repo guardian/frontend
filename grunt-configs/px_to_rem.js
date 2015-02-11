@@ -3,12 +3,12 @@ module.exports = function(grunt, options) {
         dist: {
             options: {
                 base: 16,
-                fallback: true // set to false when Opera Mini supports rem units
+                fallback: false // Opera Mini gets its own global.px.css
             },
             files: [{
                 expand: true,
                 cwd: options.staticTargetDir + 'stylesheets/',
-                src: ['*.css', '!old-ie*'],
+                src: ['*.css', '!old-ie*', '!*.px.css'],
                 dest: options.staticTargetDir + 'stylesheets/'
             }]
         }

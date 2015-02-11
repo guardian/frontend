@@ -22,15 +22,6 @@
     @include mq(wide) {
         width: $left-column-wide !important;
     }
-
-    .container__meta__label {
-        @include fs-header(3);
-        line-height: get-line-height(header, 2) !important;
-        color: colour(neutral-2);
-    }
-    .container__meta__description {
-        margin: 0;
-    }
     .container__meta__title {
         padding-bottom: $gs-baseline/3;
         @include fs-header(4);

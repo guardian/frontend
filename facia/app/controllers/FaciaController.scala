@@ -5,7 +5,6 @@ import common.FaciaMetrics._
 import common._
 import common.editions.EditionalisedSections
 import conf.Configuration.commercial.expiredAdFeatureUrl
-import conf.Switches._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
@@ -130,7 +129,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             ).as("text/xml; charset=utf-8")
           else if (request.isJson)
             JsonFront(faciaPage)
-          else if (AdFeatureExpirySwitch.isSwitchedOn && faciaPage.isExpiredAdvertisementFeature)
+          else if (faciaPage.isExpiredAdvertisementFeature)
             MovedPermanently(expiredAdFeatureUrl)
           else
             Ok(views.html.front(faciaPage))
@@ -168,6 +167,26 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           }
         }.getOrElse(ServiceUnavailable)
       }
+  }
+
+  def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
+    for {
+      maybeFaciaPage <- frontJson.get(path)
+    } yield {
+      val maybeResponse = for {
+        faciaPage <- maybeFaciaPage
+        (container, index) <- faciaPage.front.containers.zipWithIndex.find(_._1.dataId == collectionId)
+        containerLayout <- container.containerLayout
+      } yield {
+        Cached(faciaPage) {
+          JsonComponent(views.html.fragments.containers.facia_cards.showMore(
+            containerLayout.remainingCards,
+            index
+          ))
+        }
+      }
+      maybeResponse getOrElse Cached(60)(NotFound)
+    }
   }
 
   def renderFrontCollection(frontId: String, collectionId: String, version: String) = MemcachedAction { implicit request =>
