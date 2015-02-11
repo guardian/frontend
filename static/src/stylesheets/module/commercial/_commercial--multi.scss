@@ -50,6 +50,12 @@ Multi component (AKA Frankenponent)
             line-height: $gs-baseline*1.5;
         }
     }
+    
+    .commercial--books {
+        .lineitem__image {
+            width: auto;
+        }
+    }
 
     .commercial--soulmates {
         .commercial--multi__body {
