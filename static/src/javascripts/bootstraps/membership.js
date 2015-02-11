@@ -1,7 +1,3 @@
-define([
-    'membership/membership-tab'
-], function (
-    MembershipTab
-) {
-    return MembershipTab;
+define(['membership/membership-tab'], function (membershipTab) {
+    return membershipTab;
 });
