@@ -1,4 +1,4 @@
-/*! Picturefill - v2.2.0 - 2015-02-05
+/*! Picturefill - v2.2.0 - 2015-02-11
 * http://scottjehl.github.io/picturefill
 * Copyright (c) 2015 https://github.com/scottjehl/picturefill/blob/master/Authors.txt; Licensed MIT */
 /*! matchMedia() polyfill - Test a CSS media type/query in JS. Authors & copyright (c) 2012: Scott Jehl, Paul Irish, Nicholas Zakas, David Knight. Dual MIT/BSD license */
@@ -560,6 +560,10 @@ window.matchMedia || (window.matchMedia = function() {
 		return match;
 	};
 
+	pf.getBrowserWidth = function() {
+    return window.innerWidth || document.documentElement.clientWidth || 0;
+	};
+
 	function picturefill( opt ) {
 		var elements,
 			element,
@@ -569,6 +573,8 @@ window.matchMedia || (window.matchMedia = function() {
 			options = opt || {};
 
 		elements = options.elements || pf.getAllElements();
+
+		w._browserWidth = pf.getBrowserWidth();
 
 		// Loop through all elements
 		for ( var i = 0, plen = elements.length; i < plen; i++ ) {
@@ -661,13 +667,13 @@ window.matchMedia || (window.matchMedia = function() {
 		function checkResize() {
 			var resizeThrottle;
 
-			if ( !w._picturefillWorking ) {
+			if (!w._picturefillWorking && pf.getBrowserWidth() !== w._browserWidth) {
 				w._picturefillWorking = true;
 				w.clearTimeout( resizeThrottle );
 				resizeThrottle = w.setTimeout( function() {
 					picturefill({ reevaluate: true });
 					w._picturefillWorking = false;
-				}, 60 );
+				}, 250 );
 			}
 		}
 
