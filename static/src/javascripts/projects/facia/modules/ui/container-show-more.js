@@ -2,6 +2,7 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
+    'raven',
     'common/utils/_',
     'common/utils/$',
     'common/utils/ajax-promise',
@@ -12,6 +13,7 @@ define([
     bonzo,
     fastdom,
     qwery,
+    raven,
     _,
     $,
     ajax,
@@ -120,12 +122,13 @@ define([
                 updatePref(button.id, button.state);
             });
             button.isLoaded = true;
-        }).catch(function () {
+        }).catch(function (err) {
             fastdom.write(function () {
                 setButtonState(button, STATE_HIDDEN);
             });
 
             showErrorMessage(button);
+            raven.captureException(new Error('Error retrieving show more (' + err + ')'));
         });
     }
 
