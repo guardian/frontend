@@ -131,11 +131,6 @@ object Switches {
      safeState = On, sellByDate = never
   )
 
-  val AjaxRelatedContentSwitch = Switch("Performance", "ajax-related-content",
-    "If this switch is turned on then related be loaded via ajax and not inline. Also requires related-content switch to be on.",
-    safeState = On, sellByDate = never
-  )
-
   val InlineCriticalCss = Switch("Performance", "inline-critical-css",
     "If this switch is on critical CSS will be inlined into the head of the document.",
     safeState = On, sellByDate = never
@@ -291,10 +286,6 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  val EditionAwareLogoSlots = Switch("Commercial", "edition-aware-logo-slots",
-    "If this switch is on, logo slots will honour visitor's edition.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
-
   private def dateInFebruary(day: Int): Interval =
     new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
 
@@ -444,7 +435,7 @@ object Switches {
 
   val HistoryTags = Switch("Feature", "history-tags",
     "If this is switched on then personalised history tags are shown in the meganav",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
+    safeState = Off, sellByDate = never
   )
 
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
@@ -607,9 +598,4 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
   override def onStop() {
     Jobs.deschedule("SwitchBoardRefreshJob")
   }
-}
-
-// not really a switch, but I need to use this combination of switches in a number of place.
-object InlineRelatedContentSwitch {
-  def isSwitchedOn: Boolean = Switches.RelatedContentSwitch.isSwitchedOn && Switches.AjaxRelatedContentSwitch.isSwitchedOff
 }

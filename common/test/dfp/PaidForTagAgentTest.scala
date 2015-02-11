@@ -4,7 +4,6 @@ import com.gu.contentapi.client.model.{Tag => ApiTag}
 import com.gu.facia.client.models.CollectionConfigJson
 import common.Edition.defaultEdition
 import common.editions.Us
-import conf.Switches.EditionAwareLogoSlots
 import model.Tag
 import org.joda.time.DateTime
 import org.scalatest.Inspectors._
