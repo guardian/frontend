@@ -39,6 +39,9 @@ trait Driver extends Suite with WebBrowser with BeforeAndAfterAll with Retries {
   protected def theguardian(path: String) = s"$baseUrl$path?test=test#gu.prefs.switchOff=adverts&countmein&noads"
 
   protected def $(selector: String): List[Element] = findAll(cssSelector(selector)).toList
+
+  protected def countMatching(selector: String): Int = $(selector).length
+
   protected def first(selector: String): Element = $(selector).head
 }
 

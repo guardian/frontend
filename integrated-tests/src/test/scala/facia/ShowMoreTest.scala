@@ -11,26 +11,26 @@ import org.scalatest.{FlatSpec, Matchers}
 
     go to theguardian("/uk")
 
+    def getNumberOfArticles() = countMatching("[data-test-id=facia-card]")
+
     withClue("Should show the 'show more' button") {
       first("[data-test-id='show-more']").isDisplayed should be (true)
     }
 
     withClue("Should show the hidden items once cta is clicked") {
-      val hiddenItem = first(".js-hide")
-
-      hiddenItem.isDisplayed should be(false)
+      val articlesBefore = getNumberOfArticles()
 
       clickOn(first("[data-test-id='show-more']"))
 
-      hiddenItem.isDisplayed should be(true)
+      getNumberOfArticles() should be.>(articlesBefore)
     }
 
     withClue("Should hide items once cta is clicked again") {
-      val hiddenItem = first(".js-hide")
+      val articlesBefore = getNumberOfArticles()
 
       clickOn(first("[data-test-id='show-more']"))
 
-      hiddenItem.isDisplayed should be(false)
+      getNumberOfArticles() should be.<(articlesBefore)
     }
   }
 }
