@@ -19,10 +19,10 @@ define([
     mediator,
     userPrefs
 ) {
-    var className = 'fc-show-more--hidden',
-        textHook = 'js-button-text',
-        prefName = 'section-states',
-        buttonSpinnerClass = 'collection__show-more--loading',
+    var HIDDEN_CLASS_NAME = 'fc-show-more--hidden',
+        TEXT_HOOK = 'js-button-text',
+        PREF_NAME = 'section-states',
+        BUTTON_SPINNER_CLASS = 'collection__show-more--loading',
         ARTICLE_ID_ATTRIBUTE = 'data-id',
         ITEM_SELECTOR = '.js-fc-item',
         STATE_DISPLAYED = 'displayed',
@@ -35,15 +35,15 @@ define([
         button.$el.attr('data-link-name', state === STATE_DISPLAYED ? 'less' : 'more')
             .toggleClass('button--primary', state !== STATE_DISPLAYED)
             .toggleClass('button--tertiary', state === STATE_DISPLAYED)
-            .toggleClass(buttonSpinnerClass, state === STATE_LOADING);
+            .toggleClass(BUTTON_SPINNER_CLASS, state === STATE_LOADING);
         button.$iconEl.toggleClass('i-plus-white', state !== STATE_DISPLAYED)
             .toggleClass('i-minus-blue', state === STATE_DISPLAYED);
-        button.$container.toggleClass(className, state !== STATE_DISPLAYED);
+        button.$container.toggleClass(HIDDEN_CLASS_NAME, state !== STATE_DISPLAYED);
         button.state = state;
     }
 
     function updatePref(containerId, state) {
-        var prefs = userPrefs.get(prefName, {
+        var prefs = userPrefs.get(PREF_NAME, {
             type: 'session'
         }) || {};
         if (state !== STATE_DISPLAYED) {
@@ -51,13 +51,13 @@ define([
         } else {
             prefs[containerId] = 'more';
         }
-        userPrefs.set(prefName, prefs, {
+        userPrefs.set(PREF_NAME, prefs, {
             type: 'session'
         });
     }
 
     function readPrefs(containerId) {
-        var prefs = userPrefs.get(prefName, {
+        var prefs = userPrefs.get(PREF_NAME, {
             type: 'session'
         });
         return (prefs && prefs[containerId]) ? STATE_DISPLAYED : STATE_HIDDEN;
@@ -76,9 +76,9 @@ define([
 
     function renderToDom(button) {
         fastdom.write(function () {
-            button.$container.addClass(className)
+            button.$container.addClass(HIDDEN_CLASS_NAME)
                 .removeClass('js-container--fc-show-more')
-                .toggleClass(className, button.state === STATE_HIDDEN);
+                .toggleClass(HIDDEN_CLASS_NAME, button.state === STATE_HIDDEN);
             // Initialise state, as it might be different from what was rendered server side based on localstorage prefs
             setButtonState(button, button.state);
         });
@@ -174,7 +174,7 @@ define([
                 $container: $container,
                 $iconEl: $('.i', $el),
                 $placeholder: $('.js-show-more-placeholder', $container),
-                $textEl: $('.' + textHook, $el),
+                $textEl: $('.' + TEXT_HOOK, $el),
                 id: id,
                 text: {
                     hidden: $('.js-button-text', $el).text(),
