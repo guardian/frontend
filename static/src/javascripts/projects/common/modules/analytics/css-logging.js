@@ -1,5 +1,6 @@
 define([
     'Promise',
+    'fastdom',
     'common/utils/_',
     'common/utils/config',
     'common/utils/ajax',
@@ -10,6 +11,7 @@ define([
     'common/modules/analytics/beacon'
 ], function (
     Promise,
+    fastdom,
     _,
     config,
     ajax,
@@ -67,7 +69,9 @@ define([
             var el = document.createElement('style');
             el.className = classNameLoggable;
             el.innerHTML = resp;
-            document.getElementsByTagName('head')[0].appendChild(el);
+            fastdom.write(function () {
+                document.getElementsByTagName('head')[0].appendChild(el);
+            });
         });
     }
 
