@@ -216,7 +216,6 @@ define([
 
                     player.fullscreener();
 
-                    // do ads last so if the ad blocker throws an exception it doesn't stop anything else
                     if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
                         raven.wrap(
                             { tags: { feature: 'media' } },
@@ -243,7 +242,6 @@ define([
                     if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
                         initEndSlate(player, endSlateUri);
                     }
-
                 } else {
                     player.playlist({
                         mediaType: 'audio',
