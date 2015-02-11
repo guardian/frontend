@@ -71,7 +71,7 @@ define([
 
         getWeatherData: function (url) {
             return ajax({
-                url: url + '?edition=' + config.page.edition.toLowerCase(),
+                url: url,
                 type: 'json',
                 method: 'get',
                 crossOrigin: true
@@ -110,7 +110,7 @@ define([
         },
 
         fetchWeatherData: function (location) {
-            return this.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
+            return this.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json?_edition=' + config.page.edition.toLowerCase())
                 .then(function (response) {
                     this.render(response, location.city);
                     this.fetchForecastData(location);
@@ -135,7 +135,7 @@ define([
         },
 
         fetchForecastData: function (location) {
-            return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json')
+            return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json?_edition=' + config.page.edition.toLowerCase())
                 .then(function (response) {
                     this.renderForecast(response);
                 }.bind(this))
@@ -162,7 +162,7 @@ define([
         },
 
         bindEvents: function () {
-            bean.on(qwery('.js-toggle-forecast')[0], 'click', function (e) {
+            bean.on(document.body, 'click', '.js-toggle-forecast', function (e) {
                 e.preventDefault();
                 this.toggleForecast();
             }.bind(this));
