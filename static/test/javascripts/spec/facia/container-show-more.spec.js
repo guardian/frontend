@@ -9,7 +9,6 @@ define([
     _,
     containerShowMore
 ) {
-
     describe('Container Show More', function () {
         var $container;
 
