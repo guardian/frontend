@@ -277,6 +277,8 @@ case class ContentCard(
     cardTypes.allTypes.exists(_.canShowMedia) && !displaySettings.imageHide
 
   def showStandfirst = cardTypes.allTypes.exists(_.showStandfirst)
+
+  def mediaWidthsByBreakpoint = WidthsByBreakpoint.fromItemClasses(cardTypes)
 }
 
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard

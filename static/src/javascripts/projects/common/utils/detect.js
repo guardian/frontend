@@ -22,7 +22,9 @@ define([
                          document.msVisibilityState ||
                          'visible',
         // Ordered lists of breakpoints
-        // These should match those defined in stylesheets/_vars.scss
+        // These should match those defined in:
+        //   stylesheets/_vars.scss
+        //   common/app/layout/Breakpoint.scala
         breakpoints = [
             {
                 name: 'mobile',
