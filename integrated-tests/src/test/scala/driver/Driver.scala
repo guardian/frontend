@@ -40,7 +40,7 @@ trait Driver extends Suite with WebBrowser with BeforeAndAfterAll with Retries {
 
   protected def $(selector: String): List[Element] = findAll(cssSelector(selector)).toList
 
-  protected def countMatching(selector: String): Int = $(selector).length
+  protected def countMatchingVisible(selector: String): Int = $(selector).count(_.isDisplayed)
 
   protected def first(selector: String): Element = $(selector).head
 }
