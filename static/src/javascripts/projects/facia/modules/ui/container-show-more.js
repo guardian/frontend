@@ -199,28 +199,32 @@ define([
         }
     }
 
-    return function () {
-        fastdom.read(function () {
-            var containers = qwery('.js-container--fc-show-more').map(bonzo),
-                buttons = _.filter(_.map(containers, makeButton));
+    return {
+        itemsByArticleId: itemsByArticleId,
+        dedupShowMore: dedupShowMore,
+        init: function () {
+            fastdom.read(function () {
+                var containers = qwery('.js-container--fc-show-more').map(bonzo),
+                    buttons = _.filter(_.map(containers, makeButton));
 
-            _.forEach(buttons, renderToDom);
+                _.forEach(buttons, renderToDom);
 
-            mediator.on('module:clickstream:click', function (clickSpec) {
-                var clickedButton = _.find(buttons, function (button) {
-                    return button.$el[0] === clickSpec.target;
-                });
-                if (clickedButton && clickedButton.state !== STATE_LOADING) {
-                    if (clickedButton.isLoaded) {
-                        showMore(clickedButton);
-                    } else {
-                        if (clickedButton.$errorMessage) {
-                            clickedButton.$errorMessage.hide();
+                mediator.on('module:clickstream:click', function (clickSpec) {
+                    var clickedButton = _.find(buttons, function (button) {
+                        return button.$el[0] === clickSpec.target;
+                    });
+                    if (clickedButton && clickedButton.state !== STATE_LOADING) {
+                        if (clickedButton.isLoaded) {
+                            showMore(clickedButton);
+                        } else {
+                            if (clickedButton.$errorMessage) {
+                                clickedButton.$errorMessage.hide();
+                            }
+                            loadShowMoreForContainer(clickedButton);
                         }
-                        loadShowMoreForContainer(clickedButton);
                     }
-                }
+                });
             });
-        });
+        }
     };
 });
