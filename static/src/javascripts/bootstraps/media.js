@@ -214,29 +214,34 @@ define([
                 // preroll for videos only
                 if (mediaType === 'video') {
 
-                    if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
-                        initEndSlate(player, endSlateUri);
-                    }
-
                     player.fullscreener();
 
                     // do ads last so if the ad blocker throws an exception it doesn't stop anything else
                     if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
-                        events.bindPrerollEvents(player);
-                        player.adSkipCountdown(15);
+                        raven.wrap(
+                            { tags: { feature: 'media' } },
+                            function () {
+                                events.bindPrerollEvents(player);
+                                player.adSkipCountdown(15);
 
-                        require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
-                            .then(function () {
-                                player.ima({
-                                    id: mediaId,
-                                    adTagUrl: getAdUrl()
-                                });
-                                // Video analytics event.
-                                player.trigger(events.constructEventName('preroll:request', player));
-                                player.ima.requestAds();
-                            });
+                                require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
+                                    .then(function () {
+                                        player.ima({
+                                            id: mediaId,
+                                            adTagUrl: getAdUrl()
+                                        });
+                                        // Video analytics event.
+                                        player.trigger(events.constructEventName('preroll:request', player));
+                                        player.ima.requestAds();
+                                    });
+                            }
+                        );
                     } else {
                         events.bindContentEvents(player);
+                    }
+
+                    if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
+                        initEndSlate(player, endSlateUri);
                     }
 
                 } else {
