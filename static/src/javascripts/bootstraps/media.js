@@ -2,6 +2,7 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'raven',
     'common/utils/$',
     'common/utils/_',
@@ -22,6 +23,7 @@ define([
 ], function (
     bean,
     bonzo,
+    fastdom,
     raven,
     $,
     _,
@@ -114,6 +116,30 @@ define([
             event.target.firstChild.id.indexOf('flash_api') > 0;
     }
 
+    function initPlayButtons(root) {
+
+        fastdom.read(function () {
+            $('.js-video-play-button', root).each(function (el) {
+                var $el = bonzo(el);
+                bean.on(el, 'click', function () {
+                    var placeholder, player, container;
+                    container = bonzo(el).parent().parent();
+                    placeholder = $('.js-video-placeholder', container);
+                    player = $('.js-video-player', container);
+                    fastdom.write(function () {
+                        placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
+                        player.removeClass('media__container--hidden').addClass('media__container--active');
+                        $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
+                    });
+                    enhanceVideo($('video', player).get(0), true);
+                });
+                fastdom.write(function () {
+                    $el.removeClass('media__placeholder--hidden').addClass('media__placeholder--active');
+                });
+            });
+        });
+    }
+
     function initPlayer() {
 
         // When possible, use our CDN instead of a third party (zencoder).
@@ -123,24 +149,15 @@ define([
         videojs.plugin('adSkipCountdown', events.adSkipCountdown);
         videojs.plugin('fullscreener', fullscreener);
 
-        $('.js-gu-media--enhance').each(function (el) {
-            enhanceVideo(el, false);
-        });
-
-        $('.js-video-play-button').each(function (el) {
-            var $el = bonzo(el);
-            $el.removeClass('media__placeholder--hidden').addClass('media__placeholder--active');
-            bean.on(el, 'click', function () {
-                var placeholder, player, container;
-                container = bonzo(el).parent().parent();
-                placeholder = $('.js-video-placeholder', container);
-                placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
-                player = $('.js-video-player', container);
-                player.removeClass('media__container--hidden').addClass('media__container--active');
-                $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
-                enhanceVideo($('video', player).get(0), true);
+        fastdom.read(function () {
+            $('.js-gu-media--enhance').each(function (el) {
+                enhanceVideo(el, false);
             });
         });
+
+        initPlayButtons(document.body);
+
+        mediator.on('modules:related:loaded', initPlayButtons);
     }
 
     function enhanceVideo(el, autoplay) {
@@ -335,8 +352,6 @@ define([
         }
         initMoreInSection();
         initMostViewedMedia();
-
-        mediator.emit('page:media:ready');
     }
 
     return {
