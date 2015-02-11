@@ -115,9 +115,17 @@ define([
         });
 
         loadShowMore(config.page.pageId, button.id).then(function (response) {
-            var dedupedShowMore = dedupShowMore(button.$container, response.html);
+            var dedupedShowMore,
+                html = response.html.trim();
+
+            if (html) {
+                dedupedShowMore = dedupShowMore(button.$container, html);
+            }
+
             fastdom.write(function () {
-                button.$placeholder.replaceWith(dedupedShowMore);
+                if (dedupedShowMore) {
+                    button.$placeholder.replaceWith(dedupedShowMore);
+                }
                 setButtonState(button, STATE_DISPLAYED);
                 updatePref(button.id, button.state);
             });
