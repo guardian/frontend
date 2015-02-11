@@ -118,7 +118,7 @@ define([
 
             player = createVideoPlayer(el, {
                 controls: true,
-                autoplay: false,
+                autoplay: !!window.location.hash && window.location.hash === '#autoplay',
                 preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
                 plugins: {
                     embed: {
