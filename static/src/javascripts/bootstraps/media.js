@@ -215,21 +215,26 @@ define([
                 if (mediaType === 'video') {
 
                     player.fullscreener();
-                    // Init plugins
-                    if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
-                        events.bindPrerollEvents(player);
-                        player.adSkipCountdown(15);
 
-                        require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
-                            .then(function () {
-                                player.ima({
-                                    id: mediaId,
-                                    adTagUrl: getAdUrl()
-                                });
-                                // Video analytics event.
-                                player.trigger(events.constructEventName('preroll:request', player));
-                                player.ima.requestAds();
-                            });
+                    if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
+                        raven.wrap(
+                            { tags: { feature: 'media' } },
+                            function () {
+                                events.bindPrerollEvents(player);
+                                player.adSkipCountdown(15);
+
+                                require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
+                                    .then(function () {
+                                        player.ima({
+                                            id: mediaId,
+                                            adTagUrl: getAdUrl()
+                                        });
+                                        // Video analytics event.
+                                        player.trigger(events.constructEventName('preroll:request', player));
+                                        player.ima.requestAds();
+                                    });
+                            }
+                        );
                     } else {
                         events.bindContentEvents(player);
                     }
