@@ -25,7 +25,15 @@
 .element-rich-link,
 .element-pullquote,
 .site-message,
-.breaking-news {
+.breaking-news,
+.meta__contact-header,
+.meta__twitter,
+.meta__email,
+.inline-icon,
+.element--thumbnail,
+.media-primary--showcase,
+.content__standfirst a,
+.content__standfirst br {
     display: none !important;
 }
 
