@@ -9,7 +9,7 @@ import services.ImageQuery
 
 import scala.concurrent.Future
 
-case class ImageContentPage(image: Content, related: RelatedContent)
+case class ImageContentPage(image: ImageContent, related: RelatedContent)
 
 object ImageContentController extends Controller with RendersItemResponse with ImageQuery with Logging with ExecutionContexts {
 
