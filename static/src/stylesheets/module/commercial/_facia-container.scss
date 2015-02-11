@@ -87,7 +87,8 @@
         color: #ffffff;
     }
 
-    .i-guardian-logo-commercial {
+    .i-guardian-logo-commercial,
+    .inline-guardian-logo-commercial, {
         display: inline-block;
 
         @include mq(leftCol) {
@@ -281,7 +282,8 @@
             width: gs-span(3);
         }
         .commercial__title {
-            .i-guardian-logo-commercial {
+            .i-guardian-logo-commercial,
+            .inline-guardain-logo-commercial {
                 display: inline-block;
             }
             .i--marque-54,
