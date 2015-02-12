@@ -10,7 +10,7 @@ define([
     }
 
     function init() {
-        if($('.js-lm').length !== 0) {
+        if ($('.js-lm').length !== 0) {
             $('.js-wpd').addClass('content__dateline-wpd--modified tone-colour');
             bean.on(document.body, 'click', '.js-wpd', expand);
         }
