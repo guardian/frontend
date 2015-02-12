@@ -1,9 +1,11 @@
 .l-list {
     width: 100%;
 
-    .has-flex-wrap & {
-        @include flex-display;
-        @include flex-wrap(wrap);
+    @include mq(tablet) {
+        .has-flex-wrap & {
+            @include flex-display;
+            @include flex-wrap(wrap);
+        }
     }
 }
 
