@@ -26,10 +26,6 @@
         fill: colour(comment-default);
     }
 
-    .fc-item__meta {
-        background-color: fade-out(colour(comment-background), .5);
-    }
-
     .fc-item__standfirst,
     .flyer__standfirst {
         ul > li:before {
