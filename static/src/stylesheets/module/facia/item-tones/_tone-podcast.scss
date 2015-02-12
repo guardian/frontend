@@ -42,7 +42,7 @@
     .fc-item__kicker:after,
     .flyer__kicker:after,
     .fc-sublink__kicker:after {
-        color: fade-out($c-headline, .8);
+        color: mix($c-headline, colour(podcast-background), 20%);
     }
 
     .fc-item__standfirst,

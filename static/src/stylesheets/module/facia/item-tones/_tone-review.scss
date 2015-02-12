@@ -40,11 +40,11 @@
 
     .fc-item__kicker:after,
     .fc-sublink__kicker:after {
-        color: fade-out($c-headline, .8);
+        color: mix($c-headline, colour(review-background), 20%);
     }
 
     .fc-item__standfirst {
-        color: fade-out($c-headline, .4);
+        color: mix($c-headline, colour(review-background), 60%);
     }
 
     .fc-item__meta {

@@ -269,7 +269,7 @@ $fc-item-gutter: $gs-gutter / 4;
         content: '/';
         display: inline-block;
         margin-left: .2em;
-        color: fade-out(colour(neutral-1), .8);
+        color: mix(colour(neutral-1), #ffffff, 20%);
     }
 
     &:hover:after {

@@ -38,7 +38,7 @@
     .fc-item__kicker:after,
     .flyer__kicker:after,
     .fc-sublink__kicker:after {
-        color: fade-out($c-headline, .8);
+        color: mix($c-headline, colour(live-default), 20%);
     }
 
     .fc-item__kicker--dreamsnap {
@@ -56,7 +56,7 @@
     }
 
     .fc-sublink__title:before {
-        border-color: fade-out($c-headline, .8);
+        border-color: mix($c-headline, colour(live-default), 20%);
     }
 }
 

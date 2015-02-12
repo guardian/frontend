@@ -43,7 +43,7 @@
 
     .fc-item__kicker:after,
     .fc-sublink__kicker:after {
-        color: fade-out($c-headline, .8);
+        color: mix($c-headline, colour(feature-default), 20%);
     }
 
     .fc-item__standfirst,
@@ -62,7 +62,7 @@
     }
 
     .fc-sublink__title:before {
-        border-color: fade-out($c-headline, .6);
+        border-color: mix($c-headline, colour(feature-default), 40%);
     }
 }
 
