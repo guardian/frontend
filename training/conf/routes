@@ -1,0 +1,3 @@
+
+#import routes from "standalone" project
+->  / standalone.Routes
