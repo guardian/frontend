@@ -1,29 +1,20 @@
-@(imageContainer: model.ImageContainer, inlineImage: Boolean = false, maxWidth: Int = 940, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None)(implicit request: RequestHeader)
+@(imageContainer: model.ImageContainer, inlineImage: Boolean = false, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None)(implicit request: RequestHeader)
 
 @import layout.Source
 @import views.support.ImgSrc
 
 <div class="fc-item__media-wrapper">
-    <picture class="fc-item__image-container u-responsive-ratio @if(inlineImage) {inlined-image}">
-        @* IE9 needs a <video> wrapper for <picture> to work *@
-        <!--[if IE 9]><video style="display: none;"><![endif]-->
-        @widthsByBreakpoint.map { widths =>
-            @widths.sources.map {
-                case Source(Some(minWidth), width) => {
-                    <source media="(min-width: @{minWidth}px)" srcset="@ImgSrc.getUrl(imageContainer, width)">
-                }
+    <div class="fc-item__image-container u-responsive-ratio js-image-upgrade @if(inlineImage){inlined-image}">
+        @widthsByBreakpoint match {
+            case Some(widths) => {
+                <img srcset="@ImgSrc.srcset(imageContainer, widths.maxWidth)"
+                     sizes="@widths.sizesString"
+                     @if(inlineImage) { src="@ImgSrc.getFallbackUrl(imageContainer) }">
+            }
 
-                case Source(None, width) => {
-                    <source srcset="@ImgSrc.getUrl(imageContainer, width)">
-                }
+            case _ => {
+                <img src="@ImgSrc.getFallbackUrl(imageContainer)">
             }
         }
-        <!--[if IE 9]></video><![endif]-->
-
-        @if(inlineImage) {
-            <img src="@ImgSrc.getFallbackUrl(imageContainer)" />
-        } else {
-            <img />
-        }
-    </picture>
+    </div>
 </div>

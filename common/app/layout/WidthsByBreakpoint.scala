@@ -62,6 +62,21 @@ case class WidthsByBreakpoint(
   val MaximumMobileImageWidth = 620
   val SourcesToEmitOnMobile = 3
 
+  def sizesString = breakpoints collect {
+    case BreakpointWidth(Mobile, Some(imageWidth)) =>
+      imageWidth.toString
+
+    case BreakpointWidth(breakpoint, Some(imageWidth)) =>
+      s"(min-width: ${breakpoint.minWidth.get}px) $imageWidth"
+  } mkString ", "
+
+  def maxWidth = {
+    (Seq(desktop, tablet, mobile) collect {
+      case Some(PixelWidth(pixels)) => pixels
+      case Some(PercentageWidth(_)) => Mobile.maxImageWidth.get
+    }).max
+  }
+
   def sources = breakpoints flatMap {
     case BreakpointWidth(breakpoint, Some(PixelWidth(pixels))) =>
       Seq(

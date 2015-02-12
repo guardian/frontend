@@ -65,6 +65,7 @@ object GallerySmallTrail extends Profile(width = Some(280), height = Some(168))
 object Showcase extends Profile(width = Some(860))
 object Item120 extends Profile(width = Some(120))
 object Item140 extends Profile(width = Some(140))
+object Item160 extends Profile(width = Some(160))
 object Item220 extends Profile(width = Some(220))
 object Item300 extends Profile(width = Some(300))
 object Item360 extends Profile(width = Some(360))
@@ -104,10 +105,10 @@ object Profile {
     SeoOptimisedContentImage
   )
 
-  // used to determine image widths for <picture>
+  // image widths available to <picture> and <img srcset>
   lazy val images: Seq[Profile]  = Seq(
     Item120,
-    Item140,
+    Item160,
     Item220,
     Item300,
     Item460,
@@ -161,6 +162,12 @@ object ImgSrc {
     sortedProfiles.find(_.width.getOrElse(0) >= maxWidth).orElse(sortedProfiles.reverse.headOption).flatMap{ profile =>
       imager(imageContainer, profile)
     }
+  }
+
+  def srcset(imageContainer: ImageContainer, maxWidth: Int): String = {
+    Profile.images.filter(_.width.getOrElse(0) <= maxWidth).map { profile =>
+      s"${srcForProfile(profile, imageContainer).get} ${profile.width.get}w"
+    } mkString ", "
   }
 
   private def srcForProfile(profile: Profile, imageContainer: ImageContainer) = {
