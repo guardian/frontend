@@ -50,7 +50,7 @@
     .flyer__standfirst {
         color: mix($c-headline, colour(feature-default), 80%);
         ul > li:before {
-            background: rgba($c-headline, .4);
+            background: mix($c-headline, colour(feature-default), 40%);
         }
     }
 
