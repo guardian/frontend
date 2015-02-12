@@ -70,8 +70,9 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item {
-    display: block;
-    width: 100%;
+    @include mq($until: tablet) {
+        width: 100%;
+    }
 
     @include mq(tablet) {
         .has-flex & {

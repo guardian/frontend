@@ -1,7 +1,7 @@
 .l-list {
     width: 100%;
 
-    @include mq(mobile) {
+    @include mq(tablet) {
         .has-flex-wrap & {
             @include flex-display;
             @include flex-wrap(wrap);
