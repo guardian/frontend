@@ -34,7 +34,11 @@ Multi component (AKA Frankenponent)
     .commercial--travel,
     .commercial--masterclasses {
         .lineitem__image-right {
-            width: 80px;
+            width: gs-span(1) + $gs-gutter*2;
+            
+            @include mq(mobileLandscape) {
+                width: gs-span(1) + $gs-gutter;    
+            }
         }
     }
 
@@ -114,7 +118,7 @@ Multi component (AKA Frankenponent)
         .lineitem--multi {
             width: auto;
             float: none;
-            border-bottom: 1px solid colour(neutral-1);
+            border-bottom: 1px solid colour(neutral-4);
             
             &:nth-child(n+3) {
                 display: none;
