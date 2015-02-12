@@ -59,12 +59,12 @@ object GetClasses {
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */
-  def forTagContainer(hasTitle: Boolean, hasDesktopShowMore: Boolean) = forContainer(
+  def forTagContainer(hasTitle: Boolean) = forContainer(
     showLatestUpdate = false,
     isFirst = true,
     hasTitle,
     ContainerCommercialOptions.empty,
-    hasDesktopShowMore,
+    false,
     None,
     Nil,
     disableHide = true
@@ -81,7 +81,6 @@ object GetClasses {
     disableHide: Boolean = false
   ) = {
     RenderClasses((Seq(
-      ("js-container--fetch-updates", showLatestUpdate),
       ("fc-container", true),
       ("fc-container--first", isFirst),
       ("fc-container--has-show-more", hasDesktopShowMore),
