@@ -22,6 +22,10 @@
         color: colour(comment-default);
     }
 
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(comment-background), 10%);
+    }
+
     .flyer__arrow-icon {
         fill: colour(comment-default);
     }

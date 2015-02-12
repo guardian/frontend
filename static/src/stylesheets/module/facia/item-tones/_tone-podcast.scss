@@ -31,6 +31,10 @@
         color: colour(podcast-default);
     }
 
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(podcast-background), 10%);
+    }
+
     .flyer__arrow-icon {
         fill: colour(podcast-default);
     }

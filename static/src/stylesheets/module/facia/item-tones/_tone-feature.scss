@@ -33,6 +33,10 @@
         color: colour(feature-mute);
     }
 
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(feature-default), 10%);
+    }
+
     .flyer__arrow-icon {
         fill: colour(feature-mute);
     }

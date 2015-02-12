@@ -33,6 +33,10 @@
         color: colour(editorial-accent);
     }
 
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(editorial-accent), 10%);
+    }
+
     .flyer__arrow-icon {
         fill: colour(editorial-accent);
     }

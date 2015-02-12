@@ -41,6 +41,10 @@
         color: fade-out($c-headline, .8);
     }
 
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(live-default), 10%);
+    }
+
     .fc-item__standfirst {
         color: mix($c-headline, colour(live-default), 80%);
     }

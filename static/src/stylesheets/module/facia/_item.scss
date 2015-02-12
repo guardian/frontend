@@ -282,7 +282,7 @@ $fc-item-gutter: $gs-gutter / 4;
     display: block;
     @include fs-header(2);
     line-height: get-line-height(bodyHeading, 1);
-    background-color: fade-out(#000000, .9);
+    background-color: mix(#000000, #ffffff, 10%);
     margin: 0 (0 - $gs-gutter * .25);
     padding: ($gs-baseline * .25) ($gs-gutter * .25);
 
