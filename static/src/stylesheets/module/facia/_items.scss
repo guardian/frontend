@@ -25,15 +25,17 @@
     padding-bottom: 0;
     margin-bottom: $gs-baseline;
 
+    @include mq(tablet) {
+        .has-flex & {
+            @include flex-display;
+        }
+    }
+
     + .fc-slice__item {
         @include vertical-item-separator;
     }
     + .fc-slice__item--no-mpu:before {
         border-left: 0 !important;
-    }
-
-    .has-flex & {
-        @include flex-display;
     }
 
     &.l-list__item {
