@@ -60,7 +60,9 @@ object MagentoService extends ExecutionContexts with Logging {
         timeout = 5.seconds,
         switch = GuBookshopFeedsSwitch)
 
-      FeedReader.read(request, validResponseStatuses = Seq(200, 404)) { responseBody =>
+      FeedReader.read(request,
+        signature = Some(props.oauth),
+        validResponseStatuses = Seq(200, 404)) { responseBody =>
         val json = Json.parse(responseBody)
           json.validate[Book] match {
             case JsError(e) =>

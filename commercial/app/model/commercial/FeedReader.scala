@@ -6,7 +6,7 @@ import conf.Switch
 import model.diagnostics.CloudWatch
 import play.api.Play.current
 import play.api.libs.json.{JsValue, Json}
-import play.api.libs.ws.WS
+import play.api.libs.ws.{WS, WSSignatureCalculator}
 
 import scala.concurrent.Future
 import scala.concurrent.duration.{Duration, _}
@@ -15,7 +15,9 @@ import scala.xml.{Elem, XML}
 
 object FeedReader extends ExecutionContexts with Logging {
 
-  def read[T](request: FeedRequest, validResponseStatuses: Seq[Int] = Seq(200))
+  def read[T](request: FeedRequest,
+              signature: Option[WSSignatureCalculator] = None,
+              validResponseStatuses: Seq[Int] = Seq(200))
              (parse: String => T): Future[Option[T]] = {
 
     def readUrl(url: String): Future[Option[T]] = {
@@ -35,9 +37,14 @@ object FeedReader extends ExecutionContexts with Logging {
       }
 
       val start = System.currentTimeMillis
-      val futureResponse = WS.url(url)
-        .withRequestTimeout(request.timeout.toMillis.toInt)
-        .get()
+
+      val requestHolder = {
+        val unsignedRequestHolder = WS.url(url).withRequestTimeout(request.timeout.toMillis.toInt)
+        signature.foldLeft(unsignedRequestHolder) { (soFar, calc) =>
+          soFar.sign(calc)
+        }
+      }
+      val futureResponse = requestHolder.get()
 
       futureResponse map { response =>
         response.status match {
