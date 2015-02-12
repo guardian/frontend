@@ -75,7 +75,7 @@ define([
                     elementsToAdd = resultHtml.innerHTML;
 
                 this.unreadBlocks += resultHtml.children.length;
-                $(e.srcElement).addClass('content__dateline-wpd--modified');
+
                 if (manipulation === 'prepend') {
                     bonzo(resultHtml.children).addClass('autoupdate--hidden');
                     elementsToAdd = toArray(resultHtml.children);
