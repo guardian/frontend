@@ -5,9 +5,8 @@ import common.{ExecutionContexts, Logging}
 import conf.Switch
 import model.diagnostics.CloudWatch
 import play.api.Play.current
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WS
-import play.api.libs.json.Json
 
 import scala.concurrent.Future
 import scala.concurrent.duration.{Duration, _}
@@ -16,7 +15,8 @@ import scala.xml.{Elem, XML}
 
 object FeedReader extends ExecutionContexts with Logging {
 
-  def read[T](request: FeedRequest)(parse: String => T): Future[Option[T]] = {
+  def read[T](request: FeedRequest, validResponseStatuses: Seq[Int] = Seq(200))
+             (parse: String => T): Future[Option[T]] = {
 
     def readUrl(url: String): Future[Option[T]] = {
 
@@ -41,7 +41,7 @@ object FeedReader extends ExecutionContexts with Logging {
 
       futureResponse map { response =>
         response.status match {
-          case 200 =>
+          case status if validResponseStatuses.contains(status) =>
             recordLoad(System.currentTimeMillis - start)
             val body = request.responseEncoding map {
               response.underlying[AHCResponse].getResponseBody
