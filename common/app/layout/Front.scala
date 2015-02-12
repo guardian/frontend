@@ -182,7 +182,8 @@ object FaciaContainer {
     None,
     hideToggle = false,
     showTimestamps = false,
-    None
+    None,
+    useShowMore = true
   )
 
   def forStoryPackage(dataId: String, items: Seq[Trail], title: String, href: Option[String] = None) = {
@@ -212,7 +213,8 @@ case class FaciaContainer(
   customClasses: Option[Seq[String]],
   hideToggle: Boolean,
   showTimestamps: Boolean,
-  dateLinkPath: Option[String]
+  dateLinkPath: Option[String],
+  useShowMore: Boolean
 ) {
   def transformCards(f: ContentCard => ContentCard) = copy(
     containerLayout = containerLayout.map(_.transformCards(f))
