@@ -16,6 +16,10 @@
     }
 }
 
+.l-row__item {
+    float: left;
+}
+
 // We only need this functionality for 2 & 4 column rows.
 @for $column from 2 through 4 {
     @for $span from 1 through 5 {
@@ -23,7 +27,6 @@
             .l-row__item--span-#{$span} {
                 @include mq(tablet) {
                     width: (100% / $column) * $span;
-                    float: left;
 
                     .has-flex & {
                         @include flex($span);
@@ -47,21 +50,13 @@
                         border: 0;
                     }
                 }
-            }
 
-            .has-flex-wrap & {
-                @include mq(tablet) {
-                    @include flex-basis(100% / $column);
+                &:nth-last-child(-n+#{$column}) {
+                    padding-bottom: 0;
                 }
-            }
-        }
 
-        @for $row from 1 through 5 {
-            &.l-list--rows-#{$row} {
-                .l-list__item:nth-last-child(-n+#{$column}) {
-                    @include mq(tablet) {
-                        padding-bottom: 0;
-                    }
+                .has-flex-wrap & {
+                    @include flex-basis(100% / $column);
                 }
             }
         }

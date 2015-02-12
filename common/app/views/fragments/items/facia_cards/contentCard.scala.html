@@ -107,7 +107,9 @@ data-test-id="facia-card"
             <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
         }
 
-        @meta(item)
+        @if(item.showMeta) {
+            @meta(item)
+        }
     </div>
 
         @item.cutOut.map { case cutOut @ CutOut(altText, imageUrl, _) =>

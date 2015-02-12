@@ -74,9 +74,10 @@ $fc-item-gutter: $gs-gutter / 4;
     width: 100%;
 
     @include mq(tablet) {
+        @include flex(1);
+
         .has-flex-wrap & {
             @include flex-display;
-            @include flex(1);
         }
 
         .has-no-flex-wrap & {
