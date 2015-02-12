@@ -189,7 +189,6 @@ module.exports = function(grunt, options) {
                     'text',
                     'inlineSvg'
                 ],
-                optimize: 'none',
                 generateSourceMaps: true,
                 preserveLicenseComments: false
             }
@@ -217,7 +216,6 @@ module.exports = function(grunt, options) {
                     'text',
                     'inlineSvg'
                 ],
-                optimize: 'none',
                 generateSourceMaps: true,
                 preserveLicenseComments: false
             }

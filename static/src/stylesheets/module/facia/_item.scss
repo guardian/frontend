@@ -69,10 +69,15 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
+.has-flex {
+    .fc-item {
+        @include flex(1);
+    }
+}
+
 .has-flex-wrap {
     .fc-item {
         @include flex-display;
-        @include flex(1);
     }
 
     .fc-item__container {
