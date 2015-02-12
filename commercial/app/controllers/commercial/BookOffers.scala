@@ -1,11 +1,10 @@
 package controllers.commercial
 
 import common.ExecutionContexts
-import model.commercial.books.{BestsellersAgent, Book, BookFinder}
+import model.commercial.books.{BestsellersAgent, BookFinder}
 import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
-import play.twirl.api.Html
 
 import scala.concurrent.Future
 
@@ -13,8 +12,7 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
 
   def renderBook = MemcachedAction { implicit request =>
     specificId map { isbn =>
-      BookFinder.findByIsbn(isbn) map { optBook =>
-        val result = optBook map { book =>
+      val result = BookFinder.findByIsbn(isbn) map { book =>
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
 
@@ -22,8 +20,7 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
         } getOrElse {
           jsonFormat.nilResult
         }
-        Cached(componentMaxAge)(result)
-      }
+      Future.successful(Cached(componentMaxAge)(result))
     } getOrElse {
       Future.successful(NoCache(jsonFormat.nilResult))
     }

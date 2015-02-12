@@ -14,18 +14,17 @@ object BookFinder extends ExecutionContexts {
 
   private lazy val agent = AkkaAgent[Map[String, Book]](Map.empty[String, Book])
 
-  def findByIsbn(isbn: String): Future[Option[Book]] = {
-    val book = agent.get().get(isbn)
-    if (book.isDefined) {
-      Future.successful(book)
-    } else {
-      MagentoService.findByIsbn(isbn) map {
-        _ map { foundBook =>
-          agent.send { books => books + (isbn -> foundBook)}
-          foundBook
-        }
-      }
+  def findByIsbn(isbn: String): Option[Book] = {
+    val maybeBook = agent.get().get(isbn)
+
+    if (maybeBook.isEmpty) {
+      for {
+        lookUpResult <- MagentoService.findByIsbn(isbn)
+        foundBook <- lookUpResult
+      } agent.send { books => books + (isbn -> foundBook)}
     }
+
+    maybeBook
   }
 }
 
