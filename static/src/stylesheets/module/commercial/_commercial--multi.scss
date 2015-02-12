@@ -127,7 +127,7 @@ Multi component (AKA Frankenponent)
             @include mq(mobileLandscape) {
                 width: 50%;
                 float: left;
-                border-bottom: none;
+                border-bottom: 0;
             }
             
             @include mq(tablet) {
