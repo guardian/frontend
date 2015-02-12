@@ -11,7 +11,7 @@
             padding-left: $gs-gutter/2;
             display: inline-block;
             display: flex;
-            @supports not (flex-wrap: wrap) {
+            .has-no-flex-wrap {
                 display: inline-block;
             }
             width: 49.5%;
@@ -37,7 +37,7 @@
         display: flex;
         flex-wrap: wrap;
 
-        @supports not (flex-wrap: wrap) {
+        .has-no-flex-wrap {
             display: block;
         }
 
