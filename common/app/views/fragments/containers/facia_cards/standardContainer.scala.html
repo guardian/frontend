@@ -10,8 +10,8 @@
     <div class="@RenderClasses(Map(
         ("fc-container__body", true),
         ("fc-container--rolled-up-hide", true),
-        ("fc-show-more--hidden", containerDefinition.useShowMore && containerDefinition.containerLayout.exists(_.hasShowMore)),
-        ("js-container--fc-show-more", containerDefinition.useShowMore && containerDefinition.containerLayout.exists(_.hasShowMore)),
+        ("fc-show-more--hidden", containerDefinition.addShowMoreClasses),
+        ("js-container--fc-show-more", containerDefinition.addShowMoreClasses),
         ("fc-show-more--mobile-only", containerDefinition.hasMobileOnlyShowMore)
     ))"
          data-title="@Html(Localisation(containerDefinition.displayName getOrElse ""))"

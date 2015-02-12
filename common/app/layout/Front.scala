@@ -263,6 +263,8 @@ case class FaciaContainer(
     * can consume this data if they want to.
     */
   def showCPScottHeader = Switches.CPScottSwitch.isSwitchedOn && dataId == "uk/commentisfree/regular-stories"
+
+  def addShowMoreClasses = useShowMore && containerLayout.exists(_.hasShowMore)
 }
 
 object Front extends implicits.Collections {
