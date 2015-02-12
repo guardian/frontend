@@ -120,7 +120,7 @@ define([
         }
 
         //Load new counts when more trails are loaded
-        mediator.on('modules:related:loaded', getCommentCounts.bind(null, qwery('.js-related')[0]));
+        mediator.on('modules:related:loaded', getCommentCounts);
     }
 
     return {
