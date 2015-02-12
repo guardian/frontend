@@ -16,10 +16,6 @@
     }
 }
 
-.l-row__item {
-    float: left;
-}
-
 // We only need this functionality for 2 & 4 column rows.
 @for $column from 2 through 4 {
     @for $span from 1 through 5 {
@@ -27,6 +23,7 @@
             .l-row__item--span-#{$span} {
                 @include mq(tablet) {
                     width: (100% / $column) * $span;
+                    float: left;
 
                     .has-flex & {
                         @include flex($span);
