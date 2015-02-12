@@ -9,7 +9,7 @@
             case Some(widths) => {
                 <img srcset="@ImgSrc.srcset(imageContainer, widths.maxWidth)"
                      sizes="@widths.sizesString"
-                     @if(inlineImage) { src="@ImgSrc.getFallbackUrl(imageContainer) }">
+                     @if(inlineImage) { src="@ImgSrc.getFallbackUrl(imageContainer)" }>
             }
 
             case _ => {
