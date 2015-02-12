@@ -51,9 +51,9 @@ function (
 
         listen: function () {
             mediator.addListeners({
-                //'window:resize': debounce(function () {
-                //    images.upgrade();
-                //}, 200),
+                'window:resize': debounce(function () {
+                    images.upgrade();
+                }, 200),
                 'window:orientationchange': debounce(function () {
                     images.upgrade();
                 }, 200),

@@ -4,7 +4,6 @@ define([
     'lodash/functions/debounce',
     'common/utils/$',
     'common/utils/ajax',
-    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/to-array',
@@ -16,7 +15,6 @@ define([
     debounce,
     $,
     ajax,
-    detect,
     mediator,
     template,
     toArray,
@@ -35,7 +33,7 @@ define([
 
         snaps.forEach(fetchSnap);
 
-        if (snaps.length && !detect.isIOS()) {
+        if (snaps.length) {
             mediator.on('window:resize', debounce(function () {
                 snaps.forEach(function (el) { addCss(el, true); });
             }, 200));
