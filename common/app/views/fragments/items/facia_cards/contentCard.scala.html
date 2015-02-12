@@ -123,7 +123,7 @@ data-test-id="facia-card"
 
         @item.cutOut.map { case cutOut @ CutOut(altText, imageUrl, _) =>
         <div class="fc-item__avatar">
-            <div class="fc-item__avatar__media js-image-upgrade @cutOut.cssClass" data-src="@imageUrl"></div>
+            <img class="fc-item__avatar__media @cutOut.cssClass" src="@imageUrl">
         </div>
         }
 
