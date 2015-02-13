@@ -28,19 +28,6 @@ object Metric extends Logging {
     ("video-tech-flash", CountMetric("video-tech-flash")),
     ("video-tech-html5", CountMetric("video-tech-html5")),
 
-    ("iphone-6-start", CountMetric("iphone-6-start")),
-    ("iphone-6-after-5", CountMetric("iphone-6-after-5")),
-    ("iphone-6-after-10", CountMetric("iphone-6-after-10")),
-
-    ("iphone-4-start", CountMetric("iphone-4-start")),
-    ("iphone-4-after-5", CountMetric("iphone-4-after-5")),
-    ("iphone-4-after-10", CountMetric("iphone-4-after-10")),
-
-    ("iphone-5-start", CountMetric("iphone-5-start")),
-    ("iphone-5-after-5", CountMetric("iphone-5-after-5")),
-    ("iphone-5-after-10", CountMetric("iphone-5-after-10")),
-
-
     ("dnt", CountMetric("do-not-track")),
 
     ("sm-page-view", CountMetric("sm-page-view")),
