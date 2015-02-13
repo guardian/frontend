@@ -29,16 +29,16 @@ object Metric extends Logging {
     ("video-tech-html5", CountMetric("video-tech-html5")),
 
     ("iphone-6-start", CountMetric("iphone-6-start")),
-    ("iphone-6-end", CountMetric("iphone-6-end")),
-    ("iphone-6-timeout", CountMetric("iphone-6-timeout")),
+    ("iphone-6-after-5", CountMetric("iphone-6-after-5")),
+    ("iphone-6-after-10", CountMetric("iphone-6-after-10")),
 
-    ("iphone-4-start-a", CountMetric("iphone-4-start-a")),
-    ("iphone-4-end-a", CountMetric("iphone-4-end-a")),
-    ("iphone-4-timeout-a", CountMetric("iphone-4-timeout-a")),
+    ("iphone-4-start", CountMetric("iphone-4-start")),
+    ("iphone-4-after-5", CountMetric("iphone-4-after-5")),
+    ("iphone-4-after-10", CountMetric("iphone-4-after-10")),
 
-    ("iphone-4-start-b", CountMetric("iphone-4-start-b")),
-    ("iphone-4-end-b", CountMetric("iphone-4-end-b")),
-    ("iphone-4-timeout-b", CountMetric("iphone-4-timeout-b")),
+    ("iphone-5-start", CountMetric("iphone-5-start")),
+    ("iphone-5-after-5", CountMetric("iphone-5-after-5")),
+    ("iphone-5-after-10", CountMetric("iphone-5-after-10")),
 
 
     ("dnt", CountMetric("do-not-track")),
@@ -49,6 +49,16 @@ object Metric extends Logging {
     ("sm-clicked-related-content", CountMetric("sm-clicked-related-content")),
     ("sm-clicked-series-component", CountMetric("sm-clicked-series-component")),
     ("sm-clicked-most-popular-component", CountMetric("sm-clicked-most-popular-component"))
+  ) ++ iPhoneMetrics
+
+  private val iPhoneMetrics: Seq[(String, CountMetric)] = (4 to 6).flatMap( model =>
+    (6 to 8).flatMap( ios =>
+      Seq(
+        s"iphone-$model-ios$ios-start" -> CountMetric(s"iphone-$model-ios$ios-start"),
+        s"iphone-$model-ios$ios-after-5" -> CountMetric(s"iphone-$model-ios$ios-after-5"),
+        s"iphone-$model-ios$ios-after-10" -> CountMetric(s"iphone-$model-ios$ios-after-10")
+      )
+    )
   )
 
   //just here so that when you delete this you see this comment and delete the 'iphone' metrics above
