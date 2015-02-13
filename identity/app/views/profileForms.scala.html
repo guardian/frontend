@@ -29,7 +29,7 @@
 @identityMain(page, conf.Switches.all){
 }{
 
-<div class="identity-wrapper monocolumn-wrapper js-account-profile-forms">
+<div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-membership js-account-profile-forms">
 
     <h1 class="identity-title">Edit your profile</h1>
 
@@ -37,9 +37,9 @@
         <ol class="tabs__container js-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
             @tab(1, "Public", "/public/edit", None)
 
-            @tab(2, "Account details", "/account/edit", Some("edit-account-details"))
+            @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab")
 
-            @tab(3, "Membership", "/membership/edit", None, hidden=true, "js-memebership-tab-button")
+            @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab")
         </ol>
 
         <div class="tabs__content">
@@ -47,7 +47,7 @@
 
             @content(2, "/account/edit")(fragments.profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm))
 
-            @content(3, "/membership/edit", "js-memebership-tab-container is-hidden")(HtmlFormat.empty)
+            @content(3, "/membership/edit")(fragments.profile.membershipDetailsForm())
         </div>
     </div>
 

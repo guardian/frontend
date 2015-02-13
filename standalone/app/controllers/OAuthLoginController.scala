@@ -7,6 +7,7 @@ import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.mvc.{RequestHeader, Action, Controller}
 import scala.concurrent.Future
+import conf.Configuration.environment.projectName
 
 object OAuthLoginController extends Controller with ExecutionContexts with implicits.Requests {
   import play.api.Play.current
@@ -14,7 +15,7 @@ object OAuthLoginController extends Controller with ExecutionContexts with impli
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   val ANTI_FORGERY_KEY = "antiForgeryToken"
   val forbiddenNoCredentials = Forbidden("You do not have OAuth credentials set")
-  val googleAuthConfig: Option[GoogleAuthConfig] = Configuration.preview.oauthCredentials.map { cred =>
+  val googleAuthConfig: Option[GoogleAuthConfig] = Configuration.standalone.oauthCredentials.map { cred =>
     GoogleAuthConfig(
       cred.oauthClientId,     // The client ID from the dev console
       cred.oauthSecret,       // The client secret from the dev console
@@ -27,7 +28,7 @@ object OAuthLoginController extends Controller with ExecutionContexts with impli
 
   // this is the only place we use LoginAuthAction - to prevent authentication redirect loops
   def login = Action { request =>
-      Ok(views.html.preview_auth("preview", "Dev", UserIdentity.fromRequest(request)))
+      Ok(views.html.standalone_auth(projectName, "Dev", UserIdentity.fromRequest(request)))
   }
 
   /*

@@ -470,7 +470,7 @@
                 ) {
                 new CommercialComponent(document.querySelector('.dfp-ad--merchandising-multi'), {
                     type: 'multi',
-                    components: ['jobs', 'travel', 'books', 'masterclasses'],
+                    components: ['soulmates', 'travel', 'books', 'masterclasses'],
                     clickMacro: '%%CLICK_URL_ESC%%',
                     omnitureId: 'omnitureId'
                 }).create();
@@ -519,10 +519,10 @@
                         $,
                         CommercialComponent
                     ) {
-                        var $capiMultiple = $('.ad-slot--capi-@component("type")');
+                        var $capiType = $('.ad-slot--capi-@component("type")');
 
-                        bean.on(qwery('.capi-multiple-paid-for-type')[0], 'change', function (event) {
-                            var commercialComponent = new CommercialComponent($capiMultiple[0], {
+                        bean.on(qwery('.capi-@component("type")-paid-for-type select')[0], 'change', function (event) {
+                            var commercialComponent = new CommercialComponent($capiType[0], {
                                 type: 'capi@if(component("type") == "single"){Single}',
                                 t: ['p/43b2q','p/43945'],
                                 l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
@@ -537,8 +537,8 @@
                                 omnitureId: "omnitureId"
                             });
 
-                            commercialComponent.postLoadEvents.capi = function () {
-                                $capiMultiple.removeClass('lazyloaded');
+                            commercialComponent.postLoadEvents['capi@if(component("type") == "single"){Single}'] = function () {
+                                $capiType.removeClass('lazyloaded');
                             };
                             commercialComponent.create();
                         });

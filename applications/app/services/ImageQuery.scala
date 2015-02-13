@@ -6,7 +6,7 @@ import model.ApiContent2Is
 import common._
 import conf.LiveContentApi
 import controllers.ImageContentPage
-import model.{RelatedContent, Trail, Content}
+import model.{RelatedContent, Trail, Content, ImageContent}
 import play.api.mvc.{Result => PlayResult}
 import LiveContentApi.getResponse
 
@@ -19,7 +19,7 @@ trait ImageQuery extends ConciergeRepository {
       .showFields("all")
     ) map { response: ItemResponse =>
         val mainContent = response.content.filter(_.isImageContent).map(Content(_))
-        mainContent.map { content =>
+        mainContent.map { case content: ImageContent =>
           Left(ImageContentPage(content, RelatedContent(content, response)))
         }.getOrElse(Right(NotFound))
       }
