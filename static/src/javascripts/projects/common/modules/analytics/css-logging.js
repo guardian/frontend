@@ -1,6 +1,5 @@
 define([
     'Promise',
-    'fastdom',
     'common/utils/_',
     'common/utils/config',
     'common/utils/ajax',
@@ -11,7 +10,6 @@ define([
     'common/modules/analytics/beacon'
 ], function (
     Promise,
-    fastdom,
     _,
     config,
     ajax,
@@ -69,9 +67,7 @@ define([
             var el = document.createElement('style');
             el.className = classNameLoggable;
             el.innerHTML = resp;
-            fastdom.write(function () {
-                document.getElementsByTagName('head')[0].appendChild(el);
-            });
+            document.getElementsByTagName('head')[0].appendChild(el);
         });
     }
 
@@ -97,14 +93,16 @@ define([
         reloadSheetsInline()
         .then(function () {
             beacon.postJson('/css', JSON.stringify({
-                selectors: getSelectors(all).reduce(function (isUsed, rule) {
-                    _.each(rule.replace(rxPsuedoClass, '').split(rxSeparator), function (r) {
-                        if (_.isUndefined(isUsed[r])) {
-                            isUsed[r] = !!document.querySelector(r);
-                        }
-                    });
-                    return isUsed;
-                }, {}),
+                selectors: _.chain(getSelectors(all))
+                    .reduce(function (isUsed, rule) {
+                        _.each(rule.replace(rxPsuedoClass, '').split(rxSeparator), function (r) {
+                            if (_.isUndefined(isUsed[r])) {
+                                isUsed[r] = !!document.querySelector(r);
+                            }
+                        });
+                        return isUsed;
+                    }, {})
+                    .value(),
                 contentType: config.page.contentType || 'unknown',
                 breakpoint: detect.getBreakpoint() || 'unknown'
             }), all);
