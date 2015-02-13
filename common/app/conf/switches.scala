@@ -540,7 +540,7 @@ object Switches {
 
   val IphoneConfidence = Switch("Performance", "iphone-confidence",
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
-    safeState = On, sellByDate = new LocalDate(2015, 2, 28)
+    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   val DoNotTrack = Switch("Analytics", "do-not-track",
