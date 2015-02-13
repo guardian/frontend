@@ -4,7 +4,7 @@
 @import views.support.ImgSrc
 
 <div class="fc-item__media-wrapper">
-    <div class="fc-item__image-container u-responsive-ratio js-image-upgrade @if(inlineImage){inlined-image}">
+    <div class="fc-item__image-container u-responsive-ratio @if(inlineImage){inlined-image}">
         @widthsByBreakpoint match {
             case Some(widths) => {
                 <img srcset="@ImgSrc.srcset(imageContainer, widths.maxWidth)"
