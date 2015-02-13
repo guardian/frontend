@@ -69,29 +69,37 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
-.has-flex {
-    .fc-item {
-        @include flex(1);
-    }
-}
-
-.has-flex-wrap {
-    .fc-item {
-        @include flex-display;
-    }
-
-    .fc-item__container {
-        @include flex-direction(column);
-        @include flex-display;
-        @include flex(1);
+.fc-item {
+    @include mq($until: tablet) {
         width: 100%;
     }
+
+    @include mq(tablet) {
+        .has-flex & {
+            @include flex(1);
+        }
+
+        .has-flex-wrap & {
+            @include flex-display;
+        }
+
+        .has-no-flex-wrap & {
+            @include clearfix;
+        }
+    }
 }
 
-.has-no-flex-wrap {
-    .fc-item {
-        display: block;
-        @include clearfix;
+.fc-item__container {
+    display: block;
+    width: 100%;
+    @include box-sizing(border-box);
+
+    @include mq(tablet) {
+        .has-flex-wrap & {
+            @include flex-direction(column);
+            @include flex-display;
+            @include flex(1);
+        }
     }
 }
 
@@ -117,8 +125,18 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item,
 .item {
-    margin-left: $gs-gutter * .5;
-    margin-right: $gs-gutter * .5;
+    @include mq($until: tablet) {
+        padding-left: $gs-gutter * .5;
+        padding-right: $gs-gutter * .5;
+        @include box-sizing(border-box);
+    }
+
+    @include mq(tablet) {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: $gs-gutter * .5;
+        margin-right: $gs-gutter * .5;
+    }
 
     a {
         color: colour(neutral-1);
@@ -218,10 +236,6 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__image-container {
-    background-color: rgba(0, 0, 0, .1);
-}
-
-.fc-item__image-container {
     display: none;
 }
 
@@ -269,7 +283,7 @@ $fc-item-gutter: $gs-gutter / 4;
         content: '/';
         display: inline-block;
         margin-left: .2em;
-        color: fade-out(colour(neutral-1), .8);
+        color: mix(colour(neutral-1), #ffffff, 20%);
     }
 
     &:hover:after {
@@ -282,7 +296,7 @@ $fc-item-gutter: $gs-gutter / 4;
     display: block;
     @include fs-header(2);
     line-height: get-line-height(bodyHeading, 1);
-    background-color: fade-out(#000000, .9);
+    background-color: mix(#000000, #ffffff, 10%);
     margin: 0 (0 - $gs-gutter * .25);
     padding: ($gs-baseline * .25) ($gs-gutter * .25);
 

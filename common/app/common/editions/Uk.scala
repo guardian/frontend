@@ -56,7 +56,7 @@ object Uk extends Edition(
       NavItem(media),
       NavItem(guardianProfessional),
       NavItem(observer),
-      NavItem(todaysPaper),
+      NavItem(todaysPaper, Seq(editorialsandletters, obituaries, g2, weekend, theguide, saturdayreview)),
       NavItem(crosswords),
       NavItem(video)
     )

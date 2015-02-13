@@ -750,7 +750,7 @@ $burger-width: 16px;
 %burger-icon__line {
     width: 100%;
     height: $burger-line-h;
-    background-color: rgba(#ffffff, .9);
+    background-color: mix(#ffffff, $c-navigation-toggle-background, 90%);
 }
 
 .burger-icon {

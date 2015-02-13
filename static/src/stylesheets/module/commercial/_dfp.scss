@@ -4,6 +4,11 @@
 
 /* Single */
 .commercial--dfp-single {
+    &.fc-container--sponsored,
+    &.fc-container--foundation-supported {
+        background-color: transparent;
+    }
+
     .lineitems {
         overflow: hidden;
         clear: right;
