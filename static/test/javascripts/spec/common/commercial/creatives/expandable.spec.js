@@ -33,7 +33,7 @@ define([
             expect(expandable).toBeDefined();
         });
 
-        it('should have expand and close buttons', function () {
+        it('should always have expand and close buttons', function () {
             $fixturesContainer = fixtures.render(fixturesConfig);
             expandable = new Expandable(qwery('.expandable-ad-slot'), {
                 clickMacro: 'clickMacro',
