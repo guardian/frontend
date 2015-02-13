@@ -19,7 +19,9 @@ object ItemKicker {
           trail.showKickerCustom &&
           trail.snapUri.isDefined => Some(FreeHtmlKickerWithLink(kicker, s"/${trail.snapUri.get}"))
       case Some(kicker) if trail.showKickerCustom => Some(FreeHtmlKicker(kicker))
-      case _ => if (trail.showKickerTag && maybeTag.isDefined) {
+      case _ => if (trail.isBreaking) {
+        Some(BreakingNewsKicker)
+      } else if (trail.showKickerTag && maybeTag.isDefined) {
         tagKicker
       } else if (trail.showKickerSection) {
         sectionKicker
@@ -36,9 +38,7 @@ object ItemKicker {
   }
 
   private def tonalKicker(trail: Trail): Option[ItemKicker] = {
-    if (trail.isBreaking) {
-      Some(BreakingNewsKicker)
-    } else if (trail.isLive) {
+    if (trail.isLive) {
       Some(LiveKicker)
     } else if (trail.isPodcast) {
       val series = trail.tags.find(_.tagType == "series") map { seriesTag =>
