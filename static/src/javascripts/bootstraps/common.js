@@ -88,7 +88,7 @@ define([
     ab,
     id,
     AutoSignin,
-    navigation,
+    Navigation,
     Profile,
     Search,
     history,
@@ -154,6 +154,7 @@ define([
             },
 
             initialiseNavigation: function () {
+                var navigation = new Navigation();
                 navigation.init();
             },
 

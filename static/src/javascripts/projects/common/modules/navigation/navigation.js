@@ -11,37 +11,53 @@ define([
     mediator,
     $
 ) {
-    var Navigation = {
-        init: function () {
-            this.addMegaNavMenu();
-            this.enableMegaNavToggle();
-            this.replaceAllSectionsLink();
-        },
+    function Navigation() {
+        this.isInserted = false;
+    }
 
-        addMegaNavMenu: function () {
-            var megaNav     = $('.js-transfuse'),
-                placeholder = $('.' + megaNav.attr('data-transfuse-target'));
+    Navigation.prototype.init = function () {
+        this.eatMegaNav();
+        this.enableMegaNavToggle();
+        this.replaceAllSectionsLink();
+    };
 
-            fastdom.write(function () {
-                placeholder.html(megaNav.html());
-            });
-        },
+    Navigation.prototype.eatMegaNav = function () {
+        var $megaNav = $('.js-transfuse');
 
-        replaceAllSectionsLink: function () {
-            $('.js-navigation-header .js-navigation-toggle').attr('href', '#nav-allsections');
-        },
+        this.megaNavHtml = $megaNav.html();
 
-        enableMegaNavToggle: function () {
-            bean.on(document, 'click', '.js-navigation-toggle', function (e) {
-                var target = $('.' + e.currentTarget.getAttribute('data-target-nav'));
+        fastdom.write(function () {
+            $megaNav.remove();
+        });
+    };
 
-                e.preventDefault();
-                fastdom.write(function () {
-                    target.toggleClass('navigation--expanded navigation--collapsed');
-                    mediator.emit(target.hasClass('navigation--expanded') ? 'modules:nav:open' : 'modules:nav:close');
-                });
-            });
-        }
+    Navigation.prototype.replaceAllSectionsLink = function () {
+        $('.js-navigation-toggle').attr('href', '#nav-allsections');
+    };
+
+    Navigation.prototype.toggleMegaNav = function () {
+        var $target = $('.js-navigation-header'),
+            that = this;
+
+        fastdom.write(function () {
+            if (!that.isInserted) {
+                $('.js-mega-nav-placeholder').html(that.megaNavHtml);
+                that.isInserted = true;
+                mediator.emit('modules:nav:inserted');
+            }
+
+            $target.toggleClass('navigation--expanded navigation--collapsed');
+            mediator.emit(target.hasClass('navigation--expanded') ? 'modules:nav:open' : 'modules:nav:close');
+        });
+    };
+
+    Navigation.prototype.enableMegaNavToggle = function () {
+        var that = this;
+
+        bean.on(document, 'click', '.js-navigation-toggle', function (e) {
+            e.preventDefault();
+            that.toggleMegaNav();
+        });
     };
 
     return Navigation;
