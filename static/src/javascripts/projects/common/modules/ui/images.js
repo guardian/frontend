@@ -52,7 +52,8 @@ function (
         },
 
         upgradePicture: function (context) {
-            picturefill(context);
+            var images = [].slice.call($('img', context));
+            picturefill({ elements: images });
         },
 
         listen: function () {
