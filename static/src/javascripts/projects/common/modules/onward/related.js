@@ -8,8 +8,7 @@ define([
     'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/lazyload',
-    'common/modules/ui/expandable',
-    'common/modules/ui/images'
+    'common/modules/ui/expandable'
 ], function (
     bonzo,
     qwery,
@@ -20,8 +19,7 @@ define([
     mediator,
     register,
     LazyLoad,
-    Expandable,
-    images
+    Expandable
 ) {
 
     var opts;
@@ -101,10 +99,10 @@ define([
                             }
                         }
 
-                        var relatedTrails = container.querySelector('.related-trails');
-                        new Expandable({dom: relatedTrails, expanded: false, showCount: false}).init();
+                        var relatedContent = container.querySelector('.related-content');
+                        new Expandable({dom: relatedContent, expanded: false, showCount: false}).init();
                         // upgrade images
-                        images.upgrade(relatedTrails);
+                        mediator.emit('ui:images:upgradePicture', relatedContent);
                         mediator.emit('modules:related:loaded', container);
                         register.end(componentName);
                     },
