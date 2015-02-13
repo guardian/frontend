@@ -6,7 +6,7 @@ class PreviewTestSuite extends Suites (
   new PreviewServerTest
 ) with SingleServerSuite {
 
-  override lazy val port: Int = controllers.PreviewHealthCheck.port
+  override lazy val port: Int = controllers.PreviewHealthCheck.testPort
 }
 
 @DoNotDiscover class PreviewServerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
