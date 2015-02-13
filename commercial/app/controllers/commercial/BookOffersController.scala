@@ -4,7 +4,7 @@ import model.commercial.books.{BestsellersAgent, BookFinder}
 import model.{Cached, NoCache}
 import play.api.mvc._
 
-object BookOffers extends Controller with implicits.Collections with implicits.Requests {
+object BookOffersController extends Controller with implicits.Collections with implicits.Requests {
 
   def renderBook = Action { implicit request =>
     specificId map { isbn =>

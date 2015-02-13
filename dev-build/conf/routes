@@ -251,8 +251,8 @@ GET         /commercial/masterclasses.json                                      
 
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.renderSoulmates
 
-GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffers.renderBook
-GET         /commercial/books/books.json                                                                             controllers.commercial.BookOffers.renderBooks
+GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffersController.renderBook
+GET         /commercial/books/books.json                                                                             controllers.commercial.BookOffersController.renderBooks
 
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.renderBestBuys
 GET         /commercial/money/savings/:savingsType                                                                   controllers.commercial.MoneyOffers.savings(savingsType)

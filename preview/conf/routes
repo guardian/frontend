@@ -37,8 +37,8 @@ GET        /commercial/money/credit-cards/:creditCardType                       
 GET        /commercial/money/loans/:loanType                                                   controllers.commercial.MoneyOffers.loans(loanType)
 
 # Book offers
-GET        /commercial/books/book.json                                                         controllers.commercial.BookOffers.renderBook
-GET        /commercial/books/books.json                                                        controllers.commercial.BookOffers.renderBooks
+GET        /commercial/books/book.json                                                         controllers.commercial.BookOffersController.renderBook
+GET        /commercial/books/books.json                                                        controllers.commercial.BookOffersController.renderBooks
 
 # Onward
 GET        /most-read.json                                                                     controllers.MostPopularController.render(path = "")
