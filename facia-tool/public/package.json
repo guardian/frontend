@@ -7,8 +7,8 @@
     },
     "configFile": "js/jspm-config.js",
     "dependencies": {
+      "EventEmitter": "npm:wolfy87-eventemitter@4.2.11",
       "css": "^0.1.0",
-      "eventEmitter": "npm:wolfy87-eventemitter@4.2.11",
       "font-awesome": "4.2.0",
       "jquery": "2.1.3",
       "jquery-mockjax": "npm:jquery-mockjax@^1.6.1",

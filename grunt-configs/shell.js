@@ -22,6 +22,15 @@ module.exports = function(grunt, options) {
             command: 'node tools/ab-test-info/ab-test-info.js ' +
                      'static/src/javascripts/modules/experiments/tests ' +
                      'static/abtests.json'
+        },
+
+        jspmFaciaTool: {
+            command: 'jspm install',
+            options: {
+                execOptions: {
+                    cwd: 'facia-tool/public'
+                }
+            }
         }
     };
 };
