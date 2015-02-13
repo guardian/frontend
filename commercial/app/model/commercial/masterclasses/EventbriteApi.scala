@@ -26,7 +26,14 @@ object EventbriteApi {
   def extractEventsFromFeed(jsValue: JsValue): Seq[JsValue] = jsValue \\ "event"
 
   def loadAds(): Future[Seq[EventbriteMasterClass]] = {
-    FeedReader.readSeqFromJson(FeedRequest("Masterclasses", MasterclassFeedSwitch, url, timeout = 60.seconds, responseEncoding = Some("utf-8"))) { json =>
+    val request = FeedRequest(
+      feedName = "Masterclasses",
+      switch = MasterclassFeedSwitch,
+      url = url,
+      timeout = 60.seconds,
+      responseEncoding = Some("utf-8")
+    )
+    FeedReader.readSeqFromJson(request) { json =>
       val maybes = extractEventsFromFeed(json) map (EventbriteMasterClass(_))
       maybes.flatten
     }

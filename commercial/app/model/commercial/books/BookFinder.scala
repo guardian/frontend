@@ -1,30 +1,52 @@
 package model.commercial.books
 
+import akka.pattern.CircuitBreaker
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.Configuration
+import conf.Switches.GuBookshopFeedsSwitch
+import model.commercial.{FeedReader, FeedRequest}
 import play.api.Play.current
+import play.api.libs.concurrent.Akka
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
-import play.api.libs.ws.WS
 
 import scala.concurrent.Future
+import scala.concurrent.duration._
 
-object BookFinder extends ExecutionContexts {
+object BookFinder extends ExecutionContexts with Logging {
 
   private lazy val agent = AkkaAgent[Map[String, Book]](Map.empty[String, Book])
 
-  def findByIsbn(isbn: String): Future[Option[Book]] = {
-    val book = agent.get().get(isbn)
-    if (book.isDefined) {
-      Future.successful(book)
-    } else {
-      MagentoService.findByIsbn(isbn) map {
-        _ map { foundBook =>
-          agent.send { books => books + (isbn -> foundBook)}
-          foundBook
-        }
-      }
+  private final val circuitBreaker = new CircuitBreaker(
+    scheduler = Akka.system.scheduler,
+    maxFailures = 10,
+    callTimeout = 4.seconds,
+    resetTimeout = 1.minute
+  )
+
+  circuitBreaker.onOpen(
+    log.error("Book lookup circuit breaker tripped: Open")
+  )
+
+  circuitBreaker.onHalfOpen(
+    log.info("Book lookup circuit breaker tentatively trying again: Half Open")
+  )
+
+  circuitBreaker.onClose(
+    log.info("Book lookup circuit breaker safe: Closed.")
+  )
+
+  def findByIsbn(isbn: String): Option[Book] = {
+    val maybeBook = agent.get().get(isbn)
+
+    if (maybeBook.isEmpty) {
+      for {
+        lookUpResult <- circuitBreaker.withCircuitBreaker(MagentoService.findByIsbn(isbn))
+        foundBook <- lookUpResult
+      } agent.send { books => books + (isbn -> foundBook)}
     }
+
+    maybeBook
   }
 }
 
@@ -53,34 +75,33 @@ object MagentoService extends ExecutionContexts with Logging {
   def findByIsbn(isbn: String): Future[Option[Book]] = {
 
     val result = magentoProperties map { props =>
-      val url = s"${props.urlPrefix}/$isbn"
-      val futureResponse = WS.url(url)
-        .sign(props.oauth)
-        .withRequestTimeout(5000)
-        .get()
 
-      futureResponse map { response =>
-        if (response.status == 200 || response.status == 404) {
-          val json = response.json
+      val request = FeedRequest(
+        feedName = "Book Lookup",
+        url = Some(s"${props.urlPrefix}/$isbn"),
+        timeout = 5.seconds,
+        switch = GuBookshopFeedsSwitch)
+
+      FeedReader.read(request,
+        signature = Some(props.oauth),
+        validResponseStatuses = Seq(200, 404)) { responseBody =>
+        val json = Json.parse(responseBody)
           json.validate[Book] match {
             case JsError(e) =>
               MagentoException(json) match {
-                case Some(me) if me.code == 404 => log.warn(s"MagentoService could not find isbn $isbn")
-                case Some(me) => log.error(s"MagentoService failed to get $url: ${me.code}: ${me.message}")
-                case None => log.error(s"MagentoService failed to parse $url: ${JsError.toFlatJson(e).toString()}")
+                case Some(me) if me.code == 404 =>
+                  log.warn(s"MagentoService could not find isbn $isbn")
+                case Some(me) =>
+                  val responseStatus = s"${me.code}: ${me.message}"
+                  log.error(s"MagentoService failed to get ${request.url}: $responseStatus")
+                case None =>
+                  val jsonErr = JsError.toFlatJson(e).toString()
+                  log.error(s"MagentoService failed to parse ${request.url}: $jsonErr")
               }
               None
             case JsSuccess(book, _) => Some(book)
           }
-        } else {
-          log.error(s"MagentoService failed to get $url: ${response.status}: ${response.statusText}")
-          None
-        }
-      } recover {
-        case e: Exception =>
-          log.error(s"MagentoService failed to get $url: ${e.getMessage}")
-          None
-      }
+      }.map(_.flatten)
     }
 
     result getOrElse {
