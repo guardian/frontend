@@ -417,7 +417,11 @@
 }
 
 .content__dateline-lm {
-    padding-top: 3px;
+    padding-top: $gs-baseline/4;
+
+    @include mq(leftCol) {
+        padding-top: $gs-baseline/6;
+    }
 }
 
 .content__meta-container .byline-img {
