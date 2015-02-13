@@ -61,7 +61,7 @@ function (
                 }
             });
 
-            if(!detect.isIOS) {
+            if (!detect.isIOS) {
                 mediator.on('window:resize', debounce(function () {
                     images.upgrade();
                 }, 200));
