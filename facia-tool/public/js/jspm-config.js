@@ -15,7 +15,7 @@ System.config({
     "font-awesome": "npm:font-awesome@4.2.0",
     "jquery": "github:components/jquery@2.1.3",
     "jquery-mockjax": "npm:jquery-mockjax@1.6.1",
-    "jquery-ui": "github:jquery/jquery-ui@1.11.2",
+    "jquery-ui": "github:jquery/jquery-ui@1.11.3",
     "knockout": "npm:knockout@3.2.0",
     "raven-js": "github:getsentry/raven-js@1.1.16",
     "sinon": "npm:sinon@1.12.2",
