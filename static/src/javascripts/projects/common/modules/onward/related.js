@@ -61,7 +61,7 @@ define([
     };
 
     Related.prototype.renderRelatedComponent = function () {
-        var relatedUrl, popularInTag, componentName,
+        var relatedUrl, popularInTag, componentName, container,
             fetchRelated = config.switches.relatedContent && config.page.showRelatedContent;
 
         if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
@@ -72,7 +72,7 @@ define([
             }).init();
 
         } else if (fetchRelated) {
-            var container = document.body.querySelector('.js-related');
+            container = document.body.querySelector('.js-related');
 
             if (container) {
                 popularInTag = this.popularInTagOverride();

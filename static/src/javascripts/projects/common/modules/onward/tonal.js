@@ -2,14 +2,12 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',
-    'common/modules/component',
-    'common/modules/ui/images'
+    'common/modules/component'
 ], function (
     config,
     mediator,
     register,
-    Component,
-    images
+    Component
 ) {
 
     var noop = function () {};
