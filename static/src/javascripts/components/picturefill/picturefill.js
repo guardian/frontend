@@ -693,24 +693,25 @@ window.matchMedia || (window.matchMedia = function() {
 			}
 		}, 250 );
 
-		function checkResize() {
-			var resizeThrottle;
+		// ignore resize events
+		// function checkResize() {
+		// 	var resizeThrottle;
 
-			if (!w._picturefillWorking && pf.getBrowserWidth() !== w._browserWidth) {
-				w._picturefillWorking = true;
-				w.clearTimeout( resizeThrottle );
-				resizeThrottle = w.setTimeout( function() {
-					picturefill({ reevaluate: true });
-					w._picturefillWorking = false;
-				}, 250 );
-			}
-		}
+		// 	if (!w._picturefillWorking && pf.getBrowserWidth() !== w._browserWidth) {
+		// 		w._picturefillWorking = true;
+		// 		w.clearTimeout( resizeThrottle );
+		// 		resizeThrottle = w.setTimeout( function() {
+		// 			picturefill({ reevaluate: true });
+		// 			w._picturefillWorking = false;
+		// 		}, 250 );
+		// 	}
+		// }
 
-		if ( w.addEventListener ) {
-			w.addEventListener( "resize", checkResize, false );
-		} else if ( w.attachEvent ) {
-			w.attachEvent( "onresize", checkResize );
-		}
+		// if ( w.addEventListener ) {
+		// 	w.addEventListener( "resize", checkResize, false );
+		// } else if ( w.attachEvent ) {
+		// 	w.attachEvent( "onresize", checkResize );
+		// }
 	}
 
 	runPicturefill();
