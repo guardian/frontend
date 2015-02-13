@@ -307,7 +307,7 @@ define([
 
             showHistoryInMegaNav: function () {
                 if (config.switches.historyTags) {
-                    mediator.once('modules:nav:open', function () {
+                    mediator.once('modules:nav:inserted', function () {
                         history.showInMegaNav();
                     });
                 }
