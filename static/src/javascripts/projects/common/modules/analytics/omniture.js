@@ -185,7 +185,6 @@ define([
             s.eVar21    = (window.innerWidth || document.documentElement.clientWidth)
                         + 'x'
                         + (window.innerHeight || document.documentElement.clientHeight);
-            console.log("size IS: ",s.eVar21);
             s.eVar32    = detect.getOrientation();
 
             /* Set Time Parting Day and Hour Combination - 0 = GMT */
