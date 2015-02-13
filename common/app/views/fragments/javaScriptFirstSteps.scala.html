@@ -99,6 +99,19 @@
         sc.parentNode.insertBefore(s, sc);
     }
 
+    var isOlderDevice = (function(){
+        @* I'm intentionally being a bit over zealous in the detection department here *@
+        if (navigator.platform === 'iPhone' || navigator.platform === 'iPad' || navigator.platform === 'iPod') {
+            @*
+                'older' iOs normally indicates a device with lower power (they stop being upgradeable at some point).
+                We won't run all javascript on these
+                For usage stats see http://david-smith.org/iosversionstats/
+            *@
+            return /.*iPhone OS ([56])_\d+/.test(navigator.userAgent);
+        }
+        return false;
+    })();
+
     var guardian = {
         isModernBrowser: (
             'querySelector' in document
@@ -110,6 +123,7 @@
                 ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
                 || 'XDomainRequest' in window
             )
+            && !isOlderDevice
         ),
         css: {
             loaded: false
