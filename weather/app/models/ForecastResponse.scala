@@ -2,7 +2,7 @@ package models
 
 import common.Edition
 import common.editions.Us
-import org.joda.time.{DateTimeZone, DateTime}
+import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 
