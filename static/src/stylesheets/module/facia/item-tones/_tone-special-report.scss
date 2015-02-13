@@ -36,7 +36,7 @@
     }
 
     .fc-item__kicker--breaking-news {
-        color: #ffffff;
+        color: lighten(colour(live-default), 35%);
     }
 
     .fc-item__standfirst {

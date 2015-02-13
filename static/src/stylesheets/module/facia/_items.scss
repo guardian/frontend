@@ -42,10 +42,6 @@
     &.l-list__item {
         margin-bottom: 0;
         padding-bottom: $gs-baseline;
-
-        &:last-child {
-            padding-bottom: 0;
-        }
     }
 }
 
@@ -163,10 +159,6 @@
         &.fc-item--has-cutout {
             .fc-item__container {
                 padding-bottom: gs-height(3) + $gs-baseline * 3;
-            }
-
-            .fc-trail__count__label {
-                display: none;
             }
         }
 
