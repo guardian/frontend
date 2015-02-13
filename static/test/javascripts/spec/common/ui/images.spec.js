@@ -64,9 +64,10 @@ define([
 
         describe('window events', function () {
 
-            ['resize', 'orientationchange'].forEach(function (event) {
+            ['orientationchange'].forEach(function (event) {
                 it('should listen to "' + event + '"', function (done) {
                     var upgradeSpy = sinon.spy(images, 'upgrade');
+                    navigator.userAgent = 'test';
                     images.listen();
                     mediator.emit('window:' + event);
                     waitsForAndRuns(
