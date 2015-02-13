@@ -72,11 +72,12 @@ define([
             var isFooter = $(e.currentTarget).attr('data-target-nav') === 'js-navigation-footer';
 
             e.preventDefault();
-            that.setMegaNavState(isFooter || !that.isExpanded());
 
             if (isFooter) {
                 that.scrollToHeaderNav();
             }
+
+            that.setMegaNavState(isFooter || !that.isExpanded());
         });
     };
 
