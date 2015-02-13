@@ -39,7 +39,11 @@
     .fc-item__kicker:after,
     .flyer__kicker:after,
     .fc-sublink__kicker:after {
-        color: fade-out($c-headline, .6);
+        color: mix($c-headline, colour(media-background), 40%);
+    }
+
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(media-background), 10%);
     }
 
     .fc-item__standfirst,

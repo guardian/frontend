@@ -10,14 +10,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="utf-8"/>
 
-        <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap.css")" rel="stylesheet">
-        <link href="@routes.Assets.at("css/style.css")" rel="stylesheet">
+        <link href="/assets/internal/javascripts/components/bootstrap.css/css/bootstrap.css" rel="stylesheet">
+        <link href="/assets/internal/css/style.css" rel="stylesheet">
     </head>
     <body>
         <header>
             <a href="/">
                 <h1>
-                    <span>preview</span>
+                    <span>@title</span>
                 </h1>
             </a>
             @identity.filter(_.isValid).map { identity =>
