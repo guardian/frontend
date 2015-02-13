@@ -1,25 +1,46 @@
 package model.commercial.books
 
+import akka.pattern.CircuitBreaker
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.Configuration
 import conf.Switches.GuBookshopFeedsSwitch
 import model.commercial.{FeedReader, FeedRequest}
+import play.api.libs.concurrent.Akka
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-object BookFinder extends ExecutionContexts {
+object BookFinder extends ExecutionContexts with Logging {
 
   private lazy val agent = AkkaAgent[Map[String, Book]](Map.empty[String, Book])
+
+  private final val circuitBreaker = new CircuitBreaker(
+    scheduler = Akka.system.scheduler,
+    maxFailures = 10,
+    callTimeout = 4.seconds,
+    resetTimeout = 1.minute
+  )
+
+  circuitBreaker.onOpen(
+    log.error("Book lookup circuit breaker tripped: Open")
+  )
+
+  circuitBreaker.onHalfOpen(
+    log.info("Book lookup circuit breaker tentatively trying again: Half Open")
+  )
+
+  circuitBreaker.onClose(
+    log.info("Book lookup circuit breaker safe: Closed.")
+  )
 
   def findByIsbn(isbn: String): Option[Book] = {
     val maybeBook = agent.get().get(isbn)
 
     if (maybeBook.isEmpty) {
       for {
-        lookUpResult <- MagentoService.findByIsbn(isbn)
+        lookUpResult <- circuitBreaker.withCircuitBreaker(MagentoService.findByIsbn(isbn))
         foundBook <- lookUpResult
       } agent.send { books => books + (isbn -> foundBook)}
     }
