@@ -6,8 +6,6 @@
 GET        /assets/internal/*file                                                              controllers.Assets.at(path="/public", file)
 GET        /assets/*path                                                                       dev.DevAssetsController.at(path)
 
-GET        /_healthcheck                                                                       conf.HealthCheck.healthcheck()
-
 #Login
 # authentication endpoints
 GET           /login                                                                           controllers.OAuthLoginController.login

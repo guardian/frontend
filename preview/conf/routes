@@ -1,6 +1,6 @@
-
 # Paths specific to "preview"
-GET        /responsive-viewer/*path                 controllers.ResponsiveViewerController.preview(path)
+GET     /_healthcheck               controllers.PreviewHealthCheck.healthcheck()
+GET     /responsive-viewer/*path    controllers.ResponsiveViewerController.preview(path)
 
 #import routes from "standalone" project
 ->  / standalone.Routes
