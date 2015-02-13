@@ -26,20 +26,13 @@ define([
 
         it('should be always defined', function () {
             $fixturesContainer = fixtures.render(fixturesConfig);
-            expandable = new Expandable(qwery('.expandable-ad-slot'), {
-                clickMacro: 'clickMacro',
-                slide1: 'slide1'
-            });
+            expandable = new Expandable(qwery('.expandable-ad-slot', $fixturesContainer), {});
             expect(expandable).toBeDefined();
         });
 
         it('should always have expand and close buttons', function () {
             $fixturesContainer = fixtures.render(fixturesConfig);
-            expandable = new Expandable(qwery('.expandable-ad-slot'), {
-                clickMacro: 'clickMacro',
-                slide1: 'slide1'
-            });
-            expandable.create();
+            new Expandable(qwery('.expandable-ad-slot', $fixturesContainer), {}).create();
             expect(qwery('.ad-exp--expand').length).toBe(1);
             expect(qwery('.ad-exp__close-button').length).toBe(1);
         });

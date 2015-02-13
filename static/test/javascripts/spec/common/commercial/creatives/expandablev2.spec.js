@@ -26,14 +26,13 @@ define([
 
         it('should be always defined', function () {
             $fixturesContainer = fixtures.render(fixturesConfig);
-            expandablev2 = new ExpandableV2(qwery('.expandablev2-ad-slot'), {});
+            expandablev2 = new ExpandableV2(qwery('.expandablev2-ad-slot', $fixturesContainer), {});
             expect(expandablev2).toBeDefined();
         });
 
         it('should always have expand, open and collapse buttons', function () {
             $fixturesContainer = fixtures.render(fixturesConfig);
-            expandablev2 = new ExpandableV2(qwery('.expandablev2-ad-slot'), {});
-            expandablev2.create();
+            new ExpandableV2(qwery('.expandablev2-ad-slot', $fixturesContainer), {}).create();
             expect(qwery('.ad-exp--expand').length).toBeGreaterThan(0);
             expect(qwery('.ad-exp__open').length).toBeGreaterThan(0);
             expect(qwery('.ad-exp-collapse__slide').length).toBeGreaterThan(0);
@@ -41,10 +40,9 @@ define([
 
         it('should have show more button', function () {
             $fixturesContainer = fixtures.render(fixturesConfig);
-            expandablev2 = new ExpandableV2(qwery('.expandablev2-ad-slot'), {
+            new ExpandableV2(qwery('.expandablev2-ad-slot', $fixturesContainer), {
                 showMore: 'yes'
-            });
-            expandablev2.create();
+            }).create();
             expect(qwery('.ad-exp__open-chevron').length).toBeGreaterThan(0);
         });
 
