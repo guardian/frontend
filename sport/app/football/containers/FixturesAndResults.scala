@@ -104,7 +104,8 @@ object FixturesAndResults extends Football {
           customClasses = Some(Seq("fc-container--tag")),
           hideToggle = true,
           showTimestamps = false,
-          dateLinkPath = None
+          dateLinkPath = None,
+          useShowMore = false
         )
       }
     }).flatten

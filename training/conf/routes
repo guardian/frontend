@@ -1,0 +1,5 @@
+# Paths specific to "training"
+GET     /_healthcheck    controllers.TrainingHealthCheck.healthcheck()
+
+#import routes from "standalone" project
+->  / standalone.Routes

@@ -15,6 +15,10 @@
         color: colour(news-default);
     }
 
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(neutral-8), 10%);
+    }
+
     .fc-item__kicker--breaking-news {
         color: colour(live-default);
     }
