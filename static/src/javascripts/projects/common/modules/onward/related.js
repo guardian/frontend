@@ -8,8 +8,7 @@ define([
     'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/lazyload',
-    'common/modules/ui/expandable',
-    'common/modules/ui/images'
+    'common/modules/ui/expandable'
 ], function (
     bonzo,
     qwery,
@@ -20,8 +19,7 @@ define([
     mediator,
     register,
     LazyLoad,
-    Expandable,
-    images
+    Expandable
 ) {
 
     var opts;
@@ -63,7 +61,7 @@ define([
     };
 
     Related.prototype.renderRelatedComponent = function () {
-        var relatedUrl, popularInTag, componentName, container,
+        var relatedUrl, popularInTag, componentName,
             fetchRelated = config.switches.relatedContent && config.page.showRelatedContent;
 
         if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
@@ -74,8 +72,8 @@ define([
             }).init();
 
         } else if (fetchRelated) {
+            var container = document.body.querySelector('.js-related');
 
-            container = document.body.querySelector('.js-related');
             if (container) {
                 popularInTag = this.popularInTagOverride();
                 componentName = (!Related.overrideUrl && popularInTag) ? 'related-popular-in-tag' : 'related-content';
@@ -100,11 +98,12 @@ define([
                                 $('.more-on-this-story').addClass('u-h');
                             }
                         }
+                        var relatedContainer = container.querySelector('.related-content'),
+                            images = container.querySelector('.fc-container');
 
-                        var relatedTrails = container.querySelector('.related-trails');
-                        new Expandable({dom: relatedTrails, expanded: false, showCount: false}).init();
+                        new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
                         // upgrade images
-                        images.upgrade(relatedTrails);
+                        mediator.emit('ui:images:upgradePicture', images);
                         mediator.emit('modules:related:loaded', container);
                         register.end(componentName);
                     },

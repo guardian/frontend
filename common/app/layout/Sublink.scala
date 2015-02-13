@@ -278,6 +278,8 @@ case class ContentCard(
 
   def showStandfirst = cardTypes.allTypes.exists(_.showStandfirst)
 
+  def mediaWidthsByBreakpoint = WidthsByBreakpoint.fromItemClasses(cardTypes)
+  
   def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
 
   def showMeta = discussionSettings.isCommentable || showTimestamp
