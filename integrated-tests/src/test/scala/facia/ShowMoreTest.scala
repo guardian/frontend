@@ -12,7 +12,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
     go to theguardian("/uk")
 
-    def getNumberOfVisibleArticles() = countMatchingVisible("[data-test-id=facia-card]")
+    def getNumberOfVisibleArticles() = countMatchingVisible("[data-test-id='facia-card']")
 
     withClue("Should show the 'show more' button") {
       first("[data-test-id='show-more']").isDisplayed should be (true)
