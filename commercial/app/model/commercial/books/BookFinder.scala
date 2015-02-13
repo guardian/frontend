@@ -5,6 +5,7 @@ import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.Configuration
 import conf.Switches.GuBookshopFeedsSwitch
 import model.commercial.{FeedReader, FeedRequest}
+import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
