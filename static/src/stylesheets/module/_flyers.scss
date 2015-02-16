@@ -51,6 +51,11 @@
         border: 0;
         overflow: hidden;
     }
+
+    .blog & {
+        float: none;
+        width: auto;
+    }
 }
 
 // Base flyer styles
