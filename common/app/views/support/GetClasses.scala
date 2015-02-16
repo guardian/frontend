@@ -55,19 +55,21 @@ object GetClasses {
       Some(containerDefinition.container),
       extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty) ++
         slices.Container.customClasses(containerDefinition.container),
-      disableHide = containerDefinition.hideToggle
+      disableHide = containerDefinition.hideToggle,
+      desktopOnly = containerDefinition.isDesktopOnly
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */
-  def forTagContainer(hasTitle: Boolean, hasDesktopShowMore: Boolean) = forContainer(
+  def forTagContainer(hasTitle: Boolean) = forContainer(
     showLatestUpdate = false,
     isFirst = true,
     hasTitle,
     ContainerCommercialOptions.empty,
-    hasDesktopShowMore,
+    false,
     None,
     Nil,
-    disableHide = true
+    disableHide = true,
+    desktopOnly = false
   )
 
   def forContainer(
@@ -78,13 +80,14 @@ object GetClasses {
     hasDesktopShowMore: Boolean,
     container: Option[slices.Container] = None,
     extraClasses: Seq[String] = Nil,
-    disableHide: Boolean = false
+    disableHide: Boolean = false,
+    desktopOnly: Boolean
   ) = {
     RenderClasses((Seq(
-      ("js-container--fetch-updates", showLatestUpdate),
       ("fc-container", true),
       ("fc-container--first", isFirst),
       ("fc-container--has-show-more", hasDesktopShowMore),
+      ("fc-container--desktop-only", desktopOnly),
       ("js-container--first", isFirst),
       ("fc-container--sponsored", commercialOptions.isSponsored),
       ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),

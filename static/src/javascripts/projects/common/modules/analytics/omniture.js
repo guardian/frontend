@@ -181,7 +181,10 @@ define([
 
             // see http://blogs.adobe.com/digitalmarketing/mobile/responsive-web-design-and-web-analytics/
             s.eVar18    = detect.getBreakpoint();
-            s.eVar21    = document.documentElement.clientWidth + 'x' + document.documentElement.clientHeight;
+            // getting clientWidth causes a reflow, so avoid using if possible
+            s.eVar21    = (window.innerWidth || document.documentElement.clientWidth)
+                        + 'x'
+                        + (window.innerHeight || document.documentElement.clientHeight);
             s.eVar32    = detect.getOrientation();
 
             /* Set Time Parting Day and Hour Combination - 0 = GMT */
