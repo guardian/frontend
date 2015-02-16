@@ -277,6 +277,12 @@ case class ContentCard(
     cardTypes.allTypes.exists(_.canShowMedia) && !displaySettings.imageHide
 
   def showStandfirst = cardTypes.allTypes.exists(_.showStandfirst)
+
+  def mediaWidthsByBreakpoint = WidthsByBreakpoint.fromItemClasses(cardTypes)
+  
+  def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
+
+  def showMeta = discussionSettings.isCommentable || showTimestamp
 }
 
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard

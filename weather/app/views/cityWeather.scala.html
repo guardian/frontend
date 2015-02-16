@@ -1,0 +1,35 @@
+@(weather: models.accuweather.WeatherResponse)(implicit request: RequestHeader)
+
+@import common.Edition
+
+<div class="weather js-weather">
+    <div class="u-unstyled weather__current js-weather-current">
+        <p class="weather__desc">
+            <span class="u-h">The temperature</span>
+            <span class="weather__time">Now</span>
+            <span class="u-h">is</span>
+            @defining(weather.temperatureForEdition(Edition(request))) { temp =>
+                <span class="weather__temp js-weather-temp">@math.round(temp.Value)°@temp.Unit</span>
+            }
+        </p>
+        @fragments.inlineSvg(s"weather-${weather.WeatherIcon}", "weather", Seq("weather__icon","js-weather-icon"))<span class="u-h">@weather.WeatherText</span>
+    </div>
+    <button class="weather__toggle-forecast meta-button js-toggle-forecast mobile-only" data-link-name="weather-toggle-forecast"
+    href="#toggle-forecast"><span class="u-h">Toggle forecast</span><i class="i i-arrow-grey-large weather__toggle-icon"></i>
+    </button>
+    <ul class="js-weather-forecast forecast"></ul>
+    <div class="weather__location">
+        <div class="search-tool js-search-tool">
+            <div class="search-tool__form u-cf">
+                <label class="u-h" for="editlocation">Edit your location</label>
+                <input id="editlocation" class="search-tool__input js-search-tool-input" type="text" data-link-name="weather-edit-location" value="{{city}}" aria-label="enter location" />
+                <i class="weather__edit-location js-edit-location i i-search-dark-grey-36 weather__search-icon"></i>
+                <button class="search-tool__btn"><i class="i i-search-white-36"></i><span class="u-h">Search for city</span></button>
+            </div>
+            <ul class="u-unstyled search-tool__list js-search-tool-list"></ul>
+        </div>
+        <button class="weather__close-location js-close-location meta-button u-h" data-link-name="weather-close-location"
+        href="#close-change-location" aria-label="stop editing location"><span class="u-h">Close change location</span><i class="i i-close-icon-grey weather__close-icon"></i>
+        </button>
+    </div>
+</div>

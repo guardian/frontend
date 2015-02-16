@@ -3,6 +3,7 @@
  Description: Gets and sets users reading history
  */
 define([
+    'fastdom',
     'common/utils/$',
     'common/utils/_',
     'common/utils/config',
@@ -12,6 +13,7 @@ define([
     'text!common/views/history/tag.html',
     'text!common/views/history/mega-nav.html'
 ], function (
+    fastdom,
     $,
     _,
     config,
@@ -99,7 +101,7 @@ define([
             'technology/comment', 'technology/gadgets', 'technology/games', 'technology/internet', 'technology/it',
             'technology/news', 'technology/series/techweekly', 'technology/telecoms', 'theguardian', 'theguardian/mainsection/obituaries',
             'theguardian/series/guardiancommentcartoon', 'theguardian/series/guardianwitness-assignments', 'theguardian/series/otherlives', 'tone/albumreview', 'tone/comment',
-            'tone/livereview', 'travel', 'travel/bookatrip', 'travel/europe', 'travel/hotels',
+            'tone/obituaries', 'tone/livereview', 'travel', 'travel/bookatrip', 'travel/europe', 'travel/hotels',
             'travel/lateoffers', 'travel/places', 'travel/restaurants', 'travel/series/lets-go-to', 'travel/series/readers-travel-tips',
             'travel/shortbreaks', 'travel/typesoftrip', 'travel/uk', 'travel/usa', 'tv-and-radio',
             'tv-and-radio/series/broadchurch-2-episode-by-episode', 'tv-and-radio/series/doctor-who-episode-by-episode', 'tv-and-radio/series/homeland-episode-by-episode', 'tv-and-radio/series/spiral-episode-by-episode-guide', 'tv-and-radio/series/stream-on',
@@ -129,7 +131,18 @@ define([
             {tid: 'seriesId',   tname: 'series'},
             {tid: 'authorIds',  tname: 'author'}
         ],
-
+        buckets = [
+            {
+                desc: 'Tags from articles',
+                indexInRecord: 1,
+                weight: 1
+            },
+            {
+                desc: 'Tags from fronts',
+                indexInRecord: 2,
+                weight: 1 // increase this, to favour direct visits to fronts/tag pages
+            }
+        ],
         summaryPeriodDays = 30,
         forgetUniquesAfter = 10,
         historySize = 50,
@@ -164,18 +177,16 @@ define([
     }
 
     function getSummary() {
-        if (summaryCache) {
-            return summaryCache;
-        }
+        if (!summaryCache) {
+            summaryCache = storage.local.get(storageKeySummary);
 
-        summaryCache = storage.local.get(storageKeySummary);
-
-        if (!_.isObject(summaryCache) || !_.isObject(summaryCache.tags) || !_.isNumber(summaryCache.periodEnd)) {
-            summaryCache = {
-                periodEnd: today,
-                tags: {},
-                showInMegaNav: true
-            };
+            if (!_.isObject(summaryCache) || !_.isObject(summaryCache.tags) || !_.isNumber(summaryCache.periodEnd)) {
+                summaryCache = {
+                    periodEnd: today,
+                    tags: {},
+                    showInMegaNav: true
+                };
+            }
         }
         return summaryCache;
     }
@@ -200,25 +211,27 @@ define([
         if (updateBy !== 0) {
             summary.periodEnd = newToday;
 
-            _.each(summary.tags, function (nameAndFreqs, tid) {
-                var freqs = _.chain(nameAndFreqs[1])
-                    .map(function (freq) {
-                        var newAge = freq[0] + updateBy;
-                        return newAge < summaryPeriodDays && newAge >= 0 ? [newAge, freq[1]] : false;
+            _.each(summary.tags, function (record, tid) {
+                var result = _.chain(buckets)
+                    .map(function (bucket) {
+                        var visits = _.chain(record[bucket.indexInRecord])
+                            .map(function (day) {
+                                var newAge = day[0] + updateBy;
+                                return newAge < summaryPeriodDays && newAge >= 0 ? [newAge, day[1]] : false;
+                            })
+                            .compact()
+                            .value();
+
+                        return (visits.length > 1 || (visits.length === 1 && visits[0][0] < forgetUniquesAfter)) ? visits : [];
                     })
-                    .compact()
                     .value();
 
-                if (freqs.length > 1 || (freqs.length === 1 && freqs[0][0] < forgetUniquesAfter)) {
-                    summary.tags[tid] = [nameAndFreqs[0], freqs];
+                if (_.some(result, function (r) { return r.length; })) {
+                    summary.tags[tid] = [record[0]].concat(result);
                 } else {
                     delete summary.tags[tid];
                 }
             });
-
-            if (_.isEmpty(summary.tags)) {
-                summary.periodEnd = newToday;
-            }
         }
 
         return summary;
@@ -237,21 +250,21 @@ define([
 
         return _.chain(tids)
             .map(function (tid) {
-                var nameAndFreqs = tags[tid],
-                    freqs = nameAndFreqs[1];
+                var record = tags[tid],
+                    rank = _.reduce(buckets, function (rank, bucket) {
+                        return rank + tally(record[bucket.indexInRecord], bucket.weight);
+                    }, 0);
 
-                if (freqs.length) {
-                    return {
-                        keep: [tid, nameAndFreqs[0]],
-                        rank: tally(freqs)
-                    };
-                }
+                return {
+                    idAndName: [tid, record[0]],
+                    rank: rank
+                };
             })
             .compact()
             .sortBy('rank')
             .last(number || 100)
             .reverse()
-            .pluck('keep')
+            .pluck('idAndName')
             .value();
     }
 
@@ -265,9 +278,9 @@ define([
         return popularFilteredCache;
     }
 
-    function tally(freqs) {
-        return _.reduce(freqs, function (tally, freq) {
-            return tally + (9 + freq[1]) * (summaryPeriodDays - freq[0]);
+    function tally(visits, weight) {
+        return _.reduce(visits, function (tally, day) {
+            return tally + weight * (9 + day[1]) * (summaryPeriodDays - day[0]);
         }, 0);
     }
 
@@ -275,14 +288,18 @@ define([
         return (str || '').split(',')[0];
     }
 
-    function collapseTag(t) {
-        t = t.replace(/^\/|\/$/g, '');
-        if (t.match(isEditionalisedRx)) {
-            t = t.replace(stripEditionRx, '');
+    function collapsePath(t) {
+        if (t) {
+            t = t.replace(/^\/|\/$/g, '');
+            if (t.match(isEditionalisedRx)) {
+                t = t.replace(stripEditionRx, '');
+            }
+            t = t.split('/');
+            t = t.length === 2 && t[0] === t[1] ? [t[0]] : t;
+            return t.join('/');
+        } else {
+            return '';
         }
-        t = t.split('/');
-        t = t.length === 2 && t[0] === t[1] ? [t[0]] : t;
-        return t.join('/');
     }
 
     function reset() {
@@ -313,34 +330,42 @@ define([
     }
 
     function logSummary(pageConfig, mockToday) {
-        var summary = pruneSummary(getSummary(), mockToday);
+        var summary = pruneSummary(getSummary(), mockToday),
+            page = collapsePath(pageConfig.pageId),
+            isFront = false;
 
         _.chain(pageMeta)
-            .reduceRight(function (tags, tag) {
-                var tid = firstCsv(pageConfig[tag.tid]),
+            .reduceRight(function (tagMeta, tag) {
+                var tid = collapsePath(firstCsv(pageConfig[tag.tid])),
                     tname = tid && firstCsv(pageConfig[tag.tname]);
 
                 if (tid && tname) {
-                    tags[collapseTag(tid)] = tname;
+                    tagMeta[tid] = tname;
                 }
-                return tags;
+                isFront = isFront || tid === page;
+                return tagMeta;
             }, {})
             .each(function (tname, tid) {
-                var nameAndFreqs = summary.tags[tid],
-                    freqs = nameAndFreqs && nameAndFreqs[1],
-                    freq = freqs && _.find(freqs, function (freq) { return freq[0] === 0; });
+                var record = summary.tags[tid] || [],
+                    visits,
+                    today;
 
-                if (freq) {
-                    freq[1] = freq[1] + 1;
-                } else if (freqs) {
-                    freqs.unshift([0, 1]);
+                _.forEach(buckets, function (bucket) {
+                    record[bucket.indexInRecord] = record[bucket.indexInRecord] || [];
+                });
+
+                record[0] = tname;
+
+                visits = record[isFront ? 2 : 1];
+                today = _.find(visits, function (day) { return day[0] === 0; });
+
+                if (today) {
+                    today[1] = today[1] + 1;
                 } else {
-                    summary.tags[tid] = [tname, [[0, 1]]];
+                    visits.unshift([0, 1]);
                 }
 
-                if (nameAndFreqs) {
-                    nameAndFreqs[0] = tname;
-                }
+                summary.tags[tid] = record;
             });
 
         saveSummary(summary);
@@ -348,7 +373,7 @@ define([
 
     function getTopNavItems() {
         topNavItemsCache = topNavItemsCache || $('.js-navigation-header .js-top-navigation a').map(function (item) {
-            return collapseTag(url.getPath($(item).attr('href')));
+            return collapsePath(url.getPath($(item).attr('href')));
         });
 
         return topNavItemsCache;
@@ -359,7 +384,7 @@ define([
     }
 
     function showInMegaNav() {
-        var tags;
+        var tags, tagsHTML;
 
         if (getSummary().showInMegaNav === false) { return; }
 
@@ -368,18 +393,19 @@ define([
         tags = getPopularFiltered();
 
         if (tags.length) {
-            getMegaNav().prepend(
-                template(viewMegaNav, {
-                    tags: tags.map(tagHtml).join('')
-                })
-            );
+            tagsHTML = template(viewMegaNav, {tags: tags.map(tagHtml).join('')});
+            fastdom.write(function () {
+                getMegaNav().prepend(tagsHTML);
+            });
             inMegaNav = true;
         }
     }
 
     function removeFromMegaNav() {
-        getMegaNav().each(function () {
-            $('.js-global-navigation__section--history', this).remove();
+        getMegaNav().each(function (megaNav) {
+            fastdom.write(function () {
+                $('.js-global-navigation__section--history', megaNav).remove();
+            });
         });
         inMegaNav = false;
     }

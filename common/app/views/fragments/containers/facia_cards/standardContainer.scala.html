@@ -1,18 +1,37 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
 @import common.Localisation
-@import views.html.fragments.containers.facia_cards.{containerHeader, slice, showMore}
+@import views.html.fragments.containers.facia_cards.{containerHeader, slice, showMore, showMoreButton}
+@import views.support.RenderClasses
 
 @containerHeader(containerDefinition, frontProperties)
 
 @for(containerLayout <- containerDefinition.containerLayout) {
-    <div class="fc-container__body fc-container--rolled-up-hide fc-show-more--hidden js-container--fc-show-more"
+    <div class="@RenderClasses(Map(
+        ("fc-container__body", true),
+        ("fc-container--rolled-up-hide", true),
+        ("fc-show-more--hidden", containerDefinition.addShowMoreClasses),
+        ("js-container--fc-show-more", containerDefinition.addShowMoreClasses),
+        ("fc-show-more--mobile-only", containerDefinition.hasMobileOnlyShowMore)
+    ))"
          data-title="@Html(Localisation(containerDefinition.displayName getOrElse ""))"
          data-id="@containerDefinition.dataId">
         @for(sliceWithCards <- containerLayout.slices) {
             @slice(sliceWithCards, containerDefinition.index)
         }
 
-        @showMore(containerLayout.remainingCards, containerDefinition.index)
+        @if(containerDefinition.hasShowMore) {
+            @if(containerDefinition.useShowMore) {
+                <div class="js-show-more-placeholder"></div>
+
+                @showMoreButton(containerDefinition.displayName getOrElse "")
+            } else {
+                @* Don't hide any items, for on tag pages, which are chronological *@
+                @showMore(
+                    containerDefinition.containerLayout.map(_.remainingCards).getOrElse(Nil),
+                    containerDefinition.index
+                )
+            }
+        }
     </div>
 }

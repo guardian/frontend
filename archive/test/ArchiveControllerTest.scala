@@ -13,19 +13,19 @@ import scala.concurrent.Future
       "www.theguardian.com/books/reviews/travel/0,,343395,.html" -> Some("www.theguardian.com/books/reviews/travel/0,,343395,.html"),
       "www.theguardian.com/books/review/story/0,034,908973,00.html" -> Some("www.theguardian.com/books/review/story/0,,908973,.html"),
       "www.theguardian.com/books/reviews/travel/foo" -> None
-    ) 
+    )
     tests foreach {
       case (key, value) => controllers.ArchiveController.normalise(key) should be (value)
     }
   }
-  
+
   // r1 curio (all the redirects have their 00's removed, all the s3 archived files don't)
   it should "return a normalised r1 path with suffixed zeros" in {
     val path = "www.theguardian.com/books/reviews/travel/0,,343395,.html"
     val expectedPath = Some("www.theguardian.com/books/reviews/travel/0,,343395,00.html")
     controllers.ArchiveController.normalise(path , zeros = "00") should be (expectedPath)
   }
-  
+
   it should "not decode encoded urls" in {
     val result = controllers.ArchiveController.lookup("www.theguardian.com/foo/%2Cfoo")(TestRequest())
     status(result) should be (404)
@@ -89,6 +89,12 @@ import scala.concurrent.Future
     val result2 = controllers.ArchiveController.lookup("www.theguardian.com/tv-and-radio+media/chris-evans")(TestRequest())
     status(result2) should be (301)
     location(result2) should be ("http://www.theguardian.com/tv-and-radio?redirection=combinersection")
+  }
+
+  it should "redirect paths that start with /Guardian/" in {
+    val result = controllers.ArchiveController.lookup("www.theguardian.com/Guardian/world/2005/jun/21/hearafrica05.development3")(TestRequest())
+    status(result) should be (301)
+    location(result) should be ("http://www.theguardian.com/world/2005/jun/21/hearafrica05.development3?redirection=guardian")
   }
 
   it should "redirect failed combiners RSS to the section RSS" in {

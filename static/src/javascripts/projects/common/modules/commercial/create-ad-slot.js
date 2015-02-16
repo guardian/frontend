@@ -92,7 +92,7 @@ define([
         }
     };
 
-    return function (name, types, keywords, slotTarget) {
+    return function (name, types, series, keywords, slotTarget) {
         var attrName,
             definition = adSlotDefinitions[slotTarget ? slotTarget : name],
             dataAttrs  = {
@@ -120,6 +120,9 @@ define([
         }
         if (slotTarget) {
             $adSlot.attr('data-slot-target', slotTarget);
+        }
+        if (series) {
+            $adSlot.attr('data-series', series);
         }
         if (keywords) {
             $adSlot.attr('data-keywords', keywords);

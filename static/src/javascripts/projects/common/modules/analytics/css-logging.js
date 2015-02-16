@@ -1,97 +1,138 @@
 define([
+    'Promise',
     'common/utils/_',
     'common/utils/config',
+    'common/utils/ajax',
     'common/utils/detect',
     'common/utils/url',
     'common/utils/scan',
     'common/utils/mediator',
     'common/modules/analytics/beacon'
 ], function (
+    Promise,
     _,
     config,
+    ajax,
     detect,
     url,
     scan,
     mediator,
     beacon
 ) {
-    var rxPsuedoClass = new RegExp(/:+[^\s\,]+/g),
-        rxSeparator = new RegExp(/\s*,\s*/g);
+    var sample = 500,
+        rxPsuedoClass = new RegExp(/:+[^\s\,]+/g),
+        rxSeparator = new RegExp(/\s*,\s*/g),
+        classNameLoggable = 'js-loggable',
+        classNameInlined = 'js-inlined',
+        eventsInitialised = false;
 
-    function getStylesheets() {
-        return _.chain(document.styleSheets)
-            .filter(function (sheet) {
-                return sheet &&
-                    _.values(sheet.rules || sheet.cssRules).length > 0 &&
-                    (!sheet.ownerNode || sheet.ownerNode.className !== 'webfont') &&
-                    (!sheet.href || sheet.href.match(/\/\/(localhost|assets\.guim\.co\.uk)/));
-            })
-            .value();
-    }
-
-    function getRandomStylesheet() {
-        var stylesheets = getStylesheets(),
-            stylesheetLengths = scan(
-                stylesheets.map(function (sheet) { return _.values(sheet.rules || sheet.cssRules).length; }),
-                function (x, y) { return x + y; },
-                0
-            ),
-            totalRules = stylesheetLengths.pop(),
-            randomRule = _.random(0, totalRules);
-
-        return stylesheets[_.reduce(stylesheetLengths, function (acc, len, i) { return randomRule > len ? i : acc; }, 0)];
-    }
-
-    function sendReport(stylesheet, allRules) {
-        var sampleSize = 1000,
-            offset,
-            rules = _.chain(stylesheet.rules || stylesheet.cssRules)
+    function getSelectors(all) {
+        var rand,
+            len,
+            rules = _.chain(getInlineStylesheets())
+                .map(function (s) { return s.rules || s.cssRules; })
+                .compact()
+                .map(_.values)
+                .flatten()
                 .map(function (r) { return r && r.selectorText; })
                 .compact()
                 .value();
 
-        if (!allRules) {
-            offset = _.random(0, Math.max(0, rules.length - sampleSize));
-            rules = rules.slice(offset, offset + sampleSize);
+        if (all) {
+            return rules;
+        } else {
+            len = rules.length;
+            rand = _.random(0, len);
+            return rules.slice(rand, rand + sample).concat(rand + sample < len ? [] : rules.slice(0, (rand + sample) % len));
         }
-
-        beacon.postJson('/css', JSON.stringify({
-            selectors: rules.reduce(function (isUsed, rule) {
-                _.each(rule.replace(rxPsuedoClass, '').split(rxSeparator), function (s) {
-                    if (_.isUndefined(isUsed[s])) {
-                        isUsed[s] = !!document.querySelector(s);
-                    }
-                });
-                return isUsed;
-            }, {}),
-            contentType: config.page.contentType,
-            breakpoint: detect.getBreakpoint(),
-            href: stylesheet.href ? url.getPath(stylesheet.href).replace(/stylesheets\/\w+\//, '') : '',
-            className: stylesheet.ownerNode ? stylesheet.ownerNode.className : ''
-        }), allRules);
     }
 
-    function makeSender(sendAll) {
+    function getInlineStylesheets() {
+        return _.chain(document.styleSheets)
+            .filter(function (sheet) {
+                return sheet &&
+                    _.values(sheet.rules || sheet.cssRules).length > 0 &&
+                    sheet.ownerNode &&
+                    sheet.ownerNode.nodeName === 'STYLE' &&
+                    sheet.ownerNode.className.indexOf(classNameLoggable) > -1;
+            })
+            .value();
+    }
+
+    function reloadSheetInline(sheet) {
+        return ajax({
+            url: sheet.href,
+            crossOrigin: true
+        }).then(function (resp) {
+            var el = document.createElement('style');
+            el.className = classNameLoggable;
+            el.innerHTML = resp;
+            document.getElementsByTagName('head')[0].appendChild(el);
+        });
+    }
+
+    function reloadSheetsInline() {
+        return Promise.all(
+            _.chain(document.styleSheets)
+            .filter(function (sheet) {
+                return sheet &&
+                    sheet.href &&
+                    sheet.href.match(/\/\/(localhost|assets\.guim\.co\.uk)/) &&
+                    (!sheet.media || sheet.media.mediaText !== 'print') &&
+                    sheet.ownerNode.className.indexOf(classNameInlined) === -1;
+            })
+            .forEach(function (sheet) {
+                sheet.ownerNode.className += ' ' + classNameInlined;
+            })
+            .map(reloadSheetInline)
+            .value()
+        );
+    }
+
+    function sendReport(all) {
+        reloadSheetsInline()
+        .then(function () {
+            beacon.postJson('/css', JSON.stringify({
+                selectors: _.chain(getSelectors(all))
+                    .reduce(function (isUsed, rule) {
+                        _.each(rule.replace(rxPsuedoClass, '').split(rxSeparator), function (r) {
+                            if (_.isUndefined(isUsed[r])) {
+                                isUsed[r] = !!document.querySelector(r);
+                            }
+                        });
+                        return isUsed;
+                    }, {})
+                    .value(),
+                contentType: config.page.contentType || 'unknown',
+                breakpoint: detect.getBreakpoint() || 'unknown'
+            }), all);
+        });
+    }
+
+    function makeSender(all) {
         return _.debounce(function (clickSpec) {
             if (!clickSpec || clickSpec.samePage) {
                 setTimeout(function () {
-                    _.each(sendAll ? getStylesheets() : [getRandomStylesheet()], function (stylesheet) {
-                        sendReport(stylesheet, sendAll);
-                    });
-                }, _.random(0, 3000));
+                    sendReport(all);
+                }, all ? 0 : _.random(0, 3000));
             }
-        }, 300);
+        }, 500);
     }
 
-    return function () {
-        var sendAll = window.location.hash === '#csslogging',
-            sender;
+    return function (all) {
+        var sender;
 
-        if (sendAll || _.random(1, 5000) === 1) {
-            sender = makeSender(sendAll);
+        all = all || window.location.hash === '#csslogging';
+
+        if (all || _.random(1, 2500) === 1) {
+            sender = makeSender(all);
             sender();
-            mediator.on('module:clickstream:interaction', sender);
-            mediator.on('module:clickstream:click', sender);
+
+            if (!eventsInitialised) {
+                mediator.on('module:clickstream:interaction', sender);
+                mediator.on('module:clickstream:click', sender);
+                eventsInitialised = true;
+            }
         }
     };
 });

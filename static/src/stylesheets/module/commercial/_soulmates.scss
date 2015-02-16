@@ -10,6 +10,7 @@ $c-soulmates-high: colour(neutral-1);
 
     .commercial--multi__header {
         background-color: $c-soulmates-high;
+        margin-bottom: $gs-baseline/3;
     }
 
     .commercial__header__inner {
@@ -20,6 +21,12 @@ $c-soulmates-high: colour(neutral-1);
             padding-left: 0;
             padding-right: 0;
             border-bottom: 0;
+        }
+    }
+
+    .commercial__body {
+        @include mq(wide) {
+            padding-bottom: $gs-baseline*2.5;
         }
     }
 

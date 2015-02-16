@@ -97,3 +97,9 @@
         width: 100%;
     }
 }
+
+.fc-container--desktop-only {
+    @include mq($until: desktop) {
+        display: none;
+    }
+}

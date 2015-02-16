@@ -29,6 +29,10 @@
         color: colour(news-support-6);
     }
 
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(analysis-background), 10%);
+    }
+
     .fc-item__meta {
         color: colour(neutral-2);
     }

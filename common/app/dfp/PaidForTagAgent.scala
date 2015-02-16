@@ -4,7 +4,6 @@ import java.net.URLDecoder
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import common.Edition
-import conf.Switches.EditionAwareLogoSlots
 import model.Tag
 import model.`package`.frontKeywordIds
 
@@ -40,12 +39,8 @@ trait PaidForTagAgent {
     def editionMatches(maybeEdition: Option[Edition], dfpTag: PaidForTag): Boolean = {
       maybeEdition.isEmpty || maybeEdition.exists { edition =>
         dfpTag.lineItems exists { lineItem =>
-          val editionIds = lineItem.targeting.customTargetSets.flatMap {
-            _.targets filter {
-              _.isEditionTag
-            } flatMap (_.values.map(_.toLowerCase))
-          }.distinct
-          editionIds.isEmpty || editionIds.contains(edition.id.toLowerCase)
+          val editions = lineItem.targeting.editions
+          editions.isEmpty || editions.contains(edition)
         }
       }
     }
@@ -53,7 +48,7 @@ trait PaidForTagAgent {
     dfpTags find { dfpTag =>
       tagMatches(capiTagId, dfpTag) &&
         sectionMatches(maybeSectionId, dfpTag) &&
-        (EditionAwareLogoSlots.isSwitchedOff || editionMatches(maybeEdition, dfpTag))
+        editionMatches(maybeEdition, dfpTag)
     }
   }
 
@@ -129,9 +124,10 @@ trait PaidForTagAgent {
       val stopWords = Set("newest", "order-by", "published", "search", "tag", "use-date")
 
       config.apiQuery map { encodedQuery =>
+        def negativeClause(token: String): Boolean = token.startsWith("-")
         val query = URLDecoder.decode(encodedQuery, "utf-8")
         val tokens = query.split( """\?|&|=|\(|\)|\||\,""")
-        (tokens filterNot stopWords.contains flatMap frontKeywordIds).toSeq
+        (tokens filterNot negativeClause filterNot stopWords.contains flatMap frontKeywordIds).toSeq
       } getOrElse Nil
     }
 
@@ -168,8 +164,10 @@ trait PaidForTagAgent {
     findWinningTagPair(currentPaidForTags, capiTags, maybeSectionId, None) map (_.capiTag)
   }
 
-  def sponsorshipTag(config: CollectionConfig): Option[String] = {
-    findContainerCapiTagIdAndDfpTag(config) map (_.capiTagId)
+  def sponsorshipTag(config: CollectionConfig): Option[SponsorshipTag] = {
+    findContainerCapiTagIdAndDfpTag(config) map { tagPair =>
+      SponsorshipTag(tagPair.dfpTag.tagType, tagPair.capiTagId)
+    }
   }
 
   private def isExpiredAdvertisementFeature(pageId: String,
@@ -177,15 +175,16 @@ trait PaidForTagAgent {
                                             maybeDfpTag: => Option[PaidForTag],
                                     maybeSectionId: Option[String]): Boolean = {
 
-    def hasExpired(lineItem: GuLineItem): Boolean = lineItem.endTime exists (_.isBeforeNow)
+    lazy val lineItems = maybeDfpTag map (_.lineItems) getOrElse Nil
 
-    lazy val isAdFeatureToneTagPage = pageId == "tone/advertisement-features"
+    lazy val isExpiredLegacyAdFeature =
+      lineItems.isEmpty && hasAdFeatureTone && pageId != "tone/advertisement-features"
 
-    val lineItems = maybeDfpTag map (_.lineItems) getOrElse Nil
+    lazy val isExpiredAdFeature = lineItems.nonEmpty && (lineItems forall { lineItem =>
+      lineItem.endTime exists (_.isBeforeNow)
+    })
 
-    (!isPreview) &&
-      ((lineItems.isEmpty && hasAdFeatureTone && !isAdFeatureToneTagPage) ||
-        lineItems.nonEmpty && (lineItems forall hasExpired))
+    !isPreview && (isExpiredLegacyAdFeature || isExpiredAdFeature)
   }
 
   def isExpiredAdvertisementFeature(pageId: String,
@@ -246,3 +245,5 @@ trait PaidForTagAgent {
 sealed case class CapiTagAndDfpTag(capiTag: Tag, dfpTag: PaidForTag)
 
 sealed case class CapiTagIdAndDfpTag(capiTagId: String, dfpTag: PaidForTag)
+
+case class SponsorshipTag(tagType: TagType, tagId: String)

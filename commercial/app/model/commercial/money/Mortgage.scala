@@ -33,7 +33,12 @@ object MortgagesApi extends ExecutionContexts with Logging {
   }
 
   def loadAds(): Future[Seq[Mortgage]] = {
-    FeedReader.readSeqFromXml[Mortgage](FeedRequest("Mortgages", LCMortgageFeedSwitch, url))(parse)
+    val request = FeedRequest(
+      feedName = "Mortgages",
+      switch = LCMortgageFeedSwitch,
+      url = url
+    )
+    FeedReader.readSeqFromXml[Mortgage](request)(parse)
   }
 
 }

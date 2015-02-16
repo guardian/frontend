@@ -1,5 +1,5 @@
 @(env: String, report: dfp.PaidForTagsReport)
-@import dfp.{PaidForTag, PaidForType, TagType, GuLineItem}
+@import dfp.{GuLineItem, PaidForTag, printDate}
 @import tools.{DfpLink, SiteLink}
 
 @buildRef(s: String) = {@{s.toLowerCase.replaceAll("\\s+", "-")}}
@@ -29,6 +29,13 @@
             <div>Ad Units: @{lineItem.targeting.adUnits.map(_.path.mkString("/")).mkString(", ")}</div>
         }
     }
+    @if(lineItem.targeting.editions.nonEmpty) {
+        @if(lineItem.targeting.editions.size == 1) {
+            <div>Edition: @{lineItem.targeting.editions.map(_.id)}</div>
+        } else {
+            <div>Editions: @{lineItem.targeting.editions.map(_.id).mkString(", ")}</div>
+        }
+    }
     @if(lineItem.targeting.geoTargetsIncluded.nonEmpty) {
         @if(lineItem.targeting.geoTargetsIncluded.size == 1) {
             <div>Geotarget: @{lineItem.targeting.geoTargetsIncluded.map(_.name)}</div>
@@ -44,10 +51,10 @@
         }
     }
     <div>
-        Expiry date: @if(lineItem.endTime.isEmpty) {
+        Expires: @if(lineItem.endTime.isEmpty) {
             Never
         } else {
-            @dfp.printDate(lineItem.endTime.get)
+            @printDate(lineItem.endTime.get)
         }
     </div>
 }
@@ -96,6 +103,7 @@
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
 
     <h1>Paid-for Tags</h1>
+    <p>Last updated: @report.updatedTimeStamp</p>
 
     <hr />
     @summary("Sponsored Series", report.sponsoredSeries)

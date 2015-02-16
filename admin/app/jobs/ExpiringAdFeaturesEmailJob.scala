@@ -1,31 +1,38 @@
 package jobs
 
 import common.Logging
-import conf.Configuration.commercial.{adOpsTeam, adTechTeam, gLabsTeam}
-import dfp.{AdvertisementFeature, GuLineItem}
+import conf.Configuration.commercial.{adOpsTeam, adTechTeam, dfpAdFeatureReportKey, gLabsTeam}
+import dfp.GuLineItem
 import services.EmailService
 import tools.Store
 
 object ExpiringAdFeaturesEmailJob extends Logging {
 
   def run(): Unit = {
-    val adFeatureTags =
-      Store.getDfpPaidForTags().paidForTags filter (_.paidForType == AdvertisementFeature)
+    val adFeatureTags = Store.getDfpPaidForTags(dfpAdFeatureReportKey).paidForTags
 
     def adFeatures(p: GuLineItem => Boolean): Seq[GuLineItem] = {
-      adFeatureTags.filter(_.lineItems.forall(p)).flatMap(_.lineItems).sortBy(_.id).distinct
+      adFeatureTags.withFilter {
+        _.lineItems.forall(p)
+      }.flatMap {
+        _.lineItems
+      }.sortBy { lineItem =>
+        (lineItem.endTime.map(_.getMillis).get, lineItem.id)
+      }.distinct
     }
 
     for {
       adTech <- adTechTeam
       adOps <- adOpsTeam
-      gLabs <- gLabsTeam
+      gLabsCsv <- gLabsTeam
     } {
 
-      val expiredAdFeatures = adFeatures(_.isExpired)
+      val expiredAdFeatures = adFeatures(_.isExpiredRecently)
       val expiringAdFeatures = adFeatures(_.isExpiringSoon)
 
       if (expiredAdFeatures.nonEmpty || expiringAdFeatures.nonEmpty) {
+
+        val gLabs = gLabsCsv.split(",") map (_.trim())
 
         val htmlBody = {
           views.html.commercial.email.expiringAdFeatures(
@@ -36,7 +43,7 @@ object ExpiringAdFeaturesEmailJob extends Logging {
 
         EmailService.send(
           from = adTech,
-          to = Seq(gLabs, adOps),
+          to = gLabs :+ adOps,
           cc = Seq(adTech),
           subject = "Expiring Advertisement Features",
           htmlBody = Some(htmlBody))

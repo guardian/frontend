@@ -1,12 +1,14 @@
 define([
     'bonzo',
     'bean',
+    'fastdom',
     'common/utils/$',
     'common/modules/navigation/navigation',
     'helpers/fixtures'
 ], function(
     bonzo,
     bean,
+    fastdom,
     $,
     sut,
     fixtures
@@ -44,10 +46,14 @@ define([
             expect(sut.replaceAllSectionsLink).toHaveBeenCalled();
         });
 
-        it("should add mega nav menu", function() {
+        it("should add mega nav menu", function(done) {
+
             sut.addMegaNavMenu();
 
-            expect($('.js-mega-nav-placeholder').html()).toEqual('Nav');
+            fastdom.defer(1, function () {
+                expect($('.js-mega-nav-placeholder').html()).toEqual('Nav');
+                done();
+            });
         });
 
         it("should change all sections link", function() {
@@ -58,16 +64,18 @@ define([
             expect($('.js-navigation-header .js-navigation-toggle').attr("href")).toEqual("#nav-allsections");
         });
 
-        it("should toggle navigation class", function() {
+        it("should toggle navigation class", function(done) {
             var className = $('.js-navigation-toggle').attr('data-target-nav');
 
             expect($('.' + className).hasClass('navigation--collapsed')).toBeTruthy();
 
             sut.enableMegaNavToggle();
-
             bean.fire($('.js-navigation-toggle')[0], 'click');
 
-            expect($('.' + className).hasClass('navigation--expanded')).toBeTruthy();
+            fastdom.defer(1, function () {
+                expect($('.' + className).hasClass('navigation--expanded')).toBeTruthy();
+                done();
+            });
         });
     });
 });

@@ -6,12 +6,18 @@ define([
     'videojs',
     'videojsembed',
     'common/utils/_',
+    'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
+    'common/utils/template',
     'common/modules/analytics/omniture',
+    'common/modules/component',
     'common/modules/video/tech-order',
     'common/modules/video/events',
-    'text!common/views/ui/loading.html'
+    'common/modules/video/fullscreener',
+    'common/views/svgs',
+    'text!common/views/ui/loading.html',
+    'text!common/views/media/titlebar.html'
 ], function (
     bean,
     bonzo,
@@ -19,13 +25,21 @@ define([
     videojs,
     videojsembed,
     _,
+    $,
     config,
     deferToAnalytics,
+    template,
     Omniture,
+    Component,
     techOrder,
     events,
-    loadingTmpl
+    fullscreener,
+    svgs,
+    loadingTmpl,
+    titlebarTmpl
     ) {
+
+    var omniture = new Omniture(window.s);
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -46,25 +60,48 @@ define([
         return player;
     }
 
-    function fullscreener() {
-        var player = this,
-            clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0],
-            events = {
-                click: function (e) {
-                    this.paused() ? this.play() : this.pause();
-                    e.stop();
-                },
-                dblclick: function (e) {
-                    e.stop();
-                    this.isFullScreen() ? this.exitFullscreen() : this.requestFullscreen();
-                }
-            };
+    function addTitleBar() {
+        var data = {
+            webTitle: config.page.webTitle,
+            pageId: config.page.pageId,
+            icon: svgs('marque36icon')
+        };
+        $('.vjs-control-bar').after(template(titlebarTmpl, data));
+        bean.on($('.vjs-title-bar')[0], 'click', function (e) {
+            omniture.logTag({
+                tag: 'Embed | title bar',
+                sameHost: false,
+                samePage: false,
+                target: e.target
+            });
+        });
+    }
 
-        bonzo(clickbox)
-            .appendTo(player.contentEl());
+    function initEndSlate(player) {
+        var endSlate = new Component(),
+            endState = 'vjs-has-ended';
 
-        bean.on(clickbox, 'click', events.click.bind(player));
-        bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
+        endSlate.endpoint = config.page.externalEmbedHost + $('.js-gu-media--enhance').first().attr('data-end-slate');
+
+        endSlate.fetch(player.el(), 'html').then(function () {
+            $('.end-slate-container .fc-item__action').each(function (e) { e.href += '?CMP=embed_endslate'; });
+            bean.on($('.end-slate-container')[0], 'click', function (e) {
+                omniture.logTag({
+                    tag: 'Embed | endslate',
+                    sameHost: false,
+                    samePage: false,
+                    target: e.target
+                });
+            });
+        });
+
+        player.on('ended', function () {
+            bonzo(player.el()).addClass(endState);
+        });
+
+        player.on('playing', function () {
+            bonzo(player.el()).removeClass(endState);
+        });
     }
 
     function initPlayer() {
@@ -81,7 +118,7 @@ define([
 
             player = createVideoPlayer(el, {
                 controls: true,
-                autoplay: false,
+                autoplay: !!window.location.hash && window.location.hash === '#autoplay',
                 preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
                 plugins: {
                     embed: {
@@ -98,6 +135,9 @@ define([
                 var vol;
 
                 initLoadingSpinner(player);
+                addTitleBar();
+                initEndSlate(player);
+
                 events.bindGlobalEvents(player);
 
                 // unglitching the volume on first load
@@ -116,7 +156,7 @@ define([
                         events.bindContentEvents(player);
                     });
 
-                    new Omniture(window.s).go();
+                    omniture.go();
                 }
             });
 

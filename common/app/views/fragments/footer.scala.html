@@ -1,5 +1,4 @@
 @(page: model.MetaData, showNav: Boolean=true)(implicit request: RequestHeader)
-@import views.support.HasClassicVersion
 
 @import conf.Switches._
 @import org.joda.time.DateTime
@@ -9,7 +8,7 @@
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
 
-    @if(ReleaseMessageSwitch.isSwitchedOn && HasClassicVersion(page)) {
+    @if(ReleaseMessageSwitch.isSwitchedOn) {
         <div class="site-message--footer is-hidden js-footer-message" data-link-name="release message">
             <div class="gs-container">
                 <div class="site-message__inner">
@@ -93,8 +92,6 @@
                     about us</a></li>
                 <li class="colophon__item"><a data-link-name="uk : footer : contact us" target="_blank" href="/help/contact-us">
                     contact us</a></li>
-                <li class="colophon__item"><a data-link-name="uk : footer : feedback" target="_blank" href="https://www.surveymonkey.com/s/theguardian-uk-edition-feedback">
-                    feedback</a></li>
             }
 
             @if(currentEdition == Us) {
@@ -102,20 +99,18 @@
                     about us</a></li>
                 <li class="colophon__item"><a data-link-name="us : footer : contact us" target="_blank" href="/info/about-guardian-us/contact">
                     contact us</a></li>
-                <li class="colophon__item"><a data-link-name="us : footer : feedback" target="_blank" href="https://www.surveymonkey.com/s/theguardian-us-edition-feedback">
-                    feedback</a></li>
             }
             @if(currentEdition == Au) {
                 <li class="colophon__item"><a data-link-name="au : footer : about us" href="/info/about-guardian-australia">
                     about us</a></li>
                 <li class="colophon__item"><a data-link-name="au : footer : vacancies" href="/info/2014/aug/11/guardian-australia-vacancies">
                     vacancies</a></li>
-                <li class="colophon__item"><a data-link-name="au : footer : about us" target="_blank" href="/info">
-                    about us</a></li>
+                <li class="colophon__item"><a data-link-name="au : footer : information" target="_blank" href="/info">
+                    information</a></li>
                 <li class="colophon__item"><a data-link-name="au : footer : contact us" target="_blank" href="/info/2013/may/26/contact-guardian-australia">
                     contact us</a></li>
-                <li class="colophon__item"><a data-link-name="au : footer : feedback" target="_blank" href="https://www.surveymonkey.com/s/theguardian-au-edition-feedback">
-                    feedback</a></li>
+                <li class="colophon__item"><a data-link-name="au : footer : email sign-up" target="_blank" href="/info/2015/jan/30/guardian-australia-emails-delivered-to-your-inbox-subscribe-now">
+                    email sign-up</a></li>
             }
             @if(currentEdition != Au) {
                 <li class="colophon__item"><a data-link-name="complaints" href="/info/complaints-and-corrections">
@@ -125,11 +120,6 @@
             <li class="colophon__item"><a data-link-name="privacy" href="/help/privacy-policy">privacy policy</a></li>
             <li class="colophon__item"><a data-link-name="cookie" href="/info/cookies">cookie policy</a></li>
             <li class="colophon__item"><a data-link-name="securedrop" href="https://securedrop.theguardian.com/">securedrop</a></li>
-
-            @if(HasClassicVersion(page)) {
-                <li class="colophon__item hide-on-mobile">@fragments.mainSiteLink(page, label = "use current version")</li>
-                <li class="colophon__item mobile-only">@fragments.mainSiteLink(page, label = "desktop site")</li>
-            }
         }
         </ul>
         <div class="l-footer__misc">

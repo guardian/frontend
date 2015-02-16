@@ -104,7 +104,9 @@ object Frontend extends Build with Prototypes {
       dfpAxis,
       anorm,
       jdbc
-    )
+    ),
+    routesImport += "bindables._",
+    routesImport += "org.joda.time.LocalDate"
   )
 
   val faciaTool = application("facia-tool").dependsOn(commonWithTests).aggregate(common).settings(
@@ -163,8 +165,7 @@ object Frontend extends Build with Prototypes {
 
   // this app has a very limited set.
   // it is designed to get all other services (e.g. onwards) from PROD
-  val preview = application("preview").dependsOn(
-    withTests(common),
+  val standalone = application("standalone").dependsOn(
     article,
     facia,
     applications,
@@ -172,6 +173,14 @@ object Frontend extends Build with Prototypes {
     commercial,
     onward,
     weather
+  )
+
+  val preview = application("preview").dependsOn(withTests(common), standalone).settings(
+    routesImport += "scala.language.reflectiveCalls"
+  )
+
+  val training = application("training").dependsOn(withTests(common), standalone).settings(
+    routesImport += "scala.language.reflectiveCalls"
   )
 
   val integrationTests = Project("integrated-tests", file("integrated-tests"))
@@ -215,6 +224,7 @@ object Frontend extends Build with Prototypes {
     onward,
     archive,
     preview,
+    training,
     rss,
     weather
   )

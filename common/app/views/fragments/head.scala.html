@@ -6,8 +6,10 @@
 @fragments.metaData(metaData)
 @head
 
+@fragments.stylesheetsLoad(projectName)
+
 @fragments.javaScriptFirstSteps(metaData)
 
-@fragments.commonCssSetup(projectName)
+@fragments.stylesheetsUse()
 
 @fragments.javaScriptLaterSteps(metaData, curlPaths)

@@ -2,14 +2,12 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',
-    'common/modules/component',
-    'common/modules/ui/images'
+    'common/modules/component'
 ], function (
     config,
     mediator,
     register,
-    Component,
-    images
+    Component
 ) {
 
     var noop = function () {};
@@ -48,7 +46,8 @@ define([
     };
 
     TonalComponent.prototype.ready = function () {
-        images.upgrade();
+        var container = document.body.querySelector('.tone-feature');
+        mediator.emit('ui:images:upgradePicture', container);
         register.end('tonal-content');
     };
 

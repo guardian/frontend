@@ -109,7 +109,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 .l-footer__misc {
     padding-top: $gs-baseline * .5;
     padding-bottom: $gs-baseline * 1.5;
-    border-top: 1px solid fade-out(colour(neutral-4), .8);
+    border-top: 1px solid mix(colour(neutral-4), $c-footer-background, 20%);
 }
 
 .really-serious-copyright {

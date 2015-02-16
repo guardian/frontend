@@ -107,5 +107,11 @@ case class ContainerLayout(
     remainingCards.map(cardAndIndex => cardAndIndex.transformCard(f))
   )
 
-  def hasShowMore = remainingCards.nonEmpty
+  def hasMobileShowMore =
+    slices.flatMap(_.columns.flatMap(_.cards)).exists(_.hideUpTo.contains(Mobile))
+
+  def hasDesktopShowMore =
+    remainingCards.nonEmpty
+
+  def hasShowMore = hasDesktopShowMore || hasMobileShowMore
 }

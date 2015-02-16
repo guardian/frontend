@@ -51,13 +51,13 @@
                         <i class="i i-comment-anchor"></i>
                     </a>
                 </div>
-                @if(comment.profile.isStaff){
-                    <span class="d-comment__author-label">Staff</span>
-                }else { @if(comment.profile.isContributor) {
-                    <span class="d-comment__author-label">Contributor</span>}
-                }
+
+                @fragments.commentBadges(comment)
+
                 @if(comment.isHighlighted && !comment.isBlocked) {
-                    <div class="d-comment__pick" title="Guardian pick">Guardian Pick</div>
+                    <div class="d-comment__pick" title="Guardian pick">
+                        @fragments.inlineSvg("marque-36", "icon", Seq("d-comment__gu-icon")) Guardian Pick
+                    </div>
                 }
             </div>
         </div>

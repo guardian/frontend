@@ -11,14 +11,11 @@ object SectionTagLookUp {
 
   private val ExceptionsReverseMap = ExceptionsMap.reverseMap
 
-  private def useExceptions[A] =
-    const[Boolean, A](Switches.HardcodedSectionTagLookUp.isSwitchedOn) _
-
   def tagId(sectionId: String) = {
-    ExceptionsMap.get(sectionId).filter(useExceptions).getOrElse(s"$sectionId/$sectionId")
+    ExceptionsMap.getOrElse(sectionId, s"$sectionId/$sectionId")
   }
 
-  def sectionId(tagId: String) = ExceptionsReverseMap.get(tagId).filter(useExceptions) orElse (tagId.split('/').toList match {
+  def sectionId(tagId: String) = ExceptionsReverseMap.get(tagId) orElse (tagId.split('/').toList match {
     case a :: b :: Nil if a == b => Some(a)
     case _ => None
   })

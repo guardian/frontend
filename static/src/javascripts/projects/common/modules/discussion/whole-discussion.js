@@ -17,7 +17,41 @@ define([
 ) {
     // This size effectively determines how many calls this module needs to make.
     // Number of ajax calls = number of comments / comments per page
-    var commentsPerPage = 50;
+    var commentsPerPage = 50,
+        concurrentLimit = 3,
+        maximumCommentCount = 1000;
+
+    // A basic Promise queue based on: http://talks.joneisen.me/presentation-javascript-concurrency-patterns/refactoru-9-23-2014.slide#25
+    function runConcurrently(workFunction, items) {
+
+        return new Promise(function (resolve) {
+
+            function onComplete() {
+                workers--;
+                if (queue.length) {
+                    start(queue.shift());
+                } else if (!workers) {
+                    resolve();
+                }
+            }
+
+            function start(item) {
+                workers++;
+                workFunction.call(null, item).then(onComplete, onComplete);
+            }
+
+            if (!items || !items.length) {
+                resolve();
+                return;
+            }
+
+            var initialItems = items.splice(0, concurrentLimit),
+                queue = items,
+                workers = 0;
+
+            _.forEach(initialItems, start);
+        });
+    }
 
     function WholeDiscussion(options) {
         this.discussionId = options.discussionId;
@@ -33,10 +67,16 @@ define([
         // Add the first page of comments to the discussion object.
         this.storeCommentPage(resp, 1);
 
-        // Keep the container so it can be easily reduced.
-        this.discussionContainer = $('ul', bonzo.create(resp.commentsHtml)).empty();
+        // Keep a copy of the comments thread and discussion container so it can be easily reduced later.
+        this.discussionContainer = bonzo.create(resp.commentsHtml);
+        this.commentsThread = $('.d-thread--comments', this.discussionContainer).empty();
         this.postedCommentHtml = resp.postedCommentHtml;
         this.lastPage = resp.lastPage;
+
+        // Decide if this discussion is too big to load the remaining pages for.
+        if (resp.commentCount > maximumCommentCount) {
+            throw new Error('Discussion comment count too large');
+        }
 
         // Return a collection of the indices of the remaining pages.
         return _.range(2, this.lastPage + 1);
@@ -44,8 +84,10 @@ define([
 
     // Caches a bonzo object/array of comments, so that they can be re-assembled when the load is complete.
     WholeDiscussion.prototype.storeCommentPage = function (response, page) {
-        var comments = $('li', bonzo.create(response.commentsHtml));
+        var container = $('.d-thread--comments', bonzo.create(response.commentsHtml)),
+            comments = $('.d-comment--top-level', container);
         if (this.params.orderBy === 'newest') {
+
             comments = comments.map(function (comment) {
                 return comment;
             }).reverse();
@@ -76,15 +118,14 @@ define([
         });
     };
 
-    WholeDiscussion.prototype.loadRemainingPages = function (pages) {
-        var pagePromises = pages.map(this.loadPage.bind(this));
-        return Promise.all(pagePromises)
-        .then(function (responses) {
-            _.forEach(responses, function (response, index) {
-                // The first page has been loaded, and pages are not zero-based, so adjust the index.
-                this.storeCommentPage(response, index + 2);
-            }.bind(this));
+    WholeDiscussion.prototype.loadPageAndStore = function (pageNumber) {
+        return this.loadPage(pageNumber).then(function (response) {
+            this.storeCommentPage(response, pageNumber);
         }.bind(this));
+    };
+
+    WholeDiscussion.prototype.loadRemainingPages = function (pages) {
+        return runConcurrently(this.loadPageAndStore.bind(this), pages);
     };
 
     WholeDiscussion.prototype.makeDiscussionResponseObject = function () {
@@ -93,15 +134,15 @@ define([
             this.discussion.reverse();
         }
 
-        var comments = this.discussion.reduce(function (result, comments) {
+        this.discussion.reduce(function (result, comments) {
             result.append(comments);
             return result;
-        }, this.discussionContainer);
+        }, this.commentsThread);
 
         return {
             paginationHtml: '',
             postedCommentHtml: this.postedCommentHtml,
-            commentsHtml: comments.html(),
+            commentsHtml: this.discussionContainer.html(),
             lastPage: this.lastPage
         };
     };

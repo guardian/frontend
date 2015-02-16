@@ -3,10 +3,13 @@
 <div class="d-discussion @if(!page.isClosedForRecommendation){d-discussion--recommendations-open} u-cf"
     @page.switches.map{ switch => data-@switch.name="@switch.state" }>
 
-    <ul class="d-thread d-thread--top-level">
+    <ul class="d-thread d-thread--comments">
+        @userMessageForLargeDiscussion
+
         @page.comments.map { comment =>
             @fragments.comment(comment, page.isClosedForRecommendation, false)
         }
+
     </ul>
 
     <div class="discussion__pagination discussion__pagination--bottom">
@@ -15,3 +18,11 @@
 
     @fragments.reportComment()
 </div>
+
+@userMessageForLargeDiscussion = {
+    @if(page.isLargeDiscussion){
+        <div class="d-discussion__size-message">
+            Due to the large number of comments, they are being shown 100 per page.
+        </div>
+    }
+}
