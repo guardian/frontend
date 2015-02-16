@@ -75,6 +75,12 @@ object Switches {
   private lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
+  val DesktopOnlyContainersSwitch = Switch("Performance", "desktop-only-containers",
+    "If this switch is on, certain containers will only render on desktop breakpoints",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 4, 1)
+  )
+
   val TagPageSizeSwitch = Switch("Performance", "tag-page-size",
     "If this switch is on then we will request more items for larger tag pages",
     safeState = Off,
