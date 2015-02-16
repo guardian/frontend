@@ -266,7 +266,7 @@ case class FaciaContainer(
 
   def addShowMoreClasses = useShowMore && containerLayout.exists(_.hasShowMore)
 
-  def isDesktopOnly = DesktopOnlyContainers.all.contains(dataId)
+  def isDesktopOnly = Switches.DesktopOnlyContainersSwitch.isSwitchedOn && DesktopOnlyContainers.all.contains(dataId)
 }
 
 object Front extends implicits.Collections {
