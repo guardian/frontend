@@ -23,7 +23,7 @@ define([
         };
 
         function showBenefit(variant) {
-            $('.identity-wrapper').addClass('identity-wrapper--leftCol');
+            $('.identity-wrapper').addClass('identity-wrapper--leftcol');
             $('.identity-wrapper--benefits').removeClass('is-hidden');
             $('.identity-benefits__item--' + variant).removeClass('is-hidden');
         }

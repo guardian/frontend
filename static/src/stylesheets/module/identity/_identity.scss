@@ -383,13 +383,13 @@
 /* Benefits AB test
    ========================================================================== */
 
-.identity-wrapper--leftCol {
-   padding-bottom: 0;
+.identity-wrapper--leftcol {
+    padding-bottom: 0;
 
-   @include mq(leftCol) {
-       display: table-cell;
-       vertical-align: top;
-   }
+    @include mq(leftCol) {
+        display: table-cell;
+        vertical-align: top;
+    }
 }
 
 .identity-wrapper--benefits {
