@@ -174,7 +174,7 @@ define([
             },
 
             initRelated: function () {
-                if (!config.switches.lazyLoadOnwards || window.location.hash) {
+                if (window.location.hash) {
                     modules.transcludeRelated();
                 } else {
                     var relatedEl = qwery('.js-related')[0];
@@ -190,7 +190,7 @@ define([
 
             initPopular: function () {
                 if (!config.page.isFront) {
-                    if (!config.switches.lazyLoadOnwards || window.location.hash) {
+                    if (window.location.hash) {
                         modules.transcludePopular();
                     } else {
                         var onwardEl = qwery('.js-popular-trails')[0];
@@ -212,7 +212,7 @@ define([
             },
 
             initOnwardContent: function () {
-                if (!config.switches.lazyLoadOnwards || window.location.hash) {
+                if (window.location.hash) {
                     modules.transcludeOnwardContent();
                 } else {
                     var onwardEl = qwery('.js-onward')[0];

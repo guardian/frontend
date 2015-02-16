@@ -497,11 +497,6 @@ object Switches {
      safeState = Off, sellByDate = never
   )
 
-  val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
-    "If this is switched on then lazy load the related and series containers on content pages",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 17)
-  )
-
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
