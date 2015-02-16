@@ -27,7 +27,7 @@ define([
         eventsInitialised = false;
 
     function getRules(s) {
-        var rules = s ? s.cssRules || s.rules : mull;
+        var rules = s ? s.cssRules || s.rules : null;
         return rules && !_.isEmpty(rules) ? _.values(rules) : s;
     }
 
@@ -44,7 +44,6 @@ define([
                 .uniq()
                 .value();
 
-        console.log("RULES: " + rules.length)
         if (all) {
             return rules;
         } else {
