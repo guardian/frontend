@@ -21,9 +21,16 @@
 // overrides of current slices
 
 .fc-slice__item {
+    width: 100%;
     position: relative;
     padding-bottom: 0;
     margin-bottom: $gs-baseline;
+
+    @include mq(tablet) {
+        .has-flex & {
+            @include flex-display;
+        }
+    }
 
     + .fc-slice__item {
         @include vertical-item-separator;
@@ -32,17 +39,9 @@
         border-left: 0 !important;
     }
 
-    .has-flex & {
-        @include flex-display;
-    }
-
     &.l-list__item {
         margin-bottom: 0;
         padding-bottom: $gs-baseline;
-
-        &:last-child {
-            padding-bottom: 0;
-        }
     }
 }
 
@@ -160,10 +159,6 @@
         &.fc-item--has-cutout {
             .fc-item__container {
                 padding-bottom: gs-height(3) + $gs-baseline * 3;
-            }
-
-            .fc-trail__count__label {
-                display: none;
             }
         }
 

@@ -30,17 +30,21 @@
         color: colour(review-accent);
     }
 
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(review-background), 10%);
+    }
+
     .flyer__arrow-icon {
         fill: colour(review-accent);
     }
 
     .fc-item__kicker:after,
     .fc-sublink__kicker:after {
-        color: fade-out($c-headline, .8);
+        color: mix($c-headline, colour(review-background), 20%);
     }
 
     .fc-item__standfirst {
-        color: fade-out($c-headline, .4);
+        color: mix($c-headline, colour(review-background), 60%);
     }
 
     .fc-item__meta {

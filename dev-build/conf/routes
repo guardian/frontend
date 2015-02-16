@@ -84,6 +84,7 @@ GET         /most-read-day.json                                                 
 GET         /top-stories.json                                                                                        controllers.TopStoriesController.renderTopStories()
 GET         /top-stories/trails.json                                                                                 controllers.TopStoriesController.renderTrails()
 GET         /related/*path.json                                                                                      controllers.RelatedController.render(path)
+GET         /related/*path                                                                                           controllers.RelatedController.renderHtml(path)
 GET         /popular-in-tag/*tag.json                                                                                controllers.PopularInTag.render(tag)
 
 GET         /preference/edition/:edition                                                                             controllers.ChangeEditionController.render(edition)
@@ -250,8 +251,8 @@ GET         /commercial/masterclasses.json                                      
 
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.renderSoulmates
 
-GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffers.renderBook
-GET         /commercial/books/books.json                                                                             controllers.commercial.BookOffers.renderBooks
+GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffersController.renderBook
+GET         /commercial/books/books.json                                                                             controllers.commercial.BookOffersController.renderBooks
 
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.renderBestBuys
 GET         /commercial/money/savings/:savingsType                                                                   controllers.commercial.MoneyOffers.savings(savingsType)

@@ -49,9 +49,16 @@ define([
             'showDateHeader',
             'showLatestUpdate',
             'excludeFromRss',
-            'apiQuery']);
+            'apiQuery',
+            'importance']);
 
         populateObservables(this.meta, opts);
+
+        this.props = {
+            optionsImportance: [
+                'critical', 'important'
+            ]
+        };
 
         this.state = asObservableProps([
             'isOpen',

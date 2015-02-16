@@ -30,5 +30,8 @@
         "require": false,
         "define" : false,
         "s"      : false
-    }
+    },
+
+    // catch keyword (native promises)
+    "-W024": true
 }

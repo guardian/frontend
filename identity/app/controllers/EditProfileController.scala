@@ -90,12 +90,6 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
            avatarUploadStatus))))
   }
 
-  def renderMembershipTab() = authActionWithUser { implicit request =>
-    Cached(60)(JsonComponent(
-      "html" -> views.html.fragments.profile.membershipDetailsForm()
-    ))
-  }
-
   private def avatarUploadDataFor(user: User) = AvatarUploadData(AvatarSigningService.sign(AvatarData(user)))
 }
 

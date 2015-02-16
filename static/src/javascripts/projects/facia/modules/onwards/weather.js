@@ -20,6 +20,7 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/user-prefs',
@@ -32,6 +33,7 @@ define([
     $,
     ajax,
     config,
+    detect,
     mediator,
     template,
     userPrefs,
@@ -40,7 +42,6 @@ define([
 
     var $holder        = null,
         searchTool     = null,
-        city           = '',
         prefName       = 'weather-location';
 
     return {
@@ -87,8 +88,6 @@ define([
                 'id': location.id,
                 'city': location.city
             });
-
-            city = location.city;
         },
 
         getDefaultLocation: function () {
@@ -101,7 +100,6 @@ define([
                     .then(function (response) {
                         this.fetchWeatherData(response);
                         this.track(response.city);
-                        city = response.city;
                     }.bind(this))
                     .fail(function (err, msg) {
                         raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
@@ -114,7 +112,7 @@ define([
         },
 
         fetchWeatherData: function (location) {
-            return this.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json')
+            return this.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json?_edition=' + config.page.edition.toLowerCase())
                 .then(function (response) {
                     this.render(response, location.city);
                     this.fetchForecastData(location);
@@ -129,7 +127,6 @@ define([
 
         clearLocation: function () {
             userPrefs.remove(prefName);
-            city = '';
             searchTool.setInputValue();
         },
 
@@ -140,7 +137,7 @@ define([
         },
 
         fetchForecastData: function (location) {
-            return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json')
+            return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json?_edition=' + config.page.edition.toLowerCase())
                 .then(function (response) {
                     this.renderForecast(response);
                 }.bind(this))
@@ -167,14 +164,6 @@ define([
         },
 
         bindEvents: function () {
-            bean.on(document.body, 'click', '.js-weather-input', function (e) {
-                e.preventDefault();
-                this.toggleControls(true);
-            }.bind(this));
-            bean.on(document.body, 'click', '.js-close-location', function (e) {
-                e.preventDefault();
-                this.toggleControls(false);
-            }.bind(this));
             bean.on(document.body, 'click', '.js-toggle-forecast', function (e) {
                 e.preventDefault();
                 this.toggleForecast();
@@ -183,40 +172,8 @@ define([
             mediator.on('autocomplete:fetch', this.saveDeleteLocalStorage.bind(this));
         },
 
-        toggleControls: function (value) {
-            var $input    = $('.js-weather-input')[0],
-                $location = $('.weather__location'),
-                $close    = $('.js-close-location'),
-                $edit     = $('.js-edit-location');
-
-            if (value) {
-                $location.addClass('is-editing');
-                $input.setSelectionRange(0, $input.value.length);
-                $close.removeClass('u-h');
-                $edit.addClass('u-h');
-            } else {
-                $location.removeClass('is-editing');
-                searchTool.clear();
-                searchTool.setInputValue(city ? city : this.getUserLocation().city);
-                $close.addClass('u-h');
-                $edit.removeClass('u-h');
-            }
-        },
-
         toggleForecast: function () {
             $('.weather').toggleClass('is-expanded');
-        },
-
-        getUnits: function () {
-            if (config.page.edition === 'US') {
-                return 'imperial';
-            }
-
-            return 'metric';
-        },
-
-        getTemperature: function (weatherData) {
-            return weatherData.temperature[this.getUnits()];
         },
 
         addSearch: function () {
@@ -236,6 +193,10 @@ define([
             this.render = function (weatherData, city) {
                 this.attachToDOM(weatherData.html, city);
                 searchTool.bindElements($('.js-search-tool'));
+
+                if (detect.isBreakpoint({max: 'phablet'})) {
+                    window.scrollTo(0, 0);
+                }
             };
         },
 

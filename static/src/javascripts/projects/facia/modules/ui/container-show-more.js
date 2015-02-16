@@ -2,74 +2,173 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
+    'raven',
     'common/utils/_',
     'common/utils/$',
+    'common/utils/ajax-promise',
+    'common/utils/config',
     'common/utils/mediator',
     'common/modules/user-prefs'
 ], function (
     bonzo,
     fastdom,
     qwery,
+    raven,
     _,
     $,
+    ajax,
+    config,
     mediator,
     userPrefs
 ) {
-    var className = 'fc-show-more--hidden',
-        textHook = 'js-button-text',
-        prefName = 'section-states';
+    var HIDDEN_CLASS_NAME = 'fc-show-more--hidden',
+        TEXT_HOOK = 'js-button-text',
+        PREF_NAME = 'section-states',
+        BUTTON_SPINNER_CLASS = 'collection__show-more--loading',
+        ARTICLE_ID_ATTRIBUTE = 'data-id',
+        ITEM_SELECTOR = '.js-fc-item',
+        STATE_DISPLAYED = 'displayed',
+        STATE_HIDDEN = 'hidden',
+        STATE_LOADING = 'loading',
+        REQUEST_TIMEOUT = 5000;
 
     function setButtonState(button, state) {
         var text = button.text[state];
-        $('.' + textHook, button.$el).text(text);
-        button.$el.attr('data-link-name', state === 'displayed' ? 'less' : 'more')
-            .toggleClass('button--primary', state !== 'displayed')
-            .toggleClass('button--tertiary', state === 'displayed');
-        $('.i', button.$el).toggleClass('i-plus-white', state !== 'displayed')
-            .toggleClass('i-minus-blue', state === 'displayed');
+        button.$textEl.html(text);
+        button.$el.attr('data-link-name', state === STATE_DISPLAYED ? 'less' : 'more')
+            .toggleClass('button--primary', state !== STATE_DISPLAYED)
+            .toggleClass('button--tertiary', state === STATE_DISPLAYED)
+            .toggleClass(BUTTON_SPINNER_CLASS, state === STATE_LOADING);
+        button.$iconEl.toggleClass('i-plus-white', state !== STATE_DISPLAYED)
+            .toggleClass('i-minus-blue', state === STATE_DISPLAYED);
+        button.$container.toggleClass(HIDDEN_CLASS_NAME, state !== STATE_DISPLAYED);
+        button.state = state;
     }
 
     function updatePref(containerId, state) {
-        var prefs = userPrefs.get(prefName, {
+        var prefs = userPrefs.get(PREF_NAME, {
             type: 'session'
         }) || {};
-        if (state !== 'displayed') {
+        if (state !== STATE_DISPLAYED) {
             delete prefs[containerId];
         } else {
             prefs[containerId] = 'more';
         }
-        userPrefs.set(prefName, prefs, {
+        userPrefs.set(PREF_NAME, prefs, {
             type: 'session'
         });
     }
 
     function readPrefs(containerId) {
-        var prefs = userPrefs.get(prefName, {
+        var prefs = userPrefs.get(PREF_NAME, {
             type: 'session'
         });
-        return (prefs && prefs[containerId]) ? 'displayed' : 'hidden';
+        return (prefs && prefs[containerId]) ? STATE_DISPLAYED : STATE_HIDDEN;
     }
 
-    function showMore($container, button) {
+    function showMore(button) {
         fastdom.write(function () {
             /**
              * Do not remove: it should retain context for the click stream module, which recurses upwards through
              * DOM nodes.
              */
-            $container.toggleClass(className, button.state === 'displayed');
-            button.state = (button.state === 'hidden') ? 'displayed' : 'hidden';
-            setButtonState(button, button.state);
+            setButtonState(button, (button.state === STATE_HIDDEN) ? STATE_DISPLAYED : STATE_HIDDEN);
             updatePref(button.id, button.state);
         });
     }
 
-    function renderToDom($container, button) {
+    function renderToDom(button) {
         fastdom.write(function () {
-            $container.addClass(className)
+            button.$container.addClass(HIDDEN_CLASS_NAME)
                 .removeClass('js-container--fc-show-more')
-                .toggleClass(className, button.state === 'hidden');
+                .toggleClass(HIDDEN_CLASS_NAME, button.state === STATE_HIDDEN);
             // Initialise state, as it might be different from what was rendered server side based on localstorage prefs
             setButtonState(button, button.state);
+        });
+    }
+
+    function loadShowMore(pageId, containerId) {
+        return ajax({
+            url: '/' + pageId + '/show-more/' + containerId + '.json',
+            crossOrigin: true,
+            timeout: REQUEST_TIMEOUT
+        });
+    }
+
+    function dedupShowMore($container, html) {
+        var seenArticles = itemsByArticleId($container),
+            $html = bonzo.create(html);
+
+        $(ITEM_SELECTOR, $html).each(function (article) {
+            var $article = bonzo(article);
+            if ($article.attr(ARTICLE_ID_ATTRIBUTE) in seenArticles) {
+                $article.remove();
+            }
+        });
+
+        return $html;
+    }
+
+    function loadShowMoreForContainer(button) {
+        fastdom.write(function () {
+            setButtonState(button, STATE_LOADING);
+        });
+
+        loadShowMore(config.page.pageId, button.id).then(function (response) {
+            var dedupedShowMore,
+                html = response.html.trim();
+
+            if (html) {
+                dedupedShowMore = dedupShowMore(button.$container, html);
+            }
+
+            fastdom.write(function () {
+                if (dedupedShowMore) {
+                    button.$placeholder.replaceWith(dedupedShowMore);
+                }
+                setButtonState(button, STATE_DISPLAYED);
+                updatePref(button.id, button.state);
+            });
+            button.isLoaded = true;
+        }).catch(function (err) {
+            fastdom.write(function () {
+                setButtonState(button, STATE_HIDDEN);
+            });
+
+            showErrorMessage(button);
+            raven.captureException(new Error('Error retrieving show more (' + err + ')'));
+        });
+    }
+
+    function hideErrorMessage($errorMessage) {
+        fastdom.write(function () {
+            $errorMessage.addClass('show-more__error-message--invisible');
+        });
+    }
+
+    function showErrorMessage(button) {
+        if (button.$errorMessage) {
+            button.$errorMessage.remove();
+        }
+
+        button.$errorMessage = bonzo(bonzo.create(
+            '<div class="show-more__error-message">' +
+                'Sorry, failed to load more stories. Please try again.' +
+            '</div>'
+        ));
+
+        fastdom.write(function () {
+            button.$errorMessage.insertAfter(button.$el);
+
+            setTimeout(function () {
+                hideErrorMessage(button.$errorMessage);
+            }, 5000);
+        });
+    }
+
+    function itemsByArticleId($el) {
+        return _.groupBy(qwery(ITEM_SELECTOR, $el), function (el) {
+            return bonzo(el).attr(ARTICLE_ID_ATTRIBUTE);
         });
     }
 
@@ -85,37 +184,55 @@ define([
 
             button = {
                 $el: $el,
+                $container: $container,
+                $iconEl: $('.i', $el),
+                $placeholder: $('.js-show-more-placeholder', $container),
+                $textEl: $('.' + TEXT_HOOK, $el),
                 id: id,
                 text: {
                     hidden: $('.js-button-text', $el).text(),
-                    displayed: 'Less'
+                    displayed: 'Less',
+                    loading: 'Loading&hellip;'
                 },
-                state: state
+                state: state,
+                isLoaded: false,
+                $errorMessage: null
             };
+
+            if (state === STATE_DISPLAYED) {
+                loadShowMoreForContainer(button);
+            }
+
             return button;
         }
     }
 
-    return function () {
-        fastdom.read(function () {
-            var containers = qwery('.js-container--fc-show-more').map(bonzo),
-                buttons = _.map(containers, makeButton),
-                containersWithButtons = _.filter(_.zip(containers, buttons), function (pair) {
-                    return pair[1];
-                });
+    return {
+        itemsByArticleId: itemsByArticleId,
+        dedupShowMore: dedupShowMore,
+        init: function () {
+            fastdom.read(function () {
+                var containers = qwery('.js-container--fc-show-more').map(bonzo),
+                    buttons = _.filter(_.map(containers, makeButton));
 
-            _.forEach(containersWithButtons, function (pair) {
-                renderToDom(pair[0], pair[1]);
-            });
+                _.forEach(buttons, renderToDom);
 
-            mediator.on('module:clickstream:click', function (clickSpec) {
-                var pair = _.find(containersWithButtons, function (pair) {
-                    return pair[1].$el[0] === clickSpec.target;
+                mediator.on('module:clickstream:click', function (clickSpec) {
+                    var clickedButton = _.find(buttons, function (button) {
+                        return button.$el[0] === clickSpec.target;
+                    });
+                    if (clickedButton && clickedButton.state !== STATE_LOADING) {
+                        if (clickedButton.isLoaded) {
+                            showMore(clickedButton);
+                        } else {
+                            if (clickedButton.$errorMessage) {
+                                clickedButton.$errorMessage.hide();
+                            }
+                            loadShowMoreForContainer(clickedButton);
+                        }
+                    }
                 });
-                if (pair) {
-                    showMore(pair[0], pair[1]);
-                }
             });
-        });
+        }
     };
 });

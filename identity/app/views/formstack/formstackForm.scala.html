@@ -5,10 +5,11 @@
 <head>
     <meta charset="utf-8" />
     <title>@Html(metaData.webTitle)</title>
+    @fragments.stylesheetsLoad(projectName)
 
     @fragments.javaScriptFirstSteps(metaData)
 
-    @fragments.commonCssSetup(projectName)
+    @fragments.stylesheetsUse()
 
     @fragments.javaScriptLaterSteps(metaData)
 </head>
@@ -19,8 +20,6 @@
             <script src="https://www.formstack.com/forms/js.php?@formstackForm.formReference"></script>
         </div>
     </div>
-
-    @fragments.loadCss()
 
 </body>
 </html>

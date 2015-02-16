@@ -72,6 +72,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
           val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl,  mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
           element.child(0).after(html.toString())
           element.addClass("fig--has-shares")
+          element.addClass("fig--narrow-caption")
           // add extra margin if there is no caption to fit the share buttons
           val figcaption = element.getElementsByTag("figcaption")
           if(figcaption.length < 1) {
@@ -498,7 +499,7 @@ object RichLinkCleaner extends HtmlCleaner {
     val richLinks = document.getElementsByClass("element-rich-link")
     richLinks
       .addClass("element-rich-link--not-upgraded")
-      .attr("data-component", s"rich-link-${richLinks.length}")
+      .attr("data-component", "rich-link")
       .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.length} | ${index+1}") }
 
     document

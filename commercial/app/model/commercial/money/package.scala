@@ -31,7 +31,13 @@ package object money {
     protected def cleanResponseBody(body: String): String = body
 
     def loadAds(): Future[Seq[T]] = {
-      FeedReader.readSeqFromXml[T](FeedRequest(adTypeName, MoneysupermarketFeedsSwitch, url, timeout = 10.seconds))(parse)
+      val request = FeedRequest(
+        feedName = adTypeName,
+        switch = MoneysupermarketFeedsSwitch,
+        url = url,
+        timeout = 10.seconds
+      )
+      FeedReader.readSeqFromXml[T](request)(parse)
     }
   }
 

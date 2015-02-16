@@ -30,6 +30,7 @@ define([
         var lenientRules = cloneDeep(getRules());
         // more lenient rules, closer to the top start of the article
         lenientRules.minAbove = 300;
+        lenientRules.selectors[' > h2'].minAbove = 20;
         return lenientRules;
     }
 
