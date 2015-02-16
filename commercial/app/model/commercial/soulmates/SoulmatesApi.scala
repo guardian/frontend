@@ -35,7 +35,13 @@ trait SoulmatesApi {
   }
 
   def loadAds(): Future[Seq[Member]] = {
-    FeedReader.readSeqFromJson(FeedRequest(adTypeName, SoulmatesFeedSwitch, url, timeout = 10.seconds))(parse)
+    val request = FeedRequest(
+      feedName = adTypeName,
+      switch = SoulmatesFeedSwitch,
+      url = url,
+      timeout = 10.seconds
+    )
+    FeedReader.readSeqFromJson(request)(parse)
   }
 
 }

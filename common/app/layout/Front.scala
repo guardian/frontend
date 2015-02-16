@@ -182,15 +182,16 @@ object FaciaContainer {
     None,
     hideToggle = false,
     showTimestamps = false,
-    None
+    None,
+    useShowMore = true
   )
 
-  def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
+  def forStoryPackage(dataId: String, items: Seq[Trail], title: String, href: Option[String] = None) = {
     FaciaContainer(
       index = 2,
       container = Fixed(ContainerDefinition.fastForNumberOfItems(items.size)),
       config = ContainerDisplayConfig.withDefaults(CollectionConfigWithId(dataId, CollectionConfig.emptyConfig)),
-      collectionEssentials = CollectionEssentials(items take 8, Nil, Some(title), None, None, None),
+      collectionEssentials = CollectionEssentials(items take 8, Nil, Some(title), href, None, None),
       componentId = None
     ).withTimeStamps
   }
@@ -212,7 +213,8 @@ case class FaciaContainer(
   customClasses: Option[Seq[String]],
   hideToggle: Boolean,
   showTimestamps: Boolean,
-  dateLinkPath: Option[String]
+  dateLinkPath: Option[String],
+  useShowMore: Boolean
 ) {
   def transformCards(f: ContentCard => ContentCard) = copy(
     containerLayout = containerLayout.map(_.transformCards(f))
@@ -261,6 +263,10 @@ case class FaciaContainer(
     * can consume this data if they want to.
     */
   def showCPScottHeader = Switches.CPScottSwitch.isSwitchedOn && dataId == "uk/commentisfree/regular-stories"
+
+  def addShowMoreClasses = useShowMore && containerLayout.exists(_.hasShowMore)
+
+  def isDesktopOnly = Switches.DesktopOnlyContainersSwitch.isSwitchedOn && DesktopOnlyContainers.all.contains(dataId)
 }
 
 object Front extends implicits.Collections {

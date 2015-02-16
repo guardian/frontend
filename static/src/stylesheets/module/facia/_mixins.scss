@@ -62,10 +62,6 @@ $breakpoints: (
         width: 1px;
         height: 100%;
         border-left: 1px solid colour(neutral-5);
-
-        .container--dark-background & {
-            border-left-color: lighten(colour(neutral-1), 16%);
-        }
     }
 }
 

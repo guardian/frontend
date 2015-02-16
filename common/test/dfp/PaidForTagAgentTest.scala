@@ -4,7 +4,6 @@ import com.gu.contentapi.client.model.{Tag => ApiTag}
 import com.gu.facia.client.models.CollectionConfigJson
 import common.Edition.defaultEdition
 import common.editions.Us
-import conf.Switches.{EditionAwareLogoSlots, LegacyAdFeatureExpirySwitch}
 import model.Tag
 import org.joda.time.DateTime
 import org.scalatest.Inspectors._
@@ -363,7 +362,6 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
   it should "be true if sponsorship is not for a particular edition" in {
     val tags = Seq(toKeyword("culture/healthyliving"))
-    EditionAwareLogoSlots.switchOn()
     TestPaidForTagAgent.isSponsored(tags,
       maybeSectionId = Some("spinach"),
       maybeEdition = Some(defaultEdition)
@@ -372,7 +370,6 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
   it should "be false if sponsorship is for another edition" in {
     val tags = Seq(toKeyword("culture/media"))
-    EditionAwareLogoSlots.switchOn()
     TestPaidForTagAgent.isSponsored(tags,
       maybeSectionId = None,
       maybeEdition = Some(Us)
@@ -569,7 +566,6 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
   }
 
   it should "be true for a page with ad-feature tone and no logo" in {
-    LegacyAdFeatureExpirySwitch.switchOn()
     val tags = Seq(adFeatureTone)
     TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(true)
   }

@@ -20,6 +20,7 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/user-prefs',
@@ -32,6 +33,7 @@ define([
     $,
     ajax,
     config,
+    detect,
     mediator,
     template,
     userPrefs,
@@ -162,7 +164,7 @@ define([
         },
 
         bindEvents: function () {
-            bean.on(qwery('.js-toggle-forecast')[0], 'click', function (e) {
+            bean.on(document.body, 'click', '.js-toggle-forecast', function (e) {
                 e.preventDefault();
                 this.toggleForecast();
             }.bind(this));
@@ -191,6 +193,10 @@ define([
             this.render = function (weatherData, city) {
                 this.attachToDOM(weatherData.html, city);
                 searchTool.bindElements($('.js-search-tool'));
+
+                if (detect.isBreakpoint({max: 'phablet'})) {
+                    window.scrollTo(0, 0);
+                }
             };
         },
 

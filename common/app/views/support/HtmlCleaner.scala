@@ -499,7 +499,7 @@ object RichLinkCleaner extends HtmlCleaner {
     val richLinks = document.getElementsByClass("element-rich-link")
     richLinks
       .addClass("element-rich-link--not-upgraded")
-      .attr("data-component", s"rich-link-${richLinks.length}")
+      .attr("data-component", "rich-link")
       .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.length} | ${index+1}") }
 
     document

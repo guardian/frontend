@@ -3,20 +3,21 @@
 @import layout.FaciaContainer
 @import views.html.fragments.containers
 
-@container(stories: Seq[model.Content], title: String, dataId: String) = {
+@container(stories: Seq[model.Content], title: String, dataId: String, href: Option[String]) = {
     @containers.facia_cards.container(
-        FaciaContainer.forStoryPackage(dataId, stories, title)
+        FaciaContainer.forStoryPackage(dataId, stories, title, href)
     )(request)
 }
 
 @defining(Seq("related") ++ (if(content.isAdvertisementFeature) Seq("fc-container--advertisement-feature") else Nil)) { classes =>
     @if(related.hasStoryPackage) {
         <aside class="@classes.mkString(" ") more-on-this-story" role="complementary" aria-labelledby="related-content-head">
-            @container(related.storyPackage, "more on this story", "more-on-this-story")
+            @container(related.storyPackage, "more on this story", "more-on-this-story", href = None)
         </aside>
     } else {
         <aside class="@classes.mkString(" ") js-related hide-on-childrens-books-site" role="complementary" data-test-id="related-content">
-            @container(related.related, "related content", "related-content")
+        @* TODO progressive enhancement *@
+        @container(Nil, "related content >", "related-content", href = Some(s"related/${content.id}"))
         </aside>
     }
 }

@@ -26,7 +26,7 @@ object ForecastResponse {
 }
 
 case class ForecastResponse(
-  epochDateTime: Int,
+  epochDateTime: Long,
   weatherIcon: Int,
   weatherText: String,
   temperature: Temperatures
@@ -40,6 +40,6 @@ case class ForecastResponse(
 
   def hourString(implicit request: RequestHeader) = {
     val edition = Edition(request)
-    new DateTime(epochDateTime * 1000).withZone(edition.timezone).toString("HH:00")
+    new DateTime(epochDateTime * 1000L).withZone(edition.timezone).toString("HH:00")
   }
 }

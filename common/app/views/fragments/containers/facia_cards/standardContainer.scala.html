@@ -10,8 +10,8 @@
     <div class="@RenderClasses(Map(
         ("fc-container__body", true),
         ("fc-container--rolled-up-hide", true),
-        ("fc-show-more--hidden", true),
-        ("js-container--fc-show-more", true),
+        ("fc-show-more--hidden", containerDefinition.addShowMoreClasses),
+        ("js-container--fc-show-more", containerDefinition.addShowMoreClasses),
         ("fc-show-more--mobile-only", containerDefinition.hasMobileOnlyShowMore)
     ))"
          data-title="@Html(Localisation(containerDefinition.displayName getOrElse ""))"
@@ -20,10 +20,18 @@
             @slice(sliceWithCards, containerDefinition.index)
         }
 
-        @showMore(containerLayout.remainingCards, containerDefinition.index)
-
         @if(containerDefinition.hasShowMore) {
-            @showMoreButton(containerDefinition.displayName getOrElse "")
+            @if(containerDefinition.useShowMore) {
+                <div class="js-show-more-placeholder"></div>
+
+                @showMoreButton(containerDefinition.displayName getOrElse "")
+            } else {
+                @* Don't hide any items, for on tag pages, which are chronological *@
+                @showMore(
+                    containerDefinition.containerLayout.map(_.remainingCards).getOrElse(Nil),
+                    containerDefinition.index
+                )
+            }
         }
     </div>
 }

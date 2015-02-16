@@ -17,6 +17,9 @@
         }
         data-discussion-closed="@item.discussionSettings.isClosedForComments"
         data-discussion-url="@item.header.url.get(request)#comments"
+        @if(item.cutOut.isDefined || item.showTimestamp) {
+            data-discussion-hide-label="true"
+        }
     }
 data-link-name="@item.cardStyle.toneString | @{index + 1}"
     @item.id.map { id =>
@@ -53,7 +56,8 @@ data-test-id="facia-card"
                                 <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span></span></div>
                                 @image(
                                     fallbackImage.imageContainer,
-                                    inlineImage = containerIndex == 0 && index < 4
+                                    inlineImage = containerIndex == 0 && index < 4,
+                                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
                                 )
                             </div>
                         }
@@ -70,11 +74,19 @@ data-test-id="facia-card"
             }
 
             case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
-                @image(fallbackImage.imageContainer, inlineImage = containerIndex == 0 && index < 4)
+                @image(
+                    fallbackImage.imageContainer,
+                    inlineImage = containerIndex == 0 && index < 4,
+                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                )
             }
 
             case Some(InlineImage(imageContainer)) => {
-                @image(imageContainer, inlineImage = containerIndex == 0 && index < 4)
+                @image(
+                    imageContainer,
+                    inlineImage = containerIndex == 0 && index < 4,
+                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                )
             }
 
             case _ => { }
@@ -107,12 +119,14 @@ data-test-id="facia-card"
             <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
         }
 
-        @meta(item)
+        @if(item.showMeta) {
+            @meta(item)
+        }
     </div>
 
         @item.cutOut.map { case cutOut @ CutOut(altText, imageUrl, _) =>
         <div class="fc-item__avatar">
-            <div class="fc-item__avatar__media js-image-upgrade @cutOut.cssClass" data-src="@imageUrl"></div>
+            <img class="fc-item__avatar__media @cutOut.cssClass" src="@imageUrl">
         </div>
         }
 

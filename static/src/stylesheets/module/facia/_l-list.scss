@@ -1,9 +1,11 @@
 .l-list {
     width: 100%;
 
-    .has-flex-wrap & {
-        @include flex-display;
-        @include flex-wrap(wrap);
+    @include mq(tablet) {
+        .has-flex-wrap & {
+            @include flex-display;
+            @include flex-wrap(wrap);
+        }
     }
 }
 
@@ -47,21 +49,13 @@
                         border: 0;
                     }
                 }
-            }
 
-            .has-flex-wrap & {
-                @include mq(tablet) {
-                    @include flex-basis(100% / $column);
+                &:nth-last-child(-n+#{$column}) {
+                    padding-bottom: 0;
                 }
-            }
-        }
 
-        @for $row from 1 through 5 {
-            &.l-list--rows-#{$row} {
-                .l-list__item:nth-last-child(-n+#{$column}) {
-                    @include mq(tablet) {
-                        padding-bottom: 0;
-                    }
+                .has-flex-wrap & {
+                    @include flex-basis(100% / $column);
                 }
             }
         }

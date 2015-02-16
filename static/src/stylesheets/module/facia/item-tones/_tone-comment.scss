@@ -22,12 +22,12 @@
         color: colour(comment-default);
     }
 
-    .flyer__arrow-icon {
-        fill: colour(comment-default);
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(comment-background), 10%);
     }
 
-    .fc-item__meta {
-        background-color: fade-out(colour(comment-background), .5);
+    .flyer__arrow-icon {
+        fill: colour(comment-default);
     }
 
     .fc-item__standfirst,
