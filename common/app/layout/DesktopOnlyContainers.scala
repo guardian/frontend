@@ -9,10 +9,11 @@ object DesktopOnlyContainers {
   val WhatWereReading = "54d7dcce-93db-4d11-a0d0-0e6d69980918"
   val TakePart = "eaf2df82-f7b4-4d96-a681-db52be53c798"
   val People = "uk-alpha/people-in-the-news/feature-stories"
+  val PicturesAndVideo = "uk-alpha/special-other/special-story"
   val RobTestContainer = "e5737dab-cc0f-4ea2-bb6a-6992cb21ac8e"
 
   val all = Set(
-    InBrief,
+    PicturesAndVideo,
     WhatWereReading,
     TakePart,
     People,
