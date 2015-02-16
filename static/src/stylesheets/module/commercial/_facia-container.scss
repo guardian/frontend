@@ -129,7 +129,6 @@
     top: -5px;
 
     @include mq(leftCol) {
-        text-align: center;
         min-width: 54px;
     }
 }

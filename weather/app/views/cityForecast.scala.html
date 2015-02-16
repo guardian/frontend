@@ -2,7 +2,7 @@
 
 @import common.Edition
 
-@for((forecast, index) <- forecasts.zipWithIndex) {
+@for((forecast, index) <- forecasts.drop(1).zipWithIndex) {
     <li class="forecast__item forecast__item--@index">
         <p class="weather__desc">
             <span class="u-h">The temperature at</span>

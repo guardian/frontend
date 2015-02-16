@@ -47,13 +47,6 @@
  * Banner ads
  */
 
-.js-on {
-    .top-banner-ad-container--desktop.top-banner-ad-container--above-nav,
-    .ad-below-nav .ad-slot--top-below-nav {
-        display: none;
-    }
-}
-
 .top-banner-ad-container--mobile {
     background-color: #f0f0f0;
 }
@@ -71,7 +64,7 @@
         }
 
         .ad-slot__label {
-            width: 100%;
+            width: 970px;
         }
     }
 

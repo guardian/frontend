@@ -1,0 +1,10 @@
+@(env: String, body: String)
+
+@admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
+
+    <h1 class="page-header">Assets frequency graph</h1>
+
+    <div style="width: 100%">
+        @Html(body)
+    </div>
+}

@@ -42,5 +42,3 @@ GET         /form/:formReference                    @controllers.FormstackContro
 GET         /form/embed/:formReference              @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = true)
 
 GET         /et/subscribe/:subDefId                 @controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)
-
-GET         /membership.json                        @controllers.EditProfileController.renderMembershipTab

@@ -14,6 +14,7 @@ define([
     'common/modules/component',
     'common/modules/video/tech-order',
     'common/modules/video/events',
+    'common/modules/video/fullscreener',
     'common/views/svgs',
     'text!common/views/ui/loading.html',
     'text!common/views/media/titlebar.html'
@@ -32,6 +33,7 @@ define([
     Component,
     techOrder,
     events,
+    fullscreener,
     svgs,
     loadingTmpl,
     titlebarTmpl
@@ -58,27 +60,6 @@ define([
         return player;
     }
 
-    function fullscreener() {
-        var player = this,
-            clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0],
-            events = {
-                click: function (e) {
-                    this.paused() ? this.play() : this.pause();
-                    e.stop();
-                },
-                dblclick: function (e) {
-                    e.stop();
-                    this.isFullScreen() ? this.exitFullscreen() : this.requestFullscreen();
-                }
-            };
-
-        bonzo(clickbox)
-            .appendTo(player.contentEl());
-
-        bean.on(clickbox, 'click', events.click.bind(player));
-        bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
-    }
-
     function addTitleBar() {
         var data = {
             webTitle: config.page.webTitle,
@@ -100,7 +81,8 @@ define([
         var endSlate = new Component(),
             endState = 'vjs-has-ended';
 
-        endSlate.endpoint = $('.js-gu-media--enhance').first().attr('data-end-slate');
+        endSlate.endpoint = config.page.externalEmbedHost + $('.js-gu-media--enhance').first().attr('data-end-slate');
+
         endSlate.fetch(player.el(), 'html').then(function () {
             $('.end-slate-container .fc-item__action').each(function (e) { e.href += '?CMP=embed_endslate'; });
             bean.on($('.end-slate-container')[0], 'click', function (e) {
@@ -136,7 +118,7 @@ define([
 
             player = createVideoPlayer(el, {
                 controls: true,
-                autoplay: false,
+                autoplay: !!window.location.hash && window.location.hash === '#autoplay',
                 preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
                 plugins: {
                     embed: {

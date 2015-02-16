@@ -248,4 +248,8 @@ $show-more-icon-spacing: $base-size + 1;
         bottom: 0;
         left: $show-more-icon-spacing;
     }
+
+    .js-off & {
+        display: none;
+    }
 }

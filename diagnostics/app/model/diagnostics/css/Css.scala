@@ -7,15 +7,13 @@ object CssReport {
 }
 
 case class CssReport(
-  href: String,
   breakpoint: String,
-  className: String,
   contentType: String,
   selectors: Map[String, Boolean]
 ) {
   override def toString: String = {
     selectors.toList.map {
-      case (key: String, exists: Boolean) => s"css ; $key ; $exists ; $contentType ; $breakpoint ; $className $href"
+      case (key: String, exists: Boolean) => s"css ; $key ; $exists ; $contentType ; $breakpoint"
     }.mkString("\n")
   }
 }

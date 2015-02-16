@@ -62,6 +62,7 @@ define([
                         $node = bonzo(node),
                         commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
                         url = $node.attr('data-discussion-url') || getContentUrl(node),
+                        hideLabel = $node.attr('data-discussion-hide-label') === 'true',
                         $container,
                         meta,
                         html;
@@ -75,7 +76,7 @@ define([
                     html = template(templates[format] || defaultTemplate, {
                         url: url,
                         count: formatters.integerCommas(c.count),
-                        label: commentOrComments
+                        label: hideLabel ? '' : commentOrComments
                     });
 
                     meta = qwery('.js-item__meta', node);
@@ -120,7 +121,7 @@ define([
         }
 
         //Load new counts when more trails are loaded
-        mediator.on('modules:related:loaded', getCommentCounts.bind(null, qwery('.js-related')[0]));
+        mediator.on('modules:related:loaded', getCommentCounts);
     }
 
     return {

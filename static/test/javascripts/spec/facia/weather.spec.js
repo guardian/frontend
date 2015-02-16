@@ -14,6 +14,7 @@ define([
 
     return new Injector()
         .store('common/utils/config')
+        .store('common/utils/mediator')
         .require(['facia/modules/onwards/weather', 'mocks'], function (sut, mocks) {
             describe('Weather component', function () {
                 var container,
@@ -28,6 +29,7 @@ define([
                     localStorage.clear();
                     mocks.store['common/utils/config'].switches = {};
                     mocks.store['common/utils/config'].switches.weather = true;
+                    mocks.store['common/utils/config'].page.edition = 'uk';
                 });
 
                 afterEach(function () {
@@ -201,7 +203,7 @@ define([
                     mocks.store['common/utils/config'].page.weatherapiurl = '/weather/city';
 
                     sut.fetchWeatherData(data);
-                    expect(sut.getWeatherData).toHaveBeenCalledWith("/weather/city/1.json");
+                    expect(sut.getWeatherData).toHaveBeenCalledWith("/weather/city/1.json?_edition=uk");
                 });
 
                 it("should call render function after fetching the weather data", function (done) {
@@ -229,7 +231,7 @@ define([
 
                     var mockWeatherData = {
                             html: '<div class="weather js-weather">' +
-                                '<input class="js-weather-input" value="{{city}}"/>' +
+                                '<input class="js-search-tool-input" value="{{city}}"/>' +
                                 '<span class="js-weather-temp">4°C</span>' +
                                 '<span class="js-weather-icon inline-weather-31"></span>'
 
@@ -240,7 +242,7 @@ define([
 
                     $weather = $('.weather');
 
-                    expect($(".js-weather-input", $weather).val()).toEqual('London');
+                    expect($(".js-search-tool-input", $weather).val()).toEqual('London');
                     expect($(".js-weather-temp", $weather).text()).toEqual('4°C');
                     expect($(".inline-weather-31", $weather).length).toEqual(1);
                     expect(sut.bindEvents).toHaveBeenCalled();
@@ -248,7 +250,7 @@ define([
 
                     mockWeatherData = {
                         html: '<div class="weather js-weather">' +
-                            '<input class="js-weather-input" value="{{city}}"/>' +
+                            '<input class="js-search-tool-input" value="{{city}}"/>' +
                             '<span class="js-weather-temp">6°C</span>' +
                             '<span class="js-weather-icon inline-weather-12"></span>'
 
@@ -260,7 +262,7 @@ define([
                     $body.append(container);
 
                     sut.render(mockWeatherData, mockCity);
-                    expect($(".js-weather-input", $body).val()).toEqual('Sydney');
+                    expect($(".js-search-tool-input", $body).val()).toEqual('Sydney');
                     expect($(".js-weather-temp", $body).text()).toEqual('6°C');
                     expect($(".inline-weather-12", $body).length).toEqual(1);
                     expect(sut.bindEvents.calls.count()).toEqual(1);

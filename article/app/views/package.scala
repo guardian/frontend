@@ -16,6 +16,7 @@ object BodyCleaner {
         WitnessCleaner,
         new TagLinker(article),
         TableEmbedComplimentaryToP,
+        R2VideoCleaner(article),
         VideoEmbedCleaner(article),
         PictureCleaner(article),
         LiveBlogDateFormatter(article.isLiveBlog),

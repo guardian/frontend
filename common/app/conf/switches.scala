@@ -59,7 +59,6 @@ case class TimerSwitch(group: String,
 
   def isSwitchedOnAndActive: Boolean = {
     val active = activePeriods.exists(_.containsNow())
-    log.info(s"TimedSwitch $name switched on $isSwitchedOn active $active")
     isSwitchedOn && (environment.isNonProd || active)
   }
 }
@@ -76,6 +75,12 @@ object Switches {
   private lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
+  val DesktopOnlyContainersSwitch = Switch("Performance", "desktop-only-containers",
+    "If this switch is on, certain containers will only render on desktop breakpoints",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 4, 1)
+  )
+
   val TagPageSizeSwitch = Switch("Performance", "tag-page-size",
     "If this switch is on then we will request more items for larger tag pages",
     safeState = Off,
@@ -132,13 +137,13 @@ object Switches {
      safeState = On, sellByDate = never
   )
 
-  val AjaxRelatedContentSwitch = Switch("Performance", "ajax-related-content",
-    "If this switch is turned on then related be loaded via ajax and not inline. Also requires related-content switch to be on.",
+  val InlineCriticalCss = Switch("Performance", "inline-critical-css",
+    "If this switch is on critical CSS will be inlined into the head of the document.",
     safeState = On, sellByDate = never
   )
 
-  val InlineCriticalCss = Switch("Performance", "inline-critical-css",
-    "If this switch is on critical CSS will be inlined into the head of the document.",
+  val AsyncCss = Switch("Performance", "async-css",
+    "If this switch is on CSS will be loaded with media set to 'only x' and updated to 'all' when the stylesheet has loaded using javascript. Disabling it will use standard link elements.",
     safeState = On, sellByDate = never
   )
 
@@ -287,45 +292,16 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  val AdFeatureExpirySwitch = Switch("Commercial", "enable-expire-ad-features",
-    "If this switch is on, expired ad features will be redirected.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
-
-  val LegacyAdFeatureExpirySwitch = Switch("Commercial", "enable-expire-legacy-ad-features",
-    "If this switch is on, expired legacy ad features will be redirected.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
-
-  val EditionAwareLogoSlots = Switch("Commercial", "edition-aware-logo-slots",
-    "If this switch is on, logo slots will honour visitor's edition.",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 11))
-
   private def dateInFebruary(day: Int): Interval =
     new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
 
-  val AppleAdNetworkFrontSwitch = TimerSwitch("Commercial", "apple-ads-on-network-front",
+  val AppleAdNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-network-front",
     "If this switch is on, Apple ads will appear on the network front during active periods.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
-    activePeriods = Seq(
-      dateInFebruary(5),
-      dateInFebruary(7),
-      dateInFebruary(8),
-      dateInFebruary(10),
-      dateInFebruary(11),
-      dateInFebruary(12)
-    )
-  )
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1))
 
-  val AppleAdCultureFrontSwitch = TimerSwitch("Commercial", "apple-ads-on-culture-front",
+  val AppleAdCultureFrontSwitch = Switch("Commercial", "apple-ads-on-culture-front",
     "If this switch is on, Apple ads will appear on the culture front during active periods.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1),
-    activePeriods = Seq(
-      dateInFebruary(7),
-      dateInFebruary(8),
-      dateInFebruary(9),
-      dateInFebruary(11),
-      dateInFebruary(12)
-    )
-  )
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 1))
 
   // Monitoring
 
@@ -351,7 +327,7 @@ object Switches {
 
   val CssLogging = Switch("Monitoring", "css-logging",
     "If this is on, then a subset of clients will post css selector information for diagnostics.",
-    safeState = Off, new LocalDate(2015, 2, 28)
+    safeState = On, new LocalDate(2015, 2, 28)
   )
 
   val ThirdPartyEmbedTracking = Switch("Monitoring", "third-party-embed-tracking",
@@ -374,6 +350,11 @@ object Switches {
     "Fixtures and results container on football tag pages",
     safeState = On,
     sellByDate = never
+  )
+
+  val HideInteractiveUi = Switch("Feature", "hide-interactive-ui",
+    "If this is switched on interactives can be rendered without page furniture.",
+    safeState = On, sellByDate = new LocalDate(2015, 2, 28)
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
@@ -460,7 +441,7 @@ object Switches {
 
   val HistoryTags = Switch("Feature", "history-tags",
     "If this is switched on then personalised history tags are shown in the meganav",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1)
+    safeState = Off, sellByDate = never
   )
 
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
@@ -498,7 +479,7 @@ object Switches {
 
   val StocksWidgetSwitch = Switch("Feature", "stocks-widget",
     "If switched on, a stocks widget will be displayed on the business front",
-    safeState = On, sellByDate = new LocalDate(2015, 2, 16)
+    safeState = On, sellByDate = never
   )
 
   val DefaultOriginSwitch = Switch("Feature", "default-origin",
@@ -623,9 +604,4 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
   override def onStop() {
     Jobs.deschedule("SwitchBoardRefreshJob")
   }
-}
-
-// not really a switch, but I need to use this combination of switches in a number of place.
-object InlineRelatedContentSwitch {
-  def isSwitchedOn: Boolean = Switches.RelatedContentSwitch.isSwitchedOn && Switches.AjaxRelatedContentSwitch.isSwitchedOff
 }
