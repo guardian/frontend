@@ -1,5 +1,5 @@
 define([
-    'mock-lastmodified',
+    'mock/lastmodified',
     'utils/fetch-lastmodified'
 ], function (
     mock,

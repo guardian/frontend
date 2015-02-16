@@ -1,4 +1,8 @@
-define('mock-lastmodified', ['utils/mediator'], function (
+define([
+    'underscore',
+    'utils/mediator'
+], function (
+    _,
     mediator
 ) {
     var lastModified = {};

@@ -1,11 +1,12 @@
-/* global _: true */
 define([
     'knockout',
+    'underscore',
     'config',
     'fixed-containers',
     'dynamic-containers'
 ], function(
     ko,
+    _,
     pageConfig,
     fixedContainers,
     dynamicContainers

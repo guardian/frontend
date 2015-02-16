@@ -1,8 +1,9 @@
-/* globals _ */
 define([
+    'underscore',
     'utils/deep-get',
     'utils/parse-query-params'
 ], function (
+    _,
     deepGet,
     parseQueryParams
 ) {

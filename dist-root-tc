@@ -4,7 +4,7 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-./grunt-tc clean validate:sass validate:js test:unit compile emitAbTestInfo
+./grunt-tc clean validate:sass validate:js prepare test:unit compile emitAbTestInfo
 ./sbt-tc "project root" compile test dist
 
 echo "Disting everything."
