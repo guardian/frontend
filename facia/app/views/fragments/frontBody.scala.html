@@ -31,6 +31,9 @@
                 @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
 
                 @if(!isAdFeature) {
+                    <div class="fc-container fc-container--commercial-high">
+                    @fragments.commercial.commercialComponentHigh()
+                    </div>
                     <div class="fc-container fc-container--commercial">
                     @fragments.commercial.commercialComponent()
                     </div>
