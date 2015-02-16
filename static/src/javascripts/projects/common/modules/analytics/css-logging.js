@@ -39,7 +39,7 @@ define([
                 .flatten()
                 .map(getRules) // 2nd pass for rules nested in media queries
                 .flatten()
-                .map(function (s) { return s && s.selectorText; })
+                .map(function (r) { return r && r.selectorText; })
                 .compact()
                 .uniq()
                 .value();
