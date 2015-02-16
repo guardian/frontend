@@ -10,7 +10,6 @@ define([
     'common/utils/request-animation-frame',
     'common/utils/storage',
     'common/utils/to-array',
-    'common/modules/analytics/beacon',
     // Modules
     'common/modules/business/stocks',
     'facia/modules/onwards/geo-most-popular-front',
@@ -29,7 +28,6 @@ define([
     requestAnimationFrame,
     storage,
     toArray,
-    beacon,
     stocks,
     GeoMostPopularFront,
     ContainerToggle,
@@ -47,8 +45,8 @@ define([
 
             showContainerShowMore: function () {
                 mediator.addListeners({
-                    'modules:container:rendered': containerShowMore,
-                    'page:front:ready': containerShowMore
+                    'modules:container:rendered': containerShowMore.init,
+                    'page:front:ready': containerShowMore.init
                 });
             },
 
@@ -70,31 +68,6 @@ define([
                 }
             },
 
-            // temporary to check an 'older' iphone perf problem
-            iPhoneConfidenceCheck: function () {
-                if (config.switches.iphoneConfidence) {
-                    /* jshint undef: true */
-                    /* global guardian */
-                    mediator.on('page:front:ready', function () {
-                        if (guardian.isIphone6) {
-                            beacon.counts('iphone-6-end');
-                            setTimeout(function () {
-                                beacon.counts('iphone-6-timeout');
-                            }, 5000);
-                        }
-                        if (guardian.isIphone4) {
-                            if (guardian.inTestBucket) {
-                                beacon.counts('iphone-4-end-b');
-                                setTimeout(function () { beacon.counts('iphone-4-timeout-b'); }, 5000);
-                            } else {
-                                beacon.counts('iphone-4-end-a');
-                                setTimeout(function () { beacon.counts('iphone-4-timeout-a'); }, 5000);
-                            }
-                        }
-                    });
-                }
-            },
-
             showWeather: function () {
                 if (config.switches.weather) {
                     mediator.on('page:front:ready', function () {
@@ -113,7 +86,6 @@ define([
                 modules.upgradeMostPopularToGeo();
                 stocks();
                 modules.showWeather();
-                modules.iPhoneConfidenceCheck();
             }
             mediator.emit('page:front:ready');
         };

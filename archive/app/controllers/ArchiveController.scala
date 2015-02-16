@@ -14,6 +14,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   private val GoogleBot = """.*(Googlebot).*""".r
   private val CombinerSection = """^(www.theguardian.com/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+$""".r
   private val CombinerSectionRss = """^(www.theguardian.com/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+/rss$""".r
+  private val Guardian = """^www.theguardian.com/Guardian/(.*)$""".r
 
   def lookup(path: String) = Action.async{ implicit request =>
 
@@ -24,6 +25,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
       path match {
         case Gallery(gallery)             => redirectTo(gallery, "gallery")
         case Century(century)             => redirectTo(century, "century")
+        case Guardian(endOfUrl)           => redirectTo(s"www.theguardian.com/$endOfUrl", "guardian")
         case Lowercase(lower)             => redirectTo(lower, "lowercase")
 
         // Googlebot hits a bunch of really old combiners and combiner RSS
@@ -54,7 +56,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     case PathPattern(_, r1path) => destination contains r1path
     case _ => false
   }
- 
+
   private def destinationFor(path: String) = DynamoDB.destinationFor(path).map(_.filterNot { destination =>
       linksToItself(path, destination.location)
   })

@@ -2,7 +2,8 @@
   isShowcase: Boolean = false,
   isFeature: Boolean = false,
   isImageContent: Boolean = false,
-  url: Option[String] = None)
+  url: Option[String] = None,
+  isLightboxable: Boolean = false)
 
 @import views.support.{ImgSrc, Item620, Item940, Naked, Profile, SeoOptimisedContentImage, Showcase}
 
@@ -43,7 +44,7 @@
 
 @lightbox(picture: model.ImageContainer, upgradeProfile: Profile) = {
     @ImgSrc.imager(picture, upgradeProfile).map { imgSrc =>
-        @if(picture.isLightboxable) {
+        @if(isLightboxable) {
             <a href="@url#img-1" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
                 <div class="js-image-upgrade @if(isFeature && isShowcase){u-responsive-ratio u-responsive-ratio--letterbox}" data-src="@imgSrc">
                     @image(picture)

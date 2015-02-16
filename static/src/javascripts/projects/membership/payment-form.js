@@ -15,6 +15,7 @@ define([
     masker,
     stripeErrorMessages
 ) {
+    //TODO-benc this work needs to be swapped out for the form.js work found on membership coming up in a separate PR
     /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
     'use strict';
 
@@ -463,21 +464,13 @@ define([
         this.getElement('CREDIT_CARD_EXPIRY_YEAR')[0].selectedIndex = 0;
     };
 
-    StripePaymentForm.prototype.init = function (context, successCallback) {
-
+    StripePaymentForm.prototype.init = function (form, successCallback) {
+        this.context = form;
         this.successCallback = successCallback;
-
-        this.context = context || document.querySelector('.' + this.config.classes.STRIPE_FORM);
-
-        if (!this.context.className.match(this.config.classes.STRIPE_FORM)) {
-            this.context = $('.' + this.config.classes.STRIPE_FORM, this.context)[0];
-        }
 
         if (this.context) {
             this.domElementSetup();
-
             this.addListeners();
-
             stripe.setPublishableKey(this.PUBLIC_STRIPE_KEY);
         }
     };

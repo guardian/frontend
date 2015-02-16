@@ -70,7 +70,6 @@ trait Navigation {
   val video = SectionLink("video", "video", "Video", "/video")
   val guardianProfessional = SectionLink("guardian-professional", "guardian professional", "Guardian Professional", "/guardian-professional")
   val observer = SectionLink("observer", "the observer", "The Observer", "/observer")
-  val todaysPaper = SectionLink("news", "today's paper", "Today's Paper", "/theguardian")
 
   val health = SectionLink("society", "health", "Health", "/society/health")
 
@@ -191,6 +190,15 @@ trait Navigation {
 
   //Games
   val crosswords = SectionLink("crosswords", "crosswords", "Crosswords", "/crosswords")
+
+  // Today's paper
+  val todaysPaper = SectionLink("todayspaper", "today's paper", "Today's Paper", "/theguardian")
+  val editorialsandletters = SectionLink("todayspaper", "editorials and letters", "Editorials and Letters", "/theguardian/mainsection/editorialsandreply")
+  val obituaries = SectionLink("todayspaper", "obituaries", "Obituaries", "/tone/obituaries")
+  val g2 = SectionLink("todayspaper", "g2", "G2", "/theguardian/g2")
+  val weekend = SectionLink("todayspaper", "weekend", "Weekend", "/theguardian/weekend")
+  val theguide = SectionLink("todayspaper", "the guide", "The Guide", "/theguardian/theguide")
+  val saturdayreview = SectionLink("todayspaper", "saturday review", "Saturday Review", "/theguardian/guardianreview")
 
   val footballNav = Seq(
     SectionLink("football", "live scores", "Live scores", "/football/live"),

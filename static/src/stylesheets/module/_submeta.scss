@@ -30,11 +30,6 @@
     .submeta {
         border-top-width: 0;
     }
-
-    .container--rolled-up-hide & {
-        left: $gs-gutter;
-        margin-bottom: -$gs-baseline/1.5;
-    }
 }
 
 @mixin submeta-break-common {
