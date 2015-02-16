@@ -28,7 +28,7 @@ define([
 
     function getRules(s) {
         var rules = s ? s.cssRules || s.rules : null;
-        return rules && !_.isEmpty(rules) ? _.values(rules) : s;
+        return rules ? _.values(rules) : s;
     }
 
     function getSelectors(all) {
