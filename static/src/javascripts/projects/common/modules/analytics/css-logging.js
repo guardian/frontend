@@ -26,15 +26,19 @@ define([
         classNameInlined = 'js-inlined',
         eventsInitialised = false;
 
+    function valsOrNull(obj) {
+        return !obj || _.isEmpty(obj) ? null : _.values(obj);
+    }
+
     function getSelectors(all) {
         var rand,
             len,
             rules = _.chain(getInlineStylesheets())
-                .map(function (s) { return s.rules || s.cssRules; })
-                .compact()
-                .map(_.values)
+                .map(function (s) { return valsOrNull(s.cssRules || s.rules); })
                 .flatten()
-                .map(function (r) { return r && r.selectorText; })
+                .map(function (s) { return valsOrNull(s.cssRules || s.rules) || s; }) // 2nd pass to fetch rule nested in media queries
+                .flatten()
+                .map(function (s) { return s.selectorText; })
                 .compact()
                 .value();
 
