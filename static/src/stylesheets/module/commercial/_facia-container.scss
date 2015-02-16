@@ -105,7 +105,8 @@
         }
     }
     
-    .i-commercial-brand {
+    .i-commercial-brand,
+    .inline-commercial-brand {
         @include mq($until: leftCol) {
             opacity: .8;
         }
@@ -291,7 +292,8 @@
             .i-marque-36 {
                 display: none;
             }
-            .i-commercial-brand {
+            .i-commercial-brand,
+            .inline-commercial-brand {
                 opacity: .8;
             }
         }
