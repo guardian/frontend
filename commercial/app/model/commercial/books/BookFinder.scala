@@ -10,8 +10,8 @@ import play.api.libs.concurrent.Akka
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
 
-import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.concurrent.{ExecutionContext, Future}
 
 object BookFinder extends ExecutionContexts with Logging {
 
@@ -51,7 +51,7 @@ object BookFinder extends ExecutionContexts with Logging {
 }
 
 
-object MagentoService extends ExecutionContexts with Logging {
+object MagentoService extends Logging {
 
   private case class MagentoProperties(oauth: OAuthCalculator, urlPrefix: String)
 
@@ -71,6 +71,9 @@ object MagentoService extends ExecutionContexts with Logging {
       urlPrefix = s"http://$domain/$path"
     )
   }
+
+  private implicit val singleThreadExecutionContext: ExecutionContext =
+    Akka.system.dispatchers.lookup("play.akka.actor.single-thread")
 
   def findByIsbn(isbn: String): Future[Option[Book]] = {
 
