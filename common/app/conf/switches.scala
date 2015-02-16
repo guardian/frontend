@@ -473,7 +473,7 @@ object Switches {
 
   val StocksWidgetSwitch = Switch("Feature", "stocks-widget",
     "If switched on, a stocks widget will be displayed on the business front",
-    safeState = On, sellByDate = new LocalDate(2015, 2, 16)
+    safeState = On, sellByDate = never
   )
 
   val DefaultOriginSwitch = Switch("Feature", "default-origin",

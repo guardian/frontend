@@ -436,13 +436,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val signingKey = configuration.getMandatoryStringProperty("avatars.signing.key")
   }
 
-  object preview {
-    lazy val oauthCredentials: Option[OAuthCredentials] =
-      for {
-        oauthClientId <- configuration.getStringProperty("preview.oauth.clientid")
-        oauthSecret <- configuration.getStringProperty("preview.oauth.secret")
-        oauthCallback <- configuration.getStringProperty("preview.oauth.callback")
-      } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
+  object standalone {
+    lazy val oauthCredentials: Option[OAuthCredentials] = for {
+      oauthClientId <- configuration.getStringProperty("standalone.oauth.clientid")
+      // TODO needs the orElse fallback till we roll out new properties files
+      oauthSecret <- configuration.getStringProperty("standalone.oauth.secret").orElse(configuration.getStringProperty("preview.oauth.secret"))
+      oauthCallback <- configuration.getStringProperty("standalone.oauth.callback")
+    } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
   }
 
   object pngResizer {

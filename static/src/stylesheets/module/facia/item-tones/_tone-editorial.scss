@@ -33,6 +33,10 @@
         color: colour(editorial-accent);
     }
 
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(editorial-accent), 10%);
+    }
+
     .flyer__arrow-icon {
         fill: colour(editorial-accent);
     }
@@ -42,7 +46,7 @@
     }
 
     .fc-sublink__title:before {
-        border-color: fade-out($c-headline, .8);
+        border-color: mix($c-headline, colour(editorial-default), 20%);
     }
 }
 

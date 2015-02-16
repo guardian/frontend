@@ -33,9 +33,12 @@
  *  Everything below is pure magic. Trying to even out the different baseline of Guardian font.
  */
 .collection__show-more {
-    margin-top: $gs-baseline;
     line-height: 2.2;
     font-size: 14px;
+
+    @include mq(tablet) {
+        margin-top: $gs-baseline;
+    }
 
     .fc-show-more--hidden & {
         margin-top: 0;

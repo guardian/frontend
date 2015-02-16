@@ -44,7 +44,14 @@ object JobsApi extends ExecutionContexts with Logging {
   }
 
   def loadAds(): Future[Seq[Job]] = {
-    FeedReader.readSeq[Job](FeedRequest("Jobs", JobFeedSwitch, url, responseEncoding = Some("utf-8"), timeout = 30.seconds)) { body =>
+    val request = FeedRequest(
+      feedName = "Jobs",
+      switch = JobFeedSwitch,
+      url = url,
+      responseEncoding = Some("utf-8"),
+      timeout = 30.seconds
+    )
+    FeedReader.readSeq[Job](request) { body =>
       parse(XML.loadString(body.dropWhile(_ != '<')))
     }
   }

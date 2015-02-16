@@ -31,8 +31,12 @@
         color: colour(news-support-1);
     }
 
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(news-support-6), 10%);
+    }
+
     .fc-item__kicker--breaking-news {
-        color: #ffffff;
+        color: lighten(colour(live-default), 35%);
     }
 
     .fc-item__standfirst {
@@ -46,7 +50,7 @@
     .fc-item__kicker:after,
     .flyer__kicker:after,
     .fc-sublink__kicker:after {
-        color: mix(#ffffff, colour(news-support-6), 80%);
+        color: mix(#ffffff, colour(news-support-6), 20%);
     }
 
     .fc-sublink__title:before {

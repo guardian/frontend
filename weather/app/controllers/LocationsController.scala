@@ -32,9 +32,9 @@ object LocationsController extends Controller with ExecutionContexts with Loggin
     def getEncodedHeader(key: String) =
       request.headers.get(key).map(java.net.URLDecoder.decode(_, "latin1"))
 
-    val maybeCity = getEncodedHeader(CityHeader)
-    val maybeRegion = getEncodedHeader(RegionHeader)
-    val maybeCountry = getEncodedHeader(CountryHeader)
+    val maybeCity = getEncodedHeader(CityHeader).filter(_.nonEmpty)
+    val maybeRegion = getEncodedHeader(RegionHeader).filter(_.nonEmpty)
+    val maybeCountry = getEncodedHeader(CountryHeader).filter(_.nonEmpty)
 
     log.info(s"What is my city request with headers $maybeCity $maybeRegion $maybeCountry")
 
