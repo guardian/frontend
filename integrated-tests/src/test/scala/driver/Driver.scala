@@ -3,7 +3,7 @@ package driver
 import java.net.URL
 
 import driver.Config._
-import org.openqa.selenium.{JavascriptExecutor, WebDriver}
+import org.openqa.selenium.WebDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.remote.{DesiredCapabilities, RemoteWebDriver}
 import org.scalatest.selenium.WebBrowser
@@ -43,9 +43,6 @@ trait Driver extends Suite with WebBrowser with BeforeAndAfterAll with Retries {
   protected def countMatchingVisible(selector: String): Int = $(selector).count(_.isDisplayed)
 
   protected def first(selector: String): Element = $(selector).head
-
-  // http://stackoverflow.com/questions/12293158/page-scroll-up-or-down-in-selenium-webdriver-selenium-2-using-java
-  protected def scrollToBottom(): Unit = driver.asInstanceOf[JavascriptExecutor].executeScript("window.scrollTo(0,document.body.scrollHeight);")
 }
 
 
