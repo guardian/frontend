@@ -212,3 +212,35 @@ category: Common
     visibility: visible;
     opacity: 1;
 }
+
+// Testing static social on mobile
+
+.social-fixed--facebook {
+    background-color: colour(social-facebook);
+    width: 100%;
+    height: 40px;
+    color: #ffffff;
+    position: fixed;
+    bottom: -40px;
+    left: 0;
+    z-index: 999;
+    @include transition(bottom .4s ease);
+
+    .i-share-facebook--white {
+        height: 40px;
+        width: 40px;
+        float: left;
+    }
+}
+
+.social-fixed--show {
+    bottom: 0;
+}
+
+.share-text {
+    float: left;
+    @include fs-textSans(3);
+    font-weight: 700;
+    padding-top: $gs-baseline/4*3;
+    padding-left: $gs-gutter/5;
+}
