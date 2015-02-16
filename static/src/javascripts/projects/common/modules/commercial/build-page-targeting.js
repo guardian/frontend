@@ -104,7 +104,7 @@ define([
                 vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
 
-        if (kruxAbParam) {
+        if (kruxAbParam()) {
             pageTargets.x = krux.getSegments();
         } else {
             pageTargets.a = audienceScience.getSegments();
