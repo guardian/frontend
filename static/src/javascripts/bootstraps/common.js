@@ -45,6 +45,7 @@ define([
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/fonts',
+    'common/modules/ui/last-modified',
     'common/modules/ui/message',
     'common/modules/ui/relativedates',
     'common/modules/ui/smartAppBanner',
@@ -101,6 +102,7 @@ define([
     Dropdowns,
     fauxBlockLink,
     fonts,
+    LastModified,
     Message,
     RelativeDates,
     smartAppBanner,
@@ -435,6 +437,10 @@ define([
                 shareCount.init();
             },
 
+            initLastModified: function () {
+                LastModified.init();
+            },
+
             loadBreakingNews: function () {
                 if (config.switches.breakingNews) {
                     mediator.on('page:common:ready', breakingNews);
@@ -473,6 +479,7 @@ define([
             robust('c-event-listeners', modules.windowEventListeners);
             robust('c-breaking-news',   modules.loadBreakingNews);
             robust('c-shares',          modules.initShareCounts);
+            robust('c-last-modified',   modules.initLastModified);
             robust('c-block-link',      modules.initialiseFauxBlockLink);
             robust('c-iframe',          modules.checkIframe);
             robust('c-tabs',            modules.showTabs);
