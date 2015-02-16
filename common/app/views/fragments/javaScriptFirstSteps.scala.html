@@ -57,6 +57,52 @@
     data-cache-file-hinted-auto-woff="@Static("fonts/GuardianTextSansWebAutoHinted.woff.json")"
     data-cache-file-hinted-auto-ttf="@Static("fonts/GuardianTextSansWebAutoHinted.ttf.json")"></style>
 
+    <script>
+        var isIphone4 = false;
+    </script>
+
+@if(IphoneConfidence.isSwitchedOn && Seq("uk", "us", "au").contains(item.id)) {
+
+    @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
+    @* also delete iPhoneConfidenceCheck inside of facia.js *@
+
+    @* see http://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions *@
+    <script>
+
+        function logDevice(model, os) {
+            (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-' + model + '-ios' + os + '-start.gif';
+
+            setTimeout(function() {
+                (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-' + model + '-ios' + os + '-after-5.gif';
+            }, 5000);
+
+            setTimeout(function() {
+                (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-' + model + '-ios' + os + '-after-10.gif';
+            }, 10000);
+        }
+
+        if (navigator.platform === 'iPhone') {
+
+        var iPhoneVersionRegex = /.*iPhone OS ([678])_\d+/;
+
+        if (iPhoneVersionRegex.test(navigator.userAgent)) {
+
+            var osVersion = iPhoneVersionRegex.exec(navigator.userAgent)[1];
+            var isIphone6 = ( screen.width === 375 && screen.height === 667 ) || ( screen.width === 414 && screen.height === 736 ) ;
+            isIphone4 = screen.width === 320 && screen.height === 480 && window.devicePixelRatio > 1 ;
+
+            if ( isIphone6 ) {
+                logDevice ( '6', osVersion)
+            }
+
+            if ( isIphone4 ) {
+                logDevice ( '4', osVersion)
+            }
+        }
+        }
+    </script>
+}
+
 <script id="gu">
 
     if (!Function.prototype.bind) {
@@ -100,6 +146,14 @@
     }
 
     var isOlderDevice = (function(){
+
+        @if(IphoneConfidence.isSwitchedOn) {
+            if (isIphone4) {
+                return true;
+            }
+        }
+
+
         @* I'm intentionally being a bit over zealous in the detection department here *@
         if (navigator.platform === 'iPhone' || navigator.platform === 'iPad' || navigator.platform === 'iPod') {
             @*
@@ -207,45 +261,3 @@
     document.documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
 
 </script>
-
-@if(IphoneConfidence.isSwitchedOn && Seq("uk", "us", "au").contains(item.id)) {
-
-    @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
-    @* also delete iPhoneConfidenceCheck inside of facia.js *@
-
-    @* see http://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions *@
-    <script>
-
-        function logDevice(model, os) {
-            (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-' + model + '-ios' + os + '-start.gif';
-
-            setTimeout(function() {
-                (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-' + model + '-ios' + os + '-after-5.gif';
-            }, 5000);
-
-            setTimeout(function() {
-                (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-' + model + '-ios' + os + '-after-10.gif';
-            }, 10000);
-        }
-
-        if (navigator.platform === 'iPhone') {
-
-            var iPhoneVersionRegex = /.*iPhone OS ([678])_\d+/;
-
-            if (iPhoneVersionRegex.test(navigator.userAgent)) {
-
-                var osVersion = iPhoneVersionRegex.exec(navigator.userAgent)[1];
-                var isIphone6 = ( screen.width === 375 && screen.height === 667 ) || ( screen.width === 414 && screen.height === 736 ) ;
-                var isIphone4 = screen.width === 320 && screen.height === 480 && window.devicePixelRatio > 1 ;
-
-                if ( isIphone6 ) {
-                    logDevice ( '6', osVersion)
-                }
-
-                if ( isIphone4 ) {
-                    logDevice ( '4', osVersion)
-                }
-            }
-        }
-    </script>
-}
