@@ -20,7 +20,7 @@ object BookFinder extends ExecutionContexts with Logging {
   private final val circuitBreaker = new CircuitBreaker(
     scheduler = Akka.system.scheduler,
     maxFailures = 10,
-    callTimeout = 4.seconds,
+    callTimeout = 2.seconds,
     resetTimeout = 1.minute
   )
 
@@ -82,7 +82,7 @@ object MagentoService extends Logging {
       val request = FeedRequest(
         feedName = "Book Lookup",
         url = Some(s"${props.urlPrefix}/$isbn"),
-        timeout = 5.seconds,
+        timeout = 3.seconds,
         switch = GuBookshopFeedsSwitch)
 
       FeedReader.read(request,
