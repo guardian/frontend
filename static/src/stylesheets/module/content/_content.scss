@@ -411,7 +411,9 @@
     color: colour(news-default);
     cursor: pointer;
 
-    &:hover {
+    &:hover,
+    &:active,
+    &:focus {
         text-decoration: underline;
     }
 }
