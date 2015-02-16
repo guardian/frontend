@@ -24,11 +24,7 @@
 
                 @defining(faciaPage.front.containers) { collections =>
                     @collections.map { containerDefinition =>
-                        @if(containerDefinition.isDesktopOnly) {
-                            <div class="js-desktop-container-placeholder" data-container-id="@containerDefinition.dataId"></div>
-                        } else {
-                            @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
-                        }
+                        @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
                     }
                 }
 
