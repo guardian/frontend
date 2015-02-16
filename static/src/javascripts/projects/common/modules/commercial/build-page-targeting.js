@@ -78,7 +78,7 @@ define([
             var kasTest = ab.getParticipations().KruxAudienceScience;
 
             return kasTest && kasTest.variant === 'variant';
-        }
+        };
 
     return function (opts) {
         var win         = (opts || {}).window || window,

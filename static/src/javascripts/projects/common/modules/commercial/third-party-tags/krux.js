@@ -1,7 +1,7 @@
 define([
     'common/utils/config',
     'common/utils/cookies',
-    'common/utils/storage',
+    'common/utils/storage'
 ], function (
     config,
     cookies,
