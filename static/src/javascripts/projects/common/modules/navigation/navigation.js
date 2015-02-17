@@ -21,7 +21,9 @@ define([
 
             if (detect.isIOS() && detect.getUserAgent.version > 5) {
                 // crashes mobile safari < 6, so we add it here after detection
-                $('.navigation__scroll').css({'-webkit-overflow-scrolling': 'touch'});
+                fastdom.write(function () {
+                    $('.navigation__scroll').css({'-webkit-overflow-scrolling': 'touch'});
+                });
             }
         },
 
