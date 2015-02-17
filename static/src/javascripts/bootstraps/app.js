@@ -7,7 +7,6 @@ define([
     'common/utils/user-timing',
     'bootstraps/article',
     'bootstraps/common',
-    'bootstraps/football',
     'bootstraps/gallery',
     'bootstraps/image-content',
     'bootstraps/liveblog',
@@ -25,7 +24,6 @@ define([
     userTiming,
     article,
     common,
-    football,
     gallery,
     imageContent,
     liveBlog,
@@ -97,7 +95,10 @@ define([
             }
 
             if (config.page.section === 'football') {
-                bootstrapContext('footbal', football);
+                console.log(config.page.section);
+                require(['bootstraps/football'], function (football) {
+                    bootstrapContext('footbal', football);
+                });
             }
 
             if (config.page.section === 'sport') {
