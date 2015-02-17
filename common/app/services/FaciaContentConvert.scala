@@ -21,7 +21,7 @@ object FaciaContentConvert {
       frontendContent.byline,
       showByLine = false,
       kicker = None,
-      imageCutout = ImageCutout(false, None, None, None),
+      imageCutout = None,
       showBoostedHeadline = false,
       showQuotedHeadline = false)
 

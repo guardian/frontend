@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import com.gu.facia.api.models.CollectionConfig
 import common.FaciaMetrics._
 import common._
 import common.editions.EditionalisedSections
@@ -10,6 +10,7 @@ import conf.Switches._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
+import model.facia.PressedCollection
 import performance.MemcachedAction
 import play.api.libs.json.Json
 import play.api.mvc._
@@ -17,6 +18,7 @@ import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
 import slices.Container
 import views.html.fragments.containers.facia_cards.container
+import implicits.FaciaContentImplicits._
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -89,7 +91,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     successful(Cached(60)(Found(LinkTo(Editionalise(s"/$path", request)))))
   }
 
-  private def withFaciaPage(path: String)(f: FaciaPage => Result): Future[Result] = {
+  private def withFaciaPage(path: String)(f: PressedPage => Result): Future[Result] = {
     if (ConfigAgent.shouldServeFront(path)) {
       for {
         maybeFront <- frontJson.get(path)
@@ -115,15 +117,15 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       case Some(faciaPage) =>
         Cached(faciaPage) {
           if (request.isRss)
-            Ok(TrailsToRss(
-              faciaPage,
-              faciaPage.collections
-                .filterNot(_._1.config.excludeFromRss.exists(identity))
-                .map(_._2)
-                .flatMap(_.items)
-                .toSeq
-                .distinctBy(_.id))
-            ).as("text/xml; charset=utf-8")
+              NotImplemented
+//            Ok(TrailsToRss(
+//              faciaPage,
+//              faciaPage.collections
+//                .filterNot(_.config.excludeFromRss)
+//                .flatMap(_.all)
+//                .toSeq
+//                .distinctBy(_.id))
+//            ).as("text/xml; charset=utf-8")
           else if (request.isJson)
             JsonFront(faciaPage)
           else if (AdFeatureExpirySwitch.isSwitchedOn && faciaPage.isExpiredAdvertisementFeature)
@@ -147,13 +149,13 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       getPressedCollection(id).map { collectionOption =>
         collectionOption.map { collection =>
           Cached(60) {
-            val config = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.emptyConfig)
+            val config = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
 
             val containerDefinition = FaciaContainer(
               1,
               Container.fromConfig(config),
               CollectionConfigWithId(id, config),
-              CollectionEssentials.fromCollection(collection)
+              CollectionEssentials.fromPressedCollection(collection)
             )
 
             val html = container(containerDefinition, FaciaPage.defaultFaciaPage.frontProperties)
@@ -183,22 +185,22 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   private object JsonCollection{
-    def apply(html: Html, collection: Collection)(implicit request: RequestHeader) = JsonComponent(
+    def apply(html: Html, collection: PressedCollection)(implicit request: RequestHeader) = JsonComponent(
       "html" -> html
     )
   }
 
   private object JsonFront{
-    def apply(faciaPage: FaciaPage)(implicit request: RequestHeader) = JsonComponent(
+    def apply(faciaPage: PressedPage)(implicit request: RequestHeader) = JsonComponent(
       "html" -> views.html.fragments.frontBody(faciaPage),
       "config" -> Json.parse(views.html.fragments.javaScriptConfig(faciaPage).body)
     )
   }
 
-  private def getPressedCollection(collectionId: String): Future[Option[Collection]] =
+  private def getPressedCollection(collectionId: String): Future[Option[PressedCollection]] =
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
       frontJson.get(path).map(_.flatMap{ faciaPage =>
-        faciaPage.collections.find{ case (c, col) => c.id == collectionId}.map(_._2)
+        faciaPage.collections.find{ c => c.id == collectionId}
       })
     }.getOrElse(Future.successful(None))
 
@@ -208,8 +210,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       getPressedCollection(id).map { collectionOption =>
           collectionOption.map { collection =>
               Cached(60) {
-                val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.emptyConfig)
-                  Ok(TrailsToRss(config.displayName, collection.items)).as("text/xml; charset=utf8")
+                val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
+                  Ok("Gone").as("text/xml; charset=utf8")
               }
           }.getOrElse(ServiceUnavailable)
       }

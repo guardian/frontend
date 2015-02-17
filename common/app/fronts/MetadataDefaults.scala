@@ -1,7 +1,9 @@
 package fronts
 
+import com.gu.facia.api.models.FaciaContent
 import model.Content
 import views.support.{CardStyle, Comment, Podcast}
+import implicits.FaciaContentImplicits._
 
 /** TODO this needs to be moved to Facia scala client & be integrated with Facia */
 object MetadataDefaults {
@@ -39,6 +41,22 @@ object MetadataDefaults {
     )
 
     case _ if content.isVideo => Defaults + ("showMainVideo" -> true)
+
+    case _ => Defaults
+  }
+
+  def apply(faciaContent: FaciaContent) = CardStyle(faciaContent) match {
+    case _ if faciaContent.isCartoon => Defaults ++ Map(
+      "showByline" -> true
+    )
+
+    case Comment => Defaults ++ Map(
+      ("showByline", true),
+      ("showQuotedHeadline", true),
+      ("imageCutoutReplace", true)
+    )
+
+    case _ if faciaContent.isVideo => Defaults + ("showMainVideo" -> true)
 
     case _ => Defaults
   }

@@ -1,20 +1,22 @@
 package model
 
+import com.gu.facia.api.models.FaciaContent
 import conf.Switches
+import implicits.FaciaContentImplicits._
 
 object FaciaDisplayElement {
-  def fromTrail(trail: Trail): Option[FaciaDisplayElement] = {
-    (trail, trail.mainVideo) match {
+  def fromTrail(faciaContent: FaciaContent): Option[FaciaDisplayElement] = {
+    (faciaContent, faciaContent.mainVideo) match {
       case (other: Content, Some(videoElement)) if other.showMainVideo =>
         Some(InlineVideo(
           videoElement,
           other.webTitle,
           EndSlateComponents.fromContent(other).toUriPath,
-          InlineImage.fromTrail(trail)
+          InlineImage.fromFaciaContent(faciaContent)
         ))
       case (content: Content, _) if content.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
         Some(CrosswordSvg(content.id))
-      case _ => InlineImage.fromTrail(trail)
+      case _ => InlineImage.fromFaciaContent(faciaContent)
     }
   }
 }
@@ -29,13 +31,14 @@ case class InlineVideo(
 ) extends FaciaDisplayElement
 
 object InlineImage {
-  def fromTrail(trail: Trail): Option[InlineImage] = if (!trail.imageHide) {
-    trail.trailPicture(5, 3) map { picture =>
-      InlineImage(picture)
+  def fromFaciaContent(faciaContent: FaciaContent): Option[InlineImage] =
+    if (!faciaContent.imageHide) {
+      faciaContent.trailPicture(5, 3) map { picture =>
+        InlineImage(picture)
+      }
+    } else {
+      None
     }
-  } else {
-    None
-  }
 }
 
 case class InlineImage(imageContainer: ImageContainer) extends FaciaDisplayElement

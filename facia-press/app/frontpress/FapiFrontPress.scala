@@ -7,13 +7,14 @@ import com.gu.facia.api.contentapi.ContentApi.AdjustSearchQuery
 import com.gu.facia.api.models.{Collection, _}
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
-import common.{ExecutionContexts, Logging}
-import conf.Configuration
+import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
+import common.{Edition, ExecutionContexts, Logging}
+import conf.{LiveContentApi, Configuration}
 import contentapi.QueryDefaults
-import model.facia.{PressedCollection, PressedFront}
-import model.{FrontProperties, SeoData}
+import model.facia.PressedCollection
+import model.{PressedPage, FrontProperties, SeoData}
 import play.api.libs.json._
-import services.S3FrontsApi
+import services.{ConfigAgent, S3FrontsApi}
 
 import scala.concurrent.Future
 
@@ -59,6 +60,7 @@ object FapiFrontPress extends TestClient with QueryDefaults with Logging {
 
   private def getBackfill(collection: Collection): Response[List[FaciaContent]] =
     collection
+      .collectionConfig
       .apiQuery
       .map { query =>
       FAPI.backfill(query, collection, apiQuery)}
@@ -72,16 +74,76 @@ object FapiFrontPress extends TestClient with QueryDefaults with Logging {
       throw new IllegalStateException(s"There are no collections for path $path")
     }
 
-  def getPressedFrontForPath(path: String): Response[PressedFront] = {
+  def getPressedFrontForPath(path: String): Response[PressedPage] = {
     val collectionIds = getCollectionIdsForPath(path)
     collectionIds
       .flatMap(c => Response.traverse(c.map(generateCollectionJsonFromFapiClient)))
-      .map(result => PressedFront(path, SeoData.empty, FrontProperties.empty, result))
+      .flatMap(result =>
+        Response.Async.Right(getFrontSeoAndProperties(path).map{
+          case (seoData, frontProperties) => PressedPage(path, seoData, frontProperties, result)
+        }))
   }
 
   def pressLiveByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
       .map { pressedFront => S3FrontsApi.putLivePressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
       .asFuture.map(_.fold(_ => (), _ => ()))
+
+  private def getFrontSeoAndProperties(path: String): Future[(SeoData, FrontProperties)] =
+    for {
+      itemResp <- getCapiItemResponseForPath(path)
+    } yield {
+      val seoFromConfig = ConfigAgent.getSeoDataJsonFromConfig(path)
+      val seoFromPath = SeoData.fromPath(path)
+
+      val navSection: String = seoFromConfig.navSection
+        .orElse(itemResp.flatMap(getNavSectionFromItemResponse))
+        .getOrElse(seoFromPath.navSection)
+      val webTitle: String = seoFromConfig.webTitle
+        .orElse(itemResp.flatMap(getWebTitleFromItemResponse))
+        .getOrElse(seoFromPath.webTitle)
+      val title: Option[String] = seoFromConfig.title
+      val description: Option[String] = seoFromConfig.description
+        .orElse(SeoData.descriptionFromWebTitle(webTitle))
+
+      val frontProperties: FrontProperties = ConfigAgent.fetchFrontProperties(path)
+        .copy(editorialType = itemResp.flatMap(_.tag).map(_.`type`))
+
+      val seoData: SeoData = SeoData(path, navSection, webTitle, title, description)
+      (seoData, frontProperties)
+    }
+
+  private def getNavSectionFromItemResponse(itemResponse: ItemResponse): Option[String] =
+    itemResponse.tag.flatMap(_.sectionId)
+      .orElse(itemResponse.section.map(_.id).map(removeLeadEditionFromSectionId))
+
+  private def getWebTitleFromItemResponse(itemResponse: ItemResponse): Option[String] =
+    itemResponse.tag.map(_.webTitle)
+      .orElse(itemResponse.section.map(_.webTitle))
+
+  //This will turn au/culture into culture. We want to stay consistent with the manual entry and autogeneration
+  private def removeLeadEditionFromSectionId(sectionId: String): String = sectionId.split('/').toList match {
+    case edition :: tail if Edition.all.map(_.id.toLowerCase).contains(edition.toLowerCase) => tail.mkString("/")
+    case _ => sectionId
+  }
+
+  private def getCapiItemResponseForPath(id: String): Future[Option[ItemResponse]] = {
+    val contentApiResponse:Future[ItemResponse] = LiveContentApi.getResponse(LiveContentApi
+      .item(id, Edition.defaultEdition)
+      .showEditorsPicks(false)
+      .pageSize(0)
+    )
+
+    contentApiResponse.onSuccess { case _ =>
+      ContentApiSeoRequestSuccess.increment()
+      log.info(s"Getting SEO data from content API for $id")}
+
+    contentApiResponse.onFailure { case e: Exception =>
+      log.warn(s"Error getting SEO data from content API for $id: $e")
+      ContentApiSeoRequestFailure.increment()
+    }
+
+    contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
+  }
 
 }

@@ -2,8 +2,9 @@
 
 @import common.LinkTo
 @import views.html.fragments.items.elements.facia_cards.itemHeader
-@import layout.LatestSnap
+@import layout.FrontendLatestSnap
 @import views.support._
+@import implicits.ItemKickerImplicits._
 
 @headline() = {<span class="@labelCssClasses fc-item__headline">@RemoveOuterParaHtml(header.headline)</span>}
 
@@ -12,7 +13,7 @@
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
     @(header.kicker, header.kicker.flatMap(_.link)) match {
         case (Some(kicker), Some(link)) => {
-            @if(snapType != Some(LatestSnap)) {
+            @if(snapType != Some(FrontendLatestSnap)) {
                 <a href="@LinkTo(link)" data-link-name="kicker" class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</a>
             }
             @articleLink{@headline()}

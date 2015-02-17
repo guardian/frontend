@@ -1,5 +1,6 @@
 package views.support
 
+import com.gu.facia.api.models.{LinkSnap, FaciaContent}
 import common._
 import model._
 
@@ -188,12 +189,12 @@ object RenderClasses {
 }
 
 object SnapData {
-  def apply(trail: Trail): String = generateDataAttributes(trail).mkString(" ")
+  def apply(faciaContent: FaciaContent): String = generateDataAttributes(faciaContent).mkString(" ")
 
-  private def generateDataAttributes(trail: Trail): Iterable[String] = trail match {
-    case content: Content =>
-        content.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
-        content.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
+  private def generateDataAttributes(faciaContent: FaciaContent): Iterable[String] = faciaContent match {
+    case linkSnap: LinkSnap =>
+        Seq(s"data-snap-type=${linkSnap.snapType}") ++
+        linkSnap.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
     case _  => Nil
   }
 }

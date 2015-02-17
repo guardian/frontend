@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.facia.client.models.CollectionConfigJson
+import com.gu.facia.api.models.CollectionConfig
 import common._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
@@ -25,14 +25,14 @@ object RelatedController extends Controller with Related with Logging with Execu
     val dataId: String = "related content"
     val displayName = Some(dataId)
     val properties = FrontProperties.empty
-    val config = CollectionConfigJson.withDefaults(displayName = displayName)
+    val config = CollectionConfig.empty.copy(displayName = displayName)
 
     val html = views.html.fragments.containers.facia_cards.container(
       FaciaContainer(
         1,
         Fixed(FixedContainers.fixedMediumFastXII),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(trails take 8, Nil, displayName, None, None, None)
+        CollectionEssentials(trails map FaciaContentConvert.frontentContentToFaciaContent take 8, Nil, displayName, None, None, None)
       ).withTimeStamps,
       properties
     )(request)

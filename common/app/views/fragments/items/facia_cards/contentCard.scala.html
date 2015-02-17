@@ -1,4 +1,5 @@
 @(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
+@import layout.FrontendLatestSnap
 
 @import model.InlineImage
 @import model.{InlineVideo, VideoPlayer, CrosswordSvg}
@@ -7,7 +8,7 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
-@import layout.LatestSnap
+@import layout.FrontendLatestSnap
 @import Function.const
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
@@ -27,7 +28,7 @@ data-test-id="facia-card"
     @item.snapStuff.dataAttributes>
 
     <div class="fc-item__container">
-        @if(item.snapStuff.snapType == LatestSnap) {
+        @if(item.snapStuff.snapType == FrontendLatestSnap) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
         }
 
@@ -81,7 +82,7 @@ data-test-id="facia-card"
         }
 
     <div class="fc-item__content">
-        @if(item.snapStuff.snapType == LatestSnap) {
+        @if(item.snapStuff.snapType == FrontendLatestSnap) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap"))
         }
         <div class="@RenderClasses(Map(

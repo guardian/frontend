@@ -7,6 +7,7 @@
 @import views.BodyCleaner
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
+@import services.FaciaContentConvert
 
 @defining(model.article) {  article =>
 <div class="l-side-margins">
@@ -91,7 +92,7 @@
                                 @model.related.storyPackage.take(3).zipWithIndex.map { case (trail, index) =>
                                     @item(
                                         FaciaCardAndIndex.fromTrail(
-                                            trail,
+                                            FaciaContentConvert.frontentContentToFaciaContent(trail),
                                             ItemClasses.liveBlogMore,
                                             index
                                         ).transformCard(_.withTimeStamp),

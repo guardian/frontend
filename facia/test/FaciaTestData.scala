@@ -5,7 +5,7 @@ import common.{AkkaAgent, Edition}
 import common.editions.{Au, Us, Uk}
 import controllers.front.Front
 import model._
-import model.FaciaPage
+import model.PressedPage
 import org.joda.time.DateTime
 import com.gu.contentapi.client.model.{Content => ApiContent}
 import services.CollectionConfigWithId
@@ -40,10 +40,10 @@ case class TestTrail(u: String) extends Content(TestContent.apiContentWithMeta) 
   override lazy val isLive: Boolean = true
 }
 
-class TestPageFront(val id: String, edition: Edition, faciaPage: FaciaPage) {
+class TestPageFront(val id: String, edition: Edition, faciaPage: PressedPage) {
   val query = null
   def close() = {}
-  def apply(): Option[FaciaPage] = Some(faciaPage)
+  def apply(): Option[PressedPage] = Some(faciaPage)
 }
 
 trait ModelHelper {
@@ -98,7 +98,7 @@ trait FaciaTestData extends ModelHelper {
 
   val cultureFrontTrails: Seq[Content] = cultureTrailIds map trailWithUrl
 
-  val ukFaciaPage: FaciaPage = FaciaPage(
+  val ukFaciaPage: PressedPage = PressedPage(
     id = "uk",
     SeoData.fromPath("uk"),
     FrontProperties.empty,
@@ -108,7 +108,7 @@ trait FaciaTestData extends ModelHelper {
       )
     )
 
-  val usFaciaPage: FaciaPage = FaciaPage(
+  val usFaciaPage: PressedPage = PressedPage(
     id = "us",
     SeoData.fromPath("us"),
     FrontProperties.empty,
@@ -118,7 +118,7 @@ trait FaciaTestData extends ModelHelper {
     )
   )
 
-  val auFaciaPage: FaciaPage = FaciaPage(
+  val auFaciaPage: PressedPage = PressedPage(
     id = "us",
     SeoData.fromPath("us"),
     FrontProperties.empty,
@@ -128,7 +128,7 @@ trait FaciaTestData extends ModelHelper {
     )
   )
 
-  val ukCultureFaciaPage: FaciaPage = FaciaPage(
+  val ukCultureFaciaPage: PressedPage = PressedPage(
     id = "uk/culture",
     SeoData.fromPath("uk/culture"),
     FrontProperties.empty,
@@ -139,7 +139,7 @@ trait FaciaTestData extends ModelHelper {
     )
   )
 
-  val usCultureFaciaPage: FaciaPage = FaciaPage(
+  val usCultureFaciaPage: PressedPage = PressedPage(
     id = "us/culture",
     SeoData.fromPath("us/culture"),
     FrontProperties.empty,
@@ -150,7 +150,7 @@ trait FaciaTestData extends ModelHelper {
     )
   )
 
-  val auCultureFaciaPage: FaciaPage = FaciaPage(
+  val auCultureFaciaPage: PressedPage = PressedPage(
     id = "au/culture",
     SeoData.fromPath("au/culture"),
     FrontProperties.empty,

@@ -2,10 +2,11 @@
 
 @import layout.FaciaContainer
 @import views.html.fragments.containers
+@import services.FaciaContentConvert
 
 @container(stories: Seq[model.Content], title: String, dataId: String) = {
     @containers.facia_cards.container(
-        FaciaContainer.forStoryPackage(dataId, stories, title)
+        FaciaContainer.forStoryPackage(dataId, stories.map(FaciaContentConvert.frontentContentToFaciaContent), title)
     )(request)
 }
 

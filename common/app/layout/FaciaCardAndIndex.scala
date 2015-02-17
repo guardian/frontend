@@ -1,7 +1,6 @@
 package layout
 
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
-import model.Trail
+import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
 
 sealed trait Breakpoint
 
@@ -10,11 +9,11 @@ case object Desktop extends Breakpoint
 
 object FaciaCardAndIndex {
   /** If creating a Card off the cuff (i.e., outside of the normal Facia front construction code */
-  def fromTrail(trail: Trail, itemClasses: ItemClasses, index: Int) = FaciaCardAndIndex(
+  def fromTrail(faciaContent: FaciaContent, itemClasses: ItemClasses, index: Int) = FaciaCardAndIndex(
     index,
     FaciaCard.fromTrail(
-      trail,
-      CollectionConfig.emptyConfig,
+      faciaContent,
+      CollectionConfig.empty,
       itemClasses,
       showSeriesAndBlogKickers = false
     ),

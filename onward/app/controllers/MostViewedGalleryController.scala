@@ -1,10 +1,11 @@
 package controllers
 
+import com.gu.facia.api.models.{Groups, CollectionConfig}
 import com.gu.facia.client.models.CollectionConfigJson
 import common._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
-import services.CollectionConfigWithId
+import services.{FaciaContentConvert, CollectionConfigWithId}
 import slices.{Fixed, FixedContainers}
 import play.api.mvc.{RequestHeader, Controller, Action}
 import feed.MostViewedGalleryAgent
@@ -13,9 +14,9 @@ object MostViewedGalleryController extends Controller with Logging with Executio
 
   private val page = Page("more galleries", "inpictures", "more galleries", "more galleries")
   private val dataId: String = "multimedia/gallery"
-  private val config = CollectionConfigJson.withDefaults(
+  private val config = CollectionConfig.empty.copy(
     displayName = Some("more galleries"),
-    groups = Some(List("multimedia/gallery"))
+    groups = Some(Groups(List("multimedia/gallery")))
   )
 
   val featuredSeries = Seq(
@@ -44,7 +45,7 @@ object MostViewedGalleryController extends Controller with Logging with Executio
         1,
         Fixed(FixedContainers.fixedMediumSlowVI),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(galleries, Nil, Some("more galleries"), None, None, None)
+        CollectionEssentials(galleries.map(FaciaContentConvert.frontentContentToFaciaContent), Nil, Some("more galleries"), None, None, None)
       ).withTimeStamps,
       FrontProperties.empty
     )(request)

@@ -1,12 +1,19 @@
 package views.support
 
+import com.gu.facia.api.models.FaciaContent
 import common.ExternalLinks
 import model.Trail
+import implicits.FaciaContentImplicits._
 
 object CardStyle {
   def isExternalLink(trail: Trail): Boolean = (for {
     snapType <- trail.snapType
     href <- trail.faciaUrl
+  } yield snapType == "link" && ExternalLinks.external(href)) getOrElse false
+
+  def isExternalLink(faciaContent: FaciaContent): Boolean = (for {
+    snapType <- faciaContent.snapType
+    href <- Option(faciaContent.href)
   } yield snapType == "link" && ExternalLinks.external(href)) getOrElse false
 
   def apply(trail: Trail): CardStyle = {
@@ -33,6 +40,36 @@ object CardStyle {
     } else if (trail.isLetters) {
       Letters
     } else if (trail.isFeature) {
+      Feature
+    } else {
+      Default
+    }
+  }
+
+  def apply(faciaContent: FaciaContent): CardStyle = {
+    if (isExternalLink(faciaContent)) {
+      ExternalLink
+    } else if (faciaContent.isLiveBlog) {
+      if (faciaContent.isLive) {
+        LiveBlog
+      } else {
+        DeadBlog
+      }
+    } else if (faciaContent.isPodcast) {
+      Podcast
+    } else if (faciaContent.isMedia) {
+      Media
+    } else if (faciaContent.isEditorial) {
+      Editorial
+    } else if (faciaContent.isComment) {
+      Comment
+    } else if (faciaContent.isAnalysis) {
+      Analysis
+    } else if (faciaContent.isReview) {
+      Review
+    } else if (faciaContent.isLetters) {
+      Letters
+    } else if (faciaContent.isFeature) {
       Feature
     } else {
       Default

@@ -1,11 +1,12 @@
 package controllers.front
 
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import com.gu.facia.api.models.{DefaultImportance, Importance, Groups, CollectionConfig}
 import model._
+import model.facia.FapiJsonFormats
 import scala.concurrent.Future
-import play.api.libs.json.{JsObject, JsNull, JsValue, JsString, Json}
+import play.api.libs.json._
 import common.{Logging, S3Metrics, ExecutionContexts}
-import model.FaciaPage
+import model.PressedPage
 import services.{CollectionConfigWithId, SecureS3Request}
 import conf.Configuration
 
@@ -61,7 +62,7 @@ trait FrontJson extends ExecutionContexts with Logging {
 
   private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/pressed.json"
 
-  def get(path: String): Future[Option[FaciaPage]] = {
+  def get(path: String): Future[Option[PressedPage]] = {
     val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
     response.map { r =>
       r.status match {
@@ -136,29 +137,27 @@ trait FrontJson extends ExecutionContexts with Logging {
       apiQuery        = (json \ "apiQuery").asOpt[String],
       displayName     = (json \ "displayName").asOpt[String],
       href            = (json \ "href").asOpt[String],
-      groups          = (json \ "groups").asOpt[List[String]],
-      `type`          = (json \ "type").asOpt[String],
-      showTags        = (json \ "showTags").asOpt[Boolean],
-      showSections    = (json \ "showSections").asOpt[Boolean],
-      uneditable      = (json \ "uneditable").asOpt[Boolean],
-      hideKickers     = (json \ "hideKickers").asOpt[Boolean],
-      showDateHeader =  (json \ "showDateHeader").asOpt[Boolean],
-      showLatestUpdate = (json \ "showLatestUpdate").asOpt[Boolean],
-      excludeFromRss = (json \ "excludeFromRss").asOpt[Boolean],
-      showTimestamps = (json \ "showTimestamps").asOpt[Boolean]
+      groups          = (json \ "groups").asOpt[List[String]].map(Groups.apply),
+      collectionType  = (json \ "type").asOpt[String].getOrElse(CollectionConfig.DefaultCollectionType),
+      showTags        = (json \ "showTags").asOpt[Boolean].exists(identity),
+      showSections    = (json \ "showSections").asOpt[Boolean].exists(identity),
+      uneditable      = (json \ "uneditable").asOpt[Boolean].exists(identity),
+      hideKickers     = (json \ "hideKickers").asOpt[Boolean].exists(identity),
+      showDateHeader =  (json \ "showDateHeader").asOpt[Boolean].exists(identity),
+      showLatestUpdate = (json \ "showLatestUpdate").asOpt[Boolean].exists(identity),
+      excludeFromRss = (json \ "excludeFromRss").asOpt[Boolean].exists(identity),
+      showTimestamps = (json \ "showTimestamps").asOpt[Boolean].exists(identity),
+      importance     = (json \ "importance").asOpt[Importance](FapiJsonFormats.importanceFormat).getOrElse(DefaultImportance)
     )
 
-  private def parsePressedJson(j: String): Option[FaciaPage] = {
+  private def parsePressedJson(j: String): Option[PressedPage] = {
     val json = Json.parse(j)
-    val id: String = (json \ "id").as[String]
-    Option(
-      FaciaPage(
-        id,
-        seoData     = parseSeoData(id, (json \ "seoData").asOpt[JsValue].getOrElse(JsNull)),
-        frontProperties = parseFrontProperties((json \ "frontProperties").asOpt[JsValue].getOrElse(JsNull)),
-        collections = parseOutTuple(json)
-      )
-    )
+    json.validate[PressedPage] match {
+      case JsSuccess(page, _) => Option(page)
+      case JsError(errors) =>
+        println(errors)
+        None
+    }
   }
 
   private def parseSeoData(id: String, seoJson: JsValue): SeoData = {

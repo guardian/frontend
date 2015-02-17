@@ -1,5 +1,6 @@
 package views.support
 
+import com.gu.facia.api.models.FaciaContent
 import model.Trail
 
 object TrailCssClasses {
@@ -9,4 +10,8 @@ object TrailCssClasses {
   def toneClass(trail: Trail) = toneClassFromStyle(CardStyle(trail))
 
   def articleToneClass(trail: Trail) = toneClass(trail)
+
+  def toneClass(faciaContent: FaciaContent) = toneClassFromStyle(CardStyle(faciaContent))
+
+  def articleToneClass(faciaContent: FaciaContent) = toneClass(faciaContent)
 }

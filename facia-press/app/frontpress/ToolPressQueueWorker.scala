@@ -37,8 +37,8 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
     log.info(s"Processing job from tool to update $path on $pressType")
 
     val pressFuture = pressType match {
-      case Draft => FrontPress.pressDraftByPathId(path)
-      case Live => FrontPress.pressLiveByPathId(path)
+      case Draft => Future.successful(())//FrontPress.pressDraftByPathId(path)
+      case Live => FapiFrontPress.pressLiveByPathId(path)
     }
 
     pressFuture onComplete {

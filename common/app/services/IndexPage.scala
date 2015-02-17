@@ -1,6 +1,7 @@
 package services
 
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
+import com.gu.facia.api.utils.{ReviewKicker, CartoonKicker, TagKicker}
 import common.Edition
 import conf.Switches
 import contentapi.Paths
@@ -9,7 +10,6 @@ import layout._
 import model._
 import org.joda.time.DateTime
 import slices.{ContainerDefinition, Fixed, FixedContainers}
-import views.support.{CartoonKicker, ReviewKicker, TagKicker}
 
 import scala.Function.const
 import scalaz.syntax.traverse._
@@ -58,8 +58,8 @@ object IndexPage {
 
     val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
       case (mpuState, grouping) =>
-        val collection = CollectionEssentials.fromTrails(
-          grouping.items
+        val collection = CollectionEssentials.fromFaciaContent(
+          grouping.items.map(FaciaContentConvert.frontentContentToFaciaContent)
         )
 
         val mpuContainer = (if (isSlow)
@@ -80,7 +80,7 @@ object IndexPage {
         }
 
         val containerConfig = ContainerDisplayConfig(
-          CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig.copy(
+          CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.empty.copy(
             displayName = Some(grouping.dateHeadline.displayString)
           )),
           showSeriesAndBlogKickers = true
