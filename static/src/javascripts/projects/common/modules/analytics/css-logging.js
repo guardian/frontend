@@ -31,7 +31,24 @@ define([
         return rules ? _.values(rules) : s;
     }
 
-    function getSelectors(all) {
+    function getSplitSelectors(classRule) {
+        return classRule && classRule.selectorText && classRule.selectorText.replace(rxPsuedoClass, '').split(rxSeparator);
+    }
+
+    function canonicalise(selector) {
+        var siblings = selector.match(/\.[^\s\.]+\.[^\s]+/g) || [];
+
+        siblings.forEach(function(s) {
+            selector = selector.replace(s, canonicalOrder(s));
+        });
+        return selector;
+    }
+
+    function canonicalOrder(s) {
+        return _.sortBy(s.split('.')).join('.');
+    }
+
+    function getAllSelectors(all) {
         var rand,
             len,
             rules = _.chain(getInlineStylesheets())
@@ -39,10 +56,14 @@ define([
                 .flatten()
                 .map(getRules) // 2nd pass for rules nested in media queries
                 .flatten()
-                .map(function (r) { return r && r.selectorText; })
+                .map(getSplitSelectors)
+                .flatten()
                 .compact()
                 .uniq()
+                .map(canonicalise)
                 .value();
+
+        console.log('rules.length: ' + rules.length);
 
         if (all) {
             return rules;
@@ -99,13 +120,11 @@ define([
         reloadSheetsInline()
         .then(function () {
             beacon.postJson('/css', JSON.stringify({
-                selectors: _.chain(getSelectors(all))
-                    .reduce(function (isUsed, rule) {
-                        _.each(rule.replace(rxPsuedoClass, '').split(rxSeparator), function (r) {
-                            if (_.isUndefined(isUsed[r])) {
-                                isUsed[r] = !!document.querySelector(r);
-                            }
-                        });
+                selectors: _.chain(getAllSelectors(all))
+                    .reduce(function (isUsed, s) {
+                        if (_.isUndefined(isUsed[s])) {
+                            isUsed[s] = !!document.querySelector(s);
+                        }
                         return isUsed;
                     }, {})
                     .value(),
