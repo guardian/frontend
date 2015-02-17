@@ -34,6 +34,7 @@
     "handlebars": "2.0.0",
     "jit-grunt": "0.8.0",
     "jsonfile": "2.0.0",
+    "jspm": "0.13.4",
     "karma": "0.12.24",
     "karma-chrome-launcher": "0.1.5",
     "karma-coffee-preprocessor": "0.2.1",

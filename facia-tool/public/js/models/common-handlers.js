@@ -1,7 +1,9 @@
 define([
-    'knockout'
+    'knockout',
+    'jquery'
 ], function (
-    ko
+    ko,
+    $
 ) {
     ko.bindingHandlers.toggleClick = {
         init: function (element, valueAccessor) {

@@ -1,7 +1,8 @@
-/* global _: true */
 define([
     'modules/vars',
     'knockout',
+    'underscore',
+    'jquery',
     'utils/alert',
     'utils/as-observable-props',
     'utils/deep-get',
@@ -25,6 +26,8 @@ define([
     function (
         vars,
         ko,
+        _,
+        $,
         alert,
         asObservableProps,
         deepGet,

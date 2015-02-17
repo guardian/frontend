@@ -1,5 +1,6 @@
 package model.commercial.masterclasses
 
+import common.ExecutionContexts
 import conf.Switches.MasterclassFeedSwitch
 import conf.{CommercialConfiguration, Configuration}
 import model.commercial.{FeedReader, FeedRequest}
@@ -8,7 +9,7 @@ import play.api.libs.json.JsValue
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-object EventbriteApi {
+object EventbriteApi extends ExecutionContexts {
 
   lazy val organiserId = "684756979"
   lazy val apiKeyOption = CommercialConfiguration.getProperty("masterclasses.api.key")

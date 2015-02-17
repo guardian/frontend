@@ -1,11 +1,12 @@
-/* global _: true */
 define([
+    'underscore',
     'modules/vars',
     'utils/alert',
     'utils/mediator',
     'utils/url-abs-path',
     'utils/remove-by-id'
 ], function(
+    _,
     vars,
     alert,
     mediator,

@@ -1,9 +1,11 @@
 define([
+    'underscore',
     'test/utils/collections-loader',
     'test/utils/config-loader',
     'knockout',
     'utils/mediator'
 ], function(
+    _,
     collectionsLoader,
     configLoader,
     ko,
@@ -19,6 +21,9 @@ define([
     return function (what, description, test) {
 
         it(description, function (done) {
+            // Prevent pressing on fronts, it messes up with other tests
+            mediator.removeEvent('presser:detectfailures');
+
             if (currentTesting !== what) {
                 if (running) {
                     ko.cleanNode(window.document.body);

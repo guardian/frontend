@@ -1,6 +1,6 @@
-/* global _ */
 define([
     'knockout',
+    'underscore',
     'models/group',
     'modules/cache',
     'modules/copied-article',
@@ -9,6 +9,7 @@ define([
     'utils/update-scrollables'
 ], function (
     ko,
+    _,
     Group,
     cache,
     copiedArticle,

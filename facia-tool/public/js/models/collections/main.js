@@ -1,7 +1,8 @@
-/* global _: true */
 define([
     'config',
     'knockout',
+    'underscore',
+    'jquery',
     'modules/vars',
     'utils/ammended-query-str',
     'utils/mediator',
@@ -22,6 +23,8 @@ define([
 ], function(
     pageConfig,
     ko,
+    _,
+    $,
     vars,
     ammendedQueryStr,
     mediator,

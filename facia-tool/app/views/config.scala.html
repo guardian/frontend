@@ -296,5 +296,9 @@
 
 </div>
 
-<script src="@routes.UncachedAssets.at("js/app-config.js")"></script>
+<script>
+    System.import('facia-tool/main').then(function (main) {
+        main.load('config');
+    });
+</script>
 }

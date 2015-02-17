@@ -1,5 +1,10 @@
-/* global _ */
-define(function () {
+define([
+    'jquery',
+    'underscore'
+], function (
+    $,
+    _
+) {
     var registeredListeners = {};
 
     function registerListener (event, callback, scope) {

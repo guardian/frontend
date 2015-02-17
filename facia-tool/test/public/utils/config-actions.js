@@ -1,5 +1,5 @@
 define([
-    'mock-config'
+    'mock/config'
 ], function (
     mockConfig
 ) {

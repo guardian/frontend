@@ -75,6 +75,12 @@ object Switches {
   private lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
+  val DesktopOnlyContainersSwitch = Switch("Performance", "desktop-only-containers",
+    "If this switch is on, certain containers will only render on desktop breakpoints",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 4, 1)
+  )
+
   val TagPageSizeSwitch = Switch("Performance", "tag-page-size",
     "If this switch is on then we will request more items for larger tag pages",
     safeState = Off,
@@ -386,6 +392,11 @@ object Switches {
   val IdentityProfileNavigationSwitch = Switch("Feature", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
     safeState = On, sellByDate = never
+  )
+
+  val IdentitySocialOAuthSwitch = Switch("Feature", "id-social-oauth",
+    "If this switch is on then social sign-in attempts will be directed to Identity OAuth app, rather than the Webapp.",
+    safeState = Off, sellByDate = never
   )
 
   val FacebookAutoSigninSwitch = Switch("Feature", "facebook-autosignin",

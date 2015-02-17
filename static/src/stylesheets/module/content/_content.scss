@@ -380,6 +380,10 @@
     padding-top: $gs-baseline / 6;
     margin-bottom: $gs-baseline / 2;
 
+    time {
+        display: block;
+    }
+
     i {
         position: relative;
         top: 1px;
@@ -395,17 +399,30 @@
     }
 
     @include mq(leftCol) {
-        height: gs-height(1) + $gs-baseline;
+        min-height: gs-height(1) + $gs-baseline;
         padding-top: $gs-baseline/6;
         padding-bottom: $gs-baseline;
         margin-bottom: 0;
         border-top: 1px dotted colour(neutral-5);
     }
+}
 
-    @include mq(wide) {
-        .content__dateline-time {
-            display: inline-block;
-        }
+.content__dateline-wpd--modified {
+    color: colour(news-default);
+    cursor: pointer;
+
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: underline;
+    }
+}
+
+.content__dateline-lm {
+    padding-top: $gs-baseline/4;
+
+    @include mq(leftCol) {
+        padding-top: $gs-baseline/6;
     }
 }
 

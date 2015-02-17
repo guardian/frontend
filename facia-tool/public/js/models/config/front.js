@@ -1,6 +1,6 @@
-/* global _: true */
 define([
     'knockout',
+    'underscore',
     'config',
     'modules/vars',
     'modules/content-api',
@@ -13,6 +13,7 @@ define([
     'utils/validate-image-src'
 ], function(
     ko,
+    _,
     pageConfig,
     vars,
     contentApi,
