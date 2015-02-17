@@ -506,12 +506,7 @@ object Switches {
     "If this switch is switched on then there will be a floating social icon on the bottom of pages on mobile",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 14)
   )
-
-  val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
-    "If this is switched on then lazy load the related and series containers on content pages",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 17)
-  )
-
+  
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
