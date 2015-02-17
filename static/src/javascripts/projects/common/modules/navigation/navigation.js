@@ -3,12 +3,14 @@ define([
     'qwery',
     'fastdom',
     'common/utils/mediator',
+    'common/utils/detect',
     'common/utils/$'
 ], function (
     bean,
     qwery,
     fastdom,
     mediator,
+    detect,
     $
 ) {
     var Navigation = {
@@ -16,6 +18,10 @@ define([
             this.addMegaNavMenu();
             this.enableMegaNavToggle();
             this.replaceAllSectionsLink();
+
+            if (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) && detect.getUserAgent.version > 5) {
+                $('.navigation__scroll').css({'-webkit-overflow-scrolling': 'touch'});
+            }
         },
 
         addMegaNavMenu: function () {
