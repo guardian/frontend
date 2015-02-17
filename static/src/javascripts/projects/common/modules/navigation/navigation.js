@@ -11,37 +11,74 @@ define([
     mediator,
     $
 ) {
-    var Navigation = {
-        init: function () {
-            this.addMegaNavMenu();
-            this.enableMegaNavToggle();
-            this.replaceAllSectionsLink();
-        },
+    function Navigation() {
+        this.isInserted = false;
+    }
 
-        addMegaNavMenu: function () {
-            var megaNav     = $('.js-transfuse'),
-                placeholder = $('.' + megaNav.attr('data-transfuse-target'));
+    Navigation.prototype.init = function () {
+        this.eatMegaNav();
+        this.enableMegaNavToggle();
+        this.replaceAllSectionsLink();
+        this.$headerNav = $('.js-navigation-header');
+    };
 
-            fastdom.write(function () {
-                placeholder.html(megaNav.html());
-            });
-        },
+    Navigation.prototype.eatMegaNav = function () {
+        var $megaNav = $('.js-transfuse');
 
-        replaceAllSectionsLink: function () {
-            $('.js-navigation-header .js-navigation-toggle').attr('href', '#nav-allsections');
-        },
+        this.megaNavHtml = $megaNav.html();
 
-        enableMegaNavToggle: function () {
-            bean.on(document, 'click', '.js-navigation-toggle', function (e) {
-                var target = $('.' + e.currentTarget.getAttribute('data-target-nav'));
+        fastdom.write(function () {
+            $megaNav.remove();
+        });
+    };
 
-                e.preventDefault();
-                fastdom.write(function () {
-                    target.toggleClass('navigation--expanded navigation--collapsed');
-                    mediator.emit(target.hasClass('navigation--expanded') ? 'modules:nav:open' : 'modules:nav:close');
-                });
-            });
-        }
+    Navigation.prototype.replaceAllSectionsLink = function () {
+        $('.js-navigation-toggle').attr('href', '#nav-allsections');
+    };
+
+    Navigation.prototype.scrollToHeaderNav = function () {
+        var that = this;
+
+        fastdom.read(function () {
+            window.scrollTo(0, that.$headerNav.offset().top);
+        });
+    };
+
+    Navigation.prototype.setMegaNavState = function (open) {
+        var that = this;
+
+        fastdom.write(function () {
+            if (open && !that.isInserted) {
+                $('.js-mega-nav-placeholder').html(that.megaNavHtml);
+                that.isInserted = true;
+                mediator.emit('modules:nav:inserted');
+            }
+
+            that.$headerNav.toggleClass('navigation--expanded', open);
+            that.$headerNav.toggleClass('navigation--collapsed', !open);
+
+            mediator.emit(open ? 'modules:nav:open' : 'modules:nav:close');
+        });
+    };
+
+    Navigation.prototype.isExpanded = function () {
+        return this.$headerNav.hasClass('navigation--expanded');
+    };
+
+    Navigation.prototype.enableMegaNavToggle = function () {
+        var that = this;
+
+        bean.on(document, 'click', '.js-navigation-toggle', function (e) {
+            var isFooter = $(e.currentTarget).attr('data-target-nav') === 'js-navigation-footer';
+
+            e.preventDefault();
+
+            if (isFooter) {
+                that.scrollToHeaderNav();
+            }
+
+            that.setMegaNavState(isFooter || !that.isExpanded());
+        });
     };
 
     return Navigation;

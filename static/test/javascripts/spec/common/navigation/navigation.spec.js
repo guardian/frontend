@@ -10,7 +10,7 @@ define([
     bean,
     fastdom,
     $,
-    sut,
+    Navigation,
     fixtures
 ) {
     describe("Navigation", function() {
@@ -32,39 +32,30 @@ define([
             fixtures.clean('navigation-fixture');
         });
 
-        it("should initialise", function() {
-            expect(sut).toEqual(jasmine.any(Object));
-
-            spyOn(sut, "addMegaNavMenu");
-            spyOn(sut, "enableMegaNavToggle");
-            spyOn(sut, "replaceAllSectionsLink");
+        it("should add mega nav menu", function(done) {
+            var sut = new Navigation();
 
             sut.init();
+            sut.setMegaNavState(true);
 
-            expect(sut.addMegaNavMenu).toHaveBeenCalled();
-            expect(sut.enableMegaNavToggle).toHaveBeenCalled();
-            expect(sut.replaceAllSectionsLink).toHaveBeenCalled();
-        });
-
-        it("should add mega nav menu", function(done) {
-
-            sut.addMegaNavMenu();
-
-            fastdom.defer(1, function () {
+            fastdom.defer(5, function () {
                 expect($('.js-mega-nav-placeholder').html()).toEqual('Nav');
                 done();
             });
         });
 
         it("should change all sections link", function() {
+            var sut = new Navigation();
+
             expect($('.js-navigation-header .js-navigation-toggle').attr("href")).toEqual("#footer-nav");
-
             sut.replaceAllSectionsLink();
-
             expect($('.js-navigation-header .js-navigation-toggle').attr("href")).toEqual("#nav-allsections");
         });
 
         it("should toggle navigation class", function(done) {
+            var sut = new Navigation();
+            sut.init();
+
             var className = $('.js-navigation-toggle').attr('data-target-nav');
 
             expect($('.' + className).hasClass('navigation--collapsed')).toBeTruthy();

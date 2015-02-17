@@ -89,7 +89,7 @@ define([
     ab,
     id,
     AutoSignin,
-    navigation,
+    Navigation,
     Profile,
     Search,
     history,
@@ -156,6 +156,7 @@ define([
             },
 
             initialiseNavigation: function () {
+                var navigation = new Navigation();
                 navigation.init();
             },
 
@@ -308,7 +309,7 @@ define([
 
             showHistoryInMegaNav: function () {
                 if (config.switches.historyTags) {
-                    mediator.once('modules:nav:open', function () {
+                    mediator.once('modules:nav:inserted', function () {
                         history.showInMegaNav();
                     });
                 }
