@@ -38,7 +38,7 @@ define([
     function canonicalise(selector) {
         var siblings = selector.match(/\.[^\s\.]+\.[^\s]+/g) || [];
 
-        siblings.forEach(function(s) {
+        siblings.forEach(function (s) {
             selector = selector.replace(s, canonicalOrder(s));
         });
         return selector;
