@@ -19,7 +19,7 @@ define([
             this.enableMegaNavToggle();
             this.replaceAllSectionsLink();
 
-            if (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) && detect.getUserAgent.version > 5) {
+            if (detect.isIOS() && detect.getUserAgent.version > 5) {
                 $('.navigation__scroll').css({'-webkit-overflow-scrolling': 'touch'});
             }
         },
