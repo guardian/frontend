@@ -72,8 +72,8 @@ object MagentoService extends Logging {
     )
   }
 
-  private implicit val singleThreadExecutionContext: ExecutionContext =
-    Akka.system.dispatchers.lookup("play.akka.actor.single-thread")
+  private implicit val bookLookupExecutionContext: ExecutionContext =
+    Akka.system.dispatchers.lookup("play.akka.actor.book-lookup")
 
   def findByIsbn(isbn: String): Future[Option[Book]] = {
 
