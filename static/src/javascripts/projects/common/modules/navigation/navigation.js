@@ -20,7 +20,7 @@ define([
             this.replaceAllSectionsLink();
 
             if (detect.isIOS() && detect.getUserAgent.version > 5) {
-                // crashed mobile safari < 6, so we add it here after detection
+                // crashes mobile safari < 6, so we add it here after detection
                 $('.navigation__scroll').css({'-webkit-overflow-scrolling': 'touch'});
             }
         },
