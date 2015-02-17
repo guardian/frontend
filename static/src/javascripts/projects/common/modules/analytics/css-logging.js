@@ -31,8 +31,8 @@ define([
         return rules ? _.values(rules) : s;
     }
 
-    function getSplitSelectors(classRule) {
-        return classRule && classRule.selectorText && classRule.selectorText.replace(rxPsuedoClass, '').split(rxSeparator);
+    function getSplitSelectors(ruleObj) {
+        return ruleObj && ruleObj.selectorText && ruleObj.selectorText.replace(rxPsuedoClass, '').split(rxSeparator);
     }
 
     function canonicalise(selector) {
@@ -62,8 +62,6 @@ define([
                 .uniq()
                 .map(canonicalise)
                 .value();
-
-        console.log('rules.length: ' + rules.length);
 
         if (all) {
             return rules;
