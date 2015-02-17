@@ -21,7 +21,7 @@
     }
 
     @if(!content.shouldHidePublicationDate) {
-        @fragments.meta.dateline(content.webPublicationDate, secondary = true)
+        @fragments.meta.dateline(content.webPublicationDate, content.lastModified, content.hasBeenModified, secondary = true)
     }
 
     <div class="meta__extras">

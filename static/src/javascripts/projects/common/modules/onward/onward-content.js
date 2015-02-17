@@ -4,16 +4,14 @@ define([
     'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/commercial/badges',
-    'common/modules/component',
-    'common/modules/ui/images'
+    'common/modules/component'
 ], function (
     union,
     config,
     mediator,
     register,
     badges,
-    Component,
-    images
+    Component
 ) {
 
     var getTag = function () {
@@ -32,9 +30,9 @@ define([
 
     OnwardContent.prototype.ready = function (container) {
         badges.add(container);
-        images.upgrade(this.context);
         register.end('series-content');
         mediator.emit('modules:onward:loaded');
+        mediator.emit('ui:images:upgradePicture', this.context);
     };
 
     OnwardContent.prototype.error = function () {

@@ -1,8 +1,0 @@
-{
-	"name": "curl",
-	"moduleType": [ "amd", "node" ],
-	"main": "./src/curl.js",
-	"version": "0.8.12",
-	"description": "curl.js is small, fast, extensible module loader that handles AMD, CommonJS Modules/1.1, CSS, HTML/text, and legacy scripts.",
-	"ignore": ["bin", "docs", "test"]
-}

@@ -1,8 +1,10 @@
 define([
+    'jquery',
     'modules/vars',
     'modules/authed-ajax',
     'utils/terminate'
 ], function(
+    $,
     vars,
     authedAjax,
     terminate

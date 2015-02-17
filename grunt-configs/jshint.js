@@ -31,9 +31,12 @@ module.exports = function(grunt, options) {
                 cwd: 'facia-tool/public/js/',
                 src: [
                     '**/*.js',
-                    '!components/**'
+                    '!jspm-config.js'
                 ]
-            }]
+            }],
+            options: {
+                jshintrc: './facia-tool/public/.jshintrc'
+            }
         },
         membership: {
             files: [{

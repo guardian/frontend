@@ -1,8 +1,9 @@
-/* global _: true */
 define([
+    'underscore',
     'modules/vars',
     'utils/mediator'
 ], function(
+    _,
     vars,
     mediator
 ) {

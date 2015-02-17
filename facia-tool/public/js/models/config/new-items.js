@@ -1,8 +1,10 @@
 define([
+    'jquery',
     'modules/vars',
     'utils/url-abs-path',
     'utils/find-first-by-id'
 ], function(
+    $,
     vars,
     urlAbsPath,
     findFirstById

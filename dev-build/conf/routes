@@ -43,6 +43,7 @@ GET         /analytics/confidence                                               
 GET         /analytics/google-referrers                                                                              controllers.admin.GoogleReferrerController.renderGoogleReferrerDashboard()
 GET         /analytics/content/gallery                                                                               controllers.admin.ContentPerformanceController.renderGalleryDashboard()
 GET         /analytics/content/liveblog                                                                              controllers.admin.ContentPerformanceController.renderLiveBlogDashboard()
+GET         /analytics/content/video                                                                                 controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
 GET         /analytics/omniture/segments/:rsid                                                                       controllers.admin.OmnitureReportController.getSegments(rsid)
 GET         /analytics/omniture/*reportName                                                                          controllers.admin.OmnitureReportController.getReport(reportName)
 GET         /analytics/commercial                                                                                    controllers.admin.CommercialController.renderCommercial()
@@ -193,6 +194,7 @@ GET         /metrics/errors/4xx                                                 
 GET         /metrics/errors/5xx                                                                                      controllers.admin.MetricsController.render5XX()
 GET         /metrics/memory                                                                                          controllers.admin.MetricsController.renderMemory()
 GET         /metrics/assets                                                                                          controllers.admin.MetricsController.renderAssets()
+GET         /metrics/afg                                                                                             controllers.admin.MetricsController.renderAfg()
 GET         /radiator                                                                                                controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                        controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                                   controllers.admin.RadiatorController.commitDetail(hash)
@@ -251,8 +253,8 @@ GET         /commercial/masterclasses.json                                      
 
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.renderSoulmates
 
-GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffers.renderBook
-GET         /commercial/books/books.json                                                                             controllers.commercial.BookOffers.renderBooks
+GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffersController.renderBook
+GET         /commercial/books/books.json                                                                             controllers.commercial.BookOffersController.renderBooks
 
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.renderBestBuys
 GET         /commercial/money/savings/:savingsType                                                                   controllers.commercial.MoneyOffers.savings(savingsType)

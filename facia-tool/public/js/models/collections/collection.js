@@ -1,7 +1,8 @@
-/* global _: true */
 define([
     'config',
     'knockout',
+    'underscore',
+    'jquery',
     'modules/vars',
     'utils/as-observable-props',
     'utils/fetch-visible-stories',
@@ -16,6 +17,8 @@ define([
 ], function(
     config,
     ko,
+    _,
+    $,
     vars,
     asObservableProps,
     fetchVisibleStories,

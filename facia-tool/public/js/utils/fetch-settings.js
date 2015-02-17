@@ -1,12 +1,15 @@
-/* global _: true */
 define([
+    'jquery',
+    'underscore',
     'utils/fetch-config',
     'utils/fetch-switches'
-], function(
+], function (
+    $,
+    _,
     fetchConfig,
     fetchSwitches
 ) {
-    var poller= _.once(function(callback, pollingMs) {
+    var poller = _.once(function(callback, pollingMs) {
         setInterval(function(){
             fetchSettings(callback);
         }, pollingMs);

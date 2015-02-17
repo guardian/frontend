@@ -75,6 +75,12 @@ object Switches {
   private lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
+  val DesktopOnlyContainersSwitch = Switch("Performance", "desktop-only-containers",
+    "If this switch is on, certain containers will only render on desktop breakpoints",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 4, 1)
+  )
+
   val TagPageSizeSwitch = Switch("Performance", "tag-page-size",
     "If this switch is on then we will request more items for larger tag pages",
     safeState = Off,
@@ -473,7 +479,7 @@ object Switches {
 
   val StocksWidgetSwitch = Switch("Feature", "stocks-widget",
     "If switched on, a stocks widget will be displayed on the business front",
-    safeState = On, sellByDate = new LocalDate(2015, 2, 16)
+    safeState = On, sellByDate = never
   )
 
   val DefaultOriginSwitch = Switch("Feature", "default-origin",
@@ -489,11 +495,6 @@ object Switches {
   val MissingVideoEndcodingsJobSwitch = Switch("Feature", "check-for-missing-video-encodings",
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
      safeState = Off, sellByDate = never
-  )
-
-  val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
-    "If this is switched on then lazy load the related and series containers on content pages",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 17)
   )
 
   // Facia

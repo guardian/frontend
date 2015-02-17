@@ -1,6 +1,7 @@
 define([
     'bonzo',
     'imager',
+    'picturefill',
     'lodash/collections/forEach',
     'lodash/functions/debounce',
     'common/utils/$',
@@ -11,6 +12,7 @@ define([
 function (
     bonzo,
     imager,
+    picturefill,
     forEach,
     debounce,
     $,
@@ -51,6 +53,11 @@ function (
             });
         },
 
+        upgradePicture: function (context) {
+            var images = [].slice.call($('img', context));
+            picturefill({ elements: images });
+        },
+
         listen: function () {
             mediator.addListeners({
                 'window:orientationchange': debounce(function () {
@@ -58,6 +65,9 @@ function (
                 }, 200),
                 'ui:images:upgrade': function (context) {
                     images.upgrade(context);
+                },
+                'ui:images:upgradePicture': function (context) {
+                    images.upgradePicture(context);
                 }
             });
 

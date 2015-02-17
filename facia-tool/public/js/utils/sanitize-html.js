@@ -1,5 +1,8 @@
-/* global _: true */
-define(function() {
+define([
+    'underscore'
+], function(
+    _
+) {
     var rx = new RegExp(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi),
         el = document.createElement('div');
 

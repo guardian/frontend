@@ -1,8 +1,8 @@
 define([
     'test/utils/async-test',
     'test/utils/drag',
-    'mock-collection',
-    'mock-stories-visible',
+    'mock/collection',
+    'mock/stories-visible',
     'test/utils/edit-actions',
     'test/utils/publish-actions',
     'test/utils/dom-nodes'

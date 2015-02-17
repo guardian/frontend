@@ -1,5 +1,5 @@
-/* global _: true */
 define([
+    'underscore',
     'modules/vars',
     'utils/internal-content-code',
     'utils/query-params',
@@ -10,6 +10,7 @@ define([
     'modules/content-api',
     'knockout'
 ], function (
+    _,
     vars,
     internalContentCode,
     queryParams,

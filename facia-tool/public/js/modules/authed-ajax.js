@@ -1,5 +1,12 @@
-/* global _: true */
-define(['modules/vars'], function(vars) {
+define([
+    'underscore',
+    'jquery',
+    'modules/vars'
+], function(
+    _,
+    $,
+    vars
+) {
     function request(opts) {
         return $.ajax(
             _.extend({}, {
