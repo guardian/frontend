@@ -55,7 +55,7 @@ define([
     function showMessage() {
         var platform = (detect.isIOS()) ? 'ios' : 'android',
             msg = new Message(platform),
-            fullTemplate = tmp + (detect.isBreakpoint('mobile') ? "" : tablet);
+            fullTemplate = tmp + (detect.isBreakpoint('mobile') ? '' : tablet);
 
         msg.show(template(fullTemplate, DATA[platform.toUpperCase()]));
         cookies.add(COOKIE_IMPRESSION_KEY, impressions + 1);
