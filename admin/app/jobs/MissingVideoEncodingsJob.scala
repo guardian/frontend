@@ -45,40 +45,44 @@ object VideoEncodingsJob extends ExecutionContexts with Logging  {
             response.results map { Video(_)  }
      }
 
-     val allVideoContent = Await.result(apiVideoResponse.map{ actualVideo =>
-        actualVideo map ( video => video )
-     }, 10.seconds )
+     apiVideoResponse.onSuccess {
+       case allVideoContent =>
+         val missingVideoEncodings = Future.sequence(allVideoContent.map { video =>
+           val videoAssets = video.elements.filter(_.isMain)
+             .map {
+             element => element.delegate.assets.filter(_.`type` == "video")
+           }.flatMap(asset => asset).map(_.file).flatten
 
-     val missingVideoEncodings = Future.sequence(allVideoContent.map { video =>
-         val videoAssets = video.elements.filter(_.isMain)
-            .map{
-                element => element.delegate.assets.filter(_.`type`=="video")
-            }.flatMap(asset => asset).map(_.file).flatten
-
-         val missingVideoAsssets = Future.sequence(
-             videoAssets.map{ encoding =>
-                 doesEncodingExist(encoding) map {
-                     case true => Some(encoding)
-                     case false => None
-                 }
+           val missingVideoAsssets = Future.sequence(
+             videoAssets.map { encoding =>
+               doesEncodingExist(encoding) map {
+                 case true => Some(encoding)
+                 case false => None
+               }
              }).map(_.flatten)
 
-         missingVideoAsssets.map {
-             missingEncodings => missingEncodings.map{ missingEncoding => new MissingEncoding(video, missingEncoding) }
-         }
-     }).map(_.flatten)
+           missingVideoAsssets.map {
+             missingEncodings => missingEncodings.map { missingEncoding => new MissingEncoding(video, missingEncoding)}
+           }
+         }).map(_.flatten)
 
-     missingVideoEncodings.onSuccess{ case missingEncodings =>
-         missingEncodings.map { case missingEncoding: MissingEncoding =>
+         missingVideoEncodings.onSuccess { case missingEncodings =>
+           missingEncodings.map { case missingEncoding: MissingEncoding =>
              DynamoDbStore.haveSeenMissingEncoding(missingEncoding.encodingSrc, missingEncoding.url) map {
-                 case true => log.debug(s"Already seen missing encoding: ${missingEncoding.encodingSrc} for url: ${missingEncoding.url}")
-                 case false =>
-                    log.info(s"Send notification for missing video encoding: ${missingEncoding.encodingSrc} for url: ${missingEncoding.url}")
-                    MissingVideoEncodings.sendMessage(missingEncoding.encodingSrc, missingEncoding.url, missingEncoding.title)
-                    DynamoDbStore.storeMissingEncoding(missingEncoding.encodingSrc, missingEncoding.url)
+               case true => log.debug(s"Already seen missing encoding: ${missingEncoding.encodingSrc} for url: ${missingEncoding.url}")
+               case false =>
+                 log.info(s"Send notification for missing video encoding: ${missingEncoding.encodingSrc} for url: ${missingEncoding.url}")
+                 MissingVideoEncodings.sendMessage(missingEncoding.encodingSrc, missingEncoding.url, missingEncoding.title)
+                 DynamoDbStore.storeMissingEncoding(missingEncoding.encodingSrc, missingEncoding.url)
              }
+           }
+           videoEncodingsAgent.send(old => old + ("missing-encodings" -> List()))
          }
-         videoEncodingsAgent.send( old => old + ("missing-encodings" -> List()) )
+     }
+
+     apiVideoResponse.onFailure{
+       case error: Throwable =>
+         log.error(s"Unable to retrieve video content from api: ${error.getMessage}")
      }
   }
 }
