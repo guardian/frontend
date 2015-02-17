@@ -107,7 +107,7 @@
                 We won't run all javascript on these
                 For usage stats see http://david-smith.org/iosversionstats/
             *@
-            return /.*iPhone OS ([56])_\d+/.test(navigator.userAgent);
+            return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent);
         }
         return false;
     })();
