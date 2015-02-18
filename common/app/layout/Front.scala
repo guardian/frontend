@@ -267,6 +267,8 @@ case class FaciaContainer(
   def addShowMoreClasses = useShowMore && containerLayout.exists(_.hasShowMore)
 
   def isDesktopOnly = Switches.DesktopOnlyContainersSwitch.isSwitchedOn && DesktopOnlyContainers.all.contains(dataId)
+
+  def shouldLazyLoad = index >= 7
 }
 
 object Front extends implicits.Collections {
