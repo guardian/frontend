@@ -30,7 +30,7 @@ trait Prototypes {
       seleniumJava % Test,
       jodaTime % Test,
       jodaConvert % Test,
-      akkaAgent
+      akkaAgent % Test
     )
   )
 
