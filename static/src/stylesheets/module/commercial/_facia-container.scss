@@ -87,8 +87,7 @@
         color: #ffffff;
     }
 
-    .i-guardian-logo-commercial,
-    .inline-logo-guardian, {
+    .inline-logo-guardian {
         display: inline-block;
 
         @include mq(leftCol) {
@@ -96,8 +95,7 @@
         }
     }
     
-    .inline-marque-54,
-    .i-marque-54 {
+    .inline-marque-54 {
         display: none;
 
         @include mq(leftCol) {
@@ -282,13 +280,10 @@
             width: gs-span(3);
         }
         .commercial__title {
-            .i-guardian-logo-commercial,
             .inline-logo-guardian {
                 display: inline-block;
             }
-            .i--marque-54,
-            .inline--marque-54,
-            .i-marque-36 {
+            .inline--marque-54 {
                 display: none;
             }
             .inline-commercial-brand {

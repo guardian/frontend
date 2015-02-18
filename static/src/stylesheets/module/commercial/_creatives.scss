@@ -40,7 +40,6 @@
     }
     .creative__marque {
         display: block;
-        fill: color(neutral-1);
     }
     .creative__marque-title {
         margin-left: 2px;
@@ -65,6 +64,10 @@
     .creative__marque-title {
         color: colour(news-support-2);
     }
+    .creative__marque {
+        color: colour(news-support-2);
+        fill: colour(news-support-2);
+    }
 }
 
 .creative--membership {
@@ -73,6 +76,10 @@
     }
     .creative__marque-title {
         color: colour(news-accent);
+    }
+    .creative__marque {
+        color: colour(news-accent);
+        fill: colour(news-accent);
     }
 }
 
@@ -170,6 +177,8 @@
     }
     .soulmates-logo__title {
         text-align: center;
+        color: #ffffff;
+        fill: #ffffff;
     }
 
     &:after {
