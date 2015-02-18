@@ -81,6 +81,17 @@ define([
                     expect(bonzo(adSlot).hasClass('ad-slot')).toBe(true);
                 });
 
+                it('should have 1,1 slot for wide breakpoint if there is a page skin', function () {
+                    mocks.store['common/utils/config'].page.hasPageSkin = true;
+                    '12'.split('').forEach(function () {
+                        appendContainer($fixturesContainer);
+                    });
+                    frontCommercialComponents.init();
+
+                    expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
+                    expect($('.ad-slot', $fixturesContainer).attr('data-wide')).toBe('1,1');
+                });
+
                 it('should not display ad slot if commercial-components switch is off', function () {
                     mocks.store['common/utils/config'].switches.commercialComponents = false;
 
@@ -90,13 +101,6 @@ define([
 
                 it('should not display ad slot if not a front', function () {
                     mocks.store['common/utils/config'].page.isFront = false;
-
-                    expect(frontCommercialComponents.init()).toBe(false);
-                    expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
-                });
-
-                it('should not display ad slot if there is a page skin', function () {
-                    mocks.store['common/utils/config'].page.hasPageSkin = true;
 
                     expect(frontCommercialComponents.init()).toBe(false);
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
