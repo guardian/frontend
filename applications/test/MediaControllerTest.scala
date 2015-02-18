@@ -6,6 +6,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 @DoNotDiscover class MediaControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   val videoUrl = "uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
+  val videoUrlWithDodgyOctpusUrl = "football/video/2015/feb/10/manchester-united-louis-van-gaal-long-ball-video"
 
   "Media Controller" should "200 when content type is video" in {
     val result = controllers.MediaController.render(videoUrl)(TestRequest(videoUrl))
@@ -39,5 +40,12 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
     val result = controllers.MediaController.render("football/video/2014/dec/05/football-weekly-live-in-london-video")(TestRequest("/football/video/2014/dec/05/football-weekly-live-in-london-video"))
     status(result) should be(200)
     contentAsString(result) should include(""""isPodcast":false""")
+  }
+
+  it should("strip newline characters out of src urls for videos") in {
+     val result = controllers.MediaController.render(videoUrlWithDodgyOctpusUrl)(TestRequest(videoUrlWithDodgyOctpusUrl))
+     status(result) should be (200)
+     contentAsString(result) should include ("http://multimedia.guardianapis.com/interactivevideos/video.php?octopusid=10040285&amp;format=video/m3u8")
+
   }
 }
