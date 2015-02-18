@@ -70,6 +70,26 @@ $c-soulmates-high: colour(neutral-1);
         min-height: 0;
     }
 
+    .inline-logo-soulmates {
+        width: 86px;
+        height: 18px;
+
+        .svg & {
+            background-size: contain;
+
+            @include mq(wide) {
+                width: 100px;
+                height: 21px;
+            }
+        }
+        @include mq(wide) {
+            .has-page-skin & {
+                width: 86px;
+                height: 18px;
+            }
+        }
+    }
+
     .commercial__explainer {
         @include fs-header(1);
         line-height: 1;
