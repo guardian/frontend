@@ -215,7 +215,7 @@ category: Common
 
 // Testing static social on mobile
 
-.social-fixed__container {
+.social-fixed {
     height: 40px;
     position: fixed;
     left: 0;
@@ -226,7 +226,7 @@ category: Common
     @include transition(bottom .4s ease);
 }
 
-.social-fixed {
+.social-fixed__item {
     width: 50%;
     color: #ffffff;
 
@@ -237,12 +237,12 @@ category: Common
     }
 }
 
-.social-fixed--facebook {
+.social-fixed__item--facebook {
     background-color: colour(social-facebook);
     float: left;
 }
 
-.social-fixed--twitter {
+.social-fixed__item--twitter {
     background-color: colour(social-twitter);
     float: right;
 }

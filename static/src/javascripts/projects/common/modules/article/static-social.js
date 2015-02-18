@@ -4,17 +4,17 @@ define([
     'common/utils/detect',
     'common/utils/proximity-loader',
     'common/utils/template',
-    'text!common/views/content/static-facebook.html'
+    'text!common/views/content/static-social-buttons.html'
 ], function (
     $,
     config,
     detect,
     proximityLoader,
     template,
-    staticFacebookTmpl
+    staticSocialTmpl
 ) {
     function show() {
-        $('.social-fixed__container').addClass('social-fixed--show');
+        $('.social-fixed').addClass('social-fixed--show');
     }
 
     function init() {
@@ -26,11 +26,11 @@ define([
             match = window.location.href.match(/[?&]CMP=([^&#]+)/);
 
         if (config.switches.staticSocialIconMobile && detect.isBreakpoint({ max: 'phablet' }) &&
-            match && ['share_btn_fb', 'share_btn_tw'].indexOf(match[1]) > -1 && Math.random() < 0.5) {
-            $('.meta__social').append(template(staticFacebookTmpl, data));
+            match && ['share_btn_fb', 'share_btn_tw'].indexOf(match[1]) > -1) {
+            $('.meta__social').append(template(staticSocialTmpl, data));
         }
 
-        proximityLoader.add($('.content-footer'), 1500, show);
+        proximityLoader.add($('.submeta-container'), 1500, show);
     }
 
     return init;
