@@ -268,7 +268,7 @@ case class FaciaContainer(
 
   def isDesktopOnly = Switches.DesktopOnlyContainersSwitch.isSwitchedOn && DesktopOnlyContainers.all.contains(dataId)
 
-  def shouldLazyLoad = index >= 7
+  def shouldLazyLoad = index > 8
 }
 
 object Front extends implicits.Collections {
