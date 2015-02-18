@@ -66,7 +66,7 @@ define([
             ),
             videoDesktop = {
                 video: (this.params.videoURL !== '') ?
-                    '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0&enablejsapi=1" frameborder="0" class="expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="margin-left: ' + leftMargin + 'px;' + leftPosition + rightPosition + '"></iframe>' : ''
+                    '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="margin-left: ' + leftMargin + 'px;' + leftPosition + rightPosition + '"></iframe>' : ''
             },
             showmore = {
                 show: (this.params.showMore === 'yes') ?
