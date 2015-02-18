@@ -95,7 +95,6 @@ define([
             }
 
             if (config.page.section === 'football') {
-                console.log(config.page.section);
                 require(['bootstraps/football'], function (football) {
                     bootstrapContext('footbal', football);
                 });
