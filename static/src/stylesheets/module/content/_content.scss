@@ -382,6 +382,13 @@
 
     time {
         display: table;
+
+        @include mq(desktop) {
+            .content--interactive & {
+                display: inline;
+                padding-right: $gs-gutter/4;
+            }
+        }
     }
 
     i {
