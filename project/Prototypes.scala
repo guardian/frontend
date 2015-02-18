@@ -22,6 +22,18 @@ trait Prototypes {
     scalaVersion := "2.11.4"
   )
 
+  val frontendIntegrationTestsSettings = Seq (
+    concurrentRestrictions in ThisProject := List(Tags.limit(Tags.Test, 1)),
+    testOptions in Test += Tests.Argument("-oDF"),
+    libraryDependencies ++= Seq(
+      scalaTestPlus,
+      seleniumJava % Test,
+      jodaTime % Test,
+      jodaConvert % Test,
+      akkaAgent
+    )
+  )
+
   val frontendDependencyManagementSettings = Seq(
     ivyXML :=
       <dependencies>
@@ -63,7 +75,7 @@ trait Prototypes {
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
 
-    concurrentRestrictions in Global += Tags.limit(Tags.Test, 4),
+    concurrentRestrictions in Global := List(Tags.limit(Tags.Test, 4)),
 
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
