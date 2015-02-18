@@ -356,6 +356,10 @@ Loader.prototype.renderCommentCount = function() {
                     $('.js-comment-count').html(html);
 
                     $('.js-discussion-comment-count').text('(' + commentCount + ')');
+
+                    if (commentCount < 4) {
+                        $('.js-discussion-comment-box--bottom').remove();
+                    }
                 } else {
                     this.setState('empty');
                 }
