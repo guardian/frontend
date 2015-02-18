@@ -75,6 +75,12 @@ object Switches {
   private lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
+  val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
+    "If this switch is on, containers past the 8th will be lazily loaded on mobile and tablet",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 4, 1)
+  )
+
   val DesktopOnlyContainersSwitch = Switch("Performance", "desktop-only-containers",
     "If this switch is on, certain containers will only render on desktop breakpoints",
     safeState = Off,
