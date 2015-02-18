@@ -76,7 +76,8 @@ define([
             modules.initRightHandComponent();
             modules.initSelectionSharing();
             Lightbox.init();
-            flyers.init();
+            flyers.upgradeFlyers();
+            flyers.insertTagFlyer();
             openModule.init();
 
             mediator.emit('page:article:ready');
