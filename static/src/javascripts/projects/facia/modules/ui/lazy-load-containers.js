@@ -3,7 +3,7 @@ define([
     'fastdom',
     'qwery',
     'common/utils/_',
-    'common/utils/mediator',
+    'common/utils/mediator'
 ], function (
     bonzo,
     fastdom,
@@ -15,28 +15,27 @@ define([
 
     return function () {
         var $frontBottom = bonzo(qwery('.js-front-bottom')),
-            containers = qwery('.js-container--lazy-load');
+            containers = qwery('.js-container--lazy-load'),
+            lazyLoad = _.throttle(function () {
+                if (containers.length === 0) {
+                    mediator.off('window:scroll', lazyLoad);
+                } else {
+                    fastdom.read(function () {
+                        var scrollTop = bonzo(document.body).scrollTop(),
+                            scrollBottom = scrollTop + bonzo.viewport().height,
+                            bottomOffset = $frontBottom.offset().top,
+                            $container;
 
-        var lazyLoad = _.throttle(function () {
-            if (containers.length === 0) {
-                mediator.off('window:scroll', lazyLoad);
-            } else {
-                fastdom.read(function () {
-                    var scrollTop = bonzo(document.body).scrollTop(),
-                        scrollBottom = scrollTop + bonzo.viewport().height,
-                        bottomOffset = $frontBottom.offset().top,
-                        $container;
+                        if (scrollBottom > bottomOffset - DISTANCE_BEFORE_LOAD) {
+                            $container = bonzo(containers.shift());
 
-                    if (scrollBottom > bottomOffset - DISTANCE_BEFORE_LOAD) {
-                        $container = bonzo(containers.shift());
-
-                        fastdom.write(function () {
-                            $container.removeClass('fc-container--lazy-load');
-                        });
-                    }
-                });
-            }
-        }, 200);
+                            fastdom.write(function () {
+                                $container.removeClass('fc-container--lazy-load');
+                            });
+                        }
+                    });
+                }
+            }, 200);
 
         mediator.on('window:scroll', lazyLoad);
         lazyLoad();
