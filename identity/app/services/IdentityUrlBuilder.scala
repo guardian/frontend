@@ -36,4 +36,8 @@ class IdentityUrlBuilder @Inject()(conf: IdentityConfiguration) {
     build(conf.id.webappUrl, path, Some(idRequest), params)
   def buildWebappUrl(path: String, params: (String, String)*) =
     build(conf.id.webappUrl, path, None, params)
+  def buildOAuthUrl(path: String, idRequest: IdentityRequest, params: (String, String)*) =
+    build(conf.id.oauthUrl, path, Some(idRequest), params)
+  def buildOAuthUrl(path: String, params: (String, String)*) =
+    build(conf.id.oauthUrl, path, None, params)
 }
