@@ -27,7 +27,7 @@ case class ContainerLayoutContext(
   private def dedupCutOut(cardAndContext: CardAndContext): CardAndContext = {
     val (content, context) = cardAndContext
 
-    if (content.snapStuff.snapType == LatestSnap) {
+    if (content.snapStuff.map(_.snapType) == Some(LatestSnap)) {
       (content, context)
     } else {
       val newCard = if (content.cutOut.exists(cutOutsSeen.contains)) {
