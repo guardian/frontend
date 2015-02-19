@@ -4,6 +4,7 @@ define([
     'qwery',
     'common/utils/_',
     'common/utils/detect',
+    'common/utils/storage',
     'common/utils/mediator'
 ], function (
     bonzo,
@@ -11,28 +12,50 @@ define([
     qwery,
     _,
     detect,
+    storage,
     mediator
 ) {
-    var distanceBeforeLoad = detect.getViewport().height;
+    var storageKey = 'gu.front.lazystate',
+        distanceBeforeLoad = detect.getViewport().height;
+
+    function saveState(numOpenContainers) {
+        return storage.session.set(storageKey, {
+            pathname: window.location.pathname,
+            openContainers: numOpenContainers
+        });
+    }
+
+    function isHidden(el) {
+        return el.offsetParent === null;
+    }
+
+    function revealContainer(container) {
+        if (isHidden(container)) {
+            bonzo(container).removeClass('fc-container--lazy-load');
+            return true;
+        }
+    }
 
     return function () {
         var $frontBottom = bonzo(qwery('.js-front-bottom')),
-            containers = qwery('.js-container--lazy-load'),
+            lazyContainers = qwery('.js-container--lazy-load'),
+            numOpenContainers = qwery('section').length - lazyContainers.length,
             lazyLoad = _.throttle(function () {
-                if (containers.length === 0) {
+                if (lazyContainers.length === 0) {
                     mediator.off('window:scroll', lazyLoad);
                 } else {
                     fastdom.read(function () {
                         var scrollTop = bonzo(document.body).scrollTop(),
                             scrollBottom = scrollTop + bonzo.viewport().height,
-                            bottomOffset = $frontBottom.offset().top,
-                            $container;
+                            bottomOffset = $frontBottom.offset().top;
 
                         if (scrollBottom > bottomOffset - distanceBeforeLoad) {
-                            $container = bonzo(containers.shift());
-
                             fastdom.write(function () {
-                                $container.removeClass('fc-container--lazy-load');
+                                numOpenContainers += 1;
+                                while (!revealContainer(lazyContainers.shift())) {
+                                    numOpenContainers += 1;
+                                }
+                                saveState(numOpenContainers);
                             });
                         }
                     });

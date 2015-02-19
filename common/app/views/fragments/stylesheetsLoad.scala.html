@@ -75,3 +75,23 @@ if (Object.prototype.toString.call(window.operamini) === "[object OperaMini]") {
 </script>
 
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />
+
+@if(LazyLoadContainersSwitch.isSwitchedOn) {
+    <script>
+        (function (session) {
+            var frontState, style ;
+
+            if (session) {
+                frontState = session.getItem('gu.front.lazystate');
+                frontState = frontState && JSON.parse (frontState);
+                frontState = frontState && frontState.value ;
+
+                if (frontState && frontState.pathname === window.location.pathname && frontState.openContainers > 0) {
+                    style = document.createElement('style') ;
+                    style.innerHTML = 'section:nth-child(-n+' + frontState.openContainers + ') {display: block !important;}';
+                    document.getElementsByTagName('head')[0].appendChild(style)
+                }
+            }
+        })(JSON && JSON.parse && window.sessionStorage)
+    </script>
+}
