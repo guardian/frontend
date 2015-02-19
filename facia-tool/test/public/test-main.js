@@ -1,8 +1,15 @@
 // Make karma asynchronous
 window.__karma__.loaded = function () {};
 
-// Load all tests specs through curl
-(function () {
+System.baseURL = '/base/public/';
+
+System.amdRequire([
+    'test-config',
+    'underscore'
+], function (
+    testConfig,
+    _
+) {
     var tests = [],
         specFileExpr = /.*\.spec\.js$/,
         filterTests = document.location.search.match(/[\?\&]test=[a-z]+/gi) || [];
@@ -21,14 +28,25 @@ window.__karma__.loaded = function () {};
     } : function () {
         return true;
     };
+    var prepareForLoad = function (test) {
+        return '.' + test.substring(test.indexOf('/spec/')).replace('.js', '');
+    };
 
     tests = _.chain(window.__karma__.files)
         .keys()
         .filter(filterSpecFiles)
         .filter(filterLoadedTests)
+        .map(prepareForLoad)
         .value();
 
-    curl(tests).then(function () {
-        window.__karma__.start();
+    System.amdRequire([
+        'mock/once',
+        'mock/logger'
+    ], function (
+        onceMock
+    ) {
+        System.amdRequire(tests, function () {
+            window.__karma__.start();
+        });
     });
-})();
+});

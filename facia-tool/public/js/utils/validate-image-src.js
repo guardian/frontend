@@ -1,7 +1,12 @@
-/* global _: true */
 define([
+    'underscore',
+    'jquery',
     'modules/vars'
-], function(vars){
+], function(
+    _,
+    $,
+    vars
+) {
 
     /**
      * Asserts if the given image URL is on The Guardian domain, is proper size and aspect ratio.

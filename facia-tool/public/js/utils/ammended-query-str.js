@@ -1,5 +1,10 @@
-/* global _: true */
-define(['utils/query-params'], function(queryParams) {
+define([
+    'underscore',
+    'utils/query-params'
+], function(
+    _,
+    queryParams
+) {
     return function (key, val) {
         var qp = queryParams();
         if (_.isUndefined(val)) {

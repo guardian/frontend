@@ -42,7 +42,7 @@ module.exports = function (grunt) {
     }
 
     // Default task
-    grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);
+    grunt.registerTask('default', ['clean', 'validate', 'prepare', 'compile', 'test', 'analyse']);
 
     /**
      * Validate tasks
@@ -101,6 +101,10 @@ module.exports = function (grunt) {
         'asset_hash',
         'compile:conf'
     ]);
+
+    grunt.registerTask('prepare', ['jspm']);
+
+    grunt.registerTask('jspm', ['shell:jspmFaciaTool']);
 
     /**
      * compile:js:<requiretask> tasks. Generate one for each require task

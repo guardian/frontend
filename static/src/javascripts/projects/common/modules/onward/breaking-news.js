@@ -117,7 +117,7 @@ define([
 
                         bean.on($('.js-breaking-news__item__close', el)[0], 'click', function () {
                             fastdom.write(function () {
-                                $(el).hide();
+                                $('[data-breaking-article-id]').hide();
                             });
                             hiddenIds[article.id] = true;
                             storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));

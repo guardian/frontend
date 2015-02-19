@@ -1,7 +1,10 @@
-/* globals _ */
 define([
+    'jquery',
+    'underscore',
     'modules/authed-ajax'
 ], function (
+    $,
+    _,
     authedAjax
 ) {
     return function (type, groups) {
