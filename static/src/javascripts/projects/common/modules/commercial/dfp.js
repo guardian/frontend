@@ -299,7 +299,7 @@ define([
                     $slot.parent().css('display', 'block');
                 }
 
-                if (($slot.hasClass('ad-slot--top-above-nav') && size === '88,70')) {
+                if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')) {
                     $slot.addClass('ad-slot__fluid250');
                 }
 
