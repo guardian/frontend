@@ -41,7 +41,7 @@ define([
         siblings.forEach(function (s) {
             selector = selector.replace(s, canonicalOrder(s));
         });
-        return selector;
+        return _.trim(selector).replace(/\s+/g, ' ');
     }
 
     function canonicalOrder(s) {
