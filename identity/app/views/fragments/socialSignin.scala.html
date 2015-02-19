@@ -1,16 +1,37 @@
 @(cta: String, page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, confirm: Boolean = false)(implicit request: RequestHeader)
 
+@import conf.Switches._
+@import dev.HttpSwitch
+
 <ul class="social-signin">
     <li class="social-signin__item">
-        <a class="social-signin__action social-signin__action--fb" href="@idUrlBuilder.buildWebappUrl(if (confirm) "/facebook/confirm" else "/facebook/signin", idRequest)"
-                data-link-name="Register/Sign in with Facebook" data-test-id="facebook-sign-in">
+        <a class="social-signin__action social-signin__action--fb"
+            data-link-name="Register/Sign in with Facebook" data-test-id="facebook-sign-in"
+            href="@if(confirm) {
+                @idUrlBuilder.buildWebappUrl("/facebook/confirm", idRequest)
+            } else {
+                @if(HttpSwitch(IdentitySocialOAuthSwitch).isSwitchedOn) {
+                    @idUrlBuilder.buildOAuthUrl("/facebook/signin", idRequest)
+                } else {
+                    @idUrlBuilder.buildWebappUrl("/facebook/signin", idRequest)
+                }
+            }">
             <span>@cta with Facebook</span>
             <i class="i-fb i social-signin__icon social-signin__icon--fb"></i>
         </a>
     </li>
     <li class="social-signin__item">
-        <a class="social-signin__action social-signin__action--gplus" href="@idUrlBuilder.buildWebappUrl(if (confirm) "/google/confirm" else "/google/signin", idRequest)"
-                data-link-name="Register/Sign in with Google" data-test-id="google-sign-in">
+        <a class="social-signin__action social-signin__action--gplus"
+            data-link-name="Register/Sign in with Google" data-test-id="google-sign-in"
+            href="@if(confirm) {
+                @idUrlBuilder.buildWebappUrl("/google/confirm", idRequest)
+            } else {
+                @if(HttpSwitch(IdentitySocialOAuthSwitch).isSwitchedOn) {
+                    @idUrlBuilder.buildOAuthUrl("/google/signin", idRequest)
+                } else {
+                    @idUrlBuilder.buildWebappUrl("/google/signin", idRequest)
+                }
+            }">
             <span>@cta with Google</span>
             <i class="i-gplus i social-signin__icon social-signin__icon--gplus"></i>
         </a>

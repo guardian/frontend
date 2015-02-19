@@ -1,7 +1,7 @@
 define([
     'test/utils/async-test',
     'test/utils/drag',
-    'mock-collection',
+    'mock/collection',
     'test/utils/config-actions',
     'test/utils/dom-nodes'
 ], function(

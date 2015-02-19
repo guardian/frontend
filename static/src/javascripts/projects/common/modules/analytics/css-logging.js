@@ -26,16 +26,22 @@ define([
         classNameInlined = 'js-inlined',
         eventsInitialised = false;
 
+    function getRules(s) {
+        var rules = s ? s.cssRules || s.rules : null;
+        return rules ? _.values(rules) : s;
+    }
+
     function getSelectors(all) {
         var rand,
             len,
             rules = _.chain(getInlineStylesheets())
-                .map(function (s) { return s.rules || s.cssRules; })
-                .compact()
-                .map(_.values)
+                .map(getRules)
+                .flatten()
+                .map(getRules) // 2nd pass for rules nested in media queries
                 .flatten()
                 .map(function (r) { return r && r.selectorText; })
                 .compact()
+                .uniq()
                 .value();
 
         if (all) {

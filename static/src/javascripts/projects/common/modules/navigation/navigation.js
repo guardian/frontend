@@ -3,12 +3,14 @@ define([
     'qwery',
     'fastdom',
     'common/utils/mediator',
+    'common/utils/detect',
     'common/utils/$'
 ], function (
     bean,
     qwery,
     fastdom,
     mediator,
+    detect,
     $
 ) {
     var Navigation = {
@@ -16,6 +18,13 @@ define([
             this.addMegaNavMenu();
             this.enableMegaNavToggle();
             this.replaceAllSectionsLink();
+
+            if (detect.isIOS() && detect.getUserAgent.version > 5) {
+                // crashes mobile safari < 6, so we add it here after detection
+                fastdom.write(function () {
+                    $('.navigation__scroll').css({'-webkit-overflow-scrolling': 'touch'});
+                });
+            }
         },
 
         addMegaNavMenu: function () {

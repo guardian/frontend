@@ -1,24 +1,25 @@
 package model.commercial
 
 import com.ning.http.client.{Response => AHCResponse}
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import conf.Switch
 import model.diagnostics.CloudWatch
 import play.api.Play.current
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.{WS, WSSignatureCalculator}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.{Duration, _}
 import scala.util.Try
 import scala.xml.{Elem, XML}
 
-object FeedReader extends ExecutionContexts with Logging {
+object FeedReader extends Logging {
 
   def read[T](request: FeedRequest,
               signature: Option[WSSignatureCalculator] = None,
               validResponseStatuses: Seq[Int] = Seq(200))
-             (parse: String => T): Future[Option[T]] = {
+             (parse: String => T)
+             (implicit ec: ExecutionContext): Future[Option[T]] = {
 
     def readUrl(url: String): Future[Option[T]] = {
 
@@ -83,7 +84,9 @@ object FeedReader extends ExecutionContexts with Logging {
 
   }
 
-  def readSeq[T](request: FeedRequest)(parse: String => Seq[T]): Future[Seq[T]] = {
+  def readSeq[T](request: FeedRequest)
+                (parse: String => Seq[T])
+                (implicit ec: ExecutionContext): Future[Seq[T]] = {
     read(request)(parse) map {
       case Some(items) =>
         log.info(s"Loaded ${items.size} ${request.feedName} from ${request.url.get}")
@@ -94,13 +97,17 @@ object FeedReader extends ExecutionContexts with Logging {
     }
   }
 
-  def readSeqFromXml[T](request: FeedRequest)(parse: Elem => Seq[T]): Future[Seq[T]] = {
+  def readSeqFromXml[T](request: FeedRequest)
+                       (parse: Elem => Seq[T])
+                       (implicit ec: ExecutionContext): Future[Seq[T]] = {
     readSeq(request) { body =>
       parse(XML.loadString(body))
     }
   }
 
-  def readSeqFromJson[T](request: FeedRequest)(parse: JsValue => Seq[T]): Future[Seq[T]] = {
+  def readSeqFromJson[T](request: FeedRequest)
+                        (parse: JsValue => Seq[T])
+                        (implicit ec: ExecutionContext): Future[Seq[T]] = {
     readSeq(request) { body =>
       parse(Json.parse(body))
     }

@@ -1,8 +1,9 @@
-/* global _: true */
 define([
+    'underscore',
     'utils/parse-query-params',
     'utils/identity'
 ], function(
+    _,
     parseQueryParams,
     identity
 ) {

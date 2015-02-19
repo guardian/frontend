@@ -1,7 +1,6 @@
-package common
+package integration
 
-import org.scalatest.tags.Retryable
-import org.scalatest.FlatSpec
+import org.scalatest.{DoNotDiscover, FlatSpec}
 import javax.net.ssl._
 import java.security.{cert, SecureRandom}
 import java.net.{ProtocolException, MalformedURLException, URL}
@@ -9,7 +8,7 @@ import org.joda.time.{Days, DateTime}
 import java.io.IOException
 import sun.security.x509.X509CertImpl
 
-class SslCertTest extends FlatSpec     {
+@DoNotDiscover class SslCertTest extends FlatSpec {
 
   val trustManager = Array[TrustManager](new NativeTrustMananger())
 

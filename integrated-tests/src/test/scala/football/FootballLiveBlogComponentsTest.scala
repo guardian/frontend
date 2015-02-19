@@ -1,30 +1,29 @@
-package football
+package integration
 
-import driver.Driver
 import org.scalatest.tags.Retryable
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
-
-@Retryable class FootballLiveBlogComponentsTest extends FlatSpec with Matchers with Driver {
+@DoNotDiscover @Retryable class FootballLiveBlogComponentsTest extends FlatSpec with Matchers with SharedWebDriver with BeforeAndAfterAll {
 
   "Football live blogs" should "have match stats components" in {
 
-    go to theguardian("/football/live/2014/aug/16/-sp-arsenal-v-crystal-palace-premier-league-live-report")
+    get("/football/live/2014/aug/16/-sp-arsenal-v-crystal-palace-premier-league-live-report")
+    implicitlyWait(10)
 
     withClue("should show the 'scores' component") {
-      first("[data-component='big-match-special']").text should include("Arsenal")
+      first("[data-component='big-match-special']").getText() should include("Arsenal")
     }
 
     withClue("should pull in the 'Match stats' component") {
-      first("[data-component='football-stats-embed']").text should include("Goal attempts")
+      first("[data-component='football-stats-embed']").getText() should include("Goal attempts")
     }
 
     withClue("should pull in the 'League table' component") {
-      first("[data-component='football-table-embed']").text should include("Premier League")
+      first("[data-component='football-table-embed']").getText() should include("Premier League")
     }
 
     withClue("should pull in the 'Fixtures' component") {
-      first("[data-component='football-matches-embed']").text should include("Premier League")
+      first("[data-component='football-matches-embed']").getText() should include("Premier League")
     }
   }
 }

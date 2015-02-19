@@ -1,5 +1,5 @@
 define([
-    'mock-search',
+    'mock/search',
     'test/fixtures/dates'
 ], function (
     mockSearch,

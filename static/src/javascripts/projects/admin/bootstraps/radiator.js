@@ -22,7 +22,7 @@ define([
     values
 ) {
     function initialise() {
-        var pingdom = document.getElementById('pingdom')
+        var pingdom = document.getElementById('pingdom');
         ajax({
             url:'/radiator/pingdom',
             type: 'json',
@@ -39,7 +39,7 @@ define([
                         pingdom.appendChild(li);
                 })
             }
-        )
+        );
 
         // riff raff - requires you to be on the guardian network
         ajax({
@@ -88,12 +88,17 @@ define([
                 function renderDeploys(stage, target) {
                     Object.keys(latestDeployments[stage]).forEach(function (deployment)  {
                         var d  = latestDeployments[stage][deployment];
-                        var nameAbbreviation = d.projectName.substr(10, 4) //start at 10 to drop 'frontend::'
+                        var nameAbbreviation = d.projectName.substr(10, 4); //start at 10 to drop 'frontend::'
+
+                        var link = document.createElement('a');
+                        link.href = 'https://riffraff.gutools.co.uk/deployment/view/' + d.uuid;
+                        target.appendChild(link);
+
                         var li = document.createElement('li');
                         li.className = d.status;
                         li.innerHTML = nameAbbreviation;
                         li.setAttribute('title', d.projectName);
-                        target.appendChild(li);
+                        link.appendChild(li);
 
                         if (latestDeployments["CODE"][deployment] && stage === "PROD" && d.status == "Completed") {
                             var codeBuild = (latestDeployments["CODE"][deployment] || {}).build;

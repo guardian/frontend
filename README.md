@@ -109,6 +109,17 @@ Ubuntu/Mac:
 ```
 sudo npm -g install grunt-cli
 ```
+
+#### JSPM (package management)
+
+Ubuntu/Mac:
+```
+sudo npm -g install jspm
+jspm endpoint config github
+```
+
+It'll ask for a GitHub access token. Go to GitHub Settings -> Applications and [generate new token](https://github.com/settings/tokens/new). Default scopes are fine.
+
 #### Ruby >= v1.9.x (use `ruby -v` to check if you have it installed)
 
 Ubuntu:
@@ -166,7 +177,7 @@ bundle
 
 After this, you can compile the assets:
 ```
-grunt compile
+grunt prepare compile
 ```
 
 ### Run the app

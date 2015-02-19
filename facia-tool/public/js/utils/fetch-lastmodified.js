@@ -1,8 +1,10 @@
 define([
+    'jquery',
     'modules/authed-ajax',
     'modules/vars',
     'utils/human-time'
 ], function (
+    $,
     authedAjax,
     vars,
     humanTime

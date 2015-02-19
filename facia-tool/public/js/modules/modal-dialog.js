@@ -1,8 +1,11 @@
-/* globals _ */
 define([
-    'knockout'
+    'jquery',
+    'knockout',
+    'underscore'
 ], function (
-    ko
+    $,
+    ko,
+    _
 ) {
     function ModalDialog () {
         this.isOpen = ko.observable(false);

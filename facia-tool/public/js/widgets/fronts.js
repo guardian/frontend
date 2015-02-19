@@ -1,7 +1,7 @@
-/* globals _ */
 define([
     'config',
     'knockout',
+    'underscore',
     'models/collections/collection',
     'modules/vars',
     'utils/fetch-lastmodified',
@@ -12,6 +12,7 @@ define([
 ], function (
     pageConfig,
     ko,
+    _,
     Collection,
     vars,
     lastModified,

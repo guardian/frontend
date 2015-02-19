@@ -55,7 +55,9 @@ object GetClasses {
       Some(containerDefinition.container),
       extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty) ++
         slices.Container.customClasses(containerDefinition.container),
-      disableHide = containerDefinition.hideToggle
+      disableHide = containerDefinition.hideToggle,
+      desktopOnly = containerDefinition.isDesktopOnly,
+      lazyLoad = containerDefinition.shouldLazyLoad
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */
@@ -67,7 +69,9 @@ object GetClasses {
     false,
     None,
     Nil,
-    disableHide = true
+    disableHide = true,
+    desktopOnly = false,
+    lazyLoad = false
   )
 
   def forContainer(
@@ -78,16 +82,21 @@ object GetClasses {
     hasDesktopShowMore: Boolean,
     container: Option[slices.Container] = None,
     extraClasses: Seq[String] = Nil,
-    disableHide: Boolean = false
+    disableHide: Boolean = false,
+    desktopOnly: Boolean,
+    lazyLoad: Boolean
   ) = {
     RenderClasses((Seq(
       ("fc-container", true),
       ("fc-container--first", isFirst),
       ("fc-container--has-show-more", hasDesktopShowMore),
+      ("fc-container--desktop-only", desktopOnly),
       ("js-container--first", isFirst),
       ("fc-container--sponsored", commercialOptions.isSponsored),
       ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
       ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
+      ("fc-container--lazy-load", lazyLoad),
+      ("js-container--lazy-load", lazyLoad),
       ("js-sponsored-container", commercialOptions.isPaidFor),
       ("js-container--toggle",
         !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !commercialOptions.isPaidFor)
