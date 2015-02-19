@@ -22,7 +22,7 @@ object Application extends Controller with ExecutionContexts {
       .map(Ok.apply(_))
       .map(NoCache.apply)
       .fold(
-        apiError => InternalServerError,
+        apiError => InternalServerError(apiError.message),
         successJson => successJson
       )}
 
@@ -33,7 +33,7 @@ object Application extends Controller with ExecutionContexts {
       .map(Ok.apply(_))
       .map(NoCache.apply)
       .fold(
-        apiError => InternalServerError,
+        apiError => InternalServerError(apiError.message),
         successJson => successJson.withHeaders("Content-Type" -> "application/json")
       )}
 }
