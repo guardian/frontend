@@ -3,15 +3,17 @@ define([
     'fastdom',
     'qwery',
     'common/utils/_',
+    'common/utils/detect',
     'common/utils/mediator'
 ], function (
     bonzo,
     fastdom,
     qwery,
     _,
+    detect,
     mediator
 ) {
-    var DISTANCE_BEFORE_LOAD = 100;
+    var distanceBeforeLoad = detect.getViewport().height;
 
     return function () {
         var $frontBottom = bonzo(qwery('.js-front-bottom')),
@@ -26,7 +28,7 @@ define([
                             bottomOffset = $frontBottom.offset().top,
                             $container;
 
-                        if (scrollBottom > bottomOffset - DISTANCE_BEFORE_LOAD) {
+                        if (scrollBottom > bottomOffset - distanceBeforeLoad) {
                             $container = bonzo(containers.shift());
 
                             fastdom.write(function () {
