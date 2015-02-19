@@ -408,6 +408,7 @@ define([
         hasPushStateSupport: hasPushStateSupport,
         getOrientation: getOrientation,
         getBreakpoint: getBreakpoint,
+        getViewport: getViewport,
         getUserAgent: getUserAgent,
         isIOS: isIOS,
         isAndroid: isAndroid,
