@@ -303,7 +303,7 @@ define([
                     $slot.addClass('ad-slot__fluid250');
                 }
 
-                if (($slot.hasClass('ad-slot--commercial-component') && size == '88,88')) {
+                if (($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
                     $slot.addClass('ad-slot__fluid250');
                 }
             }
