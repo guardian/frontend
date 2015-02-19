@@ -501,6 +501,7 @@ define([
     };
 
     function bootstrap() {
+        console.log('ligtbox: bootstrap');
         if ('lightboxImages' in config.page && config.page.lightboxImages.images.length > 0) {
             var lightbox,
                 galleryId,

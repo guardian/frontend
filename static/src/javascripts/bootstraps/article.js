@@ -8,7 +8,6 @@ define([
     'common/modules/article/open-module',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
-    'common/modules/gallery/lightbox',
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
     'common/modules/ui/rhc',
@@ -23,7 +22,6 @@ define([
     openModule,
     truncate,
     twitter,
-    Lightbox,
     geoMostPopular,
     OpenCta,
     rhc,
@@ -75,7 +73,6 @@ define([
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
             modules.initSelectionSharing();
-            Lightbox.init();
             flyers.init();
             openModule.init();
 

@@ -12,7 +12,6 @@ define([
     'common/utils/url',
     'common/modules/commercial/liveblog-adverts',
     'common/modules/experiments/affix',
-    'common/modules/gallery/lightbox',
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
     'common/modules/ui/dropdowns',
@@ -34,7 +33,6 @@ define([
     url,
     liveblogAdverts,
     Affix,
-    Lightbox,
     LiveFilter,
     AutoUpdate,
     dropdowns,
@@ -250,7 +248,6 @@ define([
         robust('lb-fence',      function () { article.modules.initFence(); });
         robust('lb-twitter',    function () { article.modules.initTruncateAndTwitter(); });
         robust('lb-sharing',    function () { article.modules.initSelectionSharing(); });
-        robust('lb-lightbox',   function () { Lightbox.init(); });
 
         robust('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
     }

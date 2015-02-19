@@ -9,7 +9,6 @@ define([
     'bootstraps/common',
     'bootstraps/football',
     'bootstraps/gallery',
-    'bootstraps/image-content',
     'bootstraps/liveblog',
     'bootstraps/media',
     'bootstraps/profile',
@@ -27,7 +26,6 @@ define([
     common,
     football,
     gallery,
-    imageContent,
     liveBlog,
     media,
     profile,
@@ -69,11 +67,17 @@ define([
             }
 
             if (config.page.contentType === 'Article') {
-                bootstrapContext('article', article);
+                require(['bootstraps/image-content'], function(imageContent) {
+                    bootstrapContext('article', article);
+                    imageContent.init();
+                });
             }
 
             if (config.page.contentType === 'LiveBlog') {
-                bootstrapContext('liveBlog', liveBlog);
+                require(['bootstraps/image-content'], function(imageContent) {
+                    bootstrapContext('liveBlog', liveBlog);
+                    imageContent.init();
+                });
             }
 
             if (config.isMedia || qwery('video, audio').length) {
@@ -81,11 +85,17 @@ define([
             }
 
             if (config.page.contentType === 'Gallery') {
-                bootstrapContext('gallery', gallery);
+                require(['bootstraps/image-content'], function(imageContent) {
+                    bootstrapContext('gallery', gallery);
+                    imageContent.init();
+                });
             }
 
             if (config.page.contentType === 'ImageContent') {
-                bootstrapContext('image-content', imageContent);
+                require(['bootstraps/image-content'], function(imageContent) {
+                    bootstrapContext('image-content', imageContent);
+                    imageContent.init();
+                });
             }
 
             if (config.page.contentType === 'Tag') {
