@@ -5,7 +5,6 @@ define([
 ) {
 
     var ready = function () {
-            console.log('image content: ready');
             Lightbox.init();
         };
 
