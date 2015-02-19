@@ -41,7 +41,7 @@ define([
         siblings.forEach(function (s) {
             selector = selector.replace(s, canonicalOrder(s));
         });
-        return selector.replace(/^\s+|\s+$/g,'').replace(/\s+/g, ' ');
+        return selector.replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
     }
 
     function canonicalOrder(s) {
