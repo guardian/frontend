@@ -56,7 +56,6 @@ object GetClasses {
       extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty) ++
         slices.Container.customClasses(containerDefinition.container),
       disableHide = containerDefinition.hideToggle,
-      desktopOnly = containerDefinition.isDesktopOnly,
       lazyLoad = containerDefinition.shouldLazyLoad
     )
 
@@ -70,7 +69,6 @@ object GetClasses {
     None,
     Nil,
     disableHide = true,
-    desktopOnly = false,
     lazyLoad = false
   )
 
@@ -83,14 +81,12 @@ object GetClasses {
     container: Option[slices.Container] = None,
     extraClasses: Seq[String] = Nil,
     disableHide: Boolean = false,
-    desktopOnly: Boolean,
     lazyLoad: Boolean
   ) = {
     RenderClasses((Seq(
       ("fc-container", true),
       ("fc-container--first", isFirst),
       ("fc-container--has-show-more", hasDesktopShowMore),
-      ("fc-container--desktop-only", desktopOnly),
       ("js-container--first", isFirst),
       ("fc-container--sponsored", commercialOptions.isSponsored),
       ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
