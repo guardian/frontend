@@ -249,12 +249,16 @@ define([
         return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
     }
 
-    function getViewportWidth() {
+    function getViewport() {
         var w = window,
             d = document,
             e = d.documentElement,
             g = d.getElementsByTagName('body')[0];
-        return w.innerWidth || e.clientWidth || g.clientWidth;
+
+        return {
+            width:  w.innerWidth  || e.clientWidth  || g.clientWidth,
+            height: w.innerHeight || e.clientHeight || g.clientHeight
+        };
     }
 
     /** TEMPORARY: I'm going to update lodash in a separate pull request. */
@@ -275,7 +279,7 @@ define([
     }
 
     function getBreakpoint(includeTweakpoint) {
-        var viewportWidth = getViewportWidth(),
+        var viewportWidth = getViewport().width,
             index,
             breakpoint = _.last(takeWhile(breakpoints, function (bp) {
                 return bp.width <= viewportWidth;
