@@ -83,7 +83,7 @@ if (Object.prototype.toString.call(window.operamini) === "[object OperaMini]") {
 
             if (session) {
                 frontState = session.getItem('gu.front.lazystate');
-                frontState = frontState && JSON.parse (frontState);
+                frontState = frontState && JSON.parse(frontState);
                 frontState = frontState && frontState.value ;
 
                 if (frontState && frontState.pathname === window.location.pathname && frontState.openContainers > 0) {
