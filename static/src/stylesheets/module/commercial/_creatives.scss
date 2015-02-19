@@ -172,8 +172,12 @@
         height: gs-height(1);
         margin: $gs-baseline auto 0;
         padding-top: $gs-baseline*3;
-        background-size: 100%;
+        background-size: 290%; /* for non svg browsers */
         width: auto;
+        
+        .svg & {
+            background-size: 100%;
+        }
     }
     .soulmates-logo__title {
         text-align: center;
