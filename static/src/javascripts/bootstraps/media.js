@@ -235,6 +235,7 @@ define([
                     player.fullscreener();
 
                     if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
+
                         raven.wrap(
                             { tags: { feature: 'media' } },
                             function () {
@@ -252,7 +253,7 @@ define([
                                         player.ima.requestAds();
                                     });
                             }
-                        );
+                        )();
                     } else {
                         events.bindContentEvents(player);
                     }
