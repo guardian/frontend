@@ -12,7 +12,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/krux-audience-science'
+    'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/identity-benefits'
 ], function (
     raven,
