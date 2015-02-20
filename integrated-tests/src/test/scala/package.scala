@@ -58,6 +58,7 @@ trait SharedWebDriver extends SuiteMixin { this: Suite =>
 
   protected def get(path: String) = {
     webDriver.get(s"${Config.baseUrl}$path?test=test#gu.prefs.switchOff=adverts&countmein&noads")
+    webDriver.navigate().refresh()
   }
 
   protected def implicitlyWait(seconds: Int) = {
