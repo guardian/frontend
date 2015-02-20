@@ -27,7 +27,7 @@ case class ContainerLayoutContext(
   private def dedupCutOut(cardAndContext: CardAndContext): CardAndContext = {
     val (content, context) = cardAndContext
 
-    if (content.snapStuff.snapType == LatestSnap) {
+    if (content.snapStuff.map(_.snapType) == Some(LatestSnap)) {
       (content, context)
     } else {
       val newCard = if (content.cutOut.exists(cutOutsSeen.contains)) {
@@ -266,7 +266,7 @@ case class FaciaContainer(
 
   def addShowMoreClasses = useShowMore && containerLayout.exists(_.hasShowMore)
 
-  def isDesktopOnly = Switches.DesktopOnlyContainersSwitch.isSwitchedOn && DesktopOnlyContainers.all.contains(dataId)
+  def shouldLazyLoad = Switches.LazyLoadContainersSwitch.isSwitchedOn && index > 8
 }
 
 object Front extends implicits.Collections {

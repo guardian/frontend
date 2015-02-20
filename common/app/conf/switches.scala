@@ -75,8 +75,8 @@ object Switches {
   private lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
-  val DesktopOnlyContainersSwitch = Switch("Performance", "desktop-only-containers",
-    "If this switch is on, certain containers will only render on desktop breakpoints",
+  val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
+    "If this switch is on, containers past the 8th will be lazily loaded on mobile and tablet",
     safeState = Off,
     sellByDate = new LocalDate(2015, 4, 1)
   )
@@ -394,6 +394,11 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val IdentitySocialOAuthSwitch = Switch("Feature", "id-social-oauth",
+    "If this switch is on then social sign-in attempts will be directed to Identity OAuth app, rather than the Webapp.",
+    safeState = Off, sellByDate = never
+  )
+
   val FacebookAutoSigninSwitch = Switch("Feature", "facebook-autosignin",
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
     safeState = Off, sellByDate = never
@@ -453,6 +458,11 @@ object Switches {
     "If switched on, any user registrations from a known tor esit node will be logged",
     safeState = On, sellByDate = never)
 
+  val ABIdentityBenefits = Switch("A/B Tests", "ab-identity-benefits",
+    "Switch for the Identity benefits A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
+  )
+
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
@@ -495,11 +505,6 @@ object Switches {
   val MissingVideoEndcodingsJobSwitch = Switch("Feature", "check-for-missing-video-encodings",
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
      safeState = Off, sellByDate = never
-  )
-
-  val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
-    "If this is switched on then lazy load the related and series containers on content pages",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 17)
   )
 
   // Facia

@@ -69,13 +69,13 @@ define([
         }
     }
 
-    function init() {
-        $('.js-article__body .element-rich-link').each(upgradeFlyer);
-        insertTagFlyer();
+    function upgradeFlyers() {
+        $('.element-rich-link--not-upgraded').each(upgradeFlyer);
     }
 
     return {
-        init: init,
-        upgradeFlyer: upgradeFlyer
+        upgradeFlyer: upgradeFlyer,
+        upgradeFlyers: upgradeFlyers,
+        insertTagFlyer: insertTagFlyer
     };
 });

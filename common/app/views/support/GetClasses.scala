@@ -24,7 +24,7 @@ object GetClasses {
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
       ("fc-item--live", item.isLive),
       ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable)
-    ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
+    ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty) ++ mediaTypeClass(item).map(_ -> true))
   }
 
   def forSubLink(sublink: Sublink) = RenderClasses(Seq(
@@ -56,7 +56,7 @@ object GetClasses {
       extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty) ++
         slices.Container.customClasses(containerDefinition.container),
       disableHide = containerDefinition.hideToggle,
-      desktopOnly = containerDefinition.isDesktopOnly
+      lazyLoad = containerDefinition.shouldLazyLoad
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */
@@ -69,7 +69,7 @@ object GetClasses {
     None,
     Nil,
     disableHide = true,
-    desktopOnly = false
+    lazyLoad = false
   )
 
   def forContainer(
@@ -81,17 +81,18 @@ object GetClasses {
     container: Option[slices.Container] = None,
     extraClasses: Seq[String] = Nil,
     disableHide: Boolean = false,
-    desktopOnly: Boolean
+    lazyLoad: Boolean
   ) = {
     RenderClasses((Seq(
       ("fc-container", true),
       ("fc-container--first", isFirst),
       ("fc-container--has-show-more", hasDesktopShowMore),
-      ("fc-container--desktop-only", desktopOnly),
       ("js-container--first", isFirst),
       ("fc-container--sponsored", commercialOptions.isSponsored),
       ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
       ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
+      ("fc-container--lazy-load", lazyLoad),
+      ("js-container--lazy-load", lazyLoad),
       ("js-sponsored-container", commercialOptions.isPaidFor),
       ("js-container--toggle",
         !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !commercialOptions.isPaidFor)

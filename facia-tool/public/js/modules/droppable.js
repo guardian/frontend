@@ -1,11 +1,12 @@
-/* global _: true */
 define([
     'knockout',
+    'underscore',
     'modules/copied-article',
     'utils/alert',
     'utils/draggable-element'
 ], function(
     ko,
+    _,
     copiedArticle,
     alert,
     draggableElement

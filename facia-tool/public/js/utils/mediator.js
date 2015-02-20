@@ -1,5 +1,10 @@
-/* globals _ */
-define(['EventEmitter'], function(EventEmitter) {
+define([
+    'EventEmitter',
+    'underscore'
+], function(
+    EventEmitter,
+    _
+) {
     var bus = new EventEmitter();
 
     bus.scope = function () {

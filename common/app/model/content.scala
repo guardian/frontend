@@ -60,6 +60,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val hasTonalHeaderByline: Boolean = {
     visualTone == Tags.VisualTone.Comment && hasSingleContributor && contentType != GuardianContentTypes.ImageContent
   }
+  lazy val hasBeenModified: Boolean = {
+    new Duration(webPublicationDate, lastModified).isLongerThan(Duration.standardSeconds(60))
+  }
   lazy val hasTonalHeaderIllustration: Boolean = isLetters
   lazy val showBylinePic: Boolean = {
     visualTone != Tags.VisualTone.News && visualTone != Tags.VisualTone.Live &&

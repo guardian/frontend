@@ -3,16 +3,25 @@
 
 define([
     'bonzo',
-    'inlineSvg!svgs/marque-36!icon'
+    'inlineSvg!svgs/marque-36!icon',
+    'inlineSvg!svgs/marque-54!icon',
+    'inlineSvg!svgs/logo-guardian!logo',
+    'inlineSvg!svgs/logo-soulmates!commercial'
 ], function (
     bonzo,
-    marque36icon
+    marque36icon,
+    marque54icon,
+    logoguardian,
+    logosoulmates
 ) {
     var svgs = {
-        marque36icon: marque36icon
+        marque36icon: marque36icon,
+        marque54icon: marque54icon,
+        logoguardian: logoguardian,
+        logosoulmates: logosoulmates
     };
 
-    return function (name, classes, attributes) {
+    return function (name, classes, title) {
         var svg = svgs[name];
 
         // Only mess with classes if we actually need to.
@@ -21,8 +30,8 @@ define([
         }
 
         // Only mess with attributes if we actually need to.
-        if (attributes) {
-            svg = bonzo(svg).attr('test', 'something');
+        if (title) {
+            svg = bonzo(svg).attr('title', 'something');
         }
 
         return svg;

@@ -1,10 +1,11 @@
-/* globals _ */
 define([
     'knockout',
+    'underscore',
     'utils/global-listeners',
     'utils/mediator'
 ],function (
     ko,
+    _,
     globalListeners,
     mediator
 ) {

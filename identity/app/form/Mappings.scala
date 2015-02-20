@@ -22,7 +22,8 @@ trait Mappings {
     { value => value.isEmpty || UrlPattern.findFirstIn(value).isDefined }
   )
 
-  private val EmailPattern = """(\w+)@([\w\.]+)""".r
+  private val EmailPattern = """(.*)@(.*)""".r
+
   val idRegEmail = text.verifying (
     Messages("error.emailDomainInvalid"),
     { value =>
