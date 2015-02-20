@@ -424,7 +424,8 @@ window.matchMedia || (window.matchMedia = function() {
 	pf.setIntrinsicSize = (function() {
 		var urlCache = {};
 		var setSize = function( picImg, width, res ) {
-			picImg.setAttribute( "width", parseInt(width / res, 10) );
+            // I don't understand why Picturefill does this, as it will override any CSS rules the user has set.
+			//picImg.setAttribute( "width", parseInt(width / res, 10) );
 		};
 		return function( picImg, bestCandidate ) {
 			var img;
