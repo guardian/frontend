@@ -468,6 +468,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val ABKruxAudienceScience = Switch("A/B Tests", "ab-krux-audience-science",
+    "Switch for the Krux/Audience Science A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 6)
+  )
+
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
     safeState = Off, sellByDate = never)
