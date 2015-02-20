@@ -8,6 +8,7 @@ define([
     'utils/human-time',
     'utils/mediator',
     'utils/presser',
+    'utils/sparklines',
     'utils/update-scrollables'
 ], function (
     pageConfig,
@@ -19,6 +20,7 @@ define([
     humanTime,
     mediator,
     presser,
+    sparklines,
     updateScrollables
 ) {
     function Front (params) {
@@ -134,10 +136,10 @@ define([
         this.setIntervals = [];
         this.setTimeouts = [];
         this.refreshCollections(vars.CONST.collectionsPollMs || 60000);
-        this.refreshSparklines(vars.CONST.sparksRefreshMs || 60000);
         this.refreshRelativeTimes(vars.CONST.pubTimeRefreshMs || 60000);
 
         this.load(frontId);
+        sparklines.subscribe(this);
         mediator.emit('front:loaded', this);
     }
 
@@ -217,16 +219,6 @@ define([
             model.collections().forEach(function (list, index) {
                 model.setTimeouts.push(setTimeout(function() {
                     list.refresh();
-                }, index * period / length)); // stagger requests
-            });
-        }, period));
-    };
-    Front.prototype.refreshSparklines = function (period) {
-        var length = this.collections().length || 1, model = this;
-        this.setIntervals.push(setInterval(function () {
-            model.collections().forEach(function (list, index) {
-                model.setTimeouts.push(setTimeout(function() {
-                    list.refreshSparklines();
                 }, index * period / length)); // stagger requests
             });
         }, period));
@@ -314,6 +306,7 @@ define([
         _.each(this.setTimeouts, function (timeout) {
             clearTimeout(timeout);
         });
+        sparklines.unsubscribe(this);
         mediator.emit('front:disposed', this);
     };
 

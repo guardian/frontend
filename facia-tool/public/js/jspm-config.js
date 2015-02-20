@@ -21,6 +21,7 @@ System.config({
     "sinon": "npm:sinon@1.12.2",
     "text": "github:systemjs/plugin-text@0.0.2",
     "underscore": "npm:underscore@1.7.0",
+    "highcharts": "./components/highcharts/highcharts-custom",
     "github:jspm/nodelibs-fs@0.1.0": {
       "assert": "npm:assert@1.3.0",
       "fs": "github:jspm/nodelibs-fs@0.1.0"
