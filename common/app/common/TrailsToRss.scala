@@ -1,6 +1,6 @@
 package common
 
-import com.gu.facia.api.models.FaciaContent
+import com.gu.facia.api.models.{LinkSnap, FaciaContent}
 import model._
 import play.api.mvc.RequestHeader
 import org.joda.time.DateTime
@@ -123,7 +123,14 @@ object TrailsToRss extends implicits.Collections {
   }
 
   def fromPressedPage(pressedPage: PressedPage)(implicit request: RequestHeader): String  = {
-    val faciaContentList: List[FaciaContent] = pressedPage.collections.filterNot(_.config.excludeFromRss).flatMap(_.all).distinctBy(_.id)
+    val faciaContentList: List[FaciaContent] =
+      pressedPage.collections
+        .filterNot(_.config.excludeFromRss)
+        .flatMap(_.all)
+        .filter{
+          case _: LinkSnap => false
+          case _ => true}
+        .distinctBy(_.id)
     val feedTitle = pressedPage.webTitle
 
     // Feed
