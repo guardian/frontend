@@ -53,6 +53,12 @@ object FaciaContentImplicits {
         linkSnap => linkSnap.id,
         latestSnap => latestSnap.id)
 
+    def id: String = fold(
+        curatedContent => curatedContent.content.id,
+        supportingCuratedContent => supportingCuratedContent.content.id,
+        linkSnap => linkSnap.id,
+        latestSnap => latestSnap.id)
+
     def snapType: Option[String] = fold(
         curatedContent => None,
         supportingCuratedContent => None,
@@ -72,6 +78,15 @@ object FaciaContentImplicits {
         //TODO: Carry TrailMetaData through snaps
         linkSnap => "No LinkSnap Headline",
         latestSnap => "No LatestSnap Headline")
+
+    def standfirst: Option[String] = fieldsGet(_.get("standfirst"))
+    def body: Option[String] = fieldsGet(_.get("body"))
+
+    def webUrl: Option[String] = fold(
+      curatedContent => Option(curatedContent.content.webUrl),
+      supportingCuratedContent => Option(supportingCuratedContent.content.webUrl),
+      linkSnap => linkSnap.snapUri,
+      latestSnap => latestSnap.latestContent.map(_.webUrl))
 
     def href: String = fold(
         curatedContent => curatedContent.href.getOrElse(SupportedUrl(curatedContent.content)),
@@ -321,6 +336,7 @@ object FaciaContentImplicits {
       case _ => None
     }
     lazy val thumbnail: Option[ImageElement] = images.find(_.isThumbnail)
+    lazy val bodyImages: Seq[ImageElement] = images.filter(_.isBody)
 
     private val trailPicMinDesiredSize = 460
     val AspectRatioThreshold = 0.01
