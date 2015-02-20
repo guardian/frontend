@@ -51,6 +51,7 @@ GET           /switches                  controllers.SwitchesProxy.getSwitches()
 GET           /api/proxy/*path           controllers.FaciaContentApiProxy.capi(path)
 GET           /http/proxy/*url           controllers.FaciaContentApiProxy.http(url)
 GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
+GET           /ophan/*path               controllers.FaciaContentApiProxy.ophan(path)
 
 # thumbnails
 GET           /thumbnails/*id.svg        controllers.ThumbnailController.container(id)
