@@ -299,11 +299,8 @@ define([
                     $slot.parent().css('display', 'block');
                 }
 
-                if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')) {
-                    $slot.addClass('ad-slot__fluid250');
-                }
-
-                if (($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
+                if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
+                || ($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
                     $slot.addClass('ad-slot__fluid250');
                 }
             }
