@@ -2,13 +2,11 @@
 // This file is only required by core, and so has a long cache time.
 
 define([
-    'bonzo',
     'inlineSvg!svgs/marque-36!icon',
     'inlineSvg!svgs/marque-54!icon',
     'inlineSvg!svgs/logo-guardian!logo',
     'inlineSvg!svgs/logo-soulmates!commercial'
 ], function (
-    bonzo,
     marque36icon,
     marque54icon,
     logoguardian,
@@ -29,9 +27,9 @@ define([
             svg = svg.replace(/class="/, '$&' + classes.join(' ') + ' ');
         }
 
-        // Only mess with attributes if we actually need to.
+        // Only mess with title if we actually need to.
         if (title) {
-            svg = bonzo(svg).attr('title', 'something');
+            svg = svg.replace(/<span /, '<span title="' + title + '" ');
         }
 
         return svg;
