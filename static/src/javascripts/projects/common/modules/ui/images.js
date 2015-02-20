@@ -6,7 +6,6 @@ define([
     'lodash/functions/debounce',
     'common/utils/$',
     'common/utils/$css',
-    'common/utils/detect',
     'common/utils/mediator'
 ],
 function (
@@ -17,7 +16,6 @@ function (
     debounce,
     $,
     $css,
-    detect,
     mediator
 ) {
 
@@ -60,9 +58,6 @@ function (
 
         listen: function () {
             mediator.addListeners({
-                'window:orientationchange': debounce(function () {
-                    images.upgrade();
-                }, 200),
                 'ui:images:upgrade': function (context) {
                     images.upgrade(context);
                 },
@@ -70,12 +65,6 @@ function (
                     images.upgradePicture(context);
                 }
             });
-
-            if (!detect.isIOS) {
-                mediator.on('window:resize', debounce(function () {
-                    images.upgrade();
-                }, 200));
-            }
         }
 
     };
