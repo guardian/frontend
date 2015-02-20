@@ -821,11 +821,6 @@ collection-widget:first-child .collection {
     background-color: #eeeeee !important;
 }
 
-.article:hover > .closed > .article__spark,
-.article:hover > .closed > .article__times {
-    display: none;
-}
-
 .supporting .article {
     border-color: #dddddd;
     background: #dddddd;
@@ -1839,7 +1834,7 @@ button {
 .narrow .article .has-playable,
 .narrow .image__overrides,
 .narrow .log-in-out,
-.narrow .article__spark,
+.narrow .sparkline,
 .narrow .list-header__timings {
     display: none;
 }
@@ -2114,7 +2109,7 @@ hr {
     .article .thumb--cutout,
     .image__overrides,
     .log-in-out,
-    .article__spark {
+    .sparkline {
         display: none;
     }
     .article__times {
