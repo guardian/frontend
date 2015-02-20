@@ -113,20 +113,19 @@ case object LinkSnap extends SnapType
 case object OtherSnap extends SnapType
 
 object SnapStuff {
-  def fromTrail(trail: Trail) = SnapStuff(
-    SnapData(trail),
-    trail match {
+  def fromTrail(trail: Trail): Option[SnapStuff] = {
+    lazy val snapCss = trail match {
       case c: Content => c.snapCss
-      case _ => None
-    },
-    if (trail.snapType.exists(_ == "latest")) {
-      LatestSnap
-    } else if (trail.snapType.exists(_ == "link")) {
-      LinkSnap
-    } else {
-      OtherSnap
+      case _ => None}
+    lazy val snapData = SnapData(trail)
+
+    trail.snapType match {
+      case Some("latest") => Option(SnapStuff(snapData, snapCss, LatestSnap))
+      case Some("link") => Option(SnapStuff(snapData, snapCss, LinkSnap))
+      case Some(s) => Option(SnapStuff(snapData, snapCss, OtherSnap))
+      case None => None
     }
-  )
+  }
 }
 
 case class SnapStuff(
@@ -250,7 +249,7 @@ case class ContentCard(
   starRating: Option[Int],
   url: EditionalisedLink,
   discussionSettings: DiscussionSettings,
-  snapStuff: SnapStuff,
+  snapStuff: Option[SnapStuff],
   webPublicationDate: Option[DateTime],
   trailText: Option[String],
   mediaType: Option[MediaType],
@@ -279,7 +278,7 @@ case class ContentCard(
   def showStandfirst = cardTypes.allTypes.exists(_.showStandfirst)
 
   def mediaWidthsByBreakpoint = WidthsByBreakpoint.fromItemClasses(cardTypes)
-  
+
   def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
 
   def showMeta = discussionSettings.isCommentable || showTimestamp

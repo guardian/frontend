@@ -295,5 +295,9 @@
 
 </div>
 
-<script src="@routes.UncachedAssets.at("js/app-collections.js")"></script>
+<script>
+    System.import('facia-tool/main').then(function (main) {
+        main.load('collections');
+    });
+</script>
 }

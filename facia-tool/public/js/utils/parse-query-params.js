@@ -1,5 +1,10 @@
-/* global _: true */
-define(['utils/url-query'], function(urlQuery) {
+define([
+    'underscore',
+    'utils/url-query'
+], function(
+    _,
+    urlQuery
+) {
     /**
      * Returns query params as an object.
      * @param {function} opts                  optional options

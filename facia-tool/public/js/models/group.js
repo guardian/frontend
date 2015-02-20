@@ -1,10 +1,11 @@
-/* global _: true */
 define([
     'knockout',
+    'underscore',
     'modules/copied-article',
     'utils/mediator'
 ], function(
     ko,
+    _,
     copiedArticle,
     mediator
 ) {

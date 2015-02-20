@@ -1,5 +1,5 @@
 define([
-    'mock-collection'
+    'mock/collection'
 ], function (
     mockCollection
 ) {

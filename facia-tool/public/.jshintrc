@@ -1,0 +1,32 @@
+{
+    // http://www.jshint.com/docs/options/
+
+    // Enforcing options
+    "bitwise"  : true,
+    "curly"    : true,
+    "eqeqeq"   : true,
+    "immed"    : true,
+    "latedef"  : true,
+    "newcap"   : true,
+    "noarg"    : true,
+    "noempty"  : true,
+    "nonew"    : true,
+    "quotmark" : "single",
+    "unused"   : true,
+    "undef"    : true,
+    "trailing" : true,
+
+    // Relaxing options
+    "expr"     : true,
+    "laxbreak" : true,
+    "maxerr"   : 100,
+    "esnext"   : true,
+
+    // Environments
+    "browser"  : true,
+    "jquery"   : false,
+
+    "globals"   : {
+        "define": false
+    }
+}

@@ -1,9 +1,13 @@
 define([
-    'mock-lastmodified',
+    'underscore',
+    'sinon',
+    'mock/lastmodified',
     'modules/vars',
     'utils/mediator',
     'utils/presser',
 ], function (
+    _,
+    sinon,
     mockLastModified,
     vars,
     mediator,

@@ -53,12 +53,26 @@ define([
     };
 
     ExpandableV2.prototype.create = function () {
-
-        var showmore = {
+        var videoHeight = this.closedHeight - 24,
+            videoWidth = (videoHeight * 16) / 9,
+            leftMargin = (this.params.videoPositionH === 'center' ?
+                videoWidth / -2 : 0
+            ),
+            leftPosition = (this.params.videoPositionH === 'left' ?
+                ' left: ' + this.params.videoHorizSpace + 'px;' : ''
+            ),
+            rightPosition = (this.params.videoPositionH === 'right' ?
+                ' right: ' + this.params.videoHorizSpace + 'px' : ''
+            ),
+            videoDesktop = {
+                video: (this.params.videoURL !== '') ?
+                    '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="margin-left: ' + leftMargin + 'px;' + leftPosition + rightPosition + '"></iframe>' : ''
+            },
+            showmore = {
                 show: (this.params.showMore === 'yes') ?
                     '<button class="ad-exp__open-chevron ad-exp__open"><i class="i i-arrow-white-down-36"></i></button>' : ''
             },
-            $expandablev2 = $.create(template(expandableV2Tpl, merge(this.params, showmore)));
+            $expandablev2 = $.create(template(expandableV2Tpl, merge(this.params, showmore, videoDesktop)));
 
         this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
         this.$button = $('.ad-exp__open', $expandablev2);

@@ -467,6 +467,7 @@
 
     @include mq(leftCol) {
         clear: left;
+        width: $left-column;
         padding: 0;
         margin: 0;
         float: left;

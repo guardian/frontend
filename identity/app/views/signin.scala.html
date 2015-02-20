@@ -4,6 +4,7 @@
 @import views.html.fragments.form.{inputField, checkbox}
 @import views.html.fragments.socialSignin
 @import views.html.fragments.identityPageHeader
+@import views.html.fragments.identityBenefits
 
 @identityMain(page, conf.Switches.all){
 }{
@@ -59,4 +60,6 @@
         </fieldset>
     </form>
 </div>
+
+@identityBenefits()
 }

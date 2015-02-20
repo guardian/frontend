@@ -258,6 +258,7 @@ $block-padding-right: $gs-gutter;
     .block-title,
     .block-elements > *,
     .block-elements > .element.element-tweet,
+    .block-elements > .element.element-rich-link,
     .block-elements > .element.element-witness,
     .block-elements > .element.element--thumbnail {
         margin-left: $gs-gutter/2;

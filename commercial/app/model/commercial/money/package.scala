@@ -10,7 +10,7 @@ import scala.xml.Elem
 
 package object money {
 
-  trait MoneySupermarketApi[T] extends Logging {
+  trait MoneySupermarketApi[T] extends ExecutionContexts with Logging {
 
     protected val adTypeName: String
 

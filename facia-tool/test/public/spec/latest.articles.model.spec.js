@@ -1,8 +1,10 @@
 define([
+    'underscore',
     'modules/content-api',
-    'mock-search',
+    'mock/search',
     'utils/mediator'
 ], function (
+    _,
     contentApi,
     mockSearch,
     mediator
