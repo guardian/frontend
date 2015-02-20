@@ -1,6 +1,5 @@
 package views.support
 
-import layout.BrowserWidth
 import model.{Content, MetaData, ImageContainer, ImageAsset}
 import conf.Switches.{ImageServerSwitch, PngResizingSwitch}
 import java.net.URI
@@ -38,8 +37,12 @@ sealed trait ElementProfile {
 
 sealed case class Profile(
   override val width: Option[Int] = None,
-  override val height: Option[Int] = None,
-  override val compression: Int = 95) extends ElementProfile
+  override val height: Option[Int] = None) extends ElementProfile {
+  override def compression: Int = width match {
+    case Some(pixels) if pixels <= 220 => 80
+    case _ => 95
+  }
+}
 
 object VideoProfile {
   lazy val ratioHD = new Fraction(16,9)
