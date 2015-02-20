@@ -88,7 +88,7 @@ if (Object.prototype.toString.call(window.operamini) === "[object OperaMini]") {
 
                 if (frontState && frontState.pathname === window.location.pathname && frontState.openContainers > 0) {
                     style = document.createElement('style') ;
-                    style.innerHTML = 'section:nth-child(-n+' + frontState.openContainers + ') {display: block !important;}';
+                    style.innerHTML = '.fc-container:nth-child(-n+' + frontState.openContainers + ') {display: block}';
                     document.getElementsByTagName('head')[0].appendChild(style)
                 }
             }

@@ -18,51 +18,59 @@ define([
     var storageKey = 'gu.front.lazystate',
         distanceBeforeLoad = detect.getViewport().height;
 
-    function saveState(numOpenContainers) {
+    function saveNumOpen(numOpen) {
         return storage.session.set(storageKey, {
             pathname: window.location.pathname,
-            openContainers: numOpenContainers
+            openContainers: numOpen
         });
     }
 
-    function isHidden(el) {
-        return el.offsetParent === null;
+    function loadNumPreviouslyOpen() {
+        var state = storage.session.get(storageKey);
+
+        return state && state.pathname === window.location.pathname && state.openContainers > 0 ? state.openContainers : 0;
     }
 
     function revealContainer(container) {
-        if (isHidden(container)) {
-            bonzo(container).removeClass('fc-container--lazy-load');
-            return true;
-        }
+        bonzo(container).removeClass('fc-container--lazy-load');
     }
 
     return function () {
         var $frontBottom = bonzo(qwery('.js-front-bottom')),
-            lazyContainers = qwery('.js-container--lazy-load'),
-            numOpenContainers = qwery('section').length - lazyContainers.length,
-            lazyLoad = _.throttle(function () {
-                if (lazyContainers.length === 0) {
-                    mediator.off('window:scroll', lazyLoad);
-                } else {
-                    fastdom.read(function () {
-                        var scrollTop = bonzo(document.body).scrollTop(),
-                            scrollBottom = scrollTop + bonzo.viewport().height,
-                            bottomOffset = $frontBottom.offset().top;
+            lazies = qwery('.js-container--lazy-load'),
+            numOpen = qwery('.fc-container').length - lazies.length,
+            numPreviouslyOpen,
+            lazyLoad;
 
-                        if (scrollBottom > bottomOffset - distanceBeforeLoad) {
-                            fastdom.write(function () {
-                                numOpenContainers += 1;
-                                while (!revealContainer(lazyContainers.shift())) {
-                                    numOpenContainers += 1;
-                                }
-                                saveState(numOpenContainers);
-                            });
-                        }
-                    });
-                }
-            }, 200);
+        if (lazies.length) {
+            numPreviouslyOpen = loadNumPreviouslyOpen();
+            lazies.splice(0, numPreviouslyOpen - numOpen - 1);
+            numOpen = Math.max(numOpen, numPreviouslyOpen);
 
-        mediator.on('window:scroll', lazyLoad);
-        lazyLoad();
+            if (lazies.length) {
+                lazyLoad = _.throttle(function () {
+                    if (lazies.length === 0) {
+                        mediator.off('window:scroll', lazyLoad);
+                    } else {
+                        fastdom.read(function () {
+                            var scrollTop = bonzo(document.body).scrollTop(),
+                                scrollBottom = scrollTop + bonzo.viewport().height,
+                                bottomOffset = $frontBottom.offset().top;
+
+                            if (scrollBottom > bottomOffset - distanceBeforeLoad) {
+                                fastdom.write(function () {
+                                    revealContainer(lazies.shift())
+                                    numOpen += 1;
+                                    saveNumOpen(numOpen);
+                                });
+                            }
+                        });
+                    }
+                }, 200);
+
+                mediator.on('window:scroll', lazyLoad);
+                lazyLoad();
+            }
+        }
     };
 });
