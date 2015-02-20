@@ -98,7 +98,7 @@ The result of inserting an SVG with either method is the compressed source wrapp
 So both this Scala:
 
 ```scala
-@fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper", Some("Profile icon")))
+@fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"), Some("Profile icon"))
 ```
 and this JavaScript:
 
