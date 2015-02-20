@@ -8,9 +8,9 @@ import com.gu.facia.api.models.{Collection, _}
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
 import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
-import common.{Edition, ExecutionContexts, Logging}
+import common.{ContentApiMetrics, Edition, ExecutionContexts, Logging}
 import conf.{LiveContentApi, Configuration}
-import contentapi.QueryDefaults
+import contentapi.{CircuitBreakingContentApiClient, QueryDefaults}
 import model.facia.PressedCollection
 import model.{PressedPage, FrontProperties, SeoData}
 import play.api.libs.json._
@@ -18,24 +18,49 @@ import services.{ConfigAgent, S3FrontsApi}
 
 import scala.concurrent.Future
 
-private case class TestContentApiClient(override val apiKey: String, override val targetUrl: String) extends GuardianContentClient(apiKey)
-
-trait TestClient extends ExecutionContexts {
-  val apiKey: String = scala.sys.env.getOrElse("CONTENT_API_KEY", "")
-  val targetUrl: Option[String] = scala.sys.env.get("FACIA_CLIENT_TARGET_URL")
-
-  implicit val capiClient: GuardianContentClient =
-    targetUrl.fold(ifEmpty = new GuardianContentClient(apiKey)){ targetUrl =>
-      new TestContentApiClient(
-        apiKey,
-        targetUrl)}
-
-  private val amazonS3Client = new AmazonS3Client()
-  implicit val apiClient: ApiClient = ApiClient("aws-frontend-store", "FRANCIS", AmazonSdkS3Client(amazonS3Client))
+private case class ContentApiClientWithTarget(override val apiKey: String, override val targetUrl: String) extends GuardianContentClient(apiKey) with CircuitBreakingContentApiClient {
+  lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
+  lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
 }
 
-object FapiFrontPress extends TestClient with QueryDefaults with Logging {
+object LiveFapiFrontPress extends FapiFrontPress {
+  val apiKey: String = Configuration.contentApi.key.getOrElse("facia-press")
+  val stage: String = Configuration.facia.stage.toUpperCase
+  val bucket: String = Configuration.aws.bucket
+  val targetUrl: String = Configuration.contentApi.contentApiLiveHost
+
+  override implicit val capiClient: GuardianContentClient = new ContentApiClientWithTarget(apiKey, targetUrl)
+  private val amazonS3Client = new AmazonS3Client()
+  implicit val apiClient: ApiClient = ApiClient(bucket, stage, AmazonSdkS3Client(amazonS3Client))
+
+  def pressByPathId(path: String): Future[Unit] =
+    getPressedFrontForPath(path)
+      .map { pressedFront => S3FrontsApi.putLivePressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
+      .asFuture.map(_.fold(_ => (), _ => ()))
+}
+
+object DraftFapiFrontPress extends FapiFrontPress {
+  val apiKey: String = Configuration.contentApi.key.getOrElse("facia-press")
+  val stage: String = Configuration.facia.stage.toUpperCase
+  val bucket: String = Configuration.aws.bucket
+  val targetUrl: String = Configuration.contentApi.contentApiDraftHost
+
+  override implicit val capiClient: GuardianContentClient = new ContentApiClientWithTarget(apiKey, targetUrl)
+  private val amazonS3Client = new AmazonS3Client()
+  implicit val apiClient: ApiClient = ApiClient(bucket, stage, AmazonSdkS3Client(amazonS3Client))
+
+  def pressByPathId(path: String): Future[Unit] =
+    getPressedFrontForPath(path)
+      .map { pressedFront => S3FrontsApi.putDraftPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
+      .asFuture.map(_.fold(_ => (), _ => ()))
+}
+
+trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   import model.facia.FapiJsonFormats._
+
+  implicit val capiClient: GuardianContentClient
+  implicit val apiClient: ApiClient
+  def pressByPathId(path: String): Future[Unit]
 
   val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalContentCode"
   val apiQuery: AdjustSearchQuery = (searchQuery: SearchQuery) =>
@@ -83,11 +108,6 @@ object FapiFrontPress extends TestClient with QueryDefaults with Logging {
           case (seoData, frontProperties) => PressedPage(path, seoData, frontProperties, result)
         }))
   }
-
-  def pressLiveByPathId(path: String): Future[Unit] =
-    getPressedFrontForPath(path)
-      .map { pressedFront => S3FrontsApi.putLivePressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
-      .asFuture.map(_.fold(_ => (), _ => ()))
 
   private def getFrontSeoAndProperties(path: String): Future[(SeoData, FrontProperties)] =
     for {
