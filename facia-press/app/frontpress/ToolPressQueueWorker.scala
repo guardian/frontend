@@ -2,7 +2,6 @@ package frontpress
 
 import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
-import common.SQSQueues._
 import common._
 import conf.Configuration
 import metrics._
@@ -37,8 +36,8 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
     log.info(s"Processing job from tool to update $path on $pressType")
 
     val pressFuture = pressType match {
-      case Draft => Future.successful(())//FrontPress.pressDraftByPathId(path)
-      case Live => FapiFrontPress.pressLiveByPathId(path)
+      case Draft => DraftFapiFrontPress.pressByPathId(path)
+      case Live => LiveFapiFrontPress.pressByPathId(path)
     }
 
     pressFuture onComplete {
