@@ -59,7 +59,7 @@ define([
 
                             if (scrollBottom > bottomOffset - distanceBeforeLoad) {
                                 fastdom.write(function () {
-                                    revealContainer(lazies.shift())
+                                    revealContainer(lazies.shift());
                                     numOpen += 1;
                                     saveNumOpen(numOpen);
                                 });
