@@ -1,7 +1,7 @@
 package controllers
 
 import common.ExecutionContexts
-import frontpress.{FapiFrontPress, FrontPress}
+import frontpress.LiveFapiFrontPress
 import model.NoCache
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
@@ -17,7 +17,7 @@ object Application extends Controller with ExecutionContexts {
   }
 
   def generateFrontJson() = Action.async { request =>
-    FapiFrontPress.generateFrontJsonFromFapiClient()
+    LiveFapiFrontPress.generateFrontJsonFromFapiClient()
       .map(Json.prettyPrint)
       .map(Ok.apply(_))
       .map(NoCache.apply)
@@ -27,7 +27,7 @@ object Application extends Controller with ExecutionContexts {
       )}
 
   def generateLivePressedFor(path: String) = Action.async { request =>
-    FapiFrontPress.getPressedFrontForPath(path)
+    LiveFapiFrontPress.getPressedFrontForPath(path)
       .map(Json.toJson(_))
       .map(Json.prettyPrint)
       .map(Ok.apply(_))
