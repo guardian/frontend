@@ -43,6 +43,8 @@ define([
 
         detectPressFailureMs: 10000,
 
+        detectPendingChangesInClipboard: 5000,
+
         maxFronts: 500,
 
         filterTypes: {
