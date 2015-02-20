@@ -273,7 +273,7 @@ case class ContentCard(
   def withTimeStamp = copy(timeStampDisplay = Some(DateOrTimeAgo))
 
   def showDisplayElement =
-    cardTypes.allTypes.exists(_.canShowMedia) && !displaySettings.imageHide
+    cardTypes.allTypes.exists(_.canShowMedia) && !displaySettings.imageHide && !cutOut.isDefined
 
   def showStandfirst = cardTypes.allTypes.exists(_.showStandfirst)
 
