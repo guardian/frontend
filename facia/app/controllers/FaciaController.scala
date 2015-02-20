@@ -117,15 +117,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       case Some(faciaPage) =>
         Cached(faciaPage) {
           if (request.isRss)
-              NotImplemented
-//            Ok(TrailsToRss(
-//              faciaPage,
-//              faciaPage.collections
-//                .filterNot(_.config.excludeFromRss)
-//                .flatMap(_.all)
-//                .toSeq
-//                .distinctBy(_.id))
-//            ).as("text/xml; charset=utf-8")
+            Ok(TrailsToRss.fromPressedPage(faciaPage)).as("text/xml; charset=utf-8")
           else if (request.isJson)
             JsonFront(faciaPage)
           else if (AdFeatureExpirySwitch.isSwitchedOn && faciaPage.isExpiredAdvertisementFeature)
