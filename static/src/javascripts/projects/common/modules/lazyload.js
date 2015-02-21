@@ -1,13 +1,14 @@
 define([
+    'bonzo',
+    'fastdom',
     'lodash/objects/assign',
-    'common/utils/ajax',
-    'bonzo'
+    'common/utils/ajax'
 ], function (
+    bonzo,
+    fastdom,
     assign,
-    ajax,
-    bonzo
+    ajax
 ) {
-
     var LazyLoad = function (options) {
 
         /*
@@ -43,9 +44,13 @@ define([
                         crossOrigin: true
                     }).then(
                         function (resp) {
-                            into.html(opts.beforeInsert(resp.html));
-                            into.addClass('lazyloaded');
-                            opts.success(resp);
+                            var componentHtml = opts.beforeInsert(resp.html);
+                            fastdom.write(function () {
+                                into.html(componentHtml);
+                                into.addClass('lazyloaded');
+                                opts.success(resp);
+                            });
+
                         },
                         function (req) {
                             opts.error(req);

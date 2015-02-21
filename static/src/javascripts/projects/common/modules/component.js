@@ -3,6 +3,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
+    'fastdom',
     'lodash/objects/assign',
     'lodash/objects/clone',
     'common/utils/ajax'
@@ -10,6 +11,7 @@ define([
     bean,
     bonzo,
     qwery,
+    fastdom,
     assign,
     clone,
     ajax
@@ -107,7 +109,11 @@ define([
 
         this.elem = template;
         this._prerender();
-        bonzo(container)[this.manipulationType](this.elem);
+
+        fastdom.write(function () {
+            bonzo(container)[this.manipulationType](this.elem);
+        });
+
         this._ready();
         return this;
     };
@@ -137,7 +143,9 @@ define([
             self._prerender();
 
             if (!self.destroyed) {
-                bonzo(parent)[self.manipulationType](self.elem);
+                fastdom.write(function () {
+                    bonzo(parent)[self.manipulationType](self.elem);
+                });
                 self._ready(self.elem);
             }
         }).fail(function (xmlHttpRequest) {
