@@ -7,7 +7,8 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
-@import layout.LatestSnap
+@import views.support.ImgSrc
+@import layout.{LatestSnap, WidthsByBreakpoint}
 @import Function.const
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
@@ -27,10 +28,10 @@ data-link-name="@item.cardStyle.toneString | @{index + 1}"
     }
 data-item-visibility="@visibilityDataAttribute"
 data-test-id="facia-card"
-    @item.snapStuff.dataAttributes>
+    @item.snapStuff.map(_.dataAttributes)>
 
     <div class="fc-item__container">
-        @if(item.snapStuff.snapType == LatestSnap) {
+        @if(item.snapStuff.map(_.snapType) == Some(LatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
         }
 
@@ -93,14 +94,14 @@ data-test-id="facia-card"
         }
 
     <div class="fc-item__content">
-        @if(item.snapStuff.snapType == LatestSnap) {
+        @if(item.snapStuff.map(_.snapType) == Some(LatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap"))
         }
         <div class="@RenderClasses(Map(
             ("fc-item__header", true),
             ("fc-item__header--inline-video", item.isVideo && item.displaySettings.isBoosted)
         ))">
-            @title(item.header, index, containerIndex, snapType = Some(item.snapStuff.snapType))
+            @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
 
             @item.byline.map { byline =>
                 <div class="fc-item__byline">@byline.htmlWithLinks(request)</div>
@@ -124,10 +125,15 @@ data-test-id="facia-card"
         }
     </div>
 
-        @item.cutOut.map { case cutOut @ CutOut(altText, imageUrl, _) =>
-        <div class="fc-item__avatar">
-            <img class="fc-item__avatar__media @cutOut.cssClass" src="@imageUrl">
-        </div>
+        @if(item.cardTypes.showCutOut) {
+            @item.cutOut.map { case cutOut @ CutOut(imageUrl, _) =>
+            <div class="fc-item__avatar">
+                <img class="fc-item__avatar__media @cutOut.cssClass"
+                     srcset="@ImgSrc.srcsetForCutout(imageUrl)"
+                     sizes="@WidthsByBreakpoint.cutOutFromItemClasses(item.cardTypes).sizesString"
+                >
+            </div>
+            }
         }
 
         @if(item.sublinks.nonEmpty) {

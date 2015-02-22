@@ -19,6 +19,10 @@
                 a {
                     color: $titleColor;
                 }
+                .inline-commercial-brand {
+                    color: $titleColor;
+                    fill: $titleColor;
+                }
                 .commercial__cta.button {
                     border-color: rgba($titleColor, .3);
 

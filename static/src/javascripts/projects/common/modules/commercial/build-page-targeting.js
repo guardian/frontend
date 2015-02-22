@@ -11,6 +11,7 @@ define([
     'common/modules/commercial/third-party-tags/audience-science',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
     'common/modules/commercial/third-party-tags/criteo',
+    'common/modules/commercial/third-party-tags/krux',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab'
 ], function (
@@ -26,6 +27,7 @@ define([
     audienceScience,
     audienceScienceGateway,
     criteo,
+    krux,
     userAdTargeting,
     ab
 ) {
@@ -71,6 +73,11 @@ define([
                 }
             }
             return '3';
+        },
+        kruxAbParam = function () {
+            var kasTest = ab.getParticipations().KruxAudienceScience;
+
+            return kasTest && kasTest.variant === 'variant';
         };
 
     return function (opts) {
@@ -86,7 +93,6 @@ define([
                 k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
                 su:      page.isSurging,
                 bp:      detect.getBreakpoint(),
-                a:       audienceScience.getSegments(),
                 at:      cookies.get('adtest'),
                 gdncrm:  userAdTargeting.getUserSegments(),
                 ab:      abParam(),
@@ -97,6 +103,12 @@ define([
                 // round video duration up to nearest 30 multiple
                 vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
+
+        if (kruxAbParam()) {
+            pageTargets.x = krux.getSegments();
+        } else {
+            pageTargets.a = audienceScience.getSegments();
+        }
 
         // filter out empty values
         return pick(pageTargets, function (target) {

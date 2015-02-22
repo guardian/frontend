@@ -7,6 +7,7 @@ module.exports = function(config) {
         {pattern: 'public/jspm_packages/system.js', included: true},
         {pattern: 'public/jspm_packages/**/*', included: false},
         {pattern: 'public/js/jspm-config.js', included: true},
+        {pattern: 'public/js/components/**/*', included: false, watched: false},
         {pattern: 'test/public/config.js', included: true},
         {pattern: 'app/views/**/*.html', included: false},
         {pattern: 'public/js/**/*', included: false},

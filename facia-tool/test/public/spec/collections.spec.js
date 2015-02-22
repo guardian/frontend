@@ -7,7 +7,7 @@ define([
     'test/utils/publish-actions',
     'test/utils/dom-nodes'
 ], function(
-    test,
+    sandbox,
     drag,
     mockCollection,
     mockVisible,
@@ -16,14 +16,16 @@ define([
     dom
 ){
     describe('Collections', function () {
-        test('collections', 'displays the correct timing', function (done) {
+        var test = sandbox('collections');
+
+        test('displays the correct timing', function (done) {
             expect(
                 $('.list-header__timings').text().replace(/\s+/g, ' ')
             ).toMatch('1 day ago by Test');
             done();
         });
 
-        test('collections', '/edits', function (done) {
+        test('/edits', function (done) {
 
             insertInEmptyGroup()
             .then(function (request) {
@@ -355,7 +357,7 @@ define([
             }
         });
 
-        test('collections', 'stories visible', function (done) {
+        test('stories visible', function (done) {
             mockVisible.set({
                 'slow/slower/slowest': {
                     desktop: 1,

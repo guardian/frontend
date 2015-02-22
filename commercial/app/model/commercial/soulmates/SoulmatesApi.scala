@@ -1,5 +1,6 @@
 package model.commercial.soulmates
 
+import common.ExecutionContexts
 import conf.CommercialConfiguration
 import conf.Switches.SoulmatesFeedSwitch
 import model.commercial.{FeedReader, FeedRequest}
@@ -8,7 +9,7 @@ import play.api.libs.json.{JsArray, JsValue}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-trait SoulmatesApi {
+trait SoulmatesApi extends ExecutionContexts {
 
   protected val adTypeName: String
 
