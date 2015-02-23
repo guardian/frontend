@@ -20,7 +20,8 @@ trait SingleWebDriver extends SuiteMixin { this: Suite =>
     val capabilities = DesiredCapabilities.firefox()
 
     // this makes the test name appear in the Saucelabs UI
-    capabilities.setCapability("name", "Integrated Tests Suite")
+    val buildNumber = System.getProperty("build.number", "")
+    capabilities.setCapability("name", s"Integrated Tests Suite $buildNumber")
     new RemoteWebDriver(new URL(url), capabilities)
   }
 
