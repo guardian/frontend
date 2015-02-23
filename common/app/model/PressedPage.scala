@@ -1,17 +1,49 @@
 package model
 
-import com.gu.facia.api.models.{Importance, Groups, CollectionConfig, CuratedContent}
+import com.gu.facia.api.models._
 import common.{Edition, NavItem}
 import conf.Configuration
 import contentapi.Paths
 import dfp.DfpAgent
 import layout.Front
 import model.facia.PressedCollection
+import org.joda.time.DateTime
 import play.api.libs.json.{Json, JsString, JsValue}
+import services.FaciaContentConvert
 
 import scala.language.postfixOps
 
 object PressedPage {
+  def fromFaciaPage(faciaPage: FaciaPage): PressedPage =
+    PressedPage(
+      faciaPage.id,
+      faciaPage.seoData,
+      faciaPage.frontProperties,
+      faciaPage.collections.map{ case (collectionConfigWithId, collection) =>
+        PressedCollection(
+          collectionConfigWithId.id,
+          collectionConfigWithId.config.displayName.getOrElse(""),
+          collection.curated.map(FaciaContentConvert.frontentContentToFaciaContent).toList,
+          (collection.editorsPicks ++ collection.mostViewed ++ collection.results).map(FaciaContentConvert.frontentContentToFaciaContent).toList,
+          collection.treats.map(FaciaContentConvert.frontentContentToFaciaContent).toList,
+          collection.lastUpdated.map(new DateTime(_)),
+          collection.updatedBy,
+          collection.updatedEmail,
+          collection.href,
+          collectionConfigWithId.config.apiQuery,
+          collectionConfigWithId.config.collectionType,
+          collectionConfigWithId.config.groups.map(Group.fromGroups),
+          collectionConfigWithId.config.uneditable,
+          collectionConfigWithId.config.showTags,
+          collectionConfigWithId.config.showSections,
+          collectionConfigWithId.config.hideKickers,
+          collectionConfigWithId.config.showDateHeader,
+          collectionConfigWithId.config.showLatestUpdate,
+          collectionConfigWithId.config
+        )
+      }
+    )
+
   implicit val pressedPageFormat = Json.format[PressedPage]
 }
 
