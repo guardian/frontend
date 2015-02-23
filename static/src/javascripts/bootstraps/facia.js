@@ -12,6 +12,7 @@ define([
     'common/utils/to-array',
     // Modules
     'common/modules/business/stocks',
+    'common/modules/ui/images',
     'facia/modules/onwards/geo-most-popular-front',
     'facia/modules/ui/container-toggle',
     'facia/modules/ui/container-show-more',
@@ -30,6 +31,7 @@ define([
     storage,
     toArray,
     stocks,
+    images,
     GeoMostPopularFront,
     ContainerToggle,
     containerShowMore,
@@ -82,6 +84,7 @@ define([
         ready = function () {
             if (!this.initialised) {
                 this.initialised = true;
+                images.upgradePicture('.facia-page');
                 modules.showSnaps();
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
