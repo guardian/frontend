@@ -155,7 +155,7 @@ trait FrontJson extends ExecutionContexts with Logging {
     json.validate[PressedPage] match {
       case JsSuccess(page, _) => Option(page)
       case JsError(errors) =>
-        println(errors)
+        log.warn("Could not parse JSON in FrontJson")
         None
     }
   }
