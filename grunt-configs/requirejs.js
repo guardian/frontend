@@ -117,6 +117,18 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
+        football: {
+            options: {
+                name: 'bootstraps/football',
+                    out: options.staticTargetDir + 'javascripts/bootstraps/football.js',
+                    exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
         preferences: {
             options: {
                 name: 'bootstraps/preferences',

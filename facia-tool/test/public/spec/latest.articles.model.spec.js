@@ -68,23 +68,6 @@ define([
             }));
         });
 
-        it('- search multiple words with pages', function (done) {
-            mockSearch.latest([]);
-
-            contentApi.fetchLatest({
-                term: 'one  two=2',
-                page: 3
-            })
-            .then(assert(function (request, list) {
-                expect(request.urlParams.page).toBe('3');
-                expect(request.urlParams.q).toBe('one AND two=2');
-
-                expect(list.results).toEqual([]);
-
-                done();
-            }));
-        });
-
         it('- all results empty response', function (done) {
             mockSearch.latest([]);
 

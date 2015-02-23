@@ -276,7 +276,7 @@ function (
             propName = 'content';
             url += term + '?' + vars.CONST.apiSearchParams;
         } else {
-            term = encodeURIComponent(term.trim().replace(/ +/g,' AND '));
+            term = encodeURIComponent(term.trim());
             propName = 'results';
             url += 'search?' + vars.CONST.apiSearchParams;
             url += options.isDraft ?
