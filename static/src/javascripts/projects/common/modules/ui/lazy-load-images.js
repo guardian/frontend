@@ -14,19 +14,15 @@ define([
     mediator
 ) {
     function reveal($image) {
-        // offsetParent is fast to check (does not trigger layout), but it won't work for fixed elements.
-        // see http://stackoverflow.com/questions/19669786/check-if-element-is-visible-in-dom
-        if ($image[0].offsetParent !== null) {
-            fastdom.write(function () {
-                $image.attr('srcset', $image.attr('data-srcset'));
-                $image.attr('sizes', $image.attr('data-sizes'));
-                $image.removeAttr('src');
+        fastdom.write(function () {
+            $image.attr('srcset', $image.attr('data-srcset'));
+            $image.attr('sizes', $image.attr('data-sizes'));
+            $image.removeAttr('src');
 
-                fastdom.defer(function () {
-                    mediator.emit('ui:images:lazyLoaded', $image[0]);
-                });
+            fastdom.defer(function () {
+                mediator.emit('ui:images:lazyLoaded', $image[0]);
             });
-        }
+        });
     }
 
     return function (images, distanceBeforeLoad) {
@@ -49,7 +45,9 @@ define([
                     scrollBottom = scrollTop + bonzo.viewport().height;
                     threshold = scrollBottom + distanceBeforeLoad;
                     _.forEach($images, function ($image) {
-                        if ($image.offset().top < threshold) {
+                        // offsetParent is fast to check, but it won't work for fixed elements.
+                        // see http://stackoverflow.com/questions/19669786/check-if-element-is-visible-in-dom
+                        if ($image.offset().top < threshold && $image[0].offsetParent !== null) {
                             reveal($image);
                         } else {
                             $nextImages.push($image);
