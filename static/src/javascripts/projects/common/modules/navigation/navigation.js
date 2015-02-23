@@ -15,7 +15,7 @@ define([
 ) {
     var Navigation = {
         init: function () {
-            this.addMegaNavMenu();
+            this.copyMegaNavMenu();
             this.enableMegaNavToggle();
             this.replaceAllSectionsLink();
 
@@ -27,12 +27,14 @@ define([
             }
         },
 
-        addMegaNavMenu: function () {
-            var megaNav     = $('.js-transfuse'),
-                placeholder = $('.' + megaNav.attr('data-transfuse-target'));
+        copyMegaNavMenu: function () {
+            var megaNavCopy = $.create($('.js-mega-nav').html()),
+                placeholder = $('.js-mega-nav-placeholder');
+
+            $('.global-navigation', megaNavCopy).addClass('global-navigation--top');
 
             fastdom.write(function () {
-                placeholder.html(megaNav.html());
+                placeholder.append(megaNavCopy);
             });
         },
 
