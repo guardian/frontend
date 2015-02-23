@@ -381,7 +381,7 @@
     margin-bottom: $gs-baseline / 2;
 
     time {
-        display: table;
+        display: inline-block;
 
         @include mq(desktop) {
             .content--interactive & {
