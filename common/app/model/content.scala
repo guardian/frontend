@@ -292,7 +292,7 @@ object Content {
     apiContent.delegate match {
       // liveblog / article comes at the top of this list - it might be tagged with other types, but if so is treated as an article
       case liveBlog if apiContent.delegate.isLiveBlog => new LiveBlog(apiContent)
-      case article if apiContent.delegate.isArticle || apiContent.delegate.isSudoku => new Article(apiContent)
+      case article if apiContent.delegate.isArticle => new Article(apiContent)
       case gallery if apiContent.delegate.isGallery => new Gallery(apiContent)
       case video if apiContent.delegate.isVideo => new Video(apiContent)
       case audio if apiContent.delegate.isAudio => new Audio(apiContent)

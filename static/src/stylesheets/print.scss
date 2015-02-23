@@ -33,8 +33,13 @@
 .element--thumbnail,
 .media-primary--showcase,
 .content__standfirst a,
-.content__standfirst br {
+.content__standfirst br,
+figure {
     display: none !important;
+}
+
+.sudoku figure {
+    display: block !important;
 }
 
 * {

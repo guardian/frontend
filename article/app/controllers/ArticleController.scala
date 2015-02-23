@@ -29,7 +29,7 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
   }
 
 
-  private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
+  private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {

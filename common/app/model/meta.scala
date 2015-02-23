@@ -293,6 +293,7 @@ trait Tags {
   lazy val isCartoon = types.exists(_.id == Tags.Cartoon)
   lazy val isLetters = tones.exists(_.id == Tags.Letters)
   lazy val isCrossword = types.exists(_.id == Tags.Crossword)
+  lazy val isSudoku = types.exists(_.id == Tags.Sudoku) || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
 
   lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.contributorLargeImagePath.nonEmpty).nonEmpty
 
@@ -309,6 +310,7 @@ object Tags {
   val Editorial = "tone/editorials"
   val Letters = "tone/letters"
   val Podcast = "type/podcast"
+  val Sudoku = "type/sudoku"
 
   object VisualTone {
     val Live = "live"
