@@ -1,4 +1,4 @@
-package driver
+package integration
 
 import java.io.{FileInputStream, File}
 import java.util.Properties

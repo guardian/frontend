@@ -185,14 +185,7 @@ object Frontend extends Build with Prototypes {
 
   val integrationTests = Project("integrated-tests", file("integrated-tests"))
     .settings(frontendCompilationSettings:_*)
-    .settings(
-      libraryDependencies ++= Seq(
-        scalaTest,
-        seleniumJava % Test,
-        jodaTime % Test,
-        jodaConvert % Test
-      )
-    )
+    .settings(frontendIntegrationTestsSettings:_*)
 
   val pngResizer = application("png-resizer")
     .dependsOn(commonWithTests)

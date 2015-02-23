@@ -3,7 +3,8 @@
    ========================================================================== */
 .commercial--jobs {
     /* Logo adjustment */
-    .i-jobs-logo {
+    .i-jobs-logo,
+    .inline-logo-jobs {
         @include mq(leftCol) {
             margin-left: 7px;
         }

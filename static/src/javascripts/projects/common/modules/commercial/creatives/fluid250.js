@@ -44,8 +44,6 @@ define([
         if (this.params.trackingPixel) {
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
         }
-
-        this.$adSlot.addClass('ad-slot__fluid250');
     };
 
     return Fluid250;

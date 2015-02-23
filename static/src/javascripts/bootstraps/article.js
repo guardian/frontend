@@ -83,7 +83,8 @@ define([
             modules.initSelectionSharing();
             modules.initStaticSocial();
             Lightbox.init();
-            flyers.init();
+            flyers.upgradeFlyers();
+            flyers.insertTagFlyer();
             openModule.init();
 
             mediator.emit('page:article:ready');

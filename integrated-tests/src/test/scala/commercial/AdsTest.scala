@@ -1,15 +1,20 @@
-package commercial
+package integration
 
-import driver.Driver
+import Config.baseUrl
 import org.scalatest.tags.Retryable
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 
-
-@Retryable class AdsTest extends FlatSpec with Matchers with Driver {
+@DoNotDiscover @Retryable class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
 
   "Ads" should "display on the network front" in {
 
-    go to theguardianWithAds("/uk")
+    webDriver.get(theguardianWithAds("/uk"))
+    webDriver.navigate().refresh()
+
+    // This is an essential sleep, because the implicitlyWait isn't sufficient to ensure that
+    // the js application has completed, since the dfp-ad classes exist on page load.
+    Thread.sleep(10000)
+    implicitlyWait(10)
 
     withClue("Should display top banner ad") {
       $("#dfp-ad--top-above-nav > *").size should be > 0
@@ -21,5 +26,6 @@ import org.scalatest.{FlatSpec, Matchers}
     }
 
   }
-  
+
+  protected def theguardianWithAds(path: String) = s"$baseUrl$path?test=test#gu.prefs.switchOn=adverts"
 }
