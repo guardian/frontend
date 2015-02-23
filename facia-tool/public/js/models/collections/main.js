@@ -9,6 +9,7 @@ define([
     'utils/fetch-settings',
     'utils/global-listeners',
     'utils/layout-from-url',
+    'utils/sparklines',
     'utils/parse-query-params',
     'utils/update-scrollables',
     'utils/terminate',
@@ -31,6 +32,7 @@ define([
     fetchSettings,
     globalListeners,
     layoutFromUrl,
+    sparklines,
     parseQueryParams,
     updateScrollables,
     terminate,
@@ -52,7 +54,10 @@ define([
             switches: ko.observable(),
             fronts: ko.observableArray(),
             loadedFronts: ko.observableArray(),
-            isPasteActive: ko.observable(false)
+            isPasteActive: ko.observable(false),
+            isSparklinesEnabled: ko.pureComputed(function () {
+                return sparklines.isEnabled();
+            })
         };
 
         model.chooseLayout = function () {

@@ -1,23 +1,36 @@
 package controllers.commercial
 
+import common.ExecutionContexts
 import model.commercial.books.{BestsellersAgent, BookFinder}
 import model.{Cached, NoCache}
+import performance.MemcachedAction
 import play.api.mvc._
 
-object BookOffersController extends Controller with implicits.Collections with implicits.Requests {
+import scala.concurrent.Future
 
-  def renderBook = Action { implicit request =>
+object BookOffersController
+  extends Controller
+  with ExecutionContexts
+  with implicits.Collections
+  with implicits.Requests {
+
+  def renderBook = MemcachedAction { implicit request =>
     specificId map { isbn =>
-      val result = BookFinder.findByIsbn(isbn) map { book =>
+
+      BookFinder.findByIsbn(isbn) map {
+        _ map { book =>
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
-          jsonFormat.result(views.html.books.book(book, omnitureId, clickMacro))
+          Cached(componentMaxAge) {
+            jsonFormat.result(views.html.books.book(book, omnitureId, clickMacro))
+          }
         } getOrElse {
-          jsonFormat.nilResult
+          Cached(componentMaxAge)(jsonFormat.nilResult)
         }
-      Cached(componentMaxAge)(result)
+      }
+
     } getOrElse {
-      NoCache(jsonFormat.nilResult)
+      Future.successful(NoCache(jsonFormat.nilResult))
     }
   }
 

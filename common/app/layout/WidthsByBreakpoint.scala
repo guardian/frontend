@@ -6,12 +6,17 @@ import views.support.Profile
 import scalaz.syntax.std.option._
 
 object WidthsByBreakpoint {
-  val Mobile = Map[CardType, BrowserWidth](
+  val MediaMobile = Map[CardType, BrowserWidth](
     (MediaList, 127.px),
     (Standard, 100.perc)
   )
 
-  val Tablet = Map[CardType, BrowserWidth](
+  val CutOutMobile = Map[CardType, BrowserWidth](
+    (MediaList, 115.px),
+    (Standard, 130.px)
+  )
+
+  val MediaTablet = Map[CardType, BrowserWidth](
     (MediaList, 140.px),
     (Fluid, 140.px),
     (Standard, 160.px),
@@ -24,7 +29,19 @@ object WidthsByBreakpoint {
     (FullMedia100, 700.px)
   )
 
-  val Desktop = Map[CardType, BrowserWidth](
+  val CutOutTablet = Map[CardType, BrowserWidth](
+    (MediaList, 115.px),
+    (Standard, 216.px),
+    (Third, 187.px),
+    (Half, 331.px),
+    (ThreeQuarters, 331.px),
+    (ThreeQuartersRight, 331.px),
+    (FullMedia50, 331.px),
+    (FullMedia75, 331.px),
+    (FullMedia100, 331.px)
+  )
+
+  val MediaDesktop = Map[CardType, BrowserWidth](
     (MediaList, 140.px),
     (Fluid, 188.px),
     (Standard, 220.px),
@@ -37,13 +54,35 @@ object WidthsByBreakpoint {
     (FullMedia100, 940.px)
   )
 
-  def fromItemClasses(itemClasses: ItemClasses) = {
+  val CutOutDesktop = Map[CardType, BrowserWidth](
+    (MediaList, 115.px),
+    (Standard, 216.px),
+    (Third, 216.px),
+    (Half, 331.px),
+    (ThreeQuarters, 389.px),
+    (ThreeQuartersRight, 389.px),
+    (FullMedia50, 331.px),
+    (FullMedia75, 331.px),
+    (FullMedia100, 331.px)
+  )
+
+  def mediaFromItemClasses(itemClasses: ItemClasses) = {
     val desktopClass = itemClasses.desktop.getOrElse(itemClasses.tablet)
 
     WidthsByBreakpoint(
-      Mobile.get(itemClasses.mobile),
-      Tablet.get(itemClasses.tablet),
-      Desktop.get(desktopClass)
+      MediaMobile.get(itemClasses.mobile),
+      MediaTablet.get(itemClasses.tablet),
+      MediaDesktop.get(desktopClass)
+    )
+  }
+
+  def cutOutFromItemClasses(itemClasses: ItemClasses) = {
+    val desktopClass = itemClasses.desktop.getOrElse(itemClasses.tablet)
+
+    WidthsByBreakpoint(
+      CutOutMobile.get(itemClasses.mobile),
+      CutOutTablet.get(itemClasses.tablet),
+      CutOutDesktop.get(desktopClass)
     )
   }
 }

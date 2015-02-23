@@ -71,7 +71,7 @@ object FrontPressNotification extends Notification {
 }
 
 object MissingVideoEncodings extends Notification {
-  lazy val topic: String = Configuration.aws.videoEncodingsSns
+  lazy val topic: String = "arn:aws:sns:eu-west-1:642631414762:frontend-missingVideoEncodingsNotificationTopic"
 
   def sendMessage(encoding: String, url: String, webTitle: String): Unit = {
     val subject = "Missing video encoding found"

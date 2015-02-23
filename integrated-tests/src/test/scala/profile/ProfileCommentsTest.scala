@@ -1,28 +1,28 @@
-package profile
+package integration
 
-import driver.Config._
-import driver.Driver
+import Config.profileBaseUrl
 import org.scalatest.tags.Retryable
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 
-@Retryable class ProfileCommentsTest extends FlatSpec with Matchers with Driver {
+@DoNotDiscover @Retryable class ProfileCommentsTest extends FlatSpec with Matchers with SharedWebDriver {
 
   "Profile pages" should "show user comments" in {
-    go to profileTheguardian("/user/id/4383032")
+    webDriver.get(profileTheguardian("/user/id/4383032"))
+    implicitlyWait(5);
 
     $("[itemtype='http://schema.org/UserComments']") should not be empty
     $("[itemtype='http://schema.org/Comment']") should not be empty
   }
 
   they should "show replies to user comments" in {
-    go to profileTheguardian("/user/id/4383032/replies")
+    webDriver.get(profileTheguardian("/user/id/4383032/replies"))
 
     $("[itemtype='http://schema.org/UserComments']") should not be empty
     $("[itemtype='http://schema.org/Comment']") should not be empty
   }
 
   they should "show featured (picked) user comments" in {
-    go to profileTheguardian("/user/id/4383032/picks")
+    webDriver.get(profileTheguardian("/user/id/4383032/picks"))
 
     $("[itemtype='http://schema.org/UserComments']") should not be empty
     $("[itemtype='http://schema.org/Comment']") should not be empty

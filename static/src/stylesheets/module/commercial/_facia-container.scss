@@ -76,21 +76,34 @@
     }
 }
 .commercial__title {
-    .i-guardian-logo-commercial {
+    @include fs-header(3);
+    line-height: 1;
+    min-height: $gs-baseline*3;
+    color: #ffffff;
+    fill: #ffffff;
+    margin: 0;
+
+    a {
+        color: #ffffff;
+    }
+
+    .inline-logo-guardian {
         display: inline-block;
 
         @include mq(leftCol) {
             display: none;
         }
     }
-    .i-marque-54 {
+    
+    .inline-marque-54 {
         display: none;
 
         @include mq(leftCol) {
             display: block;
         }
     }
-    .i-commercial-brand {
+    
+    .inline-commercial-brand {
         @include mq($until: leftCol) {
             opacity: .8;
         }
@@ -109,17 +122,6 @@
     @include mq(wide) {
         margin-left: $left-column-wide + $gs-gutter;
         margin-right: 0;
-    }
-}
-.commercial__title {
-    @include fs-header(3);
-    line-height: 1;
-    min-height: $gs-baseline*3;
-    color: #ffffff;
-    margin: 0;
-
-    a {
-        color: #ffffff;
     }
 }
 .commercial__title__logo {
@@ -278,14 +280,13 @@
             width: gs-span(3);
         }
         .commercial__title {
-            .i-guardian-logo-commercial {
+            .inline-logo-guardian {
                 display: inline-block;
             }
-            .i-marque-54,
-            .i-marque-36 {
+            .inline--marque-54 {
                 display: none;
             }
-            .i-commercial-brand {
+            .inline-commercial-brand {
                 opacity: .8;
             }
         }
