@@ -34,8 +34,12 @@
 .media-primary--showcase,
 .content__standfirst a,
 .content__standfirst br,
-.figure {
+figure {
     display: none !important;
+}
+
+.sudoku figure {
+    display: block !important;
 }
 
 * {

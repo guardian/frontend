@@ -491,6 +491,10 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
     isbn.isDefined || super.hasInlineMerchandise
   }
 
+  lazy val isSudoku: Boolean = {
+      tags.contains()
+  }
+
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
