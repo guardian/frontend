@@ -40,7 +40,6 @@ System.amdRequire([
         .value();
 
     System.amdRequire([
-        'mock/once',
         'mock/logger'
     ], function (
         onceMock

@@ -5,14 +5,16 @@ define([
     'test/utils/config-actions',
     'test/utils/dom-nodes'
 ], function(
-    test,
+    sandbox,
     drag,
     mockCollection,
     configAction,
     dom
 ){
     describe('Config', function () {
-        test('config', '/config/fronts', function (done) {
+        var test = sandbox('config');
+
+        test('/config/fronts', function (done) {
 
             createFrontWithCollection()
             .then(function (request) {

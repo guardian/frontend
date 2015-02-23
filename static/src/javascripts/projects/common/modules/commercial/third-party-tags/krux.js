@@ -1,7 +1,11 @@
 define([
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/cookies',
+    'common/utils/storage'
 ], function (
-    config
+    config,
+    cookies,
+    storage
 ) {
     function load() {
         if (config.switches.krux) {
@@ -9,8 +13,19 @@ define([
         }
     }
 
+    function retrieve(n) {
+        var k = 'kx' + n;
+
+        return storage.local.getRaw(k) || cookies.get(k + '=([^;]*)') || '';
+    }
+
+    function getSegments() {
+        return retrieve('segs') ? retrieve('segs').split(',') : [];
+    }
+
     return {
-        load: load
+        load: load,
+        getSegments: getSegments
     };
 
 });

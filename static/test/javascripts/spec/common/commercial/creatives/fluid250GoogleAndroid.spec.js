@@ -33,7 +33,7 @@ define([
             expect(fluid250GoogleAndroid).toBeDefined();
         });
 
-        it('ad slot should always have a proper fluid250 css class', function() {
+        xit('ad slot should always have a proper fluid250 css class', function() {
             $fixturesContainer = fixtures.render(fixturesConfig);
 
             new Fluid250GoogleAndroid($('.ad-slot', $fixturesContainer), {}).create();

@@ -1,0 +1,27 @@
+
+@import conf.Switches._
+
+@if(ABIdentityBenefits.isSwitchedOn) {
+    <div class="identity-wrapper identity-wrapper--benefits monocolumn-wrapper is-hidden">
+        <div class="identity-benefits">
+            <h3 class="identity-benefits__header">Why register?</h3>
+            @fragments.inlineSvg("marque-36", "icon")
+            <div class="identity-benefits__item identity-benefits__item--support is-hidden">
+                <h4>Support our journalism</h4>
+                <p>When you sign in to theguardian.com, we're able to give you a better experience on our website. It also helps to support our journalism. <a href="http://www.theguardian.com/why-your-data-matters">Find out more</a>.</p>
+            </div>
+            <div class="identity-benefits__item identity-benefits__item--discussion is-hidden">
+                <h4>Join the conversation</h4>
+                <p>Discuss, debate and share your comments on the stories that matter to you. Add your viewpoint and engage with others sharing their knowledge and experience.</p>
+            </div>
+            <div class="identity-benefits__item identity-benefits__item--emails is-hidden">
+                <h4>Keep up to date</h4>
+                <p>Sign up to your Guardian emails to get the news you want, straight to your inbox. We round up the latest in culture, sport, comment and more in our handy email newsletters.</p>
+            </div>
+            <div class="identity-benefits__item identity-benefits__item--witness is-hidden">
+                <h4>Upload video and photos</h4>
+                <p>Share your view of the world with GuardianWitness. You can contribute your video, pictures and stories, and browse all the news, opinions and creations submitted by others.</p>
+            </div>
+        </div>
+    </div>
+}

@@ -252,7 +252,7 @@ define([
                                         player.ima.requestAds();
                                     });
                             }
-                        );
+                        )();
                     } else {
                         events.bindContentEvents(player);
                     }
