@@ -14,15 +14,19 @@ define([
     mediator
 ) {
     function reveal($image) {
-        fastdom.write(function () {
-            $image.attr('srcset', $image.attr('data-srcset'));
-            $image.attr('sizes', $image.attr('data-sizes'));
-            $image.removeAttr('src');
+        // offsetParent is fast to check (does not trigger layout), but it won't work for fixed elements.
+        // see http://stackoverflow.com/questions/19669786/check-if-element-is-visible-in-dom
+        if ($image[0].offsetParent !== null) {
+            fastdom.write(function () {
+                $image.attr('srcset', $image.attr('data-srcset'));
+                $image.attr('sizes', $image.attr('data-sizes'));
+                $image.removeAttr('src');
 
-            fastdom.defer(function () {
-                mediator.emit('ui:images:lazyLoaded', $image[0]);
+                fastdom.defer(function () {
+                    mediator.emit('ui:images:lazyLoaded', $image[0]);
+                });
             });
-        });
+        }
     }
 
     return function (images, distanceBeforeLoad) {
