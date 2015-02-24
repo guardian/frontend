@@ -29,6 +29,7 @@ require([
     'common/modules/experiments/ab',
     'common/modules/lazyload',
     'common/modules/ui/images',
+    'common/modules/ui/non-modern-images',
     'common/modules/ui/tabs',
     'common/modules/user-prefs',
     'common/views/svgs'

@@ -14,5 +14,9 @@
         data-sizes="@sizes"
         @* A tiny transparent gif *@
         src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+        @fallbackSrc.map { src =>
+            @* Non-modern browsers don't lazy-load, but a little bit of JavaScript swaps this out as the src. *@
+            data-fallback-src="@src"
+        }
     }
 >

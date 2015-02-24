@@ -266,21 +266,7 @@
                 }
             ).install();
 
-            require([
-                'common/utils/config',
-                'common/modules/experiments/ab',
-                'common/modules/ui/images'
-            ], function (
-                config,
-                ab,
-                images
-            ) {
-
-                ab.segmentUser();
-                ab.run();
-                images.upgrade();
-                images.listen();
-
+            require(['common/utils/config'], function (config) {
                 if (config.switches.commercial) {
                     require(['bootstraps/commercial'], raven.wrap(
                         { tags: { feature: 'commercial' } },
@@ -289,8 +275,23 @@
                         }
                     ));
                 }
+            });
 
-                if (guardian.isModernBrowser) {
+            if (guardian.isModernBrowser) {
+                require([
+                    'common/utils/config',
+                    'common/modules/experiments/ab',
+                    'common/modules/ui/images'
+                ], function (
+                    config,
+                    ab,
+                    images
+                ) {
+                    ab.segmentUser();
+                    ab.run();
+                    images.upgrade();
+                    images.listen();
+
                     @if(play.Play.isDev()) {
                         require(['bootstraps/dev'], function (devmode) { devmode.init(); });
                     }
@@ -298,9 +299,14 @@
                     require(['bootstraps/app'], function(bootstrap) {
                         bootstrap.go();
                     });
-                }
-
-            });
+                });
+            } else {
+                require([
+                    'common/modules/ui/non-modern-images'
+                ], function (nonModernImages) {
+                    nonModernImages();
+                });
+            }
 
         });
 
