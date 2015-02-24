@@ -67,14 +67,14 @@ define([
             if (config.page.contentType === 'Article') {
                 require(['bootstraps/image-content'], function (imageContent) {
                     bootstrapContext('article', article);
-                    imageContent.init();
+                    bootstrapContext('article : image-content', imageContent);
                 });
             }
 
             if (config.page.contentType === 'LiveBlog') {
                 require(['bootstraps/image-content'], function (imageContent) {
                     bootstrapContext('liveBlog', liveBlog);
-                    imageContent.init();
+                    bootstrapContext('liveBlog : image-content', imageContent);
                 });
             }
 
@@ -85,14 +85,13 @@ define([
             if (config.page.contentType === 'Gallery') {
                 require(['bootstraps/image-content'], function (imageContent) {
                     bootstrapContext('gallery', gallery);
-                    imageContent.init();
+                    bootstrapContext('gallery : image-content', imageContent);
                 });
             }
 
             if (config.page.contentType === 'ImageContent') {
                 require(['bootstraps/image-content'], function (imageContent) {
                     bootstrapContext('image-content', imageContent);
-                    imageContent.init();
                 });
             }
 
