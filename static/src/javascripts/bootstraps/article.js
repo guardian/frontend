@@ -73,7 +73,6 @@ define([
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
             modules.initSelectionSharing();
-            Lightbox.init();
             flyers.upgradeFlyers();
             flyers.insertTagFlyer();
             openModule.init();
