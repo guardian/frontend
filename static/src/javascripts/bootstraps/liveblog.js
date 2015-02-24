@@ -13,7 +13,6 @@ define([
     'common/modules/article/flyers',
     'common/modules/commercial/liveblog-adverts',
     'common/modules/experiments/affix',
-    'common/modules/gallery/lightbox',
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
     'common/modules/ui/dropdowns',
@@ -36,7 +35,6 @@ define([
     flyers,
     liveblogAdverts,
     Affix,
-    Lightbox,
     LiveFilter,
     AutoUpdate,
     dropdowns,
@@ -253,7 +251,6 @@ define([
         robust('lb-fence',      article.modules.initFence);
         robust('lb-twitter',    article.modules.initTruncateAndTwitter);
         robust('lb-sharing',    article.modules.initSelectionSharing);
-        robust('lb-lightbox',   Lightbox.init);
 
         robust('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
     }
