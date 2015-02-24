@@ -1,5 +1,4 @@
 define([
-    'config',
     'modules/vars',
     'knockout',
     'underscore',
@@ -13,7 +12,6 @@ define([
     'utils/mediator',
     'utils/update-scrollables'
 ], function (
-    config,
     vars,
     ko,
     _,
@@ -45,7 +43,7 @@ define([
     function Clipboard (params) {
         var listeners = mediator.scope();
 
-        this.storage = storage.bind('gu.front-tools.clipboard.' + config.email);
+        this.storage = storage.bind('gu.front-tools.clipboard.' + vars.identity.email);
         this.uiOpenElement = ko.observable();
         this.column = params.column;
         this.group = new Group({
@@ -115,6 +113,12 @@ define([
     };
 
     Clipboard.prototype.getItemsFromStorage = function () {
+        if (
+            vars.model.switches()['facia-tool-save-clipboard-often'] === false &&
+            vars.model.switches()['facia-tool-save-clipboard-seldom'] === false
+        ) {
+            return;
+        }
         var group = this.group,
             items = _.map(this.storage.getItem() || [], function (item) {
                 return new Article(_.extend(item, {
@@ -139,7 +143,16 @@ define([
     Clipboard.prototype.pollArticlesChange = function (callback) {
         // Because I want to save intermediate states, in case the browser crashes
         // before the user clicks on 'save article', save regularly the current state
-        this.pollID = setInterval(callback, vars.CONST.detectPendingChangesInClipboard || 5000);
+        var period = null;
+        if (vars.model.switches()['facia-tool-save-clipboard-seldom']) {
+            period = vars.CONST.detectPendingChangesInClipboardSeldom;
+        }
+        if (vars.model.switches()['facia-tool-save-clipboard-often']) {
+            period = vars.CONST.detectPendingChangesInClipboardOften;
+        }
+        if (period) {
+            this.pollID = setInterval(callback, period);
+        }
     };
 
     Clipboard.prototype.dispose = function () {

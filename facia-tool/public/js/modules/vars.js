@@ -43,7 +43,8 @@ define([
 
         detectPressFailureMs: 10000,
 
-        detectPendingChangesInClipboard: 5000,
+        detectPendingChangesInClipboardOften:  2000,
+        detectPendingChangesInClipboardSeldom: 5000,
 
         maxFronts: 500,
 
@@ -93,6 +94,10 @@ define([
         CONST: CONST,
         model: undefined,
         priority: pageConfig.priority === 'editorial' ? undefined : pageConfig.priority,
+        identity: {
+            email: pageConfig.email,
+            avatarUrl: pageConfig.avatarUrl
+        },
         state: {
             config: {}
         }
