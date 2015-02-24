@@ -1,7 +1,7 @@
 package controllers.preview
 
 import controllers.FaciaController
-import controllers.front.FrontJson
+import controllers.front.{FrontJsonFapiLive, FrontJsonFapi, FrontJson}
 import services.ConfigAgent
 
 object FrontJsonDraft extends FrontJson {
@@ -10,6 +10,7 @@ object FrontJsonDraft extends FrontJson {
 
 object FaciaDraftController extends FaciaController {
   val frontJson: FrontJson = FrontJsonDraft
+  val frontJsonFapi: FrontJsonFapi = FrontJsonFapiLive
 
   override def renderFront(path: String) = {
     log.info(s"Serving Path: $path")
