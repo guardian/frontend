@@ -28,6 +28,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   val EditionalisedKey = """^\w\w(/.*)?$""".r
 
   val frontJson: FrontJson
+  val frontJsonFapi: FrontJsonFapi
 
   // TODO - these should not be separate endpoints
   // see comment in routes file...
@@ -216,4 +217,5 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
 object FaciaController extends FaciaController {
   val frontJson: FrontJson = FrontJsonLive
+  val frontJsonFapi: FrontJsonFapi = FrontJsonFapiLive
 }
