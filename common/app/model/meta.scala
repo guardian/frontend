@@ -294,13 +294,13 @@ trait Tags {
   lazy val isLetters = tones.exists(_.id == Tags.Letters)
   lazy val isCrossword = types.exists(_.id == Tags.Crossword)
 
-  lazy val isArticle: Boolean = tags.exists { _.id == "type/article" }
-  lazy val isSudoku: Boolean = tags.exists { _.id == "type/sudoku" } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
-  lazy val isGallery: Boolean = tags.exists { _.id == "type/gallery" }
-  lazy val isVideo: Boolean = tags.exists { _.id == "type/video" }
-  lazy val isPoll: Boolean = tags.exists { _.id == "type/poll" }
+  lazy val isArticle: Boolean = tags.exists { _.id == Tags.Article }
+  lazy val isSudoku: Boolean = tags.exists { _.id == Tags.Sudoku } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
+  lazy val isGallery: Boolean = tags.exists { _.id == Tags.Gallery }
+  lazy val isVideo: Boolean = tags.exists { _.id == Tags.Video }
+  lazy val isPoll: Boolean = tags.exists { _.id == Tags.Poll }
   lazy val isImageContent: Boolean = tags.exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
-  lazy val isInteractive: Boolean = tags.exists { _.id == "type/interactive" }
+  lazy val isInteractive: Boolean = tags.exists { _.id == Tags.Interactive }
 
   lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.contributorLargeImagePath.nonEmpty).nonEmpty
 
@@ -318,12 +318,24 @@ object Tags {
   val Letters = "tone/letters"
   val Podcast = "type/podcast"
 
+  val Article = "type/article"
+  val Gallery = "type/gallery"
+  val Video = "type/video"
+  val Poll = "type/poll"
+  val Interactive = "type/interactive"
+  val Sudoku = "type/sudoku"
+
   object VisualTone {
     val Live = "live"
     val Comment = "comment"
     val Feature = "feature"
     val News = "news"
   }
+
+  val sudokuTags = Seq(
+    "type/sudoku",
+    "lifeandstyle/series/sudoku"
+  )
 
   val liveMappings = Seq(
     "tone/minutebyminute"
