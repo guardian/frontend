@@ -7,7 +7,6 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/request-animation-frame',
     'common/utils/storage',
     'common/utils/to-array',
     // Modules
@@ -27,7 +26,6 @@ define([
     config,
     detect,
     mediator,
-    requestAnimationFrame,
     storage,
     toArray,
     stocks,
@@ -43,6 +41,15 @@ define([
     var modules = {
             lazyLoadImages: function () {
                 lazyLoadImages($('.js-lazy-loaded-image'));
+
+                _.forEach([
+                    'modules:onward:loaded',
+                    'modules:related:loaded'
+                ], function (event) {
+                    mediator.on(event, function (context) {
+                        lazyLoadImages($('.js-lazy-loaded-image', context));
+                    });
+                });
             },
 
             showSnaps: function () {
