@@ -252,7 +252,7 @@ define([
                         dfp.init();
                         window.googletag.cmd.forEach(function (func) { func(); });
                         window.googletag.pubads().listener(makeFakeEvent(slotId));
-                        expect($('#' + slotId).html()).toBe('<div class="dfp-iframe-content">Some content</div>');
+                        expect($('iframe', '#' + slotId).css('display')).toBe('none');
                     });
 
                     it('should run javascript', function () {
