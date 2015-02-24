@@ -24,7 +24,7 @@ object GetClasses {
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
       ("fc-item--live", item.isLive),
       ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable)
-    ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty) ++ mediaTypeClass(item).map(_ -> true))
+    ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
   }
 
   def forSubLink(sublink: Sublink) = RenderClasses(Seq(
