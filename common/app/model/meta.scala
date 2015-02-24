@@ -332,11 +332,6 @@ object Tags {
     val News = "news"
   }
 
-  val sudokuTags = Seq(
-    "type/sudoku",
-    "lifeandstyle/series/sudoku"
-  )
-
   val liveMappings = Seq(
     "tone/minutebyminute"
   )
