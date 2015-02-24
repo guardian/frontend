@@ -18,7 +18,7 @@ define([
     staticSocialTmpl
 ) {
     function show() {
-        if (($(document.body).scrollTop() > $(".meta__extras").offset().top)) {
+        if (($(document.body).scrollTop() > $('.meta__extras').offset().top)) {
             $('.social-fixed').addClass('social-fixed--show');
         }
     }
