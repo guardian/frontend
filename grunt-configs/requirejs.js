@@ -105,6 +105,18 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
+        "image-content": {
+            options: {
+                name: 'bootstraps/image-content',
+                out: options.staticTargetDir + 'javascripts/bootstraps/image-content.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
         facia: {
             options: {
                 name: 'bootstraps/facia',

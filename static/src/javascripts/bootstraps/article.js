@@ -9,7 +9,6 @@ define([
     'common/modules/article/static-social',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
-    'common/modules/gallery/lightbox',
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
     'common/modules/ui/rhc',
@@ -25,7 +24,6 @@ define([
     staticSocial,
     truncate,
     twitter,
-    Lightbox,
     geoMostPopular,
     OpenCta,
     rhc,
@@ -82,7 +80,6 @@ define([
             modules.initRightHandComponent();
             modules.initSelectionSharing();
             modules.initStaticSocial();
-            Lightbox.init();
             flyers.upgradeFlyers();
             flyers.insertTagFlyer();
             openModule.init();

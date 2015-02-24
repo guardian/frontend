@@ -71,6 +71,10 @@ function (
                             }
                         );
                         profile.init();
+
+                        s.eVar36 = 'facebook auto';
+                        s.linkTrackVars = 'eVar36';
+                        s.tl(this, 'o', 'Social signin auto');
                     }
                 }
             });
