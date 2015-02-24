@@ -8,6 +8,9 @@ import implicits.FaciaContentImplicits._
 import scala.util.{Failure, Success, Try}
 
 object CutOut extends Logging {
+  /* If a CutOut comes with width and height, it's proabably coming from facia-tool
+     Otherwise, it is probably coming from Content API Content type via tags (This gives no src and width)
+   */
   def fromTrail(faciaContent: FaciaContent): Option[CutOut] = {
     faciaContent.imageCutout match {
         case Some(ImageCutout(imageCutoutSrc, Some(imageCutoutSrcHeight), Some(imageCutoutSrcWidth))) =>
