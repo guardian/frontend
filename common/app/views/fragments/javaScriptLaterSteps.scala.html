@@ -278,8 +278,12 @@
 
                 ab.segmentUser();
                 ab.run();
-                images.upgrade();
-                images.listen();
+                if(guardian.config.page.isFront) {
+                    images.upgradePicture('.facia-page');
+                } else {
+                    images.upgrade();
+                    images.listen();
+                }
 
                 if (config.switches.commercial) {
                     require(['bootstraps/commercial'], raven.wrap(
