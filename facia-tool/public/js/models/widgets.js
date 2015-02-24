@@ -2,7 +2,14 @@
 define([
     'knockout'
 ], function (ko) {
+    var alreadyRegistered = false;
+
     function register () {
+        if (alreadyRegistered) {
+            return;
+        }
+        alreadyRegistered = true;
+
         ko.components.loaders.unshift({
             loadTemplate: function (name, templateConfig, callback) {
                 if (typeof templateConfig !== 'object' || !('text' in templateConfig)) {
