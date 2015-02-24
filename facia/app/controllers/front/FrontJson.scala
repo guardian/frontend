@@ -62,7 +62,7 @@ trait FrontJson extends ExecutionContexts with Logging {
 
   private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/pressed.json"
 
-  def get(path: String): Future[Option[PressedPage]] = {
+  def get(path: String): Future[Option[FaciaPage]] = {
     val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
     response.map { r =>
       r.status match {
@@ -150,14 +150,17 @@ trait FrontJson extends ExecutionContexts with Logging {
       importance     = (json \ "importance").asOpt[Importance](FapiJsonFormats.importanceFormat).getOrElse(DefaultImportance)
     )
 
-  private def parsePressedJson(j: String): Option[PressedPage] = {
+  private def parsePressedJson(j: String): Option[FaciaPage] = {
     val json = Json.parse(j)
-    json.validate[PressedPage] match {
-      case JsSuccess(page, _) => Option(page)
-      case JsError(errors) =>
-        log.warn("Could not parse JSON in FrontJson")
-        None
-    }
+    val id: String = (json \ "id").as[String]
+    Option(
+      FaciaPage(
+        id,
+        seoData = parseSeoData(id, (json \ "seoData").asOpt[JsValue].getOrElse(JsNull)),
+        frontProperties = parseFrontProperties((json \ "frontProperties").asOpt[JsValue].getOrElse(JsNull)),
+        collections = parseOutTuple(json)
+      )
+    )
   }
 
   private def parseSeoData(id: String, seoJson: JsValue): SeoData = {
