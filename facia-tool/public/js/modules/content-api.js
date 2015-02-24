@@ -123,11 +123,14 @@ function (
     }
 
     function decorateItems (articles) {
-        var num = vars.CONST.capiBatchSize || 10;
+        var num = vars.CONST.capiBatchSize || 10,
+            pending = [];
 
         _.each(_.range(0, articles.length, num), function(index) {
-            decorateBatch(articles.slice(index, index + num));
+            pending.push(decorateBatch(articles.slice(index, index + num)));
         });
+
+        return $.when.apply($, pending);
     }
 
     function decorateBatch (articles) {
@@ -142,7 +145,7 @@ function (
             }
         });
 
-        fetchContentByIds(ids)
+        return fetchContentByIds(ids)
         .done(function(results){
             if (!_.isArray(results)) {
                 return;
@@ -273,7 +276,7 @@ function (
             propName = 'content';
             url += term + '?' + vars.CONST.apiSearchParams;
         } else {
-            term = encodeURIComponent(term.trim().replace(/ +/g,' AND '));
+            term = encodeURIComponent(term.trim());
             propName = 'results';
             url += 'search?' + vars.CONST.apiSearchParams;
             url += options.isDraft ?

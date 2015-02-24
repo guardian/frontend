@@ -10,6 +10,7 @@ define([
     'common/utils/scroller',
     'common/utils/template',
     'common/utils/url',
+    'common/modules/article/flyers',
     'common/modules/commercial/liveblog-adverts',
     'common/modules/experiments/affix',
     'common/modules/live/filter',
@@ -31,6 +32,7 @@ define([
     scroller,
     template,
     url,
+    flyers,
     liveblogAdverts,
     Affix,
     LiveFilter,
@@ -236,18 +238,19 @@ define([
     };
 
     function ready() {
-        robust('lb-adverts',    function () { modules.initAdverts(); });
-        robust('lb-filter',     function () { modules.createFilter(); });
-        robust('lb-timeline',   function () { modules.createTimeline(); });
-        robust('lb-autoupdate', function () { modules.createAutoUpdate(); });
-        robust('lb-timestamp',  function () { modules.keepTimestampsCurrent(); });
-        robust('lb-updates',    function () { modules.handleUpdates(); });
+        robust('lb-adverts',    modules.initAdverts);
+        robust('lb-filter',     modules.createFilter);
+        robust('lb-timeline',   modules.createTimeline);
+        robust('lb-autoupdate', modules.createAutoUpdate);
+        robust('lb-timestamp',  modules.keepTimestampsCurrent);
+        robust('lb-updates',    modules.handleUpdates);
+        robust('lb-flyers',     flyers.upgradeFlyers);
 
         // re-use modules from article bootstrap
-        robust('lb-article',    function () { article.modules.initOpenCta(); });
-        robust('lb-fence',      function () { article.modules.initFence(); });
-        robust('lb-twitter',    function () { article.modules.initTruncateAndTwitter(); });
-        robust('lb-sharing',    function () { article.modules.initSelectionSharing(); });
+        robust('lb-article',    article.modules.initOpenCta);
+        robust('lb-fence',      article.modules.initFence);
+        robust('lb-twitter',    article.modules.initTruncateAndTwitter);
+        robust('lb-sharing',    article.modules.initSelectionSharing);
 
         robust('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
     }

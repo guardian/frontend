@@ -73,7 +73,9 @@ define([
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
             modules.initSelectionSharing();
-            flyers.init();
+            Lightbox.init();
+            flyers.upgradeFlyers();
+            flyers.insertTagFlyer();
             openModule.init();
 
             mediator.emit('page:article:ready');

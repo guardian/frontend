@@ -67,7 +67,9 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
       logger.info("Invalid registration request")
       formWithErrors.error("user.primaryEmailAddress") match {
         case Some(FormError("user.primaryEmailAddress", Seq("This domain is blacklisted"), _)) => {
-          logger.info("Blocking registration from blacklisted domain here: %s".format(formWithErrors.data.getOrElse(emailKey," should be an email address")))
+          val emailAddressOrError = formWithErrors.data.getOrElse(emailKey," should be an email address")
+          val clientIp = idRequest.clientIp.getOrElse("Could not get remote ip address")
+          logger.info(s"Blocking registration from blacklisted domain here: Email: $emailAddressOrError Remote ip <$clientIp>")
           Future.successful(redirectToRegistrationPageWithoutErrors(formWithErrors, verifiedReturnUrlAsOpt, skipConfirmation))
         }
         case _ =>

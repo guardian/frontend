@@ -89,6 +89,18 @@ define([
         }
     };
 
+    /**
+     * Retrieve a value from storage without parsing as JSON
+     *
+     * @param  {String} key
+     * @return {String} value
+     */
+    Storage.prototype.getRaw = function (key) {
+        if (this.isStorageAvailable()) {
+            return w[this.type].getItem(key);
+        }
+    };
+
     Storage.prototype.remove = function (key) {
         if (this.isStorageAvailable()) {
             return w[this.type].removeItem(key);

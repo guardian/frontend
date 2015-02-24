@@ -3,27 +3,38 @@ define([
     'qwery',
     'fastdom',
     'common/utils/mediator',
+    'common/utils/detect',
     'common/utils/$'
 ], function (
     bean,
     qwery,
     fastdom,
     mediator,
+    detect,
     $
 ) {
     var Navigation = {
         init: function () {
-            this.addMegaNavMenu();
+            this.copyMegaNavMenu();
             this.enableMegaNavToggle();
             this.replaceAllSectionsLink();
+
+            if (detect.isIOS() && detect.getUserAgent.version > 5) {
+                // crashes mobile safari < 6, so we add it here after detection
+                fastdom.write(function () {
+                    $('.navigation__scroll').css({'-webkit-overflow-scrolling': 'touch'});
+                });
+            }
         },
 
-        addMegaNavMenu: function () {
-            var megaNav     = $('.js-transfuse'),
-                placeholder = $('.' + megaNav.attr('data-transfuse-target'));
+        copyMegaNavMenu: function () {
+            var megaNavCopy = $.create($('.js-mega-nav').html()),
+                placeholder = $('.js-mega-nav-placeholder');
+
+            $('.global-navigation', megaNavCopy).addClass('global-navigation--top');
 
             fastdom.write(function () {
-                placeholder.html(megaNav.html());
+                placeholder.append(megaNavCopy);
             });
         },
 

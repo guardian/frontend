@@ -15,6 +15,7 @@ define([
     'facia/modules/onwards/geo-most-popular-front',
     'facia/modules/ui/container-toggle',
     'facia/modules/ui/container-show-more',
+    'facia/modules/ui/lazy-load-containers',
     'facia/modules/ui/snaps',
     'facia/modules/onwards/weather'
 ], function (
@@ -32,6 +33,7 @@ define([
     GeoMostPopularFront,
     ContainerToggle,
     containerShowMore,
+    lazyLoadContainers,
     snaps,
     weather
 ) {
@@ -84,6 +86,7 @@ define([
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
                 modules.upgradeMostPopularToGeo();
+                lazyLoadContainers();
                 stocks();
                 modules.showWeather();
             }
