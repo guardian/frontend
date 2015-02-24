@@ -1,10 +1,44 @@
+@include keyframes(spinner) {
+    from {
+        @include rotate(0deg);
+    }
+
+    to {
+        @include rotate(360deg);
+    }
+}
+
+.collection__show-more--loading i {
+    @include animation(spinner linear 1.5s infinite);
+}
+
+.show-more__error-message {
+    @include fs-textSans(3);
+    @include transition(opacity 1.5s);
+    color: colour(status-negative);
+    display: inline-block;
+    padding-top: $gs-baseline / 2;
+    opacity: 1;
+}
+
+.show-more__error-message--invisible {
+    opacity: 0;
+}
+
+.is-not-modern .button--show-more {
+    display: none;
+}
+
 /**
  *  Everything below is pure magic. Trying to even out the different baseline of Guardian font.
  */
 .collection__show-more {
-    margin-top: $gs-baseline;
     line-height: 2.2;
     font-size: 14px;
+
+    @include mq(tablet) {
+        margin-top: $gs-baseline;
+    }
 
     .fc-show-more--hidden & {
         margin-top: 0;

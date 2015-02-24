@@ -2,10 +2,9 @@ package model
 
 import java.net.URL
 
+import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
 import com.gu.facia.client.models.TrailMetaData
-import com.gu.contentapi.client.model.{
-  Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag, Podcast
-}
+import com.gu.util.liveblogs.{Block, BlockToText, Parser => LiveBlogParser}
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
 import conf.Switches.FacebookShareUseTrailPicFirstSwitch
@@ -18,7 +17,6 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
-import com.gu.util.liveblogs.{Parser => LiveBlogParser, Block, BlockToText}
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -61,6 +59,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
   lazy val hasTonalHeaderByline: Boolean = {
     visualTone == Tags.VisualTone.Comment && hasSingleContributor && contentType != GuardianContentTypes.ImageContent
+  }
+  lazy val hasBeenModified: Boolean = {
+    new Duration(webPublicationDate, lastModified).isLongerThan(Duration.standardSeconds(60))
   }
   lazy val hasTonalHeaderIllustration: Boolean = isLetters
   lazy val showBylinePic: Boolean = {
@@ -148,7 +149,10 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val webTitle: String = delegate.webTitle
   override lazy val analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val description: Option[String] = trailText
-  override lazy val headline: String = apiContent.metaData.flatMap(_.headline).getOrElse(fields("headline"))
+
+  // draft content may not have a headline. In that case just go with empty. We expect live content to have a headline
+  override lazy val headline: String = apiContent.metaData.flatMap(_.headline).getOrElse(fields.getOrDefault("headline", ""))
+
   override lazy val trailText: Option[String] = apiContent.metaData.flatMap(_.trailText).orElse(fields.get("trailText"))
   override lazy val byline: Option[String] = apiContent.metaData.flatMap(_.byline).orElse(fields.get("byline"))
   override val showByline = apiContent.metaData.flatMap(_.showByline).getOrElse(metaDataDefault("showByline"))
@@ -544,8 +548,6 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
     "twitter:card" -> "summary"
   )
 
-  override lazy val hasClassicVersion: Boolean = super.hasClassicVersion && !(section == "football")
-
   private lazy val cricketMetaData = if (isCricketLiveBlog && conf.Switches.CricketScoresSwitch.isSwitchedOn) {
     Map(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
   } else {
@@ -595,8 +597,6 @@ object Audio {
 }
 
 class Video(content: ApiContentWithMeta) extends Media(content) {
-
-  override lazy val hasClassicVersion = false
 
   override lazy val contentType = GuardianContentTypes.Video
 
@@ -710,6 +710,8 @@ trait Lightboxable extends Content {
   lazy val bodyFiltered = bodyImages.filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
   lazy val lightboxImages: Seq[ImageContainer] = mainFiltered ++ bodyFiltered
 
+  lazy val isMainMediaLightboxable = !mainFiltered.isEmpty
+
   lazy val lightbox: JsObject = {
     val imageContainers = lightboxImages.filter(_.largestEditorialCrop.nonEmpty)
     val imageJson = imageContainers.map { imgContainer =>
@@ -741,6 +743,9 @@ class Interactive(content: ApiContentWithMeta) extends Content(content) {
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
 
   override lazy val metaData: Map[String, JsValue] = super.metaData + ("contentType" -> JsString(contentType))
+  override lazy val hideUi: Boolean = body.exists{ b =>
+      Jsoup.parseBodyFragment(b).body().getElementsByClass("element-interactive").attr("data-interactive").contains("/visuals-blank-page/")
+    }
 }
 
 object Interactive {

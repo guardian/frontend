@@ -1,6 +1,7 @@
 package controllers.front
 
 import com.gu.facia.api.models.{DefaultImportance, Importance, Groups, CollectionConfig}
+import com.gu.facia.client.models.CollectionConfigJson
 import model._
 import model.facia.FapiJsonFormats
 import scala.concurrent.Future

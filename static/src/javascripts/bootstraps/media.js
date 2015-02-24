@@ -2,6 +2,7 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'raven',
     'common/utils/$',
     'common/utils/_',
@@ -15,12 +16,14 @@ define([
     'common/modules/component',
     'common/modules/ui/images',
     'common/modules/video/events',
+    'common/modules/video/fullscreener',
     'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
     'text!common/views/ui/loading.html'
 ], function (
     bean,
     bonzo,
+    fastdom,
     raven,
     $,
     _,
@@ -34,6 +37,7 @@ define([
     Component,
     images,
     events,
+    fullscreener,
     supportedBrowsers,
     techOrder,
     loadingTmpl
@@ -56,27 +60,6 @@ define([
         };
 
         return 'http://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
-    }
-
-    function fullscreener() {
-        var player = this,
-            clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0],
-            events = {
-                click: function (e) {
-                    this.paused() ? this.play() : this.pause();
-                    e.stop();
-                },
-                dblclick: function (e) {
-                    e.stop();
-                    this.isFullScreen() ? this.exitFullscreen() : this.requestFullscreen();
-                }
-            };
-
-        bonzo(clickbox)
-            .appendTo(player.contentEl());
-
-        bean.on(clickbox, 'click', events.click.bind(player));
-        bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
     }
 
     function initLoadingSpinner(player) {
@@ -133,6 +116,30 @@ define([
             event.target.firstChild.id.indexOf('flash_api') > 0;
     }
 
+    function initPlayButtons(root) {
+
+        fastdom.read(function () {
+            $('.js-video-play-button', root).each(function (el) {
+                var $el = bonzo(el);
+                bean.on(el, 'click', function () {
+                    var placeholder, player, container;
+                    container = bonzo(el).parent().parent();
+                    placeholder = $('.js-video-placeholder', container);
+                    player = $('.js-video-player', container);
+                    fastdom.write(function () {
+                        placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
+                        player.removeClass('media__container--hidden').addClass('media__container--active');
+                        $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
+                    });
+                    enhanceVideo($('video', player).get(0), true);
+                });
+                fastdom.write(function () {
+                    $el.removeClass('media__placeholder--hidden').addClass('media__placeholder--active');
+                });
+            });
+        });
+    }
+
     function initPlayer() {
 
         // When possible, use our CDN instead of a third party (zencoder).
@@ -142,24 +149,16 @@ define([
         videojs.plugin('adSkipCountdown', events.adSkipCountdown);
         videojs.plugin('fullscreener', fullscreener);
 
-        $('.js-gu-media--enhance').each(function (el) {
-            enhanceVideo(el, false);
-        });
-
-        $('.js-video-play-button').each(function (el) {
-            var $el = bonzo(el);
-            $el.removeClass('media__placeholder--hidden').addClass('media__placeholder--active');
-            bean.on(el, 'click', function () {
-                var placeholder, player, container;
-                container = bonzo(el).parent().parent();
-                placeholder = $('.js-video-placeholder', container);
-                placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
-                player = $('.js-video-player', container);
-                player.removeClass('media__container--hidden').addClass('media__container--active');
-                $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
-                enhanceVideo($('video', player).get(0), true);
+        fastdom.read(function () {
+            $('.js-gu-media--enhance').each(function (el) {
+                enhanceVideo(el, false);
             });
         });
+
+        initPlayButtons(document.body);
+
+        mediator.on('modules:related:loaded', initPlayButtons);
+        mediator.on('page:media:moreinloaded', initPlayButtons);
     }
 
     function enhanceVideo(el, autoplay) {
@@ -189,8 +188,8 @@ define([
             preload: 'auto', // preload='none' & autoplay breaks ad loading on chrome35, preload="metadata" breaks older Safari's
             plugins: {
                 embed: {
-                    embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && $el.attr('data-embeddable') === 'true',
-                    location: config.page.externalEmbedHost + (embedPath ? embedPath : config.page.pageId)
+                    embeddable: !config.page.isFront && config.switches.externalVideoEmbeds && (config.page.contentType === 'Video' || $el.attr('data-embeddable') === 'true'),
+                    location: config.page.externalEmbedHost + '/embed/video/' + (embedPath ? embedPath : config.page.pageId)
                 }
             }
         });
@@ -234,21 +233,26 @@ define([
                 if (mediaType === 'video') {
 
                     player.fullscreener();
-                    // Init plugins
-                    if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
-                        events.bindPrerollEvents(player);
-                        player.adSkipCountdown(15);
 
-                        require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
-                            .then(function () {
-                                player.ima({
-                                    id: mediaId,
-                                    adTagUrl: getAdUrl()
-                                });
-                                // Video analytics event.
-                                player.trigger(events.constructEventName('preroll:request', player));
-                                player.ima.requestAds();
-                            });
+                    if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
+                        raven.wrap(
+                            { tags: { feature: 'media' } },
+                            function () {
+                                events.bindPrerollEvents(player);
+                                player.adSkipCountdown(15);
+
+                                require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
+                                    .then(function () {
+                                        player.ima({
+                                            id: mediaId,
+                                            adTagUrl: getAdUrl()
+                                        });
+                                        // Video analytics event.
+                                        player.trigger(events.constructEventName('preroll:request', player));
+                                        player.ima.requestAds();
+                                    });
+                            }
+                        )();
                     } else {
                         events.bindContentEvents(player);
                     }
@@ -319,6 +323,7 @@ define([
 
         section.fetch(attachTo).then(function () {
             images.upgrade(attachTo);
+            mediator.emit('page:media:moreinloaded', attachTo);
         });
     }
 
@@ -349,8 +354,6 @@ define([
         }
         initMoreInSection();
         initMostViewedMedia();
-
-        mediator.emit('page:media:ready');
     }
 
     return {

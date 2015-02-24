@@ -16,6 +16,7 @@ module.exports = function(grunt, options) {
                 fence:                'components/fence/fence',
                 imager:               'components/imager.js/container',
                 lodash:               'components/lodash-amd',
+                picturefill:          'components/picturefill/picturefill',
                 Promise:              'components/native-promise-only/npo.src',
                 qwery:                'components/qwery/qwery',
                 raven:                'components/raven-js/raven',
@@ -116,6 +117,18 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
+        football: {
+            options: {
+                name: 'bootstraps/football',
+                    out: options.staticTargetDir + 'javascripts/bootstraps/football.js',
+                    exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
         preferences: {
             options: {
                 name: 'bootstraps/preferences',
@@ -184,7 +197,10 @@ module.exports = function(grunt, options) {
                     }
                 },
                 wrapShim: true,
-                optimize: 'none',
+                exclude: [
+                    'text',
+                    'inlineSvg'
+                ],
                 generateSourceMaps: true,
                 preserveLicenseComments: false
             }
@@ -212,7 +228,6 @@ module.exports = function(grunt, options) {
                     'text',
                     'inlineSvg'
                 ],
-                optimize: 'none',
                 generateSourceMaps: true,
                 preserveLicenseComments: false
             }

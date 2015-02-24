@@ -1,5 +1,6 @@
-/* global _: true */
 define([
+    'underscore',
+    'jquery',
     'modules/vars',
     'modules/authed-ajax',
     'modules/content-api',
@@ -10,6 +11,8 @@ define([
     'utils/mediator',
     'utils/remove-by-id'
 ], function(
+    _,
+    $,
     vars,
     authedAjax,
     contentApi,
@@ -131,7 +134,7 @@ define([
             });
         }
 
-        if (remove !== false && sourceGroup && !sourceGroup.keepCopy && sourceGroup !== targetGroup) {
+        if (remove !== false && sourceGroup && !sourceGroup.keepCopy && sourceGroup !== targetGroup && sourceGroup.items) {
             removeById(sourceGroup.items, id); // for immediate UI effect
         }
     }

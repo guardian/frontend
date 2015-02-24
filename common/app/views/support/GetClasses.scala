@@ -24,7 +24,7 @@ object GetClasses {
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
       ("fc-item--live", item.isLive),
       ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable)
-    ) ++ item.snapStuff.cssClasses.map(_ -> true) ++ mediaTypeClass(item).map(_ -> true))
+    ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty) ++ mediaTypeClass(item).map(_ -> true))
   }
 
   def forSubLink(sublink: Sublink) = RenderClasses(Seq(
@@ -51,23 +51,25 @@ object GetClasses {
       containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
       containerDefinition.displayName.isDefined,
       containerDefinition.commercialOptions,
-      containerDefinition.hasShowMore,
+      containerDefinition.hasDesktopShowMore,
       Some(containerDefinition.container),
       extraClasses = containerDefinition.customClasses.getOrElse(Seq.empty) ++
         slices.Container.customClasses(containerDefinition.container),
-      disableHide = containerDefinition.hideToggle
+      disableHide = containerDefinition.hideToggle,
+      lazyLoad = containerDefinition.shouldLazyLoad
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */
-  def forTagContainer(hasTitle: Boolean, hasShowMore: Boolean) = forContainer(
+  def forTagContainer(hasTitle: Boolean) = forContainer(
     showLatestUpdate = false,
     isFirst = true,
     hasTitle,
     ContainerCommercialOptions.empty,
-    hasShowMore,
+    false,
     None,
     Nil,
-    disableHide = true
+    disableHide = true,
+    lazyLoad = false
   )
 
   def forContainer(
@@ -75,20 +77,22 @@ object GetClasses {
     isFirst: Boolean,
     hasTitle: Boolean,
     commercialOptions: ContainerCommercialOptions,
-    hasShowMore: Boolean,
+    hasDesktopShowMore: Boolean,
     container: Option[slices.Container] = None,
     extraClasses: Seq[String] = Nil,
-    disableHide: Boolean = false
+    disableHide: Boolean = false,
+    lazyLoad: Boolean
   ) = {
     RenderClasses((Seq(
-      ("js-container--fetch-updates", showLatestUpdate),
       ("fc-container", true),
       ("fc-container--first", isFirst),
-      ("fc-container--has-show-more", hasShowMore),
+      ("fc-container--has-show-more", hasDesktopShowMore),
       ("js-container--first", isFirst),
       ("fc-container--sponsored", commercialOptions.isSponsored),
       ("fc-container--advertisement-feature", commercialOptions.isAdvertisementFeature),
       ("fc-container--foundation-supported", commercialOptions.isFoundationSupported),
+      ("fc-container--lazy-load", lazyLoad),
+      ("js-container--lazy-load", lazyLoad),
       ("js-sponsored-container", commercialOptions.isPaidFor),
       ("js-container--toggle",
         !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !commercialOptions.isPaidFor)

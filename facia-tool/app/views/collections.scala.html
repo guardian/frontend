@@ -149,9 +149,7 @@
             </div>
 
             <div class="closed" data-bind="ifnot: state.isOpen">
-                <img class="article__spark" data-bind="
-                    visible: state.sparkUrl,
-                    attr: {src: state.sparkUrl}" />
+                <div data-bind="sparklines: $root.isSparklinesEnabled" class="sparkline"></div>
 
                 <div class="article__tools">
                     <a class="tool tool--small tool--small--paste" data-bind="
@@ -295,5 +293,9 @@
 
 </div>
 
-<script src="@routes.UncachedAssets.at("js/app-collections.js")"></script>
+<script>
+    System.import('facia-tool/main').then(function (main) {
+        main.load('collections');
+    });
+</script>
 }

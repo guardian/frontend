@@ -47,7 +47,12 @@ trait BestsellersApi extends ExecutionContexts with Logging {
   }
 
   def loadBestsellers(): Future[Seq[Book]] = {
-    FeedReader.readSeqFromXml[Book](FeedRequest(adTypeName, GuBookshopFeedsSwitch, url, timeout = 5.seconds))(parse)
+    val request = FeedRequest(
+      feedName = adTypeName,
+      switch = GuBookshopFeedsSwitch,
+      url = url,
+      timeout = 5.seconds)
+    FeedReader.readSeqFromXml[Book](request)(parse)
   }
 
 }

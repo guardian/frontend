@@ -61,28 +61,5 @@ define([
             expect($('.img-2 img').attr('alt')).toEqual('');
 
         });
-
-        describe('window events', function () {
-
-            ['resize', 'orientationchange'].forEach(function (event) {
-                it('should listen to "' + event + '"', function (done) {
-                    var upgradeSpy = sinon.spy(images, 'upgrade');
-                    images.listen();
-                    mediator.emit('window:' + event);
-                    waitsForAndRuns(
-                        function () {
-                            return upgradeSpy.called;
-                        },
-                        function () {
-                            upgradeSpy.restore();
-                            done();
-                        }
-                    );
-                });
-            });
-
-        })
-
     });
-
 });

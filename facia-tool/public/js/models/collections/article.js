@@ -1,7 +1,8 @@
-/* global _: true */
 define([
     'modules/vars',
     'knockout',
+    'underscore',
+    'jquery',
     'utils/alert',
     'utils/as-observable-props',
     'utils/deep-get',
@@ -25,6 +26,8 @@ define([
     function (
         vars,
         ko,
+        _,
+        $,
         alert,
         asObservableProps,
         deepGet,
@@ -560,8 +563,6 @@ define([
                 populateObservables(this.meta, this.metaDefaults);
 
                 this.updateEditorsDisplay();
-
-                this.loadSparkline();
             }
         };
 
@@ -574,20 +575,6 @@ define([
         Article.prototype.setRelativeTimes = function() {
             this.frontPublicationTime(humanTime(this.frontPublicationDate));
             this.scheduledPublicationTime(humanTime(this.fields.scheduledPublicationDate()));
-        };
-
-        Article.prototype.loadSparkline = function() {
-            var self = this;
-
-            if (vars.model.switches()['facia-tool-sparklines']) {
-                setTimeout(function() {
-                    if (self.state.sparkUrl()) {
-                        self.state.sparkUrl.valueHasMutated();
-                    } else {
-                        self.state.sparkUrl(vars.sparksBase + urlAbsPath(self.props.webUrl()) + (self.frontPublicationDate ? '&markers=' + (self.frontPublicationDate/1000) + ':46C430' : ''));
-                    }
-                }, Math.floor(Math.random() * 5000));
-            }
         };
 
         Article.prototype.get = function() {

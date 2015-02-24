@@ -44,6 +44,7 @@ GET         /analytics/confidence                                               
 GET         /analytics/google-referrers                                                        controllers.admin.GoogleReferrerController.renderGoogleReferrerDashboard()
 GET         /analytics/content/gallery                                                         controllers.admin.ContentPerformanceController.renderGalleryDashboard()
 GET         /analytics/content/liveblog                                                        controllers.admin.ContentPerformanceController.renderLiveBlogDashboard()
+GET         /analytics/content/video                                                           controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
 GET         /analytics/omniture/segments/:rsid                                                 controllers.admin.OmnitureReportController.getSegments(rsid)
 GET         /analytics/omniture/*reportName                                                    controllers.admin.OmnitureReportController.getReport(reportName)
 
@@ -72,6 +73,7 @@ GET         /metrics/errors/5xx                                                 
 GET         /metrics/memory                                                                    controllers.admin.MetricsController.renderMemory()
 GET         /metrics/assets                                                                    controllers.admin.MetricsController.renderAssets()
 GET         /metrics/googlebot/404                                                             controllers.admin.MetricsController.renderGooglebot404s()
+GET         /metrics/afg                                                                       controllers.admin.MetricsController.renderAfg()
 
 # Radiator
 GET         /radiator                                                                          controllers.admin.RadiatorController.renderRadiator()
@@ -124,4 +126,5 @@ GET         /admin/football/api/squad/:teamId                                   
 # css reports
 GET         /css-reports                                                                       controllers.admin.CssReportController.entry
 GET         /css-reports.json                                                                  controllers.admin.CssReportController.index
+GET         /css-reports/all.json                                                              controllers.admin.CssReportController.aggregateReport
 GET         /css-reports/:date.json                                                            controllers.admin.CssReportController.report(date: LocalDate)

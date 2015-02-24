@@ -1,6 +1,6 @@
-/* global _: true */
 define([
     'knockout',
+    'underscore',
     'config',
     'models/config/persistence',
     'modules/vars',
@@ -14,6 +14,7 @@ define([
     'utils/identity'
 ], function(
     ko,
+    _,
     pageConfig,
     persistence,
     vars,
@@ -49,9 +50,16 @@ define([
             'showDateHeader',
             'showLatestUpdate',
             'excludeFromRss',
-            'apiQuery']);
+            'apiQuery',
+            'importance']);
 
         populateObservables(this.meta, opts);
+
+        this.props = {
+            optionsImportance: [
+                'critical', 'important'
+            ]
+        };
 
         this.state = asObservableProps([
             'isOpen',

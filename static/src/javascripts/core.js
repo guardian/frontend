@@ -2,6 +2,7 @@ require([
     // 3rd party libs
     'raven',
     'lodash/main',
+    'picturefill',
 
     // utilities
     'common/utils/_',
@@ -15,6 +16,7 @@ require([
     'common/utils/storage',
     'common/utils/template',
     'common/utils/url',
+    'common/utils/fastdom-errors',
 
     // shared modules
     'common/modules/analytics/beacon',

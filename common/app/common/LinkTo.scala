@@ -99,25 +99,6 @@ object LinkTo extends LinkTo {
 
 }
 
-object ClassicLink {
-
-  import java.net.URLEncoder.encode
-
-  def apply(page: MetaData)(implicit request: RequestHeader) = {
-
-    // quick fix for xx-alpha bug
-    val fixedId = page.id match {
-      case "uk-alpha" => "uk"
-      case "au-alpha" => "au"
-      case "us-alpha" => "us"
-      case id => id
-    }
-
-    val targetUrl = encode(LinkTo(s"/$fixedId?view=classic"), "UTF-8")
-    LinkTo{s"/preference/platform/classic?page=$targetUrl"}
-  }
-}
-
 class CanonicalLink {
 
   lazy val scheme = if (environment.secure) "https" else "http"

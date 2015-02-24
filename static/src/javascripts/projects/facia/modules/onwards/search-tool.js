@@ -18,6 +18,7 @@ define([
             $input     = null,
             oldQuery   = '',
             newQuery   = '',
+            inputTmp   = '',
             keyCodeMap = {
                 13: 'enter',
                 38: 'up',
@@ -29,15 +30,20 @@ define([
 
         return {
             init: function () {
-                $list  = $('.js-search-tool-list', $container);
-                $input = $('.js-search-tool-input', $container);
-
+                this.bindElements($container);
                 this.bindEvents();
+            },
+
+            bindElements: function (container) {
+                $list  = $('.js-search-tool-list', container);
+                $input = $('.js-search-tool-input', container);
             },
 
             bindEvents: function () {
                 bean.on(document.body, 'keyup', this.handleKeyEvents.bind(this));
-                bean.on(document.body, 'click', '.js-search-tool-list a', this.handleClick.bind(this));
+                bean.on(document.body, 'click', this.handleClick.bind(this));
+
+                mediator.on('autocomplete:toggle', this.toggleControls.bind(this));
             },
 
             hasInputValueChanged: function () {
@@ -45,11 +51,49 @@ define([
             },
 
             handleClick: function (e) {
-                e.preventDefault();
+                var isInput = $(e.target).hasClass('js-search-tool-input'),
+                    isLink  = this.isLink(e.target);
 
-                $('.active').removeClass('active');
-                $(e.currentTarget).addClass('active');
-                this.pushData();
+                if (isInput) {
+                    e.preventDefault();
+                    mediator.emit('autocomplete:toggle', true);
+                } else if (isLink) {
+                    e.preventDefault();
+                    $('.active', $list).removeClass('active');
+                    $(isLink).addClass('active');
+                    this.pushData();
+                } else {
+                    mediator.emit('autocomplete:toggle', false);
+                }
+            },
+
+            isLink: function (target) {
+                if ($(target).hasClass('js-search-tool-link')) {
+                    return target;
+                } else {
+                    return $.ancestor(target, 'js-search-tool-link');
+                }
+            },
+
+            toggleControls: function (value) {
+                var $input    = $('.js-search-tool-input')[0],
+                    $location = $('.js-search-tool'),
+                    $close    = $('.js-close-location'),
+                    $edit     = $('.js-edit-location');
+
+                if (value) {
+                    inputTmp = $input.value;
+                    $location.addClass('is-editing');
+                    $input.setSelectionRange(0, $input.value.length);
+                    $close.removeClass('u-h');
+                    $edit.addClass('u-h');
+                } else {
+                    $location.removeClass('is-editing');
+                    this.clear();
+                    this.setInputValue(inputTmp);
+                    $close.addClass('u-h');
+                    $edit.removeClass('u-h');
+                }
             },
 
             pushData: function () {
@@ -75,7 +119,7 @@ define([
                 mediator.emit('autocomplete:fetch', data);
                 this.setInputValue();
                 this.track(data.city);
-
+                inputTmp = data.city;
                 $input.blur();
 
                 // Clear all after timeout because of the tracking we can't remove everything straight away
@@ -193,7 +237,7 @@ define([
 
                     li.className = 'search-tool__item';
                     li.innerHTML = '<a role="button" href="#' + item.id + '"' +
-                        ' id="' + index + 'sti" class="search-tool__link' + (index === 0 ? ' active"' : '"') +
+                        ' id="' + index + 'sti" class="js-search-tool-link search-tool__link' + (index === 0 ? ' active"' : '"') +
                         ' data-link-name="weather-search-tool" data-weather-id="' + item.id + '" data-weather-city="' + item.city + '">' +
                         item.city + ' <span class="search-tool__meta">' + item.country + '</span></a>';
 

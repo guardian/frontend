@@ -51,7 +51,7 @@ define([
             minBelow: 250,
             selectors: {
                 ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 200},
-                ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 300},
+                ' > *:not(p):not(h2):not(blockquote)': {minAbove: 35, minBelow: 300},
                 ' .ad-slot': {minAbove: 150, minBelow: 200},
                 ' .element-rich-link': {minAbove: 500, minBelow: 500}
             }
@@ -69,13 +69,13 @@ define([
         }
     }
 
-    function init() {
-        $('.js-article__body .element-rich-link').each(upgradeFlyer);
-        insertTagFlyer();
+    function upgradeFlyers() {
+        $('.element-rich-link--not-upgraded').each(upgradeFlyer);
     }
 
     return {
-        init: init,
-        upgradeFlyer: upgradeFlyer
+        upgradeFlyer: upgradeFlyer,
+        upgradeFlyers: upgradeFlyers,
+        insertTagFlyer: insertTagFlyer
     };
 });

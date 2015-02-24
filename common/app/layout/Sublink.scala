@@ -118,8 +118,7 @@ object SnapStuff {
       FrontendLinkSnap
     } else {
       FrontendOtherSnap
-    }
-  )
+    })
 }
 
 case class SnapStuff(
@@ -267,9 +266,15 @@ case class ContentCard(
   def withTimeStamp = copy(timeStampDisplay = Some(DateOrTimeAgo))
 
   def showDisplayElement =
-    cardTypes.allTypes.exists(_.canShowMedia) && !displaySettings.imageHide
+    cardTypes.allTypes.exists(_.canShowMedia) && !displaySettings.imageHide && !cutOut.isDefined
 
   def showStandfirst = cardTypes.allTypes.exists(_.showStandfirst)
+
+  def mediaWidthsByBreakpoint = WidthsByBreakpoint.mediaFromItemClasses(cardTypes)
+
+  def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
+
+  def showMeta = discussionSettings.isCommentable || showTimestamp
 }
 
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard

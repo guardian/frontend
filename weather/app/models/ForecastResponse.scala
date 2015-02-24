@@ -1,6 +1,10 @@
 package models
 
+import common.Edition
+import common.editions.Us
+import org.joda.time.DateTime
 import play.api.libs.json.Json
+import play.api.mvc.RequestHeader
 
 object ForecastResponse {
   implicit val jsonWrites = Json.writes[ForecastResponse]
@@ -22,8 +26,20 @@ object ForecastResponse {
 }
 
 case class ForecastResponse(
-  epochDateTime: Int,
+  epochDateTime: Long,
   weatherIcon: Int,
   weatherText: String,
   temperature: Temperatures
-)
+) {
+  def temperatureForEdition(edition: Edition) = {
+    edition match {
+      case Us => s"${temperature.imperial.round}°F"
+      case _ => s"${temperature.metric.round}°C"
+    }
+  }
+
+  def hourString(implicit request: RequestHeader) = {
+    val edition = Edition(request)
+    new DateTime(epochDateTime * 1000L).withZone(edition.timezone).toString("HH:00")
+  }
+}

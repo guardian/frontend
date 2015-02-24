@@ -1,17 +1,20 @@
-/* global _: true */
 define([
+    'underscore',
     'modules/vars',
     'utils/alert',
     'utils/mediator',
     'utils/url-abs-path',
     'utils/remove-by-id'
 ], function(
+    _,
     vars,
     alert,
     mediator,
     urlAbsPath,
     removeById
 ) {
+    var alreadyInitialised = false,
+        listeners = mediator.scope();
 
     function alertBadContent(msg) {
         alert(msg ? msg : 'Sorry, but you can\'t add that item');
@@ -94,7 +97,12 @@ define([
     }
 
     return {
-        init: _.once(function(newItems) {
+        init: function(newItems) {
+            if (alreadyInitialised) {
+                return;
+            }
+            alreadyInitialised = true;
+
             mediator.on('collection:updates', function(opts) {
                 var options = _.extend(opts, newItems);
                 if (opts.alternateAction) {
@@ -103,6 +111,10 @@ define([
                     listManager(options);
                 }
             });
-        })
+        },
+        reset: function () {
+            listeners.dispose();
+            alreadyInitialised = false;
+        }
     };
 });

@@ -467,7 +467,6 @@ $c-navigation-expandable-background: colour(neutral-1);
         @include mq($until: navigationBreakOnTwoLevels) {
             overflow-x: scroll;
             white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
         }
 
         &::-webkit-scrollbar {
@@ -646,7 +645,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 .navigation {
     .global-navigation__section--home,
     .top-navigation__item--current,
-    .global-navigation__section--current {
+    .global-navigation--top .global-navigation__section--current {
         display: none;
     }
     .top-navigation__item--current {
@@ -750,7 +749,7 @@ $burger-width: 16px;
 %burger-icon__line {
     width: 100%;
     height: $burger-line-h;
-    background-color: rgba(#ffffff, .9);
+    background-color: mix(#ffffff, $c-navigation-toggle-background, 90%);
 }
 
 .burger-icon {

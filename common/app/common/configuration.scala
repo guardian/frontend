@@ -195,6 +195,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val webappUrl = configuration.getStringProperty("id.webapp.url").getOrElse("")
+    lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
     lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("membership.theguardian.com")
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
   }
@@ -286,7 +287,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val adTechTeam = configuration.getStringProperty("email.adTechTeam")
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
 
-    lazy val expiredAdFeatureUrl = s"${site.host}/info/2015/jan/09/1"
+    lazy val expiredAdFeatureUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
   }
 
   object open {
@@ -384,7 +385,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val region = configuration.getMandatoryStringProperty("aws.region")
     lazy val bucket = configuration.getMandatoryStringProperty("aws.bucket")
     lazy val notificationSns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
+    lazy val videoEncodingsSns: String = configuration.getMandatoryStringProperty("sns.missing_video_encodings.topic.arn")
     lazy val frontPressSns: Option[String] = configuration.getStringProperty("frontpress.sns.topic")
+
 
     def mandatoryCredentials: AWSCredentialsProvider = credentials.getOrElse(throw new BadConfigurationException("AWS credentials are not configured"))
     val credentials: Option[AWSCredentialsProvider] = {
@@ -434,13 +437,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val signingKey = configuration.getMandatoryStringProperty("avatars.signing.key")
   }
 
-  object preview {
-    lazy val oauthCredentials: Option[OAuthCredentials] =
-      for {
-        oauthClientId <- configuration.getStringProperty("preview.oauth.clientid")
-        oauthSecret <- configuration.getStringProperty("preview.oauth.secret")
-        oauthCallback <- configuration.getStringProperty("preview.oauth.callback")
-      } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
+  object standalone {
+    lazy val oauthCredentials: Option[OAuthCredentials] = for {
+      oauthClientId <- configuration.getStringProperty("standalone.oauth.clientid")
+      // TODO needs the orElse fallback till we roll out new properties files
+      oauthSecret <- configuration.getStringProperty("standalone.oauth.secret").orElse(configuration.getStringProperty("preview.oauth.secret"))
+      oauthCallback <- configuration.getStringProperty("standalone.oauth.callback")
+    } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
   }
 
   object pngResizer {

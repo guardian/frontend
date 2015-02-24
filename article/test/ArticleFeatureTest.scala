@@ -163,7 +163,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see the publication date of the article")
-        findFirst(".content__dateline").getText should be("Monday 6 August 2012 20.30 BST")
+        findFirst(".content__dateline-wpd").getText should be("Monday 6 August 2012 20.30 BST")
         findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00+0100")
       }
     }
@@ -357,29 +357,6 @@ import collection.JavaConversions._
       StandardAdvertsSwitch.switchOff()
     }
 
-    scenario("Navigate to the classic site (UK edition - www.guardian.co.uk)") {
-      Given("I'm on article entitled 'We must capitalise on a low-carbon future'")
-      And("I am using the UK edition")
-      goTo("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
-        import browser._
-
-        Then("I should see a link to the corresponding classic article")
-        findFirst(".js-main-site-link").getAttribute("href") should be(classicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
-      }
-    }
-
-    scenario("Navigate to the classic site (US edition - www.guardiannews.com)") {
-      Given("I'm on article entitled 'We must capitalise on a low-carbon future'")
-      And("I am using the US edition")
-      US("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
-        import browser._
-
-        Then("I should see a link to the corresponding classic article")
-        findFirst(".js-main-site-link").getAttribute("href") should
-          be(classicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
-      }
-    }
-
     scenario("Direct link to paragraph") {
 
       Given("I have clicked a direct link to paragrah 16 on the article 'Eurozone crisis live: Fitch downgrades Greece on euro exit fears'")
@@ -448,15 +425,6 @@ import collection.JavaConversions._
       goTo("/football/live/2014/aug/03/arsenal-v-monaco-emirates-cup-live") { browser =>
         withClue("There should be no 'classic version' link") {
           browser.find(".js-main-site-link") should be(empty)
-        }
-      }
-    }
-
-    scenario("Show 'classic' link on non-Football live blogs") {
-      goTo("/business/blog/live/2014/aug/20/bank-of-england-minutes-to-shed-light-on-interest-rate-rises-business-live") { browser =>
-        import browser._
-        withClue("There should be a 'classic version' link") {
-          browser.find(".js-main-site-link") should not be empty
         }
       }
     }
@@ -534,6 +502,18 @@ import collection.JavaConversions._
       }
     }
 
+    scenario("Progressive related content") {
+      Given("I vist a Guardian article page")
+      goTo("/technology/askjack/2015/feb/05/how-should-i-upgrade-my-old-hi-fi-in-a-digital-world") { browser =>
+        import browser._
+
+        Then("I should see a link to related to related content")
+        val relatedLink = findFirst("[data-test-id=related-content]").findFirst("a")
+        relatedLink.getAttribute("href") should endWith ("/related/technology/askjack/2015/feb/05/how-should-i-upgrade-my-old-hi-fi-in-a-digital-world")
+        relatedLink.getText() should be ("related content >")
+      }
+    }
+
     scenario("Story package with a gallery trail") {
 
       Given("I'm on an article that has a gallery in its story package")
@@ -606,25 +586,6 @@ import collection.JavaConversions._
 
         Then("I should see the comment tonal treatmemt")
         $(".content").getAttribute("class") should include("tone-comment")
-      }
-    }
-
-
-    scenario("'Classic' link") {
-      Given("I am on a piece of content that has an R2 version")
-      goTo("/world/2014/mar/24/egypt-death-sentence-529-morsi-supporters") { browser =>
-        import browser._
-        Then("I should see a 'Classic' link")
-        $(".js-main-site-link").isEmpty should be(false)
-      }
-    }
-
-    scenario("Remove 'Classic' link") {
-      Given("I am on a piece of content that is only Next Gen")
-      goTo("/science/antarctica-live/2014/feb/28/-sp-rescue-from-antarctica") { browser =>
-        import browser._
-        Then("I should not see a 'Classic' link")
-        $(".js-main-site-link").isEmpty should be(true)
       }
     }
 

@@ -128,6 +128,7 @@ object IndexPage {
         ).flatten),
         hideToggle = true,
         showTimestamps = true,
+        useShowMore = false,
         dateLinkPath = Some(s"/${indexPage.idWithoutEdition}")
       ).transformCards({ card =>
         card.copy(

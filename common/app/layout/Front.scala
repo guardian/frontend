@@ -1,12 +1,11 @@
 package layout
 
-import implicits.FaciaContentImplicits._
-import com.gu.facia.api.models.{CollectionConfig, CuratedContent, FaciaContent}
+import com.gu.facia.api.models.{LatestSnap, CollectionConfig, CuratedContent, FaciaContent}
 import conf.Switches
-import dfp.DfpAgent
+import dfp.{DfpAgent, SponsorshipTag}
 import implicits.FaciaContentImplicits._
+import model.{PressedPage, _}
 import model.facia.PressedCollection
-import model.{MetaData, PressedPage}
 import org.joda.time.DateTime
 import services.{CollectionConfigWithId, FaciaContentConvert}
 import slices.{MostPopular, _}
@@ -16,7 +15,7 @@ import scala.Function._
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
-  val empty = ContainerLayoutContext(Set.empty, false)
+  val empty = ContainerLayoutContext(Set.empty, hideCutOuts = false)
 }
 
 case class ContainerLayoutContext(
@@ -113,20 +112,12 @@ object ContainerCommercialOptions {
     DfpAgent.sponsorshipType(config)
   )
 
-  def fromMetaData(metaData: MetaData) = ContainerCommercialOptions(
-    metaData.isSponsored(),
-    metaData.isAdvertisementFeature,
-    metaData.isFoundationSupported,
-    metaData.sponsor,
-    metaData.sponsorshipType
-  )
-
   val empty = ContainerCommercialOptions(
-    false,
-    false,
-    false,
-    None,
-    None
+    isSponsored = false,
+    isAdvertisementFeature = false,
+    isFoundationSupported = false,
+    sponsorshipTag = None,
+    sponsorshipType = None
   )
 }
 
@@ -134,7 +125,7 @@ case class ContainerCommercialOptions(
   isSponsored: Boolean,
   isAdvertisementFeature: Boolean,
   isFoundationSupported: Boolean,
-  sponsorshipTag: Option[String],
+  sponsorshipTag: Option[SponsorshipTag],
   sponsorshipType: Option[String]
 ) {
   val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
@@ -202,17 +193,18 @@ object FaciaContainer {
     },
     None,
     None,
-    false,
-    false,
-    None
+    hideToggle = false,
+    showTimestamps = false,
+    None,
+    useShowMore = true
   )
 
-  def forStoryPackage(dataId: String, items: Seq[FaciaContent], title: String) = {
+  def forStoryPackage(dataId: String, items: Seq[FaciaContent], title: String, href: Option[String] = None) = {
     FaciaContainer(
       index = 2,
       container = Fixed(ContainerDefinition.fastForNumberOfItems(items.size)),
       config = ContainerDisplayConfig.withDefaults(CollectionConfigWithId(dataId, CollectionConfig.empty)),
-      collectionEssentials = CollectionEssentials(items take 8, Nil, Some(title), None, None, None),
+      collectionEssentials = CollectionEssentials(items take 8, Nil, Some(title), href, None, None),
       componentId = None
     ).withTimeStamps
   }
@@ -234,7 +226,8 @@ case class FaciaContainer(
   customClasses: Option[Seq[String]],
   hideToggle: Boolean,
   showTimestamps: Boolean,
-  dateLinkPath: Option[String]
+  dateLinkPath: Option[String],
+  useShowMore: Boolean
 ) {
   def transformCards(f: ContentCard => ContentCard) = copy(
     containerLayout = containerLayout.map(_.transformCards(f))
@@ -270,6 +263,11 @@ case class FaciaContainer(
 
   def hasShowMore = containerLayout.exists(_.hasShowMore)
 
+  def hasDesktopShowMore = containerLayout.exists(_.hasDesktopShowMore)
+
+  def hasMobileOnlyShowMore =
+    containerLayout.exists(layout => layout.hasMobileShowMore && !layout.hasDesktopShowMore)
+
   /** Nasty hardcoded thing.
     *
     * TODO: change Facia Tool to have a dropdown for 'header types', one of which is default, the other CP Scott.
@@ -278,6 +276,10 @@ case class FaciaContainer(
     * can consume this data if they want to.
     */
   def showCPScottHeader = Switches.CPScottSwitch.isSwitchedOn && dataId == "uk/commentisfree/regular-stories"
+
+  def addShowMoreClasses = useShowMore && containerLayout.exists(_.hasShowMore)
+
+  def shouldLazyLoad = Switches.LazyLoadContainersSwitch.isSwitchedOn && index > 8
 }
 
 object Front extends implicits.Collections {

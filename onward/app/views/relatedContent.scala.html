@@ -1,0 +1,10 @@
+@(page: model.Page, trails: Seq[model.Trail])(implicit request: RequestHeader)
+
+@main(page){ }{
+    <main itemprop="mainContentOfPage" role="main" class="monocolumn-wrapper content">
+        <h1 class="content__inline-section">Related content</h1>
+        <div class="headline-list" data-link-name="related-content">
+        @fragments.trailblocks.link(trails, trails.size)
+        </div>
+    </main>
+}

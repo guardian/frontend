@@ -1,8 +1,10 @@
 define([
+    'underscore',
     'modules/content-api',
-    'mock-search',
+    'mock/search',
     'utils/mediator'
 ], function (
+    _,
     contentApi,
     mockSearch,
     mediator
@@ -61,23 +63,6 @@ define([
                         headline: 'Filtering results'
                     }
                 }]);
-
-                done();
-            }));
-        });
-
-        it('- search multiple words with pages', function (done) {
-            mockSearch.latest([]);
-
-            contentApi.fetchLatest({
-                term: 'one  two=2',
-                page: 3
-            })
-            .then(assert(function (request, list) {
-                expect(request.urlParams.page).toBe('3');
-                expect(request.urlParams.q).toBe('one AND two=2');
-
-                expect(list.results).toEqual([]);
 
                 done();
             }));

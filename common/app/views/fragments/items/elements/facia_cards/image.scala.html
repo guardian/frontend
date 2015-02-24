@@ -1,16 +1,20 @@
-@(imageContainer: model.ImageContainer, inlineImage: Boolean = false, maxWidth: Int = 620)(implicit request: RequestHeader)
+@(imageContainer: model.ImageContainer, inlineImage: Boolean = false, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None)(implicit request: RequestHeader)
 
-@import views.support.{ImgSrc, Item300}
+@import views.support.ImgSrc
 
-@ImgSrc.imager(imageContainer, maxWidth).map { imgSrc =>
-    <div class="fc-item__media-wrapper">
-        <div class="fc-item__image-container u-responsive-ratio js-image-upgrade @if(inlineImage){inlined-image}"
-             data-src="@imgSrc">
-            @if(inlineImage) {
-                @Item300.bestFor(imageContainer).map{ url =>
-                    <img src="@url" class="responsive-img" alt="" role="presentation" />
-                }
+<div class="fc-item__media-wrapper">
+    <div class="fc-item__image-container u-responsive-ratio @if(inlineImage){inlined-image}">
+        @widthsByBreakpoint match {
+            case Some(widths) => {
+                <img class="responsive-img"
+                     srcset="@ImgSrc.srcset(imageContainer, widths.maxWidth)"
+                     sizes="@widths.sizesString"
+                     @if(inlineImage) { src="@ImgSrc.getFallbackUrl(imageContainer)" }>
             }
-        </div>
+
+            case _ => {
+                <img src="@ImgSrc.getFallbackUrl(imageContainer)">
+            }
+        }
     </div>
-}
+</div>

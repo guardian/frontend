@@ -21,7 +21,8 @@ case class ItemClasses(mobile: CardType, tablet: CardType, desktop: Option[CardT
 
   def allTypes = Set(mobile, tablet) ++ desktop.toSet
 
-  def showVideoPlayer = allTypes.exists(_.showVideoPlayer)
+  def showVideoPlayer = allTypes.exists(_.videoPlayer.show)
+  def showVideoEndSlate = allTypes.exists(_.videoPlayer.showEndSlate)
 
   def showCutOut = allTypes.exists(_.showCutOut)
 }

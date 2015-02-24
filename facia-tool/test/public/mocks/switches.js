@@ -1,4 +1,8 @@
-define("mock-switches", ['utils/mediator'], function (
+define([
+    'underscore',
+    'utils/mediator'
+], function (
+    _,
     mediator
 ) {
     // Default response, if missing the application navigates away

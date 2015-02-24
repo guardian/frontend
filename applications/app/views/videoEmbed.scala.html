@@ -6,7 +6,7 @@
 @import conf.Configuration
 
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en-GB" class="gu-video-embed-html ">
     <head>
         <title>@page.title</title>
         <style>
@@ -14,6 +14,7 @@
             figure { margin: 0 !important; }
         </style>
         <link rel="stylesheet" href="@StaticSecure("stylesheets/media-player.css")"/>
+        <base target="_parent"/>
     </head>
     <body>
 
@@ -100,6 +101,7 @@
                         paths: {
                             core: '@StaticSecure("javascripts/core.js")',
                             text: 'text', // noop
+                            inlineSvg: 'inlineSvg', // noop
                             'bootstraps/video-embed': '@StaticSecure("javascripts/bootstraps/video-embed.js")',
                             'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
                         }

@@ -99,6 +99,19 @@
         sc.parentNode.insertBefore(s, sc);
     }
 
+    var isOlderDevice = (function(){
+        @* I'm intentionally being a bit over zealous in the detection department here *@
+        if (navigator.platform === 'iPhone' || navigator.platform === 'iPad' || navigator.platform === 'iPod') {
+            @*
+                'older' iOs normally indicates a device with lower power (they stop being upgradeable at some point).
+                We won't run all javascript on these
+                For usage stats see http://david-smith.org/iosversionstats/
+            *@
+            return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent);
+        }
+        return false;
+    })();
+
     var guardian = {
         isModernBrowser: (
             'querySelector' in document
@@ -110,6 +123,7 @@
                 ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
                 || 'XDomainRequest' in window
             )
+            && !isOlderDevice
         ),
         css: {
             loaded: false
@@ -194,23 +208,51 @@
 
 </script>
 
-@* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
-@* also delete iPhoneConfidenceCheck inside of facia.js *@
 @if(IphoneConfidence.isSwitchedOn && Seq("uk", "us", "au").contains(item.id)) {
+
+    @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
+    @* also delete iPhoneConfidenceCheck inside of facia.js *@
+
     @* see http://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions *@
     <script>
-        if (navigator.platform === 'iPhone') {
 
-            guardian.isIphone6 = (screen.width === 375 && screen.height === 667) || (screen.width === 414 && screen.height === 736);
-            guardian.isIphone4 = screen.width === 320 && screen.height === 480 && window.devicePixelRatio > 1;
+        function logDevice(model, device) {
 
-            if (guardian.isIphone6) {
-                (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-6-start.gif';
+            var identifier = device + '-' + model;
+
+            (new Image()).src = guardian.config.page.beaconUrl + '/count/' + identifier + '-start.gif';
+
+            setTimeout(function() {
+                (new Image()).src = guardian.config.page.beaconUrl + '/count/' + identifier + '-after-5.gif';
+            }, 5000);
+        }
+
+        if (navigator.platform === 'iPhone' || navigator.platform === 'iPad') {
+
+            var platform = navigator.platform;
+            var isIphone = navigator.platform === 'iPhone';
+
+            var isIphone6 = isIphone && ( screen.width === 375 && screen.height === 667 ) || ( screen.width === 414 && screen.height === 736 ) ;
+            var isIphone4 = isIphone && screen.width === 320 && screen.height === 480 && window.devicePixelRatio > 1;
+
+            @*
+                ipad1 & 2 (unfortunately this also includes ipad mini) - mitigate that by checking older ios version too.
+                Apple seems to purposefully make this a difficult thing to do.
+            *@
+            var isOlderIpad = !isIphone && window.devicePixelRatio === 1 && /.*iPad; CPU OS ([345])_\d+.*/.test(navigator.userAgent);
+
+            if ( isOlderIpad ) {
+                logDevice ( 'old', 'ipad' );
             }
 
-            if (guardian.isIphone4) {
-                (new Image()).src = guardian.config.page.beaconUrl + '/count/iphone-4-start.gif';
+            if ( isIphone6 ) {
+                logDevice ( '6', 'iphone' );
             }
+
+            if ( isIphone4 ) {
+                logDevice ( '4', 'iphone' );
+            }
+
         }
     </script>
 }

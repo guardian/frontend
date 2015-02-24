@@ -1,7 +1,8 @@
-/* global _: true */
 define([
     'config',
     'knockout',
+    'underscore',
+    'jquery',
     'modules/vars',
     'utils/as-observable-props',
     'utils/fetch-visible-stories',
@@ -16,6 +17,8 @@ define([
 ], function(
     config,
     ko,
+    _,
+    $,
     vars,
     asObservableProps,
     fetchVisibleStories,
@@ -95,7 +98,7 @@ define([
         this.state.isHistoryOpen(this.front.confirmSendingAlert());
 
         this.setPending(true);
-        this.load();
+        this.loaded = this.load();
 
         var that = this;
         this.listeners.on('ui:open', function () {
@@ -240,17 +243,21 @@ define([
     };
 
     Collection.prototype.load = function(opts) {
-        var self = this;
+        var self = this,
+            deferred = new $.Deferred();
 
         opts = opts || {};
 
-        return authedAjax.request({
+        authedAjax.request({
             url: vars.CONST.apiBase + '/collection/' + this.id
         })
         .done(function(raw) {
             if (opts.isRefresh && self.isPending()) { return; }
 
-            if (!raw) { return; }
+            if (!raw) {
+                self.loaded.resolve();
+                return;
+            }
 
             self.state.hasConcurrentEdits(false);
 
@@ -262,9 +269,14 @@ define([
 
             self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
         })
+        .fail(function () {
+            self.loaded.resolve();
+        })
         .always(function() {
             self.setPending(false);
         });
+
+        return deferred;
     };
 
     Collection.prototype.registerElement = function (element) {
@@ -284,7 +296,8 @@ define([
 
     Collection.prototype.populate = function(rawCollection) {
         var self = this,
-            list;
+            list,
+            loading = [];
 
         this.raw = rawCollection || this.raw;
 
@@ -305,24 +318,27 @@ define([
                     var group = _.find(self.groups, function(g) {
                         return (parseInt((item.meta || {}).group, 10) || 0) === g.index;
                     }) || self.groups[0];
+                    var article = new Article(_.extend(item, {
+                        group: group,
+                        slimEditor: self.front.slimEditor()
+                    }));
 
-                    group.items.push(
-                        new Article(_.extend(item, {
-                            group: group,
-                            slimEditor: self.front.slimEditor()
-                        }))
-                    );
+                    group.items.push(article);
                 });
 
                 this.populateHistory(this.raw.previously);
                 this.state.lastUpdated(this.raw.lastUpdated);
                 this.state.count(list.length);
-                this.decorate();
+                loading.push(this.decorate());
             }
         }
 
         this.refreshVisibleStories();
         this.setPending(false);
+        $.when.apply($, loading).always(function () {
+            mediator.emit('collection:populate', self);
+            self.loaded.resolve();
+        });
     };
 
     Collection.prototype.populateHistory = function(list) {
@@ -331,7 +347,7 @@ define([
         }
         this.state.hasExtraActions(true);
 
-        list = list.slice(0, 5);
+        list = list.slice(0, this.front.maxArticlesInHistory);
         this.history(_.map(list, function (opts) {
             return new Article(_.extend(opts, {
                 uneditable: true,
@@ -340,19 +356,38 @@ define([
         }, this));
     };
 
-    Collection.prototype.closeAllArticles = function() {
+    Collection.prototype.eachArticle = function (fn) {
         _.each(this.groups, function(group) {
             _.each(group.items(), function(item) {
-                item.close();
+                fn(item, group);
             });
         });
     };
 
-    Collection.prototype.decorate = function() {
-        _.each(this.groups, function(group) {
-            contentApi.decorateItems(group.items());
+    Collection.prototype.contains = function (article) {
+        return _.some(this.groups, function (group) {
+            return _.some(group.items(), function (item) {
+                return item === article;
+            });
         });
+    };
+
+    Collection.prototype.closeAllArticles = function() {
+        this.eachArticle(function(item) {
+            item.close();
+        });
+    };
+
+    Collection.prototype.decorate = function() {
+        var allItems = [],
+            done;
+        this.eachArticle(function(item) {
+            allItems.push(item);
+        });
+        done = contentApi.decorateItems(allItems);
         contentApi.decorateItems(this.history());
+
+        return done;
     };
 
     Collection.prototype.refresh = function() {
@@ -363,19 +398,9 @@ define([
         });
     };
 
-    Collection.prototype.refreshSparklines = function() {
-        _.each(this.groups, function(group) {
-            _.each(group.items(), function(item) {
-                item.loadSparkline();
-            });
-        });
-    };
-
     Collection.prototype.refreshRelativeTimes = function() {
-        _.each(this.groups, function(group) {
-            _.each(group.items(), function(item) {
-                item.setRelativeTimes();
-            });
+        this.eachArticle(function(item) {
+            item.setRelativeTimes();
         });
     };
 

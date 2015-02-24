@@ -19,6 +19,8 @@ object CardStyle {
   def apply(trail: Trail): CardStyle = {
     if (isExternalLink(trail)) {
       ExternalLink
+    } else if (trail.tags.exists(_.id == "news/series/hsbc-files")) {
+      SpecialReport
     } else if (trail.isLiveBlog) {
       if (trail.isLive) {
         LiveBlog
@@ -79,6 +81,10 @@ object CardStyle {
 
 sealed trait CardStyle {
   def toneString: String
+}
+
+case object SpecialReport extends CardStyle {
+  override def toneString: String = "special-report"
 }
 
 case object LiveBlog extends CardStyle {

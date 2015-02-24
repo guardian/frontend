@@ -1,9 +1,10 @@
-/* global _: true */
 define([
+    'underscore',
     'modules/authed-ajax',
     'modules/vars',
     'utils/identity'
 ], function (
+    _,
     authedAjax,
     vars,
     identity

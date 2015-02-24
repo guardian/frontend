@@ -36,6 +36,21 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
+case class R2VideoCleaner(article: Article) extends HtmlCleaner {
+
+override def clean(document: Document): Document = {
+
+    val legacyVideos = document.getElementsByTag("video").filter(_.hasClass("gu-video")).filter(_.parent().tagName() != "figure")
+
+    legacyVideos.foreach( videoElement => {
+      videoElement.wrap("<figure class=\"test element element-video\"></figure>")
+    })
+
+    document
+  }
+
+}
+
 case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
@@ -57,6 +72,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
           val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl,  mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
           element.child(0).after(html.toString())
           element.addClass("fig--has-shares")
+          element.addClass("fig--narrow-caption")
           // add extra margin if there is no caption to fit the share buttons
           val figcaption = element.getElementsByTag("figcaption")
           if(figcaption.length < 1) {
@@ -109,9 +125,11 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
         findVideoApiElement(mediaId).foreach{ videoElement =>
           element.attr("data-block-video-ads", videoElement.blockVideoAds.toString)
-          element.attr("data-embeddable", videoElement.embeddable.toString)
-          if(!canonicalUrl.isEmpty) {
+          if(!canonicalUrl.isEmpty && videoElement.embeddable) {
+            element.attr("data-embeddable", "true")
             element.attr("data-embed-path", new URL(canonicalUrl).getPath.stripPrefix("/"))
+          } else {
+            element.attr("data-embeddable", "false")
           }
         }
       }
@@ -139,12 +157,12 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
-        val mediaId = fig.attr("data-media-id")
-        val asset = findImageFromId(mediaId)
 
         fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
+
+          val asset = findImageFromId(fig.attr("data-media-id"), img.attr("src"))
 
           asset.map { image =>
             image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
@@ -213,7 +231,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
   def cleanShowcasePictures(body: Document): Document = {
     for {
       element <- body.getElementsByClass("element--showcase")
-      asset <- findContainerFromId(element.attr("data-media-id"))
+      asset <- findContainerFromId(element.attr("data-media-id")).headOption
       imagerSrc <- ImgSrc.imager(asset, Showcase)
       imgElement <- element.getElementsByTag("img")
     } {
@@ -227,12 +245,27 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
     cleanShowcasePictures(addSharesAndFullscreen(cleanStandardPictures(body)))
   }
 
-  def findImageFromId(id:String): Option[ImageAsset] = {
-    findContainerFromId(id).flatMap(Item620.elementFor)
+  def findImageFromId(id: String, src: String): Option[ImageAsset] = {
+    val srcImagePath = new java.net.URL(src).getPath()
+
+    // It is possible that a single data media id can appear multiple times in the elements array.
+    val imageContainers = findContainerFromId(id)
+
+    // Try to match the container based on both URL and media ID.
+    val fullyMatchedImage: Option[ImageContainer] = {
+      for {
+        container <- imageContainers
+        asset <- container.imageCrops
+        url <- asset.url
+        if url.contains(srcImagePath)
+      } yield { container }
+    }.headOption
+
+    fullyMatchedImage.orElse(imageContainers.headOption).flatMap(Item620.elementFor)
   }
 
-  def findContainerFromId(id:String): Option[ImageContainer] = {
-    article.bodyImages.find(_.id == id)
+  def findContainerFromId(id: String): Seq[ImageContainer] = {
+    article.bodyImages.filter(_.id == id)
   }
 }
 
@@ -275,6 +308,10 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
 
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
+}
+
+object VideoEncodingUrlCleaner{
+  def apply(url: String): String = url.filter(_ != '\n')
 }
 
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
@@ -481,7 +518,7 @@ object RichLinkCleaner extends HtmlCleaner {
     val richLinks = document.getElementsByClass("element-rich-link")
     richLinks
       .addClass("element-rich-link--not-upgraded")
-      .attr("data-component", s"rich-link-${richLinks.length}")
+      .attr("data-component", "rich-link")
       .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.length} | ${index+1}") }
 
     document

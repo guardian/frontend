@@ -1,4 +1,3 @@
-/*jshint -W024 */
 define([
     'bean',
     'bonzo',
@@ -154,16 +153,24 @@ Loader.prototype.initMainComments = function() {
         this.loadComments({
             comment: commentId,
             shouldTruncate: shouldTruncate})
-            .catch(function(err) {
-                var reportMsg = 'Comments failed to load: ' + ('status' in err ? err.status : '');
+            .catch(function(error) {
+                var reportMsg = 'Comments failed to load: ',
+                    request = error.request;
+                if (error.message === 'Request is aborted: timeout') {
+                    reportMsg += 'XHR timeout';
+                } else if (error.message) {
+                    reportMsg += error.message;
+                } else {
+                    reportMsg += 'status' in request ? request.status : '';
+                }
                 raven.captureMessage(reportMsg, {
                     tags: {
                         contentType: 'comments',
                         discussionId: this.getDiscussionId(),
-                        status: 'status' in err ? err.status : '',
-                        readyState: 'readyState' in err ? err.readyState : '',
-                        response: 'response' in err ? err.response : '',
-                        statusText: 'status' in err ? err.statusText : ''
+                        status: 'status' in request ? request.status : '',
+                        readyState: 'readyState' in request ? request.readyState : '',
+                        response: 'response' in request ? request.response : '',
+                        statusText: 'status' in request ? request.statusText : ''
                     }
                 });
             }.bind(this));

@@ -31,8 +31,6 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData w
 
   override lazy val analyticsName = s"GFE:Football:automatic:match:${theMatch.date.toString("dd MMM YYYY")}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}"
 
-  override val hasClassicVersion = false
-
   override lazy val metaData: Map[String, JsValue] = super.metaData + (
     "footballMatch" -> JsObject(Seq(
       "id" -> JsString(theMatch.id),
