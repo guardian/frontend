@@ -54,7 +54,7 @@ class TemplatesTest extends FlatSpec with Matchers {
     val figures = (body \\ "figure").toList
 
     val baseImg = figures(0)
-    (baseImg \ "@class").text should include("img--base img--inline")
+    (baseImg \ "@class").text should include("img--inline")
     (baseImg \ "img" \ "@class").text should be("gu-image")
     (baseImg \ "img" \ "@width").text should be("140")
 
@@ -64,7 +64,7 @@ class TemplatesTest extends FlatSpec with Matchers {
     (medianImg \ "img" \ "@width").text should be("250")
 
     val extendedImg = figures(2)
-    (extendedImg \ "@class").text should include("img--extended")
+    (extendedImg \ "@class").text should include("element-image")
     (extendedImg \ "img" \ "@class").text should be("gu-image")
     (extendedImg \ "img" \ "@width").text should be("600")
 
