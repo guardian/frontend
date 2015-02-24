@@ -227,28 +227,29 @@ category: Common
 }
 
 .social-fixed__item {
-    width: 50%;
     color: #ffffff;
+    float: left;
+    border-radius: 20px;
 
     .i {
         height: 40px;
         width: 40px;
         float: left;
+        margin: 0 (-$gs-gutter/2) 0 (-$gs-gutter*0.6) !important;
     }
 }
 
 .social-fixed__item--facebook {
     background-color: colour(social-facebook);
-    float: left;
+    margin: 0 $gs-gutter/4 0 $gs-gutter/2 !important;
 }
 
 .social-fixed__item--twitter {
     background-color: colour(social-twitter);
-    float: right;
 }
 
 .social-fixed--show {
-    bottom: 0;
+    bottom: $gs-baseline/2;
     opacity: 1;
 }
 
@@ -256,6 +257,5 @@ category: Common
     float: left;
     @include fs-textSans(3);
     font-weight: 700;
-    padding-top: 10px;
-    padding-left: $gs-gutter/5;
+    padding: ($gs-baseline/3*2) ($gs-gutter/10) 0 ($gs-gutter/2);
 }

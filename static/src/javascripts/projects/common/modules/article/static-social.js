@@ -2,19 +2,25 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/mediator',
     'common/utils/proximity-loader',
     'common/utils/template',
+    'lodash/functions/debounce',
     'text!common/views/content/static-social-buttons.html'
 ], function (
     $,
     config,
     detect,
+    mediator,
     proximityLoader,
     template,
+    debounce,
     staticSocialTmpl
 ) {
     function show() {
-        $('.social-fixed').addClass('social-fixed--show');
+        if (($(document.body).scrollTop() > $(".meta__extras").offset().top)) {
+            $('.social-fixed').addClass('social-fixed--show');
+        }
     }
 
     function init() {
@@ -30,7 +36,7 @@ define([
             $('.meta__social').append(template(staticSocialTmpl, data));
         }
 
-        proximityLoader.add($('.submeta-container'), 1500, show);
+        mediator.on('window:scroll', debounce(show, 200));
     }
 
     return init;
