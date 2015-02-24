@@ -157,12 +157,12 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
-        val mediaId = fig.attr("data-media-id")
-        val asset = findImageFromId(mediaId)
 
         fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
+
+          val asset = findImageFromId(fig.attr("data-media-id"), img.attr("src"))
 
           asset.map { image =>
             image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
@@ -231,7 +231,7 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
   def cleanShowcasePictures(body: Document): Document = {
     for {
       element <- body.getElementsByClass("element--showcase")
-      asset <- findContainerFromId(element.attr("data-media-id"))
+      asset <- findContainerFromId(element.attr("data-media-id")).headOption
       imagerSrc <- ImgSrc.imager(asset, Showcase)
       imgElement <- element.getElementsByTag("img")
     } {
@@ -245,12 +245,27 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
     cleanShowcasePictures(addSharesAndFullscreen(cleanStandardPictures(body)))
   }
 
-  def findImageFromId(id:String): Option[ImageAsset] = {
-    findContainerFromId(id).flatMap(Item620.elementFor)
+  def findImageFromId(id: String, src: String): Option[ImageAsset] = {
+    val srcImagePath = new java.net.URL(src).getPath()
+
+    // It is possible that a single data media id can appear multiple times in the elements array.
+    val imageContainers = findContainerFromId(id)
+
+    // Try to match the container based on both URL and media ID.
+    val fullyMatchedImage: Option[ImageContainer] = {
+      for {
+        container <- imageContainers
+        asset <- container.imageCrops
+        url <- asset.url
+        if url.contains(srcImagePath)
+      } yield { container }
+    }.headOption
+
+    fullyMatchedImage.orElse(imageContainers.headOption).flatMap(Item620.elementFor)
   }
 
-  def findContainerFromId(id:String): Option[ImageContainer] = {
-    article.bodyImages.find(_.id == id)
+  def findContainerFromId(id: String): Seq[ImageContainer] = {
+    article.bodyImages.filter(_.id == id)
   }
 }
 
