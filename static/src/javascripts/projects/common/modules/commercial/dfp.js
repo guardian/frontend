@@ -354,6 +354,7 @@ define([
 
                         } else {
                             $iFrameParent.append(breakoutContent);
+                            $breakoutEl.remove();
 
                             $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
                                 window.setTimeout(function () {
@@ -366,7 +367,7 @@ define([
                 });
             }
             if (shouldRemoveIFrame) {
-                $iFrame.remove();
+                $iFrame.hide();
             }
         },
         /**
