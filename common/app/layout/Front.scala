@@ -266,7 +266,7 @@ case class FaciaContainer(
 
   def addShowMoreClasses = useShowMore && containerLayout.exists(_.hasShowMore)
 
-  def shouldLazyLoad = Switches.LazyLoadContainersSwitch.isSwitchedOn && index > 8
+  def shouldLazyLoad = Switches.LazyLoadContainersSwitch.isSwitchedOn && index > 10
 }
 
 object Front extends implicits.Collections {
