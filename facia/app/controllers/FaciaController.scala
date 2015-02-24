@@ -92,10 +92,13 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     successful(Cached(60)(Found(LinkTo(Editionalise(s"/$path", request)))))
   }
 
-  private def withFaciaPage(path: String)(f: PressedPage => Result): Future[Result] = {
+  private def withPressedPage(path: String)(f: PressedPage => Result): Future[Result] = {
     if (ConfigAgent.shouldServeFront(path)) {
       for {
         maybeFront <- frontJson.get(path)
+          .flatMap {
+            case Some(pressedPage) => Future.successful(Option(PressedPage.fromFaciaPage(pressedPage)))
+            case _ => frontJsonFapi.get(path)}
       } yield maybeFront match {
         case Some(front) => f(front)
         case None => Cached(60)(NotFound)
@@ -111,23 +114,51 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }
   }
 
-  private def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
+  private[controllers] def renderFrontPressResultFallback(path: String)(implicit request : RequestHeader) = {
     val futureResult = for {
       maybeFaciaPage <- frontJson.get(path)
     } yield maybeFaciaPage match {
-      case Some(faciaPage) =>
-        Cached(faciaPage) {
-          if (request.isRss)
-            Ok(TrailsToRss.fromPressedPage(faciaPage)).as("text/xml; charset=utf-8")
-          else if (request.isJson)
-            JsonFront(faciaPage)
-          else if (AdFeatureExpirySwitch.isSwitchedOn && faciaPage.isExpiredAdvertisementFeature)
-            MovedPermanently(expiredAdFeatureUrl)
-          else
-            Ok(views.html.front(faciaPage))
-        }
+        case Some(faciaPage) =>
+          Cached(faciaPage) {
+            if (request.isRss)
+              Ok(TrailsToRss(
+                faciaPage,
+                faciaPage.collections
+                  .filterNot(_._1.config.excludeFromRss)
+                  .map(_._2)
+                  .flatMap(_.items)
+                  .toSeq
+                  .distinctBy(_.id))
+              ).as("text/xml; charset=utf-8")
+            else if (request.isJson)
+              JsonFront(PressedPage.fromFaciaPage(faciaPage))
+            else if (faciaPage.isExpiredAdvertisementFeature)
+              MovedPermanently(expiredAdFeatureUrl)
+            else
+              Ok(views.html.front(PressedPage.fromFaciaPage(faciaPage)))
+          }
+        case None => Cached(45)(NotFound)
+      }
+    futureResult onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
+    futureResult
+  }
 
-      case None => Cached(60)(NotFound)
+  private def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
+    val futureResult = frontJsonFapi.get(path).flatMap {
+      case Some(faciaPage) =>
+        Future.successful(
+          Cached(faciaPage) {
+            if (request.isRss)
+              Ok(TrailsToRss.fromPressedPage(faciaPage)).as("text/xml; charset=utf-8")
+            else if (request.isJson)
+              JsonFront(faciaPage)
+            else if (AdFeatureExpirySwitch.isSwitchedOn && faciaPage.isExpiredAdvertisementFeature)
+              MovedPermanently(expiredAdFeatureUrl)
+            else
+              Ok(views.html.front(faciaPage))
+          }
+        )
+      case None => renderFrontPressResultFallback(path)
     }
 
     futureResult onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
@@ -164,12 +195,12 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderFrontCollection(frontId: String, collectionId: String, version: String) = MemcachedAction { implicit request =>
     log.info(s"Serving collection $collectionId on front $frontId")
 
-    withFaciaPage(frontId) { faciaPage =>
-      faciaPage.front.containers.find(_.dataId == collectionId) match {
+    withPressedPage(frontId) { pressedPage =>
+      pressedPage.front.containers.find(_.dataId == collectionId) match {
         case Some(containerDefinition) =>
           Cached(60) {
             JsonComponent(
-              "html" -> container(containerDefinition, faciaPage.frontProperties)(request)
+              "html" -> container(containerDefinition, pressedPage.frontProperties)(request)
             )
           }
         case _ => NotFound
@@ -192,7 +223,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   private def getPressedCollection(collectionId: String): Future[Option[PressedCollection]] =
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
-      frontJson.get(path).map(_.flatMap{ faciaPage =>
+      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
         faciaPage.collections.find{ c => c.id == collectionId}
       })
     }.getOrElse(Future.successful(None))
