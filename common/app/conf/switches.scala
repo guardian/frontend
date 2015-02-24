@@ -446,7 +446,7 @@ object Switches {
 
   val HistoryTags = Switch("Feature", "history-tags",
     "If this is switched on then personalised history tags are shown in the meganav",
-    safeState = On, sellByDate = never
+    safeState = Off, sellByDate = never
   )
 
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
