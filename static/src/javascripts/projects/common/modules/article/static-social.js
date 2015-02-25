@@ -1,4 +1,5 @@
 define([
+    'fastdom',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -8,6 +9,7 @@ define([
     'lodash/functions/debounce',
     'text!common/views/content/static-social-buttons.html'
 ], function (
+    fastdom,
     $,
     config,
     detect,
@@ -18,9 +20,13 @@ define([
     staticSocialTmpl
 ) {
     function show() {
-        if (($(document.body).scrollTop() > $('.meta__extras').offset().top)) {
-            $('.social-fixed').addClass('social-fixed--show');
-        }
+        fastdom.read(function () {
+            if (($(document.body).scrollTop() > $('.meta__extras').offset().top)) {
+                fastdom.write(function () {
+                    $('.social-fixed').addClass('social-fixed--show');
+                });
+            }
+        });
     }
 
     function init() {
