@@ -222,7 +222,7 @@ category: Common
     bottom: -40px;
     width: 100%;
     opacity: 0;
-    z-index: 999;
+    z-index: 10;
     @include transition(bottom .4s ease);
 }
 
