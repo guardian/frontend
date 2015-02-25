@@ -69,8 +69,8 @@ object FaciaContentImplicits {
       fold(
         curatedContent => curatedContent.kicker,
         supportingCuratedContent => supportingCuratedContent.kicker,
-        _ => None,
-        _ => None)
+        linkSnap => linkSnap.kicker,
+        latestSnap => latestSnap.kicker)
 
     def headline: String = fold(
         curatedContent => curatedContent.headline,
