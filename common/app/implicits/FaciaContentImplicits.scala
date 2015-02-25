@@ -75,9 +75,8 @@ object FaciaContentImplicits {
     def headline: String = fold(
         curatedContent => curatedContent.headline,
         supportingCuratedContent => supportingCuratedContent.headline,
-        //TODO: Carry TrailMetaData through snaps
-        linkSnap => "No LinkSnap Headline",
-        latestSnap => "No LatestSnap Headline")
+        linkSnap => linkSnap.headline.getOrElse("Missing Headline"),
+        latestSnap => latestSnap.headline.orElse(latestSnap.latestContent.map(_.webTitle)).getOrElse("Missing Headline"))
 
     def standfirst: Option[String] = fieldsGet(_.get("standfirst"))
     def body: Option[String] = fieldsGet(_.get("body"))
