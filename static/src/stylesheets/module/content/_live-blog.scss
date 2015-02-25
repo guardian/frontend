@@ -808,7 +808,7 @@ $timeline-width: 15px;
         position: absolute;
         top: 0;
         z-index: 200;
-        margin-left: ($right-column + $gs-gutter) * - 1;
+        margin-left: ($right-column + $gs-gutter) * -1;
         width: $right-column;
     }
 }
