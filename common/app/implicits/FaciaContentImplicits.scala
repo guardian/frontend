@@ -1,6 +1,6 @@
 package implicits
 
-import com.gu.contentapi.client.model.{Element, Tag}
+import com.gu.contentapi.client.model.{Content, Element, Tag}
 import com.gu.facia.api.models._
 import com.gu.facia.api.utils.ItemKicker
 import dfp.DfpAgent
@@ -30,6 +30,11 @@ object FaciaContentImplicits {
       case linkSnap: LinkSnap => ls(linkSnap)
       case latestSnap: LatestSnap => las(latestSnap)}
 
+    def maybeContent: Option[Content] = fold(
+      curatedContent => Option(curatedContent.content),
+      supportingCuratedContent => Option(supportingCuratedContent.content),
+      linkSnap => None,
+      latestSnap => latestSnap.latestContent)
 
     def tags: List[com.gu.contentapi.client.model.Tag] = fold(
       curatedContent => curatedContent.content.tags,
