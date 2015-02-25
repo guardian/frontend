@@ -13,7 +13,7 @@ object CutOut extends Logging {
    */
   def fromTrail(faciaContent: FaciaContent): Option[CutOut] = {
     faciaContent.imageCutout match {
-        case Some(ImageCutout(imageCutoutSrc, Some(imageCutoutSrcHeight), Some(imageCutoutSrcWidth))) =>
+        case Some(ImageCutout(imageCutoutSrc, Some(imageCutoutSrcWidth), Some(imageCutoutSrcHeight))) =>
           Try((imageCutoutSrcWidth.toInt, imageCutoutSrcHeight.toInt)) match {
             case Success((width, height)) => Option(CutOut(imageCutoutSrc, Orientation.fromDimensions(width, height)))
             case Failure(t) =>
