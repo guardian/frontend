@@ -39,7 +39,9 @@ define([
 
         if (config.switches.staticSocialIconMobile && detect.isBreakpoint({ max: 'phablet' }) &&
             match && ['share_btn_fb', 'share_btn_tw'].indexOf(match[1]) > -1) {
-            $('.meta__social').append(template(staticSocialTmpl, data));
+            fastdom.write(function () {
+                $('.meta__social').append(template(staticSocialTmpl, data));
+            });
         }
 
         mediator.on('window:scroll', debounce(show, 200));
