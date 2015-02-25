@@ -569,11 +569,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
-  val DoNotTrack = Switch("Analytics", "do-not-track",
-    "If this switch is on then we will count the number of people with do not track headers (yes, yes, I know)",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
-  )
-
   val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",
     "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please check the DB size.",
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
