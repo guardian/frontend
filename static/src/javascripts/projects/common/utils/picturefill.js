@@ -106,7 +106,13 @@ define( [
         /**
          * Shortcut method for matchMedia ( for easy overriding in tests )
          */
+        // IE8 and below can't be polyfilled
+        pf.canMatchMedia = w.matchMedia && w.matchMedia("(min-width: 0px)").matches;
+
         pf.matchesMedia = function( media ) {
+            if ( !pf.canMatchMedia ) {
+                return true;
+            }
             return w.matchMedia && w.matchMedia( media ).matches;
         };
 
