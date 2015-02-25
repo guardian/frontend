@@ -80,11 +80,16 @@ object Video460 extends VideoProfile(width = Some(460), height = Some(276)) // 5
 object SeoOptimisedContentImage extends Profile(width = Some(460))
 
 object Item115 extends Profile(width = Some(115))
+object Item127 extends Profile(width = Some(127))
 object Item130 extends Profile(width = Some(130))
 object Item187 extends Profile(width = Some(187))
+object Item188 extends Profile(width = Some(188))
 object Item216 extends Profile(width = Some(216))
 object Item331 extends Profile(width = Some(331))
+object Item340 extends Profile(width = Some(340))
+object Item350 extends Profile(width = Some(350))
 object Item389 extends Profile(width = Some(389))
+object Item520 extends Profile(width = Some(520))
 
 // Just degrade the image quality without adjusting the width/height
 object Naked extends Profile(None, None)
@@ -114,11 +119,16 @@ object Profile {
 
   // image widths available to <picture> and <img srcset>
   lazy val images: Seq[Profile] = Seq(
-    Item120,
+    Item127,
+    Item140,
     Item160,
+    Item188,
     Item220,
     Item300,
+    Item340,
+    Item350,
     Item460,
+    Item520,
     Item620,
     Item700,
     Item860,
