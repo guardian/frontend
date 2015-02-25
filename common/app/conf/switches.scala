@@ -297,11 +297,11 @@ object Switches {
 
   val AppleAdNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-network-front",
     "If this switch is on, Apple ads will appear on the network front during active periods.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1))
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 1))
 
   val AppleAdCultureFrontSwitch = Switch("Commercial", "apple-ads-on-culture-front",
     "If this switch is on, Apple ads will appear on the culture front during active periods.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 1))
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 1))
 
   // Monitoring
 
@@ -327,7 +327,7 @@ object Switches {
 
   val CssLogging = Switch("Monitoring", "css-logging",
     "If this is on, then a subset of clients will post css selector information for diagnostics.",
-    safeState = On, new LocalDate(2015, 2, 28)
+    safeState = Off, never
   )
 
   val ThirdPartyEmbedTracking = Switch("Monitoring", "third-party-embed-tracking",
@@ -544,6 +544,16 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val FaciaToolSaveClipboardOftenSwitch = Switch("Facia", "facia-tool-save-clipboard-often",
+    "If this switch is on facia tool will save the state of the clipboard every 2 seconds",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
+  )
+
+  val FaciaToolSaveClipboardSeldomSwitch = Switch("Facia", "facia-tool-save-clipboard-seldom",
+    "If this switch is on facia tool will save the state of the clipboard every 5 seconds",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
+  )
+
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
@@ -559,14 +569,9 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
   )
 
-  val DoNotTrack = Switch("Analytics", "do-not-track",
-    "If this switch is on then we will count the number of people with do not track headers (yes, yes, I know)",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
-  )
-
   val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",
-    "If this switch is on, facia-tool will directly archive to DynamoDB",
-    safeState = Off, sellByDate = new LocalDate(2015, 2, 28)
+    "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please check the DB size.",
+    safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
   )
 
   def all: Seq[SwitchTrait] = Switch.allSwitches
