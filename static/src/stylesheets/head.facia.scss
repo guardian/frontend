@@ -9,6 +9,7 @@
 
 @import 'module/facia/_l-list';
 @import 'module/facia/_container';
+@import 'module/facia/_containers';
 @import 'module/facia/_slices';
 @import 'module/facia/_sublinks';
 @import 'module/facia/_item';
@@ -19,11 +20,15 @@
 @import 'module/facia/_cp-scott';
 @import 'module/facia/_facia-show-more';
 @import 'module/_social';
-@import 'module/_tag-list';
 @import 'module/_tabs';
 @import 'module/_headline-list';
-@import 'layout/_footer';
 @import 'components/pasteup-buttons/src/_buttons';
-@import 'icons/_global-icons-sprite';
-@import 'icons/_global-icons-svg';
-// @import 'module/icons';
+@import 'module/_release-message';
+@import 'module/_popup';
+@import 'module/_search';
+@import 'module/_search-tool';
+@import 'module/_tag-list';
+@import 'module/_submeta';
+@import 'layout/_footer';
+@import 'module/onward/_breaking-news';
+@import 'module/facia/_facia-show-more';
