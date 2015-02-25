@@ -29,8 +29,8 @@ define([
         this.isClosed     = true;
 
         if (detect.isBreakpoint({min: 'tablet'})) {
-            this.closedHeight = Math.min(bonzo.viewport().height / 3, 300);
-            this.openedHeight = Math.min(bonzo.viewport().height * 2 / 3, 600);
+            this.closedHeight = '250';
+            this.openedHeight = '500';
         } else {
             this.closedHeight = '150';
             this.openedHeight = '300';
