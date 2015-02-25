@@ -3,7 +3,7 @@ package frontpress
 import com.amazonaws.services.s3.AmazonS3Client
 import com.gu.contentapi.client.GuardianContentClient
 import com.gu.contentapi.client.model._
-import com.gu.facia.api.contentapi.ContentApi.AdjustSearchQuery
+import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
 import com.gu.facia.api.models.{Collection, _}
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
@@ -65,6 +65,14 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalContentCode"
   val apiQuery: AdjustSearchQuery = (searchQuery: SearchQuery) =>
     searchQuery
+      .showFields(showFields)
+      .showElements("all")
+      .pageSize(Configuration.faciatool.frontPressItemSearchBatchSize)
+      .showTags("all")
+      .showReferences(references)
+
+  val snapApiQuery: AdjustItemQuery = (itemQuery: ItemQuery) =>
+    itemQuery
       .showFields(showFields)
       .showElements("all")
       .pageSize(Configuration.faciatool.frontPressItemSearchBatchSize)
