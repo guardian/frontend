@@ -20,6 +20,10 @@
     .keyword-list {
         margin-bottom: $gs-baseline * 1.5;
     }
+
+    .content--liveblog & {
+        padding-top: $gs-baseline * 2;
+    }
 }
 
 .submeta__head {
