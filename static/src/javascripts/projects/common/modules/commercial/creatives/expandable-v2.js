@@ -56,17 +56,17 @@ define([
         var videoHeight = this.closedHeight - 24,
             videoWidth = (videoHeight * 16) / 9,
             leftMargin = (this.params.videoPositionH === 'center' ?
-                videoWidth / -2 : 0
+                'margin-left: ' + videoWidth / -2 + 'px; ' : ''
             ),
             leftPosition = (this.params.videoPositionH === 'left' ?
-                ' left: ' + this.params.videoHorizSpace + 'px;' : ''
+                'left: ' + this.params.videoHorizSpace + 'px; ' : ''
             ),
             rightPosition = (this.params.videoPositionH === 'right' ?
-                ' right: ' + this.params.videoHorizSpace + 'px' : ''
+                'right: ' + this.params.videoHorizSpace + 'px; ' : ''
             ),
             videoDesktop = {
                 video: (this.params.videoURL !== '') ?
-                    '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="margin-left: ' + leftMargin + 'px;' + leftPosition + rightPosition + '"></iframe>' : ''
+                    '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?" frameborder="0" class="expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="' + leftMargin + leftPosition + rightPosition + '"></iframe>' : ''
             },
             showmore = {
                 show: (this.params.showMore === 'yes') ?
