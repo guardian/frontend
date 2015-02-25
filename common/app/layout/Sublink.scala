@@ -183,16 +183,9 @@ object FaciaCard {
   }
 
   def fromTrail(faciaContent: FaciaContent, config: CollectionConfig, cardTypes: ItemClasses, showSeriesAndBlogKickers: Boolean) = {
-    val content = faciaContent match {
-      case c: CuratedContent => Some(c.content)
-      case c: SupportingCuratedContent => Some(c.content)
-      case c: LatestSnap => c.latestContent
-      case _ => None
-    }
-
     val maybeKicker = faciaContent.itemKicker orElse {
       if (showSeriesAndBlogKickers) {
-        content.flatMap(c => com.gu.facia.api.utils.ItemKicker.seriesOrBlogKicker(c))
+        faciaContent.maybeContent.flatMap(com.gu.facia.api.utils.ItemKicker.seriesOrBlogKicker)
       } else {
         None
       }
