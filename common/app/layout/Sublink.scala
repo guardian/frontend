@@ -184,13 +184,15 @@ object FaciaCard {
 
   def fromTrail(faciaContent: FaciaContent, config: CollectionConfig, cardTypes: ItemClasses, showSeriesAndBlogKickers: Boolean) = {
     val content = faciaContent match {
-      case c: CuratedContent => Some(c)
+      case c: CuratedContent => Some(c.content)
+      case c: SupportingCuratedContent => Some(c.content)
+      case c: LatestSnap => c.latestContent
       case _ => None
     }
 
-    val maybeKicker = content.flatMap(_.kicker) orElse {
+    val maybeKicker = faciaContent.itemKicker orElse {
       if (showSeriesAndBlogKickers) {
-        content.flatMap(c => com.gu.facia.api.utils.ItemKicker.seriesOrBlogKicker(c.content))
+        content.flatMap(c => com.gu.facia.api.utils.ItemKicker.seriesOrBlogKicker(c))
       } else {
         None
       }
@@ -200,20 +202,20 @@ object FaciaCard {
     val suppressByline = (for {
       kicker <- maybeKicker
       kickerText <- ItemKicker.kickerText(kicker)
-      byline <- content.flatMap(_.byline)
+      byline <- faciaContent.byline
     } yield kickerText contains byline) getOrElse false
 
     ContentCard(
-      content.map(_.content.id),
+      Option(faciaContent.id),
       faciaContent.headline,
       FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
-      content.flatMap(getByline).filterNot(Function.const(suppressByline)),
+      getByline(faciaContent).filterNot(Function.const(suppressByline)),
       FaciaDisplayElement.fromTrail(faciaContent),
       CutOut.fromTrail(faciaContent),
       CardStyle(faciaContent),
       cardTypes,
       Sublinks.takeSublinks(faciaContent.supporting, cardTypes).map(Sublink.fromFaciaContent),
-      content.flatMap(_.starRating),
+      faciaContent.starRating,
       EditionalisedLink.fromFaciaContent(faciaContent),
       DiscussionSettings.fromTrail(faciaContent),
       SnapStuff.fromTrail(faciaContent),
