@@ -79,7 +79,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   def generateCollectionJsonFromFapiClient(collectionId: String): Response[PressedCollection] =
     for {
       collection <- FAPI.getCollection(collectionId)
-      curatedCollection <- FAPI.collectionContentWithoutSnaps(collection, apiQuery)
+      curatedCollection <- FAPI.collectionContentWithSnaps(collection, apiQuery, snapApiQuery)
       backfill <- getBackfill(collection)
     } yield PressedCollection.fromCollectionWithCuratedAndBackfill(collection, curatedCollection, backfill)
 
