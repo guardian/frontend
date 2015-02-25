@@ -20,18 +20,6 @@ object ContentLayout {
       }
     }
 
-    def submetaBreakpoint: Option[String] = {
-      content match {
-        case a: LiveBlog => None
-        case a: Article if !a.hasSupporting => Some("leftcol")
-        case v: Video if v.standfirst.getOrElse("").length > 350 => Some("leftcol")
-        case a: Audio if a.body.getOrElse("").length > 800 => Some("leftcol")
-        case i: ImageContent if i.mainPicture.flatMap(_.largestEditorialCrop).exists(crop => crop.height / crop.width.toFloat > 0.5) => Some("wide")
-        case g: Gallery => Some("leftcol")
-        case _ => None
-      }
-    }
-
     def tagTone: Option[String] = {
       content match {
         case l: LiveBlog => Some(l.visualTone)
