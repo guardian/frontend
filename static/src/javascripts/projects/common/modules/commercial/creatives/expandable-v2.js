@@ -7,6 +7,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
+    'common/views/svgs',
     'text!common/views/commercial/creatives/expandable-v2.html'
 ], function (
     bean,
@@ -17,6 +18,7 @@ define([
     mediator,
     storage,
     template,
+    svgs,
     expandableV2Tpl
 ) {
 
@@ -66,12 +68,13 @@ define([
             ),
             videoDesktop = {
                 video: (this.params.videoURL !== '') ?
-                    '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?" frameborder="0" class="expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="' + leftMargin + leftPosition + rightPosition + '"></iframe>' : ''
+                    '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="' + leftMargin + leftPosition + rightPosition + '"></iframe>' : ''
             },
+            // svgs('profile36icon', ["rounded-icon", "control__icon-wrapper"]);
             showmore = {
                 show: (this.params.showMore === 'yes') ?
-                    '<button class="ad-exp__open-chevron ad-exp__open"><i class="i i-arrow-white-down-36"></i></button>' : ''
-            },
+                    '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>' : ''
+            }
             $expandablev2 = $.create(template(expandableV2Tpl, merge(this.params, showmore, videoDesktop)));
 
         this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
