@@ -76,8 +76,6 @@
     }
 }
 
-
-
 /* Inline images: included here for faster painting
    ========================================================================== */
 
@@ -95,12 +93,6 @@
         word-wrap: break-word;
     }
 }
-
-.img-tiny.img--inline {
-    width: auto;
-    max-width: $inArticleInlineImgWidth;
-}
-
 
 /* Ajax loading helpers
    ========================================================================== */

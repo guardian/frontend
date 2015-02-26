@@ -53,21 +53,11 @@ class TemplatesTest extends FlatSpec with Matchers {
 
     val figures = (body \\ "figure").toList
 
-    val baseImg = figures(0)
-    (baseImg \ "@class").text should include("img--base img--inline")
-    (baseImg \ "img" \ "@class").text should be("gu-image")
-    (baseImg \ "img" \ "@width").text should be("140")
-
-    val medianImg = figures(1)
-    (medianImg \ "@class").text should include("img--median")
-    (medianImg \ "img" \ "@class").text should be("gu-image")
-    (medianImg \ "img" \ "@width").text should be("250")
-
-    val extendedImg = figures(2)
-    (extendedImg \ "@class").text should include("img--extended")
-    (extendedImg \ "img" \ "@class").text should be("gu-image")
-    (extendedImg \ "img" \ "@width").text should be("600")
-
+    val inlineImg = figures(0)
+    (inlineImg \ "@class").text should include("img--inline")
+    (inlineImg \ "img" \ "@class").text should be("gu-image")
+    (inlineImg \ "img" \ "@width").text should be("140")
+    
     val landscapeImg = figures(3)
     (landscapeImg \ "@class").text should include("img--landscape")
     (landscapeImg \ "img" \ "@class").text should be("gu-image")
