@@ -189,6 +189,11 @@ object Switches {
 
   // Commercial
 
+  val EsiTestSwitch = Switch("Commercial", "esi-geolocation",
+    "Activate Edge Side Inserts",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 4)
+  )
+
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
