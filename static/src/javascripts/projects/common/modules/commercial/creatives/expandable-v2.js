@@ -74,7 +74,7 @@ define([
             showmore = {
                 show: (this.params.showMore === 'yes') ?
                     '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>' : ''
-            }
+            },
             $expandablev2 = $.create(template(expandableV2Tpl, merge(this.params, showmore, videoDesktop)));
 
         this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
