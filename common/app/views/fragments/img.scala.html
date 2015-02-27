@@ -5,7 +5,7 @@
   url: Option[String] = None,
   isLightboxable: Boolean = false)
 
-@import views.support.{ImgSrc, Item620, Item940, Naked, Profile, SeoOptimisedContentImage, Showcase}
+@import views.support.{ImgSrc, Item620, Item940, Naked, Profile, SeoOptimisedContentImage, ContentShowcase}
 
 @img.map{ picture =>
 
@@ -21,7 +21,7 @@
             </div>
         } else {
             @if(isShowcase) {
-                @lightbox(picture, Showcase)
+                @lightbox(picture, ContentShowcase)
             } else {
                 @if(isImageContent) {
                     @lightbox(picture, Item940)
