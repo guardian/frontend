@@ -53,10 +53,7 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
-
-    'bootstraps/identity',
-
-    'text!common/views/release-message-compulsory.html'
+    'bootstraps/identity'
 ], function (
     bean,
     bonzo,
@@ -110,10 +107,7 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
-
-    identity,
-
-    releaseMessageCompulsoryTpl
+    identity
 ) {
 
     var modules = {
