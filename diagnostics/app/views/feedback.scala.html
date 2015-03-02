@@ -1,0 +1,36 @@
+@(page: model.Page, emailParams: String)(implicit request: RequestHeader)
+
+@main(page){ }{
+<div class="l-side-margins">
+    <div class="content content--expired">
+        <header class="content__head">
+            <div class="gs-container">
+                <div class="content__main-column">
+                    <h1 itemprop="headline" class="content__headline">Thanks for sending feedback</h1>
+                </div>
+            </div>
+        </header>
+        <div class="content__main">
+            <div class="gs-container">
+                <div class="content__main-column content__main-column--expired">
+                    <div class="js-article__container u-cf">
+                        <div class="from-content-api" itemprop="articleBody">
+                            <div class="from-content-api">
+                                <p>Thanks for reporting a technical issue.  We monitor the number of reports in order to identify potential issues with the site.<p>
+                                <p>If you would like to make a specific report in your own words, please contact:</p>
+                                <ul>
+                                    <li>Userhelp: <a  href="mailto:userhelp@@theguardian.com">userhelp@@theguardian.com@emailParams</a> </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="facia-container facia-container--layout-content">
+        @fragments.mostPopularPlaceholder("/")
+    </div>
+</div>
+}

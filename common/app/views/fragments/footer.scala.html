@@ -1,6 +1,7 @@
 @(page: model.MetaData, showNav: Boolean=true)(implicit request: RequestHeader)
 
 @import conf.Switches._
+@import conf.Configuration
 @import org.joda.time.DateTime
 @import common.Edition
 @import common.LinkTo
@@ -94,7 +95,7 @@
                     contact us</a></li>
             }
 
-        <li class="colophon__item footer__feedback--hide js-tech-feedback"><a data-link-name="uk : footer : tech feedback">report technical issue</a></li>
+        <li class="colophon__item js-tech-feedback"><a data-link-name="uk : footer : tech feedback" href="@Configuration.debug.beaconUrl/tech-feedback?uri=@request.uri">report technical issue</a></li>
         <li class="colophon__message footer__feedback--hide js-feedback-thanks">Thanks for reporting!</li>
 
             @if(currentEdition == Us) {

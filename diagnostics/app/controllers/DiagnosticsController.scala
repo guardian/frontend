@@ -1,5 +1,7 @@
 package controllers
 
+import java.net.URLEncoder
+
 import common._
 import conf.Switches
 import play.api.mvc.{ Content => _, _ }
@@ -7,7 +9,7 @@ import model.diagnostics.javascript.JavaScript
 import model.diagnostics.abtests.AbTests
 import model.diagnostics.analytics.Analytics
 import model.diagnostics.css.Css
-import model.TinyResponse
+import model.{NoCache, TinyResponse}
 
 object DiagnosticsController extends Controller with Logging {
 
@@ -38,6 +40,17 @@ object DiagnosticsController extends Controller with Logging {
 
     Analytics.report(prefix)
     TinyResponse.gif
+  }
+
+  def escape(uri: Seq[String]) = {
+    val uris = uri.fold("")(_+" "+_)
+    URLEncoder.encode(s"Problem URL: $uris", "UTF-8")// URLEncoder is wrong, but it's close enough for percent encoding
+  }
+
+  def techFeedback() = Action { implicit request =>
+    Analytics.report("tech-feedback")
+    val emailParams = request.queryString.get("uri").map(uri => s"?body=${escape(uri)}").getOrElse("")
+    NoCache(Ok(views.html.feedback(model.Page(request.path, "info", "Thanks for your report", "GFE:Tech Feedback"), emailParams)))
   }
 
   // e.g.  .../counts?c=pv&c=vv&c=ve
