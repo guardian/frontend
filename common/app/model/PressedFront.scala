@@ -78,7 +78,7 @@ object FapiJsonFormats {
   }
 
   implicit val imageCutoutFormat = Json.format[ImageCutout]
-  implicit val imageFormat = Json.format[Image]
+  implicit val imageFormat = Json.format[ImageReplace]
 
   implicit val latestSnapFormat = Json.format[LatestSnap]
   implicit val linkSnapFormat = Json.format[LinkSnap]
