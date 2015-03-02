@@ -336,6 +336,11 @@ object Switches {
     safeState = Off, never
   )
 
+  val FeedbackLink = Switch("Monitoring", "tech-feedback",
+    "Enables a link in the footer soliciting clicks for technical problems",
+    safeState = Off, new LocalDate(2015, 3, 9)
+  )
+
   // Features
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",

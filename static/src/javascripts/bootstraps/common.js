@@ -25,6 +25,7 @@ define([
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
+    'common/modules/analytics/tech-feedback',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/crosswords/thumbnails',
     'common/modules/discussion/comment-count',
@@ -79,6 +80,7 @@ define([
     ScrollDepth,
     logCss,
     simpleMetrics,
+    techFeedback,
     userAdTargeting,
     crosswordThumbnails,
     CommentCount,
@@ -439,6 +441,12 @@ define([
                 });
             },
 
+            initTechFeedback: function () {
+                mediator.on('page:common:ready', function () {
+                    techFeedback.init();
+                });
+            },
+
             initPublicApi: function () {
                 // BE CAREFUL what you expose here...
                 window.guardian.api = {
@@ -488,6 +496,7 @@ define([
             robust('c-public-api', modules.initPublicApi);
             robust('c-simple-metrics', modules.initSimpleMetrics);
             robust('c-crosswords', crosswordThumbnails.init);
+            robust('c-tech-feedback', modules.initTechFeedback);
             robust('c-ready',           function () { mediator.emit('page:common:ready'); });
         };
 

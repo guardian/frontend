@@ -106,6 +106,15 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     @include box-sizing(border-box);
 }
 
+.colophon__message {
+    @include box-sizing(border-box);
+    padding-bottom: $gs-baseline;
+}
+
+.footer__feedback--hide {
+    display: none;
+}
+
 .l-footer__misc {
     padding-top: $gs-baseline * .5;
     padding-bottom: $gs-baseline * 1.5;
