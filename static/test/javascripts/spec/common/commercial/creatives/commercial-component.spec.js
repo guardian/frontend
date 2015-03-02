@@ -14,7 +14,7 @@ define([
         .store(['common/utils/config', 'common/utils/mediator'])
         .require(['common/modules/commercial/creatives/commercial-component', 'mocks'], function (CommercialComponent, mocks) {
 
-            describe('Commercial component loader', function () {
+            xdescribe('Commercial component loader', function () {
 
                 var adSlot, server,
                     fixturesConfig = {
