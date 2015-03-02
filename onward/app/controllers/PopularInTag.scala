@@ -23,11 +23,15 @@ object PopularInTag extends Controller with Related with Logging with ExecutionC
     val displayName = Some(dataId)
     val properties = FrontProperties.empty
     val config = CollectionConfigJson.withDefaults(displayName = displayName)
+    val containerDefinition = trails.length match {
+      case 1 => FixedContainers.fixedSmallSlowI
+      case 2 => FixedContainers.fixedSmallSlowII
+      case _ => FixedContainers.fixedMediumFastXII }
 
     val html = views.html.fragments.containers.facia_cards.container(
       FaciaContainer(
         1,
-        Fixed(FixedContainers.fixedMediumFastXII),
+        Fixed(containerDefinition),
         CollectionConfigWithId(dataId, config),
         CollectionEssentials(trails take 8, Nil, displayName, None, None, None)
       ).withTimeStamps,

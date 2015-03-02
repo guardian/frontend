@@ -35,8 +35,14 @@ object RelatedController extends Controller with Related with Logging with Execu
     val properties = FrontProperties.empty
     val config = CollectionConfigJson.withDefaults(displayName = displayName)
 
-    val container: FaciaContainer = FaciaContainer(1,
-      Fixed(FixedContainers.fixedMediumFastXII),
+    val containerDefinition = trails.length match {
+      case 1 => FixedContainers.fixedSmallSlowI
+      case 2 => FixedContainers.fixedSmallSlowII
+      case _ => FixedContainers.fixedMediumFastXII }
+
+    val container: FaciaContainer = FaciaContainer(
+      1,
+      Fixed(containerDefinition),
       CollectionConfigWithId(dataId, config),
       CollectionEssentials(trails take 8, Nil, displayName, None, None, None)
     ).withTimeStamps
