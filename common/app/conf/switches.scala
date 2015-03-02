@@ -115,7 +115,7 @@ object Switches {
   val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
     "If this switch is switched on then the preview server requires login",
     safeState = On,
-    sellByDate = hackdayAmnesty
+    sellByDate = new LocalDate(2015, 3, 31)
   )
 
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
@@ -499,7 +499,7 @@ object Switches {
     "If this switch is switched on then there will be a floating social icon on the bottom of pages on mobile",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 14)
   )
-  
+
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
@@ -544,7 +544,7 @@ object Switches {
 
   val IphoneConfidence = Switch("Performance", "iphone-confidence",
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
-    safeState = Off, sellByDate = hackdayAmnesty
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
   )
 
   val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",
