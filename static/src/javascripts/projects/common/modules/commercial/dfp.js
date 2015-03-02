@@ -289,7 +289,7 @@ define([
             } else {
                 // remove any placeholder ad content
                 $('.ad-slot__content--placeholder', $slot).remove();
-                $('#' + slotId + ' div').addClass("ad-slot__content");
+                $('#' + slotId + ' div').addClass('ad-slot__content');
                 checkForBreakout($slot);
                 addLabel($slot);
                 size = event.size.join(',');
