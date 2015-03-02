@@ -29,16 +29,24 @@ define([
         });
     }
 
+    function shouldRun() {
+        var match = window.location.href.match(/[?&]CMP=([^&#]+)/);
+        return (
+            config.switches.staticSocialIconMobile &&
+            detect.isBreakpoint({ max: 'phablet' }) &&
+            /has-fixed/.test(document.documentElement.className) &&
+            (match && ['share_btn_fb', 'share_btn_tw'].indexOf(match[1]) > -1)
+        );
+    }
+
     function init() {
         var blockShortUrl = config.page.shortUrl,
             data = {
                 fbUrl: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(blockShortUrl) + '/sfb',
                 twUrl: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(config.page.webTitle) + '&url=' + encodeURIComponent(blockShortUrl) + '/stw'
-            },
-            match = window.location.href.match(/[?&]CMP=([^&#]+)/);
+            };
 
-        if (config.switches.staticSocialIconMobile && detect.isBreakpoint({ max: 'phablet' }) &&
-            match && ['share_btn_fb', 'share_btn_tw'].indexOf(match[1]) > -1) {
+        if (shouldRun()) {
             fastdom.write(function () {
                 $('.meta__social').append(template(staticSocialTmpl, data));
             });
