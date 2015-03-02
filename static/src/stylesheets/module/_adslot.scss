@@ -202,8 +202,8 @@
 .ad-slot--container-inline {
     @include mq(tablet) {
         height: auto;
-        width: 100%;
         margin: 0 $gs-gutter/2;
+        width: 300px;
 
         .linkslist-container & {
             position: absolute;
@@ -223,6 +223,7 @@
 
     @include mq(tablet, desktop) {
         position: relative;
+        width: gs-span(4.5);
 
         .ad-slot__label {
             padding: 0 $gs-gutter;
