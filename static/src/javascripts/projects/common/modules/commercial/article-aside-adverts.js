@@ -13,7 +13,6 @@ define([
     config,
     createAdSlot
 ) {
-
     function init(options) {
         var $mainCol, adType,
             opts        = defaults(
@@ -62,5 +61,4 @@ define([
     return {
         init: init
     };
-
 });
