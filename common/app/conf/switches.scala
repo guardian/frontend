@@ -550,16 +550,6 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val FaciaToolSaveClipboardOftenSwitch = Switch("Facia", "facia-tool-save-clipboard-often",
-    "If this switch is on facia tool will save the state of the clipboard every 2 seconds",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
-  )
-
-  val FaciaToolSaveClipboardSeldomSwitch = Switch("Facia", "facia-tool-save-clipboard-seldom",
-    "If this switch is on facia tool will save the state of the clipboard every 5 seconds",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
-  )
-
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
