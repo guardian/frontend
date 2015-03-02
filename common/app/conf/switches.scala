@@ -115,7 +115,7 @@ object Switches {
   val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
     "If this switch is switched on then the preview server requires login",
     safeState = On,
-    sellByDate = hackdayAmnesty
+    sellByDate = new LocalDate(2015, 3, 31)
   )
 
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
@@ -166,11 +166,6 @@ object Switches {
   val DiscussionPageSizeSwitch = Switch("Performance", "discussion-page-size",
     "If this is switched on then users will have the option to change their discussion page size",
     safeState = Off, sellByDate = never
-  )
-
-  val DiscussionTimeoutSwitch = Switch("Performance", "discussion-timeout",
-    "An experimental switch to investigate whether discussion calls should be timed out within 5000ms",
-    safeState = Off, sellByDate = hackdayAmnesty
   )
 
   val OpenCtaSwitch = Switch("Performance", "open-cta",
@@ -342,14 +337,6 @@ object Switches {
   )
 
   // Features
-  val CPScottSwitch = Switch(
-    "Feature",
-    "cp-scott-header",
-    "CP Scott header on Comment is Free container",
-    safeState = Off,
-    sellByDate = hackdayAmnesty
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
@@ -374,11 +361,6 @@ object Switches {
   val ForeseeSwitch = Switch("Feature", "foresee",
     "Enable Foresee surveys for a sample of our audience",
     safeState = Off, sellByDate = never)
-
-  val ReleaseMessageSwitch = Switch("Feature", "release-message",
-    "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = hackdayAmnesty
-  )
 
   val GeoMostPopular = Switch("Feature", "geo-most-popular",
     "If this is switched on users then 'most popular' will be upgraded to geo targeted",
@@ -503,11 +485,6 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val DefaultOriginSwitch = Switch("Feature", "default-origin",
-    "If switched on, an experimental default header to allow origins will be added to Json endpoints",
-    safeState = On, sellByDate = hackdayAmnesty
-  )
-
   val DiscussionAllPageSizeSwitch = Switch("Feature", "discussion-all-page-size",
     "If this is switched on then users will have the option to load all comments",
     safeState = Off, sellByDate = never
@@ -516,6 +493,11 @@ object Switches {
   val MissingVideoEndcodingsJobSwitch = Switch("Feature", "check-for-missing-video-encodings",
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
      safeState = Off, sellByDate = never
+  )
+
+  val StaticSocialIconSwitch = Switch("Feature", "static-social-icon-mobile",
+    "If this switch is switched on then there will be a floating social icon on the bottom of pages on mobile",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 14)
   )
 
   // Facia
@@ -562,7 +544,7 @@ object Switches {
 
   val IphoneConfidence = Switch("Performance", "iphone-confidence",
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
-    safeState = Off, sellByDate = hackdayAmnesty
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
   )
 
   val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",
