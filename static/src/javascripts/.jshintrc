@@ -29,7 +29,8 @@
     "globals"   : {
         "require": false,
         "define" : false,
-        "s"      : false
+        "s"      : false,
+        "JSON"   : false
     },
 
     // catch keyword (native promises)
