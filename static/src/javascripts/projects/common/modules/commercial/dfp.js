@@ -328,11 +328,11 @@ define([
             }
         },
         addLabel = function ($slot) {
-            if (shouldRenderLabel($slot)) {
-                fastdom.write(function () {
+            fastdom.write(function () {
+                if (shouldRenderLabel($slot)) {
                     $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
-                });
-            }
+                }
+            });
         },
         removeLabel = function ($slot) {
             fastdom.write(function () {
