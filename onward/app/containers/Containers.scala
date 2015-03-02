@@ -23,7 +23,7 @@ trait Containers {
       1,
       Fixed(containerDefinition),
       CollectionConfigWithId(dataId, config),
-      CollectionEssentials(trails take 8, Nil, displayName, None, None, None)
+      CollectionEssentials(trails, Nil, displayName, None, None, None)
     ).withTimeStamps
   }
 }

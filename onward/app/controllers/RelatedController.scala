@@ -29,14 +29,16 @@ object RelatedController extends Controller with Related with Containers with Lo
 
   private def renderRelated(trails: Seq[Content])(implicit request: RequestHeader) = Cached(30.minutes) {
 
+    val relatedTrails = trails take 8
+
     if (request.isJson) {
       val html = views.html.fragments.containers.facia_cards.container(
-        onwardContainer("related content", trails),
+        onwardContainer("related content", relatedTrails),
         FrontProperties.empty
       )(request)
       JsonComponent("html" -> html)
     } else {
-      Ok(views.html.relatedContent(page, trails))
+      Ok(views.html.relatedContent(page, relatedTrails))
     }
   }
 }
