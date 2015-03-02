@@ -1,4 +1,5 @@
 /* jshint -W024 */
+/* global System */
 define([
     'knockout'
 ], function (ko) {

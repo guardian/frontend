@@ -20,6 +20,7 @@ object Uk extends Edition(
     cycling,
     boxing,
     usSport,
+    rugbyLeague,
     formulaOne,
     racing
   )

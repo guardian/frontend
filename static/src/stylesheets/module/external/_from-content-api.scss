@@ -172,13 +172,12 @@ figure {
     img {
         display: block;
     }
-    &.img,
     &.element {
         margin-top: ($gs-baseline/3)*4;
         margin-bottom: $gs-baseline;
         position: relative;
     }
-    &.img {
+    &.element-image {
         position: relative;
         figcaption {
             padding-top: ($gs-baseline/6)*4;
