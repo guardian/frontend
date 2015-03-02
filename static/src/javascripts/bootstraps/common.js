@@ -280,20 +280,6 @@ define([
                 cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
             },
 
-            // display a flash message to devices over 600px who don't have the mobile cookie
-            displayReleaseMessage: function () {
-                var releaseMessage = new Message('alpha', {pinOnHide: true}),
-                    feedbackLink = 'https://www.surveymonkey.com/s/theguardian-beta-feedback';
-
-                if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile')) {
-                    releaseMessage.show(template(
-                        releaseMessageCompulsoryTpl, {
-                            feedbackLink: feedbackLink
-                        }
-                    ));
-                }
-            },
-
             updateHistory: function () {
                 mediator.on('page:common:ready', function () {
                     if (config.page.contentType !== 'Network Front') {
@@ -488,7 +474,6 @@ define([
             robust('c-toggles',         modules.showToggles);
             robust('c-dates',           modules.showRelativeDates);
             robust('c-clickstream',     modules.initClickstream);
-            robust('c-release-message', modules.displayReleaseMessage);
             robust('c-history',         modules.updateHistory);
             robust('c-sign-in', modules.initAutoSignin);
             robust('c-interactive', modules.augmentInteractive);
