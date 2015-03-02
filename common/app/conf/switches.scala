@@ -168,11 +168,6 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val DiscussionTimeoutSwitch = Switch("Performance", "discussion-timeout",
-    "An experimental switch to investigate whether discussion calls should be timed out within 5000ms",
-    safeState = Off, sellByDate = hackdayAmnesty
-  )
-
   val OpenCtaSwitch = Switch("Performance", "open-cta",
     "If this switch is on, will see a CTA to comments on the right hand side. Turn this off if the Open API is blowing up.",
     safeState = Off, sellByDate = never
@@ -375,11 +370,6 @@ object Switches {
     "Enable Foresee surveys for a sample of our audience",
     safeState = Off, sellByDate = never)
 
-  val ReleaseMessageSwitch = Switch("Feature", "release-message",
-    "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = hackdayAmnesty
-  )
-
   val GeoMostPopular = Switch("Feature", "geo-most-popular",
     "If this is switched on users then 'most popular' will be upgraded to geo targeted",
     safeState = On, sellByDate = never
@@ -501,11 +491,6 @@ object Switches {
   val StocksWidgetSwitch = Switch("Feature", "stocks-widget",
     "If switched on, a stocks widget will be displayed on the business front",
     safeState = On, sellByDate = never
-  )
-
-  val DefaultOriginSwitch = Switch("Feature", "default-origin",
-    "If switched on, an experimental default header to allow origins will be added to Json endpoints",
-    safeState = On, sellByDate = hackdayAmnesty
   )
 
   val DiscussionAllPageSizeSwitch = Switch("Feature", "discussion-all-page-size",
