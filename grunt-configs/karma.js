@@ -17,6 +17,9 @@ module.exports = function(grunt, options) {
         membership: {
             configFile: options.testConfDir + 'membership.js'
         },
+        commercial: {
+            configFile: options.testConfDir + 'commercial.js'
+        },
         'facia-tool': {
             configFile: 'facia-tool/test/public/conf/karma.conf.js'
         }

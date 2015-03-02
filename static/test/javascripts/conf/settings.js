@@ -37,7 +37,7 @@ module.exports = function(config) {
         // - Safari (only Mac; has to be installed with `npm install karma-safari-launcher`)
         // - PhantomJS
         // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
-        browsers: ['PhantomJS'],
+        browsers: ['PhantomJS_Desktop'],
         captureTimeout: 60000,
         singleRun: false,
         coverageReporter: {
@@ -48,6 +48,17 @@ module.exports = function(config) {
                 },
                 {type: 'text-summary'}
             ]
+        },
+        customLaunchers: {
+            'PhantomJS_Desktop': {
+                base: 'PhantomJS',
+                options: {
+                    viewportSize: {
+                        width: 1024,
+                        height: 1000
+                    }
+                }
+            }
         }
     };
 };
