@@ -30,7 +30,8 @@
         "require": false,
         "define" : false,
         "s"      : false,
-        "JSON"   : false
+        "JSON"   : false,
+        "System" : false
     },
 
     // catch keyword (native promises)
