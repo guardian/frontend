@@ -24,7 +24,8 @@ define([
             ),
             $col        = $(opts.columnSelector),
             colIsHidden = $col.length && $css($col, 'display') === 'none',
-            $componentsContainer;
+            $componentsContainer,
+            $adSlotContainer;
 
         // is the switch off, or not an article, or the secondary column hidden
         if (!config.switches.standardAdverts || !/Article|LiveBlog/.test(config.page.contentType) || colIsHidden) {
@@ -33,6 +34,7 @@ define([
 
         $mainCol = config.page.contentType === 'Article' ? $('.js-content-main-column') : false;
         $componentsContainer = $('.js-components-container', '.js-secondary-column');
+        $adSlotContainer = $(opts.adSlotContainerSelector);
 
         fastdom.read(function () {
             if (
@@ -52,10 +54,11 @@ define([
                     $componentsContainer.addClass('u-h');
                 }
 
-                $(opts.adSlotContainerSelector)
-                    .append(createAdSlot(adType, 'mpu-banner-ad'));
+                $adSlotContainer.append(createAdSlot(adType, 'mpu-banner-ad'));
             });
         });
+
+        return $adSlotContainer;
     }
 
     return {
