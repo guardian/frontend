@@ -1,26 +1,22 @@
 define([
     'bean',
     'fastdom',
-    'common/utils/$',
-    'common/modules/analytics/beacon'
+    'common/utils/$'
 ], function (
     bean,
     fastdom,
-    $,
-    beacon
+    $
 ) {
 
     return {
         init: function () {
             var link = $('.js-tech-feedback');
-            bean.on(link[0], 'click', function () {
-                beacon.fire('/counts.gif?c=tech-feedback');
+            fastdom.read(function () {
+                var oldHref = link.attr('href');
                 fastdom.write(function () {
-                    $('.js-feedback-thanks').removeClass('footer__feedback--hide');
-                    link.addClass('footer__feedback--hide');
+                    link.attr('href', oldHref + '&width=' + window.innerWidth);
                 });
             });
-            link.removeClass('footer__feedback--hide');
         }
     };
 });

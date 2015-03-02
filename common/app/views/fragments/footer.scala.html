@@ -95,8 +95,7 @@
                     contact us</a></li>
             }
 
-        <li class="colophon__item js-tech-feedback"><a data-link-name="uk : footer : tech feedback" href="@Configuration.debug.beaconUrl/tech-feedback?uri=@request.uri">report technical issue</a></li>
-        <li class="colophon__message footer__feedback--hide js-feedback-thanks">Thanks for reporting!</li>
+        <li class="colophon__item"><a class="js-tech-feedback" data-link-name="uk : footer : tech feedback" href="@Configuration.debug.beaconUrl/tech-feedback?uri=@request.uri">report technical issue</a></li>
 
             @if(currentEdition == Us) {
                 <li class="colophon__item"><a data-link-name="us : footer : about us" href="http://www.theguardian.com/info/about-guardian-us">
