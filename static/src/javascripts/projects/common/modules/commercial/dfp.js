@@ -293,7 +293,6 @@ define([
                 checkForBreakout($slot);
                 addLabel($slot);
                 size = event.size.join(',');
-
                 // is there a callback for this size
                 callbacks[size] && callbacks[size](event, $slot);
 
