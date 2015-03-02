@@ -210,6 +210,15 @@
             top: 0;
             right: 0;
         }
+
+        .ad-slot__content {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 250px;
+            margin: auto;
+        }
     }
 
     @include mq(tablet, desktop) {
@@ -220,13 +229,7 @@
         }
 
         .ad-slot__content {
-            position: absolute;
             top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            height: 250px;
-            margin: auto;
         }
     }
 }

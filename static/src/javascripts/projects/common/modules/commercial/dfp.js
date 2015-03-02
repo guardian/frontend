@@ -297,7 +297,7 @@ define([
                 // is there a callback for this size
                 callbacks[size] && callbacks[size](event, $slot);
 
-                if ($slot.hasClass('ad-slot--container-inline')) {
+                if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
                     $slot.parent().css('display', 'flex');
                 } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
                     $slot.parent().css('display', 'block');
