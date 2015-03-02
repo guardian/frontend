@@ -1,10 +1,12 @@
 define([
+    'fastdom',
     'lodash/objects/defaults',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
     'common/modules/commercial/create-ad-slot'
 ], function (
+    fastdom,
     defaults,
     $,
     $css,
@@ -22,7 +24,8 @@ define([
                 }
             ),
             $col        = $(opts.columnSelector),
-            colIsHidden = $col.length && $css($col, 'display') === 'none';
+            colIsHidden = $col.length && $css($col, 'display') === 'none',
+            $componentsContainer;
 
         // is the switch off, or not an article, or the secondary column hidden
         if (!config.switches.standardAdverts || !/Article|LiveBlog/.test(config.page.contentType) || colIsHidden) {
@@ -30,30 +33,34 @@ define([
         }
 
         $mainCol = config.page.contentType === 'Article' ? $('.js-content-main-column') : false;
-        if (
-            !$mainCol.length ||
-            (config.page.section !== 'football' && $mainCol.dim().height >= 1300) ||
-            (config.page.section === 'football' && $mainCol.dim().height >= 2200)
-        ) {
-            adType = 'right-sticky';
-        } else if ($mainCol.dim().height >= 600) {
-            adType = 'right';
-        } else {
-            adType = 'right-small';
-        }
+        $componentsContainer = $('.js-components-container', '.js-secondary-column');
 
-        if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {
-            $('.js-components-container', '.js-secondary-column').addClass('u-h');
-        }
+        fastdom.read(function () {
+            if (
+                !$mainCol.length ||
+                (config.page.section !== 'football' && $mainCol.dim().height >= 1300) ||
+                (config.page.section === 'football' && $mainCol.dim().height >= 2200)
+            ) {
+                adType = 'right-sticky';
+            } else if ($mainCol.dim().height >= 600) {
+                adType = 'right';
+            } else {
+                adType = 'right-small';
+            }
 
-        return $(opts.adSlotContainerSelector)
-            .append(createAdSlot(adType, 'mpu-banner-ad'));
+            fastdom.write(function () {
+                if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {
+                    $componentsContainer.addClass('u-h');
+                }
+
+                $(opts.adSlotContainerSelector)
+                    .append(createAdSlot(adType, 'mpu-banner-ad'));
+            });
+        });
     }
 
     return {
-
         init: init
-
     };
 
 });
