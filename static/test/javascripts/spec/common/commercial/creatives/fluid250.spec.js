@@ -33,13 +33,6 @@ define([
             expect(fluid250).toBeDefined();
         });
 
-        xit('ad slot should always have a proper fluid250 css class', function() {
-            $fixturesContainer = fixtures.render(fixturesConfig);
-
-            new Fluid250($('.ad-slot', $fixturesContainer), {}).create();
-            expect($('.ad-slot').hasClass('ad-slot__fluid250')).toBe(true);
-        });
-
         it('ad slot should have a video iframe with proper styles', function() {
             $fixturesContainer = fixtures.render(fixturesConfig);
 

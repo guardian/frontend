@@ -38,7 +38,7 @@ define([
     };
 
     ExpandableV2.prototype.listener = function () {
-        if ((window.pageYOffset + bonzo.viewport().height) > (this.$ad.offset().top + this.openedHeight)) {
+        if ((window.pageYOffset + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
             // expires in 1 week
             var week = 1000 * 60 * 60 * 24 * 7;
 
@@ -47,7 +47,6 @@ define([
             $('.ad-exp__open-chevron').toggleClass('chevron-down');
             this.$ad.css('height', this.openedHeight);
             this.isClosed = false;
-
             return true;
         }
     };

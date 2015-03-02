@@ -62,7 +62,6 @@ object GalleryUpgradedImage extends Profile(width = Some(800))
 object GalleryLargeImage extends Profile(width = Some(1024))
 object GalleryLargeTrail extends Profile(width = Some(480), height = Some(288))
 object GallerySmallTrail extends Profile(width = Some(280), height = Some(168))
-object Showcase extends Profile(width = Some(860))
 object Item120 extends Profile(width = Some(120))
 object Item140 extends Profile(width = Some(140))
 object Item160 extends Profile(width = Some(160))
@@ -78,6 +77,11 @@ object Item940 extends Profile(width = Some(940))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
 object Video460 extends VideoProfile(width = Some(460), height = Some(276)) // 5:3
 object SeoOptimisedContentImage extends Profile(width = Some(460))
+
+object ContentThumbnail extends Profile(width = Some(140))
+object ContentSupporting extends Profile(width = Some(380))
+object ContentStandard extends Profile(width = Some(620))
+object ContentShowcase extends Profile(width = Some(860))
 
 object Item115 extends Profile(width = Some(115))
 object Item130 extends Profile(width = Some(130))
@@ -98,7 +102,6 @@ object Profile {
     GalleryLargeImage,
     GalleryLargeTrail,
     GallerySmallTrail,
-    Showcase,
     Item120,
     Item140,
     Item220,

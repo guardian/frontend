@@ -153,7 +153,7 @@ define([
         }, clipboard.group);
         // Let knockout refresh the HTML
         yeld(function () {
-            jasmine.clock().tick(vars.CONST.detectPendingChangesInClipboardSeldom);
+            jasmine.clock().tick(vars.CONST.detectPendingChangesInClipboard);
             callback(clipboard);
         }, 10);
     }
@@ -164,7 +164,7 @@ define([
         });
         clipboard.group.omitItem(actualArticle);
         yeld(function () {
-            jasmine.clock().tick(vars.CONST.detectPendingChangesInClipboardSeldom);
+            jasmine.clock().tick(vars.CONST.detectPendingChangesInClipboard);
             callback(clipboard);
         }, 10);
     }
@@ -172,7 +172,7 @@ define([
     function changeHeadline (position, newHeadline, clipboard) {
         var article = clipboard.group.items()[position];
         article.meta.headline(newHeadline);
-        jasmine.clock().tick(vars.CONST.detectPendingChangesInClipboardSeldom);
+        jasmine.clock().tick(vars.CONST.detectPendingChangesInClipboard);
     }
 
     var mockjaxId;
@@ -189,8 +189,7 @@ define([
         if (!vars.model) {
             vars.model = {
                 switches: ko.observable({
-                    'facia-tool-sparklines': false,
-                    'facia-tool-save-clipboard-seldom': true
+                    'facia-tool-sparklines': false
                 })
             };
         }
@@ -205,8 +204,5 @@ define([
         ko.cleanNode(container[0]);
         container.remove();
         $.mockjax.clear(mockjaxId);
-        var switches = vars.model.switches();
-        switches['facia-tool-save-clipboard-seldom'] = false;
-        vars.model.switches(switches);
     }
 });
