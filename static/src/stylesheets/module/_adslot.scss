@@ -213,8 +213,20 @@
     }
 
     @include mq(tablet, desktop) {
+        position: relative;
+
         .ad-slot__label {
             padding: 0 $gs-gutter;
+        }
+
+        .ad-slot__content {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 250px;
+            margin: auto;
         }
     }
 }
