@@ -7,7 +7,6 @@
         faciaPage.isFoundationSupported)) { case (isSponsored, isAdFeature, isFoundationFunded) =>
     @if(faciaPage.collections.nonEmpty) {
         <div class="l-side-margins">
-            <div class="history-tags js-history-tags"></div>
             <div class="@RenderClasses(Map(
                 "fc-container--sponsored" -> isSponsored,
                 "fc-container--advertisement-feature" -> isAdFeature,
