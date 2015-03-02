@@ -337,14 +337,6 @@ object Switches {
   )
 
   // Features
-  val CPScottSwitch = Switch(
-    "Feature",
-    "cp-scott-header",
-    "CP Scott header on Comment is Free container",
-    safeState = Off,
-    sellByDate = hackdayAmnesty
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
