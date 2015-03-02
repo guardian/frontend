@@ -32,12 +32,6 @@ object DiagnosticsController extends Controller with Logging {
   }
 
   def analytics(prefix: String) = Action { implicit request =>
-
-    if (Switches.DoNotTrack.isSwitchedOn && prefix == "pv") {
-      // http://en.wikipedia.org/wiki/Do_Not_Track
-      request.headers.get("DNT").filter(_.nonEmpty).foreach( _ => Analytics.report("dnt"))
-    }
-
     Analytics.report(prefix)
     TinyResponse.gif
   }

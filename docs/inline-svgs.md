@@ -30,12 +30,13 @@ There are two places where you can use an inline SVG: Scala templates and JavaSc
 A scala helper method will insert the image for you:
 
 ```scala
-@fragments.inlineSvg(Filename[, path: Subdirectory[, classes: Classes]])
+@fragments.inlineSvg(Filename[, path: Subdirectory[, classes: Classes[, title: Title]]])
 ```
 
 - `Filename` **String** The name of the file, excluding the extention
 - `Subdirectory` **String** (optional) The folder the image lives in inside `inline-svgs`
 - `Classes` **List** (optional) A list of bespoke classes for this image
+- `Title` **String** (optional) A title that gets added to the wrapping `span`
 
 ### JavaScript templates
 
@@ -83,11 +84,12 @@ define([
     svgs
 ) {
 	var htmlWithInlineSVG = template("Here is my inline image: {{myImage}}", {
-		myImage: svgs('myImage'[, Classes])
+		myImage: svgs('myImage'[, Classes[, Title]])
 	})
 })
 ```
 - `Classes` **Array** (optional) An array of bespoke classes for this image
+- `Title` **String** (optional) A title that gets added to the wrapping `span`
 
 ## Output
 
@@ -96,7 +98,7 @@ The result of inserting an SVG with either method is the compressed source wrapp
 So both this Scala:
 
 ```scala
-@fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+@fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"), Some("Profile icon"))
 ```
 and this JavaScript:
 
@@ -119,14 +121,14 @@ define([
 ], function (
     svgs
 ) {
-	svgs('profile36icon', ["rounded-icon", "control__icon-wrapper"]);
+	svgs('profile36icon', ["rounded-icon", "control__icon-wrapper"], "Profile icon");
 });
 ```
 
 will give you this HTML:
 
 ```html
-<span class="inline-profile-36 inline-icon rounded-icon control__icon-wrapper">
+<span title="Profile icon" class="inline-profile-36 inline-icon rounded-icon control__icon-wrapper">
     <svg width="18" height="18"><path d="..."></path></svg>
 </span>
 ```

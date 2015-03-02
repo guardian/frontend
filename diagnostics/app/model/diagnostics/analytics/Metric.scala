@@ -29,8 +29,6 @@ object Metric extends Logging {
     ("video-tech-flash", CountMetric("video-tech-flash")),
     ("video-tech-html5", CountMetric("video-tech-html5")),
 
-    ("dnt", CountMetric("do-not-track")),
-
     ("sm-page-view", CountMetric("sm-page-view")),
     ("sm-interaction-on-same-page", CountMetric("sm-interaction-on-same-page")),
     ("sm-another-guardian-page", CountMetric("sm-another-guardian-page")),
