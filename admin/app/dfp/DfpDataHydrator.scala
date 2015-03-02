@@ -129,9 +129,10 @@ class DfpDataHydrator extends Logging {
 
   def loadAllAdFeatures(): Seq[GuLineItem] = {
     val allSponsored = new StatementBuilder()
-      .where("lineItemType = :sponsoredType")
+      .where("lineItemType = :sponsoredType AND status != :draftStatus")
       .orderBy("id ASC")
       .withBindVariableValue("sponsoredType", LineItemType.SPONSORSHIP.toString)
+      .withBindVariableValue("draftStatus", ComputedStatus.DRAFT.toString)
 
     loadLineItems(allSponsored) filter { lineItem =>
       lineItem.targeting.customTargetSets exists { targetSet =>

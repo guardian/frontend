@@ -645,7 +645,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 .navigation {
     .global-navigation__section--home,
     .top-navigation__item--current,
-    .global-navigation__section--current {
+    .global-navigation--top .global-navigation__section--current {
         display: none;
     }
     .top-navigation__item--current {

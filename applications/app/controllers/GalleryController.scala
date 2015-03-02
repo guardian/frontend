@@ -2,6 +2,7 @@ package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
 import common._
+import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi.getResponse
 import conf._
 import model._
@@ -48,7 +49,13 @@ object GalleryController extends Controller with RendersItemResponse with Loggin
     ).map{response =>
         val gallery = response.content.filter(isSupported).map(Gallery(_))
         val model = gallery map { g => GalleryPage(g, RelatedContent(g, response), index, isTrail) }
+
+      if (gallery.exists(_.isExpiredAdvertisementFeature)) {
+        Right(MovedPermanently(expiredAdFeatureUrl))
+      } else {
         ModelOrResult(model, response)
+      }
+
     }.recover{convertApiExceptions}
   }
 

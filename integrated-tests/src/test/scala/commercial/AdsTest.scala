@@ -9,6 +9,7 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
   "Ads" should "display on the network front" in {
 
     webDriver.get(theguardianWithAds("/uk"))
+    webDriver.navigate().refresh()
 
     // This is an essential sleep, because the implicitlyWait isn't sufficient to ensure that
     // the js application has completed, since the dfp-ad classes exist on page load.

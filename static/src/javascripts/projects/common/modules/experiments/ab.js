@@ -12,6 +12,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
+    'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/identity-benefits'
 ], function (
     raven,
@@ -27,12 +28,14 @@ define([
     store,
     mvtCookie,
     HighCommercialComponent,
+    KruxAudienceScience,
     IdentityBenefits
 ) {
 
     var ab,
         TESTS = [
             new HighCommercialComponent(),
+            new KruxAudienceScience(),
             new IdentityBenefits()
         ],
         participationsKey = 'gu.ab.participations';

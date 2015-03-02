@@ -153,32 +153,46 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
 
   def cleanStandardPictures(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
-      if(!fig.hasClass("element-comment") && !fig.hasClass("element-witness")) {
+      val images = fig.getElementsByTag("img")
+      if(!fig.hasClass("element-comment") && !fig.hasClass("element-witness") && images.size > 0) {
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
-        val mediaId = fig.attr("data-media-id")
-        val asset = findImageFromId(mediaId)
 
-        fig.getElementsByTag("img").foreach { img =>
-          fig.addClass("img")
+        // For older content that doesn't have these classes.
+        if (!fig.hasClass("element")) {
+          fig.addClass("element element-image")
+        }
+
+        // Choose which profile to use based on element type.
+        // Showcase is treated like standard because it appears full width on smaller breakpoints and is upgraded with imager.
+        // Supporting is treated like standard because it appears full width on smaller breakpoints.
+        val imageProfile: Profile = if (fig.classNames.contains("element--thumbnail")) {
+          ContentThumbnail
+        } else {
+          ContentStandard
+        }
+
+        images.foreach { img =>
           img.attr("itemprop", "contentURL")
 
-          asset.map { image =>
-            image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
-            img.attr("width", s"${image.width}")
+          val imageAsset = findImageFromId(fig.attr("data-media-id"), img.attr("src"), imageProfile)
 
-            //otherwise we mess with aspect ratio
+          imageAsset.map { asset =>
+            asset.url.map(url => img.attr("src", ImgSrc(url, imageProfile).toString))
+            img.attr("width", s"${asset.width}")
+
+            // Height can mess with aspect ratio.
             img.removeAttr("height")
 
-            fig.addClass(image.width match {
-              case width if width <= 220 => "img--base img--inline"
-              case width if width < 460 => "img--median"
-              case width => "img--extended"
-            })
-            fig.addClass(image.height match {
-              case height if height > image.width => "img--portrait"
-              case height if height < image.width => "img--landscape"
+            // If the content response provides a small image for a standard-width profile, treat it as inline.
+            if (imageProfile.width == ContentStandard.width && asset.width <= 220) {
+              fig.addClass("img--inline")
+            }
+
+            fig.addClass(asset.height match {
+              case height if height > asset.width => "img--portrait"
+              case height if height < asset.width => "img--landscape"
               case height => ""
             })
           }
@@ -231,8 +245,9 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
   def cleanShowcasePictures(body: Document): Document = {
     for {
       element <- body.getElementsByClass("element--showcase")
-      asset <- findContainerFromId(element.attr("data-media-id"))
-      imagerSrc <- ImgSrc.imager(asset, Showcase)
+      imageSrc <- element.getElementsByTag("img").headOption.map(_.attr("src"))
+      asset <- findContainerFromId(element.attr("data-media-id"), imageSrc)
+      imagerSrc <- ImgSrc.imager(asset, ContentShowcase)
       imgElement <- element.getElementsByTag("img")
     } {
       imgElement.wrap(s"""<div class="js-image-upgrade" data-src="$imagerSrc"></div>""")
@@ -242,15 +257,29 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
   }
 
   def clean(body: Document): Document = {
-    cleanShowcasePictures(addSharesAndFullscreen(cleanStandardPictures(body)))
+    cleanStandardPictures(cleanShowcasePictures(addSharesAndFullscreen(body)))
   }
 
-  def findImageFromId(id:String): Option[ImageAsset] = {
-    findContainerFromId(id).flatMap(Item620.elementFor)
+  def findImageFromId(id: String, src: String, profile: Profile): Option[ImageAsset] = {
+    findContainerFromId(id, src).flatMap(profile.elementFor)
   }
 
-  def findContainerFromId(id:String): Option[ImageContainer] = {
-    article.bodyImages.find(_.id == id)
+  def findContainerFromId(id: String, src: String): Option[ImageContainer] = {
+    // It is possible that a single data media id can appear multiple times in the elements array.
+    val srcImagePath = new java.net.URL(src).getPath()
+    val imageContainers = article.bodyImages.filter(_.id == id)
+
+    // Try to match the container based on both URL and media ID.
+    val fullyMatchedImage: Option[ImageContainer] = {
+      for {
+        container <- imageContainers
+        asset <- container.imageCrops
+        url <- asset.url
+        if url.contains(srcImagePath)
+      } yield { container }
+    }.headOption
+
+    fullyMatchedImage.orElse(imageContainers.headOption)
   }
 }
 

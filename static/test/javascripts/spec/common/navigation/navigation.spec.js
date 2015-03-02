@@ -23,7 +23,7 @@ define([
                         '<a class="js-navigation-toggle" href="#footer-nav" data-target-nav="js-navigation-header"></a>' +
                         '<div class="js-mega-nav-placeholder"></div>' +
                         '</div>' +
-                        '<div class="js-transfuse" data-transfuse-target="js-mega-nav-placeholder">Nav</div>'
+                        '<div class="js-mega-nav"><div class="global-navigation">Nav</div></div>'
                 ]
             })
         });
@@ -35,23 +35,23 @@ define([
         it("should initialise", function() {
             expect(sut).toEqual(jasmine.any(Object));
 
-            spyOn(sut, "addMegaNavMenu");
+            spyOn(sut, "copyMegaNavMenu");
             spyOn(sut, "enableMegaNavToggle");
             spyOn(sut, "replaceAllSectionsLink");
 
             sut.init();
 
-            expect(sut.addMegaNavMenu).toHaveBeenCalled();
+            expect(sut.copyMegaNavMenu).toHaveBeenCalled();
             expect(sut.enableMegaNavToggle).toHaveBeenCalled();
             expect(sut.replaceAllSectionsLink).toHaveBeenCalled();
         });
 
-        it("should add mega nav menu", function(done) {
+        it("should copy mega nav menu to placeholder", function(done) {
 
-            sut.addMegaNavMenu();
+            sut.copyMegaNavMenu();
 
             fastdom.defer(1, function () {
-                expect($('.js-mega-nav-placeholder').html()).toEqual('Nav');
+                expect($('.js-mega-nav-placeholder').html()).toEqual('<div class="global-navigation">Nav</div>');
                 done();
             });
         });

@@ -33,13 +33,6 @@ define([
             expect(fluid250GoogleAndroid).toBeDefined();
         });
 
-        xit('ad slot should always have a proper fluid250 css class', function() {
-            $fixturesContainer = fixtures.render(fixturesConfig);
-
-            new Fluid250GoogleAndroid($('.ad-slot', $fixturesContainer), {}).create();
-            expect($('.ad-slot').hasClass('ad-slot__fluid250')).toBe(true);
-        });
-
     });
 
 });

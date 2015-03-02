@@ -62,7 +62,6 @@ object GalleryUpgradedImage extends Profile(width = Some(800))
 object GalleryLargeImage extends Profile(width = Some(1024))
 object GalleryLargeTrail extends Profile(width = Some(480), height = Some(288))
 object GallerySmallTrail extends Profile(width = Some(280), height = Some(168))
-object Showcase extends Profile(width = Some(860))
 object Item120 extends Profile(width = Some(120))
 object Item140 extends Profile(width = Some(140))
 object Item160 extends Profile(width = Some(160))
@@ -79,6 +78,18 @@ object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 1
 object Video460 extends VideoProfile(width = Some(460), height = Some(276)) // 5:3
 object SeoOptimisedContentImage extends Profile(width = Some(460))
 
+object ContentThumbnail extends Profile(width = Some(140))
+object ContentSupporting extends Profile(width = Some(380))
+object ContentStandard extends Profile(width = Some(620))
+object ContentShowcase extends Profile(width = Some(860))
+
+object Item115 extends Profile(width = Some(115))
+object Item130 extends Profile(width = Some(130))
+object Item187 extends Profile(width = Some(187))
+object Item216 extends Profile(width = Some(216))
+object Item331 extends Profile(width = Some(331))
+object Item389 extends Profile(width = Some(389))
+
 // Just degrade the image quality without adjusting the width/height
 object Naked extends Profile(None, None)
 
@@ -91,7 +102,6 @@ object Profile {
     GalleryLargeImage,
     GalleryLargeTrail,
     GallerySmallTrail,
-    Showcase,
     Item120,
     Item140,
     Item220,
@@ -106,7 +116,7 @@ object Profile {
   )
 
   // image widths available to <picture> and <img srcset>
-  lazy val images: Seq[Profile]  = Seq(
+  lazy val images: Seq[Profile] = Seq(
     Item120,
     Item160,
     Item220,
@@ -116,6 +126,16 @@ object Profile {
     Item700,
     Item860,
     Item940
+  )
+
+  // image widths available to cutout images
+  lazy val cutoutImages: Seq[Profile] = Seq(
+    Item115,
+    Item130,
+    Item187,
+    Item216,
+    Item331,
+    Item389
   )
 
   lazy val imageWidths: Seq[Int] = images.flatMap(_.width)
@@ -167,6 +187,12 @@ object ImgSrc {
   def srcset(imageContainer: ImageContainer, maxWidth: Int): String = {
     Profile.images.filter(_.width.getOrElse(0) <= maxWidth).map { profile =>
       s"${srcForProfile(profile, imageContainer).get} ${profile.width.get}w"
+    } mkString ", "
+  }
+
+  def srcsetForCutout(path: String): String = {
+    Profile.cutoutImages map { profile =>
+      s"${ImgSrc(path, profile)} ${profile.width.get}w"
     } mkString ", "
   }
 

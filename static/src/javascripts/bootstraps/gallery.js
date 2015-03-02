@@ -7,8 +7,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/component',
-    'common/modules/gallery/lightbox'
+    'common/modules/component'
 ], function (
     bean,
     bonzo,
@@ -18,8 +17,7 @@ define([
     $,
     config,
     mediator,
-    Component,
-    LightboxGallery
+    Component
 ) {
 
     var verticallyResponsiveImages = function () {
@@ -52,13 +50,11 @@ define([
             mostViewed.manipulationType = 'html';
             mostViewed.endpoint = '/gallery/most-viewed.json';
             mostViewed.ready = function () {
-                mediator.emit('ui:images:upgrade', container);
+                mediator.emit('ui:images:upgradePicture', container);
             };
             mostViewed.fetch(container, 'html');
         },
         ready = function () {
-            LightboxGallery.init();
-
             verticallyResponsiveImages();
             $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
 
