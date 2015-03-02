@@ -1,4 +1,5 @@
 /* global console */
+/* global System */
 import Raven from 'raven-js';
 
 export function load (module) {
