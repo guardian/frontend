@@ -200,6 +200,10 @@
             } else {
                 docClass += ' has-no-flex-wrap';
             }
+
+            if (testCssSupport('position', 'fixed')) {
+                docClass += ' has-fixed';
+            }
             docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
         }
     })(guardian.isModernBrowser);

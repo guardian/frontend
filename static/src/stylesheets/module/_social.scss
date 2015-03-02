@@ -212,3 +212,50 @@ category: Common
     visibility: visible;
     opacity: 1;
 }
+
+// Testing static social on mobile
+
+.social-fixed {
+    height: 40px;
+    position: fixed;
+    left: 0;
+    bottom: -40px;
+    width: 100%;
+    opacity: 0;
+    z-index: 10;
+    @include transition(bottom .4s ease);
+}
+
+.social-fixed__item {
+    color: #ffffff;
+    float: left;
+    border-radius: 20px;
+
+    .i {
+        height: 40px;
+        width: 40px;
+        float: left;
+        margin: 0 (-$gs-gutter/2) 0 (-$gs-gutter*.6) !important;
+    }
+}
+
+.social-fixed__item--facebook {
+    background-color: colour(social-facebook);
+    margin: 0 $gs-gutter/4 0 $gs-gutter/2 !important;
+}
+
+.social-fixed__item--twitter {
+    background-color: colour(social-twitter);
+}
+
+.social-fixed--show {
+    bottom: $gs-baseline/2;
+    opacity: 1;
+}
+
+.share-text {
+    float: left;
+    @include fs-textSans(3);
+    font-weight: 700;
+    padding: ($gs-baseline/3*2) ($gs-gutter/10) 0 ($gs-gutter/2);
+}
