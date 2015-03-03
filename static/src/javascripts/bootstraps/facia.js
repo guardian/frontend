@@ -11,7 +11,6 @@ define([
     'common/utils/to-array',
     // Modules
     'common/modules/business/stocks',
-    'common/modules/ui/lazy-load-images',
     'facia/modules/onwards/geo-most-popular-front',
     'facia/modules/ui/container-toggle',
     'facia/modules/ui/container-show-more',
@@ -29,7 +28,6 @@ define([
     storage,
     toArray,
     stocks,
-    lazyLoadImages,
     GeoMostPopularFront,
     ContainerToggle,
     containerShowMore,
@@ -39,19 +37,6 @@ define([
 ) {
 
     var modules = {
-            lazyLoadImages: function () {
-                lazyLoadImages($('.js-lazy-loaded-image'));
-
-                _.forEach([
-                    'modules:onward:loaded',
-                    'modules:related:loaded'
-                ], function (event) {
-                    mediator.on(event, function (context) {
-                        lazyLoadImages($('.js-lazy-loaded-image', context));
-                    });
-                });
-            },
-
             showSnaps: function () {
                 snaps.init();
                 mediator.on('modules:container:rendered', snaps.init);
@@ -94,7 +79,6 @@ define([
         ready = function () {
             if (!this.initialised) {
                 this.initialised = true;
-                modules.lazyLoadImages();
                 modules.showSnaps();
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
