@@ -1,4 +1,4 @@
-@(page: model.Page, emailParams: String)(implicit request: RequestHeader)
+@(page: model.Page, emailParams: String, uri: Option[String])(implicit request: RequestHeader)
 
 @main(page){ }{
 <div class="l-side-margins">
@@ -6,7 +6,7 @@
         <header class="content__head">
             <div class="gs-container">
                 <div class="content__main-column">
-                    <h1 itemprop="headline" class="content__headline">Your report has been logged</h1>
+                    <h1 itemprop="headline" class="content__headline">Sorry you've experienced an issue</h1>
                 </div>
             </div>
         </header>
@@ -16,9 +16,9 @@
                     <div class="js-article__container u-cf">
                         <div class="from-content-api" itemprop="articleBody">
                             <div class="from-content-api">
-                                <p>Thanks for reporting a technical issue with this page.  We monitor the number of clicks in order to identify potential issues with the site.</p>
-                                <p>If you would like to make a more detailed report, please email
-                                    <a  href="mailto:userhelp@@theguardian.com@emailParams">User Help at the Guardian</a>
+                                <p>We've been alerted that there's a technical issue with the page@uri.map { uri => with URL: @uri }.</p>
+                                <p> If you could please provide more details, email us at
+                                        <a  href="mailto:userhelp@@theguardian.com@emailParams">User Help at the Guardian</a>
                                 </p>
                             </div>
                         </div>
