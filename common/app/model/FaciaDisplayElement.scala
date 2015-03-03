@@ -6,16 +6,16 @@ import implicits.FaciaContentImplicits._
 
 object FaciaDisplayElement {
   def fromTrail(faciaContent: FaciaContent): Option[FaciaDisplayElement] = {
-    (faciaContent, faciaContent.mainVideo) match {
-      case (other, Some(videoElement)) if other.showMainVideo =>
+    faciaContent.mainVideo match {
+      case Some(videoElement) if faciaContent.showMainVideo =>
         Some(InlineVideo(
           videoElement,
-          other.webTitle,
-          EndSlateComponents.fromFaciaContent(other).toUriPath,
+          faciaContent.webTitle,
+          EndSlateComponents.fromFaciaContent(faciaContent).toUriPath,
           InlineImage.fromFaciaContent(faciaContent)
         ))
-      case (content: Content, _) if content.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
-        Some(CrosswordSvg(content.id))
+      case _ if faciaContent.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
+        Some(CrosswordSvg(faciaContent.id))
       case _ => InlineImage.fromFaciaContent(faciaContent)
     }
   }
