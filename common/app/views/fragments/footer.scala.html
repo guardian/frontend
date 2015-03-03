@@ -1,26 +1,11 @@
 @(page: model.MetaData, showNav: Boolean=true)(implicit request: RequestHeader)
 
-@import conf.Switches._
 @import org.joda.time.DateTime
 @import common.Edition
 @import common.LinkTo
 @import common.editions.{Au, Uk, Us}
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
-
-    @if(ReleaseMessageSwitch.isSwitchedOn) {
-        <div class="site-message--footer is-hidden js-footer-message" data-link-name="release message">
-            <div class="gs-container">
-                <div class="site-message__inner">
-                    <div class="site-message__media">
-                        @fragments.inlineSvg("marque-36", "icon")
-                    </div>
-                    <div class="site-message__copy js-footer-site-message-copy u-cf"></div>
-                </div>
-            </div>
-        </div>
-    }
-
     <div class="l-footer__primary">
         <div id="footer-nav" class="gs-container">
             <div class="brand-bar u-cf">
@@ -117,7 +102,7 @@
                     complaints &amp; corrections</a></li>
             }
             <li class="colophon__item"><a data-link-name="terms" href="http://www.theguardian.com/help/terms-of-service">terms &amp; conditions</a></li>
-            <li class="colophon__item"><a data-link-name="privacy" href="http://www.theguardian.com/help/privacy-policy">privacy policy</a></li>
+            <li class="colophon__item"><a data-link-name="privacy" href="http://www.theguardian.com/info/privacy">privacy policy</a></li>
             <li class="colophon__item"><a data-link-name="cookie" href="http://www.theguardian.com/info/cookies">cookie policy</a></li>
             <li class="colophon__item"><a data-link-name="securedrop" href="https://securedrop.theguardian.com/">securedrop</a></li>
         }

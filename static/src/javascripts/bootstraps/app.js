@@ -8,7 +8,6 @@ define([
     'bootstraps/article',
     'bootstraps/common',
     'bootstraps/gallery',
-    'bootstraps/image-content',
     'bootstraps/liveblog',
     'bootstraps/media',
     'bootstraps/profile',
@@ -25,7 +24,6 @@ define([
     article,
     common,
     gallery,
-    imageContent,
     liveBlog,
     media,
     profile,
@@ -67,11 +65,17 @@ define([
             }
 
             if (config.page.contentType === 'Article') {
-                bootstrapContext('article', article);
+                require(['bootstraps/image-content'], function (imageContent) {
+                    bootstrapContext('article', article);
+                    bootstrapContext('article : image-content', imageContent);
+                });
             }
 
             if (config.page.contentType === 'LiveBlog') {
-                bootstrapContext('liveBlog', liveBlog);
+                require(['bootstraps/image-content'], function (imageContent) {
+                    bootstrapContext('liveBlog', liveBlog);
+                    bootstrapContext('liveBlog : image-content', imageContent);
+                });
             }
 
             if (config.isMedia || qwery('video, audio').length) {
@@ -79,11 +83,16 @@ define([
             }
 
             if (config.page.contentType === 'Gallery') {
-                bootstrapContext('gallery', gallery);
+                require(['bootstraps/image-content'], function (imageContent) {
+                    bootstrapContext('gallery', gallery);
+                    bootstrapContext('gallery : image-content', imageContent);
+                });
             }
 
             if (config.page.contentType === 'ImageContent') {
-                bootstrapContext('image-content', imageContent);
+                require(['bootstraps/image-content'], function (imageContent) {
+                    bootstrapContext('image-content', imageContent);
+                });
             }
 
             if (config.page.contentType === 'Tag') {

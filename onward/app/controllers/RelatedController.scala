@@ -1,16 +1,14 @@
 package controllers
 
-import com.gu.facia.client.models.CollectionConfigJson
 import common._
-import layout.{CollectionEssentials, FaciaContainer}
+import containers.Containers
 import model._
 import play.api.mvc.{ RequestHeader, Controller }
 import services._
 import performance.MemcachedAction
-import slices.{Fixed, FixedContainers}
 import scala.concurrent.duration._
 
-object RelatedController extends Controller with Related with Logging with ExecutionContexts {
+object RelatedController extends Controller with Related with Containers with Logging with ExecutionContexts {
 
   private val page = new Page(
     "related-content",
@@ -30,21 +28,17 @@ object RelatedController extends Controller with Related with Logging with Execu
   }
 
   private def renderRelated(trails: Seq[Content])(implicit request: RequestHeader) = Cached(30.minutes) {
-    val dataId: String = "related content"
-    val displayName = Some(dataId)
-    val properties = FrontProperties.empty
-    val config = CollectionConfigJson.withDefaults(displayName = displayName)
 
-    val container: FaciaContainer = FaciaContainer(1,
-      Fixed(FixedContainers.fixedMediumFastXII),
-      CollectionConfigWithId(dataId, config),
-      CollectionEssentials(trails take 8, Nil, displayName, None, None, None)
-    ).withTimeStamps
+    val relatedTrails = trails take 8
 
     if (request.isJson) {
-      JsonComponent("html" -> views.html.fragments.containers.facia_cards.container(container, properties))
+      val html = views.html.fragments.containers.facia_cards.container(
+        onwardContainer("related content", relatedTrails),
+        FrontProperties.empty
+      )(request)
+      JsonComponent("html" -> html)
     } else {
-      Ok(views.html.relatedContent(page, container.items))
+      Ok(views.html.relatedContent(page, relatedTrails))
     }
   }
 }

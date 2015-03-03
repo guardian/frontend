@@ -52,7 +52,7 @@ function (
         },
 
         upgradePicture: function (context) {
-            var images = [].slice.call($('img', context));
+            var images = [].slice.call($('img[srcset]', context));
             picturefill({ elements: images });
         },
 

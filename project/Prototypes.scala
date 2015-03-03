@@ -15,11 +15,16 @@ trait Prototypes {
     organization := "com.gu",
     maxErrors := 20,
     javacOptions := Seq("-g","-encoding", "utf8"),
-    scalacOptions := Seq("-unchecked", "-optimise", "-deprecation",
+    scalacOptions := Seq("-unchecked", "-optimise", "-deprecation", "-target:jvm-1.8",
       "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings","-Xfatal-warnings"),
     doc in Compile <<= target.map(_ / "none"),
     incOptions := incOptions.value.withNameHashing(true),
-    scalaVersion := "2.11.4"
+    scalaVersion := "2.11.4",
+    initialize := {
+      val _ = initialize.value
+      assert(sys.props("java.specification.version") == "1.8",
+        "Java 8 is required for this project.")
+    }
   )
 
   val frontendIntegrationTestsSettings = Seq (

@@ -14,25 +14,26 @@
             @curlPaths.map { case (module, path) =>
                 '@module': '@Static(path)',
             }
-            core:                      '@Static("javascripts/core.js")',
-            facebook:                  '//connect.facebook.net/en_US/all.js',
-            foresee:                   'vendor/foresee/20141107/foresee-trigger.js',
-            googletag:                 '@{Configuration.javascript.config("googletagJsUrl")}',
-            'ophan/ng':                '@{Configuration.javascript.config("ophanJsUrl")}',
-            stripe:                    '@Static("javascripts/vendor/stripe/stripe.min.js")',
-            text:                      'text', // noop
-            inlineSvg:                 'inlineSvg', // noop
-            zxcvbn:                    '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
-            'bootstraps/app':          '@Static("javascripts/bootstraps/app.js")',
-            'bootstraps/commercial':   '@Static("javascripts/bootstraps/commercial.js")',
-            'bootstraps/creatives':    '@Static("javascripts/bootstraps/creatives.js")',
-            'bootstraps/crosswords':   '@Static("javascripts/bootstraps/crosswords.js")',
-            'bootstraps/dev':          '@Static("javascripts/bootstraps/dev.js")',
-            'bootstraps/preferences':  '@Static("javascripts/bootstraps/preferences.js")',
-            'bootstraps/facia':        '@Static("javascripts/bootstraps/facia.js")',
-            'bootstraps/football':     '@Static("javascripts/bootstraps/football.js")',
-            'bootstraps/sudoku':       '@Static("javascripts/bootstraps/sudoku.js")',
-            'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")'
+            core:                       '@Static("javascripts/core.js")',
+            facebook:                   '//connect.facebook.net/en_US/all.js',
+            foresee:                    'vendor/foresee/20141107/foresee-trigger.js',
+            googletag:                  '@{Configuration.javascript.config("googletagJsUrl")}',
+            'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
+            stripe:                     '@Static("javascripts/vendor/stripe/stripe.min.js")',
+            text:                       'text', // noop
+            inlineSvg:                  'inlineSvg', // noop
+            zxcvbn:                     '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
+            'bootstraps/app':           '@Static("javascripts/bootstraps/app.js")',
+            'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
+            'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
+            'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")',
+            'bootstraps/dev':           '@Static("javascripts/bootstraps/dev.js")',
+            'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
+            'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
+            'bootstraps/football':      '@Static("javascripts/bootstraps/football.js")',
+            'bootstraps/image-content': '@Static("javascripts/bootstraps/image-content.js")',
+            'bootstraps/sudoku':        '@Static("javascripts/bootstraps/sudoku.js")',
+            'bootstraps/video-player':  '@Static("javascripts/bootstraps/video-player.js")'
         }
     };
 
@@ -266,7 +267,28 @@
                 }
             ).install();
 
-            require(['common/utils/config'], function (config) {
+            require([
+                'common/utils/config',
+                'common/modules/experiments/ab',
+                'common/modules/ui/images'
+            ], function (
+                config,
+                ab,
+                images
+            ) {
+
+                ab.segmentUser();
+                ab.run();
+                if(guardian.config.page.isFront) {
+                    images.upgradePicture();
+                    if(!document.addEventListener) { // IE8 and below
+                        window.onload = images.upgradePicture;
+                    }
+                } else {
+                    images.upgrade();
+                    images.listen();
+                }
+
                 if (config.switches.commercial) {
                     require(['bootstraps/commercial'], raven.wrap(
                         { tags: { feature: 'commercial' } },
@@ -275,23 +297,8 @@
                         }
                     ));
                 }
-            });
 
-            if (guardian.isModernBrowser) {
-                require([
-                    'common/utils/config',
-                    'common/modules/experiments/ab',
-                    'common/modules/ui/images'
-                ], function (
-                    config,
-                    ab,
-                    images
-                ) {
-                    ab.segmentUser();
-                    ab.run();
-                    images.upgrade();
-                    images.listen();
-
+                if (guardian.isModernBrowser) {
                     @if(play.Play.isDev()) {
                         require(['bootstraps/dev'], function (devmode) { devmode.init(); });
                     }
@@ -299,14 +306,9 @@
                     require(['bootstraps/app'], function(bootstrap) {
                         bootstrap.go();
                     });
-                });
-            } else {
-                require([
-                    'common/modules/ui/non-modern-images'
-                ], function (nonModernImages) {
-                    nonModernImages();
-                });
-            }
+                }
+
+            });
 
         });
 

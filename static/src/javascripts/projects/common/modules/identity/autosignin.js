@@ -64,13 +64,14 @@ function (
                 success: function (response) {
                     self.welcome(name);
                     if (response.status === 'ok') {
-                        var profile = new Profile(
-                            self.header,
-                            {
-                                url: config.page.idUrl
-                            }
-                        );
+                        var profile = new Profile({
+                            url: config.page.idUrl
+                        });
                         profile.init();
+
+                        s.eVar36 = 'facebook auto';
+                        s.linkTrackVars = 'eVar36';
+                        s.tl(this, 'o', 'Social signin auto');
                     }
                 }
             });

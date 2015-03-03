@@ -16,7 +16,7 @@ module.exports = function(grunt, options) {
                 fence:                'components/fence/fence',
                 imager:               'components/imager.js/container',
                 lodash:               'components/lodash-amd',
-                picturefill:          'components/picturefill/picturefill',
+                picturefill:          'projects/common/utils/picturefill',
                 Promise:              'components/native-promise-only/npo.src',
                 qwery:                'components/qwery/qwery',
                 raven:                'components/raven-js/raven',
@@ -97,6 +97,18 @@ module.exports = function(grunt, options) {
             options: {
                 name: 'bootstraps/sudoku',
                 out: options.staticTargetDir + 'javascripts/bootstraps/sudoku.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        "image-content": {
+            options: {
+                name: 'bootstraps/image-content',
+                out: options.staticTargetDir + 'javascripts/bootstraps/image-content.js',
                 exclude: [
                     'core',
                     'bootstraps/app',
