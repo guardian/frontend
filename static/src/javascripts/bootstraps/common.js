@@ -53,10 +53,7 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
-
-    'bootstraps/identity',
-
-    'text!common/views/release-message-compulsory.html'
+    'bootstraps/identity'
 ], function (
     bean,
     bonzo,
@@ -110,10 +107,7 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
-
-    identity,
-
-    releaseMessageCompulsoryTpl
+    identity
 ) {
 
     var modules = {
@@ -145,7 +139,7 @@ define([
 
                 if (header) {
                     if (config.switches.idProfileNavigation) {
-                        profile = new Profile(header, {
+                        profile = new Profile({
                             url: config.page.idUrl
                         });
                         profile.init();
@@ -278,20 +272,6 @@ define([
 
             cleanupCookies: function () {
                 cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
-            },
-
-            // display a flash message to devices over 600px who don't have the mobile cookie
-            displayReleaseMessage: function () {
-                var releaseMessage = new Message('alpha', {pinOnHide: true}),
-                    feedbackLink = 'https://www.surveymonkey.com/s/theguardian-beta-feedback';
-
-                if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile')) {
-                    releaseMessage.show(template(
-                        releaseMessageCompulsoryTpl, {
-                            feedbackLink: feedbackLink
-                        }
-                    ));
-                }
             },
 
             updateHistory: function () {
@@ -488,7 +468,6 @@ define([
             robust('c-toggles',         modules.showToggles);
             robust('c-dates',           modules.showRelativeDates);
             robust('c-clickstream',     modules.initClickstream);
-            robust('c-release-message', modules.displayReleaseMessage);
             robust('c-history',         modules.updateHistory);
             robust('c-sign-in', modules.initAutoSignin);
             robust('c-interactive', modules.augmentInteractive);

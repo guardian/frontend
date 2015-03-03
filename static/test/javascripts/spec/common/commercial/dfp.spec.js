@@ -1,19 +1,20 @@
 define([
     'bean',
     'bonzo',
-    'qwery',
+    'fastdom',
+    'qwery', 
     'common/utils/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
     bean,
     bonzo,
+    fastdom,
     qwery,
     $,
     fixtures,
     Injector
 ) {
-
     return new Injector()
         .store(['common/utils/config', 'common/utils/mediator'])
         .require(['common/modules/commercial/dfp', 'mocks'], function (dfp, mocks) {
@@ -202,12 +203,18 @@ define([
 
                     var slotId = 'dfp-ad-html-slot';
 
-                    it('should be added', function () {
+                    it('should be added', function (done) {
                         var $slot = $('#' + slotId);
                         dfp.init();
-                        window.googletag.cmd.forEach(function (func) { func(); });
-                        window.googletag.pubads().listener(makeFakeEvent(slotId));
-                        expect($('.ad-slot__label', $slot[0]).text()).toBe('Advertisement');
+
+                        fastdom.defer(function () {
+                            window.googletag.cmd.forEach(function (func) { func(); });
+                            window.googletag.pubads().listener(makeFakeEvent(slotId));
+                            fastdom.defer(function () {
+                                expect($('.ad-slot__label', $slot[0]).text()).toBe('Advertisement');
+                                done();
+                            });
+                        });
                     });
 
                     it('should not be added if data-label attribute is false', function () {
@@ -218,16 +225,22 @@ define([
                         expect($('.ad-slot__label', $slot[0]).length).toBe(0);
                     });
 
-                    it('should be added only once', function () {
+                    it('should be added only once', function (done) {
                         var fakeEvent = makeFakeEvent(slotId),
                             $slot = $('#' + slotId);
                         dfp.init();
-                        window.googletag.cmd.forEach(function (func) { func(); });
-                        window.googletag.pubads().listener(fakeEvent);
-                        window.googletag.pubads().listener(fakeEvent);
-                        expect($('.ad-slot__label', $slot[0]).length).toBe(1);
-                    });
 
+                        fastdom.defer(function () {
+                            window.googletag.cmd.forEach(function (func) { func(); });
+                            window.googletag.pubads().listener(fakeEvent);
+                            window.googletag.pubads().listener(fakeEvent);
+
+                            fastdom.defer(function () {
+                                expect($('.ad-slot__label', $slot[0]).length).toBe(1);
+                                done();
+                            });
+                        });
+                    });
                 });
 
                 describe('breakout', function() {
@@ -245,14 +258,21 @@ define([
                             $frame.appendTo(qwery('#' + id)[0]);
                         };
 
-                    it('should insert html', function () {
+                    it('should insert html', function (done) {
                         var html = '<div class="dfp-iframe-content">Some content</div>',
                             $slot = $('#' + slotId).attr('data-label', false);
                         createTestIframe(slotId, '<div class="breakout__html">' + html + '</div>');
                         dfp.init();
-                        window.googletag.cmd.forEach(function (func) { func(); });
-                        window.googletag.pubads().listener(makeFakeEvent(slotId));
-                        expect($('#' + slotId).html()).toBe('<div class="dfp-iframe-content">Some content</div>');
+
+                        fastdom.defer(function () {
+                            window.googletag.cmd.forEach(function (func) { func(); });
+                            window.googletag.pubads().listener(makeFakeEvent(slotId));
+
+                            fastdom.defer(function () {
+                                expect($('iframe', '#' + slotId).css('display')).toBe('none');
+                                done();
+                            });
+                        });
                     });
 
                     it('should run javascript', function () {
@@ -263,11 +283,7 @@ define([
                         window.googletag.pubads().listener(makeFakeEvent(slotId));
                         expect(window.dfpModuleTestVar).toBe(str);
                     });
-
                 });
-
             });
-
         });
-
 });

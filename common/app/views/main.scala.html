@@ -73,6 +73,10 @@
         @if(!hideUi) {
             @fragments.commercial.pageSkin()
         }
+
+    @if(EsiTestSwitch.isSwitchedOn) {
+        <!-- <esi:include src="/geo_information" /> -->
+    }
     </body>
     </html>
 }

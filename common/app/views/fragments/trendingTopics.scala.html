@@ -7,6 +7,7 @@
 @defining(topTags(items).filterNot(_.id == pageId).take(20)) { tags =>
     @if(tags.nonEmpty) {
         <div class="submeta" data-link-name="keywords">
+            <hr/>
             <h2 class="submeta__head">Topics</h2>
             @keywordList(tags, 5, "See also", allPath = allPath)
         </div>

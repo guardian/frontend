@@ -106,7 +106,7 @@ define([
         dataAttrs  = {
             label:   definition.label !== undefined ? definition.label : true,
             refresh: definition.refresh !== undefined ? definition.refresh : true
-        },
+        };
         $adSlot = $.create(template(
             adSlotTpl,
             {
