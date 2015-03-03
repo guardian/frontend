@@ -143,6 +143,7 @@ define([
     Clipboard.prototype.dispose = function () {
         globalListeners.off('paste', null, this);
         clearInterval(this.pollID);
+        this.listeners.dispose();
     };
 
     return Clipboard;
