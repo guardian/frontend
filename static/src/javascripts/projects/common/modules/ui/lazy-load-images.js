@@ -68,13 +68,13 @@ define([
             'modules:related:loaded'
         ], function (event) {
             mediator.on(event, function (context) {
-                lazyLoad($('.js-lazy-loaded-image', context));
+                lazyLoad(qwery('.js-lazy-loaded-image', context));
             });
         });
     }
 
     function init() {
-        lazyLoad($('.js-lazy-loaded-image'));
+        lazyLoad(qwery('.js-lazy-loaded-image'));
         setUpListeners();
     }
 
