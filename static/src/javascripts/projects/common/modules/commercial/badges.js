@@ -1,6 +1,5 @@
 define([
     'bonzo',
-    'fastdom',
     'qwery',
     'common/utils/$',
     'common/utils/config',
@@ -10,7 +9,6 @@ define([
     'text!common/views/commercial/badge.html'
 ], function (
     bonzo,
-    fastdom,
     qwery,
     $,
     config,
@@ -61,11 +59,8 @@ define([
                               ));
 
             addPreBadge($adSlot, badgeConfig.header, opts.sponsor);
-
-            fastdom.write(function () {
-                $('.js-container__header', container)
-                    .after($adSlot);
-            });
+            $('.js-container__header', container)
+                .after($adSlot);
 
             return $adSlot;
         },
