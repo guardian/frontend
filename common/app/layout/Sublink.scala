@@ -203,7 +203,7 @@ object FaciaCard {
       faciaContent.headline,
       FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
       getByline(faciaContent).filterNot(Function.const(suppressByline)),
-      FaciaDisplayElement.fromTrail(faciaContent),
+      FaciaDisplayElement.fromFaciaContent(faciaContent),
       CutOut.fromTrail(faciaContent),
       CardStyle(faciaContent),
       cardTypes,

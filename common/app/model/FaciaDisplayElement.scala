@@ -5,7 +5,7 @@ import conf.Switches
 import implicits.FaciaContentImplicits._
 
 object FaciaDisplayElement {
-  def fromTrail(faciaContent: FaciaContent): Option[FaciaDisplayElement] = {
+  def fromFaciaContent(faciaContent: FaciaContent): Option[FaciaDisplayElement] = {
     faciaContent.mainVideo match {
       case Some(videoElement) if faciaContent.showMainVideo =>
         Some(InlineVideo(
