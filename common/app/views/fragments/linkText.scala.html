@@ -6,5 +6,5 @@
 @import implicits.FaciaContentImplicits._
 
 <a href="@LinkTo(trail)" data-link-name="@info.rowNum | text">
-    @trail.webTitle.map(RemoveOuterParaHtml.apply)
+    @trail.maybeWebTitle.map(RemoveOuterParaHtml.apply)
 </a>

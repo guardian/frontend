@@ -197,7 +197,7 @@ object TrailsToRss extends implicits.Collections {
       dc.setCreator(faciaContent.byline.getOrElse("Guardian Staff"))
 
       // Entry
-      val entryWebTitle = faciaContent.webTitle.getOrElse("The Guardian")
+      val entryWebTitle = faciaContent.maybeWebTitle.getOrElse("The Guardian")
       val entry = new SyndEntryImpl
       entry.setTitle(stripInvalidXMLCharacters(entryWebTitle))
       entry.setLink(webUrl)
