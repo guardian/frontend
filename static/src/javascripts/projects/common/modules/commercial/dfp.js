@@ -286,7 +286,8 @@ define([
             var size,
                 slotId = event.slot.getSlotId().getDomId(),
                 $slot = $('#' + slotId),
-                $placeholder;
+                $placeholder,
+                $adSlotContent;
 
             allAdsRendered(slotId);
 
@@ -295,8 +296,10 @@ define([
             } else {
                 // remove any placeholder ad content
                 $placeholder = $('.ad-slot__content--placeholder', $slot);
+                $adSlotContent = $('#' + slotId + ' div');
                 fastdom.write(function () {
                     $placeholder.remove();
+                    $adSlotContent.addClass('ad-slot__content');
                 });
                 checkForBreakout($slot);
                 addLabel($slot);
@@ -304,7 +307,11 @@ define([
                 // is there a callback for this size
                 callbacks[size] && callbacks[size](event, $slot);
 
-                if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
+                if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
+                    fastdom.write(function () {
+                        $slot.parent().css('display', 'flex');
+                    });
+                } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
                     fastdom.write(function () {
                         $slot.parent().css('display', 'block');
                     });
