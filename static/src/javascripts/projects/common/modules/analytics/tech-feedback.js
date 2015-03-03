@@ -12,9 +12,9 @@ define([
         init: function () {
             var link = $('.js-tech-feedback');
             fastdom.read(function () {
-                var oldHref = link.attr('href');
+                var oldHref = link.attr('action');
                 fastdom.write(function () {
-                    link.attr('href', oldHref + '&width=' + window.innerWidth);
+                    link.attr('action', oldHref + '&width=' + window.innerWidth);
                 });
             });
         }
