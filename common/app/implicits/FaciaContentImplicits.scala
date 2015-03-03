@@ -295,6 +295,7 @@ object FaciaContentImplicits {
 
     lazy val isVideo = types.exists(_.id == "type/video")
     lazy val isCartoon = types.exists(_.id == Tags.Cartoon)
+    lazy val isCrossword = types.exists(_.id == Tags.Crossword)
 
     def imageCutout: Option[ImageCutout] = fold(
       curatedContent => curatedContent.imageCutout,
