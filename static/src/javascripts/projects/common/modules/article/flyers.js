@@ -59,7 +59,8 @@ define([
     }
 
     function insertTagFlyer() {
-        if (config.page.richLink && config.page.richLink.indexOf(config.page.pageId) === -1) {
+        if (config.page.richLink && !config.page.shouldHideAdverts && !config.page.showRelatedContent
+            && config.page.richLink.indexOf(config.page.pageId) === -1) {
             var space = spacefinder.getParaWithSpace(getSpacefinderRules());
             if (space) {
                 $.create(template(richLinkTagTmpl, {href: config.page.richLink}))
