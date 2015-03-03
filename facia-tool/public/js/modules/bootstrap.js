@@ -20,6 +20,9 @@ define([
     }, {
         key: 'switches',
         url: vars.CONST.apiBase + '/switches'
+    }, {
+        key: 'defaults',
+        url: vars.CONST.frontendApiBase + '/config'
     }];
 
     function sendRequest (endpoint) {

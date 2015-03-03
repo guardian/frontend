@@ -43,7 +43,7 @@ define([
     function Clipboard (params) {
         var listeners = mediator.scope();
 
-        this.storage = storage.bind('gu.front-tools.clipboard.' + vars.identity.email);
+        this.storage = storage.bind('gu.front-tools.clipboard.' + vars.CONST.identity.email);
         this.uiOpenElement = ko.observable();
         this.column = params.column;
         this.group = new Group({

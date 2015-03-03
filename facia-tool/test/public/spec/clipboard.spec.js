@@ -187,11 +187,11 @@ define([
             }
         });
         if (!vars.model) {
-            vars.model = {
+            vars.setModel({
                 switches: ko.observable({
                     'facia-tool-sparklines': false
                 })
-            };
+            });
         }
         mockjaxId = $.mockjax({
             url: '/api/proxy/piuccio*',
