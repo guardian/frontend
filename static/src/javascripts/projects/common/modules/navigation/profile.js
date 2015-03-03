@@ -75,11 +75,6 @@ define([
                     this.menuListItem('Sign out', this.opts.url + '/signout') +
                     '</ul>'
             );
-
-        } else {
-            fastdom.write(function () {
-                $popup.remove();
-            });
         }
 
         this.emitLoadedEvent(user);
