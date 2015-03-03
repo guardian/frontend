@@ -204,9 +204,11 @@ object FaciaContentImplicits {
       latestSnap => latestSnap.latestContent.flatMap(c => f(c.safeFields))
     )
 
-    def shortUrl = fieldsGet(_.get("shortUrl"))
+    def maybeShortUrl = fieldsGet(_.get("shortUrl"))
 
-    def shortUrlPath = shortUrl.map(_.replace("http://gu.com", ""))
+    def shortUrl: String = maybeShortUrl.getOrElse("")
+
+    def shortUrlPath = maybeShortUrl.map(_.replace("http://gu.com", ""))
 
     def discussionId = shortUrlPath
 
@@ -235,6 +237,13 @@ object FaciaContentImplicits {
       latestSnap => false
     )
 
+    def showMainVideo: Boolean = fold(
+      curatedContent => curatedContent.showMainVideo,
+      supportingCuratedContent => supportingCuratedContent.showMainVideo,
+      linkSnap => false,
+      latestSnap => latestSnap.showMainVideo
+    )
+
     def imageHide: Boolean = fold(
       curatedContent => curatedContent.imageHide,
       supportingCuratedContent => supportingCuratedContent.imageHide,
@@ -250,12 +259,14 @@ object FaciaContentImplicits {
       latestSnap => latestSnap.latestContent.flatMap(_.sectionName)
     )
 
-    def section: Option[String] = fold(
+    def maybeSection: Option[String] = fold(
       curatedContent => curatedContent.content.sectionId,
       supportingCuratedContent => supportingCuratedContent.content.sectionId,
       linkSnap => None,
       latestSnap => latestSnap.latestContent.flatMap(_.sectionId)
     )
+
+    def section: String = maybeSection.getOrElse("")
 
     def byline: Option[String] = fold(
       curatedContent => curatedContent.byline,
@@ -300,7 +311,7 @@ object FaciaContentImplicits {
       latestSnap => Nil)
 
     def isAdvertisementFeature: Boolean =
-      DfpAgent.isAdvertisementFeature(frontendTags, section)
+      DfpAgent.isAdvertisementFeature(frontendTags, maybeSection)
 
     lazy val shouldHidePublicationDate: Boolean = {
       isAdvertisementFeature && webPublicationDateOption.exists(_.isOlderThan(2.weeks))
@@ -315,16 +326,15 @@ object FaciaContentImplicits {
       linkSnap => None,
       latestSnap => None)
 
-    def webTitle: Option[String] = fold(
+    def maybeWebTitle: Option[String] = fold(
       curatedContent => Option(curatedContent.content.webTitle),
       supportingCuratedContent => Option(supportingCuratedContent.content.webTitle),
       linkSnap => None,
       latestSnap => latestSnap.latestContent.map(_.webTitle))
 
-    def linkText = webTitle
+    def webTitle: String = maybeWebTitle.getOrElse("")
 
-    def mainVideo: Option[VideoElement] = None
-
+    def linkText = maybeWebTitle
 
     //Elements
     def elements: List[Element] = fold(
@@ -370,6 +380,13 @@ object FaciaContentImplicits {
     def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= trailPicMinDesiredSize))
       .orElse(mainPicture)
       .orElse(thumbnail)
+
+    protected lazy val videos: Seq[VideoElement] = frontendElements.flatMap {
+      case video: VideoElement => Some(video)
+      case _ => None
+    }
+
+    def mainVideo: Option[VideoElement] = videos.find(_.isMain).headOption
 
   }
 
