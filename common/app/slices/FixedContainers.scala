@@ -68,8 +68,6 @@ object FixedContainers {
 
   val thrasher = slices(Fluid).copy(customCssClasses = Set("fc-container--thrasher"))
 
-  val testContainer = slices(FullMedia100, FullMedia75, FullMedia50, HalfHalf, QuarterThreeQuarter, Hl4Half, TTTL4)
-
   val all: Map[String, ContainerDefinition] = Map(
     ("fixed/small/slow-I", slices(FullMedia75)),
     ("fixed/small/slow-II", slices(HalfHalf)),
