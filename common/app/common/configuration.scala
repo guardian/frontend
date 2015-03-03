@@ -354,6 +354,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         oauthCallback <- configuration.getStringProperty("faciatool.oauth.callback")
       } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
 
+    val showTestContainers = configuration.getStringProperty("faciatool.show_test_containers").exists(_ == "true")
+
     lazy val adminPressJobStandardPushRateInMinutes: Int =
       Try(configuration.getStringProperty("admin.pressjob.standard.push.rate.inminutes").get.toInt)
         .getOrElse(5)
