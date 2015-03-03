@@ -43,8 +43,7 @@ define([
 
         detectPressFailureMs: 10000,
 
-        detectPendingChangesInClipboardOften:  2000,
-        detectPendingChangesInClipboardSeldom: 5000,
+        detectPendingChangesInClipboard: 4000,
 
         maxFronts: 500,
 

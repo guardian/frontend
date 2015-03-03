@@ -6,6 +6,7 @@ define([
     'common/utils/mediator',
     'common/modules/article/flyers',
     'common/modules/article/open-module',
+    'common/modules/article/static-social',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
     'common/modules/onward/geo-most-popular',
@@ -20,6 +21,7 @@ define([
     mediator,
     flyers,
     openModule,
+    staticSocial,
     truncate,
     twitter,
     geoMostPopular,
@@ -56,6 +58,10 @@ define([
                 twitter.enhanceTweets();
             },
 
+            initStaticSocial: function () {
+                staticSocial();
+            },
+
             initRightHandComponent: function () {
                 if (!detect.isBreakpoint('mobile') && parseInt(config.page.wordCount, 10) > 500) {
                     geoMostPopular.render();
@@ -73,6 +79,7 @@ define([
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
             modules.initSelectionSharing();
+            modules.initStaticSocial();
             flyers.upgradeFlyers();
             flyers.insertTagFlyer();
             openModule.init();

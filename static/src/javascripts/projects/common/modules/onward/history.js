@@ -82,7 +82,7 @@ define([
             'money/work-and-careers', 'money/work-blog', 'multimedia', 'music', 'music/classicalmusicandopera',
             'music/musicblog', 'music/series/cerys-matthews-dr-crotchety', 'music/series/listen-up', 'music/series/newbandoftheday', 'music/series/readersrecommend',
             'music/series/the-playlist', 'music/series/what-you-should-hear-this-week', 'music/tomserviceblog', 'news/guardianfilms', 'news/series/the-daily-quiz',
-            'observer', 'politics', 'politics/series/politics-live-with-andrew-sparrow', 'profile/adriansearle', 'profile/andrewpulver',
+            'observer', 'politics', 'politics/series/politics-live-with-andrew-sparrow', 'politics/general-election-2015', 'profile/adriansearle', 'profile/andrewpulver',
             'profile/brianlogan', 'profile/catherineshoard', 'profile/charliebrooker', 'profile/david-squires', 'profile/davidmitchell',
             'profile/first-dog-on-the-moon', 'profile/georgemonbiot', 'profile/hadleyfreeman', 'profile/henrybarnes', 'profile/johnharris',
             'profile/johnpatterson', 'profile/jonathanjones', 'profile/lauracumming', 'profile/marinahyde', 'profile/markkermode',
@@ -133,14 +133,12 @@ define([
         ],
         buckets = [
             {
-                desc: 'Tags from articles',
-                indexInRecord: 1,
-                weight: 1
+                type: 'content',
+                indexInRecord: 1
             },
             {
-                desc: 'Tags from fronts',
-                indexInRecord: 2,
-                weight: 1 // increase this, to favour direct visits to fronts/tag pages
+                type: 'front',
+                indexInRecord: 2
             }
         ],
         summaryPeriodDays = 30,
@@ -155,6 +153,7 @@ define([
         summaryCache,
         popularFilteredCache,
         topNavItemsCache,
+        blacklistCache,
 
         inMegaNav = false,
 
@@ -237,22 +236,22 @@ define([
         return summary;
     }
 
-    function getPopular(number, filtered) {
+    function getPopular(opts) {
         var tags = getSummary().tags,
             tids = _.keys(tags),
-            blacklist;
+            op = _.extend({
+                number: 100,
+                weights: {}
+            }, opts);
 
-        if (filtered) {
-            blacklist = getTopNavItems();
-            tids = tids.filter(function (tid) { return whitelist.indexOf(tid) > -1; });
-            tids = tids.filter(function (tid) { return blacklist.indexOf(tid) === -1; });
-        }
+        tids = op.whitelist ? tids.filter(function (tid) { return op.whitelist.indexOf(tid) > -1; }) : tids;
+        tids = op.blacklist ? tids.filter(function (tid) { return op.blacklist.indexOf(tid) === -1; }) : tids;
 
         return _.chain(tids)
             .map(function (tid) {
                 var record = tags[tid],
                     rank = _.reduce(buckets, function (rank, bucket) {
-                        return rank + tally(record[bucket.indexInRecord], bucket.weight);
+                        return rank + tally(record[bucket.indexInRecord], op.weights[bucket.type] || 1);
                     }, 0);
 
                 return {
@@ -262,19 +261,27 @@ define([
             })
             .compact()
             .sortBy('rank')
-            .last(number || 100)
+            .last(op.number)
             .reverse()
             .pluck('idAndName')
             .value();
     }
 
     function getPopularFiltered(opts) {
-        if (opts && opts.flush) {
-            popularFilteredCache = getPopular(10, true);
-        } else {
-            popularFilteredCache = popularFilteredCache || getPopular(10, true);
+        var flush = opts && opts.flush,
+            filterOpts = {
+                blacklist: blacklistCache || getTopNavItems(),
+                whitelist: whitelist,
+                number: 10
+            };
+
+        // Temporary...
+        if (window.location.hash === '#alt-history') {
+            delete filterOpts.whitelist;
+            filterOpts.weights = {'content': 1, 'front': 10};
         }
 
+        popularFilteredCache = (!flush && popularFilteredCache) || getPopular(filterOpts);
         return popularFilteredCache;
     }
 

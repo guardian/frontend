@@ -19,12 +19,17 @@ define([
         logosoulmates: logosoulmates
     };
 
-    return function (name, classes) {
+    return function (name, classes, title) {
         var svg = svgs[name];
 
         // Only mess with classes if we actually need to.
         if (classes) {
             svg = svg.replace(/class="/, '$&' + classes.join(' ') + ' ');
+        }
+
+        // Only mess with title if we actually need to.
+        if (title) {
+            svg = svg.replace(/<span /, '<span title="' + title + '" ');
         }
 
         return svg;

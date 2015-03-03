@@ -113,12 +113,6 @@ define([
     };
 
     Clipboard.prototype.getItemsFromStorage = function () {
-        if (
-            vars.model.switches()['facia-tool-save-clipboard-often'] === false &&
-            vars.model.switches()['facia-tool-save-clipboard-seldom'] === false
-        ) {
-            return;
-        }
         var group = this.group,
             items = _.map(this.storage.getItem() || [], function (item) {
                 return new Article(_.extend(item, {
@@ -143,21 +137,13 @@ define([
     Clipboard.prototype.pollArticlesChange = function (callback) {
         // Because I want to save intermediate states, in case the browser crashes
         // before the user clicks on 'save article', save regularly the current state
-        var period = null;
-        if (vars.model.switches()['facia-tool-save-clipboard-seldom']) {
-            period = vars.CONST.detectPendingChangesInClipboardSeldom;
-        }
-        if (vars.model.switches()['facia-tool-save-clipboard-often']) {
-            period = vars.CONST.detectPendingChangesInClipboardOften;
-        }
-        if (period) {
-            this.pollID = setInterval(callback, period);
-        }
+        this.pollID = setInterval(callback, vars.CONST.detectPendingChangesInClipboard);
     };
 
     Clipboard.prototype.dispose = function () {
         globalListeners.off('paste', null, this);
         clearInterval(this.pollID);
+        this.listeners.dispose();
     };
 
     return Clipboard;
