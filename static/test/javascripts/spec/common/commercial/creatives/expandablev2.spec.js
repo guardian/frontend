@@ -45,14 +45,6 @@ define([
             expect(qwery('.ad-exp__close-button').length).toBeGreaterThan(0);
         });
 
-        it('should have show more arrow', function () {
-            $fixturesContainer = fixtures.render(fixturesConfig);
-            new ExpandableV2(qwery('.expandablev2-ad-slot', $fixturesContainer), {
-                showArrow: 'arrow-only'
-            }).create();
-            expect(qwery('.ad-exp__open-chevron').length).toBeGreaterThan(0);
-        });
-
     });
 
 });
