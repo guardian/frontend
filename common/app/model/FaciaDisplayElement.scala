@@ -7,11 +7,11 @@ import implicits.FaciaContentImplicits._
 object FaciaDisplayElement {
   def fromTrail(faciaContent: FaciaContent): Option[FaciaDisplayElement] = {
     (faciaContent, faciaContent.mainVideo) match {
-      case (other: Content, Some(videoElement)) if other.showMainVideo =>
+      case (other, Some(videoElement)) if other.showMainVideo =>
         Some(InlineVideo(
           videoElement,
           other.webTitle,
-          EndSlateComponents.fromContent(other).toUriPath,
+          EndSlateComponents.fromFaciaContent(other).toUriPath,
           InlineImage.fromFaciaContent(faciaContent)
         ))
       case (content: Content, _) if content.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
