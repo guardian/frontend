@@ -105,8 +105,8 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     input {
         display: inline-block;
         background: none;
-        border: none;
-        padding: 0px 0px $gs-baseline 0px;
+        border: 0;
+        padding: 0px 0px $gs-baseline;
         //color: #0066ff;
         //text-decoration: underline;
         //cursor: pointer;
