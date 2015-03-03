@@ -14,7 +14,7 @@ define([
         .store(['common/utils/config', 'common/utils/mediator'])
         .require(['common/modules/commercial/creatives/commercial-component', 'mocks'], function (CommercialComponent, mocks) {
 
-            describe('Commercial component loader', function () {
+            xdescribe('Commercial component loader', function () {
 
                 var adSlot, server,
                     fixturesConfig = {
@@ -59,7 +59,7 @@ define([
 
                 it('should load component with keyword params', function (done) {
                     mocks.store['common/utils/mediator']
-                        .on('modules:commercial:creatives:commercial-component:loaded', done);
+                        .once('modules:commercial:creatives:commercial-component:loaded', done);
 
                     server.respondWith(
                         '/commercial/money/bestbuys.json?k=annerice&k=fiction&k=books&k=culture',
@@ -71,7 +71,7 @@ define([
 
                 it('should use pageId if no keywordIds', function (done) {
                     mocks.store['common/utils/mediator']
-                        .on('modules:commercial:creatives:commercial-component:loaded', done);
+                        .once('modules:commercial:creatives:commercial-component:loaded', done);
                     mocks.store['common/utils/config'].page.keywordIds = '';
 
                     server.respondWith(
@@ -84,7 +84,7 @@ define([
 
                 it('should load component into the slot', function (done) {
                     mocks.store['common/utils/mediator']
-                        .on('modules:commercial:creatives:commercial-component:loaded', function () {
+                        .once('modules:commercial:creatives:commercial-component:loaded', function () {
                             expect(adSlot.innerHTML).toBe('<p>Commercial Component</p>');
                             done();
                         });
@@ -96,7 +96,7 @@ define([
 
                 it('should load replace oastoken token', function (done) {
                     mocks.store['common/utils/mediator']
-                        .on('modules:commercial:creatives:commercial-component:loaded', function () {
+                        .once('modules:commercial:creatives:commercial-component:loaded', function () {
                             expect(adSlot.innerHTML).toBe('<p>OASToken: 123</p>');
                             done();
                         });
@@ -163,7 +163,7 @@ define([
 
                     it('should correctly load "' + testConfig.type  + '" component', function (done) {
                         mocks.store['common/utils/mediator']
-                            .on('modules:commercial:creatives:commercial-component:loaded', done);
+                            .once('modules:commercial:creatives:commercial-component:loaded', done);
 
                         server.respondWith(testConfig.url, [200, {}, '{ "html": "" }']);
 

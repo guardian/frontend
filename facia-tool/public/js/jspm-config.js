@@ -13,6 +13,7 @@ System.config({
     "EventEmitter": "npm:wolfy87-eventemitter@4.2.11",
     "css": "github:systemjs/plugin-css@0.1.0",
     "font-awesome": "npm:font-awesome@4.2.0",
+    "highcharts": "./components/highcharts/highcharts-custom",
     "jquery": "github:components/jquery@2.1.3",
     "jquery-mockjax": "npm:jquery-mockjax@1.6.1",
     "jquery-ui": "github:jquery/jquery-ui@1.11.3",
@@ -21,7 +22,6 @@ System.config({
     "sinon": "npm:sinon@1.12.2",
     "text": "github:systemjs/plugin-text@0.0.2",
     "underscore": "npm:underscore@1.7.0",
-    "highcharts": "./components/highcharts/highcharts-custom",
     "github:jspm/nodelibs-fs@0.1.0": {
       "assert": "npm:assert@1.3.0",
       "fs": "github:jspm/nodelibs-fs@0.1.0"
