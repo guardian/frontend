@@ -32,7 +32,8 @@ module.exports = function(grunt, options) {
                 src: [
                     '**/*.js',
                     '!jspm-config.js',
-                    '!components/**/*.js'
+                    '!components/**/*.js',
+                    '!build/*.js'
                 ]
             }],
             options: {

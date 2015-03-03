@@ -1,5 +1,4 @@
 define([
-    'config',
     'knockout',
     'underscore',
     'jquery',
@@ -15,7 +14,6 @@ define([
     'models/collections/article',
     'modules/content-api'
 ], function(
-    config,
     ko,
     _,
     $,
@@ -265,7 +263,7 @@ define([
 
             populateObservables(self.collectionMeta, raw);
 
-            self.collectionMeta.updatedBy(raw.updatedEmail === config.email ? 'you' : raw.updatedBy);
+            self.collectionMeta.updatedBy(raw.updatedEmail === vars.identity.email ? 'you' : raw.updatedBy);
 
             self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
         })
@@ -305,7 +303,7 @@ define([
             this.state.hasDraft(_.isArray(this.raw.draft));
 
             if (this.hasOpenArticles()) {
-                this.state.hasConcurrentEdits(this.raw.updatedEmail !== config.email && this.state.lastUpdated());
+                this.state.hasConcurrentEdits(this.raw.updatedEmail !== vars.identity.email && this.state.lastUpdated());
 
             } else if (!rawCollection || this.raw.lastUpdated !== this.state.lastUpdated()) {
                 list = this.front.getCollectionList(this.raw);

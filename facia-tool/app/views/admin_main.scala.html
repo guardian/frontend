@@ -1,9 +1,6 @@
 @(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[com.gu.googleauth.UserIdentity] = None)(content: Html)
 
-@import slices.{FixedContainers, DynamicContainers, IdsJson}
-@import IdsJson.{fixed, dynamic}
 @import conf.Configuration
-@import conf.Switches.FaciaTreats
 
 <!DOCTYPE html>
 
@@ -20,8 +17,8 @@
         <link rel="apple-touch-icon" sizes="72x72" href="@routes.UncachedAssets.at("images/72x72.png")" />
         <link rel="apple-touch-icon-precomposed" href="@routes.UncachedAssets.at("images/57x57.png")" />
 
-        <meta name="apple-mobile-web-app-title" content="Guardian" />
-        <meta name="application-name" content="The Guardian" />
+        <meta name="apple-mobile-web-app-title" content="Facia Tool" />
+        <meta name="application-name" content="Facia Tool" />
         <meta name="msapplication-TileColor" content="#005689" />
         <meta name="msapplication-TileImage" content="@routes.UncachedAssets.at("images/windows_tile_144_b.png")" />
 
@@ -29,35 +26,6 @@
 
         <script src="@routes.UncachedAssets.at("jspm_packages/system.js")"></script>
         <script src="@routes.UncachedAssets.at("js/jspm-config.js")"></script>
-
-
-        <script>
-            System.import('font-awesome/css/font-awesome.min.css!');
-
-            System.amdDefine('config', function() {
-                return {
-                    env: '@env.toLowerCase',
-                    priority: '@priority',
-                    editions: [@Html(Edition.all.map(_.id.toLowerCase).mkString("'","','", "'"))],
-                    navSections: [@Html(FaciaToolConfiguration.sectionsFromNav.mkString("'", "', '", "'"))],
-                    email: '@identity.map(_.email).getOrElse("")',
-                    avatarUrl: '@identity.map(_.avatarUrl).getOrElse("")',
-                    lowFrequency: @Configuration.faciatool.adminPressJobLowPushRateInMinutes,
-                    highFrequency: @Configuration.faciatool.adminPressJobHighPushRateInMinutes,
-                    standardFrequency: @Configuration.faciatool.adminPressJobStandardPushRateInMinutes,
-                    sentryPublicDSN: 'https://4527e03d554a4962ae99a7481e9278ff@@app.getsentry.com/35467'
-                }
-            });
-
-            System.amdDefine('fixed-containers', function () {
-                return @Html(fixed(FixedContainers.all.keys.toSeq));
-            });
-
-            System.amdDefine('dynamic-containers', function () {
-                return @Html(dynamic(DynamicContainers.all.keys.toSeq));
-            });
-        </script>
-
     </head>
     <body class="@if(isAuthed){is-authed}">
 
@@ -97,5 +65,3 @@
 
     </body>
 </html>
-
-

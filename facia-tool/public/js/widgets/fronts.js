@@ -1,5 +1,4 @@
 define([
-    'config',
     'knockout',
     'underscore',
     'models/collections/collection',
@@ -11,7 +10,6 @@ define([
     'utils/sparklines',
     'utils/update-scrollables'
 ], function (
-    pageConfig,
     ko,
     _,
     Collection,
@@ -91,7 +89,7 @@ define([
         listeners.on('presser:lastupdate', function (front, date) {
             if (front === model.front()) {
                 model.frontAge(humanTime(date));
-                if (pageConfig.env !== 'dev') {
+                if (vars.env !== 'dev') {
                     var stale = _.some(model.collections(), function (collection) {
                         var l = new Date(collection.state.lastUpdated());
                         return _.isDate(l) ? l > date : false;
@@ -184,7 +182,7 @@ define([
         if (model.front()) {
             lastModified(model.front()).done(function (last) {
                 model.frontAge(last.human);
-                if (pageConfig.env !== 'dev') {
+                if (vars.env !== 'dev') {
                     model.alertFrontIsStale(opts.alertIfStale && last.stale);
                 }
             });

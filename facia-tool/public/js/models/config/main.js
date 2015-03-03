@@ -1,38 +1,28 @@
 define([
-    'config',
     'knockout',
     'underscore',
     'modules/vars',
-    'modules/authed-ajax',
     'modules/list-manager',
     'modules/droppable',
-    'utils/fetch-settings',
     'utils/update-scrollables',
-    'utils/clean-clone',
     'utils/clone-with-key',
     'utils/find-first-by-id',
     'utils/logger',
-    'utils/terminate',
     'models/group',
     'models/config/front',
     'models/config/collection',
     'models/config/new-items',
     'models/config/persistence'
 ], function(
-    pageConfig,
     ko,
     _,
     vars,
-    authedAjax,
     listManager,
     droppable,
-    fetchSettings,
     updateScrollables,
-    cleanClone,
     cloneWithKey,
     findFirstById,
     logger,
-    terminate,
     Group,
     Front,
     Collection,
@@ -42,11 +32,11 @@ define([
     return function() {
         var model = vars.model = {};
 
-        model.title = ko.observable(pageConfig.priority + ' fronts configuration');
+        model.title = ko.observable((vars.priority || 'editorial') + ' fronts configuration');
 
         model.switches = ko.observable();
 
-        model.navSections = [].concat(pageConfig.navSections);
+        model.navSections = [];
 
         model.collections = ko.observableArray();
 
@@ -102,70 +92,73 @@ define([
             }, {});
         }
 
-        function bootstrap(opts) {
-            return fetchSettings(function (config, switches) {
-                model.switches(switches);
+        this.update = function (res) {
+            var config = res.config,
+                switches = res.switches;
 
-                if (opts.force || !_.isEqual(config, vars.state.config)) {
-                    vars.state.config = config;
+            model.switches(switches);
 
-                    model.collections(
-                       _.chain(config.collections)
-                        .map(function(obj, cid) { return new Collection(cloneWithKey(obj, cid)); })
-                        .sortBy(function(collection) { return collection.meta.displayName(); })
-                        .value()
-                    );
+            if (!_.isEqual(config, vars.state.config)) {
+                this.refreshConfig(config);
+            }
+        };
 
-                    model.fronts(
-                       _.chain(_.keys(config.fronts))
-                        .sortBy(function(id) { return id; })
-                        .without(model.pinnedFront() ? model.pinnedFront().id() : undefined)
-                        .unshift(model.pinnedFront() ? model.pinnedFront().id() : undefined)
-                        .filter(function(id) { return id; })
-                        .map(function(id) {
-                            var newFront = new Front(cloneWithKey(config.fronts[id], id)),
-                                oldFront = findFirstById(model.fronts, id);
+        this.refreshConfig = function (config) {
+            vars.state.config = config;
 
-                            if (oldFront) {
-                                newFront.state.isOpen(oldFront.state.isOpen());
-                                newFront.state.isOpenProps(oldFront.state.isOpenProps());
-                            }
+            model.collections(
+               _.chain(config.collections)
+                .map(function(obj, cid) { return new Collection(cloneWithKey(obj, cid)); })
+                .sortBy(function(collection) { return collection.meta.displayName(); })
+                .value()
+            );
 
-                            return newFront;
-                        })
-                       .value()
-                    );
+            model.fronts(
+               _.chain(_.keys(config.fronts))
+                .sortBy(function(id) { return id; })
+                .without(model.pinnedFront() ? model.pinnedFront().id() : undefined)
+                .unshift(model.pinnedFront() ? model.pinnedFront().id() : undefined)
+                .filter(function(id) { return id; })
+                .map(function(id) {
+                    var newFront = new Front(cloneWithKey(config.fronts[id], id)),
+                        oldFront = findFirstById(model.fronts, id);
 
-                    logger.log('CONTAINER USAGE\n');
-                    _.each(containerUsage(), function(fronts, type) {
-                        logger.log(type + ': ' + fronts.join(',') + '\n');
-                    });
-                }
-            }, opts.pollingMs, opts.terminateOnFail);
-        }
+                    if (oldFront) {
+                        newFront.state.isOpen(oldFront.state.isOpen());
+                        newFront.state.isOpenProps(oldFront.state.isOpenProps());
+                    }
 
-        this.init = function() {
+                    return newFront;
+                })
+               .value()
+            );
+
+            logger.log('CONTAINER USAGE\n');
+            _.each(containerUsage(), function(fronts, type) {
+                logger.log(type + ': ' + fronts.join(',') + '\n');
+            });
+        };
+
+        this.init = function (bootstrap, res) {
+            var that = this;
             persistence.registerCallback(function () {
-                bootstrap({
-                    force: true
-                }).done(function () {
+                bootstrap.get().onload(function (res) {
+                    that.refreshConfig(res.config);
                     vars.model.pending(false);
                 });
             });
 
-            bootstrap({
-                pollingMs: vars.CONST.configSettingsPollMs,
-                terminateOnFail: true
-
-            }).done(function() {
-                ko.applyBindings(model);
-
-                updateScrollables();
-                window.onresize = updateScrollables;
-            });
-
             listManager.init(newItems);
             droppable.init();
+
+            this.update(res);
+
+            model.navSections = [].concat(vars.pageConfig.navSections);
+
+            ko.applyBindings(model);
+
+            updateScrollables();
+            window.onresize = updateScrollables;
         };
     };
 });
