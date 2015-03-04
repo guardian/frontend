@@ -1,4 +1,5 @@
 define([
+    'fastdom',
     'qwery',
     'common/utils/$',
     'common/utils/config',
@@ -9,6 +10,7 @@ define([
     'text!common/views/commercial/creatives/branded-component-soulmates.html',
     'lodash/objects/defaults'
 ], function (
+    fastdom,
     qwery,
     $,
     config,
@@ -19,7 +21,6 @@ define([
     brandedComponentSoulmatesTpl,
     defaults
 ) {
-
     var templates = {
             jobs: {
                 template: brandedComponentJobsTpl,
@@ -56,24 +57,27 @@ define([
 
     BrandedComponent.prototype.create = function () {
         var templateConfig = templates[this.params.type],
-            $rightHandCol  = $('.js-secondary-column');
+            $rightHandCol  = $('.js-secondary-column'),
+            that = this;
 
-        if (
-            !this.opts.force && (!templateConfig ||
-            $rightHandCol.css('display') === 'none' ||
-            $rightHandCol.dim().height < 1800 ||
-            config.page.section === 'football')
-        ) {
-            return false;
-        }
+        fastdom.read(function () {
+            if (
+                this.opts.force ||
+                (templateConfig &&
+                $rightHandCol.css('display') !== 'none' &&
+                $rightHandCol.dim().height >= 1800 &&
+                config.page.section !== 'football')
+            ) {
+                templateConfig.config.clickMacro = that.params.clickMacro;
+                templateConfig.config.omnitureId = that.params.omnitureId;
 
-        templateConfig.config.clickMacro = this.params.clickMacro;
-        templateConfig.config.omnitureId = this.params.omnitureId;
-
-        $.create(template(templateConfig.template, templateConfig.config))
-            .appendTo($rightHandCol);
+                fastdom.write(function () {
+                    $.create(template(templateConfig.template, templateConfig.config))
+                        .appendTo($rightHandCol);
+                });
+            }
+        });
     };
 
     return BrandedComponent;
-
 });
