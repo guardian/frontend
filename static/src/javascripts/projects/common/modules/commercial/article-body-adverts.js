@@ -84,9 +84,7 @@ define([
                 return spacefinder.getParaWithSpace(rules).then(function (space) {
                     return insertAdAtP(space);
                 }).then(function () {
-                    if (detect.isBreakpoint({
-                            max: 'tablet'
-                        })) {
+                    if (detect.isBreakpoint({max: 'tablet'})) {
                         return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
                             return insertAdAtP(nextSpace);
                         });
