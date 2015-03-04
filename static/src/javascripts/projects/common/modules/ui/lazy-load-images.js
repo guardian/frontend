@@ -27,7 +27,7 @@ define([
         });
     }
 
-    function lazyLoad(images, distanceBeforeLoad) {
+    function attachLazyLoad(images, distanceBeforeLoad) {
         var $images = _.map(images, bonzo),
             lazyLoad;
 
@@ -70,18 +70,18 @@ define([
             'modules:related:loaded'
         ], function (event) {
             mediator.on(event, function (context) {
-                lazyLoad(qwery('.js-lazy-loaded-image', context));
+                attachLazyLoad(qwery('.js-lazy-loaded-image', context));
             });
         });
     }
 
     function init() {
-        lazyLoad(qwery('.js-lazy-loaded-image'));
+        attachLazyLoad(qwery('.js-lazy-loaded-image'));
         setUpListeners();
     }
 
     return {
-        lazyLoad: lazyLoad,
+        lazyLoad: attachLazyLoad,
         setUpListeners: setUpListeners,
         init: init
     };
