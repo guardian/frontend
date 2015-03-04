@@ -54,7 +54,7 @@ define([
         fastdom.write(function () {
             that.$scrollableMpu.appendTo(this.$adSlot);
         });
-        
+
         if (ScrollableMpu.hasScrollEnabled) {
             // update bg position
             this.updateBgPosition();

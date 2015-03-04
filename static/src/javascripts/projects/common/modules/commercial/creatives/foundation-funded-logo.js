@@ -1,5 +1,6 @@
 define([
     'common/utils/$',
+    'fastdom',
     'common/utils/config',
     'common/utils/template',
 
@@ -8,10 +9,10 @@ define([
     'text!common/views/commercial/creatives/logo-foundation-funded-partners.html'
 ], function (
     $,
+    fastdom,
     config,
     template
 ) {
-
     /**
      * Create the foundation logo
      *
@@ -29,13 +30,15 @@ define([
         var templateName = 'logo-foundation-funded' + (this.params.hasPartners ? '-partners' : '');
 
         require(['text!common/views/commercial/creatives/' + templateName + '.html'], function (creativeTpl) {
-            var creativeHtml = template(creativeTpl, this.params);
+            var creativeHtml = template(creativeTpl, this.params),
+                that = this;
 
-            $.create(creativeHtml)
-                .appendTo(this.$adSlot);
+            fastdom.write(function () {
+                $.create(creativeHtml)
+                    .appendTo(that.$adSlot);
+            });
         }.bind(this));
     };
 
     return Template;
-
 });
