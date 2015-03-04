@@ -1,15 +1,16 @@
 define([
     'bonzo',
+    'fastdom',
     'lodash/functions/throttle',
     'lodash/objects/defaults',
     'common/utils/mediator'
 ], function (
     bonzo,
+    fastdom,
     throttle,
     defaults,
     mediator
 ) {
-
     /**
      * @todo: check if browser natively supports "position: sticky"
      */
@@ -28,27 +29,30 @@ define([
     };
 
     Sticky.prototype.updatePosition = function () {
-        var fixedTop, css;
+        var fixedTop, css, that = this;
 
         // have we scrolled past the element
-        if (window.scrollY >= this.$parent.offset().top - this.opts.top) {
-            // make sure the element stays within its parent
-            fixedTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height);
+        fastdom.read(function () {
+            if (window.scrollY >= that.$parent.offset().top - that.opts.top) {
+                // make sure the element stays within its parent
+                fixedTop = Math.min(that.opts.top, that.$parent[0].getBoundingClientRect().bottom - that.$element.dim().height);
 
-            css = {
-                position: 'fixed',
-                top:      fixedTop
-            };
-        } else {
-            css = {
-                position: null,
-                top:      null
-            };
-        }
+                css = {
+                    position: 'fixed',
+                    top:      fixedTop
+                };
+            } else {
+                css = {
+                    position: null,
+                    top:      null
+                };
+            }
 
-        return this.$element.css(css);
+            fastdom.write(function () {
+                that.$element.css(css);
+            });
+        });
     };
 
     return Sticky;
-
 });
