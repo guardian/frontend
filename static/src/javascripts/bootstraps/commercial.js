@@ -1,4 +1,5 @@
 define([
+    'Promise',
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/robust',
@@ -11,6 +12,7 @@ define([
     'common/modules/commercial/third-party-tags',
     'common/modules/user-prefs'
 ], function (
+    Promise,
     config,
     mediator,
     robust,
@@ -35,11 +37,14 @@ define([
                 // load tags
                 robust('cm-thirdPartyTags',            function () { thirdPartyTags.init(); });
                 robust('cm-articleAsideAdverts',       function () { articleAsideAdverts.init(); });
-                robust('cm-articleBodyAdverts',        function () { articleBodyAdverts.init(); });
+                robust('cm-articleBodyAdverts',        function () {
+                    Promise.race([articleBodyAdverts.init()]).then(function () {
+                        robust('cm-dfp', function () { dfp.init(); });
+                    });
+                });
                 robust('cm-sliceAdverts',              function () { sliceAdverts.init(); });
                 robust('cm-frontCommercialComponents', function () { frontCommercialComponents.init(); });
                 robust('cm-badges',                    function () { badges.init(); });
-                robust('cm-dfp',                       function () { dfp.init(); });
             }
 
             robust('cm-ready', function () { mediator.emit('page:commercial:ready'); });

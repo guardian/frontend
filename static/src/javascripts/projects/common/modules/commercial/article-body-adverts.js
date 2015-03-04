@@ -1,5 +1,6 @@
 define([
     'fastdom',
+    'Promise',
     'lodash/objects/cloneDeep',
     'common/utils/$',
     'common/utils/config',
@@ -8,6 +9,7 @@ define([
     'common/modules/commercial/create-ad-slot'
 ], function (
     fastdom,
+    Promise,
     cloneDeep,
     $,
     config,
@@ -39,18 +41,22 @@ define([
         adNames = [['inline1', 'inline'], ['inline2', 'inline']],
         insertAdAtP = function (para) {
             if (para) {
-                var adName = adNames[ads.length],
-                    $ad    = $.create(createAdSlot(adName[0], adName[1]));
+                return new Promise(function (resolve) {
+                    var adName = adNames[ads.length],
+                        $ad    = $.create(createAdSlot(adName[0], adName[1]));
 
-                fastdom.write(function () {
-                    $ad.insertBefore(para);
+                    fastdom.write(function () {
+                        $ad.insertBefore(para);
+                        ads.push($ad);
+                        resolve(null);
+                    });
                 });
-
-                ads.push($ad);
+            } else {
+                return Promise.resolve(null);
             }
         },
         init = function () {
-            var rules, lenientRules;
+            var rules, lenientRules, inlineMercPromise;
 
             // is the switch off, or not an article, or a live blog
             if (
@@ -66,18 +72,27 @@ define([
 
             if (config.page.hasInlineMerchandise) {
                 adNames.unshift(['im', 'im']);
-                insertAdAtP(spacefinder.getParaWithSpace(lenientRules));
+
+                inlineMercPromise = spacefinder.getParaWithSpace(lenientRules).then(function (space) {
+                    return insertAdAtP(space)
+                });
+            } else {
+                inlineMercPromise = Promise.resolve(null);
             }
 
-            //fastdom.defer(function () {
-                insertAdAtP(spacefinder.getParaWithSpace(rules));
-
-                if (detect.isBreakpoint({ max: 'tablet' })) {
-                    //fastdom.defer(function () {
-                        insertAdAtP(spacefinder.getParaWithSpace(rules));
-                    //});
-                }
-            //});
+            return inlineMercPromise.then(function () {
+                return spacefinder.getParaWithSpace(rules).then(function (space) {
+                    return insertAdAtP(space);
+                }).then(function () {
+                    if (detect.isBreakpoint({
+                            max: 'tablet'
+                        })) {
+                        return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+                            return insertAdAtP(nextSpace);
+                        });
+                    }
+                });
+            });
         };
 
     return {
