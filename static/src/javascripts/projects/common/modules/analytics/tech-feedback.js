@@ -10,12 +10,9 @@ define([
 
     return {
         init: function () {
-            var link = $('.js-tech-feedback');
-            fastdom.read(function () {
-                var oldHref = link.attr('action');
-                fastdom.write(function () {
-                    link.attr('action', oldHref + '&width=' + window.innerWidth);
-                });
+            $('.js-tech-feedback').on('submit', function () {
+                var oldHref = this.attr('action');
+                this.attr('action', oldHref + '&width=' + window.innerWidth);
             });
         }
     };
