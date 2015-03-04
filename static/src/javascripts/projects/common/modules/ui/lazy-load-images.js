@@ -1,4 +1,5 @@
 define([
+    'bean',
     'bonzo',
     'fastdom',
     'qwery',
@@ -6,6 +7,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator'
 ], function (
+    bean,
     bonzo,
     fastdom,
     qwery,
@@ -58,7 +60,7 @@ define([
             });
         }, 100);
 
-        mediator.on('window:scroll', lazyLoad);
+        bean.on(window, 'scroll', lazyLoad);
         lazyLoad();
     }
 
