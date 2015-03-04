@@ -13,7 +13,7 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
     'common/modules/ui/rhc',
-    'common/modules/ui/selection-sharing',
+    'common/modules/ui/selection-sharing'
 ], function (
     fence,
     qwery,
