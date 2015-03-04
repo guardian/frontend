@@ -28,7 +28,7 @@ define([
             };
 
             describe('Flyers', function () {
-                var conf = {
+                var articleBodyConf = {
                         id: 'article-body',
                         fixtures: [
                             // Minimal article body fixture
@@ -36,12 +36,13 @@ define([
                         ]
                 };
 
+                var articleBodyFixtureElement;
                 beforeEach(function() {
-                    fixtures.render(conf);
+                    fixtures.render(articleBodyConf);
                 });
 
                 afterEach(function() {
-                    fixtures.clean(conf.id);
+                    fixtures.clean(articleBodyConf.id);
                 });
 
                 describe('#insertTagFlyer', function () {
