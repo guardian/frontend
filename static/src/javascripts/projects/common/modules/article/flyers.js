@@ -60,7 +60,7 @@ define([
 
     function insertTagFlyer() {
         var richLinkHrefs = $('.element-rich-link a')
-            .map(function (el) { return $(el).attr('href'); }),
+                .map(function (el) { return $(el).attr('href'); }),
             testIfDuplicate = function (richLinkHref) {
                 // Tag-targeted rich links can be absolute
                 return _.contains(config.page.richLink, richLinkHref);
