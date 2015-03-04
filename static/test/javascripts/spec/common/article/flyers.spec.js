@@ -28,7 +28,7 @@ define([
             };
 
             describe('Flyers', function () {
-                var conf = {
+                var articleBodyConf = {
                         id: 'article-body',
                         fixtures: [
                             // Minimal article body fixture
@@ -36,12 +36,13 @@ define([
                         ]
                 };
 
+                var articleBodyFixtureElement;
                 beforeEach(function() {
-                    fixtures.render(conf);
+                    articleBodyFixtureElement = fixtures.render(articleBodyConf);
                 });
 
                 afterEach(function() {
-                    fixtures.clean(conf.id);
+                    fixtures.clean(articleBodyConf.id);
                 });
 
                 describe('#insertTagFlyer', function () {
@@ -109,6 +110,22 @@ define([
 
                                 var richLinkElements = getRichLinkElements();
                                 expect(richLinkElements.length).toBe(0);
+                            });
+                        });
+
+                        describe('given an existing rich link with the same URL', function () {
+                            // No need to clean because the parent element is reset after each
+                            beforeEach(function() {
+                                var existingRichLinkElement = $.create(template(richLinkTagTmpl, { href: config.page.richLink }));
+
+                                articleBodyFixtureElement.append(existingRichLinkElement);
+                            });
+
+                            it('should not insert the provided tag rich link', function () {
+                                flyers.insertTagFlyer();
+
+                                var richLinkElements = getRichLinkElements();
+                                expect(richLinkElements.length).toBe(1);
                             });
                         });
                     });
