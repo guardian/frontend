@@ -1,5 +1,4 @@
 define([
-    'fastdom',
     'lodash/objects/cloneDeep',
     'common/utils/$',
     'common/utils/config',
@@ -7,7 +6,6 @@ define([
     'common/modules/article/spacefinder',
     'common/modules/commercial/create-ad-slot'
 ], function (
-    fastdom,
     cloneDeep,
     $,
     config,
@@ -15,6 +13,7 @@ define([
     spacefinder,
     createAdSlot
 ) {
+
     function getRules() {
         return {
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
@@ -40,16 +39,13 @@ define([
         insertAdAtP = function (para) {
             if (para) {
                 var adName = adNames[ads.length],
-                    $ad    = $.create(createAdSlot(adName[0], adName[1]));
-
-                fastdom.write(function () {
-                    $ad.insertBefore(para);
-                });
-
+                    $ad    = $.create(createAdSlot(adName[0], adName[1]))
+                                .insertBefore(para);
                 ads.push($ad);
             }
         },
         init = function () {
+
             var rules, lenientRules;
 
             // is the switch off, or not an article, or a live blog
@@ -76,7 +72,9 @@ define([
         };
 
     return {
+
         init: init,
+
         // rules exposed for spacefinder debugging
         getRules: getRules,
         getLenientRules: getLenientRules,
@@ -84,5 +82,6 @@ define([
         reset: function () {
             ads = [];
         }
+
     };
 });
