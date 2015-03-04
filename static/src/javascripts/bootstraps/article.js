@@ -66,7 +66,8 @@ define([
 
             initRightHandComponent: function () {
                 var mainColumn = qwery('.js-content-main-column');
-                if (mainColumn && mainColumn[0].offsetHeight > 1000 && !detect.isBreakpoint('mobile')) {
+                // only render when we have >1000px or more (enough space for ad + most popular)
+                if (mainColumn[0] && mainColumn[0].offsetHeight > 1000 && !detect.isBreakpoint('mobile')) {
                     geoMostPopular.render();
                 }
             },
