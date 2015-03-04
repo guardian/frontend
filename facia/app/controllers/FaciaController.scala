@@ -197,14 +197,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
     for {
-      maybeFaciaPage <- frontJson.get(path)
+      maybePressedPage <- frontJsonFapi.get(path)
     } yield {
       val maybeResponse = for {
-        faciaPage <- maybeFaciaPage
-        (container, index) <- faciaPage.front.containers.zipWithIndex.find(_._1.dataId == collectionId)
+        pressedPage <- maybePressedPage
+        (container, index) <- pressedPage.front.containers.zipWithIndex.find(_._1.dataId == collectionId)
         containerLayout <- container.containerLayout
       } yield {
-        Cached(faciaPage) {
+        Cached(pressedPage) {
           JsonComponent(views.html.fragments.containers.facia_cards.showMore(
             containerLayout.remainingCards,
             index
