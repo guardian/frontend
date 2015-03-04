@@ -5,6 +5,7 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'raven',
     'lodash/collections/map',
     'lodash/collections/size',
@@ -21,6 +22,7 @@ define([
 ], function (
     bean,
     bonzo,
+    fastdom,
     raven,
     map,
     size,
@@ -35,7 +37,6 @@ define([
     LazyLoad,
     Tabs
 ) {
-
     var constructQuery = function (params) {
             return _(params)
                 .pairs()
