@@ -45,8 +45,8 @@ define([
 
                     getParaWithSpaceStub = sinon.stub();
                     var paras = qwery('p', $fixturesContainer);
-                    getParaWithSpaceStub.onFirstCall().returns(paras[0]);
-                    getParaWithSpaceStub.onSecondCall().returns(paras[1]);
+                    getParaWithSpaceStub.onFirstCall().returns(Promise.resolve(paras[0]));
+                    getParaWithSpaceStub.onSecondCall().returns(Promise.resolve(paras[1]));
                     mocks.store['common/modules/article/spacefinder'].getParaWithSpace = getParaWithSpaceStub;
                 });
 
@@ -93,8 +93,7 @@ define([
                 });
 
                 it('should insert an inline ad container to the available slot', function (done) {
-                    articleBodyAdverts.init();
-                    fastdom.defer(function () {
+                    articleBodyAdverts.init().then(function () {
                         expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
                         expect(getParaWithSpaceStub).toHaveBeenCalledOnce();
                         done();
@@ -103,8 +102,7 @@ define([
 
                 it('should insert an inline merchandising slot if page has one', function (done) {
                     mocks.store['common/utils/config'].page.hasInlineMerchandise = true;
-                    articleBodyAdverts.init();
-                    fastdom.defer(function () {
+                    articleBodyAdverts.init().then(function () {
                         expect(qwery('#dfp-ad--im', $fixturesContainer).length).toBe(1);
                         expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
                         done();
