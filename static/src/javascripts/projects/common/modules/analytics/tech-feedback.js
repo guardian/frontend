@@ -10,9 +10,10 @@ define([
 
     return {
         init: function () {
-            $('.js-tech-feedback').on('submit', function () {
-                var oldHref = this.attr('action');
-                this.attr('action', oldHref + '&width=' + window.innerWidth);
+            var form = $('.js-tech-feedback');
+            bean.on(form[0], 'submit', function () {
+                var oldHref = form.attr('action');
+                form.attr('action', oldHref + '&width=' + window.innerWidth);
             });
         }
     };
