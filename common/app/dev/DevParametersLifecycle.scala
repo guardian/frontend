@@ -55,7 +55,8 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
         !request.uri.startsWith("/oauth2callback") &&
         !request.uri.startsWith("/px.gif")  && // diagnostics box
         !request.uri.startsWith("/ab.gif") &&
-        !request.uri.startsWith("/js.gif")
+        !request.uri.startsWith("/js.gif") &&
+        !request.uri.startsWith("/tech-feedback")
       ) {
         val illegalParams = request.queryString.keySet.filterNot(allowedParams.contains(_))
         if (illegalParams.nonEmpty) {

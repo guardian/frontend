@@ -1,5 +1,6 @@
 @(page: model.MetaData, showNav: Boolean=true)(implicit request: RequestHeader)
 
+@import conf.Configuration
 @import org.joda.time.DateTime
 @import common.Edition
 @import common.LinkTo
@@ -78,6 +79,12 @@
                 <li class="colophon__item"><a data-link-name="uk : footer : contact us" href="http://www.theguardian.com/help/contact-us">
                     contact us</a></li>
             }
+
+        <li class="colophon__item">
+            <form class="js-tech-feedback" action="@Configuration.debug.beaconUrl/tech-feedback?uri=http@{if (request.secure) "s" else ""}://@request.host@request.uri" method="post">
+                <input data-link-name="tech feedback" type="submit" value="report technical issue">
+            </form>
+        </li>
 
             @if(currentEdition == Us) {
                 <li class="colophon__item"><a data-link-name="us : footer : about us" href="http://www.theguardian.com/info/about-guardian-us">

@@ -34,16 +34,15 @@ define([
             $fixturesContainer = fixtures.render(fixturesConfig);
             new ExpandableV2(qwery('.expandablev2-ad-slot', $fixturesContainer), {}).create();
             expect(qwery('.ad-exp--expand').length).toBeGreaterThan(0);
-            expect(qwery('.ad-exp__open').length).toBeGreaterThan(0);
             expect(qwery('.ad-exp-collapse__slide').length).toBeGreaterThan(0);
         });
 
         it('should have show more button', function () {
             $fixturesContainer = fixtures.render(fixturesConfig);
             new ExpandableV2(qwery('.expandablev2-ad-slot', $fixturesContainer), {
-                showMore: 'yes'
+                showPlus: 'plus-only'
             }).create();
-            expect(qwery('.ad-exp__open-chevron').length).toBeGreaterThan(0);
+            expect(qwery('.ad-exp__close-button').length).toBeGreaterThan(0);
         });
 
     });
