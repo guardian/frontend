@@ -289,8 +289,8 @@
                     }
                 } else {
                     images.upgrade();
-                    images.listen();
                 }
+                images.listen();
 
                 if (config.switches.commercial) {
                     require(['bootstraps/commercial'], raven.wrap(

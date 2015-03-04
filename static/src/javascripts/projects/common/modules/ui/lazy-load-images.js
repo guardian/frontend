@@ -41,7 +41,7 @@ define([
                     $nextImages = [];
 
                 if ($images.length === 0) {
-                    mediator.off('window:scroll', lazyLoad);
+                    bean.off(window, 'scroll', lazyLoad);
                 } else {
                     scrollTop = bonzo(document.body).scrollTop();
                     scrollBottom = scrollTop + bonzo.viewport().height;
