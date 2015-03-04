@@ -12,9 +12,7 @@ define([
     Promise,
     _
 ) {
-
     // find spaces in articles for inserting ads and other inline content
-
     var bodySelector = '.js-article__body',
         // minAbove and minBelow are measured in px from the top of the paragraph element being tested
         defaultRules = { // these are written for adverts
