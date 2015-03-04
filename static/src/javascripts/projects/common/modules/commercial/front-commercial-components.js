@@ -1,15 +1,16 @@
 define([
     'bonzo',
+    'fastdom',
     'common/utils/$',
     'common/utils/config',
     'common/modules/commercial/create-ad-slot'
 ], function (
     bonzo,
+    fastdom,
     $,
     config,
     createAdSlot
 ) {
-
     function init() {
         if (!config.switches.commercialComponents || !config.page.isFront) {
             return false;
@@ -27,17 +28,17 @@ define([
                 containerIndex = config.page.contentType === 'Network Front' ? 3 : 2;
             }
 
-            return $adSlotWrapper
-                .append($adSlot)
-                .insertAfter($containers[containerIndex]);
-        }
+            $adSlotWrapper.append($adSlot);
 
+            fastdom.write(function () {
+                $adSlotWrapper.insertAfter($containers[containerIndex]);
+            });
+
+            return $adSlotWrapper;
+        }
     }
 
     return {
-
         init: init
-
     };
-
 });
