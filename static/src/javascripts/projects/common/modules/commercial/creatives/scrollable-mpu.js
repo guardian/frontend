@@ -11,7 +11,6 @@ define([
     template,
     scrollableMpuTpl
 ) {
-
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026567
      */
@@ -27,7 +26,18 @@ define([
     ScrollableMpu.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     ScrollableMpu.prototype.updateBgPosition = function () {
-        $('.creative--scrollable-mpu-image').css('background-position', '100%' + (window.pageYOffset - this.$scrollableMpu.offset().top) + 'px');
+        var that = this;
+
+        fastdom.read(function () {
+            var offset = window.pageYOffset - that.$scrollableMpu.offset().top;
+
+            fastdom.write(function () {
+                $('.creative--scrollable-mpu-image').css(
+                    'background-position',
+                    '100% ' + offset + 'px'
+                );
+            });
+        });
     };
 
     ScrollableMpu.prototype.create = function () {
@@ -37,9 +47,14 @@ define([
             image:            ScrollableMpu.hasScrollEnabled ? this.params.image : this.params.staticImage,
             trackingPixelImg: this.params.trackingPixel ?
                 '<img src="' + this.params.trackingPixel + '" width="1" height="1" />' : ''
-        };
-        this.$scrollableMpu = $.create(template(scrollableMpuTpl, templateOptions)).appendTo(this.$adSlot);
+        }, that = this;
 
+        this.$scrollableMpu = $.create(template(scrollableMpuTpl, templateOptions));
+
+        fastdom.write(function () {
+            that.$scrollableMpu.appendTo(this.$adSlot);
+        });
+        
         if (ScrollableMpu.hasScrollEnabled) {
             // update bg position
             this.updateBgPosition();
@@ -51,5 +66,4 @@ define([
     };
 
     return ScrollableMpu;
-
 });

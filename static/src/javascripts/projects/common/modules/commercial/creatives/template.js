@@ -18,7 +18,6 @@ define([
     template,
     svgs
 ) {
-
     /**
      * Create simple templated creatives
      *
@@ -50,5 +49,4 @@ define([
     };
 
     return Template;
-
 });
