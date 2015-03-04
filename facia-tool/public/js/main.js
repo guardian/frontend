@@ -5,7 +5,7 @@ import Bootstrap from 'modules/bootstrap';
 import 'font-awesome/css/font-awesome.min.css!';
 import vars from 'modules/vars';
 
-export function load (moduleName) {
+export default function load (Module) {
     var module, bootstrap;
 
     function checkEnabled (res) {
@@ -31,14 +31,10 @@ export function load (moduleName) {
     function loadModule (res) {
         vars.update(res);
 
-        System.amdRequire(['models/' + moduleName + '/main'], function (Module) {
-            module = new Module();
-            module.init(bootstrap. res);
+        module = new Module();
+        module.init(bootstrap, res);
 
-            bootstrap.every(updateModuleConfig);
-        }, function (error) {
-            console.error(error);
-        });
+        bootstrap.every(updateModuleConfig);
     }
 
     function updateModuleConfig (res) {

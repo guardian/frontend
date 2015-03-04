@@ -82,7 +82,7 @@ module.exports = function (grunt) {
 
     });
     grunt.registerTask('compile:js', function(fullCompile) {
-        grunt.task.run(['compile:inlineSvgs', 'concurrent:requireJS', 'copy:javascript']);
+        grunt.task.run(['compile:inlineSvgs', 'concurrent:requireJS', 'jspm-bundle', 'copy:javascript']);
         if (!options.isDev) {
             grunt.task.run('uglify:javascript');
         }
@@ -107,6 +107,7 @@ module.exports = function (grunt) {
     grunt.registerTask('prepare', ['jspm']);
 
     grunt.registerTask('jspm', ['shell:jspmFaciaTool']);
+    grunt.registerTask('jspm-bundle', ['shell:jspmBundleFaciaToolCollections', 'shell:jspmBundleFaciaToolConfig']);
 
     /**
      * compile:js:<requiretask> tasks. Generate one for each require task

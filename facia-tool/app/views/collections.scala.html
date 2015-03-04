@@ -1,6 +1,6 @@
 @(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity])
 
-@admin_main("fronts", env, Some(priority), isAuthed = true, identity) {
+@admin_main("fronts", env, Some(priority), isAuthed = true, identity, model=Option("collections")) {
 
 <div style="display: none;" data-bind="visible: true">
 
@@ -296,10 +296,4 @@
     </script>
 
 </div>
-
-<script>
-    System.import('facia-tool/main').then(function (main) {
-        main.load('collections');
-    });
-</script>
 }

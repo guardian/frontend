@@ -1,7 +1,7 @@
 @(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity])
 @import views.helpers.environment.urlBase
 
-@admin_main("config", env, Some(priority), isAuthed = true, identity=identity) {
+@admin_main("config", env, Some(priority), isAuthed = true, identity=identity, model=Option("config")) {
 
 <div style="display: none;" data-bind="
     visible: true,
@@ -295,10 +295,4 @@
     </script>
 
 </div>
-
-<script>
-    System.import('facia-tool/main').then(function (main) {
-        main.load('config');
-    });
-</script>
 }

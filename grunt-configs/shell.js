@@ -31,6 +31,34 @@ module.exports = function(grunt, options) {
                     cwd: 'facia-tool/public'
                 }
             }
+        },
+        jspmBundleFaciaToolCollections: {
+            command: 'node ../../node_modules/jspm/jspm.js bundle --minify ' + [
+                'models/collections/loader',
+                'widgets/fronts',
+                'widgets/latest',
+                'widgets/clipboard',
+                'widgets/fronts.html!text',
+                'widgets/latest.html!text',
+                'widgets/search_controls.html!text',
+                'widgets/collection.html!text',
+                'widgets/clipboard.html!text'
+            ].join(' + ') + ' js/build/collections.js',
+            options: {
+                execOptions: {
+                    cwd: 'facia-tool/public'
+                }
+            }
+        },
+        jspmBundleFaciaToolConfig: {
+            command: 'node ../../node_modules/jspm/jspm.js bundle --minify ' + [
+                'models/config/loader'
+            ].join(' + ') + ' js/build/config.js',
+            options: {
+                execOptions: {
+                    cwd: 'facia-tool/public'
+                }
+            }
         }
     };
 };
