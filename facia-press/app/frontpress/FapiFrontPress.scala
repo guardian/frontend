@@ -63,7 +63,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   def pressByPathId(path: String): Future[Unit]
 
   val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalContentCode"
-  val apiQuery: AdjustSearchQuery = (searchQuery: SearchQuery) =>
+  val searchApiQuery: AdjustSearchQuery = (searchQuery: SearchQuery) =>
     searchQuery
       .showFields(showFields)
       .showElements("all")
@@ -71,7 +71,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
       .showTags("all")
       .showReferences(references)
 
-  val snapApiQuery: AdjustItemQuery = (itemQuery: ItemQuery) =>
+  val itemApiQuery: AdjustItemQuery = (itemQuery: ItemQuery) =>
     itemQuery
       .showFields(showFields)
       .showElements("all")
@@ -87,7 +87,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   def generateCollectionJsonFromFapiClient(collectionId: String): Response[PressedCollection] =
     for {
       collection <- FAPI.getCollection(collectionId)
-      curatedCollection <- FAPI.collectionContentWithSnaps(collection, apiQuery, snapApiQuery)
+      curatedCollection <- FAPI.collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
       backfill <- getBackfill(collection)
     } yield PressedCollection.fromCollectionWithCuratedAndBackfill(collection, curatedCollection, backfill)
 
@@ -96,7 +96,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
       .collectionConfig
       .apiQuery
       .map { query =>
-      FAPI.backfill(query, collection, apiQuery)}
+      FAPI.backfill(query, collection, searchApiQuery, itemApiQuery)}
       .getOrElse{Response.Right(Nil)}
 
   private def getCollectionIdsForPath(path: String): Response[List[String]] =
