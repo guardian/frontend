@@ -94,10 +94,12 @@ define([
                 paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
 
                 if (debug) { // reset any previous debug messages
-                    bonzo(paraElems.pluck('element').valueOf())
-                        .attr('data-spacefinder-msg', '')
-                        .removeClass('spacefinder--valid')
-                        .removeClass('spacefinder--error');
+                    fastdom.write(function () {
+                        bonzo(paraElems.pluck('element').valueOf())
+                            .attr('data-spacefinder-msg', '')
+                            .removeClass('spacefinder--valid')
+                            .removeClass('spacefinder--error');
+                    });
                 }
 
                 slots = _enforceRules(paraElems, rules, bodyBottom, debug);
