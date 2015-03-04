@@ -28,21 +28,24 @@ define([
     return {
         init: function () {
             if (config.page.openModule) {
-                var space = spacefinder.getParaWithSpace(getSpacefinderRules());
-                if (space) {
-                    ajax({
-                        url: config.page.openModule,
-                        crossOrigin: true,
-                        method: 'get'
-                    }).then(function (resp) {
-                        if (resp.html) {
-                            $.create(resp.html)
-                                .addClass('element--supporting')
-                                .insertBefore(space);
-                            $('.submeta-container--break').removeClass('submeta-container--break');
-                        }
-                    });
-                }
+                spacefinder.getParaWithSpace(getSpacefinderRules()).then(function (space) {
+                    if (space) {
+                        ajax({
+                            url: config.page.openModule,
+                            crossOrigin: true,
+                            method: 'get'
+                        }).then(function (resp) {
+                            if (resp.html) {
+                                fastdom.write(function () {
+                                    $.create(resp.html)
+                                        .addClass('element--supporting')
+                                        .insertBefore(space);
+                                    $('.submeta-container--break').removeClass('submeta-container--break');
+                                });
+                            }
+                        });
+                    }
+                });
             }
         }
     };
