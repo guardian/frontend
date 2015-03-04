@@ -1,10 +1,12 @@
 define([
+    'fastdom',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
     'common/modules/article/spacefinder'
 ], function (
+    fastdom,
     $,
     ajax,
     config,

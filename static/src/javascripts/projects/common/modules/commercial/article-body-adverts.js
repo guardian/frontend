@@ -74,7 +74,7 @@ define([
                 adNames.unshift(['im', 'im']);
 
                 inlineMercPromise = spacefinder.getParaWithSpace(lenientRules).then(function (space) {
-                    return insertAdAtP(space)
+                    return insertAdAtP(space);
                 });
             } else {
                 inlineMercPromise = Promise.resolve(null);
