@@ -141,7 +141,7 @@ define([
 
                 if (header) {
                     if (config.switches.idProfileNavigation) {
-                        profile = new Profile(header, {
+                        profile = new Profile({
                             url: config.page.idUrl
                         });
                         profile.init();

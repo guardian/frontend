@@ -468,6 +468,7 @@
             width: $left-column + $gs-gutter;
             content: '';
             border-bottom: 1px dotted colour(neutral-5);
+            margin-top: $gs-gutter/4;
 
             @include mq(leftCol) {
                 width: $left-column;

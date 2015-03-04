@@ -73,7 +73,7 @@ object Switches {
   // Switch names can be letters numbers and hyphens only
 
   private lazy val never = new LocalDate(2100, 1, 1)
-  private lazy val hackdayAmnesty = new LocalDate(2015, 3, 4)
+  private lazy val hackdayAmnesty = new LocalDate(2015, 3, 9)
 
   // Performance
   val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
@@ -352,7 +352,7 @@ object Switches {
 
   val HideInteractiveUi = Switch("Feature", "hide-interactive-ui",
     "If this is switched on interactives can be rendered without page furniture.",
-    safeState = On, sellByDate = hackdayAmnesty
+    safeState = On, sellByDate = new LocalDate(2015, 3, 31)
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",

@@ -4,11 +4,9 @@
     </div>
     <div class="ad-exp--expand l-side-margins mobile-only" style="background-color: {{backgroundColor}}">
         <div class="facia-container__inner facia-container__inner--full-span" style="background: url('{{backgroundImageM}}') {{backgroundRepeatM}} {{backgroundPositionM}};">
-            <button class="ad-exp__close-button ad-exp__open">
-                <i class="i i-close-icon-white-small"></i>
-            </button>
+            {{showPlus}}
+            {{showArrow}}
             <div class="ad-exp-collapse__slide slide-1" style="background: {{slide1BGColor}} url('{{slide1BGImageM}}') {{slide1BGImageRepeatM}} {{slide1BGImagePositionM}};">
-                {{show}}
                 <a href="{{clickMacro}}{{link}}" target="_new">
                     <div class="ad-exp__layer ad-exp__layer1" style="background: url('{{slide1Layer1BGImageM}}') {{slide1Layer1BGImageRepeatM}} {{slide1Layer1BGImagePositionM}};"></div>
                     <div class="ad-exp__layer ad-exp__layer2" style="background: url('{{slide1Layer2BGImageM}}') {{slide1Layer2BGImageRepeatM}} {{slide1Layer2BGImagePositionM}};"></div>
@@ -16,6 +14,7 @@
                 </a>
             </div>
             <div class="ad-exp-collapse__slide slide-2" style="background: {{slide2BGColor}} url('{{slide2BGImageM}}') {{slide2BGImagePositionM}} {{slide2BGImageRepeatM}};">
+                {{video}}
                 <a href="{{clickMacro}}{{link}}" target="_new">
                     <div class="ad-exp__layer ad-exp__layer1" style="background: url('{{slide2Layer1BGImageM}}') {{slide2Layer1BGImageRepeatM}} {{slide2Layer1BGImagePositionM}};"></div>
                     <div class="ad-exp__layer ad-exp__layer2" style="background: url('{{slide2Layer2BGImageM}}') {{slide2Layer2BGImageRepeatM}} {{slide2Layer2BGImagePositionM}};"></div>
@@ -26,11 +25,9 @@
     </div>
     <div class="ad-exp--expand l-side-margins hide-until-tablet" style="background-color: {{backgroundColor}}">
         <div class="facia-container__inner facia-container__inner--full-span" style="background: url('{{backgroundImage}}') {{backgroundRepeat}} {{backgroundPosition}};">
-            <button class="ad-exp__close-button ad-exp__open">
-                <i class="i i-close-icon-white-small"></i>
-            </button>
+            {{showPlus}}
+            {{showArrow}}
             <div class="ad-exp-collapse__slide slide-1" style="background: {{slide1BGColor}} url('{{slide1BGImage}}') {{slide1BGImageRepeat}} {{slide1BGImagePosition}};">
-                {{show}}
                 <a href="{{clickMacro}}{{link}}" target="_new">
                     <div class="ad-exp__layer ad-exp__layer1" style="background: url('{{slide1Layer1BGImage}}') {{slide1Layer1BGImageRepeat}} {{slide1Layer1BGImagePosition}};"></div>
                     <div class="ad-exp__layer ad-exp__layer2" style="background: url('{{slide1Layer2BGImage}}') {{slide1Layer2BGImageRepeat}} {{slide1Layer2BGImagePosition}};"></div>
