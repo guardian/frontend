@@ -68,11 +68,16 @@ define([
                 adNames.unshift(['im', 'im']);
                 insertAdAtP(spacefinder.getParaWithSpace(lenientRules));
             }
-            insertAdAtP(spacefinder.getParaWithSpace(rules));
 
-            if (detect.isBreakpoint({ max: 'tablet' })) {
+            //fastdom.defer(function () {
                 insertAdAtP(spacefinder.getParaWithSpace(rules));
-            }
+
+                if (detect.isBreakpoint({ max: 'tablet' })) {
+                    //fastdom.defer(function () {
+                        insertAdAtP(spacefinder.getParaWithSpace(rules));
+                    //});
+                }
+            //});
         };
 
     return {
