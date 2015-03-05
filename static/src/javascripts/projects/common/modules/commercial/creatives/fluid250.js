@@ -48,7 +48,7 @@ define([
         if (this.params.trackingPixel) {
             fastdom.write(function () {
                 this.$adSlot.before(
-                    '<img src="' + that.params.trackingPixel + that.params.cacheBuster +
+                    '<img src="' + this.params.trackingPixel + this.params.cacheBuster +
                     '" class="creative__tracking-pixel" height="1px" width="1px"/>'
                 );
             }.bind(this));

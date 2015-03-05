@@ -1,10 +1,12 @@
 define([
+    'fastdom',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
     'text!common/views/commercial/creatives/scrollable-mpu.html'
 ], function (
+    fastdom,
     $,
     detect,
     mediator,
