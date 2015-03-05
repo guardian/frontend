@@ -797,6 +797,7 @@ define([
 
         function isPremium(contentApiArticle) {
             return contentApiArticle.fields.membershipAccess === 'members-only' ||
+                contentApiArticle.fields.membershipAccess === 'paid-members-only' ||
                 !!_.find(contentApiArticle.tags, {id: 'news/series/looking-back'});
         }
 
