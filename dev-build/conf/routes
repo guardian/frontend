@@ -252,7 +252,7 @@ GET         /commercial/jobs.json                                               
 
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.renderMasterclasses
 
-GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.renderSoulmates
+GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.renderMixedSoulmates
 GET         /commercial/soulmates/brighton.json                                                                      controllers.commercial.SoulmateAds.renderBrightonSoulmates
 GET         /commercial/soulmates/northwest.json                                                                     controllers.commercial.SoulmateAds.renderNorthwestSoulmates
 GET         /commercial/soulmates/scotland.json                                                                      controllers.commercial.SoulmateAds.renderScotlandSoulmates
