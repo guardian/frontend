@@ -133,7 +133,7 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val RichLinkSwitch = Switch("Performance", "rich-link",
+  val RichLinkSwitch = Switch("Performance", "rich-links",
     "If this switch is turned off then rich links will not be shown. Turn off to help handle exceptional load.",
      safeState = On, sellByDate = never
   )

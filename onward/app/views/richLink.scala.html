@@ -9,10 +9,10 @@
 
 
           @if(play.Play.isDev() || !InlineCriticalCss.isSwitchedOn) {
-              <link rel="stylesheet" data-reload="head.rich-link" type="text/css" href="@Static("stylesheets/head.rich-link.css")" />
+              <link rel="stylesheet" data-reload="head.rich-links" type="text/css" href="@Static("stylesheets/head.rich-links.css")" />
           } else {
               <style>
-              @Html(Static.css.head(Some("rich-link")))
+              @Html(Static.css.head(Some("rich-links")))
               body {
                 margin: 0;
               }
