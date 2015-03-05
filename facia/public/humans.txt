@@ -124,6 +124,10 @@ Twitter: no
 Favourite John Carpenter film: The Thing
 From: London, England
 
+Developer: Austin Harris
+Twitter: @austinh7
+Location: Buxted, England
+
 Front-end Developer: Chris Finch
 Twitter: @chrisfinchy
 Linkedin: chrisfinch
