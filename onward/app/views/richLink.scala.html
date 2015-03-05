@@ -9,10 +9,10 @@
 
 
           @if(play.Play.isDev() || !InlineCriticalCss.isSwitchedOn) {
-              <link rel="stylesheet" data-reload="head.flyers" type="text/css" href="@Static("stylesheets/head.flyers.css")" />
+              <link rel="stylesheet" data-reload="head.rich-link" type="text/css" href="@Static("stylesheets/head.rich-link.css")" />
           } else {
               <style>
-              @Html(Static.css.head(Some("flyers")))
+              @Html(Static.css.head(Some("rich-link")))
               body {
                 margin: 0;
               }
@@ -43,6 +43,6 @@
 
       </head>
       <body width="30%">
-          @fragments.flyerBody(content)
+          @fragments.richLinkBody(content)
       </body>
 </html>

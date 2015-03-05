@@ -1,6 +1,6 @@
 .tone-analysis--item {
     &.fc-item,
-    &.flyer {
+    &.rich-link {
         background-color: colour(analysis-background);
         color: colour(analysis-default);
     }
@@ -10,22 +10,22 @@
     }
 
     .fc-item__container:before,
-    .flyer__container:before {
+    .rich-link__container:before {
         background-color: colour(analysis-accent);
     }
 
-    .flyer__read-more-text {
+    .rich-link__read-more-text {
         color: colour(analysis-default);
     }
 
-    .flyer__arrow-icon {
+    .rich-link__arrow-icon {
         fill: colour(analysis-default);
     }
 
     .fc-item__kicker,
-    .flyer__kicker,
+    .rich-link__kicker,
     .fc-item__byline,
-    .flyer__standfirst {
+    .rich-link__standfirst {
         color: colour(news-support-6);
     }
 

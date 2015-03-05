@@ -58,8 +58,8 @@ GET        /:mediaType/section/:sectionId/*seriesId.json                        
 GET        /:mediaType/section/:sectionId.json                                                 controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
 GET        /video/most-viewed.json                                                             controllers.MostViewedVideoController.renderMostViewed()
 GET        /audio/most-viewed.json                                                             controllers.MostViewedAudioController.renderMostViewed()
-GET        /embed/card/*path.json                                                              controllers.FlyerController.render(path)
-GET        /embed/card/*path                                                                   controllers.FlyerController.renderHtml(path)
+GET        /embed/card/*path.json                                                              controllers.RichLinkController.render(path)
+GET        /embed/card/*path                                                                   controllers.RichLinkController.renderHtml(path)
 
 # Sport
 GET        /sport/cricket/match/:matchId                                                       controllers.CricketMatchController.renderMatchId(matchId)
