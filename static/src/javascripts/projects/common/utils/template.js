@@ -1,3 +1,6 @@
+// jshint evil:true
+// jshint unused:false
+
 define([
     'lodash/objects/keys',
     'common/views/svgs'
@@ -5,10 +8,9 @@ define([
     keys,
     inlineSvg
 ) {
-    var svgRegEx = /({{)(inlineSvg\([^)]*\))(}})/g, // e.g. {{inlineSvg('marque36icon')}}
-        svgParamCleanerRegEx = /["'\s]/g;
+    var svgRegEx = /({{)(inlineSvg\([^)]*\))(}})/g; // e.g. {{inlineSvg('marque36icon')}}
 
-    function svgReplacer (match, openingDelimiter, inlineSvgCall) {
+    function svgReplacer(match, openingDelimiter, inlineSvgCall) {
         return eval(inlineSvgCall);
     }
 
