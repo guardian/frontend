@@ -1,6 +1,6 @@
 # Inline SVGs
 
-The use of inline SVGs is encouraged over BASE-64-encoded URLs in CSS. It means: 
+The use of inline SVGs is encouraged over BASE-64-encoded URLs in CSS. It means:
 
 - the browser only has to parse what it needs, rather than all the images for the entire site on every page load
 - the weight of the CSS is massively reduced (about 50kb gzipped in theory)
@@ -15,7 +15,7 @@ Any image which you want to insert needs to be added to `/static/src/inline-svgs
 
 All images in `inline-svgs` are run through SVGO before being inserted, so you can afford to leave useful comments etc. in a file if you want.
 
-In order to stop IE8 from freaking out (even though it cannot even render SVGs), you *must* remove any `xmlns` attributes from the `svg` element. 
+In order to stop IE8 from freaking out (even though it cannot even render SVGs), you *must* remove any `xmlns` attributes from the `svg` element.
 
 IE also needs dimensions being set (all versions).
 
@@ -40,7 +40,7 @@ A scala helper method will insert the image for you:
 
 ### JavaScript templates
 
-These are a bit more complex. To ensures they only appear in the source once, all SVGs that will be used in a JavaScript template need to be added to `common/views/svgs.js`:
+These are slightly more complex. To ensures they only appear in the source once, any SVG that will be used in a JavaScript template needs to be added to `common/views/svgs.js`:
 
 ```javascript
 // common/views/svgs.js
@@ -62,45 +62,30 @@ define([
 - `Filename` **String** The name of the file, excluding the extention
 - `Subdirectory` **String** (optional) The folder the image lives in within `inline-svgs/`, prefixed by a `!`
 
-Then in the file that will use the template, require `svgs.js`:
+This provides a look-up method to pull icons out from the `svgs` object in `svgs.js`, which can be used in templates. The method takes an optional array of classes and an optional title string, like the Scala helper:
 
-```javascript
-// myfile.js
-define([
-    'common/views/svgs',
-], function (
-    svgs
-) { ... })
+```html
+// mytemplate.html
+        <div class="breaking-news__item-header">
+            {{inlineSvg("myImage"[, Classes[, Title]])}}
+            <em class="breaking-news__item-kicker">Breaking news</em>
 ```
-This returns a look-up method to pull icons out of the `svgs` object in `svgs.js`, which can then be passed into templates. The method takes an optional array of classes, like the Scala helper:
 
-```javascript
-// myfile.js
-define([
-    'common/utils/template',
-    'common/views/svgs'
-], function (
-    template,
-    svgs
-) {
-	var htmlWithInlineSVG = template("Here is my inline image: {{myImage}}", {
-		myImage: svgs('myImage'[, Classes[, Title]])
-	})
-})
-```
 - `Classes` **Array** (optional) An array of bespoke classes for this image
 - `Title` **String** (optional) A title that gets added to the wrapping `span`
 
+Unlike the Scala helper, you need to use the `key` from the `svgs` object of `common/views/svgs.js` and not the filename/subdirectory.
+
 ## Output
 
-The result of inserting an SVG with either method is the compressed source wrapped inside a `span`, with some default classes for free, plus any extra you've specified. 
+The result of inserting an SVG with either method is the compressed source wrapped inside a `span`, with some default classes for free, plus any extra you've specified.
 
 So both this Scala:
 
 ```scala
 @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"), Some("Profile icon"))
 ```
-and this JavaScript:
+and this JavaScript/HTML:
 
 ```javascript
 // common/views/svgs.js
@@ -114,15 +99,9 @@ define([
     };
 });
 ```
-```javascript
-// myfile.js
-define([
-    'common/views/svgs'
-], function (
-    svgs
-) {
-	svgs('profile36icon', ["rounded-icon", "control__icon-wrapper"], "Profile icon");
-});
+```html
+// mytemplate.html
+{{inlineSvg("profile36icon", ["rounded-icon", "control__icon-wrapper"], "Profile icon")}}
 ```
 
 will give you this HTML:

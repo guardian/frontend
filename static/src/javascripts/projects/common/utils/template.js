@@ -1,15 +1,26 @@
+// jshint evil:true
+// jshint unused:false
+
 define([
-    'lodash/collections/reduce',
-    'lodash/objects/keys'
+    'lodash/objects/keys',
+    'common/views/svgs'
 ], function (
-    reduce,
-    keys
+    keys,
+    inlineSvg
 ) {
+    var svgRegEx = /({{)(inlineSvg\([^)]*\))(}})/g; // e.g. {{inlineSvg('marque36icon')}}
 
-    return function template(tmpl, params) {
-        return reduce(keys(params), function (tmpl, token) {
-            return tmpl.replace(new RegExp('{{' + token + '}}', 'g'), params[token]);
-        }, tmpl);
+    function svgReplacer(match, openingDelimiter, inlineSvgCall) {
+        return eval(inlineSvgCall);
+    }
+
+    return function (template, params) {
+        var keyRegEx = new RegExp('{{(' + keys(params).join('|') + ')}}', 'g');
+
+        return template
+            .replace(svgRegEx, svgReplacer)
+            .replace(keyRegEx, function (match, key) {
+                return params[key];
+            });
     };
-
 });
