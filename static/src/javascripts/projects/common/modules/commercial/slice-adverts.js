@@ -1,6 +1,5 @@
 define([
     'bonzo',
-    'fastdom',
     'qwery',
     'lodash/collections/contains',
     'lodash/objects/defaults',
@@ -11,7 +10,6 @@ define([
     'common/modules/user-prefs'
 ], function (
     bonzo,
-    fastdom,
     qwery,
     contains,
     defaults,
@@ -21,6 +19,7 @@ define([
     createAdSlot,
     userPrefs
 ) {
+
     var adNames = ['inline1', 'inline2'],
         init = function (options) {
 
@@ -45,9 +44,9 @@ define([
 
             // pull out ad slices which are have at least x containers between them
             while (index < containers.length) {
-                container    = containers[index];
-                containerId  = bonzo(container).data('id');
-                $adSlice     = $(opts.sliceSelector, container);
+                container    = containers[index],
+                containerId  = bonzo(container).data('id'),
+                $adSlice     = $(opts.sliceSelector, container),
                 // don't display ad in the first container on the fronts
                 isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
 
@@ -68,15 +67,13 @@ define([
                         $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
                             .addClass('ad-slot--not-mobile');
 
-                    fastdom.write(function () {
-                        // add a tablet+ ad to the slice
-                        $adSlice
-                            .removeClass('fc-slice__item--no-mpu')
-                            .append($tabletAdSlot);
-                        // add a mobile advert after the container
-                        $mobileAdSlot
-                            .insertAfter($.ancestor($adSlice[0], 'fc-container'));
-                    });
+                    // add a tablet+ ad to the slice
+                    $adSlice
+                        .removeClass('fc-slice__item--no-mpu')
+                        .append($tabletAdSlot);
+                    // add a mobile advert after the container
+                    $mobileAdSlot
+                        .insertAfter($.ancestor($adSlice[0], 'fc-container'));
                 })
                 .valueOf();
 
@@ -84,6 +81,9 @@ define([
         };
 
     return {
+
         init: init
+
     };
+
 });

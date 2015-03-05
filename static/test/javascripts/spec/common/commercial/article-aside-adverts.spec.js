@@ -1,11 +1,9 @@
 define([
-    'fastdom',
     'qwery',
     'common/utils/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
-    fastdom,
     qwery,
     $,
     fixtures,
@@ -58,40 +56,24 @@ define([
                     expect(articleAsideAdverts).toBeDefined();
                 });
 
-                it('should return the ad slot container on init', function (done) {
+                it('should return the ad slot container on init', function () {
                     var adSlot = articleAsideAdverts.init()[0];
-
-                    fastdom.defer(function () {
-                        expect(adSlot).toBe(qwery('.js-mpu-ad-slot', $fixturesContainer)[0]);
-                        done();
-                    });
+                    expect(adSlot).toBe(qwery('.js-mpu-ad-slot', $fixturesContainer)[0]);
                 });
 
-                it('should append ad slot', function (done) {
+                it('should append ad slot', function () {
                     articleAsideAdverts.init();
-
-                    fastdom.defer(function () {
-                        expect(qwery('.js-mpu-ad-slot > .ad-slot', $fixturesContainer).length).toBe(1);
-                        done();
-                    });
+                    expect(qwery('.js-mpu-ad-slot > .ad-slot', $fixturesContainer).length).toBe(1);
                 });
 
-                it('should have the correct ad name', function (done) {
+                it('should have the correct ad name', function () {
                     articleAsideAdverts.init();
-
-                    fastdom.defer(function () {
-                        expect($('.ad-slot', $fixturesContainer).data('name')).toBe('right');
-                        done();
-                    });
+                    expect($('.ad-slot', $fixturesContainer).data('name')).toBe('right');
                 });
 
-                it('should have the correct size mappings', function (done) {
+                it('should have the correct size mappings', function () {
                     articleAsideAdverts.init();
-
-                    fastdom.defer(function () {
-                        expect($('.ad-slot', $fixturesContainer).data('mobile')).toBe('1,1|300,250|300,251|300,600');
-                        done();
-                    });
+                    expect($('.ad-slot', $fixturesContainer).data('mobile')).toBe('1,1|300,250|300,251|300,600');
                 });
 
                 it('should not display ad slot if standard-adverts switch is off', function () {

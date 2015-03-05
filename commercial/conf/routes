@@ -18,7 +18,12 @@ GET        /commercial/jobs.json                                     controllers
 GET        /commercial/masterclasses.json                            controllers.commercial.MasterClasses.renderMasterclasses
 
 # Soulmates
-GET        /commercial/soulmates/mixed.json                          controllers.commercial.SoulmateAds.renderSoulmates
+GET        /commercial/soulmates/mixed.json                          controllers.commercial.SoulmateAds.renderMixedSoulmates
+GET        /commercial/soulmates/brighton.json                       controllers.commercial.SoulmateAds.renderBrightonSoulmates
+GET        /commercial/soulmates/northwest.json                      controllers.commercial.SoulmateAds.renderNorthwestSoulmates
+GET        /commercial/soulmates/scotland.json                       controllers.commercial.SoulmateAds.renderScotlandSoulmates
+GET        /commercial/soulmates/young.json                          controllers.commercial.SoulmateAds.renderYoungSoulmates
+GET        /commercial/soulmates/mature.json                         controllers.commercial.SoulmateAds.renderMatureSoulmates
 
 # Money offers
 GET        /commercial/money/bestbuys.json                           controllers.commercial.MoneyOffers.renderBestBuys

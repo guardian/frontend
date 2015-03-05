@@ -1,13 +1,11 @@
 define([
     'bonzo',
-    'fastdom',
     'qwery',
     'common/utils/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
     bonzo,
-    fastdom,
     qwery,
     $,
     fixtures,
@@ -49,33 +47,27 @@ define([
                     expect(frontCommercialComponents).toBeDefined();
                 });
 
-                it('should place ad between 3rd and 4th containers if there are 4 or more containers', function (done) {
+                it('should place ad between 3rd and 4th containers if there are 4 or more containers', function () {
                     for (var i = 0; i<4; i++) {
                         appendContainer($fixturesContainer);
                     }
                     frontCommercialComponents.init();
 
-                    fastdom.defer(function () {
-                        expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
-                        done();
-                    });
+                    expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
                 });
 
-                it('should place ad between 1st and 2nd containers if there are less than 4 containers', function (done) {
-                    for (var i = 0; i < 2; i++) {
+                it('should place ad between 1st and 2nd containers if there are less than 4 containers', function () {
+                    for (var i = 0; i<2; i++) {
                         appendContainer($fixturesContainer);
                     }
                     frontCommercialComponents.init();
 
-                    fastdom.defer(function () {
-                        expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
-                        var adSlot = $('#' + fixturesConfig.id + ' > .fc-container > *');
-                        expect(bonzo(adSlot).hasClass('ad-slot')).toBe(true);
-                        done();
-                    });
+                    expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
+                    var adSlot = $('#' + fixturesConfig.id + ' > .fc-container > *');
+                    expect(bonzo(adSlot).hasClass('ad-slot')).toBe(true);
                 });
 
-                it('should place ad between between the 4th and 5th container if a network front', function (done) {
+                it('should place ad between between the 4th and 5th container if a network front', function () {
                     mocks.store['common/utils/config'].page.contentType = 'Network Front';
 
                     for (var i = 0; i<5; i++) {
@@ -83,27 +75,21 @@ define([
                     }
                     frontCommercialComponents.init();
 
-                    fastdom.defer(function () {
-                        expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
-                        var adSlot = $('#' + fixturesConfig.id + ' > .fc-container > *');
+                    expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
+                    var adSlot = $('#' + fixturesConfig.id + ' > .fc-container > *');
 
-                        expect(bonzo(adSlot).hasClass('ad-slot')).toBe(true);
-                        done();
-                    });
+                    expect(bonzo(adSlot).hasClass('ad-slot')).toBe(true);
                 });
 
-                it('should have 1,1 slot for wide breakpoint if there is a page skin', function (done) {
+                it('should have 1,1 slot for wide breakpoint if there is a page skin', function () {
                     for (var i = 0; i<2; i++) {
                         appendContainer($fixturesContainer);
                     }
                     mocks.store['common/utils/config'].page.hasPageSkin = true;
                     frontCommercialComponents.init();
 
-                    fastdom.defer(function () {
-                        expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
-                        expect($('.ad-slot', $fixturesContainer).attr('data-wide')).toBe('1,1');
-                        done();
-                    });
+                    expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
+                    expect($('.ad-slot', $fixturesContainer).attr('data-wide')).toBe('1,1');
                 });
 
                 it('should not display ad slot if commercial-components switch is off', function () {

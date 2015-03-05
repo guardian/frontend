@@ -1,11 +1,9 @@
 define([
-    'fastdom',
     'qwery',
     'common/utils/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
-    fastdom,
     qwery,
     $,
     fixtures,
@@ -60,21 +58,17 @@ define([
                     expect(articleBodyAdverts).toBeDefined();
                 });
 
-                it('should call "getParaWithSpace" with correct arguments', function (done) {
+                it('should call "getParaWithSpace" with correct arguments', function () {
                     articleBodyAdverts.init();
-
-                    fastdom.defer(function () {
-                        expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                            minAbove: 700,
-                            minBelow: 300,
-                            selectors: {
-                                ' > h2': {minAbove: 0, minBelow: 250},
-                                ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                                ' .ad-slot': {minAbove: 500, minBelow: 500}
-                            }
-                        });
-                        done();
-                    });
+                    expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                        minAbove: 700,
+                        minBelow: 300,
+                        selectors: {
+                            ' > h2': {minAbove: 0, minBelow: 250},
+                            ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                            ' .ad-slot': {minAbove: 500, minBelow: 500}
+                        }
+                    })
                 });
 
                 it('should not not display ad slot if standard-adverts switch is off', function () {
@@ -92,24 +86,21 @@ define([
                     expect(articleBodyAdverts.init()).toBe(false);
                 });
 
-                it('should insert an inline ad container to the available slot', function (done) {
+                it('should insert an inline ad container to the available slot', function () {
                     articleBodyAdverts.init();
-                    fastdom.defer(function () {
-                        expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
-                        expect(getParaWithSpaceStub).toHaveBeenCalledOnce();
-                        done();
-                    });
+                    expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
+                    expect(getParaWithSpaceStub).toHaveBeenCalledOnce();
                 });
-
-                it('should insert an inline merchandising slot if page has one', function (done) {
+                
+                it('should insert an inline merchandising slot if page has one', function () {
                     mocks.store['common/utils/config'].page.hasInlineMerchandise = true;
                     articleBodyAdverts.init();
-                    fastdom.defer(function () {
-                        expect(qwery('#dfp-ad--im', $fixturesContainer).length).toBe(1);
-                        expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
-                        done();
-                    });
+                    expect(qwery('#dfp-ad--im', $fixturesContainer).length).toBe(1);
+                    expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
                 });
+
             });
+
         });
+
 });

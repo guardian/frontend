@@ -11,6 +11,8 @@ GET        /count/$path<.+>.gif             controllers.DiagnosticsController.an
 
 GET        /counts.gif                      controllers.DiagnosticsController.analyticsCounts()
 
+POST       /tech-feedback                   controllers.DiagnosticsController.techFeedback()
+
 GET        /robots.txt                      controllers.Assets.at(path="/public", file="robots.txt")
 
 POST       /css                             controllers.DiagnosticsController.css

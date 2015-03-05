@@ -2,7 +2,6 @@
 define([
     'bean',
     'bonzo',
-    'fastdom',
     'qwery',
     'raven',
     'lodash/functions/debounce',
@@ -28,7 +27,6 @@ define([
 ], function (
     bean,
     bonzo,
-    fastdom,
     qwery,
     raven,
     debounce,
@@ -52,6 +50,7 @@ define([
     buildPageTargeting,
     geoMostPopular
 ) {
+
     /**
      * Right, so an explanation as to how this works...
      *
@@ -103,9 +102,7 @@ define([
             '300,1050': function () {
                 // remove geo most popular
                 geoMostPopular.whenRendered.then(function (geoMostPopular) {
-                    fastdom.write(function () {
-                        bonzo(geoMostPopular.elem).remove();
-                    });
+                    bonzo(geoMostPopular.elem).remove();
                 });
             }
         },
@@ -137,9 +134,7 @@ define([
                 // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
                     if ($css($adSlot, 'display') === 'none') {
-                        fastdom.write(function () {
-                            $adSlot.remove();
-                        });
+                        $adSlot.remove();
                         return false;
                     } else {
                         return true;
@@ -285,9 +280,7 @@ define([
         parseAd = function (event) {
             var size,
                 slotId = event.slot.getSlotId().getDomId(),
-                $slot = $('#' + slotId),
-                $placeholder,
-                $adSlotContent;
+                $slot = $('#' + slotId);
 
             allAdsRendered(slotId);
 
@@ -295,12 +288,8 @@ define([
                 removeLabel($slot);
             } else {
                 // remove any placeholder ad content
-                $placeholder = $('.ad-slot__content--placeholder', $slot);
-                $adSlotContent = $('#' + slotId + ' div');
-                fastdom.write(function () {
-                    $placeholder.remove();
-                    $adSlotContent.addClass('ad-slot__content');
-                });
+                $('.ad-slot__content--placeholder', $slot).remove();
+                $('#' + slotId + ' div').addClass('ad-slot__content');
                 checkForBreakout($slot);
                 addLabel($slot);
                 size = event.size.join(',');
@@ -308,20 +297,14 @@ define([
                 callbacks[size] && callbacks[size](event, $slot);
 
                 if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
-                    fastdom.write(function () {
-                        $slot.parent().css('display', 'flex');
-                    });
+                    $slot.parent().css('display', 'flex');
                 } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
-                    fastdom.write(function () {
-                        $slot.parent().css('display', 'block');
-                    });
+                    $slot.parent().css('display', 'block');
                 }
 
                 if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
                 || ($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
-                    fastdom.write(function () {
-                        $slot.addClass('ad-slot__fluid250');
-                    });
+                    $slot.addClass('ad-slot__fluid250');
                 }
             }
         },
@@ -335,16 +318,12 @@ define([
             }
         },
         addLabel = function ($slot) {
-            fastdom.write(function () {
-                if (shouldRenderLabel($slot)) {
-                    $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
-                }
-            });
+            if (shouldRenderLabel($slot)) {
+                $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
+            }
         },
         removeLabel = function ($slot) {
-            fastdom.write(function () {
-                $('.ad-slot__label', $slot).remove();
-            });
+            $('.ad-slot__label', $slot).remove();
         },
         shouldRenderLabel = function ($slot) {
             return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
@@ -377,16 +356,12 @@ define([
                             }
 
                         } else {
-                            fastdom.write(function () {
-                                $iFrameParent.append(breakoutContent);
-                                $breakoutEl.remove();
-                            });
+                            $iFrameParent.append(breakoutContent);
+                            $breakoutEl.remove();
 
                             $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
                                 window.setTimeout(function () {
-                                    fastdom.write(function () {
-                                        bonzo(responsiveAd).addClass('ad--responsive--open');
-                                    });
+                                    bonzo(responsiveAd).addClass('ad--responsive--open');
                                 }, 50);
                             });
                         }
@@ -395,9 +370,7 @@ define([
                 });
             }
             if (shouldRemoveIFrame) {
-                fastdom.write(function () {
-                    $iFrame.hide();
-                });
+                $iFrame.hide();
             }
         },
         /**

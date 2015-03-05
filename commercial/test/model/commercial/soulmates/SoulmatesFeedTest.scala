@@ -5,9 +5,9 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import play.api.libs.json.Json
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class SoulmatesApiTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite {
+@DoNotDiscover class SoulmatesFeedTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite {
 
-  private val api = new SoulmatesApi {
+  private val api = new SoulmatesFeed {
     protected lazy val path: String = "test"
     protected val adTypeName: String = "test"
   }

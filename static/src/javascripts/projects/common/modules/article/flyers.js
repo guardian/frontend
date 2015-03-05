@@ -59,8 +59,19 @@ define([
     }
 
     function insertTagFlyer() {
-        if (config.page.richLink && config.page.richLink.indexOf(config.page.pageId) === -1) {
-            var space = spacefinder.getParaWithSpace(getSpacefinderRules());
+        var richLinkHrefs = $('.element-rich-link a')
+                .map(function (el) { return $(el).attr('href'); }),
+            testIfDuplicate = function (richLinkHref) {
+                // Tag-targeted rich links can be absolute
+                return _.contains(config.page.richLink, richLinkHref);
+            },
+            isDuplicate = richLinkHrefs.some(testIfDuplicate),
+            isSensitive = config.page.shouldHideAdverts || !config.page.showRelatedContent,
+            space;
+
+        if (config.page.richLink && config.page.richLink.indexOf(config.page.pageId) === -1
+            && !isSensitive && !isDuplicate) {
+            space = spacefinder.getParaWithSpace(getSpacefinderRules());
             if (space) {
                 $.create(template(richLinkTagTmpl, {href: config.page.richLink}))
                     .insertBefore(space)
