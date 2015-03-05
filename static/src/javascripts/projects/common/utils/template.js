@@ -15,11 +15,11 @@ define([
     }
 
     return function (template, params) {
-        var keyRegEx = new RegExp('({{)(' + keys(params).join('|') + ')(}})', 'g');
+        var keyRegEx = new RegExp('{{(' + keys(params).join('|') + ')}}', 'g');
 
         return template
             .replace(svgRegEx, svgReplacer)
-            .replace(keyRegEx, function (match, openingDelimiter, key) {
+            .replace(keyRegEx, function (match, key) {
                 return params[key];
             });
     };
