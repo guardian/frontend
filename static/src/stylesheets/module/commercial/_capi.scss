@@ -31,6 +31,10 @@
     .linkslist__action {
         @include f-headlineSans;
     }
+
+    .fc-item__header {
+        @include fs-bodyHeading(2, $size-only: true);
+    }
 }
 
 .fc-container--advertisement-feature {
