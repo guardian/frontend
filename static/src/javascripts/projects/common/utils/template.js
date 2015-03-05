@@ -8,15 +8,15 @@ define([
     keys,
     inlineSvg
 ) {
-    var svgRegEx = /({{)(inlineSvg\([^)]*\))(}})/g; // e.g. {{inlineSvg('marque36icon')}}
+    var svgRegEx = /{{(inlineSvg.*)?}}/g,
+        keyRegEx = /{{(.*?)}}/g;
 
-    function svgReplacer(match, openingDelimiter, inlineSvgCall) {
+    // see docs/inline-svgs.md for info on how to insert an inline SVG in template
+    function svgReplacer(match, inlineSvgCall) {
         return eval(inlineSvgCall);
     }
 
     return function (template, params) {
-        var keyRegEx = new RegExp('{{(' + keys(params).join('|') + ')}}', 'g');
-
         return template
             .replace(svgRegEx, svgReplacer)
             .replace(keyRegEx, function (match, key) {
