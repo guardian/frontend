@@ -57,8 +57,7 @@ define([
 
     BrandedComponent.prototype.create = function () {
         var templateConfig = templates[this.params.type],
-            $rightHandCol  = $('.js-secondary-column'),
-            that = this;
+            $rightHandCol  = $('.js-secondary-column');
 
         fastdom.read(function () {
             if (
@@ -68,15 +67,15 @@ define([
                 $rightHandCol.dim().height >= 1800 &&
                 config.page.section !== 'football')
             ) {
-                templateConfig.config.clickMacro = that.params.clickMacro;
-                templateConfig.config.omnitureId = that.params.omnitureId;
+                templateConfig.config.clickMacro = this.params.clickMacro;
+                templateConfig.config.omnitureId = this.params.omnitureId;
 
                 fastdom.write(function () {
                     $.create(template(templateConfig.template, templateConfig.config))
                         .appendTo($rightHandCol);
                 });
             }
-        });
+        }.bind(this));
     };
 
     return BrandedComponent;

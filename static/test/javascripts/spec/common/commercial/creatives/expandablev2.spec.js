@@ -1,10 +1,12 @@
 define([
     'common/modules/commercial/creatives/expandable-v2',
     'helpers/fixtures',
+    'fastdom',
     'qwery'
 ], function(
     ExpandableV2,
     fixtures,
+    fastdom,
     qwery
 ) {
 
@@ -30,22 +32,29 @@ define([
             expect(expandablev2).toBeDefined();
         });
 
-        it('should always have expand, open and collapse buttons', function () {
+        it('should always have expand, open and collapse buttons', function (done) {
             $fixturesContainer = fixtures.render(fixturesConfig);
             new ExpandableV2(qwery('.expandablev2-ad-slot', $fixturesContainer), {}).create();
-            expect(qwery('.ad-exp--expand').length).toBeGreaterThan(0);
-            expect(qwery('.ad-exp-collapse__slide').length).toBeGreaterThan(0);
+
+            fastdom.defer(function () {
+                expect(qwery('.ad-exp--expand').length).toBeGreaterThan(0);
+                expect(qwery('.ad-exp-collapse__slide').length).toBeGreaterThan(0);
+                done();
+            });
         });
 
-        it('should have show more button', function () {
+        it('should have show more button', function (done) {
             $fixturesContainer = fixtures.render(fixturesConfig);
             new ExpandableV2(qwery('.expandablev2-ad-slot', $fixturesContainer), {
-                showPlus: 'plus-only'
+                showMoreType: 'plus-only'
             }).create();
-            expect(qwery('.ad-exp__close-button').length).toBeGreaterThan(0);
+
+            fastdom.defer(function () {
+                expect(qwery('.ad-exp__open-button').length).toBe(0);
+                expect(qwery('.ad-exp__close-button').length).toBeGreaterThan(0);
+                done();
+            });
         });
-
     });
-
 });
 

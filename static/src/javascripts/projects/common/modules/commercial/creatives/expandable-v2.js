@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'lodash/objects/merge',
     'common/utils/$',
     'common/utils/detect',
@@ -12,6 +13,7 @@ define([
 ], function (
     bean,
     bonzo,
+    fastdom,
     merge,
     $,
 	detect,

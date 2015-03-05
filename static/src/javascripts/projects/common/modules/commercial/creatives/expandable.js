@@ -50,25 +50,24 @@ define([
     };
 
     Expandable.prototype.create = function () {
-        var $expandable = $.create(template(expandableTpl, this.params)),
-            that = this;
+        var $expandable = $.create(template(expandableTpl, this.params));
 
         this.$ad     = $('.ad-exp--expand', $expandable);
         this.$button = $('.ad-exp__close-button', $expandable);
 
         fastdom.write(function () {
-            that.$ad.css('height', that.closedHeight);
-            $('.ad-exp-collapse__slide', $expandable).css('height', that.closedHeight);
+            this.$ad.css('height', this.closedHeight);
+            $('.ad-exp-collapse__slide', $expandable).css('height', this.closedHeight);
 
-            if (that.params.trackingPixel) {
-                that.$adSlot.before(
-                    '<img src="' + that.params.trackingPixel + that.params.cacheBuster +
+            if (this.params.trackingPixel) {
+                this.$adSlot.before(
+                    '<img src="' + this.params.trackingPixel + this.params.cacheBuster +
                         '" class="creative__tracking-pixel" height="1px" width="1px"/>'
                 );
             }
 
             $expandable.appendTo(this.$adSlot);
-        });
+        }.bind(this));
 
         if (!storage.local.get('gu.commercial.expandable.an-expandable')) {
             mediator.on('window:scroll', this.listener.bind(this));
@@ -76,11 +75,11 @@ define([
 
         bean.on(this.$button[0], 'click', function () {
             fastdom.write(function () {
-                that.$button.toggleClass('button-spin');
-                that.$ad.css('height', that.isClosed ? that.openedHeight : that.closedHeight);
-                that.isClosed = !that.isClosed;
-            });
-        });
+                this.$button.toggleClass('button-spin');
+                this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
+                this.isClosed = !this.isClosed;
+            }.bind(this));
+        }.bind(this));
     };
 
     return Expandable;
