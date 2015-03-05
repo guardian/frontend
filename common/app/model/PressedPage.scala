@@ -23,9 +23,9 @@ object PressedPage {
         PressedCollection(
           collectionConfigWithId.id,
           collectionConfigWithId.config.displayName.getOrElse(""),
-          collection.curated.map(FaciaContentConvert.frontentContentToFaciaContent).toList,
-          (collection.editorsPicks ++ collection.mostViewed ++ collection.results).map(FaciaContentConvert.frontentContentToFaciaContent).toList,
-          collection.treats.map(FaciaContentConvert.frontentContentToFaciaContent).toList,
+          collection.curated.map(FaciaContentConvert.frontentContentToFaciaContent(_, Option(collectionConfigWithId.config))).toList,
+          (collection.editorsPicks ++ collection.mostViewed ++ collection.results).map(FaciaContentConvert.frontentContentToFaciaContent(_, Option(collectionConfigWithId.config))).toList,
+          collection.treats.map(FaciaContentConvert.frontentContentToFaciaContent(_, Option(collectionConfigWithId.config))).toList,
           collection.lastUpdated.map(new DateTime(_)),
           collection.updatedBy,
           collection.updatedEmail,
