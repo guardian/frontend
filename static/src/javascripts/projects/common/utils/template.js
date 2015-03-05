@@ -2,10 +2,8 @@
 // jshint unused:false
 
 define([
-    'lodash/objects/keys',
     'common/views/svgs'
 ], function (
-    keys,
     inlineSvg
 ) {
     var svgRegEx = /{{(inlineSvg.*)?}}/g,
