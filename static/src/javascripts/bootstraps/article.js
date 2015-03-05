@@ -1,5 +1,6 @@
 define([
     'fence',
+    'qwery',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -15,6 +16,7 @@ define([
     'common/modules/ui/selection-sharing'
 ], function (
     fence,
+    qwery,
     $,
     config,
     detect,
@@ -63,7 +65,9 @@ define([
             },
 
             initRightHandComponent: function () {
-                if (!detect.isBreakpoint('mobile') && parseInt(config.page.wordCount, 10) > 500) {
+                var mainColumn = qwery('.js-content-main-column');
+                // only render when we have >1000px or more (enough space for ad + most popular)
+                if (mainColumn[0] && mainColumn[0].offsetHeight > 1000 && !detect.isBreakpoint('mobile')) {
                     geoMostPopular.render();
                 }
             },
