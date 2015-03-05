@@ -16,7 +16,7 @@ object FaciaContentConvert {
       href = frontendContent.delegate.safeFields.get("href"),
       trailText = frontendContent.trailText,
       group = frontendContent.group.getOrElse("0"),
-      imageReplace = imageFromContent(frontendContent),
+      imageReplace = ImageReplace.fromTrailMeta(trailMetaData),
       isBreaking = resolvedMetaData.isBreaking,
       isBoosted = resolvedMetaData.isBoosted,
       imageHide = resolvedMetaData.imageHide,
@@ -29,11 +29,4 @@ object FaciaContentConvert {
       showBoostedHeadline = resolvedMetaData.showBoostedHeadline,
       showQuotedHeadline = resolvedMetaData.showQuotedHeadline)
   }
-
-  private def imageFromContent(frontendContent: model.Content): Option[ImageReplace] =
-    for {
-      imageSrc <- frontendContent.imageSrc
-      imageSrcWidth <- frontendContent.imageSrcWidth
-      imageSrcHeight <- frontendContent.imageSrcHeight
-    } yield ImageReplace(imageSrc, imageSrcWidth, imageSrcHeight)
 }
