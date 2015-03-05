@@ -81,16 +81,17 @@ define([
             delete this.params.type;
             this.$adSlot    = $adSlot;
             this.components = {
-                bestbuy:       buildComponentUrl('money/bestbuys', this.params),
-                book:          buildComponentUrl('books/book', merge({}, this.params, { t: config.page.isbn || this.params.isbn })),
-                books:         buildComponentUrl('books/books', merge({}, this.params, { t: this.params.isbns ? this.params.isbns.split(',') : [] })),
-                jobs:          buildComponentUrl('jobs', merge({}, this.params, { t: this.params.jobIds ? this.params.jobIds.split(',') : [] })),
-                masterclasses: buildComponentUrl('masterclasses', merge({}, this.params, { t: this.params.ids ? this.params.ids.split(',') : [] })),
-                soulmates:     buildComponentUrl('soulmates/mixed', this.params),
-                travel:        buildComponentUrl('travel/offers', this.params),
-                multi:         buildComponentUrl('multi', this.params),
-                capiSingle:    buildComponentUrl('capi-single', this.params),
-                capi:          buildComponentUrl('capi', this.params)
+                bestbuy:        buildComponentUrl('money/bestbuys', this.params),
+                book:           buildComponentUrl('books/book', merge({}, this.params, { t: config.page.isbn || this.params.isbn })),
+                books:          buildComponentUrl('books/books', merge({}, this.params, { t: this.params.isbns ? this.params.isbns.split(',') : [] })),
+                jobs:           buildComponentUrl('jobs', merge({}, this.params, { t: this.params.jobIds ? this.params.jobIds.split(',') : [] })),
+                masterclasses:  buildComponentUrl('masterclasses', merge({}, this.params, { t: this.params.ids ? this.params.ids.split(',') : [] })),
+                soulmates:      buildComponentUrl('soulmates/mixed', this.params),
+                soulmatesGroup: buildComponentUrl('soulmates/' + this.params.soulmatesFeedName + '.json', this.params),
+                travel:         buildComponentUrl('travel/offers', this.params),
+                multi:          buildComponentUrl('multi', this.params),
+                capiSingle:     buildComponentUrl('capi-single', this.params),
+                capi:           buildComponentUrl('capi', this.params)
             };
         };
 
