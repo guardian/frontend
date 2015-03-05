@@ -30,23 +30,22 @@ define([
     };
 
     Expandable.prototype.listener = function () {
-        var that = this,
-            week = 1000 * 60 * 60 * 24 * 7;
+        var week = 1000 * 60 * 60 * 24 * 7;
 
         fastdom.read(function () {
-            if ((window.pageYOffset + bonzo.viewport().height) > (that.$ad.offset().top + that.openedHeight)) {
+            if ((window.pageYOffset + bonzo.viewport().height) > (this.$ad.offset().top + this.openedHeight)) {
                 // TODO - needs to have a creative-specific id
                 storage.local.set('gu.commercial.expandable.an-expandable', true, { expires: Date.now() + week });
 
                 fastdom.write(function () {
-                    that.$button.toggleClass('button-spin');
-                    that.$ad.css('height', that.openedHeight);
-                });
+                    this.$button.toggleClass('button-spin');
+                    this.$ad.css('height', this.openedHeight);
+                }.bind(this));
 
-                that.isClosed = false;
+                this.isClosed = false;
                 return true;
             }
-        });
+        }.bind(this));
     };
 
     Expandable.prototype.create = function () {

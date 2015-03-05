@@ -35,14 +35,12 @@ define([
     };
 
     Template.prototype.create = function () {
-        var that = this;
-
         require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
             var creativeHtml = template(creativeTpl, this.params);
 
             fastdom.write(function () {
                 $.create(creativeHtml)
-                    .appendTo(that.$adSlot);
+                    .appendTo(this.$adSlot);
             });
 
         }.bind(this));

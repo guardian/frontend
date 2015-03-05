@@ -18,8 +18,7 @@ define([
         };
 
     StickyMpu.prototype.create = function () {
-        var articleBodyOffset,
-            that = this;
+        var articleBodyOffset;
 
         if (this.$adSlot.data('name') !== 'right') {
             return;
@@ -28,10 +27,10 @@ define([
             articleBodyOffset = qwery('.content__article-body')[0].offsetTop;
 
             fastdom.write(function () {
-                that.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
-                new Sticky(that.$adSlot[0], { top: that.opts.top }).init();
-            });
-        });
+                this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
+                new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
+            }.bind(this));
+        }.bind(this));
     };
 
     return StickyMpu;

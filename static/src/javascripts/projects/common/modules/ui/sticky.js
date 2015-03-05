@@ -29,13 +29,13 @@ define([
     };
 
     Sticky.prototype.updatePosition = function () {
-        var fixedTop, css, that = this;
+        var fixedTop, css;
 
         // have we scrolled past the element
         fastdom.read(function () {
-            if (window.scrollY >= that.$parent.offset().top - that.opts.top) {
+            if (window.scrollY >= this.$parent.offset().top - this.opts.top) {
                 // make sure the element stays within its parent
-                fixedTop = Math.min(that.opts.top, that.$parent[0].getBoundingClientRect().bottom - that.$element.dim().height);
+                fixedTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height);
 
                 css = {
                     position: 'fixed',
@@ -49,9 +49,9 @@ define([
             }
 
             fastdom.write(function () {
-                that.$element.css(css);
-            });
-        });
+                this.$element.css(css);
+            }.bind(this));
+        }.bind(this));
     };
 
     return Sticky;

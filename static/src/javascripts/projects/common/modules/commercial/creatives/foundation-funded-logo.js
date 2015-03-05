@@ -30,13 +30,12 @@ define([
         var templateName = 'logo-foundation-funded' + (this.params.hasPartners ? '-partners' : '');
 
         require(['text!common/views/commercial/creatives/' + templateName + '.html'], function (creativeTpl) {
-            var creativeHtml = template(creativeTpl, this.params),
-                that = this;
+            var creativeHtml = template(creativeTpl, this.params);
 
             fastdom.write(function () {
                 $.create(creativeHtml)
-                    .appendTo(that.$adSlot);
-            });
+                    .appendTo(this.$adSlot);
+            }.bind(this));
         }.bind(this));
     };
 

@@ -26,18 +26,16 @@ define([
     ScrollableMpu.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     ScrollableMpu.prototype.updateBgPosition = function () {
-        var that = this;
-
         fastdom.read(function () {
-            var offset = window.pageYOffset - that.$scrollableMpu.offset().top;
+            var offset = window.pageYOffset - this.$scrollableMpu.offset().top;
 
             fastdom.write(function () {
                 $('.creative--scrollable-mpu-image').css(
                     'background-position',
                     '100% ' + offset + 'px'
                 );
-            });
-        });
+            }.bind(this));
+        }.bind(this));
     };
 
     ScrollableMpu.prototype.create = function () {
@@ -47,13 +45,13 @@ define([
             image:            ScrollableMpu.hasScrollEnabled ? this.params.image : this.params.staticImage,
             trackingPixelImg: this.params.trackingPixel ?
                 '<img src="' + this.params.trackingPixel + '" width="1" height="1" />' : ''
-        }, that = this;
+        };
 
         this.$scrollableMpu = $.create(template(scrollableMpuTpl, templateOptions));
 
         fastdom.write(function () {
-            that.$scrollableMpu.appendTo(this.$adSlot);
-        });
+            this.$scrollableMpu.appendTo(this.$adSlot);
+        }.bind(this));
 
         if (ScrollableMpu.hasScrollEnabled) {
             // update bg position
