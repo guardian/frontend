@@ -1,6 +1,6 @@
 package layout
 
-import com.gu.facia.api.models.FaciaContent
+import com.gu.facia.api.models.{CuratedContent, FaciaContent}
 import model.{Content, Trail}
 import slices._
 import scalaz.syntax.traverse._
@@ -78,7 +78,7 @@ object ContainerLayout extends implicits.Collections {
       config: ContainerDisplayConfig,
       items: Seq[FaciaContent]
   ) =
-    ContainerDefinition.fromContainer(container, items collect { case c: Content => c }) map {
+    ContainerDefinition.fromContainer(container, items collect { case c: CuratedContent => c }) map {
       case definition: ContainerDefinition =>
         fromContainerDefinition(definition, containerLayoutContext, config, items)
     }
