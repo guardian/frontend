@@ -27,7 +27,7 @@ object CutOut {
 }
 
 object Orientation {
-  def fromDimensions(width: Int, height: Int) = if (width > height) Landscape else Portrait
+  def fromDimensions(width: Int, height: Int) = if (width >= height) Landscape else Portrait
 }
 
 sealed trait Orientation

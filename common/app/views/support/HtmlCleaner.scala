@@ -5,8 +5,11 @@ import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
 import conf.Switches._
+import layout.{WidthsByBreakpoint, ContentWidths}
+import layout.ContentWidths._
 import model._
 import org.joda.time.DateTime
+import org.jsoup.Jsoup
 import org.jsoup.nodes.{TextNode, Element, Document}
 import play.api.mvc.RequestHeader
 
@@ -151,113 +154,64 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
 case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.Numbers {
 
-  def cleanStandardPictures(body: Document): Document = {
-    body.getElementsByTag("figure").foreach { fig =>
-      val images = fig.getElementsByTag("img")
-      if(!fig.hasClass("element-comment") && !fig.hasClass("element-witness") && images.size > 0) {
-        fig.attr("itemprop", "associatedMedia")
-        fig.attr("itemscope", "")
-        fig.attr("itemtype", "http://schema.org/ImageObject")
+  def replacePictures(body: Document): Document = {
+    for {
+      figure <- body.getElementsByTag("figure")
+      image <- figure.getElementsByTag("img").headOption
+      if !figure.hasClass("element-comment") && !figure.hasClass("element-witness")
+      container <- findContainerFromId(figure.attr("data-media-id"), image.attr("src"))
+      image <- container.largestImage
+    }{
+        val hinting = findBreakpointWidths(figure)
+        val widths = ContentWidths.getWidthsFromContentElement(hinting, BodyMedia)
 
-        // For older content that doesn't have these classes.
-        if (!fig.hasClass("element")) {
-          fig.addClass("element element-image")
+        val orientationClass = image.orientation match {
+          case Portrait => Some("img--portrait")
+          case _ => Some("img--landscape")
         }
 
-        // Choose which profile to use based on element type.
-        // Showcase is treated like standard because it appears full width on smaller breakpoints and is upgraded with imager.
-        // Supporting is treated like standard because it appears full width on smaller breakpoints.
-        val imageProfile: Profile = if (fig.classNames.contains("element--thumbnail")) {
-          ContentThumbnail
-        } else {
-          ContentStandard
+        val smallImageClass = hinting match {
+          case Thumbnail => None
+          case _ if image.width <= 220 => Some("img--inline")
+          case _ => None
         }
 
-        images.foreach { img =>
-          img.attr("itemprop", "contentURL")
+        val figureClasses = List(orientationClass, smallImageClass, hinting.className).flatten.mkString(" ")
 
-          val imageAsset = findImageFromId(fig.attr("data-media-id"), img.attr("src"), imageProfile)
-
-          imageAsset.map { asset =>
-            asset.url.map(url => img.attr("src", ImgSrc(url, imageProfile).toString))
-            img.attr("width", s"${asset.width}")
-
-            // Height can mess with aspect ratio.
-            img.removeAttr("height")
-
-            // If the content response provides a small image for a standard-width profile, treat it as inline.
-            if (imageProfile.width == ContentStandard.width && asset.width <= 220) {
-              fig.addClass("img--inline")
-            }
-
-            fig.addClass(asset.height match {
-              case height if height > asset.width => "img--portrait"
-              case height if height < asset.width => "img--landscape"
-              case height => ""
-            })
-          }
-        }
-
-        val figcaptions = fig.getElementsByTag("figcaption")
-
-        if(figcaptions.length > 0) {
-          figcaptions.foreach { figcaption =>
-            // content api/ tools sometimes pops a &nbsp; in the blank field
-            if (!figcaption.hasText || figcaption.text().length < 2) {
-              figcaption.remove()
-              fig.addClass("fig--no-caption")
-            } else {
-              figcaption.attr("itemprop", "description")
-              fig.addClass("fig--border")
-            }
-          }
-        } else {
-          fig.addClass("fig--no-caption")
-        }
-      }
+        val html = views.html.fragments.contentImage(container, image, widths, figureClasses).toString()
+        figure.replaceWith(Jsoup.parse(html).body())
     }
+
     body
   }
 
   def addSharesAndFullscreen(body: Document): Document = {
-    if(!article.isLiveBlog) {
-      article.zippedBodyImages.zipWithIndex map {
-        case ((imageElement, Some(crop)), index) =>
-          body.select("[data-media-id=" + imageElement.id + "]").map { fig =>
-            val linkIndex = (index + (if (article.mainFiltered.size > 0) 2 else 1)).toString
-            val hashSuffix = "img-" + linkIndex
-            fig.attr("id", hashSuffix)
-            fig.addClass("fig--narrow-caption")
-            fig.getElementsByTag("img").foreach { img =>
-              val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
-              img.after(html.toString())
-              fig.addClass("fig--has-shares")
-              img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
-              img.after("<span class='rounded-icon article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
-            }
-          }
-      }
-    }
-    body
-  }
 
-
-  def cleanShowcasePictures(body: Document): Document = {
     for {
-      element <- body.getElementsByClass("element--showcase")
-      imageSrc <- element.getElementsByTag("img").headOption.map(_.attr("src"))
-      asset <- findContainerFromId(element.attr("data-media-id"), imageSrc)
-      imagerSrc <- ImgSrc.imager(asset, ContentShowcase)
-      imgElement <- element.getElementsByTag("img")
-    } {
-      imgElement.wrap(s"""<div class="js-image-upgrade" data-src="$imagerSrc"></div>""")
-      imgElement.addClass("responsive-img")
+      (imageElement, index) <- article.bodyFiltered.zipWithIndex
+      if !article.isLiveBlog
+      crop <- imageElement.largestEditorialCrop
+      figure <- body.select("[data-media-id=" + imageElement.id + "]")
+      image <- figure.getElementsByTag("img").headOption
+
+    }{
+      val linkIndex = (index + (if (article.mainFiltered.size > 0) 2 else 1)).toString
+      val hashSuffix = "img-" + linkIndex
+      figure.attr("id", hashSuffix)
+      figure.addClass("fig--narrow-caption")
+      figure.addClass("fig--has-shares")
+
+      val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
+      image.after(html.toString())
+      image.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
+      image.after("<span class='rounded-icon article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
     }
+
     body
   }
 
   def clean(body: Document): Document = {
-    cleanStandardPictures(cleanShowcasePictures(addSharesAndFullscreen(body)))
+    addSharesAndFullscreen(replacePictures(body))
   }
 
   def findImageFromId(id: String, src: String, profile: Profile): Option[ImageAsset] = {
@@ -280,6 +234,16 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
     }.headOption
 
     fullyMatchedImage.orElse(imageContainers.headOption)
+  }
+
+  def findBreakpointWidths(figure: Element): ContentHinting = {
+
+    figure.classNames().map(Some(_)) match {
+      case classes if classes.contains(Supporting.className) => Supporting
+      case classes if classes.contains(Showcase.className) => Showcase
+      case classes if classes.contains(Thumbnail.className) => Thumbnail
+      case _ => Inline
+    }
   }
 }
 

@@ -8,7 +8,7 @@
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
 @import views.support.ImgSrc
-@import layout.{LatestSnap, WidthsByBreakpoint}
+@import layout.{LatestSnap, FaciaWidths}
 @import Function.const
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
@@ -129,8 +129,8 @@ data-test-id="facia-card"
             @item.cutOut.map { case cutOut @ CutOut(imageUrl, _) =>
             <div class="fc-item__avatar">
                 <img class="fc-item__avatar__media @cutOut.cssClass"
-                     srcset="@ImgSrc.srcsetForCutout(imageUrl)"
-                     sizes="@WidthsByBreakpoint.cutOutFromItemClasses(item.cardTypes).sizesString"
+                     srcset="@ImgSrc.srcset(imageUrl, FaciaWidths.cutOutFromItemClasses(item.cardTypes))"
+                     sizes="@FaciaWidths.cutOutFromItemClasses(item.cardTypes).sizes"
                 >
             </div>
             }

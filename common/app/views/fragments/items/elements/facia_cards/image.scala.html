@@ -6,9 +6,9 @@
     <div class="fc-item__image-container u-responsive-ratio @if(inlineImage){inlined-image}">
         @widthsByBreakpoint match {
             case Some(widths) => {
-                <img class="responsive-img"
-                     srcset="@ImgSrc.srcset(imageContainer, widths.maxWidth)"
-                     sizes="@widths.sizesString"
+                <img class="responsive-img "
+                     srcset="@ImgSrc.srcset(imageContainer, widths)"
+                     sizes="@widths.sizes"
                      @if(inlineImage) { src="@ImgSrc.getFallbackUrl(imageContainer)" }>
             }
 
