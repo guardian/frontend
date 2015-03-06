@@ -10,6 +10,7 @@ import conf.Configuration.facebook
 import conf.Switches.FacebookShareUseTrailPicFirstSwitch
 import dfp.DfpAgent
 import fronts.MetadataDefaults
+import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
@@ -504,8 +505,6 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
     leftColElements.isDefined
   }
 
-  lazy val zippedBodyImages = bodyFiltered.zip(bodyFiltered.map(_.largestEditorialCrop))
-
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
   override def metaData: Map[String, JsValue] = {
@@ -707,7 +706,7 @@ object Gallery {
 trait Lightboxable extends Content {
   val lightboxableCutoffWidth = 620
   lazy val mainFiltered = mainPicture.filter(_.largestEditorialCrop.map(_.ratio).getOrElse(0) > 0.7).filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
-  lazy val bodyFiltered = bodyImages.filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
+  lazy val bodyFiltered: Seq[ImageContainer] = bodyImages.filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
   lazy val lightboxImages: Seq[ImageContainer] = mainFiltered ++ bodyFiltered
 
   lazy val isMainMediaLightboxable = !mainFiltered.isEmpty
@@ -720,7 +719,9 @@ trait Lightboxable extends Content {
           "caption" -> JsString(img.caption.getOrElse("")),
           "credit" -> JsString(img.credit.getOrElse("")),
           "displayCredit" -> JsBoolean(img.displayCredit),
-          "src" -> JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager)),
+          "src" -> JsString(ImgSrc.getFallbackUrl(imgContainer).getOrElse("")),
+          "srcsets" -> JsString(ImgSrc.srcset(imgContainer, GalleryMedia.Lightbox)),
+          "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
           "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
           "role" -> JsString(img.role.toString)
         ))
