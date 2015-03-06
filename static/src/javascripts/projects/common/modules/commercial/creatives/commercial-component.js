@@ -59,7 +59,7 @@ define([
         },
         buildComponentUrl = function (url, params) {
             // filter out empty params
-            var filteredParams = pick(defaults(params || {}, getKeywords()), function (v) {
+            var filteredParams = pick(params || {}, function (v) {
                     return isArray(v) ? v.length : v;
                 }),
                 query = size(filteredParams) ? '?' + constructQuery(filteredParams) : '';
