@@ -297,7 +297,8 @@ define([
                 'hasMainVideo',
                 'imageCutoutSrcFromCapi',
                 'ophanUrl',
-                'sparkUrl']);
+                'sparkUrl',
+                'premium']);
 
             this.state.enableContentOverrides(this.meta.snapType() !== 'latest');
             this.state.inDynamicCollection(deepGet(opts, '.group.parent.isDynamic'));
@@ -557,6 +558,7 @@ define([
                 this.state.hasMainVideo(getMainMediaType(opts) === 'video');
                 this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
                 this.state.ophanUrl(vars.CONST.ophanBase + '?path=/' + urlAbsPath(opts.webUrl));
+                this.state.premium(isPremium(opts));
 
                 this.metaDefaults = _.extend(deepGet(opts, '.frontsMeta.defaults') || {}, this.collectionMetaDefaults);
 
@@ -791,6 +793,12 @@ define([
 
         function getContributorImage(contentApiArticle) {
             return _.chain(contentApiArticle.tags).where({type: 'contributor'}).pluck('bylineLargeImageUrl').first().value();
+        }
+
+        function isPremium(contentApiArticle) {
+            return contentApiArticle.fields.membershipAccess === 'members-only' ||
+                contentApiArticle.fields.membershipAccess === 'paid-members-only' ||
+                !!_.find(contentApiArticle.tags, {id: 'news/series/looking-back'});
         }
 
         function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
