@@ -1,15 +1,15 @@
 <div data-bind="
     css: {
-        'live-mode': !latestArticles.showingDrafts(),
-        'draft-mode': latestArticles.showingDrafts
+        'live-mode': !showingDrafts(),
+        'draft-mode': showingDrafts
     }">
     <div class="modes">
     <!-- ko if: $root.switches()['facia-tool-draft-content'] --><a class="draft-mode" data-bind="
-        click: latestArticles.showDrafts,
-        css: {active: latestArticles.showingDrafts}">Draft content</a
+        click: showDrafts,
+        css: {active: showingDrafts}">Draft content</a
    ><!-- /ko --><a class="live-mode" data-bind="
-        click: latestArticles.showLive,
-        css: {active: !latestArticles.showingDrafts()}">Live content</a>
+        click: showLive,
+        css: {active: !showingDrafts()}">Live content</a>
     </div>
 </div>
 
@@ -63,7 +63,17 @@
 
         <search-controls params="context: $context"></search-controls>
 
-        <div class="latest-articles" data-bind="template: {name: 'template_article', foreach: articles}"></div>
+        <div class="latest-articles">
+            <div data-bind="template: {
+                name: 'template_article',
+                foreach: articles,
+                afterAdd: afterAdd
+            }"></div>
+
+            <!-- ko if: message -->
+                <div class="search-message" data-bind="text: message"></div>
+            <!-- /ko -->
+        </div>
 
         <search-controls params="context: $context"></search-controls>
     </div>
