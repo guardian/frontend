@@ -94,10 +94,12 @@ object ContentWidths {
     val className: Option[String]
   )
 
+  private val unused = WidthsByBreakpoint(None, None, None, None, None, None, None)
+
   object Inline     extends ContentHinting (MainMedia.Inline,     BodyMedia.Inline,     None)
-  object Supporting extends ContentHinting (MainMedia.Supporting, BodyMedia.Supporting, Some("element--supporting"))
+  object Supporting extends ContentHinting (unused,               BodyMedia.Supporting, Some("element--supporting"))
   object Showcase   extends ContentHinting (MainMedia.Showcase,   BodyMedia.Showcase,   Some("element--showcase"))
-  object Thumbnail  extends ContentHinting (MainMedia.Thumbnail,  BodyMedia.Thumbnail,  Some("element--thumbnail"))
+  object Thumbnail  extends ContentHinting (unused,               BodyMedia.Thumbnail,  Some("element--thumbnail"))
 
   sealed trait ContentRelation
 
@@ -137,15 +139,29 @@ object ContentWidths {
     val Showcase = WidthsByBreakpoint(
       mobile =          Some(465.px),
       mobileLandscape = Some(645.px),
+      phablet =         Some(620.px),
+      tablet =          Some(700.px),
+      desktop =         Some(620.px),
+      leftCol =         Some(780.px),
+      wide =            Some(860.px))
+
+    val FeatureShowcase = WidthsByBreakpoint(
+      mobile =          Some(465.px),
+      mobileLandscape = Some(645.px),
       phablet =         Some(725.px),
       tablet =          Some(965.px),
       desktop =         Some(1125.px),
       leftCol =         Some(1140.px),
       wide =            Some(1300.px))
+  }
 
-    private val unused = WidthsByBreakpoint(None, None, None, None, None, None, None)
-    val Supporting = unused
-    val Thumbnail = unused
+  object PictureMedia extends ContentRelation {
+    val Inline = WidthsByBreakpoint(
+      mobile =          Some(465.px),
+      mobileLandscape = Some(645.px),
+      phablet =         Some(685.px),
+      tablet =          Some(700.px),
+      desktop =         Some(940.px)) // leftCol and wide are also 940px
   }
 
   object GalleryMedia {

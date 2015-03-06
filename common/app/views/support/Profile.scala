@@ -125,6 +125,10 @@ object ImgSrc {
   def getFallbackUrl(imageContainer: ImageContainer): Option[String] = {
     imager(imageContainer, Item300)
   }
+
+  def getFallbackAsset(imageContainer: ImageContainer): Option[ImageAsset] = {
+    Item300.elementFor(imageContainer)
+  }
 }
 
 object SeoThumbnail {
