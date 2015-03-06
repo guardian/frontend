@@ -1,7 +1,7 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
 
-@import views.support.{ImgSrc, Item140}
+@import views.support.{ImgSrc, Item460}
 @import views.support.TrailCssClasses.toneClass
 @import model.Tag
 @import views.support.RenderClasses
@@ -29,7 +29,8 @@
     <div class="flyer__container">
         @if(content.isGallery || content.isVideo || CardStyle(content) == Feature || CardStyle(content) == Default) {
             @content.trailPicture.map { trailPictureContainer =>
-                @ImgSrc.imager(trailPictureContainer, 500).map { imgSrc =>
+                @ImgSrc.imager(trailPictureContainer, Item460).map { imgSrc =>
+
                     <div class="flyer__image-container u-responsive-ratio js-image-upgrade" data-src="@imgSrc">
                     </div>
                 }
