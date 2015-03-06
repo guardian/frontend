@@ -286,6 +286,10 @@ object Switches {
     "If this switch is on, commercial components will be fed by job feed.",
     safeState = Off, sellByDate = never)
 
+  val MembersAreaSwitch = Switch("Commercial", "gu-members-area",
+    "If this switch is on, content flagged with membershipAccess will be protected",
+    safeState = On, sellByDate = never)
+
   val MasterclassFeedSwitch = Switch("Commercial", "gu-masterclasses",
     "If this switch is on, commercial components will be fed by masterclass feed.",
     safeState = Off, sellByDate = never)
