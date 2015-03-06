@@ -209,7 +209,11 @@ $mq-media-type: all !default;
         @if $max-width != 0 { $media-query: '#{$media-query} and (max-width: #{$max-width})'; }
         @if $and            { $media-query: '#{$media-query} and #{$and}'; }
 
-        $media-query: unquote(#{$media-query});
+        // Remove unnecessary media query prefix 'all and '
+        @if ($media-type == 'all' and $media-query != '') {
+            $media-type: '';
+            $media-query: str-slice(unquote($media-query), 6);
+        }
 
         @media #{$media-type + $media-query} {
             @content;

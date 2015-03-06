@@ -123,16 +123,29 @@ $guss-columns-fallback-columns: 3 !default;
                     $css3-columns-support: $browser-supports-columns) {
     @if $css3-columns-support {
         #{$base-class} {
-            -webkit-column-width: rem($column-min-width);
-            -webkit-column-gap: rem($column-gap);
+            @if function-exists(rem) {
+                -webkit-column-width: rem($column-min-width);
+                -webkit-column-gap: rem($column-gap);
+
+                -moz-column-width: rem($column-min-width);
+                -moz-column-gap: rem($column-gap);
+
+                column-width: rem($column-min-width);
+                column-gap: rem($column-gap);
+            }
+            @else {
+                -webkit-column-width: $column-min-width;
+                -webkit-column-gap: $column-gap;
+
+                -moz-column-width: $column-min-width;
+                -moz-column-gap: $column-gap;
+
+                column-width: $column-min-width;
+                column-gap: $column-gap;
+            }
+
             -webkit-column-fill: balance;
-
-            -moz-column-width: rem($column-min-width);
-            -moz-column-gap: rem($column-gap);
             -moz-column-fill: balance;
-
-            column-width: rem($column-min-width);
-            column-gap: rem($column-gap);
             column-fill: balance;
         }
         #{$base-class}__item {
