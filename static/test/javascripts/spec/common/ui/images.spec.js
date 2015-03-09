@@ -33,7 +33,7 @@ define([
         });
 
         it('should upgrade images with class "' + imgClass + '"', function () {
-            images.upgrade();
+            images.upgradePictures();
             var $upgradedImgs = $('.' + imgClass + ' img');
             expect($upgradedImgs.length).toEqual(3);
             $upgradedImgs.each(function (upgradedImg) {
@@ -45,7 +45,7 @@ define([
         it('should not upgrade image with display "none"', function () {
             var hiddenImg = $('.' + imgClass + ':first-child')
                 .css('display', 'none');
-            images.upgrade();
+            images.upgradePictures();
             expect($('.' + imgClass + ' img').length).toEqual(2);
             expect($('img', hiddenImg).length).toEqual(0);
 
@@ -55,7 +55,7 @@ define([
             $('.' + imgClass)
                 .first()
                 .append('<img alt="foo" />');
-            images.upgrade();
+            images.upgradePictures();
             expect($('.img-0 img').attr('alt')).toEqual('foo');
             expect($('.img-1 img').attr('alt')).toEqual('');
             expect($('.img-2 img').attr('alt')).toEqual('');
