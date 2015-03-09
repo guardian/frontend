@@ -5,6 +5,7 @@ import common.FaciaMetrics._
 import common._
 import common.editions.EditionalisedSections
 import conf.Configuration.commercial.expiredAdFeatureUrl
+import conf.Switches
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
@@ -147,26 +148,31 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   private[controllers] def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
-    val futureResult = frontJsonFapi.get(path).flatMap {
-      case Some(faciaPage) =>
-        Future.successful(
-          Cached(faciaPage) {
-            if (request.isRss)
-              Ok(TrailsToRss.fromPressedPage(faciaPage)).as("text/xml; charset=utf-8")
-            else if (request.isJson)
-              JsonFront(faciaPage)
-            else if (faciaPage.isExpiredAdvertisementFeature)
-              MovedPermanently(expiredAdFeatureUrl)
-            else
-              Ok(views.html.front(faciaPage))
-          }
-        )
-      case None => renderFrontPressResultFallback(path)
+    if (Switches.FapiClientFormat.isSwitchedOn) {
+      val futureResult = frontJsonFapi.get(path).flatMap {
+        case Some(faciaPage) =>
+          Future.successful(
+            Cached(faciaPage) {
+              if (request.isRss)
+                Ok(TrailsToRss.fromPressedPage(faciaPage)).as("text/xml; charset=utf-8")
+              else if (request.isJson)
+                JsonFront(faciaPage)
+              else if (faciaPage.isExpiredAdvertisementFeature)
+                MovedPermanently(expiredAdFeatureUrl)
+              else
+                Ok(views.html.front(faciaPage))
+            }
+          )
+        case None => renderFrontPressResultFallback(path)
+      }
+
+      futureResult onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
+
+      futureResult
+    } else {
+      renderFrontPressResultFallback(path)
     }
 
-    futureResult onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
-
-    futureResult
   }
 
   def renderFrontPress(path: String) = MemcachedAction { implicit request => renderFrontPressResult(path) }
