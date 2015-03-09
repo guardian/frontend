@@ -59,16 +59,11 @@ case class VideoProfile(
 object Contributor extends Profile(width = Some(140), height = Some(140))
 object Item120 extends Profile(width = Some(120))
 object Item140 extends Profile(width = Some(140))
-object Item160 extends Profile(width = Some(160))
-object Item220 extends Profile(width = Some(220))
 object Item300 extends Profile(width = Some(300))
-object Item360 extends Profile(width = Some(360))
 object Item460 extends Profile(width = Some(460))
 object Item620 extends Profile(width = Some(620))
 object Item640 extends Profile(width = Some(640))
 object Item700 extends Profile(width = Some(700))
-object Item860 extends Profile(width = Some(860))
-object Item940 extends Profile(width = Some(940))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
 
 // The imager/images.js base image.
