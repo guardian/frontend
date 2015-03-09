@@ -5,7 +5,6 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/discussion/comment-count',
-    'common/modules/ui/images',
     'common/modules/ui/relativedates'
 ], function (
     bonzo,
