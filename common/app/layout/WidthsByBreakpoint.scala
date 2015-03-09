@@ -178,7 +178,8 @@ object ContentWidths {
       phablet =         Some(725.px),
       tablet =          Some(965.px),
       desktop =         Some(1065.px),
-      leftCol =         Some(1225.px)) // leftCol is also 1225px
+      leftCol =         Some(1225.px),
+      wide =            Some(1920.px))
   }
 
   def getWidthsFromContentElement(hinting: ContentHinting, relation: ContentRelation): WidthsByBreakpoint = {
