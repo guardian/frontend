@@ -14,7 +14,8 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/identity-benefits',
-    'common/modules/experiments/tests/chimney'
+    'common/modules/experiments/tests/chimney',
+    'common/modules/experiments/tests/sticky-mpu'
 ], function (
     raven,
     filter,
@@ -31,7 +32,8 @@ define([
     HighCommercialComponent,
     KruxAudienceScience,
     IdentityBenefits,
-    Chimney
+    Chimney,
+    StickyMPU
 ) {
 
     var ab,
@@ -39,7 +41,8 @@ define([
             new HighCommercialComponent(),
             new KruxAudienceScience(),
             new IdentityBenefits(),
-            new Chimney()
+            new Chimney(),
+            new StickyMPU()
         ],
         participationsKey = 'gu.ab.participations';
 
