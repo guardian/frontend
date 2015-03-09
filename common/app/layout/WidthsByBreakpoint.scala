@@ -155,7 +155,8 @@ object ContentWidths {
       wide =            Some(1300.px))
   }
 
-  object PictureMedia extends ContentRelation {
+  object PictureMedia {
+    // PictureMedia does not support hinting/weighting, so does not extend ContentRelation.
     val Inline = WidthsByBreakpoint(
       mobile =          Some(465.px),
       mobileLandscape = Some(645.px),
@@ -165,13 +166,19 @@ object ContentWidths {
   }
 
   object GalleryMedia {
-    // GalleryMedia does not support hinting/weighting, so does not extend ContentRelation.
     val Inline = WidthsByBreakpoint(
-      mobile = Some(666.px)
-    )
+      mobile          = Some(445.px),
+      mobileLandscape = Some(610.px),
+      phablet =         Some(620.px),
+      tablet =          Some(700.px)) // desktop, leftCol, and wide are also 700px
+
     val Lightbox = WidthsByBreakpoint(
-      mobile = Some(666.px)
-    )
+      mobile =          Some(465.px),
+      mobileLandscape = Some(645.px),
+      phablet =         Some(725.px),
+      tablet =          Some(965.px),
+      desktop =         Some(1065.px),
+      leftCol =         Some(1225.px)) // leftCol is also 1225px
   }
 
   def getWidthsFromContentElement(hinting: ContentHinting, relation: ContentRelation): WidthsByBreakpoint = {
