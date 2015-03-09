@@ -40,10 +40,10 @@ object Metric extends Logging {
     ("ipad-old-after-5", CountMetric(s"ipad-old-after-5")),
 
     ("tech-feedback", CountMetric("tech-feedback"))
-
   ) ++ iPhoneMetrics
 
   lazy val techFeedback = Switches.FeedbackLink // remove tech-feedback metric when this switch is removed.
+
 
   private val iPhoneMetrics: Seq[(String, CountMetric)] = Seq(4, 6).flatMap( model =>
     Seq(
