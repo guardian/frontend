@@ -74,8 +74,6 @@ object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 1
 // The imager/images.js base image.
 object SeoOptimisedContentImage extends Profile(width = Some(460))
 
-object ContentShowcase extends Profile(width = Some(860))
-
 // Just degrade the image quality without adjusting the width/height
 object Naked extends Profile(None, None)
 
