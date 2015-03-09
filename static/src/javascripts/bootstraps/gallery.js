@@ -50,7 +50,7 @@ define([
             mostViewed.manipulationType = 'html';
             mostViewed.endpoint = '/gallery/most-viewed.json';
             mostViewed.ready = function () {
-                mediator.emit('ui:images:upgradePicture', container);
+                mediator.emit('module:gallery-most-popular:loaded', container);
             };
             mostViewed.fetch(container, 'html');
         },

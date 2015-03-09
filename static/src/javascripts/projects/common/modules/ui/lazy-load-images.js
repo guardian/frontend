@@ -73,7 +73,8 @@ define([
             'modules:tonal:loaded',
             'modules:popular-fronts:loaded',
             'page:media:moreinloaded',
-            'page:media:most-viewed-loaded'
+            'page:media:most-viewed-loaded',
+            'module:gallery-most-popular:loaded'
         ], function (event) {
             mediator.on(event, function (context) {
                 attachLazyLoad(qwery('.js-lazy-loaded-image', context));
