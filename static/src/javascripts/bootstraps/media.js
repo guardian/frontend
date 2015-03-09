@@ -338,7 +338,7 @@ define([
         mostViewed.endpoint = endpoint;
 
         mostViewed.fetch(attachTo, 'html').then(function () {
-            mediator.emit('page:media:most-viewed-loaded')
+            mediator.emit('page:media:most-viewed-loaded');
         });
     }
 
