@@ -11,6 +11,7 @@ import model.Tags
 import model.SupportedUrl
 import model.ImageElement
 import model.ImageContainer
+import model.ImageOverride
 import org.joda.time.DateTime
 import model.`package`._
 import org.scala_tools.time.Imports._
@@ -338,7 +339,16 @@ object FaciaContentImplicits {
     def linkText = maybeWebTitle
 
     //Elements
-    def elements: List[Element] = fold(
+    def imageReplace: Option[ImageReplace] = fold(
+      _.imageReplace,
+      _.imageReplace,
+      _ => None,
+      _ => None)
+
+    def imageReplaceElement = for(imageReplace <- imageReplace)
+      yield ImageOverride.createElementWithOneAsset(imageReplace.imageSrc, imageReplace.imageSrcWidth, imageReplace.imageSrcHeight)
+
+    def elements: List[Element] = imageReplaceElement.toList ::: fold(
       curatedContent => curatedContent.content.elements.getOrElse(Nil),
       supportingCuratedContent => supportingCuratedContent.content.elements.getOrElse(Nil),
       linkSnap => Nil, //TODO: linkSnap Elements
