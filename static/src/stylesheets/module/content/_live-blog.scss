@@ -290,18 +290,9 @@ $block-padding-right: $gs-gutter;
                 }
             }
         }
+
         > blockquote {
             color: colour(neutral-2);
-        }
-
-        > blockquote.quoted:before {
-            left: auto;
-        }
-
-        > blockquote.quoted p:first-child {
-            @include mq(mobileLandscape) {
-                text-indent: $gs-gutter * 1.5;
-            }
         }
 
         /* Media

@@ -33,13 +33,23 @@ blockquote.quoted:before {
 }
 
 // Quotes
-.from-content-api blockquote.quoted:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    @include transform(scale(.8));
-    @include transform-origin(0);
-    @include icon(quote-grey);
+.from-content-api blockquote.quoted {
+    // Clearfix
+    overflow: hidden;
+
+    &:before {
+        content: '';
+        float: left;
+        @include transform(scale(.8));
+        @include transform-origin(0);
+        @include icon(quote-grey);
+    }
+
+    & > .quoted__contents {
+        float: left;
+        // Do not allow text to wrap around blockquote icon
+        overflow: hidden;
+    }
 }
 
 .item--dark .i-comment-light-grey {

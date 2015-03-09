@@ -23,7 +23,8 @@ object BodyCleaner {
         LiveBlogShareButtons(article),
         DropCaps(article.isComment || article.isFeature),
         FigCaptionCleaner,
-        RichLinkCleaner
+        RichLinkCleaner,
+        BlockquoteCleaner
       )
   }
 }
