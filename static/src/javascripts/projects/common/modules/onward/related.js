@@ -87,12 +87,11 @@ define([
                     url: relatedUrl,
                     container: container,
                     success: function () {
-                        var relatedContainer = container.querySelector('.related-content'),
-                            images = container.querySelector('.fc-container');
+                        var relatedContainer = container.querySelector('.related-content')
 
                         new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
                         // upgrade images
-                        mediator.emit('ui:images:upgradePicture', images);
+                        mediator.emit('ui:images:upgradePictures');
                         mediator.emit('modules:related:loaded', container);
                         register.end(componentName);
                     },
