@@ -18,7 +18,6 @@ define([
                     response = JSON.stringify({
                         faciaHtml: '<section class="container--popular"><ul>' + [1, 2, 3, 4].reduce(function (previousValue) {
                             return previousValue + '<li>' +
-                                '<div class="js-image-upgrade" data-src="item-{width}.jpg"></div>' +
                                 '<div class="js-item__timestamp"><div class="timestamp__text">1</div></div>' +
                                 '</li>';
                         }, '') + '</section></ul>'
@@ -59,15 +58,6 @@ define([
                     popular.render({
                         then: function () {
                             expect($('.container--popular').length).not.toBe(0);
-                            done();
-                        }
-                    });
-                });
-
-                it('should upgrade images', function (done) {
-                    popular.render({
-                        then: function () {
-                            expect($('.container--popular img').length).toBe(4);
                             done();
                         }
                     });

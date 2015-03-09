@@ -37,7 +37,7 @@ define([
                             // relativise timestamps
                             relativeDates.init(container);
                             // upgrade image
-                            images.upgrade(container);
+                            images.upgradePictures();
                         }
                     }
 

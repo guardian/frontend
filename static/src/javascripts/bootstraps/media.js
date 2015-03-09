@@ -322,7 +322,7 @@ define([
         section.endpoint = endpoint;
 
         section.fetch(attachTo).then(function () {
-            images.upgrade(attachTo);
+            images.upgradePictures();
             mediator.emit('page:media:moreinloaded', attachTo);
         });
     }
@@ -341,7 +341,7 @@ define([
         mostViewed.endpoint = endpoint;
 
         mostViewed.fetch(attachTo, 'html').then(function () {
-            images.upgrade(attachTo);
+            images.upgradePictures();
         });
     }
 
