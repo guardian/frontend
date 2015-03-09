@@ -47,6 +47,8 @@ define([
                     }).join('&');
                 }).join('&');
         },
+        /*
+        To reinstate when find out where required
         getKeywords = function () {
             var keywords = (config.page.keywordIds) ?
                 map(config.page.keywordIds.split(','), function (keywordId) {
@@ -57,9 +59,10 @@ define([
                 k: keywords
             };
         },
+        */
         buildComponentUrl = function (url, params) {
             // filter out empty params
-            var filteredParams = pick(defaults(params || {}, getKeywords()), function (v) {
+            var filteredParams = pick(params || {}, function (v) {
                     return isArray(v) ? v.length : v;
                 }),
                 query = size(filteredParams) ? '?' + constructQuery(filteredParams) : '';
@@ -87,7 +90,7 @@ define([
                 jobs:           buildComponentUrl('jobs', merge({}, this.params, { t: this.params.jobIds ? this.params.jobIds.split(',') : [] })),
                 masterclasses:  buildComponentUrl('masterclasses', merge({}, this.params, { t: this.params.ids ? this.params.ids.split(',') : [] })),
                 soulmates:      buildComponentUrl('soulmates/mixed', this.params),
-                soulmatesGroup: buildComponentUrl('soulmates/' + this.params.soulmatesFeedName + '.json', this.params),
+                soulmatesGroup: buildComponentUrl('soulmates/' + this.params.soulmatesFeedName, this.params),
                 travel:         buildComponentUrl('travel/offers', this.params),
                 multi:          buildComponentUrl('multi', this.params),
                 capiSingle:     buildComponentUrl('capi-single', this.params),
