@@ -3,7 +3,7 @@ define([
 ], function (
     _
 ) {
-    function combine (destination, previous, comparator, generator) {
+    function combine (destination, previous, comparator, generator, update) {
         previous = previous.slice();
 
         return _.map(destination, function (item) {
@@ -17,7 +17,7 @@ define([
             });
 
             if (previousItem) {
-                return previousItem;
+                return update(previousItem, item);
             } else {
                 return generator(item);
             }

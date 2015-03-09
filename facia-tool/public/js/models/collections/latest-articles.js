@@ -160,6 +160,9 @@ define([
 
                                 opts.uneditable = true;
                                 return new Article(opts, true);
+                            }, function (oldArticle, newArticle) {
+                                oldArticle.props.webPublicationDate(newArticle.webPublicationDate);
+                                return oldArticle;
                             });
                             self.articles(newArticles);
                             self.message(null);

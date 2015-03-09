@@ -1,7 +1,26 @@
 define([
+    'underscore',
     'utils/array'
-], function (array) {
+], function (
+    _,
+    array
+) {
     describe('Array', function () {
+        var comparator = function (one, two) {
+            return one.id === two.id;
+        },
+        generator = function (item) {
+            return {
+                id: item.id,
+                generated: true
+            };
+        },
+        update = function (oldItem, item) {
+            return _.extend({}, oldItem, {
+                updated: oldItem !== item && oldItem.id === item.id
+            });
+        };
+
         it('computes the difference of two lists', function () {
             var before = [
                 {id: 1, sameAsBefore: true},
@@ -20,25 +39,16 @@ define([
                 {id: 4},
                 {id: 7}
             ],
-            comparator = function (one, two) {
-                return one.id === two.id;
-            },
-            generator = function (item) {
-                return {
-                    id: item.id,
-                    generated: true
-                };
-            };
+            result = array.combine(after, before, comparator, generator, update);
 
-            var result = array.combine(after, before, comparator, generator);
             expect(result).toEqual([
                 {id: 9, generated: true},
                 {id: 10, generated: true},
-                {id: 2, sameAsBefore: true},
-                {id: 1, sameAsBefore: true},
+                {id: 2, sameAsBefore: true, updated: true},
+                {id: 1, sameAsBefore: true, updated: true},
                 {id: 8, generated: true},
-                {id: 3, sameAsBefore: true},
-                {id: 4, sameAsBefore: true},
+                {id: 3, sameAsBefore: true, updated: true},
+                {id: 4, sameAsBefore: true, updated: true},
                 {id: 7, generated: true}
             ]);
         });
@@ -48,17 +58,8 @@ define([
                 {id: 1},
                 {id: 2}
             ],
-            comparator = function (one, two) {
-                return one.id === two.id;
-            },
-            generator = function (item) {
-                return {
-                    id: item.id,
-                    generated: true
-                };
-            };
+            result = array.combine(after, before, comparator, generator, update);
 
-            var result = array.combine(after, before, comparator, generator);
             expect(result).toEqual([
                 {id: 1, generated: true},
                 {id: 2, generated: true}
@@ -70,17 +71,8 @@ define([
                 {id: 1},
                 {id: 2}
             ], after = [],
-            comparator = function (one, two) {
-                return one.id === two.id;
-            },
-            generator = function (item) {
-                return {
-                    id: item.id,
-                    generated: true
-                };
-            };
+            result = array.combine(after, before, comparator, generator, update);
 
-            var result = array.combine(after, before, comparator, generator);
             expect(result).toEqual([]);
         });
     });
