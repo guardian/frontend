@@ -130,8 +130,8 @@ data-test-id="facia-card"
             <div class="fc-item__avatar">
                 @lazyImage(
                     Seq("fc-item__avatar__media", cutOut.cssClass),
-                    ImgSrc.srcsetForCutout(imageUrl),
-                    WidthsByBreakpoint.cutOutFromItemClasses(item.cardTypes).sizesString,
+                    ImgSrc.srcset(imageUrl, FaciaWidths.cutOutFromItemClasses(item.cardTypes)),
+                    FaciaWidths.cutOutFromItemClasses(item.cardTypes).sizes,
                     None,
                     false
                 )
