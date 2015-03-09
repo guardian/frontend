@@ -14,7 +14,6 @@ define([
     'common/modules/analytics/beacon',
     'common/modules/commercial/build-page-targeting',
     'common/modules/component',
-    'common/modules/ui/images',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
     'common/modules/video/supportedBrowsers',
@@ -35,7 +34,6 @@ define([
     beacon,
     buildPageTargeting,
     Component,
-    images,
     events,
     fullscreener,
     supportedBrowsers,
@@ -322,7 +320,6 @@ define([
         section.endpoint = endpoint;
 
         section.fetch(attachTo).then(function () {
-            images.upgrade(attachTo);
             mediator.emit('page:media:moreinloaded', attachTo);
         });
     }
@@ -341,7 +338,7 @@ define([
         mostViewed.endpoint = endpoint;
 
         mostViewed.fetch(attachTo, 'html').then(function () {
-            images.upgrade(attachTo);
+            mediator.emit('page:media:most-viewed-loaded');
         });
     }
 
