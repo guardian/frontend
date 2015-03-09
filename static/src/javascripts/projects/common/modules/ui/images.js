@@ -28,6 +28,11 @@ function (
             mediator.addListeners({
                 'ui:images:upgradePictures': function () {
                     images.upgradePictures();
+                },
+                'ui:images:lazyLoaded': function (context) {
+                    picturefill({
+                        elements: [context]
+                    });
                 }
             });
         }

@@ -91,7 +91,6 @@ define([
 
                         new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
                         // upgrade images
-                        mediator.emit('ui:images:upgradePictures');
                         mediator.emit('modules:related:loaded', container);
                         register.end(componentName);
                     },

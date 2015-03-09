@@ -270,24 +270,28 @@
             require([
                 'common/utils/config',
                 'common/modules/experiments/ab',
-                'common/modules/ui/images'
+                'common/modules/ui/images',
+                'common/modules/ui/lazy-load-images'
             ], function (
                 config,
                 ab,
-                images
+                images,
+                lazyLoadImages
             ) {
 
                 ab.segmentUser();
                 ab.run();
                 if(guardian.config.page.isFront) {
-                    images.upgradePicture();
+                    lazyLoadImages.init();
+                    images.upgradePictures();
                     if(!document.addEventListener) { // IE8 and below
-                        window.onload = images.upgradePicture;
+                        window.onload = images.upgradePictures;
                     }
                 } else {
+                    lazyLoadImages.setUpListeners();
                     images.upgradePictures();
-                    images.listen();
                 }
+                images.listen();
 
                 if (config.switches.commercial) {
                     require(['bootstraps/commercial'], raven.wrap(

@@ -73,7 +73,6 @@ object Switches {
   // Switch names can be letters numbers and hyphens only
 
   private lazy val never = new LocalDate(2100, 1, 1)
-  private lazy val hackdayAmnesty = new LocalDate(2015, 3, 9)
 
   // Performance
   val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
@@ -184,11 +183,6 @@ object Switches {
   )
 
   // Commercial
-
-  val EsiTestSwitch = Switch("Commercial", "esi-geolocation",
-    "Activate Edge Side Inserts",
-    safeState = Off, sellByDate = hackdayAmnesty
-  )
 
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
@@ -464,6 +458,11 @@ object Switches {
   val ABKruxAudienceScience = Switch("A/B Tests", "ab-krux-audience-science",
     "Switch for the Krux/Audience Science A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 1)
+  )
+
+  val ABChimney = Switch("A/B Tests", "ab-chimney", 
+    "Switch for the home icon chimney test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 16)
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",

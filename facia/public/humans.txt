@@ -99,6 +99,10 @@ User Experience Architect: Alastair Jardine
 Twitter: @aj_ux
 From: London, UK
 
+Developer (Frontendy Things): David Vella
+Twitter: @indeox
+From: Gozo, Malta
+
 Developer: Ben James
 Twitter: @bmjames
 From: Liverpool, UK

@@ -13,7 +13,8 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/krux-audience-science',
-    'common/modules/experiments/tests/identity-benefits'
+    'common/modules/experiments/tests/identity-benefits',
+    'common/modules/experiments/tests/chimney'
 ], function (
     raven,
     filter,
@@ -29,14 +30,16 @@ define([
     mvtCookie,
     HighCommercialComponent,
     KruxAudienceScience,
-    IdentityBenefits
+    IdentityBenefits,
+    Chimney
 ) {
 
     var ab,
         TESTS = [
             new HighCommercialComponent(),
             new KruxAudienceScience(),
-            new IdentityBenefits()
+            new IdentityBenefits(),
+            new Chimney()
         ],
         participationsKey = 'gu.ab.participations';
 
