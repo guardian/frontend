@@ -3,6 +3,7 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
+    'common/utils/mediator',
     'common/modules/discussion/comment-count',
     'common/modules/ui/images',
     'common/modules/ui/relativedates'
@@ -11,8 +12,8 @@ define([
     $,
     ajax,
     config,
+    mediator,
     commentCount,
-    images,
     relativeDates
 ) {
 
@@ -24,28 +25,24 @@ define([
                 url: '/most-read' + (hasSection ? '/' + config.page.section : '') + '.json',
                 type: 'json',
                 crossOrigin: true
-            }).then(
-                function (resp) {
-                    if (resp.faciaHtml) {
-                        var container = bonzo.create(resp.faciaHtml.replace(/^\s+|\s+$/g, ''))[0];
+            }).then(function (resp) {
+                if (resp.faciaHtml) {
+                    var container = bonzo.create(resp.faciaHtml.replace(/^\s+|\s+$/g, ''))[0];
 
-                        if (container) {
-                            bonzo(container)
-                                .insertAfter(opts.insertAfter || $('.container, .ad-slot--commercial-component-high').last());
+                    if (container) {
+                        bonzo(container)
+                            .insertAfter(opts.insertAfter || $('.container, .ad-slot--commercial-component-high').last());
 
-                            commentCount.init(container);
-                            // relativise timestamps
-                            relativeDates.init(container);
-                            // upgrade image
-                            images.upgrade(container);
-                        }
+                        commentCount.init(container);
+                        // relativise timestamps
+                        relativeDates.init(container);
+                        // upgrade image
+                        mediator.emit('modules:popular-fronts:loaded', container);
                     }
-
-                    opts.then && opts.then();
                 }
-            );
+
+                opts.then && opts.then();
+            });
         }
-
     };
-
 });
