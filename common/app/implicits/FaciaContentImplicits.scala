@@ -342,8 +342,8 @@ object FaciaContentImplicits {
     def imageReplace: Option[ImageReplace] = fold(
       _.imageReplace,
       _.imageReplace,
-      _ => None,
-      _ => None)
+      _.image,
+      _.image)
 
     def imageReplaceElement = for(imageReplace <- imageReplace)
       yield ImageOverride.createElementWithOneAsset(imageReplace.imageSrc, imageReplace.imageSrcWidth, imageReplace.imageSrcHeight)
