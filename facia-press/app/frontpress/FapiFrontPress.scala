@@ -35,7 +35,7 @@ object LiveFapiFrontPress extends FapiFrontPress {
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
-      .map { pressedFront => S3FrontsApi.putLivePressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
+      .map { pressedFront => S3FrontsApi.putLiveFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
       .asFuture.map(_.fold(_ => (), _ => ()))
 }
 
@@ -51,7 +51,7 @@ object DraftFapiFrontPress extends FapiFrontPress {
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
-      .map { pressedFront => S3FrontsApi.putDraftPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
+      .map { pressedFront => S3FrontsApi.putDraftFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
       .asFuture.map(_.fold(_ => (), _ => ()))
 }
 

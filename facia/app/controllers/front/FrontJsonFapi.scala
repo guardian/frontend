@@ -12,7 +12,7 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
   val stage: String = Configuration.facia.stage.toUpperCase
   val bucketLocation: String
 
-  private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/pressed.json"
+  private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/fapi/pressed.json"
 
   private def parsePressedJson(j: String): Option[PressedPage] = {
     val json = Json.parse(j)
