@@ -44,8 +44,9 @@ define([
                     bean.off(window, 'scroll', lazyLoad);
                 } else {
                     scrollTop = bonzo(document.body).scrollTop();
-                    scrollBottom = scrollTop + bonzo.viewport().height;
+                    scrollBottom = scrollTop + detect.getViewport().height;
                     threshold = scrollBottom + distanceBeforeLoad;
+
                     _.forEach($images, function ($image) {
                         // offsetParent is fast to check, but it won't work for fixed elements.
                         // see http://stackoverflow.com/questions/19669786/check-if-element-is-visible-in-dom
