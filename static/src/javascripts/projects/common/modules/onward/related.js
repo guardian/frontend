@@ -87,7 +87,7 @@ define([
                     url: relatedUrl,
                     container: container,
                     success: function () {
-                        var relatedContainer = container.querySelector('.related-content')
+                        var relatedContainer = container.querySelector('.related-content');
 
                         new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
                         // upgrade images
