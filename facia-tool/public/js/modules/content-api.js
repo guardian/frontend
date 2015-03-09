@@ -258,7 +258,7 @@ function (
 
     function fetchLatest (options) {
         var url = vars.CONST.apiSearchBase + '/',
-            propName, term;
+            propName, term, filter;
 
         options = _.extend({
             article: '',
@@ -270,6 +270,7 @@ function (
             isDraft: true
         }, options);
         term = options.term;
+        filter = options.filter;
 
         if (options.article) {
             term = options.article;
@@ -285,7 +286,7 @@ function (
             url += '&page-size=' + options.pageSize;
             url += '&page=' + options.page;
             url += term ? '&q=' + term : '';
-            url += options.filter ? '&' + options.filterType + '=' + encodeURIComponent(options.filter) : '';
+            url += filter ? '&' + options.filterType + '=' + encodeURIComponent(filter) : '';
         }
 
         var deferred = new $.Deferred();
@@ -294,7 +295,7 @@ function (
         }).then(function(data) {
             var rawArticles = data.response && data.response[propName] ? [].concat(data.response[propName]) : [];
 
-            if (!term && !rawArticles.length) {
+            if (!term && !filter && !rawArticles.length) {
                 deferred.reject(new Error('Sorry, the Content API is not currently returning content'));
             } else {
                 deferred.resolve(_.extend({}, data.response, {
