@@ -369,7 +369,7 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
-class TagLinker(article: Article)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner{
+case class TagLinker(article: Article)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner{
 
   private val group1 = "$1"
   private val group2 = "$2"
