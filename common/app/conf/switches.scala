@@ -551,6 +551,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
   )
 
+  val FapiClientFormat = Switch("Facia", "facia-tool-fapi-client-format",
+    "If this switch is on, facia-press will press in the new fapi-client format",
+    safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
+  )
+
   def all: Seq[SwitchTrait] = Switch.allSwitches
 
   def grouped: List[(String, Seq[SwitchTrait])] = {
