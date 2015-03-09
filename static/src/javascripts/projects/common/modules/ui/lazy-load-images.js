@@ -71,7 +71,6 @@ define([
             'modules:related:loaded',
             'modules:popular:loaded',
             'modules:tonal:loaded',
-            'modules:popular-fronts:loaded',
             'page:media:moreinloaded',
             'page:media:most-viewed-loaded',
             'module:gallery-most-popular:loaded'
