@@ -1,9 +1,7 @@
 package model
 
 import com.gu.contentapi.client.model.Asset
-import org.apache.commons.math3.fraction.Fraction
 import views.support.{Orientation, Naked, ImgSrc}
-import scala.util.matching.Regex
 
 case class ImageAsset(delegate: Asset, index: Int) {
   private lazy val fields: Map[String, String] = delegate.typeData
