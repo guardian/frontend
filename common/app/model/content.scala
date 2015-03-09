@@ -17,7 +17,7 @@ import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
+import views.support.{ImgSrc, Naked, Item700, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -719,7 +719,7 @@ trait Lightboxable extends Content {
           "caption" -> JsString(img.caption.getOrElse("")),
           "credit" -> JsString(img.credit.getOrElse("")),
           "displayCredit" -> JsBoolean(img.displayCredit),
-          "src" -> JsString(ImgSrc.getFallbackUrl(imgContainer).getOrElse("")),
+          "src" -> JsString(ImgSrc.imager(imgContainer, Item700).getOrElse("")),
           "srcsets" -> JsString(ImgSrc.srcset(imgContainer, GalleryMedia.Lightbox)),
           "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
           "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
