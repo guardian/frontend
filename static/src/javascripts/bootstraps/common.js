@@ -486,7 +486,6 @@ define([
             robust('c-crosswords',      crosswordThumbnails.init);
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
-            robust('c-ready',           function () { mediator.emit('page:common:ready'); });
         };
 
     return {

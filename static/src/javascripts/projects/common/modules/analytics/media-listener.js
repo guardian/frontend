@@ -1,11 +1,9 @@
 define([
     'bean',
-    'fastdom',
-    'common/modules/analytics/beacon'
+    'common/utils/mediator'
 ], function (
     bean,
-    fastdom,
-    beacon
+    mediator
 ) {
 
     return {
@@ -14,7 +12,7 @@ define([
                 var mql = window.matchMedia('print');
                 mql.addListener(function () {
                     if (mql.matches) {
-                        beacon.fire('/count/print.gif');
+                        mediator.emit('module:clickstream:interaction', 'print');
                     }
                 });
             }
