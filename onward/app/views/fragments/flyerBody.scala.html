@@ -29,7 +29,7 @@
     <div class="flyer__container">
         @if(content.isGallery || content.isVideo || CardStyle(content) == Feature || CardStyle(content) == Default) {
             @content.trailPicture.map { trailPictureContainer =>
-                @ImgSrc.imager(trailPictureContainer, Item460).map { imgSrc =>
+                @ImgSrc.findSrc(trailPictureContainer, Item460).map { imgSrc =>
 
                     <div class="flyer__image-container u-responsive-ratio js-image-upgrade" data-src="@imgSrc">
                     </div>

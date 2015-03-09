@@ -102,7 +102,7 @@ object ImgSrc {
   }
 
   // always, and I mean ALWAYS think carefully about the size image you use
-  def imager(imageContainer: ImageContainer, profile: Profile): Option[String] = {
+  def findSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
     profile.elementFor(imageContainer).flatMap(_.url).map{ largestImage =>
       ImgSrc(largestImage, profile)
     }
@@ -110,7 +110,7 @@ object ImgSrc {
 
   def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
     widths.profiles.filter(_.width.getOrElse(0) <= widths.maxWidth).map { profile =>
-      s"${imager(imageContainer, profile).get} ${profile.width.get}w"
+      s"${findSrc(imageContainer, profile).get} ${profile.width.get}w"
     } mkString ", "
   }
 
@@ -121,7 +121,7 @@ object ImgSrc {
   }
 
   def getFallbackUrl(imageContainer: ImageContainer): Option[String] = {
-    imager(imageContainer, Item300)
+    findSrc(imageContainer, Item300)
   }
 
   def getFallbackAsset(imageContainer: ImageContainer): Option[ImageAsset] = {
