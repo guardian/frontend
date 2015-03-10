@@ -19,8 +19,7 @@ case class Book(title: String,
                 buyUrl: Option[String] = None,
                 position: Option[Int] = None,
                 category: Option[String] = None,
-                keywordIds: Seq[String] = Nil
-                 )
+                keywordIdSuffixes: Seq[String] = Nil)
 
 object Book {
 
@@ -59,13 +58,15 @@ object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
   def getSpecificBooks(specifics: Seq[String]) = available filter (specifics contains _.isbn)
 
   def bestsellersTargetedAt(segment: Segment): Seq[Book] = {
-    val targetedBestsellers = available filter (book => keywordsMatch(segment, book.keywordIds))
-    lazy val defaultBestsellers = available filter (_.category.exists(_ == "General"))
+    val targetedBestsellers = available filter { book =>
+      Keyword.idSuffixesIntersect(segment.context.keywords, book.keywordIdSuffixes)
+    }
+    lazy val defaultBestsellers = available filter (_.category.contains("General"))
     val bestsellers = if (targetedBestsellers.isEmpty) defaultBestsellers else targetedBestsellers
     bestsellers.filter(_.jacketUrl.nonEmpty).sortBy(_.position).take(10)
   }
 
-  def refresh() {
+  def refresh(): Unit = {
 
     val bookListsLoading: Future[Seq[Seq[Book]]] = Future.sequence {
       feeds.foldLeft(Seq[Future[Seq[Book]]]()) {
