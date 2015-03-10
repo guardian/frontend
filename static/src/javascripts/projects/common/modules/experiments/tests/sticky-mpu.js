@@ -2,7 +2,7 @@ define([
     'common/utils/config'
 ], function (
     config
-){
+) {
     return function () {
         this.id = 'StickyMpu';
         this.start = '2015-03-09';
@@ -22,8 +22,6 @@ define([
             if (config.page.edition === 'UK' || config.page.edition === 'US') {
                 isUkOrUs = true;
             }
-
-            console.log('inside canRun', config.page.edition, isUkOrUs);
 
             return isUkOrUs;
         };
