@@ -1,17 +1,17 @@
 .tone-news--item {
     &.fc-item,
-    &.flyer {
+    &.rich-link {
         background-color: colour(neutral-8);
     }
 
-    .flyer__container:before,
+    .rich-link__container:before,
     .fc-item__container:before {
         background-color: colour(news-accent);
     }
 
     .fc-item__kicker,
     .fc-item__byline,
-    .flyer__read-more-text {
+    .rich-link__read-more-text {
         color: colour(news-default);
     }
 
@@ -23,7 +23,7 @@
         color: colour(live-default);
     }
 
-    .flyer__arrow-icon {
+    .rich-link__arrow-icon {
         fill: colour(news-default);
     }
 }

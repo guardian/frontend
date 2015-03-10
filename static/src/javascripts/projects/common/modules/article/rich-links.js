@@ -25,7 +25,7 @@ define([
 
     richLinkTagTmpl
 ) {
-    function upgradeFlyer(el) {
+    function upgradeRichLink(el) {
         var href = $('a', el).attr('href'),
             matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
 
@@ -58,24 +58,35 @@ define([
         };
     }
 
-    function insertTagFlyer() {
-        if (config.page.richLink && config.page.richLink.indexOf(config.page.pageId) === -1) {
-            var space = spacefinder.getParaWithSpace(getSpacefinderRules());
+    function insertTagRichLink() {
+        var richLinkHrefs = $('.element-rich-link a')
+                .map(function (el) { return $(el).attr('href'); }),
+            testIfDuplicate = function (richLinkHref) {
+                // Tag-targeted rich links can be absolute
+                return _.contains(config.page.richLink, richLinkHref);
+            },
+            isDuplicate = richLinkHrefs.some(testIfDuplicate),
+            isSensitive = config.page.shouldHideAdverts || !config.page.showRelatedContent,
+            space;
+
+        if (config.page.richLink && config.page.richLink.indexOf(config.page.pageId) === -1
+            && !isSensitive && !isDuplicate) {
+            space = spacefinder.getParaWithSpace(getSpacefinderRules());
             if (space) {
                 $.create(template(richLinkTagTmpl, {href: config.page.richLink}))
                     .insertBefore(space)
-                    .each(upgradeFlyer);
+                    .each(upgradeRichLink);
             }
         }
     }
 
-    function upgradeFlyers() {
-        $('.element-rich-link--not-upgraded').each(upgradeFlyer);
+    function upgradeRichLinks() {
+        $('.element-rich-link--not-upgraded').each(upgradeRichLink);
     }
 
     return {
-        upgradeFlyer: upgradeFlyer,
-        upgradeFlyers: upgradeFlyers,
-        insertTagFlyer: insertTagFlyer
+        upgradeRichLink: upgradeRichLink,
+        upgradeRichLinks: upgradeRichLinks,
+        insertTagRichLink: insertTagRichLink
     };
 });

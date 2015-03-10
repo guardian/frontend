@@ -128,10 +128,13 @@ data-test-id="facia-card"
         @if(item.cardTypes.showCutOut) {
             @item.cutOut.map { case cutOut @ CutOut(imageUrl, _) =>
             <div class="fc-item__avatar">
-                <img class="fc-item__avatar__media @cutOut.cssClass"
-                     srcset="@ImgSrc.srcsetForCutout(imageUrl)"
-                     sizes="@WidthsByBreakpoint.cutOutFromItemClasses(item.cardTypes).sizesString"
-                >
+                @lazyImage(
+                    Seq("fc-item__avatar__media", cutOut.cssClass),
+                    ImgSrc.srcsetForCutout(imageUrl),
+                    WidthsByBreakpoint.cutOutFromItemClasses(item.cardTypes).sizesString,
+                    None,
+                    false
+                )
             </div>
             }
         }

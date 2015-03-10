@@ -28,12 +28,6 @@ define([
         opts = options || {};
     }
 
-    Related.overrideUrl = '';
-
-    Related.setOverrideUrl = function (url) {
-        Related.overrideUrl = url;
-    };
-
     Related.prototype.popularInTagOverride = function () {
         // whitelist of tags to override related story component with a popular-in-tag component
         if (!config.page.keywordIds) {
@@ -64,7 +58,7 @@ define([
         var relatedUrl, popularInTag, componentName, container,
             fetchRelated = config.switches.relatedContent && config.page.showRelatedContent;
 
-        if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
+        if (config.page && config.page.hasStoryPackage) {
             new Expandable({
                 dom: document.body.querySelector('.related-trails'),
                 expanded: false,
@@ -76,12 +70,12 @@ define([
 
             if (container) {
                 popularInTag = this.popularInTagOverride();
-                componentName = (!Related.overrideUrl && popularInTag) ? 'related-popular-in-tag' : 'related-content';
+                componentName = popularInTag ? 'related-popular-in-tag' : 'related-content';
                 register.begin(componentName);
 
                 container.setAttribute('data-component', componentName);
 
-                relatedUrl = Related.overrideUrl || popularInTag || '/related/' + config.page.pageId + '.json';
+                relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
 
                 if (opts.excludeTags && opts.excludeTags.length) {
                     relatedUrl += '?' + map(opts.excludeTags, function (tag) {
@@ -93,17 +87,10 @@ define([
                     url: relatedUrl,
                     container: container,
                     success: function () {
-                        if (Related.overrideUrl) {
-                            if (config.page.hasStoryPackage) {
-                                $('.more-on-this-story').addClass('u-h');
-                            }
-                        }
-                        var relatedContainer = container.querySelector('.related-content'),
-                            images = container.querySelector('.fc-container');
+                        var relatedContainer = container.querySelector('.related-content');
 
                         new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
                         // upgrade images
-                        mediator.emit('ui:images:upgradePicture', images);
                         mediator.emit('modules:related:loaded', container);
                         register.end(componentName);
                     },

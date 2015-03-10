@@ -73,7 +73,6 @@ object Switches {
   // Switch names can be letters numbers and hyphens only
 
   private lazy val never = new LocalDate(2100, 1, 1)
-  private lazy val hackdayAmnesty = new LocalDate(2015, 3, 4)
 
   // Performance
   val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
@@ -133,8 +132,8 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val FlyerSwitch = Switch("Performance", "flyers",
-    "If this switch is turned off then flyers will not be shown. Turn off to help handle exceptional load.",
+  val RichLinkSwitch = Switch("Performance", "rich-links",
+    "If this switch is turned off then rich links will not be shown. Turn off to help handle exceptional load.",
      safeState = On, sellByDate = never
   )
 
@@ -184,11 +183,6 @@ object Switches {
   )
 
   // Commercial
-
-  val EsiTestSwitch = Switch("Commercial", "esi-geolocation",
-    "Activate Edge Side Inserts",
-    safeState = Off, sellByDate = hackdayAmnesty
-  )
 
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
@@ -336,6 +330,11 @@ object Switches {
     safeState = Off, never
   )
 
+  val FeedbackLink = Switch("Monitoring", "tech-feedback",
+    "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
+    safeState = Off, new LocalDate(2015, 3, 24)
+  )
+
   // Features
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
@@ -347,7 +346,7 @@ object Switches {
 
   val HideInteractiveUi = Switch("Feature", "hide-interactive-ui",
     "If this is switched on interactives can be rendered without page furniture.",
-    safeState = On, sellByDate = hackdayAmnesty
+    safeState = On, sellByDate = new LocalDate(2015, 3, 31)
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
@@ -459,6 +458,11 @@ object Switches {
   val ABKruxAudienceScience = Switch("A/B Tests", "ab-krux-audience-science",
     "Switch for the Krux/Audience Science A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 1)
+  )
+
+  val ABChimney = Switch("A/B Tests", "ab-chimney", 
+    "Switch for the home icon chimney test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 16)
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",

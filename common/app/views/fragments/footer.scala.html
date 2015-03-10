@@ -1,5 +1,6 @@
 @(page: model.MetaData, showNav: Boolean=true)(implicit request: RequestHeader)
 
+@import conf.Configuration
 @import org.joda.time.DateTime
 @import common.Edition
 @import common.LinkTo
@@ -79,6 +80,12 @@
                     contact us</a></li>
             }
 
+        <li class="colophon__item">
+            <form class="js-tech-feedback" action="@Configuration.debug.beaconUrl/tech-feedback?uri=http@{if (request.secure) "s" else ""}://@request.host@request.uri" method="post">
+                <input data-link-name="tech feedback" type="submit" value="report technical issue">
+            </form>
+        </li>
+
             @if(currentEdition == Us) {
                 <li class="colophon__item"><a data-link-name="us : footer : about us" href="http://www.theguardian.com/info/about-guardian-us">
                     about us</a></li>
@@ -102,7 +109,7 @@
                     complaints &amp; corrections</a></li>
             }
             <li class="colophon__item"><a data-link-name="terms" href="http://www.theguardian.com/help/terms-of-service">terms &amp; conditions</a></li>
-            <li class="colophon__item"><a data-link-name="privacy" href="http://www.theguardian.com/help/privacy-policy">privacy policy</a></li>
+            <li class="colophon__item"><a data-link-name="privacy" href="http://www.theguardian.com/info/privacy">privacy policy</a></li>
             <li class="colophon__item"><a data-link-name="cookie" href="http://www.theguardian.com/info/cookies">cookie policy</a></li>
             <li class="colophon__item"><a data-link-name="securedrop" href="https://securedrop.theguardian.com/">securedrop</a></li>
         }

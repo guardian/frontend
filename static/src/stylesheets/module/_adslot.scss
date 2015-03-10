@@ -204,12 +204,35 @@
 }
 .ad-slot--container-inline {
     @include mq(tablet) {
-        margin: 0 $gs-gutter/2 0 auto;
+        height: auto;
+        margin: 0 $gs-gutter/2;
 
         .linkslist-container & {
             position: absolute;
             top: 0;
             right: 0;
+        }
+
+        .ad-slot__content {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 250px;
+            margin: auto;
+        }
+    }
+
+    @include mq(tablet, desktop) {
+        position: relative;
+        width: gs-span(4.5);
+
+        .ad-slot__label {
+            padding: 0 $gs-gutter;
+        }
+
+        .ad-slot__content {
+            top: $mpu-ad-label-height;
         }
     }
 }
@@ -445,6 +468,7 @@
             width: $left-column + $gs-gutter;
             content: '';
             border-bottom: 1px dotted colour(neutral-5);
+            margin-top: $gs-gutter/4;
 
             @include mq(leftCol) {
                 width: $left-column;

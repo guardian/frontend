@@ -9,50 +9,50 @@
 
 @kicker = {
     @if(content.isAnalysis) {
-        <span class="flyer__kicker">Analysis</span>
+        <span class="rich-link__kicker">Analysis</span>
     }
     @if(content.isLiveBlog && content.isLive) {
-        <span class="flyer__kicker"><span class="flyer__live live-pulse-icon">Live</span></span>
+        <span class="rich-link__kicker"><span class="rich-link__live live-pulse-icon">Live</span></span>
     }
     @if(content.isPodcast) {
-        @content.seriesTag.map { series => <span class="flyer__kicker">@series.webTitle</span> }
+        @content.seriesTag.map { series => <span class="rich-link__kicker">@series.webTitle</span> }
     }
 }
 
-<div class="flyer @toneClass(content)--item @RenderClasses(Map(
-    "flyer--video" -> content.isVideo,
-    "flyer--gallery" -> content.isGallery,
-    "flyer--audio" -> content.isAudio,
-    "flyer--has-byline-pic" -> (content.hasTonalHeaderByline && content.hasLargeContributorImage)
+<div class="rich-link @toneClass(content)--item @RenderClasses(Map(
+    "rich-link--video" -> content.isVideo,
+    "rich-link--gallery" -> content.isGallery,
+    "rich-link--audio" -> content.isAudio,
+    "rich-link--has-byline-pic" -> (content.hasTonalHeaderByline && content.hasLargeContributorImage)
     ))">
 
-    <div class="flyer__container">
+    <div class="rich-link__container">
         @if(content.isGallery || content.isVideo || CardStyle(content) == Feature || CardStyle(content) == Default) {
             @content.trailPicture.map { trailPictureContainer =>
                 @ImgSrc.imager(trailPictureContainer, 500).map { imgSrc =>
-                    <div class="flyer__image-container u-responsive-ratio js-image-upgrade" data-src="@imgSrc">
+                    <div class="rich-link__image-container u-responsive-ratio js-image-upgrade" data-src="@imgSrc">
                     </div>
                 }
             }
         }
 
-        <div class="flyer__header">
-            <h1 class="flyer__title"><a class="flyer__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.headline)</a></h1>
+        <div class="rich-link__header">
+            <h1 class="rich-link__title"><a class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.headline)</a></h1>
             @if(!content.isMedia && CardStyle(content) == Comment) {
-                <div class="flyer__byline">@content.byline.map { byline => @Html(byline) }</div>
+                <div class="rich-link__byline">@content.byline.map { byline => @Html(byline) }</div>
             }
             @content.starRating.map { stars => @fragments.items.elements.starRating(stars) }
         </div>
 
         @if(!content.isGallery && !content.isVideo) {
-            <div class="flyer__standfirst u-cf">
+            <div class="rich-link__standfirst u-cf">
                 @content.trailText.map { trailText => @Html(BulletCleaner(trailText)) }
             </div>
             @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) {
                 @content.contributors.headOption.map { profile =>
                     @profile.contributorLargeImagePath.map{ image =>
-                        <div class="flyer__byline-img">
-                            <img class="flyer__byline-img__img" src="@image" alt="@profile.name" />
+                        <div class="rich-link__byline-img">
+                            <img class="rich-link__byline-img__img" src="@image" alt="@profile.name" />
                         </div>
                     }
                 }
@@ -60,11 +60,11 @@
             @*<div class="u-h meta__number" data-discussion-id="@content.discussionId"/>*@
         }
 
-        <div class="flyer__read-more">
-            <div class="flyer__arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path class="flyer__arrow-icon" d="m12 0c-6.627 0-12 5.373-12 12 0 6.627 5.373 12 12 12 6.627 0 12-5.373 12-12 0-6.627-5.373-12-12-12m.21 19l-.637-.668 4.888-6.326h-11.465v-1.01h11.465l-4.888-6.333.637-.668 6.79 7.158v.685l-6.79 7.157"/></g></svg>
+        <div class="rich-link__read-more">
+            <div class="rich-link__arrow">
+                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path class="rich-link__arrow-icon" d="m12 0c-6.627 0-12 5.373-12 12 0 6.627 5.373 12 12 12 6.627 0 12-5.373 12-12 0-6.627-5.373-12-12-12m.21 19l-.637-.668 4.888-6.326h-11.465v-1.01h11.465l-4.888-6.333.637-.668 6.79 7.158v.685l-6.79 7.157"/></g></svg>
             </div>
-            <div class="flyer__read-more-text">
+            <div class="rich-link__read-more-text">
                 @{content.contentType match {
                         case "Audio" => "Listen"
                         case "Gallery" => "View gallery"
@@ -74,6 +74,6 @@
                 }
             </div>
         </div>
-        <a class="flyer__link u-faux-block-link__overlay" href="@content.webUrl"></a>
+        <a class="rich-link__link u-faux-block-link__overlay" href="@content.webUrl"></a>
     </div>
 </div>

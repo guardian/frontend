@@ -200,7 +200,7 @@ Hence why a greater depth of selector specificity is needed.
     @include mq(tablet) {
         .fc-slice__popular-mpu {
             position: absolute;
-            max-width: 320px;
+            width: 320px;
         }
     }
 
@@ -208,6 +208,12 @@ Hence why a greater depth of selector specificity is needed.
         .fc-slice__popular-mpu {
             bottom: 0;
             right: 0;
+            width: gs-span(4.5);
+
+            .ad-slot--container-inline {
+                margin: 0;
+                height: 286px;
+            }
         }
     }
 
