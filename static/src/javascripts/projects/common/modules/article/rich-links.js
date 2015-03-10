@@ -75,7 +75,7 @@ define([
                     fastdom.write(function () {
                         $.create(template(richLinkTagTmpl, {href: config.page.richLink}))
                             .insertBefore(space)
-                            .each(upgradeFlyer);
+                            .each(upgradeRichLink);
                     });
                 }
             });
