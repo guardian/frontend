@@ -17,13 +17,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            var isUkOrUs = false;
-
-            if (config.page.edition === 'UK' || config.page.edition === 'US') {
-                isUkOrUs = true;
-            }
-
-            return isUkOrUs;
+            return config.page.edition === 'UK' || config.page.edition === 'US';
         };
 
         /**
