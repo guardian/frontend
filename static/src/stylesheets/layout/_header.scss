@@ -38,8 +38,8 @@ $c-guardian-services-action: #ffffff;
     }
 
     .l-header--is-slim & {
-        margin-top: $gs-baseline*0.75;
-        margin-bottom: $gs-baseline*0.75;
+        margin-top: $gs-baseline * .75;
+        margin-bottom: $gs-baseline * .75;
         float: left;
 
         // TODO: Or :not on default?
