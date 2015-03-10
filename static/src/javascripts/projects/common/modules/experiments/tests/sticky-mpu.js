@@ -12,7 +12,7 @@ define([
         this.audience = 0.01;
         this.audienceOffset = 0;
         this.successMeasure = '';
-        this.audienceCriteria = '1% of US and GB edition';
+        this.audienceCriteria = '1% of US and UK edition';
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
