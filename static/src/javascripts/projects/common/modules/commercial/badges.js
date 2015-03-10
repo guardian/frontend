@@ -118,8 +118,7 @@ define([
 
             // add a badge to a container (if appropriate)
             add: function (container) {
-                var $adSlot,
-                    $container = bonzo(container);
+                var $container = bonzo(container);
 
                 if (
                     $container.hasClass('js-sponsored-container') &&
