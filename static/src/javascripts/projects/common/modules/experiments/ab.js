@@ -4,6 +4,7 @@ define([
     'lodash/collections/forEach',
     'lodash/collections/map',
     'lodash/collections/some',
+    'lodash/collections/find',
     'lodash/objects/assign',
     'lodash/objects/keys',
     'common/utils/_',
@@ -22,6 +23,7 @@ define([
     forEach,
     map,
     some,
+    find,
     assign,
     keys,
     _,
@@ -302,6 +304,22 @@ define([
         getActiveTests: getActiveTests,
         getTestVariant: getTestVariant,
         setTestVariant: setTestVariant,
+
+        /**
+         * check if a test can be run (i.e. is not expired and switched on)
+         *
+         * @param  {string|Object} test   id or test object
+         * @return {Boolean}
+         */
+        testCanBeRun: function (test) {
+            if (typeof test === 'string') {
+                return testCanBeRun(find(TESTS, function (t) {
+                    return t.id === test;
+                }));
+            }
+
+            return test.id && test.expiry && testCanBeRun(test);
+        },
 
         // testing
         reset: function () {
