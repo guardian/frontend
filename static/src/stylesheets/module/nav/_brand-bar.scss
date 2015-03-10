@@ -25,7 +25,7 @@
 
     &,
     // Override breakpoint
-    .is-interactive & {
+    .l-header--is-slim & {
         margin-right: $gs-baseline * .25;
         margin-left: $gs-baseline * .25;
     }
@@ -99,7 +99,7 @@
     @include mq(tablet) {
         float: right;
 
-        .is-interactive & {
+        .l-header--is-slim & {
             // Unset override
             float: left;
         }

@@ -72,7 +72,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         -webkit-background-clip: padding-box;
         background-clip: padding-box;
 
-        .is-interactive & {
+        .l-header--is-slim & {
             display: none;
         }
     }
@@ -477,7 +477,7 @@ $c-navigation-expandable-background: colour(neutral-1);
             white-space: nowrap;
         }
 
-        .is-interactive & {
+        .l-header--is-slim & {
             display: none;
         }
 
@@ -493,7 +493,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     .local-navigation {
         height: $navigation-height;
 
-        .is-interactive & {
+        .l-header--is-slim & {
             // Fallback
             // TODO: Mixin
             height: initial;
@@ -652,7 +652,7 @@ $c-navigation-expandable-background: colour(neutral-1);
             background: $c-local-navigation-background;
             border-top: $navigation-height solid $c-top-header-background;
 
-            .is-interactive & {
+            .l-header--is-slim & {
                 // Fallback
                 // TODO: Mixin
                 border-top: initial;
@@ -707,7 +707,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     border-left: 2px solid $c-navigation-toggle-shadow;
     outline: none;
 
-    .is-interactive & {
+    .l-header--is-slim & {
         float: left;
         line-height: 47px;
         // Fallback
@@ -852,7 +852,7 @@ $burger-width: 16px;
         display: none;
     }
 
-    .is-interactive & {
+    .l-header--is-slim & {
         margin-top: 18px;
     }
 }

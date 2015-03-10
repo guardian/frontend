@@ -37,7 +37,7 @@ $control-size: 36px;
         display: block;
     }
 
-    .is-interactive & {
+    .l-header--is-slim & {
         display: none;
     }
 
@@ -66,7 +66,7 @@ $control-size: 36px;
             display: none;
         }
 
-        .is-interactive & {
+        .l-header--is-slim & {
             // Fallback
             // TODO: Mixin
             display: initial;

@@ -146,7 +146,7 @@ $control-offset: 36 + $gs-gutter/2;
 }
 
 // TODO: Combine parent selector (@at-root) or move context class
-.is-interactive.l-header .popup__toggle {
+.l-header--is-slim.l-header .popup__toggle {
     &:after {
         display: none;
     }
