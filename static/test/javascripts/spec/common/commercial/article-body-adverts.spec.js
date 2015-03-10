@@ -11,7 +11,11 @@ define([
 ) {
 
     return new Injector()
-        .store(['common/utils/config', 'common/modules/article/spacefinder'])
+        .store([
+            'common/utils/config',
+            'common/utils/detect',
+            'common/modules/article/spacefinder'
+        ])
         .require(['common/modules/commercial/article-body-adverts', 'mocks'], function (articleBodyAdverts, mocks) {
 
             describe('Article Body Adverts', function () {
@@ -40,6 +44,9 @@ define([
                     mocks.store['common/utils/config'].switches = {
                         standardAdverts: true
                     };
+                    mocks.store['common/utils/detect'].getBreakpoint = function () {
+                        return 'desktop';
+                    };
 
                     getParaWithSpaceStub = sinon.stub();
                     var paras = qwery('p', $fixturesContainer);
@@ -59,6 +66,10 @@ define([
                 });
 
                 it('should call "getParaWithSpace" with correct arguments', function () {
+                    mocks.store['common/utils/detect'].isBreakpoint = function () {
+                        return false;
+                    };
+
                     articleBodyAdverts.init();
                     expect(getParaWithSpaceStub).toHaveBeenCalledWith({
                         minAbove: 700,
@@ -91,7 +102,7 @@ define([
                     expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
                     expect(getParaWithSpaceStub).toHaveBeenCalledOnce();
                 });
-                
+
                 it('should insert an inline merchandising slot if page has one', function () {
                     mocks.store['common/utils/config'].page.hasInlineMerchandise = true;
                     articleBodyAdverts.init();
