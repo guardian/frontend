@@ -47,7 +47,7 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
         expiryDate,
         isPageSkin = false,
         sponsor,
-        "delivering",
+        "DELIVERING",
         targeting)
     }
     PaidForTag(targetedName, Keyword, paidForType, Nil, lineItems)
