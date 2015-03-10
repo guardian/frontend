@@ -132,8 +132,8 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val FlyerSwitch = Switch("Performance", "flyers",
-    "If this switch is turned off then flyers will not be shown. Turn off to help handle exceptional load.",
+  val RichLinkSwitch = Switch("Performance", "rich-links",
+    "If this switch is turned off then rich links will not be shown. Turn off to help handle exceptional load.",
      safeState = On, sellByDate = never
   )
 

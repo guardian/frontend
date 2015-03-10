@@ -18,7 +18,7 @@ define([
 
     return new Injector()
         .store(['common/utils/config', 'common/modules/article/spacefinder'])
-        .require(['common/modules/article/flyers', 'mocks'], function (flyers, mocks) {
+        .require(['common/modules/article/rich-links', 'mocks'], function (richLinks, mocks) {
             var config = mocks.store['common/utils/config'];
             var spacefinder = mocks.store['common/modules/article/spacefinder'];
             var getRichLinkElements = function () { return $('#article-body .element-rich-link'); };
@@ -27,7 +27,7 @@ define([
                 return $('#article-body p').first();
             };
 
-            describe('Flyers', function () {
+            describe('richLinks', function () {
                 var articleBodyConf = {
                         id: 'article-body',
                         fixtures: [
@@ -45,10 +45,10 @@ define([
                     fixtures.clean(articleBodyConf.id);
                 });
 
-                describe('#insertTagFlyer', function () {
+                describe('#insertTagRichLink', function () {
                     describe('given no tag rich link', function () {
                         it('should not insert a tag rich link', function () {
-                            flyers.insertTagFlyer();
+                            richLinks.insertTagRichLink();
 
                             var richLinkElements = getRichLinkElements();
                             expect(richLinkElements.length).toBe(0);
@@ -71,7 +71,7 @@ define([
                         });
 
                         it('should insert the provided tag rich link', function () {
-                            flyers.insertTagFlyer();
+                            richLinks.insertTagRichLink();
 
                             var richLinkElements = getRichLinkElements();
                             expect(richLinkElements.length).toBe(1);
@@ -89,7 +89,7 @@ define([
                             });
 
                             it('should not insert the provided tag rich link', function () {
-                                flyers.insertTagFlyer();
+                                richLinks.insertTagRichLink();
 
                                 var richLinkElements = getRichLinkElements();
                                 expect(richLinkElements.length).toBe(0);
@@ -106,7 +106,7 @@ define([
                             });
 
                             it('should not insert the provided tag rich link', function () {
-                                flyers.insertTagFlyer();
+                                richLinks.insertTagRichLink();
 
                                 var richLinkElements = getRichLinkElements();
                                 expect(richLinkElements.length).toBe(0);
@@ -122,7 +122,7 @@ define([
                             });
 
                             it('should not insert the provided tag rich link', function () {
-                                flyers.insertTagFlyer();
+                                richLinks.insertTagRichLink();
 
                                 var richLinkElements = getRichLinkElements();
                                 expect(richLinkElements.length).toBe(1);

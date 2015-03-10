@@ -533,6 +533,7 @@
     .creative__article__title {
         @include f-headlineSans;
         @include font-size(14, 18);
+        text-align: left;
     }
     .creative__logo-text,
     .creative__logo-info {

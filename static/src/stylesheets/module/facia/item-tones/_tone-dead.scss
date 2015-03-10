@@ -1,6 +1,6 @@
 .tone-dead--item {
     &.fc-item,
-    &.flyer {
+    &.rich-link {
         background-color: colour(neutral-7);
     }
 
@@ -9,7 +9,7 @@
     }
 
     .fc-item__container:before,
-    .flyer__container:before {
+    .rich-link__container:before {
         background-color: colour(live-default);
     }
 
@@ -22,11 +22,11 @@
         background-color: mix(#000000, colour(neutral-7), 10%);
     }
 
-    .flyer__read-more-text {
+    .rich-link__read-more-text {
         color: colour(neutral-2);
     }
 
-    .flyer__arrow-icon {
+    .rich-link__arrow-icon {
         fill: colour(neutral-2);
     }
 }

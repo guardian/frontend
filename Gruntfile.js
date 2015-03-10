@@ -72,6 +72,8 @@ module.exports = function (grunt) {
         }
 
         grunt.task.run(['copy:pxCss']);
+        // TODO: Update pixrem to handle source maps
+        // https://github.com/walbo/grunt-px-to-rem/issues/10
         grunt.task.run(['px_to_rem']);
 
         if (isOnlyTask(this) && !fullCompile) {
