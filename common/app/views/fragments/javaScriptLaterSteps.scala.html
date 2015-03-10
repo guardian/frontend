@@ -283,14 +283,13 @@
                 ab.run();
                 if(guardian.config.page.isFront) {
                     lazyLoadImages.init();
-                    images.upgradePictures();
                     if(!document.addEventListener) { // IE8 and below
                         window.onload = images.upgradePictures;
                     }
                 } else {
                     lazyLoadImages.setUpListeners();
-                    images.upgradePictures();
                 }
+                images.upgradePictures();
                 images.listen();
 
                 if (config.switches.commercial) {
