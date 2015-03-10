@@ -282,13 +282,11 @@
                 ab.segmentUser();
                 ab.run();
                 if(guardian.config.page.isFront) {
-                    lazyLoadImages.init();
                     if(!document.addEventListener) { // IE8 and below
                         window.onload = images.upgradePictures;
                     }
-                } else {
-                    lazyLoadImages.setUpListeners();
                 }
+                lazyLoadImages.init();
                 images.upgradePictures();
                 images.listen();
 

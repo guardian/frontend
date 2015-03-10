@@ -88,7 +88,6 @@ define([
 
     return {
         lazyLoad: attachLazyLoad,
-        setUpListeners: setUpListeners,
         init: init
     };
 });
