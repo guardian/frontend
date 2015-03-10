@@ -10,6 +10,11 @@ object FaciaWidths {
     (Standard, 100.perc)
   )
 
+  val ExtraPixelWidthsForMediaMobile: Seq[PixelWidth] = List(
+    445.px, // largest width for mobile breakpoint
+    605.px  // largest width for mobile landscape breakpoint
+  )
+
   private val CutOutMobile = Map[CardType, BrowserWidth](
     (MediaList, 115.px),
     (Standard, 130.px)
@@ -69,9 +74,9 @@ object FaciaWidths {
     val desktopClass = itemClasses.desktop.getOrElse(itemClasses.tablet)
 
     WidthsByBreakpoint(
-      MediaMobile.get(itemClasses.mobile),
-      MediaTablet.get(itemClasses.tablet),
-      MediaDesktop.get(desktopClass)
+      mobile          = MediaMobile.get(itemClasses.mobile),
+      tablet          = MediaTablet.get(itemClasses.tablet),
+      desktop         = MediaDesktop.get(desktopClass)
     )
   }
 
@@ -79,9 +84,9 @@ object FaciaWidths {
     val desktopClass = itemClasses.desktop.getOrElse(itemClasses.tablet)
 
     WidthsByBreakpoint(
-      CutOutMobile.get(itemClasses.mobile),
-      CutOutTablet.get(itemClasses.tablet),
-      CutOutDesktop.get(desktopClass)
+      mobile  = CutOutMobile.get(itemClasses.mobile),
+      tablet  = CutOutTablet.get(itemClasses.tablet),
+      desktop = CutOutDesktop.get(desktopClass)
     )
   }
 }
@@ -200,48 +205,37 @@ case class WidthsByBreakpoint(
 ) {
   private val allBreakpoints: List[Breakpoint] = List(Wide, LeftCol, Desktop, Tablet, Phablet, MobileLandscape, Mobile)
   private val allWidths: List[Option[BrowserWidth]] = List(wide, leftCol, desktop, tablet, phablet, mobileLandscape, mobile)
-
-  private val breakpoints = allBreakpoints zip allWidths map BreakpointWidth.tupled
+  private val breakpoints: Seq[BreakpointWidth] = allBreakpoints zip allWidths collect {
+      case (breakpoint, Some(width)) => BreakpointWidth(breakpoint, width)
+    }
 
   private val MaximumMobileImageWidth = 620
   private val SourcesToEmitOnMobile = 3
 
-  def sizes: String = breakpoints collect {
-    case BreakpointWidth(Mobile, Some(imageWidth)) =>
+  def sizes: String = breakpoints map {
+    case BreakpointWidth(Mobile, imageWidth) =>
       imageWidth.toString
 
-    case BreakpointWidth(breakpoint, Some(imageWidth)) =>
+    case BreakpointWidth(breakpoint, imageWidth) =>
       s"(min-width: ${breakpoint.minWidth.get}px) $imageWidth"
   } mkString ", "
 
-  val maxWidth: Int = (allWidths collect {
-    case Some(PixelWidth(pixels)) => pixels
-    case Some(PercentageWidth(_)) => MaximumMobileImageWidth
-    case None => 0
-  }).max
 
-  def sources: Seq[Source] = breakpoints flatMap {
-    case BreakpointWidth(breakpoint, Some(PixelWidth(pixels))) =>
-      Seq(Source(breakpoint.minWidth, pixels))
-
-    case BreakpointWidth(Mobile, Some(PercentageWidth(percentage))) =>
-      val widths = profiles.flatMap(_.width).dropWhile(_ > MaximumMobileImageWidth).take(SourcesToEmitOnMobile)
-      val minWidths = widths.map(Some(_)).drop(1) ++ Seq(None)
-
-      (widths zip minWidths) map { case (width, minWidth) =>
-        Source(minWidth, width)
-      }
-
+  def profiles: Seq[Profile] = (breakpoints flatMap {
+    case BreakpointWidth(breakpoint, PixelWidth(pixels)) =>
+      Seq(pixels)
+    case BreakpointWidth(Mobile, _: PercentageWidth) =>
+      // Percentage widths are not explicitly associated with any pixel widths that could be used with a srcset.
+      // So we create a series of profiles by combining usable widths in the class with predefined sensible widths.
+      val pixelWidths = breakpoints.collect { case BreakpointWidth(_,width: PixelWidth) => width.get }
+      val widths: Seq[Int] = pixelWidths.dropWhile(_ > MaximumMobileImageWidth).take(SourcesToEmitOnMobile)
+      widths ++ FaciaWidths.ExtraPixelWidthsForMediaMobile.map(_.get)
     case _ => Seq.empty
+  })
+  .distinct
+  .map { (browserWidth: Int) =>
+    Profile(width = Some(browserWidth))
   }
-
-  val profiles: Seq[Profile] = allWidths
-      .flatten
-      .map(_.get)
-      .distinct
-      .map(browserWidth => Profile(width = Some(browserWidth)))
 }
 
-case class Source(minWidth: Option[Int], pixelWidth: Int)
-
-case class BreakpointWidth(breakpoint: Breakpoint, width: Option[BrowserWidth])
+case class BreakpointWidth(breakpoint: Breakpoint, width: BrowserWidth)

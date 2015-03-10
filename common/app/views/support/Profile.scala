@@ -104,7 +104,7 @@ object ImgSrc {
   }
 
   def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
-    widths.profiles.filter(_.width.getOrElse(0) <= widths.maxWidth).map { profile =>
+    widths.profiles.map { profile =>
       s"${findSrc(imageContainer, profile).get} ${profile.width.get}w"
     } mkString ", "
   }
