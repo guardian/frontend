@@ -82,7 +82,7 @@ define([
                 return false;
             }
 
-            sponsoredFrontPromise = Promise.all(map($('.js-sponsored-front'), (function (front) {
+            sponsoredFrontPromise = Promise.all(map($('.js-sponsored-front'), function (front) {
                 var $front = bonzo(front);
 
                 return renderAd(
@@ -92,7 +92,7 @@ define([
                         sponsor: $front.data('sponsor')
                     }
                 );
-            })));
+            }));
 
             sponsoredContainersPromise = Promise.all(map($('.js-sponsored-container'), function (container) {
                 if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
