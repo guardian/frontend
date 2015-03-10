@@ -1,20 +1,31 @@
-define(function () {
-
+define([
+    'common/utils/config'
+], function (
+    config
+){
     return function () {
         this.id = 'StickyMpu';
         this.start = '2015-03-09';
         this.expiry = '2015-05-09';
         this.author = 'Zofia Korcz';
         this.description = 'Sticky mpu everywhere where possible instead of the standard RH mpu';
-        this.audience = 0.05;
+        this.audience = 0.01;
         this.audienceOffset = 0;
         this.successMeasure = '';
-        this.audienceCriteria = 'All users';
+        this.audienceCriteria = '1% of US and GB edition';
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return true;
+            var isUkOrUs = false;
+
+            if (config.page.edition === 'UK' || config.page.edition === 'US') {
+                isUkOrUs = true;
+            }
+
+            console.log('inside canRun', config.page.edition, isUkOrUs);
+
+            return isUkOrUs;
         };
 
         /**

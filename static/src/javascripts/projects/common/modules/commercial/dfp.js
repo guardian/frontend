@@ -95,9 +95,7 @@ define([
             '300,250': function (event, $adSlot) {
                 var stickyMpuTest = ab.getParticipations().StickyMpu;
 
-                //for 5% audience show sticky mpu instead of static one
                 if (stickyMpuTest && stickyMpuTest.variant === 'variant') {
-                    //only if it is possible
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         new StickyMpu($adSlot).create();
                     }
