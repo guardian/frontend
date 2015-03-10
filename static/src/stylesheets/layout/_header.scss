@@ -16,6 +16,11 @@ $c-guardian-services-action: #ffffff;
     }
 }
 
+.l-header--interactive__inner {
+    @include clearfix;
+    background: $c-top-header-background;
+}
+
 .logo-wrapper {
     position: relative;
     float: right;
@@ -28,6 +33,19 @@ $c-guardian-services-action: #ffffff;
     @include mq(tablet) {
         margin-top: $gs-baseline * .5;
         margin-bottom: $gs-baseline * .5;
+    }
+
+    .is-interactive & {
+        margin-top: $gs-baseline*0.75;
+        margin-bottom: $gs-baseline*0.75;
+        float: left;
+
+        // TODO: Or :not on default?
+        @include mq(mobileLandscape) {
+            // Reset to previous value, as the breakpoint overriding this
+            // does not apply for interactives.
+            margin-right: $gs-gutter/2;
+        }
     }
 
     i {
@@ -50,7 +68,11 @@ $c-guardian-services-action: #ffffff;
    ========================================================================== */
 
 .l-header-pre {
-    float: left;
+    &,
+    // Override breakpoint
+    .is-interactive & {
+        float: left;
+    }
     min-width: gs-span(2);
     z-index: 100;
     position: relative;
@@ -67,5 +89,9 @@ $c-guardian-services-action: #ffffff;
 .l-header-main {
     position: relative;
     z-index: 2;
+
+    .is-interactive & {
+        float: right;
+    }
 }
 

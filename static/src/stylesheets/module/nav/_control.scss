@@ -26,14 +26,19 @@ $control-size: 36px;
         max-width: 200px;
     }
 
-    @include mq(tablet) {
-        display: block;
-    }
-
     .brand-bar__item--right & {
         @include mq(tablet) {
             margin: 0;
         }
+    }
+
+    // TODO: @extend .hide-on-mobile;
+    @include mq(tablet) {
+        display: block;
+    }
+
+    .is-interactive & {
+        display: none;
     }
 
     .brand-bar__item--profile & {
@@ -59,6 +64,13 @@ $control-size: 36px;
     .brand-bar__item--right & {
         @include mq(tablet) {
             display: none;
+        }
+
+        .is-interactive & {
+            // Fallback
+            // TODO: Mixin
+            display: initial;
+            display: unset;
         }
     }
 }

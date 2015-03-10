@@ -6,8 +6,6 @@
 @defining(Edition(request).navigation) { navigation =>
     <div class="@RenderClasses(Map(
                     ("navigation", true),
-                    ("js-navigation-header", true),
-                    ("navigation--collapsed", true),
                     ("navigation--has-signposting", !Edition.isEditionFront),
                     ("navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty)
                 ))">
@@ -35,11 +33,9 @@
                         @fragments.nav.topNavigation(metaData, navigation)
                     </nav>
                 </div>
-                <a class="navigation__toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-header">
-                    <i class="burger-icon"></i><span class="navigation__toggle-label navigation__toggle-label--open"
-                          aria-haspopup="true" aria-controls="all-sections-popup" aria-label="browse all sections"><span class="navigation__toggle-label__extra navigation__toggle-label__extra--browse">browse </span>all<span class="navigation__toggle-label__extra"> sections</span></span>
-                    <span class="navigation__toggle-label navigation__toggle-label--close" aria-label="close all sections">close</span>
-                </a>
+                @if(metaData.contentType != "Interactive") {
+                    @fragments.nav.navigationToggle(metaData)
+                }
             </div>
             <div id="all-sections-popup" class="navigation__expandable js-mega-nav-placeholder" data-component="all-nav"></div>
         </div>

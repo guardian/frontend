@@ -22,8 +22,13 @@
     height: $headerHeight;
     padding-top: $gs-baseline /3;
     padding-bottom: $gs-baseline /3;
-    margin-right: $gs-baseline * .25;
-    margin-left: $gs-baseline * .25;
+
+    &,
+    // Override breakpoint
+    .is-interactive & {
+        margin-right: $gs-baseline * .25;
+        margin-left: $gs-baseline * .25;
+    }
 
     @include mq(mobileLandscape) {
         padding-top: $gs-baseline/2;
@@ -93,6 +98,11 @@
 
     @include mq(tablet) {
         float: right;
+
+        .is-interactive & {
+            // Unset override
+            float: left;
+        }
     }
 }
 

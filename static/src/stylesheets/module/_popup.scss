@@ -145,6 +145,13 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
+// TODO: Combine parent selector (@at-root) or move context class
+.is-interactive.l-header .popup__toggle {
+    &:after {
+        display: none;
+    }
+}
+
 .popup__item {
     display: block;
     border-bottom: 1px solid colour(neutral-5);
