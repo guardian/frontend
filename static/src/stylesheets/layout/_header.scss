@@ -16,9 +16,11 @@ $c-guardian-services-action: #ffffff;
     }
 }
 
-.l-header--interactive__inner {
-    @include clearfix;
-    background: $c-top-header-background;
+.l-header--is-slim {
+    .l-header__inner {
+        @include clearfix;
+        background: $c-top-header-background;
+    }
 }
 
 .logo-wrapper {
