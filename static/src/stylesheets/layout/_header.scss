@@ -70,14 +70,15 @@ $c-guardian-services-action: #ffffff;
    ========================================================================== */
 
 .l-header-pre {
+    min-width: gs-span(2);
+    z-index: 100;
+    position: relative;
+
     &,
     // Override breakpoint
     .l-header--is-slim & {
         float: left;
     }
-    min-width: gs-span(2);
-    z-index: 100;
-    position: relative;
 
     @include mq(tablet) {
         float: none;
