@@ -465,7 +465,7 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 3, 16)
   )
 
-  val ABKStickyMpu = Switch("A/B Tests", "ab-sticky-mpu",
+  val ABStickyMpu = Switch("A/B Tests", "ab-sticky-mpu",
     "Switch for the Sticky mpu test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 9)
   )
