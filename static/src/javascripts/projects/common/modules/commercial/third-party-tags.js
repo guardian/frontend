@@ -48,10 +48,11 @@ define([
         remarketing.load();
         outbrain.load();
         krux.load();
+
+        return Promise.resolve(null);
     }
 
     return {
         init: init
     };
-
 });

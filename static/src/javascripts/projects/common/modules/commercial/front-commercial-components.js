@@ -1,12 +1,14 @@
 define([
     'bonzo',
     'fastdom',
+    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/modules/commercial/create-ad-slot'
 ], function (
     bonzo,
     fastdom,
+    Promise,
     $,
     config,
     createAdSlot
@@ -21,21 +23,24 @@ define([
             $adSlot        = bonzo(createAdSlot('merchandising-high', 'commercial-component-high')),
             $containers    = $('.fc-container');
 
-        if ($containers.length >= 2) {
-            containerIndex = 0;
+        return new Promise(function (resolve) {
+            if ($containers.length >= 2) {
+                containerIndex = 0;
 
-            if ($containers.length >= 4) {
-                containerIndex = config.page.contentType === 'Network Front' ? 3 : 2;
+                if ($containers.length >= 4) {
+                    containerIndex = config.page.contentType === 'Network Front' ? 3 : 2;
+                }
+
+                $adSlotWrapper.append($adSlot);
+
+                fastdom.write(function () {
+                    $adSlotWrapper.insertAfter($containers[containerIndex]);
+                    resolve($adSlotWrapper);
+                });
+            } else {
+                resolve(null);
             }
-
-            $adSlotWrapper.append($adSlot);
-
-            fastdom.write(function () {
-                $adSlotWrapper.insertAfter($containers[containerIndex]);
-            });
-
-            return $adSlotWrapper;
-        }
+        });
     }
 
     return {

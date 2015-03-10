@@ -23,7 +23,6 @@ define([
 ) {
     var adNames = ['inline1', 'inline2'],
         init = function (options) {
-
             if (!config.switches.standardAdverts) {
                 return false;
             }
@@ -59,28 +58,33 @@ define([
                 }
             }
 
-            _(adSlices)
+            return Promise.all(_(adSlices)
                 .slice(0, adNames.length)
-                .forEach(function ($adSlice, index) {
+                .map(function ($adSlice, index) {
                     var adName        = adNames[index],
                         $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
                             .addClass('ad-slot--mobile'),
                         $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
                             .addClass('ad-slot--not-mobile');
 
-                    fastdom.write(function () {
-                        // add a tablet+ ad to the slice
-                        $adSlice
-                            .removeClass('fc-slice__item--no-mpu')
-                            .append($tabletAdSlot);
-                        // add a mobile advert after the container
-                        $mobileAdSlot
-                            .insertAfter($.ancestor($adSlice[0], 'fc-container'));
+                    return new Promise(function (resolve) {
+                        fastdom.write(function () {
+                            // add a tablet+ ad to the slice
+                            $adSlice
+                                .removeClass('fc-slice__item--no-mpu')
+                                .append($tabletAdSlot);
+                            // add a mobile advert after the container
+                            $mobileAdSlot
+                                .insertAfter($.ancestor($adSlice[0], 'fc-container'));
+
+                            resolve(null);
+                        });
                     });
                 })
-                .valueOf();
-
-            return adSlices;
+                .valueOf()
+            ).then(function () {
+                return adSlices;
+            });
         };
 
     return {
