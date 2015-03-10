@@ -8,7 +8,7 @@
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
 @import views.support.ImgSrc
-@import layout.{LatestSnap, WidthsByBreakpoint}
+@import layout.{LatestSnap, FaciaWidths}
 @import Function.const
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
@@ -130,8 +130,8 @@ data-test-id="facia-card"
             <div class="fc-item__avatar">
                 @lazyImage(
                     Seq("fc-item__avatar__media", cutOut.cssClass),
-                    ImgSrc.srcsetForCutout(imageUrl),
-                    WidthsByBreakpoint.cutOutFromItemClasses(item.cardTypes).sizesString,
+                    ImgSrc.srcset(imageUrl, FaciaWidths.cutOutFromItemClasses(item.cardTypes)),
+                    FaciaWidths.cutOutFromItemClasses(item.cardTypes).sizes,
                     None,
                     false
                 )

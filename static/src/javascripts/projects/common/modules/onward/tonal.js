@@ -48,7 +48,7 @@ define([
     TonalComponent.prototype.ready = function () {
         var container = document.body.querySelector('.tone-feature');
         mediator.emit('modules:tonal:loaded', container);
-        mediator.emit('ui:images:upgradePicture', container);
+        mediator.emit('ui:images:upgradePictures');
         register.end('tonal-content');
     };
 

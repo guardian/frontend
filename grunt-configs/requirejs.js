@@ -14,7 +14,6 @@ module.exports = function(grunt, options) {
                 fastclick:            'components/fastclick/fastclick',
                 fastdom:              'components/fastdom/index',
                 fence:                'components/fence/fence',
-                imager:               'components/imager.js/container',
                 lodash:               'components/lodash-amd',
                 picturefill:          'projects/common/utils/picturefill',
                 Promise:              'components/native-promise-only/npo.src',
@@ -46,10 +45,6 @@ module.exports = function(grunt, options) {
                 dir: options.requirejsDir,
                 keepBuildDir: false,
                 shim: {
-                    imager: {
-                        deps: ['components/imager.js/imager'],
-                        exports: 'Imager'
-                    },
                     omniture: {
                         exports: 's'
                     }
@@ -177,10 +172,6 @@ module.exports = function(grunt, options) {
                 name: 'bootstraps/admin',
                 out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
                 shim: {
-                    imager: {
-                        deps: ['components/imager.js/imager'],
-                        exports: 'Imager'
-                    },
                     omniture: {
                         exports: 's'
                     }
@@ -227,10 +218,6 @@ module.exports = function(grunt, options) {
                     },
                     videojsembed: {
                         deps: ['videojs']
-                    },
-                    imager: {
-                        deps: ['components/imager.js/imager'],
-                        exports: 'Imager'
                     },
                     omniture: {
                         exports: 's'
