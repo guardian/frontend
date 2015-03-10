@@ -125,7 +125,7 @@ define([
                     $container.hasClass('js-sponsored-container') &&
                     qwery('.ad-slot--paid-for-badge', container).length === 0
                 ) {
-                    $adSlot = renderAd(
+                    renderAd(
                         container,
                         $container.data('sponsorship'),
                         {
@@ -133,9 +133,10 @@ define([
                             series:   $container.data('series'),
                             keywords: $container.data('keywords')
                         }
-                    );
-                    // add slot to dfp
-                    dfp.addSlot($adSlot);
+                    ).then(function ($adSlot) {
+                        // add slot to dfp
+                        dfp.addSlot($adSlot);
+                    });
                 }
             },
 

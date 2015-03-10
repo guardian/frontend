@@ -1,9 +1,10 @@
 define([
     'fastdom',
     'qwery',
+    'Promise',
     'common/utils/_',
     'common/utils/$',
-    'common/utils/ajax',
+    'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/template',
@@ -13,6 +14,7 @@ define([
 ], function (
     fastdom,
     qwery,
+    Promise,
     _,
     $,
     ajax,
@@ -28,7 +30,7 @@ define([
             matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
 
         if (matches && matches[1]) {
-            ajax({
+            return ajax({
                 url: '/embed/card' + matches[1] + '.json',
                 crossOrigin: true
             }).then(function (resp) {
@@ -42,6 +44,8 @@ define([
                     });
                 }
             });
+        } else {
+            return Promise.resolve(null);
         }
     }
 
@@ -70,15 +74,22 @@ define([
 
         if (config.page.richLink && config.page.richLink.indexOf(config.page.pageId) === -1
             && !isSensitive && !isDuplicate) {
-            spacefinder.getParaWithSpace(getSpacefinderRules()).then(function (space) {
-                if (space) {
-                    fastdom.write(function () {
-                        $.create(template(richLinkTagTmpl, {href: config.page.richLink}))
-                            .insertBefore(space)
-                            .each(upgradeRichLink);
-                    });
-                }
+
+            return spacefinder.getParaWithSpace(getSpacefinderRules()).then(function (space) {
+                return new Promise(function (resolve) {
+                    if (space) {
+                        fastdom.write(function () {
+                            var $el = $.create(template(richLinkTagTmpl, {href: config.page.richLink}));
+                            $el.insertBefore(space);
+                            resolve(upgradeRichLink($el[0]));
+                        });
+                    } else {
+                        resolve(null);
+                    }
+                });
             });
+        } else {
+            return Promise.resolve(null);
         }
     }
 

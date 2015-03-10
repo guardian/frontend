@@ -59,10 +59,10 @@ define([
                 });
 
                 it('should return the ad slot container on init', function (done) {
-                    var adSlot = articleAsideAdverts.init()[0];
+                    var adSlotPromise = articleAsideAdverts.init();
 
-                    fastdom.defer(function () {
-                        expect(adSlot).toBe(qwery('.js-mpu-ad-slot', $fixturesContainer)[0]);
+                    adSlotPromise.then(function (adSlot) {
+                        expect(adSlot[0]).toBe(qwery('.js-mpu-ad-slot', $fixturesContainer)[0]);
                         done();
                     });
                 });
