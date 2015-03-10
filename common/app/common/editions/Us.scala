@@ -61,7 +61,7 @@ object Us extends Edition(
     NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
     NavItem(fashion),
     NavItem(business, Seq(markets, companies)),
-    NavItem(money),
+    NavItem(science),
     NavItem(travel, Seq(usaTravel, europetravel, uktravel)),
     NavItem(environment, Seq(globalDevelopment, cities))
   )
