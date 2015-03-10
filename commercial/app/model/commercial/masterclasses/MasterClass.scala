@@ -70,21 +70,19 @@ object EventbriteMasterClass {
   }
 }
 
-case class EventbriteMasterClass(
-                                  id: String,
-                                  name: String,
-                                  startDate: DateTime,
-                                  url: String,
-                                  description: String,
-                                  status: String,
-                                  venue: Venue,
-                                  tickets: List[Ticket],
-                                  capacity: Int,
-                                  guardianUrl: String,
-                                  firstParagraph: String = "",
-                                  tags: Seq[String],
-                                  keywordIds: Seq[String] = Nil
-                                  ) {
+case class EventbriteMasterClass(id: String,
+                                 name: String,
+                                 startDate: DateTime,
+                                 url: String,
+                                 description: String,
+                                 status: String,
+                                 venue: Venue,
+                                 tickets: List[Ticket],
+                                 capacity: Int,
+                                 guardianUrl: String,
+                                 firstParagraph: String = "",
+                                 tags: Seq[String],
+                                 keywordIdSuffixes: Seq[String] = Nil) {
 
   def isOpen = { status == "Live" }
 

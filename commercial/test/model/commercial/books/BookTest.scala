@@ -40,7 +40,7 @@ import test.ConfiguredTestSuite
       buyUrl = Some("http://guardianbookshop.staging.lab.co.uk/index.php/in-a-people-house.html"),
       position = Some(222),
       category = Some("Picture books"),
-      keywordIds = Nil
+      keywordIdSuffixes = Nil
     ))
   }
 }
