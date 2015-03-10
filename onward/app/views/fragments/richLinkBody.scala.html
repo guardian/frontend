@@ -31,7 +31,8 @@
             @content.trailPicture.map { trailPictureContainer =>
                 @ImgSrc.findSrc(trailPictureContainer, Item460).map { imgSrc =>
 
-                    <div class="rich-link__image-container u-responsive-ratio js-image-upgrade" data-src="@imgSrc">
+                    <div class="rich-link__image-container u-responsive-ratio">
+                        <img src="@imgSrc" itemprop="contentURL">
                     </div>
                 }
             }
