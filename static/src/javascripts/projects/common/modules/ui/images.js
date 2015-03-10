@@ -63,6 +63,11 @@ function (
                 },
                 'ui:images:upgradePicture': function (context) {
                     images.upgradePicture(context);
+                },
+                'ui:images:lazyLoaded': function (context) {
+                    picturefill({
+                        elements: [context]
+                    });
                 }
             });
         }

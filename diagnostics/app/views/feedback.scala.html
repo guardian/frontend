@@ -1,0 +1,36 @@
+@(page: model.Page, emailParams: String, uri: Option[String])(implicit request: RequestHeader)
+
+@main(page){ }{
+<div class="l-side-margins">
+    <div class="content content--expired">
+        <header class="content__head">
+            <div class="gs-container">
+                <div class="content__main-column">
+                    <h1 itemprop="headline" class="content__headline">Sorry you've experienced an issue</h1>
+                </div>
+            </div>
+        </header>
+        <div class="content__main">
+            <div class="gs-container">
+                <div class="content__main-column content__main-column--expired">
+                    <div class="js-article__container u-cf">
+                        <div class="from-content-api" itemprop="articleBody">
+                            <div class="from-content-api">
+                                <p>If you'd like to give us some details, please email us at
+                                    <a data-link-name="tech feedback : mailto" href="mailto:userhelp@@theguardian.com@emailParams">userhelp@@theguardian.com</a>
+                                </p>
+                                <p>We've also automatically added @uri.map { uri => @uri } to our list of pages that may have a technical issue.</p>
+                                <p>You can also visit our <a data-link-name="tech feedback : faq" href="http://www.theguardian.com/help/users/faq">User help page</a> for further help.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="facia-container facia-container--layout-content">
+        @fragments.mostPopularPlaceholder("/")
+    </div>
+</div>
+}

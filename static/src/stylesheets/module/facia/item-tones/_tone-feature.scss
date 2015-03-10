@@ -4,7 +4,7 @@
     background-color: colour(feature-default);
 
     &,
-    .flyer__link,
+    .rich-link__link,
     .fc-sublink__title {
         color: $c-headline;
     }
@@ -14,7 +14,7 @@
     }
 
     .fc-item__link,
-    .flyer__link,
+    .rich-link__link,
     .fc-sublink__link {
         &:visited {
             color: mix($c-headline, colour(feature-default), 80%);
@@ -22,14 +22,14 @@
     }
 
     .fc-item__container:before,
-    .flyer__container:before {
+    .rich-link__container:before {
         background-color: colour(feature-mute);
     }
 
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__meta,
-    .flyer__read-more-text {
+    .rich-link__read-more-text {
         color: colour(feature-mute);
     }
 
@@ -37,7 +37,7 @@
         background-color: mix(#000000, colour(feature-default), 10%);
     }
 
-    .flyer__arrow-icon {
+    .rich-link__arrow-icon {
         fill: colour(feature-mute);
     }
 
@@ -47,7 +47,7 @@
     }
 
     .fc-item__standfirst,
-    .flyer__standfirst {
+    .rich-link__standfirst {
         color: mix($c-headline, colour(feature-default), 80%);
         ul > li:before {
             background: mix($c-headline, colour(feature-default), 40%);

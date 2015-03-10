@@ -6,7 +6,8 @@ define([
     'common/modules/identity/api',
     'common/modules/identity/facebook-authorizer',
     'common/modules/navigation/profile',
-    'common/modules/ui/message'
+    'common/modules/ui/message',
+    'common/modules/ui/toggles'
 ],
 function (
     bonzo,
@@ -16,7 +17,8 @@ function (
     id,
     FacebookAuthorizer,
     Profile,
-    Message
+    Message,
+    Toggles
 ) {
 
     function AutoSignin() {
@@ -68,9 +70,10 @@ function (
                             url: config.page.idUrl
                         });
                         profile.init();
+                        new Toggles().init();
 
-                        s.eVar36 = 'facebook auto';
-                        s.linkTrackVars = 'eVar36';
+                        s.eVar13 = 'facebook auto';
+                        s.linkTrackVars = 'eVar13';
                         s.tl(this, 'o', 'Social signin auto');
                     }
                 }

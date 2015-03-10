@@ -9,7 +9,7 @@ import play.api.libs.json.{JsArray, JsValue}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-trait SoulmatesApi extends ExecutionContexts {
+trait SoulmatesFeed extends ExecutionContexts {
 
   protected val adTypeName: String
 
@@ -48,13 +48,43 @@ trait SoulmatesApi extends ExecutionContexts {
 }
 
 
-object MaleSoulmatesApi extends SoulmatesApi {
+object MaleSoulmatesFeed extends SoulmatesFeed {
   protected val adTypeName = "Male Soulmates"
   protected lazy val path = "popular/men"
 }
 
 
-object FemaleSoulmatesApi extends SoulmatesApi {
+object FemaleSoulmatesFeed extends SoulmatesFeed {
   protected val adTypeName = "Female Soulmates"
   protected lazy val path = "popular/women"
+}
+
+
+object BrightonSoulmatesFeed extends SoulmatesFeed {
+  protected val adTypeName = "Brighton Soulmates"
+  protected lazy val path = "popular/brighton"
+}
+
+
+object NorthwestSoulmatesFeed extends SoulmatesFeed {
+  protected val adTypeName = "Northwest Soulmates"
+  protected lazy val path = "popular/northwest"
+}
+
+
+object ScotlandSoulmatesFeed extends SoulmatesFeed {
+  protected val adTypeName = "Scotland Soulmates"
+  protected lazy val path = "popular/scotland"
+}
+
+
+object YoungSoulmatesFeed extends SoulmatesFeed {
+  protected val adTypeName = "Young Soulmates"
+  protected lazy val path = "popular/young"
+}
+
+
+object MatureSoulmatesFeed extends SoulmatesFeed {
+  protected val adTypeName = "Mature Soulmates"
+  protected lazy val path = "popular/mature"
 }

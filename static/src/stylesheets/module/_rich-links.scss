@@ -53,10 +53,10 @@
     }
 }
 
-// Base flyer styles
+// Base rich link styles
 //----------------------------------
 
-.flyer {
+.rich-link {
     margin: 0;
     position: relative;
     overflow: hidden;
@@ -73,7 +73,7 @@
     }
 }
 
-.flyer__image-container {
+.rich-link__image-container {
     @include transition(background-color .25s ease);
     background-color: rgba(0, 0, 0, .1);
 
@@ -82,10 +82,10 @@
     }
 }
 
-.flyer .u-faux-block-link--hover {
+.rich-link .u-faux-block-link--hover {
     background-color: colour(neutral-6);
 
-    .flyer__image-container {
+    .rich-link__image-container {
         background-color: #000000;
         .responsive-img {
             opacity: .8;
@@ -94,22 +94,22 @@
 
 }
 
-.flyer__byline {
+.rich-link__byline {
     @include fs-header(3);
     padding-right: $gs-gutter;
 }
 
-.flyer__title {
+.rich-link__title {
     padding: 0;
 }
 
-.flyer .flyer__header {
+.rich-link .rich-link__header {
     padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline;
     @include box-sizing(border-box);
     min-height: $gs-baseline * 3;
 }
 
-.flyer__standfirst {
+.rich-link__standfirst {
     @include fs-headline(1);
     padding: $gs-baseline / 3  $gs-gutter / 2 $gs-baseline $gs-gutter / 4;
     ul {
@@ -118,24 +118,24 @@
     }
 }
 
-.flyer__read-more {
+.rich-link__read-more {
     padding-left: $gs-gutter / 4;
 
     @include mq(tablet) {
-        .tone-comment--item.flyer--has-byline-pic & {
+        .tone-comment--item.rich-link--has-byline-pic & {
             position: absolute;
             bottom: 0;
         }
     }
 }
 
-.flyer__arrow {
+.rich-link__arrow {
     height: 24px;
     width: 24px;
     display: inline-block;
 }
 
-.flyer__read-more-text {
+.rich-link__read-more-text {
     @include fs-headline(1);
     display: inline-block;
     height: 30px;
@@ -145,7 +145,7 @@
     font-weight: 500;
 }
 
-.flyer__link {
+.rich-link__link {
     text-decoration: none;
 
     &.u-faux-block-link__overlay {
@@ -153,11 +153,11 @@
     }
 }
 
-.flyer__live {
+.rich-link__live {
     font-weight: normal;
 }
 
-.flyer__container {
+.rich-link__container {
     &:after {
         content: '';
         display: table;
@@ -165,19 +165,19 @@
     }
 }
 
-.flyer--gallery {
-    .flyer__header {
+.rich-link--gallery {
+    .rich-link__header {
         padding-top: $gs-baseline / 4;
     }
 }
 
-.flyer.tone-live--item .live-pulse-icon {
+.rich-link.tone-live--item .live-pulse-icon {
     @include mq(mobileLandscape) {
         margin-bottom: 1px;
     }
 }
 
-.flyer.tone-comment--item .flyer__title:before {
+.rich-link.tone-comment--item .rich-link__title:before {
     @include icon(quote-grey);
     width: 1.2em !important;
     height: .7em !important;
@@ -185,7 +185,7 @@
     content: '';
 }
 
-.flyer__byline-img {
+.rich-link__byline-img {
     height: $gs-baseline * 12;
     z-index: 1;
     position: absolute;
@@ -200,13 +200,13 @@
     }
 }
 
-.flyer--has-byline-pic {
+.rich-link--has-byline-pic {
 
-    .flyer__byline-img__img {
+    .rich-link__byline-img__img {
         height: 100%;
     }
 
-    .flyer__standfirst {
+    .rich-link__standfirst {
         padding-right: $gs-gutter * 7;
         min-height: $gs-baseline * 5;
     }
@@ -221,10 +221,10 @@
     clear: both;
 
     .tone-comment--item {
-        .flyer__standfirst {
+        .rich-link__standfirst {
             display: none;
         }
-        .flyer__byline-img {
+        .rich-link__byline-img {
             @include mq($until: tablet) {
                 display: none;
             }
@@ -233,7 +233,7 @@
 
     .tone-feature--item,
     .tone-news--item {
-        .flyer__standfirst {
+        .rich-link__standfirst {
             display: none;
         }
     }
@@ -243,13 +243,13 @@
         margin-bottom: $gs-baseline / 2;
         margin-right: $gs-gutter / 2;
 
-        .flyer__header {
+        .rich-link__header {
             @include fs-headline(1, true);
         }
-        .flyer__standfirst {
+        .rich-link__standfirst {
             display: none;
         }
-        .flyer__byline-img {
+        .rich-link__byline-img {
             display: none;
         }
     }
@@ -259,13 +259,13 @@
     }
 
     @include mq(tablet) {
-        .flyer--has-byline-pic.tone-comment--item .flyer__container {
+        .rich-link--has-byline-pic.tone-comment--item .rich-link__container {
             padding-bottom: $gs-baseline * 10;
         }
     }
 
     @include mq(leftCol) {
-        &.element--supporting .flyer--has-byline-pic.tone-comment--item .flyer__container {
+        &.element--supporting .rich-link--has-byline-pic.tone-comment--item .rich-link__container {
             padding-bottom: ($gs-baseline * 2) + 8;
         }
     }
@@ -275,7 +275,7 @@
         &.element--supporting {
             width: gs-span(4);
             .tone-comment--item {
-                .flyer__standfirst {
+                .rich-link__standfirst {
                     display: block;
                 }
             }
@@ -286,26 +286,26 @@
         margin-left: -1 * (gs-span(3) + $gs-gutter);
         &.element--supporting {
             width: gs-span(5);
-            .flyer__byline-img {
+            .rich-link__byline-img {
                 height: $gs-baseline * 12;
             }
         }
     }
 
     .blog & {
-        .flyer__image-container {
+        .rich-link__image-container {
             display: none;
         }
-        .flyer__standfirst {
+        .rich-link__standfirst {
             display: block;
         }
-        .flyer--gallery,
+        .rich-link--gallery,
         .tone-feature--item {
             max-width: gs-span(6) + (2 * $gs-gutter);
-            .flyer__image-container {
+            .rich-link__image-container {
                 display: block;
             }
-            .flyer__standfirst {
+            .rich-link__standfirst {
                 display: none;
             }
         }
