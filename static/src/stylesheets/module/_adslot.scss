@@ -194,6 +194,9 @@
     @include mq(tablet) {
         width: 300px;
     }
+
+    /* For I.E. Mobile */
+    position: relative;
 }
 .ad-slot--inline {
     @include mq(tablet) {
