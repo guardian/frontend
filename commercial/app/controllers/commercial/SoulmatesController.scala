@@ -4,7 +4,7 @@ import model.commercial.soulmates._
 import model.{Cached, NoCache}
 import play.api.mvc._
 
-object SoulmateAds extends Controller with implicits.Requests {
+object SoulmatesController extends Controller with implicits.Requests {
 
   private def renderSoulmates(members: Seq[Member]) = Action { implicit request =>
     SoulmatesAggregatingAgent.sampleMembers(members) match {
@@ -23,13 +23,14 @@ object SoulmateAds extends Controller with implicits.Requests {
     renderSoulmates(women ++ men)
   }
 
-  def renderBrightonSoulmates = renderSoulmates(SoulmatesBrightonAgent.members)
-
-  def renderNorthwestSoulmates = renderSoulmates(SoulmatesNorthwestAgent.members)
-
-  def renderScotlandSoulmates = renderSoulmates(SoulmatesScotlandAgent.members)
-
-  def renderYoungSoulmates = renderSoulmates(SoulmatesYoungAgent.members)
-
-  def renderMatureSoulmates = renderSoulmates(SoulmatesMatureAgent.members)
+  def renderSoulmates(subgroup: String): Action[AnyContent] = {
+    subgroup match {
+      case "brighton" => renderSoulmates(SoulmatesBrightonAgent.members)
+      case "northwest" => renderSoulmates(SoulmatesNorthwestAgent.members)
+      case "scotland" => renderSoulmates(SoulmatesScotlandAgent.members)
+      case "young" => renderSoulmates(SoulmatesYoungAgent.members)
+      case "mature" => renderSoulmates(SoulmatesMatureAgent.members)
+      case _ => renderSoulmates(Nil)
+    }
+  }
 }
