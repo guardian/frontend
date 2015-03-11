@@ -41,13 +41,13 @@ define([
         adNames = [['inline1', 'inline'], ['inline2', 'inline']],
         insertAdAtP = function (para) {
             if (para) {
-                return new Promise(function (resolve) {
-                    var adName = adNames[ads.length],
-                        $ad    = $.create(createAdSlot(adName[0], adName[1]));
+                var adName = adNames[ads.length],
+                    $ad    = $.create(createAdSlot(adName[0], adName[1]));
 
+                ads.push($ad);
+                return new Promise(function (resolve) {
                     fastdom.write(function () {
                         $ad.insertBefore(para);
-                        ads.push($ad);
                         resolve(null);
                     });
                 });
@@ -88,6 +88,8 @@ define([
                         return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
                             return insertAdAtP(nextSpace);
                         });
+                    } else {
+                        return Promise.resolve(null);
                     }
                 });
             });

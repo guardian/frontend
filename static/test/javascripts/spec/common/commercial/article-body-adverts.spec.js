@@ -105,8 +105,8 @@ define([
                 it('should insert an inline ad container to the available slot', function (done) {
                     articleBodyAdverts.init().then(function () {
                         fastdom.defer(function () {
-                            expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
                             expect(getParaWithSpaceStub).toHaveBeenCalledOnce();
+                            expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
                             done();
                         });
                     });
