@@ -39,7 +39,7 @@ define([
                         $(el).html(resp.html)
                             .removeClass('element-rich-link--not-upgraded')
                             .addClass('element-rich-link--upgraded');
-                        imagesModule.upgrade(el);
+                        imagesModule.upgradePictures(el);
                         $('.submeta-container--break').removeClass('submeta-container--break');
                     });
                 }

@@ -7,7 +7,9 @@ object BrowserWidth {
   }
 }
 
-sealed trait BrowserWidth
+sealed trait BrowserWidth {
+  def get: Int
+}
 
 case class PercentageWidth(get: Int) extends BrowserWidth {
   override def toString = s"$get%"

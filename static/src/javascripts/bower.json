@@ -39,10 +39,6 @@
         }
       ],
       "lodash-amd": "bower_components/lodash-amd/modern/**",
-      "imager.js": [
-        "bower_components/imager.js/src/imager.js",
-        "bower_components/imager.js/src/strategies/**"
-      ],
       "socket.io-client": "bower_components/socket.io-client/socket.io.js",
       "videojs": "bower_components/videojs/dist/video-js/video.js",
       "videojs-contrib-ads": "bower_components/videojs-contrib-ads/src/videojs.ads.js",

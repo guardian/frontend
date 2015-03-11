@@ -277,7 +277,7 @@ case class ContentCard(
 
   def showStandfirst = cardTypes.allTypes.exists(_.showStandfirst)
 
-  def mediaWidthsByBreakpoint = WidthsByBreakpoint.mediaFromItemClasses(cardTypes)
+  def mediaWidthsByBreakpoint = FaciaWidths.mediaFromItemClasses(cardTypes)
 
   def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
 

@@ -15,7 +15,7 @@ case class Job(id: Int,
                recruiterLogoUrl: String,
                sectorIds: Seq[Int],
                salaryDescription: String,
-               keywordIds: Seq[String] = Nil) {
+               keywordIdSuffixes: Seq[String] = Nil) {
 
   val shortSalaryDescription = StringUtils.abbreviate(salaryDescription, 25).replace("...", "…")
 

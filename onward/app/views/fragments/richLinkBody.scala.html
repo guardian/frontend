@@ -1,7 +1,7 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
 
-@import views.support.{ImgSrc, Item140}
+@import views.support.{ImgSrc, Item460}
 @import views.support.TrailCssClasses.toneClass
 @import model.Tag
 @import views.support.RenderClasses
@@ -29,8 +29,10 @@
     <div class="rich-link__container">
         @if(content.isGallery || content.isVideo || CardStyle(content) == Feature || CardStyle(content) == Default) {
             @content.trailPicture.map { trailPictureContainer =>
-                @ImgSrc.imager(trailPictureContainer, 500).map { imgSrc =>
-                    <div class="rich-link__image-container u-responsive-ratio js-image-upgrade" data-src="@imgSrc">
+                @ImgSrc.findSrc(trailPictureContainer, Item460).map { imgSrc =>
+
+                    <div class="rich-link__image-container u-responsive-ratio">
+                        <img src="@imgSrc" itemprop="contentURL">
                     </div>
                 }
             }

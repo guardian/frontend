@@ -24,7 +24,8 @@ define([
     'common/utils/user-timing',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
-    'common/modules/onward/geo-most-popular'
+    'common/modules/onward/geo-most-popular',
+    'common/modules/experiments/ab'
 ], function (
     bean,
     bonzo,
@@ -50,7 +51,8 @@ define([
     userTiming,
     StickyMpu,
     buildPageTargeting,
-    geoMostPopular
+    geoMostPopular,
+    ab
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -90,6 +92,15 @@ define([
         callbacks = {
             '300,251': function (event, $adSlot) {
                 new StickyMpu($adSlot).create();
+            },
+            '300,250': function (event, $adSlot) {
+                var stickyMpuTest = ab.getParticipations().StickyMpu;
+
+                if (stickyMpuTest && stickyMpuTest.variant === 'variant') {
+                    if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
+                        new StickyMpu($adSlot).create();
+                    }
+                }
             },
             '1,1': function (event, $adSlot) {
                 if (!event.slot.getOutOfPage()) {
