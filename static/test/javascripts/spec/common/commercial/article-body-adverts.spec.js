@@ -1,17 +1,18 @@
 define([
     'fastdom',
     'qwery',
+    'Promise',
     'common/utils/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
     fastdom,
     qwery,
+    Promise,
     $,
     fixtures,
     Injector
 ) {
-
     return new Injector()
         .store([
             'common/utils/config',
@@ -19,9 +20,7 @@ define([
             'common/modules/article/spacefinder'
         ])
         .require(['common/modules/commercial/article-body-adverts', 'mocks'], function (articleBodyAdverts, mocks) {
-
             describe('Article Body Adverts', function () {
-
                 var getParaWithSpaceStub, $fixturesContainer, $style,
                     fixturesConfig = {
                         id: 'article-body-adverts',
