@@ -71,9 +71,7 @@ define([
                         return false;
                     };
 
-                    articleBodyAdverts.init();
-
-                    fastdom.defer(function () {
+                    articleBodyAdverts.init().then(function () {
                         expect(getParaWithSpaceStub).toHaveBeenCalledWith({
                             minAbove: 700,
                             minBelow: 300,
@@ -104,11 +102,9 @@ define([
 
                 it('should insert an inline ad container to the available slot', function (done) {
                     articleBodyAdverts.init().then(function () {
-                        fastdom.defer(function () {
-                            expect(getParaWithSpaceStub).toHaveBeenCalledOnce();
-                            expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
-                            done();
-                        });
+                        expect(getParaWithSpaceStub).toHaveBeenCalledOnce();
+                        expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
+                        done();
                     });
                 });
 
