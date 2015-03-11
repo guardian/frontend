@@ -77,7 +77,8 @@ define([
         kruxAbParam = function () {
             var kasTest = ab.getParticipations().KruxAudienceScience;
 
-            return kasTest && kasTest.variant === 'variant';
+            return ab.testCanBeRun('KruxAudienceScience') &&
+                   kasTest && kasTest.variant === 'variant';
         };
 
     return function (opts) {

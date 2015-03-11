@@ -72,8 +72,8 @@ function (
                         profile.init();
                         new Toggles().init();
 
-                        s.eVar36 = 'facebook auto';
-                        s.linkTrackVars = 'eVar36';
+                        s.eVar13 = 'facebook auto';
+                        s.linkTrackVars = 'eVar13';
                         s.tl(this, 'o', 'Social signin auto');
                     }
                 }

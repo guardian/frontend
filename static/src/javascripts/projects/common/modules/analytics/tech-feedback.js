@@ -11,10 +11,13 @@ define([
     return {
         init: function () {
             var form = $('.js-tech-feedback');
-            bean.on(form[0], 'submit', function () {
-                var oldHref = form.attr('action');
-                form.attr('action', oldHref + '&width=' + window.innerWidth);
-            });
+            if (form.length) {
+                bean.on(form[0], 'submit', function () {
+                    var oldHref = form.attr('action');
+                    form.attr('action', oldHref + '&width=' + window.innerWidth);
+                });
+            }
+
         }
     };
 });

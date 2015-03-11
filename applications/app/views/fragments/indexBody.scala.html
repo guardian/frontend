@@ -12,7 +12,8 @@
         "index-page" -> true,
         "js-sponsored-front" -> (index.page.isSponsored(Some(Edition(request))) ||
             index.page.isAdvertisementFeature ||
-            index.page.isFoundationSupported))
+            index.page.isFoundationSupported),
+        "fc-container--advertisement-feature" -> index.page.isAdvertisementFeature)
         )"
         data-link-name="Front | @request.path"
         @index.page.sponsor.map { sponsor =>

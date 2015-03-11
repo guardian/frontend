@@ -14,7 +14,7 @@ object BodyCleaner {
         BlockNumberCleaner,
         TweetCleaner,
         WitnessCleaner,
-        new TagLinker(article),
+        TagLinker(article),
         TableEmbedComplimentaryToP,
         R2VideoCleaner(article),
         VideoEmbedCleaner(article),

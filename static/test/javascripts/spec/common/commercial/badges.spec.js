@@ -1,10 +1,12 @@
 define([
+    'fastdom',
     'qwery',
     'common/utils/$',
     'common/utils/template',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
+    fastdom,
     qwery,
     $,
     template,
@@ -105,20 +107,25 @@ define([
 
                             it(
                                 'should add "' + badge.name + '" badge to first container if page is ' + badge.type,
-                                function () {
+                                function (done) {
                                     $('.facia-container', $fixtureContainer)
                                         .addClass('js-sponsored-front')
                                         .attr('data-sponsorship', badge.type);
                                     badges.init();
-                                    var $adSlot = $('.container:first-child .ad-slot', $fixtureContainer)
-                                        .first();
 
-                                    expect($adSlot.data('name')).toBe(badge.name);
-                                    expect($adSlot.hasClass('ad-slot--paid-for-badge--front')).toBeTruthy();
+                                    fastdom.defer(function () {
+                                        var $adSlot = $('.container:first-child .ad-slot', $fixtureContainer)
+                                            .first();
+
+                                        expect($adSlot.data('name')).toBe(badge.name);
+                                        expect($adSlot.hasClass('ad-slot--paid-for-badge--front')).toBeTruthy();
+
+                                        done();
+                                    });
                                 }
                             );
 
-                            it('should add pre-badge if sponsor\'s name available', function () {
+                            it('should add pre-badge if sponsor\'s name available', function (done) {
                                 var sponsor = 'Unilever',
                                     container = $('.facia-container', $fixtureContainer).first()
                                         .addClass('js-sponsored-front')
@@ -128,11 +135,12 @@ define([
                                         })[0];
                                 badges.init();
 
-                                expect($('.ad-slot', container).html()).toBe(preBadges(badge.type, sponsor));
+                                fastdom.defer(function () {
+                                    expect($('.ad-slot', container).html()).toBe(preBadges(badge.type, sponsor));
+                                    done();
+                                });
                             });
-
                         });
-
                 });
 
                 describe('sponsored containers', function () {
@@ -153,29 +161,36 @@ define([
                     ];
 
                     configs.forEach(function (badge) {
-                        it('should add "' + badge.name + '" badge to ' + badge.type + ' container', function () {
+                        it('should add "' + badge.name + '" badge to ' + badge.type + ' container', function (done) {
                             $('.container', $fixtureContainer).first()
                                 .addClass('js-sponsored-container')
                                 .attr('data-sponsorship', badge.type);
                             badges.init();
-                            var $adSlot = $('.facia-container .container:first-child .ad-slot', $fixtureContainer).first();
-                            expect($adSlot.data('name')).toBe(badge.name);
-                            expect($adSlot.hasClass('ad-slot--paid-for-badge--front')).toBeTruthy();
+                            fastdom.defer(function () {
+                                var $adSlot = $('.facia-container .container:first-child .ad-slot', $fixtureContainer).first();
+                                expect($adSlot.data('name')).toBe(badge.name);
+                                expect($adSlot.hasClass('ad-slot--paid-for-badge--front')).toBeTruthy();
+                                done();
+                            });
                         });
                     });
 
                     configs.forEach(function (badge) {
-                        it('should not add more than one of the same badge', function () {
+                        it('should not add more than one of the same badge', function (done) {
                             $('.container', $fixtureContainer)
                                 .addClass('js-sponsored-container')
                                 .attr('data-sponsorship', badge.type);
                             badges.init();
-                            expect(qwery('.facia-container .ad-slot[data-name="' + badge.name + '"]').length).toBe(1);
+
+                            fastdom.defer(function () {
+                                expect(qwery('.facia-container .ad-slot[data-name="' + badge.name + '"]').length).toBe(1);
+                                done();
+                            });
                         });
                     });
 
                     configs.forEach(function (badge) {
-                        it('should add pre-badge if sponsor\'s name available', function () {
+                        it('should add pre-badge if sponsor\'s name available', function (done) {
                             var sponsor = 'Unilever',
                                 container = $('.container', $fixtureContainer).first()
                                     .addClass('js-sponsored-container')
@@ -184,18 +199,25 @@ define([
                                         'data-sponsorship': badge.type
                                     })[0];
                             badges.init();
-                            expect($('.ad-slot', container).html()).toBe(preBadges(badge.type, sponsor));
+
+                            fastdom.defer(function () {
+                                expect($('.ad-slot', container).html()).toBe(preBadges(badge.type, sponsor));
+                                done();
+                            });
                         });
                     });
 
-                    it('should not add a badge if one already exists', function () {
+                    it('should not add a badge if one already exists', function (done) {
                         $('.container__header', $fixtureContainer).first()
                             .after('<div class="ad-slot--paid-for-badge"></div>');
                         badges.init();
-                        expect(qwery('.facia-container .ad-slot', $fixtureContainer).length).toBe(0);
+                        fastdom.defer(function () {
+                            expect(qwery('.facia-container .ad-slot', $fixtureContainer).length).toBe(0);
+                            done();
+                        });
                     });
 
-                    it('should add container\'s keywords to ad', function () {
+                    it('should add container\'s keywords to ad', function (done) {
                         $('.container', $fixtureContainer).first()
                             .addClass('js-sponsored-container')
                             .attr({
@@ -203,41 +225,51 @@ define([
                                 'data-sponsorship': 'sponsoredfeatures'
                             });
                         badges.init();
-                        expect($('.facia-container .ad-slot', $fixtureContainer).data('keywords')).toBe('russia,ukraine');
+
+                        fastdom.defer(function () {
+                            expect($('.facia-container .ad-slot', $fixtureContainer).data('keywords')).toBe('russia,ukraine');
+                            done();
+                        });
                     });
 
-                    it('should add container\'s keywords to ad', function () {
-                        $('.facia-container .container', $fixtureContainer).first()
+                    it('should add container\'s keywords to ad', function (done) {
+                        $('.facia-container .container', $fixtureContainer)
+                            .first()
                             .addClass('js-sponsored-container')
                             .attr({
                                 'data-keywords': 'russia,ukraine',
                                 'data-sponsorship': 'sponsoredfeatures'
-                            })[0];
+                            });
                         badges.init();
-                        expect($('.facia-container .ad-slot', $fixtureContainer).data('keywords')).toBe('russia,ukraine');
+                        fastdom.defer(function () {
+                            expect($('.facia-container .ad-slot', $fixtureContainer).data('keywords')).toBe('russia,ukraine');
+                            done();
+                        });
                     });
 
-                    it('should increment badge id if multiple badges added', function () {
+                    it('should increment badge id if multiple badges added', function (done) {
                         var $containers = $('.container', $fixtureContainer)
                             .addClass('js-sponsored-container')
                             .attr('data-sponsorship', 'sponsoredfeatures');
                         badges.init();
-                        expect(qwery('#dfp-ad--spbadge1', $containers[0]).length).toBe(1);
-                        expect(qwery('#dfp-ad--spbadge2', $containers[1]).length).toBe(1);
+                        fastdom.defer(function () {
+                            expect(qwery('#dfp-ad--spbadge1', $containers[0]).length).toBe(1);
+                            expect(qwery('#dfp-ad--spbadge2', $containers[1]).length).toBe(1);
+                            done();
+                        });
                     });
 
-                    it('should be able to add badge to a container', function () {
+                    it('should be able to add badge to a container', function (done) {
                         var $container = $('.container', $fixtureContainer).first()
                             .addClass('js-sponsored-container')
                             .attr('data-sponsorship', 'sponsoredfeatures');
                         badges.add($container);
-                        expect(qwery('#dfp-ad--spbadge1', $container[0]).length).toBe(1);
+                        fastdom.defer(function () {
+                            expect(qwery('#dfp-ad--spbadge1', $container[0]).length).toBe(1);
+                            done();
+                        });
                     });
-
                 });
-
             });
-
         });
-
 });
