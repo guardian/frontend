@@ -318,6 +318,8 @@ define([
 
                 // meta
                 this.$indexEl.text(this.index);
+
+                imagesModule.upgradePictures();
             },
             leave: function () {
                 bean.off(this.$swipeContainer[0], 'click', this.toggleInfo);
