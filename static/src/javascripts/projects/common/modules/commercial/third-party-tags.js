@@ -2,6 +2,7 @@
  * A regionalised container for all the commercial tags.
  */
 define([
+    'Promise',
     'common/utils/config',
     'common/modules/commercial/third-party-tags/amaa',
     'common/modules/commercial/third-party-tags/audience-science',
@@ -13,6 +14,7 @@ define([
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/commercial/third-party-tags/outbrain'
 ], function (
+    Promise,
     config,
     amaa,
     audienceScience,
