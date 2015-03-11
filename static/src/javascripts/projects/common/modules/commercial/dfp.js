@@ -95,8 +95,6 @@ define([
             '300,250': function (event, $adSlot) {
                 var stickyMpuTest = ab.getParticipations().StickyMpu;
 
-                console.log(ab.testCanBeRun('StickyMpu'));
-
                 if (ab.testCanBeRun('StickyMpu') &&
                     stickyMpuTest && stickyMpuTest.variant === 'variant') {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
