@@ -1,0 +1,55 @@
+define([
+    'bean',
+    'fastdom',
+    'common/utils/$',
+    'common/utils/cookies'
+], function (
+    bean,
+    fastdom,
+    $,
+    cookies
+) {
+    return function () {
+        this.id = 'SignedOut';
+        this.start = '2015-03-10';
+        // far future expiration, only really using the test to bucket users, which we can use for targeting in dfp
+        this.expiry = '2015-03-24';
+        this.author = 'Sam Morris';
+        this.description = 'Testing to see if alerting users on sign out will increase the sign in rate.';
+        this.audience = 1;
+        this.audienceOffset = 0;
+        this.successMeasure = 'Users sign back in after signing out.';
+        this.audienceCriteria = 'All signed out users';
+        this.dataLinkNames = 'Signed Out Link';
+        this.idealOutcome = 'Sign in rate increases';
+
+        this.canRun = function () {
+            if (cookies.get('GU_SO')) {
+                return true;
+            }
+        };
+
+        /**
+         * nothing happens in here, we just use this to bucket users
+         */
+        this.variants = [
+            {
+                id: 'control',
+                test: function () {
+                    console.log("control");
+                }
+            },
+            {
+                id: 'show-message',
+                test: function () {
+                    bean.on($('.js-popup-toggle')[0], 'click', function(e) {
+                        fastdom.write(function(e) {
+                            $('.js-popup-signed-out', e).addClass('u-h');
+                        })
+                    });
+                }
+            }
+        ];
+    };
+
+});

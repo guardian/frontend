@@ -20,6 +20,13 @@ to apply any necessary changes to non-shared code there too.
                         <span class="js-profile-info control__info" data-test-id="sign-in-name">sign in</span>
                     </a>
                     <div class="js-profile-popup"></div>
+                    <div class="js-popup-signed-out popup popup--signed-out">
+                        <a class="popup--signed-out__link" href="@Configuration.id.url/signin" data-link-name="Signed Out Link"></a>
+                        You are signed out of the Guardian. <span class="popup--signed-out__highlight">Sign In</span>
+                        <button class="js-popup-toggle u-button-reset popup__toggle">
+                            @fragments.inlineSvg("cross", "icon", Seq("popup__toggle-icon"))
+                        </button>
+                    </div>
                 </div>
             }
 
