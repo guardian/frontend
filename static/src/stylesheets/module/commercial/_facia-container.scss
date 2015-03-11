@@ -5,11 +5,19 @@
     background-color: colour(neutral-6);
 
     .button--tertiary {
-        .i-arrow-black-right {
+
+        .i-arrow-black {
+            path { fill: black; }
+        }
+        .i-arrow-black-right,
+        .i-arrow-black {
             opacity: .3;
         }
-        &:hover .i-arrow-black-right {
-            opacity: 1;
+        &:hover {
+            .i-arrow-black-right,
+            .i-arrow-black {
+                opacity: 1;
+            }
         }
     }
 }
@@ -94,7 +102,7 @@
             display: none;
         }
     }
-    
+
     .inline-marque-54 {
         display: none;
 
@@ -102,7 +110,7 @@
             display: block;
         }
     }
-    
+
     .inline-commercial-brand {
         @include mq($until: leftCol) {
             opacity: .8;
@@ -184,6 +192,10 @@
     width: $gs-baseline*3;
     height: $gs-baseline*3;
     padding: $gs-baseline*.75 $gs-baseline;
+
+    path {
+        fill: colour(neutral-3);
+    }
 
     &:hover,
     &:focus,
