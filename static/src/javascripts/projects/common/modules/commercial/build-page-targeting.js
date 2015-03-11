@@ -5,6 +5,7 @@ define([
     'lodash/objects/isArray',
     'lodash/objects/merge',
     'lodash/objects/pick',
+    'lodash/objects/forIn',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -21,6 +22,7 @@ define([
     isArray,
     merge,
     pick,
+    forIn,
     config,
     cookies,
     detect,
@@ -63,16 +65,16 @@ define([
             ));
         },
         abParam = function () {
-            var hchTest = ab.getParticipations().HighCommercialComponent;
-            if (hchTest) {
-                switch (hchTest.variant) {
-                    case 'control':
-                        return '1';
-                    case 'variant':
-                        return '2';
+            var abParams = [],
+                abParticipations = ab.getParticipations();
+
+            forIn(abParticipations, function (n, key) {
+                if (n.variant) {
+                    abParams.push(key + '-' + n.variant);
                 }
-            }
-            return '3';
+            });
+
+            return abParams;
         },
         kruxAbParam = function () {
             var kasTest = ab.getParticipations().KruxAudienceScience;
