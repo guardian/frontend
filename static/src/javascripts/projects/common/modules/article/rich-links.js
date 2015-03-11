@@ -25,7 +25,7 @@ define([
 
     richLinkTagTmpl
 ) {
-    function upgradeFlyer(el) {
+    function upgradeRichLink(el) {
         var href = $('a', el).attr('href'),
             matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
 
@@ -38,7 +38,7 @@ define([
                     $(el).html(resp.html)
                         .removeClass('element-rich-link--not-upgraded')
                         .addClass('element-rich-link--upgraded');
-                    imagesModule.upgrade(el);
+                    imagesModule.upgradePictures();
                     $('.submeta-container--break').removeClass('submeta-container--break');
                 }
             });
@@ -58,7 +58,7 @@ define([
         };
     }
 
-    function insertTagFlyer() {
+    function insertTagRichLink() {
         var richLinkHrefs = $('.element-rich-link a')
                 .map(function (el) { return $(el).attr('href'); }),
             testIfDuplicate = function (richLinkHref) {
@@ -75,18 +75,18 @@ define([
             if (space) {
                 $.create(template(richLinkTagTmpl, {href: config.page.richLink}))
                     .insertBefore(space)
-                    .each(upgradeFlyer);
+                    .each(upgradeRichLink);
             }
         }
     }
 
-    function upgradeFlyers() {
-        $('.element-rich-link--not-upgraded').each(upgradeFlyer);
+    function upgradeRichLinks() {
+        $('.element-rich-link--not-upgraded').each(upgradeRichLink);
     }
 
     return {
-        upgradeFlyer: upgradeFlyer,
-        upgradeFlyers: upgradeFlyers,
-        insertTagFlyer: insertTagFlyer
+        upgradeRichLink: upgradeRichLink,
+        upgradeRichLinks: upgradeRichLinks,
+        insertTagRichLink: insertTagRichLink
     };
 });

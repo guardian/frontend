@@ -28,28 +28,29 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
   private val adFeatureToneTagId = "tone/advertisement-features"
   private val adFeatureTone = toTag("tone", adFeatureToneTagId, None)
 
-  private def paidForTag(targetedName: String,
-                         paidForType: PaidForType,
-                         tagType: TagType,
-                         adUnitPaths: Seq[String] = Nil,
+  private def toLineItem(state: String = "DELIVERING",
+                         editionId: Option[String] = None,
                          sponsor: Option[String] = None,
-                         expiryDates: Seq[Option[DateTime]] = Seq(None),
-                         editionId: Option[String] = None): PaidForTag = {
+                         expiryDate: Option[DateTime] = None,
+                         adUnitPaths: Seq[String] = Nil) = {
     val adUnits = adUnitPaths.map(path => GuAdUnit("0", path.split("/")))
     val customTargetSets = editionId map { edition =>
       Seq(CustomTargetSet("AND", Seq(CustomTarget("edition", "IS", Seq(edition)))))
     } getOrElse Nil
-    val targeting = GuTargeting(adUnits, Nil, Nil, customTargetSets)
-    val lineItems = expiryDates map { expiryDate =>
-      GuLineItem(Random.nextInt(),
-        "liName",
-        DateTime.now(),
-        expiryDate,
-        isPageSkin = false,
-        sponsor,
-        "delivering",
-        targeting)
-    }
+    GuLineItem(Random.nextInt(),
+      "liName",
+      DateTime.now(),
+      expiryDate,
+      isPageSkin = false,
+      sponsor,
+      state,
+      GuTargeting(adUnits, Nil, Nil, customTargetSets))
+  }
+
+  private def paidForTag(targetedName: String,
+                         paidForType: PaidForType,
+                         tagType: TagType,
+                         lineItems: GuLineItem*): PaidForTag = {
     PaidForTag(targetedName, Keyword, paidForType, Nil, lineItems)
   }
 
@@ -58,12 +59,12 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     override protected def isPreview: Boolean = false
 
     val sponsorships: Seq[PaidForTag] = Seq(
-      paidForTag("business-essentials", Sponsored, Keyword, sponsor = Some("spon")),
-      paidForTag("media", Sponsored, Keyword, editionId = Some("uk")),
+      paidForTag("business-essentials", Sponsored, Keyword, toLineItem(sponsor = Some("spon"))),
+      paidForTag("media", Sponsored, Keyword, toLineItem(editionId = Some("uk"))),
       paidForTag("healthyliving",
         Sponsored, Keyword,
-        adUnitPaths = Seq("theguardian.com/spinach"),
-        sponsor = Some("Squeegee")
+        toLineItem(adUnitPaths = Seq("theguardian.com/spinach"),
+          sponsor = Some("Squeegee"))
       ),
       paidForTag(
         targetedName = "sixnations",
@@ -73,37 +74,42 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     )
 
     val advertisementFeatureSponsorships: Seq[PaidForTag] = Seq(
-      paidForTag("best-awards", AdvertisementFeature, Keyword, sponsor = Some("spon2")),
+      paidForTag("best-awards", AdvertisementFeature, Keyword, toLineItem(sponsor = Some("spon2"))),
       paidForTag("film", AdvertisementFeature, Keyword),
       paidForTag("grundfos-partner-zone", AdvertisementFeature, Keyword),
       paidForTag("sustainable-business-grundfos-partner-zone", AdvertisementFeature, Keyword),
       paidForTag("media-network-adobe-partner-zone", AdvertisementFeature, Keyword),
       paidForTag("wsscc-partner-zone", AdvertisementFeature, Keyword,
-        adUnitPaths = Seq("theguardian.com",
+        toLineItem(adUnitPaths = Seq("theguardian.com",
           "theguardian.com/global-development-professionals-network",
-          "theguardian.com/global-development-professionals-network/front")),
+          "theguardian.com/global-development-professionals-network/front"))),
       paidForTag("some-partner-zone", AdvertisementFeature, Keyword,
-        adUnitPaths = Seq(
+        toLineItem(adUnitPaths = Seq(
           "theguardian.com/global-development-professionals-network",
-          "theguardian.com/global-development-professionals-network/front")
+          "theguardian.com/global-development-professionals-network/front"))
       ),
       paidForTag("agencies", AdvertisementFeature, Series),
       paidForTag("tagName",
         AdvertisementFeature,
         Keyword,
-        expiryDates = Seq(Some(DateTime.now().minusHours(1)))),
+        toLineItem(expiryDate = Some(DateTime.now().minusHours(1)))),
       paidForTag("tagNameMatchingMultipleLineItems",
         AdvertisementFeature,
         Keyword,
-        expiryDates = Seq(Some(DateTime.now().minusHours(1)), None)),
+        toLineItem(expiryDate = Some(DateTime.now().minusHours(1))),
+        toLineItem(expiryDate = None)),
       paidForTag("tagNameMatchingMoreMultipleLineItems",
         AdvertisementFeature,
         Keyword,
-        expiryDates = Seq(Some(DateTime.now().minusHours(1)), Some(DateTime.now().plusHours(1))))
+        toLineItem(expiryDate = Some(DateTime.now().minusHours(1))),
+        toLineItem(expiryDate = Some(DateTime.now().plusHours(1))))
     )
 
     val foundationSupported: Seq[PaidForTag] = Seq(
-      paidForTag("music", FoundationFunded, Keyword, sponsor = Some("Music Foundation")),
+      paidForTag("music",
+        FoundationFunded,
+        Keyword,
+        toLineItem(sponsor = Some("Music Foundation"))),
       paidForTag("womens-rights-and-gender-equality-in-focus", FoundationFunded, Keyword),
       paidForTag("global-development", FoundationFunded, Keyword),
       paidForTag("global-modern-day-slavery-in-focus", FoundationFunded, Series)
@@ -113,15 +119,21 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
       paidForTag("tagName",
         AdvertisementFeature,
         Keyword,
-        expiryDates = Seq(Some(DateTime.now().minusHours(1)))),
+        toLineItem(expiryDate = Some(DateTime.now().minusHours(1)))),
       paidForTag("tagNameMatchingMultipleLineItems",
         AdvertisementFeature,
         Keyword,
-        expiryDates = Seq(Some(DateTime.now().minusHours(1)), None)),
+        toLineItem(expiryDate = Some(DateTime.now().minusHours(1))),
+        toLineItem(expiryDate = None)),
       paidForTag("tagNameMatchingMoreMultipleLineItems",
         AdvertisementFeature,
         Keyword,
-        expiryDates = Seq(Some(DateTime.now().minusHours(1)), Some(DateTime.now().plusHours(1))))
+        toLineItem(expiryDate = Some(DateTime.now().minusHours(1))),
+        toLineItem(expiryDate = Some(DateTime.now().plusHours(1)))),
+      paidForTag("tagNameMatchingPausedTag",
+        AdvertisementFeature,
+        Keyword,
+        toLineItem(state = "PAUSED", expiryDate = Some(DateTime.now().plusHours(1))))
     )
 
     override protected val currentPaidForTags: Seq[PaidForTag] =
@@ -518,9 +530,18 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
   "generate tag to sponsors map" should "glom sponsorships together" in {
     val universitySponsorships = Seq(
-      paidForTag("universityguide", Sponsored, Keyword, sponsor = Some("University Sponsor A")),
-      paidForTag("university A", Sponsored, Keyword, sponsor = Some("University Sponsor A")),
-      paidForTag("universityguide", Sponsored, Keyword, sponsor = Some("University Sponsor B"))
+      paidForTag("universityguide",
+        Sponsored,
+        Keyword,
+        toLineItem(sponsor = Some("University Sponsor A"))),
+      paidForTag("university A",
+        Sponsored,
+        Keyword,
+        toLineItem(sponsor = Some("University Sponsor A"))),
+      paidForTag("universityguide",
+        Sponsored,
+        Keyword,
+        toLineItem(sponsor = Some("University Sponsor B")))
     )
 
     val sponsorsMap: Map[String, Set[String]] = DfpAgent.generateTagToSponsorsMap(
@@ -533,7 +554,10 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
 
   it should "not bother with tag with no detected sponsors" in {
     val sponsorshipsWithANone = Seq(
-      paidForTag("universityguide", Sponsored, Keyword, sponsor = Some("University Sponsor A")),
+      paidForTag("universityguide",
+        Sponsored,
+        Keyword,
+        toLineItem(sponsor = Some("University Sponsor A"))),
       paidForTag("videogames", Sponsored, Keyword)
     )
 
@@ -573,6 +597,11 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
   it should "be false for a page with an unexpired logo and ad-feature tone" in {
     val tags = Seq(adFeatureTone, toKeyword("section/tagNameMatchingMoreMultipleLineItems"))
     TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(false)
+  }
+
+  it should "be true for a page with a paused logo" in {
+    val tags = Seq(adFeatureTone, toKeyword("section/tagNameMatchingPausedTag"))
+    TestPaidForTagAgent.isExpiredAdvertisementFeature("pageId", tags, None) should be(true)
   }
 
   it should "be false for the ad feature tone tag page" in {

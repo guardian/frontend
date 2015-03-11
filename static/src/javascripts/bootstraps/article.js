@@ -5,7 +5,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/article/flyers',
+    'common/modules/article/rich-links',
     'common/modules/article/open-module',
     'common/modules/article/static-social',
     'common/modules/article/truncate',
@@ -21,7 +21,7 @@ define([
     config,
     detect,
     mediator,
-    flyers,
+    richLinks,
     openModule,
     staticSocial,
     truncate,
@@ -84,8 +84,8 @@ define([
             modules.initRightHandComponent();
             modules.initSelectionSharing();
             modules.initStaticSocial();
-            flyers.upgradeFlyers();
-            flyers.insertTagFlyer();
+            richLinks.upgradeRichLinks();
+            richLinks.insertTagRichLink();
             openModule.init();
 
             mediator.emit('page:article:ready');

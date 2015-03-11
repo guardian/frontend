@@ -14,7 +14,7 @@
       "jquery-mockjax": "npm:jquery-mockjax@^1.6.1",
       "jquery-ui": "github:jquery/jquery-ui@1.11.3",
       "knockout": "npm:knockout@3.2.0",
-      "raven-js": "github:getsentry/raven-js@1.1.16",
+      "raven-js": "npm:raven-js@1.1.17",
       "sinon": "npm:sinon@^1.12.2",
       "text": "0.0.2",
       "underscore": "1.7.0"

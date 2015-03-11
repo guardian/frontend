@@ -13,7 +13,6 @@
 .l-footer,
 .element-video,
 .byline-img,
-.quoted,
 .element-embed,
 .gallery__most-popular,
 .block-share--gallery-mobile,
@@ -93,7 +92,7 @@ p {
 
 .l-side-margins:before,
 .l-side-margins:after {
-    background-color: #ffffff !important;
+    display: none;
 }
 
 .drop-cap {

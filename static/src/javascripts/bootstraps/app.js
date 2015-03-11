@@ -11,9 +11,7 @@ define([
     'bootstraps/liveblog',
     'bootstraps/media',
     'bootstraps/profile',
-    'bootstraps/section',
-    'bootstraps/sport',
-    'bootstraps/tag'
+    'bootstraps/sport'
 ], function (
     qwery,
     raven,
@@ -27,9 +25,7 @@ define([
     liveBlog,
     media,
     profile,
-    section,
-    sport,
-    tag
+    sport
 ) {
 
     var bootstrapContext = function (featureName, boostrap) {
@@ -93,14 +89,6 @@ define([
                 require(['bootstraps/image-content'], function (imageContent) {
                     bootstrapContext('image-content', imageContent);
                 });
-            }
-
-            if (config.page.contentType === 'Tag') {
-                bootstrapContext('tag', tag);
-            }
-
-            if (config.page.contentType === 'Section' && !config.page.isFront) {
-                bootstrapContext('section', section);
             }
 
             if (config.page.section === 'football') {

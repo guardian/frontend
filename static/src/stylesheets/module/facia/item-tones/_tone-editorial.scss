@@ -4,9 +4,9 @@
     background-color: colour(editorial-default);
 
     &,
-    .flyer__link,
+    .rich-link__link,
     .fc-sublink__title,
-    .flyer__standfirst {
+    .rich-link__standfirst {
         color: $c-headline;
     }
 
@@ -22,14 +22,14 @@
     }
 
     .fc-item__container:before,
-    .flyer__container:before {
+    .rich-link__container:before {
         background-color: colour(editorial-accent);
     }
 
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__standfirst,
-    .flyer__read-more-text {
+    .rich-link__read-more-text {
         color: colour(editorial-accent);
     }
 
@@ -37,7 +37,7 @@
         background-color: mix(#000000, colour(editorial-default), 10%);
     }
 
-    .flyer__arrow-icon {
+    .rich-link__arrow-icon {
         fill: colour(editorial-accent);
     }
 

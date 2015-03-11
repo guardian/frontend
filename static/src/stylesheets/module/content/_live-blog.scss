@@ -341,7 +341,8 @@ $block-padding-right: $gs-gutter;
         > .element-table .table--football,
         > .element-comment,
         > .element-embed,
-        > .element-audio {
+        > .element-audio,
+        > .element-interactive {
             width: auto;
             margin: $gs-baseline $gs-gutter/2 ($gs-baseline / 3) * 4;
 
