@@ -1,28 +1,28 @@
 define([
+    'fastdom',
     'qwery',
+    'Promise',
     'common/utils/_',
     'common/utils/$',
-    'common/utils/ajax',
+    'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/template',
-
     'common/modules/article/spacefinder',
     'common/modules/ui/images',
-
     'text!common/views/content/richLinkTag.html'
 ], function (
+    fastdom,
     qwery,
+    Promise,
     _,
     $,
     ajax,
     config,
     detect,
     template,
-
     spacefinder,
     imagesModule,
-
     richLinkTagTmpl
 ) {
     function upgradeRichLink(el) {
@@ -30,18 +30,22 @@ define([
             matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
 
         if (matches && matches[1]) {
-            ajax({
+            return ajax({
                 url: '/embed/card' + matches[1] + '.json',
                 crossOrigin: true
             }).then(function (resp) {
                 if (resp.html) {
-                    $(el).html(resp.html)
-                        .removeClass('element-rich-link--not-upgraded')
-                        .addClass('element-rich-link--upgraded');
-                    imagesModule.upgradePictures();
-                    $('.submeta-container--break').removeClass('submeta-container--break');
+                    fastdom.write(function () {
+                        $(el).html(resp.html)
+                            .removeClass('element-rich-link--not-upgraded')
+                            .addClass('element-rich-link--upgraded');
+                        imagesModule.upgradePictures(el);
+                        $('.submeta-container--break').removeClass('submeta-container--break');
+                    });
                 }
             });
+        } else {
+            return Promise.resolve(null);
         }
     }
 
@@ -66,17 +70,26 @@ define([
                 return _.contains(config.page.richLink, richLinkHref);
             },
             isDuplicate = richLinkHrefs.some(testIfDuplicate),
-            isSensitive = config.page.shouldHideAdverts || !config.page.showRelatedContent,
-            space;
+            isSensitive = config.page.shouldHideAdverts || !config.page.showRelatedContent;
 
         if (config.page.richLink && config.page.richLink.indexOf(config.page.pageId) === -1
             && !isSensitive && !isDuplicate) {
-            space = spacefinder.getParaWithSpace(getSpacefinderRules());
-            if (space) {
-                $.create(template(richLinkTagTmpl, {href: config.page.richLink}))
-                    .insertBefore(space)
-                    .each(upgradeRichLink);
-            }
+
+            return spacefinder.getParaWithSpace(getSpacefinderRules()).then(function (space) {
+                return new Promise(function (resolve) {
+                    if (space) {
+                        fastdom.write(function () {
+                            var $el = $.create(template(richLinkTagTmpl, {href: config.page.richLink}));
+                            $el.insertBefore(space);
+                            resolve(upgradeRichLink($el[0]));
+                        });
+                    } else {
+                        resolve(null);
+                    }
+                });
+            });
+        } else {
+            return Promise.resolve(null);
         }
     }
 

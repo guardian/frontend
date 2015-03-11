@@ -1,4 +1,6 @@
 define([
+    'fastdom',
+    'Promise',
     'lodash/objects/cloneDeep',
     'common/utils/$',
     'common/utils/config',
@@ -6,6 +8,8 @@ define([
     'common/modules/article/spacefinder',
     'common/modules/commercial/create-ad-slot'
 ], function (
+    fastdom,
+    Promise,
     cloneDeep,
     $,
     config,
@@ -13,7 +17,6 @@ define([
     spacefinder,
     createAdSlot
 ) {
-
     function getRules() {
         return {
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
@@ -38,15 +41,22 @@ define([
         adNames = [['inline1', 'inline'], ['inline2', 'inline']],
         insertAdAtP = function (para) {
             if (para) {
-                var adName = adNames[ads.length],
-                    $ad    = $.create(createAdSlot(adName[0], adName[1]))
-                                .insertBefore(para);
-                ads.push($ad);
+                return new Promise(function (resolve) {
+                    var adName = adNames[ads.length],
+                        $ad    = $.create(createAdSlot(adName[0], adName[1]));
+
+                    fastdom.write(function () {
+                        $ad.insertBefore(para);
+                        ads.push($ad);
+                        resolve(null);
+                    });
+                });
+            } else {
+                return Promise.resolve(null);
             }
         },
         init = function () {
-
-            var rules, lenientRules;
+            var rules, lenientRules, inlineMercPromise;
 
             // is the switch off, or not an article, or a live blog
             if (
@@ -62,19 +72,29 @@ define([
 
             if (config.page.hasInlineMerchandise) {
                 adNames.unshift(['im', 'im']);
-                insertAdAtP(spacefinder.getParaWithSpace(lenientRules));
-            }
-            insertAdAtP(spacefinder.getParaWithSpace(rules));
 
-            if (detect.isBreakpoint({ max: 'tablet' })) {
-                insertAdAtP(spacefinder.getParaWithSpace(rules));
+                inlineMercPromise = spacefinder.getParaWithSpace(lenientRules).then(function (space) {
+                    return insertAdAtP(space);
+                });
+            } else {
+                inlineMercPromise = Promise.resolve(null);
             }
+
+            return inlineMercPromise.then(function () {
+                return spacefinder.getParaWithSpace(rules).then(function (space) {
+                    return insertAdAtP(space);
+                }).then(function () {
+                    if (detect.isBreakpoint({max: 'tablet'})) {
+                        return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+                            return insertAdAtP(nextSpace);
+                        });
+                    }
+                });
+            });
         };
 
     return {
-
         init: init,
-
         // rules exposed for spacefinder debugging
         getRules: getRules,
         getLenientRules: getLenientRules,
@@ -82,6 +102,5 @@ define([
         reset: function () {
             ads = [];
         }
-
     };
 });
