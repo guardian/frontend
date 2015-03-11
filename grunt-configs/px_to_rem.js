@@ -2,6 +2,7 @@ module.exports = function(grunt, options) {
     return {
         dist: {
             options: {
+                map: true,
                 base: 16,
                 fallback: false // Opera Mini gets its own global.px.css
             },
