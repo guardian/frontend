@@ -38,7 +38,7 @@
                                 @for(buttonText <- optCapiButtonText) {
                                     <a href="@optClickMacro@item.webUrl" class="lineitem__cta button button--tertiary button--small">
                                         @buttonText
-                                        @fragments.inlineSvg("arrow-white-right", "icon", List("i-right", "i-arrow-black"))
+                                        @fragments.inlineSvg("arrow-right", "icon", List("i-right", "i-arrow-black"))
                                     </a>
                                 }
                             </a>
@@ -47,7 +47,7 @@
                             @for(moreButton <- optCapiReadMoreText) {
                                 <a href="@optClickMacro@for(moreUrl <- optCapiReadMoreUrl) {@moreUrl}" class="commercial__cta button button--primary button--large" data-link-name="merchandising-single-more">
                                     @moreButton
-                                    @fragments.inlineSvg("arrow-white-right", "icon", List("i-right"))
+                                    @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
                                 </a>
                             }
                         </div>
