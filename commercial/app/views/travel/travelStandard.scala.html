@@ -20,14 +20,14 @@
                             <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
                             <input id="traveloffer" name="search" class="commercial__search__input" type="text" placeholder="Find your perfect holiday" />
                             <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-travel-v@{version}_@{date}-low-search">
-                                <i class="i i-search-grey-36"></i>
+                                @fragments.inlineSvg("search-36", "icon")
                                 <span class="u-h">Find your perfect holiday</span>
                             </button>
                             <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
                         </div>
                     </form>
                     <a class="commercial__cta button button--tertiary button--large" href="@clickMacro@Configuration.commercial.travel_url" data-link-name="merchandising-travel-v@{version}_@{date}-low-visit-shop">
-                        <i class="i i-arrow-white-right i-right"></i>
+                        @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
                         <span class="commercial__cta__label">View <span class="hide-on-mobile-inline">more great</span> deals</span>
                     </a>
                 </div>
@@ -43,7 +43,7 @@
                                 <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
                             </a>
                             <a class="lineitem__cta button button--primary button--small" href="@clickMacro@offer.offerUrl" data-link-name="merchandising-travel-v@{version}_@{date}-low-@{offer.title}-book-now">
-                                Book now<i class="i i-arrow-white-right i-right"></i>
+                                Book now@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
                             </a>
                         </li>
                     }
