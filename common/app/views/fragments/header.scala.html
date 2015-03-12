@@ -66,9 +66,13 @@ to apply any necessary changes to non-shared code there too.
                     <meta itemprop="logo" content="https://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
                     @if(metaData.section == "observer" && metaData.isFront) {
                         <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" itemprop="url" data-component="logo">
-                            <span class="u-h" itemprop="name">The Observer</span>
-                            <i class="i i-observer-logo-160 mobile-only"></i>
-                            <i class="i i-observer-logo-320 hide-on-mobile"></i>
+                            @if(metaData.contentType == "Interactive") {
+                                <i class="i i-observer-logo-160"></i>
+                            } else {
+                                <span class="u-h" itemprop="name">The Observer</span>
+                                <i class="i i-observer-logo-160 mobile-only"></i>
+                                <i class="i i-observer-logo-320 hide-on-mobile"></i>
+                            }
                         </a>
                     } else {
                         <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url" data-component="logo">
