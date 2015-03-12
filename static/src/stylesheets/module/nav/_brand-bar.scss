@@ -118,6 +118,44 @@
     cursor: pointer;
 }
 
-.brand-bar__item--subscribe .control__icon-wrapper {
-    border: 0;
+// Desktop only
+.brand-bar__item--subscribe,
+.brand-bar__item--soulmates {
+    @include mq($until: desktop) {
+        display: none;
+    }
+}
+.brand-bar__item--subscribe {
+    .control__icon-wrapper {
+        border: 0;
+    }
+}
+
+// Hide on mobile
+.brand-bar__item--jobs {
+    @include mq($until: tablet) {
+        display: none;
+    }
+}
+
+.brand-bar__item--edition {
+    @include mq($until: tablet) {
+        display: none;
+    }
+}
+
+// Mobile only
+.brand-bar__popup--jobs,
+.brand-bar__popup--edition {
+    @include mq(tablet) {
+        display: none;
+    }
+}
+
+// Hide on desktop
+.brand-bar__popup--membership,
+.brand-bar__popup--soulmates {
+    @include mq(desktop) {
+        display: none;
+    }
 }
