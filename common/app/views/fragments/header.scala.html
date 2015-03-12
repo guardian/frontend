@@ -9,7 +9,7 @@ to apply any necessary changes to non-shared code there too.
 -->*@
 
 <header id="header"
-        class="l-header u-cf @if(metaData.contentType == "Interactive") { l-header--is-slim }"
+        class="l-header u-cf @if(metaData.hasSlimHeader) { l-header--is-slim }"
         role="banner"
         data-link-name="global navigation: header">
     <div class="js-navigation-header navigation-container navigation-container--collapsed">
@@ -66,7 +66,7 @@ to apply any necessary changes to non-shared code there too.
                     <meta itemprop="logo" content="https://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
                     @if(metaData.section == "observer" && metaData.isFront) {
                         <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" itemprop="url" data-component="logo">
-                            @if(metaData.contentType == "Interactive") {
+                            @if(metaData.hasSlimHeader) {
                                 <i class="i i-observer-logo-160"></i>
                             } else {
                                 <span class="u-h" itemprop="name">The Observer</span>
@@ -77,7 +77,7 @@ to apply any necessary changes to non-shared code there too.
                     } else {
                         <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url" data-component="logo">
                             <span class="u-h" itemprop="name">The Guardian</span>
-                            @if(metaData.contentType == "Interactive") {
+                            @if(metaData.hasSlimHeader) {
                                 <i class="i i-guardian-logo-160"></i>
                             } else {
                                 <i class="i i-guardian-logo-160 mobile-only"></i>
@@ -86,7 +86,7 @@ to apply any necessary changes to non-shared code there too.
                             }
                         </a>
                     }
-                    @if(metaData.contentType == "Interactive") {
+                    @if(metaData.hasSlimHeader) {
                         @fragments.nav.navigationToggle(metaData)
                     }
                 </span>

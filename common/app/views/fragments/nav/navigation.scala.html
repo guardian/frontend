@@ -33,7 +33,7 @@
                         @fragments.nav.topNavigation(metaData, navigation)
                     </nav>
                 </div>
-                @if(metaData.contentType != "Interactive") {
+                @if(!metaData.hasSlimHeader) {
                     @fragments.nav.navigationToggle(metaData)
                 }
             </div>
