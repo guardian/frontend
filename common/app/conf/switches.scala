@@ -287,8 +287,9 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  private def dateInFebruary(day: Int): Interval =
-    new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
+  val BookLookupSwitch = Switch("Commercial", "book-lookup",
+    "If this switch is on, book data will be looked up using a third-party service.",
+    safeState = Off, sellByDate = never)
 
   val AppleAdNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-network-front",
     "If this switch is on, Apple ads will appear on the network front during active periods.",

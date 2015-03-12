@@ -4,7 +4,7 @@ import akka.pattern.CircuitBreaker
 import common.ExecutionContexts.memcachedExecutionContext
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
-import conf.Switches.GuBookshopFeedsSwitch
+import conf.Switches.BookLookupSwitch
 import model.commercial.{FeedReader, FeedRequest}
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
@@ -108,7 +108,7 @@ object MagentoService extends Logging {
           feedName = "Book Lookup",
           url = Some(s"${props.urlPrefix}/$isbn"),
           timeout = 3.seconds,
-          switch = GuBookshopFeedsSwitch)
+          switch = BookLookupSwitch)
 
         log.info(s"Looking up book with ISBN $isbn ...")
 
