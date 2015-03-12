@@ -1,4 +1,4 @@
-@(metaData: model.MetaData)(implicit request: RequestHeader)
+@(page: model.MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
 @import common.{LinkTo, Navigation, Edition}
 @import common.editions._
@@ -8,91 +8,73 @@ Identity pages use identityHeader.scala.html, be sure
 to apply any necessary changes to non-shared code there too.
 -->*@
 
-<header id="header"
-        class="l-header u-cf @if(metaData.hasSlimHeader) { l-header--is-slim }"
-        role="banner"
-        data-link-name="global navigation: header">
-    <div class="js-navigation-header navigation-container navigation-container--collapsed">
-        <div class="gs-container l-header__inner">
-            <div class="l-header-pre u-cf">
-                <div class="brand-bar">
-                    @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                        <div class="brand-bar__item brand-bar__item--profile popup-container has-popup brand-bar__item--has-control js-profile-nav" data-component="identity-profile">
-                            <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="popup--profile"
-                               class="brand-bar__item--action popup__toggle" data-test-id="sign-in-link"
-                               aria-haspopup="true">
-                                @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                                <span class="js-profile-info control__info" data-test-id="sign-in-name">sign in</span>
-                            </a>
-                            <div class="js-profile-popup"></div>
-                            <div class="js-popup-signed-out popup popup--signed-out u-h">
-                                <a class="popup--signed-out__link" href="@Configuration.id.url/signin" data-link-name="Signed out link"></a>
-                                You are signed out of the Guardian. <span class="popup--signed-out__highlight">Sign In</span>
-                                <button class="js-popup-toggle u-button-reset popup__toggle" data-link-name="Signed out link | Close">
-                                    @fragments.inlineSvg("cross", "icon", Seq("popup__toggle-icon"))
-                                </button>
-                            </div>
-                        </div>
-                    }
-
-                    <div class="brand-bar__item has-popup brand-bar__item--has-control
-                                popup-container brand-bar__item--subscribe"
-                         data-component="subscribe">
-                        <a href="http://subscribe.theguardian.com/@if(Edition(request) != Uk) {@{Edition(request).id.toLowerCase}}?INTCMP=NGW_HEADER_@{Edition(request).id}_GU_SUBSCRIBE" class="brand-bar__item--action"
-                        data-link-name="@Edition(request) : topNav : subscribe" class="brand-bar__item--action">
-                            @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                            <span class="control__info">subscribe</span>
-                        </a>
+<header id="header" class="l-header u-cf" role="banner" data-link-name="global navigation: header">
+    <div class="l-header-pre gs-container u-cf">
+        <div class="brand-bar">
+            @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
+                <div class="brand-bar__item brand-bar__item--profile popup-container has-popup brand-bar__item--has-control js-profile-nav" data-component="identity-profile">
+                    <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="popup--profile"
+                       class="brand-bar__item--action popup__toggle" data-test-id="sign-in-link"
+                       aria-haspopup="true">
+                        @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                        <span class="js-profile-info control__info" data-test-id="sign-in-name">sign in</span>
+                    </a>
+                    <div class="js-profile-popup"></div>
+                    <div class="js-popup-signed-out popup popup--signed-out u-h">
+                        <a class="popup--signed-out__link" href="@Configuration.id.url/signin" data-link-name="Signed out link"></a>
+                        You are signed out of the Guardian. <span class="popup--signed-out__highlight">Sign In</span>
+                        <button class="js-popup-toggle u-button-reset popup__toggle" data-link-name="Signed out link | Close">
+                            @fragments.inlineSvg("cross", "icon", Seq("popup__toggle-icon"))
+                        </button>
                     </div>
-
-                    @if(SearchSwitch.isSwitchedOn) {
-                        <div class="brand-bar__item has-popup popup-container brand-bar__item--has-control brand-bar__item--search" data-component="search">
-                            <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
-                               class="brand-bar__item--action popup__toggle js-search-toggle" data-toggle="popup--search"
-                               aria-haspopup="true">
-                                @fragments.inlineSvg("search-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                                <span class="control__info">search</span>
-                            </a>
-                        </div>
-                    }
-                    @fragments.topNav.servicesLinks(metaData)
                 </div>
+            }
+
+            <div class="brand-bar__item has-popup brand-bar__item--has-control popup-container brand-bar__item--subscribe desktop-only" data-component="subscribe">
+                <a href="http://subscribe.theguardian.com/@if(Edition(request) != Uk) {@{Edition(request).id.toLowerCase}}?INTCMP=NGW_HEADER_@{Edition(request).id}_GU_SUBSCRIBE" class="brand-bar__item--action"
+                data-link-name="@Edition(request) : topNav : subscribe" class="brand-bar__item--action">
+                    @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                    <span class="control__info">subscribe</span>
+                </a>
             </div>
 
-            <div class="popup popup--search is-off"><div class="js-search-placeholder"></div></div>
-
-            <div class="l-header-main">
-                <span itemscope itemtype="http://schema.org/Organization">
-                    <meta itemprop="logo" content="https://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
-                    @if(metaData.section == "observer" && metaData.isFront) {
-                        <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" itemprop="url" data-component="logo">
-                            @if(metaData.hasSlimHeader) {
-                                <i class="i i-observer-logo-160"></i>
-                            } else {
-                                <span class="u-h" itemprop="name">The Observer</span>
-                                <i class="i i-observer-logo-160 mobile-only"></i>
-                                <i class="i i-observer-logo-320 hide-on-mobile"></i>
-                            }
-                        </a>
-                    } else {
-                        <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url" data-component="logo">
-                            <span class="u-h" itemprop="name">The Guardian</span>
-                            @if(metaData.hasSlimHeader) {
-                                <i class="i i-guardian-logo-160"></i>
-                            } else {
-                                <i class="i i-guardian-logo-160 mobile-only"></i>
-                                <i class="i i-guardian-logo-320 hide-on-mobile"></i>
-                                <span class="logo__tagline hide-on-mobile">Winner of the Pulitzer prize</span>
-                            }
-                        </a>
-                    }
-                    @if(metaData.hasSlimHeader) {
-                        @fragments.nav.navigationToggle(metaData)
-                    }
-                </span>
-            </div>
+            @if(SearchSwitch.isSwitchedOn) {
+                <div class="brand-bar__item has-popup popup-container brand-bar__item--has-control brand-bar__item--search" data-component="search">
+                    <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
+                       class="brand-bar__item--action popup__toggle js-search-toggle" data-toggle="popup--search"
+                       aria-haspopup="true">
+                        @fragments.inlineSvg("search-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                        <span class="control__info">search</span>
+                    </a>
+                </div>
+            }
+            @fragments.topNav.servicesLinks(page)
         </div>
-        @fragments.nav.navigation(metaData)
     </div>
+
+    <div class="popup popup--search is-off"><div class="js-search-placeholder"></div></div>
+
+    <div class="l-header-main">
+        <div class="gs-container">
+            <span itemscope itemtype="http://schema.org/Organization">
+                <meta itemprop="logo" content="https://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
+                @if(page.section == "observer" && page.isFront) {
+                    <a href="@LinkTo{@page.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" itemprop="url" data-component="logo">
+                        <span class="u-h" itemprop="name">The Observer</span>
+                        <i class="i i-observer-logo-160 mobile-only"></i>
+                        <i class="i i-observer-logo-320 hide-on-mobile"></i>
+                    </a>
+                } else {
+                    <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url" data-component="logo">
+                        <span class="u-h" itemprop="name">The Guardian</span>
+                        <i class="i i-guardian-logo-160 mobile-only"></i>
+                        <i class="i i-guardian-logo-320 hide-on-mobile"></i>
+                        <span class="logo__tagline hide-on-mobile">Winner of the Pulitzer prize</span>
+                    </a>
+                }
+            </span>
+        </div>
+    </div>
+    @fragments.nav.navigation(page)
 
 </header>

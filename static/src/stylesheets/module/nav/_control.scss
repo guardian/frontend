@@ -26,19 +26,14 @@ $control-size: 36px;
         max-width: 200px;
     }
 
-    .brand-bar__item--right & {
-        @include mq(tablet) {
-            margin: 0;
-        }
-    }
-
-    // TODO: @extend .hide-on-mobile;
     @include mq(tablet) {
         display: block;
     }
 
-    .l-header--is-slim & {
-        display: none;
+    .brand-bar__item--right & {
+        @include mq(tablet) {
+            margin: 0;
+        }
     }
 
     .brand-bar__item--profile & {
@@ -64,10 +59,6 @@ $control-size: 36px;
     .brand-bar__item--right & {
         @include mq(tablet) {
             display: none;
-        }
-
-        .l-header--is-slim & {
-            display: block;
         }
     }
 }
