@@ -472,7 +472,7 @@ object Switches {
 
   val ABSignedOut = Switch("A/B Tests", "ab-signed-out",
     "Switch for the Signed Out messaging test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
