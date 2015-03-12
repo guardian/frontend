@@ -1,6 +1,8 @@
 package controllers.commercial
 
 import common.ExecutionContexts
+import model.commercial.{FeedMissingConfigurationException, FeedSwitchOffException}
+import model.commercial.books.BestsellersAgent._
 import model.commercial.books.{BestsellersAgent, BookFinder}
 import model.{Cached, NoCache}
 import performance.MemcachedAction
@@ -8,6 +10,7 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
+import model.commercial.books.CacheNotConfiguredException
 
 object BookOffersController
   extends Controller
@@ -29,7 +32,18 @@ object BookOffersController
           Cached(componentMaxAge)(jsonFormat.nilResult)
         }
       } recover {
-        case NonFatal(e) => NoCache(jsonFormat.nilResult)
+        case e: FeedSwitchOffException =>
+          log.warn(e.getMessage)
+          NoCache(jsonFormat.nilResult)
+        case e: FeedMissingConfigurationException =>
+          log.warn(e.getMessage)
+          NoCache(jsonFormat.nilResult)
+        case e: CacheNotConfiguredException =>
+          log.warn(e.getMessage)
+          NoCache(jsonFormat.nilResult)
+        case NonFatal(e) =>
+          log.error(e.getMessage)
+          NoCache(jsonFormat.nilResult)
       }
 
     } getOrElse {

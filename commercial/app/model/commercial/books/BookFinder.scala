@@ -130,7 +130,7 @@ object MagentoService extends Logging {
               }
             case JsSuccess(book, _) => Some(bookJson)
           }
-        }.map(_.flatten)
+        }
       }
 
       result getOrElse {
@@ -168,8 +168,7 @@ object MemcachedBookDataCache extends BookDataCache with Logging with MemcachedC
 
   private def withCache[T](action: Memcached => Future[T]): Future[T] = {
     maybeCache map action getOrElse {
-      log.warn("Cache not configured")
-      Future.failed(CacheNotConfiguredException)
+      Future.failed(CacheNotConfiguredException("Memcached"))
     }
   }
 
@@ -192,6 +191,8 @@ object MemcachedBookDataCache extends BookDataCache with Logging with MemcachedC
     }
     bookData
   }
+}
 
-  object CacheNotConfiguredException extends Exception
+case class CacheNotConfiguredException(cacheName:String) extends Exception {
+  override val getMessage: String = s"$cacheName cache not configured"
 }
