@@ -1,4 +1,5 @@
 define([
+    'Promise',
     'helpers/injector',
     'helpers/fixtures',
 
@@ -7,6 +8,7 @@ define([
 
     'text!common/views/content/richLinkTag.html'
 ], function(
+    Promise,
     Injector,
     fixtures,
 
@@ -21,10 +23,12 @@ define([
         .require(['common/modules/article/rich-links', 'mocks'], function (richLinks, mocks) {
             var config = mocks.store['common/utils/config'];
             var spacefinder = mocks.store['common/modules/article/spacefinder'];
-            var getRichLinkElements = function () { return $('#article-body .element-rich-link'); };
+            var getRichLinkElements = function () {
+                return $('#article-body .element-rich-link');
+            };
 
             spacefinder.getParaWithSpace = function () {
-                return $('#article-body p').first();
+                return Promise.resolve($('#article-body p').first());
             };
 
             describe('richLinks', function () {
@@ -47,11 +51,12 @@ define([
 
                 describe('#insertTagRichLink', function () {
                     describe('given no tag rich link', function () {
-                        it('should not insert a tag rich link', function () {
-                            richLinks.insertTagRichLink();
-
-                            var richLinkElements = getRichLinkElements();
-                            expect(richLinkElements.length).toBe(0);
+                        it('should not insert a tag rich link', function (done) {
+                            richLinks.insertTagRichLink().then(function () {
+                                var richLinkElements = getRichLinkElements();
+                                expect(richLinkElements.length).toBe(0);
+                                done();
+                            });
                         });
                     });
 
@@ -70,13 +75,15 @@ define([
                             delete config.page.richLink;
                         });
 
-                        it('should insert the provided tag rich link', function () {
-                            richLinks.insertTagRichLink();
+                        it('should insert the provided tag rich link', function (done) {
+                            richLinks.insertTagRichLink().then(function () {
+                                var richLinkElements = getRichLinkElements();
+                                expect(richLinkElements.length).toBe(1);
+                                expect(richLinkElements[0].outerHTML)
+                                    .toBe(template(richLinkTagTmpl, { href: config.page.richLink }).trim());
 
-                            var richLinkElements = getRichLinkElements();
-                            expect(richLinkElements.length).toBe(1);
-                            expect(richLinkElements[0].outerHTML)
-                                .toBe(template(richLinkTagTmpl, { href: config.page.richLink }).trim());
+                                done();
+                            });
                         });
 
                         describe('given `config.page.shouldHideAdverts` is set to `true`', function () {
