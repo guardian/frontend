@@ -650,7 +650,7 @@ $c-navigation-expandable-background: colour(neutral-1);
             border-top: $navigation-height solid $c-top-header-background;
 
             .l-header--is-slim & {
-                border-top: none;
+                border-top: 0;
             }
         }
         .navigation__container--second {
@@ -705,7 +705,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         float: left;
         line-height: 47px;
         position: static;
-        border-left: none;
+        border-left: 0;
     }
 
 
