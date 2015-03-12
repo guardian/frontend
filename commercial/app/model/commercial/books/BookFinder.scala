@@ -183,10 +183,13 @@ object MemcachedBookDataCache extends BookDataCache with Logging with MemcachedC
   }
 
   def add(isbn: String, json: JsValue): Future[Boolean] = withCache { cache =>
-    log.info(s"Caching book: $json")
+    log.info(s"Caching book: $isbn -> $json")
     val bookData = cache.add(isbn, Json.stringify(json), 15.minutes)
+    bookData onSuccess {
+      case result if !result => log.error(s"Caching book $isbn failed: not added to cache")
+    }
     bookData onFailure {
-      case NonFatal(e) => log.error(s"Adding book to cache failed: ${e.getMessage}")
+      case NonFatal(e) => log.error(s"Caching book $isbn failed : ${e.getMessage}")
     }
     bookData
   }
