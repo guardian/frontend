@@ -2,12 +2,16 @@ define([
     'bean',
     'fastdom',
     'common/utils/$',
-    'common/utils/cookies'
+    'common/utils/cookies',
+    'common/utils/detect',
+    'common/utils/storage'
 ], function (
     bean,
     fastdom,
     $,
-    cookies
+    cookies,
+    detect,
+    storage
 ) {
     return function () {
         this.id = 'SignedOut';
@@ -19,12 +23,12 @@ define([
         this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Users sign back in after signing out.';
-        this.audienceCriteria = 'All signed out users';
+        this.audienceCriteria = 'All users who have signed out and are not signed in and are not on mobile and have not closed the message before';
         this.dataLinkNames = 'Signed Out Link';
         this.idealOutcome = 'Sign in rate increases';
 
         this.canRun = function () {
-            if (cookies.get('GU_SO')) {
+            if (cookies.get('GU_SO') && !(cookies.get('GU_U')) && (detect.getBreakpoint() !== 'mobile') && !(storage.local.get('gu.ab.signedout'))) {
                 return true;
             }
         };
@@ -42,10 +46,12 @@ define([
             {
                 id: 'show-message',
                 test: function () {
+                    $('.js-popup-signed-out').removeClass('u-h');
                     bean.on($('.js-popup-toggle')[0], 'click', function(e) {
                         fastdom.write(function(e) {
                             $('.js-popup-signed-out', e).addClass('u-h');
                         })
+                        storage.local.set('gu.ab.signedout', true);
                     });
                 }
             }
