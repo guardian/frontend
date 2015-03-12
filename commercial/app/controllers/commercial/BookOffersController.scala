@@ -7,6 +7,7 @@ import performance.MemcachedAction
 import play.api.mvc._
 
 import scala.concurrent.Future
+import scala.util.control.NonFatal
 
 object BookOffersController
   extends Controller
@@ -27,6 +28,8 @@ object BookOffersController
         } getOrElse {
           Cached(componentMaxAge)(jsonFormat.nilResult)
         }
+      } recover {
+        case NonFatal(e) => NoCache(jsonFormat.nilResult)
       }
 
     } getOrElse {
