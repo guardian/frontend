@@ -42,7 +42,6 @@ $c-guardian-services-action: #ffffff;
         margin-bottom: $gs-baseline * .75;
         float: left;
 
-        // TODO: Or :not on default?
         @include mq(mobileLandscape) {
             // Reset to previous value, as the breakpoint overriding this
             // does not apply for interactives.
