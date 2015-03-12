@@ -67,10 +67,7 @@ $control-size: 36px;
         }
 
         .l-header--is-slim & {
-            // Fallback
-            // TODO: Mixin
-            display: initial;
-            display: unset;
+            display: block;
         }
     }
 }

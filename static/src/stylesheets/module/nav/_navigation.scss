@@ -494,10 +494,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         height: $navigation-height;
 
         .l-header--is-slim & {
-            // Fallback
-            // TODO: Mixin
-            height: initial;
-            height: unset;
+            height: auto;
         }
     }
     .signposting,
@@ -653,10 +650,7 @@ $c-navigation-expandable-background: colour(neutral-1);
             border-top: $navigation-height solid $c-top-header-background;
 
             .l-header--is-slim & {
-                // Fallback
-                // TODO: Mixin
-                border-top: initial;
-                border-top: unset;
+                border-top: none;
             }
         }
         .navigation__container--second {
@@ -710,14 +704,8 @@ $c-navigation-expandable-background: colour(neutral-1);
     .l-header--is-slim & {
         float: left;
         line-height: 47px;
-        // Fallback
-        // TODO: Mixin
-        position: initial;
-        position: unset;
-        // Fallback
-        // TODO: Mixin
-        border-left: initial;
-        border-left: unset;
+        position: static;
+        border-left: none;
     }
 
 
