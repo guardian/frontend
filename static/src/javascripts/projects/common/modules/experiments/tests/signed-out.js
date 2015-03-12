@@ -39,18 +39,16 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-                    console.log("control");
-                }
+                test: function () { }
             },
             {
                 id: 'show-message',
                 test: function () {
                     $('.js-popup-signed-out').removeClass('u-h');
-                    bean.on($('.js-popup-toggle')[0], 'click', function(e) {
-                        fastdom.write(function(e) {
-                            $('.js-popup-signed-out', e).addClass('u-h');
-                        })
+                    bean.on($('.js-popup-toggle')[0], 'click', function () {
+                        fastdom.write(function () {
+                            $('.js-popup-signed-out').addClass('u-h');
+                        });
                         storage.local.set('gu.ab.signedout', true);
                     });
                 }
