@@ -21,24 +21,6 @@ $c-guardian-services-action: #ffffff;
         @include clearfix;
         background: $c-top-header-background;
     }
-
-    .brand-bar__item--subscribe,
-    .brand-bar__item--jobs,
-    .brand-bar__item--soulmates,
-    .brand-bar__item--edition {
-        display: none;
-    }
-
-    // Override breakpoints for normal header
-    .brand-bar__popup--jobs,
-    .brand-bar__popup--soulmates,
-    .brand-bar__popup--edition,
-    .brand-bar__popup--membership {
-        // Fallback
-        // TODO: Mixin
-        display: initial;
-        display: unset;
-    }
 }
 
 .logo-wrapper {
