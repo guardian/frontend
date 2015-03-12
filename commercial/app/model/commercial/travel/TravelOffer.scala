@@ -8,9 +8,18 @@ import org.joda.time.DateTime
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-case class TravelOffer(id: Int, title: String, offerUrl: String, imageUrl: String, fromPrice: String,
-                       earliestDeparture: DateTime, keywordIds: List[String], countries: List[String], category: String,
-                       tags: List[String], duration: String, position: Int) {
+case class TravelOffer(id: Int,
+                       title: String,
+                       offerUrl: String,
+                       imageUrl: String,
+                       fromPrice: String,
+                       earliestDeparture: DateTime,
+                       keywordIdSuffixes: List[String],
+                       countries: List[String],
+                       category: String,
+                       tags: List[String],
+                       duration: String,
+                       position: Int) {
 
   val durationInWords: String = duration match {
     case "1" => "1 night"

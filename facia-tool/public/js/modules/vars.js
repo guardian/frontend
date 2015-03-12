@@ -43,6 +43,8 @@ define([
 
         detectPressFailureMs: 10000,
 
+        detectPendingChangesInClipboard: 4000,
+
         maxFronts: 500,
 
         filterTypes: {
@@ -72,7 +74,7 @@ define([
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
-        apiSearchParams:       'show-elements=video&show-tags=all&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail,liveBloggingNow',
+        apiSearchParams:       'show-elements=video&show-tags=all&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail,liveBloggingNow,membershipAccess',
 
         imageCdnDomain:        'guim.co.uk',
         previewBase:           'http://preview.gutools.co.uk',
@@ -91,6 +93,10 @@ define([
         CONST: CONST,
         model: undefined,
         priority: pageConfig.priority === 'editorial' ? undefined : pageConfig.priority,
+        identity: {
+            email: pageConfig.email,
+            avatarUrl: pageConfig.avatarUrl
+        },
         state: {
             config: {}
         }

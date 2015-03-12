@@ -7,6 +7,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
+    'common/views/svgs',
     'text!common/views/commercial/creatives/expandable-v2.html'
 ], function (
     bean,
@@ -17,6 +18,7 @@ define([
     mediator,
     storage,
     template,
+    svgs,
     expandableV2Tpl
 ) {
 
@@ -29,8 +31,8 @@ define([
         this.isClosed     = true;
 
         if (detect.isBreakpoint({min: 'tablet'})) {
-            this.closedHeight = Math.min(bonzo.viewport().height / 3, 300);
-            this.openedHeight = Math.min(bonzo.viewport().height * 2 / 3, 600);
+            this.closedHeight = '250';
+            this.openedHeight = '500';
         } else {
             this.closedHeight = '150';
             this.openedHeight = '300';
@@ -38,7 +40,7 @@ define([
     };
 
     ExpandableV2.prototype.listener = function () {
-        if ((window.pageYOffset + bonzo.viewport().height) > (this.$ad.offset().top + this.openedHeight)) {
+        if ((window.pageYOffset + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
             // expires in 1 week
             var week = 1000 * 60 * 60 * 24 * 7;
 
@@ -47,7 +49,6 @@ define([
             $('.ad-exp__open-chevron').toggleClass('chevron-down');
             this.$ad.css('height', this.openedHeight);
             this.isClosed = false;
-
             return true;
         }
     };
@@ -56,23 +57,27 @@ define([
         var videoHeight = this.closedHeight - 24,
             videoWidth = (videoHeight * 16) / 9,
             leftMargin = (this.params.videoPositionH === 'center' ?
-                videoWidth / -2 : 0
+                'margin-left: ' + videoWidth / -2 + 'px; ' : ''
             ),
             leftPosition = (this.params.videoPositionH === 'left' ?
-                ' left: ' + this.params.videoHorizSpace + 'px;' : ''
+                'left: ' + this.params.videoHorizSpace + 'px; ' : ''
             ),
             rightPosition = (this.params.videoPositionH === 'right' ?
-                ' right: ' + this.params.videoHorizSpace + 'px' : ''
+                'right: ' + this.params.videoHorizSpace + 'px; ' : ''
             ),
             videoDesktop = {
                 video: (this.params.videoURL !== '') ?
-                    '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="margin-left: ' + leftMargin + 'px;' + leftPosition + rightPosition + '"></iframe>' : ''
+                    '<iframe id="myYTPlayer" width="' + videoWidth + '" height="' + videoHeight + '" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable_video expandable_video--horiz-pos-' + this.params.videoPositionH + '" style="' + leftMargin + leftPosition + rightPosition + '"></iframe>' : ''
             },
-            showmore = {
-                show: (this.params.showMore === 'yes') ?
-                    '<button class="ad-exp__open-chevron ad-exp__open"><i class="i i-arrow-white-down-36"></i></button>' : ''
+            showmoreArrow = {
+                showArrow: (this.params.showMoreType === 'arrow-only' || this.params.showMoreType === 'plus-and-arrow') ?
+                    '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>' : ''
             },
-            $expandablev2 = $.create(template(expandableV2Tpl, merge(this.params, showmore, videoDesktop)));
+            showmorePlus = {
+                showPlus: (this.params.showMoreType === 'plus-only' || this.params.showMoreType === 'plus-and-arrow') ?
+                    '<button class="ad-exp__close-button ad-exp__open"><i class="i i-close-icon-white-small"></i></button>' : ''
+            },
+            $expandablev2 = $.create(template(expandableV2Tpl, merge(this.params, showmoreArrow, showmorePlus, videoDesktop)));
 
         this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
         this.$button = $('.ad-exp__open', $expandablev2);

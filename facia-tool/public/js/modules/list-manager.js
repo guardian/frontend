@@ -103,7 +103,7 @@ define([
             }
             alreadyInitialised = true;
 
-            mediator.on('collection:updates', function(opts) {
+            listeners.on('collection:updates', function(opts) {
                 var options = _.extend(opts, newItems);
                 if (opts.alternateAction) {
                     alternateAction(options);

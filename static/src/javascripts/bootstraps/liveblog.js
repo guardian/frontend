@@ -10,10 +10,9 @@ define([
     'common/utils/scroller',
     'common/utils/template',
     'common/utils/url',
-    'common/modules/article/flyers',
+    'common/modules/article/rich-links',
     'common/modules/commercial/liveblog-adverts',
     'common/modules/experiments/affix',
-    'common/modules/gallery/lightbox',
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
     'common/modules/ui/dropdowns',
@@ -33,10 +32,9 @@ define([
     scroller,
     template,
     url,
-    flyers,
+    richLinks,
     liveblogAdverts,
     Affix,
-    Lightbox,
     LiveFilter,
     AutoUpdate,
     dropdowns,
@@ -246,14 +244,13 @@ define([
         robust('lb-autoupdate', modules.createAutoUpdate);
         robust('lb-timestamp',  modules.keepTimestampsCurrent);
         robust('lb-updates',    modules.handleUpdates);
-        robust('lb-flyers',     flyers.upgradeFlyers);
+        robust('lb-richlinks',  richLinks.upgradeRichLinks);
 
         // re-use modules from article bootstrap
         robust('lb-article',    article.modules.initOpenCta);
         robust('lb-fence',      article.modules.initFence);
         robust('lb-twitter',    article.modules.initTruncateAndTwitter);
         robust('lb-sharing',    article.modules.initSelectionSharing);
-        robust('lb-lightbox',   Lightbox.init);
 
         robust('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
     }

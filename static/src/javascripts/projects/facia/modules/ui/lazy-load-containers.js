@@ -18,7 +18,7 @@ define([
     return function () {
         var $frontBottom = bonzo(qwery('.js-front-bottom')),
             containers = qwery('.js-container--lazy-load'),
-            lazyLoad = _.throttle(function () {
+            lazyLoad = function () {
                 if (containers.length === 0) {
                     mediator.off('window:scroll', lazyLoad);
                 } else {
@@ -37,7 +37,7 @@ define([
                         }
                     });
                 }
-            }, 200);
+            };
 
         mediator.on('window:scroll', lazyLoad);
         lazyLoad();

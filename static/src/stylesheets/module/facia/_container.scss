@@ -614,4 +614,8 @@ $header-image-size-desktop: 100px;
     @include mq($until: desktop) {
         display: none;
     }
+
+    .is-not-modern & {
+        display: none;
+    }
 }

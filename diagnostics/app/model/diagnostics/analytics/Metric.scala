@@ -3,6 +3,7 @@ package model.diagnostics.analytics
 import java.util.concurrent.atomic.AtomicLong
 
 import common.Logging
+import conf.Switches
 
 object Metric extends Logging {
 
@@ -28,8 +29,6 @@ object Metric extends Logging {
     ("video-tech-flash", CountMetric("video-tech-flash")),
     ("video-tech-html5", CountMetric("video-tech-html5")),
 
-    ("dnt", CountMetric("do-not-track")),
-
     ("sm-page-view", CountMetric("sm-page-view")),
     ("sm-interaction-on-same-page", CountMetric("sm-interaction-on-same-page")),
     ("sm-another-guardian-page", CountMetric("sm-another-guardian-page")),
@@ -38,8 +37,13 @@ object Metric extends Logging {
     ("sm-clicked-most-popular-component", CountMetric("sm-clicked-most-popular-component")),
 
     ("ipad-old-start", CountMetric(s"ipad-old-start")),
-    ("ipad-old-after-5", CountMetric(s"ipad-old-after-5"))
+    ("ipad-old-after-5", CountMetric(s"ipad-old-after-5")),
+
+    ("tech-feedback", CountMetric("tech-feedback"))
   ) ++ iPhoneMetrics
+
+  lazy val techFeedback = Switches.FeedbackLink // remove tech-feedback metric when this switch is removed.
+
 
   private val iPhoneMetrics: Seq[(String, CountMetric)] = Seq(4, 6).flatMap( model =>
     Seq(

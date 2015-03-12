@@ -25,7 +25,7 @@
     "grunt-karma": "0.10.1",
     "grunt-mkdir": "0.1.2",
     "grunt-pagespeed": "0.3.0",
-    "grunt-px-to-rem": "0.3.1",
+    "grunt-px-to-rem": "0.4.0",
     "grunt-scss-lint": "0.3.3",
     "grunt-shell": "1.1.1",
     "grunt-svgmin": "^2.0.0",

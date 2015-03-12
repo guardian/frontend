@@ -34,8 +34,8 @@
                 </figure>
             }
         } else {
-            @fragments.img(article.mainPicture, article.hasShowcaseMainPicture, article.isFeature,
-                Some(article.url), isLightboxable = article.isMainMediaLightboxable)
+            @fragments.img(article.mainPicture, article.hasShowcaseMainPicture, article.isFeature, false,
+                Some(article.url), article.isMainMediaLightboxable)
         }
     }
 }

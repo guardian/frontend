@@ -14,7 +14,7 @@ object Dependencies {
   val awsSdk = "com.amazonaws" % "aws-java-sdk" % "1.9.16"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
-  val contentApiClient = "com.gu" %% "content-api-client" % "5.1"
+  val contentApiClient = "com.gu" %% "content-api-client" % "5.2"
   val crosswordsApiClient = "com.gu" %% "crosswords-api-client" % "0.5"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "1.35.1"
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"

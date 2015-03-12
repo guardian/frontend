@@ -13,7 +13,6 @@
 .l-footer,
 .element-video,
 .byline-img,
-.quoted,
 .element-embed,
 .gallery__most-popular,
 .block-share--gallery-mobile,
@@ -33,8 +32,13 @@
 .element--thumbnail,
 .media-primary--showcase,
 .content__standfirst a,
-.content__standfirst br {
+.content__standfirst br,
+figure {
     display: none !important;
+}
+
+.sudoku figure {
+    display: block !important;
 }
 
 * {
@@ -88,7 +92,7 @@ p {
 
 .l-side-margins:before,
 .l-side-margins:after {
-    background-color: #ffffff !important;
+    display: none;
 }
 
 .drop-cap {

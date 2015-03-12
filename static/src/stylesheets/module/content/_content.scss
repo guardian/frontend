@@ -381,7 +381,14 @@
     margin-bottom: $gs-baseline / 2;
 
     time {
-        display: block;
+        display: inline-block;
+
+        @include mq(desktop) {
+            .content--interactive & {
+                display: inline;
+                padding-right: $gs-gutter/4;
+            }
+        }
     }
 
     i {
@@ -798,3 +805,14 @@
     display: none;
 }
 
+.content--article,
+.content--liveblog,
+.content--gallery,
+.content--media,
+.content--image,
+.content--interactive {
+    .social--top {
+        padding-top: $gs-baseline / 2;
+        padding-bottom: $gs-baseline / 2;
+    }
+ }

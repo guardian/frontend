@@ -914,6 +914,10 @@ collection-widget:first-child .collection {
     color: #CCCCCC;
 }
 
+.article__ammends .label--premium {
+    color: #b71c1c;
+}
+
 .article__ammends .label--draft {
     color: #ffc107;
 }

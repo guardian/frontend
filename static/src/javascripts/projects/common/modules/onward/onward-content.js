@@ -32,7 +32,7 @@ define([
         badges.add(container);
         register.end('series-content');
         mediator.emit('modules:onward:loaded');
-        mediator.emit('ui:images:upgradePicture', this.context);
+        mediator.emit('ui:images:upgradePictures');
     };
 
     OnwardContent.prototype.error = function () {

@@ -12,14 +12,7 @@ object Cors extends Results {
 
     val responseHeaders = (defaultAllowHeaders ++ request.headers.get("Access-Control-Request-Headers").toList) mkString ","
 
-    val origin = if (conf.Switches.DefaultOriginSwitch.isSwitchedOn && request.headers.get("Origin").isEmpty) {
-      // Not nice, but this is temporary code to investigate Cors behaviour.
-      Some("")
-    } else {
-      request.headers.get("Origin")
-    }
-
-    origin match {
+    request.headers.get("Origin") match {
       case None => result
       case Some(requestOrigin) => {
         val headers = allowedMethods.map("Access-Control-Allow-Methods" -> _).toList ++ List(

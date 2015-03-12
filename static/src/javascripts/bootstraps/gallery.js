@@ -7,8 +7,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/component',
-    'common/modules/gallery/lightbox'
+    'common/modules/component'
 ], function (
     bean,
     bonzo,
@@ -18,8 +17,7 @@ define([
     $,
     config,
     mediator,
-    Component,
-    LightboxGallery
+    Component
 ) {
 
     var verticallyResponsiveImages = function () {
@@ -52,23 +50,14 @@ define([
             mostViewed.manipulationType = 'html';
             mostViewed.endpoint = '/gallery/most-viewed.json';
             mostViewed.ready = function () {
-                mediator.emit('ui:images:upgradePicture', container);
+                mediator.emit('module:gallery-most-popular:loaded', container);
             };
             mostViewed.fetch(container, 'html');
         },
         ready = function () {
-            LightboxGallery.init();
-
             verticallyResponsiveImages();
-            $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
 
-            forEach(qwery('.js-gallery-img.responsive-img'), function (responsiveImage) {
-                bean.one(responsiveImage, 'load', function (e) {
-                    bonzo(e.currentTarget).removeClass('u-h').previous().hide();
-                });
-            });
-
-            mediator.emit('ui:images:upgrade', $('.gallery2')[0]);
+            mediator.emit('ui:images:upgradePictures');
 
             mediator.emit('page:gallery:ready');
             transcludeMostPopular();

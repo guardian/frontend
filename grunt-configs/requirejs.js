@@ -14,9 +14,8 @@ module.exports = function(grunt, options) {
                 fastclick:            'components/fastclick/fastclick',
                 fastdom:              'components/fastdom/index',
                 fence:                'components/fence/fence',
-                imager:               'components/imager.js/container',
                 lodash:               'components/lodash-amd',
-                picturefill:          'components/picturefill/picturefill',
+                picturefill:          'projects/common/utils/picturefill',
                 Promise:              'components/native-promise-only/npo.src',
                 qwery:                'components/qwery/qwery',
                 raven:                'components/raven-js/raven',
@@ -46,10 +45,6 @@ module.exports = function(grunt, options) {
                 dir: options.requirejsDir,
                 keepBuildDir: false,
                 shim: {
-                    imager: {
-                        deps: ['components/imager.js/imager'],
-                        exports: 'Imager'
-                    },
                     omniture: {
                         exports: 's'
                     }
@@ -105,11 +100,35 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
+        "image-content": {
+            options: {
+                name: 'bootstraps/image-content',
+                out: options.staticTargetDir + 'javascripts/bootstraps/image-content.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
         facia: {
             options: {
                 name: 'bootstraps/facia',
                 out: options.staticTargetDir + 'javascripts/bootstraps/facia.js',
                 exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        football: {
+            options: {
+                name: 'bootstraps/football',
+                    out: options.staticTargetDir + 'javascripts/bootstraps/football.js',
+                    exclude: [
                     'core',
                     'bootstraps/app',
                     'text',
@@ -153,10 +172,6 @@ module.exports = function(grunt, options) {
                 name: 'bootstraps/admin',
                 out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
                 shim: {
-                    imager: {
-                        deps: ['components/imager.js/imager'],
-                        exports: 'Imager'
-                    },
                     omniture: {
                         exports: 's'
                     }
@@ -203,10 +218,6 @@ module.exports = function(grunt, options) {
                     },
                     videojsembed: {
                         deps: ['videojs']
-                    },
-                    imager: {
-                        deps: ['components/imager.js/imager'],
-                        exports: 'Imager'
                     },
                     omniture: {
                         exports: 's'
