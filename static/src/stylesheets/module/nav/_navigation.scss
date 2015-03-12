@@ -691,7 +691,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     @include fs-header(1);
     line-height: $navigation-height;
     padding: 0 $gs-gutter / 2;
-    min-width: $navigation-toggler-width;
     background: $c-navigation-toggle-background;
     -moz-background-clip: padding-box;
     -webkit-background-clip: padding-box;
@@ -700,6 +699,12 @@ $c-navigation-expandable-background: colour(neutral-1);
     // TODO: Why is this needed?
     border-left: 2px solid $c-navigation-toggle-shadow;
     outline: none;
+
+    &,
+    // Override breakpoint
+    .l-header--is-slim & {
+        min-width: $navigation-toggler-width;
+    }
 
     .l-header--is-slim & {
         float: left;
@@ -752,6 +757,10 @@ $c-navigation-expandable-background: colour(neutral-1);
         @include mq($until: wide) {
             display: none;
         }
+    }
+
+    .l-header--is-slim & {
+        display: none;
     }
 
     .has-page-skin & {
