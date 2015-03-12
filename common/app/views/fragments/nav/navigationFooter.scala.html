@@ -4,11 +4,7 @@
 @import views.support.RenderClasses
 
 @defining(Edition(request).navigation) { navigation =>
-    <div class="@RenderClasses(Map(
-                    ("navigation", true),
-                    ("js-navigation-footer", true),
-                    ("navigation--collapsed", true)
-                ))">
+    <div class="js-navigation-footer navigation-container navigation-container--collapsed">
         <div class="gs-container">
             <div class="navigation__inner" aria-hidden="true">
                 <div class="navigation__scroll">
@@ -16,11 +12,11 @@
                         @fragments.nav.topNavigation(metaData, navigation)
                     </div>
                 </div>
-                <a class="navigation__toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-footer">
+                <a class="navigation-toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-footer">
                     <i class="burger-icon"></i>
-                    <span class="navigation__toggle-label navigation__toggle-label--open"
-                    aria-haspopup="true" aria-controls="all-sections-popup" aria-label="view all sections">all<span class="navigation__toggle-label__extra"> sections</span></span>
-                    <span class="navigation__toggle-label navigation__toggle-label--close" aria-label="close all sections">close</span>
+                    <span class="navigation-toggle-label navigation-toggle-label--open"
+                    aria-haspopup="true" aria-controls="all-sections-popup" aria-label="view all sections">all<span class="navigation-toggle-label__extra"> sections</span></span>
+                    <span class="navigation-toggle-label navigation-toggle-label--close" aria-label="close all sections">close</span>
                 </a>
             </div>
             <div class="js-mega-nav navigation__expandable" data-component="all-footer-nav" data-link-name="global navigation: footer : sections">

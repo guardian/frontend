@@ -53,6 +53,9 @@
    Global modules
    ========================================================================== */
 
+// Popup "object" must appear above brand-bar "component"
+// Also included by global
+@import 'module/_popup';
 @import 'module/nav/_nav';
 @import 'module/nav/_brand-bar';
 @import 'module/nav/_control';
