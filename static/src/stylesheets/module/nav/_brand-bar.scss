@@ -135,6 +135,7 @@
         display: none;
     }
 }
+
 .brand-bar__item--subscribe {
     .control__icon-wrapper {
         border: 0;
@@ -175,8 +176,8 @@
 }
 
 // Hide on desktop
-.brand-bar__popup--membership,
-.brand-bar__popup--soulmates {
+.brand-bar__popup--soulmates,
+.brand-bar__popup--membership {
     @include mq(desktop) {
         display: none;
     }
