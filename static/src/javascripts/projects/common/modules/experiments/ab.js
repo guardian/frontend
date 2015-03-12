@@ -16,7 +16,7 @@ define([
     'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/identity-benefits',
     'common/modules/experiments/tests/chimney',
-    'common/modules/experiments/tests/sticky-mpu'
+    'common/modules/experiments/tests/mt-sticky-mpu'
 ], function (
     raven,
     filter,
@@ -35,7 +35,7 @@ define([
     KruxAudienceScience,
     IdentityBenefits,
     Chimney,
-    StickyMPU
+    MtStickyMpu
 ) {
 
     var ab,
@@ -44,7 +44,7 @@ define([
             new KruxAudienceScience(),
             new IdentityBenefits(),
             new Chimney(),
-            new StickyMPU()
+            new MtStickyMpu()
         ],
         participationsKey = 'gu.ab.participations';
 

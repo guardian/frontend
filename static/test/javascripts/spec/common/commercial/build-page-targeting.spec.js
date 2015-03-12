@@ -49,8 +49,8 @@ define([
                     };
                     mocks.store['common/modules/experiments/ab'].getParticipations = function () {
                         return {
-                            HighCommercialComponent: {
-                                variant: 'control'
+                            MtStickyMpu: {
+                                variant: 'variant'
                             }
                         }
                     };
@@ -117,7 +117,7 @@ define([
                 });
 
                 it('should set correct ab param', function () {
-                    expect(buildPageTargeting().ab).toBe('1');
+                    expect(buildPageTargeting().ab).toEqual(['MtStickyMpu-v']);
                 });
 
                 it('should set correct criteo params', function () {
@@ -166,7 +166,7 @@ define([
                         p: 'ng',
                         bp: 'mobile',
                         at: 'ng101',
-                        ab: '1'
+                        ab: ['MtStickyMpu-v']
                     });
                 });
 

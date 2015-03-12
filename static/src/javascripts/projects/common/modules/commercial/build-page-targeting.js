@@ -69,8 +69,9 @@ define([
                 abParticipations = ab.getParticipations();
 
             forIn(abParticipations, function (n, key) {
-                if (n.variant) {
-                    abParams.push(key + '-' + n.variant);
+                if (key.indexOf('Mt') > -1 && n.variant &&
+                    n.variant !== 'notintest') {
+                    abParams.push(key + '-' + n.variant.substring(0, 1));
                 }
             });
 

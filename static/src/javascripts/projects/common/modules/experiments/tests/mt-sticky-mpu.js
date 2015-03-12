@@ -4,9 +4,9 @@ define([
     config
 ) {
     return function () {
-        this.id = 'StickyMpu';
-        this.start = '2015-03-09';
-        this.expiry = '2015-05-09';
+        this.id = 'MtStickyMpu';
+        this.start = '2015-03-12';
+        this.expiry = '2015-05-12';
         this.author = 'Zofia Korcz';
         this.description = 'Sticky mpu everywhere where possible instead of the standard RH mpu';
         this.audience = 0.01;
