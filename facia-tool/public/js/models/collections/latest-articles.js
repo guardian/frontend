@@ -240,26 +240,6 @@ define([
             this.startPoller = function() {}; // make idempotent
         };
 
-        this.afterAdd = function (element) {
-            element = $(element);
-            var lastSearch = self.lastSearch();
-            if (lastSearch && lastSearch.isPoll && element.is('.article')) {
-                $(element).animate({
-                    backgroundColor: '#fffde7'
-                }, 800, null, function () {
-                    $(element).animate({
-                        backgroundColor: '#fff'
-                    }, 800);
-                });
-            }
-        };
-        // Remove this block of code when the switch is gone
-        var isHighlightEnabled = parseQueryParams(window.location.search).flash === 'please';
-        if (!isHighlightEnabled) {
-            this.afterAdd = function () {};
-        }
-        // ^ until here
-
         this.dispose = function () {
             clearTimeout(deBounced);
             clearInterval(poller);
