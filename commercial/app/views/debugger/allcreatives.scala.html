@@ -445,6 +445,8 @@
                     <option value="scotland">Scotland</option>
                     <option value="young">Young</option>
                     <option value="mature">Mature</option>
+                    <option value="men">Men</option>
+                    <option value="women">Women</option>
                 </select>
             </label>
         </form>
@@ -457,7 +459,7 @@
         require([
             'bean',
             'qwery',
-            'common/utils/$',    
+            'common/utils/$',
             'common/modules/commercial/creatives/commercial-component'
         ])
             .then(function(
@@ -467,7 +469,7 @@
                 CommercialComponent
             ) {
                 var $soulmatesFeed = $('.js-merchandising-soulmates-feed');
-                
+
                 bean.on(qwery('.js-soulmates-feed select')[0], 'change', function (event) {
                     var commercialComponent = new CommercialComponent($soulmatesFeed[0], {
                         type: 'soulmatesGroup',
