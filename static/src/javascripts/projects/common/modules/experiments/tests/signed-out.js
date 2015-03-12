@@ -33,9 +33,6 @@ define([
             }
         };
 
-        /**
-         * nothing happens in here, we just use this to bucket users
-         */
         this.variants = [
             {
                 id: 'control',
