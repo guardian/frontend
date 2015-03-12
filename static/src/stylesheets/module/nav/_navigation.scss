@@ -841,7 +841,7 @@ $burger-width: 16px;
     }
 
     .l-header--is-slim & {
-        margin-top: 18px;
+        margin-top: $gs-baseline * 1.5;
     }
 }
 
