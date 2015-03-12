@@ -29,7 +29,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     }
 
     .js-off & {
-        .navigation-container--collapsed {
+        .navigation--collapsed {
             height: auto;
         }
 

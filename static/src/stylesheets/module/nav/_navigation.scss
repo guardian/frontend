@@ -20,13 +20,14 @@ $c-signposting-action: colour(news-default);
 $c-signposting-background: $c-navigation-base;
 
 $c-top-navigation-action: #ffffff;
+$c-top-navigation-background: #00456e; // one-off colour for nav bg
 
 $c-local-navigation-action: colour(neutral-1);
 $c-local-navigation-background: $c-navigation-base;
 
 $c-global-navigation-background: $c-navigation-base;
 $c-global-navigation-title: #ffffff;
-$c-global-navigation-title-background: $c-top-header-background;
+$c-global-navigation-title-background: $c-top-navigation-background;
 $global-navigation-title-width: $left-column + $gs-gutter;
 $global-navigation-title-width-wide: $left-column-wide + $gs-gutter;
 $c-global-navigation-action: colour(neutral-1);
@@ -71,10 +72,6 @@ $c-navigation-expandable-background: colour(neutral-1);
         -moz-background-clip: padding-box;
         -webkit-background-clip: padding-box;
         background-clip: padding-box;
-
-        .l-header--is-slim & {
-            display: none;
-        }
     }
 
     &:after {
@@ -83,10 +80,8 @@ $c-navigation-expandable-background: colour(neutral-1);
         z-index: -1;
     }
 
-    .navigation-container--collapsed & {
-        &:after {
-            display: none;
-        }
+    &.navigation--collapsed:after {
+        display: none;
     }
 }
 .top-navigation,
@@ -112,12 +107,13 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
 }
-.top-navigation {
+.top-navigation,
+.navigation__main {
     position: relative;
-    background: $c-top-header-background;
+    background: $c-top-navigation-background;
 }
 .navigation__container--first {
-    background: $c-top-header-background;
+    background: $c-top-navigation-background;
     min-height: $navigation-height;
 }
 .navigation__expandable {
@@ -149,7 +145,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         padding-left: $navigation-h-space-between-items/2;
     }
 
-    .navigation-container--expanded .navigation--has-local-navigation & {
+    .navigation--expanded.navigation--has-local-navigation & {
         @include mq($until: navigationBreakOnTwoLevels) {
             border-bottom: 1px solid $c-global-navigation-border;
         }
@@ -163,7 +159,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
 
-    .navigation-container--expanded & {
+    .navigation--expanded & {
         @include mq($until: tablet) {
             border-right: 0;
         }
@@ -267,14 +263,14 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
 }
-.navigation-container--collapsed .navigation--has-signposting {
+.navigation--collapsed.navigation--has-signposting {
     .local-navigation,
     .top-navigation {
         padding-left: $navigation-h-space-between-items/2;
     }
 }
 @include mq(mobileLandscape) {
-    .navigation-container--collapsed {
+    .navigation--collapsed {
         .local-navigation,
         .top-navigation {
             padding-left: $navigation-h-space-between-items/2;
@@ -463,8 +459,8 @@ $c-navigation-expandable-background: colour(neutral-1);
 /* State: collapsed
    ========================================================================== */
 
-.navigation-container--collapsed {
-    .navigation-container--collapsed__hide {
+.navigation--collapsed {
+    .navigation--collapsed__hide {
         display: none !important;
     }
     .navigation__container {
@@ -477,10 +473,6 @@ $c-navigation-expandable-background: colour(neutral-1);
             white-space: nowrap;
         }
 
-        .l-header--is-slim & {
-            display: none;
-        }
-
         &::-webkit-scrollbar {
             display: none;
         }
@@ -488,14 +480,10 @@ $c-navigation-expandable-background: colour(neutral-1);
     .navigation__expandable {
         display: none;
     }
-    .navigation,
+    &,
     .signposting,
     .local-navigation {
         height: $navigation-height;
-
-        .l-header--is-slim & {
-            height: auto;
-        }
     }
     .signposting,
     .local-navigation {
@@ -528,11 +516,9 @@ $c-navigation-expandable-background: colour(neutral-1);
 /* State: expanded
    ========================================================================== */
 
-.navigation-container--expanded {
-    .navigation {
-        z-index: 2;
-        height: auto;
-    }
+.navigation--expanded {
+    z-index: 2;
+    height: auto;
 
     .top-navigation {
         display: none;
@@ -565,7 +551,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 }
 
-.navigation-container--expanded .local-navigation__item,
+.navigation--expanded .local-navigation__item,
 .global-navigation__child {
     @include mq($until: tablet) {
         float: left;
@@ -608,10 +594,10 @@ $c-navigation-expandable-background: colour(neutral-1);
             background: $c-global-navigation-border;
             z-index: 1;
         }
-        .navigation-container--collapsed & {
+        &.navigation--collapsed {
             height: $navigation-height * 2;
         }
-        .navigation-container--expanded & {
+        &.navigation--expanded {
             .top-navigation__item {
                 visibility: hidden;
             }
@@ -647,11 +633,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
         .navigation__container--first {
             background: $c-local-navigation-background;
-            border-top: $navigation-height solid $c-top-header-background;
-
-            .l-header--is-slim & {
-                border-top: 0;
-            }
+            border-top: $navigation-height solid $c-top-navigation-background;
         }
         .navigation__container--second {
             position: absolute;
@@ -681,8 +663,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 /* Toggle button
    ========================================================================== */
 
-// TODO: Move
-.navigation-toggle {
+.navigation__toggle {
     z-index: 2;
     position: absolute;
     right: 0;
@@ -691,27 +672,14 @@ $c-navigation-expandable-background: colour(neutral-1);
     @include fs-header(1);
     line-height: $navigation-height;
     padding: 0 $gs-gutter / 2;
+    min-width: $navigation-toggler-width;
     background: $c-navigation-toggle-background;
     -moz-background-clip: padding-box;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
     text-align: left;
-    // TODO: Why is this needed?
     border-left: 2px solid $c-navigation-toggle-shadow;
     outline: none;
-
-    &,
-    // Override breakpoint
-    .l-header--is-slim & {
-        min-width: $navigation-toggler-width;
-    }
-
-    .l-header--is-slim & {
-        float: left;
-        line-height: 47px;
-        position: static;
-        border-left: 0;
-    }
 
 
     &,
@@ -724,7 +692,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         background: mix($c-navigation-toggle-background, #ffffff, 92%);
     }
 
-    .navigation-container--expanded & {
+    .navigation--expanded & {
         border-left-color: transparent;
     }
 
@@ -746,21 +714,17 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
 }
-.navigation-toggle-label__extra {
+.navigation__toggle-label__extra {
     display: none;
 
     @include mq(leftCol) {
         display: inline;
     }
 
-    &.navigation-toggle-label__extra--browse {
+    &.navigation__toggle-label__extra--browse {
         @include mq($until: wide) {
             display: none;
         }
-    }
-
-    .l-header--is-slim & {
-        display: none;
     }
 
     .has-page-skin & {
@@ -769,11 +733,11 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
 }
-.navigation-toggle-label--close,
-.navigation-container--expanded .navigation-toggle-label--open {
+.navigation__toggle-label--close,
+.navigation--expanded .navigation__toggle-label--open {
     display: none;
 }
-.navigation-container--expanded .navigation-toggle-label--close {
+.navigation--expanded .navigation__toggle-label--close {
     display: inline;
 }
 
@@ -820,7 +784,7 @@ $burger-width: 16px;
     }
 
     @if not $old-ie {
-        .navigation-container--expanded & {
+        .navigation--expanded & {
             height: 0;
 
             &:before {
@@ -848,19 +812,15 @@ $burger-width: 16px;
     @if $old-ie {
         display: none;
     }
-
-    .l-header--is-slim & {
-        margin-top: $gs-baseline * 1.5;
-    }
 }
 
 /**
  * Signed Out Popup styling
  */
-
+ 
 $signedout-arrow-size: $gs-gutter / 2;
 $signedout-padding: $gs-gutter / 3;
-
+ 
 .popup.popup--signed-out {
     left: 0 !important;
     width: gs-span(3);
