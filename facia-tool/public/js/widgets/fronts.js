@@ -37,6 +37,7 @@ define([
         this.mode = ko.observable(params.mode || 'draft');
         this.flattenGroups = ko.observable(params.mode === 'treats');
         this.maxArticlesInHistory = this.confirmSendingAlert() ? 20 : 5;
+        this.controlsVisible = ko.observable(false);
 
         this.front.subscribe(this.onFrontChange.bind(this));
         this.mode.subscribe(this.onModeChange.bind(this));
@@ -77,6 +78,11 @@ define([
                 presser.pressDraft(this.front());
             }
         };
+
+        this.isControlsVisible = ko.observable(sparklines.isEnabled());
+        this.controlsText = ko.pureComputed(function () {
+            return 'Sparklines: ' + this.sparklinesOptions().hours + 'h';
+        }, this);
 
         this.ophanPerformances = ko.pureComputed(function () {
             return vars.CONST.ophanFrontBase + encodeURIComponent('/' + this.front());
@@ -139,6 +145,17 @@ define([
         this.refreshRelativeTimes(vars.CONST.pubTimeRefreshMs || 60000);
 
         this.load(frontId);
+
+        this.sparklinesOptions = ko.observable({
+            hours: 1,
+            interval: 10
+        });
+        this.setSparklines = function (hours, interval) {
+            this.sparklinesOptions({
+                hours: hours,
+                interval: interval
+            });
+        };
         sparklines.subscribe(this);
         mediator.emit('front:loaded', this);
     }
