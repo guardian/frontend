@@ -4,7 +4,8 @@
 @import common.Edition
 @import common.editions._
 
-<div class="brand-bar__item--right" data-component="guardian-services">
+<div class="brand-bar__item--right brand-bar__item--right--@Edition(request).id.toLowerCase()-edition"
+     data-component="guardian-services">
     @if(Edition(request) == Uk){
         <div class="brand-bar__item brand-bar__item--jobs">
             <a class="brand-bar__item--action" data-link-name="uk : topNav : jobs"
@@ -14,7 +15,7 @@
             <a class="brand-bar__item--action" data-link-name="uk : topNav : soulmates"
                href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">dating</a>
         </div>
-        <div class="brand-bar__item has-popup brand-bar__item--has-control">
+        <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more">
             <a href="#guardian-services-top-menu" class="brand-bar__item--action popup__toggle"
                data-toggle="top-bar__popup--more" data-link-name="uk : topNav : more"
                aria-haspopup="true" aria-controls="guardian-services-top-menu">
@@ -71,12 +72,11 @@
         </div>
     }
     @if(Edition(request) == Us){
-        <!-- TODO: -->
-        <div class="brand-bar__item hide-on-mobile">
+        <div class="brand-bar__item brand-bar__item--jobs">
             <a class="brand-bar__item--action" data-link-name="us : topNav : jobs"
                href="http://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS">jobs</a>
         </div>
-        <div class="brand-bar__item has-popup brand-bar__item--has-control mobile-only">
+        <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more">
             <a href="#guardian-services-top-menu" class="brand-bar__item--action popup__toggle"
                data-toggle="top-bar__popup--more" data-link-name="topNav : more"
                aria-haspopup="true" aria-controls="guardian-services-top-menu">
@@ -88,24 +88,26 @@
             <div class="popup is-off top-bar__popup--more" id="guardian-services-top-menu">
                 <h3 class="popup__group-header">from the guardian:</h3>
                 <ul class="popup__group">
-                    <li class="popup__item mobile-only">
+                    <li class="popup__item brand-bar__popup--jobs">
                         <a class="brand-bar__item--action" data-link-name="us: topNav : jobs"
                            href="http://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS">jobs</a>
                     </li>
                 </ul>
-                <h3 class="popup__group-header mobile-only">change edition:</h3>
-                <ul class="popup__group mobile-only">
-                    <li class="popup__item">
-                        @Edition.others(request).map{ edition =>
-                            <a class="brand-bar__item--action brand-bar__item--inline-action" data-edition="@edition.id"
-                                data-link-name="switch to @edition.id edition"
-                                href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
-                                title="Switch to the @edition.id edition">
-                                <span class="u-h">switch to the </span>@edition.id<span class="u-h"> edition</span>
-                            </a>
-                        }
-                    </li>
-                </ul>
+                <div class="brand-bar__popup--edition">
+                    <h3 class="popup__group-header">change edition:</h3>
+                    <ul class="popup__group">
+                        <li class="popup__item">
+                            @Edition.others(request).map{ edition =>
+                                <a class="brand-bar__item--action brand-bar__item--inline-action" data-edition="@edition.id"
+                                    data-link-name="switch to @edition.id edition"
+                                    href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
+                                    title="Switch to the @edition.id edition">
+                                    <span class="u-h">switch to the </span>@edition.id<span class="u-h"> edition</span>
+                                </a>
+                            }
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     }

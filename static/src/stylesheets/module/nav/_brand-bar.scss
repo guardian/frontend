@@ -149,6 +149,22 @@
     }
 }
 
+// Mobile only
+.brand-bar__item--more {
+    .brand-bar__item--right--us-edition & {
+        @include mq(tablet) {
+            display: none;
+
+            .l-header--is-slim & {
+                // Fallback
+                // TODO: Mixin
+                display: initial;
+                display: unset;
+            }
+        }
+    }
+}
+
 .brand-bar__item--edition {
     @include mq($until: tablet) {
         display: none;
