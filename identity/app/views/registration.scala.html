@@ -1,4 +1,4 @@
-@(page: model.MetaData with tracking.TrackingParams, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, registrationForm: Form[(String, String, String, String, String, Boolean, Boolean)], socialSigninEmailRemoved: Boolean = false)(implicit request: RequestHeader)
+@(page: model.MetaData with tracking.TrackingParams, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, registrationForm: Form[(String, String, String, String, String, Boolean, Boolean)], socialEmailRemoved: Option[Boolean])(implicit request: RequestHeader)
 
 @import form.IdFormHelpers._
 @import views.html.fragments.form.{inputField, checkbox}
@@ -19,7 +19,7 @@
         @if(registrationForm.globalError.isDefined) {
             <div class="form__error">@registrationForm.globalErrors.map(_.message).mkString(", ")</div>
         } else {
-            @socialSigninEmailError(socialSigninEmailRemoved)
+            @socialSigninEmailError(socialEmailRemoved)
         }
 
         <fieldset class="fieldset">

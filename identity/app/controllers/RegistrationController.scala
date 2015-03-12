@@ -46,8 +46,9 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
     val idRequest = idRequestParser(request)
     val filledForm = registrationForm.bindFromFlash.getOrElse(registrationForm.fill("", "", "", "", "", true, false))
+    val socialEmailRemoved = request.getQueryString("fbEmailError").map(_ == "true")
 
-    NoCache(Ok(views.html.registration(page.registrationStart(idRequest), idRequest, idUrlBuilder, filledForm)))
+    NoCache(Ok(views.html.registration(page.registrationStart(idRequest), idRequest, idUrlBuilder, filledForm, socialEmailRemoved)))
   }
 
   def renderRegistrationConfirmation(returnUrl: String) = Action{ implicit request =>

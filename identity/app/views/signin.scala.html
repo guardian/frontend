@@ -1,4 +1,4 @@
-@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, signinForm: Form[(String, String, Boolean)], socialSigninEmailRemoved: Boolean = false)(implicit request: RequestHeader)
+@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, signinForm: Form[(String, String, Boolean)], socialEmailRemoved: Option[Boolean])(implicit request: RequestHeader)
 
 @import form.IdFormHelpers._
 @import views.html.fragments.form.{inputField, checkbox}
@@ -18,7 +18,7 @@
         @if(signinForm.globalError.isDefined) {
             <div class="form__error">@signinForm.globalErrors.map(_.message).mkString(", ")</div>
         } else {
-            @socialSigninEmailError(socialSigninEmailRemoved)
+            @socialSigninEmailError(socialEmailRemoved)
         }
 
         <fieldset class="fieldset">
