@@ -11,6 +11,12 @@
     }
 }
 
+// Items
+
+// We alter the brand bar items and popups based on two contexts: the edition
+// and whether the header is in slim mode. Beware of increased specifcity (due
+// to context matching).
+
 .brand-bar__item {
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -106,6 +112,9 @@
     }
 }
 
+// Context overrides: hide brand bar items: slim header, edition, and various
+// breakpoints
+
 .brand-bar__item--search {
     padding-left: 0;
 
@@ -114,26 +123,47 @@
     }
 }
 
+.brand-bar__item--subscribe {
+    // Desktop only
+    @include mq($until: desktop) {
+        display: none;
+    }
 
-.brand-bar__item--jobs,
-.brand-bar__item--subscribe,
-.brand-bar__item--soulmates,
-.brand-bar__item--edition {
     .l-header--is-slim & {
         display: none;
     }
 }
 
 .brand-bar__item--edition {
-    cursor: pointer;
+    .l-header--is-slim & {
+        display: none;
+    }
 }
 
-// Desktop only
-.brand-bar__item--subscribe,
+.brand-bar__item--jobs {
+    .brand-bar__item--right--uk-edition &,
+    .brand-bar__item--right--us-edition & {
+        .l-header--is-slim & {
+            display: none;
+        }
+    }
+}
+
 .brand-bar__item--soulmates {
+    // Desktop only
     @include mq($until: desktop) {
         display: none;
     }
+
+    .brand-bar__item--right--uk-edition & {
+        .l-header--is-slim & {
+            display: none;
+        }
+    }
+}
+
+.brand-bar__item--edition {
+    cursor: pointer;
 }
 
 .brand-bar__item--subscribe {
@@ -142,15 +172,36 @@
     }
 }
 
-// Hide on mobile
-.brand-bar__item--jobs {
+.brand-bar__item--jobs,
+.brand-bar__item--edition {
+    // Hide on mobile
     @include mq($until: tablet) {
         display: none;
     }
 }
 
-// Mobile only
 .brand-bar__item--more {
+    .brand-bar__item--right--us-edition &,
+    .brand-bar__item--right--au-edition & {
+        // Mobile only
+        @include mq(tablet) {
+            display: none;
+
+            .l-header--is-slim & {
+                // Fallback
+                // TODO: Mixin
+                display: initial;
+                display: unset;
+            }
+        }
+    }
+}
+
+// Popups
+
+// Mobile only
+.brand-bar__popup--jobs {
+    .brand-bar__item--right--uk-edition &,
     .brand-bar__item--right--us-edition & {
         @include mq(tablet) {
             display: none;
@@ -165,36 +216,50 @@
     }
 }
 
-.brand-bar__item--edition {
-    @include mq($until: tablet) {
-        display: none;
-    }
-}
-
-.brand-bar__popup--jobs,
-.brand-bar__popup--soulmates,
-.brand-bar__popup--edition,
-.brand-bar__popup--membership {
-    .l-header--is-slim & {
-        // Fallback
-        // TODO: Mixin
-        display: initial;
-        display: unset;
-    }
-}
-
-// Mobile only
-.brand-bar__popup--jobs,
 .brand-bar__popup--edition {
-    @include mq(tablet) {
-        display: none;
+    .brand-bar__item--right--uk-edition & {
+        // Mobile only
+        @include mq(tablet) {
+            display: none;
+
+            .l-header--is-slim & {
+                // Fallback
+                // TODO: Mixin
+                display: initial;
+                display: unset;
+            }
+        }
     }
 }
 
-// Hide on desktop
-.brand-bar__popup--soulmates,
+.brand-bar__popup--soulmates {
+    .brand-bar__item--right--uk-edition & {
+        // Hide on desktop
+        @include mq(desktop) {
+            display: none;
+
+            .l-header--is-slim & {
+                // Fallback
+                // TODO: Mixin
+                display: initial;
+                display: unset;
+            }
+        }
+    }
+}
+
 .brand-bar__popup--membership {
-    @include mq(desktop) {
-        display: none;
+    .brand-bar__item--right--uk-edition & {
+        // Hide on desktop
+        @include mq(desktop) {
+            display: none;
+
+            .l-header--is-slim & {
+                // Fallback
+                // TODO: Mixin
+                display: initial;
+                display: unset;
+            }
+        }
     }
 }
