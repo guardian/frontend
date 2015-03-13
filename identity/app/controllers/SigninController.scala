@@ -42,7 +42,6 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
     logger.trace("Rendering signin form")
     val idRequest = idRequestParser(request)
-
     NoCache(Ok(views.html.signin(page, idRequest, idUrlBuilder, filledForm)))
   }
 
