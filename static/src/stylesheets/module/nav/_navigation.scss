@@ -9,7 +9,7 @@ $c-navigation-base: colour(neutral-5);
 
 $navigation-height: $gs-row-height;
 
-$navigation-toggler-width: 44px;
+$navigation-toggler-width: 36px;
 $navigation-toggler-width-halffull: 132px;
 $navigation-toggler-width-full: 186px;
 
@@ -746,6 +746,15 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
 }
+
+.navigation-toggle-label {
+    .l-header--is-slim & {
+        @include mq($until: mobileLandscape) {
+            display: none;
+        }
+    }
+}
+
 .navigation-toggle-label__extra {
     display: none;
 
@@ -800,6 +809,12 @@ $burger-width: 16px;
     vertical-align: top;
     margin: 13px 6px 0 0; // We need to position burger icon to the middle and push text after
     position: relative;
+
+    .l-header--is-slim & {
+        @include mq($until: mobileLandscape) {
+            margin-right: 0;
+        }
+    }
 
     &:before,
     &:after {
