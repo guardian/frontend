@@ -68,16 +68,21 @@ $c-guardian-services-action: #ffffff;
 /* Pre-header
    ========================================================================== */
 
+// We have two selectors for `.l-header-pre` because of an edge case in IE
+// stylesheets, whereby breakpoint styles are preceed nested rules in the
+// cascade.
 .l-header-pre {
-    min-width: gs-span(2);
-    z-index: 100;
-    position: relative;
-
     &,
     // Override breakpoint
     .l-header--is-slim & {
         float: left;
     }
+}
+
+.l-header-pre {
+    min-width: gs-span(2);
+    z-index: 100;
+    position: relative;
 
     @include mq(tablet) {
         float: none;
