@@ -22,10 +22,6 @@ trait Initializable[T] extends ExecutionContexts with Logging {
     }
   }
 
-  initialized.future.onFailure {
-    case e: Exception => log.error(s"Initialization failed: ${e.getMessage}")
-  }
-
   def initialized(t: T): Unit = initialized.trySuccess(t)
 
   def onInitialized: Future[T] = initialized.future
