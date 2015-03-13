@@ -18,6 +18,7 @@ System.config({
     "jquery-mockjax": "npm:jquery-mockjax@1.6.1",
     "jquery-ui": "github:jquery/jquery-ui@1.11.3",
     "knockout": "npm:knockout@3.2.0",
+    "numeral": "npm:numeral@1.5.3",
     "raven-js": "npm:raven-js@1.1.17",
     "sinon": "npm:sinon@1.13.0",
     "text": "github:systemjs/plugin-text@0.0.2",
@@ -119,6 +120,9 @@ System.config({
     },
     "npm:knockout@3.2.0": {
       "process": "github:jspm/nodelibs-process@0.1.1"
+    },
+    "npm:numeral@1.5.3": {
+      "fs": "github:jspm/nodelibs-fs@0.1.1"
     },
     "npm:os-browserify@0.1.2": {
       "os": "github:jspm/nodelibs-os@0.1.0"
