@@ -1,21 +1,21 @@
 package model.commercial.soulmates
 
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
 import conf.CommercialConfiguration
 import conf.Switches.SoulmatesFeedSwitch
-import model.commercial.{FeedReader, FeedRequest}
+import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest}
 import play.api.libs.json.{JsArray, JsValue}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-trait SoulmatesFeed extends ExecutionContexts {
+trait SoulmatesFeed extends ExecutionContexts with Logging {
 
   protected val adTypeName: String
 
   protected val path: String
 
-  protected lazy val url: Option[String] = {
+  protected lazy val maybeUrl: Option[String] = {
     CommercialConfiguration.getProperty("soulmates.api.url") map (url => s"$url/$path")
   }
 
@@ -36,13 +36,18 @@ trait SoulmatesFeed extends ExecutionContexts {
   }
 
   def loadAds(): Future[Seq[Member]] = {
-    val request = FeedRequest(
-      feedName = adTypeName,
-      switch = SoulmatesFeedSwitch,
-      url = url,
-      timeout = 10.seconds
-    )
-    FeedReader.readSeqFromJson(request)(parse)
+    maybeUrl map { url =>
+      val request = FeedRequest(
+        feedName = adTypeName,
+        switch = SoulmatesFeedSwitch,
+        url = url,
+        timeout = 10.seconds
+      )
+      FeedReader.readSeqFromJson(request)(parse)
+    } getOrElse {
+      log.warn(s"Missing URL for $adTypeName feed")
+      Future.failed(FeedMissingConfigurationException(adTypeName))
+    }
   }
 
 }
