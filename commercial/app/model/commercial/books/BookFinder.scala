@@ -5,7 +5,7 @@ import common.ExecutionContexts.memcachedExecutionContext
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import conf.Switches.BookLookupSwitch
-import model.commercial.{FeedReader, FeedRequest}
+import model.commercial.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api.libs.json._
@@ -106,7 +106,7 @@ object MagentoService extends Logging {
 
         val request = FeedRequest(
           feedName = "Book Lookup",
-          url = Some(s"${props.urlPrefix}/$isbn"),
+          url = s"${props.urlPrefix}/$isbn",
           timeout = 3.seconds,
           switch = BookLookupSwitch)
 
@@ -121,17 +121,16 @@ object MagentoService extends Logging {
               MagentoException(bookJson) match {
                 case Some(me) if me.code == 404 =>
                   log.warn(s"MagentoService could not find isbn $isbn")
+                  None
                 case Some(me) =>
-                  val responseStatus = s"${me.code}: ${me.message}"
-                  log.error(s"MagentoService failed to get ${request.url}: $responseStatus")
+                  throw FeedReadException(request, me.code, me.message)
                 case None =>
                   val jsonErr = JsError.toFlatJson(e).toString()
-                  log.error(s"MagentoService failed to parse ${request.url}: $jsonErr")
+                  throw FeedParseException(request, jsonErr)
               }
-              None
             case JsSuccess(book, _) => Some(bookJson)
           }
-        }.map(_.flatten)
+        }
       }
 
       result getOrElse {
@@ -169,8 +168,7 @@ object MemcachedBookDataCache extends BookDataCache with Logging with MemcachedC
 
   private def withCache[T](action: Memcached => Future[T]): Future[T] = {
     maybeCache map action getOrElse {
-      log.warn("Cache not configured")
-      Future.failed(CacheNotConfiguredException)
+      Future.failed(CacheNotConfiguredException("Memcached"))
     }
   }
 
@@ -193,6 +191,8 @@ object MemcachedBookDataCache extends BookDataCache with Logging with MemcachedC
     }
     bookData
   }
+}
 
-  object CacheNotConfiguredException extends Exception
+case class CacheNotConfiguredException(cacheName:String) extends Exception {
+  override val getMessage: String = s"$cacheName cache not configured"
 }

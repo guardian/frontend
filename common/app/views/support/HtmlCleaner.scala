@@ -39,9 +39,28 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
+object BlockquoteCleaner extends HtmlCleaner {
+
+  override def clean(document: Document): Document = {
+    val quotedBlockquotes = document.getElementsByTag("blockquote").filter(_.hasClass("quoted"))
+    val wrapBlockquoteChildren = (blockquoteElement: Element) => {
+      val container = document.createElement("div")
+      container.addClass("quoted__contents")
+      // Get children before mutating
+      val children = blockquoteElement.children()
+      blockquoteElement.prependChild(container)
+      container.insertChildren(0, children)
+    }
+
+    quotedBlockquotes.foreach(wrapBlockquoteChildren)
+    document
+  }
+
+}
+
 case class R2VideoCleaner(article: Article) extends HtmlCleaner {
 
-override def clean(document: Document): Document = {
+  override def clean(document: Document): Document = {
 
     val legacyVideos = document.getElementsByTag("video").filter(_.hasClass("gu-video")).filter(_.parent().tagName() != "figure")
 

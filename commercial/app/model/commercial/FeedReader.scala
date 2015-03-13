@@ -8,9 +8,9 @@ import play.api.Play.current
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.{WS, WSSignatureCalculator}
 
-import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.{Duration, _}
-import scala.util.Try
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.control.NonFatal
 import scala.xml.{Elem, XML}
 
 object FeedReader extends Logging {
@@ -19,22 +19,14 @@ object FeedReader extends Logging {
               signature: Option[WSSignatureCalculator] = None,
               validResponseStatuses: Seq[Int] = Seq(200))
              (parse: String => T)
-             (implicit ec: ExecutionContext): Future[Option[T]] = {
+             (implicit ec: ExecutionContext): Future[T] = {
 
-    def readUrl(url: String): Future[Option[T]] = {
+    def readUrl(url: String): Future[T] = {
 
-      def recordLoad(duration: Long):Unit= {
+      def recordLoad(duration: Long): Unit = {
         val feedName = request.feedName.toLowerCase.replaceAll("\\s+", "-")
         val key = s"$feedName-feed-load-time"
         CloudWatch.put("Commercial", Map(s"$key" -> duration.toDouble))
-      }
-
-      def parseBody(url: String, body: String): Option[T] = {
-        Try(parse(body)).map(Some(_)).recover {
-          case e: Exception =>
-            log.error(s"Parsing ${request.feedName} feed from $url failed: ${e.getMessage}")
-            None
-        }.get
       }
 
       val start = System.currentTimeMillis
@@ -47,54 +39,49 @@ object FeedReader extends Logging {
       }
       val futureResponse = requestHolder.get()
 
-      futureResponse map { response =>
+      val contents = futureResponse map { response =>
         response.status match {
           case status if validResponseStatuses.contains(status) =>
             recordLoad(System.currentTimeMillis - start)
             val body = request.responseEncoding map {
               response.underlying[AHCResponse].getResponseBody
             } getOrElse response.body
-            parseBody(url, body)
-          case other =>
-            recordLoad(-1)
-            val feedName = request.feedName
-            val statusText = response.statusText
-            log.error(s"Reading $feedName feed from $url failed: $other: $statusText")
-            None
+            parse(body)
+          case invalid =>
+            throw FeedReadException(request, response.status, response.statusText)
         }
-      } recover {
-        case e: Exception =>
-          recordLoad(-1)
-          log.error(s"Reading ${request.feedName} feed from $url failed: ${e.getMessage}")
-          None
       }
+
+      contents onFailure {
+        case NonFatal(e) => recordLoad(-1)
+      }
+
+      contents
     }
 
-     request.switch.onInitialized flatMap { switch =>
-       if (switch.isSwitchedOn) {
-        request.url map readUrl getOrElse {
-          log.warn(s"Missing URL for ${request.feedName} feed")
-          Future.successful(None)
-        }
-      } else {
-        log.warn(s"Reading ${request.feedName} feed failed: Switch is off")
-        Future.successful(None)
-      }
+    request.switch.onInitialized flatMap { switch =>
+      if (switch.isSwitchedOn) readUrl(request.url)
+      else Future.failed(FeedSwitchOffException(request.feedName))
+    } recoverWith {
+      case NonFatal(e) => Future.failed(FeedSwitchOffException(request.feedName))
     }
-
   }
 
   def readSeq[T](request: FeedRequest)
                 (parse: String => Seq[T])
                 (implicit ec: ExecutionContext): Future[Seq[T]] = {
-    read(request)(parse) map {
-      case Some(items) =>
-        log.info(s"Loaded ${items.size} ${request.feedName} from ${request.url.get}")
-        items
-      case None =>
-        log.warn(s"Empty ${request.feedName} feed")
-        Nil
+    val contents = read(request)(parse)
+
+    contents onSuccess {
+      case items => log.info(s"Loaded ${items.size} ${request.feedName} from ${request.url}")
     }
+
+    contents onFailure {
+      case e: FeedSwitchOffException => log.warn(e.getMessage)
+      case NonFatal(e) => log.error(e.getMessage)
+    }
+
+    contents
   }
 
   def readSeqFromXml[T](request: FeedRequest)
@@ -112,8 +99,32 @@ object FeedReader extends Logging {
       parse(Json.parse(body))
     }
   }
-
 }
 
 
-case class FeedRequest(feedName: String, switch: Switch, url: Option[String], timeout: Duration = 2.seconds, responseEncoding: Option[String] = None)
+case class FeedRequest(feedName: String,
+                       switch: Switch,
+                       url: String,
+                       timeout: Duration = 2.seconds,
+                       responseEncoding: Option[String] = None)
+
+
+case class FeedSwitchOffException(feedName: String) extends Exception {
+  override val getMessage: String = s"Reading $feedName feed failed: Switch is off"
+}
+
+case class FeedReadException(request: FeedRequest,
+                             statusCode: Int,
+                             statusText: String) extends Exception {
+  override val getMessage: String =
+    s"Reading ${request.feedName} feed from ${request.url} failed: $statusCode: $statusText"
+}
+
+case class FeedParseException(request: FeedRequest, causeMessage: String) extends Exception {
+  override val getMessage: String =
+    s"Parsing ${request.feedName} feed from ${request.url} failed: $causeMessage"
+}
+
+case class FeedMissingConfigurationException(feedName: String) extends Exception {
+  override val getMessage: String = s"Missing configuration for $feedName feed"
+}

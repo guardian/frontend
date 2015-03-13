@@ -1,0 +1,12 @@
+@(metaData: model.MetaData)(implicit request: RequestHeader)
+
+@import common._
+@import views.support.RenderClasses
+
+@defining(Edition(request).navigation) { navigation =>
+    <a class="navigation-toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-header">
+        <i class="burger-icon"></i><span class="navigation-toggle-label navigation-toggle-label--open"
+              aria-haspopup="true" aria-controls="all-sections-popup" aria-label="browse all sections"><span class="navigation-toggle-label__extra navigation-toggle-label__extra--browse">browse </span>all<span class="navigation-toggle-label__extra"> sections</span></span>
+        <span class="navigation-toggle-label navigation-toggle-label--close" aria-label="close all sections">close</span>
+    </a>
+}

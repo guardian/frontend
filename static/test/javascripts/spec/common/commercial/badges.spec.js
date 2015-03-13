@@ -111,9 +111,7 @@ define([
                                     $('.facia-container', $fixtureContainer)
                                         .addClass('js-sponsored-front')
                                         .attr('data-sponsorship', badge.type);
-                                    badges.init();
-
-                                    fastdom.defer(function () {
+                                    badges.init().then(function () {
                                         var $adSlot = $('.container:first-child .ad-slot', $fixtureContainer)
                                             .first();
 
@@ -133,9 +131,7 @@ define([
                                             'data-sponsor': sponsor,
                                             'data-sponsorship': badge.type
                                         })[0];
-                                badges.init();
-
-                                fastdom.defer(function () {
+                                badges.init().then(function () {
                                     expect($('.ad-slot', container).html()).toBe(preBadges(badge.type, sponsor));
                                     done();
                                 });
@@ -165,8 +161,7 @@ define([
                             $('.container', $fixtureContainer).first()
                                 .addClass('js-sponsored-container')
                                 .attr('data-sponsorship', badge.type);
-                            badges.init();
-                            fastdom.defer(function () {
+                            badges.init().then(function () {
                                 var $adSlot = $('.facia-container .container:first-child .ad-slot', $fixtureContainer).first();
                                 expect($adSlot.data('name')).toBe(badge.name);
                                 expect($adSlot.hasClass('ad-slot--paid-for-badge--front')).toBeTruthy();
@@ -180,9 +175,7 @@ define([
                             $('.container', $fixtureContainer)
                                 .addClass('js-sponsored-container')
                                 .attr('data-sponsorship', badge.type);
-                            badges.init();
-
-                            fastdom.defer(function () {
+                            badges.init().then(function () {
                                 expect(qwery('.facia-container .ad-slot[data-name="' + badge.name + '"]').length).toBe(1);
                                 done();
                             });
@@ -198,9 +191,7 @@ define([
                                         'data-sponsor': sponsor,
                                         'data-sponsorship': badge.type
                                     })[0];
-                            badges.init();
-
-                            fastdom.defer(function () {
+                            badges.init().then(function () {
                                 expect($('.ad-slot', container).html()).toBe(preBadges(badge.type, sponsor));
                                 done();
                             });
@@ -224,9 +215,7 @@ define([
                                 'data-keywords': 'russia,ukraine',
                                 'data-sponsorship': 'sponsoredfeatures'
                             });
-                        badges.init();
-
-                        fastdom.defer(function () {
+                        badges.init().then(function () {
                             expect($('.facia-container .ad-slot', $fixtureContainer).data('keywords')).toBe('russia,ukraine');
                             done();
                         });
@@ -240,8 +229,7 @@ define([
                                 'data-keywords': 'russia,ukraine',
                                 'data-sponsorship': 'sponsoredfeatures'
                             });
-                        badges.init();
-                        fastdom.defer(function () {
+                        badges.init().then(function () {
                             expect($('.facia-container .ad-slot', $fixtureContainer).data('keywords')).toBe('russia,ukraine');
                             done();
                         });
@@ -251,8 +239,7 @@ define([
                         var $containers = $('.container', $fixtureContainer)
                             .addClass('js-sponsored-container')
                             .attr('data-sponsorship', 'sponsoredfeatures');
-                        badges.init();
-                        fastdom.defer(function () {
+                        badges.init().then(function () {
                             expect(qwery('#dfp-ad--spbadge1', $containers[0]).length).toBe(1);
                             expect(qwery('#dfp-ad--spbadge2', $containers[1]).length).toBe(1);
                             done();
@@ -263,8 +250,7 @@ define([
                         var $container = $('.container', $fixtureContainer).first()
                             .addClass('js-sponsored-container')
                             .attr('data-sponsorship', 'sponsoredfeatures');
-                        badges.add($container);
-                        fastdom.defer(function () {
+                        badges.add($container).then(function () {
                             expect(qwery('#dfp-ad--spbadge1', $container[0]).length).toBe(1);
                             done();
                         });
