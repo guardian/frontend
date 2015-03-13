@@ -94,21 +94,23 @@ define([
                 );
             }));
 
-            sponsoredContainersPromise = Promise.all(map($('.js-sponsored-container'), function (container) {
-                if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
-                    var $container = bonzo(container);
+            sponsoredContainersPromise = sponsoredFrontPromise.then(function() {
+                return Promise.all(map($('.js-sponsored-container'), function (container) {
+                    if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
+                        var $container = bonzo(container);
 
-                    renderAd(
-                        container,
-                        $container.data('sponsorship'),
-                        {
-                            sponsor:  $container.data('sponsor'),
-                            series:   $container.data('series'),
-                            keywords: $container.data('keywords')
-                        }
-                    );
-                }
-            }));
+                        renderAd(
+                            container,
+                            $container.data('sponsorship'),
+                            {
+                                sponsor:  $container.data('sponsor'),
+                                series:   $container.data('series'),
+                                keywords: $container.data('keywords')
+                            }
+                        );
+                    }
+                }));
+            });
 
             return Promise.all([sponsoredFrontPromise, sponsoredContainersPromise]);
         },
@@ -124,7 +126,7 @@ define([
                     $container.hasClass('js-sponsored-container') &&
                     qwery('.ad-slot--paid-for-badge', container).length === 0
                 ) {
-                    renderAd(
+                    return renderAd(
                         container,
                         $container.data('sponsorship'),
                         {
@@ -142,6 +144,7 @@ define([
             // for testing
             reset: function () {
                 for (var type in badgesConfig) {
+
                     badgesConfig[type].count = 0;
                 }
             }
