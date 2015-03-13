@@ -26,15 +26,15 @@
     "type": "git",
     "url": "https://github.com/sass-mq/sass-mq"
   },
-  "homepage": "https://github.com/guardian/sass-mq",
-  "version": "3.0.1",
-  "_release": "3.0.1",
+  "homepage": "https://github.com/sass-mq/sass-mq",
+  "version": "3.0.2",
+  "_release": "3.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "v3.0.1",
-    "commit": "7b2f0003f8c7a48bd4689ee393151a217c1cb614"
+    "tag": "v3.0.2",
+    "commit": "05160f53077a5ec93e558cc95bb94323f7469746"
   },
-  "_source": "git://github.com/guardian/sass-mq.git",
+  "_source": "git://github.com/sass-mq/sass-mq.git",
   "_target": "~3.0.0",
   "_originalSource": "sass-mq"
 }
