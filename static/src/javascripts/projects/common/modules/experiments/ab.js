@@ -43,7 +43,6 @@ define([
             new HighCommercialComponent(),
             new KruxAudienceScience(),
             new IdentityBenefits(),
-            new Chimney(),
             new MtMaster(),
             new SignedOut()
         ],
