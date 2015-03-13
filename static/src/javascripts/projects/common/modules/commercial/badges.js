@@ -94,7 +94,7 @@ define([
                 );
             }));
 
-            sponsoredContainersPromise = sponsoredFrontPromise.then(function() {
+            sponsoredContainersPromise = sponsoredFrontPromise.then(function () {
                 return Promise.all(map($('.js-sponsored-container'), function (container) {
                     if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
                         var $container = bonzo(container);
