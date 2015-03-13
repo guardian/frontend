@@ -31,7 +31,7 @@ define([
     Fluid250.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     Fluid250.prototype.updateBgPosition = function () {
-        var bgpositionx = this.params.backgroundPosition.split(" ")[0];
+        var bgpositionx = this.params.backgroundPosition.split(' ')[0];
         $('.creative--fluid250').css('background-position', bgpositionx + ' ' + window.pageYOffset + 'px').css('background-repeat', 'repeat-y');
     };
 
