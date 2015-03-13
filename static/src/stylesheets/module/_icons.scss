@@ -46,7 +46,6 @@ blockquote.quoted:before {
     }
 
     & > .quoted__contents {
-        float: left;
         // Do not allow text to wrap around blockquote icon
         overflow: hidden;
     }
