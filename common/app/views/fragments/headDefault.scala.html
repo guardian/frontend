@@ -1,21 +1,23 @@
 @(content: model.Content, showBadge: Boolean = false)(implicit request: RequestHeader)
 
-<header class="content__head u-cf">
-    <div class="gs-container">
-        <div class="content__main-column">
+@if(!content.isImmersive) {
+    <header class="content__head u-cf">
+        <div class="gs-container">
+            <div class="content__main-column">
 
-            @fragments.meta.metaInline(content)
+                @fragments.meta.metaInline(content)
 
-            <h1 class="content__headline js-score" itemprop="headline">@Html(content.headline)</h1>
+                <h1 class="content__headline js-score" itemprop="headline">@Html(content.headline)</h1>
 
-            @if(!content.delegate.isVideo && !content.delegate.isGallery) {
-                @fragments.standfirst(content)
-            }
+                @if(!content.delegate.isVideo && !content.delegate.isGallery) {
+                    @fragments.standfirst(content)
+                }
 
-            @if(showBadge) {
-                @fragments.commercial.badge(content)
-            }
+                @if(showBadge) {
+                    @fragments.commercial.badge(content)
+                }
 
+            </div>
         </div>
-    </div>
-</header>
+    </header>
+}
