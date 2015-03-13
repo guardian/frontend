@@ -4,7 +4,7 @@ define([
     config
 ) {
     return function () {
-        this.id = 'MtStickyMpu';
+        this.id = 'MtMaster';
         this.start = '2015-03-12';
         this.expiry = '2015-05-12';
         this.author = 'Zofia Korcz';

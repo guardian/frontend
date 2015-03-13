@@ -94,10 +94,10 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                var mtStickyMpuTest = ab.getParticipations().MtStickyMpu;
+                var mtMasterTest = ab.getParticipations().MtMaster;
 
-                if (ab.testCanBeRun('MtStickyMpu') &&
-                    mtStickyMpuTest && mtStickyMpuTest.variant === 'variant') {
+                if (ab.testCanBeRun('MtMaster') &&
+                    mtMasterTest && mtMasterTest.variant === 'variant') {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         new StickyMpu($adSlot).create();
                     }

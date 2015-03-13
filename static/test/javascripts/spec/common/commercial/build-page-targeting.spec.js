@@ -49,7 +49,7 @@ define([
                     };
                     mocks.store['common/modules/experiments/ab'].getParticipations = function () {
                         return {
-                            MtStickyMpu: {
+                            MtMaster: {
                                 variant: 'variant'
                             }
                         }
@@ -117,7 +117,7 @@ define([
                 });
 
                 it('should set correct ab param', function () {
-                    expect(buildPageTargeting().ab).toEqual(['MtStickyMpu-v']);
+                    expect(buildPageTargeting().ab).toEqual(['MtMaster-v']);
                 });
 
                 it('should set correct criteo params', function () {
@@ -166,7 +166,7 @@ define([
                         p: 'ng',
                         bp: 'mobile',
                         at: 'ng101',
-                        ab: ['MtStickyMpu-v']
+                        ab: ['MtMaster-v']
                     });
                 });
 

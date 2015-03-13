@@ -16,7 +16,7 @@ define([
     'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/identity-benefits',
     'common/modules/experiments/tests/chimney',
-    'common/modules/experiments/tests/mt-sticky-mpu',
+    'common/modules/experiments/tests/mt-master',
     'common/modules/experiments/tests/signed-out'
 ], function (
     raven,
@@ -36,7 +36,7 @@ define([
     KruxAudienceScience,
     IdentityBenefits,
     Chimney,
-    MtStickyMpu,
+    MtMaster,
     SignedOut
 ) {
 
@@ -46,7 +46,7 @@ define([
             new KruxAudienceScience(),
             new IdentityBenefits(),
             new Chimney(),
-            new MtStickyMpu(),
+            new MtMaster(),
             new SignedOut()
         ],
         participationsKey = 'gu.ab.participations';
@@ -221,6 +221,7 @@ define([
                     return (test.id === testId);
                 })
                 .forEach(function (test) {
+                    console.log(test, variant);
                     addParticipation(test, variant);
                 })
                 .valueOf();
