@@ -9,7 +9,7 @@ $c-navigation-base: colour(neutral-5);
 
 $navigation-height: $gs-row-height;
 
-$navigation-toggler-width: 36px;
+$navigation-toggler-width: 44px;
 $navigation-toggler-width-halffull: 132px;
 $navigation-toggler-width-full: 186px;
 
@@ -699,11 +699,11 @@ $c-navigation-expandable-background: colour(neutral-1);
     // TODO: Why is this needed?
     border-left: 2px solid $c-navigation-toggle-shadow;
     outline: none;
+    min-width: $navigation-toggler-width;
 
-    &,
-    // Override breakpoint
+    // Remove redundant min-width and override breakpoint
     .l-header--is-slim & {
-        min-width: $navigation-toggler-width;
+        min-width: 0;
     }
 
     .l-header--is-slim & {
