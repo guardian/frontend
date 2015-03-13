@@ -57,7 +57,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
       def loadFromDisk = {
         val url = Play.classloader(Play.current).getResource(s"assets/inline-svgs/$path")
-        IOUtils.toString(url)
+        Option(url).map(IOUtils.toString).getOrElse("")
       }
 
       memoizedSvg.getOrElseUpdate(path, loadFromDisk)
