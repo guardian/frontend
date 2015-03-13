@@ -221,7 +221,6 @@ define([
                     return (test.id === testId);
                 })
                 .forEach(function (test) {
-                    console.log(test, variant);
                     addParticipation(test, variant);
                 })
                 .valueOf();
