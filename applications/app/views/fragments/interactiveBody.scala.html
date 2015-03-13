@@ -2,14 +2,13 @@
 @import common.Edition
 @import views.support.TrailCssClasses.articleToneClass
 
-@if((page.interactive.hideUi && HideInteractiveUi.isSwitchedOn) || page.interactive.isImmersive) {
-
-    @interactiveBodyRaw(page.interactive)
+@if((page.interactive.hideUi && conf.Switches.HideInteractiveUi.isSwitchedOn) || page.interactive.isImmersive) {
+    @bodyRaw(page.interactive)
 } else {
-    @interactiveBody(page.interactive)
+    @body(page.interactive)
 }
 
-@interactiveBodyRaw(interactive: model.Interactive) = {
+@bodyRaw(interactive: model.Interactive) = {
     @page.interactive.body.map { body =>
         @HtmlFormat.raw(body)
     }.getOrElse {
@@ -17,7 +16,7 @@
     }
 }
 
-@interactiveBody(interactive: model.Interactive) {
+@body(interactive: model.Interactive) = {
     <div class="l-side-margins">
         <article class="@RenderClasses(
                 Map(
@@ -40,7 +39,7 @@
 
                 <div class="gs-container" data-test-id="interactive-content-body">
                     <div class="content__main-column content__main-column--interactive">
-                        @interactiveBodyRaw(interactive)
+                        @bodyRaw(interactive)
                     </div>
                 </div>
             </div>
