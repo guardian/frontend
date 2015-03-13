@@ -1,16 +1,5 @@
 @(model: InteractivePage)(implicit request: RequestHeader)
-@import conf.Switches.HideInteractiveUi
 
-@defining(model.interactive.hideUi && HideInteractiveUi.isSwitchedOn) { hideUi =>
-    @main(model.interactive) { }{
-
-        @if(hideUi || model.interactive.isImmersive) {
-            @model.interactive.body.map { body =>
-                @HtmlFormat.raw(body)
-            }
-        } else {
-            @fragments.interactiveBody(model)
-        }
-
-    }
+@main(model.interactive){}{
+    @fragments.interactiveBody(model)
 }

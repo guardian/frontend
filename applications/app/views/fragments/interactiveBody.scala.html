@@ -2,40 +2,51 @@
 @import common.Edition
 @import views.support.TrailCssClasses.articleToneClass
 
-@defining(page.interactive) { interactive =>
-<div class="l-side-margins">
-    <article class="@RenderClasses(
-            Map(
-                "content--advertisement-feature" -> interactive.isAdvertisementFeature,
-                "content--sponsored" -> interactive.isSponsored(Some(Edition(request))),
-                "content--foundation-supported" -> interactive.isFoundationSupported
-            ),
-            "content", "content--interactive", "tonal", s"tonal--${articleToneClass(interactive)}"
-        )"
-        itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
+@if((page.interactive.hideUi && HideInteractiveUi.isSwitchedOn) || page.interactive.isImmersive) {
 
-        @fragments.headDefault(interactive, showBadge = true)
+    @interactiveBodyRaw(page.interactive)
+} else {
+    @interactiveBody(page.interactive)
+}
 
-        <div class="content__main tonal__main tonal__main--@articleToneClass(interactive)">
-            <div class="gs-container u-cf">
-                <div class="content__main-column">
-                    @fragments.contentMeta(interactive, showBadge = false)
-                </div>
-            </div>
-
-            <div class="gs-container" data-test-id="interactive-content-body">
-                <div class="content__main-column content__main-column--interactive">
-                @interactive.body.map { body =>
-                    @HtmlFormat.raw(body)
-                }.getOrElse {
-                    <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
-                }
-                </div>
-            </div>
-        </div>
-    </article>
-
-    @fragments.contentFooter(interactive, page.related)
-
+@interactiveBodyRaw(interactive: model.Interactive) = {
+    @page.interactive.body.map { body =>
+        @HtmlFormat.raw(body)
+    }.getOrElse {
+        <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
     }
-</div>
+}
+
+@interactiveBody(interactive: model.Interactive) {
+    <div class="l-side-margins">
+        <article class="@RenderClasses(
+                Map(
+                    "content--advertisement-feature" -> interactive.isAdvertisementFeature,
+                    "content--sponsored" -> interactive.isSponsored(Some(Edition(request))),
+                    "content--foundation-supported" -> interactive.isFoundationSupported
+                ),
+                "content", "content--interactive", "tonal", s"tonal--${articleToneClass(interactive)}"
+            )"
+            itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
+
+            @fragments.headDefault(interactive, showBadge = true)
+
+            <div class="content__main tonal__main tonal__main--@articleToneClass(interactive)">
+                <div class="gs-container u-cf">
+                    <div class="content__main-column">
+                        @fragments.contentMeta(interactive, showBadge = false)
+                    </div>
+                </div>
+
+                <div class="gs-container" data-test-id="interactive-content-body">
+                    <div class="content__main-column content__main-column--interactive">
+                        @interactiveBodyRaw(interactive)
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        @fragments.contentFooter(interactive, page.related)
+
+    </div>
+}
