@@ -16,6 +16,8 @@ trait MetaData extends Tags {
   def description: Option[String] = None
   def rssPath: Option[String] = None
 
+  def hasSlimHeader: Boolean = contentType == "Interactive"
+
   lazy val canonicalUrl: Option[String] = None
 
   // Special means "Next Gen platform only".

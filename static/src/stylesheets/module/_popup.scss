@@ -1,7 +1,6 @@
 /* ==========================================================================
    Pop-up
    ========================================================================== */
-$popup-toggle-arrow-size: 4px;
 $popup-anchor-arrow-size: 6px;
 $popup-top: $headerHeight + $gs-baseline/2 + 3;
 $c-popup-bg: colour(neutral-8);
@@ -142,6 +141,13 @@ $control-offset: 36 + $gs-gutter/2;
         @include mq($until: tablet) {
             display: none;
         };
+    }
+}
+
+// TODO: Combine parent selector (@at-root) or move context class
+.l-header--is-slim.l-header .popup__toggle {
+    &:after {
+        display: none;
     }
 }
 
