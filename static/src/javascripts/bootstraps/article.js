@@ -58,10 +58,6 @@ define([
                 twitter.enhanceTweets();
             },
 
-            initStaticSocial: function () {
-                staticSocial();
-            },
-
             initRightHandComponent: function () {
                 var mainColumn = qwery('.js-content-main-column');
                 // only render when we have >1000px or more (enough space for ad + most popular)
@@ -81,7 +77,6 @@ define([
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
             modules.initSelectionSharing();
-            modules.initStaticSocial();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             openModule.init();
