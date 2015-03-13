@@ -58,7 +58,7 @@ define([
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
         }
         
-        if (Fluid250.hasScrollEnabled) {
+        if (Fluid250.hasScrollEnabled && this.params.backgroundImageScroll === 'scroll') {
             // update bg position
             this.updateBgPosition();
 
