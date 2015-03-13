@@ -15,7 +15,7 @@
 
     @image.caption.map { caption =>
         <figcaption itemprop="description" class="caption caption--img">
-            @caption @if(image.displayCredit && !image.credit.exists(caption.endsWith)) { @image.credit.map(Html(_)) }
+            @Html(caption) @if(image.displayCredit && !image.credit.exists(caption.endsWith)) { @image.credit.map(Html(_)) }
         </figcaption>
     }
 
