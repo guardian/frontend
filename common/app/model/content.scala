@@ -10,13 +10,14 @@ import conf.Configuration.facebook
 import conf.Switches.FacebookShareUseTrailPicFirstSwitch
 import dfp.DfpAgent
 import fronts.MetadataDefaults
+import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
+import views.support.{ImgSrc, Naked, Item700, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -49,6 +50,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val primaryKeyWordTag: Option[Tag] = tags.find(!_.isSectionTag)
   lazy val keywordTags: Seq[Tag] = keywords.filter(tag => !tag.isSectionTag)
   lazy val productionOffice: Option[String] = delegate.safeFields.get("productionOffice")
+  lazy val displayHint: String = fields.getOrElse("displayHint", "")
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
   lazy val hasSingleContributor: Boolean = {
@@ -504,8 +506,6 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
     leftColElements.isDefined
   }
 
-  lazy val zippedBodyImages = bodyFiltered.zip(bodyFiltered.map(_.largestEditorialCrop))
-
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
   override def metaData: Map[String, JsValue] = {
@@ -707,7 +707,7 @@ object Gallery {
 trait Lightboxable extends Content {
   val lightboxableCutoffWidth = 620
   lazy val mainFiltered = mainPicture.filter(_.largestEditorialCrop.map(_.ratio).getOrElse(0) > 0.7).filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
-  lazy val bodyFiltered = bodyImages.filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
+  lazy val bodyFiltered: Seq[ImageContainer] = bodyImages.filter(_.largestEditorialCrop.map(_.width).getOrElse(1) > lightboxableCutoffWidth).toSeq
   lazy val lightboxImages: Seq[ImageContainer] = mainFiltered ++ bodyFiltered
 
   lazy val isMainMediaLightboxable = !mainFiltered.isEmpty
@@ -720,7 +720,9 @@ trait Lightboxable extends Content {
           "caption" -> JsString(img.caption.getOrElse("")),
           "credit" -> JsString(img.credit.getOrElse("")),
           "displayCredit" -> JsBoolean(img.displayCredit),
-          "src" -> JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager)),
+          "src" -> JsString(ImgSrc.findSrc(imgContainer, Item700).getOrElse("")),
+          "srcsets" -> JsString(ImgSrc.srcset(imgContainer, GalleryMedia.Lightbox)),
+          "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
           "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
           "role" -> JsString(img.role.toString)
         ))
@@ -743,9 +745,9 @@ class Interactive(content: ApiContentWithMeta) extends Content(content) {
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
 
   override lazy val metaData: Map[String, JsValue] = super.metaData + ("contentType" -> JsString(contentType))
-  override lazy val hideUi: Boolean = body.exists{ b =>
-      Jsoup.parseBodyFragment(b).body().getElementsByClass("element-interactive").attr("data-interactive").contains("/visuals-blank-page/")
-    }
+  override lazy val hideUi: Boolean = displayHint.contains("immersive") || body.exists{ b =>
+    Jsoup.parseBodyFragment(b).body().getElementsByClass("element-interactive").attr("data-interactive").contains("/visuals-blank-page/")
+  }
 }
 
 object Interactive {

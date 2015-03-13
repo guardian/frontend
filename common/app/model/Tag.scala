@@ -5,7 +5,7 @@ import common.{Pagination, Reference}
 import conf.Configuration
 import contentapi.SectionTagLookUp
 import play.api.libs.json.{JsArray, JsString, JsValue}
-import views.support.{Contributor, ImgSrc, Item140, Item360}
+import views.support.{Contributor, ImgSrc, Item140}
 
 case class Tag(private val delegate: ApiTag, override val pagination: Option[Pagination] = None) extends MetaData with AdSuffixHandlingForFronts {
   lazy val name: String = webTitle

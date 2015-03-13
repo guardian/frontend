@@ -1,6 +1,6 @@
 .tone-special-report--item {
     &.fc-item,
-    &.flyer {
+    &.rich-link {
         background-color: colour(news-support-6);
     }
 
@@ -8,7 +8,7 @@
         background-color: darken(colour(news-support-6), 5%);
     }
 
-    .flyer__container:before,
+    .rich-link__container:before,
     .fc-item__container:before {
         background-color: colour(news-support-1);
     }
@@ -27,7 +27,7 @@
 
     .fc-item__kicker,
     .fc-item__byline,
-    .flyer__read-more-text {
+    .rich-link__read-more-text {
         color: colour(news-support-1);
     }
 
@@ -43,12 +43,12 @@
         color: mix(#ffffff, colour(news-support-6), 80%);
     }
 
-    .flyer__arrow-icon {
+    .rich-link__arrow-icon {
         fill: colour(news-support-1);
     }
 
     .fc-item__kicker:after,
-    .flyer__kicker:after,
+    .rich-link__kicker:after,
     .fc-sublink__kicker:after {
         color: mix(#ffffff, colour(news-support-6), 20%);
     }

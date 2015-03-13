@@ -72,6 +72,8 @@ module.exports = function (grunt) {
         }
 
         grunt.task.run(['copy:pxCss']);
+        // TODO: Update pixrem to handle source maps
+        // https://github.com/walbo/grunt-px-to-rem/issues/10
         grunt.task.run(['px_to_rem']);
 
         if (isOnlyTask(this) && !fullCompile) {
@@ -80,7 +82,7 @@ module.exports = function (grunt) {
 
     });
     grunt.registerTask('compile:js', function(fullCompile) {
-        grunt.task.run(['compile:inlineSvgs', 'requirejs', 'copy:javascript']);
+        grunt.task.run(['compile:inlineSvgs', 'concurrent:requireJS', 'copy:javascript']);
         if (!options.isDev) {
             grunt.task.run('uglify:javascript');
         }

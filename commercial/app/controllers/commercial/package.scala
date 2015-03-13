@@ -8,7 +8,7 @@ import play.twirl.api.Html
 
 package object commercial {
 
-  val componentMaxAge = 5.minutes
+  val componentMaxAge = 15.minutes
 
   def segment(implicit request: RequestHeader) = {
     val params = request.queryString

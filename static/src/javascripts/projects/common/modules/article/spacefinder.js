@@ -1,16 +1,18 @@
 /* jscs:disable disallowDanglingUnderscores */
 define([
+    'fastdom',
     'qwery',
     'bonzo',
+    'Promise',
     'common/utils/_'
 ], function (
+    fastdom,
     qwery,
     bonzo,
+    Promise,
     _
 ) {
-
     // find spaces in articles for inserting ads and other inline content
-
     var bodySelector = '.js-article__body',
         // minAbove and minBelow are measured in px from the top of the paragraph element being tested
         defaultRules = { // these are written for adverts
@@ -84,23 +86,31 @@ define([
         rules = rules || defaultRules;
 
         // get all immediate children
-        bodyBottom = qwery(bodySelector)[0].offsetHeight;
-        paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
+        return new Promise(function (resolve) {
+            fastdom.read(function () {
+                bodyBottom = qwery(bodySelector)[0].offsetHeight;
+                paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
 
-        if (debug) { // reset any previous debug messages
-            bonzo(paraElems.pluck('element').valueOf())
-                .attr('data-spacefinder-msg', '')
-                .removeClass('spacefinder--valid')
-                .removeClass('spacefinder--error');
-        }
+                if (debug) { // reset any previous debug messages
+                    fastdom.write(function () {
+                        bonzo(paraElems.pluck('element').valueOf())
+                            .attr('data-spacefinder-msg', '')
+                            .removeClass('spacefinder--valid')
+                            .removeClass('spacefinder--error');
+                    });
+                }
 
-        slots = _enforceRules(paraElems, rules, bodyBottom, debug);
+                slots = _enforceRules(paraElems, rules, bodyBottom, debug);
 
-        if (debug) {
-            bonzo(_.pluck(slots, 'element')).addClass('spacefinder--valid');
-        }
+                if (debug) {
+                    fastdom.write(function () {
+                        bonzo(_.pluck(slots, 'element')).addClass('spacefinder--valid');
+                    });
+                }
 
-        return slots.length ? slots[0].element : undefined;
+                resolve(slots.length ? slots[0].element : undefined);
+            });
+        });
     }
 
     return {

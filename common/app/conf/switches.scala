@@ -73,7 +73,6 @@ object Switches {
   // Switch names can be letters numbers and hyphens only
 
   private lazy val never = new LocalDate(2100, 1, 1)
-  private lazy val hackdayAmnesty = new LocalDate(2015, 3, 9)
 
   // Performance
   val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
@@ -133,8 +132,8 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val FlyerSwitch = Switch("Performance", "flyers",
-    "If this switch is turned off then flyers will not be shown. Turn off to help handle exceptional load.",
+  val RichLinkSwitch = Switch("Performance", "rich-links",
+    "If this switch is turned off then rich links will not be shown. Turn off to help handle exceptional load.",
      safeState = On, sellByDate = never
   )
 
@@ -184,11 +183,6 @@ object Switches {
   )
 
   // Commercial
-
-  val EsiTestSwitch = Switch("Commercial", "esi-geolocation",
-    "Activate Edge Side Inserts",
-    safeState = Off, sellByDate = hackdayAmnesty
-  )
 
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
@@ -293,8 +287,9 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  private def dateInFebruary(day: Int): Interval =
-    new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
+  val BookLookupSwitch = Switch("Commercial", "book-lookup",
+    "If this switch is on, book data will be looked up using a third-party service.",
+    safeState = Off, sellByDate = never)
 
   val AppleAdNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-network-front",
     "If this switch is on, Apple ads will appear on the network front during active periods.",
@@ -334,6 +329,11 @@ object Switches {
   val ThirdPartyEmbedTracking = Switch("Monitoring", "third-party-embed-tracking",
     "Enables tracking on our off-site third party embedded content. Such as: videos on embed.theguardian.com.",
     safeState = Off, never
+  )
+
+  val FeedbackLink = Switch("Monitoring", "tech-feedback",
+    "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
+    safeState = Off, new LocalDate(2015, 3, 24)
   )
 
   // Features
@@ -459,6 +459,21 @@ object Switches {
   val ABKruxAudienceScience = Switch("A/B Tests", "ab-krux-audience-science",
     "Switch for the Krux/Audience Science A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 1)
+  )
+
+  val ABChimney = Switch("A/B Tests", "ab-chimney",
+    "Switch for the home icon chimney test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 16)
+  )
+
+  val ABStickyMpu = Switch("A/B Tests", "ab-sticky-mpu",
+    "Switch for the Sticky mpu test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 9)
+  )
+
+  val ABSignedOut = Switch("A/B Tests", "ab-signed-out",
+    "Switch for the Signed Out messaging test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",

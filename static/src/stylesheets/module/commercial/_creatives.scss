@@ -9,15 +9,22 @@
         overflow: hidden;
         position: relative;
     }
-    .creative--scrollable-mpu-image {
+    .creative--scrollable-mpu-image,
+    .creative--scrollable-mpu-static-image {
         display: block;
         height: 100%;
         width: 300px;
         position: absolute;
         top: 0;
         @include box-sizing(border-box);
+    }
+    .creative--scrollable-mpu-image {
         border: 1px solid colour(neutral-5);
-        background: none 0 0 repeat;
+        background: none 0 0 repeat;        
+    }
+    .creative--scrollable-mpu-static-image {
+        z-index: 1;
+        background-repeat: no-repeat;
     }
 }
 
@@ -533,6 +540,7 @@
     .creative__article__title {
         @include f-headlineSans;
         @include font-size(14, 18);
+        text-align: left;
     }
     .creative__logo-text,
     .creative__logo-info {

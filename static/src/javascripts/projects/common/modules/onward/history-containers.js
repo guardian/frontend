@@ -118,7 +118,7 @@ define([
                     // Join containers to minimise DOM insertion
                     allContainers = containers.join('');
                 refContainer.before(allContainers);
-                images.upgrade(refContainer.parent().get(0));
+                images.upgradePictures();
             });
         }
     }

@@ -20,13 +20,13 @@
     }
 
     .fc-item__container:before,
-    .flyer__container:before {
+    .rich-link__container:before {
         background-color: colour(review-accent);
     }
 
     .fc-item__kicker,
     .fc-item__byline,
-    .flyer__read-more-text {
+    .rich-link__read-more-text {
         color: colour(review-accent);
     }
 
@@ -34,7 +34,7 @@
         background-color: mix(#000000, colour(review-background), 10%);
     }
 
-    .flyer__arrow-icon {
+    .rich-link__arrow-icon {
         fill: colour(review-accent);
     }
 

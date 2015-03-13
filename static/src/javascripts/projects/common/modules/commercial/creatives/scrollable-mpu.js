@@ -35,6 +35,8 @@ define([
             clickMacro:       this.params.clickMacro,
             destination:      this.params.destination,
             image:            ScrollableMpu.hasScrollEnabled ? this.params.image : this.params.staticImage,
+            stillImage:       ScrollableMpu.hasScrollEnabled && this.params.stillImage ?
+                '<div class="creative--scrollable-mpu-static-image" style="background-image: url(' + this.params.stillImage + ');"></div>' : '',
             trackingPixelImg: this.params.trackingPixel ?
                 '<img src="' + this.params.trackingPixel + '" width="1" height="1" />' : ''
         };

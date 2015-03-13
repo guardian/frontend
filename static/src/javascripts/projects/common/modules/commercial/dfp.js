@@ -2,6 +2,7 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'qwery',
     'raven',
     'lodash/functions/debounce',
@@ -23,10 +24,12 @@ define([
     'common/utils/user-timing',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
-    'common/modules/onward/geo-most-popular'
+    'common/modules/onward/geo-most-popular',
+    'common/modules/experiments/ab'
 ], function (
     bean,
     bonzo,
+    fastdom,
     qwery,
     raven,
     debounce,
@@ -48,9 +51,9 @@ define([
     userTiming,
     StickyMpu,
     buildPageTargeting,
-    geoMostPopular
+    geoMostPopular,
+    ab
 ) {
-
     /**
      * Right, so an explanation as to how this works...
      *
@@ -90,6 +93,16 @@ define([
             '300,251': function (event, $adSlot) {
                 new StickyMpu($adSlot).create();
             },
+            '300,250': function (event, $adSlot) {
+                var stickyMpuTest = ab.getParticipations().StickyMpu;
+
+                if (ab.testCanBeRun('StickyMpu') &&
+                    stickyMpuTest && stickyMpuTest.variant === 'variant') {
+                    if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
+                        new StickyMpu($adSlot).create();
+                    }
+                }
+            },
             '1,1': function (event, $adSlot) {
                 if (!event.slot.getOutOfPage()) {
                     $adSlot.addClass('u-h');
@@ -102,7 +115,9 @@ define([
             '300,1050': function () {
                 // remove geo most popular
                 geoMostPopular.whenRendered.then(function (geoMostPopular) {
-                    bonzo(geoMostPopular.elem).remove();
+                    fastdom.write(function () {
+                        bonzo(geoMostPopular.elem).remove();
+                    });
                 });
             }
         },
@@ -134,7 +149,9 @@ define([
                 // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
                     if ($css($adSlot, 'display') === 'none') {
-                        $adSlot.remove();
+                        fastdom.write(function () {
+                            $adSlot.remove();
+                        });
                         return false;
                     } else {
                         return true;
@@ -280,7 +297,9 @@ define([
         parseAd = function (event) {
             var size,
                 slotId = event.slot.getSlotId().getDomId(),
-                $slot = $('#' + slotId);
+                $slot = $('#' + slotId),
+                $placeholder,
+                $adSlotContent;
 
             allAdsRendered(slotId);
 
@@ -288,8 +307,12 @@ define([
                 removeLabel($slot);
             } else {
                 // remove any placeholder ad content
-                $('.ad-slot__content--placeholder', $slot).remove();
-                $('#' + slotId + ' div').addClass('ad-slot__content');
+                $placeholder = $('.ad-slot__content--placeholder', $slot);
+                $adSlotContent = $('#' + slotId + ' div');
+                fastdom.write(function () {
+                    $placeholder.remove();
+                    $adSlotContent.addClass('ad-slot__content');
+                });
                 checkForBreakout($slot);
                 addLabel($slot);
                 size = event.size.join(',');
@@ -297,14 +320,20 @@ define([
                 callbacks[size] && callbacks[size](event, $slot);
 
                 if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
-                    $slot.parent().css('display', 'flex');
+                    fastdom.write(function () {
+                        $slot.parent().css('display', 'flex');
+                    });
                 } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
-                    $slot.parent().css('display', 'block');
+                    fastdom.write(function () {
+                        $slot.parent().css('display', 'block');
+                    });
                 }
 
                 if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
                 || ($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
-                    $slot.addClass('ad-slot__fluid250');
+                    fastdom.write(function () {
+                        $slot.addClass('ad-slot__fluid250');
+                    });
                 }
             }
         },
@@ -318,12 +347,16 @@ define([
             }
         },
         addLabel = function ($slot) {
-            if (shouldRenderLabel($slot)) {
-                $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
-            }
+            fastdom.write(function () {
+                if (shouldRenderLabel($slot)) {
+                    $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
+                }
+            });
         },
         removeLabel = function ($slot) {
-            $('.ad-slot__label', $slot).remove();
+            fastdom.write(function () {
+                $('.ad-slot__label', $slot).remove();
+            });
         },
         shouldRenderLabel = function ($slot) {
             return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
@@ -356,12 +389,16 @@ define([
                             }
 
                         } else {
-                            $iFrameParent.append(breakoutContent);
-                            $breakoutEl.remove();
+                            fastdom.write(function () {
+                                $iFrameParent.append(breakoutContent);
+                                $breakoutEl.remove();
+                            });
 
                             $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
                                 window.setTimeout(function () {
-                                    bonzo(responsiveAd).addClass('ad--responsive--open');
+                                    fastdom.write(function () {
+                                        bonzo(responsiveAd).addClass('ad--responsive--open');
+                                    });
                                 }, 50);
                             });
                         }
@@ -370,7 +407,9 @@ define([
                 });
             }
             if (shouldRemoveIFrame) {
-                $iFrame.hide();
+                fastdom.write(function () {
+                    $iFrame.hide();
+                });
             }
         },
         /**

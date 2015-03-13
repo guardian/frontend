@@ -200,6 +200,10 @@
                                 <span class="time__front" data-bind="text: frontPublicationTime"></span>
                             </span>
 
+                            <!-- ko if: state.premium -->
+                                <span class="label label--premium">premium</span>
+                            <!-- /ko -->
+
                             <!-- ko if: fields.isLive() === 'false' -->
                                 <span class="label" data-bind="
                                     css: {

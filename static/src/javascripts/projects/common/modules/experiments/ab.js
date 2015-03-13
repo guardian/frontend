@@ -4,6 +4,7 @@ define([
     'lodash/collections/forEach',
     'lodash/collections/map',
     'lodash/collections/some',
+    'lodash/collections/find',
     'lodash/objects/assign',
     'lodash/objects/keys',
     'common/utils/_',
@@ -13,13 +14,17 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/krux-audience-science',
-    'common/modules/experiments/tests/identity-benefits'
+    'common/modules/experiments/tests/identity-benefits',
+    'common/modules/experiments/tests/chimney',
+    'common/modules/experiments/tests/sticky-mpu',
+    'common/modules/experiments/tests/signed-out'
 ], function (
     raven,
     filter,
     forEach,
     map,
     some,
+    find,
     assign,
     keys,
     _,
@@ -29,14 +34,20 @@ define([
     mvtCookie,
     HighCommercialComponent,
     KruxAudienceScience,
-    IdentityBenefits
+    IdentityBenefits,
+    Chimney,
+    StickyMPU,
+    SignedOut
 ) {
 
     var ab,
         TESTS = [
             new HighCommercialComponent(),
             new KruxAudienceScience(),
-            new IdentityBenefits()
+            new IdentityBenefits(),
+            new Chimney(),
+            new StickyMPU(),
+            new SignedOut()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -296,6 +307,22 @@ define([
         getActiveTests: getActiveTests,
         getTestVariant: getTestVariant,
         setTestVariant: setTestVariant,
+
+        /**
+         * check if a test can be run (i.e. is not expired and switched on)
+         *
+         * @param  {string|Object} test   id or test object
+         * @return {Boolean}
+         */
+        testCanBeRun: function (test) {
+            if (typeof test === 'string') {
+                return testCanBeRun(find(TESTS, function (t) {
+                    return t.id === test;
+                }));
+            }
+
+            return test.id && test.expiry && testCanBeRun(test);
+        },
 
         // testing
         reset: function () {

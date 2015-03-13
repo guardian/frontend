@@ -14,7 +14,6 @@ define([
     'common/modules/analytics/beacon',
     'common/modules/commercial/build-page-targeting',
     'common/modules/component',
-    'common/modules/ui/images',
     'common/modules/video/events',
     'common/modules/video/fullscreener',
     'common/modules/video/supportedBrowsers',
@@ -35,7 +34,6 @@ define([
     beacon,
     buildPageTargeting,
     Component,
-    images,
     events,
     fullscreener,
     supportedBrowsers,
@@ -96,8 +94,9 @@ define([
         // we have some special autoplay rules, so do not want to depend on 'default' autoplay
         player.guAutoplay = $(el).attr('data-auto-play') === 'true';
 
-        // need to explicitly set the height, as the ima plugin uses it
+        // need to explicitly set the dimensions for the ima plugin.
         player.height(bonzo(player.el()).parent().dim().height);
+        player.width(bonzo(player.el()).parent().dim().width);
 
         if (events.handleInitialMediaError(player)) {
             player.dispose();
@@ -322,7 +321,6 @@ define([
         section.endpoint = endpoint;
 
         section.fetch(attachTo).then(function () {
-            images.upgrade(attachTo);
             mediator.emit('page:media:moreinloaded', attachTo);
         });
     }
@@ -341,7 +339,7 @@ define([
         mostViewed.endpoint = endpoint;
 
         mostViewed.fetch(attachTo, 'html').then(function () {
-            images.upgrade(attachTo);
+            mediator.emit('page:media:most-viewed-loaded');
         });
     }
 

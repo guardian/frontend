@@ -59,7 +59,7 @@ define([
         },
         buildComponentUrl = function (url, params) {
             // filter out empty params
-            var filteredParams = pick(defaults(params || {}, getKeywords()), function (v) {
+            var filteredParams = pick(params || {}, function (v) {
                     return isArray(v) ? v.length : v;
                 }),
                 query = size(filteredParams) ? '?' + constructQuery(filteredParams) : '';
@@ -81,16 +81,17 @@ define([
             delete this.params.type;
             this.$adSlot    = $adSlot;
             this.components = {
-                bestbuy:       buildComponentUrl('money/bestbuys', this.params),
-                book:          buildComponentUrl('books/book', merge({}, this.params, { t: config.page.isbn || this.params.isbn })),
-                books:         buildComponentUrl('books/books', merge({}, this.params, { t: this.params.isbns ? this.params.isbns.split(',') : [] })),
-                jobs:          buildComponentUrl('jobs', merge({}, this.params, { t: this.params.jobIds ? this.params.jobIds.split(',') : [] })),
-                masterclasses: buildComponentUrl('masterclasses', merge({}, this.params, { t: this.params.ids ? this.params.ids.split(',') : [] })),
-                soulmates:     buildComponentUrl('soulmates/mixed', this.params),
-                travel:        buildComponentUrl('travel/offers', this.params),
-                multi:         buildComponentUrl('multi', this.params),
-                capiSingle:    buildComponentUrl('capi-single', this.params),
-                capi:          buildComponentUrl('capi', this.params)
+                bestbuy:        buildComponentUrl('money/bestbuys', this.params),
+                book:           buildComponentUrl('books/book', merge({}, this.params, { t: config.page.isbn || this.params.isbn })),
+                books:          buildComponentUrl('books/books', merge({}, this.params, { t: this.params.isbns ? this.params.isbns.split(',') : [] })),
+                jobs:           buildComponentUrl('jobs', merge({}, this.params, { t: this.params.jobIds ? this.params.jobIds.split(',') : [] }, getKeywords())),
+                masterclasses:  buildComponentUrl('masterclasses', merge({}, this.params, { t: this.params.ids ? this.params.ids.split(',') : [] }, getKeywords())),
+                soulmates:      buildComponentUrl('soulmates/mixed', this.params),
+                soulmatesGroup: buildComponentUrl('soulmates/' + this.params.soulmatesFeedName, this.params),
+                travel:         buildComponentUrl('travel/offers', merge({}, this.params, getKeywords())),
+                multi:          buildComponentUrl('multi', merge({}, this.params, getKeywords())),
+                capiSingle:     buildComponentUrl('capi-single', merge({}, this.params, getKeywords())),
+                capi:           buildComponentUrl('capi', merge({}, this.params, getKeywords()))
             };
         };
 

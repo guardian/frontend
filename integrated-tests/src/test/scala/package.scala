@@ -76,7 +76,5 @@ class IntegratedTestsSuite extends Suites (
   new MostPopularTest,
   new SslCertTest,
   new ShowMoreTest,
-  new FootballLiveBlogComponentsTest,
-  new MatchReportComponentsTest,
   new ProfileCommentsTest) with SingleWebDriver {
 }
