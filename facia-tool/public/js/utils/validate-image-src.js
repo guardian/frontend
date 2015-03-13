@@ -52,7 +52,12 @@ define([
                 if (err) {
                     defer.reject(err);
                 } else {
-                    defer.resolve(width, height);
+                    // Get the src again from the img, this makes sure that the URL is encoded properly
+                    defer.resolve({
+                        width: width,
+                        height: height,
+                        src: img.src
+                    });
                 }
             };
             img.src = src;
