@@ -1,5 +1,0 @@
-@(socialEmailRemovedOpt: Option[Boolean])(implicit request: RequestHeader)
-
-@for(socialEmailRemoved <- socialEmailRemovedOpt if socialEmailRemoved) {
-    <div class="form__error">We need your email address when you sign in with Facebook. Try again and allow access to your email address or provide it manually below</div>
-}

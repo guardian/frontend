@@ -1,9 +1,8 @@
-@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, signinForm: Form[(String, String, Boolean)], socialEmailRemoved: Option[Boolean])(implicit request: RequestHeader)
+@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, signinForm: Form[(String, String, Boolean)])(implicit request: RequestHeader)
 
 @import form.IdFormHelpers._
 @import views.html.fragments.form.{inputField, checkbox}
 @import views.html.fragments.socialSignin
-@import views.html.fragments.socialSigninEmailError
 @import views.html.fragments.identityPageHeader
 @import views.html.fragments.identityBenefits
 
@@ -17,8 +16,6 @@
     <form class="form js-signin-form" novalidate action="@idUrlBuilder.buildUrl("/signin", idRequest)" role="main" method="post">
         @if(signinForm.globalError.isDefined) {
             <div class="form__error">@signinForm.globalErrors.map(_.message).mkString(", ")</div>
-        } else {
-            @socialSigninEmailError(socialEmailRemoved)
         }
 
         <fieldset class="fieldset">

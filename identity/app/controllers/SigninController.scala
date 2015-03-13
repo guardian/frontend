@@ -42,9 +42,8 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
     logger.trace("Rendering signin form")
     val idRequest = idRequestParser(request)
-    val socialEmailRemoved = request.getQueryString("fbEmailError").map(_ == "true")
 
-    NoCache(Ok(views.html.signin(page, idRequest, idUrlBuilder, filledForm, socialEmailRemoved)))
+    NoCache(Ok(views.html.signin(page, idRequest, idUrlBuilder, filledForm)))
   }
 
   def processForm = Action.async { implicit request =>

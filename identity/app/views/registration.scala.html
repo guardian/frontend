@@ -1,10 +1,9 @@
-@(page: model.MetaData with tracking.TrackingParams, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, registrationForm: Form[(String, String, String, String, String, Boolean, Boolean)], socialEmailRemoved: Option[Boolean])(implicit request: RequestHeader)
+@(page: model.MetaData with tracking.TrackingParams, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, registrationForm: Form[(String, String, String, String, String, Boolean, Boolean)], socialEmailRemovedOpt: Option[Boolean])(implicit request: RequestHeader)
 
 @import form.IdFormHelpers._
 @import views.html.fragments.form.{inputField, checkbox}
 @import views.html.fragments.registrationFooter
 @import views.html.fragments.socialSignin
-@import views.html.fragments.socialSigninEmailError
 @import views.html.fragments.identityPageHeader
 @import views.html.fragments.identityBenefits
 
@@ -19,7 +18,9 @@
         @if(registrationForm.globalError.isDefined) {
             <div class="form__error">@registrationForm.globalErrors.map(_.message).mkString(", ")</div>
         } else {
-            @socialSigninEmailError(socialEmailRemoved)
+            @for(socialEmailRemoved <- socialEmailRemovedOpt if socialEmailRemoved) {
+                <div class="form__error">We need your email address when you sign in with Facebook. Try again and allow access to your email address or provide it manually below</div>
+            }
         }
 
         <fieldset class="fieldset">
