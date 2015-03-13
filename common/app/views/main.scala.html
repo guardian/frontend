@@ -63,7 +63,7 @@
 
         @body
 
-        @if(!hideUi) {
+        @if(!hideUi && !metaData.isImmersive) {
             @fragments.footer(metaData)
         }
         @fragments.analytics(metaData)

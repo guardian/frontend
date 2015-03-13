@@ -4,7 +4,7 @@
 @defining(model.interactive.hideUi && HideInteractiveUi.isSwitchedOn) { hideUi =>
     @main(model.interactive) { }{
 
-        @if(hideUi) {
+        @if(model.interactive.isImmersive) {
             @model.interactive.body.map { body =>
                 @HtmlFormat.raw(body)
             }
