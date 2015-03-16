@@ -30,7 +30,8 @@ define([
     id
 ) {
     var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
-        NG_STORAGE_KEY = 'gu.analytics.referrerVars';
+        NG_STORAGE_KEY = 'gu.analytics.referrerVars',
+        omniture = new Omniture();
 
     function Omniture() {
         this.isEmbed = !!guardian.isEmbed;
@@ -324,5 +325,5 @@ define([
         }, 10000);
     };
 
-    return Omniture;
+    return omniture;
 });
