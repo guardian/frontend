@@ -19,7 +19,10 @@ $c-guardian-services-action: #ffffff;
 .l-header--is-slim {
     .l-header__inner {
         @include clearfix;
-        background: $c-top-header-background;
+
+        @include mq(tablet) {
+            background: $c-top-header-background;
+        }
     }
 }
 
