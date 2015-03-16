@@ -508,11 +508,8 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
     .top-navigation__item:last-child {
-        padding-right: $navigation-toggler-width + $gs-gutter;
+        padding-right: gs-span(1) + $gs-gutter;
 
-        @include mq(tablet) {
-            padding-right: $navigation-toggler-width-full + $gs-gutter;
-        }
         @include mq(navigationBreakOnTwoLevels) {
             padding-right: 0;
         }
