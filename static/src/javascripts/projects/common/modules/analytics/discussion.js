@@ -3,95 +3,43 @@ define([
     'lodash/functions/debounce',
     'common/utils/$',
     'common/utils/mediator',
-    'common/modules/identity/api'
+    'common/modules/analytics/omniture'
 ], function (
     bonzo,
     debounce,
     $,
     mediator,
-    Id
+    omniture
 ) {
-
-    /**
-     * event51: Comment
-     * event72: Engagement event (e.g. recommendation)
-     * eVar65: Only for event72. Type of interaction (any string)
-     * eVar66: User ID of current user
-     * eVar67: User ID of person being acted upon
-     * eVar68: Only for event51. comment || response
-     */
-    var track = {};
-    track.seen = false;
-
-    /**
-     * @param {Array.<string>}
-     * @return {string}
-     */
-    track.getLinkTrackVars = function (extras) {
-        extras = extras || [];
-        var linkTrackVars = [
-            'events',
-            'prop4', 'prop6', 'prop8', 'prop10', 'prop13',
-            'prop19', 'prop31', 'prop51', 'prop75',
-            'eVar7', 'eVar8',  'eVar19', 'eVar31',
-            'eVar51', 'eVar66'
-        ];
-
-        return linkTrackVars.concat(extras).join(',');
+    var track = {
+        seen: false
     };
 
-    track.comment = function (comment) {
-        s.events = 'event51';
-        s.eVar66 = Id.getUserFromCookie().id || null;
-        s.eVar68 = comment.replyTo ? 'response' : 'comment';
-        s.eVar67 = comment.replyTo ? comment.replyTo.authorId : null;
-        s.linkTrackVars = this.getLinkTrackVars(['eVar68']);
-        s.linkTrackEvents = 'event51';
-        s.tl(true, 'o', 'comment');
+    track.comment = function () {
+        omniture.trackLinkImmediate('comment');
     };
 
-    track.recommend = function (e) {
-        s.events = 'event72';
-        s.eVar65 = 'recommendation';
-        s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
-        s.eVar67 = e.userId;
-        s.linkTrackVars = this.getLinkTrackVars(['eVar65', 'eVar67']);
-        s.linkTrackEvents = 'event72';
-        s.tl(true, 'o', 'Recommend a comment');
+    track.recommend = function () {
+        omniture.trackLinkImmediate('Recommend a comment');
     };
 
     track.jumpedToComments = function () {
         if (!track.seen) {
-            s.events = 'event72';
-            s.eVar65 = 'seen jump-to-comments';
-            s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
-            s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
-            s.linkTrackEvents = 'event72';
-            s.tl(true, 'o', 'seen jump-to-comments');
+            omniture.trackLinkImmediate('seen jump-to-comments');
             track.seen = true;
         }
     };
 
     track.commentPermalink = function () {
         if (!track.seen) {
-            s.events = 'event72';
-            s.eVar65 = 'seen comment-permalink';
-            s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
-            s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
-            s.linkTrackEvents = 'event72';
-            s.tl(true, 'o', 'seen comment-permalink');
+            omniture.trackLinkImmediate('seen comment-permalink');
             track.seen = true;
         }
     };
 
     track.scrolledToComments = function () {
         if (!track.seen) {
-            s.events = 'event72';
-            s.eVar65 = 'seen scroll-top';
-            s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
-            s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
-            s.linkTrackEvents = 'event72';
-            s.tl(true, 'o', 'seen scroll-top');
+            omniture.trackLinkImmediate('seen scroll-top');
             track.seen = true;
         }
     };

@@ -97,8 +97,8 @@ define([
 
     Omniture.prototype.populateEventProperties = function (linkName) {
 
-        this.s.linkTrackVars =  'channel,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,'+
-                                'prop51,prop61,prop64,prop65,evar7,evar37,evar38,evar39,evar50,events';
+        this.s.linkTrackVars = 'channel,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,' +
+                               'prop51,prop61,prop64,prop65,evar7,evar37,evar38,evar39,evar50,events';
         this.s.linkTrackEvents = 'event37';
         this.s.events = 'event37';
         this.s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + linkName : linkName;
