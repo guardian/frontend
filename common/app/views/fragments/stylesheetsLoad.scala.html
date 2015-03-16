@@ -64,7 +64,7 @@
         @Html(Static.css.head(projectName))
     </style>
 }
-    @fragments.stylesheetLink("stylesheets/global.css", "global")
+@fragments.stylesheetLink(Static.css.projectCss(), projectName.getOrElse("global"))
 <!--<![endif]-->
 
 @* https://dev.opera.com/articles/opera-mini-and-javascript/#detectingmini *@

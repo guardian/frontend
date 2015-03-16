@@ -68,6 +68,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
     private val memoizedCss: ConcurrentMap[java.net.URL, String] = TrieMap()
 
+    def projectCss(projectOverride: Option[String] = None) = project(projectOverride.getOrElse(Configuration.environment.projectName))
     def head(projectOverride: Option[String] = None) = css(projectOverride.getOrElse(Configuration.environment.projectName))
     def headOldIE(projectOverride: Option[String] = None) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
     def headIE9(projectOverride: Option[String] = None) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
@@ -93,6 +94,13 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
       memoizedCss.getOrElseUpdate(url, {
         IOUtils.toString(url)
       })
+    }
+
+    private def project(project: String): String = {
+      project match {
+        case "facia" => "stylesheets/facia.css"
+        case _ => "stylesheets/global.css"
+      }
     }
 
     private def cssOldIE(project: String): String = {
