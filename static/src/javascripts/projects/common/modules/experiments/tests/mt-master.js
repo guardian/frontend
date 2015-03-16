@@ -25,10 +25,6 @@ define([
          */
         this.variants = [
             {
-                id: 'control',
-                test: function () { }
-            },
-            {
                 id: 'variant',
                 test: function () { }
             }
