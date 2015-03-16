@@ -5,12 +5,15 @@ define([
     'inlineSvg!svgs/comment-white-16!icon',
     'inlineSvg!svgs/marque-36!icon',
     'inlineSvg!svgs/marque-54!icon',
+    'inlineSvg!svgs/arrow-down!icon',
     'inlineSvg!svgs/logo-guardian!logo',
     'inlineSvg!svgs/logo-soulmates!commercial'
 ], function (
     commentCount16icon,
     marque36icon,
     marque54icon,
+    arrowdownicon,
+    minusicon,
     logoguardian,
     logosoulmates
 ) {
@@ -18,6 +21,7 @@ define([
         commentCount16icon: commentCount16icon,
         marque36icon: marque36icon,
         marque54icon: marque54icon,
+        arrowdownicon: arrowdownicon,
         logoguardian: logoguardian,
         logosoulmates: logosoulmates
     };

@@ -18,9 +18,9 @@
             data-link-name="Pagination view @dir"
             aria-label="@ariaContext @dir page">
             @if(dir == "next") {
-            <i aria-hidden="true" class="i i-arrow-right-grey"></i><span class="u-h">@dir</span>
+                @fragments.inlineSvg("arrow-right-grey", "icon")<span class="u-h">@dir</span>
             } else {
-            <i aria-hidden="true" class="i i-arrow-left-grey"></i><span class="u-h">@dir</span>
+                @fragments.inlineSvg("arrow-left-grey", "icon")<span class="u-h">@dir</span>
             }
         </a>
     }

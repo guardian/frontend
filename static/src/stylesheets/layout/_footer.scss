@@ -29,7 +29,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     }
 
     .js-off & {
-        .navigation--collapsed {
+        .navigation-container--collapsed {
             height: auto;
         }
 
@@ -41,6 +41,11 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
             display: none;
         }
     }
+
+    .is-immersive & {
+        display: none;
+    }
+
     .control__info {
         display: inline-block;
     }
@@ -101,6 +106,17 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         display: inline-block;
         padding-bottom: $gs-baseline;
     }
+
+    input {
+        display: inline-block;
+        background: none;
+        border: 0;
+        padding: 0px 0px $gs-baseline;
+    }
+    input:hover {
+        text-decoration: underline;
+    }
+
 }
 .colophon__item {
     @include box-sizing(border-box);

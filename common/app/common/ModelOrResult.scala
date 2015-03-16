@@ -76,6 +76,7 @@ object InternalRedirect extends implicits.Requests with Logging {
       case a if a.isArticle || a.isLiveBlog => internalRedirect("type/article", a.id)
       case v if v.isVideo => internalRedirect("applications", v.id)
       case g if g.isGallery => internalRedirect("applications", g.id)
+      case a if a.isAudio => internalRedirect("applications", a.id)
       case unsupportedContent =>
         log.info(s"unsupported content: ${unsupportedContent.id}")
         NotFound

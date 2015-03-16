@@ -104,7 +104,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__container,
-.flyer__container,
+.rich-link__container,
 .item__container {
     position: relative;
 
@@ -250,7 +250,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__header,
 .item__title,
-.flyer__header {
+.rich-link__header {
     @include fs-headline(3);
     font-weight: 500;
     padding-bottom: .5em;
@@ -263,9 +263,9 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__title,
 .fc-item__byline,
 .fc-item__kicker,
-.flyer__byline,
-.flyer__title,
-.flyer__kicker {
+.rich-link__byline,
+.rich-link__title,
+.rich-link__kicker {
     font: inherit;
     line-height: inherit;
 }
@@ -278,7 +278,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__kicker,
 .fc-sublink__kicker,
-.flyer__kicker {
+.rich-link__kicker {
     &:after {
         content: '/';
         display: inline-block;

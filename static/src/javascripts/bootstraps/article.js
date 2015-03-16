@@ -1,12 +1,12 @@
 define([
     'fence',
+    'qwery',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/article/flyers',
+    'common/modules/article/rich-links',
     'common/modules/article/open-module',
-    'common/modules/article/static-social',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
     'common/modules/onward/geo-most-popular',
@@ -15,13 +15,13 @@ define([
     'common/modules/ui/selection-sharing'
 ], function (
     fence,
+    qwery,
     $,
     config,
     detect,
     mediator,
-    flyers,
+    richLinks,
     openModule,
-    staticSocial,
     truncate,
     twitter,
     geoMostPopular,
@@ -58,12 +58,10 @@ define([
                 twitter.enhanceTweets();
             },
 
-            initStaticSocial: function () {
-                staticSocial();
-            },
-
             initRightHandComponent: function () {
-                if (!detect.isBreakpoint('mobile') && parseInt(config.page.wordCount, 10) > 500) {
+                var mainColumn = qwery('.js-content-main-column');
+                // only render when we have >1000px or more (enough space for ad + most popular)
+                if (mainColumn[0] && mainColumn[0].offsetHeight > 1000 && !detect.isBreakpoint('mobile')) {
                     geoMostPopular.render();
                 }
             },
@@ -79,9 +77,8 @@ define([
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
             modules.initSelectionSharing();
-            modules.initStaticSocial();
-            flyers.upgradeFlyers();
-            flyers.insertTagFlyer();
+            richLinks.upgradeRichLinks();
+            richLinks.insertTagRichLink();
             openModule.init();
 
             mediator.emit('page:article:ready');

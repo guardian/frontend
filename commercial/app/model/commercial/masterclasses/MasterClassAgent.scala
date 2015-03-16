@@ -1,7 +1,7 @@
 package model.commercial.masterclasses
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
-import model.commercial.{Lookup, MerchandiseAgent, Segment, keywordsMatch}
+import model.commercial._
 
 import scala.concurrent.Future
 
@@ -9,7 +9,10 @@ object MasterClassAgent extends MerchandiseAgent[MasterClass] with ExecutionCont
 
   def masterclassesTargetedAt(segment: Segment) = {
     lazy val defaultClasses = available take 4
-    val targeted = available filter (masterclass => keywordsMatch(segment, masterclass.eventBriteEvent.keywordIds))
+    val targeted = available filter { masterclass =>
+      Keyword.idSuffixesIntersect(segment.context.keywords,
+        masterclass.eventBriteEvent.keywordIdSuffixes)
+    }
     val toShow = (targeted ++ defaultClasses) take 4
     toShow sortBy (_.eventBriteEvent.startDate.getMillis)
   }
@@ -41,7 +44,7 @@ object MasterClassAgent extends MerchandiseAgent[MasterClass] with ExecutionCont
     Future.sequence(futureMasterclasses)
   }
 
-  def refresh() {
+  def refresh(): Unit = {
 
     def populateKeywordIds(events: Seq[EventbriteMasterClass]):Seq[EventbriteMasterClass] = {
       val populated = events map { event =>
@@ -57,10 +60,10 @@ object MasterClassAgent extends MerchandiseAgent[MasterClass] with ExecutionCont
             keywordIdsFromTags
           }
         }
-        event.copy(keywordIds = eventKeywordIds)
+        event.copy(keywordIdSuffixes = eventKeywordIds map Keyword.getIdSuffix)
       }
 
-      val unpopulated = populated.filter(_.keywordIds.isEmpty)
+      val unpopulated = populated.filter(_.keywordIdSuffixes.isEmpty)
       if (unpopulated.nonEmpty) {
         val unpopulatedString = unpopulated.map { event =>
           event.name + ": tags(" + event.tags.mkString(", ") + ")"

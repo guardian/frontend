@@ -21,10 +21,12 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
   val articleTag = new Tag("type/article", "type", webTitle = "the title", webUrl = "http://foo.bar", apiUrl = "http://foo.bar")
   val galleryTag = articleTag.copy(id = "type/gallery")
   val videoTag = articleTag.copy(id = "type/video")
+  val audioTag = articleTag.copy(id = "type/audio")
 
   val testArticle = testContent.copy(tags = List(articleTag))
   val testGallery = testContent.copy(tags = List(galleryTag))
   val testVideo = testContent.copy(tags = List(videoTag))
+  val testAudio = testContent.copy(tags = List(audioTag))
 
   val testSection = new Section("water", "Water", "http://foo.bar", "http://foo.bar", Nil)
 
@@ -66,6 +68,17 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
     val notFound = Future { ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testGallery))
+      ).right.get
+    }
+
+    status(notFound) should be(200)
+    headers(notFound).apply("X-Accel-Redirect") should be("/applications/the/id")
+  }
+
+  it should "internal redirect to a audio if it has shown up at the wrong server" in {
+    val notFound = Future { ModelOrResult(
+      item = None,
+      response = stubResponse.copy(content = Some(testAudio))
       ).right.get
     }
 

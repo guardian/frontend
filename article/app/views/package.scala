@@ -14,7 +14,7 @@ object BodyCleaner {
         BlockNumberCleaner,
         TweetCleaner,
         WitnessCleaner,
-        new TagLinker(article),
+        TagLinker(article),
         TableEmbedComplimentaryToP,
         R2VideoCleaner(article),
         VideoEmbedCleaner(article),
@@ -23,7 +23,8 @@ object BodyCleaner {
         LiveBlogShareButtons(article),
         DropCaps(article.isComment || article.isFeature),
         FigCaptionCleaner,
-        RichLinkCleaner
+        RichLinkCleaner,
+        BlockquoteCleaner
       )
   }
 }

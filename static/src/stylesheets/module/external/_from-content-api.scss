@@ -101,7 +101,10 @@
 
     &.quoted {
         color: colour(neutral-2);
-        margin-left: $gs-gutter * 1.5;
+        // Fallback
+        // TODO: Write mixin for this
+        margin-left: initial;
+        margin-left: unset;
     }
 }
 
