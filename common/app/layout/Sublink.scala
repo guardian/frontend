@@ -149,6 +149,10 @@ object FaciaCardHeader {
 
   def fromTrailAndKicker(trail: Trail, itemKicker: Option[ItemKicker], config: Option[CollectionConfig]) = FaciaCardHeader(
     trail.showQuotedHeadline,
+    CardStyle(trail).toneString.equals("external"),
+    trail.isVideo,
+    trail.isGallery,
+    trail.isAudio,
     itemKicker,
     trail.headline,
     EditionalisedLink.fromTrail(trail)
@@ -157,6 +161,10 @@ object FaciaCardHeader {
 
 case class FaciaCardHeader(
   quoted: Boolean,
+  isExternal: Boolean,
+  isVideo: Boolean,
+  isGallery: Boolean,
+  isAudio: Boolean,
   kicker: Option[ItemKicker],
   headline: String,
   url: EditionalisedLink
