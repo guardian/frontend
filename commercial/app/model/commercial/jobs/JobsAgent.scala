@@ -3,6 +3,8 @@ package model.commercial.jobs
 import common.ExecutionContexts
 import model.commercial._
 
+import scala.util.control.NonFatal
+
 object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
 
   def jobsTargetedAt(segment: Segment): Seq[Job] = {
@@ -24,7 +26,21 @@ object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
       job.copy(keywordIdSuffixes = jobKeywordIds map Keyword.getIdSuffix)
     }
 
-    for {freshJobs <- JobsApi.loadAds()} updateAvailableMerchandise(populateKeywords(freshJobs))
+    JobsApi.loadAds() map { freshJobs =>
+      updateAvailableMerchandise(populateKeywords(freshJobs))
+    } recover {
+      case e: FeedSwitchOffException =>
+        log.warn(e.getMessage)
+        Nil
+      case e: FeedMissingConfigurationException =>
+        log.warn(e.getMessage)
+        Nil
+      case NonFatal(e) =>
+        log.error(e.getMessage)
+        Nil
+    }
+    for {freshJobs <- JobsApi.loadAds()}
+      updateAvailableMerchandise(populateKeywords(freshJobs))
   }
 
 }

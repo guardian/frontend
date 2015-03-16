@@ -19,7 +19,7 @@ define([
             fixtures.render({
                 id: 'navigation-fixture',
                 fixtures: [
-                        '<div class="js-navigation-header navigation--collapsed">' +
+                        '<div class="js-navigation-header navigation-container--collapsed">' +
                         '<a class="js-navigation-toggle" href="#footer-nav" data-target-nav="js-navigation-header"></a>' +
                         '<div class="js-mega-nav-placeholder"></div>' +
                         '</div>' +
@@ -67,13 +67,13 @@ define([
         it("should toggle navigation class", function(done) {
             var className = $('.js-navigation-toggle').attr('data-target-nav');
 
-            expect($('.' + className).hasClass('navigation--collapsed')).toBeTruthy();
+            expect($('.' + className).hasClass('navigation-container--collapsed')).toBeTruthy();
 
             sut.enableMegaNavToggle();
             bean.fire($('.js-navigation-toggle')[0], 'click');
 
             fastdom.defer(1, function () {
-                expect($('.' + className).hasClass('navigation--expanded')).toBeTruthy();
+                expect($('.' + className).hasClass('navigation-container--expanded')).toBeTruthy();
                 done();
             });
         });

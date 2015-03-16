@@ -290,7 +290,7 @@ define([
                 var afterInterval = _.after(2, function () {
                     mediator.off('mock:histogram', afterInterval);
                     expect(sparklinesTitle('_a')).toBe('500');
-                    expect(sparklinesTitle('_b')).toBe('12345');
+                    expect(sparklinesTitle('_b')).toBe('12,345');
 
                     finishTest();
                 });

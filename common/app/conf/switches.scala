@@ -336,6 +336,11 @@ object Switches {
     safeState = Off, new LocalDate(2015, 3, 24)
   )
 
+  val Print = Switch("Print analytics", "print",
+    "decide by now whether enough people are printing stuff to care whether they get a good experience",
+    safeState = Off, new LocalDate(2015, 3, 27)
+  )
+
   // Features
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
@@ -461,14 +466,9 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 1)
   )
 
-  val ABChimney = Switch("A/B Tests", "ab-chimney",
-    "Switch for the home icon chimney test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 16)
-  )
-
-  val ABStickyMpu = Switch("A/B Tests", "ab-sticky-mpu",
+  val ABMtMaster = Switch("A/B Tests", "ab-mt-master",
     "Switch for the Sticky mpu test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 9)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 11)
   )
 
   val ABSignedOut = Switch("A/B Tests", "ab-signed-out",
@@ -508,11 +508,6 @@ object Switches {
   val MissingVideoEndcodingsJobSwitch = Switch("Feature", "check-for-missing-video-encodings",
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
      safeState = Off, sellByDate = never
-  )
-
-  val StaticSocialIconSwitch = Switch("Feature", "static-social-icon-mobile",
-    "If this switch is switched on then there will be a floating social icon on the bottom of pages on mobile",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 14)
   )
 
   // Facia

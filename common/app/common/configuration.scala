@@ -268,6 +268,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v1.json"
     lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v1.json"
+    lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
 

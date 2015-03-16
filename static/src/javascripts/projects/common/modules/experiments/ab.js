@@ -15,8 +15,7 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/identity-benefits',
-    'common/modules/experiments/tests/chimney',
-    'common/modules/experiments/tests/sticky-mpu',
+    'common/modules/experiments/tests/mt-master',
     'common/modules/experiments/tests/signed-out'
 ], function (
     raven,
@@ -35,8 +34,7 @@ define([
     HighCommercialComponent,
     KruxAudienceScience,
     IdentityBenefits,
-    Chimney,
-    StickyMPU,
+    MtMaster,
     SignedOut
 ) {
 
@@ -45,8 +43,7 @@ define([
             new HighCommercialComponent(),
             new KruxAudienceScience(),
             new IdentityBenefits(),
-            new Chimney(),
-            new StickyMPU(),
+            new MtMaster(),
             new SignedOut()
         ],
         participationsKey = 'gu.ab.participations';

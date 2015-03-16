@@ -8,7 +8,11 @@
         <a class="social-signin__action social-signin__action--fb"
             data-link-name="Register/Sign in with Facebook" data-test-id="facebook-sign-in"
             href="@if(confirm) {
-                @idUrlBuilder.buildWebappUrl("/facebook/confirm", idRequest)
+                @if(HttpSwitch(IdentitySocialOAuthSwitch).isSwitchedOn) {
+                    @idUrlBuilder.buildOAuthUrl("/facebook/confirm", idRequest)
+                } else {
+                    @idUrlBuilder.buildWebappUrl("/facebook/confirm", idRequest)
+                }
             } else {
                 @if(HttpSwitch(IdentitySocialOAuthSwitch).isSwitchedOn) {
                     @idUrlBuilder.buildOAuthUrl("/facebook/signin", idRequest)
