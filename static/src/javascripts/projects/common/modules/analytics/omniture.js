@@ -38,7 +38,7 @@ define([
         this.s = window.s;
         this.pageviewSent = false;
 
-        mediator.on('module:clickstream:interaction', this.trackNonLinkEvent.bind(this));
+        mediator.on('module:clickstream:interaction', this.trackLinkImmediate.bind(this));
 
         mediator.on('module:clickstream:click', this.logTag.bind(this));
 
@@ -119,20 +119,14 @@ define([
         }
     };
 
-    // used where we don't have an element to pass as a tag
-    // eg. keyboard interaction
-    Omniture.prototype.trackNonLinkEvent = function (tagStr) {
-        this.s.linkTrackVars = 'eVar37,events';
-        this.s.linkTrackEvents = 'event37';
-        this.s.events = 'event37';
-        this.s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + tagStr : tagStr;
-        this.s.tl(true, 'o', tagStr);
+    // used where we don't have an element to pass as a tag, eg. keyboard interaction
+    Omniture.prototype.trackLinkImmediate = function (linkName) {
+        // A linkObject of value 'true' means track link with no delay.
+        this.trackLink(true, linkName);
     };
 
     Omniture.prototype.trackLink = function (linkObject, linkName) {
         this.populateEventProperties(linkName);
-
-        // A linkObject of value 'true' means track link with no delay.
         this.s.tl(linkObject, 'o', linkName);
     };
 
