@@ -76,7 +76,9 @@ define([
 
         if (!spec.tag) {
             return;
-        } else if (spec.sameHost && !spec.samePage) {
+        }
+
+        if (spec.sameHost && !spec.samePage) {
             // Came from a link to a new page on the same host,
             // so do session storage rather than an omniture track.
             storeObj = {
@@ -87,14 +89,16 @@ define([
             try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {}
             storage.session.set(NG_STORAGE_KEY, storeObj);
         } else {
-            this.populateEventProperties(spec.tag);
             // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
             delay = spec.samePage ? true : spec.target;
-            this.s.tl(delay, 'o', spec.tag);
+            this.trackLink(delay, spec.tag);
         }
     };
 
     Omniture.prototype.populateEventProperties = function (tag) {
+        //channel
+        //prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop47,prop51,prop61,prop64,prop65
+        //evar7,evar37,evar38,evar39,evar50
         this.s.linkTrackVars = 'eVar37,eVar7,prop37,events';
         this.s.linkTrackEvents = 'event37';
         this.s.events = 'event37';
@@ -125,10 +129,8 @@ define([
         this.s.tl(true, 'o', tagStr);
     };
 
-    Omniture.prototype.trackLinkEvent = function (linkObject, linkName) {
-        //channel
-        //prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop47,prop51,prop61,prop64,prop65
-        //evar7,evar37,evar38,evar39,evar50
+    Omniture.prototype.trackLink = function (linkObject, linkName) {
+        this.populateEventProperties(linkName);
 
         // A linkObject of value 'true' means track link with no delay.
         this.s.tl(linkObject, 'o', linkName);
