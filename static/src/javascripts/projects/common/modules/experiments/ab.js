@@ -15,7 +15,6 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/identity-benefits',
-    'common/modules/experiments/tests/chimney',
     'common/modules/experiments/tests/mt-master',
     'common/modules/experiments/tests/signed-out'
 ], function (
@@ -35,7 +34,6 @@ define([
     HighCommercialComponent,
     KruxAudienceScience,
     IdentityBenefits,
-    Chimney,
     MtMaster,
     SignedOut
 ) {
@@ -45,7 +43,6 @@ define([
             new HighCommercialComponent(),
             new KruxAudienceScience(),
             new IdentityBenefits(),
-            new Chimney(),
             new MtMaster(),
             new SignedOut()
         ],
