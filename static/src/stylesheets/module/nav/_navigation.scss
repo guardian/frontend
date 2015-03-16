@@ -14,7 +14,8 @@ $navigation-toggler-width-halffull: 132px;
 $navigation-toggler-width-full: 186px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
-$c-navigation-background-side-bar: #005182;
+// TODO: Palette?
+$c-navigation-background-side-bar: darken(colour(guardian-brand), 2%);
 
 $c-signposting-action: colour(news-default);
 $c-signposting-background: $c-navigation-base;
