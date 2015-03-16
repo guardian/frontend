@@ -12,6 +12,10 @@
     .fc-item__image-container {
         display: block;
     }
+
+    .fc-item__header {
+        @include fs-bodyHeading(2, $size-only: true);
+    }
 }
 
 .fc-container--advertisement-feature {
@@ -30,10 +34,6 @@
     .item__title,
     .linkslist__action {
         @include f-headlineSans;
-    }
-
-    .fc-item__header {
-        @include fs-bodyHeading(2, $size-only: true);
     }
 }
 
