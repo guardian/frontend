@@ -47,6 +47,20 @@ $c-guardian-services-action: #ffffff;
             // does not apply for interactives.
             margin-right: $gs-gutter/2;
         }
+
+        @include mq($until: tablet) {
+            margin-top: $gs-baseline * .83;
+            margin-bottom: $gs-baseline * .83;
+
+            i {
+                // Height / width
+                $height-to-width-ratio: 30 / 160;
+                // Magic number to fit the logo to 320px+ screens
+                $width: 134px;
+                width: $width;
+                height: $width * $height-to-width-ratio;
+            }
+        }
     }
 
     i {
