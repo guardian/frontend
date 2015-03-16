@@ -17,9 +17,15 @@ $c-guardian-services-action: #ffffff;
 }
 
 .l-header--is-slim {
+    // TODO: Palette?
+    background: darken(colour(guardian-brand), 2%);
+
     .l-header__inner {
         @include clearfix;
-        background: $c-top-header-background;
+
+        @include mq(tablet) {
+            background: colour(guardian-brand);
+        }
     }
 }
 
