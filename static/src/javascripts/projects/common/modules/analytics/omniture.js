@@ -41,11 +41,6 @@ define([
 
         mediator.on('module:clickstream:click', this.logTag.bind(this));
 
-        mediator.on('module:autoupdate:loaded', function () {
-            this.populatePageProperties();
-            this.logUpdate();
-        }.bind(this));
-
         mediator.on('module:analytics:omniture:pageview:sent', function () {
             // Independently log this page view, used for checking we have not broken analytics.
             // We want to exclude off-site embed tracking from this data.
@@ -58,14 +53,6 @@ define([
     Omniture.prototype.logView = function () {
         this.s.t();
         this.confirmPageView();
-    };
-
-    Omniture.prototype.logUpdate = function () {
-        this.s.linkTrackVars = 'events,eVar7';
-        this.s.linkTrackEvents = 'event90';
-        this.s.events = 'event90';
-        this.s.eVar7 = config.page.analyticsName;
-        this.s.tl(true, 'o', 'AutoUpdate Refresh');
     };
 
     Omniture.prototype.generateTrackingImageString = function () {
