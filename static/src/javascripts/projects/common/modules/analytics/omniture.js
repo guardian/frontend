@@ -106,16 +106,6 @@ define([
         // this allows 'live' Omniture tracking of Navigation Interactions
         this.s.eVar7 = 'D=pageName';
         this.s.prop37 = 'D=v37';
-
-        if (/social/.test(linkName)) {
-            this.s.linkTrackVars   += ',eVar12,prop4,prop9,prop10';
-            this.s.linkTrackEvents += ',event16';
-            this.s.eVar12           = linkName;
-            this.s.prop4            = config.page.keywords || '';
-            this.s.prop9            = config.page.contentType || '';
-            this.s.prop10           = config.page.tones || '';
-            this.s.events           = this.s.apl(this.s.events, 'event16', ',');
-        }
     };
 
     // used where we don't have an element to pass as a tag, eg. keyboard interaction
