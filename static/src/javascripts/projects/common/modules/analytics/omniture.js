@@ -95,23 +95,22 @@ define([
         }
     };
 
-    Omniture.prototype.populateEventProperties = function (tag) {
-        //channel
-        //prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop47,prop51,prop61,prop64,prop65
-        //evar7,evar37,evar38,evar39,evar50
-        this.s.linkTrackVars = 'eVar37,eVar7,prop37,events';
+    Omniture.prototype.populateEventProperties = function (linkName) {
+
+        this.s.linkTrackVars =  'channel,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,'+
+                                'prop51,prop61,prop64,prop65,evar7,evar37,evar38,evar39,evar50,events';
         this.s.linkTrackEvents = 'event37';
         this.s.events = 'event37';
-        this.s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + tag : tag;
+        this.s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + linkName : linkName;
 
         // this allows 'live' Omniture tracking of Navigation Interactions
         this.s.eVar7 = 'D=pageName';
         this.s.prop37 = 'D=v37';
 
-        if (/social/.test(tag)) {
+        if (/social/.test(linkName)) {
             this.s.linkTrackVars   += ',eVar12,prop4,prop9,prop10';
             this.s.linkTrackEvents += ',event16';
-            this.s.eVar12           = tag;
+            this.s.eVar12           = linkName;
             this.s.prop4            = config.page.keywords || '';
             this.s.prop9            = config.page.contentType || '';
             this.s.prop10           = config.page.tones || '';
