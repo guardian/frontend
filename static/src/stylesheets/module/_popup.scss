@@ -109,11 +109,11 @@ $control-offset: 36 + $gs-gutter/2;
             border-top: 0;
             position: absolute;
             left: 50%;
-            margin-left: 0 - $popup-anchor-arrow-size;
             border-left: $popup-anchor-arrow-size solid transparent;
             border-right: $popup-anchor-arrow-size solid transparent;
             border-bottom: $popup-anchor-arrow-size solid $c-popup-bg;
             top: $popup-top - $popup-anchor-arrow-size;
+
 
             .brand-bar__item--has-control & {
                 @include mq(tablet) {
@@ -131,6 +131,12 @@ $control-offset: 36 + $gs-gutter/2;
                 @include mq(tablet) {
                     margin-left: 0 - $popup-anchor-arrow-size * 2;
                 }
+            }
+
+            // This margin must come last in the cascade
+            &,
+            .l-header--is-slim & {
+                margin-left: 0 - $popup-anchor-arrow-size;
             }
         }
     }
