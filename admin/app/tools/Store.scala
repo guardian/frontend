@@ -42,6 +42,9 @@ trait Store extends Logging with Dates {
   def putDfpAdFeatureReport(adFeaturesJson: String) {
     S3.putPublic(dfpAdFeatureReportKey, adFeaturesJson, defaultJsonEncoding)
   }
+  def putDfpActiveAdUnitList(adUnits: String) {
+    S3.putPublic(dfpActiveAdUnitListKey, adUnits, "text/plain")
+  }
   def putCachedTravelOffersFeed(everything: String) {
     S3.putPublic(travelOffersS3Key, everything, "text/plain")
   }
