@@ -204,6 +204,7 @@
 }
 .ad-slot--container-inline {
     @include mq(tablet) {
+        position: relative;
         height: auto;
         margin: 0 $gs-gutter/2;
 
