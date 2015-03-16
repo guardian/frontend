@@ -3,6 +3,7 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/time',
+    'common/modules/analytics/omniture',
     'common/modules/identity/api',
     'common/modules/identity/facebook-authorizer',
     'common/modules/navigation/profile',
@@ -14,6 +15,7 @@ function (
     ajax,
     config,
     time,
+    omniture,
     id,
     FacebookAuthorizer,
     Profile,
@@ -71,10 +73,7 @@ function (
                         });
                         profile.init();
                         new Toggles().init();
-
-                        s.eVar13 = 'facebook auto';
-                        s.linkTrackVars = 'eVar13';
-                        s.tl(this, 'o', 'Social signin auto');
+                        omniture.trackLink(this, 'Social signin auto');
                     }
                 }
             });

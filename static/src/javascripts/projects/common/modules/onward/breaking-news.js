@@ -9,6 +9,7 @@ define([
     'common/utils/config',
     'common/utils/storage',
     'common/utils/template',
+    'common/modules/analytics/omniture',
     'common/views/svgs',
     'text!common/views/breaking-news.html'
 ], function (
@@ -22,6 +23,7 @@ define([
     config,
     storage,
     template,
+    omniture,
     svgs,
     alertHtml
 ) {
@@ -130,10 +132,7 @@ define([
                             $breakingNews.removeClass('breaking-news--hidden');
                         });
 
-                        s.eVar36 = message;
-                        s.eVar72 = _.map(alerts, function (article) { return article.headline; }).join(' | ');
-                        s.linkTrackVars = 'eVar36,eVar72';
-                        s.tl(this, 'o', message);
+                        omniture.trackLink(this, message);
                     }, alertDelay);
                 }
             }
