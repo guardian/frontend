@@ -124,7 +124,6 @@ trait Index extends ConciergeRepository with QueryDefaults {
     val promiseOfResponse = getResponse(LiveContentApi.item(queryPath, edition).page(pageNum)
       .pageSize(pageSize)
       .showFields(fields)
-      .useDate("first-publication")
     ) map { response =>
       val page = maybeSection.map(s => section(s, response)) orElse
         response.tag.flatMap(t => tag(response, pageNum)) orElse
