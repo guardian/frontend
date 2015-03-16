@@ -2,16 +2,14 @@
 // =============================================================================
 
 .fc-container__header__title a {
-    &:after {
-        @include icon(arrow-blue-right, false);
-        content: '';
+    .inline-icon {
         position: relative;
         height: .7em;
         width: 1em;
     }
 
-    &:hover:after {
-        @include icon(arrow-light-blue-right, false);
+    &:hover path {
+        fill: colour(news-accent);
     }
 }
 
@@ -21,9 +19,7 @@
 .fc-item__timestamp {
     padding-left: 0;
 
-    &:before {
-        @include icon(clock-light-grey, false);
-        content: '';
+    .inline-icon  {
         margin: 0;
         top: 1px;
         position: relative;
@@ -33,62 +29,59 @@
     }
 }
 
-.fc-trail__count:before {
-    @include icon(comment-light-grey, false);
+.fc-trail__count .inline-icon {
     width: 16px;
     height: 16px;
-    content: '';
     position: relative;
     top: 3px;
     float: left;
     margin-right: 1px;
+
+    path {
+        fill: colour(neutral-3);
+    }
 }
 
 .fc-item__title--quoted {
-    .fc-item__headline {
-        @include icon(quote-grey, false);
+    .fc-item__headline svg {
         display: inline !important;
-        background-size: 1.2em .75em !important;
-        background-position: 0 .1em !important;
-        padding-left: 1.4em;
+        width: 1.2em;
+        height: .75em;
     }
 
-    .tone-podcast--item & .fc-item__headline {
-        @include icon(quote-white, false);
+    .tone-podcast--item & path {
+        fill: white;
     }
 
-    .tone-feature--item & .fc-item__headline {
-        @include icon(quote-light-pink, false);
+    .tone-feature--item & path {
+        fill: colour(feature-mute);
     }
 
-    .tone-live--item & .fc-item__headline {
-        @include icon(quote-white, false);
+    .tone-live--item & path {
+        fill: white
     }
 
-    .tone-media--item & .fc-item__headline {
-        @include icon(quote-white, false);
+    .tone-media--item & path {
+        fill: white
     }
 
-    .tone-editorial--item & .fc-item__headline {
-        @include icon(quote-white, false);
+    .tone-editorial--item & path {
+        fill: white
     }
 
-    .tone-review--item & .fc-item__headline {
-        @include icon(quote-white, false);
+    .tone-review--item & path {
+        fill: white
     }
 
-    .tone-special-report--item & .fc-item__headline {
-        @include icon(quote-white, false);
+    .tone-special-report--item & path {
+        fill: white
     }
 }
 
-.tone-external--item .fc-item__title:before {
-    @include icon(external-link, false);
-    content: '';
+.tone-external--item .fc-item__title svg {
     width: 1.2em;
     height: .75em;
     margin-right: .2em;
-
 }
 
 // Media Icons
@@ -97,9 +90,7 @@
 .fc-item--video .fc-item__title,
 .flyer--video .flyer__title,
 .fc-sublink--video .fc-sublink__link {
-    &:before {
-        @include icon(video-icon, false);
-        content: '';
+    svg {
         height: .75em;
         width: 1.1em;
         margin-right: .3em;
@@ -109,9 +100,7 @@
 .fc-item--gallery .fc-item__title,
 .flyer--gallery .flyer__title,
 .fc-sublink--gallery .fc-sublink__link {
-    &:before {
-        @include icon(camera-yellow-large, false);
-        content: '';
+    svg {
         height: .72em;
         width: 1.2em;
         margin-right: .1em;
@@ -121,9 +110,7 @@
 .fc-item--audio .fc-item__title,
 .flyer--audio .flyer__title,
 .fc-sublink--audio .fc-sublink__link {
-    &:before {
-        @include icon(volume-high--tone-media, false);
-        content: '';
+    svg {
         height: .72em;
         width: 1.2em;
         margin-right: .1em;
@@ -138,66 +125,67 @@
 .tone-comment--item,
 .tone-dead--item,
 .tone-news--item {
-    .fc-sublink--video .fc-sublink__link:before {
-        @include icon(video-icon-black, false);
+    .fc-sublink--video .fc-sublink__link path {
+        fill: black;
     }
 
-    .fc-sublink--gallery .fc-sublink__link:before {
-        @include icon(camera-black-large, false);
+    .fc-sublink--gallery .fc-sublink__link path {
+        fill: black;
     }
 
-    .fc-sublink--audio .fc-sublink__link:before,
-    .fc-sublink--audio.tone-podcast--sublink .fc-sublink__link:before {
-        @include icon(volume-high-black, false);
+    .fc-sublink--audio .fc-sublink__link path,
+    .fc-sublink--audio.tone-podcast--sublink .fc-sublink__link path {
+        fill: black;
     }
 }
 
+.tone-special-report--item,
 .tone-podcast--item,
 .tone-podcast--sublink {
-    .fc-item__timestamp:before {
-        @include icon(clock-white, false);
+    .fc-item__timestamp path {
+        fill: white;
     }
 
-    .fc-trail__count:before {
-        @include icon(comment-white, false);
+    .fc-trail__count path {
+        fill: white;
     }
 
     &.fc-item--audio .fc-item__title,
     &.flyer--audio .flyer__title,
     &.fc-sublink--audio .fc-sublink__link {
-        &:before {
-            @include icon(volume-high--tone-podcast, false);
+        path {
+            fill: colour(podcast-default)
         }
     }
 }
 
 .tone-media--item {
-    .fc-item__timestamp:before {
-        @include icon(clock-grey, false);
+    .fc-item__timestamp path {
+        fill: colour(neutral-3);
     }
 
-    .fc-trail__count:before {
-        @include icon(comment-light-grey, false);
+    .fc-trail__count path{
+        fill: colour(neutral-3);
     }
 }
 
 .tone-live--item,
 .tone-feature--item {
-    .fc-item__timestamp:before {
-        @include icon(clock-light-pink, false);
+    .fc-item__timestamp path {
+        fill: colour(feature-mute);
     }
 
-    .fc-trail__count:before {
-        @include icon(comment-light-pink, false);
+    .fc-trail__count path  {
+        fill: colour(feature-mute);
     }
 }
 
 .tone-editorial--item {
-    .fc-item__timestamp:before {
-        @include icon(clock-light-blue, false);
+    .fc-item__timestamp path {
+        fill: colour(editorial-accent);
     }
 
-    .fc-trail__count:before {
-        @include icon(comment-light-blue, false);
+    .fc-trail__count path {
+        fill: colour(editorial-accent);
     }
 }
