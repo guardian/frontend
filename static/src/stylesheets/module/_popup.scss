@@ -114,7 +114,6 @@ $control-offset: 36 + $gs-gutter/2;
             border-bottom: $popup-anchor-arrow-size solid $c-popup-bg;
             top: $popup-top - $popup-anchor-arrow-size;
 
-
             .brand-bar__item--has-control & {
                 @include mq(tablet) {
                     margin-left: $control-offset * .5 - $popup-anchor-arrow-size;
