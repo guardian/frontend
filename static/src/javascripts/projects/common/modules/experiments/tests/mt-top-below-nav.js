@@ -26,7 +26,6 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    console.log($('.top-banner-ad-container--above-nav'));
                     $('.top-banner-ad-container--above-nav').appendTo('.top-banner-below-nav-mt-test');
                 }
             }

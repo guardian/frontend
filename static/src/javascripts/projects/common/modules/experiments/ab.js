@@ -137,13 +137,11 @@ define([
 
     // Finds variant in specific tests and runs it
     function run(test) {
-        console.log(isParticipating(test), testCanBeRun(test));
         if (isParticipating(test) && testCanBeRun(test)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
             some(test.variants, function (variant) {
                 if (variant.id === variantId) {
-                    console.log(variant);
                     variant.test();
                     return true;
                 }
