@@ -179,9 +179,14 @@ trait PaidForTagAgent {
     lazy val isExpiredLegacyAdFeature =
       lineItems.isEmpty && hasAdFeatureTone && pageId != "tone/advertisement-features"
 
-    lazy val isExpiredAdFeature = lineItems.nonEmpty && (lineItems forall { lineItem =>
-      lineItem.endTime exists (_.isBeforeNow)
-    })
+    lazy val isExpiredAdFeature = {
+      def hasExpiredStatus(lineItem: GuLineItem): Boolean = {
+        lineItem.status != "READY" && lineItem.status != "DELIVERING"
+      }
+      lineItems.nonEmpty && (lineItems forall { lineItem =>
+          hasExpiredStatus(lineItem) || lineItem.endTime.exists(_.isBeforeNow)
+      })
+    }
 
     !isPreview && (isExpiredLegacyAdFeature || isExpiredAdFeature)
   }

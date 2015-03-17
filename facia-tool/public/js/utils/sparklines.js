@@ -3,6 +3,7 @@ define([
     'knockout',
     'underscore',
     'jquery',
+    'numeral',
     'modules/authed-ajax',
     'utils/highcharts',
     'utils/mediator',
@@ -13,6 +14,7 @@ define([
     ko,
     _,
     $,
+    numeral,
     authedAjax,
     Highcharts,
     mediator,
@@ -43,7 +45,8 @@ define([
     function showSparklinesInArticle (element, article) {
         var front = article.front,
             webUrl = getWebUrl(article),
-            data, series, chart = $(element).data('sparklines');
+            $element = $(element),
+            data, series, chart = $element.data('sparklines');
 
         if (!front || !front.sparklines || !webUrl) {
             return;
@@ -51,12 +54,16 @@ define([
 
         data = front.sparklines.data()[webUrl] || {};
         series = data.series;
-        if (!series || !series.length) {
-            return;
-        }
 
         if (chart) {
+            // dispose the chart even if there's no series because the new update means
+            // there's no data for it. Don't show stale data
             chart.destroy();
+            $element.removeData('sparklines');
+        }
+
+        if (!goodEnoughSeries(data.totalHits, series)) {
+            return;
         }
         chart = createSparklikes(element, data.totalHits, _.map(series, function (value) {
             return {
@@ -66,19 +73,23 @@ define([
                 })
             };
         }));
-        $(element).data('sparklines', chart);
+        $element.data('sparklines', chart);
         return chart;
+    }
+
+    function goodEnoughSeries (totalHits, series) {
+        return series && series.length && totalHits >= 10;
     }
 
     function createSparklikes (element, totalHits, series) {
         var lineWidth = Math.min(Math.ceil(totalHits / 2000), 4);
 
-        return new Highcharts.Chart({
+        return new Highcharts.Chart($.extend(true, Highcharts.CONFIG_DEFAULTS.sparklines, {
             chart: {
                 renderTo: element
             },
             title: {
-                text: '' + totalHits
+                text: numeral(totalHits).format(',')
             },
             plotOptions: {
                 series: {
@@ -86,7 +97,7 @@ define([
                 }
             },
             series: series
-        });
+        }));
     }
 
     function loadSparklinesForFront (front) {
@@ -107,7 +118,8 @@ define([
 
             getHistogram(
                 front.front(),
-                allWebUrls(front)
+                allWebUrls(front),
+                front.sparklinesOptions()
             ).then(function (data) {
                 if (referrerFront !== front.front()) {
                     deferred.reject();
@@ -161,7 +173,8 @@ define([
 
             getHistogram(
                 front.front(),
-                newArticles
+                newArticles,
+                front.sparklinesOptions()
             ).then(function (newData) {
                 if (referrerFront !== front.front()) {
                     deferred.reject();
@@ -178,25 +191,30 @@ define([
         }
     }
 
-    function getHistogram (front, articles) {
+    function getHistogram (front, articles, options) {
         var deferred = new $.Deferred().resolve({});
 
         // Allow max articles in one request or the GET request is too big
         var maxArticles = vars.CONST.sparksBatchQueue;
         _.each(_.range(0, articles.length, maxArticles), function (limit) {
             deferred = deferred.then(function (memo) {
-                return reduceRequest(memo, front, articles.slice(limit, Math.min(limit + maxArticles, articles.length)));
+                return reduceRequest(
+                    memo,
+                    front,
+                    articles.slice(limit, Math.min(limit + maxArticles, articles.length)),
+                    options
+                );
             });
         });
 
         return deferred;
     }
 
-    function reduceRequest (memo, front, articles) {
+    function reduceRequest (memo, front, articles, options) {
         var deferred = new $.Deferred();
 
         authedAjax.request({
-            url: '/ophan/histogram?' + serializeParams(front, articles)
+            url: '/ophan/histogram?' + serializeParams(front, articles, options)
         }).then(function (data) {
             _.each(data, function (content) {
                 memo[content.path] = content;
@@ -210,15 +228,15 @@ define([
         return deferred.promise();
     }
 
-    function serializeParams (front, articles) {
+    function serializeParams (front, articles, options) {
         var params = [];
 
         params.push('referring-path=/' + front);
         _.map(articles, function (article) {
             return params.push('path=' + article);
         });
-        params.push('hours=1');
-        params.push('interval=10');
+        params.push('hours=' + (options.hours || '1'));
+        params.push('interval=' + (options.interval || '10'));
 
         return params.join('&');
     }
@@ -248,6 +266,9 @@ define([
         subscribedFronts.push(widget);
         loadSparklinesForFront(widget);
         widget.collections.subscribe(function () {
+            loadSparklinesForFront(widget);
+        });
+        widget.sparklinesOptions.subscribe(function () {
             loadSparklinesForFront(widget);
         });
     }

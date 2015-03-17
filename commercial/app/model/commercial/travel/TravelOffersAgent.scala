@@ -1,7 +1,7 @@
 package model.commercial.travel
 
 import common.ExecutionContexts
-import model.commercial.{MerchandiseAgent, Segment, keywordsMatch}
+import model.commercial.{Keyword, MerchandiseAgent, Segment}
 
 import scala.concurrent.Future
 
@@ -9,7 +9,8 @@ object TravelOffersAgent extends MerchandiseAgent[TravelOffer] with ExecutionCon
 
   def offersTargetedAt(segment: Segment): Seq[TravelOffer] = {
     val defaultOffers = available.sortBy(_.position).take(4)
-    getTargetedMerchandise(segment, defaultOffers)(offer => keywordsMatch(segment, offer.keywordIds))
+    getTargetedMerchandise(segment, defaultOffers)(offer =>
+      Keyword.idSuffixesIntersect(segment.context.keywords, offer.keywordIdSuffixes))
   }
 
   def specificTravelOffers(offerIdStrings: Seq[String]): Seq[TravelOffer] = {
@@ -23,10 +24,10 @@ object TravelOffersAgent extends MerchandiseAgent[TravelOffer] with ExecutionCon
       val populated = offers map {
         offer =>
           val offerKeywordIds = offer.countries.flatMap(Countries.forCountry).distinct
-          offer.copy(keywordIds = offerKeywordIds)
+          offer.copy(keywordIdSuffixes = offerKeywordIds map Keyword.getIdSuffix)
       }
 
-      val unpopulated = populated.withFilter(_.keywordIds.isEmpty).map {
+      val unpopulated = populated.withFilter(_.keywordIdSuffixes.isEmpty).map {
         offer => offer.title + ": countries(" + offer.countries.mkString + ")"
       }.mkString("; ")
       log.info(s"No keywords for these offers: $unpopulated")

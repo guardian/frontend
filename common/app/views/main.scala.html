@@ -30,7 +30,8 @@
             ("has-page-skin", metaData.hasPageSkin(edition)),
             ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty),
             ("childrens-books-site", metaData.section == "childrens-books-site"),
-            ("ad-below-nav", adBelowNav)))"
+            ("ad-below-nav", adBelowNav),
+            ("is-immersive", metaData.isImmersive)))"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.message(metaData)

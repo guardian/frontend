@@ -223,9 +223,9 @@ import collection.JavaConversions._
 
         Then("I should see pictures in the body of the article")
 
-        $("figure[itemprop=associatedMedia]").length should be(2)
+        $(".content__article-body .element-image").length should be(2)
 
-        val inBodyImage = findFirst("figure[itemprop=associatedMedia]")
+        val inBodyImage = findFirst(".content__article-body .element-image")
 
         ImageServerSwitch.switchOn()
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
@@ -364,7 +364,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see paragraph 16")
-        findFirst("#block-16").getText should startWith("11.31am: Vince Cable, the business secretary")
+        findFirst("#block-16").getText should startWith("11.31am:Vince Cable, the business secretary")
       }
     }
 

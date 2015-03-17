@@ -13,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="utf-8"/>
 
-        <link rel="shortcut icon" type="image/png" href="@routes.UncachedAssets.at("images/32x32.ico")" />
+        <link rel="shortcut icon" type="image/png" href="@routes.UncachedAssets.at("images/favicon.ico")" />
 
         <link rel="apple-touch-icon" sizes="144x144" href="@routes.UncachedAssets.at("images/144x144.png")" />
         <link rel="apple-touch-icon" sizes="114x114" href="@routes.UncachedAssets.at("images/114x114.png")" />
@@ -66,7 +66,7 @@
     } else {
         <header>
             <a href="/" target="_top">
-                <img class="logo" src="@routes.UncachedAssets.at("images/plane.png")" />
+                <img class="logo" src="@routes.UncachedAssets.at("images/edit-pen.png")" />
                 <h1>
                     <span data-bind="text: title()">fronts</span>
                     @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") { : @Configuration.facia.stage }

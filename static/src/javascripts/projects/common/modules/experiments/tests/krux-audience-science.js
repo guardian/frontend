@@ -3,10 +3,10 @@ define(function () {
     return function () {
         this.id = 'KruxAudienceScience';
         this.start = '2015-02-06';
-        this.expiry = '2015-03-06';
+        this.expiry = '2015-05-01';
         this.author = 'Sam Desborough';
         this.description = 'Using Krux rather than Audience Science parameters in DFP ad requests';
-        this.audience = 0.04;
+        this.audience = 0.30;
         this.audienceOffset = 0;
         this.successMeasure = '';
         this.audienceCriteria = 'All users';

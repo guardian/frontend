@@ -21,7 +21,7 @@ define([
     };
 
     SocialBurners.prototype.ready = function () {
-        images.upgrade();
+        images.upgradePictures();
         mediator.emit('register:end', 'social-content');
     };
 

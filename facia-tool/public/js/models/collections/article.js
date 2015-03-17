@@ -804,9 +804,10 @@ define([
         function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
             if (imageSrc()) {
                 validateImageSrc(imageSrc(), opts)
-                    .done(function(width, height) {
-                        imageSrcWidth(width);
-                        imageSrcHeight(height);
+                    .done(function(img) {
+                        imageSrc(img.src);
+                        imageSrcWidth(img.width);
+                        imageSrcHeight(img.height);
                     })
                     .fail(function(err) {
                         undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);

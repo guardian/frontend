@@ -1,5 +1,4 @@
 @(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
-@import layout.FrontendLatestSnap
 @import model.InlineImage
 @import model.{InlineVideo, VideoPlayer, CrosswordSvg}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
@@ -7,7 +6,7 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
-@import layout.FrontendLatestSnap
+@import layout.{FrontendLatestSnap, FaciaWidths}
 @import views.support.ImgSrc
 @import layout.WidthsByBreakpoint
 @import Function.const
@@ -129,10 +128,13 @@ data-test-id="facia-card"
         @if(item.cardTypes.showCutOut) {
             @item.cutOut.map { case cutOut @ CutOut(imageUrl, _) =>
             <div class="fc-item__avatar">
-                <img class="fc-item__avatar__media @cutOut.cssClass"
-                     srcset="@ImgSrc.srcsetForCutout(imageUrl)"
-                     sizes="@WidthsByBreakpoint.cutOutFromItemClasses(item.cardTypes).sizesString"
-                >
+                @lazyImage(
+                    Seq("fc-item__avatar__media", cutOut.cssClass),
+                    ImgSrc.srcset(imageUrl, FaciaWidths.cutOutFromItemClasses(item.cardTypes)),
+                    FaciaWidths.cutOutFromItemClasses(item.cardTypes).sizes,
+                    None,
+                    false
+                )
             </div>
             }
         }

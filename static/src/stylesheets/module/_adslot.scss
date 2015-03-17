@@ -204,6 +204,7 @@
 }
 .ad-slot--container-inline {
     @include mq(tablet) {
+        position: relative;
         height: auto;
         margin: 0 $gs-gutter/2;
 
@@ -212,19 +213,9 @@
             top: 0;
             right: 0;
         }
-
-        .ad-slot__content {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            height: 250px;
-            margin: auto;
-        }
     }
 
     @include mq(tablet, desktop) {
-        position: relative;
         width: gs-span(4.5);
 
         .ad-slot__label {
@@ -234,6 +225,15 @@
         .ad-slot__content {
             top: $mpu-ad-label-height;
         }
+    }
+
+    .ad-slot__content {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 250px;
+        margin: auto;
     }
 }
 .ad-slot--gallery-inline,

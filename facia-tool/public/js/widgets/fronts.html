@@ -38,13 +38,32 @@
     <!-- ko ifnot: confirmSendingAlert() -->
         <div class="col__inner front-selector">
             <select data-bind="options: $root.fronts, value: front, optionsCaption: 'choose a front...'"></select>
-            <span class="collapse-expand-all" data-bind="css: {
-                expanded: allExpanded
-            }, click: toggleAll">
-                <span class="expand">expand all <i class="fa fa-chevron-up"></i></span>
-                <span class="collapse">collapse all <i class="fa fa-chevron-down"></i></span>
-            </span>
         </div>
+        <!-- ko if: front -->
+            <div class="front-controls">
+                <span class="front-actions" data-bind="toggleClick: controlsVisible">
+                    <!-- ko if: isControlsVisible -->
+                        <i class="fa fa-ellipsis-v"></i><span data-bind="text: controlsText"></span>
+                        <div class="floating-controls dropdown fadeElement" data-bind="css: {
+                            'dropdown-open': controlsVisible,
+                            'visible': controlsVisible
+                        }">
+                            <ul class="z-depth-2">
+                                <li data-bind="click: setSparklines.bind($data, 1, 10)">Sparklines: 1h</li>
+                                <li data-bind="click: setSparklines.bind($data, 3, 30)">Sparklines: 3h</li>
+                                <li data-bind="click: setSparklines.bind($data, 6, 60)">Sparklines: 6h</li>
+                            </ul>
+                        </div>
+                    <!-- /ko -->
+                </span>
+                <span class="collapse-expand-all" data-bind="css: {
+                    expanded: allExpanded
+                }, click: toggleAll">
+                    <span class="expand">expand all <i class="fa fa-chevron-up"></i></span>
+                    <span class="collapse">collapse all <i class="fa fa-chevron-down"></i></span>
+                </span>
+            </div>
+        <!-- /ko -->
     <!-- /ko -->
 
     <div class="col__inner scrollable collection-container" data-bind="foreach: collections">
