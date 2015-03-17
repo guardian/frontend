@@ -471,6 +471,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 11)
   )
 
+  val ABMtTopBelowNav = Switch("A/B Tests", "ab-mt-top-below-nav",
+    "Top above nav ad placed below nav.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 17)
+  )
+
   val ABSignedOut = Switch("A/B Tests", "ab-signed-out",
     "Switch for the Signed Out messaging test.",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
