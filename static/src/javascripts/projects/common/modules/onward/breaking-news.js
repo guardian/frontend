@@ -32,10 +32,6 @@ define([
         $body,
         marque36icon;
 
-    function slashDelimit() {
-        return Array.prototype.slice.call(arguments).filter(function (str) { return str;}).join('/');
-    }
-
     function cleanIDs(articleIds, hiddenIds) {
         var cleanedIDs = {};
         _.forEach(articleIds, function (articleID) {
