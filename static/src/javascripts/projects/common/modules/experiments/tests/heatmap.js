@@ -6,7 +6,7 @@ define([
     return function () {
         this.id = 'Heatmap';
         this.start = '2015-03-16';
-        this.expiry = '2015-03-18';
+        this.expiry = '2015-03-24';
         this.author = 'Ken Lim';
         this.description = 'UK network front heatmap';
         this.audience = 0.01;
