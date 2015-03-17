@@ -31,8 +31,11 @@ define([
     Fluid250.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     Fluid250.prototype.updateBgPosition = function () {
-        var bgpositionx = this.params.backgroundPosition.split(' ')[0];
-        $('.creative--fluid250').css('background-position', bgpositionx + ' ' + window.pageYOffset + 'px').css('background-repeat', 'repeat-y');
+        var bgpositionx = this.params.backgroundPosition.split(' ')[0],
+        layeronebgpositionx = this.params.layerOneBGPosition.split(' ')[0];
+
+        $('.ad-slot--top-banner-ad .creative--fluid250').css('background-position', bgpositionx + ' ' + window.pageYOffset*(this.params.backgroundImageScroll/100) + 'px').css('background-repeat', 'repeat-y');
+        $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer1').css('background-position', bgpositionx + ' ' + window.pageYOffset*(this.params.layerOneImageScroll/100) + 'px').css('background-repeat', 'repeat-y');
     };
 
     Fluid250.prototype.create = function () {
@@ -58,7 +61,7 @@ define([
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
         }
 
-        if (Fluid250.hasScrollEnabled && this.params.backgroundImageScroll === 'scroll') {
+        if (Fluid250.hasScrollEnabled && (this.params.backgroundImageScroll !== 'normal' || this.params.layerOneImageScroll !== 'normal')) {
             // update bg position
             this.updateBgPosition();
 
