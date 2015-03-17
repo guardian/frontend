@@ -4,12 +4,12 @@ module.exports = function(grunt, options) {
             options: {
                 map: options.isDev,
                 base: 16,
-                fallback: false // Opera Mini gets its own global.px.css
+                fallback: false
             },
             files: [{
                 expand: true,
                 cwd: options.staticTargetDir + 'stylesheets/',
-                src: ['*.css', '!old-ie*', '!*.px.css'],
+                src: ['*.css', '!old-ie*'],
                 dest: options.staticTargetDir + 'stylesheets/'
             }]
         }

@@ -93,7 +93,7 @@ $block-padding-right: $gs-gutter;
     display: inline-block;
     position: relative;
     @include border-radius(50%);
-    $size: 12px;
+    $size: .75em;
     background-color: #ffffff;
     width: $size;
     height: $size;
