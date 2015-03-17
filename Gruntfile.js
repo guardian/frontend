@@ -71,7 +71,6 @@ module.exports = function (grunt) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }
 
-        grunt.task.run(['copy:pxCss']);
         grunt.task.run(['px_to_rem']);
 
         if (isOnlyTask(this) && !fullCompile) {
