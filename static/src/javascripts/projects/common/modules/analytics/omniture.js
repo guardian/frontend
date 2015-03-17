@@ -291,16 +291,16 @@ define([
         // This ensures that the Omniture pageview beacon has successfully loaded
         // Can be used as a way to prevent other events to fire earlier than the pageview
         var checkForPageViewInterval = setInterval(function () {
-                // s_i_guardiangu-frontend_guardiangu-network is a globally defined Image() object created by Omniture
-                // It does not sit in the DOM tree, and seems to be the only surefire way
-                // to check if the intial beacon has been successfully sent
-                var img = window[this.generateTrackingImageString()];
-                if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
-                    clearInterval(checkForPageViewInterval);
+            // s_i_guardiangu-frontend_guardiangu-network is a globally defined Image() object created by Omniture
+            // It does not sit in the DOM tree, and seems to be the only surefire way
+            // to check if the intial beacon has been successfully sent
+            var img = window[this.generateTrackingImageString()];
+            if (typeof (img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
+                clearInterval(checkForPageViewInterval);
 
-                    this.pageviewSent = true;
-                    mediator.emit('module:analytics:omniture:pageview:sent');
-                }
+                this.pageviewSent = true;
+                mediator.emit('module:analytics:omniture:pageview:sent');
+            }
         }.bind(this), 250);
 
         // Give up after 10 seconds
