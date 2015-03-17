@@ -58,7 +58,7 @@ $c-guardian-services-action: #ffffff;
             margin-top: $gs-baseline * .83;
             margin-bottom: $gs-baseline * .83;
 
-            i {
+            .inline-logo {
                 // Height / width
                 $height-to-width-ratio: 30 / 160;
                 // Magic number to fit the logo to 320px+ screens
@@ -69,7 +69,7 @@ $c-guardian-services-action: #ffffff;
         }
     }
 
-    i {
+    .inline-logo {
         display: block;
     }
 
@@ -81,6 +81,18 @@ $c-guardian-services-action: #ffffff;
         color: #aad8f1; // To match custom colour of 'the' in logotype. Shouldn't be used elsewhere
         font-weight: bold;
         white-space: nowrap;
+    }
+
+    .no-svg &  {
+        .inline-logo {
+            width: 160px;
+            height: 30px;
+
+            @include mq(tablet) {
+                width: 320px;
+                height: 60px;
+            }
+        }
     }
 }
 
