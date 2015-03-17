@@ -13,7 +13,6 @@ define([
     marque36icon,
     marque54icon,
     arrowdownicon,
-    minusicon,
     logoguardian,
     logosoulmates
 ) {

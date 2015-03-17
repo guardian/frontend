@@ -88,7 +88,7 @@
 // =============================================================================
 
 .fc-item--video .fc-item__title,
-.flyer--video .flyer__title,
+.rich-link--video .rich-link__title,
 .fc-sublink--video .fc-sublink__link {
     svg {
         height: .75em;
@@ -98,7 +98,7 @@
 }
 
 .fc-item--gallery .fc-item__title,
-.flyer--gallery .flyer__title,
+.rich-link--gallery .rich-link__title,
 .fc-sublink--gallery .fc-sublink__link {
     svg {
         height: .72em;
@@ -108,7 +108,7 @@
 }
 
 .fc-item--audio .fc-item__title,
-.flyer--audio .flyer__title,
+.rich-link--audio .rich-link__title,
 .fc-sublink--audio .fc-sublink__link {
     svg {
         height: .72em;
@@ -151,7 +151,7 @@
     }
 
     &.fc-item--audio .fc-item__title,
-    &.flyer--audio .flyer__title,
+    &.rich-link--audio .rich-link__title,
     &.fc-sublink--audio .fc-sublink__link {
         path {
             fill: colour(podcast-default)

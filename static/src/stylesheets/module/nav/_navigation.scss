@@ -14,7 +14,8 @@ $navigation-toggler-width-halffull: 132px;
 $navigation-toggler-width-full: 186px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
-$c-navigation-background-side-bar: #005182;
+// TODO: Palette?
+$c-navigation-background-side-bar: darken(colour(guardian-brand), 2%);
 
 $c-signposting-action: colour(news-default);
 $c-signposting-background: $c-navigation-base;
@@ -703,7 +704,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     .l-header--is-slim & {
         float: left;
-        line-height: 47px;
+        line-height: 48px;
         position: static;
         border-left: 0;
     }
@@ -742,14 +743,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 }
 
-.navigation-toggle-label {
-    .l-header--is-slim & {
-        @include mq($until: mobileLandscape) {
-            display: none;
-        }
-    }
-}
-
 .navigation-toggle-label__extra {
     display: none;
 
@@ -779,6 +772,15 @@ $c-navigation-expandable-background: colour(neutral-1);
 }
 .navigation-container--expanded .navigation-toggle-label--close {
     display: inline;
+}
+
+// This must appear last in the cascade
+.navigation-toggle-label {
+    .l-header--is-slim & {
+        @include mq($until: mobileLandscape) {
+            display: none;
+        }
+    }
 }
 
 /**

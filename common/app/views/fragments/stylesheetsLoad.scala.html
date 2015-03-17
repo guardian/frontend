@@ -67,11 +67,4 @@
 @fragments.stylesheetLink(Static.css.projectCss(), projectName.getOrElse("global"))
 <!--<![endif]-->
 
-@* https://dev.opera.com/articles/opera-mini-and-javascript/#detectingmini *@
-<script>
-if (Object.prototype.toString.call(window.operamini) === "[object OperaMini]") {
-    document.querySelector('link[href$="global.css"]').href = '@Static("stylesheets/global.px.css")';
-}
-</script>
-
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />

@@ -691,8 +691,8 @@
         }
     }
 
-    .icon {
-        margin-top: $gs-baseline/3;
+    svg {
+        margin-top: -1 * $gs-baseline/6;
         overflow: visible;
     }
 
