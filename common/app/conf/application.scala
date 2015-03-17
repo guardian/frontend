@@ -45,7 +45,7 @@ object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicit
 
 object GNUFilter extends Filter with ExecutionContexts {
 
-  //http://m.bbc.co.uk/news/technology-31907768
+  //http://www.theguardian.com/books/shortcuts/2015/mar/17/terry-pratchetts-name-lives-on-in-the-clacks-with-hidden-web-code
   private val GNUHeader = "X-Clacks-Overhead" -> "GNU Terry Pratchett"
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
