@@ -203,20 +203,24 @@
     }
 }
 .ad-slot--container-inline {
+    .ad-slot__content {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+    }
     @include mq(tablet) {
         position: relative;
         height: auto;
         margin: 0 $gs-gutter/2;
-
+        width: gs-span(4.5);
+        
         .linkslist-container & {
             position: absolute;
             top: 0;
             right: 0;
         }
-    }
-
-    @include mq(tablet, desktop) {
-        width: gs-span(4.5);
 
         .ad-slot__label {
             padding: 0 $gs-gutter;
@@ -224,17 +228,10 @@
 
         .ad-slot__content {
             top: $mpu-ad-label-height;
+            height: 250px;
         }
     }
 
-    .ad-slot__content {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        height: 250px;
-        margin: auto;
-    }
 }
 .ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
