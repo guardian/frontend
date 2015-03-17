@@ -17,18 +17,24 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return (config.page.edition === 'UK') && config.page.pageId === "uk";
+            return (config.page.edition === 'UK') && config.page.pageId === 'uk';
         };
-
 
         this.variants = [
             {
                 id: 'variant',
                 test: function () {
-                    setTimeout(function(){var a=document.createElement("script");
-                    var b=document.getElementsByTagName("script")[0];
-                    a.src=document.location.protocol+"//script.crazyegg.com/pages/scripts/0030/9248.js?"+Math.floor(new Date().getTime()/3600000);
-                    a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+                    setTimeout(function () {
+                        var a = document.createElement('script'),
+                            b = document.getElementsByTagName('script')[0],
+                            offset = Math.floor(new Date().getTime() / 3600000),
+                            scriptSrc = '//script.crazyegg.com/pages/scripts/0030/9248.js?';
+
+                        a.src = document.location.protocol + scriptSrc + offset;
+                        a.async = true;
+                        a.type = 'text/javascript';
+                        b.parentNode.insertBefore(a, b);
+                    }, 1);
                 }
             }
         ];
