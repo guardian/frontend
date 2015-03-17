@@ -9,7 +9,6 @@ define([
     'common/utils/config',
     'common/utils/storage',
     'common/utils/template',
-    'common/modules/onward/history',
     'common/views/svgs',
     'text!common/views/breaking-news.html'
 ], function (
@@ -23,7 +22,6 @@ define([
     config,
     storage,
     template,
-    history,
     svgs,
     alertHtml
 ) {
