@@ -6,7 +6,7 @@ define([
     return function () {
         this.id = 'Heatmap';
         this.start = '2015-03-16';
-        this.expiry = '2015-05-18';
+        this.expiry = '2015-03-18';
         this.author = 'Ken Lim';
         this.description = 'UK network front heatmap';
         this.audience = 0.01;
@@ -17,7 +17,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return (config.page.edition === 'UK') && config.page.pageId === "uk"  ;
+            return (config.page.edition === 'UK') && config.page.pageId === "uk";
         };
 
 
