@@ -36,7 +36,7 @@ requirejs.config({
         svgs:         '/base/common/conf/assets/inline-svgs',
         // plugins
         text:         'components/requirejs-text/text',
-        inlineSvg:    'components/requirejs-inline-svg/inlineSvg'
+        inlineSvg:    'projects/common/utils/inlineSvg'
     },
     shim: {
         imager: {
