@@ -35,7 +35,7 @@ define([
         layeronebgpositionx = this.params.layerOneBGPosition.split(' ')[0];
 
         $('.ad-slot--top-banner-ad .creative--fluid250').css('background-position', bgpositionx + ' ' + window.pageYOffset*(this.params.backgroundImageScroll/100) + 'px').css('background-repeat', 'repeat-y');
-        $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer1').css('background-position', bgpositionx + ' ' + window.pageYOffset*(this.params.layerOneImageScroll/100) + 'px').css('background-repeat', 'repeat-y');
+        $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer1').css('background-position', layeronebgpositionx + ' ' + window.pageYOffset*(this.params.layerOneImageScroll/100) + 'px').css('background-repeat', 'repeat-y');
     };
 
     Fluid250.prototype.create = function () {
