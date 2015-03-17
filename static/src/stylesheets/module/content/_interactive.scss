@@ -8,45 +8,14 @@
         z-index: 2;
     }
 
-    .content__main-column {
-        @include mq(desktop) {
-            max-width: none;
-            margin: 0;
-        }
-    }
-    .content__labels {
-        width: 100%;
-        margin-left: 0;
-        margin-bottom: $gs-baseline/2;
-        border-bottom: 1px dotted colour(neutral-5);
-    }
     .content__section-label,
     .content__series-label {
         @include mq(desktop) {
             float: left;
         }
     }
-    .content__headline,
     .content__standfirst {
-        @include box-sizing(border-box);
-
-        @include mq(desktop) {
-            float: left;
-            width: 50%;
-            padding-top: $gs-baseline / 6;
-            padding-bottom: 0;
-            margin-bottom: $gs-baseline * 2;
-        }
-    }
-    .content__headline {
-        @include mq(desktop) {
-            padding-right: $gs-gutter / 2;
-        }
-    }
-    .content__standfirst {
-        @include mq(desktop) {
-            padding-left: $gs-gutter / 2;
-        }
+        display: none;
     }
     &.content--sponsored,
     &.content--foundation-supported,
@@ -60,22 +29,6 @@
             }
             @include mq(wide) {
                 width: gs-span(6) + ($gs-gutter / 2);
-            }
-        }
-        .content__standfirst {
-            @include mq(tablet) {
-                float: left;
-                padding-right: $gs-gutter / 2;
-                width: gs-span(7);
-            }
-            @include mq(desktop) {
-                width: gs-span(5) + ($gs-gutter / 2);
-            }
-            @include mq(leftCol) {
-                width: gs-span(6) + ($gs-gutter / 2);
-            }
-            @include mq(wide) {
-                width: gs-span(8) + ($gs-gutter / 2);
             }
         }
     }
