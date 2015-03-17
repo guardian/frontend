@@ -36,7 +36,10 @@ define([
         this.isEmbed = !!guardian.isEmbed;
         this.s = window.s;
         this.pageviewSent = false;
+        this.addHandlers();
+    }
 
+    Omniture.prototype.addHandlers = function () {
         mediator.on('module:clickstream:interaction', this.trackLinkImmediate.bind(this));
 
         mediator.on('module:clickstream:click', this.logTag.bind(this));
@@ -48,7 +51,7 @@ define([
                 beacon.fire('/count/pva.gif');
             }
         }.bind(this));
-    }
+    };
 
     Omniture.prototype.logView = function () {
         this.s.t();
