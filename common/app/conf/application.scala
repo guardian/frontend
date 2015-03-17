@@ -43,6 +43,16 @@ object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicit
   }
 }
 
+object GNUFilter extends Filter with ExecutionContexts {
+
+  //http://m.bbc.co.uk/news/technology-31907768
+  private val GNUHeader = "X-Clacks-Overhead" -> "GNU Terry Pratchett"
+
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    nextFilter(request).map(_.withHeaders(GNUHeader))
+  }
+}
+
 // this lets the CDN log the exact part of the backend this response came from
 object BackendHeaderFilter extends Filter with ExecutionContexts {
 
@@ -60,6 +70,7 @@ object Filters {
     JsonVaryHeadersFilter,
     Gzipper,
     BackendHeaderFilter,
-    RequestLoggingFilter
+    RequestLoggingFilter,
+    GNUFilter
   )
 }
