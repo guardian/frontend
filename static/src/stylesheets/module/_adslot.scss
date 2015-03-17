@@ -204,10 +204,6 @@
 }
 .ad-slot--container-inline {
     .ad-slot__content {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        left: 0;
         margin: auto;
     }
     @include mq(tablet) {
@@ -227,6 +223,10 @@
         }
 
         .ad-slot__content {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
             top: $mpu-ad-label-height;
             height: 250px;
         }
