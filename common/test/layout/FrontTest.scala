@@ -1,31 +1,36 @@
 package layout
 
+import com.gu.facia.api.models.FaciaContent
 import model.{ApiContentWithMeta, Content}
 import org.scalatest.{Matchers, FlatSpec}
+import services.FaciaContentConvert
 import slices._
 import com.gu.contentapi.client.model.{Content => ApiContent}
 import contentapi.FixtureTemplates.emptyApiContent
+import implicits.FaciaContentImplicits._
 
 class FrontTest extends FlatSpec with Matchers {
-  def trailWithUrl(theUrl: String) = new Content(ApiContentWithMeta(
-    emptyApiContent,
-    Nil
-  )) {
-    override lazy val url: String = theUrl
+  def trailWithUrl(theUrl: String): FaciaContent = FaciaContentConvert.frontentContentToFaciaContent(new Content(ApiContentWithMeta(
+      emptyApiContent,
+      Nil
+    )) {
+      override lazy val url: String = theUrl
 
-    override lazy val webUrl: String = theUrl
-  }
+      override lazy val webUrl: String = theUrl
+    }
+  )
 
-  def dreamSnapWithUrl(theUrl: String) = new Content(ApiContentWithMeta(
-    emptyApiContent,
-    Nil
-  )) {
-    override lazy val url: String = theUrl
+  def dreamSnapWithUrl(theUrl: String) = FaciaContentConvert.frontentContentToFaciaContent(new Content(ApiContentWithMeta(
+      emptyApiContent,
+      Nil
+    )) {
+      override lazy val url: String = theUrl
 
-    override lazy val webUrl: String = theUrl
+      override lazy val webUrl: String = theUrl
 
-    override lazy val snapType: Option[String] = Some("latest")
-  }
+      override lazy val snapType: Option[String] = Some("latest")
+    }
+  )
 
   "itemsVisible" should "return a correct count of items visible (not behind 'show more')" in {
     Front.itemsVisible(FixedContainers.fixedMediumFastXI) shouldEqual 11
