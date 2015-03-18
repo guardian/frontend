@@ -20,7 +20,7 @@
 .fc-item__timestamp {
     padding-left: 0;
 
-    .inline-icon  {
+    .inline-icon {
         margin: 0;
         top: 1px;
         position: relative;
@@ -139,7 +139,7 @@
     &.rich-link--audio .rich-link__title,
     &.fc-sublink--audio .fc-sublink__link {
         .inline-icon {
-            fill: colour(podcast-default)
+            fill: colour(podcast-default);
         }
     }
 }
