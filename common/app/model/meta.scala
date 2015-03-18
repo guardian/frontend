@@ -37,6 +37,7 @@ trait MetaData extends Tags {
   lazy val contentType = ""
   lazy val hideUi = false
   lazy val isImmersive = false
+  lazy val isJspm = section == "crosswords"
 
   def adUnitSuffix = section
 

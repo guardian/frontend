@@ -25,6 +25,7 @@
     // Environments
     "browser"  : true,
     "jquery"   : true,
+    "esnext"   : true,
 
     "globals"   : {
         "require": false,

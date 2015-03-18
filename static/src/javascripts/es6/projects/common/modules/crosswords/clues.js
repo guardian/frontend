@@ -1,7 +1,7 @@
 /* jshint newcap: false */
 define([
     'common/utils/_',
-    'react'
+    'react/addons'
 ], function (
     _,
     React

@@ -5,6 +5,27 @@
 
 @* Scripts that should be executed after CSS is loaded *@
 
+@if(item.isJspm) {
+    @if(play.Play.isDev()) {
+        <script src="/assets/jspm_packages/system.js"></script>
+        <!-- Due to Babel conflcting with curl, we have to manually load.
+        As per https://github.com/systemjs/systemjs/issues/378#issuecomment-83982349 -->
+        <script src="/assets/jspm_packages/babel.js"></script>
+        <script src="/assets/jspm-config.js"></script>
+        <script>
+            System.import('es6/bootstraps/app')
+                .catch(function (error) {
+                    // Throw error outside of promise
+                    setTimeout(function () {
+                        throw error;
+                    });
+                });
+        </script>
+    } else {
+        <script src="@Static("bundles/app.js")"></script>
+    }
+}
+
 <script>
 
     var curl = {
@@ -26,7 +47,6 @@
             'bootstraps/app':           '@Static("javascripts/bootstraps/app.js")',
             'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
             'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
-            'bootstraps/crosswords':    '@Static("javascripts/bootstraps/crosswords.js")',
             'bootstraps/dev':           '@Static("javascripts/bootstraps/dev.js")',
             'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
             'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
