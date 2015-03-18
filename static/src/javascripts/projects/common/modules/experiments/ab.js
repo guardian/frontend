@@ -17,6 +17,7 @@ define([
     'common/modules/experiments/tests/identity-benefits',
     'common/modules/experiments/tests/mt-master',
     'common/modules/experiments/tests/signed-out',
+    'common/modules/experiments/tests/mt-top-below-nav',
     'common/modules/experiments/tests/heatmap'
 ], function (
     raven,
@@ -37,6 +38,7 @@ define([
     IdentityBenefits,
     MtMaster,
     SignedOut,
+    MtTopBelowNav,
     HeatMap
 ) {
 
@@ -47,6 +49,7 @@ define([
             new IdentityBenefits(),
             new MtMaster(),
             new SignedOut(),
+            new MtTopBelowNav(),
             new HeatMap()
         ],
         participationsKey = 'gu.ab.participations';
