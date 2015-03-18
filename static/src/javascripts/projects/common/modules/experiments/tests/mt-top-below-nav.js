@@ -12,7 +12,7 @@ define([
         this.author = 'Zofia Korcz';
         this.description = 'Top above nav ad placed below nav';
         this.audience = 0.01;
-        this.audienceOffset = 0;
+        this.audienceOffset = 0.1;
         this.successMeasure = '';
         this.audienceCriteria = '1% of US edition';
         this.dataLinkNames = '';

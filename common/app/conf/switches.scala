@@ -476,6 +476,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 17)
   )
 
+  val ABMtTopBelowFirstContainer = Switch("A/B Tests", "ab-mt-top-below-first-container",
+    "Top above nav ad placed below first container.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 18)
+  )
+
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
     "Switch for the UK Network Front heatmap test.",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 24)
