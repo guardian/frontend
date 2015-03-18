@@ -9,6 +9,7 @@ define([
     'common/utils/formatters',
     'common/utils/mediator',
     'common/utils/template',
+    'common/views/svgs',
     'text!common/views/discussion/comment-count.html',
     'text!common/views/discussion/comment-count--content.html'
 ], function (
@@ -22,6 +23,7 @@ define([
     formatters,
     mediator,
     template,
+    svgs,
     commentCountTemplate,
     commentCountContentTemplate
 ) {
@@ -75,6 +77,7 @@ define([
                     format = $node.data('commentcount-format');
                     html = template(templates[format] || defaultTemplate, {
                         url: url,
+                        icon: svgs('commentCount16icon'),
                         count: formatters.integerCommas(c.count),
                         label: hideLabel ? '' : commentOrComments
                     });

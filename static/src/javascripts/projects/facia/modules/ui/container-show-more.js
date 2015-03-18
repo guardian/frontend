@@ -22,6 +22,7 @@ define([
     userPrefs
 ) {
     var HIDDEN_CLASS_NAME = 'fc-show-more--hidden',
+        VISIBLE_CLASS_NAME = 'fc-show-more--visible',
         TEXT_HOOK = 'js-button-text',
         PREF_NAME = 'section-states',
         BUTTON_SPINNER_CLASS = 'collection__show-more--loading',
@@ -39,9 +40,8 @@ define([
             .toggleClass('button--primary', state !== STATE_DISPLAYED)
             .toggleClass('button--tertiary', state === STATE_DISPLAYED)
             .toggleClass(BUTTON_SPINNER_CLASS, state === STATE_LOADING);
-        button.$iconEl.toggleClass('i-plus-white', state !== STATE_DISPLAYED)
-            .toggleClass('i-minus-blue', state === STATE_DISPLAYED);
-        button.$container.toggleClass(HIDDEN_CLASS_NAME, state !== STATE_DISPLAYED);
+        button.$container.toggleClass(HIDDEN_CLASS_NAME, state !== STATE_DISPLAYED)
+            .toggleClass(VISIBLE_CLASS_NAME, state === STATE_DISPLAYED);
         button.state = state;
     }
 

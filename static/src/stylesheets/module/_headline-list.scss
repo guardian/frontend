@@ -57,6 +57,10 @@
         margin-top: -1 * ($gs-baseline / 3);
     }
 
+    .inline-icon {
+        fill: colour(neutral-2);
+    }
+
     &:visited {
         .headline-list__body,
         .fc-item__link {

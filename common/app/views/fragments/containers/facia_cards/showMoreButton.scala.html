@@ -12,5 +12,7 @@
 ))"
         data-test-id="show-more"
         data-link-name="more">
-    <i class="i i-plus-white"></i><span class="js-button-text">More @containerTitle</span>
+        @fragments.inlineSvg("plus", "icon")
+        @fragments.inlineSvg("minus", "icon")
+        <span class="js-button-text">More @containerTitle</span>
 </button>

@@ -2,12 +2,14 @@
 // This file is only required by core, and so has a long cache time.
 
 define([
+    'inlineSvg!svgs/comment-16!icon',
     'inlineSvg!svgs/marque-36!icon',
     'inlineSvg!svgs/marque-54!icon',
     'inlineSvg!svgs/arrow-down!icon',
     'inlineSvg!svgs/logo-guardian!logo',
     'inlineSvg!svgs/logo-soulmates!commercial'
 ], function (
+    commentCount16icon,
     marque36icon,
     marque54icon,
     arrowdownicon,
@@ -15,6 +17,7 @@ define([
     logosoulmates
 ) {
     var svgs = {
+        commentCount16icon: commentCount16icon,
         marque36icon: marque36icon,
         marque54icon: marque54icon,
         arrowdownicon: arrowdownicon,
