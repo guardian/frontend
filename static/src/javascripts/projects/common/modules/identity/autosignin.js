@@ -73,7 +73,11 @@ function (
                         });
                         profile.init();
                         new Toggles().init();
-                        omniture.trackLink(this, 'Social signin auto');
+
+                        omniture.populateEventProperties('Social signin auto');
+                        s.eVar13 = 'facebook auto';
+                        s.linkTrackVars += ',eVar13';
+                        s.tl(this, 'o', 'Social signin auto');
                     }
                 }
             });
