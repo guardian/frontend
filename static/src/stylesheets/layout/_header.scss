@@ -45,7 +45,7 @@ $c-guardian-services-action: #ffffff;
 
     .l-header--is-slim & {
         margin-top: $gs-baseline * .75;
-        margin-bottom: $gs-baseline * .75;
+        margin-bottom: 0;
         float: left;
 
         @include mq(mobileLandscape) {
@@ -56,9 +56,8 @@ $c-guardian-services-action: #ffffff;
 
         @include mq($until: tablet) {
             margin-top: $gs-baseline * .83;
-            margin-bottom: $gs-baseline * .83;
 
-            .inline-logo {
+            svg {
                 // Height / width
                 $height-to-width-ratio: 30 / 160;
                 // Magic number to fit the logo to 320px+ screens
