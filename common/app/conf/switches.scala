@@ -476,6 +476,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 17)
   )
 
+  val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
+    "Switch for the UK Network Front heatmap test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 24)
+  )
+
   val ABSignedOut = Switch("A/B Tests", "ab-signed-out",
     "Switch for the Signed Out messaging test.",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
