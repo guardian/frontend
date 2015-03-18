@@ -17,8 +17,9 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            var isUkNetworkFront = (config.page.edition === 'UK') && config.page.pageId === 'uk';
-            var isAshleyJudd = (config.page.pageId === 'film/2015/mar/18/ashley-judd-to-press-charges-twitter-sexual-harassment');
+            var isUkNetworkFront = (config.page.edition === 'UK') && config.page.pageId === 'uk',
+                    isAshleyJudd = (config.page.pageId === 'film/2015/mar/18/ashley-judd-to-press-charges-twitter-sexual-harassment');
+
             return isUkNetworkFront || isAshleyJudd;
         };
 
