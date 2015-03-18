@@ -18,7 +18,8 @@ define([
     'common/modules/experiments/tests/mt-master',
     'common/modules/experiments/tests/signed-out',
     'common/modules/experiments/tests/mt-top-below-nav',
-    'common/modules/experiments/tests/heatmap'
+    'common/modules/experiments/tests/heatmap',
+    'common/modules/experiments/tests/mt-top-below-first-container'
 ], function (
     raven,
     filter,
@@ -39,7 +40,8 @@ define([
     MtMaster,
     SignedOut,
     MtTopBelowNav,
-    HeatMap
+    HeatMap,
+    MtTopBelowFirstContainer
 ) {
 
     var ab,
@@ -50,7 +52,8 @@ define([
             new MtMaster(),
             new SignedOut(),
             new MtTopBelowNav(),
-            new HeatMap()
+            new HeatMap(),
+            new MtTopBelowFirstContainer()
         ],
         participationsKey = 'gu.ab.participations';
 
