@@ -1,6 +1,6 @@
 define([
     'text'
-], function(
+], function (
     text
 ) {
 
@@ -8,9 +8,9 @@ define([
 
     return {
 
-        load: function(name, req, onLoad, config) {
-            var prefix = 'inline-';
-            var data = name.split('!'),
+        load: function (name, req, onLoad, config) {
+            var prefix = 'inline-',
+                data = name.split('!'),
 
                 path = data[0],
                 imageType = data[1] || '',
@@ -18,7 +18,7 @@ define([
                 dirs = path.split('/'),
                 fileName = dirs.pop();
 
-            text.get(req.toUrl(dirs.join('/') + '/' + imageType + '/' + fileName + '.svg'), function(svg) {
+            text.get(req.toUrl(dirs.join('/') + '/' + imageType + '/' + fileName + '.svg'), function (svg) {
 
                 svg = '<span class="' + prefix + fileName + ' ' + (imageType !== '' ? prefix + imageType : '') + '">' + svg + '</span>';
 
@@ -31,16 +31,13 @@ define([
             }, onLoad.error);
         },
 
-
         write: function (pluginName, moduleName, write) {
             if (buildText.hasOwnProperty(moduleName)) {
-                var name = "'" + pluginName + "!" + moduleName  + "'",
-                    text = "function () {return '" + buildText[moduleName] + "';}";
+                var name = '"' + pluginName + '!' + moduleName  + '"',
+                    text = 'function () {return "' + buildText[moduleName] + '";}';
 
-                write("define(" + name + ", " + text + ");\n");
+                write('define(' + name + ', ' + text + ');\n');
             }
         }
-
     };
-
 });
