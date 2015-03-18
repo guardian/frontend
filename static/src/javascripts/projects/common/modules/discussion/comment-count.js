@@ -28,7 +28,7 @@ define([
     commentCountContentTemplate
 ) {
     var attributeName = 'data-discussion-id',
-        countUrl = 'http://localhost:9001/discussion/comment-counts.json?shortUrls=',
+        countUrl = '/discussion/comment-counts.json?shortUrls=',
         templates = {
             content: commentCountContentTemplate
         },
