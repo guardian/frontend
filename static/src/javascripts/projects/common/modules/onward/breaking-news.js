@@ -9,7 +9,6 @@ define([
     'common/utils/config',
     'common/utils/storage',
     'common/utils/template',
-    'common/modules/onward/history',
     'common/views/svgs',
     'text!common/views/breaking-news.html'
 ], function (
@@ -23,7 +22,6 @@ define([
     config,
     storage,
     template,
-    history,
     svgs,
     alertHtml
 ) {
@@ -33,10 +31,6 @@ define([
         $breakingNews,
         $body,
         marque36icon;
-
-    function slashDelimit() {
-        return Array.prototype.slice.call(arguments).filter(function (str) { return str;}).join('/');
-    }
 
     function cleanIDs(articleIds, hiddenIds) {
         var cleanedIDs = {};
@@ -65,27 +59,11 @@ define([
                         return collection;
                     }),
 
-                    keyword = page.keywordIds ? page.keywordIds.split(',')[0] : '',
-
-                    pageMatchers = _.chain(history.getPopular())
-                        .map(function (idAndName) { return idAndName[0]; })
-                        .union([
-                            page.edition,
-                            _.contains(['uk', 'us', 'au'], page.section) ? null : page.section,
-                            slashDelimit(page.edition, page.section),
-                            keyword,
-                            keyword.split('/')[0]
-                        ])
-                        .compact()
-                        .reduce(function (matchers, term) {
-                            matchers[term.toLowerCase()] = true;
-                            return matchers;
-                        }, {})
-                        .value(),
+                    edition = (page.edition || '').toLowerCase(),
 
                     articles = _.flatten([
                         collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
-                        collections.filter(function (c) { return pageMatchers[c.href]; }).map(function (c) { return c.content; })
+                        collections.filter(function (c) { return c.href === edition;  }).map(function (c) { return c.content; })
                     ]),
 
                     articleIds = articles.map(function (article) { return article.id; }),
