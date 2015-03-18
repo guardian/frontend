@@ -24,7 +24,7 @@ import conf.Configuration
         sections.length should be > 0
 
         And("a button to activate that list")
-        browser.findFirst(".navigation__toggle").getAttribute("href") should include("australia-mining-boom-end#footer-nav")
+        browser.findFirst(".navigation-toggle").getAttribute("href") should include("australia-mining-boom-end#footer-nav")
       }
     }
 

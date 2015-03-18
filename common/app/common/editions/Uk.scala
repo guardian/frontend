@@ -50,7 +50,7 @@ object Uk extends Edition(
       NavItem(fashion),
       NavItem(environment, Seq(cities, globalDevelopment)),
       NavItem(technology),
-      NavItem(money, Seq(property, savings, borrowing, careers)),
+      NavItem(money, Seq(property, savings, borrowing, workAndCareers)),
       NavItem(travel, Seq(uktravel, europetravel, usTravel)),
       NavItem(science),
       NavItem(education, Seq(students, teachersNetwork)),
@@ -76,7 +76,7 @@ object Uk extends Edition(
     NavItem(fashion),
     NavItem(environment, Seq(cities, globalDevelopment)),
     NavItem(technology),
-    NavItem(money, Seq(property, savings, borrowing, careers)),
+    NavItem(money, Seq(property, savings, borrowing, workAndCareers)),
     NavItem(travel, Seq(uktravel, europetravel, usTravel))
   )
 }

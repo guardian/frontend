@@ -7,7 +7,7 @@ define([
 ) {
     var Highcharts = highchartsGlobals.Highcharts;
 
-    Highcharts.setOptions({
+    var sparklinesDefaults = {
         chart: {
             renderTo: null,
             backgroundColor: null,
@@ -83,7 +83,11 @@ define([
                 borderColor: 'silver'
             }
         }
-    });
+    };
+
+    Highcharts.CONFIG_DEFAULTS = {
+        sparklines: sparklinesDefaults
+    };
 
     return Highcharts;
 });

@@ -20,6 +20,7 @@ define([
     'common/modules/analytics/clickstream',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
+    'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
@@ -75,7 +76,8 @@ define([
     Clickstream,
     Foresee,
     liveStats,
-    Omniture,
+    mediaListener,
+    omniture,
     register,
     ScrollDepth,
     logCss,
@@ -251,7 +253,7 @@ define([
             },
 
             loadAnalytics: function () {
-                new Omniture(window.s).go();
+                omniture.go();
 
                 if (config.switches.ophan) {
                     require('ophan/ng', function (ophan) {
@@ -306,6 +308,10 @@ define([
                 for (event in events) {
                     bean.on(window, event, mediator.emit.bind(mediator, events[event]));
                 }
+            },
+
+            mediaEventListeners: function () {
+                mediaListener.init();
             },
 
             checkIframe: function () {
@@ -479,6 +485,7 @@ define([
             robust('c-simple-metrics',  modules.initSimpleMetrics);
             robust('c-crosswords',      crosswordThumbnails.init);
             robust('c-tech-feedback',   modules.initTechFeedback);
+            robust('c-media-listeners', modules.mediaEventListeners);
         };
 
     return {

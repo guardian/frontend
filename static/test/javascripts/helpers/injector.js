@@ -12,11 +12,11 @@ define([
 
         return new Promise(function (resolve, reject) {
             r.call(this, deps, function () {
-                var res = cb.apply(this, arguments);
+                cb.apply(this, arguments);
                 resolve();
             }, function () {
-                var res = eb.apply(this, arguments);
-                resolve();
+                eb.apply(this, arguments);
+                reject();
             });
         }.bind(this));
 

@@ -50,6 +50,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val primaryKeyWordTag: Option[Tag] = tags.find(!_.isSectionTag)
   lazy val keywordTags: Seq[Tag] = keywords.filter(tag => !tag.isSectionTag)
   lazy val productionOffice: Option[String] = delegate.safeFields.get("productionOffice")
+  lazy val displayHint: String = fields.getOrElse("displayHint", "")
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
   lazy val hasSingleContributor: Boolean = {
@@ -745,8 +746,9 @@ class Interactive(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val metaData: Map[String, JsValue] = super.metaData + ("contentType" -> JsString(contentType))
   override lazy val hideUi: Boolean = body.exists{ b =>
-      Jsoup.parseBodyFragment(b).body().getElementsByClass("element-interactive").attr("data-interactive").contains("/visuals-blank-page/")
-    }
+    Jsoup.parseBodyFragment(b).body().getElementsByClass("element-interactive").attr("data-interactive").contains("/visuals-blank-page/")
+  }
+  override lazy val isImmersive: Boolean = displayHint.contains("immersive")
 }
 
 object Interactive {

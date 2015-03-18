@@ -1,10 +1,13 @@
 package common.Assets
 
-import common.{RelativePathEscaper, Logging}
-import org.apache.commons.io.IOUtils
-import play.api.{ Mode, Play }
-import play.api.libs.json.{ JsString, Json, JsObject }
+import java.net.URL
+
+import common.{Logging, RelativePathEscaper}
 import conf.Configuration
+import org.apache.commons.io.IOUtils
+import play.api.libs.json.{JsObject, JsString, Json}
+import play.api.{Mode, Play}
+
 import scala.collection.concurrent.{Map => ConcurrentMap, TrieMap}
 
 case class Asset(path: String) {
@@ -32,7 +35,7 @@ class AssetMap(base: String, assetMap: String) {
       val assetMapUri = new java.io.File(s"static/hash/" + assetMap).toURI
       IOUtils.toString(assetMapUri)
     } else {
-      val url = Play.classloader(Play.current).getResource(assetMap)
+      val url = AssetFinder(assetMap)
       IOUtils.toString(url)
     }
     val js: JsObject = Json.parse(json).asInstanceOf[JsObject]
@@ -56,7 +59,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
     def apply(path: String): String = {
 
       def loadFromDisk = {
-        val url = Play.classloader(Play.current).getResource(s"assets/inline-svgs/$path")
+        val url = AssetFinder(s"assets/inline-svgs/$path")
         IOUtils.toString(url)
       }
 
@@ -68,6 +71,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
     private val memoizedCss: ConcurrentMap[java.net.URL, String] = TrieMap()
 
+    def projectCss(projectOverride: Option[String] = None) = project(projectOverride.getOrElse(Configuration.environment.projectName))
     def head(projectOverride: Option[String] = None) = css(projectOverride.getOrElse(Configuration.environment.projectName))
     def headOldIE(projectOverride: Option[String] = None) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
     def headIE9(projectOverride: Option[String] = None) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
@@ -83,7 +87,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
         case "rich-links" => "rich-links.css"
         case _ => "content.css"
       }
-      val url = Play.classloader(Play.current).getResource(s"assets/head.$suffix")
+      val url = AssetFinder(s"assets/head.$suffix")
 
       // Reload head css on every access in DEV
       if (Play.current.mode == Mode.Dev) {
@@ -93,6 +97,13 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
       memoizedCss.getOrElseUpdate(url, {
         IOUtils.toString(url)
       })
+    }
+
+    private def project(project: String): String = {
+      project match {
+        case "facia" => "stylesheets/facia.css"
+        case _ => "stylesheets/global.css"
+      }
     }
 
     private def cssOldIE(project: String): String = {
@@ -118,8 +129,22 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
   object js {
     lazy val curl: String =
       RelativePathEscaper.escapeLeadingDotPaths(
-        IOUtils.toString(Play.classloader(Play.current).getResource(s"assets/curl-domReady.js"))
+        IOUtils.toString(AssetFinder(s"assets/curl-domReady.js"))
       )
   }
 
+}
+
+
+object AssetFinder {
+  def apply(assetPath: String): URL = {
+    Option(Play.classloader(Play.current).getResource(assetPath)).getOrElse {
+      throw AssetNotFoundException(assetPath)
+    }
+  }
+}
+
+case class AssetNotFoundException(assetPath: String) extends Exception {
+  override val getMessage: String =
+    s"Cannot find asset $assetPath. You probably need to run 'grunt compile'."
 }

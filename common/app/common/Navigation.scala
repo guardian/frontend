@@ -151,7 +151,7 @@ trait Navigation {
   val savings = SectionLink("money", "savings", "Savings", "/money/savings")
   val borrowing = SectionLink("money", "borrowing", "Borrowing", "/money/debt")
   val insurance = SectionLink("money", "insurance", "Insurance", "/money/insurance")
-  val careers = SectionLink("money", "careers", "Careers", "/money/work-and-careers")
+  val workAndCareers = SectionLink("money", "careers", "Careers", "/money/work-and-careers")
   val consumeraffairs = SectionLink("money", "consumer affairs", "Consumer affairs", "/money/consumer-affairs")
 
   //Life and style

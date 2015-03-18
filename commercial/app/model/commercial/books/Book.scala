@@ -7,6 +7,7 @@ import play.api.libs.json.Reads._
 import play.api.libs.json.{JsPath, Reads}
 
 import scala.concurrent.Future
+import scala.util.control.NonFatal
 
 
 case class Book(title: String,
@@ -72,7 +73,15 @@ object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
       feeds.foldLeft(Seq[Future[Seq[Book]]]()) {
         (soFar, feed) =>
           soFar :+ feed.loadBestsellers().recover {
-            case _ => Nil
+            case e: FeedSwitchOffException =>
+              log.warn(e.getMessage)
+              Nil
+            case e: FeedMissingConfigurationException =>
+              log.warn(e.getMessage)
+              Nil
+            case NonFatal(e) =>
+              log.error(e.getMessage)
+              Nil
           }
       }
     }

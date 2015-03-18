@@ -65,15 +65,12 @@ module.exports = function (grunt) {
 
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration']);
     grunt.registerTask('compile:css', function(fullCompile) {
-        grunt.task.run(['mkdir:css', 'compile:images', 'sass:compile', 'sass:compileStyleguide']);
+        grunt.task.run(['clean:css', 'mkdir:css', 'compile:images', 'sass:compile', 'sass:compileStyleguide']);
 
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }
 
-        grunt.task.run(['copy:pxCss']);
-        // TODO: Update pixrem to handle source maps
-        // https://github.com/walbo/grunt-px-to-rem/issues/10
         grunt.task.run(['px_to_rem']);
 
         if (isOnlyTask(this) && !fullCompile) {
