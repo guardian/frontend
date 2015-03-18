@@ -31,7 +31,7 @@ define([
      */
     track.getLinkTrackVars = function (extras) {
         extras = extras || [];
-        var linkTrackVars = ['prop6', 'prop19', 'prop75', 'eVar8',  'eVar19', 'eVar31', 'eVar51', 'eVar66' ];
+        var linkTrackVars = ['prop6', 'prop19', 'prop75', 'eVar8',  'eVar19', 'eVar31', 'eVar51', 'eVar66'];
         return ',' + linkTrackVars.concat(extras).join(',');
     };
 
