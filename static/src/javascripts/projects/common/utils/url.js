@@ -1,5 +1,5 @@
 define([
-    'lodash/objects/isArray',
+    'lodash/modern/objects/isArray',
     'common/utils/_',
     'common/utils/detect',
     'common/utils/mediator'

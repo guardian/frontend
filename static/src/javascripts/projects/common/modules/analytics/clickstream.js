@@ -1,6 +1,6 @@
 define([
     'bean',
-    'lodash/collections/map',
+    'lodash/modern/collections/map',
     'common/utils/mediator',
     'common/modules/experiments/ab'
 ], function (

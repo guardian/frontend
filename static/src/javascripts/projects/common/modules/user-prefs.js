@@ -1,5 +1,5 @@
 define([
-    'lodash/objects/defaults',
+    'lodash/modern/objects/defaults',
     'common/utils/storage'
 ], function (
     defaults,

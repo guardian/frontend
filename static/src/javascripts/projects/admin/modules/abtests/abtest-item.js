@@ -3,7 +3,7 @@
  Description: Displays information about a single test
  */
 define([
-    'lodash/main',
+    'lodash/modern/main',
     'common/modules/component',
     'admin/modules/abtests/participation',
     'bonzo',

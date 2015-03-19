@@ -1,6 +1,6 @@
 define([
     'bonzo',
-    'lodash/main',
+    'lodash/modern/main',
     'common/utils/mediator'
 ], function (
     bonzo,

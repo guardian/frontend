@@ -1,5 +1,5 @@
 define([
-    'lodash/collections/every',
+    'lodash/modern/collections/every',
     'common/modules/crosswords/helpers'
 ], function (
     every,

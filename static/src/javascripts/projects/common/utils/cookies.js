@@ -1,5 +1,5 @@
 define([
-    'lodash/collections/forEach'
+    'lodash/modern/collections/forEach'
 ], function (
     forEach
 ) {

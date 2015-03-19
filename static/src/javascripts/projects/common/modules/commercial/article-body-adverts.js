@@ -1,7 +1,7 @@
 define([
     'fastdom',
     'Promise',
-    'lodash/objects/cloneDeep',
+    'lodash/modern/objects/cloneDeep',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',

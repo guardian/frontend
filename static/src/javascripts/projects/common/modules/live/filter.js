@@ -8,7 +8,7 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/mediator',
-    'lodash/collections/toArray'
+    'lodash/modern/collections/toArray'
 ], function (
     bonzo,
     bean,

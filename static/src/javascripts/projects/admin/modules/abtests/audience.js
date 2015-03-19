@@ -3,7 +3,7 @@
  Description: Displays information about how the test users are divided.
  */
 define([
-    'lodash/main',
+    'lodash/modern/main',
     'common/modules/component',
     'admin/modules/abtests/audience-item'
 ], function (

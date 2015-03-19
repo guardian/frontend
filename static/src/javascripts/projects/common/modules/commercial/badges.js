@@ -3,7 +3,7 @@ define([
     'fastdom',
     'qwery',
     'Promise',
-    'lodash/collections/map',
+    'lodash/modern/collections/map',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',

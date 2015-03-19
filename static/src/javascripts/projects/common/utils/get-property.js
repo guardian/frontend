@@ -1,6 +1,6 @@
 define([
-    'lodash/collections/reduce',
-    'lodash/objects/has'
+    'lodash/modern/collections/reduce',
+    'lodash/modern/objects/has'
 ], function (
     reduce,
     has

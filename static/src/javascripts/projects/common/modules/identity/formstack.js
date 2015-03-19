@@ -1,6 +1,6 @@
 define([
     'bean',
-    'lodash/objects/assign',
+    'lodash/modern/objects/assign',
     'common/utils/$',
     'common/modules/identity/api'
 ], function (

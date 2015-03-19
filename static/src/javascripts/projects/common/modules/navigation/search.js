@@ -1,7 +1,7 @@
 define([
     'bean',
     'fastdom',
-    'lodash/functions/throttle',
+    'lodash/modern/functions/throttle',
     'common/utils/$',
     'common/utils/config'
 ], function (

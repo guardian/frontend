@@ -8,7 +8,7 @@
 define([
     'common/utils/mediator',
     'common/modules/experiments/ab',
-    'lodash/collections/where'
+    'lodash/modern/collections/where'
 
 ], function (
     mediator,

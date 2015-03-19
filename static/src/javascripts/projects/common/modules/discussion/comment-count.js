@@ -2,7 +2,7 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
-    'lodash/collections/forEach',
+    'lodash/modern/collections/forEach',
     'common/utils/$',
     'common/utils/_',
     'common/utils/ajax',

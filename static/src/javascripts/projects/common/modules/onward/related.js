@@ -1,8 +1,8 @@
 define([
     'bonzo',
     'qwery',
-    'lodash/arrays/intersection',
-    'lodash/collections/map',
+    'lodash/modern/arrays/intersection',
+    'lodash/modern/collections/map',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',

@@ -3,7 +3,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'lodash/collections/find',
+    'lodash/modern/collections/find',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',

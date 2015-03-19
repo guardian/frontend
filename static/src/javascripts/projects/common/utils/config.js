@@ -4,8 +4,8 @@
  Common functions to simplify access to page data
  */
 define([
-    'lodash/collections/contains',
-    'lodash/objects/assign',
+    'lodash/modern/collections/contains',
+    'lodash/modern/objects/assign',
     'common/utils/_',
     'common/utils/pad',
     'common/utils/url'

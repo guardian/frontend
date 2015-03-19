@@ -1,6 +1,6 @@
 define([
     'qwery',
-    'lodash/objects/merge',
+    'lodash/modern/objects/merge',
     'helpers/fixtures',
     'helpers/injector'
 ], function (

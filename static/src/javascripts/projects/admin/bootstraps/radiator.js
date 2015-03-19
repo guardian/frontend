@@ -1,14 +1,14 @@
 define([
     'common/utils/ajax',
     'common/utils/$',
-    'lodash/arrays/first',
-    'lodash/arrays/flatten',
-    'lodash/arrays/last',
-    'lodash/collections/forEach',
-    'lodash/collections/groupBy',
-    'lodash/collections/pluck',
-    'lodash/collections/reduce',
-    'lodash/objects/values'
+    'lodash/modern/arrays/first',
+    'lodash/modern/arrays/flatten',
+    'lodash/modern/arrays/last',
+    'lodash/modern/collections/forEach',
+    'lodash/modern/collections/groupBy',
+    'lodash/modern/collections/pluck',
+    'lodash/modern/collections/reduce',
+    'lodash/modern/objects/values'
 ], function(
     ajax,
     $,

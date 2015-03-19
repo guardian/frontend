@@ -2,7 +2,7 @@ define([
     'qwery',
     'bean',
     'bonzo',
-    'lodash/collections/where',
+    'lodash/modern/collections/where',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/url'

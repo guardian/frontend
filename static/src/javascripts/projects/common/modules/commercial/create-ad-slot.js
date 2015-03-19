@@ -1,7 +1,7 @@
 define([
-    'lodash/collections/map',
-    'lodash/objects/isArray',
-    'lodash/objects/pairs',
+    'lodash/modern/collections/map',
+    'lodash/modern/objects/isArray',
+    'lodash/modern/objects/pairs',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',

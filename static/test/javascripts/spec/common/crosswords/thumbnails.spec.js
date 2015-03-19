@@ -1,8 +1,8 @@
 define([
     'bonzo',
-    'lodash/collections/contains',
-    'lodash/collections/every',
-    'lodash/collections/map',
+    'lodash/modern/collections/contains',
+    'lodash/modern/collections/every',
+    'lodash/modern/collections/map',
     'common/modules/crosswords/helpers',
     'common/modules/crosswords/thumbnails'
 ], function (

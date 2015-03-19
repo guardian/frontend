@@ -3,8 +3,8 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'lodash/objects/assign',
-    'lodash/objects/clone',
+    'lodash/modern/objects/assign',
+    'lodash/modern/objects/clone',
     'common/utils/ajax'
 ], function (
     bean,

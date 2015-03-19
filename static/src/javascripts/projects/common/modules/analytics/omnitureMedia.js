@@ -1,6 +1,6 @@
 /* global guardian */
 define([
-    'lodash/objects/values',
+    'lodash/modern/objects/values',
     'common/utils/config',
     'qwery'
 ], function (

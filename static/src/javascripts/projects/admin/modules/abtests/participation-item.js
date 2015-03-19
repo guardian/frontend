@@ -3,7 +3,7 @@
  Description: Displays opt-in link for a variant
  */
 define([
-    'lodash/objects/assign',
+    'lodash/modern/objects/assign',
     'common/modules/component'
 ], function (
     extend,

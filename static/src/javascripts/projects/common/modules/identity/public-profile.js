@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'lodash/objects/mapValues',
+    'lodash/modern/objects/mapValues',
     'common/utils/$',
     'common/utils/config',
     'common/utils/url',

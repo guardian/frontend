@@ -1,7 +1,7 @@
 define([
     'fastdom',
     'Promise',
-    'lodash/objects/defaults',
+    'lodash/modern/objects/defaults',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',

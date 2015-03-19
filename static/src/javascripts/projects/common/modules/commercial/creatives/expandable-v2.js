@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'lodash/objects/merge',
+    'lodash/modern/objects/merge',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',

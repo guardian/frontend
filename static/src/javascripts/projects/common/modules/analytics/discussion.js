@@ -1,6 +1,6 @@
 define([
     'bonzo',
-    'lodash/functions/debounce',
+    'lodash/modern/functions/debounce',
     'common/utils/$',
     'common/utils/mediator',
     'common/modules/analytics/omniture',

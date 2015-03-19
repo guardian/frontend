@@ -1,5 +1,5 @@
 define([
-    'lodash/arrays/zipObject',
+    'lodash/modern/arrays/zipObject',
     'common/utils/$',
     'helpers/injector'
 ], function (

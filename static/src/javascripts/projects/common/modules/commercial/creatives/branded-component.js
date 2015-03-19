@@ -7,7 +7,7 @@ define([
     'text!common/views/commercial/creatives/branded-component-jobs.html',
     'text!common/views/commercial/creatives/branded-component-membership.html',
     'text!common/views/commercial/creatives/branded-component-soulmates.html',
-    'lodash/objects/defaults'
+    'lodash/modern/objects/defaults'
 ], function (
     qwery,
     $,

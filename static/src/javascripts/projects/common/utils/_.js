@@ -1,5 +1,5 @@
 define([
-    'lodash/main'
+    'lodash/modern/main'
 ], function (
     main
 ) {

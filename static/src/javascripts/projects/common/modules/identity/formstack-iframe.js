@@ -1,6 +1,6 @@
 define([
     'bean',
-    'lodash/functions/debounce',
+    'lodash/modern/functions/debounce',
     'common/utils/$',
     'common/utils/mediator'
 ], function (

@@ -1,7 +1,7 @@
 define([
     'bonzo',
-    'lodash/functions/throttle',
-    'lodash/objects/defaults',
+    'lodash/modern/functions/throttle',
+    'lodash/modern/objects/defaults',
     'common/utils/mediator'
 ], function (
     bonzo,

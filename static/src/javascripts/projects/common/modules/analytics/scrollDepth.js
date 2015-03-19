@@ -1,6 +1,6 @@
 define([
-    'lodash/functions/debounce',
-    'lodash/objects/assign',
+    'lodash/modern/functions/debounce',
+    'lodash/modern/objects/assign',
     'common/utils/mediator'
 ], function (
     debounce,

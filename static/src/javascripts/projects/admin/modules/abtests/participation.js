@@ -3,7 +3,7 @@
  Description: Displays opt-in and opt-out links for a test
  */
 define([
-    'lodash/objects/assign',
+    'lodash/modern/objects/assign',
     'common/modules/component',
     'admin/modules/abtests/participation-item'
 ], function (

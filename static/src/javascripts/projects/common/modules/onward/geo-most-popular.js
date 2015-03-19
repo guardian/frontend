@@ -5,7 +5,7 @@
 define([
     'Promise',
     'qwery',
-    'lodash/functions/once',
+    'lodash/modern/functions/once',
     'common/modules/component',
     'common/utils/mediator'
 ], function (

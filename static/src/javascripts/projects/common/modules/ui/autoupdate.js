@@ -5,8 +5,8 @@
 define([
     'bean',
     'bonzo',
-    'lodash/collections/toArray',
-    'lodash/objects/assign',
+    'lodash/modern/collections/toArray',
+    'lodash/modern/objects/assign',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',

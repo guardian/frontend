@@ -1,7 +1,7 @@
 define([
     'common/utils/$',
     'bonzo',
-    'lodash/collections/filter'
+    'lodash/modern/collections/filter'
 ], function (
     $,
     bonzo,

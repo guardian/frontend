@@ -1,0 +1,20 @@
+{
+  "name": "lodash-amd",
+  "version": "2.4.1",
+  "main": "compat/main.js",
+  "ignore": [
+    ".*",
+    "*.md",
+    "node_modules"
+  ],
+  "homepage": "https://github.com/lodash/lodash-amd",
+  "_release": "2.4.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.4.1",
+    "commit": "d6e635a2cf7d3eddebe4fc2a7af74258a5cf9d6c"
+  },
+  "_source": "git://github.com/lodash/lodash-amd.git",
+  "_target": "~2.4.1",
+  "_originalSource": "lodash-amd"
+}

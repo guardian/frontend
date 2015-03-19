@@ -1,5 +1,5 @@
 define([
-    'lodash/objects/assign',
+    'lodash/modern/objects/assign',
     'common/utils/ajax',
     'bonzo'
 ], function (

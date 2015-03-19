@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'lodash/objects/assign'
+    'lodash/modern/objects/assign'
 ], function (
     bean,
     bonzo,

@@ -3,7 +3,7 @@
  Description: Wrapper around localStorage functionality
  */
 define([
-    'lodash/functions/once'
+    'lodash/modern/functions/once'
 ], function (
     once
     ) {

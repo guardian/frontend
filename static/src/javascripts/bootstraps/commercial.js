@@ -3,7 +3,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/robust',
-    'lodash/collections/forEach',
+    'lodash/modern/collections/forEach',
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',

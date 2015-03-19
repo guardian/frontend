@@ -1,7 +1,7 @@
 define([
     'common/utils/$',
     'bonzo',
-    'lodash/functions/debounce',
+    'lodash/modern/functions/debounce',
     'bean'
 ], function(
     $,

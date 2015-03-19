@@ -1,8 +1,8 @@
 define([
     'common/utils/$',
     'common/utils/config',
-    'lodash/objects/assign',
-    'lodash/collections/find'
+    'lodash/modern/objects/assign',
+    'lodash/modern/collections/find'
 ],
 function (
     $,

@@ -1,8 +1,8 @@
 define([
     'bonzo',
     'picturefill',
-    'lodash/collections/forEach',
-    'lodash/functions/debounce',
+    'lodash/modern/collections/forEach',
+    'lodash/modern/functions/debounce',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/mediator'

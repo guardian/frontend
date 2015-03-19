@@ -38,7 +38,7 @@
           "bower_components/curl/dist/curl-with-js-and-domReady/curl.js": "curl-domReady.js"
         }
       ],
-      "lodash-amd": "bower_components/lodash-amd/modern/**",
+      "lodash-amd": "bower_components/lodash-amd/**",
       "socket.io-client": "bower_components/socket.io-client/socket.io.js",
       "videojs": "bower_components/videojs/dist/video-js/video.js",
       "videojs-contrib-ads": "bower_components/videojs-contrib-ads/src/videojs.ads.js",

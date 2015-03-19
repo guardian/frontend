@@ -2,7 +2,7 @@
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'omniture',
-    'lodash/collections/map',
+    'lodash/modern/collections/map',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',

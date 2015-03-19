@@ -3,7 +3,7 @@ define([
     'bean',
     'common/utils/storage',
     'common/modules/user-prefs',
-    'lodash/arrays/uniq'
+    'lodash/modern/arrays/uniq'
 ], function (
     $,
     bean,

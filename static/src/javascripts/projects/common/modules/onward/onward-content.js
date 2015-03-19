@@ -1,5 +1,5 @@
 define([
-    'lodash/arrays/union',
+    'lodash/modern/arrays/union',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',

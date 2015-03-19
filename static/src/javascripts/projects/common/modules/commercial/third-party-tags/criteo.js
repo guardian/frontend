@@ -1,5 +1,5 @@
 define([
-    'lodash/objects/defaults',
+    'lodash/modern/objects/defaults',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/url'

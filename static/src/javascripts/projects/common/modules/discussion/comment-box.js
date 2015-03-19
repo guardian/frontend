@@ -2,7 +2,7 @@ define([
     'common/utils/$',
     'bean',
     'bonzo',
-    'lodash/functions/debounce',
+    'lodash/modern/functions/debounce',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/discussion/api',

@@ -1,6 +1,6 @@
 define([
-    'lodash/collections/map',
-    'lodash/objects/isArray',
+    'lodash/modern/collections/map',
+    'lodash/modern/objects/isArray',
     'common/utils/config',
     'common/utils/ajax'
 ], function (

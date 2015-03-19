@@ -2,7 +2,7 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'lodash/objects/assign',
+    'lodash/modern/objects/assign',
     'common/utils/ajax',
     'common/utils/mediator',
     'common/modules/identity/api'

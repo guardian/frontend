@@ -1,9 +1,9 @@
 define([
     'bean',
     'bonzo',
-    'lodash/collections/contains',
-    'lodash/functions/debounce',
-    'lodash/functions/once',
+    'lodash/modern/collections/contains',
+    'lodash/modern/functions/debounce',
+    'lodash/modern/functions/once',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',

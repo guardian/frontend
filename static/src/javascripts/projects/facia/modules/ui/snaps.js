@@ -1,7 +1,7 @@
 define([
     'bonzo',
     'fastdom',
-    'lodash/functions/debounce',
+    'lodash/modern/functions/debounce',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/detect',

@@ -1,7 +1,7 @@
 define([
-    'lodash/functions/once',
-    'lodash/objects/assign',
-    'lodash/objects/pairs',
+    'lodash/modern/functions/once',
+    'lodash/modern/objects/assign',
+    'lodash/modern/objects/pairs',
     'common/utils/_',
     'common/utils/config',
     'common/utils/storage',

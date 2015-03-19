@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'lodash/functions/debounce',
+    'lodash/modern/functions/debounce',
     'common/utils/mediator',
     'common/utils/request-animation-frame'
 ], function (

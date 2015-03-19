@@ -1,6 +1,6 @@
 define([
     'qwery',
-    'lodash/objects/defaults',
+    'lodash/modern/objects/defaults',
     'common/modules/ui/sticky'
 ], function (
     qwery,

@@ -3,7 +3,7 @@ define([
     'bonzo',
     'qwery',
 
-    'lodash/collections/map',
+    'lodash/modern/collections/map',
 
     'common/utils/$',
     'common/utils/ajax-promise',
