@@ -4,6 +4,7 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/template',
+    'common/views/svgs',
     'text!common/views/business/stock-value.html',
     'text!common/views/business/stocks.html'
 ], function (
@@ -12,6 +13,7 @@ define([
     ajax,
     config,
     template,
+    svgs,
     stockValueTemplate,
     stocksTemplate
 ) {
@@ -21,7 +23,7 @@ define([
 
     function getStocksData() {
         return ajax({
-            url: '/business-data/stocks.json',
+            url: 'http://localhost:9001/business-data/stocks.json',
             type: 'json',
             method: 'get',
             crossOrigin: true
@@ -38,7 +40,10 @@ define([
                 price: stockValue.price,
                 change: deltaString(stockValue.change),
                 closed: stockValue.closed ? '<div class="stocks__closed">closed</div>' : '',
-                closedInline: stockValue.closed ? '<div class="stocks__closed--inline">closed</div>' : ''
+                closedInline: stockValue.closed ? '<div class="stocks__closed--inline">closed</div>' : '',
+                marketDownIcon: svgs('marketDownIcon', ['stocks__icon','stocks__icon--down']),
+                marketUpIcon: svgs('marketUpIcon', ['stocks__icon', 'stocks__icon--up']),
+                marketSameIcon: svgs('marketSameIcon', ['stocks__icon', 'stocks__icon--same'])
             });
         }).join('');
 
