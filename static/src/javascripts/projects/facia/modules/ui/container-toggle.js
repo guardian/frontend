@@ -5,22 +5,29 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/mediator',
-    'common/modules/user-prefs'
+    'common/modules/user-prefs',
+    'common/utils/template',
+    'common/views/svgs',
+    'text!facia/views/button-toggle.html'
 ], function (
     bean,
     bonzo,
     fastdom,
     $,
     mediator,
-    userPrefs
+    userPrefs,
+    template,
+    svgs,
+    btnTmpl
 ) {
     return function (container) {
         var _$container = bonzo(container),
             _$button = bonzo(bonzo.create(
-                '<button class="fc-container__toggle" data-link-name="Show">'
-                + '<i class="i i-arrow-grey-large"></i>'
-                + '<span class="fc-container__toggle__text">Hide</span>'
-                + '</button>'
+                template(btnTmpl, {
+                    text: 'Hide',
+                    dataLink: 'Show',
+                    icon: svgs('arrowicon')
+                })
             )),
             buttonText = $('.fc-container__toggle__text', _$button[0]),
             _prefName = 'container-states',
