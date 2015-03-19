@@ -73,6 +73,8 @@
     cursor: pointer;
     color: $c-guardian-services-action;
     display: inline-block;
+    // For badges
+    vertical-align: middle;
     text-decoration: none;
     line-height: $headerHeight;
 }
@@ -96,6 +98,15 @@
             }
         }
     }
+}
+
+.brand-bar__item__badge {
+    // TODO: Palette?
+    background: lighten(colour(guardian-brand), 43%);
+    // Same as header background
+    color: colour(guardian-brand);
+    padding: $gs-baseline/3 $gs-gutter/3;
+    margin-left: $gs-gutter/5;
 }
 
 .brand-bar__item--right {
