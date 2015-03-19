@@ -1,3 +1,4 @@
+/* global console */
 // Include any images needed in templates here.
 // This file is only required by core, and so has a long cache time.
 
