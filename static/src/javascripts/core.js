@@ -1,7 +1,6 @@
 require([
     // 3rd party libs
     'raven',
-    'lodash/main',
     'picturefill',
 
     // utilities

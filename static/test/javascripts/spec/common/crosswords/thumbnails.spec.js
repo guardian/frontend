@@ -1,15 +1,11 @@
 define([
     'bonzo',
-    'lodash/collections/contains',
-    'lodash/collections/every',
-    'lodash/collections/map',
+    'common/utils/_',
     'common/modules/crosswords/helpers',
     'common/modules/crosswords/thumbnails'
 ], function (
     bonzo,
-    contains,
-    every,
-    map,
+    _,
     helpers,
     thumbs
 ) {
@@ -20,7 +16,7 @@ define([
     ];
 
     function getLetters(cells) {
-        return map(cells, function (cell) {
+        return _.map(cells, function (cell) {
             return bonzo(cell).text();
         });
     }
@@ -35,17 +31,17 @@ define([
                 var cells = thumbs.makeTextCells(fixture),
                     letters = getLetters(cells);
 
-                expect(contains(letters, "H")).toBe(true);
-                expect(contains(letters, "I")).toBe(true);
-                expect(contains(letters, "R")).toBe(true);
+                expect(_.contains(letters, "H")).toBe(true);
+                expect(_.contains(letters, "I")).toBe(true);
+                expect(_.contains(letters, "R")).toBe(true);
             });
 
             it('should not create any empty text nodes', function () {
                 var cells = thumbs.makeTextCells(fixture),
                     letters = getLetters(cells);
 
-                expect(contains(letters, "")).toBe(false);
-                expect(contains(letters, null)).toBe(false);
+                expect(_.contains(letters, "")).toBe(false);
+                expect(_.contains(letters, null)).toBe(false);
             });
 
             it('should not create any nodes outside of the thumbnail borders', function () {
@@ -53,7 +49,7 @@ define([
                     gridHeight = helpers.gridSize(fixture[0].length),
                     cells = thumbs.makeTextCells(fixture);
 
-                expect(every(cells, function (cell) {
+                expect(_.every(cells, function (cell) {
                     var $cell = bonzo(cell),
                         x = $cell.attr('x'),
                         y = $cell.attr('y');

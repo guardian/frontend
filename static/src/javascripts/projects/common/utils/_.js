@@ -1,9 +1,9 @@
 define([
-    'lodash/main'
+    'lodash/lodash.compat'
 ], function (
-    main
+    _
 ) {
 
-    return main;
+    return _;
 
 });
