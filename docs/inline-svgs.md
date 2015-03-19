@@ -15,7 +15,9 @@ Any image which you want to insert needs to be added to `/static/src/inline-svgs
 
 All images in `inline-svgs` are run through SVGO before being inserted, so you can afford to leave useful comments etc. in a file if you want.
 
-In order to stop IE8 from freaking out (even though it cannot even render SVGs), you *must* remove any `xmlns` attributes from the `svg` element. 
+Make sure all double quotes (`"`) are remove, include for attribute values. The requireJS plugin expects this and its’ string conconcatenation will fail if an `svg` source contains a single quote (`'`).
+
+In order to stop IE8 from freaking out (even though it cannot even render SVGs), you *must* remove any `xmlns` attributes from the `svg` element.
 
 IE also needs dimensions being set (all versions).
 

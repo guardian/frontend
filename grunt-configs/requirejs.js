@@ -33,7 +33,7 @@ module.exports = function(grunt, options) {
                 videojsplaylist:      'components/videojs-playlist-audio/videojs.playlist',
                 // plugins
                 text:                 'components/requirejs-text/text',
-                inlineSvg:            'components/requirejs-inline-svg/inlineSvg'
+                inlineSvg:            'projects/common/utils/inlineSvg'
             },
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
