@@ -5,7 +5,6 @@
     "bean": "~1.0.14",
     "eventEmitter": "~4.2.6",
     "fastdom": "0.8.5",
-    "imager.js": "oncletom/Imager.js#feature-separation",
     "lodash": "~2.4.1",
     "fence": "~0.2.11",
     "bonzo": "~2.0.0",
@@ -39,6 +38,7 @@
           "bower_components/curl/dist/curl-with-js-and-domReady/curl.js": "curl-domReady.js"
         }
       ],
+      "lodash-amd": "bower_components/lodash-amd/modern/**",
       "socket.io-client": "bower_components/socket.io-client/socket.io.js",
       "lodash": { "bower_components/lodash/dist/lodash.compat.js" : "dist/lodash.compat.js"},
       "videojs": "bower_components/videojs/dist/video-js/video.js",
