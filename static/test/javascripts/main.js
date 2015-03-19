@@ -9,7 +9,6 @@ requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/static/src/javascripts',
     paths: {
-        bootsraps:    'bootstraps',
         admin:        'projects/admin',
         common:       'projects/common',
         facia:        'projects/facia',
@@ -21,7 +20,6 @@ requirejs.config({
         fastclick:    'components/fastclick/fastclick',
         fastdom:      'components/fastdom/index',
         fence:        'components/fence/fence',
-        imager:       'components/imager.js/container',
         lodash:       'components/lodash-amd',
         picturefill:  'projects/common/utils/picturefill',
         Promise:      'components/native-promise-only/npo.src',
@@ -39,10 +37,6 @@ requirejs.config({
         inlineSvg:    'projects/common/utils/inlineSvg'
     },
     shim: {
-        imager: {
-            deps: ['/base/static/src/javascripts/components/imager.js/imager.js'],
-            exports: 'Imager'
-        },
         googletag: {
             exports: 'googletag'
         }

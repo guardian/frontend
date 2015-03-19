@@ -16,7 +16,10 @@ define([
     'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/identity-benefits',
     'common/modules/experiments/tests/mt-master',
-    'common/modules/experiments/tests/signed-out'
+    'common/modules/experiments/tests/signed-out',
+    'common/modules/experiments/tests/mt-top-below-nav',
+    'common/modules/experiments/tests/heatmap',
+    'common/modules/experiments/tests/mt-top-below-first-container'
 ], function (
     raven,
     filter,
@@ -35,7 +38,10 @@ define([
     KruxAudienceScience,
     IdentityBenefits,
     MtMaster,
-    SignedOut
+    SignedOut,
+    MtTopBelowNav,
+    HeatMap,
+    MtTopBelowFirstContainer
 ) {
 
     var ab,
@@ -44,7 +50,10 @@ define([
             new KruxAudienceScience(),
             new IdentityBenefits(),
             new MtMaster(),
-            new SignedOut()
+            new SignedOut(),
+            new MtTopBelowNav(),
+            new HeatMap(),
+            new MtTopBelowFirstContainer()
         ],
         participationsKey = 'gu.ab.participations';
 

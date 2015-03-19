@@ -67,21 +67,19 @@ to apply any necessary changes to non-shared code there too.
                     @if(metaData.section == "observer" && metaData.isFront) {
                         <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" itemprop="url" data-component="logo">
                             @if(metaData.hasSlimHeader) {
-                                <i class="i i-observer-logo-160"></i>
+                                @fragments.inlineSvg("observer-logo-160", "logo")
                             } else {
                                 <span class="u-h" itemprop="name">The Observer</span>
-                                <i class="i i-observer-logo-160 mobile-only"></i>
-                                <i class="i i-observer-logo-320 hide-on-mobile"></i>
+                                @fragments.inlineSvg("observer-logo-320", "logo")
                             }
                         </a>
                     } else {
                         <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url" data-component="logo">
                             <span class="u-h" itemprop="name">The Guardian</span>
                             @if(metaData.hasSlimHeader) {
-                                <i class="i i-guardian-logo-160"></i>
+                                @fragments.inlineSvg("guardian-logo-160", "logo")
                             } else {
-                                <i class="i i-guardian-logo-160 mobile-only"></i>
-                                <i class="i i-guardian-logo-320 hide-on-mobile"></i>
+                                @fragments.inlineSvg("guardian-logo-320", "logo")
                                 <span class="logo__tagline hide-on-mobile">Winner of the Pulitzer prize</span>
                             }
                         </a>

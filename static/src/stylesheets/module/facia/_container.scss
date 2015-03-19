@@ -422,12 +422,17 @@ $header-image-size-desktop: 100px;
     @include fs-textSans(3);
     color: #ffffff;
 
-    i {
+    .inline-icon {
         @include transform(rotate(180deg));
         position: absolute;
-        top: 13px;
+        top: 6px;
         left: 50%;
         margin-left: -12px;
+        fill: colour(neutral-1);
+
+        .fc-container--rolled-up & {
+            @include transform(rotate(0deg));
+        }
     }
 
     @include mq(tablet) {
@@ -442,7 +447,7 @@ $header-image-size-desktop: 100px;
         &:focus {
             color: colour(neutral-1);
         }
-        i {
+        .inline-icon {
             display: none;
         }
         .fc-container__toggle__text {
@@ -610,12 +615,12 @@ $header-image-size-desktop: 100px;
     @include border-radius(50%);
 }
 
-.fc-container--lazy-load {
-    @include mq($until: desktop) {
-        display: none;
-    }
-
-    .is-not-modern & {
-        display: none;
-    }
-}
+//.fc-container--lazy-load {
+//    @include mq($until: desktop) {
+//        display: none;
+//    }
+//
+//    .is-not-modern & {
+//        display: none;
+//    }
+//}

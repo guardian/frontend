@@ -3,12 +3,14 @@ define([
     'lodash/functions/debounce',
     'common/utils/$',
     'common/utils/mediator',
+    'common/modules/analytics/omniture',
     'common/modules/identity/api'
 ], function (
     bonzo,
     debounce,
     $,
     mediator,
+    omniture,
     Id
 ) {
 
@@ -29,44 +31,44 @@ define([
      */
     track.getLinkTrackVars = function (extras) {
         extras = extras || [];
-        var linkTrackVars = [
-            'events',
-            'prop4', 'prop6', 'prop8', 'prop10', 'prop13',
-            'prop19', 'prop31', 'prop51', 'prop75',
-            'eVar7', 'eVar8',  'eVar19', 'eVar31',
-            'eVar51', 'eVar66'
-        ];
-
-        return linkTrackVars.concat(extras).join(',');
+        var linkTrackVars = ['prop6', 'prop19', 'prop75', 'eVar8',  'eVar19', 'eVar31', 'eVar51', 'eVar66'];
+        return ',' + linkTrackVars.concat(extras).join(',');
     };
 
     track.comment = function (comment) {
-        s.events = 'event51';
+        // Add extra variables for discussion.
+        omniture.populateEventProperties('comment');
+        s.events += ',event51';
+        s.linkTrackVars += this.getLinkTrackVars(['eVar68']);
+        s.linkTrackEvents += ',event51';
+
         s.eVar66 = Id.getUserFromCookie().id || null;
         s.eVar68 = comment.replyTo ? 'response' : 'comment';
         s.eVar67 = comment.replyTo ? comment.replyTo.authorId : null;
-        s.linkTrackVars = this.getLinkTrackVars(['eVar68']);
-        s.linkTrackEvents = 'event51';
         s.tl(true, 'o', 'comment');
     };
 
     track.recommend = function (e) {
-        s.events = 'event72';
+        omniture.populateEventProperties('Recommend a comment');
+        s.events += ',event72';
+        s.linkTrackVars += this.getLinkTrackVars(['eVar65', 'eVar67']);
+        s.linkTrackEvents += ',event72';
+
         s.eVar65 = 'recommendation';
         s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
         s.eVar67 = e.userId;
-        s.linkTrackVars = this.getLinkTrackVars(['eVar65', 'eVar67']);
-        s.linkTrackEvents = 'event72';
         s.tl(true, 'o', 'Recommend a comment');
     };
 
     track.jumpedToComments = function () {
         if (!track.seen) {
-            s.events = 'event72';
+            omniture.populateEventProperties('seen jump-to-comments');
+            s.events += ',event72';
+            s.linkTrackVars += this.getLinkTrackVars(['eVar65']);
+            s.linkTrackEvents += ',event72';
+
             s.eVar65 = 'seen jump-to-comments';
             s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
-            s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
-            s.linkTrackEvents = 'event72';
             s.tl(true, 'o', 'seen jump-to-comments');
             track.seen = true;
         }
@@ -74,11 +76,13 @@ define([
 
     track.commentPermalink = function () {
         if (!track.seen) {
-            s.events = 'event72';
+            omniture.populateEventProperties('seen comment-permalink');
+            s.events += ',event72';
+            s.linkTrackVars += this.getLinkTrackVars(['eVar65']);
+            s.linkTrackEvents += ',event72';
+
             s.eVar65 = 'seen comment-permalink';
             s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
-            s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
-            s.linkTrackEvents = 'event72';
             s.tl(true, 'o', 'seen comment-permalink');
             track.seen = true;
         }
@@ -86,11 +90,13 @@ define([
 
     track.scrolledToComments = function () {
         if (!track.seen) {
-            s.events = 'event72';
+            omniture.populateEventProperties('seen scroll-top');
+            s.events += ',event72';
+            s.linkTrackVars += this.getLinkTrackVars(['eVar65']);
+            s.linkTrackEvents += ',event72';
+
             s.eVar65 = 'seen scroll-top';
             s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
-            s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
-            s.linkTrackEvents = 'event72';
             s.tl(true, 'o', 'seen scroll-top');
             track.seen = true;
         }

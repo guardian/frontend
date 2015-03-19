@@ -148,7 +148,6 @@ define([
                         that.view.destroy();
                     } else {
                         that.view.render.call(that, response);
-                        mediator.emit('modules:autoupdate:loaded', response);
                     }
                 }
             );
