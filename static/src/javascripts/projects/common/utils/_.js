@@ -1,5 +1,5 @@
 define([
-    'lodash/lodash.compat'
+    'lodash/dist/lodash.compat'
 ], function (
     _
 ) {
