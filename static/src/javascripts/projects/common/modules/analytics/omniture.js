@@ -2,7 +2,7 @@
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'omniture',
-    'lodash/modern/collections/map',
+    'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -16,7 +16,7 @@ define([
     'common/modules/identity/api'
 ], function (
     s,
-    map,
+    _,
     config,
     cookies,
     detect,
@@ -205,7 +205,7 @@ define([
         this.s.prop51  = mvt;
         this.s.eVar51  = mvt;
 
-        this.s.list3 = map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
+        this.s.list3 = _.map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
 
         if (this.s.prop51) {
             this.s.events = this.s.apl(this.s.events, 'event58', ',');

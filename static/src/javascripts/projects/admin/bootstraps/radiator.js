@@ -1,25 +1,11 @@
 define([
     'common/utils/ajax',
     'common/utils/$',
-    'lodash/modern/arrays/first',
-    'lodash/modern/arrays/flatten',
-    'lodash/modern/arrays/last',
-    'lodash/modern/collections/forEach',
-    'lodash/modern/collections/groupBy',
-    'lodash/modern/collections/pluck',
-    'lodash/modern/collections/reduce',
-    'lodash/modern/objects/values'
+    'common/utils/_'
 ], function(
     ajax,
     $,
-    first,
-    flatten,
-    last,
-    forEach,
-    groupBy,
-    pluck,
-    reduce,
-    values
+    _
 ) {
     function initialise() {
         var pingdom = document.getElementById('pingdom');
@@ -37,7 +23,7 @@ define([
                         li.textContent = check.name;
                         li.setAttribute('title', check.name);
                         pingdom.appendChild(li);
-                })
+                });
             }
         );
 
@@ -50,10 +36,10 @@ define([
             function(deployments) {
 
                 // a hash of the last deployment each project
-                var latestDeployments = { "CODE": {}, "PROD": {}};
+                var latestDeployments = { 'CODE': {}, 'PROD': {}};
                 deployments.response.results.filter(function (deployment) {
 
-                        return /^frontend::/.test(deployment.projectName)
+                        return /^frontend::/.test(deployment.projectName);
 
                     }).forEach(function(deploy) {
 
@@ -65,12 +51,12 @@ define([
                     });
 
                 function renderDeployer(stage, revision, deployer){
-                    var targetId = stage + "-" + revision;
+                    var targetId = stage + '-' + revision;
 
                     if (!document.getElementById(targetId)) {
-                        var list = document.getElementById("deployers" + stage);
+                        var list = document.getElementById('deployers' + stage);
                         var li = document.createElement('li');
-                        li.setAttribute("id", targetId);
+                        li.setAttribute('id', targetId);
                         list.appendChild(li);
                         ajax({
                                 url: '/radiator/commit/' + revision,
@@ -78,7 +64,7 @@ define([
                         }).then(
                             function(rev) {
                                 if (rev.commit) {
-                                    li.innerHTML = rev.commit.author.name + " <small>(deployed by " + deployer + ")</small>";
+                                    li.innerHTML = rev.commit.author.name + ' <small>(deployed by ' + deployer + ')</small>';
                                 }
                             }
                         );
@@ -100,21 +86,21 @@ define([
                         li.setAttribute('title', d.projectName);
                         link.appendChild(li);
 
-                        if (latestDeployments["CODE"][deployment] && stage === "PROD" && d.status == "Completed") {
-                            var codeBuild = (latestDeployments["CODE"][deployment] || {}).build;
+                        if (latestDeployments['CODE'][deployment] && stage === 'PROD' && d.status === 'Completed') {
+                            var codeBuild = (latestDeployments['CODE'][deployment] || {}).build;
                             if (codeBuild !== d.build){
-                                li.innerHTML = nameAbbreviation + " " + codeBuild;
-                                li.className = "Behind";
+                                li.innerHTML = nameAbbreviation + ' ' + codeBuild;
+                                li.className = 'Behind';
                             }
                         }
 
-                        if(d.status !== "Completed"){
+                        if(d.status !== 'Completed'){
                             renderDeployer(stage, d.tags.vcsRevision, d.deployer);
                         }
                     });
                 }
-                renderDeploys("CODE", riffraffCODE);
-                renderDeploys("PROD", riffraffPROD);
+                renderDeploys('CODE', riffraffCODE);
+                renderDeploys('PROD', riffraffPROD);
             }
         );
 
@@ -125,25 +111,25 @@ define([
         }).then(
             function(data) {
 
-                var todayData = groupBy(flatten(pluck(data.seriesData, 'data')),
+                var todayData = _.groupBy(_.flatten(_.pluck(data.seriesData, 'data')),
                     function(entry) { return entry.dateTime }
                 );
 
                 // Remove first & last Ophan entries, as they always seem slightly off
                 var keys =  Object.keys(todayData);
-                delete todayData[first(keys)];
-                delete todayData[last(keys)];
+                delete todayData[_.first(keys)];
+                delete todayData[_.last(keys)];
 
                 // Build Graph
                 var graphData = [['time', 'pageviews']];
 
-                forEach(todayData, function(viewsBreakdown, timestamp) {
+                _.forEach(todayData, function(viewsBreakdown, timestamp) {
                     var epoch = parseInt(timestamp, 10),
                         time  = new Date(epoch),
-                        hours = ("0" + time.getHours()).slice(-2),
-                        mins  = ("0" + time.getMinutes()).slice(-2),
+                        hours = ('0' + time.getHours()).slice(-2),
+                        mins  = ('0' + time.getMinutes()).slice(-2),
                         formattedTime = hours + ':' + mins,
-                        totalViews = reduce(viewsBreakdown, function(memo, entry) { return entry.count + memo }, 0);
+                        totalViews = _.reduce(viewsBreakdown, function(memo, entry) { return entry.count + memo }, 0);
 
                     graphData.push([formattedTime, totalViews]);
                 });
@@ -165,7 +151,7 @@ define([
                     });
 
                 // Average pageviews now
-                var lastOphanEntry = reduce(last(values(todayData)),
+                var lastOphanEntry = _.reduce(_.last(_.values(todayData)),
                     function(memo, entry) { return entry.count + memo }, 0);
                 var viewsPerSecond = Math.round(lastOphanEntry/60);
                 $('.pageviews-per-second').html('(' + viewsPerSecond + ' views/sec)');

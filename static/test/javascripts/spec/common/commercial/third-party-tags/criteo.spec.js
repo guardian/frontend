@@ -1,9 +1,9 @@
 define([
-    'lodash/modern/arrays/zipObject',
+    'common/utils/_',
     'common/utils/$',
     'helpers/injector'
 ], function (
-    zipObject,
+    _,
     $,
     Injector
 ) {
@@ -13,7 +13,7 @@ define([
         .require(['common/modules/commercial/third-party-tags/criteo', 'mocks'], function (criteo, mocks) {
 
             function retrieveParams(url) {
-                return zipObject(url.split('?').pop().split('!').shift().split('&').map(function(param) {
+                return _.zipObject(url.split('?').pop().split('!').shift().split('&').map(function(param) {
                     return param.split('=');
                 }));
             }

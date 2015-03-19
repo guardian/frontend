@@ -3,14 +3,14 @@
  Description: Displays information about how the test users are divided.
  */
 define([
-    'lodash/modern/main',
+    'common/utils/_',
     'common/modules/component',
     'bonzo'
 ], function (
     _,
     Component,
     bonzo
-    ) {
+) {
 
     function AudienceItem(config) {
         this.config = _.extend(_.clone(this.config), config);

@@ -3,7 +3,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/robust',
-    'lodash/modern/collections/forEach',
+    'common/utils/_',
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',
@@ -17,7 +17,7 @@ define([
     config,
     mediator,
     robust,
-    forEach,
+    _,
     articleAsideAdverts,
     articleBodyAdverts,
     badges,
@@ -46,7 +46,7 @@ define([
                 (!config.page.isSSL || config.page.section === 'admin') &&
                 !window.location.hash.match(/[#&]noads(&.*)?$/)
             ) {
-                forEach(modules, function (pair) {
+                _.forEach(modules, function (pair) {
                     robust(pair[0], function () {
                         modulePromises.push(pair[1].init());
                     });

@@ -1,13 +1,11 @@
 define([
-    'lodash/modern/collections/reduce',
-    'lodash/modern/objects/keys'
+    'common/utils/_'
 ], function (
-    reduce,
-    keys
+    _
 ) {
 
     return function template(tmpl, params) {
-        return reduce(keys(params), function (tmpl, token) {
+        return _.reduce(_.keys(params), function (tmpl, token) {
             return tmpl.replace(new RegExp('{{' + token + '}}', 'g'), params[token]);
         }, tmpl);
     };

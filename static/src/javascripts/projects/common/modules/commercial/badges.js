@@ -3,7 +3,7 @@ define([
     'fastdom',
     'qwery',
     'Promise',
-    'lodash/modern/collections/map',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
@@ -15,7 +15,7 @@ define([
     fastdom,
     qwery,
     Promise,
-    map,
+    _,
     $,
     config,
     template,
@@ -82,7 +82,7 @@ define([
                 return false;
             }
 
-            sponsoredFrontPromise = Promise.all(map($('.js-sponsored-front'), function (front) {
+            sponsoredFrontPromise = Promise.all(_.map($('.js-sponsored-front'), function (front) {
                 var $front = bonzo(front);
 
                 return renderAd(
@@ -95,7 +95,7 @@ define([
             }));
 
             sponsoredContainersPromise = sponsoredFrontPromise.then(function () {
-                return Promise.all(map($('.js-sponsored-container'), function (container) {
+                return Promise.all(_.map($('.js-sponsored-container'), function (container) {
                     if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
                         var $container = bonzo(container);
 

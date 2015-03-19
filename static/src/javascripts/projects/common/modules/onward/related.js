@@ -1,8 +1,7 @@
 define([
     'bonzo',
     'qwery',
-    'lodash/modern/arrays/intersection',
-    'lodash/modern/collections/map',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -12,8 +11,7 @@ define([
 ], function (
     bonzo,
     qwery,
-    intersection,
-    map,
+    _,
     $,
     config,
     mediator,
@@ -47,7 +45,7 @@ define([
             ],
             pageTags      = config.page.keywordIds.split(','),
             // if this is an advertisement feature, use the page's keyword (there'll only be one)
-            popularInTags = config.page.isAdvertisementFeature ? pageTags : intersection(whitelistedTags, pageTags);
+            popularInTags = config.page.isAdvertisementFeature ? pageTags : _.intersection(whitelistedTags, pageTags);
 
         if (popularInTags.length) {
             return '/popular-in-tag/' + popularInTags[0] + '.json';
@@ -78,7 +76,7 @@ define([
                 relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
 
                 if (opts.excludeTags && opts.excludeTags.length) {
-                    relatedUrl += '?' + map(opts.excludeTags, function (tag) {
+                    relatedUrl += '?' + _.map(opts.excludeTags, function (tag) {
                         return 'exclude-tag=' + tag;
                     }).join('&');
                 }

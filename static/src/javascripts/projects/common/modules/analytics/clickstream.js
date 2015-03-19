@@ -1,11 +1,11 @@
 define([
     'bean',
-    'lodash/modern/collections/map',
+    'common/utils/_',
     'common/utils/mediator',
     'common/modules/experiments/ab'
 ], function (
     bean,
-    map,
+    _,
     mediator,
     ab
 ) {
@@ -109,7 +109,7 @@ define([
                 // prefix ab tests to the click spec
                 applicableTests = ab.getActiveTestsEventIsApplicableTo(clickSpec);
                 if (applicableTests !== undefined && applicableTests.length > 0) {
-                    clickSpec.tag = map(applicableTests, function (test) {
+                    clickSpec.tag = _.map(applicableTests, function (test) {
                         var variant = ab.getTestVariant(test);
                         return 'AB,' + test + ',' + variant + ',' + clickSpec.tag;
                     }).join(',');

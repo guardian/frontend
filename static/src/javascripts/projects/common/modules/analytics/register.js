@@ -8,12 +8,12 @@
 define([
     'common/utils/mediator',
     'common/modules/experiments/ab',
-    'lodash/modern/collections/where'
+    'common/utils/_'
 
 ], function (
     mediator,
     ab,
-    where
+    _
 ) {
     var register = [],
         startTime = Date.now();
@@ -26,7 +26,7 @@ define([
     }
 
     function end(name) {
-        where(register, {name: name})
+        _.where(register, {name: name})
             .forEach(function (module) {
                 module.status = 'completed';
                 module.endTime = Date.now() - startTime + 'ms';
@@ -34,7 +34,7 @@ define([
     }
 
     function error(name) {
-        where(register, {name: name})
+        _.where(register, {name: name})
             .forEach(function (module) {
                 module.status = 'failed';
                 module.endTime = Date.now() - startTime + 'ms';

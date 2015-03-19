@@ -1,12 +1,12 @@
 define([
     'common/utils/$',
     'bonzo',
-    'lodash/modern/functions/debounce',
+    'common/utils/_',
     'bean'
 ], function(
     $,
     bonzo,
-    debounce,
+    _,
     bean
 ) {
     function initialise() {
@@ -26,7 +26,7 @@ define([
             });
 
             // Do basic filtering on the table
-            bean.on(this.querySelector('.search-query'), 'keyup', debounce(function() {
+            bean.on(this.querySelector('.search-query'), 'keyup', _.debounce(function() {
                 var filter = new RegExp(this.value, "i"),
                     filteredTotal = 0;
 

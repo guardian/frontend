@@ -3,7 +3,7 @@
  Description: Displays information about a single test
  */
 define([
-    'lodash/modern/main',
+    'common/utils/_',
     'common/modules/component',
     'admin/modules/abtests/participation',
     'bonzo',
@@ -16,7 +16,7 @@ define([
     bonzo,
     qwery,
     bean
-    ) {
+) {
 
     function ABTestItem(config) {
         this.config = _.extend(_.clone(this.config), config);

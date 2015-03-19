@@ -1,11 +1,11 @@
 define([
     'common/utils/$',
     'bonzo',
-    'lodash/modern/collections/filter'
+    'common/utils/_'
 ], function (
     $,
     bonzo,
-    filter
+    _
 ) {
     var $rhc = $('.js-components-container');
 
@@ -22,7 +22,7 @@ define([
             .append(c)
             .each(function (el) {
                 $cs = $('.' +  classname, $rhc[0]);
-                var inferior = filter($cs, function (el) {
+                var inferior = _.filter($cs, function (el) {
                     return !el.hasAttribute('data-importance') ||
                         importance > parseInt(el.getAttribute('data-importance'), 10);
                 });

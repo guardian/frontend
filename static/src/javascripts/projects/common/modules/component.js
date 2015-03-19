@@ -3,15 +3,13 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'lodash/modern/objects/assign',
-    'lodash/modern/objects/clone',
+    'common/utils/_',
     'common/utils/ajax'
 ], function (
     bean,
     bonzo,
     qwery,
-    assign,
-    clone,
+    _,
     ajax
 ) {
 
@@ -333,7 +331,7 @@ define([
      * @param {Object} options
      */
     Component.prototype.setOptions = function (options) {
-        this.options = assign(clone(this.defaultOptions), this.options || {}, options);
+        this.options = _.assign(_.clone(this.defaultOptions), this.options || {}, options);
     };
 
     /**

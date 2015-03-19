@@ -1,13 +1,13 @@
 define([
     'bonzo',
-    'lodash/modern/functions/debounce',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/mediator',
     'common/modules/analytics/omniture',
     'common/modules/identity/api'
 ], function (
     bonzo,
-    debounce,
+    _,
     $,
     mediator,
     omniture,
@@ -108,12 +108,12 @@ define([
             scroll = function () {
                 if (!track.seen && !timer && track.areCommentsVisible()) {
                     track.scrolledToComments();
-                    mediator.off('window:scroll', debounce(scroll, 200));
+                    mediator.off('window:scroll', _.debounce(scroll, 200));
                 }
             };
 
         if (!track.seen) {
-            mediator.on('window:scroll', debounce(scroll, 200));
+            mediator.on('window:scroll', _.debounce(scroll, 200));
         }
     };
 

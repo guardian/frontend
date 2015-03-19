@@ -3,14 +3,14 @@
  Description: Displays information about how the test users are divided.
  */
 define([
-    'lodash/modern/main',
+    'common/utils/_',
     'common/modules/component',
     'admin/modules/abtests/audience-item'
 ], function (
     _,
     Component,
     audienceItem
-    ) {
+) {
 
     function Audience(config) {
         this.config = _.extend(_.clone(this.config), config);

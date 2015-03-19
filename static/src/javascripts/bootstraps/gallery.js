@@ -2,8 +2,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'lodash/modern/collections/forEach',
-    'lodash/modern/functions/debounce',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -12,8 +11,7 @@ define([
     bean,
     bonzo,
     qwery,
-    forEach,
-    debounce,
+    _,
     $,
     config,
     mediator,
@@ -38,8 +36,8 @@ define([
 
             setHeight();
             mediator.addListeners({
-                'window:resize': debounce(setHeight, 200),
-                'window:orientationchange': debounce(setHeight, 200),
+                'window:resize': _.debounce(setHeight, 200),
+                'window:orientationchange': _.debounce(setHeight, 200),
                 'ui:images:vh': setHeight
             });
         },

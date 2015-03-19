@@ -1,13 +1,13 @@
 define([
     'bean',
     'bonzo',
-    'lodash/modern/functions/debounce',
+    'common/utils/_',
     'common/utils/mediator',
     'common/utils/request-animation-frame'
 ], function (
     bean,
     bonzo,
-    debounce,
+    _,
     mediator,
     raf
 ) {
@@ -15,8 +15,8 @@ define([
     var Affix = function (options) {
 
         bean.on(window, 'click', this.checkPositionWithEventLoop.bind(this));
-        mediator.addListener('window:scroll', debounce(this.checkPositionWithEventLoop.bind(this), 10));
-        mediator.addListener('window:resize', debounce(this.calculateContainerPositioning.bind(this), 200));
+        mediator.addListener('window:scroll', _.debounce(this.checkPositionWithEventLoop.bind(this), 10));
+        mediator.addListener('window:resize', _.debounce(this.calculateContainerPositioning.bind(this), 200));
 
         this.affixed  = null;
         this.$markerTop = bonzo(options.topMarker);

@@ -1,11 +1,11 @@
 define([
     'qwery',
-    'lodash/modern/objects/merge',
+    'common/utils/_',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
     qwery,
-    merge,
+    _,
     fixtures,
     Injector
 ) {
@@ -167,7 +167,7 @@ define([
 
                         server.respondWith(testConfig.url, [200, {}, '{ "html": "" }']);
 
-                        var params = merge({ type: testConfig.type }, testConfig.options);
+                        var params = _.merge({ type: testConfig.type }, testConfig.options);
                         new CommercialComponent(adSlot, params).create();
                     })
                 });

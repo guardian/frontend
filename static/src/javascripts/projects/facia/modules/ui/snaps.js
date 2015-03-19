@@ -1,7 +1,7 @@
 define([
     'bonzo',
     'fastdom',
-    'lodash/modern/functions/debounce',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/detect',
@@ -13,7 +13,7 @@ define([
 ], function (
     bonzo,
     fastdom,
-    debounce,
+    _,
     $,
     ajax,
     detect,
@@ -36,7 +36,7 @@ define([
         snaps.forEach(fetchSnap);
 
         if (snaps.length && !detect.isIOS) {
-            mediator.on('window:resize', debounce(function () {
+            mediator.on('window:resize', _.debounce(function () {
                 snaps.forEach(function (el) { addCss(el, true); });
             }, 200));
         }

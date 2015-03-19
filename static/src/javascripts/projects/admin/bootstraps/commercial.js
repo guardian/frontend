@@ -2,7 +2,7 @@ define([
     'qwery',
     'bean',
     'bonzo',
-    'lodash/modern/collections/where',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/url'
@@ -10,7 +10,7 @@ define([
     qwery,
     bean,
     bonzo,
-    where,
+    _,
     $,
     ajax,
     urlUtils
@@ -39,7 +39,7 @@ define([
             }).then(function(r2Data) {
                 var r2Buckets = r2Data.buckets,
                     graphData = [['Time', 'Next Gen', 'R2']].concat(nextGenData.buckets.map(function(bucket) {
-                        var r2Bucket = where(r2Buckets, {time: bucket.time});
+                        var r2Bucket = _.where(r2Buckets, {time: bucket.time});
                         return [
                             new Date(bucket.time),
                             Math.max(bucket.avgTimeToRenderEnded/1000, 0),

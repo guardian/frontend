@@ -1,11 +1,9 @@
 define([
-    'lodash/modern/collections/map',
-    'lodash/modern/objects/isArray',
+    'common/utils/_',
     'common/utils/config',
     'common/utils/ajax'
 ], function (
-    map,
-    isArray,
+    _,
     config,
     ajax
 ) {
@@ -13,7 +11,7 @@ define([
     var canBeacon = !!navigator.sendBeacon;
 
     function buildCounts(keys) {
-        return map(isArray(keys) ? keys : [keys], function (key) {
+        return _.map(_.isArray(keys) ? keys : [keys], function (key) {
             return 'c=' + key;
         }).join('&');
     }

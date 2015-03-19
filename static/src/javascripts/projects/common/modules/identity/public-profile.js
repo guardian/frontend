@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'lodash/modern/objects/mapValues',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/url',
@@ -11,7 +11,7 @@ define([
 function (
     bean,
     bonzo,
-    mapValues,
+    _,
     $,
     config,
     url,
@@ -24,7 +24,7 @@ function (
             streamType: 'data-stream-type'
         };
         $('.js-activity-stream').each(function (el) {
-            (activityStream = new ActivityStream(mapValues(opts, function (key) {
+            (activityStream = new ActivityStream(_.mapValues(opts, function (key) {
                 return el.getAttribute(key);
             }))).fetch(el).then(function () {
                 bonzo(el).removeClass('activity-stream--loading');

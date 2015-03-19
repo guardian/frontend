@@ -5,13 +5,13 @@
 define([
     'Promise',
     'qwery',
-    'lodash/modern/functions/once',
+    'common/utils/_',
     'common/modules/component',
     'common/utils/mediator'
 ], function (
     Promise,
     qwery,
-    once,
+    _,
     Component,
     mediator
 ) {
@@ -40,7 +40,7 @@ define([
 
     return {
 
-        render: once(function () {
+        render: _.once(function () {
             new GeoMostPopular().fetch(qwery('.js-components-container'), 'rightHtml');
             return promise;
         }),
