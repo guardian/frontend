@@ -96,7 +96,8 @@ object TeamMap extends ExecutionContexts with Logging {
     ("32309", "Hannover"),
     ("7520", "Helsingborg"),
     ("26322", "Twente"),
-    ("26398", "Basel")
+    ("26398", "Basel"),
+    ("7012", "Dynamo Kyiv")
   )
 
   def apply(team: FootballTeam) = Team(team, teamAgent().get(team.id), shortNames.get(team.id))
