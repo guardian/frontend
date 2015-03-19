@@ -32,10 +32,14 @@ define([
 
     Fluid250.prototype.updateBgPosition = function () {
         var bgpositionx = this.params.backgroundPosition.split(' ')[0],
-        layeronebgpositionx = this.params.layerOneBGPosition.split(' ')[0];
+        layeronebgpositionx = this.params.layerOneBGPosition.split(' ')[0],
+        layertwobgpositionx = this.params.layerTwoBGPosition.split(' ')[0],
+        layerthreebgpositionx = this.params.layerThreeBGPosition.split(' ')[0];
 
         $('.ad-slot--top-banner-ad .creative--fluid250').css('background-position', bgpositionx + ' ' + window.pageYOffset * (this.params.backgroundImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
         $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer1').css('background-position', layeronebgpositionx + ' ' + window.pageYOffset * (this.params.layerOneImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
+        $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer2').css('background-position', layertwobgpositionx + ' ' + window.pageYOffset * (this.params.layerTwoImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
+        $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer3').css('background-position', layerthreebgpositionx + ' ' + window.pageYOffset * (this.params.layerThreeImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
     };
 
     Fluid250.prototype.create = function () {
@@ -61,7 +65,8 @@ define([
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
         }
 
-        if (Fluid250.hasScrollEnabled && (this.params.backgroundImageScroll !== 'normal' || this.params.layerOneImageScroll !== 'normal')) {
+        if (Fluid250.hasScrollEnabled && (this.params.backgroundImageScroll !== 'normal' || this.params.layerOneImageScroll !== 'normal'  || this.params.layerTwoImageScroll !== 'normal'  || this.params.layerThreeImageScroll !== 'normal')) {
+
             // update bg position
             this.updateBgPosition();
 
