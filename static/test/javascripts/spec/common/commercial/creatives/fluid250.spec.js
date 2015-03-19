@@ -1,15 +1,16 @@
 define([
+    'fastdom',
     'qwery',
     'common/utils/$',
     'helpers/fixtures',
     'common/modules/commercial/creatives/fluid250'
 ], function(
+    fastdom,
     qwery,
     $,
     fixtures,
     Fluid250
 ) {
-
     var fixturesConfig = {
         id: 'ad-slot',
         fixtures: [
@@ -18,7 +19,6 @@ define([
     };
 
     describe('Fluid 250', function() {
-
         var fluid250,
             $fixturesContainer;
 
@@ -33,7 +33,7 @@ define([
             expect(fluid250).toBeDefined();
         });
 
-        it('ad slot should have a video iframe with proper styles', function() {
+        it('ad slot should have a video iframe with proper styles', function(done) {
             $fixturesContainer = fixtures.render(fixturesConfig);
 
             new Fluid250($('.ad-slot', $fixturesContainer), {
@@ -42,11 +42,13 @@ define([
                 videoPositionV: 'top',
                 videoURL: 'exampleVideoUrl'
             }).create();
-            expect(qwery('.fluid250_video--vert-pos-top', '.ad-slot').length).toBe(1);
-            expect(qwery('.fluid250_video--horiz-pos-left', '.ad-slot').length).toBe(1);
+
+            fastdom.defer(function () {
+                expect(qwery('.fluid250_video--vert-pos-top', '.ad-slot').length).toBe(1);
+                expect(qwery('.fluid250_video--horiz-pos-left', '.ad-slot').length).toBe(1);
+                done();
+            });
         });
-
     });
-
 });
 

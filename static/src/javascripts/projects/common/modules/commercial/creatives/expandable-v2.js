@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'lodash/objects/merge',
     'common/utils/$',
     'common/utils/detect',
@@ -12,6 +13,7 @@ define([
 ], function (
     bean,
     bonzo,
+    fastdom,
     merge,
     $,
 	detect,
@@ -40,17 +42,21 @@ define([
     };
 
     ExpandableV2.prototype.listener = function () {
-        if ((window.pageYOffset + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
-            // expires in 1 week
-            var week = 1000 * 60 * 60 * 24 * 7;
+        var week = 1000 * 60 * 60 * 24 * 7;
 
-            storage.local.set('gu.commercial.expandable.' + this.params.ecid, true, { expires: Date.now() + week });
-            this.$button.toggleClass('button-spin');
-            $('.ad-exp__open-chevron').toggleClass('chevron-down');
-            this.$ad.css('height', this.openedHeight);
-            this.isClosed = false;
-            return true;
-        }
+        fastdom.read(function () {
+            if ((window.pageYOffset + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
+                storage.local.set('gu.commercial.expandable.' + this.params.ecid, true, { expires: Date.now() + week });
+
+                fastdom.write(function () {
+                    this.$button.toggleClass('button-spin');
+                    $('.ad-exp__open-chevron').toggleClass('chevron-down');
+                    this.$ad.css('height', this.openedHeight);
+                }.bind(this));
+
+                this.isClosed = false;
+            }
+        }.bind(this));
     };
 
     ExpandableV2.prototype.create = function () {
@@ -79,29 +85,33 @@ define([
             },
             $expandablev2 = $.create(template(expandableV2Tpl, merge(this.params, showmoreArrow, showmorePlus, videoDesktop)));
 
-        this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
+        this.$ad     = $('.ad-exp--expand', $expandablev2);
         this.$button = $('.ad-exp__open', $expandablev2);
 
-        $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
+        fastdom.write(function () {
+            this.$ad.css('height', this.closedHeight);
+            $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
 
-        if (this.params.trackingPixel) {
-            this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
-        }
+            if (this.params.trackingPixel) {
+                this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+            }
 
-        $expandablev2.appendTo(this.$adSlot);
+            $expandablev2.appendTo(this.$adSlot);
+        }.bind(this));
 
         if (!storage.local.get('gu.commercial.expandable.' + this.params.ecid)) {
             mediator.on('window:scroll', this.listener.bind(this));
         }
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
-            $('.ad-exp__close-button').toggleClass('button-spin');
-            $('.ad-exp__open-chevron').toggleClass('chevron-down');
-            this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
+            fastdom.write(function () {
+                $('.ad-exp__close-button').toggleClass('button-spin');
+                $('.ad-exp__open-chevron').toggleClass('chevron-down');
+                this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
+            }.bind(this));
             this.isClosed = !this.isClosed;
         }.bind(this));
     };
 
     return ExpandableV2;
-
 });

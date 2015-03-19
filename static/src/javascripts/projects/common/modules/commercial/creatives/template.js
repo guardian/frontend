@@ -1,5 +1,6 @@
 define([
     'common/utils/$',
+    'fastdom',
     'common/utils/template',
     'common/views/svgs',
 
@@ -13,10 +14,10 @@ define([
     'text!common/views/commercial/creatives/manual-single.html'
 ], function (
     $,
+    fastdom,
     template,
     svgs
 ) {
-
     /**
      * Create simple templated creatives
      *
@@ -37,11 +38,13 @@ define([
         require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
             var creativeHtml = template(creativeTpl, this.params);
 
-            $.create(creativeHtml)
-                .appendTo(this.$adSlot);
+            fastdom.write(function () {
+                $.create(creativeHtml)
+                    .appendTo(this.$adSlot);
+            });
+
         }.bind(this));
     };
 
     return Template;
-
 });

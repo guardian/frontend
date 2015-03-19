@@ -1,17 +1,18 @@
 define([
+    'fastdom',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
     'text!common/views/commercial/creatives/scrollable-mpu.html'
 ], function (
+    fastdom,
     $,
     detect,
     mediator,
     template,
     scrollableMpuTpl
 ) {
-
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026567
      */
@@ -27,7 +28,16 @@ define([
     ScrollableMpu.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     ScrollableMpu.prototype.updateBgPosition = function () {
-        $('.creative--scrollable-mpu-image').css('background-position', '100%' + (window.pageYOffset - this.$scrollableMpu.offset().top) + 'px');
+        fastdom.read(function () {
+            var offset = window.pageYOffset - this.$scrollableMpu.offset().top;
+
+            fastdom.write(function () {
+                $('.creative--scrollable-mpu-image').css(
+                    'background-position',
+                    '100% ' + offset + 'px'
+                );
+            }.bind(this));
+        }.bind(this));
     };
 
     ScrollableMpu.prototype.create = function () {
@@ -40,7 +50,12 @@ define([
             trackingPixelImg: this.params.trackingPixel ?
                 '<img src="' + this.params.trackingPixel + '" width="1" height="1" />' : ''
         };
-        this.$scrollableMpu = $.create(template(scrollableMpuTpl, templateOptions)).appendTo(this.$adSlot);
+
+        this.$scrollableMpu = $.create(template(scrollableMpuTpl, templateOptions));
+
+        fastdom.write(function () {
+            this.$scrollableMpu.appendTo(this.$adSlot);
+        }.bind(this));
 
         if (ScrollableMpu.hasScrollEnabled) {
             // update bg position
@@ -53,5 +68,4 @@ define([
     };
 
     return ScrollableMpu;
-
 });

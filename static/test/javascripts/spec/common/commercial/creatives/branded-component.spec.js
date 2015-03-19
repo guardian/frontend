@@ -1,9 +1,11 @@
 define([
+    'fastdom',
     'qwery',
     'common/utils/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function(
+    fastdom,
     qwery,
     $,
     fixtures,
@@ -51,11 +53,15 @@ define([
                     expect(brandedComponent).toBeDefined();
                 });
 
-                it('should always show branded component with force option', function () {
+                it('should always show branded component with force option', function (done) {
                     $fixturesContainer = fixtures.render(fixturesConfig);
 
                     brandedComponent.create();
-                    expect(qwery('.creative--branded-component-soulmates').length).toBe(1);
+
+                    fastdom.defer(function () {
+                        expect(qwery('.creative--branded-component-soulmates').length).toBe(1);
+                        done();
+                    });
                 });
 
                 it('should not show branded component without force option and in football section', function () {
@@ -72,7 +78,7 @@ define([
                     expect(qwery('.creative--branded-component-soulmates').length).toBe(0);
                 });
 
-                it('should show branded component without force option, long secondary column and not in football', function () {
+                it('should show branded component without force option, long secondary column and not in football', function (done) {
                     $fixturesContainer = fixtures.render(fixturesConfig);
                     $('.js-secondary-column').css('height', 1900);
                     config.page.section = '';
@@ -85,12 +91,13 @@ define([
                     });
 
                     brandedComponent.create();
-                    expect(qwery('.creative--branded-component-soulmates').length).toBe(1);
+
+                    fastdom.defer(function () {
+                        expect(qwery('.creative--branded-component-soulmates').length).toBe(1);
+                        done();
+                    });
                 });
-
             });
-
         });
-
 });
 

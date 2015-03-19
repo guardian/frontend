@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
@@ -9,6 +10,7 @@ define([
 ], function (
     bean,
     bonzo,
+    fastdom,
     $,
     mediator,
     storage,
@@ -21,14 +23,19 @@ define([
     };
 
     Fluid250GoogleAndroid.prototype.create = function () {
+        var ad = $.create(template(fluid250GoogleAndroidTpl, this.params));
 
-        $.create(template(fluid250GoogleAndroidTpl, this.params)).appendTo(this.$adSlot);
+        fastdom.write(function () {
+            ad.appendTo(this.$adSlot);
+        }.bind(this));
 
         if (this.params.trackingPixel) {
-            this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+            fastdom.write(function () {
+                this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster +
+                    '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+            }.bind(this));
         }
     };
 
     return Fluid250GoogleAndroid;
-
 });
