@@ -615,12 +615,12 @@ $header-image-size-desktop: 100px;
     @include border-radius(50%);
 }
 
-//.fc-container--lazy-load {
-//    @include mq($until: desktop) {
-//        display: none;
-//    }
-//
-//    .is-not-modern & {
-//        display: none;
-//    }
-//}
+.fc-container--lazy-load {
+    @include mq($until: desktop) {
+        display: none;
+    }
+
+    .is-not-modern & {
+        display: none;
+    }
+}
