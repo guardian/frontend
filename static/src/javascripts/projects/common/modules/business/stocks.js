@@ -23,7 +23,7 @@ define([
 
     function getStocksData() {
         return ajax({
-            url: 'http://localhost:9001/business-data/stocks.json',
+            url: '/business-data/stocks.json',
             type: 'json',
             method: 'get',
             crossOrigin: true
