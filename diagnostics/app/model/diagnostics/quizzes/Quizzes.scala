@@ -21,43 +21,44 @@ object Quizzes extends ExecutionContexts {
   lazy val host = Configuration.memcached.host.head
   lazy val memcached = Memcached(MemcachedConf(host), memcachedExecutionContext)
 
-  def update(json: String) = {
-    val quizUpdate = parse(json).extract[QuizUpdate]
-    val oldStats = results(quizUpdate.quizId)
-
-    val x = for {
-      stat <- oldStats
-    } yield {
-      addLatest(stat, quizUpdate)
-    }
-    //memcached.set[QuizUpdate](quizUpdate.quizId, quizUpdate, )
-  }
+//  def update(json: String) = {
+//    val quizUpdate = parse(json).extract[QuizUpdate]
+//    val oldStats = results(quizUpdate.quizId)
+//
+//    val x = for {
+//      stat <- oldStats
+//    } yield {
+//      addLatest(stat, quizUpdate)
+//    }
+//    memcached.set[QuizUpdate](quizUpdate.quizId, quizUpdate, )
+//  }
 
   private def addLatest(agg: QuizAggregate, upd: QuizUpdate) = {
-    agg.copy()
+    QuizAggregate(agg.quizId, addResultsToList(agg.results, upd.results), agg.timeTaken + upd.timeTaken)
   }
 
-  private def addResultsToList(aggList: List[List[Int]], newVals: List[Int]) = {
-    val extendedAgg = aggList ++ Stream.continually(Nil)
-    aggList.zip(newVals).map{ x => incrementByIndex(x._1, x._2) }
+  def addResultsToList(aggList: List[List[Int]], newVals: List[Int]) = {
+    val extendedAgg = aggList.toStream ++ Stream.continually(Nil)
+    extendedAgg.zip(newVals).toList.map{ x => incrementByIndex(x._1, x._2) }
   }
 
   def incrementByIndex(a: List[Int], b: Int): List[Int] = {
     // a mght be too short
     (a, b) match {
       case (Nil, 0) => List(1)
+      case (Nil, n) => List.fill(n)(0) ++ List(1)
       case (x::xs, 0) => x + 1 :: xs
       case (x::xs, n) => x :: incrementByIndex(xs, b - 1)
     }
   }
 
-  def results(quizId: String): Future[QuizAggregate] = {
-    memcached.get[QuizAggregate](quizId).recover {
-      case e: Exception =>
-        Logger.error(e.getMessage)
-        None
-    }
-  }.map(_.getOrElse(QuizAggregate(quizId, Nil, 0)))
+//  def results(quizId: String): Future[QuizAggregate] = {
+//    memcached.get[QuizAggregate](quizId).recover {
+//      case e: Exception =>
+//        Logger.error(e.getMessage)
+//        None
+//    }
+//  }.map(_.getOrElse(QuizAggregate(quizId, Nil, 0)))
 }
 
 case class QuizUpdate (
@@ -65,7 +66,7 @@ case class QuizUpdate (
   results: List[Int],
   timeTaken: Long)
 {
-  def toJson = Extraction.decompose(this)
+//  def toJson = Extraction.decompose(this)
 }
 
 case class QuizAggregate (
@@ -73,7 +74,7 @@ case class QuizAggregate (
   results: List[List[Int]],
   timeTaken: Long)
 {
-  def toJson = Extraction.decompose(this)
+//  def toJson = Extraction.decompose(this)
   def isCorrect(q: Int) = {
     results(q) == 1
   }
