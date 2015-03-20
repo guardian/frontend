@@ -134,7 +134,76 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table--commercial__body">
-
+                                @bestBuys.creditCards.get("balance-transfer").getOrElse(Nil).map { creditCard =>
+                                    <tr>
+                                        <td>@creditCard.name</td>
+                                        <td>@creditCard.balanceTransferRate, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee</td>
+                                        <td>@creditCard.purchaseRate, @creditCard.purchaseRateDuration</td>
+                                        <td>@creditCard.rewardNotes</td>
+                                        <td>@creditCard.representativeApr</td>
+                                        <td>@creditCard.applyUrl</td>
+                                    </tr>
+                                }
+                                @bestBuys.creditCards.get("purchases").getOrElse(Nil).map { creditCard =>
+                                    <tr>
+                                        <td>@creditCard.name</td>
+                                        <td>@creditCard.balanceTransferRate, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee</td>
+                                        <td>@creditCard.purchaseRate, @creditCard.purchaseRateDuration</td>
+                                        <td>@creditCard.rewardNotes</td>
+                                        <td>@creditCard.representativeApr</td>
+                                        <td>@creditCard.applyUrl</td>
+                                    </tr>
+                                }
+                                @bestBuys.creditCards.get("balance-transfer-and-purchases").getOrElse(Nil).map { creditCard =>
+                                    <tr>
+                                        <td>@creditCard.name</td>
+                                        <td>@creditCard.balanceTransferRate, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee</td>
+                                        <td>@creditCard.purchaseRate, @creditCard.purchaseRateDuration</td>
+                                        <td>@creditCard.rewardNotes</td>
+                                        <td>@creditCard.representativeApr</td>
+                                        <td>@creditCard.applyUrl</td>
+                                    </tr>
+                                }
+                                @bestBuys.creditCards.get("cashback").getOrElse(Nil).map { creditCard =>
+                                    <tr>
+                                        <td>@creditCard.name</td>
+                                        <td>@creditCard.balanceTransferRate, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee</td>
+                                        <td>@creditCard.purchaseRate, @creditCard.purchaseRateDuration</td>
+                                        <td>@creditCard.rewardNotes</td>
+                                        <td>@creditCard.representativeApr</td>
+                                        <td>@creditCard.applyUrl</td>
+                                    </tr>
+                                }
+                                @bestBuys.creditCards.get("low-standard-rate").getOrElse(Nil).map { creditCard =>
+                                    <tr>
+                                        <td>@creditCard.name</td>
+                                        <td>@creditCard.balanceTransferRate, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee</td>
+                                        <td>@creditCard.purchaseRate, @creditCard.purchaseRateDuration</td>
+                                        <td>@creditCard.rewardNotes</td>
+                                        <td>@creditCard.representativeApr</td>
+                                        <td>@creditCard.applyUrl</td>
+                                    </tr>
+                                }
+                                @bestBuys.creditCards.get("rewards").getOrElse(Nil).map { creditCard =>
+                                    <tr>
+                                        <td>@creditCard.name</td>
+                                        <td>@creditCard.balanceTransferRate, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee</td>
+                                        <td>@creditCard.purchaseRate, @creditCard.purchaseRateDuration</td>
+                                        <td>@creditCard.rewardNotes</td>
+                                        <td>@creditCard.representativeApr</td>
+                                        <td>@creditCard.applyUrl</td>
+                                    </tr>
+                                }
+                                @bestBuys.creditCards.get("bad-credit").getOrElse(Nil).map { creditCard =>
+                                    <tr>
+                                        <td>@creditCard.name</td>
+                                        <td>@creditCard.balanceTransferRate, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee</td>
+                                        <td>@creditCard.purchaseRate, @creditCard.purchaseRateDuration</td>
+                                        <td>@creditCard.rewardNotes</td>
+                                        <td>@creditCard.representativeApr</td>
+                                        <td>@creditCard.applyUrl</td>
+                                    </tr>
+                                }
                                 </tbody>
                             </table>
                         </div>
@@ -153,7 +222,17 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table--commercial__body">
-                                    
+                                @bestBuys.loans.map { loan =>
+                                    <tr>
+                                        <td>@loan.name</td>
+                                        <td>@loan.headlineApr</td>
+                                        <td>@loan.apr</td>
+                                        <td>@loan.minAdvance</td>
+                                        <td>@loan.maxAdvance</td>
+                                        <td>@loan.comments</td>
+                                        <td>@loan.applyUrl</td>
+                                    </tr>
+                                }
                                 </tbody>
                             </table>
                         </div>
