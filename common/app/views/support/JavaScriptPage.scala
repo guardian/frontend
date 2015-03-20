@@ -4,6 +4,7 @@ import common.Edition
 import common.Maps.RichMap
 import conf.Configuration
 import conf.Configuration.environment
+import conf.Switches.IdentitySocialOAuthSwitch
 import model.{Content, MetaData}
 import org.joda.time.DateTime
 import play.api.Play
@@ -41,7 +42,11 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
         case _ => false
       })),
       ("isPreview", JsBoolean(environment.isPreview)),
-      ("isInappropriateForSponsorship", JsBoolean(metaData.isInappropriateForSponsorship))
+      ("isInappropriateForSponsorship", JsBoolean(metaData.isInappropriateForSponsorship)),
+      ("idWebAppUrl", JsString(
+        if (IdentitySocialOAuthSwitch.isSwitchedOn) Configuration.id.oauthUrl
+        else Configuration.id.webappUrl
+      ))
     ) ++ metaData.sponsorshipType.map{s => Map("sponsorshipType" -> JsString(s))}.getOrElse(Nil)
       ++ metaData.sponsorshipTag.map{tag => Map("sponsorshipTag" -> JsString(tag.name))}.getOrElse(Nil))
   }
