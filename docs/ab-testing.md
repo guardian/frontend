@@ -2,7 +2,7 @@ This explains how to run an A/B test in frontend.
 
 We have a homebrewed AB testing framework running in the application. The data it collects is logged with both Ophan and Omniture.
 
-Most tests can be written in JavaScript, although we can serve variants via Varnish. 
+Most tests can be written in JavaScript, although we can serve variants via Varnish.
 
 # Guide
 
@@ -29,16 +29,6 @@ val ABFontDelaySwitch = Switch("A/B Tests", "ab-web-fonts-delay",
 
 The only convention is that the test id has to start with the characters _'ab-'_.
 
-You also need to add it to the list of available switches at the foot of the same file,
-
-```
-val all: List[Switch] = List(
-    FooSwitch,
-    BarSwitch,
-    ABFontDelaySwitch,
-    ..
-    )
-```
 
 You will notice here that the switches we use to run our AB testing are the same switches we use to toggle features.
 
@@ -48,7 +38,7 @@ A test is simply a JavaScript AMD module written to some conventions.
 
 Tests live in `./common/app/assets/javascripts/modules/experiments/tests/`, so create a file in there.
 
-``` 
+```
 define(['bonzo'], function (bonzo) {
 
     var GeoMostPopular = function () {
@@ -99,7 +89,7 @@ The AMD module must return an object with the following properties,
 - `audience`: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split 50/50 between the control and variant.
 - `audienceOffset`: All users are given a permanent, unique hash that is a number between 0 and 1. `audienceOffset` allows you to specify the range of
   users you want to test. For example, an `audienceOffset` value of `0.5` and an `audience` of `0.1` means user with a hash between 0.5 and 0.6 will
-  be opted in to the test. This helps to avoid overlapping tests. 
+  be opted in to the test. This helps to avoid overlapping tests.
 - `successMeasure`: Measurable traits that can be directed related to the hypothesis and objective (eg. CTR, Page Views per Visitor).
 - `audienceCriteria`: Additional criteria on audience (eg. Desktop users only, Network Front entry users only).
 - `dataLinkNames`: Link names or custom link names used for test.
@@ -110,7 +100,7 @@ The AMD module must return an object with the following properties,
 
 You will also need to mark the module as a dependency of the AB testing module.
 
-Do that here, `./common/app/assets/javascripts/modules/experiments/ab.js` 
+Do that here, `./common/app/assets/javascripts/modules/experiments/ab.js`
 
 ```
 define([
@@ -120,11 +110,11 @@ define([
 ], function (
 
     GeoMostPopular) {
-    
+
     var TESTS = [
             new GeoMostPopular()    //  and here.
         ];
-    
+
     ...
 
     })
@@ -141,7 +131,7 @@ You can stop and start the test using our [switchboard](https://frontend.gutools
 
 ### Omniture
 
-For simple analysis of the data you can use [Omniture](https://sc.omniture.com) 
+For simple analysis of the data you can use [Omniture](https://sc.omniture.com)
 
 The data is logged under the Omniture property _p51_.
 
@@ -179,7 +169,7 @@ Each AB test have a control group and _n_ variants, or buckets. For example,
 
 What metrics do you think will improve? Writing this down before the test helps
 
-For example, 
+For example,
 
 > - Bounce rate is going to improve by 1%
 > - Time on page increase by 5%
@@ -205,6 +195,6 @@ Given we already have 2 repositories of user behaviour data (Omniture, Ophan/Red
 
 Optimizely is relatively expensive - several thousand pounds p/month.
 
-Optimizely is a client-side framework, which is limited for some types of testing. 
- 
+Optimizely is a client-side framework, which is limited for some types of testing.
+
 It adds a rather large overhead to the cookie (mine is 2.5kb).

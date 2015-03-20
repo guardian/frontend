@@ -12,7 +12,8 @@ define([
     'common/modules/experiments/tests/signed-out',
     'common/modules/experiments/tests/mt-top-below-nav',
     'common/modules/experiments/tests/heatmap',
-    'common/modules/experiments/tests/mt-top-below-first-container'
+    'common/modules/experiments/tests/mt-top-below-first-container',
+    'common/modules/experiments/tests/across-the-country'
 ], function (
     raven,
     _,
@@ -27,7 +28,8 @@ define([
     SignedOut,
     MtTopBelowNav,
     HeatMap,
-    MtTopBelowFirstContainer
+    MtTopBelowFirstContainer,
+    AcrossTheCountry
 ) {
 
     var ab,
@@ -39,7 +41,8 @@ define([
             new SignedOut(),
             new MtTopBelowNav(),
             new HeatMap(),
-            new MtTopBelowFirstContainer()
+            new MtTopBelowFirstContainer(),
+            new AcrossTheCountry()
         ],
         participationsKey = 'gu.ab.participations';
 
