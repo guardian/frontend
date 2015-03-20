@@ -502,14 +502,13 @@ import collection.JavaConversions._
     }
 
     scenario("Progressive related content") {
-      Given("I vist a Guardian article page")
+      Given("I visit a Guardian article page")
       goTo("/technology/askjack/2015/feb/05/how-should-i-upgrade-my-old-hi-fi-in-a-digital-world") { browser =>
         import browser._
 
-        Then("I should see a link to related to related content")
-        val relatedLink = findFirst("[data-test-id=related-content]").findFirst("a")
-        relatedLink.getAttribute("href") should endWith ("/related/technology/askjack/2015/feb/05/how-should-i-upgrade-my-old-hi-fi-in-a-digital-world")
-        relatedLink.getText() should be ("related content >")
+        Then("There should be a placeholder for related content")
+        val relatedLink = findFirst("[data-test-id=related-content]")
+        relatedLink.getText() should be (empty)
       }
     }
 
