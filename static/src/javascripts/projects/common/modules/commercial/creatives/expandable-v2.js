@@ -75,7 +75,7 @@ define([
             },
             showmorePlus = {
                 showPlus: (this.params.showMoreType === 'plus-only' || this.params.showMoreType === 'plus-and-arrow') ?
-                    '<button class="ad-exp__close-button ad-exp__open"><i class="i i-close-icon-white-small"></i></button>' : ''
+                    '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentral') + '</button>' : ''
             },
             $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop)));
 

@@ -13,7 +13,8 @@ define([
     'inlineSvg!svgs/arrow!icon',
     'inlineSvg!svgs/arrow-down!icon',
     'inlineSvg!svgs/logo-guardian!logo',
-    'inlineSvg!svgs/logo-soulmates!commercial'
+    'inlineSvg!svgs/logo-soulmates!commercial',
+    'inlineSvg!svgs/close-central!icon'
 ], function (
     _,
     commentCount16icon,
@@ -25,7 +26,8 @@ define([
     arrowicon,
     arrowdownicon,
     logoguardian,
-    logosoulmates
+    logosoulmates,
+    closeCentral
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -37,7 +39,8 @@ define([
         arrowicon: arrowicon,
         arrowdownicon: arrowdownicon,
         logoguardian: logoguardian,
-        logosoulmates: logosoulmates
+        logosoulmates: logosoulmates,
+        closeCentral: closeCentral
     };
 
     return function (name, classes, title) {
