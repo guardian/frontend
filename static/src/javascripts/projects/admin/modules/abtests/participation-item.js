@@ -3,15 +3,15 @@
  Description: Displays opt-in link for a variant
  */
 define([
-    'lodash/objects/assign',
+    'common/utils/_',
     'common/modules/component'
 ], function (
-    extend,
+    _,
     Component
     ) {
 
     function ParticipationItem(config) {
-        this.config = extend(this.config, config);
+        this.config = _.extend(this.config, config);
     }
 
     Component.define(ParticipationItem);

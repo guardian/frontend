@@ -1,15 +1,11 @@
 define([
-    'lodash/collections/map',
-    'lodash/objects/isArray',
-    'lodash/objects/pairs',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
     'text!common/views/commercial/ad-slot.html'
 ], function (
-    map,
-    isArray,
-    pairs,
+    _,
     $,
     config,
     template,
@@ -113,10 +109,10 @@ define([
                 name: definition.name || name,
                 // badges now append their index to the name
                 normalisedName: (definition.name || name).replace(/((?:ad|fo|sp)badge).*/, '$1'),
-                types: types ? map((isArray(types) ? types : [types]), function (type) {
+                types: types ? _.map((_.isArray(types) ? types : [types]), function (type) {
                     return ' ad-slot--' + type;
                 }).join('') : '',
-                sizeMappings: map(pairs(definition.sizeMappings), function (size) {
+                sizeMappings: _.map(_.pairs(definition.sizeMappings), function (size) {
                     return ' data-' + size[0] + '="' + size[1] + '"';
                 }).join('')
             })

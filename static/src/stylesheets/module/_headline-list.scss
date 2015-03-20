@@ -60,6 +60,11 @@
     .inline-icon {
         fill: colour(neutral-2);
     }
+    
+    .inline-video-icon svg {
+        width: 1.2em;
+        height: .75em;
+    }
 
     &:visited {
         .headline-list__body,
