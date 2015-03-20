@@ -40,7 +40,7 @@ define([
         arrowdownicon: arrowdownicon,
         logoguardian: logoguardian,
         logosoulmates: logosoulmates,
-        closeCentral: closeCentral,        
+        closeCentral: closeCentral        
     };
 
     return function (name, classes, title) {
