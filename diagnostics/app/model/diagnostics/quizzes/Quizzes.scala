@@ -9,42 +9,62 @@ import play.api.Logger
 import shade.memcached.{Configuration => MemcachedConf, Codec, Memcached}
 import org.joda.time.DateTime
 import org.json4s.{DefaultFormats, Extraction}
+import org.json4s.native.Serialization
+import org.json4s._
 
 import scala.concurrent.Future
+import scala.concurrent.duration.Duration
 
 object Quizzes extends ExecutionContexts {
-  implicit val formats = new DefaultFormats {
+
+  implicit val json4sFormats = new DefaultFormats {
     override def dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
   } ++ org.json4s.ext.JodaTimeSerializers.all
 
+  implicit val memcacheDCodec: Codec[QuizAggregate] = new Codec[QuizAggregate] {
+
+    override def serialize(value: QuizAggregate): Array[Byte] = Serialization.write(value).getBytes("UTF-8")
+
+    override def deserialize(data: Array[Byte]): QuizAggregate = parse(new String(data, "UTF-8")).extract[QuizAggregate]
+
+  }
 
   lazy val host = Configuration.memcached.host.head
   lazy val memcached = Memcached(MemcachedConf(host), memcachedExecutionContext)
 
-//  def update(json: String) = {
-//    val quizUpdate = parse(json).extract[QuizUpdate]
-//    val oldStats = results(quizUpdate.quizId)
-//
-//    val x = for {
-//      stat <- oldStats
-//    } yield {
-//      addLatest(stat, quizUpdate)
-//    }
-//    memcached.set[QuizUpdate](quizUpdate.quizId, quizUpdate, )
-//  }
+  def update(json: String) = {
+    val quizUpdate = parse(json).extract[QuizUpdate]
+    for {
+      stat <- getResults(quizUpdate.quizId)
+      x = addLatest(stat, quizUpdate)
+      _ <- memcached.set[QuizAggregate](quizUpdate.quizId, x, Duration.Inf)
+    } yield (())
+  }
 
-  private def addLatest(agg: QuizAggregate, upd: QuizUpdate) = {
+  def results(quizId: String): Future[String] = {
+    getResults(quizId).map(x => Serialization.write(x))
+  }
+
+  def getResults(quizId: String): Future[QuizAggregate] = {
+    memcached.get[QuizAggregate](quizId).recover {
+      case e: Exception =>
+        Logger.error(e.getMessage)
+        None
+    }.map(_.getOrElse(QuizAggregate(quizId, Nil, 0)))
+  }
+
+  def addLatest(agg: QuizAggregate, upd: QuizUpdate) = {
     QuizAggregate(agg.quizId, addResultsToList(agg.results, upd.results), agg.timeTaken + upd.timeTaken)
   }
 
   def addResultsToList(aggList: List[List[Int]], newVals: List[Int]) = {
-    val extendedAgg = aggList.toStream ++ Stream.continually(Nil)
+    val extendedAgg = (aggList.toStream ++ Stream.continually(Nil)).take(40) // max 40 questions
     extendedAgg.zip(newVals).toList.map{ x => incrementByIndex(x._1, x._2) }
   }
 
   def incrementByIndex(a: List[Int], b: Int): List[Int] = {
-    // a mght be too short
     (a, b) match {
+      case (list, n) if n > 5 => list // prevent people adding more than 5 responses
       case (Nil, 0) => List(1)
       case (Nil, n) => List.fill(n)(0) ++ List(1)
       case (x::xs, 0) => x + 1 :: xs
@@ -52,30 +72,14 @@ object Quizzes extends ExecutionContexts {
     }
   }
 
-//  def results(quizId: String): Future[QuizAggregate] = {
-//    memcached.get[QuizAggregate](quizId).recover {
-//      case e: Exception =>
-//        Logger.error(e.getMessage)
-//        None
-//    }
-//  }.map(_.getOrElse(QuizAggregate(quizId, Nil, 0)))
-}
+  case class QuizUpdate (
+    quizId: String,
+    results: List[Int],
+    timeTaken: Long)
 
-case class QuizUpdate (
-  quizId: String,
-  results: List[Int],
-  timeTaken: Long)
-{
-//  def toJson = Extraction.decompose(this)
-}
+  case class QuizAggregate (
+    quizId: String,
+    results: List[List[Int]],
+    timeTaken: Long)
 
-case class QuizAggregate (
-  quizId: String,
-  results: List[List[Int]],
-  timeTaken: Long)
-{
-//  def toJson = Extraction.decompose(this)
-  def isCorrect(q: Int) = {
-    results(q) == 1
-  }
 }
