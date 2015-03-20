@@ -28,38 +28,6 @@
                         <li id="loans-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="loans"><a href="#loans">Loans</a></li>
                     </ol>
                     <div class="tabs__content">
-                        <div class="tabs__pane mortgages" id="mortgages" role="tabpanel" aria-labelledby="mortgages-tab">
-                            <h4 class="commercial__headline">Featured offers on fixed rate mortgages</h4>
-                            <table class="table--commercial">
-                                <thead class="table--commercial__head">
-                                    <tr class="table--commercial__row">
-                                        <th class="table--commercial__cell" scope="col">Name</th>
-                                        <th class="table--commercial__cell" scope="col">Initial&nbsp;rate</th>
-                                        <th class="table--commercial__cell hide-cell-on-mobile" scope="col">Scheme type</th>
-                                        <th class="table--commercial__cell hide-cell-on-mobile" scope="col">Overall cost for comparison (APR %)</th>
-                                        <th class="table--commercial__cell"></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table--commercial__body">
-                                 @bestBuys.mortgages.take(3).map { mortgage =>
-                                    <tr class="table--commercial__row">
-                                        <th class="table--commercial__cell" scope="row"><a href="@clickMacro@mortgage.detailsUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@mortgage.lender">@mortgage.lender</a></th>
-                                        <td class="table--commercial__cell">@mortgage.rate</td>
-                                        <td class="table--commercial__cell hide-cell-on-mobile">@mortgage.description</td>
-                                        <td class="table--commercial__cell hide-cell-on-mobile">@mortgage.overallCost%</td>
-                                        <td class="table--commercial__cell"><a href="@clickMacro@mortgage.detailsUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@mortgage.lender-more">More <span class="u-h">about @mortgage.lender's offer</span></a></td>
-                                    </tr>
-                                }
-                                </tbody>
-                            </table>
-                            <a class="lineitem__cta button button--primary button--small" href="@{clickMacro}http://guardian.lcplc-online.co.uk/">
-                                Get free mortgage advice@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
-                            </a>
-                            <a class="lineitem__cta button button--tertiary button--small" href="@{clickMacro}/money/financial-tools-calculators-mortgage-debt-consolidation-loan-repayment-savings">
-                                Tools and calculators@fragments.inlineSvg("arrow-right", "icon", List("i-right", "i-arrow-black"))
-                            </a>
-                            <p class="lineitem__meta">Data provided by London &amp; Country Mortgages Ltd</p>
-                        </div>
                         <div class="tabs__pane current-accounts modern-hidden" id="current-accounts" role="tabpanel" aria-labelledby="current-accounts-tab">
                             <h4 class="commercial__headline">Looking after your day-to-day finances</h4>
                             <table class="table--commercial">
