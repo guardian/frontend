@@ -27,7 +27,11 @@
         <a class="social-signin__action social-signin__action--gplus"
             data-link-name="Register/Sign in with Google" data-test-id="google-sign-in"
             href="@if(confirm) {
-                @idUrlBuilder.buildWebappUrl("/google/confirm", idRequest)
+                @if(IdentitySocialOAuthSwitch.isSwitchedOn) {
+                    @idUrlBuilder.buildOAuthUrl("/google/confirm", idRequest)
+                } else {
+                    @idUrlBuilder.buildWebappUrl("/google/confirm", idRequest)
+                }
             } else {
                 @if(IdentitySocialOAuthSwitch.isSwitchedOn) {
                     @idUrlBuilder.buildOAuthUrl("/google/signin", idRequest)
