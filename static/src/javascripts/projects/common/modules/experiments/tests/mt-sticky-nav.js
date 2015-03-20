@@ -26,55 +26,58 @@ define([
             return config.page.edition === 'US';
         };
 
-        function updatePosition(stickyNavOffsetTop) {
+        function updatePosition($stickyNavigation, $stickyTopAd, stickyTopAdHeight, $header, $bannnerMobile) {
             var fixedNavTop, css, adCss,
-                $stickyNavWrapper = $('.sticky-nav-mt-test'),
-                $stickyNavHeader = $('.sticky-nav-mt-test .gs-container.l-header__inner'),
-                $stickyNavigation = $('.sticky-nav-mt-test .navigation'),
-                $stickyTopAd = $('.sticky-nav-mt-test .top-banner-ad-container'),
-                $belowNav = $('.top-banner-below-nav-mt-test');
+                $belowNav = $('.top-banner-below-nav-mt-test'),
+                totalNavOffset = $stickyNavigation[0].offsetTop + $header[0].offsetTop;
 
-            fixedNavTop = stickyNavOffsetTop - window.scrollY;
-            console.log(stickyNavOffsetTop, window.scrollY, fixedNavTop);
-            if (fixedNavTop > 0) {
+           // fixedNavTop = stickyNavOffsetTop - window.scrollY;
+            console.log('window.scrollY: ' + window.scrollY, 'stickyTopAdHeight: ' + stickyTopAdHeight, '$stickyNavigationOffset: ' + (totalNavOffset - window.scrollY));
+
+            $stickyTopAd.css({
+                position:  'fixed',
+                top:       0,
+                width:     '100%',
+                'z-index': '1001'
+            });
+            $header.css('margin-top', stickyTopAdHeight);
+
+            if ((totalNavOffset - window.scrollY) <= stickyTopAdHeight) {
                 $stickyNavigation.css({
                     position:  'fixed',
-                    top:       fixedNavTop,
+                    top:       stickyTopAdHeight,
                     width:     '100%',
                     'z-index': '1001'
                 });
+                $bannnerMobile.css('margin-top', $stickyNavigation.dim().height);
+            }
+            else {
+                $stickyNavigation.css({
+                    position:  null,
+                    top:       null
+                });
+                //$bannnerMobile.css('margin-top', 0);
+            }
+
+            if (window.scrollY > 500) {
                 $stickyTopAd.css({
-                    position:  'fixed',
-                    top:       0,
-                    width:     '100%',
-                    'z-index': '1001'
+                    position:  'absolute',
+                    top:       500
                 });
-                $belowNav.css('margin-top', '291px');
+                $stickyNavigation.css({
+                    position:  'absolute',
+                    top:       500
+                });
+                //$bannnerMobile.css('margin-top', 0);
+
+                if (window.scrollY >= (500 + stickyTopAdHeight)) {
+                    $stickyNavigation.css({
+                        position:  'fixed',
+                        top:       0
+                    });
+                   // $bannnerMobile.css('margin-top', $stickyNavigation.dim().height);
+                }
             }
-
-            //fixedNavTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height);
-
-            // have we scrolled past the nav
-            /*if (window.scrollY >= 700) {
-                // make sure the element stays within its parent
-
-                adCss = {
-                    position: null,
-                    top:      null
-                };
-                $stickyNavAd.css(adCss);
-            } else {
-                css = {
-                    position:  'fixed',
-                    top:       0,
-                    width:     '100%',
-                    'z-index': '1001',
-                    'margin-bottom': '291px'
-                };
-                $belowNav.css('margin-top', '291px');
-            }
-
-            $stickyNav.css(css)*/
         }
 
         this.variants = [
@@ -83,10 +86,13 @@ define([
                 test: function () {
                     var $stickyNavigation = $('.sticky-nav-mt-test .navigation'),
                         $stickyTopAd = $('.sticky-nav-mt-test .top-banner-ad-container'),
-                        stickyNavOffsetTop = $stickyNavigation[0].offsetTop + $stickyTopAd.dim().height;
+                        $header = $('.sticky-nav-mt-test .l-header'),
+                        $bannnerMobile = $('.top-banner-ad-container--mobile'),
+                        stickyTopAdHeight = $stickyTopAd.dim().height,
+                        stickyNavOffsetTop = $stickyNavigation[0].offsetTop + stickyTopAdHeight;
 
                     mediator.on('window:scroll', throttle(function() {
-                        updatePosition(stickyNavOffsetTop)
+                        updatePosition($stickyNavigation, $stickyTopAd, stickyTopAdHeight, $header, $bannnerMobile)
                     }, 10));
                 }
             }
