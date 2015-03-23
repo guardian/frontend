@@ -47,6 +47,34 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
     }
   }
 
+  feature("Careers migration") {
+    scenario("Show careers maintenance page for front") {
+      Switches.CareersMaintenanceSwitch.switchOn()
+      goTo("/careers") { browser =>
+        import browser._
+        findFirst("[itemprop=headline]").getText should include ("Guardian Careers")
+        findFirst("title").getText should include ("maintenance")
+      }
+    }
+
+    scenario("Show careers maintenance page for other pages in careers section") {
+      Switches.CareersMaintenanceSwitch.switchOn()
+      goTo("/careers/foo") { browser =>
+        import browser._
+        findFirst("[itemprop=headline]").getText should include ("Guardian Careers")
+        findFirst("title").getText should include ("maintenance")
+      }
+    }
+
+    scenario("not show careers maintenance page for other pages") {
+      Switches.CareersMaintenanceSwitch.switchOn()
+      goTo("/sport/cycling") { browser =>
+        import browser._
+        findFirst("h1").getText should include ("Cycling")
+      }
+    }
+  }
+
   feature("Tag Pages Football Nav") {
 
     scenario("Pagination") {
