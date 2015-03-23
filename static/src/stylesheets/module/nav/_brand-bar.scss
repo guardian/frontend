@@ -274,9 +274,7 @@
     margin-left: $gs-gutter/5;
     display: none;
 
-    .brand-bar__item--profile & {
-        @include mq(mobileLandscape) {
-            display: inline-block;
-        }
+    @include mq(tablet) {
+        display: inline-block;
     }
 }
