@@ -21,7 +21,7 @@ define([
         };
 
         var $register = $('.js-register'),
-            $registerText = $('.control__info', $register),
+            $registerText = $('.js-control-info', $register),
             $registerLink = $('a', $register),
             // Common mutations
             show = function () {
