@@ -16,19 +16,40 @@ to apply any necessary changes to non-shared code there too.
         <div class="gs-container l-header__inner">
             <div class="l-header-pre u-cf">
                 <div class="brand-bar">
+                    <div class="u-h brand-bar__item brand-bar__item--profile
+                                brand-bar__item--has-control popup-container has-popup
+                                js-register">
+                        <a href="@Configuration.id.url/register"
+                           data-link-name="Register link"
+                           class="brand-bar__item--action">
+                            @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                            <span class="control__info js-control-info">register</span>
+                        </a>
+                        <span class="u-h brand-bar__item__badge">free</span>
+                    </div>
                     @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                        <div class="brand-bar__item brand-bar__item--profile popup-container has-popup brand-bar__item--has-control js-profile-nav" data-component="identity-profile">
-                            <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="popup--profile"
-                               class="brand-bar__item--action popup__toggle" data-test-id="sign-in-link"
+                        <div class="brand-bar__item brand-bar__item--profile popup-container
+                                    has-popup brand-bar__item--has-control js-profile-nav"
+                             data-component="identity-profile">
+                            <a href="@Configuration.id.url/signin"
+                               data-link-name="User profile"
+                               data-toggle="popup--profile"
+                               class="brand-bar__item--action popup__toggle"
+                               data-test-id="sign-in-link"
                                aria-haspopup="true">
                                 @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                                <span class="js-profile-info control__info" data-test-id="sign-in-name">sign in</span>
+                                <span class="js-profile-info control__info"
+                                      data-test-id="sign-in-name">sign in</span>
                             </a>
                             <div class="js-profile-popup"></div>
                             <div class="js-popup-signed-out popup popup--signed-out u-h">
-                                <a class="popup--signed-out__link" href="@Configuration.id.url/signin" data-link-name="Signed out link"></a>
-                                You are signed out of the Guardian. <span class="popup--signed-out__highlight">Sign In</span>
-                                <button class="js-popup-toggle u-button-reset popup__toggle" data-link-name="Signed out link | Close">
+                                <a class="popup--signed-out__link"
+                                   href="@Configuration.id.url/signin"
+                                   data-link-name="Signed out link"></a>
+                                You are signed out of the Guardian.
+                                <span class="popup--signed-out__highlight">Sign In</span>
+                                <button class="js-popup-toggle u-button-reset popup__toggle"
+                                        data-link-name="Signed out link | Close">
                                     @fragments.inlineSvg("cross", "icon", Seq("popup__toggle-icon"))
                                 </button>
                             </div>
