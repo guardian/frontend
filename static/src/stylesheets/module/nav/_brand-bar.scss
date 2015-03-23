@@ -107,6 +107,13 @@
     color: colour(guardian-brand);
     padding: $gs-baseline/3 $gs-gutter/3;
     margin-left: $gs-gutter/5;
+    display: none;
+
+    .brand-bar__item--profile & {
+        @include mq(mobileLandscape) {
+            display: inline-block;
+        }
+    }
 }
 
 .brand-bar__item--right {
