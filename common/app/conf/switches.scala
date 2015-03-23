@@ -445,6 +445,11 @@ object Switches {
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
     "If switched on, any new registrations with emails from ae blacklisted domin will be blocked",
     safeState = On, sellByDate = never)
+
+  val QuizScoresService = Switch("Feature", "quiz-scores-service",
+    "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 16))
+
   // A/B Tests
 
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",

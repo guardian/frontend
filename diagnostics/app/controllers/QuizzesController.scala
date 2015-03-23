@@ -1,33 +1,37 @@
 package controllers
 
-import java.net.URLEncoder
-
 import common._
-import model.diagnostics.abtests.AbTests
-import model.diagnostics.analytics.Analytics
-import model.diagnostics.css.Css
-import model.diagnostics.javascript.JavaScript
+import conf.Switches
 import model.diagnostics.quizzes.Quizzes
-import model.{NoCache, TinyResponse}
+import model.{Cached, NoCache}
 import play.api.mvc.{Content => _, _}
 
 import scala.concurrent.ExecutionContext.Implicits
+import scala.concurrent.Future
 
 object QuizzesController extends Controller with Logging {
 
   implicit val ec = Implicits.global
 
   def results(quizId: String) = Action.async { implicit request =>
-    Quizzes.results(quizId).map {
-      json =>
-        NoCache(Ok(json))
+    if (Switches.QuizScoresService.isSwitchedOn) {
+      Quizzes.results(quizId).map {
+        json =>
+          Cached(600)(Ok(json))
+      }
+    } else {
+      Future.successful(Cached(3600)(NotFound("")))
     }
   }
 
   def update() = Action.async(parse.text) { implicit request =>
-    Quizzes.update(request.body).map {
-      _ =>
-        NoCache(Ok(""))
+    if (Switches.QuizScoresService.isSwitchedOn) {
+      Quizzes.update(request.body).map {
+        _ =>
+          NoCache(Ok(""))
+      }
+    } else {
+      Future.successful(Cached(3600)(NotFound("")))
     }
   }
 

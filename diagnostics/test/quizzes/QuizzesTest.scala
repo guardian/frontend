@@ -1,10 +1,9 @@
 package quizzes
 
-import model.diagnostics.javascript.Metric
 import model.diagnostics.quizzes.Quizzes
-import org.scalatest.{BeforeAndAfterEach, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers}
 
-class QuizzesTest extends FlatSpec with Matchers with BeforeAndAfterEach {
+class QuizzesTest extends FlatSpec with Matchers {
 
   "question Aggregator" should "add unseen buckets in the first place" in {
     Quizzes.incrementByIndex(Nil, 0) should be(List(1))

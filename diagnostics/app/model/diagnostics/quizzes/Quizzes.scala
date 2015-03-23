@@ -4,13 +4,11 @@ import java.text.SimpleDateFormat
 
 import common.ExecutionContexts
 import conf.Configuration
+import org.json4s.{DefaultFormats, _}
 import org.json4s.native.JsonMethods._
-import play.api.Logger
-import shade.memcached.{Configuration => MemcachedConf, Codec, Memcached}
-import org.joda.time.DateTime
-import org.json4s.{DefaultFormats, Extraction}
 import org.json4s.native.Serialization
-import org.json4s._
+import play.api.Logger
+import shade.memcached.{Codec, Configuration => MemcachedConf, Memcached}
 
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration
