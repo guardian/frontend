@@ -31,9 +31,6 @@ define([
                 $belowNav = $('.top-banner-below-nav-mt-test'),
                 totalNavOffset = $stickyNavigation[0].offsetTop + $header[0].offsetTop;
 
-           // fixedNavTop = stickyNavOffsetTop - window.scrollY;
-            console.log('window.scrollY: ' + window.scrollY, 'stickyTopAdHeight: ' + stickyTopAdHeight, '$stickyNavigationOffset: ' + (totalNavOffset - window.scrollY), 'totalNavOffset: ' + totalNavOffset, 'navOffset: ' + $stickyNavigation[0].offsetTop, 'headerOffset: ' + $header[0].offsetTop);
-
             $stickyTopAd.css({
                 position:  'fixed',
                 top:       0,
@@ -50,14 +47,12 @@ define([
                         width:     '100%',
                         'z-index': '1001'
                     });
-                   // $bannnerMobile.css('margin-top', $stickyNavigation.dim().height);
                 }
                 else {
                     $stickyNavigation.css({
                         position:  null,
                         top:       null
                     });
-                   // $bannnerMobile.css('margin-top', 0);
                 }
             }
             else {
@@ -65,21 +60,16 @@ define([
                     position:  'absolute',
                     top:       500
                 });
-                if ($stickyNavigation.css('top') > 0) {
-                    $stickyNavigation.css({
-                        position:  'fixed',
-                        top:       stickyTopAdHeight - (window.scrollY - 500)
-                    });
-                }
+                $stickyNavigation.css({
+                    position:  'fixed',
+                    top:       stickyTopAdHeight - (window.scrollY - 500)
+                });
 
-                //$bannnerMobile.css('margin-top', 0);
-
-                if (window.scrollY > 500 + stickyTopAdHeight) {
+                if (window.scrollY > (500 + stickyTopAdHeight)) {
                     $stickyNavigation.css({
                         position:  'fixed',
                         top:       0
                     });
-                    // $bannnerMobile.css('margin-top', $stickyNavigation.dim().height);
                 }
             }
         }
