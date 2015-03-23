@@ -268,6 +268,7 @@ define([
             this.front = opts.group ? opts.group.front : null;
 
             this.props = asObservableProps(capiProps);
+            this.props.webPublicationDate.extend({ notify: 'always' });
 
             this.fields = asObservableProps(capiFields);
 

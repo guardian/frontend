@@ -451,6 +451,11 @@ object Switches {
     "If switched on, any user registrations from a known tor esit node will be logged",
     safeState = On, sellByDate = never)
 
+  val ABAcrossTheCountry = Switch("A/B Tests", "ab-across-the-country",
+    "Tests container placement on the US front",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 19)
+  )
+
   val ABIdentityBenefits = Switch("A/B Tests", "ab-identity-benefits",
     "Switch for the Identity benefits A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
