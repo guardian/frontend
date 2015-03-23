@@ -49,6 +49,8 @@ object ContainerThumbnails {
         Some(Rectangle(x + 1 + third, y + 1, third * 2, height - 2))
       case cards.ThreeQuartersRight =>
         Some(Rectangle(x + 1, y + 1, third * 2, height - 2))
+      case cards.ThreeQuartersTall =>
+        Some(Rectangle(x + 1, y + 1, width - 2, height * .8))
       case cards.Standard  =>
         Some(Rectangle(x + 1, y + 1, width - 2, height * .4))
       case cards.Half =>
