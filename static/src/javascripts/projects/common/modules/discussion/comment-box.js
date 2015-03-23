@@ -295,7 +295,7 @@ CommentBox.prototype.fail = function(xhr) {
     } else if (this.errorMessages[response.errorCode]) {
         this.error(response.errorCode);
     } else {
-        this.error('API_ERROR', this.errorMessages['API_ERROR'] + xhr.status);// templating would be ideal here
+        this.error('API_ERROR', this.errorMessages.API_ERROR + xhr.status);// templating would be ideal here
     }
 };
 
