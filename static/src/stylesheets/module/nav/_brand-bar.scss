@@ -260,6 +260,12 @@
     }
 }
 
+.brand-bar__item--register {
+    @include mq($until: mobileLandscape) {
+        display: none;
+    }
+}
+
 .brand-bar__item__badge {
     background: colour(news-accent);
     // Same as header background
