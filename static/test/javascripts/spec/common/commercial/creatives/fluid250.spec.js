@@ -40,7 +40,11 @@ define([
                 videoPositionH: 'left',
                 videoHorizSpace: 10,
                 videoPositionV: 'top',
-                videoURL: 'exampleVideoUrl'
+                videoURL: 'exampleVideoUrl',
+                backgroundPosition: 'left top',
+                layerOneBGPosition: 'left top',
+                layerTwoBGPosition: 'left top',
+                layerThreeBGPosition: 'left top'
             }).create();
             expect(qwery('.fluid250_video--vert-pos-top', '.ad-slot').length).toBe(1);
             expect(qwery('.fluid250_video--horiz-pos-left', '.ad-slot').length).toBe(1);
