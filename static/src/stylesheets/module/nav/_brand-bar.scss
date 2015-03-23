@@ -101,8 +101,7 @@
 }
 
 .brand-bar__item__badge {
-    // TODO: Palette?
-    background: lighten(colour(guardian-brand), 43%);
+    background: colour(news-accent);
     // Same as header background
     color: colour(guardian-brand);
     padding: 1px $gs-gutter/5;
