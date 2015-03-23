@@ -336,11 +336,6 @@ object Switches {
     safeState = Off, new LocalDate(2015, 3, 24)
   )
 
-  val Print = Switch("Print analytics", "print",
-    "decide by now whether enough people are printing stuff to care whether they get a good experience",
-    safeState = Off, new LocalDate(2015, 3, 27)
-  )
-
   // Features
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
