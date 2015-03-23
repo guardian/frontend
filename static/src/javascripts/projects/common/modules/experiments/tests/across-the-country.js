@@ -14,8 +14,8 @@ define([
         this.expiry = '2015-04-19';
         this.author = 'Grant Klopper';
         this.description = 'Checking effect of moving "across the country" container higher up the US front';
-        this.audience = 1.0;
-        this.audienceOffset = 0;
+        this.audience = 0.6;
+        this.audienceOffset = 0.4;
         this.successMeasure = '';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
