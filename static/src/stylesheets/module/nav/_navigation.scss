@@ -870,12 +870,14 @@ $burger-width: 16px;
 $signedout-arrow-size: $gs-gutter / 2;
 $signedout-padding: $gs-gutter / 3;
 
-.popup.popup--signed-out {
+.popup--signed-out {
     left: 0 !important;
     width: gs-span(3);
-    padding: $signedout-padding $gs-gutter $signedout-padding $signedout-padding;
+    padding: $signedout-padding;
     color: colour(neutral-1);
     line-height: 1.4;
+    // Clear floated child (toggle)
+    @include clearfix;
 
     &:before {
         content: '';
@@ -891,6 +893,18 @@ $signedout-padding: $gs-gutter / 3;
         border-bottom: $signedout-arrow-size solid colour(neutral-8);
         top: -10px;
     }
+
+    .popup__toggle {
+        float: right;
+        // Override .u-button-reset
+        width: auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    .popup__toggle__icon {
+        fill: colour(neutral-2);
+    }
 }
 
 .popup--signed-out__link {
@@ -904,12 +918,4 @@ $signedout-padding: $gs-gutter / 3;
 .popup--signed-out__highlight {
     color: colour(news-main-1);
     text-decoration: underline;
-}
-
-.popup__toggle-icon {
-    position: absolute;
-    top: $signedout-padding;
-    right: $signedout-padding;
-    z-index: 10;
-    fill: colour(neutral-2);
 }
