@@ -31,7 +31,7 @@
                         @fragments.standfirst(article)
 
                         <div class="content__updated-container content__updated-container--liveblog">
-                            @if(article.isLive) {<span class="blog__live live-pulse-icon">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
+                            @if(article.isLive) {<span class="blog__live live-pulse-icon">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.lastModified" data-relativeformat="med"></time>
                         </div>
                     </div>
                 </div>
