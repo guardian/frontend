@@ -204,7 +204,7 @@
 }
 .ad-slot--container-inline {
     .ad-slot__content {
-        margin: auto;
+        margin: 0 auto;
     }
     @include mq(tablet) {
         position: relative;
