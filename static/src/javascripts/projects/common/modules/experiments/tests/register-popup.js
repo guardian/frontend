@@ -38,12 +38,11 @@ define([
             becomeAMember = function () {
                 $registerText.text('become a member');
                 applyMembershipLink();
+            },
+            onHover = function (toggleFn) {
+                bean.on($register[0], 'mouseenter', toggleFn);
+                bean.on($register[0], 'mouseleave', toggleFn);
             };
-
-        var onHover = function (toggleFn) {
-            bean.on($register[0], 'mouseenter', toggleFn);
-            bean.on($register[0], 'mouseleave', toggleFn);
-        };
 
         this.variants = [
             {
