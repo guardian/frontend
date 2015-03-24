@@ -488,19 +488,19 @@ case object QuarterThreeQuarter extends Slice {
  * |##########################|########|
  * |##########################|########|
  * |##########################|        |
- * |##########################|--------|
- * |##########################|########|
- * |##########################|########|
+ * |##########################|        |
  * |##########################|        |
  * |##########################|--------|
- * |                          |########|
- * |                          |########|
+ * |##########################|########|
+ * |##########################|########|
+ * |                          |        |
+ * |                          |        |
  * |                          |        |
  * `--------------------------'--------'
  */
-case object ThreeQuarterTallQuarter3 extends Slice {
+case object ThreeQuarterTallQuarter2 extends Slice {
   val layout = SliceLayout(
-    cssClassName = "qqq-q3",
+    cssClassName = "qqq-q2",
     columns = Seq(
       SingleItem(
         colSpan = 3,
@@ -512,10 +512,48 @@ case object ThreeQuarterTallQuarter3 extends Slice {
       Rows(
         colSpan = 1,
         columns = 1,
-        rows = 3,
+        rows = 2,
         ItemClasses(
           mobile = ListItem,
           tablet = Standard
+        )
+      )
+    )
+  )
+}
+
+/* .__________________________.________.
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|--------|
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|--------|
+ * |##########################|        |
+ * |##########################|        |
+ * |                          |--------|
+ * |                          |        |
+ * |                          |        |
+ * `--------------------------'--------'
+ */
+case object ThreeQuarterTallQl4 extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "qqq-ql4",
+    columns = Seq(
+      SingleItem(
+        colSpan = 3,
+        ItemClasses(
+          mobile = Standard,
+          tablet = ThreeQuartersTall
+        )
+      ),
+      Rows(
+        colSpan = 1,
+        columns = 1,
+        rows = 4,
+        ItemClasses(
+          mobile = ListItem,
+          tablet = ListItem
         )
       )
     )
