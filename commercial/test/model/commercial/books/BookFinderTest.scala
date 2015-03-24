@@ -1,6 +1,7 @@
 package model.commercial.books
 
 import org.scalatest.concurrent._
+import org.scalatest.time.{Millis, Span, Seconds}
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json.{JsNull, JsValue, Json}
 
@@ -8,6 +9,9 @@ import scala.collection.mutable
 import scala.concurrent.Future
 
 class BookFinderTest extends FlatSpec with Matchers with ScalaFutures {
+
+  private implicit val defaultPatience =
+    PatienceConfig(timeout = Span(2, Seconds), interval = Span(5, Millis))
 
   private case class TestCache(delegate: mutable.Map[String, JsValue]) extends BookDataCache {
 
