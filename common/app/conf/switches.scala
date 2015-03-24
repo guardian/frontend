@@ -451,6 +451,11 @@ object Switches {
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
     "If switched on, any new registrations with emails from ae blacklisted domin will be blocked",
     safeState = On, sellByDate = never)
+
+  val QuizScoresService = Switch("Feature", "quiz-scores-service",
+    "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 16))
+
   // A/B Tests
 
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
@@ -494,12 +499,17 @@ object Switches {
 
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
     "Switch for the UK Network Front heatmap test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 24)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
   val ABSignedOut = Switch("A/B Tests", "ab-signed-out",
     "Switch for the Signed Out messaging test.",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
+  )
+
+  val ABRegister = Switch("A/B Tests", "ab-register",
+    "Switch for the Register A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 1)
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
