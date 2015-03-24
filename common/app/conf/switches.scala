@@ -462,11 +462,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 4, 19)
   )
 
-  val ABIdentityBenefits = Switch("A/B Tests", "ab-identity-benefits",
-    "Switch for the Identity benefits A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
-  )
-
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
