@@ -68,7 +68,7 @@
         }
 
         @include mq(leftCol) {
-            padding-left: 15px;
+            padding-left: $gs-gutter * .75;
         }
     }
 
