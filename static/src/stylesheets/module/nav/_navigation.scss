@@ -912,7 +912,7 @@ $popup-text-padding: $gs-gutter / 3;
     padding: $popup-text-padding;
 }
 
-.popup--signed-out__link {
+.popup--text--signed-out__link {
     position: absolute;
     top: 0;
     right: 0;
@@ -920,7 +920,7 @@ $popup-text-padding: $gs-gutter / 3;
     left: 0;
 }
 
-.popup--signed-out__highlight {
+.popup--text--signed-out__highlight {
     color: colour(news-main-1);
     text-decoration: underline;
 }
