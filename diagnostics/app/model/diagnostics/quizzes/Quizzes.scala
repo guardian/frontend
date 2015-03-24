@@ -8,6 +8,7 @@ import org.json4s.{DefaultFormats, _}
 import org.json4s.native.JsonMethods._
 import org.json4s.native.Serialization
 import play.api.Logger
+import play.api.libs.json.{Json, JsValue}
 import shade.memcached.{Codec, Configuration => MemcachedConf, Memcached}
 
 import scala.concurrent.Future
@@ -30,8 +31,8 @@ object Quizzes extends ExecutionContexts {
   lazy val host = Configuration.memcached.host.head
   lazy val memcached = Memcached(MemcachedConf(host), memcachedExecutionContext)
 
-  def update(json: String) = {
-    val quizUpdate = parse(json).extract[QuizUpdate]
+  def update(json: JsValue) = {
+    val quizUpdate = parse(Json.stringify(json)).extract[QuizUpdate]
     for {
       stat <- getResults(quizUpdate.quizId)
       x = addLatest(stat, quizUpdate)
