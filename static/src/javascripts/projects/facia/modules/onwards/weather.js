@@ -23,6 +23,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
+    'common/modules/analytics/omniture',
     'common/modules/user-prefs',
     'facia/modules/onwards/search-tool'
 ], function (
@@ -36,6 +37,7 @@ define([
     detect,
     mediator,
     template,
+    omniture,
     userPrefs,
     SearchTool
     ) {
@@ -99,7 +101,7 @@ define([
                 return this.getWeatherData(config.page.weatherapiurl + '.json')
                     .then(function (response) {
                         this.fetchWeatherData(response);
-                        this.track(response.city);
+                        omniture.trackLinkImmediate(true, 'o', 'weather location set by fastly');
                     }.bind(this))
                     .fail(function (err, msg) {
                         raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
@@ -128,12 +130,6 @@ define([
         clearLocation: function () {
             userPrefs.remove(prefName);
             searchTool.setInputValue();
-        },
-
-        track: function (city) {
-            s.prop26 = city;
-            s.linkTrackVars = 'prop26';
-            s.tl(true, 'o', 'weather location set by fastly');
         },
 
         fetchForecastData: function (location) {

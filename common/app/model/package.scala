@@ -40,7 +40,9 @@ object `package` {
 
     val path = parts.mkString("/")
 
-    if (parts.size == 1) {
+    if (parts.isEmpty) {
+      Nil
+    } else if (parts.size == 1) {
       Seq(s"$path/$path")
     } else {
       val normalizedPath = parts.mkString("-")

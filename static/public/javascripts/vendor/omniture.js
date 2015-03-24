@@ -84,8 +84,8 @@ function s_doPlugins(s) {
     s.eVar10=s.getDaysSinceLastVisit('s_lv');
 
     /* New/Repeat Status */
-    s.prop16=s.getNewRepeat(365);
-    
+    s.prop16=s.getNewRepeat(30);
+
     // Previous Site section
 	s.prop71 = s.getPreviousValue(s.channel,"s_prev_ch");
 
@@ -276,7 +276,7 @@ s.getNewRepeat=new Function("d","cn",""
     +"=0){s.c_w(cn,ct+'-New',e);return'New';}sval=s.split(cval,'-');if(ct"
     +"-sval[0]<30*60*1000&&sval[1]=='New'){s.c_w(cn,ct+'-New',e);return'N"
     +"ew';}else{s.c_w(cn,ct+'-Repeat',e);return'Repeat';}");
-    
+
 /*
  * Plugin: getPreviousValue_v1.0 - return previous value of designated
  *   variable (requires split utility)

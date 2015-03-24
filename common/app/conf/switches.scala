@@ -287,8 +287,9 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
-  private def dateInFebruary(day: Int): Interval =
-    new Interval(new DateTime(2015, 2, day, 0, 0, DateTimeZone.UTC), Days.ONE)
+  val BookLookupSwitch = Switch("Commercial", "book-lookup",
+    "If this switch is on, book data will be looked up using a third-party service.",
+    safeState = Off, sellByDate = never)
 
   val AppleAdNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-network-front",
     "If this switch is on, Apple ads will appear on the network front during active periods.",
@@ -332,7 +333,7 @@ object Switches {
 
   val FeedbackLink = Switch("Monitoring", "tech-feedback",
     "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
-    safeState = Off, new LocalDate(2015, 3, 24)
+    safeState = Off, new LocalDate(2015, 4, 24)
   )
 
   // Features
@@ -347,6 +348,12 @@ object Switches {
   val HideInteractiveUi = Switch("Feature", "hide-interactive-ui",
     "If this is switched on interactives can be rendered without page furniture.",
     safeState = On, sellByDate = new LocalDate(2015, 3, 31)
+  )
+
+  val CareersMaintenanceSwitch = Switch("Feature", "careers-maintenance-switch",
+    "If this is switched on then we will display a maintenance message for anything with path /careers*.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 4, 10)
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
@@ -439,11 +446,21 @@ object Switches {
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
     "If switched on, any new registrations with emails from ae blacklisted domin will be blocked",
     safeState = On, sellByDate = never)
+
+  val QuizScoresService = Switch("Feature", "quiz-scores-service",
+    "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 16))
+
   // A/B Tests
 
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
     "If switched on, any user registrations from a known tor esit node will be logged",
     safeState = On, sellByDate = never)
+
+  val ABAcrossTheCountry = Switch("A/B Tests", "ab-across-the-country",
+    "Tests container placement on the US front",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 19)
+  )
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
@@ -455,14 +472,34 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 1)
   )
 
-  val ABChimney = Switch("A/B Tests", "ab-chimney",
-    "Switch for the home icon chimney test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 16)
+  val ABMtMaster = Switch("A/B Tests", "ab-mt-master",
+    "Switch for the Sticky mpu test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 11)
   )
 
-  val ABStickyMpu = Switch("A/B Tests", "ab-sticky-mpu",
-    "Switch for the Sticky mpu test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 9)
+  val ABMtTopBelowNav = Switch("A/B Tests", "ab-mt-top-below-nav",
+    "Top above nav ad placed below nav.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 17)
+  )
+
+  val ABMtTopBelowFirstContainer = Switch("A/B Tests", "ab-mt-top-below-first-container",
+    "Top above nav ad placed below first container.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 18)
+  )
+
+  val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
+    "Switch for the UK Network Front heatmap test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
+  )
+
+  val ABSignedOut = Switch("A/B Tests", "ab-signed-out",
+    "Switch for the Signed Out messaging test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
+  )
+
+  val ABRegister = Switch("A/B Tests", "ab-register",
+    "Switch for the Register A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 1)
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
@@ -497,11 +534,6 @@ object Switches {
   val MissingVideoEndcodingsJobSwitch = Switch("Feature", "check-for-missing-video-encodings",
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
      safeState = Off, sellByDate = never
-  )
-
-  val StaticSocialIconSwitch = Switch("Feature", "static-social-icon-mobile",
-    "If this switch is switched on then there will be a floating social icon on the bottom of pages on mobile",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 14)
   )
 
   // Facia

@@ -3,10 +3,10 @@
  Description: Wrapper around localStorage functionality
  */
 define([
-    'lodash/functions/once'
+    'common/utils/_'
 ], function (
-    once
-    ) {
+    _
+) {
 
     var w = window,
         Storage = function (type) {
@@ -17,7 +17,7 @@ define([
         w = window;
     };
 
-    Storage.prototype.isStorageAvailable = once(function () {
+    Storage.prototype.isStorageAvailable = _.once(function () {
         return this.isAvailable();
     });
 

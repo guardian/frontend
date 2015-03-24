@@ -80,8 +80,8 @@ class DfpDataHydrator extends Logging {
                   )
                 }.toSeq
               }
-              } getOrElse Nil
-            }
+            } getOrElse Nil
+          }
           val geoTargetsIncluded = geoTargets(_.getTargetedLocations)
           val geoTargetsExcluded = geoTargets(_.getExcludedLocations)
 
@@ -141,27 +141,47 @@ class DfpDataHydrator extends Logging {
     }
   }
 
-  def loadSpecialAdunits(rootName: String): Seq[(String, String)] =
-    dfpServiceRegistry.fold(Seq[(String, String)]()) { serviceRegistry =>
-      val statementBuilder = new StatementBuilder()
-        .where("status = :status")
-        .where("explicitlyTargeted = :targetting")
-        .withBindVariableValue("status", InventoryStatus._ACTIVE)
-        .withBindVariableValue("targetting", true)
+  private def loadDescendantAdunits(rootName: String,
+                                    stmtBuilder: StatementBuilder): Seq[GuAdUnit] = {
 
-      val dfpAdUnits = DfpApiWrapper.fetchAdUnits(serviceRegistry, statementBuilder)
-
-      val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
-        Option(adUnit.getParentPath) exists { path =>
-          (path.length == 1 && adUnit.getName == rootName) || (path.length > 1 && path(1).getName == rootName)
-        }
-      }
-
-      rootAndDescendantAdUnits.map { ad =>
-        val parentPathComponents: List[String] = ad.getParentPath.map(_.getName).toList.tail
-        (ad.getId, (parentPathComponents ::: ad.getName :: Nil).mkString("/"))
-      } sortBy (_._2)
+    def toGuAdUnit(dfpAdUnit: AdUnit): GuAdUnit = {
+      val parentPathComponents: List[String] = dfpAdUnit.getParentPath.map(_.getName).toList.tail
+      GuAdUnit(dfpAdUnit.getId, parentPathComponents :+ dfpAdUnit.getName)
     }
+
+    dfpServiceRegistry.map { serviceRegistry =>
+      val dfpAdUnits = DfpApiWrapper.fetchAdUnits(serviceRegistry, stmtBuilder)
+      dfpAdUnits filter { adUnit =>
+        Option(adUnit.getParentPath) exists { path =>
+          val isRoot = path.length == 1 && adUnit.getName == rootName
+          val isDescendant = path.length > 1 && path(1).getName == rootName
+          isRoot || isDescendant
+        }
+      } map toGuAdUnit sortBy (_.id)
+    } getOrElse Nil
+  }
+
+  def loadActiveAdUnits(rootName: String): Seq[GuAdUnit] = {
+
+    val statementBuilder = new StatementBuilder()
+      .where("status = :status")
+      .withBindVariableValue("status", InventoryStatus._ACTIVE)
+
+    loadDescendantAdunits(rootName, statementBuilder)
+  }
+
+  def loadSpecialAdunits(rootName: String): Seq[(String, String)] = {
+
+    val statementBuilder = new StatementBuilder()
+      .where("status = :status")
+      .where("explicitlyTargeted = :targetting")
+      .withBindVariableValue("status", InventoryStatus._ACTIVE)
+      .withBindVariableValue("targetting", true)
+
+    loadDescendantAdunits(rootName, statementBuilder) map { adUnit =>
+      (adUnit.id, adUnit.path.mkString("/"))
+    } sortBy (_._2)
+  }
 
   def loadAdUnitsForApproval(rootName: String): Seq[GuAdUnit] =
     dfpServiceRegistry.fold(Seq[GuAdUnit]()) { serviceRegistry =>

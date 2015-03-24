@@ -26,20 +26,19 @@ $control-size: 36px;
         max-width: 200px;
     }
 
-    @include mq(tablet) {
-        display: block;
-    }
-
     .brand-bar__item--right & {
         @include mq(tablet) {
             margin: 0;
         }
     }
 
-    .brand-bar__item--profile & {
-        @include mq(mobileLandscape) {
-            display: block;
-        }
+    // TODO: @extend .hide-on-mobile;
+    @include mq(tablet) {
+        display: block;
+    }
+
+    .l-header--is-slim & {
+        display: none;
     }
 }
 
@@ -59,6 +58,10 @@ $control-size: 36px;
     .brand-bar__item--right & {
         @include mq(tablet) {
             display: none;
+        }
+
+        .l-header--is-slim & {
+            display: block;
         }
     }
 }

@@ -1,10 +1,8 @@
 define([
-    'lodash/objects/isArray',
     'common/utils/_',
     'common/utils/detect',
     'common/utils/mediator'
 ], function (
-    isArray,
     _,
     detect,
     mediator
@@ -56,7 +54,7 @@ define([
                     .pairs()
                     .map(function (queryParts) {
                         var value = queryParts[1];
-                        if (isArray(value)) {
+                        if (_.isArray(value)) {
                             value = value.join(',');
                         }
                         return [queryParts[0], '=', value].join('');

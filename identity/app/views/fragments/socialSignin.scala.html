@@ -1,16 +1,19 @@
 @(cta: String, page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, confirm: Boolean = false)(implicit request: RequestHeader)
 
-@import conf.Switches._
-@import dev.HttpSwitch
+@import conf.Switches.IdentitySocialOAuthSwitch
 
 <ul class="social-signin">
     <li class="social-signin__item">
         <a class="social-signin__action social-signin__action--fb"
             data-link-name="Register/Sign in with Facebook" data-test-id="facebook-sign-in"
             href="@if(confirm) {
-                @idUrlBuilder.buildWebappUrl("/facebook/confirm", idRequest)
+                @if(IdentitySocialOAuthSwitch.isSwitchedOn) {
+                    @idUrlBuilder.buildOAuthUrl("/facebook/confirm", idRequest)
+                } else {
+                    @idUrlBuilder.buildWebappUrl("/facebook/confirm", idRequest)
+                }
             } else {
-                @if(HttpSwitch(IdentitySocialOAuthSwitch).isSwitchedOn) {
+                @if(IdentitySocialOAuthSwitch.isSwitchedOn) {
                     @idUrlBuilder.buildOAuthUrl("/facebook/signin", idRequest)
                 } else {
                     @idUrlBuilder.buildWebappUrl("/facebook/signin", idRequest)
@@ -24,9 +27,13 @@
         <a class="social-signin__action social-signin__action--gplus"
             data-link-name="Register/Sign in with Google" data-test-id="google-sign-in"
             href="@if(confirm) {
-                @idUrlBuilder.buildWebappUrl("/google/confirm", idRequest)
+                @if(IdentitySocialOAuthSwitch.isSwitchedOn) {
+                    @idUrlBuilder.buildOAuthUrl("/google/confirm", idRequest)
+                } else {
+                    @idUrlBuilder.buildWebappUrl("/google/confirm", idRequest)
+                }
             } else {
-                @if(HttpSwitch(IdentitySocialOAuthSwitch).isSwitchedOn) {
+                @if(IdentitySocialOAuthSwitch.isSwitchedOn) {
                     @idUrlBuilder.buildOAuthUrl("/google/signin", idRequest)
                 } else {
                     @idUrlBuilder.buildWebappUrl("/google/signin", idRequest)

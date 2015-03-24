@@ -29,7 +29,7 @@ define([
     config,
     deferToAnalytics,
     template,
-    Omniture,
+    omniture,
     Component,
     techOrder,
     events,
@@ -38,8 +38,6 @@ define([
     loadingTmpl,
     titlebarTmpl
     ) {
-
-    var omniture = new Omniture(window.s);
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;

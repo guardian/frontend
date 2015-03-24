@@ -50,10 +50,6 @@ module.exports = function(grunt, options) {
                 dest: options.staticTargetDir + 'stylesheets'
             }]
         },
-        pxCss: {
-            src: [options.staticTargetDir + 'stylesheets/global.css'],
-            dest: options.staticTargetDir + 'stylesheets/global.px.css'
-        },
         images: {
             files: [{
                 expand: true,

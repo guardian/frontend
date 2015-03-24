@@ -1,13 +1,13 @@
 define([
     'bean',
     'fastdom',
-    'lodash/functions/throttle',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config'
 ], function (
     bean,
     fastdom,
-    throttle,
+    _,
     $,
     config
 ) {
@@ -25,7 +25,7 @@ define([
             enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
 
-            searchLoader = throttle(function () {
+            searchLoader = _.throttle(function () {
                 self.load();
             });
 

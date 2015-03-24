@@ -201,6 +201,10 @@ Hence why a greater depth of selector specificity is needed.
         .fc-slice__popular-mpu {
             position: absolute;
             width: 320px;
+
+            .ad-slot {
+                min-height: 300px;
+            }
         }
     }
 

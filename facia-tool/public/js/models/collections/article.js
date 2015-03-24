@@ -268,6 +268,7 @@ define([
             this.front = opts.group ? opts.group.front : null;
 
             this.props = asObservableProps(capiProps);
+            this.props.webPublicationDate.extend({ notify: 'always' });
 
             this.fields = asObservableProps(capiFields);
 
@@ -804,9 +805,10 @@ define([
         function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
             if (imageSrc()) {
                 validateImageSrc(imageSrc(), opts)
-                    .done(function(width, height) {
-                        imageSrcWidth(width);
-                        imageSrcHeight(height);
+                    .done(function(img) {
+                        imageSrc(img.src);
+                        imageSrcWidth(img.width);
+                        imageSrcHeight(img.height);
                     })
                     .fail(function(err) {
                         undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);

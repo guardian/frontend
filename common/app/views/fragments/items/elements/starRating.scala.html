@@ -6,5 +6,7 @@
     <span itemprop="bestRating">5</span> stars
 </span>
 <div class="stars" role="presentation">
-    @List(1,2,3,4,5).map{ i =><i class="star__item @if(i <= rating){i-star-golden}else{i-star-gray} i"></i>}
+    @List(1,2,3,4,5).map{ i =>
+        @fragments.inlineSvg("star", "icon", List("star__item", if(i <= rating){ "star__item--golden" }else{ "star__item--grey" }))
+    }
 </div>

@@ -1,9 +1,10 @@
 package views.support
 
+import common.Logging
 import layout.WidthsByBreakpoint
 import model.{Content, MetaData, ImageContainer, ImageAsset}
 import conf.Switches.{ImageServerSwitch, PngResizingSwitch}
-import java.net.URI
+import java.net.{URISyntaxException, URI}
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
 import conf.Configuration
@@ -72,7 +73,7 @@ object SeoOptimisedContentImage extends Profile(width = Some(460))
 // Just degrade the image quality without adjusting the width/height
 object Naked extends Profile(None, None)
 
-object ImgSrc {
+object ImgSrc extends Logging {
 
   private val imageHost = Configuration.images.path
 
@@ -82,18 +83,24 @@ object ImgSrc {
   )
 
   def apply(url: String, imageType: ElementProfile): String = {
-    val uri = new URI(url.trim)
+    try {
+      val uri = new URI(url.trim)
 
-    val supportedImages = if(PngResizingSwitch.isSwitchedOn) Set(".jpg", ".jpeg", ".png") else Set(".jpg", ".jpeg")
+      val supportedImages = if(PngResizingSwitch.isSwitchedOn) Set(".jpg", ".jpeg", ".png") else Set(".jpg", ".jpeg")
 
-    val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
+      val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
-    hostPrefixMapping.get(uri.getHost)
-      .filter(_ => isSupportedImage)
-      .filter(_ => ImageServerSwitch.isSwitchedOn)
-      .map( pathPrefix =>
+      hostPrefixMapping.get(uri.getHost)
+        .filter(_ => isSupportedImage)
+        .filter(_ => ImageServerSwitch.isSwitchedOn)
+        .map( pathPrefix =>
         s"$imageHost/$pathPrefix${imageType.resizeString}${uri.getPath}"
-      ).getOrElse(url)
+        ).getOrElse(url)
+    } catch {
+      case error: URISyntaxException =>
+        log.error("Unable to decode image url", error)
+        url
+    }
   }
 
   // always, and I mean ALWAYS think carefully about the size image you use

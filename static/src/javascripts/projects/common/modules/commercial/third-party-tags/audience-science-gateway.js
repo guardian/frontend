@@ -1,15 +1,9 @@
 define([
-    'lodash/functions/once',
-    'lodash/objects/assign',
-    'lodash/objects/pairs',
     'common/utils/_',
     'common/utils/config',
     'common/utils/storage',
     'common/utils/url'
 ], function (
-    once,
-    assign,
-    pairs,
     _,
     config,
     storage,
@@ -31,7 +25,7 @@ define([
         init = function () {
             section = sectionPlacements[config.page.section] ? config.page.section : 'default';
         },
-        load = once(function () {
+        load = _.once(function () {
             if (config.switches.audienceScienceGateway) {
                 var placements = sectionPlacements[section],
                     query = urlUtils.constructQuery({
@@ -53,7 +47,7 @@ define([
             var segments = {},
                 storedSegments = storage.local.get(storageKey);
             if (config.switches.audienceScienceGateway && storedSegments) {
-                segments = _(pairs(storedSegments[section]))
+                segments = _(_.pairs(storedSegments[section]))
                     .filter(function (placement) {
                         return placement[1]['default'];
                     })
