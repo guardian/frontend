@@ -142,9 +142,14 @@ $weather-large-size: 60px;
     }
 
     .weather__toggle-icon {
-        width: 18px;
-        height: 8px;
+        display: inline-block;
         margin-bottom: $gs-baseline / 6;
+        fill: colour(neutral-1);
+
+        svg {
+            width: 18px;
+            height: 8px;
+        }
 
         .is-expanded & {
             @include transform(rotate(180deg));
