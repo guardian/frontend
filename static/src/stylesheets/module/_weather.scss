@@ -225,10 +225,11 @@ $weather-large-size: 60px;
     }
 }
 
-i.weather__search-icon,
-i.weather__close-icon {
+.weather__search-icon,
+.weather__close-icon {
     width: 16px;
     height: 16px;
+    fill: colour(neutral-2);
 }
 
 .weather__edit-location {

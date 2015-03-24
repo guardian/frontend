@@ -1,5 +1,6 @@
 package test
 
+import conf.Switches
 import contentapi.SectionsLookUp
 import play.api.test._
 import play.api.test.Helpers._
@@ -160,5 +161,11 @@ import conf.Switches.MemcachedSwitch
     val result = controllers.IndexController.render("sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone")(TestRequest())
     status(result) should be(301)
     header("Location", result).head should be ("/sustainable-business-grundfos-partner-zone")
+  }
+
+  it should "not serve the maintenance page on Careers if the switch is off" in {
+    Switches.CareersMaintenanceSwitch.switchOff()
+    val result = controllers.IndexController.render("careers/foo")(TestRequest())
+    status(result) should be(404)
   }
 }

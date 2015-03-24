@@ -1,14 +1,12 @@
 define([
     'common/utils/$',
     'common/utils/config',
-    'lodash/objects/assign',
-    'lodash/collections/find'
+    'common/utils/_'
 ],
 function (
     $,
     config,
-    assign,
-    find
+    _
 ) {
 
     function isit(isTrue, yes, no, arg) {
@@ -25,11 +23,11 @@ function (
 
         // the order of this is important as, on occasion,
         // "minbymin" is tagged with "match reports" but should be considered "minbymin".
-        assign(match, {
+        _.assign(match, {
             date: config.webPublicationDateAsUrlPart(),
             teams: teams,
             isLive: config.page.isLive,
-            pageType: find([
+            pageType: _.find([
                 ['minbymin', config.page.isLiveBlog],
                 ['report', config.hasTone('Match reports')],
                 ['preview', config.hasSeries('Match previews')],

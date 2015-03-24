@@ -77,7 +77,7 @@ define([
     Foresee,
     liveStats,
     mediaListener,
-    Omniture,
+    omniture,
     register,
     ScrollDepth,
     logCss,
@@ -253,7 +253,7 @@ define([
             },
 
             loadAnalytics: function () {
-                new Omniture(window.s).go();
+                omniture.go();
 
                 if (config.switches.ophan) {
                     require('ophan/ng', function (ophan) {

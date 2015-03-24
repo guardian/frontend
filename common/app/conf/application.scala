@@ -4,8 +4,10 @@ import common.Assets.Assets
 import common.{ExecutionContexts, GuardianConfiguration}
 import filters.RequestLoggingFilter
 import contentapi.{ElasticSearchPreviewContentApiClient, ElasticSearchLiveContentApiClient}
+import model.{Page, Cached}
 import play.api.mvc._
 import play.filters.gzip.GzipFilter
+import Switches.CareersMaintenanceSwitch
 
 import scala.concurrent.Future
 
@@ -43,6 +45,16 @@ object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicit
   }
 }
 
+object GNUFilter extends Filter with ExecutionContexts {
+
+  //http://www.theguardian.com/books/shortcuts/2015/mar/17/terry-pratchetts-name-lives-on-in-the-clacks-with-hidden-web-code
+  private val GNUHeader = "X-Clacks-Overhead" -> "GNU Terry Pratchett"
+
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    nextFilter(request).map(_.withHeaders(GNUHeader))
+  }
+}
+
 // this lets the CDN log the exact part of the backend this response came from
 object BackendHeaderFilter extends Filter with ExecutionContexts {
 
@@ -53,6 +65,22 @@ object BackendHeaderFilter extends Filter with ExecutionContexts {
   }
 }
 
+object CareersFilter extends Filter with ExecutionContexts with Results {
+
+  private val page = new Page("careers/maintenance", "careers", "Guardian Careers - under maintenance", "GFE:careers:maintenance")
+
+  // we want to be able to build the front and check things on preview
+  private lazy val notPreview = !Configuration.environment.isPreview
+
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    if (CareersMaintenanceSwitch.isSwitchedOn && request.path.startsWith("/careers") && notPreview) {
+      Future.successful(Cached(5)(Ok(views.html.careersMaintenance(page)(request))))
+    } else {
+      nextFilter(request)
+    }
+  }
+}
+
 object Filters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
@@ -60,6 +88,8 @@ object Filters {
     JsonVaryHeadersFilter,
     Gzipper,
     BackendHeaderFilter,
-    RequestLoggingFilter
+    RequestLoggingFilter,
+    GNUFilter,
+    CareersFilter
   )
 }
