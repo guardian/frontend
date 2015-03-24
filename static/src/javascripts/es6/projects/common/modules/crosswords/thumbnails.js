@@ -1,77 +1,69 @@
-define([
-    'bonzo',
-    'qwery',
-    'common/utils/_',
-    'common/utils/$',
-    'common/utils/ajax',
-    'es6/projects/common/modules/crosswords/helpers',
-    'es6/projects/common/modules/crosswords/persistence'
-], function (
-    bonzo,
-    qwery,
-    _,
-    $,
-    ajax,
-    helpers,
-    persistence
-) {
-    var textXOffset = 15,
-        textYOffset = 19;
+import bonzo from 'bonzo';
+import qwery from 'qwery';
+import _ from 'common/utils/_';
+import $ from 'common/utils/$';
+import ajax from 'common/utils/ajax';
 
-    function makeTextCells(savedState) {
-        var columns = savedState.length,
-            rows = savedState[0].length;
+import helpers from 'es6/projects/common/modules/crosswords/helpers';
+import persistence from 'es6/projects/common/modules/crosswords/persistence';
 
-        return _.flatten(_.map(_.range(columns), function (column) {
-            return _.map(_.range(rows), function (row) {
-                var enteredText = savedState[column][row],
-                    el,
-                    top,
-                    left;
+var textXOffset = 15,
+    textYOffset = 19;
 
-                if (enteredText) {
-                    el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                    top = helpers.gridSize(row);
-                    left = helpers.gridSize(column);
+function makeTextCells(savedState) {
+    var columns = savedState.length,
+        rows = savedState[0].length;
 
-                    bonzo(el).attr({
-                        x: left + textXOffset,
-                        y: top + textYOffset,
-                        'class': 'crossword__cell-text'
-                    }).text(enteredText);
+    return _.flatten(_.map(_.range(columns), function (column) {
+        return _.map(_.range(rows), function (row) {
+            var enteredText = savedState[column][row],
+                el,
+                top,
+                left;
 
-                    return [el];
-                } else {
-                    return [];
-                }
-            });
-        }));
-    }
+            if (enteredText) {
+                el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                top = helpers.gridSize(row);
+                left = helpers.gridSize(column);
 
-    function init() {
-        _.forEach(qwery('.js-crossword-thumbnail'), function (elem) {
-            var $elem = bonzo(elem),
-                savedState = persistence.loadGridState($elem.attr('data-crossword-id'));
+                bonzo(el).attr({
+                    x: left + textXOffset,
+                    y: top + textYOffset,
+                    'class': 'crossword__cell-text'
+                }).text(enteredText);
 
-            if (savedState) {
-                ajax({
-                    url: $elem.attr('src'),
-                    type: 'xml',
-                    method: 'get',
-                    crossOrigin: true,
-                    success: function (data) {
-                        var cells = makeTextCells(savedState),
-                            svg = qwery('svg', data)[0];
-                        bonzo(svg).append(cells);
-                        $elem.replaceWith(svg);
-                    }
-                });
+                return [el];
+            } else {
+                return [];
             }
         });
-    }
+    }));
+}
 
-    return {
-        init: init,
-        makeTextCells: makeTextCells
-    };
-});
+function init() {
+    _.forEach(qwery('.js-crossword-thumbnail'), function (elem) {
+        var $elem = bonzo(elem),
+            savedState = persistence.loadGridState($elem.attr('data-crossword-id'));
+
+        if (savedState) {
+            ajax({
+                url: $elem.attr('src'),
+                type: 'xml',
+                method: 'get',
+                crossOrigin: true,
+                success: function (data) {
+                    var cells = makeTextCells(savedState),
+                        svg = qwery('svg', data)[0];
+                    bonzo(svg).append(cells);
+                    $elem.replaceWith(svg);
+                }
+            });
+        }
+    });
+}
+
+export default {
+    init: init,
+    makeTextCells: makeTextCells
+};
+
