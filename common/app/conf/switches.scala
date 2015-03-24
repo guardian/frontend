@@ -502,6 +502,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 4, 1)
   )
 
+  val ABRegisterPopup = Switch("A/B Tests", "ab-register-popup",
+    "Switch for the Register Popup A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 8)
+  )
+
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
     safeState = Off, sellByDate = never)
