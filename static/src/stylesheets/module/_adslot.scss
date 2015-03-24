@@ -212,6 +212,10 @@
         margin: 0 $gs-gutter/2;
         width: gs-span(4.5);
         
+        .content-footer & {
+            width: 300px;
+        }
+        
         .linkslist-container & {
             position: absolute;
             top: 0;
@@ -231,7 +235,6 @@
             height: 250px;
         }
     }
-
 }
 .ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
