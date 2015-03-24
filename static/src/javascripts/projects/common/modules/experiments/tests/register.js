@@ -1,7 +1,9 @@
 define([
-    'common/utils/$'
+    'common/utils/$',
+    'common/utils/cookies'
 ], function (
-    $
+    $,
+    cookies
 ) {
     return function () {
         this.id = 'Register';
@@ -17,7 +19,7 @@ define([
         this.idealOutcome = 'Conversion rate increases';
 
         this.canRun = function () {
-            return true;
+            return !cookies.get('GU_U');
         };
 
         var $register = $('.js-register'),
