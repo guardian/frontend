@@ -864,16 +864,15 @@ $burger-width: 16px;
 }
 
 /**
- * Signed Out Popup styling
+ * Popups with text content
  */
 
-$signedout-arrow-size: $gs-gutter / 2;
-$signedout-padding: $gs-gutter / 3;
+$popup-text-arrow-size: $gs-gutter / 2;
+$popup-text-padding: $gs-gutter / 3;
 
-.popup--signed-out {
+.popup--text {
     left: 0 !important;
     width: gs-span(3);
-    padding: $signedout-padding;
     color: colour(neutral-1);
     line-height: 1.4;
     // Clear floated child (toggle)
@@ -887,24 +886,30 @@ $signedout-padding: $gs-gutter / 3;
         border-top: 0;
         position: absolute;
         left: 30%;
-        margin-left: 0 - $signedout-arrow-size;
-        border-left: $signedout-arrow-size solid transparent;
-        border-right: $signedout-arrow-size solid transparent;
-        border-bottom: $signedout-arrow-size solid colour(neutral-8);
+        margin-left: 0 - $popup-text-arrow-size;
+        border-left: $popup-text-arrow-size solid transparent;
+        border-right: $popup-text-arrow-size solid transparent;
+        border-bottom: $popup-text-arrow-size solid colour(neutral-8);
         top: -10px;
     }
+}
 
-    .popup__toggle {
-        float: right;
-        // Override .u-button-reset
-        width: auto;
-        position: relative;
-        z-index: 1;
-    }
+.popup--text__toggle {
+    float: right;
+    // Override .u-button-reset
+    width: auto;
+    position: relative;
+    z-index: 1;
+    margin-top: $popup-text-padding;
+    margin-right: $popup-text-padding;
+}
 
-    .popup__toggle__icon {
-        fill: colour(neutral-2);
-    }
+.popup--text__toggle__icon {
+    fill: colour(neutral-2);
+}
+
+.popup--text__content {
+    padding: $popup-text-padding;
 }
 
 .popup--signed-out__link {
