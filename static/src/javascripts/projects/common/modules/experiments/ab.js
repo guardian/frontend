@@ -7,7 +7,6 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/krux-audience-science',
-    'common/modules/experiments/tests/identity-benefits',
     'common/modules/experiments/tests/mt-master',
     'common/modules/experiments/tests/signed-out',
     'common/modules/experiments/tests/register',
@@ -24,7 +23,6 @@ define([
     mvtCookie,
     HighCommercialComponent,
     KruxAudienceScience,
-    IdentityBenefits,
     MtMaster,
     SignedOut,
     Register,
@@ -38,7 +36,6 @@ define([
         TESTS = [
             new HighCommercialComponent(),
             new KruxAudienceScience(),
-            new IdentityBenefits(),
             new MtMaster(),
             new SignedOut(),
             new Register(),

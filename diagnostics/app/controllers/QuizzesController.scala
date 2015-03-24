@@ -3,7 +3,7 @@ package controllers
 import common._
 import conf.Switches
 import model.diagnostics.quizzes.Quizzes
-import model.{Cached, NoCache}
+import model.{TinyResponse, Cached, NoCache}
 import play.api.mvc.{Content => _, _}
 
 import scala.concurrent.ExecutionContext.Implicits
@@ -24,7 +24,7 @@ object QuizzesController extends Controller with Logging {
     }
   }
 
-  def update() = Action.async(parse.text) { implicit request =>
+  def update() = Action.async(parse.json) { implicit request =>
     if (Switches.QuizScoresService.isSwitchedOn) {
       Quizzes.update(request.body).map {
         _ =>
@@ -33,6 +33,10 @@ object QuizzesController extends Controller with Logging {
     } else {
       Future.successful(Cached(3600)(NotFound("")))
     }
+  }
+
+  def acceptBeaconOptions = Action { implicit request =>
+    TinyResponse.noContent(Some("POST, OPTIONS"))
   }
 
 }

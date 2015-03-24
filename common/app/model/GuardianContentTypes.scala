@@ -25,3 +25,12 @@ object GuardianContentTypes {
   val LiveBlog = "LiveBlog"
   val TagIndex = "Index"
 }
+
+// Eventually, replace list above with one of these
+sealed trait ContentType {
+  val name: String
+}
+
+case object articleType extends ContentType {
+  override val name: String = "article"
+}

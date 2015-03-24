@@ -1,7 +1,9 @@
 define([
-    'common/utils/$'
+    'common/utils/$',
+    'common/modules/identity/api'
 ], function (
-    $
+    $,
+    Id
 ) {
     return function () {
         this.id = 'Register';
@@ -17,7 +19,7 @@ define([
         this.idealOutcome = 'Conversion rate increases';
 
         this.canRun = function () {
-            return true;
+            return !Id.isUserLoggedIn();
         };
 
         var $register = $('.js-register'),
