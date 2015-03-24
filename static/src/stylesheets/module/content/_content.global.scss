@@ -61,13 +61,20 @@
         margin: 0;
         position: relative;
         padding-left: 18px;
-        @include mq(leftCol) {
-            padding-left: 15px;
-        }
-        .i {
+
+        .i, .inline-icon {
             position: absolute;
             left: 0;
         }
+
+        @include mq(leftCol) {
+            padding-left: $gs-gutter * .75;
+        }
+    }
+
+    .inline-icon {
+        margin: 2px 0 0 -2px;
+        fill: colour(neutral-2);
     }
 
     .commentcount2__value,
@@ -98,14 +105,6 @@
         color: colour(neutral-2);
         .i {
             opacity: .35;
-        }
-    }
-    .commentcount2__heading {
-        @include mq(leftCol) {
-            padding-left: 17px;
-        }
-        .i {
-            top: -1px;
         }
     }
 }

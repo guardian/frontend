@@ -333,12 +333,7 @@ object Switches {
 
   val FeedbackLink = Switch("Monitoring", "tech-feedback",
     "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
-    safeState = Off, new LocalDate(2015, 3, 24)
-  )
-
-  val Print = Switch("Print analytics", "print",
-    "decide by now whether enough people are printing stuff to care whether they get a good experience",
-    safeState = Off, new LocalDate(2015, 3, 27)
+    safeState = Off, new LocalDate(2015, 4, 24)
   )
 
   // Features
@@ -465,11 +460,6 @@ object Switches {
   val ABAcrossTheCountry = Switch("A/B Tests", "ab-across-the-country",
     "Tests container placement on the US front",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 19)
-  )
-
-  val ABIdentityBenefits = Switch("A/B Tests", "ab-identity-benefits",
-    "Switch for the Identity benefits A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
   )
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
