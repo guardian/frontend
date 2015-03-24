@@ -906,6 +906,11 @@ $popup-text-padding: $gs-gutter / 3;
 
 .popup--text__toggle__icon {
     fill: colour(neutral-2);
+
+    svg {
+        width: 12px;
+        height: 12px;
+    }
 }
 
 .popup--text__content {
