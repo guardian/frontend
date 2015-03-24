@@ -484,6 +484,43 @@ case object QuarterThreeQuarter extends Slice {
   )
 }
 
+
+/* .__________________________.________.
+ * |##########################|########|
+ * |##########################|########|
+ * |##########################|########|
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|        |
+ * |                          |        |
+ * |                          |        |
+ * |                          |        |
+ * `--------------------------'--------'
+ */
+case object ThreeQuarterTallQuarter extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "qqqtall-q",
+    columns = Seq(
+      SingleItem(
+        colSpan = 3,
+        ItemClasses(
+          mobile = Standard,
+          tablet = ThreeQuartersTall
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = ListItem,
+          tablet = Standard
+        )
+      )
+    )
+  )
+}
+
 /* .__________________________.________.
  * |##########################|########|
  * |##########################|########|
@@ -500,7 +537,7 @@ case object QuarterThreeQuarter extends Slice {
  */
 case object ThreeQuarterTallQuarter2 extends Slice {
   val layout = SliceLayout(
-    cssClassName = "qqq-q2",
+    cssClassName = "qqqtall-q2",
     columns = Seq(
       SingleItem(
         colSpan = 3,
@@ -523,6 +560,46 @@ case object ThreeQuarterTallQuarter2 extends Slice {
 }
 
 /* .__________________________.________.
+ * |##########################|########|
+ * |##########################|########|
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|--------|
+ * |##########################|        |
+ * |##########################|        |
+ * |                          |--------|
+ * |                          |        |
+ * |                          |        |
+ * `--------------------------'--------'
+ */
+case object ThreeQuarterTallQuarterQl2 extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "qqqtall-q-ql2",
+    columns = Seq(
+      SingleItem(
+        colSpan = 3,
+        ItemClasses(
+          mobile = Standard,
+          tablet = ThreeQuartersTall
+        )
+      ),
+      SplitColumn(
+        colSpan = 1,
+        topItemClasses = ItemClasses(
+          mobile = MediaList,
+          tablet = Standard
+        ),
+        bottomItemsClasses = ItemClasses(
+          mobile = ListItem,
+          tablet = ListItem
+        )
+      )
+    )
+  )
+}
+
+/* .__________________________.________.
  * |##########################|        |
  * |##########################|        |
  * |##########################|--------|
@@ -538,7 +615,7 @@ case object ThreeQuarterTallQuarter2 extends Slice {
  */
 case object ThreeQuarterTallQl4 extends Slice {
   val layout = SliceLayout(
-    cssClassName = "qqq-ql4",
+    cssClassName = "qqqtall-ql4",
     columns = Seq(
       SingleItem(
         colSpan = 3,

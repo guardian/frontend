@@ -269,3 +269,38 @@ Hence why a greater depth of selector specificity is needed.
         @include columns($cols: 3, $gap: $alley, $rule: true);
     }
 }
+
+/**
+ * Huge Styling
+ */
+ 
+.fc-slice--qqqtall-q,
+.fc-slice--qqqtall-q2,
+.fc-slice--qqqtall-q-ql2,
+.fc-slice--qqqtall-ql4 {
+    position: relative;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: $gs-baseline;
+    border-top: 1px solid colour(news-accent);
+    padding-top: $gs-baseline * 4;
+    background-color: colour(neutral-8);
+
+    &::before {
+        content: 'A Huge Story';
+        position: absolute;
+        top: 1px;
+        left: $gs-gutter / 2;
+        color: guss-colour(guardian-brand-dark, $pasteup-palette);
+        @include fs-header(4);
+    }
+ }
+
+.fc-slice--qqqtall-q {
+    .fc-item--standard-tablet {
+        .fc-item__media-wrapper,
+        .fc-item__standfirst {
+            display: block !important;
+        }
+    }
+}
