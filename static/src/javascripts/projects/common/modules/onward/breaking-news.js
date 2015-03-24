@@ -89,7 +89,7 @@ define([
                 if (alerts.length) {
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
                     marque36icon = svgs('marque36icon');
-                    closeIcon = svgs('closeCentral');
+                    closeIcon = svgs('closeCentralIcon');
 
                     _.forEach(alerts, function (article) {
                         var el;

@@ -27,7 +27,7 @@ define([
     arrowdownicon,
     logoguardian,
     logosoulmates,
-    closeCentral
+    closeCentralIcon
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -40,7 +40,7 @@ define([
         arrowdownicon: arrowdownicon,
         logoguardian: logoguardian,
         logosoulmates: logosoulmates,
-        closeCentral: closeCentral
+        closeCentralIcon: closeCentralIcon
     };
 
     return function (name, classes, title) {
