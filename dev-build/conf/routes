@@ -255,7 +255,6 @@ GET         /commercial/jobs.json                                               
 
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.renderMasterclasses
 
-GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmatesController.renderMixedSoulmates
 GET         /commercial/soulmates/$subgroup<\w+>.json                                                                controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
 
 GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffersController.renderBook
