@@ -84,7 +84,7 @@ function (
         };
 
         this.welcome = function (name) {
-            var msg = '<p class="site-message__message">' +
+            var msg = '<p class="site-message__message" data-test-id="facebook-auto-sign-in-banner">' +
                           'Welcome ' + name + ', you’re signed into the Guardian using Facebook, or ' +
                           '<a data-link-name="fb auto : sign out" href="' + config.page.idUrl + '/signout"/>sign out</a>.' +
                       '</p>';
