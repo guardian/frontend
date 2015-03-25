@@ -31,6 +31,7 @@ object Container extends Logging {
   }
 
   def customClasses(container: Container) = container match {
+    case Dynamic(DynamicPackage) => Set("fc-container--story-package")
     case Fixed(fixedContainer) => fixedContainer.customCssClasses
     case _ => Nil
   }
