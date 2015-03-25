@@ -14,10 +14,10 @@ object DevAssetsController extends Controller with ExecutionContexts {
       if (MimeTypes.isText(mime)) s"${mime}; charset=utf-8" else mime
     }
 
-    val sourceFile = new File(s"static/hash/$path")
+    val hashFile = new File(s"static/hash/$path")
 
-    val resolved = if (sourceFile.exists()) {
-      sourceFile.toURI.toURL
+    val resolved = if (hashFile.exists()) {
+      hashFile.toURI.toURL
     } else {
       new File(s"static/src/$path").toURI.toURL
     }
