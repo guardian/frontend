@@ -107,7 +107,7 @@ define([
                         width:     '100%',
                         'z-index': '1000'
                     });
-                    config.$contentBelowMobile.css('margin-top', config.$stickyNavigation.dim().height + config.$bannnerMobile.dim().height);
+                    config.$contentBelowMobile.css('margin-top', config.belowMobileMargin);
                 }
             } else {
                 //after 500px of scrolling 'release' banner below nav
