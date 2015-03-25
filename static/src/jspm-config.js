@@ -15,6 +15,7 @@ System.config({
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@2.0.0",
+    "domready": "npm:domready@1.0.7",
     "lodash": "npm:lodash@2.4.1",
     "qwery": "npm:qwery@4.0.0",
     "raven": "github:getsentry/raven-js@1.1.18",
