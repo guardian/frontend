@@ -232,6 +232,18 @@ var Crossword = React.createClass({
         return this.clueMap[helpers.clueMapKey(x, y)];
     },
 
+    getContextualCluesFor: (clue) => {
+        let { x: x, y: y } = clue.direction === 'down' ? { x: 'x', y: 'y' } : { x: 'y', y: 'x' };
+
+        return _.filter(this.props.data.entries, (testClue) =>
+            testClue.direction !== clue.direction &&
+            testClue.position[x] <= clue.position[x] &&
+            testClue.position[y] >= clue.position[y] &&
+            testClue.position[x] + testClue.length >= clue.position[x] &&
+            testClue.position[y] < clue.position[y] + clue.length
+        );
+    },
+
     clueInFocus: function () {
         if (this.state.cellInFocus) {
             var cluesForCell = this.cluesFor(this.state.cellInFocus.x, this.state.cellInFocus.y);
