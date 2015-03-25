@@ -42,6 +42,9 @@ define([
             onHover = function (toggleFn) {
                 bean.on($register[0], 'mouseenter', toggleFn);
                 bean.on($register[0], 'mouseleave', toggleFn);
+            },
+            free = function () {
+                $('.brand-bar__item__badge', $register).removeClass('u-h');
             };
 
         this.variants = [
@@ -54,6 +57,7 @@ define([
                 test: function () {
                     show();
                     becomeAMember();
+                    free();
                     applyMembershipLink();
 
                     var $popup = $('.js-popup-polly-toynbee-quote', $register),
@@ -78,6 +82,7 @@ define([
                 test: function () {
                     show();
                     becomeAMember();
+                    free();
                     applyMembershipLink();
 
                     var $popup = $('.js-popup-membership-benefits', $register),
