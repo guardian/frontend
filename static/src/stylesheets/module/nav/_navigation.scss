@@ -972,5 +972,8 @@ $popup-text-padding: $gs-gutter / 3;
     // Appear below the close button
     clear: right;
     // Magic number, relative to font sizing.
-    width: 102px;
+    height: 119px;
+    // Mask the white space either side of the image
+    margin-left: -19px;
+    margin-right: -19px;
 }
