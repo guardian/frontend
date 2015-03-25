@@ -68,7 +68,7 @@ define([
                                 $popup.toggleClass('u-h');
                                 $popup.css('opacity', '1');
                             } else {
-                                $popup.css('opacity', '0');
+                                $popup.css('opacity', '');
                                 setTimeout(function () {
                                     $popup.toggleClass('u-h');
                                 }, 300);
@@ -93,7 +93,7 @@ define([
                                 $popup.toggleClass('u-h');
                                 $popup.css('opacity', 1);
                             } else {
-                                $popup.css('opacity', 0);
+                                $popup.css('opacity', '');
                                 setTimeout(function () {
                                     $popup.toggleClass('u-h');
                                 }, 1000);
