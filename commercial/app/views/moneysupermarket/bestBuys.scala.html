@@ -95,90 +95,114 @@
                                         <th class="table--commercial__cell">Account Name</th>
                                         <th class="table--commercial__cell">Balance Transfer</th>
                                         <th class="table--commercial__cell">Purchases</th>
-                                        <th class="table--commercial__cell hide-cell-on-mobile">Rewards</th>
                                         <th class="table--commercial__cell">Representative APR (Variable)</th>
                                         <th class="table--commercial__cell u-h">Link to product</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table--commercial__body">
-                                    <tr><td class="table--commercial__cell" colspan="6">Best for balance transfer</td></tr>
-                                @bestBuys.creditCards.get("balance-transfer").getOrElse(Nil).map { creditCard =>
-                                    <tr>
-                                        <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
+                                    <tr class="table--commercial__row">
+                                        <td class="table--commercial__cell" colspan="6">Best for balance transfer</td>
+                                    </tr>
+                                @bestBuys.creditCards.get("balance-transfer").getOrElse(Nil).take(1).map { creditCard =>
+                                    <tr class="table--commercial__row">
+                                        <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
                                         <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td>
                                         <td class="table--commercial__cell">Purchase rate: @creditCard.purchaseRate%<br/>Duration: @creditCard.purchaseRateDuration</td>
-                                        <td class="table--commercial__cell hide-cell-on-mobile">
-                                            <div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div>
-                                            <span class="lineitem__cta button button--primary button--small"></span>
-                                        </td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
+                                    <tr class="table--commercial__row">
+                                        <td class="table--commercial__cell" colspan="5">@creditCard.example</td>
+                                    </tr>
                                 }
-                                <tr><td class="table--commercial__cell" colspan="6">Best for purchases</td></tr>
-                                @bestBuys.creditCards.get("purchases").getOrElse(Nil).map { creditCard =>
-                                    <tr>
-                                        <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
-                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee%</td>
+                                <tr class="table--commercial__row">
+                                    <td class="table--commercial__cell" colspan="6">Best for purchases</td>
+                                </tr>
+                                @bestBuys.creditCards.get("purchases").getOrElse(Nil).take(1).map { creditCard =>
+                                    <tr class="table--commercial__row">
+                                        <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
+                                        <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td></td>
                                         <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
-                                        <td class="table--commercial__cell hide-cell-on-mobile"><div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div></td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
+                                    <tr class="table--commercial__row">
+                                        <td class="table--commercial__cell" colspan="5">@creditCard.example</td>
+                                    </tr>
                                 }
-                                <tr><td class="table--commercial__cell" colspan="6">Best for balance transfer and purchases</td></tr>
-                                @bestBuys.creditCards.get("balance-transfer-and-purchases").getOrElse(Nil).map { creditCard =>
-                                    <tr>
-                                        <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
-                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee%</td>
+                                <tr class="table--commercial__row">
+                                    <td class="table--commercial__cell" colspan="6">Best for balance transfer and purchases</td>
+                                </tr>
+                                @bestBuys.creditCards.get("balance-transfer-and-purchases").getOrElse(Nil).take(1).map { creditCard =>
+                                    <tr class="table--commercial__row">
+                                        <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
+                                        <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td></td>
                                         <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
-                                        <td class="table--commercial__cell hide-cell-on-mobile"><div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div></td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
+                                    <tr class="table--commercial__row">
+                                        <td class="table--commercial__cell" colspan="5">@creditCard.example</td>
+                                    </tr>
                                 }
-                                <tr><td class="table--commercial__cell" colspan="6">Best for cashback</td></tr>
-                                @bestBuys.creditCards.get("cashback").getOrElse(Nil).map { creditCard =>
-                                    <tr>
-                                        <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
-                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee%</td>
+                                <tr class="table--commercial__row">
+                                    <td class="table--commercial__cell" colspan="6">Best for cashback</td>
+                                </tr>
+                                @bestBuys.creditCards.get("cashback").getOrElse(Nil).take(1).map { creditCard =>
+                                    <tr class="table--commercial__row">
+                                        <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
+                                        <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td></td>
                                         <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
-                                        <td class="table--commercial__cell hide-cell-on-mobile"><div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div></td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
+                                    <tr class="table--commercial__row">
+                                        <td class="table--commercial__cell" colspan="5">@creditCard.example</td>
+                                    </tr>
                                 }
-                                <tr><td class="table--commercial__cell" colspan="6">Best for low standard rate</td></tr>
-                                @bestBuys.creditCards.get("low-standard-rate").getOrElse(Nil).map { creditCard =>
-                                    <tr>
-                                        <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
-                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee%</td>
+                                <tr class="table--commercial__row">
+                                    <td class="table--commercial__cell" colspan="6">Best for low standard rate</td>
+                                </tr>
+                                @bestBuys.creditCards.get("low-standard-rate").getOrElse(Nil).take(1).map { creditCard =>
+                                    <tr class="table--commercial__row">
+                                        <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
+                                        <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td></td>
                                         <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
-                                        <td class="table--commercial__cell hide-cell-on-mobile"><div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div></td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
+                                    <tr class="table--commercial__row">
+                                        <td class="table--commercial__cell" colspan="5">@creditCard.example</td>
+                                    </tr>
                                 }
-                                <tr><td class="table--commercial__cell" colspan="6">Best for rewards</td></tr>
-                                @bestBuys.creditCards.get("rewards").getOrElse(Nil).map { creditCard =>
-                                    <tr>
-                                        <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
-                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee%</td>
+                                <tr class="table--commercial__row">
+                                    <td class="table--commercial__cell" colspan="6">Best for rewards</td>
+                                </tr>
+                                @bestBuys.creditCards.get("rewards").getOrElse(Nil).take(1).map { creditCard =>
+                                    <tr class="table--commercial__row">
+                                        <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
+                                        <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td></td>
                                         <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
-                                        <td class="table--commercial__cell hide-cell-on-mobile"><div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div></td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
+                                    <tr class="table--commercial__row">
+                                        <td class="table--commercial__cell" colspan="5">@creditCard.example</td>
+                                    </tr>
                                 }
-                                <tr><td class="table--commercial__cell" colspan="6">Best for bad credit</td></tr>
-                                @bestBuys.creditCards.get("bad-credit").getOrElse(Nil).map { creditCard =>
-                                    <tr>
-                                        <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
-                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee%</td>
+                                <tr class="table--commercial__row">
+                                    <td class="table--commercial__cell" colspan="6">Best for bad credit</td>
+                                </tr>
+                                @bestBuys.creditCards.get("bad-credit").getOrElse(Nil).take(1).map { creditCard =>
+                                    <tr class="table--commercial__row">
+                                        <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
+                                        <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td></td>
                                         <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
-                                        <td class="table--commercial__cell hide-cell-on-mobile"><div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div></td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
+                                    </tr>
+                                    <tr class="table--commercial__row">
+                                        <td class="table--commercial__cell" colspan="5">@creditCard.example</td>
                                     </tr>
                                 }
                                 </tbody>
