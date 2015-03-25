@@ -97,3 +97,27 @@
         width: 100%;
     }
 }
+
+.fc-container--story-package {
+    .fc-slice--qqqtall-q,
+    .fc-slice--qqqtall-q2,
+    .fc-slice--qqqtall-q-ql2,
+    .fc-slice--qqqtall-ql4 {
+        position: relative;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: $gs-baseline;
+        border-top: 1px solid colour(news-accent);
+        padding-top: $gs-baseline;
+        background-color: colour(neutral-8);
+     }
+
+    .fc-slice--qqqtall-q {
+        .fc-item--standard-tablet {
+            .fc-item__media-wrapper,
+            .fc-item__standfirst {
+                display: block !important;
+            }
+        }
+    }
+}
