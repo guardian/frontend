@@ -276,5 +276,10 @@
 
     @include mq(tablet) {
         display: inline-block;
+
+        // Unset breakpoint
+        .l-header--is-slim & {
+            display: none;
+        }
     }
 }
