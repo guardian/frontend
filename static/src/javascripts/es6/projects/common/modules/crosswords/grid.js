@@ -34,7 +34,7 @@ var Cell = React.createClass({
                     x: left + constants.cellSize / 2,
                     y: top + (constants.cellSize + constants.entrySize) / 2,
                     key: 'entry',
-                    className: classnames({
+                    className: classNames({
                         'crossword__cell-text': true,
                         'crossword__cell-text--error': this.props.isError
                     })
@@ -49,7 +49,7 @@ var Cell = React.createClass({
                     y: top,
                     width: constants.cellSize,
                     height: constants.cellSize,
-                    className: classnames({
+                    className: classNames({
                         'crossword__cell': true,
                         'crossword__cell--focussed': this.props.isFocussed,
                         'crossword__cell--highlighted': this.props.isHighlighted
