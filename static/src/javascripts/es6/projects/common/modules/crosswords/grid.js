@@ -1,11 +1,13 @@
 /* jshint newcap: false */
-import React from 'react/addons';
+import classNames from 'classnames';
+import React from 'react';
+
 import _ from 'common/utils/_';
+
 import constants from 'es6/projects/common/modules/crosswords/constants';
 import helpers from 'es6/projects/common/modules/crosswords/helpers';
 
-var classSet = React.addons.classSet,
-    Cell = React.createClass({
+var Cell = React.createClass({
         onClick: function (event) {
             event.preventDefault();
             this.props.handleSelect();
@@ -32,7 +34,7 @@ var classSet = React.addons.classSet,
                     x: left + constants.cellSize / 2,
                     y: top + (constants.cellSize + constants.entrySize) / 2,
                     key: 'entry',
-                    className: classSet({
+                    className: classnames({
                         'crossword__cell-text': true,
                         'crossword__cell-text--error': this.props.isError
                     })
@@ -47,7 +49,7 @@ var classSet = React.addons.classSet,
                     y: top,
                     width: constants.cellSize,
                     height: constants.cellSize,
-                    className: classSet({
+                    className: classnames({
                         'crossword__cell': true,
                         'crossword__cell--focussed': this.props.isFocussed,
                         'crossword__cell--highlighted': this.props.isHighlighted

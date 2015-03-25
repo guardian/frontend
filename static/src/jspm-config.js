@@ -16,11 +16,15 @@ System.config({
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@2.0.0",
     "domready": "npm:domready@1.0.7",
+    "classnames": "npm:classnames@1.2.0",
     "lodash": "npm:lodash@2.4.1",
     "qwery": "npm:qwery@4.0.0",
     "raven": "github:getsentry/raven-js@1.1.18",
     "react": "npm:react@0.11.2",
     "reqwest": "github:ded/reqwest@1.1.5",
+    "github:jspm/nodelibs-assert@0.1.0": {
+      "assert": "npm:assert@1.3.0"
+    },
     "github:jspm/nodelibs-buffer@0.1.0": {
       "buffer": "npm:buffer@3.1.1"
     },
@@ -45,6 +49,9 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
+    "npm:assert@1.3.0": {
+      "util": "npm:util@0.10.3"
+    },
     "npm:bean@1.0.15": {
       "fs": "github:jspm/nodelibs-fs@0.1.1"
     },
@@ -56,6 +63,9 @@ System.config({
       "base64-js": "npm:base64-js@0.0.8",
       "ieee754": "npm:ieee754@1.1.4",
       "is-array": "npm:is-array@1.0.1"
+    },
+    "npm:classnames@1.2.0": {
+      "assert": "github:jspm/nodelibs-assert@0.1.0"
     },
     "npm:core-util-is@1.0.1": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"

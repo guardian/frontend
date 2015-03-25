@@ -1,9 +1,10 @@
 /* jshint newcap: false */
-import _ from 'common/utils/_';
-import React from 'react/addons';
+import classNames from 'classnames';
+import React from 'react';
 
-var classSet = React.addons.classSet,
-    Clue = React.createClass({
+import _ from 'common/utils/_';
+
+var Clue = React.createClass({
         onClick: function (event) {
             event.preventDefault();
             this.props.focusClue();
@@ -11,7 +12,7 @@ var classSet = React.addons.classSet,
 
         render: function () {
             return React.DOM.li({
-                className: classSet({
+                className: classNames({
                     'crossword__clue': true,
                     'crossword__clue--answered': this.props.hasAnswered,
                     'crossword__clue--selected': this.props.isSelected

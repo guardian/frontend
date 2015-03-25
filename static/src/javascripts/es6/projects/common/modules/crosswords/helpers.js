@@ -1,7 +1,5 @@
-// vendor
 import _ from 'common/utils/_';
 
-// app
 import constants from 'es6/projects/common/modules/crosswords/constants';
 
 function isAcross(clue) {
