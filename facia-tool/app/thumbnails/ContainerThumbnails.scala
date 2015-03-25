@@ -153,6 +153,9 @@ object ContainerThumbnails {
       case "dynamic/slow" =>
         Some(Seq(HalfHl4))
 
+      case "dynamic/package" =>
+        Some(Seq(ThreeQuarterTallQuarterQl2))
+
       case _ =>
         FixedContainers.unapply(Some(id)).map(_.slices)
     }
