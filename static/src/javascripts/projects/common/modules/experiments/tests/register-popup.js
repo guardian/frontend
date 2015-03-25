@@ -56,20 +56,20 @@ define([
                     becomeAMember();
                     applyMembershipLink();
 
-                    var $popup = $('.js-popup-polly-toynbee-quote', $register);
-                    var togglePopup = function () {
-                        // FIXME: Find a nicer way to fade in/out whilst toggling
-                        // the display style to none
-                        if ($popup.css('opacity') === '0') {
-                            $popup.toggleClass('u-h');
-                            $popup.css('opacity', '1');
-                        } else {
-                            $popup.css('opacity', '0');
-                            setTimeout(function () {
+                    var $popup = $('.js-popup-polly-toynbee-quote', $register),
+                        togglePopup = function () {
+                            // FIXME: Find a nicer way to fade in/out whilst toggling
+                            // the display style to none
+                            if ($popup.css('opacity') === '0') {
                                 $popup.toggleClass('u-h');
-                            }, 300);
-                        }
-                    };
+                                $popup.css('opacity', '1');
+                            } else {
+                                $popup.css('opacity', '0');
+                                setTimeout(function () {
+                                    $popup.toggleClass('u-h');
+                                }, 300);
+                            }
+                        };
                     onHover(togglePopup);
                 }
             },
@@ -80,21 +80,21 @@ define([
                     becomeAMember();
                     applyMembershipLink();
 
-                    var $popup = $('.js-popup-membership-benefits', $register);
-                    var togglePopup = function () {
-                        // FIXME: Find a nicer way to fade in/out whilst toggling
-                        // the display style to none
-                        if ($popup.css('opacity') === '0') {
-                            $popup.toggleClass('u-h');
-                            $popup.css('opacity', 1);
-                        } else {
-                            $popup.css('opacity', 0);
-                            setTimeout(function () {
+                    var $popup = $('.js-popup-membership-benefits', $register),
+                        togglePopup = function () {
+                            // FIXME: Find a nicer way to fade in/out whilst toggling
+                            // the display style to none
+                            if ($popup.css('opacity') === '0') {
                                 $popup.toggleClass('u-h');
-                            }, 1000);
-                        }
+                                $popup.css('opacity', 1);
+                            } else {
+                                $popup.css('opacity', 0);
+                                setTimeout(function () {
+                                    $popup.toggleClass('u-h');
+                                }, 1000);
+                            }
 
-                    };
+                        };
                     onHover(togglePopup);
                 }
             }
