@@ -34,7 +34,7 @@ define([
                 if (iframe) {
                     message = JSON.parse(event.data);
                     if (message.type === 'set-height') {
-                        iframe.height = message.value;
+                        bonzo(iframe).parent().css('height', message.value);
                     }
                 }
             });
@@ -99,17 +99,18 @@ define([
         var spec = bonzo(el).offset(),
             minIframeHeight = Math.ceil((spec.width || 0) / 2),
             maxIframeHeight = 400,
-            iframeHtml = template('<iframe src="{{src}}" height="{{height}}" style="width: 100%; border: none;"></iframe>', {
-                src: el.getAttribute('data-snap-uri'),
-                height: Math.min(Math.max(spec.height || 0, minIframeHeight), maxIframeHeight)
-            }),
-            iframe = bonzo.create(iframeHtml)[0];
+            src = el.getAttribute('data-snap-uri'),
+            height = Math.min(Math.max(spec.height || 0, minIframeHeight), maxIframeHeight),
+            containerEl = bonzo.create('<div style="width: 100%; height: ' + height + 'px; ' +
+                                        'overflow: hidden; -webkit-overflow-scrolling:touch"></div>')[0],
+            iframe = bonzo.create('<iframe src="' + src + '" style="width: 100%; height: 100%; border: none;"></iframe>')[0];
 
+        bonzo(containerEl).append(iframe);
         snapIframes.push(iframe);
         bindIframeMsgReceiverOnce();
 
         fastdom.write(function () {
-            bonzo(el).empty().append(iframe);
+            bonzo(el).empty().append(containerEl);
         });
     }
 
