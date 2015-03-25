@@ -91,7 +91,7 @@ define([
                             // the display style to none
                             if ($popup.css('opacity') === '0') {
                                 $popup.toggleClass('u-h');
-                                $popup.css('opacity', 1);
+                                $popup.css('opacity', '1');
                             } else {
                                 $popup.css('opacity', '');
                                 setTimeout(function () {
