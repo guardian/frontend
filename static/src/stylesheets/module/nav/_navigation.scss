@@ -918,7 +918,7 @@ $popup-text-padding: $gs-gutter / 3;
 }
 
 .popup--text__content__blockquote {
-    margin-bottom: 7px;
+    margin-bottom: $gs-baseline / 2;
 
     &:before {
         // FIXME: Objects (quoted) should come before components (popup--text__content__blockquote)
