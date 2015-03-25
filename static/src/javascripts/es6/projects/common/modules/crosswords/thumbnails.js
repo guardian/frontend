@@ -1,7 +1,7 @@
-import bonzo from 'bonzo';
-import qwery from 'qwery';
 import _ from 'common/utils/_';
 import $ from 'common/utils/$';
+import bonzo from 'bonzo';
+import qwery from 'qwery';
 import ajax from 'common/utils/ajax';
 
 import helpers from 'es6/projects/common/modules/crosswords/helpers';

@@ -1,9 +1,10 @@
 /* jshint newcap: false */
+import React from 'react';
+
 import $ from 'common/utils/$';
 import _ from 'common/utils/_';
 import bean from 'bean';
 import bonzo from 'bonzo';
-import React from 'react';
 
 import Clues from 'es6/projects/common/modules/crosswords/clues';
 import Controls from 'es6/projects/common/modules/crosswords/controls';
