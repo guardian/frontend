@@ -8,6 +8,7 @@ object Container extends Logging {
   val all: Map[String, Container] = Map(
     ("dynamic/fast", Dynamic(DynamicFast)),
     ("dynamic/slow", Dynamic(DynamicSlow)),
+    ("dynamic/package", Dynamic(DynamicPackage)),
     ("nav/list", NavList),
     ("nav/media-list", NavMediaList),
     ("news/most-popular", MostPopular)

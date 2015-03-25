@@ -87,6 +87,7 @@ object FixedContainers {
     ("fixed/medium/fast-XII", fixedMediumFastXII),
     ("fixed/large/slow-XIV", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
     ("fixed/large/fast-XV", slices(HalfQQ, Ql3Ql3Ql3Ql3)),
+    ("story-package", slices(FullMedia100)),
     ("fixed/thrasher", thrasher)
   ) ++ (if (Configuration.faciatool.showTestContainers) Map(
     ("all-items/not-for-production", slices(FullMedia100, FullMedia75, FullMedia50, HalfHalf, QuarterThreeQuarter, ThreeQuarterQuarter, Hl4Half, HalfQuarterQl2Ql4, TTTL4, Ql3Ql3Ql3Ql3))
@@ -99,7 +100,8 @@ object FixedContainers {
 object DynamicContainers {
   val all: Map[String, DynamicContainer] = Map(
     ("dynamic/fast", DynamicFast),
-    ("dynamic/slow", DynamicSlow)
+    ("dynamic/slow", DynamicSlow),
+    ("dynamic/package", DynamicPackage)
   )
 
   def apply(collectionType: Option[String], items: Seq[Content]): Option[ContainerDefinition] = {
