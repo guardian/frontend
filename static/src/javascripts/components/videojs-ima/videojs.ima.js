@@ -436,7 +436,7 @@
         fullscreenDiv.className = 'ima-non-fullscreen';
         adContainerDiv.style.width = player.width() + 'px';
         adContainerDiv.style.height = player.height() + 'px';
-        adContainerDiv.className = ''
+        adContainerDiv.className = '';
         adsManager.resize(
             player.width(),
             player.height(),

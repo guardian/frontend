@@ -76,6 +76,13 @@ $c-guardian-services-action: #ffffff;
                 height: $width * $height-to-width-ratio;
             }
         }
+
+        @include mq(tablet) {
+            svg {
+                width: 160px;
+                height: 30px;
+            }
+        }
     }
 
     .inline-logo {

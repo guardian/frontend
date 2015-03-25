@@ -19,7 +19,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return config.page.edition === 'US' && config.page.pageId === 'us';
+            return config.page.edition === 'US' && config.page.isFront;
         };
 
         this.variants = [

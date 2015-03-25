@@ -142,9 +142,14 @@ $weather-large-size: 60px;
     }
 
     .weather__toggle-icon {
-        width: 18px;
-        height: 8px;
+        display: inline-block;
         margin-bottom: $gs-baseline / 6;
+        fill: colour(neutral-1);
+
+        svg {
+            width: 18px;
+            height: 8px;
+        }
 
         .is-expanded & {
             @include transform(rotate(180deg));
@@ -225,10 +230,11 @@ $weather-large-size: 60px;
     }
 }
 
-i.weather__search-icon,
-i.weather__close-icon {
+.weather__search-icon,
+.weather__close-icon {
     width: 16px;
     height: 16px;
+    fill: colour(neutral-2);
 }
 
 .weather__edit-location {

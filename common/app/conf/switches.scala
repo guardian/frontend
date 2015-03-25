@@ -333,12 +333,7 @@ object Switches {
 
   val FeedbackLink = Switch("Monitoring", "tech-feedback",
     "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
-    safeState = Off, new LocalDate(2015, 3, 24)
-  )
-
-  val Print = Switch("Print analytics", "print",
-    "decide by now whether enough people are printing stuff to care whether they get a good experience",
-    safeState = Off, new LocalDate(2015, 3, 27)
+    safeState = Off, new LocalDate(2015, 4, 24)
   )
 
   // Features
@@ -353,6 +348,12 @@ object Switches {
   val HideInteractiveUi = Switch("Feature", "hide-interactive-ui",
     "If this is switched on interactives can be rendered without page furniture.",
     safeState = On, sellByDate = new LocalDate(2015, 3, 31)
+  )
+
+  val CareersMaintenanceSwitch = Switch("Feature", "careers-maintenance-switch",
+    "If this is switched on then we will display a maintenance message for anything with path /careers*.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 4, 10)
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
@@ -445,15 +446,20 @@ object Switches {
   val IdentityBlockSpamEmails = Switch("Feature", "id-block-spam-emails",
     "If switched on, any new registrations with emails from ae blacklisted domin will be blocked",
     safeState = On, sellByDate = never)
+
+  val QuizScoresService = Switch("Feature", "quiz-scores-service",
+    "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 16))
+
   // A/B Tests
 
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
     "If switched on, any user registrations from a known tor esit node will be logged",
     safeState = On, sellByDate = never)
 
-  val ABIdentityBenefits = Switch("A/B Tests", "ab-identity-benefits",
-    "Switch for the Identity benefits A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
+  val ABAcrossTheCountry = Switch("A/B Tests", "ab-across-the-country",
+    "Tests container placement on the US front",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 19)
   )
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -488,12 +494,22 @@ object Switches {
 
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
     "Switch for the UK Network Front heatmap test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 24)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
   val ABSignedOut = Switch("A/B Tests", "ab-signed-out",
     "Switch for the Signed Out messaging test.",
     safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
+  )
+
+  val ABRegister = Switch("A/B Tests", "ab-register",
+    "Switch for the Register A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 1)
+  )
+
+  val ABRegisterPopup = Switch("A/B Tests", "ab-register-popup",
+    "Switch for the Register Popup A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 8)
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",

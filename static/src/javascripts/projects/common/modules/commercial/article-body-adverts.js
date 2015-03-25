@@ -1,7 +1,7 @@
 define([
     'fastdom',
     'Promise',
-    'lodash/objects/cloneDeep',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -10,7 +10,7 @@ define([
 ], function (
     fastdom,
     Promise,
-    cloneDeep,
+    _,
     $,
     config,
     detect,
@@ -30,7 +30,7 @@ define([
     }
 
     function getLenientRules() {
-        var lenientRules = cloneDeep(getRules());
+        var lenientRules = _.cloneDeep(getRules());
         // more lenient rules, closer to the top start of the article
         lenientRules.minAbove = 300;
         lenientRules.selectors[' > h2'].minAbove = 20;

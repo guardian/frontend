@@ -1,12 +1,12 @@
 define([
     'common/utils/$',
+    'common/utils/_',
     'common/utils/config',
-    'lodash/functions/throttle',
     'common/utils/mediator'
 ], function (
     $,
+    _,
     config,
-    throttle,
     mediator
 ) {
     return function () {
@@ -139,11 +139,11 @@ define([
                     if (windowWidth <= 740) {
                         updatePositionMobile(stickyConfig);
 
-                        mediator.on('window:scroll', throttle(function () {
+                        mediator.on('window:scroll', _.throttle(function () {
                             updatePositionMobile(stickyConfig);
                         }, 10));
                     } else {
-                        mediator.on('window:scroll', throttle(function () {
+                        mediator.on('window:scroll', _.throttle(function () {
                             //height of topAd needs to be recalculated because we don't know when we will get repspond from DFP
                             stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
                             updatePosition(stickyConfig);

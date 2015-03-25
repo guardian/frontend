@@ -1,10 +1,10 @@
 /* global guardian */
 define([
-    'lodash/objects/values',
+    'common/utils/_',
     'common/utils/config',
     'qwery'
 ], function (
-    values,
+    _,
     config,
     qwery
 ) {
@@ -72,7 +72,7 @@ define([
                 s.prop41 = 'PrerollMilestone';
             }
             s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44,prop9';
-            s.linkTrackEvents = values(events).join(',');
+            s.linkTrackEvents = _.values(events).join(',');
             s.events = event;
             s.tl(true, 'o', eventName || event);
             s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = undefined;

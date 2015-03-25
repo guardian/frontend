@@ -1,16 +1,16 @@
 define([
     'bean',
     'bonzo',
-    'lodash/objects/assign'
+    'common/utils/_'
 ], function (
     bean,
     bonzo,
-    assign
+    _
 ) {
 
     function PasswordStrength(el, config) {
 
-        config = assign({
+        config = _.assign({
             text: {
                 label: 'Password strength',
                 'long': 'Password too long',

@@ -1,4 +1,5 @@
 $breaking-news-icon-width: 36px;
+$breaking-news-close-icon-width: 32px;
 
 .breaking-news {
     z-index: 16777271;
@@ -17,6 +18,9 @@ $breaking-news-icon-width: 36px;
     }
 
     .button {
+        padding: 0;
+        width: $breaking-news-close-icon-width;
+        height: $breaking-news-close-icon-width;
         border-color: #ffffff;
 
         @include mq(tablet) {

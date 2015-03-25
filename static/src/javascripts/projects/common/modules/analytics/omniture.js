@@ -2,7 +2,7 @@
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'omniture',
-    'lodash/collections/map',
+    'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -16,7 +16,7 @@ define([
     'common/modules/identity/api'
 ], function (
     s,
-    map,
+    _,
     config,
     cookies,
     detect,
@@ -100,7 +100,7 @@ define([
     Omniture.prototype.populateEventProperties = function (linkName) {
 
         this.s.linkTrackVars = 'channel,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,' +
-                               'prop51,prop61,prop64,prop65,evar7,evar37,evar38,evar39,evar50,events';
+                               'prop51,prop61,prop64,prop65,eVar7,eVar37,eVar38,eVar39,eVar50,events';
         this.s.linkTrackEvents = 'event37';
         this.s.events = 'event37';
         this.s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + linkName : linkName;
@@ -205,7 +205,7 @@ define([
         this.s.prop51  = mvt;
         this.s.eVar51  = mvt;
 
-        this.s.list3 = map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
+        this.s.list3 = _.map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
 
         if (this.s.prop51) {
             this.s.events = this.s.apl(this.s.events, 'event58', ',');

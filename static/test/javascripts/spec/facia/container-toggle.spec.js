@@ -26,7 +26,7 @@ define([
             assertState = function ($container, state) {
                 var $button = $('button', $container[0]);
                 expect($container.hasClass('fc-container--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
-                expect($button.text()).toBe(state === 'open' ? 'Hide' : 'Show');
+                expect($button.text().trim()).toBe(state === 'open' ? 'Hide' : 'Show');
                 expect($button.attr('data-link-name')).toBe(state === 'open' ? 'Show' : 'Hide');
             };
 

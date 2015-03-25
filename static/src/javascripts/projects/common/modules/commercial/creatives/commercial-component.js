@@ -6,12 +6,6 @@ define([
     'bean',
     'bonzo',
     'raven',
-    'lodash/collections/map',
-    'lodash/collections/size',
-    'lodash/objects/defaults',
-    'lodash/objects/isArray',
-    'lodash/objects/merge',
-    'lodash/objects/pick',
     'common/utils/$',
     'common/utils/_',
     'common/utils/config',
@@ -22,12 +16,6 @@ define([
     bean,
     bonzo,
     raven,
-    map,
-    size,
-    defaults,
-    isArray,
-    merge,
-    pick,
     $,
     _,
     config,
@@ -41,15 +29,15 @@ define([
                 .pairs()
                 .map(function (param) {
                     var key    = param[0],
-                        values = isArray(param[1]) ? param[1] : [param[1]];
-                    return map(values, function (value) {
+                        values = _.isArray(param[1]) ? param[1] : [param[1]];
+                    return _.map(values, function (value) {
                         return [key, '=', encodeURIComponent(value)].join('');
                     }).join('&');
                 }).join('&');
         },
         getKeywords = function () {
             var keywords = (config.page.keywordIds) ?
-                map(config.page.keywordIds.split(','), function (keywordId) {
+                _.map(config.page.keywordIds.split(','), function (keywordId) {
                     return keywordId.split('/').pop();
                 }) :
                 config.page.pageId.split('/').pop();
@@ -59,10 +47,10 @@ define([
         },
         buildComponentUrl = function (url, params) {
             // filter out empty params
-            var filteredParams = pick(params || {}, function (v) {
-                    return isArray(v) ? v.length : v;
+            var filteredParams = _.pick(params || {}, function (v) {
+                    return _.isArray(v) ? v.length : v;
                 }),
-                query = size(filteredParams) ? '?' + constructQuery(filteredParams) : '';
+                query = _.size(filteredParams) ? '?' + constructQuery(filteredParams) : '';
             return [config.page.ajaxUrl, '/commercial/', url, '.json', query].join('');
         },
         /**
@@ -82,15 +70,15 @@ define([
             this.$adSlot    = $adSlot;
             this.components = {
                 bestbuy:        buildComponentUrl('money/bestbuys', this.params),
-                book:           buildComponentUrl('books/book', merge({}, this.params, { t: config.page.isbn || this.params.isbn })),
-                books:          buildComponentUrl('books/books', merge({}, this.params, { t: this.params.isbns ? this.params.isbns.split(',') : [] })),
-                jobs:           buildComponentUrl('jobs', merge({}, this.params, { t: this.params.jobIds ? this.params.jobIds.split(',') : [] }, getKeywords())),
-                masterclasses:  buildComponentUrl('masterclasses', merge({}, this.params, { t: this.params.ids ? this.params.ids.split(',') : [] }, getKeywords())),
+                book:           buildComponentUrl('books/book', _.merge({}, this.params, { t: config.page.isbn || this.params.isbn })),
+                books:          buildComponentUrl('books/books', _.merge({}, this.params, { t: this.params.isbns ? this.params.isbns.split(',') : [] })),
+                jobs:           buildComponentUrl('jobs', _.merge({}, this.params, { t: this.params.jobIds ? this.params.jobIds.split(',') : [] }, getKeywords())),
+                masterclasses:  buildComponentUrl('masterclasses', _.merge({}, this.params, { t: this.params.ids ? this.params.ids.split(',') : [] }, getKeywords())),
                 soulmates:      buildComponentUrl('soulmates/mixed', this.params),
                 soulmatesGroup: buildComponentUrl('soulmates/' + this.params.soulmatesFeedName, this.params),
-                travel:         buildComponentUrl('travel/offers', merge({}, this.params, getKeywords())),
-                multi:          buildComponentUrl('multi', merge({}, this.params, getKeywords())),
-                capiSingle:     buildComponentUrl('capi-single', merge({}, this.params, getKeywords())),
+                travel:         buildComponentUrl('travel/offers', _.merge({}, this.params, getKeywords())),
+                multi:          buildComponentUrl('multi', _.merge({}, this.params, getKeywords())),
+                capiSingle:     buildComponentUrl('capi-single', _.merge({}, this.params, getKeywords())),
                 capi:           buildComponentUrl('capi', this.params)
             };
         };

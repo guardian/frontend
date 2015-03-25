@@ -1,8 +1,6 @@
 define([
     'bonzo',
     'picturefill',
-    'lodash/collections/forEach',
-    'lodash/functions/debounce',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/mediator'
@@ -10,8 +8,6 @@ define([
 function (
     bonzo,
     picturefill,
-    forEach,
-    debounce,
     $,
     $css,
     mediator

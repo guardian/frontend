@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'lodash/functions/debounce',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
@@ -18,7 +18,7 @@ define([
 ], function (
     bean,
     bonzo,
-    debounce,
+    _,
     $,
     ajax,
     config,
@@ -322,7 +322,7 @@ define([
                     }
                     return r;
                 })();
-                mediator.on('window:resize', debounce(resize, 200));
+                mediator.on('window:resize', _.debounce(resize, 200));
                 bean.on(document, 'click', '.dropdown__button', resize);
             })();
         }

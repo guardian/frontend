@@ -3,8 +3,6 @@ define([
     'bonzo',
     'qwery',
 
-    'lodash/collections/map',
-
     'common/utils/$',
     'common/utils/ajax-promise',
     'common/utils/config',
@@ -20,8 +18,6 @@ define([
     bean,
     bonzo,
     qwery,
-
-    _map,
 
     $,
     ajaxPromise,
