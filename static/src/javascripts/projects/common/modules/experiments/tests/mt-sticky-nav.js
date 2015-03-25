@@ -45,17 +45,16 @@ define([
                 config.$bannnerMobile.css('margin-top', null);
 
                 //when scroll will pass height of the header with logo
-                if (window.scrollY >= config.$header.dim().height) {
+                if (window.scrollY >= config.headerHeight) {
                     config.$stickyNavigation.css({
                         position:  'fixed',
                         top:       config.stickyTopAdHeight,
                         width:     '100%',
                         'z-index': '1001'
                     });
-                    config.$bannnerMobile.css('margin-top', config.$stickyNavigation.dim().height);
+                    config.$bannnerMobile.css('margin-top', config.stickyNavigationHeight);
                 }
-            }
-            else {
+            } else {
                 //after 500px of scrolling 'release' topAd
                 config.$stickyTopAd.css({
                     position:  'absolute',
@@ -79,7 +78,6 @@ define([
         }
 
         function updatePositionMobile(config) {
-            console.log(config);
             if (window.scrollY < 500) {
                 //navigation is not sticky yet
                 config.$stickyNavigation.css({
@@ -91,9 +89,10 @@ define([
                     position:  null,
                     top:       null
                 });
+                config.$contentBelowMobile.css('margin-top', null);
 
                 //when scroll will pass height of the header with logo
-                if (window.scrollY >= config.$header.dim().height) {
+                if (window.scrollY >= config.headerHeight) {
                     config.$stickyNavigation.css({
                         position:  'fixed',
                         top:       0,
@@ -104,13 +103,13 @@ define([
                     //also banner below nav becomes sticky
                     config.$bannnerMobile.css({
                         position:  'fixed',
-                        top:       config.$stickyNavigation.dim().height,
+                        top:       config.stickyNavigationHeight,
                         width:     '100%',
-                        'z-index': '1001'
+                        'z-index': '1000'
                     });
+                    config.$contentBelowMobile.css('margin-top', config.$stickyNavigation.dim().height + config.$bannnerMobile.dim().height);
                 }
-            }
-            else {
+            } else {
                 //after 500px of scrolling 'release' banner below nav
                 config.$bannnerMobile.css({
                     position:  'absolute',
@@ -127,26 +126,26 @@ define([
                             $stickyNavigation: $('.sticky-nav-mt-test .navigation'),
                             $stickyTopAd: $('.sticky-nav-mt-test .top-banner-ad-container'),
                             $header: $('.sticky-nav-mt-test .l-header__inner'),
-                            $bannnerMobile: $('.top-banner-ad-container--mobile')
+                            $bannnerMobile: $('.top-banner-ad-container--mobile'),
+                            $contentBelowMobile: $('#maincontent')
                         },
                         windowWidth = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
 
                     $('.sticky-nav-mt-test .l-header-main').css('overflow', 'hidden');
+                    stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
+                    stickyConfig.headerHeight = stickyConfig.$header.dim().height;
+                    stickyConfig.belowMobileMargin = stickyConfig.stickyNavigationHeight + stickyConfig.$bannnerMobile.dim().height;
 
-                    //recalculate height of ad slot when it is fully rendered
-                    /*mediator.on('modules:commercial:dfp:topAdRendered', function() {
+                    if (windowWidth <= 740) {
+                        updatePositionMobile(stickyConfig);
 
-                    });*/
-
-                    if (windowWidth <= 740 ) {
-                        mediator.on('window:scroll', throttle(function() {
+                        mediator.on('window:scroll', throttle(function () {
                             updatePositionMobile(stickyConfig);
                         }, 10));
-                    }
-                    else {
-                        mediator.on('window:scroll', throttle(function() {
+                    } else {
+                        mediator.on('window:scroll', throttle(function () {
+                            //height of topAd needs to be recalculated because we don't know when we will get repspond from DFP
                             stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
-
                             updatePosition(stickyConfig);
                         }, 10));
                     }
