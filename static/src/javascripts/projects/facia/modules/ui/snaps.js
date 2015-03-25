@@ -99,9 +99,11 @@ define([
         var spec = bonzo(el).offset(),
             minIframeHeight = Math.ceil((spec.width || 0) / 2),
             maxIframeHeight = 400,
-            height = Math.min(Math.max(spec.height || 0, minIframeHeight), maxIframeHeight),
-            src = el.getAttribute('data-snap-uri'),
-            iframe = bonzo.create('<iframe src="' + src + '" height="' + height + '" style="width: 100%; border: none;"></iframe>')[0];
+            iframeHtml = template('<iframe src="{{src}}" height="{{height}}" style="width: 100%; border: none;"></iframe>',{
+                src: el.getAttribute('data-snap-uri'),
+                height: Math.min(Math.max(spec.height || 0, minIframeHeight), maxIframeHeight)
+            }),
+            iframe = bonzo.create(iframeHtml)[0];
 
         snapIframes.push(iframe);
         bindIframeMsgReceiverOnce();
