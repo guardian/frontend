@@ -1,4 +1,5 @@
 define([
+    'bean',
     'bonzo',
     'fastdom',
     'common/utils/_',
@@ -11,6 +12,7 @@ define([
     'common/modules/ui/relativedates',
     'facia/modules/ui/football-snaps'
 ], function (
+    bean,
     bonzo,
     fastdom,
     _,
@@ -23,7 +25,8 @@ define([
     relativeDates,
     FootballSnaps
 ) {
-    var clientProcessedTypes = ['document', 'fragment', 'json.html'];
+    var clientProcessedTypes = ['document', 'fragment', 'json.html'],
+        snapIframes = [];
 
     function init() {
         var snaps = toArray($('.js-snappable.js-snap'))
@@ -80,19 +83,31 @@ define([
         });
     }
 
+    var bindIframeMsgReceiverOnce = _.once(function() {
+        bean.on(window, 'message', function(event) {
+            var iframe = _.find(snapIframes, function(iframe) { return iframe.contentWindow === event.source; });
+            if (iframe) {
+                var message = JSON.parse(event.data);
+                if (message.type === 'set-height') {
+                    iframe.height = message.value;
+                }
+            }
+        });
+    });
+
     function injectIframe(el) {
         var spec = bonzo(el).offset(),
             minIframeHeight = Math.ceil((spec.width || 0) / 2),
             maxIframeHeight = 400,
-            source = template( // Wrapping iframe to fix iOS height-setting bug
-                '<div style="height:{{height}}px; overflow:hidden; width: 100%;">' +
-                    '<iframe src="{{src}}" style="height:{{height}}px; width: 100%; border: none;"></iframe>' +
-                '</div>',
-                {src: el.getAttribute('data-snap-uri'), height: Math.min(Math.max(spec.height || 0, minIframeHeight), maxIframeHeight)}
-            );
+            height = Math.min(Math.max(spec.height || 0, minIframeHeight), maxIframeHeight),
+            src = el.getAttribute('data-snap-uri'),
+            iframe = bonzo.create('<iframe src="' + src + '" height="' + height + '" style="width: 100%; border: none;"></iframe>')[0];
+
+        snapIframes.push(iframe);
+        bindIframeMsgReceiverOnce();
 
         fastdom.write(function () {
-            bonzo(el).html(source);
+            bonzo(el).empty().append(iframe);
         });
     }
 
