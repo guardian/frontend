@@ -106,22 +106,16 @@ var Crossword = React.createClass({
     moveFocus: function (deltaX, deltaY) {
         var cell = this.state.cellInFocus,
             x = cell.x + deltaX,
-            y = cell.y + deltaY;
+            y = cell.y + deltaY,
+            direction;
 
         if (this.state.grid[x] && this.state.grid[x][y] && this.state.grid[x][y].isEditable) {
-            this.focusHiddenInput(x, y);
-            this.state.cellInFocus = {
-                x: x,
-                y: y
-            };
-
             if (deltaY !== 0) {
-                this.state.directionOfEntry = 'down';
+                direction = 'down';
             } else if (deltaX !== 0) {
-                this.state.directionOfEntry = 'across';
-            }
-
-            this.forceUpdate();
+                direction = 'across';
+            };
+            this.focusClue(x, y, direction);
         }
     },
 
@@ -170,6 +164,7 @@ var Crossword = React.createClass({
         }
     },
 
+    // called when cell is selected (by click or programtically focussed)
     onSelect: function (x, y) {
         var cellInFocus = this.state.cellInFocus,
             clue = this.cluesFor(x, y),
@@ -184,14 +179,12 @@ var Crossword = React.createClass({
                 }
             };
 
-        this.focusHiddenInput(x, y);
-
         if (cellInFocus && cellInFocus.x === x && cellInFocus.y === y) {
             /** User has clicked again on the highlighted cell, meaning we ought to swap direction */
             newDirection = helpers.otherDirection(this.state.directionOfEntry);
 
             if (clue[newDirection]) {
-                this.state.directionOfEntry = newDirection;
+                this.focusClue(x, y, newDirection);
             }
         } else if (isInsideFocussedClue()) {
             /**
@@ -200,6 +193,7 @@ var Crossword = React.createClass({
              */
 
             this.state.cellInFocus = {x: x, y: y};
+            this.forceUpdate();
         } else {
             this.state.cellInFocus = {x: x, y: y};
 
@@ -212,16 +206,15 @@ var Crossword = React.createClass({
              * prefer to highlight the down clue.
              */
             if (!isStartOfClue(clue.across) && isStartOfClue(clue.down)) {
-                this.state.directionOfEntry = 'down';
+                newDirection = 'down';
             } else if (clue.across) {
                 /** Across is the default focus otherwise */
-                this.state.directionOfEntry = 'across';
+                newDirection = 'across';
             } else {
-                this.state.directionOfEntry = 'down';
+                newDirection = 'down';
             }
+            this.focusClue(x, y, newDirection);
         }
-
-        this.forceUpdate();
     },
 
     focusClue: function (x, y, direction) {
