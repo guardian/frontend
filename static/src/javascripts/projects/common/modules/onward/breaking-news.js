@@ -32,7 +32,8 @@ define([
         maxSimultaneousAlerts = 1,
         $breakingNews,
         $body,
-        marque36icon;
+        marque36icon,
+        closeIcon;
 
     function cleanIDs(articleIds, hiddenIds) {
         var cleanedIDs = {};
@@ -88,11 +89,13 @@ define([
                 if (alerts.length) {
                     $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
                     marque36icon = svgs('marque36icon');
+                    closeIcon = svgs('closeCentralIcon');
 
                     _.forEach(alerts, function (article) {
                         var el;
 
                         article.marque36icon = marque36icon;
+                        article.closeIcon = closeIcon;
                         el = bonzo.create(template(alertHtml, article));
 
                         bean.on($('.js-breaking-news__item__close', el)[0], 'click', function () {
