@@ -248,14 +248,15 @@ object Navigation {
     topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
   def rotatedLocalNav(topSection: Option[NavItem], metaData: MetaData)(implicit request: RequestHeader): Seq[SectionLink] =
-    topSection.map{ section =>
-      section.searchForCurrentSublink(metaData) match {
-        case Some(currentSection) =>
-          val navSlices = section.links.span(_.href != currentSection.href)
-          navSlices._2.drop(1) ++ navSlices._1
-        case None =>
-          section.links
-    }}.orElse(sectionSpecificSublinks.get(metaData.section)).getOrElse(Nil)
+    sectionSpecificSublinks.get(metaData.section)
+      .orElse(topSection.map{ section =>
+        section.searchForCurrentSublink(metaData) match {
+          case Some(currentSection) =>
+            val navSlices = section.links.span(_.href != currentSection.href)
+            navSlices._2.drop(1) ++ navSlices._1
+          case None =>
+            section.links
+    }}).getOrElse(Nil)
 
   def isEditionFront(topSection: NavItem): Boolean = ("/" :: Edition.editionFronts).contains(topSection.name.href)
 
@@ -269,15 +270,14 @@ object Navigation {
       SectionLink("careers", "Q&As", "Q&As", "/careers/live-q-a"),
       SectionLink("careers", "sectors", "sectors", "/careers/sectors-industry-roles"),
       SectionLink("careers", "newsletter", "newsletter", "https://register.theguardian.com/careers"),
-      SectionLink("careers", "courses", "courses", "/careers/find-masters"),
+      SectionLink("careers", "courses", "courses", "http://jobs.theguardian.com/courses"),
       SectionLink("careers", "jobs", "jobs", "http://jobs.theguardian.com"),
       SectionLink("careers", "top employers UK", "top employers UK", "/careers/britains-top-employers")
     )
   ).withDefault( _ => Nil)
 
-  def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] = {
-      Navigation.topLevelItem(navigation, metaData).map(_.links).filter(_.nonEmpty)
-        .orElse(sectionSpecificSublinks.get(metaData.section))
-        .getOrElse(Nil)
-    }
+  def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] = sectionSpecificSublinks.get(metaData.section)
+    .orElse(Navigation.topLevelItem(navigation, metaData).map(_.links).filter(_.nonEmpty))
+    .getOrElse(Nil)
+
 }
