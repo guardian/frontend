@@ -21,14 +21,13 @@
             <div class="commercial__body">
                 <div class="tabs">
                     <ol class="tabs__container js-tabs" role="tablist">
-                        <li id="mortgages-tab" class="tabs__tab tabs__tab--selected" role="tab" aria-selected="true" aria-controls="mortgages"><a href="#mortgages">Mortgages</a></li>
-                        <li id="current-accounts-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="current-accounts"><a href="#current-accounts">Current accounts</a></li>
+                        <li id="current-accounts-tab" class="tabs__tab tabs__tab--selected" role="tab" aria-selected="true" aria-controls="current-accounts"><a href="#current-accounts">Current accounts</a></li>
                         <li id="savings-account-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="savings-account"><a href="#savings-account">Savings <span class="hide-on-mobile-inline">account</span></a></li>
                         <li id="credit-cards-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="credit-cards"><a href="#credit-cards">Credit Cards</a></li>
                         <li id="loans-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="loans"><a href="#loans">Loans</a></li>
                     </ol>
                     <div class="tabs__content">
-                        <div class="tabs__pane current-accounts modern-hidden" id="current-accounts" role="tabpanel" aria-labelledby="current-accounts-tab">
+                        <div class="tabs__pane current-accounts" id="current-accounts" role="tabpanel" aria-labelledby="current-accounts-tab">
                             <h4 class="commercial__headline">Looking after your day-to-day finances</h4>
                             <table class="table--commercial">
                                 <thead class="table--commercial__head">
@@ -96,84 +95,95 @@
                                         <th class="table--commercial__cell">Account Name</th>
                                         <th class="table--commercial__cell">Balance Transfer</th>
                                         <th class="table--commercial__cell">Purchases</th>
-                                        <th class="table--commercial__cell">Rewards</th>
+                                        <th class="table--commercial__cell hide-cell-on-mobile">Rewards</th>
                                         <th class="table--commercial__cell">Representative APR (Variable)</th>
                                         <th class="table--commercial__cell u-h">Link to product</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table--commercial__body">
+                                    <tr><td class="table--commercial__cell" colspan="6">Best for balance transfer</td></tr>
                                 @bestBuys.creditCards.get("balance-transfer").getOrElse(Nil).map { creditCard =>
                                     <tr>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
-                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration%, @creditCard.balanceTransferFee%</td>
-                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration%</td>
-                                        <td class="table--commercial__cell">@creditCard.rewardNotes</td>
+                                        <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td>
+                                        <td class="table--commercial__cell">Purchase rate: @creditCard.purchaseRate%<br/>Duration: @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell hide-cell-on-mobile">
+                                            <div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div>
+                                            <span class="lineitem__cta button button--primary button--small"></span>
+                                        </td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
                                 }
+                                <tr><td class="table--commercial__cell" colspan="6">Best for purchases</td></tr>
                                 @bestBuys.creditCards.get("purchases").getOrElse(Nil).map { creditCard =>
                                     <tr>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
-                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration%, @creditCard.balanceTransferFee%</td>
-                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration%</td>
-                                        <td class="table--commercial__cell">@creditCard.rewardNotes</td>
+                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee%</td>
+                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell hide-cell-on-mobile"><div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div></td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
                                 }
+                                <tr><td class="table--commercial__cell" colspan="6">Best for balance transfer and purchases</td></tr>
                                 @bestBuys.creditCards.get("balance-transfer-and-purchases").getOrElse(Nil).map { creditCard =>
                                     <tr>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
-                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration%, @creditCard.balanceTransferFee%</td>
-                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration%</td>
-                                        <td class="table--commercial__cell">@creditCard.rewardNotes</td>
+                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee%</td>
+                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell hide-cell-on-mobile"><div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div></td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
                                 }
+                                <tr><td class="table--commercial__cell" colspan="6">Best for cashback</td></tr>
                                 @bestBuys.creditCards.get("cashback").getOrElse(Nil).map { creditCard =>
                                     <tr>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
-                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration%, @creditCard.balanceTransferFee%</td>
-                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration%</td>
-                                        <td class="table--commercial__cell">@creditCard.rewardNotes</td>
+                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee%</td>
+                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell hide-cell-on-mobile"><div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div></td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
                                 }
+                                <tr><td class="table--commercial__cell" colspan="6">Best for low standard rate</td></tr>
                                 @bestBuys.creditCards.get("low-standard-rate").getOrElse(Nil).map { creditCard =>
                                     <tr>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
-                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration%, @creditCard.balanceTransferFee%</td>
-                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration%</td>
-                                        <td class="table--commercial__cell">@creditCard.rewardNotes</td>
+                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee%</td>
+                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell hide-cell-on-mobile"><div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div></td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
                                 }
+                                <tr><td class="table--commercial__cell" colspan="6">Best for rewards</td></tr>
                                 @bestBuys.creditCards.get("rewards").getOrElse(Nil).map { creditCard =>
                                     <tr>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
-                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration%, @creditCard.balanceTransferFee%</td>
-                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration%</td>
-                                        <td class="table--commercial__cell">@creditCard.rewardNotes</td>
+                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee%</td>
+                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell hide-cell-on-mobile"><div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div></td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
                                 }
+                                <tr><td class="table--commercial__cell" colspan="6">Best for bad credit</td></tr>
                                 @bestBuys.creditCards.get("bad-credit").getOrElse(Nil).map { creditCard =>
                                     <tr>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
-                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration%, @creditCard.balanceTransferFee%</td>
-                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration%</td>
-                                        <td class="table--commercial__cell">@creditCard.rewardNotes</td>
+                                        <td class="table--commercial__cell">@creditCard.balanceTransferRate%, @creditCard.balanceTransferRateDuration, @creditCard.balanceTransferFee%</td>
+                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell hide-cell-on-mobile"><div class="commercial--bestbuys-reward-notes u-h">@creditCard.rewardNotes</div></td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
                                 }
                                 </tbody>
                             </table>
+                            <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
                         </div>
                         <div class="tabs__pane loans modern-hidden" id="loans" role="tabpanel" aria-labelledby="loans-tab">
                             <h4 class="commercial__headline">Featured offers on loans</h4>
@@ -185,7 +195,6 @@
                                         <th class="table--commercial__cell">APR</th>
                                         <th class="table--commercial__cell">Min Loan Amount</th>
                                         <th class="table--commercial__cell">Max Loan Amount</th>
-                                        <th class="table--commercial__cell">Comments</th>
                                         <th class="table--commercial__cell u-h">Link to product</th>
                                     </tr>
                                 </thead>
@@ -197,12 +206,13 @@
                                         <td class="table--commercial__cell">@loan.apr%</td>
                                         <td class="table--commercial__cell hide-cell-on-mobile">£@{"%,.0f".format(loan.minAdvance)}</td>
                                         <td class="table--commercial__cell hide-cell-on-mobile">£@{"%,.0f".format(loan.maxAdvance)}</td>
-                                        <td class="table--commercial__cell hide-cell-on-mobile">@loan.comments.toLowerCase.capitalize</td>
                                         <td class="table--commercial__cell"><a href="@loan.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-browse-@loan.name-more">More <span class="u-h">about @loan.name's offer</span></a></td>
                                     </tr>
                                 }
                                 </tbody>
                             </table>
+                            <p>Your home may be repossessed if you do not keep up repayments on a mortgage, loan or any other debt secured on it.</p>
+                            <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
                         </div>
                     </div>
                 </div>
