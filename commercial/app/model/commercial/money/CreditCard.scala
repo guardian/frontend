@@ -40,12 +40,15 @@ case class CreditExample(amount: Double,
                          fee: Double) {
 
   override val toString: String = {
-    val spend = f"£$amount%,.0f"
+    def moneyFormat(d: Double) = f"£$d%,.0f"
     def fixedText(b: Boolean) = if (b) "fixed" else "variable"
     val rateType = fixedText(interestRateFixed)
     val aprType = fixedText(aprFixed)
-    s"If you spend $spend at $interestRateDescription interest rate of $interestRate% p.a. " +
-      s"($rateType) your representative rate will be $apr% APR ($aprType)"
+    val spendText = s"If you spend ${moneyFormat(amount)}"
+    val rateText = s"at $interestRateDescription interest rate of $interestRate% p.a. ($rateType)"
+    val feeText = if (fee > 0) s" with a ${moneyFormat(fee)} annual fee" else ""
+    val aprText = s"your representative rate will be $apr% APR ($aprType)"
+    s"$spendText $rateText$feeText $aprText"
   }
 }
 
