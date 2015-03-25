@@ -954,7 +954,7 @@ $popup-text-padding: $gs-gutter / 3;
 
 .popup--text--register {
     width: gs-span(4);
-    @include transition(opacity 0.3s ease);
+    @include transition(opacity .3s ease);
     opacity: 0;
 }
 
