@@ -2,14 +2,21 @@ define([
     'underscore',
     'modules/content-api',
     'mock/search',
-    'utils/mediator'
+    'utils/mediator',
+    'test/utils/mockjax'
 ], function (
     _,
     contentApi,
     mockSearch,
-    mediator
+    mediator,
+    mockjax
 ) {
     describe('Latest articles', function() {
+        var scope = mockjax();
+        afterEach(function () {
+            scope.clear();
+        });
+
         it('- whole list should filter out articles', function (done) {
             mockSearch.latest([{
                 fields: {
@@ -84,7 +91,7 @@ define([
         });
 
         it('- searches an article', function (done) {
-            var mockId = $.mockjax({
+            scope({
                 url: /\/api\/proxy\/uk-news\/important\/stuff\?(.+)/,
                 responseText: {
                     status: 'ok',
@@ -108,13 +115,12 @@ define([
                     }
                 }]);
 
-                $.mockjax.clear(mockId);
                 done();
             });
         });
 
         it('- network fail', function (done) {
-            var mockId = $.mockjax({
+            scope({
                 url: /\/api\/proxy\/uk-news\/less\/important.*/,
                 responseText: 'Server error',
                 status: 500
@@ -131,7 +137,6 @@ define([
                 expect(error instanceof Error).toBe(true);
                 expect(error.message).toMatch(/Content API error/i);
 
-                $.mockjax.clear(mockId);
                 done();
             });
         });

@@ -1,8 +1,7 @@
 define([
     'underscore',
+    'test-config',
     'models/collections/main',
-    'test/fixtures/one-front-config',
-    'mock/switches',
     'test/fixtures/articles',
     'test/fixtures/some-collections',
     'utils/layout-from-url',
@@ -12,9 +11,8 @@ define([
     'utils/mediator'
 ], function(
     _,
+    testConfig,
     CollectionsEditor,
-    fixConfig,
-    mockSwitches,
     fixArticles,
     fixCollections,
     layoutFromURL,
@@ -53,7 +51,7 @@ define([
         });
 
 
-        new CollectionsEditor().init();
+        new CollectionsEditor().init({}, testConfig);
 
         // Number 2 is because we wait for two search, latest and the only
         // article in the collection.

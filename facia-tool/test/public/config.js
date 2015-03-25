@@ -17,8 +17,34 @@ System.amdDefine('test-config', [
     $.mockjaxSettings.logging = false;
     $.mockjaxSettings.responseTime = 50;
 
-    System.amdDefine('config', function() {
-        return {
+    return {
+        config: {
+            fronts: {
+                uk: {
+                    collections: ['latest', 'sport'],
+                    description: 'Broken news',
+                    title: 'UK',
+                    priority: 'test'
+                }
+            },
+            collections: {
+                'latest': {
+                    displayName: 'Latest News',
+                    type: 'fast/slow'
+                },
+                'sport': {
+                    displayName: 'Sport',
+                    groups: ['short', 'tall', 'grande', 'venti'],
+                    type: 'slow/slower/slowest'
+                }
+            }
+        },
+        switches: {
+            'facia-tool-disable': false,
+            'facia-tool-draft-content': true,
+            'facia-tool-sparklines': false
+        },
+        defaults: {
             env: 'test',
             priority: 'test',
             editions: ['uk','us','au'],
@@ -27,20 +53,9 @@ System.amdDefine('test-config', [
             avatarUrl: '',
             lowFrequency: 60,
             highFrequency: 2,
-            standardFrequency: 5
-        };
-    });
-
-    System.amdDefine('fixed-containers', function () {
-        return [
-            {'name':'fixed/test'}
-        ];
-    });
-
-    System.amdDefine('dynamic-containers', function () {
-        return [
-            {'name':'dynamic/test'}
-        ];
-    });
-
+            standardFrequency: 5,
+            fixedContainers: [{'name':'fixed/test'}],
+            dynamicContainers: [{'name':'dynamic/test'}]
+        }
+    };
 });

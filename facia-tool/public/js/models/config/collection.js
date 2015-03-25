@@ -1,7 +1,6 @@
 define([
     'knockout',
     'underscore',
-    'config',
     'models/config/persistence',
     'modules/vars',
     'modules/content-api',
@@ -15,7 +14,6 @@ define([
 ], function(
     ko,
     _,
-    pageConfig,
     persistence,
     vars,
     contentApi,

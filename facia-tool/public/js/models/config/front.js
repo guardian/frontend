@@ -1,7 +1,6 @@
 define([
     'knockout',
     'underscore',
-    'config',
     'modules/vars',
     'modules/content-api',
     'models/group',
@@ -14,7 +13,6 @@ define([
 ], function(
     ko,
     _,
-    pageConfig,
     vars,
     contentApi,
     Group,
@@ -122,7 +120,7 @@ define([
 
         this.placeholders.navSection = ko.computed(function() {
             var path = asPath(this.id()),
-                isEditionalised = [].concat(pageConfig.editions).some(function(edition) { return edition === path[0]; });
+                isEditionalised = [].concat(vars.pageConfig.editions).some(function(edition) { return edition === path[0]; });
 
             return this.capiProps.section() || (isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]);
         }, this);
