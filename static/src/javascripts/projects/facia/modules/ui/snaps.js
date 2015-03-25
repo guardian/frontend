@@ -26,7 +26,19 @@ define([
     FootballSnaps
 ) {
     var clientProcessedTypes = ['document', 'fragment', 'json.html'],
-        snapIframes = [];
+        snapIframes = [],
+        bindIframeMsgReceiverOnce = _.once(function () {
+            bean.on(window, 'message', function (event) {
+                var iframe = _.find(snapIframes, function (iframe) { return iframe.contentWindow === event.source; }),
+                    message;
+                if (iframe) {
+                    message = JSON.parse(event.data);
+                    if (message.type === 'set-height') {
+                        iframe.height = message.value;
+                    }
+                }
+            });
+        });
 
     function init() {
         var snaps = toArray($('.js-snappable.js-snap'))
@@ -83,23 +95,11 @@ define([
         });
     }
 
-    var bindIframeMsgReceiverOnce = _.once(function() {
-        bean.on(window, 'message', function(event) {
-            var iframe = _.find(snapIframes, function(iframe) { return iframe.contentWindow === event.source; });
-            if (iframe) {
-                var message = JSON.parse(event.data);
-                if (message.type === 'set-height') {
-                    iframe.height = message.value;
-                }
-            }
-        });
-    });
-
     function injectIframe(el) {
         var spec = bonzo(el).offset(),
             minIframeHeight = Math.ceil((spec.width || 0) / 2),
             maxIframeHeight = 400,
-            iframeHtml = template('<iframe src="{{src}}" height="{{height}}" style="width: 100%; border: none;"></iframe>',{
+            iframeHtml = template('<iframe src="{{src}}" height="{{height}}" style="width: 100%; border: none;"></iframe>', {
                 src: el.getAttribute('data-snap-uri'),
                 height: Math.min(Math.max(spec.height || 0, minIframeHeight), maxIframeHeight)
             }),
