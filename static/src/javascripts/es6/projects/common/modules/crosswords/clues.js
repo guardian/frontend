@@ -18,7 +18,7 @@ var Clue = React.createClass({
                     'crossword__clue--selected': this.props.isSelected
                 }),
                 onClick: this.onClick,
-                value: this.props.number,
+                value: parseInt(this.props.number, 10),
                 dangerouslySetInnerHTML: {
                     '__html': this.props.clue
                 }

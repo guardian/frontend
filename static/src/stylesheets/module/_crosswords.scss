@@ -26,12 +26,16 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
     }
 
     @include mq(desktop) {
+        padding-left: 0;
         @include flex-display;
     }
 }
 
 .crossword__clues-header {
     @include fs-header(1);
+    border-top: 1px solid colour(crosswordAccent2);
+    border-bottom: 1px dotted colour(neutral-3);
+    padding-bottom: $gs-baseline * .75;
 }
 
 .crossword__clues-list {
@@ -50,8 +54,20 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 
 .crossword__clue,
 .crossword__focussed-clue {
+    position: relative;
     cursor: pointer;
-    @include fs-bodyCopy(1);
+    @include fs-textSans(1);
+    margin-bottom: $gs-baseline / 2;
+    list-style-type: none;
+    padding-left: 2em;
+
+    &:before {
+        content: attr(value);
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+        -webkit-font-smoothing: initial;
+    }
 }
 
 .crossword__clue--selected {
@@ -65,7 +81,7 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 }
 
 .crossword__clue--answered {
-    text-decoration: line-through;
+    color: colour(neutral-4);
 }
 
 .crossword__controls {
@@ -143,7 +159,5 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 }
 
 .crossword__focussed-clue {
-    @include mq(tablet) {
-        display: none;
-    }
+
 }

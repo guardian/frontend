@@ -376,9 +376,6 @@ var Crossword = React.createClass({
         return React.DOM.div({
             className: 'crossword__container'
         },
-        FocussedClue({
-            clueText: focussed ? focussed.clue : null
-        }),
         React.DOM.div({
             className: 'crossword__grid-wrapper'
         },
@@ -414,6 +411,9 @@ var Crossword = React.createClass({
             onCheck: this.onCheck,
             onCheckAll: this.onCheckAll,
             onClearAll: this.onClearAll
+        }),
+        FocussedClue({
+            clueText: focussed ? focussed.clue : null
         }),
         Clues({
             clues: this.cluesData(),
