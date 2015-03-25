@@ -104,5 +104,15 @@ import scala.xml.XML
         CreditCard("Platinum Balance Transfer and Purchase Credit Card", "NATWEST", 0.0, 15, 0.90, CreditExample(1200.0, 16.95, "a purchase", interestRateFixed = false, 16.9, aprFixed = false, 0.0), "http://www.moneysupermarket.com/medias/sys_master/h55/hf8/8815356051486/Natwestplatinum80x50.png", "http://www.moneysupermarket.com/shop/media-partner-best-buy-click/?product_sku=CC_NATWEST_PLAT_LOW_BT_FEE&source=GU6&channel_id=112", "You will receive discounts from a range of retailers.", "", 16.90, 0.00, 15),
         CreditCard("Platinum Balance Transfer and Purchase Credit Card", "ROYAL BANK OF SCOTLAND", 0.0, 15, 0.90, CreditExample(1200.0, 16.95, "a purchase", interestRateFixed = false, 16.9, aprFixed = false, 0.0), "http://www.moneysupermarket.com/medias/sys_master/h57/hf8/8815356117022/RBSPlatim80x51.png", "http://www.moneysupermarket.com/shop/media-partner-best-buy-click/?product_sku=CC_RBS_PLAT_LOW_BT_FEE&source=GU6&channel_id=112", "You will receive discounts from a range of retailers.", "", 16.90, 0.00, 15)
       ))
+
+    cards map (_.example.toString) should be(
+      Seq(
+        "If you spend £1,200 at a purchase interest rate of 17.95% p.a. (variable) your " +
+          "representative rate will be 17.9% APR (variable)",
+        "If you spend £1,200 at a purchase interest rate of 16.95% p.a. (variable) your " +
+          "representative rate will be 16.9% APR (variable)",
+        "If you spend £1,200 at a purchase interest rate of 16.95% p.a. (variable) your " +
+          "representative rate will be 16.9% APR (variable)"
+      ))
   }
 }
