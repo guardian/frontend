@@ -5,24 +5,28 @@
 
 @* Scripts that should be executed after CSS is loaded *@
 
-@if(item.isJspm) {
-    @if(play.Play.isDev()) {
-        <script src="/assets/jspm_packages/system.js"></script>
-        <!-- Due to Babel conflcting with curl, we have to manually load.
-        As per https://github.com/systemjs/systemjs/issues/378#issuecomment-83982349 -->
-        <script src="/assets/jspm_packages/babel.js"></script>
-        <script src="/assets/jspm-config.js"></script>
-        <script>
-            System.import('es6/bootstraps/app')
-                .catch(function (error) {
-                    // Throw error outside of promise
-                    setTimeout(function () {
-                        throw error;
+@defining(Static.js.jspmFile(item.section)) { jspmFile =>
+    @if(jspmFile.nonEmpty) {
+        @if(play.Play.isDev()) {
+            <script src="/assets/jspm_packages/system.js"></script>
+            <!-- Due to Babel conflcting with curl, we have to manually load.
+            As per https://github.com/systemjs/systemjs/issues/378#issuecomment-83982349 -->
+            <script src="/assets/jspm_packages/babel.js"></script>
+            <script src="/assets/jspm-config.js"></script>
+            <script>
+                System.import('es6/bootstraps/app')
+                    .catch(function (error) {
+                        // Throw error outside of promise
+                        setTimeout(function () {
+                            throw error;
+                        });
                     });
-                });
-        </script>
-    } else {
-        <script src="@Static("bundles/app.js")"></script>
+            </script>
+        } else {
+            @jspmFile.map { file =>
+                <script src="@Static(file)"></script>
+            }
+        }
     }
 }
 
