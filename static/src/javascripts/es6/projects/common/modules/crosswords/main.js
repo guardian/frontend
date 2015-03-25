@@ -14,6 +14,9 @@ import helpers from 'es6/projects/common/modules/crosswords/helpers';
 import keycodes from 'es6/projects/common/modules/crosswords/keycodes';
 import persistence from 'es6/projects/common/modules/crosswords/persistence';
 
+// make react available to dev tool
+window.React || (window.React = React);
+
 var Crossword = React.createClass({
     getInitialState: function () {
         var dimensions = this.props.data.dimensions;
