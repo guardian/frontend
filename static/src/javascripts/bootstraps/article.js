@@ -56,9 +56,9 @@ define([
             initFormStack: function () {
                 var allvars = urlutils.getUrlVars();
 
-                if (allvars["CMP"]) {
+                if (allvars.CMP) {
                     $('.element-formstack').each(function (el) {
-                        el.src = el.src + "?CMP=" + allvars["CMP"]
+                        el.src = el.src + '?CMP=' + allvars.CMP;
                     });
                 }
             },
