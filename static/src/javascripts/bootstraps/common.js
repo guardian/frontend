@@ -28,7 +28,6 @@ define([
     'common/modules/analytics/simple-metrics',
     'common/modules/analytics/tech-feedback',
     'common/modules/commercial/user-ad-targeting',
-    'common/modules/crosswords/thumbnails',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
     'common/modules/experiments/ab',
@@ -84,7 +83,6 @@ define([
     simpleMetrics,
     techFeedback,
     userAdTargeting,
-    crosswordThumbnails,
     CommentCount,
     DiscussionLoader,
     ab,
@@ -483,7 +481,6 @@ define([
             robust('c-css-logging',     modules.runCssLogging);
             robust('c-public-api',      modules.initPublicApi);
             robust('c-simple-metrics',  modules.initSimpleMetrics);
-            robust('c-crosswords',      crosswordThumbnails.init);
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
         };
