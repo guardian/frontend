@@ -8,7 +8,7 @@ define([
     return function () {
         this.id = 'Heatmap';
         this.start = '2015-03-24';
-        this.expiry = '2015-03-26';
+        this.expiry = '2015-03-28';
         this.author = 'Ken Lim';
         this.description = 'US network front desktop heatmap';
         this.audience = 0.01;
