@@ -30,7 +30,7 @@ define([
             {
                 id: 'oauth',
                 test: function () {
-                    $('.social-signin__action').each(function(el) {
+                    $('.social-signin__action').each(function (el) {
                         el.href = el.href.replace(config.page.idWebAppUrl, config.page.idOAuthUrl);
                     });
                 }
