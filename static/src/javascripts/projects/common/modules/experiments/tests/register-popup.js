@@ -55,7 +55,6 @@ define([
                     show();
                     becomeAMember();
                     free();
-                    applyMembershipLink();
 
                     var $popup = $('.js-popup-polly-toynbee-quote', $register);
 
@@ -79,7 +78,6 @@ define([
                     show();
                     becomeAMember();
                     free();
-                    applyMembershipLink();
 
                     var $popup = $('.js-popup-membership-benefits', $register);
 
