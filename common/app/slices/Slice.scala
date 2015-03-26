@@ -566,11 +566,12 @@ case object ThreeQuarterTallQuarter2 extends Slice {
  * |##########################|########|
  * |##########################|        |
  * |##########################|        |
- * |##########################|        |
  * |##########################|--------|
+ * |##########################|########|
  * |##########################|        |
  * |##########################|        |
  * |                          |--------|
+ * |                          |########|
  * |                          |        |
  * |                          |        |
  * `--------------------------'--------'
@@ -628,7 +629,7 @@ case object ThreeQuarterTallQuarter2Ql2 extends Slice {
         colSpan = 1,
         topItemRows = 2,
         topItemClasses = ItemClasses(
-          mobile = MediaList,
+          mobile = ListItem,
           tablet = Standard
         ),
         bottomItemRows = 2,
