@@ -207,18 +207,6 @@ $control-offset: 36 + $gs-gutter/2;
             }
         }
     }
-
-    .popup {
-        @include mq(mobileLandscape) {
-            left: $control-offset;
-        };
-    }
-
-    .brand-bar__item--action:before {
-        @include mq(mobileLandscape) {
-            margin-left: $control-offset * .5 - $popup-anchor-arrow-size;
-        };
-    }
 }
 
 /* Search Menu
