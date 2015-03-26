@@ -6,13 +6,21 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 @import "controls";
 
 .crossword__container {
-    @include flex-display;
-    @include flex-wrap(wrap);
+    position: relative;
+
+    @include mq(tablet) {
+        @include flex-display;
+        @include flex-wrap(wrap);
+    }
 }
 
 .crossword__focussed-clue-wrapper {
-    order: 2;
-    @include flex(1, 1, 0%);
+    margin-bottom: $gs-baseline * 2;
+
+    @include mq(tablet) {
+        @include flex(1, 1, 0%);
+        margin-left: $gs-gutter;
+    }
 }
 
 .crossword__grid-wrapper {
@@ -21,15 +29,13 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
     @include flex-basis($crossword-native-size);
     height: auto;
     display: block;
-    order: 1;
 }
 
 .crossword__controls {
     @include flex-basis(100%);
-    order: 3;
+    padding-bottom: $gs-baseline / 2;
 }
 
 .crossword__clues {
     @include flex-basis(100%);
-    order: 3;
 }

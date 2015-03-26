@@ -1,6 +1,8 @@
 .crossword__focussed-clue-wrapper {
-    margin-left: $gs-gutter;
     border-top: 2px solid colour(crosswordAccent2);
+
+    @include mq(tablet) {
+    }
 }
 
 .crossword__focussed-clue--direction {
