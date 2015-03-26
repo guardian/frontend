@@ -28,7 +28,7 @@ object QuizzesController extends Controller with Logging {
     if (Switches.QuizScoresService.isSwitchedOn) {
       Quizzes.update(request.body).map {
         _ =>
-          NoCache(Ok(""))
+          Cors(NoCache(Ok("")), Some("POST"))
       }
     } else {
       Future.successful(Cached(3600)(NotFound("")))
