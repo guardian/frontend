@@ -487,6 +487,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 18)
   )
 
+  val ABMtStickyBottom = Switch("A/B Tests", "ab-mt-sticky-bottom",
+    "Top ad slot is sticky at the bottom of page.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
+  )
+
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
     "Switch for the UK Network Front heatmap test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
