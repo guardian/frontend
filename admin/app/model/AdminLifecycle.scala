@@ -66,7 +66,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       MatchDayRecorder.record()
     }
 
-    Jobs.schedule("AdImpressionCountJob", "0 * * * * ?") {
+    Jobs.schedule("AdImpressionCountJob", "0 */3 * * * ?") {
       AdImpressionCounter.count()
     }
 

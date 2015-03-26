@@ -4,8 +4,9 @@ import java.net.{URL, URLEncoder}
 
 import common.{BadConfigurationException, ExecutionContexts, Logging}
 import conf.Configuration._
-import model.ContentType
-import model.commercial.AdSlot
+import layout.{Breakpoint, Desktop, Mobile, Tablet}
+import model.commercial._
+import model.{ArticleType, ContentType, SectionFrontType}
 import play.api.Play.current
 import play.api.libs.json._
 import play.api.libs.ws.WS
@@ -104,14 +105,43 @@ object OphanApi extends ExecutionContexts with Logging with implicits.WSRequests
   def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] =
     getBody("video/mostviewed")(Map("hours" -> hours.toString, "count" -> count.toString))
 
-  def getAdImpressionCount(contentType: ContentType,
-                           adSlot: AdSlot,
-                           browserFamily: BrowserFamily): Future[Int] = {
-    getBody("ads/count")(
-      Map("content-type" -> contentType.name,
-        "ad-slot" -> adSlot.name,
-        "uafamily" -> browserFamily.name,
-        "mins" -> "1")) map {
+  def getAdImpressionCount(adSlot: AdSlot,
+                           breakpoint: Breakpoint,
+                           country: String,
+                           contentType: ContentType): Future[Int] = {
+
+    val ophanAdSlot = adSlot match {
+      case TopAboveNav => "dfp-ad--top-above-nav"
+      case Top => "dfp-top"
+      case Right => "dfp-right"
+      case Inline1 => "dfp-ad--inline1"
+      case Inline2 => "dfp-ad--inline2"
+      case Inline3 => "dfp-ad--inline3"
+      case _ => throw new IllegalArgumentException(s"No such ad slot: $adSlot")
+    }
+
+    val ophanDevice = breakpoint match {
+      case Mobile => "Smartphone"
+      case Tablet => "Tablet"
+      case Desktop => "Personal computer"
+      case _ => throw new IllegalArgumentException(s"No such breakpoint: $breakpoint")
+    }
+
+    val ophanContentType = contentType match {
+      case ArticleType => "article"
+      case SectionFrontType => "section"
+      case _ => throw new IllegalArgumentException(s"No such content type: $contentType")
+    }
+
+    val params: Map[String, String] = Map(
+      "mins" -> "3",
+      "ad-slot" -> ophanAdSlot,
+      "device" -> ophanDevice,
+      "country" -> country,
+      "content-type" -> ophanContentType
+    )
+
+    getBody("ads/count")(params) map {
       case JsNumber(count) => count.toInt
       case other =>
         val msg = s"Unexpected ad impression count response: $other"
@@ -119,12 +149,4 @@ object OphanApi extends ExecutionContexts with Logging with implicits.WSRequests
         throw new RuntimeException(msg)
     }
   }
-}
-
-sealed trait BrowserFamily {
-  val name: String
-}
-
-case object mobileSafari extends BrowserFamily {
-  override val name: String = "Mobile Safari"
 }
