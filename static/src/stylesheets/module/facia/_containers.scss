@@ -120,4 +120,31 @@
             }
         }
     }
+
+    .fc-slice--qqqtall-q2 {
+        // This targets the first item in the right-hand column only
+        .l-row__item--span-1:first-of-type {
+            .fc-item__media-wrapper {
+                display: block !important;
+            }
+        }
+    }
+
+    .fc-slice--qqqtall-q3,
+    .fc-slice--qqqtall-q4 {
+        .fc-item--standard-tablet {
+            &.fc-item--has-sublinks-1 {
+                .fc-item__media-wrapper {
+                    display: none;
+                }
+            }
+        }
+
+        // Hide images on all except the first item in right-hand column
+        .l-list__item.l-row__item--span-1:nth-of-type(n+2) {
+            .fc-item__media-wrapper {
+                display: none !important;
+            }
+        }
+    }
 }

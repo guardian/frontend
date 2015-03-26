@@ -14,9 +14,9 @@ object DynamicPackage extends DynamicContainer {
       } else if (stories.length == 3) {
         ThreeQuarterTallQuarter2
       } else if (stories.length == 4) {
-        ThreeQuarterTallQuarterQl2
+        ThreeQuarterTallQuarter3
       } else {
-        ThreeQuarterTallQl4
+        ThreeQuarterTallQuarter4
       })
     }
   }
