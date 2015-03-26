@@ -92,8 +92,8 @@
                             <table class="table--commercial">
                                 <thead class="table--commercial__head">
                                     <tr class="table--commercial__row">
-                                        <th class="table--commercial__cell">Account Name</th>
-                                        <th class="table--commercial__cell">Balance Transfer</th>
+                                        <th class="table--commercial__cell table--commercial__cell-large">Account Name</th>
+                                        <th class="table--commercial__cell table--commercial__cell-medium">Balance Transfer</th>
                                         <th class="table--commercial__cell">Purchases</th>
                                         <th class="table--commercial__cell">Representative APR (Variable)</th>
                                         <th class="table--commercial__cell u-h">Link to product</th>
@@ -101,18 +101,18 @@
                                 </thead>
                                 <tbody class="table--commercial__body">
                                     <tr class="table--commercial__row">
-                                        <td class="table--commercial__cell" colspan="6">Best for balance transfer</td>
+                                        <td class="table--commercial__cell table--commercial__cell-subtitle" colspan="6">Best for balance transfer</td>
                                     </tr>
                                 @bestBuys.creditCards.get("balance-transfer").getOrElse(Nil).take(1).map { creditCard =>
                                     <tr class="table--commercial__row">
                                         <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
                                         <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td>
-                                        <td class="table--commercial__cell">Purchase rate: @creditCard.purchaseRate%<br/>Duration: @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell">Purchase rate: @creditCard.purchaseRate%<br/>Duration: @creditCard.purchaseRateDuration months</td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
                                     <tr class="table--commercial__row">
-                                        <td class="table--commercial__cell" colspan="5">@creditCard.example</td>
+                                        <td class="table--commercial__cell table--commercial__cell-example" colspan="5">@creditCard.example</td>
                                     </tr>
                                 }
                                 <tr class="table--commercial__row">
@@ -122,7 +122,7 @@
                                     <tr class="table--commercial__row">
                                         <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
                                         <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td></td>
-                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell">Purchase rate: @creditCard.purchaseRate%<br/>Duration: @creditCard.purchaseRateDuration months</td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
@@ -137,7 +137,7 @@
                                     <tr class="table--commercial__row">
                                         <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
                                         <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td></td>
-                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell">Purchase rate: @creditCard.purchaseRate%<br/>Duration: @creditCard.purchaseRateDuration months</td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
@@ -152,7 +152,7 @@
                                     <tr class="table--commercial__row">
                                         <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
                                         <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td></td>
-                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell">Purchase rate: @creditCard.purchaseRate%<br/>Duration: @creditCard.purchaseRateDuration months</td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
@@ -167,7 +167,7 @@
                                     <tr class="table--commercial__row">
                                         <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
                                         <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td></td>
-                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell">Purchase rate: @creditCard.purchaseRate%<br/>Duration: @creditCard.purchaseRateDuration months</td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
@@ -182,7 +182,7 @@
                                     <tr class="table--commercial__row">
                                         <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
                                         <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td></td>
-                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell">Purchase rate: @creditCard.purchaseRate%<br/>Duration: @creditCard.purchaseRateDuration months</td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>
@@ -197,7 +197,7 @@
                                     <tr class="table--commercial__row">
                                         <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
                                         <td class="table--commercial__cell">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td></td>
-                                        <td class="table--commercial__cell">@creditCard.purchaseRate%, @creditCard.purchaseRateDuration</td>
+                                        <td class="table--commercial__cell">Purchase rate: @creditCard.purchaseRate%<br/>Duration: @creditCard.purchaseRateDuration months</td>
                                         <td class="table--commercial__cell">@creditCard.representativeApr%</td>
                                         <td class="table--commercial__cell"><a href="@creditCard.applyUrl">More</a></td>
                                     </tr>

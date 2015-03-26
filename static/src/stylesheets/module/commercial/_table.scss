@@ -12,6 +12,22 @@
         line-height: 1;
         padding: $gs-baseline/3 0 $gs-baseline;
     }
+    
+    .table--commercial__cell-large {
+        width: 25%;
+    }
+    
+    .table--commercial__cell-medium {
+        width: 20%;
+    }
+    
+    .table--commercial__cell-subtitle {
+        border-top: 1px solid colour(neutral-5);
+    }
+    
+    .table--commercial__cell-example {
+        border-bottom: 1px solid colour(neutral-5);
+    }
 
     .table--commercial__head {
         color: colour(neutral-2);
