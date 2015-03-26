@@ -2,7 +2,7 @@ define([
     'common/utils/detect',
     'common/utils/config'
 ], function (
-    detection,
+    detect,
     config
 ) {
     return function () {
@@ -20,7 +20,7 @@ define([
 
         this.canRun = function () {
             var isUsNetworkFront = (config.page.edition === 'US') && config.page.pageId === 'us',
-                isDesktop = detection.getBreakpoint() === 'desktop';
+                isDesktop = detect.getBreakpoint() === 'desktop';
 
             return isUsNetworkFront && isDesktop;
         };
