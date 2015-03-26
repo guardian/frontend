@@ -33,7 +33,8 @@ define([
             },
             applyMembershipLink = function () {
                 $registerLink.attr('href', $registerLink.attr('href')
-                    + '?returnUrl=https://membership.theguardian.com/join/friend/enter-details&skipConfirmation=true');
+                    + '?returnUrl=' + encodeURIComponent('https://membership.theguardian.com/join/friend/enter-details')
+                    + '&skipConfirmation=true');
             },
             becomeAMember = function () {
                 $registerText.text('become a member');
