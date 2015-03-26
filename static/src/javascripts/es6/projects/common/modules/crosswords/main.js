@@ -190,8 +190,7 @@ var Crossword = React.createClass({
              * to the new cell, not change direction or anything funny.
              */
 
-            this.state.cellInFocus = {x: x, y: y};
-            this.forceUpdate();
+            this.focusClue(x, y, this.state.directionOfEntry);
         } else {
             this.state.cellInFocus = {x: x, y: y};
 
