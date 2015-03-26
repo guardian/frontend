@@ -1,11 +1,15 @@
 define([
     'common/utils/$',
     'common/utils/_',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/detect',
+    'common/utils/mediator'
 ], function (
     $,
     _,
-    config
+    config,
+    detect,
+    mediator
 ) {
     return function () {
         this.id = 'MtStickyBottom';
@@ -25,7 +29,15 @@ define([
         };
 
         function updatePosition(config) {
-            if (window.scrollY < 500) {
+            config.$stickyTopAd.css({
+                position:  'fixed',
+                bottom:       0,
+                width:     '100%',
+                'z-index': '1001'
+            });
+
+
+            /*if (window.scrollY < 500) {
                 //topAd is sticky from the beginning
                 config.$stickyTopAd.css({
                     position:  'fixed',
@@ -72,7 +84,7 @@ define([
                         top:       0
                     });
                 }
-            }
+            } */
         }
 
         function updatePositionMobile(config) {
@@ -121,32 +133,31 @@ define([
                 id: 'variant',
                 test: function () {
                     var stickyConfig = {
-                            $stickyNavigation: $('.sticky-nav-mt-test .navigation'),
+                            //$stickyNavigation: $('.sticky-nav-mt-test .navigation'),
                             $stickyTopAd: $('.sticky-nav-mt-test .top-banner-ad-container'),
-                            $header: $('.sticky-nav-mt-test .l-header__inner'),
+                            //$header: $('.sticky-nav-mt-test .l-header__inner'),
                             $bannnerMobile: $('.top-banner-ad-container--mobile'),
                             $contentBelowMobile: $('#maincontent')
-                        },
-                        windowWidth = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
+                        };
 
-                    $('.sticky-nav-mt-test .l-header-main').css('overflow', 'hidden');
-                    stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
-                    stickyConfig.headerHeight = stickyConfig.$header.dim().height;
+                    //$('.sticky-nav-mt-test .l-header-main').css('overflow', 'hidden');
+                    //stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
+                    //stickyConfig.headerHeight = stickyConfig.$header.dim().height;
                     stickyConfig.belowMobileMargin = stickyConfig.stickyNavigationHeight + stickyConfig.$bannnerMobile.dim().height;
 
-                    if (windowWidth <= 740) {
+                    /*if (detect.getBreakpoint() === 'mobile') {
                         updatePositionMobile(stickyConfig);
 
                         mediator.on('window:scroll', _.throttle(function () {
                             updatePositionMobile(stickyConfig);
                         }, 10));
-                    } else {
+                    } else {*/
                         mediator.on('window:scroll', _.throttle(function () {
                             //height of topAd needs to be recalculated because we don't know when we will get repspond from DFP
                             stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
                             updatePosition(stickyConfig);
                         }, 10));
-                    }
+                   // }
                 }
             }
         ];
