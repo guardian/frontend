@@ -39,7 +39,7 @@ define([
                         a.async = true;
                         a.type = 'text/javascript';
 
-                        window.CE_SNAPSHOT_NAME = "US Network front on Desktop";
+                        window.CE_SNAPSHOT_NAME = 'US Network front on Desktop';
 
                         b.parentNode.insertBefore(a, b);
                     }, 1);
