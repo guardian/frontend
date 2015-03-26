@@ -13,6 +13,7 @@ import Grid from 'es6/projects/common/modules/crosswords/grid';
 import helpers from 'es6/projects/common/modules/crosswords/helpers';
 import keycodes from 'es6/projects/common/modules/crosswords/keycodes';
 import persistence from 'es6/projects/common/modules/crosswords/persistence';
+import loadFont from 'es6/projects/common/modules/crosswords/font';
 
 // make react available to dev tool
 window.React || (window.React = React);
@@ -24,6 +25,8 @@ var Crossword = React.createClass({
         this.columns = dimensions.cols;
         this.rows = dimensions.rows;
         this.clueMap = helpers.buildClueMap(this.props.data.entries);
+
+        loadFont();
 
         return {
             grid: helpers.buildGrid(
