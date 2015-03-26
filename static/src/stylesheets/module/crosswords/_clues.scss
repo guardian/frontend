@@ -55,22 +55,6 @@
     color: darken(colour(crosswordAccent2), 15%);
 }
 
-.crossword__focussed-clue {
-    margin-bottom: $gs-baseline;
-    color: darken(colour(crosswordAccent2), 15%);
-    font-style: italic;
-}
-
 .crossword__clue--answered {
     color: colour(neutral-4);
-}
-
-.crossword__controls {
-    display: block;
-    margin-bottom: $gs-baseline;
-
-    @include mq(tablet) {
-        float: left;
-        clear: both;
-    }
 }

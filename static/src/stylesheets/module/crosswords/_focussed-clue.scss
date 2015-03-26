@@ -1,0 +1,5 @@
+.crossword__focussed-clue {
+    margin-bottom: $gs-baseline;
+    color: darken(colour(crosswordAccent2), 15%);
+    font-style: italic;
+}
