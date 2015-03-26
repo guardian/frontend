@@ -1,9 +1,11 @@
 define([
+    'fastdom',
     'qwery',
     'common/utils/$',
     'helpers/fixtures',
     'common/modules/commercial/creatives/fluid250'
 ], function(
+    fastdom,
     qwery,
     $,
     fixtures,
@@ -46,8 +48,10 @@ define([
                 layerTwoBGPosition: 'left top',
                 layerThreeBGPosition: 'left top'
             }).create();
-            expect(qwery('.fluid250_video--vert-pos-top', '.ad-slot').length).toBe(1);
-            expect(qwery('.fluid250_video--horiz-pos-left', '.ad-slot').length).toBe(1);
+            fastdom.defer(function () {
+                expect(qwery('.fluid250_video--vert-pos-top', '.ad-slot').length).toBe(1);
+                expect(qwery('.fluid250_video--horiz-pos-left', '.ad-slot').length).toBe(1);
+            });
         });
 
     });
