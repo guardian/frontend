@@ -4,8 +4,8 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
-    'common/modules/crosswords/helpers',
-    'common/modules/crosswords/persistence'
+    'es6/projects/common/modules/crosswords/helpers',
+    'es6/projects/common/modules/crosswords/persistence'
 ], function (
     bonzo,
     qwery,

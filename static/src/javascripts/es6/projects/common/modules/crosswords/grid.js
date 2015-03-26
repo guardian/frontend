@@ -1,9 +1,9 @@
 /* jshint newcap: false */
 define([
-    'react',
+    'react/addons',
     'common/utils/_',
-    'common/modules/crosswords/constants',
-    'common/modules/crosswords/helpers'
+    'es6/projects/common/modules/crosswords/constants',
+    'es6/projects/common/modules/crosswords/helpers'
 ], function (
     React,
     _,

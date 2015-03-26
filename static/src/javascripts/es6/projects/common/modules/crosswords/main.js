@@ -5,13 +5,13 @@ define([
     'bean',
     'bonzo',
     'react',
-    'common/modules/crosswords/clues',
-    'common/modules/crosswords/controls',
-    'common/modules/crosswords/focussedClue',
-    'common/modules/crosswords/grid',
-    'common/modules/crosswords/helpers',
-    'common/modules/crosswords/keycodes',
-    'common/modules/crosswords/persistence'
+    'es6/projects/common/modules/crosswords/clues',
+    'es6/projects/common/modules/crosswords/controls',
+    'es6/projects/common/modules/crosswords/focussedClue',
+    'es6/projects/common/modules/crosswords/grid',
+    'es6/projects/common/modules/crosswords/helpers',
+    'es6/projects/common/modules/crosswords/keycodes',
+    'es6/projects/common/modules/crosswords/persistence'
 ], function (
     $,
     _,
