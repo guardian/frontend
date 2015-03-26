@@ -28,12 +28,13 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
     margin-bottom: $gs-baseline;
     @include flex-basis($crossword-native-size);
     height: auto;
+    font-size: 0;
     display: block;
 }
 
 .crossword__controls {
     @include flex-basis(100%);
-    padding-bottom: $gs-baseline / 2;
+    padding-bottom: $gs-baseline;
 }
 
 .crossword__clues {

@@ -162,8 +162,10 @@ var Crossword = React.createClass({
         wrapper.style.left = position.x + '%';
         wrapper.style.top = position.y + '%';
 
-        if (document.activeElement !== this.refs.hiddenInput.getDOMNode()) {
-            this.refs.hiddenInput.getDOMNode().focus();
+        let hiddenInputNode = this.refs.hiddenInput.getDOMNode();
+
+        if (document.activeElement !== hiddenInputNode) {
+            hiddenInputNode.focus();
         }
     },
 
