@@ -29,8 +29,7 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    setTimeout(function()
-                    {
+                    setTimeout(function() {
                         var a = document.createElement('script'),
                             b = document.getElementsByTagName('script')[0],
                             offset = Math.floor(new Date().getTime() / 3600000),
