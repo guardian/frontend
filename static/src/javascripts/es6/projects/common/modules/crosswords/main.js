@@ -231,13 +231,11 @@ var Crossword = React.createClass({
     getContextualCluesFor: function (clue) {
         let clueDirection = clue.direction,
             [x, y] = clueDirection === 'down' ? ['x', 'y'] : ['y', 'x'],
-            clueX = clue.position[x],
-            clueY = clue.position[y],
+            {[x]: clueX, [y]: clueY} = clue.position,
             clueLength = clue.length;
 
         return _.filter(this.props.data.entries, (test) => {
-            let testX = test.position[x],
-                testY = test.position[y],
+            let {[x]: testX, [y]: testY} = test.position,
                 testLength = test.length;
 
             return testClue.direction !== clueDirection &&
