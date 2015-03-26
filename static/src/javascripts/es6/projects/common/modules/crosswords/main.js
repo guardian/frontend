@@ -364,14 +364,8 @@ var Crossword = React.createClass({
     },
 
     render: function () {
-        var focussed = this.clueInFocus(),
-            isHighlighted = function (x, y) {
-                if (focussed) {
-                    return helpers.entryHasCell(focussed, x, y);
-                } else {
-                    return false;
-                }
-            };
+        let focussed = this.clueInFocus(),
+            isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
 
         return React.DOM.div({
             className: 'crossword__container'
