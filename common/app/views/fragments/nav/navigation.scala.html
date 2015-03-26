@@ -16,14 +16,14 @@
                         @if(!Edition.isEditionFront){
                             @fragments.nav.signposting(metaData, navigation)
 
-                            @Navigation.topLevelItem(navigation, metaData).map{ topSection =>
-                                @if(Navigation.localLinks(navigation, metaData).nonEmpty) {
+                            @defining(Navigation.rotatedLocalNav(Navigation.topLevelItem(navigation, metaData), metaData)){ localNav =>
+                                @if(localNav.nonEmpty) {
                                     <ul class="local-navigation">
-                                        @Navigation.rotatedLocalNav(topSection, metaData).map{ link =>
-                                            <li class="local-navigation__item">
-                                                <a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : secondary : @link.title">@Html(link.title)</a>
-                                            </li>
-                                        }
+                                    @localNav.map{ link =>
+                                        <li class="local-navigation__item">
+                                            <a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : secondary : @link.title">@Html(link.title)</a>
+                                        </li>
+                                    }
                                     </ul>
                                 }
                             }

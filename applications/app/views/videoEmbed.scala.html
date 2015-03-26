@@ -80,9 +80,15 @@
                         ),
                         config: @fragments.javaScriptConfig(video)
                     };
-                    window.s_account = 'guardiangu-thirdpartyapps';
-
                     var docClass = document.documentElement.className;
+
+                    @* Get iframes parent url: http://www.nczonline.net/blog/2013/04/16/getting-the-url-of-an-iframes-parent/ *@
+                    var parentUrl = (!!window.parent && window.parent !== window) ? document.referrer : '';
+
+                    @* Hack to correctly track external embeds which have been incorrectly embedded on theguardian.com *@
+                    var sAccount = (/www\.theguardian\.com/.test(parentUrl)) ? 'guardiangu-frontend,guardiangu-network' : 'guardiangu-thirdpartyapps';
+
+                    window.s_account = sAccount;
 
                     function hasSvgSupport() {
                         var ns = {'svg': 'http://www.w3.org/2000/svg'};

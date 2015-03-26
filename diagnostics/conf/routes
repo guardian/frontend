@@ -20,3 +20,7 @@ OPTIONS    /css                             controllers.DiagnosticsController.cs
 
 POST       /accept-beacon                   controllers.DiagnosticsController.acceptBeacon
 OPTIONS    /accept-beacon                   controllers.DiagnosticsController.acceptBeaconOptions
+
+GET        /quiz/results/$quizId<.+>    controllers.QuizzesController.results(quizId)
+POST       /quiz/update                 controllers.QuizzesController.update()
+OPTIONS    /quiz/update                   controllers.DiagnosticsController.acceptBeaconOptions

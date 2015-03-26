@@ -67,16 +67,17 @@ CommentBox.prototype.classes = {};
 CommentBox.prototype.errorMessages = {
     EMPTY_COMMENT_BODY: 'Please write a comment.',
     COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
-    ENHANCE_YOUR_CALM: 'You can only post one comment every minute. Please try again in a moment.',
+    HTTP_420: 'You can only post one comment every minute. Please try again in a moment.',
+    HTTP_0: /*CORS blocked by HTTP/1.0 proxy*/'Could not post due to your internet settings, which might be controlled by your provider. Please contact your administrator or disable any proxy servers or VPNs and try again.',
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
-    API_ERROR: 'Sorry, there was a problem posting your comment.',
+    API_ERROR: 'Sorry, there was a problem posting your comment.  Please try another browser or network connection.  Reference code ',
     EMAIL_VERIFIED: '<span class="d-comment-box__error-meta">Sent. Please check your email to verify '+
-        (IdentityApi.getUserFromCookie() ? IdentityApi.getUserFromCookie().primaryEmailAddress : ' your email address') +'. Once verified post your comment.</span>',
+        ' your email address' +'. Once verified post your comment.</span>',
     EMAIL_VERIFIED_FAIL: 'We are having technical difficulties. Please try again later or '+
         '<a href="/send/email" class="js-id-send-validation-email"><strong>resend the verification</strong></a>.',
     EMAIL_NOT_VERIFIED: 'Please confirm your email address to post your first comment.<br />'+
-        '<a href="_#" class="js-id-send-validation-email"><strong>Send verification email</strong></a><span class="d-comment-box__error-meta"> to '+
-        (IdentityApi.getUserFromCookie() ? IdentityApi.getUserFromCookie().primaryEmailAddress : ' your email address') + '.</span>'
+        'If you can\'t find the email, we can <a href="_#" class="js-id-send-validation-email"><strong>resend the verification email</strong></a><span class="d-comment-box__error-meta"> to '+
+        ' your email address' + '.</span>'
 };
 
 /**
@@ -287,12 +288,12 @@ CommentBox.prototype.fail = function(xhr) {
 
     this.setFormState();
 
-    if (xhr.status === 420) {
-        this.error('ENHANCE_YOUR_CALM');
+    if (this.errorMessages['HTTP_' + xhr.status]) {
+        this.error('HTTP_' + xhr.status);
     } else if (this.errorMessages[response.errorCode]) {
         this.error(response.errorCode);
     } else {
-        this.error('API_ERROR');
+        this.error('API_ERROR', this.errorMessages.API_ERROR + xhr.status);// templating would be ideal here
     }
 };
 
