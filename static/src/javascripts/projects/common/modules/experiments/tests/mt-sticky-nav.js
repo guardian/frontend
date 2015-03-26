@@ -2,11 +2,13 @@ define([
     'common/utils/$',
     'common/utils/_',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/mediator'
 ], function (
     $,
     _,
     config,
+    detect,
     mediator
 ) {
     return function () {
@@ -128,15 +130,14 @@ define([
                             $header: $('.sticky-nav-mt-test .l-header__inner'),
                             $bannnerMobile: $('.top-banner-ad-container--mobile'),
                             $contentBelowMobile: $('#maincontent')
-                        },
-                        windowWidth = window.screen.width < window.outerWidth ? window.screen.width : window.outerWidth;
+                        };
 
                     $('.sticky-nav-mt-test .l-header-main').css('overflow', 'hidden');
                     stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
                     stickyConfig.headerHeight = stickyConfig.$header.dim().height;
                     stickyConfig.belowMobileMargin = stickyConfig.stickyNavigationHeight + stickyConfig.$bannnerMobile.dim().height;
 
-                    if (windowWidth <= 740) {
+                    if (detect.getBreakpoint() === 'mobile') {
                         updatePositionMobile(stickyConfig);
 
                         mediator.on('window:scroll', _.throttle(function () {
