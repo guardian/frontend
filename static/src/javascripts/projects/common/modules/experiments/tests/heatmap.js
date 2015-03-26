@@ -1,6 +1,8 @@
 define([
+    'common/utils/detect',
     'common/utils/config'
 ], function (
+    detection,
     config
 ) {
     return function () {
@@ -17,16 +19,18 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            var isUsNetworkFront = (config.page.edition === 'US') && config.page.pageId === 'us';
+            var isUsNetworkFront = (config.page.edition === 'US') && config.page.pageId === 'us',
+                isDesktop = detection.getBreakpoint() === 'desktop';
 
-            return isUsNetworkFront
+            return isUsNetworkFront && isDesktop;
         };
 
         this.variants = [
             {
                 id: 'variant',
                 test: function () {
-                    setTimeout(function () {
+                    setTimeout(function()
+                    {
                         var a = document.createElement('script'),
                             b = document.getElementsByTagName('script')[0],
                             offset = Math.floor(new Date().getTime() / 3600000),
