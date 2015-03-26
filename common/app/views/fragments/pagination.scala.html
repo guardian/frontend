@@ -17,11 +17,7 @@
             href="@paginated(p)"
             data-link-name="Pagination view @dir"
             aria-label="@ariaContext @dir page">
-            @if(dir == "next") {
-                @fragments.inlineSvg("arrow-right", "icon")<span class="u-h">@dir</span>
-            } else {
-                @fragments.inlineSvg("arrow-left", "icon")<span class="u-h">@dir</span>
-            }
+            @fragments.inlineSvg("arrow-left", "icon", List("pagination__action__icon", s"pagination__action__icon--$dir"))<span class="u-h">@dir</span>
         </a>
     }
 }
