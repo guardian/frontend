@@ -6,7 +6,7 @@ import play.api.mvc.{Action, Controller}
 import services.ReturnUrlVerifier
 import utils.SafeLogging
 
-class SyncedPreferencesController @Inject() (returnUrlVerifier: ReturnUrlVerifier)
+class SaveContentController @Inject() (returnUrlVerifier: ReturnUrlVerifier)
   extends Controller with ExecutionContexts with SafeLogging {
 
   def saveContentItem = Action { implicit request =>
