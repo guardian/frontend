@@ -27,7 +27,11 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return config.page.edition === 'US' && $('html').hasClass('has-fixed');
+            var isEditionUs = config.page.edition === 'US',
+                isFixedSuported = $('html').hasClass('has-fixed'),
+                isOlderThanIphone4 = (window.screen.height <= (960 / 2));
+
+            return isEditionUs && isFixedSuported && !isOlderThanIphone4;
         };
 
         function updatePosition(config) {
