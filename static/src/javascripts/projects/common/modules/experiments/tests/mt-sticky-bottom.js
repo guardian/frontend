@@ -29,6 +29,7 @@ define([
         };
 
         function updatePosition(config) {
+            console.log(config);
             config.$stickyTopAd.css({
                 position:  'fixed',
                 bottom:       0,
@@ -87,7 +88,7 @@ define([
             } */
         }
 
-        function updatePositionMobile(config) {
+        /*function updatePositionMobile(config) {
             if (window.scrollY < 500) {
                 //navigation is not sticky yet
                 config.$stickyNavigation.css({
@@ -126,7 +127,7 @@ define([
                     top:       500
                 });
             }
-        }
+        }*/
 
         this.variants = [
             {
@@ -139,6 +140,8 @@ define([
                             $bannnerMobile: $('.top-banner-ad-container--mobile'),
                             $contentBelowMobile: $('#maincontent')
                         };
+
+                    console.log('variant');
 
                     //$('.sticky-nav-mt-test .l-header-main').css('overflow', 'hidden');
                     //stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
