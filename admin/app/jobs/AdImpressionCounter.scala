@@ -3,7 +3,7 @@ package jobs
 import common.{ExecutionContexts, Logging}
 import conf.Configuration.environment
 import conf.Switches.MetricsSwitch
-import layout.{Breakpoint, Desktop, Mobile, Tablet}
+import layout.{Breakpoint, Desktop, Mobile}
 import model.commercial._
 import model.diagnostics.CloudWatch
 import model.{ArticleType, ContentType, SectionFrontType}
@@ -65,19 +65,6 @@ object AdImpressionCounter extends ExecutionContexts with Logging {
           desktopSlots(SectionFrontType, Inline2)
       }
 
-      val tabletSlots = {
-        def tabletSlots(contentType: ContentType, adSlot: AdSlot) = {
-          zipWithCountries(Tablet, adSlot, contentType)
-        }
-        tabletSlots(ArticleType, Top) ++
-          tabletSlots(ArticleType, Inline1) ++
-          tabletSlots(ArticleType, Inline2) ++
-          tabletSlots(ArticleType, Inline3) ++
-          tabletSlots(SectionFrontType, Top) ++
-          tabletSlots(SectionFrontType, Inline1) ++
-          tabletSlots(SectionFrontType, Inline2)
-      }
-
       val mobileSlots = {
         def mobileSlots(contentType: ContentType, adSlot: AdSlot) = {
           zipWithCountries(Mobile, adSlot, contentType)
@@ -91,7 +78,7 @@ object AdImpressionCounter extends ExecutionContexts with Logging {
           mobileSlots(SectionFrontType, Inline2)
       }
 
-      val slotsToMonitor = desktopSlots ++ tabletSlots ++ mobileSlots
+      val slotsToMonitor = desktopSlots ++ mobileSlots
 
       val eventualCounts = slotsToMonitor map (count _).tupled
 

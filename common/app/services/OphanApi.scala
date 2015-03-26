@@ -134,7 +134,7 @@ object OphanApi extends ExecutionContexts with Logging with implicits.WSRequests
     }
 
     val params: Map[String, String] = Map(
-      "mins" -> "3",
+      "mins" -> "1",
       "ad-slot" -> ophanAdSlot,
       "device" -> ophanDevice,
       "country" -> country,
