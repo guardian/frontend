@@ -26,6 +26,9 @@ OPTIONS     /accept-beacon                                                      
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: CrosswordType, id: Int)
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
 
+# Business data
+GET        /business-data/stocks.json                 controllers.StocksController.stocks
+
 #Weather - OLD
 GET         /weather/city/:id.json                                                                                   controllers.WeatherController.forCity(id)
 GET         /weather/city.json                                                                                       controllers.LocationsController.whatIsMyCity()
@@ -252,7 +255,6 @@ GET         /commercial/jobs.json                                               
 
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.renderMasterclasses
 
-GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmatesController.renderMixedSoulmates
 GET         /commercial/soulmates/$subgroup<\w+>.json                                                                controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
 
 GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffersController.renderBook

@@ -3,8 +3,6 @@ define([
     'fastdom',
     'qwery',
     'Promise',
-    'lodash/collections/contains',
-    'lodash/objects/defaults',
     'common/utils/$',
     'common/utils/_',
     'common/utils/config',
@@ -15,8 +13,6 @@ define([
     fastdom,
     qwery,
     Promise,
-    contains,
-    defaults,
     $,
     _,
     config,
@@ -30,7 +26,7 @@ define([
             }
 
             var container, containerId, $adSlice, isFrontFirst,
-                opts = defaults(
+                opts = _.defaults(
                     options || {},
                     {
                         containerSelector: '.fc-container',
@@ -50,7 +46,7 @@ define([
                 containerId  = bonzo(container).data('id');
                 $adSlice     = $(opts.sliceSelector, container);
                 // don't display ad in the first container on the fronts
-                isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
+                isFrontFirst = _.contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
 
                 if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed')) {
                     adSlices.push($adSlice.first());

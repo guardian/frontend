@@ -16,8 +16,10 @@
         </aside>
     } else {
         <aside class="@classes.mkString(" ") js-related hide-on-childrens-books-site" role="complementary" data-test-id="related-content">
-        @* TODO progressive enhancement *@
-        @container(Nil, "related content >", "related-content", href = Some(s"related/${content.id}"))
+        @*
+            We are not doing progressive enhancement here. The related content query is expensive and crawlers
+            were having too much fun with the links that used to be here. Also, nobody was actually reading those pages.
+        *@
         </aside>
     }
 }

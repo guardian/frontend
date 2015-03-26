@@ -1,26 +1,34 @@
 package services
 
-import scala.concurrent.Future
-import play.api.libs.json._
+import java.net.{URL, URLEncoder}
+
+import common.{BadConfigurationException, ExecutionContexts, Logging}
 import conf.Configuration._
-import common.{ExecutionContexts, Logging}
-import play.api.libs.ws.WS
-import java.net.URL
+import model.ContentType
+import model.commercial.AdSlot
 import play.api.Play.current
+import play.api.libs.json._
+import play.api.libs.ws.WS
 
-object OphanApi extends ExecutionContexts with Logging {
+import scala.concurrent.Future
 
-  private def getBody(path: String, timeout: Int = ophanApi.timeout): Future[JsValue] = {
-    (for {
+object OphanApi extends ExecutionContexts with Logging with implicits.WSRequests {
+
+  private def getBody(path: String)(params: Map[String, String] = Map.empty): Future[JsValue] = {
+    val maybeJson = for {
       host <- ophanApi.host
       key <- ophanApi.key
     } yield {
-      val url = s"$host/$path&api-key=$key"
-      log.info("Making request to Ophan API: " + url)
-      WS.url(url) withRequestTimeout timeout get() map (_.json)
-    }) getOrElse {
-      log.error("Ophan host or key not configured")
-      Future.successful(JsObject(Nil))
+        val queryString = params map {
+          case (k, v) => s"$k=${URLEncoder.encode(v, "utf-8")}"
+        } mkString "&"
+        val url = s"$host/$path?$queryString&api-key=$key"
+        log.info(s"Making request to Ophan API: $url")
+        WS.url(url) withRequestTimeout ophanApi.timeout getOKResponse() map (_.json)
+      }
+
+    maybeJson getOrElse {
+      Future.failed(new BadConfigurationException("Ophan host or key not configured"))
     }
   }
 
@@ -32,43 +40,91 @@ object OphanApi extends ExecutionContexts with Logging {
     contentId
   }
 
-  def getBreakdown(platform: String, hours: Int): Future[JsValue] = getBody(s"breakdown?platform=$platform&hours=$hours")
 
-  def getBreakdown(path: String): Future[JsValue] = getBody(s"breakdown?path=/$path")
+  private def getBreakdown = getBody("breakdown") _
 
-  def getMostRead(referrer: String, hours: Int): Future[JsValue] = getBody(s"mostread?referrer=$referrer&hours=$hours")
+  def getBreakdown(platform: String, hours: Int): Future[JsValue] =
+    getBreakdown(Map("platform" -> platform, "hours" -> hours.toString))
 
-  def getMostRead(hours: Int, count: Int): Future[JsValue] = getBody(s"mostread?hours=$hours&count=$count")
+  def getBreakdown(path: String): Future[JsValue] = getBreakdown(Map("path" -> s"/$path"))
 
-  def getMostRead(hours: Int, count: Int, country: String): Future[JsValue] = getBody(s"mostread?hours=$hours&count=$count&country=$country")
+
+  private def getMostRead = getBody("mostread") _
+
+  def getMostRead(referrer: String, hours: Int): Future[JsValue] =
+    getMostRead(Map("referrer" -> referrer, "hours" -> hours.toString))
+
+  def getMostRead(hours: Int, count: Int): Future[JsValue] =
+    getMostRead(Map("hours" -> hours.toString, "count" -> count.toString))
+
+  def getMostRead(hours: Int, count: Int, country: String): Future[JsValue] =
+    getMostRead(Map("hours" -> hours.toString, "count" -> count.toString, "country" -> country))
 
   def getMostReadInSection(section: String, days: Int, count: Int): Future[JsValue] =
-    getBody(s"mostread?days=$days&count=$count&section=$section")
+    getMostRead(Map("days" -> days.toString, "count" -> count.toString, "section" -> section))
 
-  def getMostPopularOnward(path: String, hours: Int, count: Int, isContent: Boolean): Future[JsValue] =
-    getBody(s"onward?path=/$path&is-content=true&hours=3&count=10")
+  def getMostReferredFromSocialMedia(days: Int): Future[JsValue] =
+    getMostRead(Map("days" -> days.toString, "referrer" -> "social media"))
 
-  def getMostReferredFromSocialMedia(days: Int): Future[JsValue] = getBody(s"mostread?days=$days&referrer=social%20media")
+  def getMostViewedGalleries(hours: Int, count: Int): Future[JsValue] =
+    getMostRead(Map("content-type" -> "gallery",
+      "hours" -> hours.toString,
+      "count" -> count.toString))
 
-  val validQueryKeys = Seq("platform", "hours", "ad-slot")
+  def getMostViewedAudio(hours: Int, count: Int): Future[JsValue] =
+    getMostRead(Map("content-type" -> "audio",
+      "hours" -> hours.toString,
+      "count" -> count.toString))
+
+
+  def getMostPopularOnward(path: String,
+                           hours: Int,
+                           count: Int,
+                           isContent: Boolean): Future[JsValue] =
+    getBody("onward")(
+      Map("path" -> s"/$path",
+        "is-content" -> "true",
+        "hours" -> "3",
+        "count" -> "10"))
 
   def getAdsRenderTime(params: Map[String, Seq[String]]): Future[JsValue] = {
-    val query: String = params
-      .filter { case(k, v) =>
-        validQueryKeys.contains(k)
+    val validatedParams = for {
+      (key, values) <- params
+      if Seq("platform", "hours", "ad-slot").contains(key)
+      value <- values
+    } yield {
+        key -> value
       }
-      .map { case (k, v) =>
-        k + "=" + v.mkString(",")
-      }
-      .mkString("&")
-    getBody(s"ads/render-time?$query", 5000)
+
+    getBody("ads/render-time")(validatedParams)
   }
 
-  def getSurgingContent() = getBody("surging?")
+  def getSurgingContent(): Future[JsValue] = getBody("surging")()
 
-  def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] = getBody(s"video/mostviewed?hours=$hours&count=$count")
+  def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] =
+    getBody("video/mostviewed")(Map("hours" -> hours.toString, "count" -> count.toString))
 
-  def getMostViewedGalleries(hours: Int, count: Int): Future[JsValue] = getBody(s"mostread?content-type=gallery&hours=$hours&count=$count")
+  def getAdImpressionCount(contentType: ContentType,
+                           adSlot: AdSlot,
+                           browserFamily: BrowserFamily): Future[Int] = {
+    getBody("ads/count")(
+      Map("content-type" -> contentType.name,
+        "ad-slot" -> adSlot.name,
+        "uafamily" -> browserFamily.name,
+        "mins" -> "1")) map {
+      case JsNumber(count) => count.toInt
+      case other =>
+        val msg = s"Unexpected ad impression count response: $other"
+        log.error(msg)
+        throw new RuntimeException(msg)
+    }
+  }
+}
 
-  def getMostViewedAudio(hours: Int, count: Int): Future[JsValue] = getBody(s"mostread?content-type=audio&hours=$hours&count=$count")
+sealed trait BrowserFamily {
+  val name: String
+}
+
+case object mobileSafari extends BrowserFamily {
+  override val name: String = "Mobile Safari"
 }

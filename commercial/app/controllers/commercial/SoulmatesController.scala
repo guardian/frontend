@@ -22,14 +22,15 @@ object SoulmatesController extends Controller with implicits.Requests {
     renderSoulmates(sampleMembers(members))
   }
 
-  def renderMixedSoulmates = {
+  private def renderMixedSoulmates() = {
     val women = SoulmatesWomenAgent.sample(3)
     val men = SoulmatesMenAgent.sample(3)
-    renderSoulmates(women ++ men)
+    renderShuffledSoulmates(women ++ men)
   }
 
   def renderSoulmates(subgroup: String): Action[AnyContent] = {
     subgroup match {
+      case "mixed" => renderMixedSoulmates()
       case "brighton" => renderShuffledSoulmates(SoulmatesBrightonAgent.members)
       case "northwest" => renderShuffledSoulmates(SoulmatesNorthwestAgent.members)
       case "scotland" => renderShuffledSoulmates(SoulmatesScotlandAgent.members)

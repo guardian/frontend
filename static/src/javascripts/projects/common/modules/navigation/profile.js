@@ -2,7 +2,7 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'lodash/objects/assign',
+    'common/utils/_',
     'common/utils/ajax',
     'common/utils/mediator',
     'common/modules/identity/api'
@@ -10,7 +10,7 @@ define([
     bean,
     bonzo,
     fastdom,
-    assign,
+    _,
     ajax,
     mediator,
     id
@@ -21,7 +21,7 @@ define([
      * @constructor
      */
     function Profile(options) {
-        this.opts = assign(this.opts, options);
+        this.opts = _.assign(this.opts, options);
         this.dom.container = document.body.querySelector('.' + Profile.CONFIG.classes.container);
         this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
         this.dom.popup = document.body.querySelector('.' + Profile.CONFIG.classes.popup);

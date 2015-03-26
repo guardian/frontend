@@ -238,7 +238,7 @@ $show-more-icon-spacing: $base-size + 1;
     position: relative;
     padding-left: $show-more-icon-size + $show-more-icon-spacing * 2;
 
-    .i {
+    .i, svg {
         width: $show-more-icon-size;
         height: $show-more-icon-size;
         vertical-align: middle;

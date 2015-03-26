@@ -40,12 +40,6 @@ $control-size: 36px;
     .l-header--is-slim & {
         display: none;
     }
-
-    .brand-bar__item--profile & {
-        @include mq(mobileLandscape) {
-            display: block;
-        }
-    }
 }
 
 
