@@ -56,8 +56,6 @@ define([
             initFormStack: function () {
                 var allvars = urlutils.getUrlVars();
 
-                console.log("All Vars: "+ allvars);
-
                 if (allvars["CMP"]) {
                     $('.element-formstack').each(function (el) {
                         el.src = el.src + "?CMP=" + allvars["CMP"]
