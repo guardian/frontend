@@ -2,13 +2,13 @@ define([
     'common/utils/detect',
     'common/utils/config'
 ], function (
-    detection,
+    detect,
     config
 ) {
     return function () {
         this.id = 'Heatmap';
         this.start = '2015-03-24';
-        this.expiry = '2015-03-26';
+        this.expiry = '2015-03-28';
         this.author = 'Ken Lim';
         this.description = 'US network front desktop heatmap';
         this.audience = 0.01;
@@ -20,7 +20,7 @@ define([
 
         this.canRun = function () {
             var isUsNetworkFront = (config.page.edition === 'US') && config.page.pageId === 'us',
-                isDesktop = detection.getBreakpoint() === 'desktop';
+                isDesktop = detect.getBreakpoint() === 'desktop';
 
             return isUsNetworkFront && isDesktop;
         };
