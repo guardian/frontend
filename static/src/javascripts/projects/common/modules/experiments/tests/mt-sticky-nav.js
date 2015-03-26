@@ -28,10 +28,9 @@ define([
 
         this.canRun = function () {
             var isEditionUs = config.page.edition === 'US',
-                isFixedSuported = $('html').hasClass('has-fixed'),
-                isOlderThanIphone4 = (window.screen.height <= (960 / 2));
+                isFixedSuported = $('html').hasClass('has-fixed');
 
-            return isEditionUs && isFixedSuported && !isOlderThanIphone4;
+            return isEditionUs && isFixedSuported;
         };
 
         function updatePosition(config) {
