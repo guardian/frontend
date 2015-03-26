@@ -6,14 +6,14 @@ import _ from 'common/utils/_';
 import bean from 'bean';
 import bonzo from 'bonzo';
 
-import Clues from 'es6/projects/common/modules/crosswords/clues';
-import Controls from 'es6/projects/common/modules/crosswords/controls';
-import FocussedClue from 'es6/projects/common/modules/crosswords/focussedClue';
-import Grid from 'es6/projects/common/modules/crosswords/grid';
-import helpers from 'es6/projects/common/modules/crosswords/helpers';
-import keycodes from 'es6/projects/common/modules/crosswords/keycodes';
-import persistence from 'es6/projects/common/modules/crosswords/persistence';
-import loadFont from 'es6/projects/common/modules/crosswords/font';
+import Clues from './clues';
+import Controls from './controls';
+import FocussedClue from './focussedClue.jsx!';
+import Grid from './grid';
+import helpers from './helpers';
+import keycodes from './keycodes';
+import persistence from './persistence';
+import loadFont from './font';
 
 // make react available to dev tool
 window.React || (window.React = React);
