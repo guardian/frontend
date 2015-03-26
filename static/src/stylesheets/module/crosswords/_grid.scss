@@ -1,15 +1,3 @@
-.crossword__grid-wrapper {
-    position: relative;
-    margin-bottom: $gs-baseline;
-    width: 100%;
-    height: auto;
-    display: block;
-
-    @include mq(tablet) {
-        width: $crossword-native-size;
-    }
-}
-
 .crossword__grid {
     width: 100%;
     height: auto;

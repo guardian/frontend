@@ -4,4 +4,29 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
 @import "clues";
 
 .crossword__container {
+    @include flex-display;
+    @include flex-wrap(wrap);
+}
+
+.crossword__grid-wrapper {
+    position: relative;
+    margin-bottom: $gs-baseline;
+    @include flex-basis($crossword-native-size);
+    height: auto;
+    display: block;
+    order: 1;
+}
+
+.crossword__focussed-clue {
+    order: 2;
+}
+
+.crossword__controls {
+    @include flex-basis(100%);
+    order: 3;
+}
+
+.crossword__clues {
+    @include flex-basis(100%);
+    order: 3;
 }
