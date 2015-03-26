@@ -49,11 +49,14 @@ object Quizzes extends ExecutionContexts {
       case e: Exception =>
         Logger.error(e.getMessage)
         None
-    }.map(_.getOrElse(QuizAggregate(quizId, Nil, 0)))
+    }.map(_.getOrElse(QuizAggregate(quizId, Nil, Nil, 0)))
   }
 
   def addLatest(agg: QuizAggregate, upd: QuizUpdate) = {
-    QuizAggregate(agg.quizId, addResultsToList(agg.results, upd.results), agg.timeTaken + upd.timeTaken)
+    QuizAggregate(agg.quizId,
+      addResultsToList(agg.results, upd.results),
+      incrementByIndex(agg.scoreHistogram, upd.score, 40),
+      agg.timeTaken + upd.timeTaken)
   }
 
   def addResultsToList(aggList: List[List[Int]], newVals: List[Int]) = {
@@ -61,24 +64,26 @@ object Quizzes extends ExecutionContexts {
     extendedAgg.zip(newVals).toList.map{ x => incrementByIndex(x._1, x._2) }
   }
 
-  def incrementByIndex(a: List[Int], b: Int): List[Int] = {
+  def incrementByIndex(a: List[Int], b: Int, limit: Int = 5): List[Int] = {
     (a, b) match {
-      case (list, n) if n > 5 => list // prevent people adding more than 5 responses
+      case (list, n) if n > limit => list // prevent people adding more than 5 responses
       case (Nil, 0) => List(1)
       case (Nil, n) => List.fill(n)(0) ++ List(1)
       case (x::xs, 0) => x + 1 :: xs
-      case (x::xs, n) => x :: incrementByIndex(xs, b - 1)
+      case (x::xs, n) => x :: incrementByIndex(xs, n - 1, limit)
     }
   }
 
   case class QuizUpdate (
     quizId: String,
     results: List[Int],
+    score: Int,
     timeTaken: Long)
 
   case class QuizAggregate (
     quizId: String,
     results: List[List[Int]],
+    scoreHistogram: List[Int],
     timeTaken: Long)
 
 }
