@@ -451,11 +451,16 @@ object Switches {
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 16))
 
-  // A/B Tests
-
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
     "If switched on, any user registrations from a known tor esit node will be logged",
     safeState = On, sellByDate = never)
+
+  // A/B Tests
+
+  val ABIdentitySocialOAuth = Switch("A/B Tests", "ab-id-social-oauth",
+    "Switch to direct users to OAuth social sign-in app.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 25)
+  )
 
   val ABAcrossTheCountry = Switch("A/B Tests", "ab-across-the-country",
     "Tests container placement on the US front",
