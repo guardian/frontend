@@ -182,6 +182,12 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  //TODO - change safestate
+  val SavForLaterSwitch = Switch("Performance", "saveForLater",
+    "It this switch is turned on, user are able to save article. Turn off if the identity API",
+    safeState = On, sellByDate = never
+  )
+
   // Commercial
 
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
