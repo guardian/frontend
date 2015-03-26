@@ -1,5 +1,38 @@
+.crossword__focussed-clue-wrapper {
+    margin-left: $gs-gutter;
+    border-top: 2px solid colour(crosswordAccent2);
+}
+
+.crossword__focussed-clue--direction {
+    color: colour(crosswordAccent2);
+    @include fs-bodyHeading(2);
+    &:before {
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-color: transparent;
+        content: '';
+        font-size: 0;
+        margin-right: $gs-gutter * .25;
+        display: inline-block;
+    }
+}
+
 .crossword__focussed-clue {
-    margin-bottom: $gs-baseline;
-    color: darken(colour(crosswordAccent2), 15%);
-    font-style: italic;
+    @include fs-bodyCopy(1);
+}
+
+.crossword__focussed-clue--direction-across {
+    &:before {
+        border-width: 5px 0 5px 9px;
+        border-left-color: colour(crosswordAccent2);
+    }
+}
+
+.crossword__focussed-clue--direction-down {
+    &:before {
+        border-width: 9px 5px 0 5px;
+        border-top-color: colour(crosswordAccent2);
+    }
+
 }

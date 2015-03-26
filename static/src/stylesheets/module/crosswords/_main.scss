@@ -10,6 +10,11 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
     @include flex-wrap(wrap);
 }
 
+.crossword__focussed-clue-wrapper {
+    order: 2;
+    @include flex(1, 1, 0%);
+}
+
 .crossword__grid-wrapper {
     position: relative;
     margin-bottom: $gs-baseline;
@@ -17,10 +22,6 @@ $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it
     height: auto;
     display: block;
     order: 1;
-}
-
-.crossword__focussed-clue-wrapper {
-    order: 2;
 }
 
 .crossword__controls {

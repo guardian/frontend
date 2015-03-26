@@ -33,8 +33,7 @@
     padding-left: $gs-gutter / 2;
 }
 
-.crossword__clue,
-.crossword__focussed-clue {
+.crossword__clue {
     position: relative;
     cursor: pointer;
     @include fs-textSans(1);
