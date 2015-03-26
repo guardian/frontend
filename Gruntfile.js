@@ -79,8 +79,13 @@ module.exports = function (grunt) {
 
     });
     grunt.registerTask('compile:js', function(fullCompile) {
-        grunt.task.run(['clean:js', 'compile:inlineSvgs', 'shell:jspmBundleStatic',
-                        'concurrent:requireJS', 'copy:javascript']);
+        grunt.task.run(['clean:js', 'compile:inlineSvgs']);
+
+        if (!options.isDev) {
+            grunt.task.run('shell:jspmBundleStatic');
+        }
+
+        grunt.task.run(['concurrent:requireJS', 'copy:javascript']);
         if (!options.isDev) {
             grunt.task.run('uglify:javascript');
         }
