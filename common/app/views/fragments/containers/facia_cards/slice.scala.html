@@ -25,13 +25,10 @@
                 </li>
             }
 
-            case SplitColumn(colSpan, _, _) => {
+            case SplitColumn(colSpan, topItemRows, _, bottomItemRows, _) => {
                 <li class="fc-slice__item l-row__item l-row__item--span-@colSpan">
-                    <ul class="u-unstyled l-list l-list--columns-1 l-list--rows-3">
-                        @cards.headOption.map { card =>
-                            @item(card, containerIndex, isList = true)
-                        }
-                        @cards.tail.map { card =>
+                    <ul class="u-unstyled l-list l-list--columns-1 l-list--rows-@(topItemRows + bottomItemRows)">
+                        @cards.map { card =>
                             @item(card, containerIndex, isList = true)
                         }
                     </ul>

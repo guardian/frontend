@@ -118,7 +118,7 @@ object ContainerThumbnails {
                 style="font: 10px Arial, Verdana, sans-serif; alignment-baseline: central; fill: white;">MPU</text>
         </g>
 
-      case SplitColumn(_, topItemClasses, bottomItemClasses) =>
+      case SplitColumn(_, _, topItemClasses, _, bottomItemClasses) =>
         val centreY = y + height / 2
 
         <g>
