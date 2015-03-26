@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'common/utils/_',
     'common/utils/$',
     'common/utils/detect',
@@ -11,6 +12,7 @@ define([
 ], function (
     bean,
     bonzo,
+    fastdom,
     _,
     $,
     detect,
@@ -32,24 +34,35 @@ define([
 
     Fluid250.prototype.updateBgPosition = function () {
 
-        var bgpositionx, layeronebgpositionx, layertwobgpositionx, layerthreebgpositionx;
+        fastdom.read(function () {
 
-        if (this.params.backgroundPosition !== '') {
-            bgpositionx = this.params.backgroundPosition.split(' ')[0];
-            $('.ad-slot--top-banner-ad .creative--fluid250').css('background-position', bgpositionx + ' ' + window.pageYOffset * (this.params.backgroundImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
-        }
-        if (this.params.layerOneBGPosition !== '') {
-            layeronebgpositionx = this.params.layerOneBGPosition.split(' ')[0];
-            $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer1').css('background-position', layeronebgpositionx + ' ' + window.pageYOffset * (this.params.layerOneImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
-        }
-        if (this.params.layerTwoBGPosition !== '') {
-            layertwobgpositionx = this.params.layerTwoBGPosition.split(' ')[0];
-            $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer2').css('background-position', layertwobgpositionx + ' ' + window.pageYOffset * (this.params.layerTwoImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
-        }
-        if (this.params.layerThreeBGPosition !== '') {
-            layerthreebgpositionx = this.params.layerThreeBGPosition.split(' ')[0];
-            $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer3').css('background-position', layerthreebgpositionx + ' ' + window.pageYOffset * (this.params.layerThreeImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
-        }
+            var bgpositionx, layeronebgpositionx, layertwobgpositionx, layerthreebgpositionx;
+
+            if (this.params.backgroundPosition !== '') {
+                bgpositionx = this.params.backgroundPosition.split(' ')[0];
+                fastdom.write(function () {
+                    $('.ad-slot--top-banner-ad .creative--fluid250').css('background-position', bgpositionx + ' ' + window.pageYOffset * (this.params.backgroundImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
+                }.bind(this));
+            }
+            if (this.params.layerOneBGPosition !== '') {
+                layeronebgpositionx = this.params.layerOneBGPosition.split(' ')[0];
+                fastdom.write(function () {
+                    $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer1').css('background-position', layeronebgpositionx + ' ' + window.pageYOffset * (this.params.layerOneImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
+                }.bind(this));
+            }
+            if (this.params.layerTwoBGPosition !== '') {
+                layertwobgpositionx = this.params.layerTwoBGPosition.split(' ')[0];
+                fastdom.write(function () {
+                    $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer2').css('background-position', layertwobgpositionx + ' ' + window.pageYOffset * (this.params.layerTwoImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
+                }.bind(this));
+            }
+            if (this.params.layerThreeBGPosition !== '') {
+                layerthreebgpositionx = this.params.layerThreeBGPosition.split(' ')[0];
+                fastdom.write(function () {
+                    $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer3').css('background-position', layerthreebgpositionx + ' ' + window.pageYOffset * (this.params.layerThreeImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
+                }.bind(this));
+            }
+        }.bind(this));
     };
 
     Fluid250.prototype.create = function () {
@@ -67,12 +80,20 @@ define([
             videoDesktop = {
                 video: (this.params.videoURL !== '') ?
                     '<iframe width="409px" height="230px" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="fluid250_video fluid250_video--desktop fluid250_video--vert-pos-' + this.params.videoPositionV + ' fluid250_video--horiz-pos-' + this.params.videoPositionH + '" style="' + leftPosition + rightPosition + '"></iframe>' : ''
-            };
+            },
+            ad = $.create(template(fluid250Tpl, _.merge(this.params, templateOptions, videoDesktop)));
 
-        this.$fluid250 = $.create(template(fluid250Tpl, _.merge(this.params, templateOptions, videoDesktop))).appendTo(this.$adSlot);
+            fastdom.write(function () {
+                ad.appendTo(this.$adSlot);
+            }.bind(this));
 
         if (this.params.trackingPixel) {
-            this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+            fastdom.write(function () {
+                this.$adSlot.before(
+                    '<img src="' + this.params.trackingPixel + this.params.cacheBuster +
+                    '" class="creative__tracking-pixel" height="1px" width="1px"/>'
+                );
+            }.bind(this));
         }
 
         if (Fluid250.hasScrollEnabled && (this.params.backgroundImageScroll !== 'normal' ||
