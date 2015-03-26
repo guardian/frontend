@@ -28,26 +28,20 @@ var Clue = React.createClass({
 
 export default React.createClass({
     render: function () {
-        var that = this,
-            headerClass = 'crossword__clues-header';
+        var headerClass = 'crossword__clues-header';
 
-        function cluesByDirection(direction) {
-            return _.chain(that.props.clues)
-                .filter(function (clue) {
-                    return clue.entry.direction === direction;
-                })
-                .map(function (clue) {
-                    return Clue({
-                        number: clue.entry.number + '.',
-                        clue: clue.entry.clue,
-                        hasAnswered: clue.hasAnswered,
-                        isSelected: clue.isSelected,
-                        focusClue: function () {
-                            that.props.focusClue(clue.entry.position.x, clue.entry.position.y, direction);
-                        }
-                    });
-                });
-        }
+        let cluesByDirection = (direction) => _.chain(this.props.clues)
+            .filter((clue) => clue.entry.direction === direction)
+            .map((clue) => Clue({
+                number: clue.entry.number + '.',
+                clue: clue.entry.clue,
+                hasAnswered: clue.hasAnswered,
+                isSelected: clue.isSelected,
+                focusClue: () => {
+                    this.props.focusClue(clue.entry.position.x, clue.entry.position.y, direction);
+                }
+            })
+        );
 
         return React.DOM.div({
             className: 'crossword__clues'

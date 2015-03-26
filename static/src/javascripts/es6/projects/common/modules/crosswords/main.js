@@ -170,14 +170,9 @@ var Crossword = React.createClass({
             clue = this.cluesFor(x, y),
             focussedClue = this.clueInFocus(),
             newDirection,
-            isStartOfClue,
-            isInsideFocussedClue = function () {
-                if (focussedClue) {
-                    return helpers.entryHasCell(focussedClue, x, y);
-                } else {
-                    return false;
-                }
-            };
+            isStartOfClue;
+
+        let isInsideFocussedClue = () => focussedClue ? helpers.entryHasCell(focussedClue, x, y) : false;
 
         if (cellInFocus && cellInFocus.x === x && cellInFocus.y === y) {
             /** User has clicked again on the highlighted cell, meaning we ought to swap direction */
@@ -197,9 +192,7 @@ var Crossword = React.createClass({
         } else {
             this.state.cellInFocus = {x: x, y: y};
 
-            isStartOfClue = function (clue) {
-                return clue && clue.position.x === x && clue.position.y === y;
-            };
+            let isStartOfClue = (clue) => clue && clue.position.x === x && clue.position.y === y;
 
             /**
              * If the user clicks on the start of a down clue midway through an across clue, we should
@@ -232,7 +225,7 @@ var Crossword = React.createClass({
         return this.clueMap[helpers.clueMapKey(x, y)];
     },
 
-    getContextualCluesFor: (clue) => {
+    getContextualCluesFor: function (clue) {
         let clueDirection = clue.direction,
             [x, y] = clueDirection === 'down' ? ['x', 'y'] : ['y', 'x'],
             clueX = clue.position[x],
@@ -260,17 +253,13 @@ var Crossword = React.createClass({
     },
 
     cluesData: function () {
-        var that = this;
-
-        return _.map(this.props.data.entries, function (entry) {
-            return {
-                entry: entry,
-                hasAnswered: _.every(helpers.cellsForEntry(entry), function (position) {
-                    return /^[A-Z]$/.test(that.state.grid[position.x][position.y].value);
-                }),
-                isSelected: that.clueInFocus() === entry
-            };
-        });
+        return _.map(this.props.data.entries, (entry) => ({
+            entry: entry,
+            hasAnswered: _.every(helpers.cellsForEntry(entry), (position) => {
+                return /^[A-Z]$/.test(this.state.grid[position.x][position.y].value);
+            }),
+            isSelected: this.clueInFocus() === entry
+        }));
     },
 
     save: function () {
@@ -278,12 +267,11 @@ var Crossword = React.createClass({
     },
 
     cheat: function (entry) {
-        var that = this,
-            cells = helpers.cellsForEntry(entry);
+        var cells = helpers.cellsForEntry(entry);
 
         if (entry.solution) {
-            _.forEach(cells, function (cell, n) {
-                that.state.grid[cell.x][cell.y].value = entry.solution[n];
+            _.forEach(cells, (cell, n) => {
+                this.state.grid[cell.x][cell.y].value = entry.solution[n];
             });
 
             this.forceUpdate();
@@ -291,34 +279,29 @@ var Crossword = React.createClass({
     },
 
     check: function (entry) {
-        var that = this,
-            cells = _.map(helpers.cellsForEntry(entry), function (cell) {
-                return that.state.grid[cell.x][cell.y];
-            }),
+        var cells = _.map(helpers.cellsForEntry(entry), (cell) => this.state.grid[cell.x][cell.y]),
             badCells;
 
         if (entry.solution) {
-            badCells = _.map(_.filter(_.zip(cells, entry.solution), function (cellAndSolution) {
+            badCells = _.map(_.filter(_.zip(cells, entry.solution), (cellAndSolution) => {
                 var cell = cellAndSolution[0],
                     solution = cellAndSolution[1];
                 return /^[A-Z]$/.test(cell.value) && cell.value !== solution;
-            }), function (cellAndSolution) {
-                return cellAndSolution[0];
-            });
+            }), (cellAndSolution) => cellAndSolution[0]);
 
-            _.forEach(badCells, function (cell) {
+            _.forEach(badCells, (cell) => {
                 cell.isError = true;
             });
 
             this.forceUpdate();
 
-            setTimeout(function () {
-                _.forEach(badCells, function (cell) {
+            setTimeout(() => {
+                _.forEach(badCells, (cell) => {
                     cell.isError = false;
                     cell.value = '';
                 });
-                that.forceUpdate();
-                that.save();
+                this.forceUpdate();
+                this.save();
             }, 150);
         }
     },
@@ -333,20 +316,16 @@ var Crossword = React.createClass({
     },
 
     onSolution: function () {
-        var that = this;
-
-        _.forEach(this.props.data.entries, function (entry) {
-            that.cheat(entry);
+        _.forEach(this.props.data.entries, (entry) => {
+            this.cheat(entry);
         });
 
         this.save();
     },
 
     onCheckAll: function () {
-        var that = this;
-
-        _.forEach(this.props.data.entries, function (entry) {
-            that.check(entry);
+        _.forEach(this.props.data.entries, (entry) => {
+            this.check(entry);
         });
     },
 

@@ -66,23 +66,22 @@ export default React.createClass({
     },
 
     render: function () {
-        var that = this,
-            width = helpers.gridSize(this.props.columns),
+        var width = helpers.gridSize(this.props.columns),
             height = helpers.gridSize(this.props.rows),
             cells = [];
 
-        _.forEach(_.range(this.props.rows), function (y) {
-            _.map(_.range(that.props.columns), function (x) {
-                var cellProps = that.props.cells[x][y];
+        _.forEach(_.range(this.props.rows), (y) => {
+            _.map(_.range(this.props.columns), (x) => {
+                var cellProps = this.props.cells[x][y];
 
                 if (cellProps.isEditable) {
-                    cellProps.handleSelect = that.handleSelect.bind(that, x, y);
+                    cellProps.handleSelect = this.handleSelect.bind(this, x, y);
                     cellProps.x = x;
                     cellProps.y = y;
                     cellProps.key = 'cell_' + x + '_' + y;
-                    cellProps.isHighlighted = that.props.isHighlighted(x, y);
-                    cellProps.isFocussed = that.props.focussedCell && x === that.props.focussedCell.x &&
-                        y === that.props.focussedCell.y;
+                    cellProps.isHighlighted = this.props.isHighlighted(x, y);
+                    cellProps.isFocussed = this.props.focussedCell && x === this.props.focussedCell.x &&
+                        y === this.props.focussedCell.y;
                     cells.push(Cell(cellProps));
                 }
             });
