@@ -233,15 +233,21 @@ var Crossword = React.createClass({
     },
 
     getContextualCluesFor: (clue) => {
-        let { x: x, y: y } = clue.direction === 'down' ? { x: 'x', y: 'y' } : { x: 'y', y: 'x' };
+        let clueDirection = clue.direction,
+            [x, y] = clueDirection === 'down' ? ['x', 'y'] : ['y', 'x'],
+            clueX = clue.position[x],
+            clueY = clue.position[y],
+            clueLength = clue.length;
 
-        return _.filter(this.props.data.entries, (testClue) =>
-            testClue.direction !== clue.direction &&
-            testClue.position[x] <= clue.position[x] &&
-            testClue.position[y] >= clue.position[y] &&
-            testClue.position[x] + testClue.length >= clue.position[x] &&
-            testClue.position[y] < clue.position[y] + clue.length
-        );
+        return _.filter(this.props.data.entries, (test) => {
+            let testX = test.position[x],
+                testY = test.position[y],
+                testLength = test.length;
+
+            return testClue.direction !== clueDirection &&
+                testX <= clueX && testX + testLength >= clueX &&
+                testY >= clueY && testY < clueY + clueLength;
+        });
     },
 
     clueInFocus: function () {
