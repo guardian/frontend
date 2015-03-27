@@ -36,6 +36,10 @@ $fc-item-gutter: $gs-gutter / 4;
             @include flex-basis($media-width);
         }
 
+        .fc-item__video-fallback {
+            @include flex-basis($media-width);
+        }
+
         .fc-item__content {
             @include flex-basis(100% - $media-width);
             // DAMN YOU IE10/11 FLEXWRAP BOX SIZING BUG
@@ -57,31 +61,50 @@ $fc-item-gutter: $gs-gutter / 4;
             width: 100% - $media-width;
         }
     }
+
+    &.fc-item--has-no-image .fc-item__content {
+        flex-basis: 100%;
+        max-width: 100%;
+        padding-right: gs-span(3);
+    }
 }
 
-.has-flex-wrap {
-    .fc-item {
-        @include flex-display;
-        @include flex(1);
-    }
-
-    .fc-item__container {
-        @include flex-direction(column);
-        @include flex-display;
-        @include flex(1);
+.fc-item {
+    @include mq($until: tablet) {
         width: 100%;
     }
+
+    @include mq(tablet) {
+        .has-flex & {
+            @include flex(1);
+        }
+
+        .has-flex-wrap & {
+            @include flex-display;
+        }
+
+        .has-no-flex-wrap & {
+            @include clearfix;
+        }
+    }
 }
 
-.has-no-flex-wrap {
-    .fc-item {
-        display: block;
-        @include clearfix;
+.fc-item__container {
+    display: block;
+    width: 100%;
+    @include box-sizing(border-box);
+
+    @include mq(tablet) {
+        .has-flex-wrap & {
+            @include flex-direction(column);
+            @include flex-display;
+            @include flex(1);
+        }
     }
 }
 
 .fc-item__container,
-.flyer__container,
+.rich-link__container,
 .item__container {
     position: relative;
 
@@ -102,8 +125,18 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item,
 .item {
-    margin-left: $gs-gutter * .5;
-    margin-right: $gs-gutter * .5;
+    @include mq($until: tablet) {
+        padding-left: $gs-gutter * .5;
+        padding-right: $gs-gutter * .5;
+        @include box-sizing(border-box);
+    }
+
+    @include mq(tablet) {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: $gs-gutter * .5;
+        margin-right: $gs-gutter * .5;
+    }
 
     a {
         color: colour(neutral-1);
@@ -137,7 +170,7 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     .u-faux-block-link--hover {
-        background-color: colour(neutral-7);
+        background-color: colour(neutral-6);
 
         .fc-item__image-container {
             background-color: #000000;
@@ -203,25 +236,21 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__image-container {
-    background-color: rgba(0, 0, 0, .1);
+    display: none;
 }
 
-.fc-item__image-container,
-.fc-item__video-fallback {
-    display: none;
+.fc-item__video-play {
+    display: block;
+    z-index: 1;
 }
 
 .fc-item__live-indicator {
     color: colour(live-default);
 }
 
-.fc-item__breaking-indicator {
-    color: colour(live-default);
-}
-
 .fc-item__header,
 .item__title,
-.flyer__header {
+.rich-link__header {
     @include fs-headline(3);
     font-weight: 500;
     padding-bottom: .5em;
@@ -234,9 +263,9 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__title,
 .fc-item__byline,
 .fc-item__kicker,
-.flyer__byline,
-.flyer__title,
-.flyer__kicker {
+.rich-link__byline,
+.rich-link__title,
+.rich-link__kicker {
     font: inherit;
     line-height: inherit;
 }
@@ -249,12 +278,12 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__kicker,
 .fc-sublink__kicker,
-.flyer__kicker {
+.rich-link__kicker {
     &:after {
         content: '/';
         display: inline-block;
         margin-left: .2em;
-        color: fade-out(colour(neutral-1), .8);
+        color: mix(colour(neutral-1), #ffffff, 20%);
     }
 
     &:hover:after {
@@ -266,7 +295,8 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__kicker--dreamsnap {
     display: block;
     @include fs-header(2);
-    background-color: fade-out(#000000, .9);
+    line-height: get-line-height(bodyHeading, 1);
+    background-color: mix(#000000, #ffffff, 10%);
     margin: 0 (0 - $gs-gutter * .25);
     padding: ($gs-baseline * .25) ($gs-gutter * .25);
 
@@ -289,7 +319,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__standfirst {
     @include fs-headline(1);
-    padding-bottom: get-line-height(bodyCopy, 1);
+    padding-bottom: .5em;
     color: colour(neutral-2);
     display: none;
 
@@ -323,10 +353,6 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-trail__count--inline-template {
-    display: none;
-}
-
-.fc-item__timestamp + .fc-trail__count .fc-trail__count__label {
     display: none;
 }
 

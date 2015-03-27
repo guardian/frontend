@@ -11,19 +11,21 @@ object BodyCleaner {
       withJsoup(BulletCleaner(html))(
         InBodyElementCleaner,
         InBodyLinkCleaner("in body link"),
-        InBodyLinkDataComponentCleaner,
         BlockNumberCleaner,
         TweetCleaner,
         WitnessCleaner,
-        new TagLinker(article),
+        TagLinker(article),
         TableEmbedComplimentaryToP,
+        R2VideoCleaner(article),
         VideoEmbedCleaner(article),
         PictureCleaner(article),
         LiveBlogDateFormatter(article.isLiveBlog),
         LiveBlogShareButtons(article),
         DropCaps(article.isComment || article.isFeature),
         FigCaptionCleaner,
-        RichLinkCleaner
+        RichLinkCleaner,
+        BlockquoteCleaner,
+        FormStackCleaner
       )
   }
 }

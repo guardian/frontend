@@ -1,7 +1,10 @@
-/* global _: true */
 define([
+    'jquery',
+    'underscore',
     'modules/vars',
+    'utils/array',
     'utils/internal-content-code',
+    'utils/parse-query-params',
     'utils/query-params',
     'utils/url-abs-path',
     'models/collections/article',
@@ -10,8 +13,12 @@ define([
     'modules/content-api',
     'knockout'
 ], function (
+    $,
+    _,
     vars,
+    array,
     internalContentCode,
+    parseQueryParams,
     queryParams,
     urlAbsPath,
     Article,
@@ -28,11 +35,12 @@ define([
             poller,
             opts = options || {},
             counter = 0,
-            container = options.container.querySelector('.latest-articles'),
             scrollable = options.container.querySelector('.scrollable'),
-            pageSize = vars.CONST.searchPageSize || 25;
+            pageSize = vars.CONST.searchPageSize || 25,
+            showingDrafts = opts.showingDrafts;
 
         this.articles = ko.observableArray();
+        this.message = ko.observable();
 
         this.term = ko.observable(queryParams().q || '');
         this.term.subscribe(function() { self.search(); });
@@ -41,16 +49,6 @@ define([
         this.filter     = ko.observable();
         this.filterType = ko.observable();
         this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []);
-
-        this.showingDrafts = ko.observable(false);
-        this.showDrafts = function() {
-            self.showingDrafts(true);
-            self.search();
-        };
-        this.showLive = function() {
-            self.showingDrafts(false);
-            self.search();
-        };
 
         this.suggestions = ko.observableArray();
         this.lastSearch = ko.observable();
@@ -107,10 +105,6 @@ define([
 
             opts = opts || {};
 
-            if (!vars.model.switches()['facia-tool-draft-content']) {
-                self.showingDrafts(false);
-            }
-
             clearTimeout(deBounced);
             deBounced = setTimeout(function() {
                 if (self.suggestions().length) {
@@ -123,11 +117,12 @@ define([
                 }
 
                 var request = {
-                    isDraft: self.showingDrafts(),
+                    isDraft: showingDrafts(),
                     page: self.page(),
                     pageSize: pageSize,
                     filter: self.filter(),
-                    filterType: self.filterType().param
+                    filterType: self.filterType().param,
+                    isPoll: opts.isPoll
                 };
 
                 var term = self.term();
@@ -145,24 +140,36 @@ define([
                     function(response) {
                         if (count !== counter) { return; }
                         var rawArticles = response.results,
+                            newArticles,
                             initialScroll = scrollable.scrollTop;
 
-                        self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
-
-                        var newArticles = [];
-                        _.each(rawArticles, function(opts) {
-                            var icc = internalContentCode(opts);
-
-                            opts.id = icc;
-                            cache.put('contentApi', icc, opts);
-
-                            opts.uneditable = true;
-                            newArticles.push(new Article(opts, true));
-                        });
-                        self.articles(newArticles);
                         self.lastSearch(request);
                         self.totalPages(response.pages);
                         self.page(response.currentPage);
+
+                        if (rawArticles.length) {
+                            newArticles = array.combine(rawArticles, self.articles(), function (one, two) {
+                                var oneId = one instanceof Article ? one.id() : internalContentCode(one);
+                                var twoId = two instanceof Article ? two.id() : internalContentCode(two);
+                                return oneId === twoId;
+                            }, function (opts) {
+                                var icc = internalContentCode(opts);
+
+                                opts.id = icc;
+                                cache.put('contentApi', icc, opts);
+
+                                opts.uneditable = true;
+                                return new Article(opts, true);
+                            }, function (oldArticle, newArticle) {
+                                oldArticle.props.webPublicationDate(newArticle.webPublicationDate);
+                                return oldArticle;
+                            });
+                            self.articles(newArticles);
+                            self.message(null);
+                        } else {
+                            self.flush('...sorry, no articles were found.');
+                        }
+
                         scrollable.scrollTop = initialScroll;
                     },
                     function(error) {
@@ -184,8 +191,7 @@ define([
 
         this.flush = function(message) {
             self.articles.removeAll();
-            // clean up any dragged-in articles
-            container.innerHTML = message ? '<div class="search-message">' + message + '</div>' : '';
+            self.message(message);
         };
 
         this.refresh = function() {
@@ -224,7 +230,10 @@ define([
         this.startPoller = function() {
             poller = setInterval(function(){
                 if (self.page() === 1) {
-                    self.search({noFlushFirst: true});
+                    self.search({
+                        noFlushFirst: true,
+                        isPoll: true
+                    });
                 }
             }, vars.CONST.latestArticlesPollMs || 60000);
 

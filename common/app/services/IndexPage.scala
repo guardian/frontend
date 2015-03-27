@@ -93,8 +93,7 @@ object IndexPage {
       containerDefinitions,
       ContainerLayoutContext(
         Set.empty,
-        hideCutOuts = indexPage.page.isContributorPage,
-        ContainerLayoutContext.MaximumVideoPlayersPerTagPage
+        hideCutOuts = indexPage.page.isContributorPage
       )
     )
 
@@ -129,6 +128,7 @@ object IndexPage {
         ).flatten),
         hideToggle = true,
         showTimestamps = true,
+        useShowMore = false,
         dateLinkPath = Some(s"/${indexPage.idWithoutEdition}")
       ).transformCards({ card =>
         card.copy(

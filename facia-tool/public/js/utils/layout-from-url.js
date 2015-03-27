@@ -1,8 +1,9 @@
-/* globals _ */
 define([
+    'underscore',
     'modules/vars',
     'utils/parse-query-params'
 ], function (
+    _,
     vars,
     parseQueryParams
 ) {
@@ -17,6 +18,8 @@ define([
 
         if (queryParams.treats === 'please' && vars.model.switches()['facia-treats']) {
             columns = [{
+                type: 'clipboard'
+            }, {
                 type: 'treats',
                 config: queryParams.front
             }];

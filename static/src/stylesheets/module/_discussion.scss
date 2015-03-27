@@ -103,6 +103,26 @@ $avatarPadding: $gs-gutter / 2;
     margin: 0;
 }
 
+.d-discussion__size-message {
+    display: none;
+}
+
+.discussion--pagesize-msg-show {
+
+    .d-discussion__size-message {
+        @include fs-textSans(2);
+        margin-bottom: $gs-baseline * 2 / 3;
+        border-top: 1px solid colour(neutral-4);
+        padding-top: $gs-baseline;
+        color: colour(neutral-2);
+        display: block;
+
+        & + .d-comment {
+            border-top: 0;
+        }
+    }
+}
+
 .discussion__heading {
     margin-bottom: 0;
     padding-top: 0;
@@ -143,8 +163,6 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
-
-
 .discussion__show-button {
     display: none;
 }
@@ -182,6 +200,12 @@ $avatarPadding: $gs-gutter / 2;
     .discussion__main-comments,
     .discussion__show-button {
         display: none;
+    }
+}
+
+.discussion__pagination--bottom {
+    .pagination {
+        border-top: 1px solid colour(neutral-4);
     }
 }
 
@@ -404,23 +428,49 @@ $avatarPadding: $gs-gutter / 2;
     @include fs-textSans(4);
     color: colour(neutral-2);
 }
+
 .d-comment__author-label {
     display: block;
     @include fs-textSans(1);
-    text-transform: uppercase;
+    color: colour(news-default);
+    font-weight: bold;
+
+    .d-comment__gu-icon svg {
+        fill: colour(news-default);
+    }
+
 }
 
-.d-comment__author-label--staff {
-    display: none;
+.d-comment__pick {
+    margin-bottom: $gs-baseline / 6;
+    white-space: nowrap;
+    @include fs-textSans(1);
+    font-weight: bold;
+
+    .d-comment__gu-icon svg {
+        fill: colour(neutral-1);
+    }
 }
 
-.d-comment--staff .d-comment__author-label--staff {
-    display: block;
+.d-comment__gu-icon {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 1px;
+    svg {
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .d-comment__timestamp {
     margin-bottom: $gs-baseline;
     @include fs-textSans(1);
+
+    @include mq($until: tablet) {
+        padding: 0;
+    }
 
     @include mq(tablet) {
         display: inline;
@@ -475,18 +525,6 @@ $avatarPadding: $gs-gutter / 2;
     margin-top: $gs-baseline / 2;
     @include mq($until: tablet) {
         clear: both;
-    }
-}
-
-.d-comment__pick {
-    margin-bottom: $gs-baseline / 6;
-    white-space: nowrap;
-    @include fs-textSans(4);
-    font-weight: bold;
-
-    .i-gupickasterisk {
-        margin-bottom: -4px;
-        margin-right: $gs-gutter / 4;
     }
 }
 
@@ -547,6 +585,12 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-comment__inner--top-level {
+    @include mq(tablet) {
+        .d-comment__avatar-wrapper {
+            margin-left: -1 * ($avatarSize-big + $avatarPadding);
+        }
+    }
+
     .d-comment__avatar,
     .user-avatar__image {
         overflow: hidden;
@@ -558,9 +602,7 @@ $avatarPadding: $gs-gutter / 2;
         }
     }
     @include mq(tablet) {
-        .d-comment__content {
-            margin-left: $avatarSize-big + $avatarPadding;
-        }
+        margin-left: $avatarSize-big + $avatarPadding;
     }
 }
 
@@ -578,12 +620,12 @@ $avatarPadding: $gs-gutter / 2;
         }
     }
     @include mq(tablet) {
+        .d-comment__avatar-wrapper {
+            margin-left: -1 * ($avatarSize-small + $avatarPadding);
+        }
         .d-comment__avatar {
             width: $avatarSize-small;
             height: $avatarSize-small;
-        }
-        .d-comment__content {
-            margin-left: $avatarSize-small + $avatarPadding;
         }
     }
 }
@@ -597,6 +639,13 @@ $avatarPadding: $gs-gutter / 2;
         margin-left: $avatarSize-big + $avatarPadding;
     }
 
+}
+
+
+.d-comment__inner--response {
+    @include mq(tablet) {
+        margin-left: $avatarSize-small + $avatarPadding;
+    }
 }
 
 .d-show-more-replies {
@@ -914,6 +963,10 @@ $comment-recommend-button-size: 19px;
         width: $avatarSize-big;
         height: $avatarSize-big;
     }
+
+    .d-comment__author-label {
+        margin-top: 5px;
+    }
 }
 
 .d-top-comment__pick {
@@ -959,6 +1012,7 @@ $comment-recommend-button-size: 19px;
     .d-comment__timestamp {
         display: block;
         margin-bottom: 0;
+        padding: 0;
     }
 }
 
@@ -1150,11 +1204,17 @@ $comment-recommend-button-size: 19px;
             color: #ffffff;
         }
     }
+    .discussion__comment-box--bottom & {
+        margin-top: 0;
+    }
 }
 
 .d-comment-box--top-level {
     @include mq(leftCol) {
         padding-top: $gs-baseline * 2;
+        .discussion__comment-box--bottom & {
+            padding-top: 0;
+        }
     }
 }
 

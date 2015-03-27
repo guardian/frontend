@@ -3,7 +3,7 @@ package model.commercial.jobs
 import common.{ExecutionContexts, Logging}
 import conf.CommercialConfiguration
 import conf.Switches.JobFeedSwitch
-import model.commercial.{FeedReader, FeedRequest, OptString}
+import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest, OptString}
 import org.apache.commons.lang.StringEscapeUtils.unescapeHtml
 import org.joda.time._
 
@@ -14,7 +14,7 @@ import scala.xml.{XML, Elem}
 object JobsApi extends ExecutionContexts with Logging {
 
   // url changes daily so cannot be val
-  def url = {
+  def maybeUrl = {
 
     /*
      * Using offset time because this appears to be how the URL is constructed.
@@ -44,8 +44,20 @@ object JobsApi extends ExecutionContexts with Logging {
   }
 
   def loadAds(): Future[Seq[Job]] = {
-    FeedReader.readSeq[Job](FeedRequest("Jobs", JobFeedSwitch, url, responseEncoding = Some("utf-8"), timeout = 30.seconds)) { body =>
+    maybeUrl map { url =>
+    val request = FeedRequest(
+      feedName = "Jobs",
+      switch = JobFeedSwitch,
+      url,
+      responseEncoding = Some("utf-8"),
+      timeout = 30.seconds
+    )
+    FeedReader.readSeq[Job](request) { body =>
       parse(XML.loadString(body.dropWhile(_ != '<')))
+    }
+    } getOrElse {
+      log.warn(s"Missing URL for Jobs feed")
+      Future.failed(FeedMissingConfigurationException("Jobs"))
     }
   }
 

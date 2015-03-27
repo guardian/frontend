@@ -9,7 +9,7 @@
     }
 
     .u-faux-block-link--hover {
-        background-color: darken(colour(live-default), 5%);
+        background-color: darken(colour(live-default), 4%);
     }
 
     .fc-item__link,
@@ -20,29 +20,33 @@
     }
 
     .fc-item__container:before,
-    .flyer__container:before, {
+    .rich-link__container:before, {
         background-color: colour(live-mute);
     }
 
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__meta,
-    .flyer__read-more-text {
+    .rich-link__read-more-text {
         color: colour(live-mute);
     }
 
-    .flyer__arrow-icon {
+    .rich-link__arrow-icon {
         fill: colour(live-mute);
     }
 
     .fc-item__kicker:after,
-    .flyer__kicker:after,
+    .rich-link__kicker:after,
     .fc-sublink__kicker:after {
-        color: fade-out($c-headline, .8);
+        color: mix($c-headline, colour(live-default), 20%);
+    }
+
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(live-default), 10%);
     }
 
     .fc-item__standfirst {
-        color: fade-out($c-headline, .2);
+        color: mix($c-headline, colour(live-default), 80%);
     }
 
     .fc-item__live-indicator,
@@ -52,7 +56,7 @@
     }
 
     .fc-sublink__title:before {
-        border-color: fade-out($c-headline, .8);
+        border-color: mix($c-headline, colour(live-default), 20%);
     }
 }
 

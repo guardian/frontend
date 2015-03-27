@@ -6,11 +6,18 @@ define([
     'videojs',
     'videojsembed',
     'common/utils/_',
+    'common/utils/$',
+    'common/utils/config',
     'common/utils/defer-to-analytics',
+    'common/utils/template',
     'common/modules/analytics/omniture',
-    'common/modules/analytics/omnitureMedia',
+    'common/modules/component',
     'common/modules/video/tech-order',
-    'text!common/views/ui/loading.html'
+    'common/modules/video/events',
+    'common/modules/video/fullscreener',
+    'common/views/svgs',
+    'text!common/views/ui/loading.html',
+    'text!common/views/media/titlebar.html'
 ], function (
     bean,
     bonzo,
@@ -18,76 +25,19 @@ define([
     videojs,
     videojsembed,
     _,
+    $,
+    config,
     deferToAnalytics,
-    Omniture,
-    OmnitureMedia,
+    template,
+    omniture,
+    Component,
     techOrder,
-    loadingTmpl
+    events,
+    fullscreener,
+    svgs,
+    loadingTmpl,
+    titlebarTmpl
     ) {
-
-    var QUARTILES = [25, 50, 75];
-
-    function constructEventName(eventName) {
-        return 'video:' + eventName;
-    }
-
-    function handleInitialMediaError(player) {
-        var err = player.error();
-        if (err !== null) {
-            return err.code === 4;
-        }
-        return false;
-    }
-
-    // The Flash player does not copy its events to the dom as the HTML5 player does. This makes some
-    // integrations difficult. These events are so that other libraries (e.g. Ophan) can hook into events without
-    // needing to know about videojs
-    function bindGlobalEvents(player) {
-        player.on('playing', function () {
-            bean.fire(document.body, 'videoPlaying');
-        });
-        player.on('pause', function () {
-            bean.fire(document.body, 'videoPause');
-        });
-        player.on('ended', function () {
-            bean.fire(document.body, 'videoEnded');
-        });
-    }
-
-    function bindContentEvents(player) {
-        var events = {
-            end: function () {
-                player.trigger(constructEventName('content:end', player));
-            },
-            play: function () {
-                var duration = player.duration();
-                if (duration) {
-                    player.trigger(constructEventName('content:play', player));
-                } else {
-                    player.one('durationchange', events.play);
-                }
-            },
-            timeupdate: function () {
-                var progress = Math.round(parseInt(player.currentTime() / player.duration() * 100, 10));
-                QUARTILES.reverse().some(function (quart) {
-                    if (progress >= quart) {
-                        player.trigger(constructEventName('play:' + quart, player));
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
-            },
-            ready: function () {
-                player.trigger(constructEventName('content:ready', player));
-
-                player.one('play', events.play);
-                player.on('timeupdate', _.throttle(events.timeupdate, 1000));
-                player.one('ended', events.end);
-            }
-        };
-        events.ready();
-    }
 
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -99,7 +49,7 @@ define([
         options.techOrder = techOrder(el);
         player = videojs(el, options);
 
-        if (handleInitialMediaError(player)) {
+        if (events.handleInitialMediaError(player)) {
             player.dispose();
             options.techOrder = techOrder(el).reverse();
             player = videojs(el, options);
@@ -108,44 +58,65 @@ define([
         return player;
     }
 
-    function fullscreener() {
-        var player = this,
-            clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0],
-            events = {
-                click: function (e) {
-                    this.paused() ? this.play() : this.pause();
-                    e.stop();
-                },
-                dblclick: function (e) {
-                    e.stop();
-                    this.isFullScreen() ? this.exitFullscreen() : this.requestFullscreen();
-                }
-            };
-
-        bonzo(clickbox)
-            .appendTo(player.contentEl());
-
-        bean.on(clickbox, 'click', events.click.bind(player));
-        bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
+    function addTitleBar() {
+        var data = {
+            webTitle: config.page.webTitle,
+            pageId: config.page.pageId,
+            icon: svgs('marque36icon')
+        };
+        $('.vjs-control-bar').after(template(titlebarTmpl, data));
+        bean.on($('.vjs-title-bar')[0], 'click', function (e) {
+            omniture.logTag({
+                tag: 'Embed | title bar',
+                sameHost: false,
+                samePage: false,
+                target: e.target
+            });
+        });
     }
 
-    function initOmnitureTracking(player) {
-        new OmnitureMedia(player).init();
+    function initEndSlate(player) {
+        var endSlate = new Component(),
+            endState = 'vjs-has-ended';
+
+        endSlate.endpoint = config.page.externalEmbedHost + $('.js-gu-media--enhance').first().attr('data-end-slate');
+
+        endSlate.fetch(player.el(), 'html').then(function () {
+            $('.end-slate-container .fc-item__action').each(function (e) { e.href += '?CMP=embed_endslate'; });
+            bean.on($('.end-slate-container')[0], 'click', function (e) {
+                omniture.logTag({
+                    tag: 'Embed | endslate',
+                    sameHost: false,
+                    samePage: false,
+                    target: e.target
+                });
+            });
+        });
+
+        player.on('ended', function () {
+            bonzo(player.el()).addClass(endState);
+        });
+
+        player.on('playing', function () {
+            bonzo(player.el()).removeClass(endState);
+        });
     }
 
     function initPlayer() {
 
         videojs.plugin('fullscreener', fullscreener);
 
-        bonzo(qwery('.js-gu-media')).each(function (el) {
+        bonzo(qwery('.js-gu-media--enhance')).each(function (el) {
             var player,
-                mouseMoveIdle;
+                mouseMoveIdle,
+                $el = bonzo(el).addClass('vjs vjs-tech-' + videojs.options.techOrder[0]),
+                mediaId = $el.attr('data-media-id');
 
             bonzo(el).addClass('vjs');
 
             player = createVideoPlayer(el, {
                 controls: true,
-                autoplay: false,
+                autoplay: !!window.location.hash && window.location.hash === '#autoplay',
                 preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
                 plugins: {
                     embed: {
@@ -156,13 +127,16 @@ define([
             });
 
             //Location of this is important
-            handleInitialMediaError(player);
+            events.handleInitialMediaError(player);
 
             player.ready(function () {
                 var vol;
 
                 initLoadingSpinner(player);
-                bindGlobalEvents(player);
+                addTitleBar();
+                initEndSlate(player);
+
+                events.bindGlobalEvents(player);
 
                 // unglitching the volume on first load
                 vol = player.volume();
@@ -173,12 +147,15 @@ define([
 
                 player.fullscreener();
 
-                deferToAnalytics(function () {
-                    initOmnitureTracking(player);
-                    bindContentEvents(player);
-                });
+                if (config.switches.thirdPartyEmbedTracking) {
+                    deferToAnalytics(function () {
+                        events.initOphanTracking(player, mediaId);
+                        events.initOmnitureTracking(player);
+                        events.bindContentEvents(player);
+                    });
 
-                new Omniture(window.s).go();
+                    omniture.go();
+                }
             });
 
             mouseMoveIdle = _.debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);

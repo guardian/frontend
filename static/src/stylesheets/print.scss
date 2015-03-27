@@ -13,15 +13,32 @@
 .l-footer,
 .element-video,
 .byline-img,
-.quoted,
 .element-embed,
 .gallery__most-popular,
 .block-share--gallery-mobile,
 .content__headline:before,
 .caption--img:before,
 #dfp-ad--top-above-nav,
-.ad-slot__label {
+.ad-slot__label,
+.gallery-lightbox,
+.element-rich-link,
+.element-pullquote,
+.site-message,
+.breaking-news,
+.meta__contact-header,
+.meta__twitter,
+.meta__email,
+.inline-icon,
+.element--thumbnail,
+.media-primary--showcase,
+.content__standfirst a,
+.content__standfirst br,
+figure {
     display: none !important;
+}
+
+.sudoku figure {
+    display: block !important;
 }
 
 * {
@@ -34,6 +51,10 @@
     height: auto !important;
     background-color: #ffffff !important;
     color: #000000 !important;
+}
+
+.content__meta-container {
+    position: static;
 }
 
 .responsive-img,
@@ -71,7 +92,7 @@ p {
 
 .l-side-margins:before,
 .l-side-margins:after {
-    background-color: #ffffff !important;
+    display: none;
 }
 
 .drop-cap {

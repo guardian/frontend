@@ -1,5 +1,13 @@
-@(img: Option[model.ImageContainer], isShowcase: Boolean = false, isFeature: Boolean = false, url: Option[String] = None)
-@import views.support.{ImgSrc, Item620, Naked, Profile, SeoOptimisedContentImage, Showcase}
+@(img: Option[model.ImageContainer],
+  isShowcase: Boolean = false,
+  isFeature: Boolean = false,
+  isImageContent: Boolean = false,
+  url: Option[String] = None,
+  isLightboxable: Boolean = false)
+
+@import layout.WidthsByBreakpoint
+@import layout.ContentWidths.{PictureMedia, MainMedia}
+@import views.support.ImgSrc
 
 @img.map{ picture =>
 
@@ -7,55 +15,53 @@
         class="media-primary media-content@if(isShowcase){ media-primary--showcase}">
 
         @if(isFeature && isShowcase) {
-            @lightbox(picture, Naked)
+            @lightbox(picture, MainMedia.FeatureShowcase)
             <div class="gs-container">
                 <div class="content__main-column">
                     @caption(picture)
                 </div>
             </div>
         } else {
-            @if(isShowcase) {
-                @lightbox(picture, Showcase)
+            @if(isImageContent ) {
+                @lightbox(picture, PictureMedia.Inline)
             } else {
-                @lightbox(picture, Item620)
+                @if(isShowcase) {
+                    @lightbox(picture, MainMedia.Showcase)
+                } else {
+                    @lightbox(picture, MainMedia.Inline)
+                }
             }
             @caption(picture)
         }
     </figure>
 }
 
-@upgrade(picture: model.ImageContainer, upgradeProfile: Profile) = {
-    @ImgSrc.imager(picture, upgradeProfile).map { imgSrc =>
-        <div class="js-image-upgrade" data-src="@imgSrc">
-            @image(picture)
-        </div>
+@lightbox(picture: model.ImageContainer, widths: WidthsByBreakpoint) = {
+
+    @if(isLightboxable) {
+        <a href="@url#img-1" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
+            <div class="@if(isFeature && isShowcase){u-responsive-ratio u-responsive-ratio--letterbox}">
+                @image(picture, widths)
+                <span class="rounded-icon article__fullscreen"><i class="i i-expand-white"></i><i class="i i-expand-black"></i></span>
+            </div>
+        </a>
+    } else {
+        @image(picture, widths)
     }
+
 }
 
-@lightbox(picture: model.ImageContainer, upgradeProfile: Profile) = {
-    @ImgSrc.imager(picture, upgradeProfile).map { imgSrc =>
-        @if(picture.isLightboxable) {
-            <a href="@url#img-1" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
-                <div class="js-image-upgrade @if(isFeature && isShowcase){u-responsive-ratio u-responsive-ratio--letterbox}" data-src="@imgSrc">
-                    @image(picture)
-                    <span class="rounded-icon article__fullscreen"><i class="i i-expand-white"></i><i class="i i-expand-black"></i></span>
-                </div>
-            </a>
-        } else {
-            @upgrade(picture, upgradeProfile)
-        }
-    }
-}
-
-@image(picture: model.ImageContainer) = {
-    <img src="@SeoOptimisedContentImage.bestFor(picture).map(Html(_))"
+@image(picture: model.ImageContainer, widths: WidthsByBreakpoint) = {
+    <img src="@ImgSrc.getFallbackUrl(picture)"
+        srcset="@ImgSrc.srcset(picture, widths)"
+        sizes="@widths.sizes"
         class="maxed responsive-img"
         itemprop="contentURL representativeOfPage"
-        alt="@SeoOptimisedContentImage.altTextFor(picture).getOrElse("")" />
+        alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
 }
 
 @caption(picture: model.ImageContainer) = {
-    @SeoOptimisedContentImage.elementFor(picture).map { img =>
+    @ImgSrc.getFallbackAsset(picture).map { img =>
         @img.caption.map { caption =>
             <figcaption class="caption caption--main caption--img" itemprop="description">
                 @Html(caption) @if(img.displayCredit && !img.credit.exists(caption.endsWith)) { @img.credit.map(Html(_)) }

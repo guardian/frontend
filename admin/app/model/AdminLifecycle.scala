@@ -1,7 +1,6 @@
 package model
 
-import commercial.TravelOffersCacheJob
-import common.{Logging, AkkaAsync, Jobs}
+import common.{AkkaAsync, Jobs, Logging}
 import conf.Configuration
 import conf.Configuration.environment
 import football.feed.MatchDayRecorder
@@ -67,6 +66,10 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       MatchDayRecorder.record()
     }
 
+    Jobs.schedule("AdImpressionCountJob", "0 * * * * ?") {
+      AdImpressionCounter.count()
+    }
+
     if (environment.isProd) {
       Jobs.schedule("AdsStatusEmailJob", "0 44 8 ? * MON-FRI") {
         AdsStatusEmailJob.run()
@@ -75,6 +78,11 @@ trait AdminLifecycle extends GlobalSettings with Logging {
         log.info(s"Starting ExpiringAdFeaturesEmailJob")
         ExpiringAdFeaturesEmailJob.run()
       }
+    }
+
+    Jobs.schedule("VideoEncodingsJob", "0 0/15 * * * ?") {
+      log.info("Starting VideoEncodingsJob")
+      VideoEncodingsJob.run()
     }
 
   }
@@ -93,8 +101,10 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("FrontPressJobHighFrequency")
     Jobs.deschedule("FrontPressJobStandardFrequency")
     Jobs.deschedule("FrontPressJobLowFrequency")
+    Jobs.deschedule("AdImpressionCountJob")
     Jobs.deschedule("AdsStatusEmailJob")
     Jobs.deschedule("ExpiringAdFeaturesEmailJob")
+    Jobs.deschedule("VideoEncodingsJob")
   }
 
   override def onStart(app: play.api.Application) {
@@ -107,6 +117,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       TravelOffersCacheJob.run()
       OmnitureReportJob.run()
       SentryReportJob.run()
+      VideoEncodingsJob.run()
     }
   }
 

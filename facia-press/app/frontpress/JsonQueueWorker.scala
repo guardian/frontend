@@ -73,13 +73,13 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
   def process(message: Message[A]): Future[Unit]
 
   final protected def getAndProcess: Future[Unit] = {
-    val getRequest = queue.receiveOne(new ReceiveMessageRequest().withWaitTimeSeconds(WaitTimeSeconds))
-
-    getRequest onComplete {
-      case Success(Some(message @ Message(id, _, receipt))) =>
+    val getRequest = queue.receiveOne(new ReceiveMessageRequest().withWaitTimeSeconds(WaitTimeSeconds)) flatMap {
+      case Some(message @ Message(id, _, receipt)) =>
         lastSuccessfulReceipt.refresh()
 
-        process(message) onComplete {
+        val ftr = process(message)
+
+        ftr onComplete {
           case Success(_) =>
             /** Ultimately, we ought to be able to recover from processing the same message twice anyway, as the nature
               * of SQS means you could get the same message delivered twice.
@@ -98,20 +98,25 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
             consecutiveProcessingErrors.recordError()
         }
 
-      case Success(None) =>
+        ftr map { _ => () }
+
+      case None =>
         lastSuccessfulReceipt.refresh()
         log.info(s"No message after $WaitTimeSeconds seconds")
+        Future.successful(())
+    }
 
-      case Failure(error) =>
-        log.error("Encountered error receiving message from queue", error)
+    getRequest onFailure {
+      case error: Throwable => log.error("Encountered error receiving message from queue", error)
     }
 
     getRequest.map(_ => ())
   }
-
+  
   final private def next() {
     getAndProcess onComplete {
-      case _ => next()
+      case _ if started => next()
+      case _ => log.info("Stopping worker...")
     }
   }
 
@@ -126,6 +131,12 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
         started = true
         next()
       }
+    }
+  }
+
+  final def stop(): Unit = {
+    synchronized {
+      started = false
     }
   }
 }

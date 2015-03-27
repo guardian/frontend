@@ -1,7 +1,7 @@
 require([
     // 3rd party libs
     'raven',
-    'lodash/main',
+    'picturefill',
 
     // utilities
     'common/utils/_',
@@ -11,9 +11,11 @@ require([
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/robust',
     'common/utils/storage',
     'common/utils/template',
     'common/utils/url',
+    'common/utils/fastdom-errors',
 
     // shared modules
     'common/modules/analytics/beacon',
@@ -25,7 +27,9 @@ require([
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/lazyload',
+    'common/modules/ui/lazy-load-images',
     'common/modules/ui/images',
     'common/modules/ui/tabs',
-    'common/modules/user-prefs'
+    'common/modules/user-prefs',
+    'common/views/svgs'
 ], function () {});

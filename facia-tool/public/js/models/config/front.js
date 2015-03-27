@@ -1,6 +1,6 @@
-/* global _: true */
 define([
     'knockout',
+    'underscore',
     'config',
     'modules/vars',
     'modules/content-api',
@@ -13,6 +13,7 @@ define([
     'utils/validate-image-src'
 ], function(
     ko,
+    _,
     pageConfig,
     vars,
     contentApi,
@@ -103,10 +104,10 @@ define([
             if (src === this.props.imageUrl()) { return; }
 
             validateImageSrc(src, {minWidth: 120})
-            .done(function(width, height) {
-                self.props.imageUrl(src);
-                self.props.imageWidth(width);
-                self.props.imageHeight(height);
+            .done(function(img) {
+                self.props.imageUrl(img.src);
+                self.props.imageWidth(img.width);
+                self.props.imageHeight(img.height);
                 self.saveProps();
             })
             .fail(function(err) {

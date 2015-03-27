@@ -3,187 +3,187 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
-    'common/modules/component',
     'membership/payment-form'
-], function (
-    bean,
-    $,
-    ajax,
-    config,
-    Component,
-    PaymentForm
-) {
+], function (bean, $, ajax, config, PaymentForm) {
+
+    var PAYMENT_FORM = '.js-mem-stripe-form',
+        CARD_DETAILS = '.js-mem-card-details',
+        CHANGE_CARD = '.js-mem-change-card',
+        CARD_DETAILS_FORM_CONTAINER = '.js-mem-card-details-form-container',
+        CARD_CHANGE_SUCCESS_MSG = '.js-mem-card-change-success-msg',
+        CARD_LAST4 = '.js-mem-card-last4',
+        CARD_TYPE = '.js-mem-card-type',
+        PACKAGE_COST = '.js-mem-package-cost',
+        PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end',
+        PACKAGE_CURRENT_PERIOD_START = '.js-mem-current-period-start',
+        PACKAGE_INTERVAL = '.js-mem-plan-interval',
+        DETAILS_MEMBERSHIP_TIER_ICON_CURRENT = '.js-mem-icon-current',
+        DETAILS_JOIN_DATE = '.js-mem-join-date',
+        DETAILS_MEMBER_NUM_TEXT = '.js-mem-number',
+        NOTIFICATION_CANCEL = '.js-mem-cancel-tier',
+        NOTIFICATION_CHANGE = '.js-mem-change-tier',
+        MEMBER_DETAILS = '.js-mem-details',
+        DETAILS_MEMBER_NUMBER_CONTAINER = '.js-mem-number-container',
+        MEMBERSHIP_TAB = '.js-mem-tab',
+        MEMBERSHIP_TIER = '.js-mem-tier',
+        UP_SELL = '.js-mem-up-sell',
+        MEMBER_INFO = '.js-mem-info',
+        LOADER = '.js-mem-loader',
+        CLOSED_CLASSNAME = 'is-closed',
+        IS_HIDDEN_CLASSNAME = 'is-hidden',
+        CTA_DISABLED_CLASSNAME = 'membership-cta--disabled';
 
     function formatAmount(amount) {
-        return amount ? '£' + (amount / 100).toFixed(2) : 'Free';
+        return amount ? '£' + (amount / 100).toFixed(2) : 'FREE';
     }
 
-    function formatDate(timestamp) { // eg: 4th June 2014
+    function formatDate(timestamp) {
         var date = new Date(timestamp),
             months = [
-                'January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-                'November', 'December'
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
             ],
             day = date.getDate(),
             month = months[date.getMonth()],
             year = date.getFullYear();
 
-        return day + ' ' + month + ' ' + year;
+        return [day, month, year].join(' ');
     }
 
-    function Membership() {}
-
-    Component.define(Membership);
-
-    Membership.prototype.classes = {
-        TAB: 'js-membership-tab',
-        TAB_BUTTON: 'js-memebership-tab-button',
-        TAB_CONTAINER: 'js-memebership-tab-container',
-        TAB_DETAILS_LIST_UPPER: 'js-membership-details-list-upper',
-        TAB_DETAILS_LIST_LOWER: 'js-membership-details-list-lower',
-        TIER: 'js-membership-tier',
-        COST: 'js-membership-payment-cost',
-        JOIN_DATE: 'js-membership-join-date',
-        INTERVAL: 'js-membership-plan-interval',
-        CURRENT_PERIOD_START: 'js-membership-current-period-start',
-        CURRENT_PERIOD_END: 'js-membership-current-period-end',
-        CC_LAST4: 'js-membership-cc-last4',
-        CC_TYPE: 'js-membership-cc-type',
-        CC_TYPE_TEXT: 'js-membership-cc-type-text',
-        NUM_CONTAINER: 'js-membership-number-container',
-        NUM_TEXT: 'js-membership-number',
-        CC_CHANGE_BUTTON: 'js-membership-change-cc-open',
-        CC_CHANGE_FORM_CONT: 'js-membership-change-cc-form-cont',
-        CC_CHANGE_FORM: 'js-membership-change-cc-form',
-        CC_CHANGE_SUCCESS: 'js-membership-change-cc-success',
-        NOTIFICATION_CANCEL: 'js-mem-cancel-tier',
-        NOTIFICATION_CHANGE: 'js-mem-change-tier',
-        NOTIFICATION_ICON_CURRENT: 'js-mem-icon-current'
-    };
-
-    /**
-    * @type {string}
-    * @override
-    */
-    Membership.prototype.endpoint = config.page.idUrl + '/membership.json';
-
-    /**
-    * @override
-    * @type {string}
-    */
-    Membership.prototype.componentClass = 'js-membership-tab-container';
-
-    /**
-    *    If the user is a guardian member; Render the contents of the membership
-    *    tab using the response from the /user/me/details
-    */
-    Membership.prototype.prerender = function () {
-        var self = this;
-
+    function fetchUserDetails() {
         ajax({
             url: config.page.membershipUrl + '/user/me/details',
             crossOrigin: true,
             withCredentials: true,
             method: 'get'
         }).then(function (resp) {
-            var intervalText = resp.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual',
-                notificationType;
-
-            $(self.getClass('TIER')).text(resp.tier);
-            $(self.getClass('COST')).text(formatAmount(resp.subscription.plan.amount));
-            $(self.getClass('JOIN_DATE')).text(formatDate(resp.joinDate));
-            $(self.getClass('INTERVAL')).text(intervalText);
-            $(self.getClass('CURRENT_PERIOD_START')).text(formatDate(resp.subscription.start));
-            $(self.getClass('CURRENT_PERIOD_END')).text(formatDate(resp.subscription.end));
-
-            if (resp.regNumber) {
-                $(self.getElem('NUM_CONTAINER')).removeClass('is-hidden');
-                $(self.getElem('NUM_TEXT')).text(resp.regNumber);
+            if (resp && resp.subscription) {
+                hideLoader();
+                populateUserDetails(resp);
+                addSpriteCss();
+                setupPaymentForm();
+                addToggleFormListener();
+            } else {
+                hideLoader();
+                displayMembershipUpSell();
             }
-
-            if (resp.subscription.card) {
-                self.updateCard(resp.subscription.card);
-            }
-
-            if (resp.subscription.cancelledAt) {
-                notificationType = resp.optIn ? 'NOTIFICATION_CHANGE' : 'NOTIFICATION_CANCEL';
-                $(self.getClass('TAB_DETAILS_LIST_UPPER')).addClass('is-hidden');
-                $(self.getClass(notificationType)).removeClass('is-hidden');
-
-                $(self.getClass('NOTIFICATION_ICON_CURRENT')).addClass('i-g-' + resp.tier.toLowerCase());
-            // only show lower list if user hasn't changed their subscription and has a payment method
-            } else if (resp.subscription.card) {
-                $(self.getElem('TAB_DETAILS_LIST_LOWER')).removeClass('is-hidden');
-            }
-
-            self.reveal();
         });
-    };
+    }
 
-    /**
-     *   Load the css file containing the base64 encoded sprites for the card icons
-     */
-    Membership.prototype.addSpriteCss = function () {
-        var spriteSheetUrl = $(this.getClass('TAB')).data('sprite-url'),
-            $head  = $('head'),
-            link  = document.createElement('link');
-        link.id   = 'membership-sprite';
-        link.rel  = 'stylesheet';
+    function hideLoader() {
+        $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
+    }
+
+    function setupPaymentForm() {
+        (new PaymentForm()).init($(PAYMENT_FORM)[0], function (newCard) {
+            toggleForm(false);
+            updateCard(newCard);
+            $(CARD_CHANGE_SUCCESS_MSG).removeClass(IS_HIDDEN_CLASSNAME);
+        });
+    }
+
+    function addToggleFormListener() {
+        bean.on($(CHANGE_CARD)[0], 'click', function () {
+            toggleForm();
+            $(CARD_CHANGE_SUCCESS_MSG).addClass(IS_HIDDEN_CLASSNAME);
+        });
+    }
+
+    function populateUserDetails(userDetails) {
+        var intervalText = userDetails.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual',
+            notificationTypeSelector;
+
+        $(MEMBERSHIP_TIER).text(userDetails.tier);
+        $(PACKAGE_COST).text(formatAmount(userDetails.subscription.plan.amount));
+        $(DETAILS_JOIN_DATE).text(formatDate(userDetails.joinDate));
+        $(PACKAGE_INTERVAL).text(intervalText);
+        $(PACKAGE_CURRENT_PERIOD_START).text(formatDate(userDetails.subscription.start));
+        $(PACKAGE_CURRENT_PERIOD_END).text(formatDate(userDetails.subscription.end));
+
+        // display membership number
+        if (userDetails.regNumber) {
+            $(DETAILS_MEMBER_NUMBER_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
+            $(DETAILS_MEMBER_NUM_TEXT).text(userDetails.regNumber);
+        }
+
+        // update card details
+        if (userDetails.subscription.card) {
+            updateCard(userDetails.subscription.card);
+        }
+
+        // user has cancelled
+        if (userDetails.subscription.cancelledAt) {
+            // is this a tier change or a cancellation
+            notificationTypeSelector = userDetails.optIn ? NOTIFICATION_CHANGE : NOTIFICATION_CANCEL;
+            $(notificationTypeSelector).removeClass(IS_HIDDEN_CLASSNAME);
+            $(MEMBER_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
+            $(DETAILS_MEMBERSHIP_TIER_ICON_CURRENT).addClass('i-g-' + userDetails.tier.toLowerCase());
+        } else if (userDetails.subscription.card) {
+            // only show card details if user hasn't changed their subscription and has a payment method
+            $(CARD_DETAILS).removeClass(IS_HIDDEN_CLASSNAME);
+        }
+
+        $(MEMBER_INFO).removeClass(IS_HIDDEN_CLASSNAME);
+    }
+
+    function displayMembershipUpSell() {
+        $(UP_SELL).removeClass(IS_HIDDEN_CLASSNAME);
+    }
+
+    function addSpriteCss() {
+        var spriteSheetUrl = $(MEMBERSHIP_TAB).data('sprite-url'),
+            $head = $('head'),
+            link = document.createElement('link');
+
+        link.id = 'membership-sprite';
+        link.rel = 'stylesheet';
         link.type = 'text/css';
         link.href = spriteSheetUrl;
         link.media = 'all';
         $head.append(link);
-    };
+    }
 
-    Membership.prototype.toggleForm = function (show) {
-        var $cont = $(this.getElem('CC_CHANGE_FORM_CONT')),
-            $button = $(this.getElem('CC_CHANGE_BUTTON'));
+    function toggleForm(show) {
+        var $cont = $(CARD_DETAILS_FORM_CONTAINER),
+            $button = $(CHANGE_CARD);
 
-        show = show !== undefined ? show : $cont.hasClass('is-closed');
+        show = show !== undefined ? show : $cont.hasClass(CLOSED_CLASSNAME);
 
         if (show) {
-            $cont.removeClass('is-closed');
-            $button.addClass('membership-tab__update-button--muted').text('Cancel');
+            $cont.removeClass(CLOSED_CLASSNAME);
+            $button.addClass(CTA_DISABLED_CLASSNAME).text('Cancel');
         } else {
-            $cont.addClass('is-closed');
-            $button.removeClass('membership-tab__update-button--muted').text('Change card');
+            $cont.addClass(CLOSED_CLASSNAME);
+            $button.removeClass(CTA_DISABLED_CLASSNAME).text('Change card');
         }
+    }
+
+    function updateCard(card) {
+        var cardTypeClassName,
+            $cardTypeElem;
+
+        cardTypeClassName = card.type.toLowerCase().replace(' ', '-');
+        $cardTypeElem = $(CARD_TYPE);
+        $(CARD_LAST4).text(card.last4);
+        $cardTypeElem[0].className = $cardTypeElem[0].className.replace(/\bi-\S+/g, '');
+        $cardTypeElem.addClass('i-' + cardTypeClassName);
+    }
+
+    function init() {
+        fetchUserDetails();
+    }
+
+    return {
+        init: init
     };
-
-    Membership.prototype.updateCard = (function () {
-        var currentClass;
-        return function (card) {
-            $(this.getClass('CC_LAST4')).text(card.last4);
-            if (currentClass) {
-                $(this.getClass('CC_TYPE')).removeClass(currentClass);
-            }
-
-            currentClass = 'i-' + card.type.toLowerCase().replace(' ', '-');
-            $(this.getClass('CC_TYPE')).addClass(currentClass);
-            $(this.getClass('CC_TYPE_TEXT')).text(card.type);
-        };
-    })();
-
-    Membership.prototype.reveal = function () {
-        var self = this;
-
-        self.addSpriteCss();
-
-        $(self.getClass('TAB_BUTTON'), self.context).removeClass('is-hidden');
-        $(self.getClass('TAB_CONTAINER'), self.context).removeClass('is-hidden');
-        $('.js-account-profile-forms').addClass('identity-wrapper--with-membership');
-
-        self.paymentForm = new PaymentForm().init(self.getElem('CC_CHANGE_FORM_CONT'), function (newCard) {
-            self.toggleForm(false);
-            self.updateCard(newCard);
-            $(self.getElem('CC_CHANGE_SUCCESS')).removeClass('is-hidden');
-        });
-
-        bean.on(self.getElem('CC_CHANGE_BUTTON'), 'click', function () {
-            self.toggleForm();
-            $(self.getElem('CC_CHANGE_SUCCESS')).addClass('is-hidden');
-        });
-    };
-
-    return Membership;
 });

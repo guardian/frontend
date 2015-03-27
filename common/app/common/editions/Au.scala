@@ -19,7 +19,16 @@ object Au extends Edition(
 
   implicit val AU = Au
 
-  val cultureLocalNav: Seq[SectionLink] = Seq(film, music, books, televisionAndRadio, artanddesign, stage, classicalMusic)
+  val cultureLocalNav: Seq[SectionLink] = Seq(
+    film,
+    music,
+    games,
+    books,
+    televisionAndRadio,
+    artanddesign,
+    stage,
+    classicalMusic
+  )
 
   override val navigation: Seq[NavItem] = {
     Seq(
@@ -27,9 +36,9 @@ object Au extends Edition(
       NavItem(australia),
       NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
       NavItem(opinion),
-      NavItem(sport, Seq(australiaSport, football, cricket, rugbyunion, rugbyLeague, tennis, cycling, boxing, afl, nrl)),
+      NavItem(sport, Seq(australiaSport, afl, nrl, aLeague, football, cricket, rugbyunion, tennis, cycling, boxing)),
       NavItem(football, aLeague :: footballNav.toList),
-      NavItem(technology, Seq(games)),
+      NavItem(technology),
       NavItem(culture, cultureLocalNav),
       NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
       NavItem(fashion),
@@ -48,9 +57,9 @@ object Au extends Edition(
     NavItem(australia),
     NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
     NavItem(opinion),
-    NavItem(sport, Seq(australiaSport, football, cricket, rugbyunion, rugbyLeague , tennis, cycling, boxing, afl, nrl)),
+    NavItem(sport, Seq(australiaSport, afl, nrl, aLeague, football, cricket, rugbyunion, tennis, cycling, boxing)),
     NavItem(football, aLeague :: footballNav.toList),
-    NavItem(technology, Seq(games)),
+    NavItem(technology),
     NavItem(culture, cultureLocalNav),
     NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
     NavItem(fashion),

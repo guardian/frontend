@@ -32,7 +32,6 @@
 @import 'module/_dropdown';
 @import 'module/charts/_doughnuts';
 
-@import 'module/_popup';
 @import 'module/_search';
 @import 'module/_search-tool';
 
@@ -41,7 +40,6 @@
 @import 'module/content/_media.global';
 @import 'module/_loader';
 
-@import 'module/_rounded-icon';
 @import 'module/content/_live-blog';
 @import 'module/content/_live-filter';
 
@@ -64,7 +62,7 @@
 @import 'module/_clamp';
 @import 'module/_submeta';
 
-@import 'module/_flyers';
+@import 'module/_rich-links';
 
 /* ==========================================================================
    External modules
@@ -98,8 +96,6 @@
 @import 'module/facia/_facia-show-more';
 @import 'module/facia/_pagination';
 
-@import 'module/containers/_popular';
-
 @import 'module/facia/snaps/_football';
 @import 'module/facia/_tag-meta';
 
@@ -115,6 +111,7 @@
 @import 'module/facia/_items';
 @import 'module/facia/_linkslist';
 @import 'module/facia/_tones';
+@import 'module/facia/_treats';
 
 /* ==========================================================================
    Experiments
@@ -143,4 +140,3 @@
 @import 'module/_release-message';
 @import 'module/_tag-list';
 @import 'module/_childrens-books-site';
-@import 'module/business/_stocks';

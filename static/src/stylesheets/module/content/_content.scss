@@ -37,7 +37,6 @@
         .content__article-body {
             padding-right: gs-span(1) + $gs-gutter;
 
-            .img--landscape,
             .ad-slot {
                 margin-right: -1 * (gs-span(1) + $gs-gutter);
             }
@@ -75,6 +74,14 @@
             max-width: none;
         }
 
+        @include mq(wide) {
+            margin-right: gs-span(1) + $gs-gutter;
+        }
+    }
+
+    .content--image & {
+        max-width: none;
+        margin-right: 0;
         @include mq(wide) {
             margin-right: gs-span(1) + $gs-gutter;
         }
@@ -373,6 +380,17 @@
     padding-top: $gs-baseline / 6;
     margin-bottom: $gs-baseline / 2;
 
+    time {
+        display: inline-block;
+
+        @include mq(desktop) {
+            .content--interactive & {
+                display: inline;
+                padding-right: $gs-gutter/4;
+            }
+        }
+    }
+
     i {
         position: relative;
         top: 1px;
@@ -388,17 +406,30 @@
     }
 
     @include mq(leftCol) {
-        height: gs-height(1) + $gs-baseline;
+        min-height: gs-height(1) + $gs-baseline;
         padding-top: $gs-baseline/6;
         padding-bottom: $gs-baseline;
         margin-bottom: 0;
         border-top: 1px dotted colour(neutral-5);
     }
+}
 
-    @include mq(wide) {
-        .content__dateline-time {
-            display: inline-block;
-        }
+.content__dateline-wpd--modified {
+    color: colour(news-default);
+    cursor: pointer;
+
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: underline;
+    }
+}
+
+.content__dateline-lm {
+    padding-top: $gs-baseline/4;
+
+    @include mq(leftCol) {
+        padding-top: $gs-baseline/6;
     }
 }
 
@@ -612,8 +643,7 @@
     .content__standfirst,
     .content__dateline,
     .caption--main,
-    .ad-slot--paid-for-badge__header,
-    .ad-slot--paid-for-badge__label {
+    .ad-slot--paid-for-badge__header {
         color: colour(neutral-2-contrasted);
     }
     .content__headline,
@@ -661,14 +691,14 @@
         }
     }
 
-    .icon {
-        margin-top: $gs-baseline/3;
+    svg {
+        margin-top: -1 * $gs-baseline/6;
         overflow: visible;
     }
 
-    button {
+    .button {
         padding-top: 1px;
-        margin-right: $gs-gutter/5;
+        margin-right: 0;
 
         .tonal--tone-media & {
             border: 0;
@@ -689,6 +719,10 @@
             .inline-mail svg {
                 margin-top: $gs-baseline/4;
             }
+        }
+
+        @include mq(leftCol, wide) {
+            max-width: $left-column;
         }
     }
 
@@ -766,3 +800,19 @@
         margin-top: $gs-baseline;
     }
 }
+
+.related .button--show-more {
+    display: none;
+}
+
+.content--article,
+.content--liveblog,
+.content--gallery,
+.content--media,
+.content--image,
+.content--interactive {
+    .social--top {
+        padding-top: $gs-baseline / 2;
+        padding-bottom: $gs-baseline / 2;
+    }
+ }

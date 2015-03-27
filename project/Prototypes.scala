@@ -15,11 +15,29 @@ trait Prototypes {
     organization := "com.gu",
     maxErrors := 20,
     javacOptions := Seq("-g","-encoding", "utf8"),
-    scalacOptions := Seq("-unchecked", "-optimise", "-deprecation",
+    scalacOptions := Seq("-unchecked", "-optimise", "-deprecation", "-target:jvm-1.8",
       "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings","-Xfatal-warnings"),
     doc in Compile <<= target.map(_ / "none"),
     incOptions := incOptions.value.withNameHashing(true),
-    scalaVersion := "2.11.4"
+    scalaVersion := "2.11.4",
+    initialize := {
+      val _ = initialize.value
+      assert(sys.props("java.specification.version") == "1.8",
+        "Java 8 is required for this project.")
+    }
+  )
+
+  val frontendIntegrationTestsSettings = Seq (
+    concurrentRestrictions in ThisProject := List(Tags.limit(Tags.Test, 1)),
+    testOptions in Test += Tests.Argument("-oDF"),
+    resolvers ++= Seq(Resolver.typesafeRepo("releases")),
+    libraryDependencies ++= Seq(
+      scalaTestPlus,
+      seleniumJava % Test,
+      jodaTime % Test,
+      jodaConvert % Test,
+      akkaAgent % Test
+    )
   )
 
   val frontendDependencyManagementSettings = Seq(
@@ -63,7 +81,7 @@ trait Prototypes {
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
 
-    concurrentRestrictions in Global += Tags.limit(Tags.Test, 4),
+    concurrentRestrictions in Global := List(Tags.limit(Tags.Test, 4)),
 
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },

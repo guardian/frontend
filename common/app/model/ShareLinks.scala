@@ -1,5 +1,7 @@
 package model
 
+import java.net.URLEncoder
+
 import common.`package`._
 
 case class ShareLink (
@@ -24,15 +26,26 @@ trait ShareLinks { self: Content =>
     lazy val whatsapp = shareCampaignUrl("swa", elementId)
     lazy val webTitleAsciiEncoding = webTitle.encodeURIComponent
 
+    lazy val fullMediaPath: Option[String] = {
+      mediaPath.map { originalPath => if(originalPath.startsWith("//")) { "http:" + originalPath } else { originalPath } }
+    }
+
     shareType match {
       case "facebook" => Some(ShareLink("Facebook", "facebook", "Share on Facebook", s"https://www.facebook.com/sharer/sharer.php?u=$facebook&ref=responsive"))
-      case "twitter"  => Some(ShareLink("Twitter", "twitter", "Share on Twitter", s"https://twitter.com/intent/tweet?text=${title.urlEncoded}&url=$twitter"))
+      case "twitter"  => {
+        val text = if (this.isClimateChangeSeries) {
+          s"${title.urlEncoded} ${URLEncoder.encode("#keepitintheground", "utf-8")}"
+        } else {
+          title.urlEncoded
+        }
+        Some(ShareLink("Twitter", "twitter", "Share on Twitter", s"https://twitter.com/intent/tweet?text=$text&url=$twitter"))
+      }
       case "gplus"    => Some(ShareLink("Google plus", "gplus", "Share on Google+", s"https://plus.google.com/share?url=$googlePlus&amp;hl=en-GB&amp;wwc=1"))
       case "whatsapp" => Some(ShareLink("WhatsApp", "whatsapp", "Share on WhatsApp", s"""whatsapp://send?text=${("\"" + title + "\" " + whatsapp).encodeURIComponent}"""))
       case "email"    => Some(ShareLink("Email", "email", "Share via Email", s"mailto:?subject=$webTitleAsciiEncoding&body=$link"))
       case "linkedin"  => Some(ShareLink("LinkedIn", "linkedin", "Share on LinkedIn", s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=${shortLinkUrl.urlEncoded}"))
       case "pinterestPage"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/find/?url=${webLinkUrl.urlEncoded}"))
-      case "pinterestBlock"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=${webLinkUrl.urlEncoded}&media=${mediaPath.getOrElse("").urlEncoded}"))
+      case "pinterestBlock"  => Some(ShareLink("Pinterest", "pinterest", "Share on Pinterest", s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=${webLinkUrl.urlEncoded}&media=${fullMediaPath.getOrElse("").urlEncoded}"))
       case _ => None
     }
   }

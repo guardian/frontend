@@ -43,7 +43,9 @@ $left-column-wide: gs-span(3);
 // across team members. It will improve communication between
 // stakeholders, designers, developers, and testers.
 
-// NB. If these change, please update javascripts/utils/detect.js to match
+// NB. If these change, please update:
+//   javascripts/utils/detect.js
+//   common/app/layout/Breakpoint.scala
 
 $mq-breakpoints: (
     mobile:          gs-span(4)  + $gs-gutter,   // 320px
@@ -147,6 +149,8 @@ $frontend-palette: (
 
 );
 
+$c-top-header-background: guss-colour(guardian-brand-dark, $pasteup-palette); // one-off colour for header bg
+
 // MPU
 // =============================================================================
 
@@ -176,3 +180,8 @@ $vjs-large-button-size: 70px;
 // =============================================================================
 
 $available-image-widths: 140px, 220px, 300px, 460px, 620px, 700px, 860px, 940px, 1430px, 1920px;
+
+// Other variables common to many partials
+// =============================================================================
+
+$popup-toggle-arrow-size: 4px;

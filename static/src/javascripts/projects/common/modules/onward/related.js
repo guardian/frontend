@@ -1,27 +1,23 @@
 define([
     'bonzo',
     'qwery',
-    'lodash/arrays/intersection',
-    'lodash/collections/map',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/lazyload',
-    'common/modules/ui/expandable',
-    'common/modules/ui/images'
+    'common/modules/ui/expandable'
 ], function (
     bonzo,
     qwery,
-    intersection,
-    map,
+    _,
     $,
     config,
     mediator,
     register,
     LazyLoad,
-    Expandable,
-    images
+    Expandable
 ) {
 
     var opts;
@@ -29,12 +25,6 @@ define([
     function Related(options) {
         opts = options || {};
     }
-
-    Related.overrideUrl = '';
-
-    Related.setOverrideUrl = function (url) {
-        Related.overrideUrl = url;
-    };
 
     Related.prototype.popularInTagOverride = function () {
         // whitelist of tags to override related story component with a popular-in-tag component
@@ -55,7 +45,7 @@ define([
             ],
             pageTags      = config.page.keywordIds.split(','),
             // if this is an advertisement feature, use the page's keyword (there'll only be one)
-            popularInTags = config.page.isAdvertisementFeature ? pageTags : intersection(whitelistedTags, pageTags);
+            popularInTags = config.page.isAdvertisementFeature ? pageTags : _.intersection(whitelistedTags, pageTags);
 
         if (popularInTags.length) {
             return '/popular-in-tag/' + popularInTags[0] + '.json';
@@ -64,30 +54,29 @@ define([
 
     Related.prototype.renderRelatedComponent = function () {
         var relatedUrl, popularInTag, componentName, container,
-            fetchRelated = config.switches.relatedContent && config.switches.ajaxRelatedContent && config.page.showRelatedContent;
+            fetchRelated = config.switches.relatedContent && config.page.showRelatedContent;
 
-        if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
+        if (config.page && config.page.hasStoryPackage) {
             new Expandable({
                 dom: document.body.querySelector('.related-trails'),
                 expanded: false,
                 showCount: false
             }).init();
-            mediator.emit('modules:related:loaded');
 
         } else if (fetchRelated) {
-
             container = document.body.querySelector('.js-related');
+
             if (container) {
                 popularInTag = this.popularInTagOverride();
-                componentName = (!Related.overrideUrl && popularInTag) ? 'related-popular-in-tag' : 'related-content';
+                componentName = popularInTag ? 'related-popular-in-tag' : 'related-content';
                 register.begin(componentName);
 
                 container.setAttribute('data-component', componentName);
 
-                relatedUrl = Related.overrideUrl || popularInTag || '/related/' + config.page.pageId + '.json';
+                relatedUrl = popularInTag || '/related/' + config.page.pageId + '.json';
 
                 if (opts.excludeTags && opts.excludeTags.length) {
-                    relatedUrl += '?' + map(opts.excludeTags, function (tag) {
+                    relatedUrl += '?' + _.map(opts.excludeTags, function (tag) {
                         return 'exclude-tag=' + tag;
                     }).join('&');
                 }
@@ -96,17 +85,11 @@ define([
                     url: relatedUrl,
                     container: container,
                     success: function () {
-                        if (Related.overrideUrl) {
-                            if (config.page.hasStoryPackage) {
-                                $('.more-on-this-story').addClass('u-h');
-                            }
-                        }
+                        var relatedContainer = container.querySelector('.related-content');
 
-                        var relatedTrails = container.querySelector('.related-trails');
-                        new Expandable({dom: relatedTrails, expanded: false, showCount: false}).init();
+                        new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
                         // upgrade images
-                        images.upgrade(relatedTrails);
-                        mediator.emit('modules:related:loaded');
+                        mediator.emit('modules:related:loaded', container);
                         register.end(componentName);
                     },
                     error: function () {

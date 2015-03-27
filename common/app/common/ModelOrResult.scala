@@ -62,7 +62,7 @@ private object ItemOrRedirect extends ItemResponses with Logging {
 
 // http://wiki.nginx.org/X-accel
 // this might have ended up at the wrong server if it has a 'funny' url
-object InternalRedirect extends implicits.Requests {
+object InternalRedirect extends implicits.Requests with Logging {
 
   lazy val ShortUrl = """^(/p/.*)$""".r
 
@@ -76,7 +76,11 @@ object InternalRedirect extends implicits.Requests {
       case a if a.isArticle || a.isLiveBlog => internalRedirect("type/article", a.id)
       case v if v.isVideo => internalRedirect("applications", v.id)
       case g if g.isGallery => internalRedirect("applications", g.id)
-      case unsupportedContent => Redirect(unsupportedContent.webUrl, Map("view" -> Seq("classic")))
+      case a if a.isAudio => internalRedirect("applications", a.id)
+      case unsupportedContent =>
+        log.info(s"unsupported content: ${unsupportedContent.id}")
+        NotFound
+
     }
   }
 

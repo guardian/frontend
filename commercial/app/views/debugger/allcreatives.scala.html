@@ -233,15 +233,15 @@
                     .then(function(
                         CommercialComponent
                     ) {
-                    new CommercialComponent(document.querySelector('.ad-slot--inline-book'), {
-                        type: 'book',
-                        isbn: '9780852655634',
-                        clickMacro: '%%CLICK_URL_ESC%%',
-                        omnitureId: 'omnitureId'
-                    }).create();
+                        new CommercialComponent(document.querySelector('.ad-slot--inline-book'), {
+                            type: 'book',
+                            isbn: '9780852655634',
+                            clickMacro: '%%CLICK_URL_ESC%%',
+                            omnitureId: 'omnitureId'
+                        }).create();
+                    });
                 });
-            });
-            </script>
+        </script>
     </article>
 
     <div class="fc-container__inner">
@@ -434,6 +434,63 @@
     <div class="fc-container__inner">
         <h2 class="test-page-head">
             <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030887">
+                Merchandising: commercial component (soulmates) + feed
+            </a>
+        </h2>
+        <form class="js-soulmates-feed">
+            <label>Feed selection:
+                <select>
+                    <option value="brighton" selected>Brighton</option>
+                    <option value="northwest">Northwest</option>
+                    <option value="scotland">Scotland</option>
+                    <option value="young">Young</option>
+                    <option value="mature">Mature</option>
+                    <option value="men">Men</option>
+                    <option value="women">Women</option>
+                </select>
+            </label>
+        </form>
+    </div>
+    <div class="fc-container fc-container--commercial">
+        <div class="js-merchandising-soulmates-feed ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component"></div>
+    </div>
+    <script>
+    loadCommercial(function () {
+        require([
+            'bean',
+            'qwery',
+            'common/utils/$',
+            'common/modules/commercial/creatives/commercial-component'
+        ])
+            .then(function(
+                bean,
+                qwery,
+                $,
+                CommercialComponent
+            ) {
+                var $soulmatesFeed = $('.js-merchandising-soulmates-feed');
+
+                bean.on(qwery('.js-soulmates-feed select')[0], 'change', function (event) {
+                    var commercialComponent = new CommercialComponent($soulmatesFeed[0], {
+                        type: 'soulmatesGroup',
+                        omnitureId: '[%OmnitureID%]',
+                        clickMacro: '%%CLICK_URL_ESC%%',
+                        soulmatesFeedName: $(event.srcElement).val()
+                    });
+                    commercialComponent.postLoadEvents.soulmatesGroup = function () {
+                        $soulmatesFeed.removeClass('lazyloaded');
+                    };
+
+                    commercialComponent.create();
+                });
+                bean.fire(qwery('.js-soulmates-feed select')[0], 'change');
+            });
+        });
+    </script>
+
+    <div class="fc-container__inner">
+        <h2 class="test-page-head">
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030887">
                 Merchandising: commercial component (soulmates)
             </a>
         </h2>
@@ -470,7 +527,7 @@
                 ) {
                 new CommercialComponent(document.querySelector('.dfp-ad--merchandising-multi'), {
                     type: 'multi',
-                    components: ['jobs', 'masterclasses', 'books', 'soulmates'],
+                    components: ['soulmates', 'travel', 'books', 'masterclasses'],
                     clickMacro: '%%CLICK_URL_ESC%%',
                     omnitureId: 'omnitureId'
                 }).create();
@@ -519,10 +576,10 @@
                         $,
                         CommercialComponent
                     ) {
-                        var $capiMultiple = $('.ad-slot--capi-@component("type")');
+                        var $capiType = $('.ad-slot--capi-@component("type")');
 
-                        bean.on(qwery('.capi-multiple-paid-for-type')[0], 'change', function (event) {
-                            var commercialComponent = new CommercialComponent($capiMultiple[0], {
+                        bean.on(qwery('.capi-@component("type")-paid-for-type select')[0], 'change', function (event) {
+                            var commercialComponent = new CommercialComponent($capiType[0], {
                                 type: 'capi@if(component("type") == "single"){Single}',
                                 t: ['p/43b2q','p/43945'],
                                 l: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
@@ -537,8 +594,8 @@
                                 omnitureId: "omnitureId"
                             });
 
-                            commercialComponent.postLoadEvents.capi = function () {
-                                $capiMultiple.removeClass('lazyloaded');
+                            commercialComponent.postLoadEvents['capi@if(component("type") == "single"){Single}'] = function () {
+                                $capiType.removeClass('lazyloaded');
                             };
                             commercialComponent.create();
                         });

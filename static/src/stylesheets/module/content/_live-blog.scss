@@ -90,9 +90,10 @@ $block-padding-right: $gs-gutter;
 }
 
 .live-pulse-icon:before {
-    @extend %rounded-icon;
-
-    $size: 12px;
+    display: inline-block;
+    position: relative;
+    @include border-radius(50%);
+    $size: .75em;
     background-color: #ffffff;
     width: $size;
     height: $size;
@@ -257,6 +258,7 @@ $block-padding-right: $gs-gutter;
     .block-title,
     .block-elements > *,
     .block-elements > .element.element-tweet,
+    .block-elements > .element.element-rich-link,
     .block-elements > .element.element-witness,
     .block-elements > .element.element--thumbnail {
         margin-left: $gs-gutter/2;
@@ -288,18 +290,9 @@ $block-padding-right: $gs-gutter;
                 }
             }
         }
+
         > blockquote {
             color: colour(neutral-2);
-        }
-
-        > blockquote.quoted:before {
-            left: auto;
-        }
-
-        > blockquote.quoted p:first-child {
-            @include mq(mobileLandscape) {
-                text-indent: $gs-gutter * 1.5;
-            }
         }
 
         /* Media
@@ -339,7 +332,8 @@ $block-padding-right: $gs-gutter;
         > .element-table .table--football,
         > .element-comment,
         > .element-embed,
-        > .element-audio {
+        > .element-audio,
+        > .element-interactive {
             width: auto;
             margin: $gs-baseline $gs-gutter/2 ($gs-baseline / 3) * 4;
 

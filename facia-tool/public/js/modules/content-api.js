@@ -1,5 +1,6 @@
-/* global _: true */
 define([
+    'underscore',
+    'jquery',
     'modules/vars',
     'modules/authed-ajax',
     'modules/cache',
@@ -11,6 +12,8 @@ define([
     'utils/snap'
 ],
 function (
+    _,
+    $,
     vars,
     authedAjax,
     cache,
@@ -120,11 +123,14 @@ function (
     }
 
     function decorateItems (articles) {
-        var num = vars.CONST.capiBatchSize || 10;
+        var num = vars.CONST.capiBatchSize || 10,
+            pending = [];
 
         _.each(_.range(0, articles.length, num), function(index) {
-            decorateBatch(articles.slice(index, index + num));
+            pending.push(decorateBatch(articles.slice(index, index + num)));
         });
+
+        return $.when.apply($, pending);
     }
 
     function decorateBatch (articles) {
@@ -139,7 +145,7 @@ function (
             }
         });
 
-        fetchContentByIds(ids)
+        return fetchContentByIds(ids)
         .done(function(results){
             if (!_.isArray(results)) {
                 return;
@@ -252,7 +258,7 @@ function (
 
     function fetchLatest (options) {
         var url = vars.CONST.apiSearchBase + '/',
-            propName, term;
+            propName, term, filter;
 
         options = _.extend({
             article: '',
@@ -264,13 +270,14 @@ function (
             isDraft: true
         }, options);
         term = options.term;
+        filter = options.filter;
 
         if (options.article) {
             term = options.article;
             propName = 'content';
             url += term + '?' + vars.CONST.apiSearchParams;
         } else {
-            term = encodeURIComponent(term.trim().replace(/ +/g,' AND '));
+            term = encodeURIComponent(term.trim());
             propName = 'results';
             url += 'search?' + vars.CONST.apiSearchParams;
             url += options.isDraft ?
@@ -279,7 +286,7 @@ function (
             url += '&page-size=' + options.pageSize;
             url += '&page=' + options.page;
             url += term ? '&q=' + term : '';
-            url += options.filter ? '&' + options.filterType + '=' + encodeURIComponent(options.filter) : '';
+            url += filter ? '&' + options.filterType + '=' + encodeURIComponent(filter) : '';
         }
 
         var deferred = new $.Deferred();
@@ -288,7 +295,7 @@ function (
         }).then(function(data) {
             var rawArticles = data.response && data.response[propName] ? [].concat(data.response[propName]) : [];
 
-            if (!term && !rawArticles.length) {
+            if (!term && !filter && !rawArticles.length) {
                 deferred.reject(new Error('Sorry, the Content API is not currently returning content'));
             } else {
                 deferred.resolve(_.extend({}, data.response, {

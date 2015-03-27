@@ -25,10 +25,16 @@
     // Environments
     "browser"  : true,
     "jquery"   : true,
+    "esnext"   : true,
 
     "globals"   : {
         "require": false,
         "define" : false,
-        "s"      : false
-    }
+        "s"      : false,
+        "JSON"   : false,
+        "System" : false
+    },
+
+    // catch keyword (native promises)
+    "-W024": true
 }

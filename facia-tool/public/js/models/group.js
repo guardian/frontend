@@ -1,10 +1,11 @@
-/* global _: true */
 define([
     'knockout',
+    'underscore',
     'modules/copied-article',
     'utils/mediator'
 ], function(
     ko,
+    _,
     copiedArticle,
     mediator
 ) {
@@ -38,7 +39,7 @@ define([
                 targetItem: targetItem,
                 targetGroup: this,
                 sourceContext: sourceItem.front,
-                targetContext: targetItem.front,
+                targetContext: this.front,
                 isAfter: true
             });
         };

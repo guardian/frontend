@@ -49,6 +49,12 @@ define([
                     expect(reqwestSpy).toHaveBeenCalledWith({url: 'https://apis.guardian.co.uk/endpoint.json'});
                 });
 
+                it('should not touch a protocol-less url', function () {
+                    ajax({url: '//apis.guardian.co.uk/endpoint.json'});
+
+                    expect(reqwestSpy).toHaveBeenCalledWith({url: '//apis.guardian.co.uk/endpoint.json'});
+                });
+
                 it('should be able to update host', function () {
                     ajax.setHost('http://apis.guardian.co.uk');
                     ajax({url: '/endpoint.json'});

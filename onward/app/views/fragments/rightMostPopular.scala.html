@@ -1,10 +1,10 @@
-@(popular: model.MostPopular)(implicit request: RequestHeader)
+@(popular: Option[model.MostPopular])(implicit request: RequestHeader)
 
-@if(popular.trails.nonEmpty) {
+@popular.map { pop =>
     <div class="right-most-popular right-most-popular--image component--rhc hide-on-childrens-books-site" data-component="right-most-popular" data-importance="-1">
         <h3 class="content__meta-heading">Most popular</h3>
         <ul class="right-most-popular__items u-unstyled" data-link-name="Right hand most popular">
-            @popular.trails.take(5).zipWithRowInfo.map{ case(trail, row) =>
+            @pop.trails.take(5).zipWithRowInfo.map{ case(trail, row) =>
                 <li class="right-most-popular-item" data-link-name="trail | @row.rowNum">
                     <a class="right-most-popular-item__url media u-cf" href="@LinkTo{@trail.url}">
                         @trail.trailPicture(5, 3).map{ image =>

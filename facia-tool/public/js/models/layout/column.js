@@ -1,10 +1,11 @@
-/* globals _ */
 define([
     'knockout',
+    'underscore',
     'utils/global-listeners',
     'utils/mediator'
 ],function (
     ko,
+    _,
     globalListeners,
     mediator
 ) {
@@ -44,9 +45,8 @@ define([
         }
         this.isFront = ko.computed(isType.bind(this, 'front'), this);
         this.isLatest = ko.computed(isType.bind(this, 'latest'), this);
-        this.isOphan = ko.computed(isType.bind(this, 'ophan'), this);
-        this.isIframe = ko.computed(isType.bind(this, 'iframe'), this);
         this.isTreats = ko.computed(isType.bind(this, 'treats'), this);
+        this.isClipboard = ko.computed(isType.bind(this, 'clipboard'), this);
 
         globalListeners.on('resize', _.debounce(function () {
             column.recomputeWidth();

@@ -6,7 +6,6 @@ import common._
 import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi
 import conf.LiveContentApi.getResponse
-import conf.Switches._
 import contentapi.{QueryDefaults, SectionTagLookUp, SectionsLookUp}
 import model.{Section, _}
 import org.joda.time.DateTime
@@ -129,8 +128,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
       val page = maybeSection.map(s => section(s, response)) orElse
         response.tag.flatMap(t => tag(response, pageNum)) orElse
         response.section.map(s => section(s, response))
-      if (AdFeatureExpirySwitch.isSwitchedOn &&
-        page.exists(_.page.isExpiredAdvertisementFeature)) {
+      if (page.exists(_.page.isExpiredAdvertisementFeature)) {
         Right(MovedPermanently(expiredAdFeatureUrl))
       } else {
         ModelOrResult(page, response, maybeSection)

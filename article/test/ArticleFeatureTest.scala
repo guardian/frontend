@@ -163,7 +163,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see the publication date of the article")
-        findFirst(".content__dateline").getText should be("Monday 6 August 2012 20.30 BST")
+        findFirst(".content__dateline-wpd").getText should be("Monday 6 August 2012 20.30 BST")
         findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00+0100")
       }
     }
@@ -223,12 +223,11 @@ import collection.JavaConversions._
 
         Then("I should see pictures in the body of the article")
 
-        $("figure[itemprop=associatedMedia]").length should be(2)
+        $(".content__article-body .element-image").length should be(2)
 
-        val inBodyImage = findFirst("figure[itemprop=associatedMedia]")
+        val inBodyImage = findFirst(".content__article-body .element-image")
 
         ImageServerSwitch.switchOn()
-        inBodyImage.getAttribute("class") should include("img--extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
           endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
@@ -357,29 +356,6 @@ import collection.JavaConversions._
       StandardAdvertsSwitch.switchOff()
     }
 
-    scenario("Navigate to the classic site (UK edition - www.guardian.co.uk)") {
-      Given("I'm on article entitled 'We must capitalise on a low-carbon future'")
-      And("I am using the UK edition")
-      goTo("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
-        import browser._
-
-        Then("I should see a link to the corresponding classic article")
-        findFirst(".js-main-site-link").getAttribute("href") should be(classicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
-      }
-    }
-
-    scenario("Navigate to the classic site (US edition - www.guardiannews.com)") {
-      Given("I'm on article entitled 'We must capitalise on a low-carbon future'")
-      And("I am using the US edition")
-      US("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
-        import browser._
-
-        Then("I should see a link to the corresponding classic article")
-        findFirst(".js-main-site-link").getAttribute("href") should
-          be(classicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
-      }
-    }
-
     scenario("Direct link to paragraph") {
 
       Given("I have clicked a direct link to paragrah 16 on the article 'Eurozone crisis live: Fitch downgrades Greece on euro exit fears'")
@@ -388,7 +364,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see paragraph 16")
-        findFirst("#block-16").getText should startWith("11.31am: Vince Cable, the business secretary")
+        findFirst("#block-16").getText should startWith("11.31am:Vince Cable, the business secretary")
       }
     }
 
@@ -448,15 +424,6 @@ import collection.JavaConversions._
       goTo("/football/live/2014/aug/03/arsenal-v-monaco-emirates-cup-live") { browser =>
         withClue("There should be no 'classic version' link") {
           browser.find(".js-main-site-link") should be(empty)
-        }
-      }
-    }
-
-    scenario("Show 'classic' link on non-Football live blogs") {
-      goTo("/business/blog/live/2014/aug/20/bank-of-england-minutes-to-shed-light-on-interest-rate-rises-business-live") { browser =>
-        import browser._
-        withClue("There should be a 'classic version' link") {
-          browser.find(".js-main-site-link") should not be empty
         }
       }
     }
@@ -531,6 +498,17 @@ import collection.JavaConversions._
         browser.find("nav", 1).getAttribute("aria-label") should not be empty
         findFirst("#article").getAttribute("role") should be("main")
         findFirst(".related").getAttribute("aria-labelledby") should be("related-content-head")
+      }
+    }
+
+    scenario("Progressive related content") {
+      Given("I visit a Guardian article page")
+      goTo("/technology/askjack/2015/feb/05/how-should-i-upgrade-my-old-hi-fi-in-a-digital-world") { browser =>
+        import browser._
+
+        Then("There should be a placeholder for related content")
+        val relatedLink = findFirst("[data-test-id=related-content]")
+        relatedLink.getText() should be (empty)
       }
     }
 
@@ -609,25 +587,6 @@ import collection.JavaConversions._
       }
     }
 
-
-    scenario("'Classic' link") {
-      Given("I am on a piece of content that has an R2 version")
-      goTo("/world/2014/mar/24/egypt-death-sentence-529-morsi-supporters") { browser =>
-        import browser._
-        Then("I should see a 'Classic' link")
-        $(".js-main-site-link").isEmpty should be(false)
-      }
-    }
-
-    scenario("Remove 'Classic' link") {
-      Given("I am on a piece of content that is only Next Gen")
-      goTo("/science/antarctica-live/2014/feb/28/-sp-rescue-from-antarctica") { browser =>
-        import browser._
-        Then("I should not see a 'Classic' link")
-        $(".js-main-site-link").isEmpty should be(true)
-      }
-    }
-
     scenario("Display breadcrumbs correctly") {
       Given("I am on a piece of content with a primary nav, secondary nav and a key woro")
       goTo("/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism") { browser =>
@@ -649,7 +608,7 @@ import collection.JavaConversions._
         Then("I should see three breadcrumbs")
         $(".breadcrumb .signposting__item").size() should be(2)
 
-        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Comment"))
+        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Opinion"))
         link.length should be > 0
         val link2 = browser.find(".breadcrumb .signposting__item a", withText().contains("Heritage"))
         link2.length should be > 0

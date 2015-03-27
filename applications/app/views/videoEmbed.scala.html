@@ -6,7 +6,7 @@
 @import conf.Configuration
 
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en-GB" class="gu-video-embed-html ">
     <head>
         <title>@page.title</title>
         <style>
@@ -14,6 +14,7 @@
             figure { margin: 0 !important; }
         </style>
         <link rel="stylesheet" href="@StaticSecure("stylesheets/media-player.css")"/>
+        <base target="_parent"/>
     </head>
     <body>
 
@@ -59,12 +60,13 @@
                             showControlsAtStart = true,
                             endSlatePath = video.endSlatePath,
                             overrideIsRatioHd = None
-                        ))
+                        ), true)
                     }
                 </figure>
 
                 <script>
                     var guardian = {
+                        isEmbed: true,
                         isModernBrowser: (
                             'querySelector' in document
                             && 'addEventListener' in window
@@ -78,9 +80,15 @@
                         ),
                         config: @fragments.javaScriptConfig(video)
                     };
-                    window.s_account = guardian.config.page.omnitureAccount;
-
                     var docClass = document.documentElement.className;
+
+                    @* Get iframes parent url: http://www.nczonline.net/blog/2013/04/16/getting-the-url-of-an-iframes-parent/ *@
+                    var parentUrl = (!!window.parent && window.parent !== window) ? document.referrer : '';
+
+                    @* Hack to correctly track external embeds which have been incorrectly embedded on theguardian.com *@
+                    var sAccount = (/www\.theguardian\.com/.test(parentUrl)) ? 'guardiangu-frontend,guardiangu-network' : 'guardiangu-thirdpartyapps';
+
+                    window.s_account = sAccount;
 
                     function hasSvgSupport() {
                         var ns = {'svg': 'http://www.w3.org/2000/svg'};
@@ -99,8 +107,9 @@
                         paths: {
                             core: '@StaticSecure("javascripts/core.js")',
                             text: 'text', // noop
+                            inlineSvg: 'inlineSvg', // noop
                             'bootstraps/video-embed': '@StaticSecure("javascripts/bootstraps/video-embed.js")',
-                            'ophan/ng':  '@{Configuration.javascript.config("ophanJsUrl")}'
+                            'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
                         }
                     };
 

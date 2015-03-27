@@ -3,9 +3,15 @@ package cards
 sealed trait CardType {
   val cssClassName: String
 
-  def showVideoPlayer = this match {
-    case Half | ThreeQuarters | ThreeQuartersRight | FullMedia50 | FullMedia75 | FullMedia100 => true
-    case _ => false
+  case class VideoPlayerMode(show: Boolean, showEndSlate: Boolean)
+
+  def videoPlayer = this match {
+    case Half | ThreeQuarters | ThreeQuartersRight | FullMedia50 | FullMedia75 | FullMedia100 =>
+      VideoPlayerMode(show = true, showEndSlate = true)
+    case Third | Standard =>
+      VideoPlayerMode(show = true, showEndSlate = false)
+    case _ =>
+      VideoPlayerMode(show = false, showEndSlate = false)
   }
 
   def showCutOut = this match {

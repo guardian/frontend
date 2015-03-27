@@ -7,8 +7,8 @@
                 <h4 class="commercial__title">
                     <a href="@{clickMacro}http://www.guardianbookshop.co.uk/"
                     data-link-name="merchandising-hybrid-book-v@{version}_@{date}-visit-shop">
-                        <i class="i i-guardian-logo-commercial"></i><i class="i i-bookshop-logo i-commercial-brand"></i>
-                        <span class="u-h">The Guardian</span> <span class="u-h">Bookshop</span>
+                        @fragments.inlineSvg("logo-bookshop-26", "commercial")
+                        <span class="u-h">Bookshop</span>
                     </a>
                 </h4>
             </div>
@@ -39,7 +39,7 @@
                     </div>
                 </a>
                 <a class="lineitem__cta button button--primary button--small" href="@clickMacro@book.buyUrl" data-link-name="merchandising-hybrid-book-v@{version}_@{date}-buy-now-link">
-                    Buy now<i class="i i-arrow-white-right i-right"></i>
+                    Buy now@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
                 </a>
             </div>
         </div>

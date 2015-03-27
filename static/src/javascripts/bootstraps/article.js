@@ -1,29 +1,31 @@
 define([
     'fence',
+    'qwery',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/article/flyers',
+    'common/utils/url',
+    'common/modules/article/rich-links',
     'common/modules/article/open-module',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
-    'common/modules/gallery/lightbox',
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
     'common/modules/ui/rhc',
     'common/modules/ui/selection-sharing'
 ], function (
     fence,
+    qwery,
     $,
     config,
     detect,
     mediator,
-    flyers,
+    urlutils,
+    richLinks,
     openModule,
     truncate,
     twitter,
-    Lightbox,
     geoMostPopular,
     OpenCta,
     rhc,
@@ -51,6 +53,16 @@ define([
                 });
             },
 
+            initFormStack: function () {
+                var allvars = urlutils.getUrlVars();
+
+                if (allvars.CMP) {
+                    $('.element-formstack').each(function (el) {
+                        el.src = el.src + '?CMP=' + allvars.CMP;
+                    });
+                }
+            },
+
             initTruncateAndTwitter: function () {
                 // Ensure that truncation occurs before the tweet upgrading.
                 truncate();
@@ -59,9 +71,15 @@ define([
             },
 
             initRightHandComponent: function () {
-                if (!detect.isBreakpoint('mobile') && parseInt(config.page.wordCount, 10) > 500) {
+                var mainColumn = qwery('.js-content-main-column');
+                // only render when we have >1000px or more (enough space for ad + most popular)
+                if (mainColumn[0] && mainColumn[0].offsetHeight > 1000 && !detect.isBreakpoint('mobile')) {
                     geoMostPopular.render();
                 }
+            },
+
+            initSelectionSharing: function () {
+                selectionSharing.init();
             }
         },
 
@@ -70,9 +88,10 @@ define([
             modules.initFence();
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
-            selectionSharing.init();
-            Lightbox.init();
-            flyers.init();
+            modules.initSelectionSharing();
+            modules.initFormStack();
+            richLinks.upgradeRichLinks();
+            richLinks.insertTagRichLink();
             openModule.init();
 
             mediator.emit('page:article:ready');

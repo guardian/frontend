@@ -7,15 +7,11 @@ define([
     'common/utils/user-timing',
     'bootstraps/article',
     'bootstraps/common',
-    'bootstraps/football',
     'bootstraps/gallery',
-    'bootstraps/image-content',
     'bootstraps/liveblog',
     'bootstraps/media',
     'bootstraps/profile',
-    'bootstraps/section',
-    'bootstraps/sport',
-    'bootstraps/tag'
+    'bootstraps/sport'
 ], function (
     qwery,
     raven,
@@ -25,15 +21,11 @@ define([
     userTiming,
     article,
     common,
-    football,
     gallery,
-    imageContent,
     liveBlog,
     media,
     profile,
-    section,
-    sport,
-    tag
+    sport
 ) {
 
     var bootstrapContext = function (featureName, boostrap) {
@@ -56,12 +48,6 @@ define([
                 });
             }
 
-            if (config.page.section === 'crosswords') {
-                require(['bootstraps/crosswords'], function (crosswords) {
-                    bootstrapContext('crosswords', crosswords);
-                });
-            }
-
             if (config.page.section === 'lifeandstyle' && config.page.series === 'Sudoku') {
                 require(['bootstraps/sudoku'], function (sudoku) {
                     bootstrapContext('sudoku', sudoku);
@@ -69,11 +55,17 @@ define([
             }
 
             if (config.page.contentType === 'Article') {
-                bootstrapContext('article', article);
+                require(['bootstraps/image-content'], function (imageContent) {
+                    bootstrapContext('article', article);
+                    bootstrapContext('article : image-content', imageContent);
+                });
             }
 
             if (config.page.contentType === 'LiveBlog') {
-                bootstrapContext('liveBlog', liveBlog);
+                require(['bootstraps/image-content'], function (imageContent) {
+                    bootstrapContext('liveBlog', liveBlog);
+                    bootstrapContext('liveBlog : image-content', imageContent);
+                });
             }
 
             if (config.isMedia || qwery('video, audio').length) {
@@ -81,23 +73,22 @@ define([
             }
 
             if (config.page.contentType === 'Gallery') {
-                bootstrapContext('gallery', gallery);
+                require(['bootstraps/image-content'], function (imageContent) {
+                    bootstrapContext('gallery', gallery);
+                    bootstrapContext('gallery : image-content', imageContent);
+                });
             }
 
             if (config.page.contentType === 'ImageContent') {
-                bootstrapContext('image-content', imageContent);
-            }
-
-            if (config.page.contentType === 'Tag') {
-                bootstrapContext('tag', tag);
-            }
-
-            if (config.page.contentType === 'Section' && !config.page.isFront) {
-                bootstrapContext('section', section);
+                require(['bootstraps/image-content'], function (imageContent) {
+                    bootstrapContext('image-content', imageContent);
+                });
             }
 
             if (config.page.section === 'football') {
-                bootstrapContext('footbal', football);
+                require(['bootstraps/football'], function (football) {
+                    bootstrapContext('footbal', football);
+                });
             }
 
             if (config.page.section === 'sport') {

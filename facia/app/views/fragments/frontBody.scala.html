@@ -7,7 +7,6 @@
         faciaPage.isFoundationSupported)) { case (isSponsored, isAdFeature, isFoundationFunded) =>
     @if(faciaPage.collections.nonEmpty) {
         <div class="l-side-margins">
-            <div class="history-tags js-history-tags"></div>
             <div class="@RenderClasses(Map(
                 "fc-container--sponsored" -> isSponsored,
                 "fc-container--advertisement-feature" -> isAdFeature,
@@ -27,6 +26,8 @@
                         @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
                     }
                 }
+
+                <div class="js-front-bottom"></div>
 
                 @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
 

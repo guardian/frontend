@@ -123,6 +123,10 @@
             }
         }
     }
+    .content__meta-container--twitter,
+    .content__meta-container--email {
+        padding-top: $gs-baseline/2;
+    }
     .byline {
         @include mq(desktop) {
             width: gs-span(7);
@@ -132,16 +136,22 @@
             border-top: 0;
             padding-bottom: 0;
             min-height: $gs-baseline * 2;
+            display: inline;
+            margin-right: $gs-gutter/2;
         }
+    }
+    .meta__email,
+    .meta__twitter {
+        display: inline !important;
     }
     .content__dateline {
         margin: 0;
         border-top: 0;
-        padding-top: $gs-baseline / 3;
         padding-bottom: $gs-baseline;
 
         @include mq(leftCol) {
             height: $gs-row-height + ($gs-baseline * 2/3);
+            padding-top: $gs-baseline / 3;
         }
     }
     // Ensure margins don't overlay full-page take over interactives

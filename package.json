@@ -12,19 +12,20 @@
     "grunt-concurrent": "1.0.0",
     "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-copy": "0.6.0",
-    "grunt-contrib-jshint": "0.10.0",
+    "grunt-contrib-jshint": "0.11.0",
     "grunt-contrib-requirejs": "0.4.4",
     "grunt-contrib-sass": "0.8.1",
     "grunt-contrib-uglify": "0.6.0",
     "grunt-contrib-watch": "0.6.1",
     "grunt-csdevmode": "0.1.2",
     "grunt-css-metrics": "0.1.2",
+    "grunt-frequency-graph": "^0.1.6",
     "grunt-hologram": "0.0.4",
     "grunt-jscs": "0.7.1",
-    "grunt-karma": "0.9.0",
+    "grunt-karma": "0.10.1",
     "grunt-mkdir": "0.1.2",
     "grunt-pagespeed": "0.3.0",
-    "grunt-px-to-rem": "0.3.1",
+    "grunt-px-to-rem": "0.4.0",
     "grunt-scss-lint": "0.3.3",
     "grunt-shell": "1.1.1",
     "grunt-svgmin": "^2.0.0",
@@ -33,13 +34,14 @@
     "handlebars": "2.0.0",
     "jit-grunt": "0.8.0",
     "jsonfile": "2.0.0",
-    "karma": "0.12.24",
-    "karma-chrome-launcher": "0.1.5",
+    "jspm": "0.14.0",
+    "karma": "0.12.31",
+    "karma-chrome-launcher": "0.1.7",
     "karma-coffee-preprocessor": "0.2.1",
-    "karma-coverage": "^0.2.6",
-    "karma-firefox-launcher": "0.1.3",
+    "karma-coverage": "0.2.7",
+    "karma-firefox-launcher": "0.1.4",
     "karma-html2js-preprocessor": "0.1.0",
-    "karma-jasmine": "0.2.2",
+    "karma-jasmine": "0.3.5",
     "karma-phantomjs-launcher": "0.1.4",
     "karma-requirejs": "0.2.2",
     "karma-script-launcher": "0.1.0",
@@ -54,5 +56,24 @@
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
+  },
+  "jspm": {
+    "directories": {
+      "baseURL": "static/src",
+      "lib": "static/src",
+      "packages": "static/src/jspm_packages"
+    },
+    "configFile": "static/src/jspm-config.js",
+    "dependencies": {
+      "EventEmitter": "github:Wolfy87/EventEmitter@~4.2.6",
+      "bean": "npm:bean@^1.0.15",
+      "bonzo": "npm:bonzo@^1.4.0",
+      "domready": "npm:domready@^1.0.7",
+      "lodash": "npm:lodash@~2.4.1",
+      "qwery": "npm:qwery@^4.0.0",
+      "raven": "github:getsentry/raven-js@~1.1.16",
+      "react": "npm:react@~0.11.2",
+      "reqwest": "github:ded/reqwest@1.1.5"
+    }
   }
 }

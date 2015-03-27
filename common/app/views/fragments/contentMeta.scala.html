@@ -21,7 +21,7 @@
     }
 
     @if(!content.shouldHidePublicationDate) {
-        @fragments.meta.dateline(content.webPublicationDate, secondary = true)
+        @fragments.meta.dateline(content.webPublicationDate, content.lastModified, content.hasBeenModified, secondary = true)
     }
 
     <div class="meta__extras">
@@ -44,8 +44,7 @@
     @if(content.hasTonalHeaderByline){ content__meta-container--tonal-header}
     @content.contributorBio.map { bio => content__meta-container--bio}
     @if(content.contributors.length == 1 && content.contributors.headOption.exists(_.twitterHandle.nonEmpty)) { content__meta-container--twitter}
-    @if(content.contributors.length == 1 && content.contributors.headOption.exists(_.emailAddress.nonEmpty)) { content__meta-container--email}
-    @if(!content.hasMainPicture && !content.hasMainVideo && !content.hasMainAudio && !content.hasMainEmbed){ content__meta-container--float}">
+    @if(content.contributors.length == 1 && content.contributors.headOption.exists(_.emailAddress.nonEmpty)) { content__meta-container--email}">
 
     @if(showBadge) {
         @fragments.commercial.badge(content)

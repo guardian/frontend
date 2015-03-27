@@ -16,10 +16,9 @@ trait MetaData extends Tags {
   def description: Option[String] = None
   def rssPath: Option[String] = None
 
-  lazy val canonicalUrl: Option[String] = None
+  def hasSlimHeader: Boolean = contentType == "Interactive"
 
-  // i.e. show the link back to the desktop site
-  def hasClassicVersion: Boolean = !special
+  lazy val canonicalUrl: Option[String] = None
 
   // Special means "Next Gen platform only".
   private lazy val special = id.contains("-sp-")
@@ -36,6 +35,8 @@ trait MetaData extends Tags {
 
   lazy val isFront = false
   lazy val contentType = ""
+  lazy val hideUi = false
+  lazy val isImmersive = false
 
   def adUnitSuffix = section
 
@@ -54,7 +55,6 @@ trait MetaData extends Tags {
     ("isFront", JsBoolean(isFront)),
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
     ("isSurging", JsString(isSurging.mkString(","))),
-    ("hasClassicVersion", JsBoolean(hasClassicVersion)),
     ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature)),
     ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path)),
     ("videoJsVpaidSwf", JsString(conf.Static("flash/components/video-js-vpaid/video-js.swf").path))
@@ -85,7 +85,8 @@ trait MetaData extends Tags {
     DfpAgent.isSponsored(tags, Some(section), maybeEdition)
   override lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
   override lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(tags, Some(section))
-  lazy val isExpiredAdvertisementFeature: Boolean = DfpAgent.isExpiredAdvertisementFeature(tags, Some(section))
+  lazy val isExpiredAdvertisementFeature: Boolean =
+    DfpAgent.isExpiredAdvertisementFeature(id, tags, Some(section))
   lazy val sponsorshipTag: Option[Tag] = DfpAgent.sponsorshipTag(tags, Some(section))
 }
 
@@ -296,11 +297,21 @@ trait Tags {
   lazy val isLetters = tones.exists(_.id == Tags.Letters)
   lazy val isCrossword = types.exists(_.id == Tags.Crossword)
 
+  lazy val isArticle: Boolean = tags.exists { _.id == Tags.Article }
+  lazy val isSudoku: Boolean = tags.exists { _.id == Tags.Sudoku } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
+  lazy val isGallery: Boolean = tags.exists { _.id == Tags.Gallery }
+  lazy val isVideo: Boolean = tags.exists { _.id == Tags.Video }
+  lazy val isPoll: Boolean = tags.exists { _.id == Tags.Poll }
+  lazy val isImageContent: Boolean = tags.exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
+  lazy val isInteractive: Boolean = tags.exists { _.id == Tags.Interactive }
+
   lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.contributorLargeImagePath.nonEmpty).nonEmpty
 
   lazy val isCricketLiveBlog = isLiveBlog &&
     tags.exists(t => t.id == "sport/england-cricket-team") &&
     tags.exists(t => t.id == "sport/over-by-over-reports")
+
+  lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
 }
 
 object Tags {
@@ -311,6 +322,13 @@ object Tags {
   val Editorial = "tone/editorials"
   val Letters = "tone/letters"
   val Podcast = "type/podcast"
+
+  val Article = "type/article"
+  val Gallery = "type/gallery"
+  val Video = "type/video"
+  val Poll = "type/poll"
+  val Interactive = "type/interactive"
+  val Sudoku = "type/sudoku"
 
   object VisualTone {
     val Live = "live"

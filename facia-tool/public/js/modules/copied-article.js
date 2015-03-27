@@ -1,8 +1,11 @@
-/* global _: true */
 define([
-    'modules/vars'
+    'underscore',
+    'modules/vars',
+    'utils/mediator'
 ], function(
-    vars
+    _,
+    vars,
+    mediator
 ) {
     var storage = window.localStorage,
         storageKeyCopied ='gu.fronts-tool.copied';
@@ -10,15 +13,26 @@ define([
     return {
         flush: function() {
             storage.removeItem(storageKeyCopied);
+            mediator.emit('copied-article:change', false);
         },
 
         set: function(article) {
+            var group = article.group || {},
+                front = group.front,
+                title = article.meta.snapType() === 'latest' ? '{ ' + article.meta.customKicker() + ' }' : article.meta.headline();
+
+            if (!title && article.fields) {
+                title = article.fields.headline();
+            }
+
             storage.setItem(storageKeyCopied, JSON.stringify({
                 article: article.get(),
-                groupIndex: article.group ? article.group.index : undefined,
-                frontPosition: article.group ? article.group.front.position() : undefined,
-                groupParentId: article.group && article.group.parent ? article.group.parent.id : undefined
+                groupIndex: group.index,
+                frontPosition: front ? front.position() : undefined,
+                groupParentId: group.parent ? group.parent.id : undefined,
+                displayName: title
             }));
+            mediator.emit('copied-article:change', true);
         },
 
         get: function(detachFromSource) {
@@ -45,6 +59,14 @@ define([
             }) : undefined;
 
             return obj.article;
+        },
+
+        peek: function() {
+            var obj = storage.getItem(storageKeyCopied);
+
+            if (obj) {
+                return JSON.parse(obj);
+            }
         }
     };
 });

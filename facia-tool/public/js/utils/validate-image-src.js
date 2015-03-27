@@ -1,7 +1,12 @@
-/* global _: true */
 define([
+    'underscore',
+    'jquery',
     'modules/vars'
-], function(vars){
+], function(
+    _,
+    $,
+    vars
+) {
 
     /**
      * Asserts if the given image URL is on The Guardian domain, is proper size and aspect ratio.
@@ -47,7 +52,12 @@ define([
                 if (err) {
                     defer.reject(err);
                 } else {
-                    defer.resolve(width, height);
+                    // Get the src again from the img, this makes sure that the URL is encoded properly
+                    defer.resolve({
+                        width: width,
+                        height: height,
+                        src: img.src
+                    });
                 }
             };
             img.src = src;

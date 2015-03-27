@@ -5,8 +5,6 @@ import common.FaciaMetrics._
 import common._
 import common.editions.EditionalisedSections
 import conf.Configuration.commercial.expiredAdFeatureUrl
-import conf.Switches
-import conf.Switches._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
@@ -52,16 +50,12 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def rssRedirect(path: String)(implicit request: RequestHeader) = {
-    if (Switches.RssServerSwitch.isSwitchedOn) {
-      FaciaToRssRedirectMetric.increment()
-      Future.successful(InternalRedirect.internalRedirect(
-        "rss_server",
-        path,
-        if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None
-      ))
-    } else {
-      applicationsRedirect(path)
-    }
+    FaciaToRssRedirectMetric.increment()
+    Future.successful(InternalRedirect.internalRedirect(
+      "rss_server",
+      path,
+      if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None
+    ))
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
@@ -107,12 +101,17 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def renderFrontJsonLite(path: String) = MemcachedAction{ implicit request =>
+    val cacheTime = path match {
+      case p if p.startsWith("breaking-news") => 10
+      case _ => 60
+    }
+
     frontJson.getAsJsValue(path).map{ json =>
-      Cached(60)(Cors(JsonComponent(FrontJsonLite.get(json))))
+      Cached(cacheTime)(Cors(JsonComponent(FrontJsonLite.get(json))))
     }
   }
 
-  private def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
+  private[controllers] def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
     val futureResult = for {
       maybeFaciaPage <- frontJson.get(path)
     } yield maybeFaciaPage match {
@@ -130,7 +129,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             ).as("text/xml; charset=utf-8")
           else if (request.isJson)
             JsonFront(faciaPage)
-          else if (AdFeatureExpirySwitch.isSwitchedOn && faciaPage.isExpiredAdvertisementFeature)
+          else if (faciaPage.isExpiredAdvertisementFeature)
             MovedPermanently(expiredAdFeatureUrl)
           else
             Ok(views.html.front(faciaPage))
@@ -168,6 +167,26 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           }
         }.getOrElse(ServiceUnavailable)
       }
+  }
+
+  def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
+    for {
+      maybeFaciaPage <- frontJson.get(path)
+    } yield {
+      val maybeResponse = for {
+        faciaPage <- maybeFaciaPage
+        (container, index) <- faciaPage.front.containers.zipWithIndex.find(_._1.dataId == collectionId)
+        containerLayout <- container.containerLayout
+      } yield {
+        Cached(faciaPage) {
+          JsonComponent(views.html.fragments.containers.facia_cards.showMore(
+            containerLayout.remainingCards,
+            index
+          ))
+        }
+      }
+      maybeResponse getOrElse Cached(60)(NotFound)
+    }
   }
 
   def renderFrontCollection(frontId: String, collectionId: String, version: String) = MemcachedAction { implicit request =>

@@ -4,31 +4,27 @@
 
 @defining(page.image) { image =>
 
-<article class="content content--image tonal tonal--@articleToneClass(image)" itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
+<div class="l-side-margins l-side-margins--media">
+    <article class="content content--media content--image tonal tonal--tone-media" itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
 
-    @fragments.headTonal(image)
+        @fragments.headTonal(image)
 
-    <div class="content__main tonal__main tonal__main--@articleToneClass(image)">
-        <div class="gs-container">
-            <div class="content__main-column content__main-column--image">
+        <div class="content__main tonal__main tonal__main--tone-media">
+            <div class="gs-container">
+                <div class="content__main-column content__main-column--image">
 
-                @fragments.img(image.mainPicture)
+                    @fragments.img(image.mainPicture, isImageContent = true,
+                        isLightboxable = image.isMainMediaLightboxable)
 
-                @fragments.contentMeta(image)
+                    @fragments.contentMeta(image)
 
-                @fragments.submeta(image)
-
+                    @fragments.submeta(image)
                 </div>
             </div>
-
-            <div class="content__secondary-column" aria-hidden="true">
-                <div class="mpu-container js-mpu-ad-slot"></div>
-                <div class="js-components-container"></div>
-            </div>
         </div>
-    </div>
-</article>
-
-@fragments.contentFooter(image, page.related)
+    </article>
+    
+    @fragments.contentFooter(image, page.related)
+</div>
 
 }

@@ -22,4 +22,6 @@ bundle config --delete without
 bundle install --binstubs dev/gems/bin --path dev/gems
 npm install
 
-grunt "$@"
+./node_modules/.bin/jspm config endpoints.github.auth `echo -n $JSPM_GITHUB_AUTH_USERNAME:$JSPM_GITHUB_AUTH_TOKEN | base64`
+
+grunt --stack --no-color "$@"

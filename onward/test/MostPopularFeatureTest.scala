@@ -31,15 +31,5 @@ import scala.collection.JavaConversions._
 
       }
     }
-
-    scenario("Viewing site-wide most popular") {
-
-      Given("I am on a page in the 'World' section")
-      goTo("/most-read/world") { browser =>
-        import browser._
-        Then("I should see the site wide most read")
-        $("main h2")(1).getText should be("Most popular across the guardian")
-      }
-    }
   }
 }

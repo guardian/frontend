@@ -21,18 +21,6 @@ object `package` {
     lazy val isReview = content.tags.exists(t => Tags.reviewMappings.contains(t.id))
   }
 
-  implicit class Content2Is(content: Content) {
-    lazy val isArticle: Boolean = content.tags exists { _.id == "type/article" }
-    lazy val isSudoku: Boolean = content.tags exists { _.id == "type/sudoku" }
-    lazy val isGallery: Boolean = content.tags exists { _.id == "type/gallery" }
-    lazy val isVideo: Boolean = content.tags exists { _.id == "type/video" }
-    lazy val isAudio: Boolean = content.tags exists { _.id == "type/audio" }
-    lazy val isMedia: Boolean = isGallery || isVideo || isAudio
-    lazy val isPoll: Boolean = content.tags exists { _.id == "type/poll" }
-    lazy val isImageContent: Boolean = content.tags exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
-    lazy val isInteractive: Boolean = content.tags exists { _.id == "type/interactive" }
-  }
-
   implicit class Any2In[A](a: A) {
     def in(as: Set[A]): Boolean = as contains a
   }
@@ -52,7 +40,9 @@ object `package` {
 
     val path = parts.mkString("/")
 
-    if (parts.size == 1) {
+    if (parts.isEmpty) {
+      Nil
+    } else if (parts.size == 1) {
       Seq(s"$path/$path")
     } else {
       val normalizedPath = parts.mkString("-")

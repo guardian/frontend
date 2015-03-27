@@ -1,15 +1,15 @@
 .tone-dead--item {
     &.fc-item,
-    &.flyer {
+    &.rich-link {
         background-color: colour(neutral-7);
     }
 
     .u-faux-block-link--hover {
-        background-color: colour(neutral-6);
+        background-color: darken(colour(neutral-6), 2%);
     }
 
     .fc-item__container:before,
-    .flyer__container:before {
+    .rich-link__container:before {
         background-color: colour(live-default);
     }
 
@@ -18,11 +18,15 @@
         color: colour(live-accent);
     }
 
-    .flyer__read-more-text {
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(neutral-7), 10%);
+    }
+
+    .rich-link__read-more-text {
         color: colour(neutral-2);
     }
 
-    .flyer__arrow-icon {
+    .rich-link__arrow-icon {
         fill: colour(neutral-2);
     }
 }

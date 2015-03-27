@@ -1,19 +1,22 @@
 define([
-    'lodash/objects/cloneDeep',
+    'fastdom',
+    'Promise',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/modules/article/spacefinder',
     'common/modules/commercial/create-ad-slot'
 ], function (
-    cloneDeep,
+    fastdom,
+    Promise,
+    _,
     $,
     config,
     detect,
     spacefinder,
     createAdSlot
 ) {
-
     function getRules() {
         return {
             minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
@@ -27,9 +30,10 @@ define([
     }
 
     function getLenientRules() {
-        var lenientRules = cloneDeep(getRules());
+        var lenientRules = _.cloneDeep(getRules());
         // more lenient rules, closer to the top start of the article
         lenientRules.minAbove = 300;
+        lenientRules.selectors[' > h2'].minAbove = 20;
         return lenientRules;
     }
 
@@ -38,14 +42,21 @@ define([
         insertAdAtP = function (para) {
             if (para) {
                 var adName = adNames[ads.length],
-                    $ad    = $.create(createAdSlot(adName[0], adName[1]))
-                                .insertBefore(para);
+                    $ad    = $.create(createAdSlot(adName[0], adName[1]));
+
                 ads.push($ad);
+                return new Promise(function (resolve) {
+                    fastdom.write(function () {
+                        $ad.insertBefore(para);
+                        resolve(null);
+                    });
+                });
+            } else {
+                return Promise.resolve(null);
             }
         },
         init = function () {
-
-            var rules, lenientRules;
+            var rules, lenientRules, inlineMercPromise;
 
             // is the switch off, or not an article, or a live blog
             if (
@@ -61,19 +72,31 @@ define([
 
             if (config.page.hasInlineMerchandise) {
                 adNames.unshift(['im', 'im']);
-                insertAdAtP(spacefinder.getParaWithSpace(lenientRules));
-            }
-            insertAdAtP(spacefinder.getParaWithSpace(rules));
 
-            if (detect.isBreakpoint({ max: 'tablet' })) {
-                insertAdAtP(spacefinder.getParaWithSpace(rules));
+                inlineMercPromise = spacefinder.getParaWithSpace(lenientRules).then(function (space) {
+                    return insertAdAtP(space);
+                });
+            } else {
+                inlineMercPromise = Promise.resolve(null);
             }
+
+            return inlineMercPromise.then(function () {
+                return spacefinder.getParaWithSpace(rules).then(function (space) {
+                    return insertAdAtP(space);
+                }).then(function () {
+                    if (detect.isBreakpoint({max: 'tablet'})) {
+                        return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+                            return insertAdAtP(nextSpace);
+                        });
+                    } else {
+                        return Promise.resolve(null);
+                    }
+                });
+            });
         };
 
     return {
-
         init: init,
-
         // rules exposed for spacefinder debugging
         getRules: getRules,
         getLenientRules: getLenientRules,
@@ -81,6 +104,5 @@ define([
         reset: function () {
             ads = [];
         }
-
     };
 });

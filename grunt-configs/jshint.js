@@ -25,15 +25,19 @@ module.exports = function(grunt, options) {
                 ]
             }]
         },
-        faciaTool: {
+        'facia-tool': {
             files: [{
                 expand: true,
                 cwd: 'facia-tool/public/js/',
                 src: [
                     '**/*.js',
-                    '!components/**'
+                    '!jspm-config.js',
+                    '!components/**/*.js'
                 ]
-            }]
+            }],
+            options: {
+                jshintrc: './facia-tool/public/.jshintrc'
+            }
         },
         membership: {
             files: [{

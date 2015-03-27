@@ -42,14 +42,17 @@ trait Store extends Logging with Dates {
   def putDfpAdFeatureReport(adFeaturesJson: String) {
     S3.putPublic(dfpAdFeatureReportKey, adFeaturesJson, defaultJsonEncoding)
   }
+  def putDfpActiveAdUnitList(adUnits: String) {
+    S3.putPublic(dfpActiveAdUnitListKey, adUnits, "text/plain")
+  }
   def putCachedTravelOffersFeed(everything: String) {
     S3.putPublic(travelOffersS3Key, everything, "text/plain")
   }
 
   val now: String = DateTime.now().toHttpDateTimeString
 
-  def getDfpPaidForTags(): PaidForTagsReport =
-    S3.get(dfpPaidForTagsDataKey).map {
+  def getDfpPaidForTags(key: String = dfpPaidForTagsDataKey): PaidForTagsReport =
+    S3.get(key).map {
     Json.parse(_).as[PaidForTagsReport]
   }.getOrElse(PaidForTagsReport(now, Nil))
 

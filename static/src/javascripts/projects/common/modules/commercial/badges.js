@@ -1,6 +1,9 @@
 define([
     'bonzo',
+    'fastdom',
     'qwery',
+    'Promise',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
@@ -9,7 +12,10 @@ define([
     'text!common/views/commercial/badge.html'
 ], function (
     bonzo,
+    fastdom,
     qwery,
+    Promise,
+    _,
     $,
     config,
     template,
@@ -17,7 +23,6 @@ define([
     dfp,
     badgeTpl
 ) {
-
     var badgesConfig = {
             sponsoredfeatures: {
                 count:      0,
@@ -51,47 +56,63 @@ define([
                 slotTarget  = badgeConfig.namePrefix + 'badge',
                 name        = slotTarget + (++badgeConfig.count),
                 $adSlot     = bonzo(createAdSlot(
-                    name, ['paid-for-badge', 'paid-for-badge--front'], opts.keywords, slotTarget
-                ));
+                                name,
+                                ['paid-for-badge', 'paid-for-badge--front'],
+                                opts.series,
+                                opts.keywords,
+                                slotTarget
+                              ));
 
             addPreBadge($adSlot, badgeConfig.header, opts.sponsor);
-            $('.js-container__header', container)
-                .after($adSlot);
 
-            return $adSlot;
+            return new Promise(function (resolve) {
+                fastdom.write(function () {
+                    $('.js-container__header', container)
+                        .after($adSlot);
+
+                    resolve($adSlot);
+                });
+            });
         },
         init = function () {
+            var sponsoredFrontPromise,
+                sponsoredContainersPromise;
 
             if (!config.switches.sponsored) {
                 return false;
             }
 
-            $('.js-sponsored-front').each(function (front) {
+            sponsoredFrontPromise = Promise.all(_.map($('.js-sponsored-front'), function (front) {
                 var $front = bonzo(front);
 
-                renderAd(
+                return renderAd(
                     qwery('.fc-container', front)[0],
                     $front.data('sponsorship'),
                     {
                         sponsor: $front.data('sponsor')
                     }
                 );
+            }));
+
+            sponsoredContainersPromise = sponsoredFrontPromise.then(function () {
+                return Promise.all(_.map($('.js-sponsored-container'), function (container) {
+                    if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
+                        var $container = bonzo(container);
+
+                        renderAd(
+                            container,
+                            $container.data('sponsorship'),
+                            {
+                                sponsor:  $container.data('sponsor'),
+                                series:   $container.data('series'),
+                                keywords: $container.data('keywords')
+                            }
+                        );
+                    }
+                }));
             });
 
-            $('.js-sponsored-container').each(function (container) {
-                if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
-                    var $container = bonzo(container);
-
-                    renderAd(
-                        container,
-                        $container.data('sponsorship'),
-                        {
-                            sponsor:  $container.data('sponsor'),
-                            keywords: $container.data('keywords')
-                        }
-                    );
-                }
-            });
+            return Promise.all([sponsoredFrontPromise, sponsoredContainersPromise]);
         },
         badges = {
 
@@ -99,23 +120,24 @@ define([
 
             // add a badge to a container (if appropriate)
             add: function (container) {
-                var $adSlot,
-                    $container = bonzo(container);
+                var $container = bonzo(container);
 
                 if (
                     $container.hasClass('js-sponsored-container') &&
                     qwery('.ad-slot--paid-for-badge', container).length === 0
                 ) {
-                    $adSlot = renderAd(
+                    return renderAd(
                         container,
                         $container.data('sponsorship'),
                         {
                             sponsor:  $container.data('sponsor'),
+                            series:   $container.data('series'),
                             keywords: $container.data('keywords')
                         }
-                    );
-                    // add slot to dfp
-                    dfp.addSlot($adSlot);
+                    ).then(function ($adSlot) {
+                        // add slot to dfp
+                        dfp.addSlot($adSlot);
+                    });
                 }
             },
 

@@ -1,9 +1,11 @@
 define([
+    'fastdom',
     'qwery',
     'common/utils/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
+    fastdom,
     qwery,
     $,
     fixtures,
@@ -45,7 +47,7 @@ define([
                         contentType: 'Article'
                     };
 
-                    fixtures.render(fixturesConfig);
+                    $fixturesContainer = fixtures.render(fixturesConfig);
                 });
 
                 afterEach(function () {
@@ -56,24 +58,40 @@ define([
                     expect(articleAsideAdverts).toBeDefined();
                 });
 
-                it('should return the ad slot container on init', function () {
-                    var adSlot = articleAsideAdverts.init()[0];
-                    expect(adSlot).toBe(qwery('.js-mpu-ad-slot', $fixturesContainer)[0]);
+                it('should return the ad slot container on init', function (done) {
+                    var adSlotPromise = articleAsideAdverts.init();
+
+                    adSlotPromise.then(function (adSlot) {
+                        expect(adSlot[0]).toBe(qwery('.js-mpu-ad-slot', $fixturesContainer)[0]);
+                        done();
+                    });
                 });
 
-                it('should append ad slot', function () {
+                it('should append ad slot', function (done) {
                     articleAsideAdverts.init();
-                    expect(qwery('.js-mpu-ad-slot > .ad-slot', $fixturesContainer).length).toBe(1);
+
+                    fastdom.defer(function () {
+                        expect(qwery('.js-mpu-ad-slot > .ad-slot', $fixturesContainer).length).toBe(1);
+                        done();
+                    });
                 });
 
-                it('should have the correct ad name', function () {
+                it('should have the correct ad name', function (done) {
                     articleAsideAdverts.init();
-                    expect($('.ad-slot', $fixturesContainer).data('name')).toBe('right');
+
+                    fastdom.defer(function () {
+                        expect($('.ad-slot', $fixturesContainer).data('name')).toBe('right');
+                        done();
+                    });
                 });
 
-                it('should have the correct size mappings', function () {
+                it('should have the correct size mappings', function (done) {
                     articleAsideAdverts.init();
-                    expect($('.ad-slot', $fixturesContainer).data('mobile')).toBe('1,1|300,250|300,251|300,600');
+
+                    fastdom.defer(function () {
+                        expect($('.ad-slot', $fixturesContainer).data('mobile')).toBe('1,1|300,250|300,251|300,600');
+                        done();
+                    });
                 });
 
                 it('should not display ad slot if standard-adverts switch is off', function () {
@@ -89,13 +107,6 @@ define([
                     expect(articleAsideAdverts.init()).toBe(false);
                     expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
                 });
-
-                it('should not add ad slot to hidden column', function () {
-                    $('.content__secondary-column', $fixturesContainer).css('display', 'none');
-                    articleAsideAdverts.init();
-                    expect($('.ad-slot', $fixturesContainer).length).toBe(0);
-                });
-
             });
 
         });

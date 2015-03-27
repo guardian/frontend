@@ -129,11 +129,19 @@
                 }
             }
 
+            .tone-accent-border {
+                border-color: $tonal__headline-accent;
+            }
+
             .drop-cap,
             .element-pullquote cite {
                 color: $tonal__article-link;
             }
-
+            
+            .open__cta-icon {
+                background-color: $tonal__article-link;
+            }
+            
             .element-pullquote {
                 &:before,
                 &:after {

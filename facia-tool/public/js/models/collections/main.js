@@ -1,13 +1,15 @@
-/* global _: true */
 define([
     'config',
     'knockout',
+    'underscore',
+    'jquery',
     'modules/vars',
     'utils/ammended-query-str',
     'utils/mediator',
     'utils/fetch-settings',
     'utils/global-listeners',
     'utils/layout-from-url',
+    'utils/sparklines',
     'utils/parse-query-params',
     'utils/update-scrollables',
     'utils/terminate',
@@ -22,12 +24,15 @@ define([
 ], function(
     pageConfig,
     ko,
+    _,
+    $,
     vars,
     ammendedQueryStr,
     mediator,
     fetchSettings,
     globalListeners,
     layoutFromUrl,
+    sparklines,
     parseQueryParams,
     updateScrollables,
     terminate,
@@ -48,7 +53,11 @@ define([
             modalDialog: modalDialog,
             switches: ko.observable(),
             fronts: ko.observableArray(),
-            loadedFronts: ko.observableArray()
+            loadedFronts: ko.observableArray(),
+            isPasteActive: ko.observable(false),
+            isSparklinesEnabled: ko.pureComputed(function () {
+                return sparklines.isEnabled();
+            })
         };
 
         model.chooseLayout = function () {
@@ -87,6 +96,9 @@ define([
         mediator.on('front:disposed', function (front) {
             model.loadedFronts.remove(front);
         });
+        mediator.on('copied-article:change', function (hasArticle) {
+            model.isPasteActive(hasArticle);
+        });
 
         this.init = function() {
             fetchSettings(function (config, switches) {
@@ -98,7 +110,6 @@ define([
                 }
                 model.switches(switches);
 
-                model.layout = new Layout();
 
                 vars.state.config = config;
 
@@ -119,6 +130,8 @@ define([
                 }
             }, vars.CONST.configSettingsPollMs, true)
             .done(function() {
+                model.layout = new Layout();
+
                 var wasPopstate = false;
                 window.onpopstate = function() {
                     wasPopstate = true;

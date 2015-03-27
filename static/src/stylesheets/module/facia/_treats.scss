@@ -1,0 +1,94 @@
+@import '../../components/pasteup-buttons/src/_mixins';
+
+.treats__container {
+    list-style-type: none;
+    margin: $gs-baseline 0;
+    display: none;
+    position: absolute;
+    bottom: 11px;
+
+    .fc-container--has-show-more & {
+        bottom: 41px;
+    }
+
+    .fc-container--rolled-up & {
+        display: none;
+    }
+
+    @include mq(leftCol) {
+        display: block;
+    }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            display: none;
+        }
+    }
+}
+
+.treats__treat {
+    @include fs-textSans(1);
+    @include button-height($base-size * 4);
+    @include border-radius(50%);
+    @include box-sizing(border-box);
+    display: inline-block;
+    vertical-align: top;
+    width: auto;
+    font-weight: 700;
+    border-width: 1px;
+    border-style: solid;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    max-width: gs-span(4);
+    line-height: $gs-baseline * 2 - 2px;
+
+    @include mq(leftCol) {
+        max-width: $left-column;
+    }
+
+    @include mq(wide) {
+        max-width: $left-column-wide;
+    }
+
+    @include button-colour(
+        #ffffff,
+        colour(news-default),
+        #ffffff,
+        darken(colour(neutral-3), 10%),
+        colour(news-accent)
+    );
+
+    &:hover,
+    &:focus,
+    &:active {
+        color: colour(neutral-1);
+        text-decoration: none;
+    }
+}
+
+.treats__list-item {
+    margin-top: $gs-baseline * 2/3;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.treats__crossword {
+    display: block;
+    margin-top: $gs-baseline * 4/3;
+    margin-bottom: $gs-baseline * 2/3;
+}
+
+.treats__crossword-link {
+    &:hover,
+    &:focus,
+    &:active {
+        .treats__treat {
+            color: colour(neutral-1);
+            border-color: darken(colour(neutral-3), 10%);
+        }
+    }
+}

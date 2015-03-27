@@ -26,7 +26,8 @@ object Time extends Logging {
 
   def apply[T](result: => Future[T], action: String, metric: FrontendTimingMetric): Future[T] = {
     val stopWatch = new StopWatch
-    result.onComplete({ result =>
+    val resultEvaluated = result
+    resultEvaluated.onComplete({ result =>
       metric.recordDuration(stopWatch.elapsed)
       result match {
         case Success(contents) =>
@@ -35,7 +36,7 @@ object Time extends Logging {
           logger.info(s"took: $stopWatch for: $action failure: $exception")
       }
     })
-    result
+    resultEvaluated
   }
 
 }

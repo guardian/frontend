@@ -11,6 +11,12 @@
     }
 }
 
+// Items
+
+// We alter the brand bar items and popups based on two contexts: the edition
+// and whether the header is in slim mode. Beware of increased specifcity (due
+// to context matching).
+
 .brand-bar__item {
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -22,8 +28,13 @@
     height: $headerHeight;
     padding-top: $gs-baseline /3;
     padding-bottom: $gs-baseline /3;
-    margin-right: $gs-baseline * .25;
-    margin-left: $gs-baseline * .25;
+
+    &,
+    // Override breakpoint
+    .l-header--is-slim & {
+        margin-right: $gs-baseline * .25;
+        margin-left: $gs-baseline * .25;
+    }
 
     @include mq(mobileLandscape) {
         padding-top: $gs-baseline/2;
@@ -62,6 +73,8 @@
     cursor: pointer;
     color: $c-guardian-services-action;
     display: inline-block;
+    // For badges
+    vertical-align: middle;
     text-decoration: none;
     line-height: $headerHeight;
 }
@@ -93,8 +106,16 @@
 
     @include mq(tablet) {
         float: right;
+
+        .l-header--is-slim & {
+            // Unset override
+            float: left;
+        }
     }
 }
+
+// Context overrides: hide brand bar items: slim header, edition, and various
+// breakpoints
 
 .brand-bar__item--search {
     padding-left: 0;
@@ -104,10 +125,161 @@
     }
 }
 
+.brand-bar__item--subscribe {
+    // Desktop only
+    @include mq($until: desktop) {
+        display: none;
+    }
+
+    .l-header--is-slim & {
+        display: none;
+    }
+}
+
+.brand-bar__item--edition {
+    .l-header--is-slim & {
+        display: none;
+    }
+}
+
+.brand-bar__item--jobs {
+    .brand-bar__item--right--uk-edition &,
+    .brand-bar__item--right--us-edition & {
+        .l-header--is-slim & {
+            display: none;
+        }
+    }
+}
+
+.brand-bar__item--soulmates {
+    // Desktop only
+    @include mq($until: desktop) {
+        display: none;
+    }
+
+    .brand-bar__item--right--uk-edition & {
+        .l-header--is-slim & {
+            display: none;
+        }
+    }
+}
+
 .brand-bar__item--edition {
     cursor: pointer;
 }
 
-.brand-bar__item--subscribe .control__icon-wrapper {
-    border: 0;
+.brand-bar__item--subscribe {
+    .control__icon-wrapper {
+        border: 0;
+    }
+}
+
+.brand-bar__item--jobs,
+.brand-bar__item--edition {
+    // Hide on mobile
+    @include mq($until: tablet) {
+        display: none;
+    }
+}
+
+.brand-bar__item--more {
+    .brand-bar__item--right--us-edition &,
+    .brand-bar__item--right--au-edition & {
+        // Mobile only
+        @include mq(tablet) {
+            display: none;
+
+            .l-header--is-slim & {
+                display: block;
+            }
+        }
+    }
+}
+
+.brand-bar__item--masterclasses {
+    .brand-bar__item--right--au-edition & {
+        // Hide on mobile
+        @include mq($until: tablet) {
+            display: none;
+        }
+    }
+}
+
+// Popups
+
+// Mobile only
+.brand-bar__popup--jobs {
+    .brand-bar__item--right--uk-edition &,
+    .brand-bar__item--right--us-edition & {
+        @include mq(tablet) {
+            display: none;
+
+            .l-header--is-slim & {
+                display: block;
+            }
+        }
+    }
+}
+
+.brand-bar__popup--edition {
+    .brand-bar__item--right--uk-edition & {
+        // Mobile only
+        @include mq(tablet) {
+            display: none;
+
+            .l-header--is-slim & {
+                display: block;
+            }
+        }
+    }
+}
+
+.brand-bar__popup--soulmates {
+    .brand-bar__item--right--uk-edition & {
+        // Hide on desktop
+        @include mq(desktop) {
+            display: none;
+
+            .l-header--is-slim & {
+                display: block;
+            }
+        }
+    }
+}
+
+.brand-bar__popup--membership {
+    .brand-bar__item--right--uk-edition & {
+        // Hide on desktop
+        @include mq(desktop) {
+            display: none;
+
+            .l-header--is-slim & {
+                display: block;
+            }
+        }
+    }
+}
+
+.brand-bar__item--register {
+    @include mq($until: mobileLandscape) {
+        display: none;
+    }
+}
+
+.brand-bar__item__badge {
+    background: colour(news-accent);
+    // Same as header background
+    color: colour(guardian-brand);
+    padding: 1px $gs-gutter/5;
+    margin-left: $gs-gutter/5;
+    display: none;
+
+    @include mq(tablet) {
+        display: inline-block;
+
+        // Unset breakpoint
+        .l-header--is-slim & {
+            display: none;
+        }
+    }
 }

@@ -24,6 +24,12 @@ Hence why a greater depth of selector specificity is needed.
 
         .fc-item--half-tablet {
             @include vertical-item-separator;
+
+            .fc-item__standfirst {
+                @include mq(desktop) {
+                    display: none;
+                }
+            }
         }
     }
 }
@@ -153,6 +159,22 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
+.fc-slice--t-t-mpu {
+    @include mq(tablet, desktop) {
+        .fc-slice__item {
+            width: 25%;
+
+            .fc-item__title {
+                @include fs-headline(2, true);
+            }
+        }
+
+        .fc-slice__item--mpu-candidate {
+            width: 50%;
+        }
+    }
+}
+
 .fc-slice--t-tl-mpu {
     @include mq(tablet, $until: desktop) {
         > .fc-slice__item {
@@ -178,7 +200,11 @@ Hence why a greater depth of selector specificity is needed.
     @include mq(tablet) {
         .fc-slice__popular-mpu {
             position: absolute;
-            max-width: 320px;
+            width: 320px;
+
+            .ad-slot {
+                min-height: 274px;
+            }
         }
     }
 
@@ -186,6 +212,12 @@ Hence why a greater depth of selector specificity is needed.
         .fc-slice__popular-mpu {
             bottom: 0;
             right: 0;
+            width: gs-span(4.5);
+
+            .ad-slot--container-inline {
+                margin: 0;
+                height: 286px;
+            }
         }
     }
 

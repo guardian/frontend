@@ -97,6 +97,12 @@ install_grunt() {
   fi
 }
 
+install_jspm() {
+  if ! installed jspm; then
+    sudo npm -g install jspm
+  fi
+}
+
 install_ruby() {
   if linux; then
     sudo apt-get install -y ruby1.9.1-full
@@ -155,6 +161,7 @@ main() {
   install_node
   install_gcc
   install_grunt
+  install_jspm
   install_ruby
   install_bundler
   install_libpng

@@ -101,7 +101,10 @@
 
     &.quoted {
         color: colour(neutral-2);
-        margin-left: $gs-gutter * 1.5;
+        // Fallback
+        // TODO: Write mixin for this
+        margin-left: initial;
+        margin-left: unset;
     }
 }
 
@@ -172,13 +175,12 @@ figure {
     img {
         display: block;
     }
-    &.img,
     &.element {
         margin-top: ($gs-baseline/3)*4;
         margin-bottom: $gs-baseline;
         position: relative;
     }
-    &.img {
+    &.element-image {
         position: relative;
         figcaption {
             padding-top: ($gs-baseline/6)*4;

@@ -1,19 +1,26 @@
-/* globals _ */
 define([
     'knockout',
+    'jquery',
+    'jquery-ui/ui/effect',
+    'jquery-ui/ui/effect-size',
+    'jquery-ui/ui/effect-scale',
+    'underscore',
     'models/layout/column',
     'modules/copied-article',
     'modules/vars',
     'utils/layout-from-url',
-    'utils/parse-query-params',
     'utils/update-scrollables'
 ],function (
     ko,
+    $,
+    $effect,
+    $effectSize,
+    $effectScale,
+    _,
     Column,
     copiedArticle,
     vars,
     layoutFromURL,
-    parseQueryParams,
     updateScrollables
 ) {
     function Layout () {

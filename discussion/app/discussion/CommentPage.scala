@@ -6,7 +6,7 @@ import discussion.model.DiscussionComments
 trait CommentPage extends Page {
   val discussionComments: DiscussionComments
 
-  override lazy val url = s"/discussion/$orderBy$id"
+  override lazy val url = s"/discussion$id"
   override val pagination = Some(discussionComments.pagination)
   lazy val discussion = discussionComments.discussion
   lazy val comments = discussionComments.comments
@@ -15,9 +15,9 @@ trait CommentPage extends Page {
   lazy val topLevelCommentCount = discussionComments.topLevelCommentCount
   lazy val commenterCount = discussionComments.commenterCount
   lazy val contentUrl = discussion.webUrl
-  lazy val orderBy = discussionComments.orderBy
   lazy val isClosedForRecommendation = discussion.isClosedForRecommendation
   lazy val switches = discussionComments.switches
+  lazy val isLargeDiscussion = commentCount > 1000
 }
 
 case class ThreadedCommentPage(val discussionComments: DiscussionComments)

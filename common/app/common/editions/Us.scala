@@ -15,7 +15,16 @@ object Us extends Edition(
 
   implicit val US = Us
 
-  val cultureLocalNav: Seq[SectionLink] = Seq(movies, televisionAndRadio, music, books, artanddesign, stage, classicalMusic)
+  val cultureLocalNav: Seq[SectionLink] = Seq(
+    movies,
+    televisionAndRadio,
+    music,
+    games,
+    books,
+    artanddesign,
+    stage,
+    classicalMusic
+  )
 
   override val navigation: Seq[NavItem] = {
     Seq(
@@ -25,12 +34,11 @@ object Us extends Edition(
       NavItem(opinion),
       NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl)),
       NavItem(soccer, footballNav),
-      NavItem(technology, Seq(games)),
+      NavItem(technology),
       NavItem(arts, cultureLocalNav),
       NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
       NavItem(fashion),
       NavItem(business, Seq(markets, companies)),
-      NavItem(money),
       NavItem(travel, Seq(usaTravel, europetravel, uktravel)),
       NavItem(environment, Seq(globalDevelopment, cities)),
       NavItem(science),
@@ -47,13 +55,13 @@ object Us extends Edition(
     NavItem(opinion),
     NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl)),
     NavItem(soccer, footballNav),
-    NavItem(technology, Seq(games)),
+    NavItem(technology),
     NavItem(arts, cultureLocalNav),
     NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
     NavItem(fashion),
     NavItem(business, Seq(markets, companies)),
-    NavItem(money),
     NavItem(travel, Seq(usaTravel, europetravel, uktravel)),
-    NavItem(environment, Seq(globalDevelopment, cities))
+    NavItem(environment, Seq(globalDevelopment, cities)),
+    NavItem(science)
   )
 }

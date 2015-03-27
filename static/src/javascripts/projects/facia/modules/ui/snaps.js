@@ -1,25 +1,44 @@
 define([
+    'bean',
     'bonzo',
-    'lodash/functions/debounce',
+    'fastdom',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/to-array',
     'common/modules/ui/relativedates',
     'facia/modules/ui/football-snaps'
 ], function (
+    bean,
     bonzo,
-    debounce,
+    fastdom,
+    _,
     $,
     ajax,
+    detect,
     mediator,
     template,
     toArray,
     relativeDates,
     FootballSnaps
 ) {
-    var clientProcessedTypes = ['document', 'fragment', 'json.html'];
+    var clientProcessedTypes = ['document', 'fragment', 'json.html'],
+        snapIframes = [],
+        bindIframeMsgReceiverOnce = _.once(function () {
+            bean.on(window, 'message', function (event) {
+                var iframe = _.find(snapIframes, function (iframe) { return iframe.contentWindow === event.source; }),
+                    message;
+                if (iframe) {
+                    message = JSON.parse(event.data);
+                    if (message.type === 'set-height') {
+                        bonzo(iframe).parent().css('height', message.value);
+                    }
+                }
+            });
+        });
 
     function init() {
         var snaps = toArray($('.js-snappable.js-snap'))
@@ -31,8 +50,8 @@ define([
 
         snaps.forEach(fetchSnap);
 
-        if (snaps.length) {
-            mediator.on('window:resize', debounce(function () {
+        if (snaps.length && !detect.isIOS) {
+            mediator.on('window:resize', _.debounce(function () {
                 snaps.forEach(function (el) { addCss(el, true); });
             }, 200));
         }
@@ -46,42 +65,53 @@ define([
     }
 
     function setSnapPoint(el, isResize) {
-        var width = el.offsetWidth,
+        var width, breakpoints,
             $el = bonzo(el),
             prefix = 'facia-snap-point--';
 
-        [
+        breakpoints = [
             { width: 0,   name: 'tiny' },
             { width: 180, name: 'mini' },
             { width: 220, name: 'small' },
             { width: 300, name: 'medium' },
             { width: 700, name: 'large' },
             { width: 940, name: 'huge' }
-        ]
-        .map(function (breakpoint, i, arr) {
-            var isAdd = width >= breakpoint.width && (arr[i + 1] ? width < arr[i + 1].width : true);
+        ];
 
-            breakpoint.action = isAdd ? 'addClass' : isResize ? 'removeClass' : false;
-            return breakpoint;
-        })
-        .filter(function (breakpoint) { return breakpoint.action; })
-        .forEach(function (breakpoint) {
-            $el[breakpoint.action](prefix + breakpoint.name);
+        fastdom.read(function () {
+            width = el.offsetWidth;
+        });
+
+        fastdom.write(function () {
+            breakpoints.map(function (breakpoint, i, arr) {
+                var isAdd = width >= breakpoint.width && (arr[i + 1] ? width < arr[i + 1].width : true);
+                breakpoint.action = isAdd ? 'addClass' : isResize ? 'removeClass' : false;
+                return breakpoint;
+            })
+            .filter(function (breakpoint) { return breakpoint.action; })
+            .forEach(function (breakpoint) {
+                $el[breakpoint.action](prefix + breakpoint.name);
+            });
         });
     }
 
     function injectIframe(el) {
         var spec = bonzo(el).offset(),
             minIframeHeight = Math.ceil((spec.width || 0) / 2),
-            maxIframeHeight = 400;
+            maxIframeHeight = 400,
+            src = el.getAttribute('data-snap-uri'),
+            height = Math.min(Math.max(spec.height || 0, minIframeHeight), maxIframeHeight),
+            containerEl = bonzo.create('<div style="width: 100%; height: ' + height + 'px; ' +
+                                        'overflow: hidden; -webkit-overflow-scrolling:touch"></div>')[0],
+            iframe = bonzo.create('<iframe src="' + src + '" style="width: 100%; height: 100%; border: none;"></iframe>')[0];
 
-        // Wrapping iframe to fix iOS height-setting bug
-        bonzo(el).html(template(
-            '<div style="height:{{height}}px; overflow:hidden; width: 100%;">' +
-                '<iframe src="{{src}}" style="height:{{height}}px; width: 100%; border: none;"></iframe>' +
-            '</div>',
-            {src: el.getAttribute('data-snap-uri'), height: Math.min(Math.max(spec.height || 0, minIframeHeight), maxIframeHeight)}
-        ));
+        bonzo(containerEl).append(iframe);
+        snapIframes.push(iframe);
+        bindIframeMsgReceiverOnce();
+
+        fastdom.write(function () {
+            bonzo(el).empty().append(containerEl);
+        });
     }
 
     function fetchFragment(el, asJson) {
@@ -91,14 +121,18 @@ define([
             crossOrigin: true
         }).then(function (resp) {
             $.create(asJson ? resp.html : resp).each(function (html) {
-                bonzo(el).html(html);
+                fastdom.write(function () {
+                    bonzo(el).html(html);
+                });
             });
             relativeDates.init(el);
         });
     }
 
     function fetchSnap(el) {
-        bonzo(el).addClass('facia-snap-embed');
+        fastdom.write(function () {
+            bonzo(el).addClass('facia-snap-embed');
+        });
         addCss(el);
 
         switch (el.getAttribute('data-snap-type')) {

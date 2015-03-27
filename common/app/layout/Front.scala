@@ -1,27 +1,24 @@
 package layout
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
-import dfp.DfpAgent
+import conf.Switches
+import dfp.{DfpAgent, SponsorshipTag}
 import model._
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
-import slices._
+import slices.{MostPopular, _}
 import views.support.CutOut
+
 import scala.Function._
-import slices.MostPopular
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
-  val MaximumVideoPlayersPerTagPage = 1
-  val MaximumVideoPlayersPerFront = 4
-
-  val empty = ContainerLayoutContext(Set.empty, false, MaximumVideoPlayersPerFront)
+  val empty = ContainerLayoutContext(Set.empty, hideCutOuts = false)
 }
 
 case class ContainerLayoutContext(
   cutOutsSeen: Set[CutOut],
-  hideCutOuts: Boolean,
-  videoPlayersRemaining: Int
+  hideCutOuts: Boolean
 ) {
   def addCutOuts(cutOut: Set[CutOut]) = copy(cutOutsSeen = cutOutsSeen ++ cutOut)
 
@@ -30,7 +27,7 @@ case class ContainerLayoutContext(
   private def dedupCutOut(cardAndContext: CardAndContext): CardAndContext = {
     val (content, context) = cardAndContext
 
-    if (content.snapStuff.snapType == LatestSnap) {
+    if (content.snapStuff.map(_.snapType) == Some(LatestSnap)) {
       (content, context)
     } else {
       val newCard = if (content.cutOut.exists(cutOutsSeen.contains)) {
@@ -42,24 +39,8 @@ case class ContainerLayoutContext(
     }
   }
 
-  private def limitVideoPlayers(cardAndContext: CardAndContext): CardAndContext = {
-    val (content, context) = cardAndContext
-
-    content.displayElement match {
-      case Some(vp: InlineVideo) if content.cardTypes.showVideoPlayer =>
-        if (videoPlayersRemaining > 0) {
-          (content, context.copy(videoPlayersRemaining = videoPlayersRemaining - 1))
-        } else {
-          (content.copy(displayElement = vp.fallBack), context)
-        }
-
-      case _ => (content, context)
-    }
-  }
-
   private val transforms = Seq(
-    dedupCutOut _,
-    limitVideoPlayers _
+    dedupCutOut _
   ).reduce(_ compose _)
 
   def transform(card: FaciaCardAndIndex) = {
@@ -118,20 +99,12 @@ object ContainerCommercialOptions {
     DfpAgent.sponsorshipType(config)
   )
 
-  def fromMetaData(metaData: MetaData) = ContainerCommercialOptions(
-    metaData.isSponsored(),
-    metaData.isAdvertisementFeature,
-    metaData.isFoundationSupported,
-    metaData.sponsor,
-    metaData.sponsorshipType
-  )
-
   val empty = ContainerCommercialOptions(
-    false,
-    false,
-    false,
-    None,
-    None
+    isSponsored = false,
+    isAdvertisementFeature = false,
+    isFoundationSupported = false,
+    sponsorshipTag = None,
+    sponsorshipType = None
   )
 }
 
@@ -139,7 +112,7 @@ case class ContainerCommercialOptions(
   isSponsored: Boolean,
   isAdvertisementFeature: Boolean,
   isFoundationSupported: Boolean,
-  sponsorshipTag: Option[String],
+  sponsorshipTag: Option[SponsorshipTag],
   sponsorshipType: Option[String]
 ) {
   val isPaidFor = isSponsored || isAdvertisementFeature || isFoundationSupported
@@ -207,17 +180,18 @@ object FaciaContainer {
     },
     None,
     None,
-    false,
-    false,
-    None
+    hideToggle = false,
+    showTimestamps = false,
+    None,
+    useShowMore = true
   )
 
-  def forStoryPackage(dataId: String, items: Seq[Trail], title: String) = {
+  def forStoryPackage(dataId: String, items: Seq[Trail], title: String, href: Option[String] = None) = {
     FaciaContainer(
       index = 2,
       container = Fixed(ContainerDefinition.fastForNumberOfItems(items.size)),
       config = ContainerDisplayConfig.withDefaults(CollectionConfigWithId(dataId, CollectionConfig.emptyConfig)),
-      collectionEssentials = CollectionEssentials(items take 8, Nil, Some(title), None, None, None),
+      collectionEssentials = CollectionEssentials(items take 8, Nil, Some(title), href, None, None),
       componentId = None
     ).withTimeStamps
   }
@@ -239,7 +213,8 @@ case class FaciaContainer(
   customClasses: Option[Seq[String]],
   hideToggle: Boolean,
   showTimestamps: Boolean,
-  dateLinkPath: Option[String]
+  dateLinkPath: Option[String],
+  useShowMore: Boolean
 ) {
   def transformCards(f: ContentCard => ContentCard) = copy(
     containerLayout = containerLayout.map(_.transformCards(f))
@@ -252,7 +227,7 @@ case class FaciaContainer(
   }
 
   def latestUpdate = (collectionEssentials.items.map(_.webPublicationDate) ++
-    collectionEssentials.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
+    collectionEssentials.lastUpdated.map(DateTime.parse)).sortBy(-_.getMillis).headOption
 
   def items = collectionEssentials.items
 
@@ -272,6 +247,26 @@ case class FaciaContainer(
       urlFragment <- dateHeadline.urlFragment
     } yield s"$path/$urlFragment/all"
   }
+
+  def hasShowMore = containerLayout.exists(_.hasShowMore)
+
+  def hasDesktopShowMore = containerLayout.exists(_.hasDesktopShowMore)
+
+  def hasMobileOnlyShowMore =
+    containerLayout.exists(layout => layout.hasMobileShowMore && !layout.hasDesktopShowMore)
+
+  /** Nasty hardcoded thing.
+    *
+    * TODO: change Facia Tool to have a dropdown for 'header types', one of which is default, the other CP Scott.
+    *
+    * Then if we end up adding more of these over time, there's an in-built mechanism for doing so. Will also mean apps
+    * can consume this data if they want to.
+    */
+  def showCPScottHeader = dataId == "uk/commentisfree/regular-stories"
+
+  def addShowMoreClasses = useShowMore && containerLayout.exists(_.hasShowMore)
+
+  def shouldLazyLoad = Switches.LazyLoadContainersSwitch.isSwitchedOn && index > 8
 }
 
 object Front extends implicits.Collections {

@@ -57,6 +57,10 @@ $header-image-size-desktop: 100px;
     .show-more--hidden & {
         display: none;
     }
+
+    @if($old-ie) {
+        clear: left;
+    }
 }
 
 .fc-container__header,
@@ -135,7 +139,7 @@ $header-image-size-desktop: 100px;
 
     @include mq(tablet, leftCol) {
         float: left;
-        width: gs-span(6) + $gs-gutter;
+        width: gs-span(4);
     }
 
     @include mq(leftCol, wide) {
@@ -145,7 +149,7 @@ $header-image-size-desktop: 100px;
     .has-page-skin & {
         @include mq(wide) {
             float: left;
-            width: gs-span(6) + $gs-gutter;
+            width: gs-span(4);
         }
     }
 
@@ -418,15 +422,16 @@ $header-image-size-desktop: 100px;
     @include fs-textSans(3);
     color: #ffffff;
 
-    i {
+    .inline-icon {
         @include transform(rotate(180deg));
         position: absolute;
-        top: 13px;
+        top: 6px;
         left: 50%;
         margin-left: -12px;
+        fill: colour(neutral-1);
 
-        .container--rolled-up & {
-            @include transform(rotate(0));
+        .fc-container--rolled-up & {
+            @include transform(rotate(0deg));
         }
     }
 
@@ -442,7 +447,7 @@ $header-image-size-desktop: 100px;
         &:focus {
             color: colour(neutral-1);
         }
-        i {
+        .inline-icon {
             display: none;
         }
         .fc-container__toggle__text {
@@ -608,4 +613,14 @@ $header-image-size-desktop: 100px;
 
 .index-page-header__image-wrapper--contributor-circle {
     @include border-radius(50%);
+}
+
+.fc-container--lazy-load {
+    @include mq($until: desktop) {
+        display: none;
+    }
+
+    .is-not-modern & {
+        display: none;
+    }
 }

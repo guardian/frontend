@@ -6,12 +6,16 @@
         color: colour(external-main-1);
     }
 
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(neutral-6), 10%);
+    }
+
     .u-faux-block-link--hover {
         background-color: darken(colour(neutral-6), 3%);
     }
 
     .fc-item__container:before,
-    .flyer__container:before {
+    .rich-link__container:before {
         background-color: colour(external-support-1);
     }
 }

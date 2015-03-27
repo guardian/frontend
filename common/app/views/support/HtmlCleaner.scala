@@ -5,8 +5,11 @@ import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
 import conf.Switches._
+import layout.{WidthsByBreakpoint, ContentWidths}
+import layout.ContentWidths._
 import model._
 import org.joda.time.DateTime
+import org.jsoup.Jsoup
 import org.jsoup.nodes.{TextNode, Element, Document}
 import play.api.mvc.RequestHeader
 
@@ -36,6 +39,40 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
+object BlockquoteCleaner extends HtmlCleaner {
+
+  override def clean(document: Document): Document = {
+    val quotedBlockquotes = document.getElementsByTag("blockquote").filter(_.hasClass("quoted"))
+    val wrapBlockquoteChildren = (blockquoteElement: Element) => {
+      val container = document.createElement("div")
+      container.addClass("quoted__contents")
+      // Get children before mutating
+      val children = blockquoteElement.children()
+      blockquoteElement.prependChild(container)
+      container.insertChildren(0, children)
+    }
+
+    quotedBlockquotes.foreach(wrapBlockquoteChildren)
+    document
+  }
+
+}
+
+case class R2VideoCleaner(article: Article) extends HtmlCleaner {
+
+  override def clean(document: Document): Document = {
+
+    val legacyVideos = document.getElementsByTag("video").filter(_.hasClass("gu-video")).filter(_.parent().tagName() != "figure")
+
+    legacyVideos.foreach( videoElement => {
+      videoElement.wrap("<figure class=\"test element element-video\"></figure>")
+    })
+
+    document
+  }
+
+}
+
 case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
@@ -57,6 +94,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
           val html = views.html.fragments.share.blockLevelSharing(blockId, article.elementShares(shortLinkUrl = shortUrl, webLinkUrl = webUrl,  mediaPath = Some(mediaPath), title = mediaTitle), article.contentType)
           element.child(0).after(html.toString())
           element.addClass("fig--has-shares")
+          element.addClass("fig--narrow-caption")
           // add extra margin if there is no caption to fit the share buttons
           val figcaption = element.getElementsByTag("figcaption")
           if(figcaption.length < 1) {
@@ -73,7 +111,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
         element
           .removeClass("gu-video")
-          .addClass("js-gu-media gu-media gu-media--video")
+          .addClass("js-gu-media--enhance gu-media gu-media--video")
           .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
         val flashMediaElement = conf.Static("flash/components/mediaelement/flashmediaelement.swf").path
@@ -109,9 +147,11 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
         findVideoApiElement(mediaId).foreach{ videoElement =>
           element.attr("data-block-video-ads", videoElement.blockVideoAds.toString)
-          element.attr("data-embeddable", videoElement.embeddable.toString)
-          if(!canonicalUrl.isEmpty) {
+          if(!canonicalUrl.isEmpty && videoElement.embeddable) {
+            element.attr("data-embeddable", "true")
             element.attr("data-embed-path", new URL(canonicalUrl).getPath.stripPrefix("/"))
+          } else {
+            element.attr("data-embeddable", "false")
           }
         }
       }
@@ -133,106 +173,96 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
 case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.Numbers {
 
-  def cleanStandardPictures(body: Document): Document = {
-    body.getElementsByTag("figure").foreach { fig =>
-      if(!fig.hasClass("element-comment") && !fig.hasClass("element-witness")) {
-        fig.attr("itemprop", "associatedMedia")
-        fig.attr("itemscope", "")
-        fig.attr("itemtype", "http://schema.org/ImageObject")
-        val mediaId = fig.attr("data-media-id")
-        val asset = findImageFromId(mediaId)
+  def replacePictures(body: Document): Document = {
+    for {
+      figure <- body.getElementsByTag("figure")
+      image <- figure.getElementsByTag("img").headOption
+      if !figure.hasClass("element-comment") && !figure.hasClass("element-witness")
+      container <- findContainerFromId(figure.attr("data-media-id"), image.attr("src"))
+      image <- container.largestImage
+    }{
+        val hinting = findBreakpointWidths(figure)
+        val widths = ContentWidths.getWidthsFromContentElement(hinting, BodyMedia)
 
-        fig.getElementsByTag("img").foreach { img =>
-          fig.addClass("img")
-          img.attr("itemprop", "contentURL")
-
-          asset.map { image =>
-            image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
-            img.attr("width", s"${image.width}")
-
-            //otherwise we mess with aspect ratio
-            img.removeAttr("height")
-
-            fig.addClass(image.width match {
-              case width if width <= 220 => "img--base img--inline"
-              case width if width < 460 => "img--median"
-              case width => "img--extended"
-            })
-            fig.addClass(image.height match {
-              case height if height > image.width => "img--portrait"
-              case height if height < image.width => "img--landscape"
-              case height => ""
-            })
-          }
+        val orientationClass = image.orientation match {
+          case Portrait => Some("img--portrait")
+          case _ => Some("img--landscape")
         }
 
-        val figcaptions = fig.getElementsByTag("figcaption")
-
-        if(figcaptions.length > 0) {
-          figcaptions.foreach { figcaption =>
-            // content api/ tools sometimes pops a &nbsp; in the blank field
-            if (!figcaption.hasText || figcaption.text().length < 2) {
-              figcaption.remove()
-              fig.addClass("fig--no-caption")
-            } else {
-              figcaption.attr("itemprop", "description")
-              fig.addClass("fig--border")
-            }
-          }
-        } else {
-          fig.addClass("fig--no-caption")
+        val smallImageClass = hinting match {
+          case Thumbnail => None
+          case _ if image.width <= 220 => Some("img--inline")
+          case _ => None
         }
-      }
+
+        val figureClasses = List(orientationClass, smallImageClass, hinting.className).flatten.mkString(" ")
+
+        val html = views.html.fragments.contentImage(container, image, widths, figureClasses).toString()
+        figure.replaceWith(Jsoup.parse(html).body())
     }
+
     body
   }
 
   def addSharesAndFullscreen(body: Document): Document = {
-    if(!article.isLiveBlog) {
-      article.zippedBodyImages.zipWithIndex map {
-        case ((imageElement, Some(crop)), index) =>
-          body.select("[data-media-id=" + imageElement.id + "]").map { fig =>
-            val linkIndex = (index + (if (article.mainFiltered.size > 0) 2 else 1)).toString
-            val hashSuffix = "img-" + linkIndex
-            fig.attr("id", hashSuffix)
-            fig.addClass("fig--narrow-caption")
-            fig.getElementsByTag("img").foreach { img =>
-              val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
-              img.after(html.toString())
-              fig.addClass("fig--has-shares")
-              img.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
-              img.after("<span class='rounded-icon article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
-            }
-          }
-      }
-    }
-    body
-  }
 
-
-  def cleanShowcasePictures(body: Document): Document = {
     for {
-      element <- body.getElementsByClass("element--showcase")
-      asset <- findContainerFromId(element.attr("data-media-id"))
-      imagerSrc <- ImgSrc.imager(asset, Showcase)
-      imgElement <- element.getElementsByTag("img")
-    } {
-      imgElement.wrap(s"""<div class="js-image-upgrade" data-src="$imagerSrc"></div>""")
-      imgElement.addClass("responsive-img")
+      (imageElement, index) <- article.bodyFiltered.zipWithIndex
+      if !article.isLiveBlog
+      crop <- imageElement.largestEditorialCrop
+      figure <- body.select("[data-media-id=" + imageElement.id + "]")
+      image <- figure.getElementsByTag("img").headOption
+
+    }{
+      val linkIndex = (index + (if (article.mainFiltered.size > 0) 2 else 1)).toString
+      val hashSuffix = "img-" + linkIndex
+      figure.attr("id", hashSuffix)
+      figure.addClass("fig--narrow-caption")
+      figure.addClass("fig--has-shares")
+
+      val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
+      image.after(html.toString())
+      image.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
+      image.after("<span class='rounded-icon article__fullscreen'><i class='i i-expand-white'></i><i class='i i-expand-black'></i></span>")
     }
+
     body
   }
 
   def clean(body: Document): Document = {
-    cleanShowcasePictures(addSharesAndFullscreen(cleanStandardPictures(body)))
+    addSharesAndFullscreen(replacePictures(body))
   }
 
-  def findImageFromId(id:String): Option[ImageAsset] = {
-    findContainerFromId(id).flatMap(Item620.elementFor)
+  def findImageFromId(id: String, src: String, profile: Profile): Option[ImageAsset] = {
+    findContainerFromId(id, src).flatMap(profile.elementFor)
   }
 
-  def findContainerFromId(id:String): Option[ImageContainer] = {
-    article.bodyImages.find(_.id == id)
+  def findContainerFromId(id: String, src: String): Option[ImageContainer] = {
+    // It is possible that a single data media id can appear multiple times in the elements array.
+    val srcImagePath = new java.net.URL(src).getPath()
+    val imageContainers = article.bodyImages.filter(_.id == id)
+
+    // Try to match the container based on both URL and media ID.
+    val fullyMatchedImage: Option[ImageContainer] = {
+      for {
+        container <- imageContainers
+        asset <- container.imageCrops
+        url <- asset.url
+        if url.contains(srcImagePath)
+      } yield { container }
+    }.headOption
+
+    fullyMatchedImage.orElse(imageContainers.headOption)
+  }
+
+  def findBreakpointWidths(figure: Element): ContentHinting = {
+
+    figure.classNames().map(Some(_)) match {
+      case classes if classes.contains(Supporting.className) => Supporting
+      case classes if classes.contains(Showcase.className) => Showcase
+      case classes if classes.contains(Thumbnail.className) => Thumbnail
+      case _ => Inline
+    }
   }
 }
 
@@ -277,6 +307,10 @@ object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
 
+object VideoEncodingUrlCleaner{
+  def apply(url: String): String = url.filter(_ != '\n')
+}
+
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByAttribute("href")
@@ -285,6 +319,7 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
       if (link.tagName == "a") {
         link.attr("href", LinkTo(link.attr("href"), edition))
         link.attr("data-link-name", dataLinkName)
+        link.attr("data-component", dataLinkName.replace(" ", "-"))
         link.addClass("u-underline")
       }
     }
@@ -300,15 +335,6 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
       }
     }
 
-    body
-  }
-}
-
-object InBodyLinkDataComponentCleaner extends HtmlCleaner {
-  def clean(body: Document): Document = {
-    body.getElementsByTag("a").foreach { link =>
-      link.attr("data-component", "in-body-link")
-    }
     body
   }
 }
@@ -362,7 +388,7 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
-class TagLinker(article: Article)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner{
+case class TagLinker(article: Article)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner{
 
   private val group1 = "$1"
   private val group2 = "$2"
@@ -489,7 +515,7 @@ object RichLinkCleaner extends HtmlCleaner {
     val richLinks = document.getElementsByClass("element-rich-link")
     richLinks
       .addClass("element-rich-link--not-upgraded")
-      .attr("data-component", s"rich-link-${richLinks.length}")
+      .attr("data-component", "rich-link")
       .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.length} | ${index+1}") }
 
     document

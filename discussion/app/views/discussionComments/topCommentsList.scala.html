@@ -1,0 +1,16 @@
+@(page: discussion.CommentPage)(implicit request: RequestHeader)
+
+<div class="d-discussion d-discussion--top-comments @if(!page.isClosedForRecommendation){d-discussion--recommendations-open} u-cf"
+    @page.switches.map{ switch => data-@switch.name="@switch.state" }>
+
+    <ul class="d-top-comment-container d-top-comment-container--left">
+        @page.comments.zipWithIndex.filter(_._2 % 2 == 0).map { case (comment, i) =>
+            @fragments.topComment(comment, page.isClosedForRecommendation, false)
+        }
+    </ul>
+    <ul class="d-top-comment-container d-top-comment-container--right">
+        @page.comments.zipWithIndex.filter(_._2 % 2 == 1).map { case (comment, i) =>
+            @fragments.topComment(comment, page.isClosedForRecommendation, false)
+        }
+    </ul>
+</div>

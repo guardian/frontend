@@ -1,23 +1,8 @@
 /* ==========================================================================
    Super-high component styling
    ========================================================================== */
-.commercial.commercial--v-high {
-    .commercial--v-high__header {
-        padding: $gs-baseline/6 $gs-gutter/4;
-
-        .commercial__title {
-            .i-marque-36 {
-                display: block;
-            }
-            .i-commercial-brand {
-                height: $gs-baseline*1.3333;
-            }
-        }
-    }
-
-    .commercial--v-high__body {
-        padding: $gs-baseline/2 $gs-gutter/4 $gs-baseline;
-    }
+.commercial--v-high {
+    margin-right: $gs-gutter;
 
     .lineitem__image {
         float: none;
@@ -29,4 +14,30 @@
         width: 100%;
         width: calc(100% + #{$gs-gutter/2});
     }
+
+    &.commercial--tone-books {
+        width: gs-span(2);
+
+        .lineitem__image {
+            max-width: 100%;
+            margin: 0;
+        }
+    }
+}
+
+.commercial--v-high__header {
+    padding: $gs-baseline/6 $gs-gutter/4;
+
+    .commercial__title {
+        .inline-icon {
+            display: block;
+        }
+        .inline-commercial-brand {
+            height: $gs-baseline*1.3333;
+        }
+    }
+}
+
+.commercial--v-high__body {
+    padding: $gs-baseline/2 $gs-gutter/4 $gs-baseline;
 }

@@ -1,11 +1,12 @@
-/* global _: true */
 define([
     'knockout',
+    'underscore',
     'modules/copied-article',
     'utils/alert',
     'utils/draggable-element'
 ], function(
     ko,
+    _,
     copiedArticle,
     alert,
     draggableElement
@@ -89,7 +90,7 @@ define([
             event.preventDefault();
         },false);
 
-        ko.bindingHandlers.makeDropabble = {
+        ko.bindingHandlers.makeDroppable = {
             init: function(element) {
                 for (var eventName in listeners) {
                     element.addEventListener(eventName, getListener(eventName, element), false);

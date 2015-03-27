@@ -11,9 +11,9 @@ define([
             'common/utils/detect',
             'common/modules/commercial/user-ad-targeting',
             'common/modules/experiments/ab',
-            'common/modules/commercial/tags/audience-science',
-            'common/modules/commercial/tags/audience-science-gateway',
-            'common/modules/commercial/tags/criteo'
+            'common/modules/commercial/third-party-tags/audience-science',
+            'common/modules/commercial/third-party-tags/audience-science-gateway',
+            'common/modules/commercial/third-party-tags/criteo'
         ])
         .require(['common/modules/commercial/build-page-targeting', 'mocks'], function (buildPageTargeting, mocks) {
 
@@ -49,27 +49,27 @@ define([
                     };
                     mocks.store['common/modules/experiments/ab'].getParticipations = function () {
                         return {
-                            HighCommercialComponent: {
-                                variant: 'control'
+                            MtMaster: {
+                                variant: 'variant'
                             }
                         }
                     };
-                    mocks.store['common/modules/commercial/tags/audience-science'].getSegments = function () {
+                    mocks.store['common/modules/commercial/third-party-tags/audience-science'].getSegments = function () {
                         return ['E012712', 'E012390', 'E012478'];
                     };
-                    mocks.store['common/modules/commercial/tags/audience-science-gateway'].getSegments = function () {
+                    mocks.store['common/modules/commercial/third-party-tags/audience-science-gateway'].getSegments = function () {
                         return {
                             asg1: 'value-one',
                             asg2: 'value-two'
                         }
                     };
-                    mocks.store['common/modules/commercial/tags/criteo'].getSegments = function () {
+                    mocks.store['common/modules/commercial/third-party-tags/criteo'].getSegments = function () {
                         return {
                             c1: 'value-one',
                             c2: 'value-two'
                         }
                     };
-                })
+                });
 
                 it('should exist', function () {
                     expect(buildPageTargeting).toBeDefined();
@@ -117,7 +117,7 @@ define([
                 });
 
                 it('should set correct ab param', function () {
-                    expect(buildPageTargeting().ab).toBe('1');
+                    expect(buildPageTargeting().ab).toEqual(['MtMaster-v']);
                 });
 
                 it('should set correct criteo params', function () {
@@ -143,13 +143,13 @@ define([
                     mocks.store['common/modules/commercial/user-ad-targeting'].getUserSegments = function () {
                         return [];
                     };
-                    mocks.store['common/modules/commercial/tags/audience-science'].getSegments = function () {
+                    mocks.store['common/modules/commercial/third-party-tags/audience-science'].getSegments = function () {
                         return [];
                     };
-                    mocks.store['common/modules/commercial/tags/audience-science-gateway'].getSegments = function () {
+                    mocks.store['common/modules/commercial/third-party-tags/audience-science-gateway'].getSegments = function () {
                         return {};
                     };
-                    mocks.store['common/modules/commercial/tags/criteo'].getSegments = function () {
+                    mocks.store['common/modules/commercial/third-party-tags/criteo'].getSegments = function () {
                         return {};
                     };
 
@@ -166,7 +166,7 @@ define([
                         p: 'ng',
                         bp: 'mobile',
                         at: 'ng101',
-                        ab: '1'
+                        ab: ['MtMaster-v']
                     });
                 });
 

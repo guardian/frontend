@@ -3,32 +3,32 @@ define([
     'bonzo',
     'qwery',
 
-    'lodash/collections/map',
-
     'common/utils/$',
-    'common/utils/ajax',
+    'common/utils/ajax-promise',
+    'common/utils/config',
     'common/utils/mediator',
     'common/utils/scroller',
 
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
+    'common/modules/discussion/whole-discussion',
     'common/modules/ui/relativedates'
 ], function(
     bean,
     bonzo,
     qwery,
 
-    _map,
-
     $,
-    ajax,
+    ajaxPromise,
+    config,
     mediator,
     scroller,
 
     Component,
     DiscussionApi,
     CommentBox,
+    WholeDiscussion,
     relativedates
 ) {
 'use strict';
@@ -132,29 +132,6 @@ Comments.prototype.unPickComment = function(commentId, $thisButton) {
         });
 };
 
-Comments.prototype.gotoComment = function(id) {
-    var comment = $('#comment-'+ id, this.elem);
-
-    if (comment.length > 0) {
-        window.location.replace('#comment-'+ id);
-        return;
-    }
-
-    return this.fetchComments({
-        comment: id
-    }).then(function() {
-        window.location.replace('#comment-'+ id);
-    }.bind(this));
-};
-
-Comments.prototype.gotoPage = function(page) {
-    scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
-    this.relativeDates();
-    return this.fetchComments({
-        page: page
-    });
-};
-
 Comments.prototype.fetchComments = function(options) {
     options = options || {};
 
@@ -164,7 +141,7 @@ Comments.prototype.fetchComments = function(options) {
 
     var queryParams = {
         orderBy: options.order || this.options.order,
-        pageSize: options.pagesize || this.options.pagesize || 25,
+        pageSize: options.pagesize || this.options.pagesize,
         displayThreaded: this.options.threading !== 'unthreaded'
     };
 
@@ -172,13 +149,34 @@ Comments.prototype.fetchComments = function(options) {
         queryParams.maxResponses = 3;
     }
 
-    return ajax({
-        url: url,
-        type: 'json',
-        method: 'get',
-        crossOrigin: true,
-        data: queryParams
-    }).then(this.renderComments.bind(this)).then(this.goToPermalink.bind(this, options.comment));
+    var promise,
+        ajaxParams = {
+            url: url,
+            type: 'json',
+            method: 'get',
+            crossOrigin: true,
+            data: queryParams
+        };
+    if (this.isAllPageSizeActive()) {
+        promise = new WholeDiscussion({
+            discussionId: this.options.discussionId,
+            orderBy: queryParams.orderBy,
+            displayThreaded: queryParams.displayThreaded,
+            maxResponses: queryParams.maxResponses
+        }).loadAllComments().catch(function() {
+            this.wholeDiscussionErrors = true;
+            queryParams.pageSize = 100;
+            return ajaxPromise(ajaxParams);
+            }.bind(this));
+    } else {
+        // It is possible that the user has chosen to view all comments,
+        // but the WholeDiscussion module has failed. Fall back to 100 comments.
+        if (queryParams.pageSize === 'All') {
+            queryParams.pageSize = 100;
+        }
+        promise = ajaxPromise(ajaxParams);
+    }
+    return promise.then(this.renderComments.bind(this)).then(this.goToPermalink.bind(this, options.comment));
 };
 
 Comments.prototype.goToPermalink = function(commentId) {
@@ -191,14 +189,21 @@ Comments.prototype.goToPermalink = function(commentId) {
 
 Comments.prototype.renderComments = function(resp) {
 
-    var contentEl = bonzo.create(resp.html),
+    // The resp object received has a collection of rendered html fragments, ready for DOM insertion.
+    // - commentsHtml - the main comments content.
+    // - paginationHtml - the discussion's pagination based on user page size and number of comments.
+    // - postedCommentHtml - an empty comment for when the user successfully posts a comment.
+
+    var contentEl = bonzo.create(resp.commentsHtml),
         comments = qwery(this.getClass('comment'), contentEl);
 
     bonzo(this.elem).empty().append(contentEl);
     this.addMoreRepliesButtons(comments);
 
+    this.postedCommentEl = resp.postedCommentHtml;
+
     this.relativeDates();
-    this.emit('rendered');
+    this.emit('rendered', resp.paginationHtml);
 };
 
 Comments.prototype.showHiddenComments = function(e) {
@@ -242,7 +247,7 @@ Comments.prototype.getMoreReplies = function(event) {
 
     var source = bonzo(event.target).data('source-comment');
 
-    ajax({
+    ajaxPromise({
         url: '/discussion/comment/'+ event.currentTarget.getAttribute('data-comment-id') +'.json',
         type: 'json',
         method: 'get',
@@ -291,7 +296,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
                 src: this.user.avatar
             }
         },
-        commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0],
+        commentElem = bonzo.create(this.postedCommentEl)[0],
         $commentElem = bonzo(commentElem);
 
     $commentElem.addClass('d-comment--new');
@@ -436,6 +441,19 @@ Comments.prototype.addUser = function(user) {
 
 Comments.prototype.relativeDates = function() {
     relativedates.init();
+};
+
+Comments.prototype.isAllPageSizeActive = function() {
+    return config.switches.discussionAllPageSize &&
+    this.options.pagesize === 'All' &&
+    !this.wholeDiscussionErrors;
+};
+
+Comments.prototype.shouldShowPageSizeMessage = function() {
+    // Similar to above, but tells the loader that the fallback size should be used.
+    return config.switches.discussionAllPageSize &&
+    this.options.pagesize === 'All' &&
+    this.wholeDiscussionErrors;
 };
 
 return Comments;

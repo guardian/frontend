@@ -11,7 +11,7 @@ define([
 ) {
 
     function init() {
-        if (!config.switches.commercialComponents || !config.page.isFront || config.page.hasPageSkin) {
+        if (!config.switches.commercialComponents || !config.page.isFront) {
             return false;
         }
 

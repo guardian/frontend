@@ -1,5 +1,8 @@
-/* global _: true */
-define(function () {
+define([
+    'underscore'
+], function (
+    _
+) {
     return function(date) {
         var periods = [
                 { secs: 30758400, unit: 'year'},

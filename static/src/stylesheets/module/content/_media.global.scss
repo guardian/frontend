@@ -82,7 +82,8 @@
         width: 1.04em;
         @include icon(video-icon-white, $with-width: false);
     }
-    .content--gallery & {
+    .content--gallery &,
+    .content--image & {
         width: .9em;
         @include icon(camera-white-large, $with-width: false);
     }
@@ -104,6 +105,7 @@
         background-color: transparent;
         margin-left: 0;
         margin-right: 0;
+        padding: 0 $gs-gutter/2;
     }
 
     + .fc-item {
@@ -194,6 +196,7 @@
     .fc-item--media {
         float: left;
         width: 50%;
+        padding: 0 $gs-gutter/2;
 
         @include mq($until: tablet) {
             &:nth-child(odd):before {

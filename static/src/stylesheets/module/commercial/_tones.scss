@@ -1,27 +1,42 @@
 /* ==========================================================================
    Commercial component tones
    ========================================================================== */
-@mixin tone-commercial($tone, $colour, $accentColour, $accentTextColour, $backgroundColour, $titleColor) {
+@mixin tone-commercial($tone, $colour, $accentColour, $accentTextColour: null, $backgroundColour: null, $titleColor: null) {
     .commercial--tone-#{$tone} {
-        background-color: $backgroundColour;
+        @if $backgroundColour {
+            background-color: $backgroundColour;
+        }
 
         .commercial--tone__highlight {
             color: $accentColour;
         }
-        .container__header,
-        .commercial--multi__header,
+        .commercial__header,
         .commercial--v-high__header {
             background-color: $colour;
 
-            .commercial__title,
-            a {
-                color: $titleColor;
-            }
-            .commercial__cta.button {
-                border-color: rgba($titleColor, .3);
+            @if $titleColor {
+                .commercial__title,
+                a {
+                    color: $titleColor;
+                }
+                .inline-commercial-brand {
+                    color: $titleColor;
+                    fill: $titleColor;
+                }
+                .commercial__cta.button {
+                    border-color: rgba($titleColor, .3);
 
-                &:hover {
-                    border-color: rgba($titleColor, 1);
+                    &:hover {
+                        border-color: rgba($titleColor, 1);
+                    }
+                }
+            }
+        }
+        .commercial--multi__header {
+            .commercial__title {
+                a {
+                    color: $colour;
+                    fill: $colour;
                 }
             }
         }
@@ -42,10 +57,7 @@
 @include tone-commercial(
     brand,
     guss-colour(news-support-2, $pasteup-palette),
-    guss-colour(news-main-2, $pasteup-palette),
-    #ffffff,
-    colour(neutral-6),
-    #ffffff
+    guss-colour(news-main-2, $pasteup-palette)
 );
 
 /* .commercial--tone-subscriptions */
@@ -53,9 +65,7 @@
     subscriptions,
     guss-colour(news-support-2, $pasteup-palette),
     guss-colour(news-main-2, $pasteup-palette),
-    #ffffff,
-    lighten(guss-colour(news-support-1, $pasteup-palette), 12%),
-    #ffffff
+    $backgroundColour: lighten(guss-colour(news-support-1, $pasteup-palette), 12%)
 );
 
 /* .commercial--tone-membership */
@@ -63,49 +73,35 @@
     membership,
     guss-colour(news-main-2, $pasteup-palette),
     guss-colour(news-main-1, $pasteup-palette),
-    #ffffff,
-    colour(neutral-6),
-    colour(neutral-1)
+    $titleColor :colour(neutral-1)
 );
 
 /* .commercial--tone-live */
 @include tone-commercial(
     live,
     guss-colour(live-main-1, $pasteup-palette),
-    guss-colour(live-support-1, $pasteup-palette),
-    #ffffff,
-    colour(neutral-6),
-    #ffffff
+    guss-colour(live-support-1, $pasteup-palette)
 );
 
 /* .commercial--tone-jobs */
 @include tone-commercial(
     jobs,
     guss-colour(news-support-2, $pasteup-palette),
-    guss-colour(news-main-1, $pasteup-palette),
-    #ffffff,
-    colour(neutral-6),
-    #ffffff
+    guss-colour(news-main-1, $pasteup-palette)
 );
 
 /* .commercial--tone-networks */
 @include tone-commercial(
     networks,
     guss-colour(news-support-4, $pasteup-palette),
-    guss-colour(news-main-1, $pasteup-palette),
-    #ffffff,
-    colour(neutral-6),
-    #ffffff
+    guss-colour(news-main-1, $pasteup-palette)
 );
 
 /* .commercial--tone-books */
 @include tone-commercial(
     books,
     guss-colour(features-main-1, $pasteup-palette),
-    guss-colour(features-main-2, $pasteup-palette),
-    #ffffff,
-    colour(neutral-6),
-    #ffffff
+    guss-colour(features-main-2, $pasteup-palette)
 );
 
 /* .commercial--tone-masterclasses */
@@ -113,47 +109,34 @@
     masterclasses,
     guss-colour(multimedia-main-1, $pasteup-palette),
     guss-colour(multimedia-main-2, $pasteup-palette),
-    colour(neutral-1),
-    colour(neutral-6),
-    guss-colour(multimedia-main-2, $pasteup-palette)
+    $accentTextColour: colour(neutral-1),
+    $titleColor: guss-colour(multimedia-main-2, $pasteup-palette)
 );
 
 /* .commercial--tone-travel */
 @include tone-commercial(
     travel,
     guss-colour(maps-support-3, $pasteup-palette),
-    guss-colour(maps-support-4, $pasteup-palette),
-    #ffffff,
-    colour(neutral-6),
-    #ffffff
+    guss-colour(maps-support-4, $pasteup-palette)
 );
 
 /* .commercial--tone-shop */
 @include tone-commercial(
     shop,
     guss-colour(features-main-1, $pasteup-palette),
-    guss-colour(features-support-4, $pasteup-palette),
-    #ffffff,
-    colour(neutral-6),
-    #ffffff
+    guss-colour(features-support-4, $pasteup-palette)
 );
 
 /* .commercial--tone-money */
 @include tone-commercial(
     money,
     guss-colour(news-main-2, $pasteup-palette),
-    guss-colour(news-support-2, $pasteup-palette),
-    #ffffff,
-    colour(neutral-6),
-    #ffffff
+    guss-colour(news-support-2, $pasteup-palette)
 );
 
 /* .commercial--tone-gardening */
 @include tone-commercial(
     gardening,
     guss-colour(maps-main-1, $pasteup-palette),
-    guss-colour(maps-support-2, $pasteup-palette),
-    #ffffff,
-    colour(neutral-6),
-    #ffffff
+    guss-colour(maps-support-2, $pasteup-palette)
 );

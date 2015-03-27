@@ -22,7 +22,6 @@ GET        /related/*path.json                        controllers.RelatedControl
 
 GET        /popular-in-tag/*tag.json                  controllers.PopularInTag.render(tag)
 
-GET        /preference/platform/:platform             controllers.ChangeViewController.render(platform, page)
 GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)
 GET        /preference/front-alphas/:optAction        controllers.ChangeAlphaController.render(optAction, page)
 
@@ -35,8 +34,8 @@ GET        /gallery/most-viewed.json                  controllers.MostViewedGall
 GET        /video/end-slate/series/*seriesId.json     controllers.VideoEndSlateController.renderSeries(seriesId)
 GET        /video/end-slate/section/*sectionId.json   controllers.VideoEndSlateController.renderSection(sectionId)
 
-GET        /embed/card/*path.json                     controllers.FlyerController.render(path)
-GET        /embed/card/*path                          controllers.FlyerController.renderHtml(path)
+GET        /embed/card/*path.json                     controllers.RichLinkController.render(path)
+GET        /embed/card/*path                          controllers.RichLinkController.renderHtml(path)
 
 # For tests
 GET        /most-read/*path                           controllers.MostPopularController.renderHtml(path)

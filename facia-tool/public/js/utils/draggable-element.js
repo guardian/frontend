@@ -1,8 +1,9 @@
-/* globals _ */
 define([
+    'underscore',
     'utils/deep-get',
     'utils/parse-query-params'
 ], function (
+    _,
     deepGet,
     parseQueryParams
 ) {
@@ -56,7 +57,7 @@ define([
         } else {
             sourceItem = {
                 id: id.split('?')[0] + (_.isEmpty(unknownQueryParams) ? '' : '?' + _.map(unknownQueryParams, function(val, key) {
-                    return key + (val ? '=' + val : '');
+                    return key + (val ? '=' + encodeURIComponent(val) : '');
                 }).join('&')),
                 meta: knownQueryParams
             };

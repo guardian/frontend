@@ -57,9 +57,8 @@ define([
 
                     var tabs = self.accountProfileForms.querySelector(self.classes.tabs);
 
-                    require(['bootstraps/membership'], function (MembershipTab) {
-                        self.membershipTab = new MembershipTab();
-                        self.membershipTab.fetch($(self.classes.memberShipContainer));
+                    require(['bootstraps/membership'], function (membershipTab) {
+                        membershipTab.init();
                     });
 
                     $(self.classes.tabs + ' .tabs__tab a').each(function () { // enhance tab urls to work with JS tabs module

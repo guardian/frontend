@@ -7,7 +7,8 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
-@import layout.LatestSnap
+@import views.support.ImgSrc
+@import layout.{LatestSnap, FaciaWidths}
 @import Function.const
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
@@ -16,6 +17,10 @@
         data-discussion-id="@id"
         }
         data-discussion-closed="@item.discussionSettings.isClosedForComments"
+        data-discussion-url="@item.header.url.get(request)#comments"
+        @if(item.cutOut.isDefined || item.showTimestamp) {
+            data-discussion-hide-label="true"
+        }
     }
 data-link-name="@item.cardStyle.toneString | @{index + 1}"
     @item.id.map { id =>
@@ -23,39 +28,41 @@ data-link-name="@item.cardStyle.toneString | @{index + 1}"
     }
 data-item-visibility="@visibilityDataAttribute"
 data-test-id="facia-card"
-    @item.snapStuff.dataAttributes>
+    @item.snapStuff.map(_.dataAttributes)>
 
     <div class="fc-item__container">
-        @if(item.snapStuff.snapType == LatestSnap) {
+        @if(item.snapStuff.map(_.snapType) == Some(LatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
         }
 
         @item.displayElement.filter(const(item.showDisplayElement)) match {
             case Some(InlineVideo(videoElement, title, endSlatePath, fallback)) if item.cardTypes.showVideoPlayer => {
-                @defining(VideoPlayer(
-                    videoElement,
-                    Video640,
-                    title,
-                    autoPlay = false,
-                    showControlsAtStart = false,
-                    endSlatePath,
-                    Some(false),
-                    item.id
-                )) { player =>
-                    <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
-                        <div class="fc-item__video-container">
-                            @video(player)
+                    @defining(VideoPlayer(
+                        videoElement,
+                        Video640,
+                        title,
+                        autoPlay = false,
+                        showControlsAtStart = false,
+                        endSlatePath,
+                        Some(false),
+                        item.id
+                    )) { player =>
+                        <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player">
+                            <div class="fc-item__video-container">
+                                @video(player, false, item.cardTypes.showVideoEndSlate)
+                            </div>
                         </div>
-                    </div>
-                @fallback.map { fallbackImage =>
-                    <div class="fc-item__video-fallback">
-                        @image(
-                            fallbackImage.imageContainer,
-                            inlineImage = containerIndex == 0 && index < 4
-                        )
-                    </div>
-                }
-                }
+                        @fallback.map { fallbackImage =>
+                            <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
+                                <div class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span></span></div>
+                                @image(
+                                    fallbackImage.imageContainer,
+                                    inlineImage = containerIndex == 0 && index < 4,
+                                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                                )
+                            </div>
+                        }
+                    }
             }
 
             case Some(svg @ CrosswordSvg(_)) => {
@@ -68,25 +75,33 @@ data-test-id="facia-card"
             }
 
             case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
-                @image(fallbackImage.imageContainer, inlineImage = containerIndex == 0 && index < 4)
+                @image(
+                    fallbackImage.imageContainer,
+                    inlineImage = containerIndex == 0 && index < 4,
+                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                )
             }
 
             case Some(InlineImage(imageContainer)) => {
-                @image(imageContainer, inlineImage = containerIndex == 0 && index < 4)
+                @image(
+                    imageContainer,
+                    inlineImage = containerIndex == 0 && index < 4,
+                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                )
             }
 
             case _ => { }
         }
 
     <div class="fc-item__content">
-        @if(item.snapStuff.snapType == LatestSnap) {
+        @if(item.snapStuff.map(_.snapType) == Some(LatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap"))
         }
         <div class="@RenderClasses(Map(
             ("fc-item__header", true),
             ("fc-item__header--inline-video", item.isVideo && item.displaySettings.isBoosted)
         ))">
-            @title(item.header, index, containerIndex, snapType = Some(item.snapStuff.snapType))
+            @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
 
             @item.byline.map { byline =>
                 <div class="fc-item__byline">@byline.htmlWithLinks(request)</div>
@@ -105,13 +120,23 @@ data-test-id="facia-card"
             <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
         }
 
-        @meta(item)
+        @if(item.showMeta) {
+            @meta(item)
+        }
     </div>
 
-        @item.cutOut.map { case cutOut @ CutOut(altText, imageUrl, _) =>
-        <div class="fc-item__avatar">
-            <div class="fc-item__avatar__media js-image-upgrade @cutOut.cssClass" data-src="@imageUrl"></div>
-        </div>
+        @if(item.cardTypes.showCutOut) {
+            @item.cutOut.map { case cutOut @ CutOut(imageUrl, _) =>
+            <div class="fc-item__avatar">
+                @lazyImage(
+                    Seq("fc-item__avatar__media", cutOut.cssClass),
+                    ImgSrc.srcset(imageUrl, FaciaWidths.cutOutFromItemClasses(item.cardTypes)),
+                    FaciaWidths.cutOutFromItemClasses(item.cardTypes).sizes,
+                    None,
+                    false
+                )
+            </div>
+            }
         }
 
         @if(item.sublinks.nonEmpty) {

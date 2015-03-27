@@ -9,7 +9,7 @@
     }
 
     .u-faux-block-link--hover {
-        background-color: darken(colour(podcast-background), 7.5%);
+        background-color: darken(colour(podcast-background), 6%);
     }
 
     .fc-item__link,
@@ -20,29 +20,33 @@
     }
 
     .fc-item__container:before,
-    .flyer__container:before {
+    .rich-link__container:before {
         background-color: colour(podcast-default);
     }
 
     .fc-item__kicker,
-    .flyer__kicker,
-    .flyer__read-more-text,
+    .rich-link__kicker,
+    .rich-link__read-more-text,
     .fc-item__byline {
         color: colour(podcast-default);
     }
 
-    .flyer__arrow-icon {
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(podcast-background), 10%);
+    }
+
+    .rich-link__arrow-icon {
         fill: colour(podcast-default);
     }
 
     .fc-item__kicker:after,
-    .flyer__kicker:after,
+    .rich-link__kicker:after,
     .fc-sublink__kicker:after {
-        color: fade-out($c-headline, .8);
+        color: mix($c-headline, colour(podcast-background), 20%);
     }
 
     .fc-item__standfirst,
-    .flyer__standfirst {
+    .rich-link__standfirst {
         color: $c-headline;
     }
 

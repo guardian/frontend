@@ -13,7 +13,11 @@ import scala.language.postfixOps
 case class FaciaPage(id: String,
                      seoData: SeoData,
                      frontProperties: FrontProperties,
-                     collections: List[(CollectionConfigWithId, Collection)]) extends MetaData with AdSuffixHandlingForFronts {
+                     collections: List[(CollectionConfigWithId, Collection)])
+  extends MetaData
+  with AdSuffixHandlingForFronts
+  with KeywordSponsorshipHandling {
+
   /** If a Facia front is a tag or section page, it ought to exist as a tag or section ID for one of its pieces of
     * content.
     *
@@ -59,19 +63,16 @@ case class FaciaPage(id: String,
     "contentType" -> JsString(contentType)
   )
 
-  val isNetworkFront: Boolean = Edition.all.exists(edition => id.toLowerCase.endsWith(edition.id.toLowerCase))
+  val isNetworkFront: Boolean = Edition.all.exists(_.id.toLowerCase == id)
 
   override lazy val contentType: String = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
   override def isSponsored(maybeEdition: Option[Edition] = None): Boolean =
     keywordIds exists (DfpAgent.isSponsored(_, Some(section), maybeEdition))
-  override def hasMultipleSponsors = false // Todo: need to think about this
   override lazy val isAdvertisementFeature = keywordIds exists (DfpAgent.isAdvertisementFeature(_,
       Some(section)))
-  override def hasMultipleFeatureAdvertisers = false // Todo: need to think about this
   override lazy val isFoundationSupported = keywordIds exists (DfpAgent.isFoundationSupported(_,
       Some(section)))
-  override def sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 
   def allItems = collections.map(_._2).flatMap(_.items).distinct

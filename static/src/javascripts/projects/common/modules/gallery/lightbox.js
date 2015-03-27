@@ -129,6 +129,7 @@ define([
 
     GalleryLightbox.prototype.generateImgHTML = function (img, i) {
         var blockShortUrl = config.page.shortUrl,
+            urlPrefix = img.src.indexOf('//') === 0 ? 'http:' : '',
             shareItems = [{
                 'text': 'Facebook',
                 'css': 'facebook',
@@ -140,7 +141,7 @@ define([
             }, {
                 'text': 'Pinterest',
                 'css': 'pinterest',
-                'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + GalleryLightbox.prototype.getImgSrc(img, '700', '700'))
+                'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + urlPrefix + img.src)
             }];
 
         return template(blockSharingTpl.replace(/^\s+|\s+$/gm, ''), {
@@ -214,31 +215,20 @@ define([
         }
     };
 
-    GalleryLightbox.prototype.getImgSrc = function (imgJson, width, height) {
-        var possibleWidths = _.filter(imagesModule.availableWidths, function (w) {
-            var widthBigger = w > width,
-                calculatedHeight = (w / imgJson.ratio),
-                heightBigger =  calculatedHeight > height;
-            return widthBigger || heightBigger;
-        }).sort(function (a, b) { return a > b; }),
-        chosenWidth = possibleWidths.length ? possibleWidths[0] : '-';
-
-        return imgJson.src.replace('{width}', chosenWidth);
-    };
-
     GalleryLightbox.prototype.loadSurroundingImages = function (index, count) {
 
-        var imgSrc, $img, $parent,
-            dim = this.$lightboxEl.dim();
+        var imageContent, $img, $parent;
         _([-1, 0, 1]).map(function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; })
             .each(function (i) {
-                imgSrc = this.getImgSrc(this.images[i], dim.width, dim.height);
+                imageContent = this.images[i];
                 $img = bonzo(this.$images[i]);
-                if ($img.attr('src') !== imgSrc) {
+                if (!$img.attr('src')) {
                     $parent = $img.parent()
                         .append(bonzo.create(loaderTpl));
 
-                    $img.attr('src', imgSrc); // src can change with width so overwrite every time
+                    $img.attr('src', imageContent.src);
+                    $img.attr('srcset', imageContent.srcsets);
+                    $img.attr('sizes', imageContent.sizes);
 
                     bean.one($img[0], 'load', function () {
                         $('.js-loader').remove();
@@ -328,6 +318,8 @@ define([
 
                 // meta
                 this.$indexEl.text(this.index);
+
+                imagesModule.upgradePictures();
             },
             leave: function () {
                 bean.off(this.$swipeContainer[0], 'click', this.toggleInfo);
@@ -393,7 +385,6 @@ define([
                 this.translateContent(this.$slides.length, 0, 0);
                 this.index = this.images.length + 1;
                 mediator.on('window:resize', this.resize);
-                imagesModule.upgrade(this.endslateEl);
             },
             leave: function () {
                 mediator.off('window:resize', this.resize);
@@ -448,7 +439,7 @@ define([
                 $body.scrollTop(this.bodyScrollPosition);
             }
             this.$lightboxEl.removeClass('gallery-lightbox--open');
-            imagesModule.upgrade();
+            imagesModule.upgradePictures();
             mediator.emit('ui:images:vh');
         }.bind(this), 1);
     };
@@ -485,7 +476,7 @@ define([
             this.endslate.componentClass = 'gallery-lightbox__endslate';
             this.endslate.endpoint = '/gallery/most-viewed.json';
             this.endslate.ready = function () {
-                imagesModule.upgrade(this.endslateEl);
+                mediator.emit('module:lightbox-end-slate:loaded');
             }.bind(this);
             this.endslate.prerender = function () {
                 bonzo(this.elem).addClass(this.componentClass);

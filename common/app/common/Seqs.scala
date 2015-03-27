@@ -21,5 +21,9 @@ object Seqs {
           Some(as.slice(start, start + windowSize))
       }
     }
+
+    def filterByIndex(f: Int => Boolean) = as.zipWithIndex collect {
+      case (a, index) if f(index) => a
+    }
   }
 }

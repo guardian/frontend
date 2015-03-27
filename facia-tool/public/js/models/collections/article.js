@@ -1,7 +1,8 @@
-/* global _: true */
 define([
     'modules/vars',
     'knockout',
+    'underscore',
+    'jquery',
     'utils/alert',
     'utils/as-observable-props',
     'utils/deep-get',
@@ -25,6 +26,8 @@ define([
     function (
         vars,
         ko,
+        _,
+        $,
         alert,
         asObservableProps,
         deepGet,
@@ -265,6 +268,7 @@ define([
             this.front = opts.group ? opts.group.front : null;
 
             this.props = asObservableProps(capiProps);
+            this.props.webPublicationDate.extend({ notify: 'always' });
 
             this.fields = asObservableProps(capiFields);
 
@@ -294,7 +298,8 @@ define([
                 'hasMainVideo',
                 'imageCutoutSrcFromCapi',
                 'ophanUrl',
-                'sparkUrl']);
+                'sparkUrl',
+                'premium']);
 
             this.state.enableContentOverrides(this.meta.snapType() !== 'latest');
             this.state.inDynamicCollection(deepGet(opts, '.group.parent.isDynamic'));
@@ -554,14 +559,13 @@ define([
                 this.state.hasMainVideo(getMainMediaType(opts) === 'video');
                 this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
                 this.state.ophanUrl(vars.CONST.ophanBase + '?path=/' + urlAbsPath(opts.webUrl));
+                this.state.premium(isPremium(opts));
 
                 this.metaDefaults = _.extend(deepGet(opts, '.frontsMeta.defaults') || {}, this.collectionMetaDefaults);
 
                 populateObservables(this.meta, this.metaDefaults);
 
                 this.updateEditorsDisplay();
-
-                this.loadSparkline();
             }
         };
 
@@ -574,20 +578,6 @@ define([
         Article.prototype.setRelativeTimes = function() {
             this.frontPublicationTime(humanTime(this.frontPublicationDate));
             this.scheduledPublicationTime(humanTime(this.fields.scheduledPublicationDate()));
-        };
-
-        Article.prototype.loadSparkline = function() {
-            var self = this;
-
-            if (vars.model.switches()['facia-tool-sparklines']) {
-                setTimeout(function() {
-                    if (self.state.sparkUrl()) {
-                        self.state.sparkUrl.valueHasMutated();
-                    } else {
-                        self.state.sparkUrl(vars.sparksBase + urlAbsPath(self.props.webUrl()) + (self.frontPublicationDate ? '&markers=' + (self.frontPublicationDate/1000) + ':46C430' : ''));
-                    }
-                }, Math.floor(Math.random() * 5000));
-            }
         };
 
         Article.prototype.get = function() {
@@ -806,12 +796,19 @@ define([
             return _.chain(contentApiArticle.tags).where({type: 'contributor'}).pluck('bylineLargeImageUrl').first().value();
         }
 
+        function isPremium(contentApiArticle) {
+            return contentApiArticle.fields.membershipAccess === 'members-only' ||
+                contentApiArticle.fields.membershipAccess === 'paid-members-only' ||
+                !!_.find(contentApiArticle.tags, {id: 'news/series/looking-back'});
+        }
+
         function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
             if (imageSrc()) {
                 validateImageSrc(imageSrc(), opts)
-                    .done(function(width, height) {
-                        imageSrcWidth(width);
-                        imageSrcHeight(height);
+                    .done(function(img) {
+                        imageSrc(img.src);
+                        imageSrcWidth(img.width);
+                        imageSrcHeight(img.height);
                     })
                     .fail(function(err) {
                         undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);

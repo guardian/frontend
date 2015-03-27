@@ -1,7 +1,6 @@
 /* ==========================================================================
    Pop-up
    ========================================================================== */
-$popup-toggle-arrow-size: 4px;
 $popup-anchor-arrow-size: 6px;
 $popup-top: $headerHeight + $gs-baseline/2 + 3;
 $c-popup-bg: colour(neutral-8);
@@ -110,7 +109,6 @@ $control-offset: 36 + $gs-gutter/2;
             border-top: 0;
             position: absolute;
             left: 50%;
-            margin-left: 0 - $popup-anchor-arrow-size;
             border-left: $popup-anchor-arrow-size solid transparent;
             border-right: $popup-anchor-arrow-size solid transparent;
             border-bottom: $popup-anchor-arrow-size solid $c-popup-bg;
@@ -133,6 +131,12 @@ $control-offset: 36 + $gs-gutter/2;
                     margin-left: 0 - $popup-anchor-arrow-size * 2;
                 }
             }
+
+            // This margin must come last in the cascade
+            &,
+            .l-header--is-slim & {
+                margin-left: 0 - $popup-anchor-arrow-size;
+            }
         }
     }
 }
@@ -142,6 +146,13 @@ $control-offset: 36 + $gs-gutter/2;
         @include mq($until: tablet) {
             display: none;
         };
+    }
+}
+
+// TODO: Combine parent selector (@at-root) or move context class
+.l-header--is-slim.l-header .popup__toggle {
+    &:after {
+        display: none;
     }
 }
 

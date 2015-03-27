@@ -65,7 +65,7 @@ define([
             if (userData) {
                 userFromCookieCache = {
                     id: userData[0],
-                    primaryEmailAddress: userData[1],
+                    primaryEmailAddress: userData[1], // not sure where this is stored now - not in the cookie any more
                     displayName: userData[2],
                     accountCreatedDate: userData[6],
                     emailVerified: userData[7],

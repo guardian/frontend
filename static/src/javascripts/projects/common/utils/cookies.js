@@ -1,7 +1,7 @@
 define([
-    'lodash/collections/forEach'
+    'common/utils/_'
 ], function (
-    forEach
+    _
 ) {
 
     var documentObject;
@@ -12,23 +12,8 @@ define([
     }
 
     function cleanUp(names) {
-        forEach(names, function (name) {
+        _.forEach(names, function (name) {
             remove(name);
-        });
-    }
-
-    function cleanUpDuplicates(names) {
-
-        // Do not clean if there is no difference from the target domain (the domain we want to store our cookies on).
-        if (getShortDomain() === document.domain) {
-            return;
-        }
-
-        forEach(names, function (name) {
-            if (getCookieValues(name).length > 1) {
-                // This remove is conservative; we know it is safe to remove the cookie with the document domain.
-                remove(name, true);
-            }
         });
     }
 
@@ -82,7 +67,7 @@ define([
             nameEq = name + '=',
             cookies = getDocument().cookie.split(';');
 
-        forEach(cookies, function (cookie) {
+        _.forEach(cookies, function (cookie) {
             while (cookie.charAt(0) === ' ') {
                 cookie = cookie.substring(1, cookie.length);
             }
@@ -115,7 +100,6 @@ define([
 
     return {
         cleanUp: cleanUp,
-        cleanUpDuplicates: cleanUpDuplicates,
         add: add,
         addSessionCookie: addSessionCookie,
         addForMinutes: addForMinutes,

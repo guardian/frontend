@@ -1,23 +1,26 @@
-/* globals _ */
 define([
     'config',
     'knockout',
+    'underscore',
     'models/collections/collection',
     'modules/vars',
     'utils/fetch-lastmodified',
     'utils/human-time',
     'utils/mediator',
     'utils/presser',
+    'utils/sparklines',
     'utils/update-scrollables'
 ], function (
     pageConfig,
     ko,
+    _,
     Collection,
     vars,
     lastModified,
     humanTime,
     mediator,
     presser,
+    sparklines,
     updateScrollables
 ) {
     function Front (params) {
@@ -33,6 +36,8 @@ define([
         this.listeners = listeners;
         this.mode = ko.observable(params.mode || 'draft');
         this.flattenGroups = ko.observable(params.mode === 'treats');
+        this.maxArticlesInHistory = this.confirmSendingAlert() ? 20 : 5;
+        this.controlsVisible = ko.observable(false);
 
         this.front.subscribe(this.onFrontChange.bind(this));
         this.mode.subscribe(this.onModeChange.bind(this));
@@ -73,6 +78,11 @@ define([
                 presser.pressDraft(this.front());
             }
         };
+
+        this.isControlsVisible = ko.observable(sparklines.isEnabled());
+        this.controlsText = ko.pureComputed(function () {
+            return 'Sparklines: ' + this.sparklinesOptions().hours + 'h';
+        }, this);
 
         this.ophanPerformances = ko.pureComputed(function () {
             return vars.CONST.ophanFrontBase + encodeURIComponent('/' + this.front());
@@ -132,10 +142,21 @@ define([
         this.setIntervals = [];
         this.setTimeouts = [];
         this.refreshCollections(vars.CONST.collectionsPollMs || 60000);
-        this.refreshSparklines(vars.CONST.sparksRefreshMs || 60000);
         this.refreshRelativeTimes(vars.CONST.pubTimeRefreshMs || 60000);
 
         this.load(frontId);
+
+        this.sparklinesOptions = ko.observable({
+            hours: 1,
+            interval: 10
+        });
+        this.setSparklines = function (hours, interval) {
+            this.sparklinesOptions({
+                hours: hours,
+                interval: interval
+            });
+        };
+        sparklines.subscribe(this);
         mediator.emit('front:loaded', this);
     }
 
@@ -219,16 +240,6 @@ define([
             });
         }, period));
     };
-    Front.prototype.refreshSparklines = function (period) {
-        var length = this.collections().length || 1, model = this;
-        this.setIntervals.push(setInterval(function () {
-            model.collections().forEach(function (list, index) {
-                model.setTimeouts.push(setTimeout(function() {
-                    list.refreshSparklines();
-                }, index * period / length)); // stagger requests
-            });
-        }, period));
-    };
     Front.prototype.refreshRelativeTimes = function (period) {
         var model = this;
         this.setIntervals.push(setInterval(function () {
@@ -299,6 +310,9 @@ define([
             // return 'Sorry, you can only add links to treats.';
             return false;
         }
+        if (this.confirmSendingAlert() && item.group && (item.group.items().length !== 1 || item.group.items()[0] !== item)) {
+            return 'You can only have one article in this collection.';
+        }
     };
 
     Front.prototype.dispose = function () {
@@ -309,6 +323,7 @@ define([
         _.each(this.setTimeouts, function (timeout) {
             clearTimeout(timeout);
         });
+        sparklines.unsubscribe(this);
         mediator.emit('front:disposed', this);
     };
 

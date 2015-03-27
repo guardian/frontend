@@ -3,7 +3,6 @@
 
 @sectionHeading = {
 
-
     <div class="discussion__heading">
 
         <div class="container__meta">
@@ -48,11 +47,7 @@
                         aria-haspopup="true" aria-controls="comments-pagesize-popup">Show <span class="js-comment-pagesize">25</span></button>
 
                 <ul id="comments-pagesize-popup" class="popup popup__group popup--comments-pagesize is-off">
-                @List("25", "50", "100").map { value =>
-                    <li class="popup__item">
-                        <button class="u-button-reset popup__action" data-pagesize="@value" data-link-name="comments-pagesize-@value">@value</button>
-                    </li>
-                }
+                @pagesizePopUp
                 </ul>
             </div>
         }
@@ -75,6 +70,16 @@
 
     </div>
 
+}
+
+@pagesizePopUp = {
+    @defining(if (DiscussionAllPageSizeSwitch.isSwitchedOn) List("25", "50", "100", "All") else List("25", "50", "100")) { pages =>
+        @pages.map { value =>
+            <li class="popup__item">
+                <button class="u-button-reset popup__action" data-pagesize="@value" data-link-name="comments-pagesize-@value">@value</button>
+            </li>
+        }
+    }
 }
 
 @if(isCommentable) {
@@ -115,7 +120,7 @@
 
                         <div class="discussion__comment-box discussion__comment-box--bottom js-discussion-comment-box--bottom"></div>
 
-                        <button class="discussion__show-button button--show-more button button--large button--primary js-discussion-show-button">
+                        <button class="discussion__show-button button--show-more button button--large button--primary js-discussion-show-button" data-link-name="more-comments">
                             <i class="i i-plus-white"></i>
                             View more comments
                         </button>
@@ -138,7 +143,7 @@
                             <h2 class="container__meta__title">Comments</h2>
                         </div>
                     </div>
-                    <div class="discussion__disabled-msg">Discussion is currently unavailable.</div>
+                    <div class="discussion__disabled-msg">Comments are currently undergoing scheduled maintenance but will be back again shortly.</div>
                 </div>
             </div>
         </div>
