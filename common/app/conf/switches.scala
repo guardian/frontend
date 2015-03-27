@@ -295,6 +295,10 @@ object Switches {
     "If this switch is on, Apple ads will appear on the culture front during active periods.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 1))
 
+  val AdImpressionCountingSwitch = Switch("Commercial", "ad-impression-counting",
+    "If this switch is on, ad impression counts will be kept in Cloudwatch.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 15))
+
   // Monitoring
 
   val OphanSwitch = Switch("Monitoring", "ophan",
@@ -483,6 +487,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 18)
   )
 
+  val ABMtStickyNav = Switch("A/B Tests", "ab-mt-sticky-nav",
+    "Top navigation and top ad slot are sticky.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
+  )
+
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
     "Switch for the UK Network Front heatmap test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
@@ -496,6 +505,11 @@ object Switches {
   val ABRegister = Switch("A/B Tests", "ab-register",
     "Switch for the Register A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 1)
+  )
+
+  val ABRegisterPopup = Switch("A/B Tests", "ab-register-popup",
+    "Switch for the Register Popup A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 8)
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",

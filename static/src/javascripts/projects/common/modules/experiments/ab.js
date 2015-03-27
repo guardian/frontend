@@ -10,9 +10,11 @@ define([
     'common/modules/experiments/tests/mt-master',
     'common/modules/experiments/tests/signed-out',
     'common/modules/experiments/tests/register',
+    'common/modules/experiments/tests/register-popup',
     'common/modules/experiments/tests/mt-top-below-nav',
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/mt-top-below-first-container',
+    'common/modules/experiments/tests/mt-sticky-nav',
     'common/modules/experiments/tests/across-the-country'
 ], function (
     raven,
@@ -26,9 +28,11 @@ define([
     MtMaster,
     SignedOut,
     Register,
+    RegisterPopup,
     MtTopBelowNav,
     HeatMap,
     MtTopBelowFirstContainer,
+    MtStickyNav,
     AcrossTheCountry
 ) {
 
@@ -39,9 +43,11 @@ define([
             new MtMaster(),
             new SignedOut(),
             new Register(),
+            new RegisterPopup(),
             new MtTopBelowNav(),
             new HeatMap(),
             new MtTopBelowFirstContainer(),
+            new MtStickyNav(),
             new AcrossTheCountry()
         ],
         participationsKey = 'gu.ab.participations';

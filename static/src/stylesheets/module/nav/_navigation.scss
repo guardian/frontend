@@ -864,18 +864,19 @@ $burger-width: 16px;
 }
 
 /**
- * Signed Out Popup styling
+ * Popups with text content
  */
 
-$signedout-arrow-size: $gs-gutter / 2;
-$signedout-padding: $gs-gutter / 3;
+$popup-text-arrow-size: $gs-gutter / 2;
+$popup-text-padding: $gs-gutter / 3;
 
-.popup.popup--signed-out {
+.popup--text {
     left: 0 !important;
     width: gs-span(3);
-    padding: $signedout-padding $gs-gutter $signedout-padding $signedout-padding;
     color: colour(neutral-1);
     line-height: 1.4;
+    // Clear floated child (toggle)
+    @include clearfix;
 
     &:before {
         content: '';
@@ -884,16 +885,59 @@ $signedout-padding: $gs-gutter / 3;
         height: 0;
         border-top: 0;
         position: absolute;
-        left: 30%;
-        margin-left: 0 - $signedout-arrow-size;
-        border-left: $signedout-arrow-size solid transparent;
-        border-right: $signedout-arrow-size solid transparent;
-        border-bottom: $signedout-arrow-size solid colour(neutral-8);
+        left: 18px;
+        margin-left: 0 - $popup-text-arrow-size;
+        border-left: $popup-text-arrow-size solid transparent;
+        border-right: $popup-text-arrow-size solid transparent;
+        border-bottom: $popup-text-arrow-size solid colour(neutral-8);
         top: -10px;
     }
 }
 
-.popup--signed-out__link {
+.popup--text__toggle {
+    float: right;
+    // Override .u-button-reset
+    width: auto;
+    position: relative;
+    z-index: 1;
+    margin-top: $popup-text-padding;
+    margin-right: $popup-text-padding;
+}
+
+.popup--text__toggle__icon {
+    fill: colour(neutral-2);
+
+    svg {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+.popup--text__content {
+    padding: $popup-text-padding;
+}
+
+.popup--text__content__blockquote {
+    margin-bottom: $gs-baseline / 2;
+
+    &:before {
+        // FIXME: Objects (quoted) should come before components (popup--text__content__blockquote)
+        width: 24px !important;
+        height: 15px !important;
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
+.popup--text__content__blockquote__citation {
+    color: hsl(0, 0%, 50%);
+}
+
+// Signed out
+
+.popup--text--signed-out__link {
     position: absolute;
     top: 0;
     right: 0;
@@ -901,20 +945,35 @@ $signedout-padding: $gs-gutter / 3;
     left: 0;
 }
 
-.popup--signed-out__highlight {
+.popup--text--signed-out__highlight {
     color: colour(news-main-1);
     text-decoration: underline;
 }
 
-.popup__toggle-icon {
-    position: absolute;
-    top: $signedout-padding;
-    right: $signedout-padding;
-    z-index: 10;
-    fill: colour(neutral-2);
+// Register
 
-    svg {
-        width: 12px;
-        height: 12px;
+.popup--text--register {
+    width: gs-span(4);
+    @include transition(opacity .3s ease);
+    opacity: 0;
+}
+
+.popup--text--register__content {
+    p:last-child {
+        @include fs-textSans(4);
+        // Unset, set by fs-textSans mixin
+        line-height: inherit;
+        margin-bottom: 0;
     }
+}
+
+.popup--text--quote__image {
+    float: right;
+    // Appear below the close button
+    clear: right;
+    // Magic number, relative to font sizing.
+    height: 119px;
+    // Mask the white space either side of the image
+    margin-left: -19px;
+    margin-right: -19px;
 }

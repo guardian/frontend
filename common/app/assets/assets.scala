@@ -127,6 +127,14 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
   }
 
   object js {
+
+     def jspmFile(section: String): Option[String] = {
+       section match {
+         case "crosswords" => Some("bundles/app.js")
+         case _ => None
+       }
+     }
+
     lazy val curl: String =
       RelativePathEscaper.escapeLeadingDotPaths(
         IOUtils.toString(AssetFinder(s"assets/curl-domReady.js"))
