@@ -1,9 +1,10 @@
 package model.commercial
 
-sealed trait AdSlot {
-  val name: String
-}
+sealed trait AdSlot
 
-case object inline2 extends AdSlot {
-  override val name: String = "dfp-ad--inline2"
-}
+case object TopAboveNav extends AdSlot
+case object Top extends AdSlot
+case object Inline1 extends AdSlot
+case object Inline2 extends AdSlot
+case object Inline3 extends AdSlot
+case object Right extends AdSlot

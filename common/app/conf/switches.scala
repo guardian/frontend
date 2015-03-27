@@ -299,6 +299,10 @@ object Switches {
     "If this switch is on, Apple ads will appear on the culture front during active periods.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 1))
 
+  val AdImpressionCountingSwitch = Switch("Commercial", "ad-impression-counting",
+    "If this switch is on, ad impression counts will be kept in Cloudwatch.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 15))
+
   // Monitoring
 
   val OphanSwitch = Switch("Monitoring", "ophan",
