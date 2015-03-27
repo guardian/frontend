@@ -1,14 +1,18 @@
 /* jscs:disable disallowDanglingUnderscores */
 define([
+    'common/utils/$',
     'fastdom',
     'qwery',
     'bonzo',
+    'bean',
     'Promise',
     'common/utils/_'
 ], function (
+    $,
     fastdom,
     qwery,
     bonzo,
+    bean,
     Promise,
     _
 ) {
@@ -80,6 +84,34 @@ define([
         return filtered.valueOf();
     }
 
+    function isImageLoaded(img) {
+        if (!img.complete) {
+            return false;
+        }
+        if (typeof img.naturalWidth !== 'undefined' && img.naturalWidth === 0) {
+            return false;
+        }
+        return true;
+    }
+
+    function onImagesLoaded() {
+        var images = $('.js-article__body img');
+        return new Promise(function (resolve) {
+            var imgLoadedPromises,
+                notLoaded = _.reject(images, isImageLoaded);
+            if (notLoaded.length === 0) {
+                resolve();
+            } else {
+                imgLoadedPromises = _.map(notLoaded, function (img) {
+                    return new Promise(function (imgResolve) {
+                        bean.on(img, 'load', imgResolve);
+                    });
+                });
+                Promise.all(imgLoadedPromises).then(resolve);
+            }
+        });
+    }
+
     // getParaWithSpace returns a paragraph that satisfies the given/default rules:
     function getParaWithSpace(rules, debug) {
         var bodyBottom, paraElems, slots;
@@ -87,28 +119,30 @@ define([
 
         // get all immediate children
         return new Promise(function (resolve) {
-            fastdom.read(function () {
-                bodyBottom = qwery(bodySelector)[0].offsetHeight;
-                paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
+            onImagesLoaded().then(function () {
+                fastdom.read(function () {
+                    bodyBottom = qwery(bodySelector)[0].offsetHeight;
+                    paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
 
-                if (debug) { // reset any previous debug messages
-                    fastdom.write(function () {
-                        bonzo(paraElems.pluck('element').valueOf())
-                            .attr('data-spacefinder-msg', '')
-                            .removeClass('spacefinder--valid')
-                            .removeClass('spacefinder--error');
-                    });
-                }
+                    if (debug) { // reset any previous debug messages
+                        fastdom.write(function () {
+                            bonzo(paraElems.pluck('element').valueOf())
+                                .attr('data-spacefinder-msg', '')
+                                .removeClass('spacefinder--valid')
+                                .removeClass('spacefinder--error');
+                        });
+                    }
 
-                slots = _enforceRules(paraElems, rules, bodyBottom, debug);
+                    slots = _enforceRules(paraElems, rules, bodyBottom, debug);
 
-                if (debug) {
-                    fastdom.write(function () {
-                        bonzo(_.pluck(slots, 'element')).addClass('spacefinder--valid');
-                    });
-                }
+                    if (debug) {
+                        fastdom.write(function () {
+                            bonzo(_.pluck(slots, 'element')).addClass('spacefinder--valid');
+                        });
+                    }
 
-                resolve(slots.length ? slots[0].element : undefined);
+                    resolve(slots.length ? slots[0].element : undefined);
+                });
             });
         });
     }
