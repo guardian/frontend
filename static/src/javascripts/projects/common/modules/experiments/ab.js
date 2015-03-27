@@ -6,6 +6,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
+    'common/modules/experiments/tests/identity-social-oauth',
     'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/mt-master',
     'common/modules/experiments/tests/signed-out',
@@ -24,6 +25,7 @@ define([
     store,
     mvtCookie,
     HighCommercialComponent,
+    IdentitySocialOAuth,
     KruxAudienceScience,
     MtMaster,
     SignedOut,
@@ -39,6 +41,7 @@ define([
     var ab,
         TESTS = [
             new HighCommercialComponent(),
+            new IdentitySocialOAuth(),
             new KruxAudienceScience(),
             new MtMaster(),
             new SignedOut(),
