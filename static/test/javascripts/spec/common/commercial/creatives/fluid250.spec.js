@@ -48,7 +48,7 @@ define([
                 layerTwoBGPosition: 'left top',
                 layerThreeBGPosition: 'left top'
             }).create();
-            fastdom.defer(function () {
+            fastdom.defer(3, function () {
                 expect(qwery('.fluid250_video--vert-pos-top', '.ad-slot').length).toBe(1);
                 expect(qwery('.fluid250_video--horiz-pos-left', '.ad-slot').length).toBe(1);
             });
