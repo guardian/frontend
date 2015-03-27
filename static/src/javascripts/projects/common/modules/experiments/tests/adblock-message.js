@@ -1,22 +1,18 @@
 define([
     'common/utils/detect',
     'common/utils/template',
-
     'common/modules/ui/message',
-
     'text!common/views/donot-use-adblock.html'
 ], function (
     detect,
     template,
-
     Message,
-
     doNotUseAdblockTemplate
 ) {
     return function () {
         this.id = 'AdBlockMessage';
-        this.start = '2014-12-23'; //TODO
-        this.expiry = '2015-02-01'; //TODO
+        this.start = '2015-03-27';
+        this.expiry = '2015-04-27';
         this.author = 'Zofia Korcz';
         this.description = 'Test if the users will disable adblock on our site';
         this.audience = 0.1;
@@ -32,13 +28,9 @@ define([
 
         this.variants = [
             {
-                id: 'control',
-                test: function () { }
-            },
-            {
-                id: 'show',
+                id: 'variant',
                 test: function () {
-                    var adblockLink = 'https://www.theguardian.com/',//TODO, also text in template and switches to off
+                    var adblockLink = 'https://membership.theguardian.com/about/supporter',
                         adblockMessage;
 
                     if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse()) {
