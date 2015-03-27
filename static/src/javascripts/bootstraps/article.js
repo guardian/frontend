@@ -5,6 +5,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/url',
     'common/modules/article/rich-links',
     'common/modules/article/open-module',
     'common/modules/article/truncate',
@@ -20,6 +21,7 @@ define([
     config,
     detect,
     mediator,
+    urlutils,
     richLinks,
     openModule,
     truncate,
@@ -51,6 +53,16 @@ define([
                 });
             },
 
+            initFormStack: function () {
+                var allvars = urlutils.getUrlVars();
+
+                if (allvars.CMP) {
+                    $('.element-formstack').each(function (el) {
+                        el.src = el.src + '?CMP=' + allvars.CMP;
+                    });
+                }
+            },
+
             initTruncateAndTwitter: function () {
                 // Ensure that truncation occurs before the tweet upgrading.
                 truncate();
@@ -77,6 +89,7 @@ define([
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
             modules.initSelectionSharing();
+            modules.initFormStack();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             openModule.init();

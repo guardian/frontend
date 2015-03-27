@@ -304,9 +304,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     // But does not change across environments
     // See https://issues.scala-lang.org/browse/SI-6723 for why we don't always use ->
     lazy val config: Map[String, String] = Map(
-      "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
+      "googleSearchUrl" -> "//www.google.co.uk/cse/cse.js",
       "idWebAppUrl" -> id.webappUrl,
       "idApiUrl" -> id.apiRoot,
+      "idOAuthUrl" -> id.oauthUrl,
       "discussionApiRoot" -> discussion.apiRoot,
       ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
