@@ -13,9 +13,9 @@ class CommercialTestSuite extends Suites (
   new jobs.JobTest,
   new masterclasses.EventbriteMasterClassFeedParsingTest,
   new masterclasses.SingleEventbriteMasterClassParsingTest,
-  new money.CreditCardsApiTest,
-  new money.CurrentAccountsApiTest,
-  new money.SavingsApiTest,
+  new money.CreditCardsFeedTest,
+  new money.CurrentAccountsFeedTest,
+  new money.SavingsFeedTest,
   new soulmates.SoulmatesFeedTest,
   new travel.TravelOffersApiTest,
   new LookupTest

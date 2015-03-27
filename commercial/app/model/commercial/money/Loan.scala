@@ -26,7 +26,7 @@ case class LoanExample(amount: Double,
                        interestRate: Double)
 
 
-object LoansApi extends MoneySupermarketApi[Loan] {
+object LoansFeed extends MoneySupermarketFeed[Loan] {
 
   protected val adTypeName = "Loans"
 
@@ -66,5 +66,5 @@ object LoansApi extends MoneySupermarketApi[Loan] {
 
 
 object LoansAgent extends MoneyAgent[Loan] {
-  protected def loadProducts() = LoansApi.loadAds()
+  protected def loadProducts() = LoansFeed.loadAds()
 }

@@ -53,7 +53,7 @@ case class CreditExample(amount: Double,
 }
 
 
-trait CreditCardsApi extends MoneySupermarketApi[CreditCard] {
+trait CreditCardsFeed extends MoneySupermarketFeed[CreditCard] {
 
   def parse(xml: Elem): Seq[CreditCard] = {
 
@@ -92,31 +92,31 @@ trait CreditCardsApi extends MoneySupermarketApi[CreditCard] {
 
 package creditCardsApi {
 
-  object BalanceTransfer extends CreditCardsApi {
+  object BalanceTransfer extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Balance Transfer"
     protected lazy val path = "cards/balance-transfer"
   }
-  object Purchase extends CreditCardsApi {
+  object Purchase extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Purchase"
     protected lazy val path = "cards/purchase"
   }
-  object BalanceTransferAndPurchase extends CreditCardsApi {
+  object BalanceTransferAndPurchase extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Balance Transfer and Purchase"
     protected lazy val path = "cards/balance-transfer-and-purchase"
   }
-  object Cashback extends CreditCardsApi {
+  object Cashback extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Cashback"
     protected lazy val path = "cards/cashback"
   }
-  object LowStandardRate extends CreditCardsApi {
+  object LowStandardRate extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Low Standard Rate"
     protected lazy val path = "cards/low-standard-rate"
   }
-  object Rewards extends CreditCardsApi {
+  object Rewards extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Rewards"
     protected lazy val path = "cards/rewards"
   }
-  object LowCredit extends CreditCardsApi {
+  object LowCredit extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Low Credit"
     protected lazy val path = "cards/low-credit"
   }

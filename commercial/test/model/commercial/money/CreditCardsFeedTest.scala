@@ -4,7 +4,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import test.ConfiguredTestSuite
 import scala.xml.XML
 
-@DoNotDiscover class CreditCardsApiTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class CreditCardsFeedTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   private val xmlStr =
     """<Cards xmlns="http://api.moneysupemarket.com"><Product xmlns="">
@@ -119,11 +119,11 @@ import scala.xml.XML
 
   "parse" should "parse Credit Cards from xml feed" in {
 
-    object CreditCardsApi extends CreditCardsApi {
+    object CreditCardsFeed extends CreditCardsFeed {
       protected val adTypeName = "Credit Cards - Test"
       protected lazy val path = "credit-cards/test"
     }
-    val cards = CreditCardsApi.parse(XML.loadString(xmlStr))
+    val cards = CreditCardsFeed.parse(XML.loadString(xmlStr))
 
     cards should be(
       Seq(
