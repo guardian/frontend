@@ -403,6 +403,11 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val FacebookAppLinksSwitch = Switch("Feature", "facebook-applinks",
+    "If this switch is on then shared links on the facebook mobile app will be opened in the native app instead of the mobile browser",
+    safeState = Off, sellByDate = never
+  )
+
   val IdentityFormstackSwitch = Switch("Feature", "id-formstack",
     "If this switch is on, formstack forms will be available",
     safeState = Off, sellByDate = never
