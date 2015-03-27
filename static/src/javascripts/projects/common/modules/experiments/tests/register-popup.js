@@ -33,16 +33,12 @@ define([
             },
             applyMembershipLink = function () {
                 $registerLink.attr('href', $registerLink.attr('href')
-                    + '?returnUrl=' + encodeURIComponent('https://membership.theguardian.com/join/friend/enter-details')
-                    + '&skipConfirmation=true');
+                    + '?skipConfirmation=true'
+                    + '&returnUrl=' + encodeURIComponent('https://membership.theguardian.com/join/friend/enter-details'));
             },
             becomeAMember = function () {
                 $registerText.text('become a member');
                 applyMembershipLink();
-            },
-            onHover = function (toggleFn) {
-                bean.on($register[0], 'mouseenter', toggleFn);
-                bean.on($register[0], 'mouseleave', toggleFn);
             },
             free = function () {
                 $('.brand-bar__item__badge', $register).removeClass('u-h');
@@ -59,23 +55,21 @@ define([
                     show();
                     becomeAMember();
                     free();
-                    applyMembershipLink();
 
-                    var $popup = $('.js-popup-polly-toynbee-quote', $register),
-                        togglePopup = function () {
-                            // FIXME: Find a nicer way to fade in/out whilst toggling
-                            // the display style to none
-                            if ($popup.css('opacity') === '0') {
-                                $popup.toggleClass('u-h');
-                                $popup.css('opacity', '1');
-                            } else {
-                                $popup.css('opacity', '');
-                                setTimeout(function () {
-                                    $popup.toggleClass('u-h');
-                                }, 300);
-                            }
-                        };
-                    onHover(togglePopup);
+                    var $popup = $('.js-popup-polly-toynbee-quote', $register);
+
+                    // FIXME: Find a nicer way to fade in/out whilst toggling
+                    // the display style to none
+                    bean.on($register[0], 'mouseenter', function () {
+                        $popup.removeClass('u-h');
+                        $popup.css('opacity', '1');
+                    });
+                    bean.on($register[0], 'mouseleave', function () {
+                        $popup.css('opacity', '');
+                        setTimeout(function () {
+                            $popup.addClass('u-h');
+                        }, 300);
+                    });
                 }
             },
             {
@@ -84,24 +78,21 @@ define([
                     show();
                     becomeAMember();
                     free();
-                    applyMembershipLink();
 
-                    var $popup = $('.js-popup-membership-benefits', $register),
-                        togglePopup = function () {
-                            // FIXME: Find a nicer way to fade in/out whilst toggling
-                            // the display style to none
-                            if ($popup.css('opacity') === '0') {
-                                $popup.toggleClass('u-h');
-                                $popup.css('opacity', '1');
-                            } else {
-                                $popup.css('opacity', '');
-                                setTimeout(function () {
-                                    $popup.toggleClass('u-h');
-                                }, 1000);
-                            }
+                    var $popup = $('.js-popup-membership-benefits', $register);
 
-                        };
-                    onHover(togglePopup);
+                    // FIXME: Find a nicer way to fade in/out whilst toggling
+                    // the display style to none
+                    bean.on($register[0], 'mouseenter', function () {
+                        $popup.removeClass('u-h');
+                        $popup.css('opacity', '1');
+                    });
+                    bean.on($register[0], 'mouseleave', function () {
+                        $popup.css('opacity', '');
+                        setTimeout(function () {
+                            $popup.addClass('u-h');
+                        }, 300);
+                    });
                 }
             }
         ];

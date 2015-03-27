@@ -19,7 +19,8 @@ module.exports = function(config) {
             { pattern: 'common/conf/assets/inline-svgs/**/*.svg', included: false }
         ],
 
-        exclude: [],
+        // FIXME: Temporarily exclude jspm app tests. How to run with SystemJS?
+        exclude: ['static/test/javascripts/spec/common/crosswords/*.spec.js'],
 
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
         reporters: ['progress'],
