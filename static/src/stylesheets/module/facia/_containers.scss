@@ -100,12 +100,12 @@
 
 .fc-container--story-package {
     background-color: colour(news-support-6);
-    border-top: 1px solid #fff;
+    border-top: 1px solid #ffffff;
     margin-bottom: $gs-baseline;
 
     .fc-container__header__title {
         border-top-color: colour(news-support-1);
-        color: #fff;
+        color: #ffffff;
     }
 
 /*
@@ -128,15 +128,15 @@
 
         .fc-item__header,
         .fc-sublink__title {
-            color: #fff !important;
+            color: #ffffff !important;
         }
 
         .fc-sublink__title:before {
-            border-color: #fff !important;
+            border-color: #ffffff !important;
         }
 
         .fc-item__standfirst {
-            color: mix(#fff, colour(news-support-6), 90%) !important;
+            color: mix(#ffffff, colour(news-support-6), 90%) !important;
         }
 
         .fc-item__title--quoted .inline-quote {
