@@ -113,3 +113,13 @@
 }
 
 <meta name="google-site-verification" content="LR-FN6c2gIEUoo3k049w1nxyHykmac5ZE3SaUOiKc30" />
+
+@* Metadata to deep-link into native apps from facebook. http://applinks.org/documentation/ *@
+@if(Switches.FacebookAppLinksSwitch.isSwitchedOn && item.id == "music/2015/mar/26/frankie-knuckles-house-dance-music-elton-john") {
+    <meta property="al:ios:url" content="theguardian://applinks">
+    <meta property="al:ios:app_store_id" content="@Configuration.ios.ukAppId">
+    <meta property="al:ios:app_name" content="The Guardian">
+    <meta property="al:android:url" content="theguardian://applinks">
+    <meta property="al:android:app_name" content="The Guardian">
+    <meta property="al:android:package" content="com.guardian">
+}
