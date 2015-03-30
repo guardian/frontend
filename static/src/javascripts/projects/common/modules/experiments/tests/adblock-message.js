@@ -28,10 +28,9 @@ define([
 
         this.variants = [
             {
-                id: 'variant',
+                id: 'join',
                 test: function () {
-                    var adblockLink = 'https://membership.theguardian.com/about/supporter',
-                        adblockMessage;
+                    var adblockLink = 'https://membership.theguardian.com/about/supporter';
 
                     if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse()) {
                         new Message('adblock', {
@@ -41,7 +40,30 @@ define([
                         }).show(template(
                             doNotUseAdblockTemplate,
                             {
-                                adblockLink: adblockLink
+                                adblockLink: adblockLink,
+                                messageText: 'If you\'re reading the Guardian without ads, why not join the Guardian instead?',
+                                linkText: 'Become a supporter today'
+                            }
+                        ));
+                    }
+                }
+            },
+            {
+                id: 'support',
+                test: function () {
+                    var adblockLink = 'https://membership.theguardian.com/about/supporter';
+
+                    if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse()) {
+                        new Message('adblock', {
+                            pinOnHide: false,
+                            siteMessageLinkName: 'adblock message',
+                            siteMessageCloseBtn: 'hide'
+                        }).show(template(
+                            doNotUseAdblockTemplate,
+                            {
+                                adblockLink: adblockLink,
+                                messageText: 'We notice you\'ve got an ad-blocker switched on. Perhaps you\'d like to support the Guardian another way?',
+                                linkText: 'Become a supporter today'
                             }
                         ));
                     }

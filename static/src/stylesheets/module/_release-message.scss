@@ -1,6 +1,10 @@
 .site-message {
     background: colour(news-default);
     display: block;
+
+    &.site-message--adblock {
+        background: colour(maps-support-3);
+    }
 }
 
 .site-message--banner {
