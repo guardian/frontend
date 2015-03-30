@@ -254,6 +254,17 @@
                             checked: props.priority" />
                         <span class="radio-label">training</span>
 
+                        <label>Canonical container</label>
+                        <select data-bind="
+                            optionsCaption: 'Select a container',
+                            options: collections.items,
+                            optionsText: function (collection) {
+                                return collection.meta.displayName();
+                            },
+                            optionsValue: 'id',
+                            value: props.canonical,
+                            valueAllowUnset: true"></select>
+
                         <div class="tools action-buttons">
                             <span class="tool" data-bind="click: saveProps">Save metadata</span>
                         </div>

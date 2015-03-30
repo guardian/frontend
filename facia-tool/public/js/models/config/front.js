@@ -43,7 +43,8 @@ define([
             'imageHeight',
             'isImageDisplayed',
             'isHidden',
-            'priority']);
+            'priority',
+            'canonical']);
 
         populateObservables(this.props, opts);
 
