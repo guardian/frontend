@@ -293,11 +293,15 @@ object Switches {
 
   val AppleAdNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-network-front",
     "If this switch is on, Apple ads will appear on the network front during active periods.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 1))
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
 
   val AppleAdCultureFrontSwitch = Switch("Commercial", "apple-ads-on-culture-front",
     "If this switch is on, Apple ads will appear on the culture front during active periods.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 1))
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+
+  val AdImpressionCountingSwitch = Switch("Commercial", "ad-impression-counting",
+    "If this switch is on, ad impression counts will be kept in Cloudwatch.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 15))
 
   // Monitoring
 
@@ -333,12 +337,7 @@ object Switches {
 
   val FeedbackLink = Switch("Monitoring", "tech-feedback",
     "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
-    safeState = Off, new LocalDate(2015, 3, 24)
-  )
-
-  val Print = Switch("Print analytics", "print",
-    "decide by now whether enough people are printing stuff to care whether they get a good experience",
-    safeState = Off, new LocalDate(2015, 3, 27)
+    safeState = Off, new LocalDate(2015, 4, 24)
   )
 
   // Features
@@ -402,6 +401,11 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val FacebookAppLinksSwitch = Switch("Feature", "facebook-applinks",
+    "If this switch is on then shared links on the facebook mobile app will be opened in the native app instead of the mobile browser",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
+  )
+
   val IdentityFormstackSwitch = Switch("Feature", "id-formstack",
     "If this switch is on, formstack forms will be available",
     safeState = Off, sellByDate = never
@@ -450,20 +454,20 @@ object Switches {
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 16))
 
-  // A/B Tests
-
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
     "If switched on, any user registrations from a known tor esit node will be logged",
     safeState = On, sellByDate = never)
 
+  // A/B Tests
+
+  val ABIdentitySocialOAuth = Switch("A/B Tests", "ab-id-social-oauth",
+    "Switch to direct users to OAuth social sign-in app.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 25)
+  )
+
   val ABAcrossTheCountry = Switch("A/B Tests", "ab-across-the-country",
     "Tests container placement on the US front",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 19)
-  )
-
-  val ABIdentityBenefits = Switch("A/B Tests", "ab-identity-benefits",
-    "Switch for the Identity benefits A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
   )
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -491,9 +495,14 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 18)
   )
 
+  val ABMtStickyNav = Switch("A/B Tests", "ab-mt-sticky-nav",
+    "Top navigation and top ad slot are sticky.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
+  )
+
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
     "Switch for the UK Network Front heatmap test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 24)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
   val ABSignedOut = Switch("A/B Tests", "ab-signed-out",
@@ -504,6 +513,11 @@ object Switches {
   val ABRegister = Switch("A/B Tests", "ab-register",
     "Switch for the Register A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 1)
+  )
+
+  val ABRegisterPopup = Switch("A/B Tests", "ab-register-popup",
+    "Switch for the Register Popup A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 8)
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",

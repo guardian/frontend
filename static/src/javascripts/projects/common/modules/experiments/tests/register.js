@@ -1,7 +1,9 @@
 define([
-    'common/utils/$'
+    'common/utils/$',
+    'common/modules/identity/api'
 ], function (
-    $
+    $,
+    Id
 ) {
     return function () {
         this.id = 'Register';
@@ -17,7 +19,7 @@ define([
         this.idealOutcome = 'Conversion rate increases';
 
         this.canRun = function () {
-            return true;
+            return !Id.isUserLoggedIn();
         };
 
         var $register = $('.js-register'),
@@ -29,7 +31,8 @@ define([
             },
             applyMembershipLink = function () {
                 $registerLink.attr('href', $registerLink.attr('href')
-                    + '?returnUrl=https://membership.theguardian.com/join/friend/enter-details&skipConfirmation=true');
+                    + '?skipConfirmation=true'
+                    + '&returnUrl=' + encodeURIComponent('https://membership.theguardian.com/join/friend/enter-details'));
             },
             becomeAFriend = function () {
                 $registerText.text('become a friend');

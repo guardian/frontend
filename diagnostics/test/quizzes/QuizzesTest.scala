@@ -8,6 +8,7 @@ class QuizzesTest extends FlatSpec with Matchers {
   "question Aggregator" should "add unseen buckets in the first place" in {
     Quizzes.incrementByIndex(Nil, 0) should be(List(1))
     Quizzes.incrementByIndex(Nil, 1) should be(List(0, 1))
+    Quizzes.incrementByIndex(Nil, 9, 40) should be(List.fill(9)(0) ++ List(1))
   }
 
   "question Aggregator" should "add unseen buckets once we've got going" in {

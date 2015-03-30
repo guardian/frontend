@@ -38,7 +38,7 @@ module.exports = function(grunt, options) {
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
             preserveLicenseComments: false,
-            fileExclusionRegExp: /^bower_components$/
+            fileExclusionRegExp: /^bower_components|es6$/i
         },
         common: {
             options: {
@@ -73,18 +73,6 @@ module.exports = function(grunt, options) {
                             'inlineSvg'
                         ]
                     }
-                ]
-            }
-        },
-        crosswords: {
-            options: {
-                name: 'bootstraps/crosswords',
-                out: options.staticTargetDir + 'javascripts/bootstraps/crosswords.js',
-                exclude: [
-                    'core',
-                    'bootstraps/app',
-                    'text',
-                    'inlineSvg'
                 ]
             }
         },

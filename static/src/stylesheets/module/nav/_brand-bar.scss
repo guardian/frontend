@@ -100,21 +100,6 @@
     }
 }
 
-.brand-bar__item__badge {
-    background: colour(news-accent);
-    // Same as header background
-    color: colour(guardian-brand);
-    padding: 1px $gs-gutter/5;
-    margin-left: $gs-gutter/5;
-    display: none;
-
-    .brand-bar__item--profile & {
-        @include mq(mobileLandscape) {
-            display: inline-block;
-        }
-    }
-}
-
 .brand-bar__item--right {
     @include box-sizing(border-box);
     float: left;
@@ -271,6 +256,30 @@
             .l-header--is-slim & {
                 display: block;
             }
+        }
+    }
+}
+
+.brand-bar__item--register {
+    @include mq($until: mobileLandscape) {
+        display: none;
+    }
+}
+
+.brand-bar__item__badge {
+    background: colour(news-accent);
+    // Same as header background
+    color: colour(guardian-brand);
+    padding: 1px $gs-gutter/5;
+    margin-left: $gs-gutter/5;
+    display: none;
+
+    @include mq(tablet) {
+        display: inline-block;
+
+        // Unset breakpoint
+        .l-header--is-slim & {
+            display: none;
         }
     }
 }

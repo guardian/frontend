@@ -4,6 +4,7 @@ import common.Assets.Assets
 import common.{ExecutionContexts, GuardianConfiguration}
 import filters.RequestLoggingFilter
 import contentapi.{ElasticSearchPreviewContentApiClient, ElasticSearchLiveContentApiClient}
+import implicits.Responses
 import play.api.mvc._
 import play.filters.gzip.GzipFilter
 
@@ -18,9 +19,8 @@ object PreviewContentApi extends ElasticSearchPreviewContentApiClient
 object Static extends Assets(Configuration.assets.path)
 object StaticSecure extends Assets(Configuration.assets.securePath)
 
-object Gzipper extends GzipFilter(
-  shouldGzip = (req, resp) => !resp.headers.get("Content-Type").exists(_.startsWith("image/"))
-)
+import Responses._
+object Gzipper extends GzipFilter(shouldGzip = (_, resp) => !resp.isImage)
 
 object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicits.Requests {
 

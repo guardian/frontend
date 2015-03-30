@@ -34,7 +34,7 @@
     "handlebars": "2.0.0",
     "jit-grunt": "0.8.0",
     "jsonfile": "2.0.0",
-    "jspm": "0.13.4",
+    "jspm": "0.14.0",
     "karma": "0.12.31",
     "karma-chrome-launcher": "0.1.7",
     "karma-coffee-preprocessor": "0.2.1",
@@ -56,5 +56,24 @@
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
+  },
+  "jspm": {
+    "directories": {
+      "baseURL": "static/src",
+      "lib": "static/src",
+      "packages": "static/src/jspm_packages"
+    },
+    "configFile": "static/src/jspm-config.js",
+    "dependencies": {
+      "EventEmitter": "github:Wolfy87/EventEmitter@~4.2.6",
+      "bean": "npm:bean@^1.0.15",
+      "bonzo": "npm:bonzo@^1.4.0",
+      "domready": "npm:domready@^1.0.7",
+      "lodash": "npm:lodash@~2.4.1",
+      "qwery": "npm:qwery@^4.0.0",
+      "raven": "github:getsentry/raven-js@~1.1.16",
+      "react": "npm:react@~0.11.2",
+      "reqwest": "github:ded/reqwest@1.1.5"
+    }
   }
 }

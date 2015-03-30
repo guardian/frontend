@@ -15,7 +15,7 @@
         @fragments.inlineSvg(s"weather-${weather.WeatherIcon}", "weather", Seq("weather__icon","js-weather-icon"), Some(weather.WeatherText))<span class="u-h">@weather.WeatherText</span>
     </div>
     <button class="weather__toggle-forecast meta-button js-toggle-forecast mobile-only" data-link-name="weather-toggle-forecast"
-    href="#toggle-forecast"><span class="u-h">Toggle forecast</span><i class="i i-arrow-grey-large weather__toggle-icon"></i>
+    href="#toggle-forecast"><span class="u-h">Toggle forecast</span>@fragments.inlineSvg("arrow", "icon", List("weather__toggle-icon"))
     </button>
     <ul class="js-weather-forecast forecast"></ul>
     <div class="weather__location">

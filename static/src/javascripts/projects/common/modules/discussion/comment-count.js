@@ -75,7 +75,7 @@ define([
                     format = $node.data('commentcount-format');
                     html = template(templates[format] || defaultTemplate, {
                         url: url,
-                        icon: svgs('commentCount16icon'),
+                        icon: svgs('commentCount16icon', ['inline-tone-fill']),
                         count: formatters.integerCommas(c.count),
                         label: hideLabel ? '' : commentOrComments
                     });
