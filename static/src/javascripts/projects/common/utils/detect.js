@@ -9,7 +9,7 @@
 define([
     'common/utils/_',
     'common/utils/mediator',
-    'common/utils/$',
+    'common/utils/$'
 ], function (
     _,
     mediator,
@@ -407,7 +407,8 @@ define([
         $.create('<div class="ad_unit"></div>').appendTo(document.body);
         displayed = $('.ad_unit').css('display');
         $('.ad_unit').remove();
-        return displayed === 'none' ? true: false;
+
+        return displayed === 'none' ? true : false;
     }
 
     return {
