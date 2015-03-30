@@ -35,10 +35,12 @@ package object layout {
   } yield Rows(width, columns, rows, layout)
 
   val splitColumnGen = for {
-    topLayout <- itemLayoutGen
-    bottomLayout <- itemLayoutGen
     width <- Gen.choose(1, 4)
-  } yield SplitColumn(width, topLayout, bottomLayout)
+    topLayoutRows <- Gen.choose(1, 3)
+    topLayout <- itemLayoutGen
+    bottomLayoutRows <- Gen.choose(1, 3)
+    bottomLayout <- itemLayoutGen
+  } yield SplitColumn(width, topLayoutRows, topLayout, bottomLayoutRows, bottomLayout)
 
   val mpuGen = for {
     width <- Gen.choose(1, 4)
