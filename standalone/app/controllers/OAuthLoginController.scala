@@ -110,11 +110,11 @@ object OAuthLoginController extends Controller with ExecutionContexts with impli
 object AuthCookie extends Logging {
 
   private val cookieName = "GU_PV_AUTH"
-  private val thirtyDaysInSeconds: Int = 2592000
+  private val oneDayInSeconds: Int = 86400
 
   def from(id: UserIdentity): Option[Cookie] = {
-    val idWith30DayExpiry = id.copy(exp = (System.currentTimeMillis() / 1000) + thirtyDaysInSeconds )
-    Some(Cookie(cookieName,  Crypto.encryptAES(Json.toJson(idWith30DayExpiry).toString), Some(thirtyDaysInSeconds)))
+    val idWith30DayExpiry = id.copy(exp = (System.currentTimeMillis() / 1000) + oneDayInSeconds )
+    Some(Cookie(cookieName,  Crypto.encryptAES(Json.toJson(idWith30DayExpiry).toString), Some(oneDayInSeconds)))
     .filter(_ => PreviewAuthByCookie.isSwitchedOn)
   }
 
