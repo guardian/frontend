@@ -70,5 +70,7 @@ object LoansFeed extends MoneySupermarketFeed[Loan] {
 
 
 object LoansAgent extends MoneyAgent[Loan] {
-  protected def loadProducts() = LoansFeed.loadAds()
+  protected def loadProducts() = {
+    LoansFeed.loadAds() map (_.sortBy(loan => (loan.apr, loan.name)).take(5))
+  }
 }
