@@ -1,8 +1,9 @@
+package test
+
 import org.jsoup.Jsoup
+import play.api.libs.json._
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
-import play.api.test._
-import test.{ConfiguredTestSuite, TestRequest}
 
 @DoNotDiscover class ArticleMetaDataTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
@@ -13,7 +14,16 @@ import test.{ConfiguredTestSuite, TestRequest}
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
 
-    body.getElementsByAttributeValue("data-schema", "organization")
+    val script = body.getElementsByAttributeValue("data-schema", "organization")
+    script.size() should be(1)
+
+    val data: JsValue = Json.parse(script.first().html())
+    (data \ "name").as[String] should be("The Guardian")
+    (data \ "logo").as[String] should include("152x152.png")
+
+    val socialNetworks = (data \ "sameAs").as[List[String]]
+
+    socialNetworks.size should be(4)
   }
 
 }
