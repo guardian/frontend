@@ -369,20 +369,20 @@ var Crossword = React.createClass({
             isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
 
         // Deep equal version of _.intersection
-        let findIntersectingCells = (array1, array2) =>
+        const findIntersectingCells = (array1, array2) =>
             array1.filter(cell1 => array2.some(cell2 => _.isEqual(cell1, cell2)));
 
-        let focussedCells = focussed ? helpers.cellsForEntry(focussed) : [];
-        let entryHasIntersectingCell = entry => {
-            let cells = helpers.cellsForEntry(entry);
-            let intersecting = findIntersectingCells(cells, focussedCells);
+        const focussedCells = focussed ? helpers.cellsForEntry(focussed) : [];
+        const entryHasIntersectingCell = entry => {
+            const cells = helpers.cellsForEntry(entry);
+            const intersecting = findIntersectingCells(cells, focussedCells);
             return !! intersecting.length;
         };
 
-        let otherEntries = _.difference(this.props.data.entries, focussed ? [focussed] : []);
-        let intersectingEntries = otherEntries.filter(entryHasIntersectingCell);
+        const otherEntries = _.difference(this.props.data.entries, focussed ? [focussed] : []);
+        const intersectingEntries = otherEntries.filter(entryHasIntersectingCell);
 
-        let cellIntersectsFocussedEntry = (x, y) =>
+        const cellIntersectsFocussedEntry = (x, y) =>
             intersectingEntries.some(entry => helpers.entryHasCell(entry, x, y));
 
         return React.DOM.div({
