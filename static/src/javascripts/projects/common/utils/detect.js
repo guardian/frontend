@@ -8,10 +8,12 @@
 
 define([
     'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/utils/$'
 ], function (
     _,
-    mediator
+    mediator,
+    $
 ) {
 
     var supportsPushState,
@@ -399,6 +401,16 @@ define([
         return window.guardian.isModernBrowser;
     }
 
+    function adblockInUse() {
+        var displayed = '';
+
+        $.create('<div class="ad_unit"></div>').appendTo(document.body);
+        displayed = $('.ad_unit').css('display');
+        $('.ad_unit').remove();
+
+        return displayed === 'none' ? true : false;
+    }
+
     return {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
@@ -421,7 +433,8 @@ define([
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
         fontHinting: fontHinting(),
-        isModernBrowser: isModernBrowser
+        isModernBrowser: isModernBrowser,
+        adblockInUse: adblockInUse
     };
 
 });
