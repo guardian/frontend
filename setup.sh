@@ -3,6 +3,7 @@ set -e
 
 readonly SYSTEM=$(uname -s)
 EXTRA_STEPS=()
+BASEDIR=$(dirname $0)
 
 linux() {
   [[ $SYSTEM == 'Linux' ]]
@@ -133,10 +134,8 @@ install_libpng() {
   fi
 }
 
-install_packages() {
-  npm install
-  bundle
-  ./node_modules/.bin/jspm install
+install_dependencies() {
+  $BASEDIR/install-dependencies.sh
 }
 
 compile() {
@@ -166,7 +165,7 @@ main() {
   install_ruby
   install_bundler
   install_libpng
-  install_packages
+  install_dependencies
   compile
   report
 }
