@@ -128,6 +128,7 @@ define([
                     });
                 });
                 Promise.all(imgLoadedPromises).then(resolve);
+                window.setTimeout(resolve, 10000); // timeout after 10s and resolve
             }
         });
     }
