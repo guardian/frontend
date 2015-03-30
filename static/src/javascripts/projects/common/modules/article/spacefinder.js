@@ -105,13 +105,7 @@ define([
     }
 
     function isImageLoaded(img) {
-        if (!img.complete) {
-            return false;
-        }
-        if (typeof img.naturalWidth !== 'undefined' && img.naturalWidth === 0) {
-            return false;
-        }
-        return true;
+        return img.complete;
     }
 
     function onImagesLoaded() {
