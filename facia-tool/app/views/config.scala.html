@@ -152,11 +152,9 @@
                 <input type="checkbox" data-bind="
                     checked: meta.uneditable" />
 
-                <label>Importance</label>
-                <select data-bind="options: props.optionsImportance,
-                    optionsCaption: 'default',
-                    value: meta.importance,
-                    valueAllowUnset: true"></select>
+                <label>Important</label>
+                <input type="checkbox" data-bind="
+                    checked: meta.important" />
 
                 <div class="tools">
                     <button class="tool" data-bind="
