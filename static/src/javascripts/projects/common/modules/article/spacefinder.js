@@ -22,6 +22,7 @@ define([
         defaultRules = { // these are written for adverts
             minAbove: 250, // minimum from para to top of article
             minBelow: 300, // minimum from (top of) para to bottom of article
+            clearContentMeta: 50, // vertical px to clear the content meta element (byline etc) by. 0 to ignore
             selectors: { // custom rules using selectors. format:
                 //'.selector': {
                 //   minAbove: <min px above para to bottom of els matching selector>,
@@ -52,13 +53,19 @@ define([
     }
 
     function _debugErrPara(p, message) {
-        bonzo(p)
-            .addClass('spacefinder--error')
-            .attr('data-spacefinder-msg', message);
+        fastdom.write(function () {
+            bonzo(p)
+                .addClass('spacefinder--error')
+                .attr('data-spacefinder-msg', message);
+        });
     }
 
     function _enforceRules(slots, rules, bodyHeight, debug) {
-        var filtered = _(slots).filter(function (p) {
+
+        var filtered = _(slots);
+
+        // enforce minAbove and minBelow rules
+        filtered = filtered.filter(function (p) {
             var farEnoughFromTopOfBody = p.top >= rules.minAbove,
                 farEnoughFromBottomOfBody = p.top + rules.minBelow <= bodyHeight,
                 valid = farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
@@ -70,6 +77,18 @@ define([
 
             return valid;
         });
+
+        // enforce content meta rule
+        if (rules.clearContentMeta) {
+            var contentMeta = _mapElementToDimensions(qwery('.js-content-meta')[0]);
+            filtered = filtered.filter(function(p) {
+                var valid = p.top > (contentMeta.bottom + rules.clearContentMeta);
+                if (debug && !valid) { _debugErrPara(p.element, 'too close to content meta'); }
+                return valid;
+            });
+        }
+
+        // enforce selector rules
         _(rules.selectors).forOwn(function (params, selector) {
             var relevantElems = _(qwery(bodySelector + selector)).map(_mapElementToDimensions);
 
