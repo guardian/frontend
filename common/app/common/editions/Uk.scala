@@ -40,6 +40,7 @@ object Uk extends Edition(
     Seq(
       NavItem(home),
       NavItem(uk),
+      NavItem(election2015),
       NavItem(world, Seq(europeNews, us, americas, asia, australia, africa, middleEast)),
       NavItem(sport, sportLocalNav),
       NavItem(football, footballNav),
@@ -50,7 +51,6 @@ object Uk extends Edition(
       NavItem(fashion),
       NavItem(environment, Seq(cities, globalDevelopment)),
       NavItem(technology),
-      NavItem(election2015),
       NavItem(money, Seq(property, savings, borrowing, workAndCareers)),
       NavItem(travel, Seq(uktravel, europetravel, usTravel)),
       NavItem(science),
@@ -67,6 +67,7 @@ object Uk extends Edition(
   override val briefNav: Seq[NavItem] = Seq(
     NavItem(home),
     NavItem(uk),
+    NavItem(election2015),
     NavItem(world, Seq(europeNews, us, americas, asia, australia, africa, middleEast)),
     NavItem(sport, sportLocalNav),
     NavItem(football, footballNav),
@@ -77,7 +78,6 @@ object Uk extends Edition(
     NavItem(fashion),
     NavItem(environment, Seq(cities, globalDevelopment)),
     NavItem(technology),
-    NavItem(election2015),
     NavItem(travel, Seq(uktravel, europetravel, usTravel))
   )
 }
