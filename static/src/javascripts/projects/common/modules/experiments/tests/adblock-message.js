@@ -14,10 +14,10 @@ define([
         this.start = '2015-03-27';
         this.expiry = '2015-04-27';
         this.author = 'Zofia Korcz';
-        this.description = 'Test if the users will disable adblock on our site';
+        this.description = 'Test if the users will disable adblock or at least click support link';
         this.audience = 0.1;
         this.audienceOffset = 0;
-        this.successMeasure = 'Users will disable adblock on theguardian site';
+        this.successMeasure = 'Users will disable adblock or at least click support link';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = 'adblock message, hide, read more';
         this.idealOutcome = 'Users will disable adblock on theguardian site';

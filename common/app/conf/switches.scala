@@ -518,7 +518,7 @@ object Switches {
 
   val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block-message",
     "Switch for the Adblock Message A/B test.",
-    safeState = Off, sellByDate = never
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
