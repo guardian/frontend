@@ -3,55 +3,100 @@ module.exports = function(grunt, options) {
         options: {
             baseUrl: 'static/src/javascripts',
             paths: {
-                bootsraps:    'bootstraps',
-                admin:        'projects/admin',
-                common:       'projects/common',
-                facia:        'projects/facia',
-                membership:   'projects/membership',
-                bean:         'components/bean/bean',
-                bonzo:        'components/bonzo/bonzo',
-                EventEmitter: 'components/eventEmitter/EventEmitter',
-                qwery:        'components/qwery/qwery',
-                reqwest:      'components/reqwest/reqwest',
-                lodash:       'components/lodash-amd',
-                imager:       'components/imager.js/container',
-                fence:        'components/fence/fence',
-                enhancer:     'components/enhancer/enhancer',
-                raven:        'components/raven-js/raven',
-                fastclick:    'components/fastclick/fastclick',
-                stripe:       '../../public/javascripts/vendor/stripe/stripe.min',
-                omniture:     '../../public/javascripts/vendor/omniture'
+                admin:                'projects/admin',
+                common:               'projects/common',
+                facia:                'projects/facia',
+                membership:           'projects/membership',
+                bean:                 'components/bean/bean',
+                bonzo:                'components/bonzo/bonzo',
+                enhancer:             'components/enhancer/enhancer',
+                EventEmitter:         'components/eventEmitter/EventEmitter',
+                fastclick:            'components/fastclick/fastclick',
+                fastdom:              'components/fastdom/index',
+                fence:                'components/fence/fence',
+                lodash:               'components/lodash',
+                picturefill:          'projects/common/utils/picturefill',
+                Promise:              'components/native-promise-only/npo.src',
+                qwery:                'components/qwery/qwery',
+                raven:                'components/raven-js/raven',
+                react:                'components/react/react',
+                reqwest:              'components/reqwest/reqwest',
+                omniture:             '../../public/javascripts/vendor/omniture',
+                socketio:             'components/socket.io-client/socket.io',
+                stripe:               '../../public/javascripts/vendor/stripe/stripe.min',
+                svgs:                 '../../../common/conf/assets/inline-svgs',
+                videojs:              'components/videojs/video',
+                videojsads:           'components/videojs-contrib-ads/videojs.ads',
+                videojsembed:         'components/videojs-embed/videojs.embed',
+                videojsima:           'components/videojs-ima/videojs.ima',
+                videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
+                videojsplaylist:      'components/videojs-playlist-audio/videojs.playlist',
+                // plugins
+                text:                 'components/requirejs-text/text',
+                inlineSvg:            'projects/common/utils/inlineSvg'
             },
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
             preserveLicenseComments: false,
-            fileExclusionRegExp: /^bower_components$/
+            fileExclusionRegExp: /^bower_components|es6$/i
         },
         common: {
             options: {
                 dir: options.requirejsDir,
                 keepBuildDir: false,
                 shim: {
-                    imager: {
-                        deps: ['components/imager.js/imager'],
-                        exports: 'Imager'
-                    },
                     omniture: {
                         exports: 's'
                     }
                 },
                 modules: [
                     {
-                        name: 'core'
+                        name: 'core',
+                        exclude: [
+                            'text',
+                            'inlineSvg'
+                        ]
                     },
                     {
                         name: 'bootstraps/app',
-                        exclude: ['core']
+                        exclude: [
+                            'core',
+                            'text',
+                            'inlineSvg'
+                        ]
                     },
                     {
                         name: 'bootstraps/commercial',
-                        exclude: ['core']
+                        exclude: [
+                            'core',
+                            'text',
+                            'inlineSvg'
+                        ]
                     }
+                ]
+            }
+        },
+        sudoku: {
+            options: {
+                name: 'bootstraps/sudoku',
+                out: options.staticTargetDir + 'javascripts/bootstraps/sudoku.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        "image-content": {
+            options: {
+                name: 'bootstraps/image-content',
+                out: options.staticTargetDir + 'javascripts/bootstraps/image-content.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -61,7 +106,33 @@ module.exports = function(grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/facia.js',
                 exclude: [
                     'core',
-                    'bootstraps/app'
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        football: {
+            options: {
+                name: 'bootstraps/football',
+                    out: options.staticTargetDir + 'javascripts/bootstraps/football.js',
+                    exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        preferences: {
+            options: {
+                name: 'bootstraps/preferences',
+                out: options.staticTargetDir + 'javascripts/bootstraps/preferences.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -72,7 +143,9 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    '../../public/javascripts/vendor/stripe/stripe.min'
+                    '../../public/javascripts/vendor/stripe/stripe.min',
+                    'text',
+                    'inlineSvg'
                 ]
             }
         },
@@ -87,10 +160,6 @@ module.exports = function(grunt, options) {
                 name: 'bootstraps/admin',
                 out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
                 shim: {
-                    imager: {
-                        deps: ['common/components/imager.js/imager'],
-                        exports: 'Imager'
-                    },
                     omniture: {
                         exports: 's'
                     }
@@ -101,59 +170,79 @@ module.exports = function(grunt, options) {
             options: {
                 name: 'bootstraps/video-player',
                 out: options.staticTargetDir + 'javascripts/bootstraps/video-player.js',
-                paths: {
-                    vast: '../../public/javascripts/vendor/vast-client',
-                    videojs: 'components/videojs/video',
-                    videojsads: 'components/videojs-contrib-ads/videojs.ads',
-                    videojsvast: 'components/videojs-vast/videojs.vast',
-                    videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
-                    videojsplaylist: 'components/videojs-playlist-audio/videojs.playlist'
-                },
                 shim: {
-                    vast: {
-                        exports: 'DMVAST'
-                    },
                     videojs: {
                         exports: 'videojs'
                     },
                     videojsads: {
                         deps: ['videojs']
                     },
-                    videojsvast: {
-                         deps: ['vast', 'videojs']
+                    videojsima: {
+                        deps: ['videojs']
                     },
                     videojsplaylist: {
+                        deps: ['videojs']
+                    },
+                    videojsembed: {
                         deps: ['videojs']
                     }
                 },
                 wrapShim: true,
-                optimize: 'none',
+                exclude: [
+                    'text',
+                    'inlineSvg'
+                ],
                 generateSourceMaps: true,
                 preserveLicenseComments: false
             }
         },
-        preview: {
+        videoEmbed : {
             options: {
-                name: 'bootstraps/preview',
-                out: options.staticTargetDir + 'javascripts/bootstraps/preview.js',
+                name: 'bootstraps/video-embed',
+                out: options.staticTargetDir + 'javascripts/bootstraps/video-embed.js',
+                shim: {
+                    videojs: {
+                        exports: 'videojs'
+                    },
+                    videojsembed: {
+                        deps: ['videojs']
+                    },
+                    omniture: {
+                        exports: 's'
+                    }
+                },
                 exclude: [
-                    'core',
-                    'bootstraps/app'
-                ]
+                    'text',
+                    'inlineSvg'
+                ],
+                generateSourceMaps: true,
+                preserveLicenseComments: false
             }
         },
         dev: {
             options: {
                 name: 'bootstraps/dev',
                 out: options.staticTargetDir + 'javascripts/bootstraps/dev.js',
-                paths: {
-                    socketio: 'components/socket.io-client/socket.io'
-                }
-            },
-            exclude: [
-                'core',
-                'bootstraps/app'
-            ]
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        creatives: {
+            options: {
+                name: 'bootstraps/creatives',
+                out: options.staticTargetDir + 'javascripts/bootstraps/creatives.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'bootstraps/commercial',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
         }
     };
 };

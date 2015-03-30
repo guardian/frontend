@@ -10,13 +10,13 @@ import scala.xml.Elem
 
 package object money {
 
-  trait MoneySupermarketApi[T] extends Logging {
+  trait MoneySupermarketApi[T] extends ExecutionContexts with Logging {
 
     protected val adTypeName: String
 
     protected val path: String
 
-    final protected val url = {
+    final protected val maybeUrl = {
 
       // this tracking code appears in the links to products
       val trackingCode = "GU15"
@@ -31,7 +31,18 @@ package object money {
     protected def cleanResponseBody(body: String): String = body
 
     def loadAds(): Future[Seq[T]] = {
-      FeedReader.readSeqFromXml[T](FeedRequest(adTypeName, MoneysupermarketFeedsSwitch, url, timeout = 10.seconds))(parse)
+      maybeUrl map { url =>
+        val request = FeedRequest(
+          feedName = adTypeName,
+          switch = MoneysupermarketFeedsSwitch,
+          url = url,
+          timeout = 10.seconds
+        )
+        FeedReader.readSeqFromXml[T](request)(parse)
+      } getOrElse{
+        log.warn(s"Missing URL for $adTypeName feed")
+        Future.failed(FeedMissingConfigurationException(adTypeName))
+      }
     }
   }
 
@@ -40,7 +51,7 @@ package object money {
 
     protected def loadProducts(): Future[Seq[T]]
 
-    def refresh() {
+    def refresh(): Unit = {
       for {
         products <- loadProducts()
       } updateAvailableMerchandise(products)

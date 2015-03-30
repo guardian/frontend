@@ -1,0 +1,21 @@
+@(metaData: model.PreferencesMetaData)(implicit request: RequestHeader)
+
+@import conf.Switches._
+
+@if(HistoryTags.isSwitchedOn) {
+    <div class="l-side-margins" data-link-name="preferences">
+        <div class="fc-container">
+            <div class="fc-container__inner">
+                <div class="fc-container__header">
+                    <div class="fc-container__header__title">
+                        <span tabindex="0">recently visited links</span>
+                    </div>
+                </div>
+
+                <div class="fc-container__body">
+                    <div id="preferences-history-tags">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

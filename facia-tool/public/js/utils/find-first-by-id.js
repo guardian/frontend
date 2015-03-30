@@ -1,7 +1,8 @@
-/* global _: true */
 define([
+    'underscore',
     'knockout'
-], function(
+], function (
+    _,
     ko
 ) {
     return function(observableArray, id) {

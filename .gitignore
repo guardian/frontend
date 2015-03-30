@@ -22,6 +22,7 @@ frontend-applications.properties
 .sass-cache
 .tm_properties
 .vagrant
+.node-version
 
 log
 logs
@@ -39,6 +40,7 @@ RUNNING_PID
 local.sbt
 
 node_modules
+jspm_packages
 screenshots
 
 common/conf/assets

@@ -1,4 +1,4 @@
-# Media Queries, with Style
+# Media Queries, with Style [![Build Status](https://travis-ci.org/sass-mq/sass-mq.svg?branch=master)](https://travis-ci.org/sass-mq/sass-mq)
 
 `mq()` is a [Sass](http://sass-lang.com/ "Sass - Syntactically Awesome
 Stylesheets") mixin that helps manipulating media queries in an elegant
@@ -15,8 +15,8 @@ as illustrated in this article posted on the Guardian's developer blog:
 ## How to Use It
 
 1. Install with [Bower](http://bower.io/ "BOWER: A package manager for the web"):
-   `bower install sass-mq --save-dev`
-   OR [Download _mq.scss](https://raw.github.com/guardian/sass-mq/master/_mq.scss)
+   `bower install sass-mq --save`
+   OR [Download _mq.scss](https://raw.github.com/sass-mq/sass-mq/master/_mq.scss)
    to your Sass project.
 2. Import the partial in your Sass files and override default settings
    with your own preferences before the file is imported:
@@ -137,7 +137,7 @@ $mq-static-breakpoint: desktop;
 ### Adding custom breakpoints
 
 ```scss
-$mq-breakpoints: mq-add-breakpoint(tvscreen, 1920px);
+@include mq-add-breakpoint(tvscreen, 1920px);
 
 .hide-on-tv {
     @include mq(tvscreen) {
@@ -156,16 +156,73 @@ then be shown in the top right corner of the viewport.
 
 ![$mq-show-breakpoints](show-breakpoints.gif)
 
+### Changing media type
+
+By default, `mq()` uses `@media all` for its queries. If you want to
+control this (e.g. to output styles for screens only), you can use the
+`$mq-media-type` config option to change it (defaults to `all`):
+
+#### SCSS
+```scss
+$mq-media-type: screen;
+
+.screen-only-element {
+    @include mq(mobile) {
+        width: 300px;
+    }
+}
+```
+
+#### CSS output
+```css
+@media screen and (max-width: 19.99em) {
+    .screen-only-element {
+        width: 300px;
+    }
+}
+```
+
+### Seeing the currently active breakpoint
+
+While developing, it can be nice to always know which breakpoint is
+active. To achieve this, set the `$mq-show-breakpoints` variable to
+be a list of the breakpoints you want to debug, ordered by width.
+The name of the active breakpoint and its pixel and em values will
+then be shown in the top right corner of the viewport.
+
+![$mq-show-breakpoints](show-breakpoints.gif)
+
 ## Test
 
-1. cd into the `test` folder
-2. run `sass test.scss test.css --force`
-3. there should be a couple of warnings like this one, this is normal:
+1. run:
+    * Ruby Sass *and* LibSass:
+    
+            ./test.sh
 
-        WARNING: Assuming 640 to be in pixels, attempting to convert it into pixels for you
-                 on line 25 of ../_mq.scss
+    * Ruby Sass
+    
+            sass test/test.scss test/test.css --force --sourcemap=none --load-path=./
 
-4. if `test.css` hasn’t changed (run a `git diff` on it), tests pass
+    * Libsass (using node-sass)
+    
+            node-sass test/test.scss test/test.css --force --sourcemap=none --include-path=./
+
+2. there should be a couple of warnings like this one, this is normal:
+
+        WARNING: Assuming 640 to be in pixels, attempting to convert it into pixels
+         on line 74 of _mq.scss, in `mq'
+
+3. if `git diff test/test.css` shows no changes, tests pass
+
+## Generate the documentation
+
+Sass MQ is documented using [SassDoc](http://sassdoc.com/):
+
+    npm install -g sassdoc
+
+Then, generate the documentation using:
+
+    sassdoc . sassdoc --config .sassdocrc --no-prompt
 
 ## Inspired By…
 

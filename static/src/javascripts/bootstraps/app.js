@@ -1,90 +1,45 @@
-/*global guardian:true */
 define([
-    'raven',
     'qwery',
-    'common/utils/mediator',
-    'common/utils/detect',
+    'raven',
     'common/utils/config',
-    'common/utils/userTiming',
-
-    'common/modules/ui/fonts',
-    'common/modules/commercial/user-ad-targeting',
-
-    'bootstraps/common',
-    'bootstraps/tag',
-    'bootstraps/section',
-    'bootstraps/football',
+    'common/utils/detect',
+    'common/utils/mediator',
+    'common/utils/user-timing',
     'bootstraps/article',
+    'bootstraps/common',
+    'bootstraps/gallery',
     'bootstraps/liveblog',
     'bootstraps/media',
-    'bootstraps/gallery',
-    'bootstraps/identity',
     'bootstraps/profile',
     'bootstraps/sport'
 ], function (
-    raven,
     qwery,
-    mediator,
-    detect,
+    raven,
     config,
+    detect,
+    mediator,
     userTiming,
-
-    Fonts,
-    userAdTargeting,
-
-    bootstrapCommon,
-    tag,
-    section,
-    football,
     article,
+    common,
+    gallery,
     liveBlog,
     media,
-    gallery,
-    identity,
     profile,
     sport
-    ) {
+) {
 
     var bootstrapContext = function (featureName, boostrap) {
             raven.context(
-                {
-                    tags: {
-                        feature: featureName
-                    }
-                },
-                function () {
-                    boostrap.init(config);
-                }
+                { tags: { feature: featureName } },
+                boostrap.init,
+                []
             );
-        },
-        modules = {
-
-            loadFonts: function (ua) {
-                if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
-                    var fileFormat = detect.getFontFormatSupport(ua),
-                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial'),
-                        f = new Fonts(fontStyleNodes, fileFormat);
-                    f.loadFromServerAndApply();
-                }
-            },
-
-            initId: function () {
-                identity.init(config);
-            },
-
-            initUserAdTargeting: function () {
-                userAdTargeting.requestUserSegmentsFromId();
-            }
         },
 
         routes = function () {
             userTiming.mark('App Begin');
 
-            modules.loadFonts(navigator.userAgent);
-            modules.initId();
-            modules.initUserAdTargeting();
-
-            bootstrapContext('common', bootstrapCommon);
+            bootstrapContext('common', common);
 
             // Front
             if (config.page.isFront) {
@@ -93,12 +48,24 @@ define([
                 });
             }
 
+            if (config.page.section === 'lifeandstyle' && config.page.series === 'Sudoku') {
+                require(['bootstraps/sudoku'], function (sudoku) {
+                    bootstrapContext('sudoku', sudoku);
+                });
+            }
+
             if (config.page.contentType === 'Article') {
-                bootstrapContext('article', article);
+                require(['bootstraps/image-content'], function (imageContent) {
+                    bootstrapContext('article', article);
+                    bootstrapContext('article : image-content', imageContent);
+                });
             }
 
             if (config.page.contentType === 'LiveBlog') {
-                bootstrapContext('liveBlog', liveBlog);
+                require(['bootstraps/image-content'], function (imageContent) {
+                    bootstrapContext('liveBlog', liveBlog);
+                    bootstrapContext('liveBlog : image-content', imageContent);
+                });
             }
 
             if (config.isMedia || qwery('video, audio').length) {
@@ -106,19 +73,22 @@ define([
             }
 
             if (config.page.contentType === 'Gallery') {
-                bootstrapContext('gallery', gallery);
+                require(['bootstraps/image-content'], function (imageContent) {
+                    bootstrapContext('gallery', gallery);
+                    bootstrapContext('gallery : image-content', imageContent);
+                });
             }
 
-            if (config.page.contentType === 'Tag') {
-                bootstrapContext('tag', tag);
-            }
-
-            if (config.page.contentType === 'Section' && !config.page.isFront) {
-                bootstrapContext('section', section);
+            if (config.page.contentType === 'ImageContent') {
+                require(['bootstraps/image-content'], function (imageContent) {
+                    bootstrapContext('image-content', imageContent);
+                });
             }
 
             if (config.page.section === 'football') {
-                bootstrapContext('footbal', football);
+                require(['bootstraps/football'], function (football) {
+                    bootstrapContext('footbal', football);
+                });
             }
 
             if (config.page.section === 'sport') {
@@ -133,6 +103,12 @@ define([
                 // lazy load this only if on the preview server
                 require('bootstraps/preview', function (preview) {
                     bootstrapContext('preview', preview);
+                });
+            }
+
+            if (config.page.pageId === 'preferences') {
+                require(['bootstraps/preferences'], function (preferences) {
+                    bootstrapContext('preferences', preferences);
                 });
             }
 

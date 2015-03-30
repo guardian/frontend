@@ -1,4 +1,5 @@
 @(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity])
+@import views.helpers.environment.urlBase
 
 @admin_main("config", env, Some(priority), isAuthed = true, identity=identity) {
 
@@ -77,6 +78,25 @@
 
             <!-- ko if: state.isOpen -->
             <div class="cnf-form">
+                <div class="type-option type-option-chosen" data-bind="click: toggleOpenTypePicker">
+                    <div data-bind="text: meta.type() || 'Choose a layout...'"></div>
+                    <!-- ko if: containerThumbnail -->
+                    <img onerror="this.style.display='none'" data-bind="attr: {src: containerThumbnail}" />
+                    <!-- /ko -->
+                </div>
+
+                <!-- ko if: state.isOpenTypePicker -->
+                <i class="fa fa-remove type-picker-closer" data-bind="click: toggleOpenTypePicker"></i>
+                <div class="type-picker" data-bind="foreach: $root.types">
+                    <div class="type-option" data-bind="
+                            css: {'type-option--highlight': $data === $parent.meta.type()},
+                            click: $parent.typePicker">
+                        <div data-bind="text: $data"></div>
+                        <img onerror="this.style.display='none'" data-bind="attr: {src: '/thumbnails/' + $data + '.svg'}" />
+                    </div>
+                </div>
+                <!-- /ko -->
+
                 <label>Title</label>
                 <input type="text" data-bind="
                     value: meta.displayName"/>
@@ -85,13 +105,13 @@
                 <input type="text" data-bind="
                     value: meta.href"/>
 
-                <label>ContentApi</label>
+                <label>ContentApi <span class="linky" data-bind="
+                    click: checkApiQueryStatus,
+                    visible: meta.apiQuery()">check</span></label>
                 <input type="text" data-bind="
                     value: meta.apiQuery,
                     valueUpdate: 'afterkeydown'"/>
-                <span class="linky api-query-status" data-bind="
-                    click: checkApiQueryStatus,
-                    visible: meta.apiQuery() && !state.apiQueryStatus()">check</span>
+
                 <!-- ko if: state.apiQueryStatus -->
                     <div class="api-query-results">
                         <div data-bind="
@@ -104,12 +124,6 @@
                         </div>
                     </div>
                 <!-- /ko -->
-
-                <label>Type</label>
-                <select data-bind="
-                    optionsCaption: 'Choose...',
-                    options: $root.types,
-                    value: meta.type"></select>
 
                 <!-- ko if: meta.groups -->
                     <label>Groups</label>
@@ -131,9 +145,18 @@
                 <label for="showLatestUpdate">Show latest update in header</label>
                 <input id="showLatestUpdate" type="checkbox" data-bind="checked: meta.showLatestUpdate" />
 
+                <label for="excludeFromRss">Exclude from RSS</label>
+                <input id="excludeFromRss" type="checkbox" data-bind="checked: meta.excludeFromRss" />
+
                 <label>No curation</label>
                 <input type="checkbox" data-bind="
                     checked: meta.uneditable" />
+
+                <label>Importance</label>
+                <select data-bind="options: props.optionsImportance,
+                    optionsCaption: 'default',
+                    value: meta.importance,
+                    valueAllowUnset: true"></select>
 
                 <div class="tools">
                     <button class="tool" data-bind="
@@ -153,24 +176,23 @@
         <div class="cnf-front" data-bind="
             css: {open: state.isOpen}">
 
-            <div class="title">
+            <div class="title" data-bind="visible: id">
                 <span data-bind="
                     text: id,
-                    visible: id,
                     click: toggleOpen
                 "></span>
 
                 <!-- ko if: props.isHidden() && collections.items().length > 0 -->
                 <span class="cfn-front__hidden-text">hidden</span>
                 <!-- /ko -->
-                </div>
+            </div>
 
             <!-- ko if: !id() -->
                 <div class="cnf-front__inner cnf-form">
                     <label>URL path</label>
                     <input type="text" placeholder="eg. world/middleeast" data-bind="value: id"/>
 
-                    <div class="tools">
+                    <div class="tools action-buttons">
                         <span class="tool">Create front</span>
                     </div>
                 </div>
@@ -181,7 +203,8 @@
                     <div class="cnf-form">
                         <label>Hidden</label>
                         <input type="checkbox" data-bind="
-                            checked: props.isHidden" />
+                            checked: props.isHidden,
+                            disable: state.isTypeLocked" />
 
                         <label>Nav section</label>
                         <select data-bind="
@@ -220,12 +243,18 @@
                             enable: props.imageUrl" />
 
                         <label>Type</label>
-                        <input type="radio" name="group02" data-bind="checkedValue: undefined, checked: props.priority" />
+                        <input type="radio" name="group02" data-bind="
+                            checkedValue: undefined,
+                            checked: props.priority" />
                         <span class="radio-label">editorial</span>
-                        <input type="radio" name="group02" value="commercial" data-bind="checked: props.priority" />
+                        <input type="radio" name="group02" value="commercial" data-bind="
+                            checked: props.priority" />
                         <span class="radio-label">commercial</span>
+                        <input type="radio" name="group02" value="training" data-bind="
+                            checked: props.priority" />
+                        <span class="radio-label">training</span>
 
-                        <div class="tools">
+                        <div class="tools action-buttons">
                             <span class="tool" data-bind="click: saveProps">Save metadata</span>
                         </div>
                     </div>
@@ -233,21 +262,29 @@
 
                  <!-- ko if: id -->
                     <div class="instructions">
-                        <!-- ko if: !state.isOpenProps() -->
-                            <span class="linky" data-bind="click: openProps">Edit metadata</span>
+                        <!-- ko if: !state.isOpenProps() && collections.items().length -->
+                            <span class="linky tool--metadata" data-bind="click: openProps">edit metadata</span>
                             &middot;
-                            <a data-bind="attr: {href: '/@{priority}?front=' + id()}">content</a>
+                            <a class='tool--content' data-bind="attr: {href: '/@{priority}?layout=latest,front:' + id()}">edit content</a>
+                            &middot;
+                            @if(Switches.FaciaTreats.isSwitchedOn) {
+                            <a class='tool--content' data-bind="attr: {href: '/@{priority}?treats=please&amp;front=' + id()}">edit treats</a>
+                            &middot;
+                            }
+                            <a class='tool--live' data-bind="attr: {href: '@urlBase(env)' + id()}" target="_blank">view live</a>
+                            &middot;
+                            <a class='tool--live' data-bind="attr: {href: ophanPerformances()}" target="_blank">view performance</a>
                         <!-- /ko -->
                     </div>
 
                     <div class="cnf-front__collections" data-bind="with: collections">
                         <div class="droppable" data-bind="
-                            makeDropabble: true,
+                            makeDroppable: true,
                             css: {underDrag: underDrag},
                             template: {name: 'template_collection', foreach: items}"></div>
                     </div>
                     <div class="instructions">
-                        <span data-bind="click: createCollection" class="linky">Create a container</span> or drop one above.
+                        <span data-bind="click: createCollection" class="linky tool--container">create a container</span> or drop one above.
                         <span data-bind="if: !collections.items().length">Empty fronts will be discarded!</span>
                     </div>
                 <!-- /ko -->
@@ -259,5 +296,9 @@
 
 </div>
 
-<script src="@routes.Assets.at("js/app-config.js")"></script>
+<script>
+    System.import('facia-tool/main').then(function (main) {
+        main.load('config');
+    });
+</script>
 }

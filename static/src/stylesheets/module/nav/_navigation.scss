@@ -5,43 +5,44 @@
 /* Configuration
    ========================================================================== */
 
-$c-navigation-base: $c-neutral5;
+$c-navigation-base: colour(neutral-5);
 
 $navigation-height: $gs-row-height;
 
-$navigation-toggler-width: 48px;
-$navigation-toggler-width-full: 130px;
+$navigation-toggler-width: 44px;
+$navigation-toggler-width-halffull: 132px;
+$navigation-toggler-width-full: 186px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
-$c-navigation-background-side-bar: #005182;
+// TODO: Palette?
+$c-navigation-background-side-bar: darken(colour(guardian-brand), 2%);
 
-$c-signposting-action: $c-newsDefault;
+$c-signposting-action: colour(news-default);
 $c-signposting-background: $c-navigation-base;
 
 $c-top-navigation-action: #ffffff;
-$c-top-navigation-background: #00456e; // one-off colour for nav bg
 
-$c-local-navigation-action: $c-neutral1;
+$c-local-navigation-action: colour(neutral-1);
 $c-local-navigation-background: $c-navigation-base;
 
 $c-global-navigation-background: $c-navigation-base;
 $c-global-navigation-title: #ffffff;
-$c-global-navigation-title-background: $c-top-navigation-background;
+$c-global-navigation-title-background: $c-top-header-background;
 $global-navigation-title-width: $left-column + $gs-gutter;
 $global-navigation-title-width-wide: $left-column-wide + $gs-gutter;
-$c-global-navigation-action: $c-neutral1;
+$c-global-navigation-action: colour(neutral-1);
 $c-global-navigation-border: mix($c-local-navigation-background, #ffffff, 60%);
 
-$c-navigation-toggle-background: $c-neutral1;
+$c-navigation-toggle-background: colour(neutral-1);
 $c-navigation-toggle-icon: #ffffff;
 $c-navigation-toggle-shadow: rgba(#000000, .333333);
 
 $navigation-h-space-between-items: $gs-gutter;
 
-$c-navigation-expandable-background: $c-neutral1;
+$c-navigation-expandable-background: colour(neutral-1);
 
-$mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
-$mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(navigationBreakOnTwoLevels) + gs-span(1) + $gs-gutter * 1.5);
+@include mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
+@include mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(leftCol));
 
 
 /* Styles common to all states
@@ -71,6 +72,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         -moz-background-clip: padding-box;
         -webkit-background-clip: padding-box;
         background-clip: padding-box;
+
+        .l-header--is-slim & {
+            display: none;
+        }
     }
 
     &:after {
@@ -79,8 +84,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         z-index: -1;
     }
 
-    &.navigation--collapsed:after {
-        display: none;
+    .navigation-container--collapsed & {
+        &:after {
+            display: none;
+        }
     }
 }
 .top-navigation,
@@ -106,13 +113,12 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         }
     }
 }
-.top-navigation,
-.navigation__main {
+.top-navigation {
     position: relative;
-    background: $c-top-navigation-background;
+    background: $c-top-header-background;
 }
 .navigation__container--first {
-    background: $c-top-navigation-background;
+    background: $c-top-header-background;
     min-height: $navigation-height;
 }
 .navigation__expandable {
@@ -144,7 +150,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         padding-left: $navigation-h-space-between-items/2;
     }
 
-    .navigation--expanded.navigation--has-local-navigation & {
+    .navigation-container--expanded .navigation--has-local-navigation & {
         @include mq($until: navigationBreakOnTwoLevels) {
             border-bottom: 1px solid $c-global-navigation-border;
         }
@@ -158,7 +164,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         }
     }
 
-    .navigation--expanded & {
+    .navigation-container--expanded & {
         @include mq($until: tablet) {
             border-right: 0;
         }
@@ -232,7 +238,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .local-navigation__item,
 .top-navigation__item,
 .global-navigation__item {
-    text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 }
@@ -249,7 +254,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 }
 .local-navigation__item,
 .top-navigation__item {
-    white-space: nowrap;
     display: table-cell;
     position: relative;
     padding-right: $navigation-h-space-between-items/2;
@@ -264,14 +268,14 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         }
     }
 }
-.navigation--collapsed.navigation--has-signposting {
+.navigation-container--collapsed .navigation--has-signposting {
     .local-navigation,
     .top-navigation {
         padding-left: $navigation-h-space-between-items/2;
     }
 }
 @include mq(mobileLandscape) {
-    .navigation--collapsed {
+    .navigation-container--collapsed {
         .local-navigation,
         .top-navigation {
             padding-left: $navigation-h-space-between-items/2;
@@ -315,7 +319,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     }
 }
 
-
 /* Global navigation
    ========================================================================== */
 
@@ -358,7 +361,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     color: $c-global-navigation-title;
     background: $c-global-navigation-title-background;
     float: left;
-    border-top: 1px solid $c-brandBlue;
+    border-top: 1px solid colour(guardian-brand);
 
     @include mq($until: tablet) {
         line-height: $gs-baseline*2;
@@ -382,6 +385,13 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     }
     @include mq(wide) {
         width: $global-navigation-title-width-wide;
+    }
+
+    &.global-navigation__title--history {
+        color: guss-colour(neutral-1, $pasteup-palette);
+        background: guss-colour(neutral-3, $pasteup-palette);
+        border: 0;
+        padding-bottom: 0;
     }
 }
 .global-navigation__children {
@@ -407,6 +417,26 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         padding-bottom: $gs-baseline/4;
         padding-left: $gs-gutter/2;
     }
+
+    &.global-navigation__children--history {
+        background: guss-colour(neutral-3, $pasteup-palette);
+
+        .button--tag {
+            margin-top: $gs-baseline / 2;
+            margin-left: $gs-gutter / 4;
+            margin-right: 0;
+            margin-bottom: 0;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+        @include mq($until: mobileLandscape) {
+            margin-left: 0;
+            padding-top: 0;
+            padding-left: $gs-gutter/3;
+        }
+    }
 }
 @include mq($until: tablet) {
     .global-navigation__title,
@@ -429,8 +459,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 /* State: collapsed
    ========================================================================== */
 
-.navigation--collapsed {
-    .navigation--collapsed__hide {
+.navigation-container--collapsed {
+    .navigation-container--collapsed__hide {
         display: none !important;
     }
     .navigation__container {
@@ -440,7 +470,11 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     .navigation__scroll {
         @include mq($until: navigationBreakOnTwoLevels) {
             overflow-x: scroll;
-            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
+        }
+
+        .l-header--is-slim & {
+            display: none;
         }
 
         &::-webkit-scrollbar {
@@ -450,16 +484,22 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     .navigation__expandable {
         display: none;
     }
-    &,
+    .navigation,
     .signposting,
     .local-navigation {
         height: $navigation-height;
+
+        .l-header--is-slim & {
+            height: auto;
+        }
     }
     .signposting,
     .local-navigation {
         display: table-cell;
     }
     .top-navigation {
+        overflow: hidden;
+
         @include mq(navigationBreakOnTwoLevels) {
             @include box-sizing(border-box);
             position: absolute;
@@ -469,11 +509,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         }
     }
     .top-navigation__item:last-child {
-        padding-right: $navigation-toggler-width + $gs-gutter;
+        padding-right: gs-span(1) + $gs-gutter;
 
-        @include mq(tablet) {
-            padding-right: $navigation-toggler-width-full + $gs-gutter;
-        }
         @include mq(navigationBreakOnTwoLevels) {
             padding-right: 0;
         }
@@ -484,9 +521,11 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 /* State: expanded
    ========================================================================== */
 
-.navigation--expanded {
-    z-index: 2;
-    height: auto;
+.navigation-container--expanded {
+    .navigation {
+        z-index: 2;
+        height: auto;
+    }
 
     .top-navigation {
         display: none;
@@ -519,7 +558,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     }
 }
 
-.navigation--expanded .local-navigation__item,
+.navigation-container--expanded .local-navigation__item,
 .global-navigation__child {
     @include mq($until: tablet) {
         float: left;
@@ -562,10 +601,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             background: $c-global-navigation-border;
             z-index: 1;
         }
-        &.navigation--collapsed {
+        .navigation-container--collapsed & {
             height: $navigation-height * 2;
         }
-        &.navigation--expanded {
+        .navigation-container--expanded & {
             .top-navigation__item {
                 visibility: hidden;
             }
@@ -601,7 +640,11 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         }
         .navigation__container--first {
             background: $c-local-navigation-background;
-            border-top: $navigation-height solid $c-top-navigation-background;
+            border-top: $navigation-height solid $c-top-header-background;
+
+            .l-header--is-slim & {
+                border-top: 0;
+            }
         }
         .navigation__container--second {
             position: absolute;
@@ -617,7 +660,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .navigation {
     .global-navigation__section--home,
     .top-navigation__item--current,
-    .global-navigation__section--current {
+    .global-navigation--top .global-navigation__section--current {
         display: none;
     }
     .top-navigation__item--current {
@@ -631,18 +674,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 /* Toggle button
    ========================================================================== */
 
-@mixin navigation__toggle--width($width: small) {
-    @if $width == small {
-        min-width: $navigation-toggler-width;
-        padding-left: $gs-gutter + 2;
-    }
-    @if $width == wide {
-        min-width: $navigation-toggler-width-full;
-        padding-left: $gs-gutter + 12px;
-    }
-}
-
-.navigation__toggle {
+// TODO: Move
+.navigation-toggle {
     z-index: 2;
     position: absolute;
     right: 0;
@@ -650,15 +683,29 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     @include box-sizing(border-box);
     @include fs-header(1);
     line-height: $navigation-height;
-    padding-right: $gs-gutter/2;
-    @include navigation__toggle--width(small);
+    padding: 0 $gs-gutter / 2;
     background: $c-navigation-toggle-background;
     -moz-background-clip: padding-box;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
-    text-align: center;
+    text-align: left;
+    // TODO: Why is this needed?
     border-left: 2px solid $c-navigation-toggle-shadow;
     outline: none;
+    min-width: $navigation-toggler-width;
+
+    // Remove redundant min-width and override breakpoint
+    .l-header--is-slim & {
+        min-width: 0;
+    }
+
+    .l-header--is-slim & {
+        float: left;
+        line-height: 48px;
+        position: static;
+        border-left: 0;
+    }
+
 
     &,
     &:hover,
@@ -670,105 +717,263 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         background: mix($c-navigation-toggle-background, #ffffff, 92%);
     }
 
-    .navigation--expanded & {
+    .navigation-container--expanded & {
         border-left-color: transparent;
     }
 
-    @include mq(tablet) {
-        @include navigation__toggle--width(wide);
-        text-align: left;
-    }
     @include mq(navigationBreakOnTwoLevels) {
         border-left: 0;
     }
-    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
-        @include navigation__toggle--width(small);
+
+    @include mq(leftCol) {
+        min-width: $navigation-toggler-width-halffull;
     }
+
     @include mq(wide) {
-        .has-page-skin & {
-            @include navigation__toggle--width(small);
+        min-width: $navigation-toggler-width-full;
+    }
+
+    .has-page-skin & {
+        @include mq(leftCol) {
+            min-width: $navigation-toggler-width;
         }
     }
 }
-.navigation__toggle-label {}
-.navigation__toggle-label__extra {
+
+.navigation-toggle-label__extra {
     display: none;
 
-    @include mq(tablet) {
+    @include mq(leftCol) {
         display: inline;
     }
-    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
+
+    &.navigation-toggle-label__extra--browse {
+        @include mq($until: wide) {
+            display: none;
+        }
+    }
+
+    .l-header--is-slim & {
         display: none;
     }
-    @include mq(wide) {
-        .has-page-skin & {
+
+    .has-page-skin & {
+        @include mq(wide) {
             display: none;
         }
     }
 }
-.navigation__toggle-label--close,
-.navigation--expanded .navigation__toggle-label--open {
+.navigation-toggle-label--close,
+.navigation-container--expanded .navigation-toggle-label--open {
     display: none;
 }
-.navigation--expanded .navigation__toggle-label--close {
+.navigation-container--expanded .navigation-toggle-label--close {
     display: inline;
 }
-@mixin navigation__toggle-burger--width($width: small) {
-    @if $width == small {
-        left: 6px;
-        width: 12px;
-    }
-    @if $width == wide {
-        left: 10px;
-        width: 16px;
-    }
-}
 
-.navigation__toggle-burger {
-    position: absolute;
-    top: 11px;
-    @include navigation__toggle-burger--width(small);
-
-    @include mq(tablet) {
-        @include navigation__toggle-burger--width(wide);
-    }
-    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
-        @include navigation__toggle-burger--width(small);
-    }
-    @include mq(wide) {
-        .has-page-skin & {
-            @include navigation__toggle-burger--width(small);
+// This must appear last in the cascade
+.navigation-toggle-label {
+    .l-header--is-slim & {
+        @include mq($until: mobileLandscape) {
+            display: none;
         }
     }
 }
-.honest-burger {
-    display: block;
-    height: 16px;
+
+/**
+ * Burger icon
+ */
+$burger-line-h: 2px;
+$burger-width: 16px;
+
+/**
+ * Placeholder for burger line.
+ */
+%burger-icon__line {
+    width: 100%;
+    height: $burger-line-h;
+    background-color: mix(#ffffff, $c-navigation-toggle-background, 90%);
 }
-.honest-burger i {
-    display: block;
-    border-top: 2px solid rgba(#ffffff, .9);
-    margin-top: 2px;
+
+.burger-icon {
+    @extend %burger-icon__line;
+
+    width: $burger-width;
+    display: inline-block;
+    vertical-align: top;
+    margin: 13px 6px 0 0; // We need to position burger icon to the middle and push text after
+    position: relative;
+
+    .l-header--is-slim & {
+        @include mq($until: mobileLandscape) {
+            margin-right: 0;
+        }
+    }
+
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+    }
+
+    &:before {
+        @extend %burger-icon__line;
+
+        top: $burger-line-h * 2;
+    }
+
+    &:after {
+        @extend %burger-icon__line;
+
+        top: $burger-line-h * 4;
+    }
 
     @if not $old-ie {
-        @include transform-origin(60%);
+        .navigation-container--expanded & {
+            height: 0;
 
-        .navigation--expanded & {
-            @include transform-origin(50%);
+            &:before {
+                @include transform(rotate(45deg));
 
-            &:nth-child(1) {
-                @include transform(translateY(rem(4px)) rotate(45deg));
+                top: 4px;
             }
-            &:nth-child(2) {
-                opacity: 0;
-            }
-            &:nth-child(3) {
-                @include transform(translateY(rem(-4px)) rotate(-45deg));
+
+            &:after {
+                @include transform(rotate(-45deg) translate(3px, -3px)); // We need to move line to the center
+
+                top: 8px;
             }
         }
+
         @include mq(tablet) {
-            -webkit-transition: opacity .1s, -webkit-transform .1s ease-in;
-            transition: opacity .1s, transform .1s ease-in;
+            &,
+            &:before,
+            &:after {
+                transition: opacity .1s, transform .1s ease-in;
+            }
         }
     }
+
+    @if $old-ie {
+        display: none;
+    }
+
+    .l-header--is-slim & {
+        margin-top: $gs-baseline * 1.5;
+    }
+}
+
+/**
+ * Popups with text content
+ */
+
+$popup-text-arrow-size: $gs-gutter / 2;
+$popup-text-padding: $gs-gutter / 3;
+
+.popup--text {
+    left: 0 !important;
+    width: gs-span(3);
+    color: colour(neutral-1);
+    line-height: 1.4;
+    // Clear floated child (toggle)
+    @include clearfix;
+
+    &:before {
+        content: '';
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-top: 0;
+        position: absolute;
+        left: 18px;
+        margin-left: 0 - $popup-text-arrow-size;
+        border-left: $popup-text-arrow-size solid transparent;
+        border-right: $popup-text-arrow-size solid transparent;
+        border-bottom: $popup-text-arrow-size solid colour(neutral-8);
+        top: -10px;
+    }
+}
+
+.popup--text__toggle {
+    float: right;
+    // Override .u-button-reset
+    width: auto;
+    position: relative;
+    z-index: 1;
+    margin-top: $popup-text-padding;
+    margin-right: $popup-text-padding;
+}
+
+.popup--text__toggle__icon {
+    fill: colour(neutral-2);
+
+    svg {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+.popup--text__content {
+    padding: $popup-text-padding;
+}
+
+.popup--text__content__blockquote {
+    margin-bottom: $gs-baseline / 2;
+
+    &:before {
+        // FIXME: Objects (quoted) should come before components (popup--text__content__blockquote)
+        width: 24px !important;
+        height: 15px !important;
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
+.popup--text__content__blockquote__citation {
+    color: hsl(0, 0%, 50%);
+}
+
+// Signed out
+
+.popup--text--signed-out__link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.popup--text--signed-out__highlight {
+    color: colour(news-main-1);
+    text-decoration: underline;
+}
+
+// Register
+
+.popup--text--register {
+    width: gs-span(4);
+    @include transition(opacity .3s ease);
+    opacity: 0;
+}
+
+.popup--text--register__content {
+    p:last-child {
+        @include fs-textSans(4);
+        // Unset, set by fs-textSans mixin
+        line-height: inherit;
+        margin-bottom: 0;
+    }
+}
+
+.popup--text--quote__image {
+    float: right;
+    // Appear below the close button
+    clear: right;
+    // Magic number, relative to font sizing.
+    height: 119px;
+    // Mask the white space either side of the image
+    margin-left: -19px;
+    margin-right: -19px;
 }

@@ -10,6 +10,8 @@ GET        /_healthcheck                                                        
 GET        /sport/cricket/match/:matchId.json                                                  controllers.CricketMatchController.renderMatchIdJson(matchId)
 GET        /sport/cricket/match/:matchId                                                       controllers.CricketMatchController.renderMatchId(matchId)
 
+GET        /football/fixtures/more/:year/:month/:day.json                                      football.controllers.FixturesController.moreFixturesForJson(year, month, day)
+GET        /football/fixtures/more/:year/:month/:day                                           football.controllers.FixturesController.moreFixturesFor(year, month, day)
 GET        /football/fixtures/:year/:month/:day.json                                           football.controllers.FixturesController.allFixturesForJson(year, month, day)
 GET        /football/fixtures/:year/:month/:day                                                football.controllers.FixturesController.allFixturesFor(year, month, day)
 GET        /football/fixtures                                                                  football.controllers.FixturesController.allFixtures()
@@ -21,6 +23,8 @@ GET        /football/:tag/fixtures.json                                         
 
 GET        /football/results/:year/:month/:day.json                                            football.controllers.ResultsController.allResultsForJson(year, month, day)
 GET        /football/results/:year/:month/:day                                                 football.controllers.ResultsController.allResultsFor(year, month, day)
+GET        /football/results/more/:year/:month/:day.json                                       football.controllers.ResultsController.moreResultsForJson(year, month, day)
+GET        /football/results/more/:year/:month/:day                                            football.controllers.ResultsController.moreResultsFor(year, month, day)
 GET        /football/results                                                                   football.controllers.ResultsController.allResults()
 GET        /football/results.json                                                              football.controllers.ResultsController.allResultsJson()
 GET        /football/:tag/results/:year/:month/:day.json                                       football.controllers.ResultsController.tagResultsForJson(year, month, day, tag)
@@ -44,6 +48,7 @@ GET        /football/:competition/table                                         
 GET        /football/:competition/table.json                                                   football.controllers.LeagueTableController.renderCompetitionJson(competition)
 GET        /football/:competition/:group/table                                                 football.controllers.LeagueTableController.renderCompetitionGroup(competition, group)
 GET        /football/:competition/:group/table.json                                            football.controllers.LeagueTableController.renderCompetitionGroupJson(competition, group)
+GET        /football/:team/fixtures-and-results-container                                      football.controllers.FixturesAndResultsContainerController.renderContainer(team)
 
 GET        /football/:competitionTag/overview/embed                                            football.controllers.WallchartController.renderWallchartEmbed(competitionTag)
 GET        /football/:competitionTag/overview                                                  football.controllers.WallchartController.renderWallchart(competitionTag)

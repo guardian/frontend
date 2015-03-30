@@ -1,21 +1,28 @@
 define([
-    'raven',
+    'common/utils/_',
+    'common/utils/config',
+    'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/commercial/badges',
-    'common/modules/component',
-    'common/modules/ui/images'
+    'common/modules/component'
 ], function (
-    raven,
+    _,
+    config,
+    mediator,
     register,
     badges,
-    Component,
-    images
+    Component
 ) {
-    function OnwardContent(config, context) {
+
+    var getTag = function () {
+        var seriesAndBlogTags = config.page.blogIds.split(',').concat([config.page.seriesId]);
+        return _.union(config.page.nonKeywordTagIds.split(','), seriesAndBlogTags).shift();
+    };
+
+    function OnwardContent(context) {
         register.begin('series-content');
-        this.config = config;
         this.context = context;
-        this.endpoint = '/series/' + this.config.page.seriesId + '.json?shortUrl=' + encodeURIComponent(this.config.page.shortUrl);
+        this.endpoint = '/series/' + getTag() + '.json?shortUrl=' + encodeURIComponent(config.page.shortUrl);
         this.fetch(this.context, 'html');
     }
 
@@ -23,8 +30,9 @@ define([
 
     OnwardContent.prototype.ready = function (container) {
         badges.add(container);
-        images.upgrade(this.context);
         register.end('series-content');
+        mediator.emit('modules:onward:loaded');
+        mediator.emit('ui:images:upgradePictures');
     };
 
     OnwardContent.prototype.error = function () {
@@ -32,4 +40,5 @@ define([
     };
 
     return OnwardContent;
+
 });

@@ -1,34 +1,45 @@
+/* jscs:disable disallowDanglingUnderscores */
 define([
-    'common/utils/$',
-    'bonzo',
     'bean',
-    'common/modules/userPrefs'
+    'bonzo',
+    'fastdom',
+    'common/utils/$',
+    'common/utils/mediator',
+    'common/modules/user-prefs',
+    'common/utils/template',
+    'common/views/svgs',
+    'text!facia/views/button-toggle.html'
 ], function (
-    $,
-    bonzo,
     bean,
-    userPrefs
+    bonzo,
+    fastdom,
+    $,
+    mediator,
+    userPrefs,
+    template,
+    svgs,
+    btnTmpl
 ) {
-
     return function (container) {
-
         var _$container = bonzo(container),
             _$button = bonzo(bonzo.create(
-                '<button class="container__toggle" data-link-name="Show">'
-                    + '<i class="i i-arrow-grey-large"></i>'
-                    + '<span class="container__toggle__text">Hide</span>'
-                +'</button>'
+                template(btnTmpl, {
+                    text: 'Hide',
+                    dataLink: 'Show',
+                    icon: svgs('arrowicon')
+                })
             )),
+            buttonText = $('.fc-container__toggle__text', _$button[0]),
             _prefName = 'container-states',
             _toggleText = {
                 hidden: 'Show',
                 displayed: 'Hide'
             },
             _state = 'displayed',
-            _updatePref = function($container, state) {
+            _updatePref = function (id, state) {
                 // update user prefs
                 var prefs = userPrefs.get(_prefName),
-                    prefValue = $container.attr('data-id');
+                    prefValue = id;
                 if (state === 'displayed') {
                     delete prefs[prefValue];
                 } else {
@@ -39,38 +50,52 @@ define([
                 }
                 userPrefs.set(_prefName, prefs);
             },
-            _readPrefs = function($container) {
+            _readPrefs = function (id) {
                 // update user prefs
                 var prefs = userPrefs.get(_prefName);
-                if (prefs && prefs[$container.attr('data-id')]) {
-                    bean.fire(_$button[0], 'click');
+                if (prefs && prefs[id]) {
+                    setState('hidden');
                 }
             };
 
         // delete old key
         userPrefs.remove('front-trailblocks');
 
-        this.addToggle =  function () {
-            // append toggle button
-            $('.js-container__header', _$container[0]).append(_$button);
-            _$container
-                .removeClass('js-container--toggle')
-                .addClass('container--has-toggle');
-            // listen to event
-            bean.on(_$button[0], 'click', function() {
-                _state = (_state === 'displayed') ? 'hidden' : 'displayed';
+        function setState(state) {
+            var adSlotBadge = $('.ad-slot--paid-for-badge', container);
+
+            _state = state;
+
+            fastdom.write(function () {
                 // add/remove rolled class
-                _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('container--rolled-up');
+                _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('fc-container--rolled-up');
                 // data-link-name is inverted, as happens before clickstream
                 _$button.attr('data-link-name', _toggleText[_state === 'displayed' ? 'hidden' : 'displayed']);
-                $('.container__toggle__text', _$button[0]).text(_toggleText[_state]);
+                buttonText.text(_toggleText[_state]);
                 // hide/show the badge
-                $('.ad-slot--paid-for-badge', container).css('display', _state === 'hidden' ? 'none' : 'block');
-                _updatePref(_$container, _state);
+                adSlotBadge.css('display', _state === 'hidden' ? 'none' : 'block');
             });
-            _readPrefs(_$container);
+        }
+
+        this.addToggle =  function () {
+            // append toggle button
+            var id = _$container.attr('data-id'),
+                $containerHeader = $('.js-container__header', _$container[0]);
+
+            fastdom.write(function () {
+                $containerHeader.append(_$button);
+                _$container
+                    .removeClass('js-container--toggle')
+                    .addClass('fc-container--has-toggle');
+                _readPrefs(id);
+            });
+
+            mediator.on('module:clickstream:click', function (clickSpec) {
+                if (clickSpec.target === _$button[0]) {
+                    setState((_state === 'displayed') ? 'hidden' : 'displayed');
+                    _updatePref(id, _state);
+                }
+            });
         };
-
     };
-
 });

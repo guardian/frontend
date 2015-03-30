@@ -1,12 +1,14 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
+
 @import common._
 @import common.Edition
 @import common.editions._
+@import views.support.RenderClasses
 
 @defining(Edition(request).navigation) { navigation =>
     @defining(Navigation.topLevelItem(navigation, metaData)) { topLevelSelected =>
         <nav role="navigation" aria-label="All sections">
-            <ul class="global-navigation">
+            <ul class="global-navigation js-global-navigation">
                 @navigation.map { nav =>
                     <li class="@RenderClasses(Map(
                             ("global-navigation__section", true),

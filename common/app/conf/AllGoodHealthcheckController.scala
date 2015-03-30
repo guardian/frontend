@@ -25,12 +25,13 @@ trait HealthcheckController extends Controller with Results with ExecutionContex
 
   def healthcheck(): Action[AnyContent]
 
-  protected def fetchResults(paths: String*): Seq[Future[(String, Int)]] = {
-    paths.map(path => WS.url(s"$baseUrl$path")
-      .withHeaders("X-Gu-Management-Healthcheck" -> "true")
-      .withRequestTimeout(10000).get()
-      .map(result => (s"$baseUrl$path", result.status)))
-  }
+  protected def fetchResult(path: String): Future[(String, Int)] = WS.url(s"$baseUrl$path")
+    .withHeaders("X-Gu-Management-Healthcheck" -> "true")
+    .withRequestTimeout(10000).get()
+    .map(result => (s"$baseUrl$path", result.status))
+
+  protected def fetchResults(paths: String*): Seq[Future[(String, Int)]] = paths.map(fetchResult)
+
 }
 
 // expects ALL of the paths to return 200. If one fails the entire healthcheck fails
@@ -63,14 +64,16 @@ class AllGoodHealthcheckController(override val testPort: Int, paths: String*) e
 class AnyGoodHealthcheckController(override val testPort: Int, paths: String*) extends HealthcheckController {
   override def healthcheck() = Action.async{
 
-    val healthCheckResults = fetchResults(paths:_*)
+    val firstHealthyEndpoint = Future.find(fetchResults(paths: _*)) {
+      case (_, status) => status == 200
+    }
 
-    Future.sequence(healthCheckResults).map(_.filterNot { case (_, status) => status == 200})
-      .map {
-      case Nil => Ok("OK")
-      case errors if errors.size < paths.size => Ok(errors.map{ case (url, status) => s"$status $url" }.mkString("\n"))
-      case errors => InternalServerError(errors.map{ case (url, status) => s"$status $url" }.mkString("\n"))
+    firstHealthyEndpoint map {
+      _ map { _ =>
+        Ok("OK")
+      } getOrElse {
+        InternalServerError(s"None of these endpoints is healthy:\n${paths.mkString("\n")}")
+      }
     }
   }
 }
-

@@ -26,6 +26,7 @@ object Global extends GlobalSettings
     FaciaPressMetrics.FrontPressLiveSuccess,
     FaciaPressMetrics.FrontPressCronSuccess,
     FaciaPressMetrics.FrontPressCronFailure,
+    GaugeMetric("content-api-calls", "Total number of Content API calls", () => ContentApiMetrics.ElasticHttpTimingMetric.getCount),
     ContentApiMetrics.ElasticHttpTimingMetric,
     ContentApiMetrics.ElasticHttpTimeoutCountMetric,
     ContentApiMetrics.ContentApi404Metric,
@@ -33,6 +34,7 @@ object Global extends GlobalSettings
     ContentApiMetrics.ContentApiJsonMappingExceptionMetric,
     ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric,
     ContentApiMetrics.ContentApiCircuitBreakerOnOpen,
+    ContentApiMetrics.ContentApiErrorMetric,
     FaciaToolMetrics.InvalidContentExceptionMetric,
     S3Metrics.S3ClientExceptionsMetric,
     S3Metrics.S3AuthorizationError,
@@ -54,6 +56,7 @@ object Global extends GlobalSettings
   }
 
   override def onStop(app: play.api.Application) {
+    ToolPressQueueWorker.stop()
     super.onStop(app)
   }
 }

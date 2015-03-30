@@ -10,18 +10,22 @@ object BodyCleaner {
       implicit val edition = Edition(request)
       withJsoup(BulletCleaner(html))(
         InBodyElementCleaner,
-        PictureCleaner(article.bodyImages),
         InBodyLinkCleaner("in body link"),
         BlockNumberCleaner,
         TweetCleaner,
         WitnessCleaner,
-        VideoEmbedCleaner(article.bodyVideos),
-        new TagLinker(article),
+        TagLinker(article),
         TableEmbedComplimentaryToP,
+        R2VideoCleaner(article),
+        VideoEmbedCleaner(article),
+        PictureCleaner(article),
         LiveBlogDateFormatter(article.isLiveBlog),
         LiveBlogShareButtons(article),
         DropCaps(article.isComment || article.isFeature),
-        FigCaptionCleaner
+        FigCaptionCleaner,
+        RichLinkCleaner,
+        BlockquoteCleaner,
+        FormStackCleaner
       )
   }
 }

@@ -1,11 +1,25 @@
-@(related: model.RelatedContent)(implicit request: RequestHeader)
+@(content: model.Content, related: model.RelatedContent)(implicit request: RequestHeader)
 
-@if(related.hasStoryPackage) {
-    <aside role="complementary" class="related more-on-this-story@if(related.storyPackage.size == 1){ more-on-this-story--one-item}">
-    @fragments.relatedTrails(related.storyPackage, heading = "More on this story", visibleTrails = 15, dataComponent = "story-package")
-    </aside>
-} else {
-    <aside class="related js-related hide-on-childrens-books-site" role="complementary" data-test-id="related-content">
-    @fragments.relatedTrails(related.related, heading = "Related content", visibleTrails = 5, dataComponent = "related-content")
-    </aside>
+@import layout.FaciaContainer
+@import views.html.fragments.containers
+
+@container(stories: Seq[model.Content], title: String, dataId: String, href: Option[String]) = {
+    @containers.facia_cards.container(
+        FaciaContainer.forStoryPackage(dataId, stories, title, href)
+    )(request)
+}
+
+@defining(Seq("related") ++ (if(content.isAdvertisementFeature) Seq("fc-container--advertisement-feature") else Nil)) { classes =>
+    @if(related.hasStoryPackage) {
+        <aside class="@classes.mkString(" ") more-on-this-story" role="complementary" aria-labelledby="related-content-head">
+            @container(related.storyPackage, "more on this story", "more-on-this-story", href = None)
+        </aside>
+    } else {
+        <aside class="@classes.mkString(" ") js-related hide-on-childrens-books-site" role="complementary" data-test-id="related-content">
+        @*
+            We are not doing progressive enhancement here. The related content query is expensive and crawlers
+            were having too much fun with the links that used to be here. Also, nobody was actually reading those pages.
+        *@
+        </aside>
+    }
 }

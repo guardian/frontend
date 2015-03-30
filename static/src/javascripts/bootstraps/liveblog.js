@@ -2,46 +2,46 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/$',
     'common/utils/_',
+    'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/preferences',
     'common/utils/scroller',
     'common/utils/template',
     'common/utils/url',
+    'common/modules/article/rich-links',
     'common/modules/commercial/liveblog-adverts',
     'common/modules/experiments/affix',
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
     'common/modules/ui/dropdowns',
-    'common/modules/ui/message',
     'common/modules/ui/notification-counter',
+    'common/modules/ui/relativedates',
     'bootstraps/article',
-    'common/modules/ui/relativedates'
+    'common/utils/robust'
 ], function (
     bean,
     bonzo,
     qwery,
-    $,
     _,
+    $,
     config,
     detect,
     mediator,
-    preferences,
     scroller,
     template,
     url,
+    richLinks,
     liveblogAdverts,
     Affix,
     LiveFilter,
     AutoUpdate,
     dropdowns,
-    Message,
     NotificationCounter,
+    RelativeDates,
     article,
-    RelativeDates
+    robust
 ) {
     'use strict';
 
@@ -70,6 +70,7 @@ define([
     function createScrollTransitions() {
 
         var curBinding,
+            timeline      = qwery('.timeline')[0],
             selectedClass = 'live-blog__key-event--selected';
 
         function unselect() {
@@ -78,32 +79,34 @@ define([
 
         function unselectOnScroll() {
             bean.off(curBinding);
-            curBinding = bean.one(document, 'scroll', function () { unselect(); });
+            curBinding = mediator.once('window:scroll', function () { unselect(); });
         }
 
         bean.on(document.body, 'click', 'a', function (e) {
-            var id = e.currentTarget.href.match(/.*(#.*)/)[1];
-            if (id && $(id).hasClass('truncated-block')) {
+            var id = e.currentTarget.href.match(/.*(#.*)/);
+            if (id && $(id[1]).hasClass('truncated-block')) {
                 mediator.emit('module:liveblog:showkeyevents', true);
             }
         });
 
-        bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function (e) {
-            mediator.emit('module:liveblog:showkeyevents', true);
-            $('.dropdown--live-feed').addClass('dropdown--active');
-            var $el = bonzo(e.currentTarget),
-                eventId = $el.attr('data-event-id'),
-                title = $('.timeline__title', $el).text(),
-                targetEl = qwery('#' + eventId),
-                dim = bonzo(targetEl).offset();
-            scroller.scrollTo(dim.top, 500, 'easeOutQuint');
-            window.setTimeout(unselectOnScroll, 550);
-            bean.off(curBinding);
-            unselect();
-            $el.addClass(selectedClass);
-            url.pushUrl({blockId: eventId}, title, window.location.pathname + '#' + eventId, true);
-            e.stop();
-        });
+        if (timeline) {
+            bean.on(timeline, 'click', '.timeline__link', function (e) {
+                mediator.emit('module:liveblog:showkeyevents', true);
+                $('.dropdown--live-feed').addClass('dropdown--active');
+                var $el = bonzo(e.currentTarget),
+                    eventId = $el.attr('data-event-id'),
+                    title = $('.timeline__title', $el).text(),
+                    targetEl = qwery('#' + eventId),
+                    dim = bonzo(targetEl).offset();
+                scroller.scrollTo(dim.top - 12, 500, 'easeOutQuint');
+                window.setTimeout(unselectOnScroll, 550);
+                bean.off(curBinding);
+                unselect();
+                $el.addClass(selectedClass);
+                url.pushUrl({blockId: eventId}, title, window.location.pathname + '#' + eventId, true);
+                e.stop();
+            });
+        }
     }
 
     function createKeyEventHTML(el) {
@@ -222,32 +225,6 @@ define([
             });
         },
 
-        showFootballLiveBlogMessage: function () {
-            var msg, releaseMessage,
-                isFootballLiveBlog = config.page.pageId.indexOf('football/live/') === 0,
-                notMobile = detect.getBreakpoint() !== 'mobile';
-
-            if (isFootballLiveBlog && notMobile && !preferences.hasOptedIntoResponsive()) {
-
-                msg = '<p class="site-message__message" id="site-message__message">' +
-                    'We’ve redesigned our Football live blogs to make it easier to follow the match. We’d love to hear what you think.' +
-                    '</p>' +
-                    '<ul class="site-message__actions u-unstyled">' +
-                    '<li class="site-message__actions__item">' +
-                    '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="https://www.surveymonkey.com/s/guardianliveblogs_football" target="_blank">Leave feedback</a>' +
-                    '</li>' +
-                    '<li class="site-message__actions__item">' +
-                    '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="http://next.theguardian.com" target="_blank">Find out more</a>' +
-                    '</li>' +
-                    '</ul>';
-                releaseMessage = new Message('football-live-blog', {pinOnHide: true});
-
-                releaseMessage.show(msg);
-            }
-        },
-
         keepTimestampsCurrent: function () {
             var dates = RelativeDates;
             window.setInterval(
@@ -257,41 +234,25 @@ define([
                 60000
             );
 
-        },
-
-        truncateBlockShareIcons: function (blockShareEl) {
-            var truncated = qwery('> *', blockShareEl).slice(2);
-            bonzo(truncated).addClass('u-h');
-            $('.js-blockshare-expand', blockShareEl).removeClass('u-h');
-        },
-
-        initBlockSharing: function () {
-            bean.on(document.body, 'click', '.js-blockshare-expand', function (e) {
-                var expandButton = bonzo(e.currentTarget),
-                    container = expandButton.parent()[0];
-                $('> *', container).removeClass('u-h');
-                expandButton.addClass('u-h');
-            });
-            $.forEachElement('.block-share', modules.truncateBlockShareIcons);
         }
     };
 
     function ready() {
-        modules.initAdverts();
-        modules.createFilter();
-        modules.createTimeline();
-        modules.createAutoUpdate();
-        modules.showFootballLiveBlogMessage();
-        modules.keepTimestampsCurrent();
-        modules.initBlockSharing();
-        modules.handleUpdates();
+        robust('lb-adverts',    modules.initAdverts);
+        robust('lb-filter',     modules.createFilter);
+        robust('lb-timeline',   modules.createTimeline);
+        robust('lb-autoupdate', modules.createAutoUpdate);
+        robust('lb-timestamp',  modules.keepTimestampsCurrent);
+        robust('lb-updates',    modules.handleUpdates);
+        robust('lb-richlinks',  richLinks.upgradeRichLinks);
 
         // re-use modules from article bootstrap
-        article.modules.initOpen(config);
-        article.modules.initFence();
-        article.modules.initTruncateAndTwitter();
+        robust('lb-article',    article.modules.initOpenCta);
+        robust('lb-fence',      article.modules.initFence);
+        robust('lb-twitter',    article.modules.initTruncateAndTwitter);
+        robust('lb-sharing',    article.modules.initSelectionSharing);
 
-        mediator.emit('page:liveblog:ready', config);
+        robust('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
     }
 
     return {

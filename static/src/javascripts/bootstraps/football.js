@@ -1,33 +1,37 @@
 define([
-    'common/utils/$',
-    'bonzo',
     'bean',
+    'bonzo',
+    'common/utils/_',
+    'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
-    'common/utils/page',
-    'common/utils/mediator',
     'common/utils/detect',
-    'common/modules/ui/rhc',
+    'common/utils/mediator',
+    'common/utils/page',
     'common/modules/charts/table-doughnut',
-    'common/modules/sport/football/match-list-live',
+    'common/modules/sport/football/football',
     'common/modules/sport/football/match-info',
+    'common/modules/sport/football/match-list-live',
     'common/modules/sport/football/score-board',
-    'common/modules/sport/football/football'
+    'common/modules/sport/football/tag-page-stats',
+    'common/modules/ui/rhc'
 ], function (
-    $,
-    bonzo,
     bean,
+    bonzo,
+    _,
+    $,
     ajax,
     config,
-    page,
-    mediator,
     detect,
-    rhc,
+    mediator,
+    page,
     Doughnut,
-    MatchListLive,
+    football,
     MatchInfo,
+    MatchListLive,
     ScoreBoard,
-    football
+    tagPageStats,
+    rhc
 ) {
 
     function renderNav(match, callback) {
@@ -222,7 +226,10 @@ define([
         });
 
         page.isCompetition(function (competition) {
-            renderTable(competition, extras, dropdownTemplate);
+            var $rightHandCol = $('.js-secondary-column').dim().height;
+            if ($rightHandCol === 0 || $rightHandCol > 1800) {
+                renderTable(competition, extras, dropdownTemplate);
+            }
         });
 
         page.isLiveClockwatch(function () {
@@ -315,14 +322,15 @@ define([
                     }
                     return r;
                 })();
-                mediator.on('window:resize', resize);
+                mediator.on('window:resize', _.debounce(resize, 200));
                 bean.on(document, 'click', '.dropdown__button', resize);
             })();
         }
+
+        tagPageStats();
     }
 
     return {
         init: init
     };
-
 });

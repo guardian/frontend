@@ -4,7 +4,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'lodash/collections/forEach',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -13,7 +13,7 @@ define([
     bean,
     bonzo,
     qwery,
-    forEach,
+    _,
     $,
     config,
     detect,
@@ -22,7 +22,7 @@ define([
     var body = qwery('.js-liveblog-body');
 
     function bootstrap() {
-        mediator.on('window:scroll', enhanceTweets);
+        mediator.on('window:scroll', _.debounce(enhanceTweets, 200));
     }
 
     function enhanceTweets() {

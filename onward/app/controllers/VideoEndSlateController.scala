@@ -6,8 +6,9 @@ import model._
 import scala.concurrent.Future
 import implicits.Requests
 import conf.LiveContentApi
-import com.gu.openplatform.contentapi.ApiError
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.model.{Content => ApiContent}
+import LiveContentApi.getResponse
 
 object VideoEndSlateController extends Controller with Logging with Paging with ExecutionContexts with Requests {
 
@@ -20,19 +21,18 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
 
   private def lookupSection(edition: Edition, sectionId: String)(implicit request: RequestHeader): Future[Option[Seq[Video]]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
-    log.info(s"Fetching video content in section: ${sectionId}" )
+    log.info(s"Fetching video content in section: $sectionId" )
 
-    def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{ shortUrl => !shortUrl.equals(currentShortUrl) }.getOrElse(false)
+    def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").exists(_ == currentShortUrl)
 
-    val promiseOrResponse = LiveContentApi.search(edition)
+    val promiseOrResponse = getResponse(LiveContentApi.search(edition)
       .section(sectionId)
       .tag("type/video")
       .showTags("all")
       .showFields("all")
-      .response
-      .map {
+    ).map {
         response =>
-          response.results filter { content => isCurrentStory(content) } map { result =>
+          response.results filter { content => !isCurrentStory(content) } map { result =>
             Video(result)
           } match {
             case Nil => None
@@ -40,7 +40,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
           }
       }
 
-      promiseOrResponse.recover{ case ApiError(404, message) =>
+      promiseOrResponse.recover{ case GuardianContentApiError(404, message) =>
          log.info(s"Got a 404 calling content api: $message" )
          None
       }
@@ -63,24 +63,22 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
     log.info(s"Fetching content in series: ${seriesId} the ShortUrl ${currentShortUrl}" )
 
-    def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{shortUrl => !shortUrl.equals(currentShortUrl)}.getOrElse(false)
+    def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").exists(_ == currentShortUrl)
 
-    val promiseOrResponse = LiveContentApi.item(seriesId, edition)
+    val promiseOrResponse = getResponse(LiveContentApi.item(seriesId, edition)
       .tag("type/video")
       .showTags("all")
       .showFields("all")
-      .response
-      .map {
-      response =>
-        response.results filter { content => isCurrentStory(content) } map { result =>
-          Video(result)
-        } match {
-          case Nil => None
-          case results => Some(results)
-        }
+    ).map { response =>
+      response.results filter { content => !isCurrentStory(content) } map { result =>
+        Video(result)
+      } match {
+        case Nil => None
+        case results => Some(results)
+      }
     }
 
-    promiseOrResponse.recover{ case ApiError(404, message) =>
+    promiseOrResponse.recover{ case GuardianContentApiError(404, message) =>
       log.info(s"Got a 404 calling content api: $message" )
       None
     }

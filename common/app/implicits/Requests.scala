@@ -1,25 +1,22 @@
 package implicits
 
-import play.api.mvc.{Request, RequestHeader}
 import play.api.http.MediaRange
-import conf.Configuration.ajax._
+import play.api.mvc.RequestHeader
 
 trait Requests {
   implicit class RichRequestHeader(r: RequestHeader) {
 
     def getParameter(name: String): Option[String] = r.queryString.get(name).flatMap(_.headOption)
 
+    def getParameters(name: String): Seq[String] = r.queryString.getOrElse(name, Nil)
+
     def getIntParameter(name: String): Option[Int] = getParameter(name).map(_.toInt)
 
     def getBooleanParameter(name: String): Option[Boolean] = getParameter(name).map(_.toBoolean)
 
-    lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.headers.get("Accept").exists{ header =>
-      header.contains("application/json") ||
-      header.contains("text/javascript") ||
-      header.contains("application/javascript")
-    } || r.path.endsWith(".json")
+    lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.path.endsWith(".json")
 
-    lazy val isRss: Boolean = r.headers.get("Accept").exists(_.contains("application/rss+xml")) || r.path.endsWith("/rss")
+    lazy val isRss: Boolean = r.path.endsWith("/rss")
 
     lazy val isWebp: Boolean = {
       val requestedContentType = r.acceptedTypes.sorted(MediaRange.ordering)
@@ -27,7 +24,7 @@ trait Requests {
       imageMimeType.exists(_.mediaSubType == "webp")
     }
 
-    lazy val hasParameters: Boolean = !r.queryString.isEmpty
+    lazy val hasParameters: Boolean = r.queryString.nonEmpty
 
     lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase  "X-Gu-Management-Healthcheck")
 

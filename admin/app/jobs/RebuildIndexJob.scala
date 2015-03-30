@@ -41,16 +41,16 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
     /** Subjects are indexed both alphabetically and by their parent section */
     (keywords andThen series).run(Enumeratee.zip(bySection, byWebTitle)) map { case (sectionMap, alphaMap) =>
       blocking {
-        saveToS3("keywords", toPages(alphaMap)(alphaTitle))
-        saveToS3("keywords_by_section", toPages(sectionMap)(ValidSections(_)))
+        saveToS3("keywords", toPages(alphaMap)(alphaTitle, asciiLowerWebTitle))
+        saveToS3("keywords_by_section", toPages(sectionMap)(ValidSections(_), asciiLowerWebTitle))
       }
     }
   }
 
   def rebuildContributorIndex() = {
-    ContentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(byWebTitle) map { alphaMap =>
+    ContentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(byContributorNameOrder) map { alphaMap =>
       blocking {
-        saveToS3("contributors", toPages(alphaMap)(alphaTitle))
+        saveToS3("contributors", toPages(alphaMap)(alphaTitle, nameOrder))
       }
     }
   }

@@ -6,10 +6,9 @@ import model._
 import conf._
 import play.api.libs.json._
 import play.api.mvc.{ Controller, Action }
-import pa.FootballMatch
+import pa.{LineUpTeam, FootballMatch, LineUp}
 import org.joda.time.format.DateTimeFormat
 import feed._
-import pa.LineUp
 import implicits.{ Requests, Football }
 import scala.concurrent.Future
 
@@ -18,13 +17,19 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData w
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
 
+  def teamHasStats(team: LineUpTeam) =
+    ( team.offsides, team.shotsOn, team.shotsOff, team.fouls) match {
+      case (0,0,0,0) => false
+      case _ => true
+    }
+
+  lazy val hasPaStats: Boolean = teamHasStats( lineUp.homeTeam ) && teamHasStats( lineUp.awayTeam )
+
   override lazy val id = MatchUrl(theMatch)
   override lazy val section = "football"
   override lazy val webTitle = s"${theMatch.homeTeam.name} ${theMatch.homeTeam.score.getOrElse("")} - ${theMatch.awayTeam.score.getOrElse("")} ${theMatch.awayTeam.name}"
 
   override lazy val analyticsName = s"GFE:Football:automatic:match:${theMatch.date.toString("dd MMM YYYY")}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}"
-
-  override val hasClassicVersion = false
 
   override lazy val metaData: Map[String, JsValue] = super.metaData + (
     "footballMatch" -> JsObject(Seq(

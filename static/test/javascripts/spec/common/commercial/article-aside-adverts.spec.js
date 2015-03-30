@@ -1,88 +1,114 @@
 define([
+    'fastdom',
     'qwery',
-    'helpers/fixtures',
     'common/utils/$',
-    'common/modules/commercial/article-aside-adverts'
-], function(
+    'helpers/fixtures',
+    'helpers/injector'
+], function (
+    fastdom,
     qwery,
-    fixtures,
     $,
-    articleAsideAdverts
-){
+    fixtures,
+    Injector
+) {
 
-    describe('Article Aside Adverts', function() {
+    var config = {
+        switches: {
+            standardAdverts: true
+        },
+        page: {
+            contentType: 'Article'
+        }
+    };
 
-        var fixturesConfig = {
-                id: 'article-aside-adverts',
-                fixtures: [
-                    '<div class="content__secondary-column">' +
-                        '<div class="js-mpu-ad-slot"></div>' +
-                    '</div>'
-                ]
-            },
-            fixture,
-            config;
+    return new Injector()
+        .mock({
+            'common/utils/config': config
+        })
+        .require(['common/modules/commercial/article-aside-adverts'], function (articleAsideAdverts) {
 
-        beforeEach(function() {
-            fixtures.render(fixturesConfig);
-            fixture = qwery('#' + fixturesConfig.id)[0];
-            config = {
-                switches: {
-                    standardAdverts: true
-                },
-                page: {
-                    contentType: 'Article'
-                }
-            };
+            describe('Article Aside Adverts', function () {
+
+                var fixturesConfig = {
+                        id: 'article-aside-adverts',
+                        fixtures: [
+                            '<div class="content__secondary-column js-secondary-column">' +
+                            '<div class="js-mpu-ad-slot"></div>' +
+                            '</div>'
+                        ]
+                    },
+                    $fixturesContainer;
+
+                beforeEach(function () {
+                    config.switches = {
+                        standardAdverts: true
+                    };
+                    config.page = {
+                        contentType: 'Article'
+                    };
+
+                    $fixturesContainer = fixtures.render(fixturesConfig);
+                });
+
+                afterEach(function () {
+                    fixtures.clean(fixturesConfig.id);
+                });
+
+                it('should exist', function () {
+                    expect(articleAsideAdverts).toBeDefined();
+                });
+
+                it('should return the ad slot container on init', function (done) {
+                    var adSlotPromise = articleAsideAdverts.init();
+
+                    adSlotPromise.then(function (adSlot) {
+                        expect(adSlot[0]).toBe(qwery('.js-mpu-ad-slot', $fixturesContainer)[0]);
+                        done();
+                    });
+                });
+
+                it('should append ad slot', function (done) {
+                    articleAsideAdverts.init();
+
+                    fastdom.defer(function () {
+                        expect(qwery('.js-mpu-ad-slot > .ad-slot', $fixturesContainer).length).toBe(1);
+                        done();
+                    });
+                });
+
+                it('should have the correct ad name', function (done) {
+                    articleAsideAdverts.init();
+
+                    fastdom.defer(function () {
+                        expect($('.ad-slot', $fixturesContainer).data('name')).toBe('right');
+                        done();
+                    });
+                });
+
+                it('should have the correct size mappings', function (done) {
+                    articleAsideAdverts.init();
+
+                    fastdom.defer(function () {
+                        expect($('.ad-slot', $fixturesContainer).data('mobile')).toBe('1,1|300,250|300,251|300,600');
+                        done();
+                    });
+                });
+
+                it('should not display ad slot if standard-adverts switch is off', function () {
+                    config.switches.standardAdverts = false;
+
+                    expect(articleAsideAdverts.init()).toBe(false);
+                    expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
+                });
+
+                it('should not display ad slot if not on an article', function () {
+                    config.page.contentType = 'Gallery';
+
+                    expect(articleAsideAdverts.init()).toBe(false);
+                    expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
+                });
+            });
+
         });
-
-        afterEach(function() {
-            fixtures.clean(fixturesConfig.id);
-            articleAsideAdverts.reset();
-        });
-
-        it('should exist', function() {
-            expect(articleAsideAdverts).toBeDefined();
-        });
-
-        it('should not display ad slot if standard-adverts switch is off', function() {
-            config.switches.standardAdverts = false;
-            expect(articleAsideAdverts.init(config)).toBe(false);
-            expect(qwery('.ad-slot', fixture).length).toBe(0);
-        });
-
-        it('should not display ad slot if not on an article', function() {
-            config.page.contentType = 'Gallery';
-            expect(articleAsideAdverts.init(config)).toBe(false);
-            expect(qwery('.ad-slot', fixture).length).toBe(0);
-        });
-
-        it('should return the ad slot container on init', function() {
-            var adSlot = articleAsideAdverts.init(config)[0];
-            expect(adSlot).toBe(qwery('.js-mpu-ad-slot', fixture)[0]);
-        });
-
-        it('should append ad slot', function() {
-            articleAsideAdverts.init(config);
-            expect(qwery('.js-mpu-ad-slot > .ad-slot', fixture).length).toBe(1);
-        });
-
-        it('should have the correct ad name', function() {
-            articleAsideAdverts.init(config);
-            expect($('.ad-slot', fixture).data('name')).toBe('right');
-        });
-
-        it('should have the correct size mappings', function() {
-            articleAsideAdverts.init(config);
-            expect($('.ad-slot', fixture).data('mobile')).toBe('300,250|300,600');
-        });
-
-        it('should not add ad slot to hidden column', function() {
-            $('.content__secondary-column', fixture).css('display', 'none');
-            articleAsideAdverts.init(config);
-            expect($('.ad-slot', fixture).length).toBe(0);
-        });
-
-    });
 
 });

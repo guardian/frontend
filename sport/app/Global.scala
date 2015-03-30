@@ -7,6 +7,7 @@ import play.api.mvc.WithFilters
 object Global extends WithFilters(Filters.common: _*)
   with DevParametersLifecycle
   with CloudWatchApplicationMetrics
-  with SurgingContentAgentLifecycle {
+  with SurgingContentAgentLifecycle
+  with CorsErrorHandler {
   override lazy val applicationName = "frontend-sport"
 }

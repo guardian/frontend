@@ -36,7 +36,7 @@ class EmailVerificationControllerTest extends path.FreeSpec with ShouldMatchers 
     val token = "myToken"
 
     "when the api call succeeds" - {
-      when(api.validateEmail(token, trackingData)).thenReturn(Future.successful(Right()))
+      when(api.validateEmail(token, trackingData)).thenReturn(Future.successful(Right(())))
       val result = controller.verify(token)(testRequest)
 
       "should display the validation completed page" in {

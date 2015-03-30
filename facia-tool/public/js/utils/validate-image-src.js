@@ -1,7 +1,12 @@
-/* global _: true */
 define([
+    'underscore',
+    'jquery',
     'modules/vars'
-], function(vars){
+], function(
+    _,
+    $,
+    vars
+) {
 
     /**
      * Asserts if the given image URL is on The Guardian domain, is proper size and aspect ratio.
@@ -40,14 +45,19 @@ define([
                         (criteria.minWidth !== undefined && width < criteria.minWidth) ?
                             'Images cannot be less than ' + criteria.minWidth + ' pixels wide' :
                         (criteria.widthAspectRatio !== undefined && criteria.heightAspectRatio !== undefined
-                          && Math.abs((width * criteria.widthAspectRatio) / (height * criteria.heightAspectRatio) - 1) > 0.01) ?
+                          && Math.abs((height * criteria.widthAspectRatio) / (width * criteria.heightAspectRatio) - 1) > 0.01) ?
                             'Images must have a ' + criteria.widthAspectRatio + 'x' + criteria.heightAspectRatio + ' aspect ratio'
                             : false;
 
                 if (err) {
                     defer.reject(err);
                 } else {
-                    defer.resolve(width, height);
+                    // Get the src again from the img, this makes sure that the URL is encoded properly
+                    defer.resolve({
+                        width: width,
+                        height: height,
+                        src: img.src
+                    });
                 }
             };
             img.src = src;

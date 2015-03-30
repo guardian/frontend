@@ -1,20 +1,20 @@
 package controllers
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import layout.{CollectionEssentials, FaciaContainer}
 import play.api.mvc.{ Controller, Action, RequestHeader }
 import common._
 import model._
+import services.CollectionConfigWithId
+import slices.{Fixed, FixedContainers}
 import scala.concurrent.Future
 import implicits.Requests
 import conf.LiveContentApi
-import com.gu.openplatform.contentapi.ApiError
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
-import views.support.{MultimediaContainer, TemplateDeduping}
+import LiveContentApi.getResponse
+import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.model.{Content => ApiContent}
 
 object MediaInSectionController extends Controller with Logging with Paging with ExecutionContexts with Requests {
-
-  implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
-
   // These exist to work around the absence of default values in Play routing.
   def renderSectionMediaWithSeries(mediaType: String, sectionId: String, seriesId: String) =
     renderMedia(mediaType, sectionId, Some(seriesId))
@@ -29,20 +29,20 @@ object MediaInSectionController extends Controller with Logging with Paging with
 
   private def lookup(edition: Edition, mediaType: String, sectionId: String, seriesId: Option[String])(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
-    log.info(s"Fetching $mediaType content in section: ${sectionId}")
+    log.info(s"Fetching $mediaType content in section: $sectionId")
 
-    // Subtract the series id from the content type.
-    val tags = List(Some(s"type/$mediaType"), seriesId).flatten.mkString(",-")
+    val excludeTags: Seq[String] = (request.queryString.getOrElse("exclude-tag", Nil) ++ seriesId).map(t => s"-$t")
+    val tags = (s"type/$mediaType" +: excludeTags).mkString(",")
 
-    def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{ shortUrl => !shortUrl.equals(currentShortUrl) }.getOrElse(false)
+    def isCurrentStory(content: ApiContent) =
+      content.safeFields.get("shortUrl").exists(!_.equals(currentShortUrl))
 
-    val promiseOrResponse = LiveContentApi.search(edition)
+    val promiseOrResponse = getResponse(LiveContentApi.search(edition)
       .section(sectionId)
       .tag(tags)
       .showTags("all")
       .showFields("all")
-      .response
-      .map {
+    ).map {
       response =>
         response.results filter { content => isCurrentStory(content) } map { result =>
           Content(result)
@@ -52,14 +52,14 @@ object MediaInSectionController extends Controller with Logging with Paging with
         }
     }
 
-    promiseOrResponse.recover{ case ApiError(404, message) =>
+    promiseOrResponse recover { case GuardianContentApiError(404, message) =>
       log.info(s"Got a 404 calling content api: $message" )
       None
     }
   }
 
   private def renderSectionTrails(mediaType: String, trails: Seq[Content], sectionId: String)(implicit request: RequestHeader) = {
-    val sectionName = trails.headOption.map(t => t.sectionName).getOrElse("")
+    val sectionName = trails.headOption.map(t => t.sectionName.toLowerCase).getOrElse("")
 
     // Content API doesn't understand the alias 'uk-news'.
     val sectionTag = sectionId match {
@@ -71,8 +71,23 @@ object MediaInSectionController extends Controller with Logging with Paging with
       case "audio" => "audio"
       case m => s"${m}s"
     }
-    implicit val config = CollectionConfig.withDefaults(href = Some(tagCombinedHref), displayName = Some(s"More ${sectionName} $pluralMediaType"))
-    val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1, "content", useInlinePlayer = false, dataId = sectionId)
+
+    val dataId = s"$pluralMediaType in section"
+    val displayName = Some(s"more $sectionName $pluralMediaType")
+    val componentId = Some("more-media-in-section")
+
+    implicit val config = CollectionConfig.withDefaults(href = Some(tagCombinedHref), displayName = displayName)
+
+    val response = () => views.html.fragments.containers.facia_cards.container(
+      FaciaContainer(
+        1,
+        Fixed(FixedContainers.fixedMediumFastXI),
+        CollectionConfigWithId(dataId, config),
+        CollectionEssentials(trails take 7, Nil, displayName, None, None, None),
+        componentId
+      ).withTimeStamps,
+      FrontProperties.empty
+    )(request)
     renderFormat(response, response, 1)
   }
 }

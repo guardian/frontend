@@ -24,6 +24,14 @@
     max-width: none;
 }
 
+.identity-wrapper--with-membership {
+    @include mq($until: desktop) {
+        .tabs__tab {
+            width: auto;
+        }
+    }
+}
+
 .identity-header {
     @include mq(tablet) {
         margin-left: $gs-gutter;
@@ -49,7 +57,7 @@
 }
 
 .identity-section {
-    border-top: 1px solid $c-neutral7;
+    border-top: 1px solid colour(neutral-7);
     @include box-sizing(border-box);
     margin: (($gs-baseline/3)*5) 0;
     padding-top: (($gs-baseline/3)*5) - 1;
@@ -71,7 +79,7 @@
     }
 }
 .identity-title--public-profile {
-    @include mq(rightCol) {
+    @include mq(desktop) {
         float: left;
         white-space: nowrap;
     }
@@ -212,7 +220,7 @@
         margin-top: 0;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         margin-top: $gs-baseline/2;
         float: right;
     }
@@ -228,7 +236,7 @@
 .user-profile__web-page {
     display: block;
     @include fs-textSans(1);
-    color: $c-neutral2-contrasted;
+    color: colour(neutral-2-contrasted);
     font-weight: normal;
 }
 .user-profile__web-page {
@@ -279,7 +287,7 @@
 
 .tabs--identity {
     .tabs__tab--selected {
-        border-top-color: $c-newsAccent;
+        border-top-color: colour(news-accent);
     }
     .tabs__tab {
         max-width: gs-span(3);
@@ -301,346 +309,13 @@
 }
 
 
-/* Edit profile Membership tab
-   ========================================================================== */
-
-.identity-wrapper--with-membership {
-    @include mq($until: desktop) {
-        .tabs__tab {
-            width: auto;
-        }
-    }
-}
-
-.membership-tab {
-    padding-bottom: $gs-baseline*2;
-
-    .membership-tab__details-list {
-        padding-top: $gs-baseline*2;
-
-        li {
-            margin-bottom: $gs-baseline;
-
-            .membership-tab__card-details {
-                padding: 8px 4px 8px 12px;
-            }
-
-            .membership-tab__upgrade {
-                margin: 0;
-            }
-        }
-
-        .membership-tab__card-types {
-            display: inline-block;
-            height: 35px;
-            width: 54px;
-            vertical-align: middle;
-        }
-
-        .membership-tab__update-button {
-            display: block;
-            @include box-sizing(border-box);
-            width: 120px;
-            margin: ($gs-baseline/2) 0 0;
-
-            @include mq(tablet) {
-                float: right;
-                margin: 0;
-            }
-
-            &:hover,
-            &:active,
-            &:focus {
-                text-decoration: none;
-            }
-        }
-
-        .membership-payment-cost {
-            text-transform: uppercase;
-        }
-
-        .membership-tab__update-button--muted {
-            background: none;
-            color: $c-newsDefault;
-
-            &:hover,
-            &:focus {
-                background: none;
-                text-decoration: underline;
-            }
-            &:active {
-                color: $c-newsAccent;
-            }
-        }
-
-        .membership-tab__interval {
-            text-transform: lowercase;
-        }
-    }
-
-    .membership-tab__details-list--lower {
-        padding-top: 0;
-    }
-
-    .membership-tab__subscription-change {
-        position: relative;
-    }
-
-    .subscription-change__title {
-        background-color: #fff8e5;
-        @include fs-header(3);
-        padding: 15px 0 15px 4px;
-        margin: 32px 0 15px;
-        border-top: 1px solid $c-commentAccent;
-        border-bottom: 1px solid $c-commentAccent;
-    }
-
-    .change-summary__heading {
-        @include fs-header(3);
-        border-top: 1px solid $c-neutral4;
-        padding: 15px 0 20px;
-        margin-top: $gs-gutter*2;
-    }
-
-    .change-summary__arrow {
-        display: block;
-        position: absolute;
-        @include background-size(rem(18px 16px));
-        left: 50%;
-        top: 598px;
-        margin-left: -9px;
-        width: 18px;
-        height: 16px;
-
-        @include transform(rotate(90deg));
-
-        @include mq(tablet) {
-            @include transform(rotate(0deg));
-            top: 384px;
-        }
-
-        @include mq(desktop) {
-            @include transform(rotate(0deg));
-            @include background-size(rem(26px 24px));
-            top: 330px;
-            margin-left: -13px;
-            width: 26px;
-            height: 24px;
-        }
-    }
-
-    .change-summary__container {
-        padding-bottom: 80px;
-        -webkit-box-pack: justify;
-        -moz-box-pack: justify;
-        -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
-        justify-content: space-between;
-
-        .change-summary__panel {
-            background-color: $c-neutral8;
-            margin-top: 30px;
-
-            @include mq(tablet) {
-                margin: 0;
-                flex-grow: 0;
-                flex-direction: column;
-                display: inline-block;
-                vertical-align: top;
-                width: 47%;
-                flex-basis: 47%;
-            }
-
-            .change-summary__panel-label {
-                display: block;
-                @include fs-textSans(4);
-                color: #ffffff;
-                height: 30px;
-                padding: 0 0 0 12px;
-                line-height: 30px;
-            }
-
-            .change-summary__panel-label--current {
-                background-color: $c-neutral2;
-            }
-            .change-summary__panel-label--target {
-                background-color: $c-newsAccent;
-            }
-        }
-
-        .change-summary__header {
-            height: 57px;
-            border-top: 1px solid $c-neutral4;
-            border-bottom: 1px solid $c-neutral4;
-
-            .change-summary__tier-icon {
-                display: inline-block;
-                vertical-align: middle;
-                height: 28px;
-                line-height: 54px;
-                padding: 0 6px 0 12px;
-            }
-
-            i {
-                display: inline-block;
-                vertical-align: middle;
-                @include background-size(rem(28px 28px));
-                height: 28px;
-                width: 28px;
-            }
-
-            .change-summary_tier {
-                @include fs-header(2);
-                display: inline-block;
-                vertical-align: top;
-                line-height: 57px;
-            }
-        }
-
-        .change-summary__meta {
-            padding: 15px 0 30px 12px;
-
-            .change-summary__label,
-            .change-summary__data {
-                display: inline-block;
-
-                @include mq(tablet, desktop) {
-                    display: block;
-                    margin-bottom: $gs-baseline;
-                }
-            }
-
-            .change-summary__label {
-                @include fs-bodyHeading(2);
-                min-width: 50%;
-            }
-
-            .change-summary__data {
-                @include fs-bodyCopy(2);
-            }
-        }
-    }
-
-    .membership-tab__change-cc-form-cont {
-        display: none;
-        overflow: hidden;
-        height: auto;
-
-        .form__error {
-            margin: 0 0 $gs-baseline;
-        }
-
-        .is-updating {
-            vertical-align: middle;
-            margin-top: 0;
-        }
-
-        &.membership-tab__change-cc-form-cont--to-open {
-            display: block;
-            @include animation(mem-tab-to-open .25s ease-in-out);
-        }
-        &.membership-tab__change-cc-form-cont--open {
-            display: block;
-
-            @include mq(tablet) {
-                max-height: 350px;
-            }
-            opacity: 1;
-        }
-
-        &.membership-tab__change-cc-form-cont--to-closed {
-            display: block;
-            max-height: 0;
-            opacity: 0;
-            @include animation(mem-tab-to-closed .25s ease-in-out forwards);
-        }
-        &.membership-tab__change-cc-form-cont--closed {
-            display: none;
-            max-height: 0;
-            opacity: 0;
-        }
-
-        /* Stripe credit card types
-           ========================================================================== */
-
-        $small-card: 32px;
-        $large-card: 35px;
-
-        .membership-tab__credit-card-container {
-            position: relative;
-        }
-
-        .membership-tab__card-types--in-field {
-            position: absolute;
-            right: 2px;
-            top: 2px;
-            width: 54px;
-            height: $large-card;
-        }
-
-        @include mq(tablet) {
-            .membership-tab__card-types--in-field {
-                width: 49px !important;
-                height: $small-card !important;
-                @include background-size(49px $small-card);
-            }
-        }
-    }
-}
-
-
-/* Membership Keyframe animations
-   ========================================================================== */
-
-@include keyframes('mem-tab-to-open') {
-    0% {
-        opacity: 0;
-        max-height: 0;
-    }
-    100% {
-        opacity: 1;
-        max-height: rem(424px);
-
-        @include mq(tablet) {
-            max-height: rem(350px);
-        }
-    }
-}
-
-@include keyframes('mem-tab-to-closed') {
-    0% {
-        opacity: 1;
-        max-height: rem(424px);
-
-        @include mq(tablet) {
-            max-height: rem(350px);
-        }
-    }
-    100% {
-        max-height: 0;
-        opacity: 0;
-    }
-}
-
-@include keyframes('updated') {
-    0% {
-        background-color: $c-brandLightBlue;
-        color: #ffffff;
-    }
-    100% {
-        background-color: #ffffff;
-        color: inherit;
-    }
-}
-
-
 /* Email subscriptions
    ========================================================================== */
 .email-subscriptions {
     margin-top: $gs-baseline*2;
 }
 .email-subscription {
-    border-top: 1px solid $c-neutral5;
+    border-top: 1px solid colour(neutral-5);
     margin-bottom: $gs-baseline*2;
     padding-top: $gs-baseline/3;
 }
@@ -688,7 +363,7 @@
 }
 .email-subscription__button {
     @include fs-textSans(2);
-    background: $c-brandBlue;
+    background: colour(guardian-brand);
     border: 0;
     color: #ffffff;
     cursor: pointer;
@@ -700,6 +375,6 @@
     }
 
     .email-subscription--subscribed & {
-        background: $c-neutral2-contrasted;
+        background: colour(neutral-2-contrasted);
     }
 }

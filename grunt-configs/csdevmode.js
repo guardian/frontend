@@ -5,7 +5,7 @@ module.exports = function(grunt, options) {
             destBasePath: options.staticHashDir + '/stylesheets'
         },
         main: {
-            assets: ['global', 'head.default', 'head.facia', 'head.football']
+            assets: ['global', 'head.content', 'head.facia', 'head.football']
         }
     };
 };

@@ -1,107 +1,143 @@
 define([
     'bean',
     'bonzo',
-    'raven',
-    'lodash/arrays/flatten',
-    'lodash/arrays/intersection',
-    'lodash/objects/assign',
-    'lodash/objects/isArray',
+    'common/utils/$',
+    'fastdom',
+    'qwery',
+    'common/utils/_',
     'common/utils/ajax',
+    'common/utils/config',
     'common/utils/storage',
-    'common/modules/onward/history'
+    'common/utils/template',
+    'common/modules/analytics/omniture',
+    'common/views/svgs',
+    'text!common/views/breaking-news.html'
 ], function (
     bean,
     bonzo,
-    raven,
-    flatten,
-    intersection,
-    assign,
-    isArray,
+    $,
+    fastdom,
+    qwery,
+    _,
     ajax,
+    config,
     storage,
-    history
+    template,
+    omniture,
+    svgs,
+    alertHtml
 ) {
     var breakingNewsSource = '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
-        interestThreshold = 5,
         maxSimultaneousAlerts = 1,
-        container;
+        $breakingNews,
+        $body,
+        marque36icon,
+        closeIcon;
 
-    function slashDelimit() {
-        return Array.prototype.slice.call(arguments).filter(function(str) { return str;}).join('/');
+    function cleanIDs(articleIds, hiddenIds) {
+        var cleanedIDs = {};
+        _.forEach(articleIds, function (articleID) {
+            cleanedIDs[articleID] = hiddenIds[articleID] || false;
+        });
+        return cleanedIDs;
     }
 
-    return function (config) {
-        var page = (config || {}).page,
-            hiddenIds = storage.local.get(storageKeyHidden) || [];
+    return function () {
+        var page = config.page,
+            hiddenIds = storage.local.get(storageKeyHidden) || {};
 
-        if (!page || hiddenIds.indexOf(page.pageId) > -1) { return; }
+        if (!page || hiddenIds[page.pageId] === true) { return; }
 
         ajax({
             url: breakingNewsSource,
             type: 'json',
             crossOrigin: true
         }).then(
-            function(resp) {
+            function (resp) {
                 var collections = (resp.collections || [])
-                    .filter(function(collection) { return isArray(collection.content) && collection.content.length; })
-                    .map(function(collection) {
+                    .filter(function (collection) { return _.isArray(collection.content) && collection.content.length; })
+                    .map(function (collection) {
                         collection.href = collection.href.toLowerCase();
                         return collection;
                     }),
 
-                    keyword = page.keywordIds ? page.keywordIds.split(',')[0] : '',
+                    edition = (page.edition || '').toLowerCase(),
 
-                    pageMatchers = [
-                        page.edition,
-                        page.section,
-                        slashDelimit(page.edition, page.section),
-                        window.location.pathname.slice(1),
-                        keyword,
-                        keyword.split('/')[0]
-                    ]
-                    .filter(function(match) { return match; })
-                    .reduce(function(matchers, term) {
-                        matchers[term.toLowerCase()] = true;
-                        return matchers;
-                    }, {}),
-
-                    historyMatchers = assign({}, assign(history.getSummary().sections, history.getSummary().keywords)),
-
-                    articles = flatten([
-                        collections.filter(function(c) { return c.href === 'global'; }).map(function(c) { return c.content; }),
-                        collections.filter(function(c) { return pageMatchers[c.href]; }).map(function(c) { return c.content; }),
-                        collections.filter(function(c) { return historyMatchers[c.href] >= interestThreshold; }).map(function(c) { return c.content; })
+                    articles = _.flatten([
+                        collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
+                        collections.filter(function (c) { return c.href === edition;  }).map(function (c) { return c.content; })
                     ]),
 
-                    articleIds = articles.map(function(article) { return article.id; });
+                    articleIds = articles.map(function (article) { return article.id; }),
+                    alertDelay = 3000,
+                    alerts;
 
+                // if we're on the page that an alert is for, hide alerts for it
                 if (articleIds.indexOf(page.pageId) > -1) {
-                    hiddenIds.push(page.pageId);
-                    storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
-                    // when displaying a breaking news item, don't show any other breaking news:
-                    return;
+                    hiddenIds[page.pageId] = true;
                 }
 
-                articles
-                .filter(function(article) {
-                    return (hiddenIds.indexOf(article.id) === -1);
-                })
-                .slice(0, maxSimultaneousAlerts)
-                .forEach(function(article) {
-                    var $el = bonzo.create('<div class="breaking-news-item" data-link-name="breaking news"><a data-link-name="article" href="/' + article.id + '">Breaking news: ' + article.headline + '</a></div>'),
-                        $closer = bonzo.create('<i class="breaking-news-item__close i-close-icon-white" data-link-name="close"></i>');
+                // update stored IDs with current batch, so we know we've seen these
+                storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
 
-                    bonzo($el).append($closer);
-                    container = container || bonzo(document.querySelector('.js-breaking-news-placeholder'));
-                    container.append($el);
+                alerts = _.chain(articles)
+                    .filter(function (article) { return hiddenIds[article.id] !== true; })
+                    .first(maxSimultaneousAlerts)
+                    .value();
 
-                    bean.on($closer[0], 'click', function() {
-                        bonzo($el).hide();
-                        hiddenIds.push(article.id);
-                        storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
+                if (alerts.length) {
+                    $breakingNews = $breakingNews || bonzo(qwery('.js-breaking-news-placeholder'));
+                    marque36icon = svgs('marque36icon');
+                    closeIcon = svgs('closeCentralIcon');
+
+                    _.forEach(alerts, function (article) {
+                        var el;
+
+                        article.marque36icon = marque36icon;
+                        article.closeIcon = closeIcon;
+                        el = bonzo.create(template(alertHtml, article));
+
+                        bean.on($('.js-breaking-news__item__close', el)[0], 'click', function () {
+                            fastdom.write(function () {
+                                $('[data-breaking-article-id]').hide();
+                            });
+                            hiddenIds[article.id] = true;
+                            storage.local.set(storageKeyHidden, cleanIDs(articleIds, hiddenIds));
+                        });
+
+                        fastdom.write(function () {
+                            $breakingNews.append(el);
+                        });
+
+                        if (hiddenIds[article.id] === false) {
+                            alertDelay = 0;
+                        }
                     });
-                });
+
+                    setTimeout(function () {
+                        var message = 'breaking news alert shown' + (alertDelay ? '' : ' 2 or more times'), $breakingNewsSpectre;
+
+                        $body = $body || bonzo(document.body);
+                        $breakingNewsSpectre = bonzo(bonzo.create($breakingNews[0])).addClass('breaking-news--spectre').removeClass('breaking-news--hidden');
+
+                        fastdom.write(function () {
+                            $body.append($breakingNewsSpectre);
+                        });
+
+                        if (!alertDelay) {
+                            fastdom.write(function () {
+                                $breakingNews.removeClass('breaking-news--fade-in');
+                            });
+                        }
+
+                        fastdom.write(function () {
+                            $breakingNews.removeClass('breaking-news--hidden');
+                        });
+
+                        omniture.trackLink(this, message);
+                    }, alertDelay);
+                }
             }
         );
     };

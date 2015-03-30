@@ -1,16 +1,14 @@
 package model
 
+import common.Edition
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 
 import org.joda.time.DateTime
-import com.gu.openplatform.contentapi.model.{ Asset, Element =>ApiElement, Content => ApiContent, Tag => ApiTag }
+import com.gu.contentapi.client.model.{Asset, Element => ApiElement, Content => ApiContent, Tag => ApiTag}
 
 class ContentTest extends FlatSpec with Matchers with implicits.Dates {
-
-
   "Trail" should "be populated properly" in {
-
     val imageElement = ApiElement(
       "test-picture",
       "main",
@@ -58,9 +56,9 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
 
     val tags = new Tags {
       override val tags = theBlogs ++ theTones ++ theContributors ++ theSeries ++ theKeywords ++ theTypes
-      override def isSponsored: Boolean = false
-      override def isFoundationSupported: Boolean = false
-      override def isAdvertisementFeature: Boolean = false
+      override def isSponsored(maybeEdition: Option[Edition]): Boolean = false
+      override val isFoundationSupported: Boolean = false
+      override val isAdvertisementFeature: Boolean = false
     }
 
     tags.keywords should be(theKeywords)
@@ -123,15 +121,27 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
       sectionId = None, sectionName = None, webUrl = url, apiUrl = "apiurl", references = Nil)
   }
 
-  private def content(contentType:String, elements:List[ApiElement]): Content = {
+  private def content(contentType: String, elements: List[ApiElement]): Content = {
     Content(
-      ApiContent("/content", None, None, Some(DateTime.now), "webTitle", "webUrl", "apiUrl", None,
-                 List(tag(s"type/${contentType}")), Nil,Nil, Some(elements), Nil, None)
+      ApiContent(
+        "/content",
+        None,
+        None,
+        Some(DateTime.now),
+        "webTitle",
+        "webUrl",
+        "apiUrl",
+        None,
+        List(tag(s"type/$contentType")),
+        Some(elements),
+        Nil,
+        None
+      )
     )
   }
 
-  private val article: ApiContent = ApiContent("/content", None, None, Some(DateTime.now), "webTitle", "webUrl", "apiUrl", None,
-    List(tag("type/article")), Nil,Nil, None, Nil, None)
+  private val article: ApiContent =
+    content("article", Nil).apiContent.delegate
 
   private def image(  id: String,
                       relation: String,

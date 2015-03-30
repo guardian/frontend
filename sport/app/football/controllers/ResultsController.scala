@@ -12,6 +12,9 @@ import model.Competition
 
 object ResultsController extends MatchListController with CompetitionResultFilters {
 
+  private def results(date: LocalDate) = new ResultsList(date, Competitions())
+  private val page = new FootballPage("football/results", "football", "All results", "GFE:Football:automatic:results")
+
   def allResultsForJson(year: String, month: String, day: String) = allResultsFor(year, month, day)
   def allResultsFor(year: String, month: String, day: String): Action[AnyContent] =
     renderAllResults(createDate(year, month, day))
@@ -20,10 +23,18 @@ object ResultsController extends MatchListController with CompetitionResultFilte
   def allResults(): Action[AnyContent] =
     renderAllResults(LocalDate.now(Edition.defaultEdition.timezone))
 
+  def moreResultsFor(year: String, month: String, day: String): Action[AnyContent] =
+    renderMoreResults(createDate(year, month, day))
+
+  def moreResultsForJson(year: String, month: String, day: String) = moreResultsFor(year, month, day)
+
+
   private def renderAllResults(date: LocalDate) = Action { implicit request =>
-    val results = new ResultsList(date, Competitions())
-    val page = new FootballPage("football/results", "football", "All results", "GFE:Football:automatic:results")
-    renderMatchList(page, results, filters)
+    renderMatchList(page, results(date), filters)
+  }
+
+  private def renderMoreResults(date: LocalDate) = Action { implicit request =>
+    renderMoreMatches(page, results(date), filters)
   }
 
   def tagResultsJson(tag: String) = tagResults(tag)

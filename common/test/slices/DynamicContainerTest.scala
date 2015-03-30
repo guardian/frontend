@@ -102,14 +102,14 @@ trait DynamicContainerTest extends FlatSpec with Matchers with GeneratorDrivenPr
 
   it should "for 0 huge and one very big, return FullThreeQuarterImage as the optional first slice" in {
     forAll { stories: Seq[Story] =>
-      slicesFor(Story.unboosted(2) +: stories.dropWhile(_.group >= 2)).value.headOption.value shouldEqual Full
+      slicesFor(Story.unboosted(2) +: stories.dropWhile(_.group >= 2)).value.headOption.value shouldEqual FullMedia75
     }
   }
 
-  it should "for any number of huge stories >= 1, return Full as the optional first slice" in {
+  it should "for any number of huge stories >= 1, return FullMedia75 as the optional first slice" in {
     forAll { stories: Seq[Story] =>
       whenever(stories.headOption.exists(_.group == 3)) {
-        slicesFor(stories).value.headOption.value shouldEqual MegaFull
+        slicesFor(stories).value.headOption.value shouldEqual FullMedia100
       }
     }
   }

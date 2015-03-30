@@ -15,7 +15,7 @@ define([
         return bonzo(bonzo.create(s));
     };
     $.ancestor = function (el, c) {
-        if (el.tagName.toLowerCase() === 'html') {
+        if (el.nodeName.toLowerCase() === 'html') {
             return false;
         }
         if (!el.parentNode || bonzo(el.parentNode).hasClass(c)) {

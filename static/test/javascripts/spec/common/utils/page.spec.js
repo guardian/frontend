@@ -1,104 +1,139 @@
 define([
-    'common/utils/config',
-    'common/utils/page'
-], function(
-    config,
-    page
+    'helpers/injector'
+], function (
+    Injector
 ) {
 
-    describe('Page', function() {
-        var cb;
-        function reset() {
-            cb = sinon.spy();
-            config.page.tones = '';
-            config.page.series = '';
-            config.page.isLive = false;
-            config.isLiveBlog = false;
-        }
-        beforeEach(reset);
+   return  new Injector()
+        .store('common/utils/config')
+        .require(['common/utils/page', 'mocks'], function (page, mocks) {
 
-        describe ('isMatch', function() {
+            describe('Page', function () {
 
-            it('should callback on match reports', function() {
-                // Report
-                config.referencesOfType = function() { return [34, 3] };
-                config.page.tones = 'Match reports';
-                page.isMatch(cb);
-                expect(cb.calledWith({
-                    date: '2013/03/20',
-                    teams: [34, 3],
-                    pageType: 'report',
-                    isLive: false
-                })).toBe(true);
+                beforeEach(function () {
+                    mocks.store['common/utils/config'].page = {
+                        tones: '',
+                        series: '',
+                        isLive: false,
+                        isLiveBlog: false,
+                        webPublicationDate: '2013-03-20T17:07:00.000Z'
+                    };
+                });
+
+                describe ('isMatch', function() {
+
+                    it('should callback on match reports', function () {
+                        mocks.store['common/utils/config'].referencesOfType = function() { return [34, 3] };
+                        mocks.store['common/utils/config'].page.tones = 'Match reports';
+
+                        var cb = sinon.spy();
+                        // Report
+                        page.isMatch(cb);
+
+                        expect(cb).toHaveBeenCalledWith({
+                            date: '2013/03/20',
+                            teams: [34, 3],
+                            pageType: 'report',
+                            isLive: false
+                        });
+                    });
+
+                    it('should callback on minute by minute live blogs', function () {
+                        mocks.store['common/utils/config'].referencesOfType = function() { return [33, 1] };
+                        mocks.store['common/utils/config'].page.isLiveBlog = true;
+
+                        var cb = sinon.spy();
+
+                        // Report
+                        page.isMatch(cb);
+
+                        expect(cb).toHaveBeenCalledWith({
+                            date: '2013/03/20',
+                            teams: [33, 1],
+                            pageType: 'minbymin',
+                            isLive: false
+                        });
+                    });
+
+                    it('should callback on match previews', function () {
+                        mocks.store['common/utils/config'].referencesOfType = function() { return [1, 2] };
+                        mocks.store['common/utils/config'].page.series = 'Match previews';
+
+                        var cb = sinon.spy();
+
+                        // Report
+                        page.isMatch(cb);
+
+                        expect(cb).toHaveBeenCalledWith({
+                            date: '2013/03/20',
+                            teams: [1, 2],
+                            pageType: 'preview',
+                            isLive: false
+                        });
+                    });
+
+                    it('should not callback without two teams', function () {
+                        mocks.store['common/utils/config'].referencesOfType = function() { return [1] };
+                        mocks.store['common/utils/config'].page.isLiveBlog = true;
+
+                        var cb = sinon.spy();
+
+                        // Report
+                        page.isMatch(cb);
+
+                        expect(cb).not.toHaveBeenCalled();
+                    });
+                });
+
+
+                describe('isClockwatch', function() {
+                    it ('should not callback on non-clockwatch series', function () {
+                        mocks.store['common/utils/config'].page.series = 'Blogger of the week (Cities)';
+
+                        var cb = sinon.spy();
+
+                        page.isClockwatch(cb);
+
+                        expect(cb).not.toHaveBeenCalled();
+                    });
+
+                    it ('should callback on clockwacth pages', function () {
+                        mocks.store['common/utils/config'].page.series = 'Clockwatch';
+
+                        var cb = sinon.spy();
+
+                        page.isClockwatch(cb);
+
+                        expect(cb).toHaveBeenCalled();
+                    });
+                });
+
+                describe('isLiveClockwatch', function() {
+                    it ('should not callback on non-live clockwatches', function () {
+                        mocks.store['common/utils/config'].page.series = 'Clockwatch';
+                        mocks.store['common/utils/config'].page.isLive = false;
+
+                        var cb = sinon.spy();
+
+                        page.isLiveClockwatch(cb);
+
+                        expect(cb).not.toHaveBeenCalled();
+                    });
+
+                    it ('should callback on live clockwatches', function () {
+                        mocks.store['common/utils/config'].page.series = 'Clockwatch';
+                        mocks.store['common/utils/config'].page.isLive = true;
+
+                        var cb = sinon.spy();
+
+                        page.isLiveClockwatch(cb);
+
+                        expect(cb).toHaveBeenCalled();
+                    });
+                });
+
             });
 
-            it('should callback on minute by minute live blogs', function() {
-                // Report
-                config.referencesOfType = function() { return [33, 1] };
-                config.page.isLiveBlog = true;
-                page.isMatch(cb);
-                expect(cb.calledWith({
-                    date: '2013/03/20',
-                    teams: [33, 1],
-                    pageType: 'minbymin',
-                    isLive: false
-                })).toBe(true);
-                config.page.isLiveBlog = false;
-            });
-
-            it('should callback on match previews', function() {
-                // Report
-                config.referencesOfType = function() { return [1, 2] };
-                config.page.series = 'Match previews';
-                page.isMatch(cb);
-                expect(cb.calledWith({
-                    date: '2013/03/20',
-                    teams: [1, 2],
-                    pageType: 'preview',
-                    isLive: false
-                })).toBe(true);
-            });
-
-            it('should not callback without two teams', function() {
-                // Report
-                config.referencesOfType = function() { return [1] };
-                config.page.isLiveBlog = true;
-                page.isMatch(cb);
-                expect(cb.called).toBe(false);
-            });
         });
-
-
-        describe('isClockwatch', function() {
-            it ('should not callback on non-clockwatch series', function() {
-                config.page.series = 'Blogger of the week (Cities)';
-                page.isClockwatch(cb);
-                expect(cb.called).toBe(false);
-            });
-
-            it ('should callback on clockwacth pages', function() {
-                config.page.series = 'Clockwatch';
-                page.isClockwatch(cb);
-                expect(cb.called).toBe(true);
-            });
-        });
-
-        describe('isLiveClockwatch', function() {
-            it ('should not callback on non-live clockwatches', function() {
-                config.page.series = 'Clockwatch';
-                config.page.isLive = false;
-                page.isLiveClockwatch(cb);
-                expect(cb.called).toBe(false);
-            });
-
-            it ('should callback on live clockwatches', function() {
-                config.page.series = 'Clockwatch';
-                config.page.isLive = true;
-                page.isLiveClockwatch(cb);
-                expect(cb.called).toBe(true);
-            });
-        });
-
-    });
 
 });

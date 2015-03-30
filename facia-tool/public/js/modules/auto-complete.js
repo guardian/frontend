@@ -1,9 +1,11 @@
 define([
+    'jquery',
     'modules/vars',
     'modules/authed-ajax',
     'modules/cache'
 ],
 function (
+    $,
     vars,
     authedAjax,
     cache

@@ -4,7 +4,7 @@ import org.scalatest.{Matchers, FlatSpec}
 import model.{Tag, MetaData, Content, Page}
 import play.api.test.FakeRequest
 import common.Pagination
-import com.gu.openplatform.contentapi.model.{Content => ApiContent, Tag => ApiTag}
+import com.gu.contentapi.client.model.{Content => ApiContent, Tag => ApiTag}
 import org.joda.time.DateTime
 
 class TitleTest extends FlatSpec with Matchers {
@@ -37,11 +37,19 @@ class TitleTest extends FlatSpec with Matchers {
 
   it should "should create a title for a Tag" in {
     val tag = new ApiTag("sport/foobar", "type", webTitle = "The title", webUrl = "http://foo.bar",
-      apiUrl = "http://foo.bar", sectionId = Some("sport"))
+      apiUrl = "http://foo.bar", sectionName = Some("Sport"))
 
     Title(Tag(tag))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | Sport | The Guardian")
 
     Title(Tag(tag, Some(Pagination(3, 4, 10))))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | Page 3 of 4 | Sport | The Guardian")
+  }
+
+  it should "should use the section name in the Tag title" in {
+    val tag = new ApiTag("lifeandstyle/foobar", "type", webTitle = "The title", webUrl = "http://foo.bar",
+      apiUrl = "http://foo.bar", sectionName = Some("Life and style"))
+
+    Title(Tag(tag))(FakeRequest("GET", "/lifeandstyle/foobar")).body should be ("The title | Life and style | The Guardian")
+
   }
 
   it should "filter out section if it is the same as webTitle" in {

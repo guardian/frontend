@@ -5,6 +5,7 @@ import common._
 import model.{Content, Video}
 import scala.concurrent.Future
 import play.api.libs.json._
+import LiveContentApi.getResponse
 
 object MostViewedVideoAgent extends Logging with ExecutionContexts {
 
@@ -27,7 +28,7 @@ object MostViewedVideoAgent extends Logging with ExecutionContexts {
         videoResult <- result.asOpt[JsArray].map(_.value).getOrElse(Nil)
         path <- videoResult.validate[QueryResult].asOpt.map(_.paths).getOrElse(Nil) if path.contains("/video/")
       } yield {
-        LiveContentApi.item(path, Edition.defaultEdition).response.map(_.content.map(Content(_)))
+        getResponse(LiveContentApi.item(path, Edition.defaultEdition)).map(_.content.map(Content(_)))
       }
 
       Future.sequence(mostViewed).map { contentSeq =>

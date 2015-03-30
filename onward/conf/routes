@@ -22,7 +22,6 @@ GET        /related/*path.json                        controllers.RelatedControl
 
 GET        /popular-in-tag/*tag.json                  controllers.PopularInTag.render(tag)
 
-GET        /preference/platform/:platform             controllers.ChangeViewController.render(platform, page)
 GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)
 GET        /preference/front-alphas/:optAction        controllers.ChangeAlphaController.render(optAction, page)
 
@@ -30,10 +29,13 @@ GET        /:mediaType/section/:sectionId/*seriesId.json   controllers.MediaInSe
 GET        /:mediaType/section/:sectionId.json             controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
 GET        /video/most-viewed.json                    controllers.MostViewedVideoController.renderMostViewed()
 GET        /audio/most-viewed.json                    controllers.MostViewedAudioController.renderMostViewed()
+GET        /podcast/most-viewed.json                  controllers.MostViewedAudioController.renderMostViewedPodcast()
 GET        /gallery/most-viewed.json                  controllers.MostViewedGalleryController.renderMostViewed()
 GET        /video/end-slate/series/*seriesId.json     controllers.VideoEndSlateController.renderSeries(seriesId)
 GET        /video/end-slate/section/*sectionId.json   controllers.VideoEndSlateController.renderSection(sectionId)
 
+GET        /embed/card/*path.json                     controllers.RichLinkController.render(path)
+GET        /embed/card/*path                          controllers.RichLinkController.renderHtml(path)
 
 # For tests
 GET        /most-read/*path                           controllers.MostPopularController.renderHtml(path)
@@ -45,3 +47,6 @@ GET        /gallery/most-viewed                       controllers.MostViewedGall
 GET        /cards/opengraph/*path.json                controllers.CardController.opengraph(path)
 GET        /tagged.json                               controllers.TaggedContentController.renderJson(tag: String)
 GET        /series/*path.json                         controllers.SeriesController.renderSeriesStories(path)
+
+# Business data
+GET        /business-data/stocks.json                 controllers.StocksController.stocks

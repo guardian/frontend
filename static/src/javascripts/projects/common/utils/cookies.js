@@ -1,34 +1,19 @@
 define([
-    'lodash/collections/forEach'
+    'common/utils/_'
 ], function (
-    forEach
+    _
 ) {
 
     var documentObject;
 
     function getShortDomain() {
         // Remove www (and dev bit, for localhost set up with dev.theguardian.com domain)
-        return document.domain.replace(/^(www|dev)\./, '.');
+        return getDocument().domain.replace(/^(www|dev)\./, '.');
     }
 
     function cleanUp(names) {
-        forEach(names, function (name) {
+        _.forEach(names, function (name) {
             remove(name);
-        });
-    }
-
-    function cleanUpDuplicates(names) {
-
-        // Do not clean if there is no difference from the target domain (the domain we want to store our cookies on).
-        if (getShortDomain() === document.domain) {
-            return;
-        }
-
-        forEach(names, function (name) {
-            if (getCookieValues(name).length > 1) {
-                // This remove is conservative; we know it is safe to remove the cookie with the document domain.
-                remove(name, true);
-            }
         });
     }
 
@@ -38,7 +23,7 @@ define([
         if (!currentDomainOnly) {
             // also remove from the short domain
             getDocument().cookie =
-                name + '=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;domain=' + getShortDomain() + ';';
+                name + '=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=' + getShortDomain() + ';';
         }
     }
 
@@ -54,7 +39,12 @@ define([
         }
 
         getDocument().cookie =
-            name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
+            name + '=' + value + '; path=/; expires=' + expires.toUTCString() + ';' + getDomainAttribute();
+    }
+
+    function getDomainAttribute() {
+        var shortDomain = getShortDomain();
+        return (shortDomain === 'localhost') ? '' : (' domain=' + shortDomain + ';');
     }
 
     function addForMinutes(name, value, minutesToLive) {
@@ -62,14 +52,14 @@ define([
             var expires = new Date();
             expires.setMinutes(expires.getMinutes() + minutesToLive);
             getDocument().cookie =
-                name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
+                name + '=' + value + '; path=/; expires=' + expires.toUTCString() + ';' + getDomainAttribute();
         } else {
             add(name, value);
         }
     }
 
     function addSessionCookie(name, value) {
-        getDocument().cookie = name + '=' + value + '; path=/; domain=' + getShortDomain() + ';';
+        getDocument().cookie = name + '=' + value + '; path=/;' + getDomainAttribute();
     }
 
     function getCookieValues(name) {
@@ -77,7 +67,7 @@ define([
             nameEq = name + '=',
             cookies = getDocument().cookie.split(';');
 
-        forEach(cookies, function (cookie) {
+        _.forEach(cookies, function (cookie) {
             while (cookie.charAt(0) === ' ') {
                 cookie = cookie.substring(1, cookie.length);
             }
@@ -110,13 +100,14 @@ define([
 
     return {
         cleanUp: cleanUp,
-        cleanUpDuplicates: cleanUpDuplicates,
         add: add,
         addSessionCookie: addSessionCookie,
         addForMinutes: addForMinutes,
         remove: remove,
         get: get,
-        setDocument: setDocument
+        test: {
+            setDocument: setDocument
+        }
     };
 
 });

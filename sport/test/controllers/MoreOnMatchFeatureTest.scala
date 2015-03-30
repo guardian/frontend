@@ -7,8 +7,6 @@ import play.api.test.FakeRequest
 
 @DoNotDiscover class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
-  val theMatch =
-
   feature("Match Nav") {
 
     scenario("View content related to a match") {
@@ -32,7 +30,7 @@ import play.api.test.FakeRequest
       }
     }
 
-    scenario("Non-existant match pages return jsonp with status property 404") {
+    scenario("Non-existant match pages return status 404") {
 
       Given("I visit a non-existant match page")
 
@@ -41,12 +39,7 @@ import play.api.test.FakeRequest
 
         val result = MoreOnMatchController.matchNav("2010", "01", "01", "1", "2")(request)
 
-        status(result) should be(200)
-
-        val body = contentAsString(result)
-
-        Then("I should see the status in the object with value 404")
-        body should include("\"status\":404")
+        status(result) should be(404)
       }
     }
   }
@@ -74,7 +67,7 @@ import play.api.test.FakeRequest
       }
     }
 
-    scenario("Non-existant match pages return jsonp with status property 404") {
+    scenario("Non-existant match pages return status 404") {
 
       Given("I visit a non-existant match page")
 
@@ -83,14 +76,9 @@ import play.api.test.FakeRequest
 
         val result = MoreOnMatchController.moreOn("bad-id")(request)
 
-        status(result) should be(200)
-
-        val body = contentAsString(result)
-
-        Then("I should see the status in the object with value 404")
-        body should include("\"status\":404")
+        status(result) should be(404)
       }
     }
-    
+
   }
 }

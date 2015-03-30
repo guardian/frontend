@@ -70,7 +70,7 @@ object Comment extends implicits.Dates {
       date = (json \ "isoDateTime").as[String].parseISODateTime,
       isHighlighted = (json \ "isHighlighted").as[Boolean],
       isBlocked = (json \ "status").as[String].contains("blocked"),
-      responseTo = (json \\ "responseTo").headOption.map(ResponseTo(_)),
+      responseTo = (json \ "responseTo").asOpt[JsValue].map(ResponseTo(_)),
       numRecommends = (json \ "numRecommends").as[Int],
       responseCount = (json \ "metaData" \ "responseCount").asOpt[Int].getOrElse(0),
       webUrl = (json \ "webUrl").as[String]

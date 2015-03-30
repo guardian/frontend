@@ -9,5 +9,21 @@ object Seqs {
     def reverseSorted(implicit ordering: Ordering[A]) = as.sorted(ordering.reverse)
 
     def countWhile(f: A => Boolean) = as.takeWhile(f).length
+
+    def around(maxBefore: Int, windowSize: Int)(f: A => Boolean): Option[Seq[A]] = {
+      require(maxBefore <= windowSize, "maxBefore is greater than windowSize, meaning window would not include item")
+      as.indexWhere(f) match {
+        case -1 => None
+
+        case index =>
+          val start = (index - maxBefore) max 0
+
+          Some(as.slice(start, start + windowSize))
+      }
+    }
+
+    def filterByIndex(f: Int => Boolean) = as.zipWithIndex collect {
+      case (a, index) if f(index) => a
+    }
   }
 }

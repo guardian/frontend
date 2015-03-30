@@ -1,5 +1,7 @@
-$c-primary-footer-background: $c-brandBlue;
+$c-footer-background: guss-colour(multimedia-support-4, $pasteup-palette);
+$c-primary-footer-background: colour(guardian-brand);
 $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff, 90%);
+
 
 /* Elements modifiers specific to the footer
    ========================================================================== */
@@ -16,7 +18,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
 .l-footer {
     padding: 0;
-    background: $c-neutral6;
+    background: $c-footer-background;
 
     .hide-in-footer {
         display: none !important;
@@ -27,7 +29,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     }
 
     .js-off & {
-        .navigation--collapsed {
+        .navigation-container--collapsed {
             height: auto;
         }
 
@@ -39,6 +41,11 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
             display: none;
         }
     }
+
+    .is-immersive & {
+        display: none;
+    }
+
     .control__info {
         display: inline-block;
     }
@@ -51,7 +58,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     border-bottom: 1px solid #ffffff;
 
     .site-message__inner {
-        background-color: $c-brandBlue;
+        background-color: colour(guardian-brand);
     }
 }
 
@@ -74,7 +81,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
     &,
     a {
-        color: $c-neutral1;
+        color: colour(neutral-4);
     }
 }
 .colophon {
@@ -83,9 +90,11 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     margin: 0;
     padding-top: $gs-baseline * 2;
     padding-bottom: $gs-baseline * .5;
-    @include columns(2);
+    @include mq($until: tablet) {
+        @include columns(2);
+    }
 
-    @include mq(tablet) {
+    @include mq(tablet, wide) {
         @include columns(3);
     }
 
@@ -97,6 +106,17 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         display: inline-block;
         padding-bottom: $gs-baseline;
     }
+
+    input {
+        display: inline-block;
+        background: none;
+        border: 0;
+        padding: 0px 0px $gs-baseline;
+    }
+    input:hover {
+        text-decoration: underline;
+    }
+
 }
 .colophon__item {
     @include box-sizing(border-box);
@@ -105,7 +125,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 .l-footer__misc {
     padding-top: $gs-baseline * .5;
     padding-bottom: $gs-baseline * 1.5;
-    border-top: 1px solid $c-neutral4;
+    border-top: 1px solid mix(colour(neutral-4), $c-footer-background, 20%);
 }
 
 .really-serious-copyright {

@@ -1,0 +1,22 @@
+@(expired: Seq[dfp.GuLineItem], expiring: Seq[dfp.GuLineItem])
+@import dfp.{GuLineItem,printLondonTime}
+
+@showLineItem(lineItem: GuLineItem) = {
+    <li><div>@{lineItem.id}: @{lineItem.name}</div>
+        <div>@{printLondonTime(lineItem.endTime.get)}</div><br/></li>
+}
+
+@if(expired.nonEmpty) {
+    <div>
+        <p>These ad feature logos have expired recently:</p>
+        <ul>@for(lineItem <- expired) {@showLineItem(lineItem)}</ul>
+    </div>
+}
+
+@if(expiring.nonEmpty) {
+    <div>
+        <p>These ad feature logos will be expiring soon:</p>
+        <ul>@for(lineItem <- expiring) {@showLineItem(lineItem)}</ul>
+        <p>See https://frontend.gutools.co.uk/analytics/commercial/sponsorships#advertisement-feature-series</p>
+    </div>
+}

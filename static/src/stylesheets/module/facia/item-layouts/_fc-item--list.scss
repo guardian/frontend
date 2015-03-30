@@ -1,0 +1,40 @@
+/*
+
+List item. Looks a bit like this:
+
+***********************************************
+x x x x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x x x x x x x
+
+***********************************************
+
+ */
+
+@mixin fc-item--list {
+    $item-vertical-padding: $gs-baseline * .25;
+
+    .fc-item__header {
+        @include fs-headline(2, true);
+        @include headline-boost(3);
+    }
+
+    .fc-item__media-wrapper {
+        display: none;
+    }
+
+    &.fc-item--has-cutout {
+        .fc-item__avatar__media {
+            display: none;
+        }
+    }
+
+    .fc-item__kicker--dreamsnap {
+        display: none;
+    }
+
+    .fc-item__kicker--dreamsnap-list {
+        display: block;
+        margin: 0;
+        @include fs-header(1);
+    }
+}

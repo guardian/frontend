@@ -25,20 +25,10 @@ import scala.collection.JavaConversions._
       goTo("/most-read/world") { browser =>
         import browser._
         Then("I should see a list of 'world' content")
-        findFirst(".zone-world").findFirst("h2").getText should be("Most popular in World news")
+        findFirst(".zone-world").findFirst("h2").getText should be("Most popular in world news")
         And("it should contain world news")
         $(".zone-world li").size should be > (0)
 
-      }
-    }
-
-    scenario("Viewing site-wide most popular") {
-
-      Given("I am on a page in the 'World' section")
-      goTo("/most-read/world") { browser =>
-        import browser._
-        Then("I should see the site wide most read")
-        $("main h2")(1).getText should be("Most popular in The Guardian")
       }
     }
   }

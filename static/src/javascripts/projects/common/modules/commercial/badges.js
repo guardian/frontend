@@ -1,109 +1,151 @@
 define([
-    'qwery',
     'bonzo',
-    'lodash/objects/defaults',
-    'lodash/functions/once',
+    'fastdom',
+    'qwery',
+    'Promise',
+    'common/utils/_',
     'common/utils/$',
-    'common/utils/template',
     'common/utils/config',
-    'common/modules/commercial/dfp'
+    'common/utils/template',
+    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp',
+    'text!common/views/commercial/badge.html'
 ], function (
-    qwery,
     bonzo,
-    defaults,
-    once,
+    fastdom,
+    qwery,
+    Promise,
+    _,
     $,
+    config,
     template,
-    globalConfig,
-    dfp
+    createAdSlot,
+    dfp,
+    badgeTpl
 ) {
-
-    var adBadgeCount = 0,
-        spBadgeCount = 0,
-        addPreBadge = function ($adSlot, isSponsored, sponsor) {
+    var badgesConfig = {
+            sponsoredfeatures: {
+                count:      0,
+                header:     'Sponsored by:',
+                namePrefix: 'sp'
+            },
+            'advertisement-features': {
+                count:      0,
+                header:     'Brought to you by:',
+                namePrefix: 'ad'
+            },
+            'foundation-features': {
+                count:      0,
+                header:     'Supported by:',
+                namePrefix: 'fo'
+            }
+        },
+        addPreBadge  = function ($adSlot, header, sponsor) {
             if (sponsor) {
                 $adSlot.append(template(
-                    '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
-                        '<h3 class="ad-slot--paid-for-badge__header">{{header}}</h3>' +
-                        '<p class="ad-slot--paid-for-badge__header">{{sponsor}}</p>' +
-                    '</div>',
+                    badgeTpl,
                     {
-                        header: isSponsored ? 'Sponsored by:' : 'Brought to you by:',
+                        header:  header,
                         sponsor: sponsor
                     }
                 ));
             }
         },
-        createAdSlot = function (container, isSponsored, opts) {
-            var slotTarget = (isSponsored ? 'sp' : 'ad') + 'badge',
-                name       = slotTarget + ((isSponsored) ? ++spBadgeCount : ++adBadgeCount),
-                $adSlot    = bonzo(dfp.createAdSlot(
-                    name, ['paid-for-badge', 'paid-for-badge--front'], opts.keywords, slotTarget
-                ));
-            addPreBadge($adSlot, isSponsored, opts.sponsor);
-            $('.js-container__header', container)
-                .after($adSlot);
-            return $adSlot;
-        },
-        init = function (c) {
+        renderAd = function (container, sponsorship, opts) {
+            var badgeConfig = badgesConfig[sponsorship],
+                slotTarget  = badgeConfig.namePrefix + 'badge',
+                name        = slotTarget + (++badgeConfig.count),
+                $adSlot     = bonzo(createAdSlot(
+                                name,
+                                ['paid-for-badge', 'paid-for-badge--front'],
+                                opts.series,
+                                opts.keywords,
+                                slotTarget
+                              ));
 
-            var config = defaults(
-                c || {},
-                globalConfig,
-                {
-                    switches: {}
-                }
-            );
+            addPreBadge($adSlot, badgeConfig.header, opts.sponsor);
+
+            return new Promise(function (resolve) {
+                fastdom.write(function () {
+                    $('.js-container__header', container)
+                        .after($adSlot);
+
+                    resolve($adSlot);
+                });
+            });
+        },
+        init = function () {
+            var sponsoredFrontPromise,
+                sponsoredContainersPromise;
 
             if (!config.switches.sponsored) {
                 return false;
             }
 
-            $('.facia-container--sponsored, .facia-container--advertisement-feature').each(function (faciaContainer) {
-                var $faciaContainer = bonzo(faciaContainer);
-                createAdSlot(
-                    qwery('.container', faciaContainer)[0],
-                    $faciaContainer.hasClass('facia-container--sponsored'),
-                    { sponsor: $faciaContainer.data('sponsor') }
+            sponsoredFrontPromise = Promise.all(_.map($('.js-sponsored-front'), function (front) {
+                var $front = bonzo(front);
+
+                return renderAd(
+                    qwery('.fc-container', front)[0],
+                    $front.data('sponsorship'),
+                    {
+                        sponsor: $front.data('sponsor')
+                    }
                 );
+            }));
+
+            sponsoredContainersPromise = sponsoredFrontPromise.then(function () {
+                return Promise.all(_.map($('.js-sponsored-container'), function (container) {
+                    if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
+                        var $container = bonzo(container);
+
+                        renderAd(
+                            container,
+                            $container.data('sponsorship'),
+                            {
+                                sponsor:  $container.data('sponsor'),
+                                series:   $container.data('series'),
+                                keywords: $container.data('keywords')
+                            }
+                        );
+                    }
+                }));
             });
-            $('.container--sponsored, .container--advertisement-feature').each(function (container) {
-                if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
-                    var $container = bonzo(container);
-                    createAdSlot(
-                        container,
-                        $container.hasClass('container--sponsored'),
-                        { keywords: $container.data('keywords'), sponsor: $container.data('sponsor') }
-                    );
-                }
-            });
+
+            return Promise.all([sponsoredFrontPromise, sponsoredContainersPromise]);
         },
         badges = {
 
-            init: once(init),
+            init: init,
 
             // add a badge to a container (if appropriate)
             add: function (container) {
-                var $adSlot,
-                    $container = bonzo(container);
+                var $container = bonzo(container);
+
                 if (
-                    $container.hasClass('container--sponsored') ||
-                    $container.hasClass('container--advertisement-feature')
+                    $container.hasClass('js-sponsored-container') &&
+                    qwery('.ad-slot--paid-for-badge', container).length === 0
                 ) {
-                    $adSlot = createAdSlot(
+                    return renderAd(
                         container,
-                        $container.hasClass('container--sponsored'),
-                        { keywords: $container.data('keywords'), sponsor: $container.data('sponsor') }
-                    );
-                    // add slot to dfp
-                    dfp.addSlot($adSlot);
+                        $container.data('sponsorship'),
+                        {
+                            sponsor:  $container.data('sponsor'),
+                            series:   $container.data('series'),
+                            keywords: $container.data('keywords')
+                        }
+                    ).then(function ($adSlot) {
+                        // add slot to dfp
+                        dfp.addSlot($adSlot);
+                    });
                 }
             },
 
-            // really only useful for testing
+            // for testing
             reset: function () {
-                badges.init = once(init);
-                adBadgeCount = spBadgeCount = 0;
+                for (var type in badgesConfig) {
+                    badgesConfig[type].count = 0;
+                }
             }
 
         };

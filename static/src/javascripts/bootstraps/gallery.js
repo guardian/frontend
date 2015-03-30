@@ -1,23 +1,21 @@
 define([
-    'common/utils/mediator',
-    'common/utils/$',
-    'common/utils/config',
-    'common/modules/component',
-    'common/modules/gallery/lightbox',
-    'lodash/collections/forEach',
+    'bean',
     'bonzo',
     'qwery',
-    'bean'
+    'common/utils/_',
+    'common/utils/$',
+    'common/utils/config',
+    'common/utils/mediator',
+    'common/modules/component'
 ], function (
-    mediator,
-    $,
-    config,
-    Component,
-    LightboxGallery,
-    forEach,
+    bean,
     bonzo,
     qwery,
-    bean
+    _,
+    $,
+    config,
+    mediator,
+    Component
 ) {
 
     var verticallyResponsiveImages = function () {
@@ -38,8 +36,8 @@ define([
 
             setHeight();
             mediator.addListeners({
-                'window:resize': setHeight,
-                'window:orientationchange': setHeight,
+                'window:resize': _.debounce(setHeight, 200),
+                'window:orientationchange': _.debounce(setHeight, 200),
                 'ui:images:vh': setHeight
             });
         },
@@ -50,24 +48,16 @@ define([
             mostViewed.manipulationType = 'html';
             mostViewed.endpoint = '/gallery/most-viewed.json';
             mostViewed.ready = function () {
-                mediator.emit('ui:images:upgrade', container);
+                mediator.emit('module:gallery-most-popular:loaded', container);
             };
             mostViewed.fetch(container, 'html');
         },
-        ready = function (config) {
-            LightboxGallery.init();
+        ready = function () {
             verticallyResponsiveImages();
-            $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
 
-            forEach(qwery('.js-gallery-img.responsive-img'), function (responsiveImage) {
-                bean.one(responsiveImage, 'load', function (e) {
-                    bonzo(e.currentTarget).removeClass('u-h').previous().hide();
-                });
-            });
+            mediator.emit('ui:images:upgradePictures');
 
-            mediator.emit('ui:images:upgrade', $('.gallery2')[0]);
-
-            mediator.emit('page:gallery:ready', config);
+            mediator.emit('page:gallery:ready');
             transcludeMostPopular();
         };
 

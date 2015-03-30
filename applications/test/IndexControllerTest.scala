@@ -1,5 +1,6 @@
 package test
 
+import contentapi.SectionsLookUp
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
@@ -8,10 +9,10 @@ import conf.Switches.MemcachedSwitch
 @DoNotDiscover class IndexControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll with ConfiguredTestSuite{
 
   val section = "books"
-  val callbackName = "aFunction"
 
   override def beforeAll(): Unit = {
     MemcachedSwitch.switchOff()
+    SectionsLookUp.refresh()
   }
 
   override def afterAll(): Unit = {
@@ -21,16 +22,6 @@ import conf.Switches.MemcachedSwitch
   "Index Controller" should "200 when content type is front" in {
     val result = controllers.IndexController.render(section)(TestRequest(s"/$section"))
     status(result) should be(200)
-  }
-
-  it should "return JSONP when callback is supplied to front" in {
-    val fakeRequest = TestRequest(s"/$section?callback=$callbackName")
-      .withHeaders("host" -> "localhost:9000")
-
-    val result = controllers.IndexController.render(section)(fakeRequest)
-    status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
-    contentAsString(result) should startWith(s"""$callbackName({\"html\"""")
   }
 
   it should "return JSON when .json format is supplied to front" in {
@@ -71,16 +62,6 @@ import conf.Switches.MemcachedSwitch
     header("Location", result).get should be ("/music/2013/oct/11/david-byrne-internet-content-world")
   }
 
-  it should "return JSONP when callback is supplied to front trails" in {
-    val fakeRequest = FakeRequest(GET, s"$section/trails?callback=$callbackName")
-      .withHeaders("host" -> "localhost:9000")
-
-    val result = controllers.IndexController.renderTrails(section)(fakeRequest)
-    status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
-    contentAsString(result) should startWith(s"""$callbackName({\"html\"""")
-  }
-
   it should "return JSON when .json format is supplied to front trails" in {
     val fakeRequest = FakeRequest(GET, s"$section/trails.json")
       .withHeaders("host" -> "localhost:9000")
@@ -111,6 +92,38 @@ import conf.Switches.MemcachedSwitch
     // temporary as this page may well exist tomorrow
     status(result) should be (302)
     header("Location", result).get should endWith ("/books+tone/reviews")
+  }
+
+  it should "remove editions from section tags on all pages" in {
+    val request = FakeRequest(GET, "/uk/culture/all")
+    val result = controllers.IndexController.render("uk/culture")(request)
+
+    status(result) should be (302)
+
+    header("Location", result).get should be ("/culture/all")
+  }
+
+  it should "remove editions past the first page of section tags" in {
+    val request = FakeRequest(GET, "/uk/business?page=2")
+    val result = controllers.IndexController.render("uk/business")(request)
+
+    status(result) should be (302)
+
+    header("Location", result).get should be ("/business?page=2")
+  }
+
+  it should "not accidentally truncate tags that contain valid strings that are also editions" in {
+    val request = FakeRequest(GET, "/uk/london?page=2")
+    val result = controllers.IndexController.render("uk/london")(request)
+
+    status(result) should be (200)
+  }
+
+  it should "not add editions to section tags" in {
+    val request = FakeRequest(GET, "/sport?page=2")
+    val result = controllers.IndexController.render("sport")(request)
+
+    status(result) should be (200)
   }
 
   "Normalise tags" should "convert content/gallery to type/gallery" in {
@@ -148,12 +161,4 @@ import conf.Switches.MemcachedSwitch
     status(result) should be(301)
     header("Location", result).head should be ("/sustainable-business-grundfos-partner-zone")
   }
-
-  it should "redirect 'section tags' rss to the section page rss" in {
-    val rssRequest = TestRequest().withHeaders("Accept" -> "application/rss+xml")
-    val result = controllers.IndexController.render("sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone")(rssRequest)
-    status(result) should be(301)
-    header("Location", result).head should be ("/sustainable-business-grundfos-partner-zone/rss")
-  }
-
 }

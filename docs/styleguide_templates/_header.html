@@ -14,7 +14,7 @@
         </style>
 
         <!-- Guardian styles -->
-        <link rel="stylesheet" href="../../static/target/stylesheets/head.default.css">
+        <link rel="stylesheet" href="../../static/target/stylesheets/head.content.css">
         <link rel="stylesheet" href="../../static/target/stylesheets/global.css">
         <link rel="stylesheet" href="../../static/target/stylesheets/webfonts.css">
 
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="navigation navigation--collapsed navigation--has-signposting">
+            <div class="navigation navigation-container--collapsed navigation--has-signposting">
                 <div class="gs-container">
                     <div class="navigation__inner">
                         <div class="navigation__scroll">
@@ -63,13 +63,14 @@
             </div>
         </header>
 
-        <div class="l-side-margins l-side-margins--layout-content">
-            <article class="content content--article tone-news tone-news--article">
-                <header class="content__head u-cf">
+        <div class="l-side-margins">
+            <article class="content content--article tonal tonal--tone-news" role="main">
+                <header class="content__head tonal__head tonal__head--tone-news">
                     <div class="gs-container">
                         <h1 itemprop="headline" class="content__headline"><%= title %></h1>
                     </div>
                 </header>
 
-                <div class="gs-container">
+                <div class="content__main tonal__main tonal__main--tone-news">
+                    <div class="gs-container">
 

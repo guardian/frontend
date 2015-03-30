@@ -1,11 +1,9 @@
 package services
 
-import com.amazonaws.services.s3.AmazonS3Client
 import com.gu.facia.client.models.{Trail, _}
-import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import com.gu.contentapi.client.model.{Content => ApiContent}
 import common._
-import conf.Switches.FaciaToolCachedContentApiSwitch
+import conf.Switches.{FaciaToolCachedContentApiSwitch, FaciaTreats}
 import conf.{Configuration, LiveContentApi}
 import contentapi.{ContentApiClient, QueryDefaults}
 import fronts.FrontsApi
@@ -14,11 +12,9 @@ import org.apache.commons.codec.digest.DigestUtils._
 import org.joda.time.DateTime
 import performance._
 import services.ParseCollectionJsonImplicits._
-
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.Try
-
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -34,11 +30,11 @@ object Seg {
 
 //Curated and editorsPicks are the same, we will get rid of either
 case class Result(
-                   curated: List[ApiContent],
-                   editorsPicks: List[ApiContent],
-                   mostViewed: List[ApiContent],
-                   contentApiResults: List[ApiContent]
-                   )
+  curated: List[ApiContent],
+  editorsPicks: List[ApiContent],
+  mostViewed: List[ApiContent],
+  contentApiResults: List[ApiContent]
+)
 
 object Result {
   val empty: Result = Result(Nil, Nil, Nil, Nil)
@@ -47,14 +43,14 @@ object Result {
 case class TrailId(get: String) extends AnyVal
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
-  implicit def apiContentCodec = JsonCodecs.snappyCodec[Option[ApiContent]]
+  implicit def apiContentCodec = JsonCodecs.snappyCodec[ApiContent]
 
   implicit def resultCodec = JsonCodecs.snappyCodec[Result]
 
   val cacheDuration: FiniteDuration = 5.minutes
 
   val client: ContentApiClient
-  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.Collection): Seq[Trail]
+  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.CollectionJson): Seq[Trail]
 
   case class InvalidContent(id: String) extends Exception(s"Invalid Content: $id")
   val showFieldsQuery: String = FaciaDefaults.showFields
@@ -70,10 +66,9 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     def empty: CollectionMeta = CollectionMeta(None, None, None, None, None)
   }
 
-  def getCollection(id: String, config: CollectionConfig, edition: Edition): Future[Collection] = {
-    val collection: Future[Option[com.gu.facia.client.models.Collection]] =
+  def getCollection(id: String, config: CollectionConfigJson, edition: Edition): Future[Collection] = {
+    val collection: Future[Option[com.gu.facia.client.models.CollectionJson]] =
       FrontsApi.amazonClient.collection(id)
-        .map(Option.apply)
         .recover { case t: Throwable =>
           log.warn(s"Could not get Collection ID $id: $t")
           None
@@ -85,6 +80,15 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       getArticles(items, edition)
     }
 
+    val treatsFuture: Future[Seq[Content]] =
+      if (FaciaTreats.isSwitchedOn)
+          collection.flatMap { collectionOption =>
+            val items: Seq[Trail] =
+              collectionOption.flatMap(_.treats).getOrElse(Nil)
+            getArticles(items, edition)}
+      else
+        Future.successful(Nil)
+
     val executeDraftContentApiQuery: Future[Result] =
       config.apiQuery.map(executeContentApiQueryViaCache(_, edition)).getOrElse(Future.successful(Result.empty))
 
@@ -92,11 +96,13 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       executeRequest <- executeDraftContentApiQuery
       curatedRequest <- curatedItems
       collectionOption <- collection
+      treats <- treatsFuture
     } yield Collection(
       curated = curatedRequest,
       editorsPicks = executeRequest.editorsPicks.map(makeContent),
       mostViewed = executeRequest.mostViewed.map(makeContent),
       results = executeRequest.contentApiResults.map(makeContent),
+      treats = treats,
       displayName = collectionOption.flatMap(_.displayName),
       href = collectionOption.flatMap(_.href),
       lastUpdated = collectionOption.map(_.lastUpdated.toString()),
@@ -105,47 +111,86 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     )
   }
 
+  def getSnapLatest(collectionItems: Seq[Trail]): Future[Map[String, com.gu.contentapi.client.model.Content]] = {
+    val latestSnapSearches: Seq[String] = collectionItems
+      .filter(c => c.meta.exists(_.snapType.exists(_ == "latest")))
+      .flatMap(c => c.meta.flatMap(_.snapUri))
+
+    val lastestSnaps = Future.traverse(latestSnapSearches) { id =>
+      client.getResponse(LiveContentApi.item(id, Edition.defaultEdition)
+        .showFields(showFieldsWithBodyQuery)
+        .pageSize(1)
+      ).map(_.results.headOption.map(id -> _))
+    }
+    .map(_.flatten)
+    .map(_.toMap)
+
+    lastestSnaps.onSuccess { case m => log.info(s"Successfully requested ${m.size} Dreamsnaps")}
+    lastestSnaps.onFailure { case t: Throwable => log.info(s"Dreamsnaps request failed: $t")}
+    lastestSnaps
+  }
+
   def getArticles(collectionItems: Seq[Trail], edition: Edition): Future[Seq[Content]] = {
-    val itemIds: Seq[TrailId]  =
+    val latestSnaps: Future[Map[String, com.gu.contentapi.client.model.Content]] = getSnapLatest(collectionItems)
+
+    val itemIds: Seq[TrailId] =
       (collectionItems.map(_.id) ++ collectionItems.flatMap(retrieveSupportingLinks).map(_.id))
         .map(TrailId)
         .filterNot(t => Snap.isSnap(t.get))
 
-    batchGetContentApiItems(itemIds, edition) map { items =>
-      collectionItems flatMap { collectionItem =>
-        val supporting: List[Content] = retrieveSupportingLinks(collectionItem).flatMap({ collectionItem =>
+    batchGetContentApiItems(itemIds, edition) flatMap { items =>
+      latestSnaps map { ls =>
+        collectionItems flatMap { collectionItem =>
+          val supporting: List[Content] = retrieveSupportingLinks(collectionItem).flatMap({ collectionItem =>
+            if (collectionItem.isSnap) {
+              if (collectionItem.meta.exists(_.snapType.exists(_ == "latest")))
+                None
+              else
+                Some(new Snap(
+                  collectionItem.id,
+                  Nil,
+                  collectionItem.frontPublicationDate.map(new DateTime(_)).getOrElse(DateTime.now),
+                  collectionItem.meta
+                ))
+            } else {
+              items.get(TrailId(collectionItem.id)) map { item =>
+                Content(
+                  item,
+                  Nil,
+                  collectionItem.meta
+                )
+              }
+            }
+          })
+
           if (collectionItem.isSnap) {
-            Some(new Snap(
-              collectionItem.id,
-              Nil,
-              collectionItem.frontPublicationDate.map(new DateTime(_)).getOrElse(DateTime.now),
-              collectionItem.meta
-            ))
+            if (collectionItem.meta.exists(_.snapType.exists(_ == "latest")))
+              ls.get(collectionItem.meta.flatMap(_.snapUri).getOrElse("")).map { item =>
+                SnapLatest(
+                  item.id,
+                  Nil, //No Supporting for a latest snap
+                  new DateTime(collectionItem.frontPublicationDate),
+                  collectionItem.meta,
+                  item.elements.getOrElse(Nil),
+                  item.safeFields,
+                  item.tags.map(Tag(_))
+                )
+              }
+            else
+              Some(new Snap(
+                collectionItem.id,
+                supporting,
+                new DateTime(collectionItem.frontPublicationDate),
+                collectionItem.meta
+              ))
           } else {
             items.get(TrailId(collectionItem.id)) map { item =>
-              Content(
+              validateContent(Content(
                 item,
-                Nil,
+                supporting,
                 collectionItem.meta
-              )
+              ))
             }
-          }
-        })
-
-        if (collectionItem.isSnap) {
-          Some(new Snap(
-            collectionItem.id,
-            supporting,
-            new DateTime(collectionItem.frontPublicationDate),
-            collectionItem.meta
-          ))
-        } else {
-          items.get(TrailId(collectionItem.id)) map { item =>
-            validateContent(Content(
-              item,
-              supporting,
-              collectionItem.meta
-            ))
           }
         }
       }
@@ -153,26 +198,31 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   private def batchGetContentApiItems(collectionItems: Seq[TrailId],
-                                      edition: Edition): Future[Map[TrailId, ApiContent]] = {
-    Futures.batchedTraverse(collectionItems, Configuration.faciatool.frontPressItemBatchSize)({ collectionItem =>
-      getContentApiItemFromCollectionItem(collectionItem, edition) map { maybeItem =>
-        maybeItem.map(collectionItem -> _)
-      }
+                                      edition: Edition): Future[Map[TrailId, ApiContent]] =
+    Futures.batchedTraverse(collectionItems.grouped(Configuration.faciatool.frontPressItemSearchBatchSize).toSeq, Configuration.faciatool.frontPressItemBatchSize)({ collectionItems =>
+      getContentApiItemFromCollectionItem(collectionItems, edition) map { items =>
+          items.map { item =>
+            item.fields.flatMap(_.get("internalContentCode")).map { internalContentCode =>
+              TrailId(InternalContentCode.toFormattedInternalContentCode(internalContentCode)) -> item}
+          }.flatten
+        }
     }).map(_.flatten.toMap)
-  }
 
-  private def getContentApiItemFromCollectionItem(collectionItem: TrailId,
-                                                  edition: Edition): Future[Option[ApiContent]] = {
-    lazy val response = client.item(collectionItem.get, edition).showFields(showFieldsWithBodyQuery)
-      .response
-      .map(Option.apply)
-      .recover {
-      case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
-        log.warn(s"Content API Error: 404 for $collectionItem")
+  private def getContentApiItemFromCollectionItem(collectionItems: Seq[TrailId],
+                                                  edition: Edition): Future[Seq[ApiContent]] = {
+    lazy val itemIds: Seq[String] = collectionItems.map(_.get)
+    lazy val collectionIdsQuery: String = itemIds.mkString(",")
+    lazy val response = client.getResponse(client.search(edition)
+      .ids(collectionIdsQuery)
+      .showFields(showFieldsWithBodyQuery)
+      .pageSize(Configuration.faciatool.frontPressItemSearchBatchSize)
+    ).map(Option.apply).recover {
+      case apiError: com.gu.contentapi.client.GuardianContentApiError if apiError.httpStatus == 404 => {
+        log.warn(s"Content API Error: 404 for collectionIds $collectionIdsQuery")
         None
       }
-      case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
-        log.warn(s"Content API Error: 410 for $collectionItem")
+      case apiError: com.gu.contentapi.client.GuardianContentApiError if apiError.httpStatus == 410 => {
+        log.warn(s"Content API Error: 410 for collectionIds $collectionIdsQuery")
         None
       }
       case jsonParseError: net.liftweb.json.JsonParser.ParseException => {
@@ -184,13 +234,13 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         throw mappingException
       }
       case t: Throwable => {
-        log.warn("%s: %s".format(collectionItem, t.toString))
+        log.warn("%s: %s".format(collectionIdsQuery, t.toString))
         throw t
       }
-    }.map(_.flatMap(_.content))
+    }.map(_.map(_.results).getOrElse(Nil))
 
     if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
-      MemcachedFallback.withMemcachedFallBack(collectionItem.get, cacheDuration)(response)
+      MemcachedFallback.withMemcachedFallBack(itemIds, cacheDuration)(response)
     }
     else {
       response
@@ -229,7 +279,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           val newSearch = queryParamsWithEdition.foldLeft(search) {
             case (query, (key, value)) => query.stringParam(key, value)
           }.showFields(showFieldsQuery)
-          newSearch.response map { searchResponse =>
+          client.getResponse(newSearch) map { searchResponse =>
             Result(
               curated = Nil,
               editorsPicks = Nil,
@@ -245,7 +295,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           val newSearch = queryParamsWithEdition.foldLeft(search) {
             case (query, (key, value)) => query.stringParam(key, value)
           }.showFields(showFieldsQuery)
-          newSearch.response map { itemResponse =>
+          client.getResponse(newSearch) map { itemResponse =>
             Result(
               curated = Nil,
               editorsPicks = itemResponse.editorsPicks,
@@ -277,11 +327,11 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   val executeContentApiQueryRecovery: PartialFunction[Throwable, Result] = {
-    case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
+    case apiError: com.gu.contentapi.client.GuardianContentApiError if apiError.httpStatus == 404 => {
       log.warn(s"Content API Error: 404 for ${apiError.httpMessage}")
       Result.empty
     }
-    case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
+    case apiError: com.gu.contentapi.client.GuardianContentApiError if apiError.httpStatus == 410 => {
       log.warn(s"Content API Error: 410 for ${apiError.httpMessage}")
       Result.empty
     }
@@ -293,7 +343,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 }
 
 object LiveCollections extends ParseCollection {
-  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.Collection): Seq[Trail] =
+  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.CollectionJson): Seq[Trail] =
     collection.live
 
   override val client: ContentApiClient = LiveContentApi

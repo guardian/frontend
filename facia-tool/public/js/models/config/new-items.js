@@ -1,8 +1,10 @@
 define([
+    'jquery',
     'modules/vars',
     'utils/url-abs-path',
     'utils/find-first-by-id'
 ], function(
+    $,
     vars,
     urlAbsPath,
     findFirstById
@@ -20,7 +22,7 @@ define([
             return defer.promise();
         },
 
-        newItemsPersister: function(newItems, sourceGroup, targetGroup) {
+        newItemsPersister: function(newItems, sourceContext, sourceGroup, targetContext, targetGroup) {
             if (newItems[0].parents.indexOf(targetGroup.parent) < 0) {
                 newItems[0].parents.push(targetGroup.parent);
             }

@@ -1,0 +1,48 @@
+.tone-dead--item {
+    &.fc-item,
+    &.rich-link {
+        background-color: colour(neutral-7);
+    }
+
+    .u-faux-block-link--hover {
+        background-color: darken(colour(neutral-6), 2%);
+    }
+
+    .fc-item__container:before,
+    .rich-link__container:before {
+        background-color: colour(live-default);
+    }
+
+    .fc-item__kicker,
+    .fc-item__byline {
+        color: colour(live-accent);
+    }
+
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(neutral-7), 10%);
+    }
+
+    .rich-link__read-more-text {
+        color: colour(neutral-2);
+    }
+
+    .rich-link__arrow-icon {
+        fill: colour(neutral-2);
+    }
+}
+
+.tone-dead--sublink {
+    .fc-sublink__kicker {
+        color: colour(live-accent);
+    }
+
+    @include sublink-style(editorial, feature, live, media, podcast, review) {
+        .fc-sublink__kicker {
+            color: #ffffff;
+        }
+    }
+}
+
+.tone-dead--most-popular .fc-item__kicker {
+    color: colour(live-accent);
+}

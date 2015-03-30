@@ -7,6 +7,7 @@ $vjs-control-height: $gs-baseline*4;
 $vjs-progress-hitbox-height: $gs-baseline;
 $vjs-progress-visual-height-resting: $gs-baseline/2;
 $vjs-progress-inset-bottom: 4px;
+$ima-controls-height: 70px;
 
 .player {
     margin-bottom: $gs-row-height;
@@ -17,7 +18,6 @@ $vjs-progress-inset-bottom: 4px;
 .gu-media-wrapper {
     background: #000000;
     -webkit-transform: translateZ(0); // fixes iOS hover bug
-    margin-bottom: $gs-baseline * 1.5;
 }
 .gu-media-wrapper--audio {
     background-color: $vjs-control-colour;
@@ -35,6 +35,10 @@ $vjs-progress-inset-bottom: 4px;
 
 .element-video {
     position: relative;
+}
+
+.gu-video-embed-html {
+    overflow-y: auto;
 }
 
 /* VJS
@@ -76,15 +80,8 @@ $vjs-progress-inset-bottom: 4px;
     @include box-sizing(border-box);
     text-align: center;
 
-    .gu-media--audio & {
-        display: none;
-    }
     .vjs-has-started & {
         padding-bottom: $vjs-control-height;
-    }
-
-    .vjs-has-ended & {
-        display: none;
     }
 
     &:after {
@@ -106,10 +103,15 @@ $vjs-progress-inset-bottom: 4px;
 
         background-color: rgba(51, 51, 51, .8);
 
-        .gu-media-wrapper:hover & {
-            background-color: $c-mediaDefault;
+        .gu-media-wrapper:hover &,
+        .gu-media__fallback:hover & {
+            background-color: colour(media-default);
         }
 
+        /**
+         * As arrow is made by using borders we need to use magic numbers
+         * to be able to position it to the center of the button circle.
+         */
         &:before {
             content: '';
             position: absolute;
@@ -118,23 +120,27 @@ $vjs-progress-inset-bottom: 4px;
             height: 0;
             border-style: solid;
             border-width: 1em 0 1em 2.4em;
-            border-color: transparent transparent transparent $c-neutral7;
+            border-color: transparent transparent transparent colour(neutral-7);
             -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
             top: 50%;
-            left: 0;
-            margin-top: -.9em;
-            margin-left: 2.2em;
+            left: 50%;
+            margin-top: -.9em; /* [1] */
+            margin-left: -.9em; /* [1] */
 
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
                 @include border-radius(.2em);
             }
 
-            .gu-media-wrapper:hover & {
+            .gu-media-wrapper:hover &,
+            .gu-media__fallback:hover & {
                 border-left-color: #333333;
             }
         }
     }
 
+    .gu-media--audio &,
+    .vjs-has-ended &,
+    .vjs-ad-playing &,
     .vjs-playing &,
     .vjs-has-started.vjs-using-native-controls &,
     .vjs-ad-loading & {
@@ -153,6 +159,10 @@ $vjs-progress-inset-bottom: 4px;
     z-index: 2;
 
     .vjs-using-native-controls & {
+        display: none;
+    }
+
+    .vjs-ad-playing--vpaid & {
         display: none;
     }
 }
@@ -180,7 +190,8 @@ $vjs-progress-inset-bottom: 4px;
 /* VJS: CONTROL BAR
    ========================================================================== */
 
-.vjs-control-bar {
+.vjs-control-bar,
+#ima-controls-div {
     cursor: default;
     width: 100%;
     z-index: 4;
@@ -192,7 +203,9 @@ $vjs-progress-inset-bottom: 4px;
     height: $vjs-control-height;
     @include transition(bottom .8s);
     transition-delay: 1s;
+}
 
+.vjs-control-bar {
     .gu-media--video & {
         position: absolute;
         bottom: $gs-baseline*-5;
@@ -201,10 +214,9 @@ $vjs-progress-inset-bottom: 4px;
         transition-delay: .5s;
     }
 
-    .gu-media-wrapper:hover .vjs-playing:not(.vjs-fullscreen) &,
-    .gu-media-wrapper:hover .vjs-fullscreen.vjs-mousemoved &,
+    .gu-media-wrapper:hover .vjs-mousemoved &,
     .vjs-paused.vjs-has-started &,
-    .gu-media--show-controls-at-start.vjs-paused & {
+    &:hover {
         bottom: 0;
         @include transition(bottom 0s);
         transition-delay: 0s;
@@ -236,19 +248,43 @@ $vjs-progress-inset-bottom: 4px;
     background-size: cover;
     top: 0;
     left: 0;
+
+    .vjs-has-started &,
+    .vjs-controls-disabled & {
+        display: none;
+    }
 }
 
-.vjs-play-control {
+.vjs-play-control,
+#ima-play-pause-div {
     float: left;
     cursor: pointer;
     margin: 7px;
+}
 
+.vjs-play-control {
     .vjs-paused & {
-        @include icon(play-32-yellow);
+        @include icon(play-32--tone-media);
+    }
+
+    .gu-media-wrapper--podcast .vjs-paused & {
+        @include icon(play-32--tone-podcast);
     }
 
     .vjs-playing & {
-        @include icon(pause-32-yellow);
+        @include icon(pause-32--tone-media);
+    }
+
+    .gu-media-wrapper--podcast .vjs-playing & {
+        @include icon(pause-32--tone-podcast);
+    }
+}
+#ima-play-pause-div {
+    &.ima-paused {
+        @include icon(play-32--tone-media);
+    }
+    &.ima-playing {
+        @include icon(pause-32--tone-media);
     }
 }
 
@@ -264,7 +300,7 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-duration {
-    color: $c-neutral3;
+    color: colour(neutral-3);
 }
 
 .vjs-fullscreen-control {
@@ -274,8 +310,10 @@ $vjs-progress-inset-bottom: 4px;
     height: $vjs-control-height;
     width: $vjs-control-height;
     position: relative;
+}
 
-    & .vjs-control-content {
+.vjs-fullscreen-control {
+    .vjs-control-content {
         width: 20px !important;
         height: 20px !important;
         position: absolute;
@@ -285,9 +323,10 @@ $vjs-progress-inset-bottom: 4px;
         bottom: 0;
         margin: auto;
         @include icon(expand-white);
-    }
-    &:hover .vjs-control-content {
-        @include icon(expand-yellow);
+
+        &:hover {
+            @include icon(expand-yellow);
+        }
     }
 
     .gu-media--audio & {
@@ -335,8 +374,12 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-play-progress {
-    background-color: $c-mediaDefault;
+    background-color: colour(media-default);
     z-index: 2;
+
+    .gu-media-wrapper--podcast & {
+        background-color: colour(podcast-default);
+    }
 }
 
 
@@ -361,7 +404,7 @@ $vjs-progress-inset-bottom: 4px;
         content: '';
         display: block;
         width: 100%;
-        background-color: $c-neutral7;
+        background-color: colour(neutral-7);
     }
 }
 
@@ -373,17 +416,26 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-volume-level {
-    background-color: $c-mediaDefault;
+    background-color: colour(media-default);
+
+    .gu-media-wrapper--podcast & {
+        background-color: colour(podcast-default);
+    }
 }
 
 .vjs-volume-handle {
     position: absolute;
-    background-color: $c-mediaDefault;
+    background-color: colour(media-default);
     height: 11px;
     width: 2px;
+
+    .gu-media-wrapper--podcast & {
+        background-color: colour(podcast-default);
+    }
 }
 
-.vjs-mute-control {
+.vjs-mute-control,
+#ima-mute-div {
     cursor: pointer;
     float: right;
     box-sizing: border-box;
@@ -391,37 +443,71 @@ $vjs-progress-inset-bottom: 4px;
     margin-right: $gs-gutter/4;
     margin-top: $gs-baseline * (4/3);
     text-align: left;
+}
 
+.vjs-mute-control {
     > div {
         @include icon(volume-low-white);
     }
     &:hover > div {
-        @include icon(volume-low-yellow);
+        @include icon(volume-low--tone-media);
     }
 
     &.vjs-vol-0 > div {
         @include icon(volume-mute-white);
     }
     &.vjs-vol-0:hover > div {
-        @include icon(volume-mute-yellow);
+        @include icon(volume-mute--tone-media);
     }
 
     &.vjs-vol-3 > div {
         @include icon(volume-high-white);
     }
     &.vjs-vol-3:hover > div {
-        @include icon(volume-high-yellow);
+        @include icon(volume-high--tone-media);
+    }
+
+    .gu-media-wrapper--podcast & {
+        &:hover > div {
+            @include icon(volume-low--tone-podcast);
+        }
+
+        &.vjs-vol-0:hover > div {
+            @include icon(volume-mute--tone-podcast);
+        }
+
+        &.vjs-vol-3:hover > div {
+            @include icon(volume-high--tone-podcast);
+        }
     }
 }
+#ima-mute-div {
+    &.ima-non-muted {
+        @include icon(volume-high-white);
+
+        &:hover {
+            @include icon(volume-high--tone-media);
+        }
+    }
+    &.ima-muted {
+        @include icon(volume-mute-white);
+
+        &:hover {
+            @include icon(volume-mute--tone-media);
+        }
+    }
+}
+
 
 /* VJS: OVERLAYS
    ========================================================================== */
 
 .vjs-error-display {
     position: absolute;
-    width: 100%;
-    top: 40%;
     display: none;
+    width: 100%;
+    top: 0;
+    z-index: 3; // Ensures that it is above fullscreen clickbox.
 
     .gu-media--video.vjs-error &,
     .gu-media__flash-fallback & {
@@ -431,29 +517,50 @@ $vjs-progress-inset-bottom: 4px;
         background-color: #000000;
     }
     > div {
-        color: #ffffff;
-        @include fs-headline(3);
-        text-align: left;
-        @include box-sizing(border-box);
-        padding: $gs-baseline $gs-gutter $gs-baseline (45 + $gs-gutter*2);
-        min-height: $gs-baseline*5;
-        background-color: $vjs-control-colour;
+        position: absolute;
+        display: table-cell;
         width: 100%;
         margin: auto;
+        padding: $gs-baseline*1.5 $gs-gutter*3;
+        @include box-sizing(border-box);
+        @include fs-headline(2);
+        line-height: 1em;
+        text-align: left;
+        color: #ffffff;
+        background-color: $vjs-control-colour;
+
         &:before {
             @include icon(error-exclamation);
             content: ' ';
             display: block;
             position: absolute;
             top: 50%;
-            left: $gs-gutter;
-            margin-top: -22px // half icon height for centering;
+            left: $gs-gutter/2;
+            margin-top: -18px // half icon height for centering;
         }
     }
 
     a {
         color: #ffffff;
         text-decoration: underline;
+    }
+}
+
+.vjs-error-display__close {
+    @include icon(close-icon-white-small);
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 50%;
+    margin-top: -16px; // half icon height for centering;
+    right: $gs-gutter/2;
+    text-indent: -9999px;
+    background: transparent;
+    border: 1px solid rgba(#ffffff, .3);
+    @include border-radius(50%);
+
+    &:hover {
+        border-color: #ffffff;
     }
 }
 
@@ -465,7 +572,6 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-overlay--big-title {
-
     .vjs-overlay__title {
         text-align: left;
         padding: $gs-gutter/2;
@@ -479,15 +585,19 @@ $vjs-progress-inset-bottom: 4px;
         &:before {
             content: '';
             margin-right: $gs-gutter/2;
-            @include icon(video-camera-yellow);
+            @include icon(video-camera--tone-media);
         }
     }
 
     .vjs-overlay__duration {
         text-align: left;
-        color: $c-mediaDefault;
+        color: colour(media-default);
         @include fs-headline(3);
         padding: 0 $gs-gutter/2 $gs-baseline*2;
+
+        .gu-media-wrapper--podcast & {
+            color: colour(podcast-default);
+        }
     }
 }
 
@@ -525,24 +635,163 @@ $vjs-progress-inset-bottom: 4px;
     .vjs-playing & {
         display: block;
     }
+
+    .vjs-playing.vjs-ad-playing--vpaid & {
+        display: none;
+    }
 }
 
 .vast-skip-button {
     display: none;
 }
 
-/* VJS: AD OVERLAY
+/* VJS: EMBED OVERLAY
    ========================================================================== */
-.vjs-ads-overlay {
+.vjs-embedoverlay {
+    @include box-sizing(border-box);
     position: absolute;
-    z-index: 2;
     top: 0;
-    left: 0;
     width: 100%;
-    height: $gs-baseline*2;
-    padding: $gs-baseline/3 0 0 $gs-gutter/4;
-    background-color: rgba($c-neutral1, .8);
-    border-top: 1px solid $c-neutral2;
+    height: 100%;
+    padding: 20% $gs-gutter * 2 0;
+    background-color: $vjs-control-colour;
+    z-index: 3;
+}
+
+.vjs-embedoverlay-text {
+    display: block;
+    @include fs-headline(2);
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: $gs-baseline * 2;
+}
+
+.vjs-embedoverlay-input {
+    @include box-sizing(border-box);
+    width: 100%;
+    height: gs-height(1) + $gs-baseline;
+    color: colour(neutral-1);
+    @include fs-textSans(2);
+    padding: $gs-baseline/3 $gs-gutter/2 0;
+    border: 1px solid colour(neutral-3);
+    outline: none;
+
+    &::selection {
+        background: #cef1fc;
+    }
+}
+
+.vjs-embed-button {
+    cursor: pointer;
+    float: right;
+    box-sizing: border-box;
+    height: $vjs-control-height;
+    padding-right: $gs-gutter/2;
+    margin-right: $gs-gutter/2;
+    position: relative;
+
+    .vjs-control-content {
+        &:before {
+            content: ' ';
+            display: block;
+            width: $gs-gutter !important;
+            height: $gs-baseline !important;
+            position: absolute;
+            top: 0;
+            left: -1 * ($gs-gutter * 4);
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            @include icon(embed--white);
+        }
+    }
+
+    .vjs-control-text {
+        padding-top: 16px;
+        display: block;
+    }
+
+    .element--supporting & {
+        display: none;
+    }
+
+    &:hover {
+        .vjs-control-content::before {
+            @include icon(embed--tone-media);
+        }
+
+        .vjs-control-text {
+            color: colour(media-default);
+        }
+    }
+}
+
+.vjs-title-bar {
+    position: fixed;
+    width: 100%;
+    height: $gs-baseline*4;
+    box-sizing: border-box;
+    background-color: rgba(25, 25, 25, .8);
+    padding: $gs-baseline/2 $gs-gutter/2;
+    @include fs-textSans(3);
+    font-weight: bold;
+    @include transition(top .8s);
+    transition-delay: 1s;
+    left: 0;
+    top: $gs-baseline*-4;
+    z-index: 4;
+
+    .gu-media-wrapper:hover .vjs-mousemoved &,
+    .vjs-paused &,
+    &:hover {
+        top: 0;
+        @include transition(top 0s);
+        transition-delay: 0s;
+    }
+
+    .vjs-control-content {
+        position: absolute;
+        top: $gs-baseline/3;
+        right: $gs-baseline*4;
+    }
+
+    .vjs-title {
+        margin-top: $gs-baseline*2/3;
+        font-size: 14px;
+        color: #ffffff;
+        display: inline-block;
+        max-width: 90%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        &:hover {
+            color: colour(media-default);
+        }
+    }
+
+    svg {
+        top: 3px;
+        left: 7px;
+        width: 32px;
+        height: 32px;
+        fill: #ffffff;
+
+        &:hover {
+            fill: colour(media-default);
+        }
+    }
+}
+
+/* VJS: SKIP AD OVERLAY
+   ========================================================================== */
+.vjs-ads-skip {
+    position: absolute;
+    z-index: 4;
+    bottom: $ima-controls-height;
+    right: 8px;
+    // width so text goes over two lines
+    width: 140px;
+    background-color: rgba(colour(neutral-1), .8);
     color: #ffffff;
     text-align: left;
     @include fs-textSans(1);
@@ -551,11 +800,37 @@ $vjs-progress-inset-bottom: 4px;
         @include fs-textSans(2, true);
     }
 }
+.vjs-ads-skip__countdown,
+.vjs-ads-skip__button {
+    display: block;
+    padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline/4;
+}
+.vjs-ads-skip__button {
+    width: 100%;
+    margin: 0;
+    background-color: transparent;
+    border: 0;
+    text-align: left;
 
-.vjs-ads-overlay__label {
-    position: absolute;
-    top: $gs-baseline/3;
-    right: $gs-gutter/2;
+    .i-play-icon-grey {
+        display: inline-block;
+    }
+    .i-play-icon-gold {
+        display: none;
+    }
+    &:hover {
+        color: colour(comment-main-2);
+
+        .i-play-icon-grey {
+            display: none;
+        }
+        .i-play-icon-gold {
+            display: inline-block;
+        }
+    }
+    .skip-icon {
+        margin-right: $gs-gutter/4;
+    }
 }
 
 /* End slate
@@ -563,23 +838,23 @@ $vjs-progress-inset-bottom: 4px;
 .end-slate-container {
     display: none;
     position: absolute;
-    z-index: 3;
+    z-index: 2;
     width: 100%;
     left: 0;
     right: 0;
     margin: auto;
     @include box-sizing(border-box);
     background-color: rgba(25, 25, 25, .8);
-    color: $c-neutral7;
+    color: colour(neutral-7);
     top: $gs-baseline*4;
-    padding-left: $gs-gutter/4;
-    padding-right: $gs-gutter/4;
     padding-top: $gs-gutter/4;
     max-width: gs-span(7);
+    cursor: initial;
 
     .vjs-has-ended & {
         display: block;
     }
+
     .vjs-fullscreen & {
         height: 100%;
         margin: auto;
@@ -589,28 +864,86 @@ $vjs-progress-inset-bottom: 4px;
         max-width: gs-span(12) + $gs-gutter*2;
         padding-bottom: $gs-baseline;
     }
+
     @include mq($until: tablet) {
         .vjs-has-ended & {
             display: none;
         }
     }
-    @include mq(leftCol, wide) {
-        top: $gs-baseline*3.5;
-    }
+
     @include mq(wide) {
         max-width: gs-span(8);
+    }
+
+    .gu-video-embed & {
+        top: 30%;
+        max-width: gs-span(9) + $gs-gutter*2;
+
+        .fc-item {
+            box-sizing: border-box;
+            padding: 0 $gs-gutter/2;
+            width: 25%;
+            float: left;
+            list-style: none;
+
+            &:not(:first-child) {
+                border-left: 1px solid colour(neutral-2);
+            }
+
+            .fc-item__action {
+                color: #ffffff;
+                &:hover {
+                    color: colour(media-default);
+                }
+            }
+
+            .fc-item__title {
+                @include fs-textSans(3);
+                @include font-size(14, 18);
+                overflow: hidden;
+                max-height: $gs-baseline*6;
+                height: $gs-baseline*6;
+                margin-top: $gs-baseline/2;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 4;
+            }
+        }
+
+        @include mq($until: tablet) {
+            top: $gs-baseline*4;
+            border-top: 1px solid colour(neutral-2);
+        }
+
+        @include mq(tablet, desktop) {
+            top: 20%;
+        }
+    }
+
+    @include mq(mobileLandscape) {
+        .gu-video-embed .vjs-has-ended & {
+            display: block;
+        }
     }
 }
 .end-slate-container__header {
     height: gs-height(1);
     padding-left: $gs-gutter/2;
     margin-bottom: $gs-baseline;
+
+    .gu-video-embed & {
+        margin-bottom: 0;
+    }
 }
 .end-slate-container__heading {
     padding-top: $gs-baseline/3;
     @include fs-header(1);
     font-weight: bold;
     text-align: left;
+
+    .gu-video-embed & {
+        @include fs-textSans(3);
+    }
 }
 .end-slate {
     margin-bottom: $gs-baseline*2;
@@ -621,7 +954,7 @@ $vjs-progress-inset-bottom: 4px;
             margin-bottom: 0;
 
             &:nth-child(-n+3) {
-                border-right: 1px solid $c-neutral2;
+                border-right: 1px solid colour(neutral-2);
             }
         }
         .item__headline {
@@ -638,7 +971,7 @@ $vjs-progress-inset-bottom: 4px;
 
 .podcast-meta {
     text-align: left;
-    border-top: 1px solid lighten($c-neutral1, 16%);
+    border-top: 1px solid lighten(colour(neutral-1), 16%);
     margin-top: $gs-baseline/2;
     padding: $gs-baseline/2 $gs-gutter/2;
 }
@@ -653,6 +986,79 @@ $vjs-progress-inset-bottom: 4px;
     }
 }
 .podcast-meta__item__link {
-    color: $c-neutral7;
+    color: colour(neutral-7);
     @include fs-textSans(1);
+}
+
+/* Tech overrides
+   ========================================================================== */
+.vjs-tech-flash,
+.vjs-tech-vpaid {
+    .vjs-poster,
+    .vjs-big-play-button,
+    .vjs-fullscreen-clickbox,
+    .vast-blocker {
+        display: none !important;
+    }
+}
+
+/* IMA Adverts
+   ========================================================================== */
+#ima-ad-container {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
+.ima-ad-container--fullscreen {
+    &,
+    > div:first-child {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+#ima-controls-div {
+    display: none;
+    position: absolute;
+    height: $ima-controls-height !important;
+    bottom: -54px;
+
+    .vjs-mousemoved &,
+    &:hover {
+        bottom: 0;
+        @include transition(bottom 0s);
+        transition-delay: 0s;
+    }
+}
+#ima-seek-bar-div {
+    height: $vjs-progress-visual-height-resting;
+    width: 100% !important;
+    background-color: #000000;
+}
+#ima-progress-div {
+    height: 100%;
+    background-color: colour(media-default);
+}
+#ima-play-pause-div,
+#ima-mute-div,
+#ima-fullscreen-div {
+    display: block !important;
+}
+#ima-mute-div {
+    position: absolute;
+    right: 159px;
+    width: 17px !important;
+}
+#ima-fullscreen-div {
+    cursor: pointer;
+    float: right;
+    margin: 14px;
+    width: 20px !important;
+    height: 20px !important;
+    @include icon(expand-white);
+
+    &:hover {
+        @include icon(expand-yellow);
+    }
 }

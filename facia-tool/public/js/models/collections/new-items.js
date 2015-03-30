@@ -1,19 +1,26 @@
-/* global _: true */
 define([
+    'underscore',
+    'jquery',
     'modules/vars',
     'modules/authed-ajax',
     'modules/content-api',
     'models/collections/article',
+    'utils/alert',
     'utils/clean-clone',
     'utils/deep-get',
+    'utils/mediator',
     'utils/remove-by-id'
 ], function(
+    _,
+    $,
     vars,
     authedAjax,
     contentApi,
     Article,
+    alert,
     cleanClone,
     deepGet,
+    mediator,
     removeById
 ) {
     var maxChars = vars.CONST.restrictedHeadlineLength || 90,
@@ -36,7 +43,7 @@ define([
         });
     }
 
-    function newItemsValidator(newItems) {
+    function newItemsValidator(newItems, context) {
         var defer = $.Deferred();
 
         contentApi.validateItem(newItems[0])
@@ -44,15 +51,18 @@ define([
             defer.reject(err);
         })
         .done(function(item) {
-            var front = vars.model.front(),
+            var front = context ? context.front() : '',
                 err;
 
             if(item.group.parentType === 'Collection') {
                 if (restrictHeadlinesOn.indexOf(front) > -1 && (item.meta.headline() || item.fields.headline()).length > maxChars) {
                     err = 'Sorry, a ' + front + ' headline must be ' + maxChars + ' characters or less. Edit it first within the clipboard.';
                 }
-                if (restrictedLiveMode.indexOf(front) > -1 && vars.model.liveMode()) {
+                if (restrictedLiveMode.indexOf(front) > -1 && context.mode() === 'live') {
                     err = 'Sorry, ' + front + ' items cannot be added in Live Front mode. Switch to Draft Front then try again.';
+                }
+                if (!err) {
+                    err = context.newItemValidator(item);
                 }
             }
 
@@ -66,7 +76,7 @@ define([
         return defer.promise();
     }
 
-    function newItemsPersister(newItems, sourceGroup, targetGroup, position, isAfter) {
+    function newItemsPersister(newItems, sourceContext, sourceGroup, targetContext, targetGroup, position, isAfter) {
         var id = newItems[0].id(),
             itemMeta,
             supporting,
@@ -84,7 +94,7 @@ define([
             });
             contentApi.decorateItems(supporting());
 
-            remove = remover(sourceGroup, id);
+            remove = remover(sourceContext, sourceGroup, id);
 
         } else if (targetGroup.parentType === 'Collection') {
             itemMeta = newItems[0].getMeta() || {};
@@ -100,13 +110,16 @@ define([
                 item:     id,
                 position: position,
                 after:    isAfter,
-                live:     vars.state.liveMode(),
-                draft:   !vars.state.liveMode(),
+                mode:     targetContext.mode(),
                 itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
-            }
+            };
 
             remove = sourceGroup && sourceGroup.parentType === 'Collection' && (deepGet(sourceGroup, '.parent.id') && deepGet(sourceGroup, '.parent.id') !== targetGroup.parent.id);
-            remove = remove ? remover(sourceGroup, id) : undefined;
+            remove = remove ? remover(sourceContext, sourceGroup, id) : undefined;
+        }
+
+        if (sourceContext !== targetContext) {
+            remove = false;
         }
 
         if (update || remove) {
@@ -115,19 +128,30 @@ define([
                 remove: remove
             })
             .then(function () {
-                if (vars.state.liveMode()) {
-                    vars.model.deferredDetectPressFailure();
+                if (targetContext.mode() === 'live') {
+                    mediator.emit('presser:detectfailures', targetContext.front());
                 }
             });
         }
 
-        if (remove && sourceGroup && !sourceGroup.keepCopy && sourceGroup !== targetGroup) {
+        if (remove !== false && sourceGroup && !sourceGroup.keepCopy && sourceGroup !== targetGroup && sourceGroup.items) {
             removeById(sourceGroup.items, id); // for immediate UI effect
         }
     }
 
-    function remover(sourceGroup, id) {
-        if (sourceGroup &&
+    function mediaHandler(opts) {
+        var article = deepGet(opts, '.targetGroup.parentType') === 'Article' ? deepGet(opts, '.targetGroup.parent') : undefined;
+
+        if (article) {
+            article.meta.imageReplace(true);
+            article.meta.imageSrc(opts.mediaItem.file);
+        } else {
+            alert('You can only drop media into an opened article');
+        }
+    }
+
+    function remover(sourceContext, sourceGroup, id) {
+        if (sourceContext && sourceGroup &&
             sourceGroup.parentType === 'Collection' &&
            !sourceGroup.keepCopy) {
 
@@ -135,15 +159,57 @@ define([
                 collection: sourceGroup.parent,
                 id:     sourceGroup.parent.id,
                 item:   id,
-                live:   vars.state.liveMode(),
-                draft: !vars.state.liveMode()
+                mode:   sourceContext.mode()
             };
         }
+    }
+
+    function mergeItems(newItem, oldItem, targetContext) {
+        _.chain(oldItem.meta)
+            .keys()
+            .each(function (key) {
+                if (_.isFunction(oldItem.meta[key])) {
+                    newItem.meta[key](oldItem.meta[key]());
+                } else {
+                    newItem.meta[key] = oldItem.meta[key];
+                }
+            });
+        newItem.group = oldItem.group;
+
+        var sourceGroup = oldItem.group;
+        var itemMeta = newItem.getMeta() || {};
+        var update = {
+            collection: sourceGroup.parent,
+            item: newItem.id(),
+            position: oldItem.id(),
+            after: false,
+            mode: targetContext.mode(),
+            itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
+        };
+        var remove = remover(targetContext, sourceGroup, oldItem.id());
+
+        authedAjax.updateCollections({
+            update: update,
+            remove: remove
+        })
+        .then(function () {
+            if (targetContext.mode() === 'live') {
+                mediator.emit('presser:detectfailures', targetContext.front());
+            }
+        });
+        if (sourceGroup && !sourceGroup.keepCopy) {
+            var insertAt = sourceGroup.items().indexOf(oldItem);
+            sourceGroup.items.splice(insertAt, 1, newItem); // for immediate UI effect
+        }
+
+        return newItem;
     }
 
     return {
         newItemsConstructor: newItemsConstructor,
         newItemsValidator: newItemsValidator,
-        newItemsPersister: newItemsPersister
+        newItemsPersister: newItemsPersister,
+        mediaHandler: mediaHandler,
+        mergeItems: mergeItems
     };
 });

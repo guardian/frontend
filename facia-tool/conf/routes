@@ -11,7 +11,7 @@ GET           /oauth2callback            controllers.OAuthLoginController.oauth2
 GET           /logout                    controllers.OAuthLoginController.logout
 
 # static files
-GET           /assets/*file              controllers.Assets.at(path="/public", file)
+GET           /assets/*file              controllers.UncachedAssets.at(file)
 
 ##################### NOTE ############################
 #all endpoints below this line should be authenticated#
@@ -21,35 +21,52 @@ GET           /assets/*file              controllers.Assets.at(path="/public", f
 GET           /                          controllers.FaciaToolController.priorities()
 GET           /editorial                 controllers.FaciaToolController.collectionEditor(priority="editorial")
 GET           /commercial                controllers.FaciaToolController.collectionEditor(priority="commercial")
+GET           /training                  controllers.FaciaToolController.collectionEditor(priority="training")
 
 GET           /editorial/config          controllers.FaciaToolController.configEditor(priority="editorial")
 GET           /commercial/config         controllers.FaciaToolController.configEditor(priority="commercial")
+GET           /training/config           controllers.FaciaToolController.configEditor(priority="training")
 
 GET           /publish-all               controllers.ContentApiPressController.publishAll()
 GET           /publish-all/comet         controllers.ContentApiPressController.publishAllStream()
 
-POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
-POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)
+POST          /collection/publish/*collectionId    controllers.FaciaToolController.publishCollection(collectionId)
+POST          /collection/discard/*collectionId    controllers.FaciaToolController.discardCollection(collectionId)
 
 POST          /press/live/*path          controllers.FaciaToolController.pressLivePath(path)
 POST          /press/draft/*path         controllers.FaciaToolController.pressDraftPath(path)
 
 GET           /front/lastmodified/*path  controllers.FaciaToolController.getLastModified(path)
 
-GET           /collection/*id            controllers.FaciaToolController.readBlock(id)
-POST          /edits                     controllers.FaciaToolController.collectionEdits
-GET           /collection                controllers.FaciaToolController.listCollections
-GET           /config                    controllers.FaciaToolController.getConfig
+GET           /collection-put/*collectionId controllers.FaciaToolController.generatePutForCollectionId(collectionId)
+GET           /collection/*collectionId     controllers.FaciaToolController.getCollection(collectionId)
+POST          /edits                        controllers.FaciaToolController.collectionEdits
+GET           /collection                   controllers.FaciaToolController.listCollections
+GET           /config                       controllers.FaciaToolController.getConfig
+
+POST          /treats/*collectionId      controllers.FaciaToolController.treatEdits(collectionId)
 
 # endpoints for proxying https
 GET           /switches                  controllers.SwitchesProxy.getSwitches()
-GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)
+GET           /api/proxy/*path           controllers.FaciaContentApiProxy.capi(path)
+GET           /http/proxy/*url           controllers.FaciaContentApiProxy.http(url)
 GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
+GET           /ophan/*path               controllers.FaciaContentApiProxy.ophan(path)
+
+# thumbnails
+GET           /thumbnails/*id.svg        controllers.ThumbnailController.container(id)
 
 # Updating config
 
 POST          /config/fronts             controllers.FrontController.create()
 POST          /config/fronts/*path       controllers.FrontController.update(path)
 
-POST          /config/collections        controllers.CollectionController.create()
-POST          /config/collections/*id    controllers.CollectionController.update(id)
+POST          /config/collections                  controllers.CollectionController.create()
+POST          /config/collections/*collectionId    controllers.CollectionController.update(collectionId)
+
+
+# Stories visible
+POST          /stories-visible/*containerType   controllers.StoriesVisibleController.storiesVisible(containerType)
+
+#Vanity URL
+GET           /breaking-news                    controllers.VanityRedirects.breakingnews

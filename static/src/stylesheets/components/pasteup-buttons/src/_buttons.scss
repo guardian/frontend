@@ -46,75 +46,56 @@ They come in different sizes:
 <a href="#" class="button button--small">Link to somewhere</a>
 <a href="#" class="button button--xsmall">Link to somewhere</a>
 ```
+
+Show more button:
+
+```html_example
+<button class="button button--medium button--show-more button--tertiary">
+    <i class="i i-plus-neutral1"></i>View more stories
+</button>
+```
 */
 
-@mixin button-height($button-size) {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    height: $button-size;
-    padding: 0 ($button-size / 3);
-    margin-right: $button-size / 3;
-    line-height: $button-size + 2px;
-    border-width: 1px;
-    border-style: solid;
+@import 'mixins';
 
-    .i {
-        width: $button-size;
-        height: $button-size;
-        margin: -1px (-$button-size / 3) 0;
-    }
-    .i-left {
-        margin-left: -($button-size / 3);
-        margin-right: 0;
-        float: left;
-    }
-    .i-right {
-        margin-right: -($button-size / 3);
-        margin-left: 0;
-        float: right;
-    }
-}
-@mixin button-colour(
-    $fill-colour,
-    $text-colour,
-    $hover-colour,
-    $hover-border: $hover-colour,
-    $border-color: $fill-colour
-) {
-    color: $text-colour;
-    background-color: $fill-colour;
-    border-color: $border-color;
-
-    &:hover,
-    &:focus,
-    &:active {
-        background-color: $hover-colour;
-        border-color: $hover-border;
-    }
-}
+/*
+    If we want to draw a circle, output a pixel value instead,
+    as older versions of WebKit do not support % in border-radius
+*/
 .button {
     display: inline-block;
     vertical-align: top;
     width: auto;
-    @include fs-textSans(2);
     font-weight: bold;
     text-decoration: none;
-    @include button-height($gs-baseline * 2.5);
-    // If we want to draw a circle, output a pixel value instead,
-    // as older versions of WebKit do not support % in border-radius
-    -webkit-border-radius: 1000px;
-    border-radius: 1000px;
+    -webkit-border-radius: 1000px; /* [1] */
+    border-radius: 1000px;         /* [1] */
+    border-width: 1px;
+    border-style: solid;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    @include fs-textSans(2);
+    @include button-height($base-size * 5);
     @include button-colour(
         guss-colour(news-main-2, $pasteup-palette),
         #ffffff,
         guss-colour(news-main-1, $pasteup-palette)
-     );
+    );
 
     &:hover,
     &:focus,
     &:active {
         text-decoration: none;
+    }
+
+    .i-left {
+        margin-right: 0;
+        float: left;
+    }
+    .i-right {
+        margin-left: 0;
+        float: right;
     }
 }
 .button--primary {
@@ -140,7 +121,6 @@ They come in different sizes:
         guss-colour(neutral-4, $pasteup-palette)
     );
 }
-
 .button--tone-media {
     @include button-colour(
         guss-colour(multimedia-support-4, $pasteup-palette),
@@ -221,25 +201,51 @@ They come in different sizes:
         guss-colour(neutral-3, $pasteup-palette)
     );
 }
-
 .button--xlarge {
     @include button-height(44px);
 }
 .button--large {
-    @include button-height($gs-baseline * 3);
+    @include button-height($base-size * 6);
+
+    @include mq($from: desktop) {
+        line-height: ($base-size * 6) + 2;
+    }
 }
 .button--medium {
-    @include button-height($gs-baseline * 2.5);
+    @include button-height($base-size * 5);
+
+    @include mq($from: desktop) {
+        line-height: ($base-size * 5) + 2px;
+    }
 }
 .button--small {
-    @include button-height($gs-baseline * 2);
+    @include button-height($base-size * 4);
     @include fs-textSans(1);
-    line-height: $gs-baseline * 2 - 1px;
+    line-height: $gs-baseline * 2 - 2px;
     font-weight: bold;
 }
 .button--xsmall {
-    @include button-height($gs-baseline * 1.5);
+    @include button-height($base-size * 3);
     @include fs-textSans(1);
-    line-height: $gs-baseline * 1.5 - 1px;
+    line-height: ($base-size * 3) - 2px;
     font-weight: bold;
+}
+
+$show-more-icon-size: $base-size * 4;
+$show-more-icon-spacing: $base-size + 1;
+
+.button--show-more {
+    position: relative;
+    padding-left: $show-more-icon-size + $show-more-icon-spacing * 2;
+
+    .i, svg {
+        width: $show-more-icon-size;
+        height: $show-more-icon-size;
+        vertical-align: middle;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: $show-more-icon-spacing;
+    }
 }

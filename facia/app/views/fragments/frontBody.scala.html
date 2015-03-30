@@ -1,40 +1,42 @@
-@(faciaPage: model.FaciaPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
-
-@import views.html.fragments.keywordList
-@import views.support.MostPopularTags.topTags
+@(faciaPage: model.FaciaPage)(implicit request: RequestHeader)
+@import common.Edition
 @import views.support.RenderClasses
 
-@if(faciaPage.collections.nonEmpty) {
-    <div class="l-side-margins l-side-margins--layout-front">
-        <div class="@RenderClasses(Map(
-                "facia-container" -> true,
-                "facia-container--layout-front" -> true,
-                "facia-container--sponsored" -> faciaPage.isSponsored,
-                "facia-container--advertisement-feature" -> (faciaPage.isAdvertisementFeature && !faciaPage.isSponsored)))"
+@defining((faciaPage.isSponsored(Some(Edition(request))),
+        faciaPage.isAdvertisementFeature,
+        faciaPage.isFoundationSupported)) { case (isSponsored, isAdFeature, isFoundationFunded) =>
+    @if(faciaPage.collections.nonEmpty) {
+        <div class="l-side-margins">
+            <div class="@RenderClasses(Map(
+                "fc-container--sponsored" -> isSponsored,
+                "fc-container--advertisement-feature" -> isAdFeature,
+                "js-sponsored-front" -> (isSponsored || isAdFeature || isFoundationFunded)
+            ), "facia-page")"
             data-link-name="Front | @request.path"
-            @faciaPage.sponsor.map { sponsor =>
+                @faciaPage.sponsor.map { sponsor =>
                 data-sponsor="@sponsor"
-            }
+                }
+                @faciaPage.sponsorshipType.map { sponsorshipType =>
+                data-sponsorship="@sponsorshipType"
+                }
             role="main">
 
-            @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
-                @collections.zipWithIndex.map{ case(block, index) =>
-                    @fragments.frontCollection(faciaPage, (block._1.config, block._2), collections.size, index, block._1.id)
-                }
-            }
-
-            <section class="facia-container__inner">
-                @defining(topTags(faciaPage.allItems).take(20)) { tags =>
-                    @if(tags.nonEmpty) {
-                        <div class="submeta" data-link-name="keywords">
-                            <h2 class="submeta__head">Trending topics</h2>
-                            @keywordList(tags, 5, "See also")
-                        </div>
+                @defining(faciaPage.front.containers) { collections =>
+                    @collections.map { containerDefinition =>
+                        @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
                     }
                 }
-            </section>
 
-            @fragments.commercial.commercialComponent()
+                <div class="js-front-bottom"></div>
+
+                @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
+
+                @if(!isAdFeature) {
+                    <div class="fc-container fc-container--commercial">
+                    @fragments.commercial.commercialComponent()
+                    </div>
+                }
+            </div>
         </div>
-    </div>
+    }
 }

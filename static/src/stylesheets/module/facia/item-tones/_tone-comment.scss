@@ -1,0 +1,60 @@
+.tone-comment--item,
+%tone-comment--item {
+    &.fc-item,
+    &.rich-link {
+        background-color: colour(comment-background);
+    }
+
+    .u-faux-block-link--hover {
+        background-color: darken(colour(comment-background), 5%);
+    }
+
+    .fc-item__container:before,
+    .rich-link__container:before {
+        background-color: colour(comment-default);
+    }
+
+    .fc-item__kicker,
+    .rich-link__kicker,
+    .fc-item__byline,
+    .rich-link__byline,
+    .rich-link__read-more-text {
+        color: colour(comment-default);
+    }
+
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(comment-background), 10%);
+    }
+
+    .rich-link__arrow-icon {
+        fill: colour(comment-default);
+    }
+
+    .fc-item__standfirst,
+    .rich-link__standfirst {
+        ul > li:before {
+            background: colour(neutral-3);
+        }
+    }
+
+}
+
+.tone-comment--sublink,
+%tone-comment--sublink {
+    .fc-sublink__kicker {
+        color: colour(comment-default);
+    }
+
+    @include sublink-style(live, review, media) {
+        .fc-sublink__kicker {
+            color: colour(comment-background);
+        }
+    }
+}
+
+.tone-comment--most-popular,
+%tone-comment--most-popular {
+    .fc-item__kicker {
+        color: colour(comment-default);
+    }
+}

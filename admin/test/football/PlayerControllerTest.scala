@@ -39,4 +39,11 @@ import test.ConfiguredTestSuite
     val content = contentAsJson(result)
     (content \ "players").as[List[JsObject]] should contain(JsObject(Seq("label" -> JsString("Heurelho Gomes"), "value" -> JsString("283600"))))
   }
+
+  "test can return json when json format supplied" in {
+    val Some(result) = route(FakeRequest(GET, "/admin/football/player/card/date/attack/237670/19/20140101.json"))
+    status(result) should equal(OK)
+    contentType(result).get should be("application/json")
+    contentAsString(result) should startWith("{\"html\"")
+  }
 }

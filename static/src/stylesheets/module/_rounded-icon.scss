@@ -1,0 +1,7 @@
+%rounded-icon,
+.rounded-icon {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    @include border-radius(50%);
+}

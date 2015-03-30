@@ -1,18 +1,8 @@
-/* jshint unused: false */
 define([
-    'vast',
     'videojs',
     'videojsads',
-    'videojsvast',
+    'videojsima',
     'videojspersistvolume',
-    'videojsplaylist'
-], function (
-    vast,
-    videojs,
-    videojsads,
-    videojsvast,
-    videojspersistvolume,
-    videojsplaylist
-) {
-    return;
-});
+    'videojsplaylist',
+    'videojsembed'
+], function () {});

@@ -1,91 +1,93 @@
 define([
-    // Common libraries
-    'common/utils/$',
-    'common/utils/ajax',
-    'common/utils/mediator',
     'bonzo',
     'qwery',
-    // Modules
+    // Common libraries
+    'common/utils/_',
+    'common/utils/$',
+    'common/utils/config',
     'common/utils/detect',
+    'common/utils/mediator',
     'common/utils/storage',
     'common/utils/to-array',
-    'facia/modules/ui/snaps',
-    'facia/modules/ui/container-fc-show-more',
-    'facia/modules/ui/container-show-more',
+    // Modules
+    'common/modules/business/stocks',
+    'facia/modules/onwards/geo-most-popular-front',
     'facia/modules/ui/container-toggle',
-    'facia/modules/onwards/geo-most-popular-front'
+    'facia/modules/ui/container-show-more',
+    'facia/modules/ui/lazy-load-containers',
+    'facia/modules/ui/snaps',
+    'facia/modules/onwards/weather'
 ], function (
-    $,
-    ajax,
-    mediator,
     bonzo,
     qwery,
+    _,
+    $,
+    config,
     detect,
+    mediator,
     storage,
     toArray,
-    snaps,
-    containerFcShowMore,
-    ContainerShowMore,
+    stocks,
+    GeoMostPopularFront,
     ContainerToggle,
-    GeoMostPopularFront
-    ) {
-    var modules = {
+    containerShowMore,
+    lazyLoadContainers,
+    snaps,
+    weather
+) {
 
+    var modules = {
             showSnaps: function () {
                 snaps.init();
+                mediator.on('modules:container:rendered', snaps.init);
             },
 
             showContainerShowMore: function () {
-                var containerShowMoreAdd = function (config, context) {
-                    var c = context || document;
-                    $('.js-container--show-more', c).each(function (container) {
-                        new ContainerShowMore(container).addShowMore();
-                    });
-
-                    $('.js-container--fc-show-more', c).each(function (container) {
-                        containerFcShowMore(container);
-                    });
-                };
                 mediator.addListeners({
-                    'page:front:ready': containerShowMoreAdd
+                    'modules:container:rendered': containerShowMore.init,
+                    'page:front:ready': containerShowMore.init
                 });
             },
 
             showContainerToggle: function () {
-                var containerToggleAdd = function (config, context) {
-                    var c = context || document;
-                    $('.js-container--toggle', c).each(function (container) {
-                        new ContainerToggle(container).addToggle();
-                    });
-                };
+                var containerToggleAdd = function (context) {
+                        $('.js-container--toggle', $(context || document)[0]).each(function (container) {
+                            new ContainerToggle(container).addToggle();
+                        });
+                    };
                 mediator.addListeners({
                     'page:front:ready': containerToggleAdd,
-                    'ui:container-toggle:add':  containerToggleAdd,
-                    'modules:geomostpopular:ready': containerToggleAdd
-                });
-                mediator.on(/page:front:ready|ui:container-toggle:add|modules:geomostpopular:ready/, function (config, context) {
-                    $('.js-container--toggle', context).each(function (container) {
-                        new ContainerToggle(container).addToggle();
-                    });
+                    'modules:geomostpopular:ready': _.partial(containerToggleAdd, '.js-popular-trails')
                 });
             },
 
-            upgradeMostPopularToGeo: function (config) {
-                if (config.page.contentType === 'Network Front' && config.switches.geoMostPopular) {
-                    new GeoMostPopularFront(mediator, config).go();
+            upgradeMostPopularToGeo: function () {
+                if (config.switches.geoMostPopular) {
+                    new GeoMostPopularFront().go();
+                }
+            },
+
+            showWeather: function () {
+                if (config.switches.weather) {
+                    mediator.on('page:front:ready', function () {
+                        weather.init();
+                    });
                 }
             }
         },
 
-        ready = function (config, context) {
+        ready = function () {
             if (!this.initialised) {
                 this.initialised = true;
                 modules.showSnaps();
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
-                modules.upgradeMostPopularToGeo(config);
+                modules.upgradeMostPopularToGeo();
+                lazyLoadContainers();
+                stocks();
+                modules.showWeather();
             }
-            mediator.emit('page:front:ready', config, context);
+            mediator.emit('page:front:ready');
         };
 
     return {

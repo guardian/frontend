@@ -2,9 +2,13 @@ package dfp
 
 import java.net.URLEncoder
 
+import common.Edition
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
-import play.api.libs.json.{JsValue, Json, Writes}
+import org.joda.time.format.ISODateTimeFormat
+import play.api.libs.functional.syntax._
+import play.api.libs.json._
+
+import scala.annotation.tailrec
 
 case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
@@ -24,11 +28,12 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
   val isInlineMerchandisingSlot = isSlot("im")
 
-  val targetsAdTest = isPositive("at")
+  val isAdTest = isPositive("at")
 
   val isKeywordTag = isPositive("k")
   val isSeriesTag = isPositive("se")
   val isContributorTag = isPositive("co")
+  val isEditionTag = isPositive("edition")
 
   val targetsR2Only: Boolean = isPlatform("r2") || isNotPlatform("ng")
 }
@@ -44,6 +49,12 @@ object CustomTarget {
       )
     }
   }
+
+  implicit val customTargetReads: Reads[CustomTarget] = (
+    (JsPath \ "name").read[String] and
+      (JsPath \ "op").read[String] and
+      (JsPath \ "values").read[Seq[String]]
+    )(CustomTarget.apply _)
 
 }
 
@@ -66,8 +77,6 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val inlineMerchandisingTargetedSeries = filterTags(tag => tag.isSeriesTag)(_.isInlineMerchandisingSlot)
   val inlineMerchandisingTargetedContributors = filterTags(tag => tag.isContributorTag)(_.isInlineMerchandisingSlot)
 
-  val targetsAdTest = targets.exists(_.targetsAdTest)
-
   val targetsR2Only: Boolean = targets exists (_.targetsR2Only)
 }
 
@@ -81,6 +90,11 @@ object CustomTargetSet {
       )
     }
   }
+
+  implicit val customTargetSetReads: Reads[CustomTargetSet] = (
+    (JsPath \ "op").read[String] and
+      (JsPath \ "targets").read[Seq[CustomTarget]]
+    )(CustomTargetSet.apply _)
 
 }
 
@@ -100,6 +114,13 @@ object GeoTarget {
     }
   }
 
+  implicit val geoTargetReads: Reads[GeoTarget] = (
+    (JsPath \ "id").read[Long] and
+      (JsPath \ "parentId").readNullable[Int] and
+      (JsPath \ "locationType").read[String] and
+      (JsPath \ "name").read[String]
+    )(GeoTarget.apply _)
+
 }
 
 
@@ -116,14 +137,38 @@ object GuAdUnit {
     }
   }
 
+  implicit val adUnitReads: Reads[GuAdUnit] = (
+    (JsPath \ "id").read[String] and
+      (JsPath \ "path").read[Seq[String]]
+    )(GuAdUnit.apply _)
+
 }
 
 
-case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargetsIncluded: Seq[GeoTarget], geoTargetsExcluded: Seq[GeoTarget], customTargetSets: Seq[CustomTargetSet]) {
+case class GuTargeting(adUnits: Seq[GuAdUnit],
+                       geoTargetsIncluded: Seq[GeoTarget],
+                       geoTargetsExcluded: Seq[GeoTarget],
+                       customTargetSets: Seq[CustomTargetSet]) {
 
-  def hasAdTestTargetting = customTargetSets.exists(_.targetsAdTest)
+  val adTestValue: Option[String] = {
+    val testValues = for {
+      targetSet <- customTargetSets
+      target <- targetSet.targets
+      if target.isAdTest
+      targetValue <- target.values
+    } yield targetValue
 
-  def targetsR2Only = customTargetSets exists (_.targetsR2Only)
+    testValues.headOption
+  }
+
+  val editions: Seq[Edition] = {
+    val targets = customTargetSets flatMap (_.targets filter (_.isEditionTag))
+    targets flatMap (_.values) flatMap Edition.byId
+  }
+
+  val hasAdTestTargetting: Boolean = adTestValue.isDefined
+
+  val targetsR2Only: Boolean = customTargetSets exists (_.targetsR2Only)
 }
 
 object GuTargeting {
@@ -139,6 +184,13 @@ object GuTargeting {
     }
   }
 
+  implicit val targetingReads: Reads[GuTargeting] = (
+    (JsPath \ "adUnits").read[Seq[GuAdUnit]] and
+      (JsPath \ "geoTargetsIncluded").read[Seq[GeoTarget]] and
+      (JsPath \ "geoTargetsExcluded").read[Seq[GeoTarget]] and
+      (JsPath \ "customTargetSets").read[Seq[CustomTargetSet]]
+    )(GuTargeting.apply _)
+
 }
 
 
@@ -148,9 +200,17 @@ case class GuLineItem(id: Long,
                       endTime: Option[DateTime],
                       isPageSkin: Boolean,
                       sponsor: Option[String],
+                      status: String,
                       targeting: GuTargeting) {
 
   val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
+  val isExpired = endTime.exists(_.isBeforeNow)
+  val isExpiredRecently = isExpired && endTime.exists(_.isAfter(DateTime.now().minusWeeks(1)))
+  val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(DateTime.now().plusMonths(1)))
+
+  val paidForTags: Seq[String] = targeting.customTargetSets.flatMap { targetSet =>
+    targetSet.sponsoredTags ++ targetSet.advertisementFeatureTags ++ targetSet.foundationSupportedTags
+  }.distinct
 
   val sponsoredTags: Seq[String] = targeting.customTargetSets.flatMap(_.sponsoredTags).distinct
 
@@ -165,20 +225,33 @@ case class GuLineItem(id: Long,
 
 object GuLineItem {
 
+  private val timeFormatter = ISODateTimeFormat.dateTime()
+
   implicit val lineItemWrites = new Writes[GuLineItem] {
     def writes(lineItem: GuLineItem): JsValue = {
-      val timePattern = DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm z")
       Json.obj(
         "id" -> lineItem.id,
         "name" -> lineItem.name,
-        "startTime" -> timePattern.print(lineItem.startTime),
-        "endTime" -> lineItem.endTime.map(endTime => timePattern.print(endTime)),
+        "startTime" -> timeFormatter.print(lineItem.startTime),
+        "endTime" -> lineItem.endTime.map(timeFormatter.print(_)),
         "isPageSkin" -> lineItem.isPageSkin,
         "sponsor" -> lineItem.sponsor,
+        "status" -> lineItem.status,
         "targeting" -> lineItem.targeting
       )
     }
   }
+
+  implicit val lineItemReads: Reads[GuLineItem] = (
+    (JsPath \ "id").read[Long] and
+      (JsPath \ "name").read[String] and
+      (JsPath \ "startTime").read[String].map(timeFormatter.parseDateTime) and
+      (JsPath \ "endTime").readNullable[String].map(_.map(timeFormatter.parseDateTime)) and
+      (JsPath \ "isPageSkin").read[Boolean] and
+      (JsPath \ "sponsor").readNullable[String] and
+      (JsPath \ "status").read[String] and
+      (JsPath \ "targeting").read[GuTargeting]
+    )(GuLineItem.apply _)
 
 }
 
@@ -196,6 +269,7 @@ case class GuCreativeTemplate(id: Long,
 
   val example: Option[String] = creatives.headOption map { creative =>
 
+    @tailrec
     def replaceParameters(html: String, args: Seq[(String, String)]): String = {
       if (args.isEmpty) html
       else {
@@ -207,5 +281,26 @@ case class GuCreativeTemplate(id: Long,
 
     replaceParameters(snippet, creative.args.toSeq)
   }
+
+}
+
+
+case class LineItemReport(timestamp: String, lineItems: Seq[GuLineItem])
+
+object LineItemReport {
+
+  implicit val reportWrites = new Writes[LineItemReport] {
+    def writes(report: LineItemReport): JsValue = {
+      Json.obj(
+        "timestamp" -> report.timestamp,
+        "lineItems" -> report.lineItems
+      )
+    }
+  }
+
+  implicit val reportReads: Reads[LineItemReport] = (
+    (JsPath \ "timestamp").read[String] and
+      (JsPath \ "lineItems").read[Seq[GuLineItem]]
+    )(LineItemReport.apply _)
 
 }

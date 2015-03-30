@@ -24,3 +24,40 @@
     margin-bottom: 0;
     margin-left: 10px;
 }
+
+.flagged {
+    color: red;
+}
+
+.lineItem {
+    padding-bottom: 20px;
+}
+
+.line-item {
+    padding-bottom: 40px;
+}
+
+.sub-line-item {
+    padding-top: 10px;
+}
+
+th, td {
+    padding: 10px 60px 20px 10px;
+}
+
+.has-cookie {
+    margin: 30px;
+    font-size: 18px;
+    color: limegreen;
+}
+
+.hasnt-cookie {
+    margin: 30px;
+    font-size: 18px;
+    color: blue;
+}
+
+.selected {
+    font-size: 16px;
+    color: limegreen;
+}

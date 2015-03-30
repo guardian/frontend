@@ -18,24 +18,31 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
   val insignificantParams = Seq(
     "view",
     "_edition", //allows us to spoof edition in tests
-    "k", // keywords in commercial component requests
-    "s", // section in commercial component requests
     "c", // used for counts in the Diagnostics server
-    "seg", // user segments in commercial component requests
     "build", // used by Forsee surveys
-    "google_console", // two params for dfp console
-    "googfc",
     "shortUrl", // Used by series component in onwards journeys
-    "t", // specific item targetting
     "switchesOn", // turn switches on for non-prod, http requests
     "switchesOff", // turn switches off for non-prod, http requests
     "test", // used for integration tests
+    "CMP", // External campaign parameter for Omniture js
+    "INTCMP", // Internal campaign parameter for Omniture js
 
     "oauth_token", // for generating Magento tokens for bookshop service
     "oauth_verifier" // for generating Magento tokens for bookshop service
   )
 
-  val allowedParams = CanonicalLink.significantParams ++ insignificantParams
+  val commercialParams = Seq(
+    "ad-unit", // allows overriding of the ad unit
+    "adtest", // used to set ad-test cookie from admin domain
+    "google_console", // two params for dfp console
+    "googfc",
+    "k", // keywords in commercial component requests
+    "s", // section in commercial component requests
+    "seg", // user segments in commercial component requests
+    "t" // specific item targetting
+  )
+
+  val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams
 
   override def onRouteRequest(request: RequestHeader) = {
 
@@ -48,7 +55,8 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
         !request.uri.startsWith("/oauth2callback") &&
         !request.uri.startsWith("/px.gif")  && // diagnostics box
         !request.uri.startsWith("/ab.gif") &&
-        !request.uri.startsWith("/js.gif")
+        !request.uri.startsWith("/js.gif") &&
+        !request.uri.startsWith("/tech-feedback")
       ) {
         val illegalParams = request.queryString.keySet.filterNot(allowedParams.contains(_))
         if (illegalParams.nonEmpty) {

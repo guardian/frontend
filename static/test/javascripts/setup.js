@@ -51,22 +51,10 @@ if (!Function.prototype.bind) {
   };
 }
 
-guardian = {
+window.guardian = {
     config: {
-        beaconUrl: '',
-        stripePublicToken: "testToken123",
-        switches: {},
-        page: {
-            tones: 'foo',
-            series: 'bar',
-            references: [{baz: 'one'}, {baz: 'two'}],
-            webPublicationDate: '2013-03-20T17:07:00.000Z'
-        }
+        switches: { },
+        page: { }
     }
 };
-
-s_account = 'guardiangu-frontend,guardiangu-network';
-
-require(['common/utils/ajax'], function(ajax) {
-    ajax.init();
-});
+window.s_account = 'guardiangu-frontend,guardiangu-network';

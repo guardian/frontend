@@ -33,9 +33,6 @@ head {
     @include mq(tablet) {
         font-family: 'tablet';
     }
-    @include mq(rightCol) {
-        font-family: 'rightCol';
-    }
     @include mq(desktop) {
         font-family: 'desktop';
     }
@@ -56,9 +53,6 @@ body:after {
     @include mq(tablet) {
         content: 'tablet';
     }
-    @include mq(rightCol) {
-        content: 'rightCol';
-    }
     @include mq(desktop) {
         content: 'desktop';
     }
@@ -71,7 +65,7 @@ body:after {
 }
 
 .dateline {
-    color: $c-neutral2;
+    color: colour(neutral-2);
     @include fs-textSans(2);
 
     @include mq(tablet) {
@@ -85,7 +79,7 @@ body:after {
 
 .relative-timestamp {
     display: block;
-    color: $c-neutral2;
+    color: colour(neutral-2);
     margin: 0;
 }
 

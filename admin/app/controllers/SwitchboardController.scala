@@ -60,7 +60,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     }
   }
 
-  private def saveSwitchesOrError(requester: String, updates: List[String]) = try {
+  private def saveSwitchesOrError(requester: String, updates: Seq[String]) = try {
     val current =  Switches.all map { switch =>
       switch.name + "=" + (if (switch.isSwitchedOn) "on" else "off")
     }

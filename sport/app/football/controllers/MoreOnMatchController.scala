@@ -11,6 +11,7 @@ import org.scala_tools.time.Imports._
 import pa.FootballMatch
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import play.twirl.api.Html
+import LiveContentApi.getResponse
 
 import scala.concurrent.Future
 
@@ -72,8 +73,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
         case related => JsonComponent(
           "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, related filter {
             hasExactlyTwoTeams
-          })),
-          "related" -> views.html.fragments.relatedTrails(related, "More on this match", 5)
+          }))
         )
       }
     }
@@ -85,13 +85,13 @@ object MoreOnMatchController extends Controller with Football with Requests with
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[Content]] = {
     val matchDate = theMatch.date.toLocalDate
 
-    LiveContentApi.search(Edition(request))
+    getResponse(LiveContentApi.search(Edition(request))
       .section("football")
       .tag("tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2).toDateTimeAtStartOfDay)
       .toDate(matchDate.plusDays(2).toDateTimeAtStartOfDay)
       .reference(s"pa-football-team/${theMatch.homeTeam.id},pa-football-team/${theMatch.awayTeam.id}")
-      .response.map{ response =>
+    ).map{ response =>
         response.results.map(Content(_))
     }
   }
@@ -121,11 +121,11 @@ object MoreOnMatchController extends Controller with Football with Requests with
       loadMoreOn(request, theMatch).map { related =>
         val (matchReport, minByMin, preview, stats) = fetchRelatedMatchContent(theMatch, related)
         val canonicalPage = matchReport.orElse(minByMin).orElse { if (theMatch.isFixture) preview else None }.getOrElse(stats)
-        Cached(60)(TemporaryRedirect(canonicalPage.url))
+        Cached(60)(Found(canonicalPage.url))
       }
     }.getOrElse {
       // we do not keep historical data, so just redirect old stuff to the results page (see also MatchController)
-      Future.successful(Cached(60)(TemporaryRedirect("/football/results")))
+      Future.successful(Cached(60)(Found("/football/results")))
     }
   }
 

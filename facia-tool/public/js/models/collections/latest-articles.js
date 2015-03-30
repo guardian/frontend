@@ -1,39 +1,46 @@
-/* global _: true */
 define([
+    'jquery',
+    'underscore',
     'modules/vars',
+    'utils/array',
     'utils/internal-content-code',
+    'utils/parse-query-params',
     'utils/query-params',
     'utils/url-abs-path',
     'models/collections/article',
     'modules/auto-complete',
     'modules/cache',
-    'modules/authed-ajax',
+    'modules/content-api',
     'knockout'
 ], function (
+    $,
+    _,
     vars,
+    array,
     internalContentCode,
+    parseQueryParams,
     queryParams,
     urlAbsPath,
     Article,
     autoComplete,
     cache,
-    authedAjax,
+    contentApi,
     ko
 ) {
-    function dateYyyymmdd() {
-        var d = new Date();
-        return [d.getFullYear(), d.getMonth() + 1, d.getDate()].map(function(p) { return p < 10 ? '0' + p : p; }).join('-');
-    }
 
     return function(options) {
 
         var self = this,
             deBounced,
+            poller,
             opts = options || {},
             counter = 0,
-            container = document.querySelector('.latest-articles');
+            scrollable = options.container.querySelector('.scrollable'),
+            pageSize = vars.CONST.searchPageSize || 25,
+            showingDrafts = opts.showingDrafts;
 
         this.articles = ko.observableArray();
+        this.message = ko.observable();
 
         this.term = ko.observable(queryParams().q || '');
         this.term.subscribe(function() { self.search(); });
@@ -43,35 +50,31 @@ define([
         this.filterType = ko.observable();
         this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []);
 
-        this.showingDrafts = ko.observable(false);
-        this.showDrafts = function() {
-            self.showingDrafts(true);
-            self.search();
-        };
-        this.showLive = function() {
-            self.showingDrafts(false);
-            self.search();
-        };
-
         this.suggestions = ko.observableArray();
+        this.lastSearch = ko.observable();
 
         this.page = ko.observable(1);
+        this.totalPages = ko.observable(1);
+
+        this.title = ko.computed(function () {
+            var lastSearch = this.lastSearch(),
+                title = 'latest';
+            if (lastSearch && lastSearch.filter) {
+                title += ' in ' + lastSearch.filter;
+            }
+            return title;
+        }, this);
 
         this.setFilter = function(item) {
             self.filter(item && item.id ? item.id : item);
             self.suggestions.removeAll();
+            self.filterChange();
             self.search();
         };
 
         this.clearFilter = function() {
             self.filter('');
             self.suggestions.removeAll();
-        };
-
-        this.setSection = function(str) {
-            self.filterType(opts.filterTypes.section);
-            self.setFilter(str);
-            self.clearTerm();
         };
 
         this.clearTerm = function() {
@@ -87,95 +90,113 @@ define([
             .then(self.suggestions);
         };
 
-        // Grab articles from Content Api
-        this.search = function(opts) {
+        this.filterChange = function () {
+            if (!this.filter()) {
+                var lastSearch = this.lastSearch();
+                if (lastSearch && lastSearch.filter) {
+                    // The filter has been cleared
+                    this.search();
+                }
+            }
+        };
+
+        function fetch (opts) {
             var count = counter += 1;
 
             opts = opts || {};
 
-            if (!vars.model.switches()['facia-tool-draft-content']) {
-                self.showingDrafts(false);
-            }
-
             clearTimeout(deBounced);
-            deBounced = setTimeout(function(){
-                var url = vars.CONST.apiSearchBase + '/',
-                    term,
-                    propName;
-
+            deBounced = setTimeout(function() {
+                if (self.suggestions().length) {
+                    // The auto complete is open, if we ask the API most likely we won't get any result
+                    // which will lead to displaying the alert
+                    return;
+                }
                 if (!opts.noFlushFirst) {
                     self.flush('searching...');
                 }
 
+                var request = {
+                    isDraft: showingDrafts(),
+                    page: self.page(),
+                    pageSize: pageSize,
+                    filter: self.filter(),
+                    filterType: self.filterType().param,
+                    isPoll: opts.isPoll
+                };
+
+                var term = self.term();
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
-                    term = urlAbsPath(self.term());
+                    term = urlAbsPath(term);
                     self.term(term);
-                    propName = 'content';
-                    url += term + '?' + vars.CONST.apiSearchParams;
+                    request.article = term;
                 } else {
-                    term = encodeURIComponent(self.term().trim().replace(/ +/g,' AND '));
-                    propName = 'results';
-                    url += 'search?' + vars.CONST.apiSearchParams;
-                    url += self.showingDrafts() ?
-                        '&content-set=-web-live&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
-                        '&content-set=web-live&order-by=newest';
-                    url += '&page-size=' + (vars.CONST.searchPageSize || 25);
-                    url += '&page=' + self.page();
-                    url += term ? '&q=' + term : '';
-                    url += self.filter() ? '&' + self.filterType().param + '=' + encodeURIComponent(self.filter()) : '';
+                    request.term = term;
                 }
 
-                authedAjax.request({
-                    url: url
-                })
-                .done(function(data) {
-                    var rawArticles = data.response && data.response[propName] ? [].concat(data.response[propName]) : [],
-                        errMsg = 'Sorry, the Content API is not currently returning content';
+                contentApi.fetchLatest(request)
+                .then(
+                    function(response) {
+                        if (count !== counter) { return; }
+                        var rawArticles = response.results,
+                            newArticles,
+                            initialScroll = scrollable.scrollTop;
 
-                    if (!term && !rawArticles.length) {
+                        self.lastSearch(request);
+                        self.totalPages(response.pages);
+                        self.page(response.currentPage);
+
+                        if (rawArticles.length) {
+                            newArticles = array.combine(rawArticles, self.articles(), function (one, two) {
+                                var oneId = one instanceof Article ? one.id() : internalContentCode(one);
+                                var twoId = two instanceof Article ? two.id() : internalContentCode(two);
+                                return oneId === twoId;
+                            }, function (opts) {
+                                var icc = internalContentCode(opts);
+
+                                opts.id = icc;
+                                cache.put('contentApi', icc, opts);
+
+                                opts.uneditable = true;
+                                return new Article(opts, true);
+                            }, function (oldArticle, newArticle) {
+                                oldArticle.props.webPublicationDate(newArticle.webPublicationDate);
+                                return oldArticle;
+                            });
+                            self.articles(newArticles);
+                            self.message(null);
+                        } else {
+                            self.flush('...sorry, no articles were found.');
+                        }
+
+                        scrollable.scrollTop = initialScroll;
+                    },
+                    function(error) {
+                        var errMsg = error.message;
                         vars.model.alert(errMsg);
                         self.flush(errMsg);
-                        return;
                     }
-
-                    if (count !== counter) { return; }
-
-                    self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
-
-                   _.chain(rawArticles)
-                    .filter(function(article) { return article.fields && article.fields.headline; })
-                    .each(function(article) {
-                        var icc = internalContentCode(article);
-
-                        article.id = icc;
-                        article.uneditable = true;
-
-                        cache.put('contentApi', icc, article);
-                        self.articles.push(new Article(article));
-                    });
-                })
-                .fail(function(xhr) {
-                    var errMsg = 'Content API error (' + xhr.status + '). Content is currently unavailable';
-
-                    vars.model.alert(errMsg);
-                    self.flush(errMsg);
-                })
-                ;
+                );
             }, 300);
+        }
+
+        // Grab articles from Content Api
+        this.search = function(opts) {
+            self.page(1);
+            fetch(opts);
 
             return true; // ensure default click happens on all the bindings
         };
 
         this.flush = function(message) {
             self.articles.removeAll();
-            // clean up any dragged-in articles
-            container.innerHTML = message ? '<div class="search-message">' + message + '</div>' : '';
+            self.message(message);
         };
 
         this.refresh = function() {
             self.page(1);
-            self.search();
+            fetch();
         };
 
         this.reset = function() {
@@ -186,25 +207,43 @@ define([
 
         this.pageNext = function() {
             self.page(self.page() + 1);
-            self.search();
+            fetch();
         };
 
         this.pagePrev = function() {
             self.page(_.max([1, self.page() - 1]));
-            self.search();
+            fetch();
         };
 
+        this.showNext = ko.pureComputed(function () {
+            return this.totalPages() > this.page();
+        }, this);
+
+        this.showPrev = ko.pureComputed(function () {
+            return this.page() > 1;
+        }, this);
+
+        this.showTop = ko.pureComputed(function () {
+            return this.page() > 2;
+        }, this);
+
         this.startPoller = function() {
-            setInterval(function(){
+            poller = setInterval(function(){
                 if (self.page() === 1) {
-                    self.search({noFlushFirst: true});
+                    self.search({
+                        noFlushFirst: true,
+                        isPoll: true
+                    });
                 }
             }, vars.CONST.latestArticlesPollMs || 60000);
 
             this.startPoller = function() {}; // make idempotent
         };
 
+        this.dispose = function () {
+            clearTimeout(deBounced);
+            clearInterval(poller);
+        };
+
     };
 });
-
-

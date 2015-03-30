@@ -1,10 +1,8 @@
 define([
-    'lodash/objects/isArray',
     'common/utils/_',
     'common/utils/detect',
     'common/utils/mediator'
 ], function (
-    isArray,
     _,
     detect,
     mediator
@@ -56,11 +54,17 @@ define([
                     .pairs()
                     .map(function (queryParts) {
                         var value = queryParts[1];
-                        if (isArray(value)) {
+                        if (_.isArray(value)) {
                             value = value.join(',');
                         }
                         return [queryParts[0], '=', value].join('');
                     }).join('&');
+            },
+
+            getPath: function (url) {
+                var a = document.createElement('a');
+                a.href = url;
+                return a.pathname;
             },
 
             pushUrl: function (state, title, url, replace) {
@@ -82,6 +86,7 @@ define([
     // not exposing all the methods here
     return {
         getUrlVars: model.getUrlVars,
+        getPath: model.getPath,
         pushUrl: model.pushUrl,
         constructQuery: model.constructQuery,
         back: model.back,

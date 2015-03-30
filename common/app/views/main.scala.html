@@ -1,6 +1,8 @@
 @(metaData: model.MetaData, projectName: Option[String] = None, curlPaths: Map[String, String] = Map())(head: Html)(body: Html)(implicit request: RequestHeader)
+
 @import conf.Switches._
-@import common.Edition
+@import common.{Edition, Navigation}
+@import views.support.RenderClasses
 
 @* Identity pages use identityMain.scala.html, most of which is shared fragments,
    be sure to apply any necessary changes to non-shared code there too. *@
@@ -10,44 +12,72 @@
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
-@defining(metaData match {
-    case c: model.Content if c.shouldHideAdverts => { false }
-    case _ => { true }
-}) { showAdverts =>
-@defining(Edition(request)) { edition =>
+@defining((
+    metaData match {
+        case c: model.Content if c.shouldHideAdverts => { false }
+        case _ => { true }
+    },
+    Edition(request),
+    Edition(request).id == "UK" && (
+        (AppleAdNetworkFrontSwitch.isSwitchedOn && metaData.id == "uk") ||
+        (AppleAdCultureFrontSwitch.isSwitchedOn && metaData.id == "uk/culture")
+    ),
+    metaData.hideUi && HideInteractiveUi.isSwitchedOn
+)) { case (showAdverts, edition, adBelowNav, hideUi) =>
     <body
         id="top"
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin(edition)),
             ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty),
-            ("childrens-books-site", metaData.section == "childrens-books-site")))"
+            ("childrens-books-site", metaData.section == "childrens-books-site"),
+            ("ad-below-nav", adBelowNav),
+            ("is-immersive", metaData.isImmersive)))"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.message(metaData)
 
-        @if(showAdverts) {
-            @fragments.commercial.topBanner()
-        }
+        <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @fragments.header(metaData)
+        @if(!hideUi) {
+            <div class="sticky-nav-mt-test">
+            @if(showAdverts) {
+                @fragments.commercial.topBanner()
+            }
 
-        @if(showAdverts) {
-            @fragments.commercial.topBannerMobile()
+            @fragments.header(metaData)
+            </div>
+            @if(showAdverts && adBelowNav) {
+                @fragments.commercial.topBannerBelowNav()
+            }
+
+            <div class="top-banner-below-nav-mt-test"></div>
+
+            @if(showAdverts) {
+                @fragments.commercial.topBannerMobile()
+            }
+
+            <div id="maincontent" tabindex="0"></div>
+
+            @if(BreakingNewsSwitch.isSwitchedOn) {
+                <div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in"
+                data-link-name="breaking news"
+                data-component="breaking-news"></div>
+            }
         }
 
         @body
 
-        @fragments.footer(metaData)
-
-        @fragments.loadCss()
-
+        @if(!hideUi) {
+            @fragments.footer(metaData)
+        }
         @fragments.analytics(metaData)
 
         @fragments.footerJavaScript()
 
-        @fragments.commercial.pageSkin()
+        @if(!hideUi) {
+            @fragments.commercial.pageSkin()
+        }
 
     </body>
     </html>
-}
 }

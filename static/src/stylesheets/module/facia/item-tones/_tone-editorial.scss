@@ -1,0 +1,67 @@
+.tone-editorial--item {
+    $c-headline: #ffffff;
+
+    background-color: colour(editorial-default);
+
+    &,
+    .rich-link__link,
+    .fc-sublink__title,
+    .rich-link__standfirst {
+        color: $c-headline;
+    }
+
+    .u-faux-block-link--hover {
+        background-color: darken(colour(editorial-default), 5%);
+    }
+
+    .fc-item__link,
+    .fc-sublink__link {
+        &:visited {
+            color: mix($c-headline, colour(editorial-default), 80%);
+        }
+    }
+
+    .fc-item__container:before,
+    .rich-link__container:before {
+        background-color: colour(editorial-accent);
+    }
+
+    .fc-item__kicker,
+    .fc-item__byline,
+    .fc-item__standfirst,
+    .rich-link__read-more-text {
+        color: colour(editorial-accent);
+    }
+
+    .fc-item__kicker--dreamsnap {
+        background-color: mix(#000000, colour(editorial-default), 10%);
+    }
+
+    .rich-link__arrow-icon {
+        fill: colour(editorial-accent);
+    }
+
+    .fc-item__meta {
+        color: colour(editorial-accent);
+    }
+
+    .fc-sublink__title:before {
+        border-color: mix($c-headline, colour(editorial-default), 20%);
+    }
+}
+
+.tone-editorial--sublink {
+    .fc-sublink__kicker {
+        color: colour(editorial-default);
+    }
+
+    @include sublink-style(editorial, feature, live, media, podcast, review) {
+        .fc-sublink__kicker {
+            color: colour(editorial-accent);
+        }
+    }
+}
+
+.tone-editorial--most-popular .fc-item__kicker {
+    color: colour(editorial-default);
+}

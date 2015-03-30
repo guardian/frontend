@@ -1,25 +1,44 @@
-@(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
-
-@import model.Collection
+@(index: services.IndexPage)(implicit request: RequestHeader)
+@import common.{Edition, PagePaths}
+@import model.FrontProperties.empty
+@import services.IndexPage
+@import views.html.fragments.containers.facia_cards.container
+@import views.html.fragments.pagination
 @import views.support.RenderClasses
-@import com.gu.facia.client.models.CollectionConfig
 
-<div class="l-side-margins l-side-margins--layout-front">
+<div class="l-side-margins">
     <div class="@RenderClasses(Map(
-            "facia-container" -> true,
-            "facia-container--layout-front" -> true,
-            "facia-container--sponsored" -> index.page.isSponsored,
-            "facia-container--advertisement-feature" -> (index.page.isAdvertisementFeature && !index.page.isSponsored)))"
+        "u-cf" -> true,
+        "index-page" -> true,
+        "js-sponsored-front" -> (index.page.isSponsored(Some(Edition(request))) ||
+            index.page.isAdvertisementFeature ||
+            index.page.isFoundationSupported),
+        "fc-container--advertisement-feature" -> index.page.isAdvertisementFeature)
+        )"
         data-link-name="Front | @request.path"
         @index.page.sponsor.map { sponsor =>
             data-sponsor="@sponsor"
         }
+        @index.page.sponsorshipType.map { sponsorshipType =>
+            data-sponsorship="@sponsorshipType"
+        }
         role="main">
 
-        @defining(getTagType(index.page)) { tagPage =>
-            @fragments.containers.tag(index.page, Collection(index.trails), layout.ContainerLayout(tagPage, model.Collection(index.trails), Some(templateDeduping)), pagination = index.page.pagination, dataId = index.page.id)(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some(index.page.webTitle)))
+        @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
+            @containers.map { containerDefinition =>
+                @container(containerDefinition, empty)
+            }
         }
 
-        @fragments.commercial.commercialComponent()
+        @index.page.pagination.map { paginationInstance =>
+            <div class="fc-container__pagination">
+                @pagination(index.page.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
+            </div>
+        }
+
+        @fragments.trendingTopics(index.trails, index.page.id, None)
+        <div class="fc-container fc-container--commercial">
+            @fragments.commercial.commercialComponent()
+        </div>
     </div>
 </div>

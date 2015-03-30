@@ -1,61 +1,53 @@
 define([
     'bonzo',
+    'fastdom',
     'qwery',
-    'lodash/collections/contains',
-    'lodash/functions/once',
-    'lodash/objects/defaults',
+    'Promise',
     'common/utils/$',
     'common/utils/_',
     'common/utils/config',
-    'common/utils/template',
-    'common/modules/userPrefs',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/create-ad-slot',
+    'common/modules/user-prefs'
 ], function (
     bonzo,
+    fastdom,
     qwery,
-    contains,
-    once,
-    defaults,
+    Promise,
     $,
     _,
-    globalConfig,
-    template,
-    userPrefs,
-    dfp
+    config,
+    createAdSlot,
+    userPrefs
 ) {
-
     var adNames = ['inline1', 'inline2'],
-        init = function (c) {
-
-            var container, containerId, $adSlice, isFrontFirst,
-                config = defaults(
-                    c || {},
-                    globalConfig,
-                    {
-                        containerSelector: '.container',
-                        sliceSelector: '.js-slice--ad-candidate, .js-facia-slice__item--mpu',
-                        page: {},
-                        switches: {}
-                    }
-                ),
-                // get all the containers
-                containers   = qwery(config.containerSelector),
-                index        = 0,
-                adSlices     = [],
-                containerGap = 2,
-                prefs        = userPrefs.get('container-states');
-
+        init = function (options) {
             if (!config.switches.standardAdverts) {
                 return false;
             }
 
+            var container, containerId, $adSlice, isFrontFirst,
+                opts = _.defaults(
+                    options || {},
+                    {
+                        containerSelector: '.fc-container',
+                        sliceSelector: '.js-fc-slice-mpu-candidate'
+                    }
+                ),
+                // get all the containers
+                containers   = qwery(opts.containerSelector),
+                index        = 0,
+                adSlices     = [],
+                containerGap = 1,
+                prefs        = userPrefs.get('container-states');
+
             // pull out ad slices which are have at least x containers between them
             while (index < containers.length) {
-                container    = containers[index],
-                containerId  = bonzo(container).data('id'),
-                $adSlice     = $(config.sliceSelector, container),
+                container    = containers[index];
+                containerId  = bonzo(container).data('id');
+                $adSlice     = $(opts.sliceSelector, container);
                 // don't display ad in the first container on the fronts
-                isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
+                isFrontFirst = _.contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
+
                 if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed')) {
                     adSlices.push($adSlice.first());
                     index += (containerGap + 1);
@@ -64,30 +56,36 @@ define([
                 }
             }
 
-            _(adSlices)
+            return Promise.all(_(adSlices)
                 .slice(0, adNames.length)
-                .forEach(function ($adSlice, index) {
-                    var adName = adNames[index],
-                        $adSlot = bonzo(dfp.createAdSlot(adName, 'container-inline'));
-                    $adSlice
-                        .addClass('slice--has-ad')
-                        .removeClass('facia-slice__item--no-mpu')
-                        .append($adSlot);
-                })
-                .valueOf();
+                .map(function ($adSlice, index) {
+                    var adName        = adNames[index],
+                        $mobileAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
+                            .addClass('ad-slot--mobile'),
+                        $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
+                            .addClass('ad-slot--not-mobile');
 
-            return adSlices;
+                    return new Promise(function (resolve) {
+                        fastdom.write(function () {
+                            // add a tablet+ ad to the slice
+                            $adSlice
+                                .removeClass('fc-slice__item--no-mpu')
+                                .append($tabletAdSlot);
+                            // add a mobile advert after the container
+                            $mobileAdSlot
+                                .insertAfter($.ancestor($adSlice[0], 'fc-container'));
+
+                            resolve(null);
+                        });
+                    });
+                })
+                .valueOf()
+            ).then(function () {
+                return adSlices;
+            });
         };
 
     return {
-
-        init: once(init),
-
-        // for testing
-        reset: function () {
-            this.init = once(init);
-        }
-
+        init: init
     };
-
 });

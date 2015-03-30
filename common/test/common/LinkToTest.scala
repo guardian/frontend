@@ -43,6 +43,12 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TestLinkTo("  http://www.foo.com/uk   ", edition) should be ("http://www.foo.com/uk")
   }
 
+  it should "link to section and not the 'section tag'" in {
+    TestLinkTo("http://www.theguardian.com/books/books", edition) should be ("http://www.foo.com/books")
+    TestLinkTo("/books/books", edition) should be ("http://www.foo.com/books")
+    TestLinkTo("/books-23-f/books-23-f", edition) should be ("http://www.foo.com/books-23-f")
+  }
+
   it should "general a editionalised RSS path" in {
     // editionalised
     TestLinkTo("/commentisfree/rss", edition) should be ("http://www.foo.com/uk/commentisfree/rss")

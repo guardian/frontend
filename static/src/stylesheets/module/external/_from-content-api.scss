@@ -100,8 +100,11 @@
     }
 
     &.quoted {
-        color: $c-neutral2;
-        margin-left: $gs-gutter * 1.5;
+        color: colour(neutral-2);
+        // Fallback
+        // TODO: Write mixin for this
+        margin-left: initial;
+        margin-left: unset;
     }
 }
 
@@ -140,11 +143,17 @@
 
 .caption {
     @include fs-textSans(1);
-    color: $c-neutral2;
+    color: colour(neutral-2);
+}
+
+.caption--img {
+    @include mq(leftCol) {
+        padding-bottom: $gs-baseline * 2;
+    }
 }
 
 .caption--main {
-    padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-row-height;
+    padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-baseline*2;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
@@ -166,33 +175,34 @@ figure {
     img {
         display: block;
     }
-    &.img {
+    &.element {
         margin-top: ($gs-baseline/3)*4;
-        margin-bottom: ($gs-baseline/3)*5;
-
-        @include mq(tablet) {
-            margin-bottom: ($gs-baseline/2)*5;
-        }
+        margin-bottom: $gs-baseline;
+        position: relative;
     }
-    &.img--landscape,
-    &.img--portrait {
+    &.element-image {
+        position: relative;
         figcaption {
             padding-top: ($gs-baseline/6)*4;
-
-            @include mq(wide) {
-                padding-top: ($gs-baseline/6)*5;
+        }
+    }
+    &.element-video {
+        figcaption {
+            @include mq(tablet) {
+                max-width: gs-span(6);
+            }
+        }
+    }
+    &.element--showcase {
+        figcaption {
+            @include mq(tablet) {
+                max-width: gs-span(9);
             }
         }
     }
     &.img--inline {
         margin: 5px $gs-gutter 6px 0;
     }
-}
-
-.figure.img--extended,
-.element-video {
-    margin-top: ($gs-baseline/3)*4;
-    margin-bottom: ($gs-baseline/3)*4;
 }
 
 p + figure,
@@ -213,7 +223,7 @@ figure.element--thumbnail + h2 {
         @include fs-bodyCopy(1);
 
         a {
-            color: $c-neutral2;
+            color: colour(neutral-2);
 
             &:hover,
             &:focus,
@@ -255,7 +265,7 @@ figure.element--thumbnail + h2 {
         font-weight: 600;
     }
     tbody tr:nth-child(odd) td {
-        background-color: darken($c-neutral8, 4%);
+        background-color: darken(colour(neutral-8), 4%);
     }
 }
 
@@ -312,16 +322,12 @@ figure.element--thumbnail + h2 {
         margin-left: $width * -1;
     }
 
-    &:before,
-    &:after {
-        @extend %tone-background;
-    }
     blockquote {
         margin: 0;
         font-style: normal;
 
         p {
-            color: $c-neutral2;
+            color: colour(neutral-2);
             margin-bottom: 0;
             @include fs-headline(4);
             @include mq(tablet) {
@@ -333,18 +339,17 @@ figure.element--thumbnail + h2 {
         margin-top: 1px;
     }
     cite {
-        @extend %tone-colour;
         font-style: normal;
-        color: $c-neutral2;
+        color: colour(neutral-2);
         @include fs-bodyHeading(2);
 
         a,
         a:visited {
-            border-bottom: 1px solid $c-neutral4;
+            border-bottom: 1px solid colour(neutral-4);
 
             &:hover {
                 text-decoration: none;
-                border-bottom: 1px solid $c-neutral2;
+                border-bottom: 1px solid colour(neutral-2);
             }
         }
     }

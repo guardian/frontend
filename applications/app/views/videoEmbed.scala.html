@@ -1,0 +1,128 @@
+@(page: EmbedPage)(implicit request: RequestHeader)
+
+@import model.{Video, VideoPlayer}
+@import views.support.{Video640}
+@import conf.Static
+@import conf.Configuration
+
+<!DOCTYPE html>
+<html lang="en-GB" class="gu-video-embed-html ">
+    <head>
+        <title>@page.title</title>
+        <style>
+            * { margin: 0; padding: 0; }
+            figure { margin: 0 !important; }
+        </style>
+        <link rel="stylesheet" href="@StaticSecure("stylesheets/media-player.css")"/>
+        <base target="_parent"/>
+    </head>
+    <body>
+
+        @if(page.isExpired) {
+            <div class="gu-video-embed gu-video-embed--expired">
+                <h1>Sorry - this page has been removed.</h1>
+
+                <div class="gu-video-embed__message">
+                    <p>This could be because it launched early, our rights have expired, there was a legal issue, or for another reason.</p>
+                </div>
+            </div>
+
+        } else {
+
+            @page.model.map{ video: Video =>
+
+                <figure class="gu-video-embed" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+                    <meta itemprop="name" content="@Html(video.headline)"/>
+                    <meta itemprop="headline" content="@Html(video.headline)"/>
+                    <meta itemprop="url" content="@video.url"/>
+                    @video.trailText.map{ t =>
+                        <meta itemprop="description" content="@StripHtmlTags(t)" />
+                        <meta itemprop="about" content="@StripHtmlTags(t)" />
+                    }
+
+                    <meta itemprop="datePublished" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
+                    <meta itemprop="name" content="@video.webTitle" />
+                    <meta itemprop="uploadDate" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
+                    @video.mainVideo.map { mv =>
+                        <meta itemprop="duration" content="@mv.ISOduration" />
+                        <meta itemprop="height" content="@mv.height" />
+                        <meta itemprop="width" content="@mv.width" />
+                    }
+                    <meta itemprop="requiresSubscription" content="no" />
+                    <meta itemprop="image" content="@video.openGraphImage" />
+                    @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
+                    @video.mainVideo.map { videoElement =>
+                        @fragments.media.video(VideoPlayer(
+                            videoElement,
+                            Video640,
+                            video.headline,
+                            autoPlay = true,
+                            showControlsAtStart = true,
+                            endSlatePath = video.endSlatePath,
+                            overrideIsRatioHd = None
+                        ), true)
+                    }
+                </figure>
+
+                <script>
+                    var guardian = {
+                        isEmbed: true,
+                        isModernBrowser: (
+                            'querySelector' in document
+                            && 'addEventListener' in window
+                            && 'localStorage' in window
+                            && 'sessionStorage' in window
+                            && 'bind' in Function
+                            && (
+                                ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
+                                || 'XDomainRequest' in window
+                            )
+                        ),
+                        config: @fragments.javaScriptConfig(video)
+                    };
+                    var docClass = document.documentElement.className;
+
+                    @* Get iframes parent url: http://www.nczonline.net/blog/2013/04/16/getting-the-url-of-an-iframes-parent/ *@
+                    var parentUrl = (!!window.parent && window.parent !== window) ? document.referrer : '';
+
+                    @* Hack to correctly track external embeds which have been incorrectly embedded on theguardian.com *@
+                    var sAccount = (/www\.theguardian\.com/.test(parentUrl)) ? 'guardiangu-frontend,guardiangu-network' : 'guardiangu-thirdpartyapps';
+
+                    window.s_account = sAccount;
+
+                    function hasSvgSupport() {
+                        var ns = {'svg': 'http://www.w3.org/2000/svg'};
+                        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+                    }
+
+                    if (hasSvgSupport()) {
+                        docClass += 'svg';
+                    }
+
+                    document.documentElement.className = docClass;
+
+                    var curl = {
+                        baseUrl: '@{Configuration.assets.securePath}javascripts',
+                        apiName: 'require',
+                        paths: {
+                            core: '@StaticSecure("javascripts/core.js")',
+                            text: 'text', // noop
+                            inlineSvg: 'inlineSvg', // noop
+                            'bootstraps/video-embed': '@StaticSecure("javascripts/bootstraps/video-embed.js")',
+                            'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
+                        }
+                    };
+
+                    @Html(StaticSecure.js.curl)
+
+                    require(['bootstraps/video-embed'], function(bootstrap) {
+                        bootstrap.init();
+                    });
+                </script>
+
+            }
+
+        }
+
+    </body>
+</html>

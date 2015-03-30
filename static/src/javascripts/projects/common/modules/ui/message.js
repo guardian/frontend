@@ -2,14 +2,14 @@ define([
     'common/utils/$',
     'bean',
     'common/utils/storage',
-    'common/modules/userPrefs',
-    'lodash/arrays/uniq'
+    'common/modules/user-prefs',
+    'common/utils/_'
 ], function (
     $,
     bean,
     storage,
     userPrefs,
-    uniq
+    _
 ) {
 
    /**
@@ -82,7 +82,7 @@ define([
     Message.prototype.remember = function () {
         var messageStates = userPrefs.get(this.prefs) || [];
         messageStates.push(this.id);
-        userPrefs.set(this.prefs, uniq(messageStates));
+        userPrefs.set(this.prefs, _.uniq(messageStates));
     };
 
     Message.prototype.acknowledge = function () {

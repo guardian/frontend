@@ -1,0 +1,22 @@
+@(env: String, specialAdUnits: Seq[(String, String)])
+@import tools.DfpLink
+
+@admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
+
+<link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+
+<h1>Special Ad Units</h1>
+
+<p>Special Ad Units do NOT inherit ads from their parents. You will have to target them specifically.</p>
+<p style="margin: 10px;"><b>Debugging Note:</b><br />
+    If a line item isn't serving to an ad unit,<br />
+    it may be because the ad unit is hierarchically below one of these ad units,<br />
+    which must be targeted explicitly.</p>
+
+<ol>
+@for((id, path) <- specialAdUnits) {
+    <li style="padding-bottom: 10px;">@path <a href="@DfpLink.adUnit(id)">(@id)</a></li>
+}
+</ol>
+
+}

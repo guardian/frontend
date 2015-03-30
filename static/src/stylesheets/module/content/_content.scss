@@ -37,19 +37,16 @@
         .content__article-body {
             padding-right: gs-span(1) + $gs-gutter;
 
-            .img--landscape,
             .ad-slot {
                 margin-right: -1 * (gs-span(1) + $gs-gutter);
             }
-            
+
             /* Inline merchandising component is on the left so negative margin-right is bad */
             .ad-slot--im {
                 margin-right: 0;
             }
 
             .gu-media-wrapper {
-                width: 112.903225806452%; // 700/620
-
                 &.u-responsive-ratio--hd {
                     padding-bottom: 63.50806451612925%; // 56.25% * 112.903225806452%
                 }
@@ -81,6 +78,21 @@
             margin-right: gs-span(1) + $gs-gutter;
         }
     }
+
+    .content--image & {
+        max-width: none;
+        margin-right: 0;
+        @include mq(wide) {
+            margin-right: gs-span(1) + $gs-gutter;
+        }
+    }
+}
+
+.content__hr {
+    border: 0;
+    margin: 0;
+    border-top: 1px dotted colour(neutral-5);
+    padding-top: 5px;
 }
 
 .content__secondary-column {
@@ -88,9 +100,10 @@
     top: 0;
     right: 0;
     height: 100%;
-    overflow: hidden; // quick hackfix for overflowing right hand components
     margin-right: $gs-gutter;
     width: gs-span(4);
+    padding-left: $gs-gutter;
+    overflow: hidden;
 
     @include mq($until: desktop) {
         display: none;
@@ -98,13 +111,7 @@
 }
 
 .content__head__comment-count {
-    height: 16px + $gs-baseline; //font-size + $gs-baseline
-
     @include mq(tablet) {
-        display: none;
-    }
-
-    &.content__head__comment-count--headline { // used in tonal templates
         display: none;
     }
 }
@@ -115,14 +122,14 @@
     padding-bottom: $gs-baseline/3;
 
     .content--media & a {
-        color: $c-neutral5;
+        color: colour(neutral-5);
     }
 }
 
 .content__labels {
     @include box-sizing(border-box);
     padding: $gs-baseline/2 0;
-    border-bottom: 1px dotted $c-neutral5;
+    border-bottom: 1px dotted colour(neutral-5);
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
@@ -147,12 +154,14 @@
     padding-right: $gs-gutter/3;
 
     @include mq(leftCol) {
-        @include fs-header(3);
+        @include fs-header(4);
+        line-height: get-line-height(header, 2);
         float: none;
+        padding-right: 0;
     }
 
-    &:first-letter {
-        text-transform: capitalize;
+    .content--interactive & {
+        padding-right: $gs-gutter/3 !important;
     }
 }
 
@@ -166,7 +175,25 @@
     }
 
     .content__series-label__link {
-        color: $c-neutral2;
+        color: colour(neutral-2);
+    }
+}
+
+@include mq(leftCol, wide) {
+    .content__section-label__link,
+    .container__meta__title {
+        font-size: 20px !important;
+        line-height: 24px !important;
+    }
+
+    .content__series-label__link {
+        @include font-size(18, 22);
+        display: block;
+
+        .content--interactive & {
+            font-size: 20px !important;
+            line-height: 24px !important;
+        }
     }
 }
 
@@ -174,19 +201,20 @@
     @include fs-header(3);
     @include box-sizing(border-box);
     padding: $gs-baseline/2 0 $gs-baseline;
-    border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
+    border-top: 1px dotted colour(neutral-5) !important; // Disable tone colour
 }
 
 .content__headline {
     @include fs-headline(5);
-    padding-top: $gs-baseline/2;
+    padding-top: $gs-baseline/6;
     padding-bottom: $gs-baseline*2;
 
     @include mq(mobileLandscape) {
         @include fs-headline(7, true);
     }
 
-    @include mq(tablet) {
+    @include mq(leftCol) {
+        padding-top: $gs-baseline/2;
         padding-bottom: $gs-row-height;
     }
 
@@ -195,7 +223,7 @@
         &:hover,
         &:active,
         &:focus {
-            color: $c-neutral1;
+            color: colour(neutral-1);
         }
     }
 
@@ -208,14 +236,96 @@
     }
 }
 
+.content__headline--byline {
+    display: block;
+    padding-top: 0;
+    margin-top: -$gs-baseline*2;
+    padding-bottom: $gs-baseline*2;
+
+    @include mq(leftCol) {
+        margin-top: -$gs-row-height;
+    }
+}
+
+.content__headline--kicker {
+    padding-bottom: 0;
+
+    @include mq(leftCol) {
+        margin-bottom: -$gs-baseline / 2;
+    }
+}
+
+.content__head--byline-pic {
+    .byline-img {
+        float: right;
+        height: $gs-baseline * 12.5;
+        z-index: 2;
+
+        @include mq($until: mobileLandscape) {
+            margin-left: -(gs-span(1) + $gs-gutter);
+            margin-right: -($gs-gutter * 2);
+        }
+
+        @include mq(mobileLandscape) {
+            position: absolute;
+            bottom: 0;
+            right: gs-span(3);
+            width: 0;
+            height: 80%;
+        }
+
+        @include mq(phablet) {
+            height: gs-span(2.5) + ($gs-gutter*2);
+        }
+
+        @include mq(desktop) {
+            right: gs-span(1) + $gs-gutter;
+        }
+    }
+
+    .byline-img__img {
+        height: 100%;
+    }
+
+    .content__head__comment-count {
+        position: absolute;
+        bottom: 0;
+
+        @include mq(desktop) {
+            position: static;
+        }
+    }
+
+    .content__header {
+        .content__main-column {
+            @include mq(mobileLandscape) {
+                min-height: gs-height(5);
+            }
+
+            @include mq(desktop) {
+                min-height: gs-height(4);
+            }
+        }
+
+        .content__headline {
+            @include mq(mobileLandscape) {
+                padding-right: gs-span(2) + $gs-gutter;
+            }
+
+            @include mq(desktop) {
+                padding-right: $gs-gutter*2;
+            }
+        }
+    }
+}
+
 .content__standfirst {
     @include fs-headline(2);
-    margin-bottom: $gs-baseline;
-    color: $c-neutral2;
+    margin-bottom: $gs-baseline/2;
+    color: colour(neutral-2);
 
     @include mq(tablet) {
         @include font-size(18px, 22px);
-        margin-bottom: ($gs-baseline/3)*4;
     }
 
     > ul,
@@ -226,10 +336,7 @@
 
         > li {
             position: relative;
-
-            + li {
-                margin-top: .6em;
-            }
+            margin-bottom: $gs-baseline/3;
         }
 
         + * {
@@ -254,7 +361,7 @@
             content: counter(li)'.';
             counter-increment: li;
             @include fs-header(1);
-            color: $c-neutral3;
+            color: colour(neutral-3);
 
             @include mq(tablet) {
                 @include fs-header(3, true);
@@ -267,10 +374,22 @@
 
 .content__dateline {
     position: relative;
-    color: $c-neutral2;
+    color: colour(neutral-2);
     @include box-sizing(border-box);
     @include fs-textSans(1);
-    padding-top: $gs-baseline/3;
+    padding-top: $gs-baseline / 6;
+    margin-bottom: $gs-baseline / 2;
+
+    time {
+        display: inline-block;
+
+        @include mq(desktop) {
+            .content--interactive & {
+                display: inline;
+                padding-right: $gs-gutter/4;
+            }
+        }
+    }
 
     i {
         position: relative;
@@ -287,20 +406,32 @@
     }
 
     @include mq(leftCol) {
-        height: gs-height(1) + $gs-baseline;
+        min-height: gs-height(1) + $gs-baseline;
         padding-top: $gs-baseline/6;
         padding-bottom: $gs-baseline;
         margin-bottom: 0;
-        border-top: 1px dotted $c-neutral5;
-    }
-
-    @include mq(wide) {
-        .content__dateline-time {
-            display: inline-block;
-        }
+        border-top: 1px dotted colour(neutral-5);
     }
 }
 
+.content__dateline-wpd--modified {
+    color: colour(news-default);
+    cursor: pointer;
+
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: underline;
+    }
+}
+
+.content__dateline-lm {
+    padding-top: $gs-baseline/4;
+
+    @include mq(leftCol) {
+        padding-top: $gs-baseline/6;
+    }
+}
 
 .content__meta-container .byline-img {
     position: relative;
@@ -309,7 +440,7 @@
     margin: $gs-baseline/2 0;
     overflow: hidden;
     @include border-radius(50%);
-    background-color: $c-neutral7;
+    background-color: colour(neutral-7);
 
     // fixes for webkit not properly scaling/clipping the child element (still broken on some android browsers...)
     -webkit-transform: translateZ(0);
@@ -342,8 +473,8 @@
     min-height: gs-height(1);
     position: relative;
     margin-bottom: $gs-baseline;
-    border-top: 1px dotted $c-neutral5;
-    border-bottom: 1px dotted $c-neutral5;
+    border-top: 1px dotted colour(neutral-5);
+    border-bottom: 1px dotted colour(neutral-5);
 
     @include mq(leftCol) {
         position: absolute;
@@ -402,22 +533,26 @@
     @include fs-bodyHeading(1);
     padding-top: $gs-baseline/3;
     line-height: 20px;
-    color: $c-neutral2;
+    color: colour(neutral-2);
 
     @include mq(tablet) {
         @include fs-bodyHeading(2, true);
-        padding-right: gs-span(2);
         line-height: 22px;
     }
 
     @include mq(leftCol) {
-        margin-bottom: 0;
-        padding-right: 0;
-        border-top: 1px dotted $c-neutral5;
-        @include box-sizing(border-box);
-        min-height: gs-height(1) + $gs-baseline;
+        clear: both;
         padding-top: $gs-baseline/6;
+        border-top: 1px dotted colour(neutral-5);
+        @include box-sizing(border-box);
         padding-bottom: $gs-baseline;
+        min-height: $gs-baseline*4;
+    }
+
+    .content__meta-container--twitter &,
+    .content__meta-container--bio & {
+        min-height: 0;
+        padding-bottom: 0;
     }
 }
 
@@ -465,7 +600,7 @@
         vertical-align: -4px;
     }
 
-    .content__head & {
+    .content__head__comment-count & {
         display: block;
         margin-bottom: $gs-baseline;
     }
@@ -474,7 +609,7 @@
         display: block;
         position: absolute;
         right: 0;
-        top: $gs-baseline/3;
+        top: $gs-baseline/1.5;
 
         .content__head & {
             display: none;
@@ -486,7 +621,7 @@
         position: static;
         @include box-sizing(border-box);
 
-        .content__head & {
+        .content__head__comment-count & {
             display: none;
         }
 
@@ -494,27 +629,22 @@
             display: block;
             padding-top: $gs-baseline/3;
             margin-bottom: $gs-baseline;
-            border-top: 1px dotted $c-neutral5;
+            border-top: 1px dotted colour(neutral-5);
         }
     }
 
 }
 
-.commentcount__label {
-    .content__head & {
-        @extend %u-h;
-    }
-}
-
 .content--advertisement-feature {
-    background-color: $c-neutral8;
-
+    &.content--article,
+    &.content--interactive {
+        background-color: colour(neutral-8);
+    }
     .content__standfirst,
     .content__dateline,
     .caption--main,
-    .ad-slot--paid-for-badge__header,
-    .ad-slot--paid-for-badge__label {
-        color: $c-neutral2-contrasted;
+    .ad-slot--paid-for-badge__header {
+        color: colour(neutral-2-contrasted);
     }
     .content__headline,
     .content__standfirst {
@@ -536,21 +666,153 @@
     padding-top: ($gs-baseline/3);
     padding-bottom: ($gs-baseline/3)*4;
     margin-bottom: 0;
-    border-top: 1px solid $c-neutral4;
+    border-top: 1px solid colour(neutral-4);
 }
 
-.button.button--show-more { // used for liveblog and discussion untruncate button
+.meta__extras {
     position: relative;
-    padding-left: 36px;
+    clear: both;
+}
 
-    .i {
-        width: 24px;
-        height: 24px;
-        vertical-align: middle;
-        margin: auto;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 7px;
+.meta__social {
+    border-top: 1px dotted colour(neutral-5);
+    padding: 0;
+    @include box-sizing(border-box);
+}
+
+.meta__twitter,
+.meta__email {
+    margin: (-$gs-baseline*2/3) ($gs-gutter/4) (-$gs-baseline/6) 0;
+    display: inline;
+
+    .content__meta-container--tonal-header & {
+        @include mq($until: leftCol) {
+            margin-top: -($gs-baseline/3);
+        }
+    }
+
+    svg {
+        margin-top: -1 * $gs-baseline/6;
+        overflow: visible;
+    }
+
+    .button {
+        padding-top: 1px;
+        margin-right: 0;
+
+        .tonal--tone-media & {
+            border: 0;
+            background-color: colour(multimedia-support-4);
+
+            &:hover {
+                background-color: colour(neutral-2);
+            }
+        }
+
+        @include mq($until: leftCol) {
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            margin-right: 0;
+            background-color: transparent !important;
+
+            .inline-mail svg {
+                margin-top: $gs-baseline/4;
+            }
+        }
+
+        @include mq(leftCol, wide) {
+            max-width: $left-column;
+        }
+    }
+
+    .contact {
+        height: 21px;
+        display: inline-block;
+        vertical-align: top;
+
+        @include mq(leftCol) {
+            margin-top: -1px;
+        }
+    }
+
+    @include mq(leftCol) {
+        margin-top: $gs-baseline/1.2;
+        margin-bottom: $gs-baseline * 3/2;
+        display: block;
     }
 }
+
+@include mq(leftCol) {
+    .meta__email {
+        .content__meta-container--email.content__meta-container--twitter & {
+            margin-top: $gs-baseline/2;
+        }
+    }
+
+    .meta__twitter {
+        .content__meta-container--email.content__meta-container--twitter & {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.meta__bio {
+    margin-bottom: $gs-baseline;
+    padding-top: $gs-baseline/2;
+
+    color: colour(neutral-2);
+    @include fs-headline(1);
+
+    @include mq($until: leftCol) {
+        display: none;
+    }
+
+    .tonal--tone-media & {
+        color: colour(neutral-7);
+    }
+
+    .meta__author--comment & {
+        padding-top: $gs-baseline/6;
+        border-top: 1px dotted colour(neutral-5);
+    }
+
+    .content__meta-container--twitter &,
+    .content__meta-container--email & {
+        margin-bottom: 0;
+    }
+
+    .content__meta-container--tonal-header & {
+        border-top: 1px dotted colour(neutral-5);
+        padding-top: $gs-baseline/6;
+    }
+}
+
+.meta__contact-header {
+    @include fs-textSans(1);
+    line-height: 15px;
+    color: colour(neutral-2);
+    margin-bottom: 0;
+    border-top: 1px dotted colour(neutral-5);
+    padding-top: $gs-baseline/6;
+
+    .content__meta-container--bio & {
+        margin-top: $gs-baseline;
+    }
+}
+
+.related .button--show-more {
+    display: none;
+}
+
+.content--article,
+.content--liveblog,
+.content--gallery,
+.content--media,
+.content--image,
+.content--interactive {
+    .social--top {
+        padding-top: $gs-baseline / 2;
+        padding-bottom: $gs-baseline / 2;
+    }
+ }

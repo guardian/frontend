@@ -1,36 +1,10 @@
 package dfp
 
+import common.Edition
+
 case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
 
   val isValid = lineItems.nonEmpty
-
-  def sectionsFromAdUnits(adUnits: Seq[GuAdUnit]): Seq[String] = adUnits flatMap (_.path.drop(1).headOption)
-
-  val sponsorships: Seq[Sponsorship] = {
-    lineItems.withFilter { lineItem =>
-      lineItem.sponsoredTags.nonEmpty && lineItem.isCurrent
-    }.map { lineItem =>
-      Sponsorship(
-        tags = lineItem.sponsoredTags,
-        sections = sectionsFromAdUnits(lineItem.targeting.adUnits),
-        sponsor = lineItem.sponsor,
-        countries = locationsTargeted(lineItem),
-        lineItemId = lineItem.id)
-    }.distinct
-  }
-
-  val advertisementFeatureSponsorships: Seq[Sponsorship] = {
-    lineItems.withFilter { lineItem =>
-      lineItem.advertisementFeatureTags.nonEmpty && lineItem.isCurrent
-    }.map { lineItem =>
-      Sponsorship(
-        tags = lineItem.advertisementFeatureTags,
-        sections = sectionsFromAdUnits(lineItem.targeting.adUnits),
-        sponsor = lineItem.sponsor,
-        countries = locationsTargeted(lineItem),
-        lineItemId = lineItem.id)
-    }.distinct
-  }
 
   val inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = {
     lineItems.foldLeft(InlineMerchandisingTagSet()) { (soFar, lineItem) =>
@@ -40,35 +14,34 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     }
   }
 
-  val foundationSupported: Seq[Sponsorship] = {
-    lineItems.withFilter { lineItem =>
-      lineItem.foundationSupportedTags.nonEmpty && lineItem.isCurrent
-    }.map { lineItem =>
-      Sponsorship(
-        tags = lineItem.foundationSupportedTags,
-        sections = sectionsFromAdUnits(lineItem.targeting.adUnits),
-        sponsor = lineItem.sponsor,
-        countries = locationsTargeted(lineItem),
-        lineItemId = lineItem.id)
-    }.distinct
-  }
-
   val pageSkinSponsorships: Seq[PageSkinSponsorship] = {
     lineItems withFilter { lineItem =>
       lineItem.isPageSkin && lineItem.isCurrent
     } map { lineItem =>
-      val paths = lineItem.targeting.adUnits map { adUnit =>
-        adUnit.path mkString "/"
-      }
-      val countries = countriesTargeted(lineItem)
-      val isR2Only = lineItem.targeting.targetsR2Only
-      val targetsAdTest = lineItem.targeting.hasAdTestTargetting
-      PageSkinSponsorship(lineItem.name, lineItem.id, paths, countries, isR2Only, targetsAdTest)
+      PageSkinSponsorship(
+        lineItemName = lineItem.name,
+        lineItemId = lineItem.id,
+        adUnits = lineItem.targeting.adUnits map (_.path mkString "/"),
+        editions = editionsTargeted(lineItem),
+        countries = countriesTargeted(lineItem),
+        isR2Only = lineItem.targeting.targetsR2Only,
+        targetsAdTest = lineItem.targeting.hasAdTestTargetting
+      )
     }
   }
 
-  def countriesTargeted(lineItem: GuLineItem): Seq[Country] = {
-    lineItem.targeting.geoTargetsIncluded map (geoTarget => Country.fromName(geoTarget.name))
+  def editionsTargeted(lineItem: GuLineItem): Seq[Edition] = {
+    for {
+      targetSet <- lineItem.targeting.customTargetSets
+      target <- targetSet.targets
+      if target.isEditionTag
+      value <- target.values
+      edition <- Edition.byId(value)
+    } yield edition
+  }
+
+  def countriesTargeted(lineItem: GuLineItem): Seq[String] = {
+    lineItem.targeting.geoTargetsIncluded map (_.name)
   }
 
   def locationsTargeted(lineItem: GuLineItem): Seq[String] = {

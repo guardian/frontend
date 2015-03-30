@@ -2,6 +2,7 @@ package services
 
 import conf.Configuration
 import common.{ExecutionContexts, Logging}
+import play.api.Play
 import scala.collection.JavaConversions._
 import com.amazonaws.auth.AWS4Signer
 import com.amazonaws.{AmazonWebServiceRequest, DefaultRequest}
@@ -9,6 +10,7 @@ import java.net.URI
 import play.api.libs.ws.WS
 import com.amazonaws.util.StringInputStream
 import scala.concurrent.Future
+
 
 sealed trait Destination {
   def location: String
@@ -21,8 +23,11 @@ trait DynamoDB extends Logging with ExecutionContexts {
   private val tableName = "redirects"
   private val DynamoDbGet = "DynamoDB_20120810.GetItem"
 
+  // should not directly call AWS during tests.
+  private lazy val credentials  = Configuration.aws.credentials.filterNot(_ => Play.isTest)
+
   def destinationFor(source: String): Future[Option[Destination]] = {
-    Configuration.aws.credentials.map{ credentialsProvider =>
+    credentials.map{ credentialsProvider =>
       val signer = new AWS4Signer()
       def signedHeaders(xAmzTarget: String, bodyContent: String) = {
         val request = new DefaultRequest[Nothing](new AmazonWebServiceRequest {}, "DynamoDB")

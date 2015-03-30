@@ -1,8 +1,9 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Podcast}
+import com.gu.contentapi.client.model.{Tag => ApiTag, Podcast}
 import common.{Pagination, Reference}
 import conf.Configuration
+import contentapi.SectionTagLookUp
 import play.api.libs.json.{JsArray, JsString, JsValue}
 import views.support.{Contributor, ImgSrc, Item140}
 
@@ -17,7 +18,10 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val webUrl: String = delegate.webUrl
   lazy val webTitle: String = delegate.webTitle
+  lazy val sectionName: String = delegate.sectionName.getOrElse("global")
   override lazy val description = delegate.description
+  lazy val twitterHandle: Option[String] = delegate.twitterHandle
+  lazy val emailAddress: Option[String] = delegate.emailAddress
 
   override lazy val url: String = SupportedUrl(delegate)
 
@@ -29,20 +33,20 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val openGraphDescription: Option[String] = if (bio.nonEmpty) Some(bio) else description
 
-  lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl.map(ImgSrc(_, Item140))
+  lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl
 
   lazy val isContributor: Boolean = id.startsWith("profile/")
   lazy val bio: String = delegate.bio.getOrElse("")
-  lazy val isSeries: Boolean = delegate.tagType == "series"
-  lazy val isBlog: Boolean = delegate.tagType == "blog"
+  lazy val isSeries: Boolean = tagType == "series"
+  lazy val isBlog: Boolean = tagType == "blog"
 
   override lazy val isFront = true
 
   lazy val isSectionTag: Boolean = {
-    val idParts = id.split("/")
-    // a section tag id looks like     science/science
-    !idParts.exists(_ != section)
+    SectionTagLookUp.sectionId(id).exists(_ == section)
   }
+
+  lazy val showSeriesInMeta = id != "childrens-books-site/childrens-books-site"
 
   lazy val isKeyword = tagType == "keyword"
 
@@ -58,6 +62,16 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val tagWithoutSection = id.split("/")(1) // used for football nav
 
+  lazy val richLinkId: Option[String] =
+    delegate.references.find(_.`type` == "rich-link")
+      .map(_.id.stripPrefix("rich-link/"))
+      .filter(_.matches("""https?://www\.theguardian\.com/.*"""))
+
+  lazy val openModuleId: Option[String] =
+    delegate.references.find(_.`type` == "open-module")
+      .map(_.id.stripPrefix("open-module/"))
+      .filter(_.matches("""https?://open-module\.appspot\.com/view\?id=\d+"""))
+
   override lazy val analyticsName = s"GFE:$section:$name"
 
   override lazy val rssPath = Some(s"/$id/rss")
@@ -65,7 +79,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
     ("keywords", JsString(name)),
     ("keywordIds", JsString(id)),
-    ("content-type", JsString("Tag")),
+    ("contentType", JsString("Tag")),
     ("references", JsArray(delegate.references.toSeq.map(ref => Reference.toJavaScript(ref.id))))
   )
 

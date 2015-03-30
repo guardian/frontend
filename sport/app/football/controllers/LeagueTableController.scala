@@ -18,9 +18,36 @@ case class TablesPage(
 
 object LeagueTableController extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
 
+    val tableOrder = Seq(
+        "Premier League",
+        "La Liga",
+        "Bundesliga",
+        "Serie A",
+        "Ligue 1",
+        "Championship",
+        "Scottish Premiership",
+        "League One",
+        "League Two",
+        "Scottish Championship",
+        "Scottish League One",
+        "Scottish League Two",
+        "Euro 2016 qualifying",
+        "Champions League qualifying",
+        "Europa League",
+        "Champions League",
+        "FA Cup",
+        "Capital One Cup",
+        "Community Shield",
+        "Scottish Cup",
+        "Scottish League Cup",
+        "International friendlies"
+    )
+
   private def competitions = Competitions().competitions
 
-  private def loadTables: Seq[Table] = competitions.filter(_.hasLeagueTable).map { Table(_) }
+  def sortedCompetitions:Seq[Competition] = tableOrder.map(leagueName => competitions.find(_.fullName == leagueName)).flatten
+
+  private def loadTables: Seq[Table] = sortedCompetitions.filter(_.hasLeagueTable).map { Table(_) }
 
   def renderLeagueTableJson() = renderLeagueTable()
   def renderLeagueTable() = Action { implicit request =>
@@ -39,7 +66,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
         table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(4)) })
       }
     }
-    
+
     val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, groups, "/football", filters, None))
     val jsonResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, groups, "/football", filters, None))
     renderFormat(htmlResponse, jsonResponse, page, Switches.all)
@@ -61,7 +88,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
     }
 
     val comps = competitions.filter(_.showInTeamsList).filter(_.hasTeams)
-    
+
     val htmlResponse = () => football.views.html.teamlist(TablesPage(page, groups, "/football", filters, None), comps)
     val jsonResponse = () => football.views.html.fragments.teamlistBody(TablesPage(page, groups, "/football", filters, None), comps)
     renderFormat(htmlResponse, jsonResponse, page, Switches.all)

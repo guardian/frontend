@@ -2,15 +2,23 @@
 
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}
 @import views.support.{Video640, SeoOptimisedContentImage, StripHtmlTags}
+@import views.support.TrailCssClasses.articleToneClass
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
-<div class="l-side-margins l-side-margins--layout-content">
-    <div class="l-side-margins l-side-margins--media l-side-margins--layout-content">
-        <article class="content content--media content--media--@mediaType tone-@media.visualTone @if(media.body.nonEmpty) {content--has-body}"
-            itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
+<div class="l-side-margins l-side-margins--media">
 
-            @fragments.headDefault(media)
+    <article class="@RenderClasses(
+            Map(
+                "content--has-body" -> media.body.nonEmpty,
+                "content--advertisement-feature" -> page.media.isAdvertisementFeature
+            ),
+            "content", "content--media", s"content--media--$mediaType", "tonal", s"tonal--${articleToneClass(media)}"
+        )"
+        itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
 
+        @fragments.headTonal(media)
+
+        <div class="content__main tonal__main tonal__main--@articleToneClass(media)">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--media content__main-column--@mediaType">
                     <div class="media-body">
@@ -31,7 +39,7 @@
                                             audio,
                                             audioElement,
                                             audio.headline,
-                                            autoPlay = true
+                                            autoPlay = false
                                         ))
                                     }
                                     </figure>
@@ -65,8 +73,8 @@
                                                 autoPlay = true,
                                                 showControlsAtStart = true,
                                                 endSlatePath = video.endSlatePath,
-                                                None
-                                            ))
+                                                overrideIsRatioHd = None
+                                            ), true)
                                         }
                                     </figure>
                                 }
@@ -74,10 +82,18 @@
                         </div>
 
                         <div class="content__main-column__body" data-component="body">
-                            @media match {
-                                case v: Video => {
-                                    @fragments.standfirst(v)
+                            <div class="tonal__standfirst">
+                                @media match {
+                                    case v: Video => {
+                                        @fragments.standfirst(v)
+                                    }
+                                    case a: Audio => { }
                                 }
+                            </div>
+
+                            @fragments.contentMeta(media)
+
+                            @media match {
                                 case a: Audio => {
                                     @a.body.map { b =>
                                         <div class="from-content-api">
@@ -85,32 +101,12 @@
                                         </div>
                                     }
                                 }
-                            }
-                            @fragments.contentMeta(media)
-
-                            @defining(media match {
-                                case v: Video => v.standfirst.getOrElse("").length > 350
-                                case a: Audio => a.body.getOrElse("").length > 800
-                            }) { breakIntoLeftCol =>
-                                <div class="submeta-container @if(breakIntoLeftCol) { submeta-container--break-at-wide}">
-                                    @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                                        <div class="submeta" data-link-name="keywords">
-                                            <h2 class="submeta__head">Topics</h2>
-                                            @fragments.keywordList(media.keywords, tone = Some("media"))
-                                        </div>
-                                    }
-                                    <div class="submeta hide-from-leftcol" data-component="share">
-                                        <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
-                                        @fragments.social(media, iconModifier = "white")
-                                    </div>
-
-                                </div>
+                                case _ => { }
                             }
 
+                            @fragments.submeta(media)
                         </div>
-
                     </div>
-
                 </div>
 
                 @media match {
@@ -128,10 +124,28 @@
                     }
                     case _ => { }
                 }
-
             </div>
-        </article>
-    </div>
+        </div>
+    </article>
+
+    @if(mediaType != "video") {
+        <div class="fc-container fc-container--media">
+            <div class="js-media-popular tonal--@articleToneClass(media)">
+                <div class="fc-container fc-container--popular">
+                    <div class="fc-container__inner">
+                        <div class="fc-container__header">
+                            <h2 class="fc-container__header__title">
+                                <a class="most-viewed-no-js tone-colour" href="@LinkTo{/@mediaType/most-viewed}" data-link-name="Most viewed @mediaType">More @mediaType</a>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="l-side-margins">
     @fragments.contentFooter(media, page.related, "media")
 
     }

@@ -1,13 +1,14 @@
 package views.support
 
-import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset}
-import model._
-import org.scalatest.{ Matchers, FlatSpec }
-import xml.XML
+import com.gu.contentapi.client.model.{Asset => ApiAsset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
+import common.Edition
 import common.editions.Uk
 import conf.Configuration
-import org.jsoup.Jsoup
+import model._
+import org.scalatest.{FlatSpec, Matchers}
 import play.api.test.FakeRequest
+
+import scala.xml.XML
 
 class TemplatesTest extends FlatSpec with Matchers {
 
@@ -26,9 +27,9 @@ class TemplatesTest extends FlatSpec with Matchers {
         Tag(tag(id = "tone/foo", tagType = "tone")),
         Tag(tag(id = "type/video", tagType = "type"))
       )
-      override def isSponsored: Boolean = false
-      override def isFoundationSupported: Boolean = false
-      override def isAdvertisementFeature: Boolean = false
+      override def isSponsored(maybeEdition:Option[Edition]): Boolean = false
+      override val isFoundationSupported: Boolean = false
+      override val isAdvertisementFeature: Boolean = false
     }
     tags.typeOrTone.get.id should be("type/video")
   }
@@ -39,47 +40,26 @@ class TemplatesTest extends FlatSpec with Matchers {
         Tag(tag(id = "type/article", tagType = "type")),
         Tag(tag(id = "tone/foo", tagType = "tone"))
       )
-      override def isSponsored: Boolean = false
-      override def isFoundationSupported: Boolean = false
-      override def isAdvertisementFeature: Boolean = false
+      override def isSponsored(maybeEdition:Option[Edition]): Boolean = false
+      override val isFoundationSupported: Boolean = false
+      override val isAdvertisementFeature: Boolean = false
     }
     tags.typeOrTone.get.id should be("tone/foo")
   }
 
-  "Inflector" should "singularize tag name" in {
-    Tag(tag("Minute by minutes")).singularName should be("Minute by minute")
-    Tag(tag("News")).singularName should be("News")
-  }
-
-  it should "pluralize tag name" in {
-    Tag(tag("Article")).pluralName should be("Articles")
-  }
-
   "PictureCleaner" should "correctly format inline pictures" in {
 
-    val body = XML.loadString(withJsoup(bodyTextWithInlineElements)(PictureCleaner(bodyImages)).body.trim)
+    val body = XML.loadString(withJsoup(bodyTextWithInlineElements)(PictureCleaner(testContent)).body.trim)
 
     val figures = (body \\ "figure").toList
 
-    val baseImg = figures(0)
-    (baseImg \ "@class").text should include("img--base img--inline")
-    (baseImg \ "img" \ "@class").text should be("gu-image")
-    (baseImg \ "img" \ "@width").text should be("140")
-
-    val medianImg = figures(1)
-    (medianImg \ "@class").text should include("img--median")
-    (medianImg \ "img" \ "@class").text should be("gu-image")
-    (medianImg \ "img" \ "@width").text should be("250")
-
-    val extendedImg = figures(2)
-    (extendedImg \ "@class").text should include("img--extended")
-    (extendedImg \ "img" \ "@class").text should be("gu-image")
-    (extendedImg \ "img" \ "@width").text should be("600")
+    val inlineImg = figures(0)
+    (inlineImg \ "@class").text should include("img--inline")
+    (inlineImg \ "img" \ "@class").text should be("gu-image")
 
     val landscapeImg = figures(3)
     (landscapeImg \ "@class").text should include("img--landscape")
     (landscapeImg \ "img" \ "@class").text should be("gu-image")
-    (landscapeImg \ "img" \ "@width").text should be("500")
 
     val portaitImg = figures(4)
     (portaitImg \ "@class").text should include("img--portrait")
@@ -87,14 +67,14 @@ class TemplatesTest extends FlatSpec with Matchers {
     (portaitImg \ "img" \ "@height").length should be (0) // we remove the height attribute
 
     (body \\ "figure").foreach { fig =>
-      (fig \ "@itemprop").text should be("associatedMedia")
+      (fig \ "@itemprop").text should be("associatedMedia image")
       (fig \ "@itemscope").text should be("")
       (fig \ "@itemtype").text should be("http://schema.org/ImageObject")
     }
 
     (body \\ "figcaption").foreach { fig =>
       (fig \ "@itemprop").text should be("description")
-      (fig).text should include("Image caption")
+      (fig).text should include("test caption")
     }
   }
 
@@ -109,36 +89,6 @@ class TemplatesTest extends FlatSpec with Matchers {
     (link \ "@href").text should be (s"${Configuration.site.host}/section/2011/jan/01/words-for-url")
 
   }
-
-  "InBodyLinkCleanerForR1" should "clean links" in {
-
-    // i. www
-    val r1BodyText = """
-      <p> foo <a href="/Guardian/path/to/article">foo</a> foo</p>
-    """
-    val body = XML.loadString(withJsoup(r1BodyText)(InBodyLinkCleanerForR1("")).body.trim)
-    val link = (body \\ "a").head
-    (link \ "@href").text should be (s"/path/to/article")
-
-    // ii. old subdomains
-    val absoluteUrls = Map(
-        "/Arts/path/to/something" -> "/arts/path/to/something",
-        "/Education/path/to/something" -> "/education/path/to/something",
-        "/Guardian/path/to/something" -> "/path/to/something",
-        "/Club/path/to/something" -> "/Club/path/to/something" // unchanged
-    )
-
-    for ((key, value) <- absoluteUrls) {
-        val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="${key}">foo</a>""")(InBodyLinkCleanerForR1("")).body.trim)
-        (bodyAbsolute \ "@href").text should be (value)
-    }
-
-    // iii. relative to the old subdomain
-    val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="/path/to/foo">foo</a>""")(InBodyLinkCleanerForR1("/arts")).body.trim)
-    (bodyAbsolute \ "@href").text should be ("/arts/path/to/foo")
-
-  }
-
 
   "BlockCleaner" should "insert block ids in minute by minute content" in {
 
@@ -262,13 +212,26 @@ class TemplatesTest extends FlatSpec with Matchers {
     ApiAsset("image", Some("image/jpeg"), Some("http://www.foo.com/bar"), Map("caption" -> caption, "width" -> width.toString, "height" -> height.toString))
   }
 
-  val bodyImages: List[ImageElement] = List(
-    new ImageElement(ApiElement("gu-image-1", "body", "image", Some(0), List(asset("caption", 140, 100))),0),
-    new ImageElement(ApiElement("gu-image-2", "body", "image", Some(0), List(asset("caption", 250, 100))),0),
-    new ImageElement(ApiElement("gu-image-3", "body", "image", Some(0), List(asset("caption", 600, 100))),0),
-    new ImageElement(ApiElement("gu-image-4", "body", "image", Some(0), List(asset("caption", 500, 100))),0),
-    new ImageElement(ApiElement("gu-image-5", "body", "image", Some(0), List(asset("caption", 500, 700))),0)
+  val testImages: List[ApiElement] = List(
+    ApiElement("gu-image-1", "body", "image", Some(0), List(asset("test caption", 140, 100))),
+    ApiElement("gu-image-2", "body", "image", Some(0), List(asset("test caption", 250, 100))),
+    ApiElement("gu-image-3", "body", "image", Some(0), List(asset("test caption", 600, 100))),
+    ApiElement("gu-image-4", "body", "image", Some(0), List(asset("test caption", 500, 100))),
+    ApiElement("gu-image-5", "body", "image", Some(0), List(asset("test caption", 500, 700)))
   )
+
+  val testContent = new Article(ApiContentWithMeta(ApiContent(
+    "foo/2012/jan/07/bar",
+    None,
+    None,
+    None,
+    "Some article",
+    "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+    "http://content.guardianapis.com/foo/2012/jan/07/bar",
+    Some(Map("shortUrl" -> "http://gu.com/p/439az")),
+    Nil,
+    elements = Some(testImages)
+  )))
 
   val bodyTextWithLinks = """
     <p>bar <a href="http://www.theguardian.com/section/2011/jan/01/words-for-url">the link</a></p>

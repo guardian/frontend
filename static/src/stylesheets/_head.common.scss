@@ -8,6 +8,7 @@
 @import '_mixins';
 @import 'module/facia/_mixins';
 @import 'module/_discussion-mixins';
+@import 'module/content/_tones-mixins';
 
 
 /* ==========================================================================
@@ -22,6 +23,7 @@
 @import 'base/_helpers';
 @import 'base/_faux-block-link';
 @import 'base/_lists';
+@import 'base/_inline-svgs';
 
 
 /* ==========================================================================
@@ -32,7 +34,7 @@
 @import 'layout/_header';
 @import 'layout/_helpers';
 @import 'layout/_side-margins';
-@include guss-row-utility;
+@include guss-row-utility($detect: true);
 @include guss-columns(
     $base-class: $guss-columns-utility-class,
     $css3-columns-support: false, // Because buggy in some versions of WebKit
@@ -51,6 +53,9 @@
    Global modules
    ========================================================================== */
 
+// Popup "object" must appear above brand-bar "component"
+// Also included by global
+@import 'module/_popup';
 @import 'module/nav/_nav';
 @import 'module/nav/_brand-bar';
 @import 'module/nav/_control';
@@ -59,18 +64,15 @@
 @import 'module/_headers';
 @import 'module/nav/_has-localnav-overrides';
 @import 'module/nav/_navigation';
+@import 'module/_rounded-icon';
 
 
 /* ==========================================================================
    Facia
    ========================================================================== */
 
-@import 'module/facia/_facia-container';
-@import 'module/facia/_container';
-@import 'module/facia/_row-pattern';
-@import 'module/facia/_item';
 @import 'module/facia/_linkslist';
-@include facia-container-head-common;
+@include fc-container-head-common;
 
 
 /* ==========================================================================
@@ -78,13 +80,6 @@
    ========================================================================== */
 
 @import 'base/_state';
-
-
-/* ==========================================================================
-   Colours
-   ========================================================================== */
-
-@import 'theme/_tones-head';
 
 
 /* ==========================================================================

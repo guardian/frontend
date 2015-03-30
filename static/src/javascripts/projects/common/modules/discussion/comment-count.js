@@ -1,100 +1,134 @@
 define([
-    'common/utils/$',
     'bonzo',
+    'fastdom',
     'qwery',
+    'common/utils/$',
+    'common/utils/_',
+    'common/utils/ajax',
+    'common/utils/formatters',
     'common/utils/mediator',
-    'common/utils/ajax'
+    'common/utils/template',
+    'common/views/svgs',
+    'text!common/views/discussion/comment-count.html',
+    'text!common/views/discussion/comment-count--content.html'
 ], function (
-    $,
     bonzo,
+    fastdom,
     qwery,
+    $,
+    _,
+    ajax,
+    formatters,
     mediator,
-    ajax
+    template,
+    svgs,
+    commentCountTemplate,
+    commentCountContentTemplate
 ) {
     var attributeName = 'data-discussion-id',
         countUrl = '/discussion/comment-counts.json?shortUrls=',
-        tpl = '<span class="trail__count trail__count--commentcount tone-colour">';
-        tpl += '<a href="[URL]" data-link-name="Comment count"><i class="i i-comment-light-grey"></i>[COUNT]';
-        tpl += '<span class="u-h"> [LABEL]</span></a></span>';
+        templates = {
+            content: commentCountContentTemplate
+        },
+        defaultTemplate = commentCountTemplate;
 
-    function getContentIds() {
-        var nodes = document.body.querySelectorAll('[' + attributeName + ']'),
-            l = nodes.length-1,
-            data = '';
+    function getElementsIndexedById(context) {
+        var elements = qwery('[' + attributeName + ']', context);
 
-        Array.prototype.forEach.call(nodes, function(el, i) {
-            data += el.getAttribute(attributeName);
-            if(i < l) { data += ','; }
+        return _.groupBy(elements, function (el) {
+            return bonzo(el).attr(attributeName);
         });
+    }
 
-        return data;
+    function getContentIds(indexedElements) {
+        return _.chain(indexedElements)
+                    .keys()
+                    .uniq()
+                    .sortBy()
+                    .join(',')
+                    .value();
     }
 
     function getContentUrl(node) {
-        return node.getElementsByTagName('a')[0].pathname + '#comments';
+        var a = node.getElementsByTagName('a')[0];
+        return (a ? a.pathname : '') + '#comments';
     }
 
-    function renderCounts(counts) {
-        counts.forEach(function(c){
-            var node = document.body.querySelector('[data-discussion-id="' + c.id +'"]');
-            if (node) {
-                if (node.getAttribute('data-discussion-closed') === 'true' && c.count === 0) {
-                    return; // Discussion is closed and had no comments, we don't want to show a comment count
-                }
+    function renderCounts(counts, indexedElements) {
+        fastdom.read(function () {
+            counts.forEach(function (c) {
+                _.forEach(indexedElements[c.id], function (node) {
+                    var format,
+                        $node = bonzo(node),
+                        commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
+                        url = $node.attr('data-discussion-url') || getContentUrl(node),
+                        hideLabel = $node.attr('data-discussion-hide-label') === 'true',
+                        $container,
+                        meta,
+                        html;
 
-                var commentOrComments = (c.count === 1 ? 'comment' : 'comments');
+                    if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
+                        return; // Discussion is closed and had no comments, we don't want to show a comment count
+                    }
+                    $node.removeClass('u-h');
 
-                if (node.getAttribute('data-discussion-inline-upgrade') === 'true') {
-                    $('.js-item__comment-count', node).append(c.count + '');
-                    $('.js-item__comment-or-comments', node).append(commentOrComments);
-                    $('.js-item__inline-comment-template', node).show('inline');
-                } else {
-                    var url = getContentUrl(node),
-                        data = tpl.replace('[URL]', url);
+                    format = $node.data('commentcount-format');
+                    html = template(templates[format] || defaultTemplate, {
+                        url: url,
+                        icon: svgs('commentCount16icon', ['inline-tone-fill']),
+                        count: formatters.integerCommas(c.count),
+                        label: hideLabel ? '' : commentOrComments
+                    });
 
-                    data = data.replace('[LABEL]', commentOrComments);
+                    meta = qwery('.js-item__meta', node);
+                    $container = meta.length ? bonzo(meta) : $node;
 
-                    // put in trail__meta, if exists
-                    var meta = qwery('.item__meta, .card__meta, .js-append-commentcount', node),
-                        $node = meta.length ? bonzo(meta) : bonzo(node);
+                    fastdom.write(function () {
+                        $container.append(html);
+                        $node.removeAttr(attributeName);
+                    });
+                });
+            });
 
-                    $node.append(data.replace('[COUNT]', c.count));
-                    node.removeAttribute(attributeName);
-                }
-            }
+            // This is the only way to ensure that this event is fired after all the comment counts have been rendered to
+            // the DOM.
+            fastdom.write(function () {
+                mediator.emit('modules:commentcount:loaded', counts);
+            });
         });
     }
 
-    function getCommentCounts() {
-        var ids = getContentIds();
-        ajax({
-            url: countUrl + ids,
-            type: 'json',
-            method: 'get',
-            crossOrigin: true,
-            success: function(response) {
-                if(response && response.counts) {
-                    renderCounts(response.counts);
-                    mediator.emit('modules:commentcount:loaded', response.counts);
+    function getCommentCounts(context) {
+        fastdom.read(function () {
+            var indexedElements = getElementsIndexedById(context || document.body),
+                ids = getContentIds(indexedElements);
+            ajax({
+                url: countUrl + ids,
+                type: 'json',
+                method: 'get',
+                crossOrigin: true,
+                success: function (response) {
+                    if (response && response.counts) {
+                        renderCounts(response.counts, indexedElements);
+                    }
                 }
-            }
+            });
         });
     }
 
     function init() {
-        if(document.body.querySelector('[data-discussion-id]')) {
-            getCommentCounts();
+        if (document.body.querySelector('[data-discussion-id]')) {
+            getCommentCounts(document.body);
         }
 
         //Load new counts when more trails are loaded
-        mediator.on('module:trailblock-show-more:render', function() { getCommentCounts(); });
-        mediator.on('modules:related:loaded', function() { getCommentCounts(); });
+        mediator.on('modules:related:loaded', getCommentCounts);
     }
 
     return {
         init: init,
         getCommentCounts: getCommentCounts,
-        getContentIds: getContentIds
+        getContentIds: getContentIds,
+        getElementsIndexedById: getElementsIndexedById
     };
-
 });

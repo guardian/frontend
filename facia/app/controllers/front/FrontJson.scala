@@ -1,6 +1,6 @@
 package controllers.front
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.CollectionConfigJson
 import model._
 import scala.concurrent.Future
 import play.api.libs.json.{JsObject, JsNull, JsValue, JsString, Json}
@@ -42,6 +42,7 @@ trait FrontJsonLite extends ExecutionContexts{
     .map{ j =>
       Json.obj(
         "headline" -> ((j \ "meta" \ "headline").asOpt[JsString].getOrElse(j \ "safeFields" \ "headline"): JsValue),
+        "trailText" -> ((j \ "meta" \ "trailText").asOpt[JsString].getOrElse(j \ "safeFields" \ "trailText"): JsValue),
         "thumbnail" -> (j \ "safeFields" \ "thumbnail"),
         "shortUrl" -> (j \ "safeFields" \ "shortUrl"),
         "id" -> (j \ "id")
@@ -58,7 +59,7 @@ trait FrontJson extends ExecutionContexts with Logging {
   val stage: String = Configuration.facia.stage.toUpperCase
   val bucketLocation: String
 
-  private def getAddressForPath(path: String): String = s"$bucketLocation/$path/pressed.json"
+  private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/pressed.json"
 
   def get(path: String): Future[Option[FaciaPage]] = {
     val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
@@ -101,6 +102,8 @@ trait FrontJson extends ExecutionContexts with Logging {
       .flatMap(Content.fromPressedJson)
     val results = (json \ "results").asOpt[List[JsValue]].getOrElse(Nil)
       .flatMap(Content.fromPressedJson)
+    val treats = (json \ "treats").asOpt[List[JsValue]].getOrElse(Nil)
+      .flatMap(Content.fromPressedJson)
 
     val lastUpdated = (json \ "lastUpdated").asOpt[String]
     val updatedBy = (json \ "updatedBy").asOpt[String]
@@ -111,6 +114,7 @@ trait FrontJson extends ExecutionContexts with Logging {
       editorsPicks=editorsPicks,
       mostViewed=mostViewed,
       results=results,
+      treats=treats,
       displayName=displayName,
       href=href,
       lastUpdated=lastUpdated,
@@ -127,8 +131,8 @@ trait FrontJson extends ExecutionContexts with Logging {
     }
   }
 
-  def parseConfig(id: String, json: JsValue): CollectionConfig =
-    CollectionConfig(
+  def parseConfig(id: String, json: JsValue): CollectionConfigJson =
+    CollectionConfigJson(
       apiQuery        = (json \ "apiQuery").asOpt[String],
       displayName     = (json \ "displayName").asOpt[String],
       href            = (json \ "href").asOpt[String],
@@ -139,7 +143,10 @@ trait FrontJson extends ExecutionContexts with Logging {
       uneditable      = (json \ "uneditable").asOpt[Boolean],
       hideKickers     = (json \ "hideKickers").asOpt[Boolean],
       showDateHeader =  (json \ "showDateHeader").asOpt[Boolean],
-      showLatestUpdate = (json \ "showLatestUpdate").asOpt[Boolean]
+      showLatestUpdate = (json \ "showLatestUpdate").asOpt[Boolean],
+      excludeFromRss = (json \ "excludeFromRss").asOpt[Boolean],
+      showTimestamps = (json \ "showTimestamps").asOpt[Boolean],
+      importance = (json \ "importance").asOpt[String]
     )
 
   private def parsePressedJson(j: String): Option[FaciaPage] = {

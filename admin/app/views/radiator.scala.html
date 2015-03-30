@@ -1,7 +1,7 @@
 @(  charts: Seq[tools.AwsLineChart],
     hitMissCharts: Seq[tools.AwsLineChart],
     cost: tools.MaximumMetric,
-    switches: List[conf.Switch],
+    switches: Seq[conf.SwitchTrait],
     env: String)
 
 @import org.joda.time.{DateTime, Days}
@@ -28,7 +28,7 @@
         *@
         <script type="text/javascript" src="https://teamcity.gutools.co.uk/externalStatus.html?js=1&buildTypeId=bt1304&buildTypeId=Frontend_IntegrationTests&buildTypeId=Frontend_SanityTests"></script>
     </div>
-    
+
     <div class="expiring-wrapper">
         <h2>Expiring features</h2>
         <ul id="sell-by-date">

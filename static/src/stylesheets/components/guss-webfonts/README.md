@@ -57,10 +57,12 @@ $guss-webfonts-charset: 'original';
 /**
  * Hinting
  *
- * - on: larger file, better rendering in Windows
+ * - cleartype: larger file, better rendering in Windows
+ * - auto: even larger file, better rendering in Windows in Chrome with 
+ *   font-smoothing disabled (the default in XP pre-servicepack 1)
  * - off: smaller files, render well on HiDPI displays
  */
-$guss-webfonts-hinting: 'on';
+$guss-webfonts-hinting: 'off';
 
 /**
  * Kerning
@@ -107,23 +109,23 @@ You can curate your own list of @font-face rules like so:
     (
         'Guardian Agate Sans 1 Web': (
             (weight: 'regular', style: 'normal'),
-            (weight: 'bold',    style: 'normal'),
+            (weight: 'bold',    style: 'normal', charset: 'original'),
         ),
         'Guardian Text Egyptian Web': (
             (weight: 'regular',  style: 'normal'),
             (weight: 'regular',  style: 'italic'),
-            (weight: 'medium',   style: 'normal', use-as: (weight: 'bold', style: 'normal')),
-            (weight: 'medium',   style: 'italic', use-as: (weight: 'bold', style: 'italic')),
+            (weight: 'medium',   style: 'normal', version: '0.2.0', use-as: (weight: 'bold')),
+            (weight: 'medium',   style: 'italic', hinting: 'off', use-as: (weight: 'bold', style: 'normal')),
         ),
         'Guardian Egyptian Web': (
-            (weight: 'light',    style: 'normal'),
+            (weight: 'light',    style: 'normal', kerning: 'off'),
             (weight: 'regular',  style: 'normal'),
-            (weight: 'semibold', style: 'normal', use-as: (weight: 'ultrablack', style: 'normal')),
+            (weight: 'semibold', style: 'normal', use-as: (weight: 'ultrablack')),
         ),
         'Guardian Text Sans Web': (
             (weight: 'regular',  style: 'normal'),
             (weight: 'regular',  style: 'italic'),
-            (weight: 'medium',   style: 'normal', use-as: (weight: 'bold', style: 'normal')),
+            (weight: 'medium',   style: 'normal', use-as: (weight: 'bold')),
             (weight: 'medium',   style: 'italic', use-as: (weight: 'bold', style: 'italic')),
         ),
         'Guardian Sans Web': (
@@ -131,6 +133,53 @@ You can curate your own list of @font-face rules like so:
         )
     )
 );
+```
+
+## Development
+
+You will need
+
+ * [Node.js](http://nodejs.org/)
+ * [Ruby](https://www.ruby-lang.org/en/)
+ * [Bundler](http://bundler.io/)
+```
+$ gem install bundler
+```
+ * [Grunt CLI](http://gruntjs.com/getting-started#installing-the-cli)
+```
+$ npm install -g grunt-cli
+```
+
+Then, in root, install the dependecies
+
+```
+$ bundle install
+$ npm install
+$ bower install
+```
+
+To build the component
+
+```
+$ grunt build:demo
+```
+
+To build the docs (output to the `docs` dir)
+
+```
+$ grunt docs
+```
+
+To release the component
+
+```
+$ grunt release
+```
+
+By default a patch release. Also `major` and `minor` targets available, e.g.
+
+```
+$ grunt release:minor
 ```
 
 ## Uploading fonts

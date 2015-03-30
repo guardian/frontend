@@ -1,0 +1,6 @@
+@(maybeUrl: Option[String], dataLinkName: String)(inner: Html)
+
+@maybeUrl match {
+    case Some(url) => {<a href="@url" data-link-name="@dataLinkName">@inner</a>}
+    case None => {@inner}
+}

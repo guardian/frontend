@@ -17,6 +17,20 @@
     .content__keywords & {
         max-width: none;
     }
+
+    button {
+        @include button-colour(
+            transparent,
+            guss-colour(neutral-1, $pasteup-palette),
+            transparent,
+            darken(guss-colour(neutral-3, $pasteup-palette), 10%),
+            guss-colour(neutral-4, $pasteup-palette)
+        );
+        border: 0;
+        padding: 0 $gs-baseline / 2;
+        margin-left: $gs-gutter / -4;
+        border-radius: $gs-gutter * 2 / 5;
+    }
 }
 
 .show-more-tags {

@@ -8,6 +8,8 @@ import scala.concurrent.ExecutionContext
 import akka.actor.ActorSystem
 import play.api.Play.current
 
+object ExecutionContexts extends ExecutionContexts
+
 trait ExecutionContexts {
   implicit lazy val executionContext: ExecutionContext = play.api.libs.concurrent.Execution.Implicits.defaultContext
   lazy val actorSystem: ActorSystem = PlayAkka.system
@@ -15,7 +17,7 @@ trait ExecutionContexts {
   lazy val feedsRecorderExecutionContext: ExecutionContext = PlayAkka.system.dispatchers.lookup("play.akka.actor.feed-recorder")
 }
 
-object AkkaAgent extends ExecutionContexts{
+object AkkaAgent extends ExecutionContexts {
   def apply[T](value: T): Agent[T] = Agent(value)
 }
 

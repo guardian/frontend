@@ -1,6 +1,6 @@
-/* global _: true */
 define([
     'knockout',
+    'underscore',
     'config',
     'modules/vars',
     'modules/content-api',
@@ -13,6 +13,7 @@ define([
     'utils/validate-image-src'
 ], function(
     ko,
+    _,
     pageConfig,
     vars,
     contentApi,
@@ -59,6 +60,8 @@ define([
             return this.props.priority() === vars.priority || this.state.isOpenProps(); // last clause allows priority change
         }, this);
 
+        this.applyConstraints();
+
         this.collections = new Group({
             parent: self,
             parentType: 'Front',
@@ -101,10 +104,10 @@ define([
             if (src === this.props.imageUrl()) { return; }
 
             validateImageSrc(src, {minWidth: 120})
-            .done(function(width, height) {
-                self.props.imageUrl(src);
-                self.props.imageWidth(width);
-                self.props.imageHeight(height);
+            .done(function(img) {
+                self.props.imageUrl(img.src);
+                self.props.imageWidth(img.width);
+                self.props.imageHeight(img.height);
                 self.saveProps();
             })
             .fail(function(err) {
@@ -143,6 +146,10 @@ define([
         this.placeholders.onPageDescription  = ko.computed(function() {
             return this.props.onPageDescription() || this.capiProps.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
         }, this);
+
+        this.ophanPerformances = ko.computed(function () {
+            return vars.CONST.ophanFrontBase + encodeURIComponent('/' + this.id());
+        }, this);
     }
 
     Front.prototype.validate = function(checkUniqueness) {
@@ -152,7 +159,7 @@ define([
             .toLowerCase()
             .replace(/\/+/g, '/')
             .replace(/^\/|\/$/g, '')
-            .replace(/[^a-z0-9\/\-]*/g, '')
+            .replace(/[^a-z0-9\/\-+]*/g, '')
             .split('/')
             .slice(0,3)
             .join('/')
@@ -191,6 +198,7 @@ define([
     };
 
     Front.prototype.saveProps = function() {
+        this.applyConstraints();
         persistence.front.update(this);
         this.state.isOpenProps(false);
     };
@@ -209,6 +217,13 @@ define([
         collection.parents.remove(this);
         this.collections.items.remove(collection);
         this.saveProps();
+    };
+
+    Front.prototype.applyConstraints = function () {
+        if (this.props.priority() === 'training') {
+            this.state.isTypeLocked = true;
+            this.props.isHidden(true);
+        }
     };
 
     function toTitleCase(str) {

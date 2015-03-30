@@ -1,0 +1,58 @@
+.inline-icon {
+    fill: #ffffff;
+
+    svg {
+        overflow: visible;
+    }
+}
+
+.inline-icon__fallback {
+    display: none;
+}
+
+.inline-tone-fill {
+    fill: colour(news-default);
+
+    .tonal--tone-comment & {
+        fill: colour(comment-default);
+    }
+
+    .tonal--tone-feature & {
+        fill: colour(feature-default);
+    }
+
+    .tonal--tone-review & {
+        fill: colour(review-background);
+    }
+
+    .tonal--tone-editorial & {
+        fill: colour(editorial-default);
+    }
+
+    .tonal--tone-analysis & {
+        fill: colour(analysis-accent);
+    }
+
+    .tonal--tone-live &,
+    .tonal--tone-dead & {
+        fill: colour(live-default);
+    }
+
+    .tonal--tone-media & {
+        fill: colour(media-default);
+    }
+
+    .tonal--tone-special-report & {
+        fill: colour(news-support-6);
+    }
+}
+
+.no-svg {
+    .inline-icon {
+        display: none !important;
+    }
+
+    .inline-icon__fallback {
+        display: initial;
+    }
+}

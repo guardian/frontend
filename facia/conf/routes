@@ -7,11 +7,15 @@
 GET        /assets/*path                                               dev.DevAssetsController.at(path)
 
 GET        /_healthcheck                                               conf.HealthCheck.healthcheck()
+GET        /_fronts_cdn_healthcheck                                    conf.HealthCheck.cdnHealthcheck()
+
 GET        /_agentcontents                                             controllers.FaciaController.renderAgentContents
 
 GET        /humans.txt                                                 controllers.Assets.at(path="/public", file="humans.txt")
 
 # Editionalised redirects
+# TODO we should get rid of these. we should not have to add these manually here as routes
+# everything is in place for the fronts, we just have to figure out what to do with RSS
 GET        /                                                           controllers.FaciaController.rootEditionRedirect()
 GET        /$path<(culture|sport|commentisfree|business|money|rss)>    controllers.FaciaController.editionRedirect(path)
 
@@ -22,6 +26,8 @@ GET        /collection/*id/rss                                         controlle
 GET        /container/*id.json                                         controllers.FaciaController.renderContainerJson(id)
 
 # Editionalised pages
+GET        /*path/show-more/*id.json                                   controllers.FaciaController.renderShowMore(path, id)
+GET        /*path/collections/*id/:version.json                        controllers.FaciaController.renderFrontCollection(path, id, version)
 GET        /*path/rss                                                  controllers.FaciaController.renderFrontRss(path)
 GET        /*path/lite.json                                            controllers.FaciaController.renderFrontJsonLite(path)
 GET        /*path.json                                                 controllers.FaciaController.renderFrontJson(path)

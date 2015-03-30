@@ -7,11 +7,24 @@ $c-guardian-services-action: #ffffff;
 
 .l-header {
     position: relative;
-    background: $c-brandBlue;
+    background: colour(guardian-brand);
 
     @include mq(wide) {
         .has-page-skin & .gs-container {
             width: gs-span(12) + ($gs-gutter*2);
+        }
+    }
+}
+
+.l-header--is-slim {
+    // TODO: Palette?
+    background: darken(colour(guardian-brand), 2%);
+
+    .l-header__inner {
+        @include clearfix;
+
+        @include mq(tablet) {
+            background: colour(guardian-brand);
         }
     }
 }
@@ -21,6 +34,11 @@ $c-guardian-services-action: #ffffff;
     float: right;
     margin: $gs-baseline/4 $gs-gutter/2 $gs-baseline 0;
 
+    svg {
+        width: 160px;
+        height: 30px;
+    }
+
     @include mq(mobileLandscape) {
         margin-right: $gs-gutter;
     }
@@ -28,10 +46,69 @@ $c-guardian-services-action: #ffffff;
     @include mq(tablet) {
         margin-top: $gs-baseline * .5;
         margin-bottom: $gs-baseline * .5;
+
+        svg {
+            width: 320px;
+            height: 60px;
+        }
     }
 
-    i {
+    .l-header--is-slim & {
+        margin-top: $gs-baseline * .75;
+        margin-bottom: 0;
+        float: left;
+
+        @include mq(mobileLandscape) {
+            // Reset to previous value, as the breakpoint overriding this
+            // does not apply for interactives.
+            margin-right: $gs-gutter/2;
+        }
+
+        @include mq($until: tablet) {
+            margin-top: $gs-baseline * .83;
+
+            svg {
+                // Height / width
+                $height-to-width-ratio: 30 / 160;
+                // Magic number to fit the logo to 320px+ screens
+                $width: 134px;
+                width: $width;
+                height: $width * $height-to-width-ratio;
+            }
+        }
+
+        @include mq(tablet) {
+            svg {
+                width: 160px;
+                height: 30px;
+            }
+        }
+    }
+
+    .inline-logo {
         display: block;
+    }
+
+    .logo__tagline {
+        @include fs-textSans(1);
+        position: absolute;
+        top: 47px;
+        left: 122px;
+        color: #aad8f1; // To match custom colour of 'the' in logotype. Shouldn't be used elsewhere
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .no-svg & {
+        .inline-logo {
+            width: 160px;
+            height: 30px;
+
+            @include mq(tablet) {
+                width: 320px;
+                height: 60px;
+            }
+        }
     }
 }
 
@@ -39,10 +116,20 @@ $c-guardian-services-action: #ffffff;
 /* Pre-header
    ========================================================================== */
 
+// We have two selectors for `.l-header-pre` because of an edge case in IE
+// stylesheets, whereby breakpoint styles are preceed nested rules in the
+// cascade.
 .l-header-pre {
-    float: left;
+    &,
+    // Override breakpoint
+    .l-header--is-slim & {
+        float: left;
+    }
+}
+
+.l-header-pre {
     min-width: gs-span(2);
-    z-index: 3;
+    z-index: 100;
     position: relative;
 
     @include mq(tablet) {
@@ -57,5 +144,9 @@ $c-guardian-services-action: #ffffff;
 .l-header-main {
     position: relative;
     z-index: 2;
+
+    .l-header--is-slim & {
+        float: right;
+    }
 }
 

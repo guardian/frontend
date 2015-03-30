@@ -6,6 +6,8 @@ import org.scala_tools.time.Imports._
 import org.joda.time.format.ISODateTimeFormat
 import scala.concurrent.duration.Duration
 
+object Dates extends Dates
+
 trait Dates {
   implicit class RichDuration(duration: Duration) {
     def toJoda = new JodaDuration(duration.toMillis)

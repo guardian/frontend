@@ -1,86 +1,92 @@
 define([
-    'common/utils/ajax',
     'bonzo',
+    'common/utils/ajax',
+    'common/utils/config',
+    'common/utils/time',
+    'common/modules/analytics/omniture',
     'common/modules/identity/api',
     'common/modules/identity/facebook-authorizer',
     'common/modules/navigation/profile',
-    'common/utils/storage',
-    'common/modules/userPrefs',
-    'common/utils/time',
-    'common/modules/ui/message'
+    'common/modules/ui/message',
+    'common/modules/ui/toggles'
 ],
-function(
-    ajax,
+function (
     bonzo,
-    Id,
+    ajax,
+    config,
+    time,
+    omniture,
+    id,
     FacebookAuthorizer,
     Profile,
-    Storage,
-    UserPrefs,
-    time,
-    Message
+    Message,
+    Toggles
 ) {
 
-    function AutoSignin(config) {
-        this.config = config;
+    function AutoSignin() {
         var self = this;
         self.header = document.body;
 
-        this.init = function() {
+        this.init = function () {
 
-            if( Id.shouldAutoSigninInUser() ) {
-                var appId = this.config.page.fbAppId;
+            if (id.shouldAutoSigninInUser()) {
+                var appId = config.page.fbAppId,
+                    authorizer = new FacebookAuthorizer(appId);
 
-                var authorizer = new FacebookAuthorizer(appId);
                 authorizer.getLoginStatus();
 
-                authorizer.onConnected.then( function(FB, statusResponse) {
-                    authorizer.onUserDataLoaded.then( function(userData) {
-                        if( userData.email ) {
-                            self.signin( statusResponse, userData.name );
+                authorizer.onConnected.then(function (FB, statusResponse) {
+                    authorizer.onUserDataLoaded.then(function (userData) {
+                        if (userData.email) {
+                            self.signin(statusResponse, userData.name);
                         }
                     });
                 });
 
-                authorizer.onNotLoggedIn.then( function() {
+                authorizer.onNotLoggedIn.then(function () {
                     var today = time.currentDate();
-                    Id.setNextFbCheckTime(today.setDate(today.getDate() + 1));
+                    id.setNextFbCheckTime(today.setDate(today.getDate() + 1));
                 });
 
-                authorizer.onNotAuthorized.then( function() {
+                authorizer.onNotAuthorized.then(function () {
                     var today = time.currentDate();
-                    Id.setNextFbCheckTime(today.setMonth(today.getMonth() + 1));
+                    id.setNextFbCheckTime(today.setMonth(today.getMonth() + 1));
                 });
             }
         };
 
-        this.signin = function(authResponse, name) {
+        this.signin = function (authResponse, name) {
             ajax({
-                url:self.config.page.idWebAppUrl + '/jsapi/facebook/autosignup',
+                url: config.page.idWebAppUrl + '/jsapi/facebook/autosignup',
                 cache: false,
                 crossOrigin: true,
                 type: 'jsonp',
                 data: {
-                    signedRequest : authResponse.signedRequest,
-                    accessToken : authResponse.accessToken
+                    signedRequest: authResponse.signedRequest,
+                    accessToken: authResponse.accessToken
                 },
-                success: function(response) {
+                success: function (response) {
                     self.welcome(name);
-                    if(response.status === 'ok') {
-                        var profile = new Profile(
-                            self.header,{
-                            url: self.config.page.idUrl
+                    if (response.status === 'ok') {
+                        var profile = new Profile({
+                            url: config.page.idUrl
                         });
                         profile.init();
+                        new Toggles().init();
+
+                        omniture.populateEventProperties('Social signin auto');
+                        s.eVar13 = 'facebook auto';
+                        s.linkTrackVars += ',eVar13';
+                        s.tl(this, 'o', 'Social signin auto');
                     }
                 }
             });
         };
 
-        this.welcome = function(name) {
-            var msg = '<p class="site-message__message">' +
+        this.welcome = function (name) {
+            var msg = '<p class="site-message__message" data-test-id="facebook-auto-sign-in-banner">' +
                           'Welcome ' + name + ', you’re signed into the Guardian using Facebook, or ' +
-                          '<a href="' + self.config.page.idUrl + '/signout"/>sign out</a>.' +
+                          '<a data-link-name="fb auto : sign out" href="' + config.page.idUrl + '/signout"/>sign out</a>.' +
                       '</p>';
             new Message('fbauto', { important: true }).show(msg);
         };

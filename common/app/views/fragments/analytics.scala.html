@@ -18,7 +18,7 @@
     }
 
     @defining(
-        s"${AnalyticsHost()}/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
+        s"${AnalyticsHost()}/b/ss/${OmnitureAnalyticsAccount(page)}/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
     ){ omnitureCall =>
         <script>
             @*
@@ -56,7 +56,4 @@
     </div>
 </noscript>
 
-@page match {
-    case v: model.Video => { <img src="@Configuration.debug.beaconUrl/counts.gif?c=pv&c=vpv" alt="" style="display : none ;" rel="nofollow"/> }
-    case _ => { <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/> }
-}
+<img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>

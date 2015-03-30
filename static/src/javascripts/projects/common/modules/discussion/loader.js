@@ -2,214 +2,294 @@ define([
     'bean',
     'bonzo',
     'qwery',
+    'raven',
 
     'common/utils/$',
     'common/utils/_',
-    'common/utils/ajax',
+    'common/utils/ajax-promise',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/scroller',
 
     'common/modules/analytics/discussion',
     'common/modules/analytics/register',
     'common/modules/component',
-    'common/modules/discussion/activity-stream',
     'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/comments',
-    'common/modules/discussion/top-comments',
     'common/modules/identity/api',
-    'common/modules/userPrefs'
+    'common/modules/user-prefs'
 ], function(
     bean,
     bonzo,
     qwery,
+    raven,
     $,
     _,
-    ajax,
+    ajaxPromise,
     config,
+    detect,
     mediator,
+    scroller,
     DiscussionAnalytics,
     register,
     Component,
-    ActivityStream,
     DiscussionApi,
     CommentBox,
     Comments,
-    TopComments,
     Id,
     userPrefs
 ) {
 
-/**
- * We have a few rendering hacks in here
- * We'll move the rendering to the play app once we
- * have the discussion stack up that can read cookies
- * This is true for the comment-box / signin / closed discussion
- * And also the premod / banned state of the user
- * @constructor
- * @extends Component
- */
 var Loader = function() {
     register.begin('discussion');
 };
 Component.define(Loader);
 
-/**
- * @type {Object.<string.string>}
- * @override
- */
-Loader.prototype.classes = {
-    commentsContainer: 'discussion__comments__container',
-    comments: 'discussion__comments',
-    commentBox: 'discussion__comment-box',
-    commentBoxBottom: 'discussion__comment-box--bottom',
-    topComments: 'discussion__comments--top-comments'
-};
+Loader.prototype.classes = { };
 
-/**
- * @type {string}
- * @override
- */
 Loader.prototype.componentClass = 'discussion';
-
-/** @type {Comments} */
 Loader.prototype.comments = null;
-
-/** @type {CommentBox} */
-Loader.prototype.commentBox = null;
-
-/** @type {CommentBox} */
-Loader.prototype.bottomCommentBox = null;
-
-/** @type {Object.<string.*>} */
 Loader.prototype.user = null;
 
-/**
- * @override
- * We need the user for comments
- * We also need them for the comment bar
- * So the flow is essentially:
- * 1. fetch user
- * 2. fetch comments
- * 3. render comment bar
- */
-Loader.prototype.ready = function() {
-    var self = this,
-        topCommentsElem = this.getElem('topComments'),
-        commentsContainer = this.getElem('commentsContainer'),
-        commentsElem = this.getElem('comments'),
-        commentId = this.getCommentIdFromHash();
+Loader.prototype.initTopComments = function() {
+
+    this.on('click', '.js-jump-to-comment', function(e) {
+        e.preventDefault();
+        scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
+        var commentId = bonzo(e.currentTarget).data('comment-id');
+        this.loadComments({comment: commentId});
+    });
+
+    return ajaxPromise({
+        url: '/discussion/top-comments/' + this.getDiscussionId() + '.json',
+        type: 'json',
+        method: 'get',
+        crossOrigin: true
+    }).then(
+        function render(resp) {
+            this.$topCommentsContainer.html(resp.html);
+            this.topCommentCount = qwery('.d-top-comment', this.$topCommentsContainer[0]).length;
+            if (this.topCommentCount !== 0) {
+                this.setState('has-top-comments');
+            }
+        }.bind(this)
+    );
+};
+
+Loader.prototype.initMainComments = function() {
+
+    var commentId = this.getCommentIdFromHash();
 
     if (commentId) {
         mediator.emit('discussion:seen:comment-permalink');
     }
 
-    this.topComments = new TopComments({
-        discussionId: this.getDiscussionId()
-    });
+    var order = userPrefs.get('discussion.order') || (this.getDiscussionClosed() ? 'oldest' : 'newest');
+    var threading = userPrefs.get('discussion.threading') || 'collapsed';
+
+    var defaultPagesize = detect.isBreakpoint({min: 'tablet'}) ?  25 : 10;
 
     this.comments = new Comments({
         discussionId: this.getDiscussionId(),
-        order: this.getDiscussionClosed() ? 'oldest' : 'newest',
-        state: 'partial'
+        order: order,
+        pagesize: defaultPagesize,
+        threading: threading
     });
 
-    this.topComments.fetch(topCommentsElem);
+    this.comments.attachTo(qwery('.js-discussion-main-comments')[0]);
 
-    this.comments.attachTo(commentsElem);
+    this.comments.on('untruncate-thread', this.removeTruncation.bind(this));
 
-    this.comments.fetchComments({comment: commentId}).then(function() {
-        $('.discussion .preload-msg').addClass('u-h');
+    this.on('click', '.js-discussion-show-button, .d-show-more-replies__button, .js-discussion-author-link, .js-discussion-change-page',
+        this.removeTruncation.bind(this));
 
-        if (commentId || window.location.hash === '#comments') {
-            self.comments.removeState('shut');
-            self.comments.removeState('partial');
+    this.comments.on('rendered', function(paginationHtml) {
+        var newPagination = bonzo.create(paginationHtml),
+            toolbarEl = qwery('.js-discussion-toolbar', this.elem)[0],
+            container = $('.js-discussion-pagination', toolbarEl).empty();
+
+        // When the pagesize is 'All', do not show any pagination.
+        if (!this.comments.isAllPageSizeActive()) {
+            container.html(newPagination);
+        }
+    }.bind(this));
+
+    this.setState('loading');
+
+    this.on('user:loaded', function() {
+        this.initState();
+        this.renderCommentBar();
+        if (this.user) {
+            this.comments.addUser(this.user);
+
+            var userPageSize = userPrefs.get('discussion.pagesize'),
+                pageSize = defaultPagesize;
+
+            if (_.isNumber(userPageSize)) {
+                pageSize = userPageSize;
+            } else {
+                if (userPageSize === 'All') {
+                    pageSize = config.switches.discussionAllPageSize ? 'All' : 100;
+                }
+            }
+            this.initPageSizeDropdown(pageSize);
+
+            if (config.switches.discussionPageSize && detect.isBreakpoint({min: 'tablet'})) {
+                this.comments.options.pagesize = pageSize;
+            }
+
+            if (this.user.isStaff) {
+                this.removeState('not-staff');
+                this.setState('is-staff');
+            }
         }
 
-        bonzo(commentsContainer).removeClass('modern-hidden');
-        self.initUnthreaded();
-        self.initShowAll();
+        // Only truncate the loaded comments on this initial fetch,
+        // and when no comment ID or #comments location is present.
+        var shouldTruncate = !commentId && window.location.hash !== '#comments';
 
-        self.on('user:loaded', function() {
-            self.initState();
-            self.renderCommentBar();
-            if (self.user) {
-                self.comments.addUser(self.user);
-            }
-        });
-        self.getUser();
+        this.loadComments({
+            comment: commentId,
+            shouldTruncate: shouldTruncate})
+            .catch(function(error) {
+                var reportMsg = 'Comments failed to load: ',
+                    request = error.request;
+                if (error.message === 'Request is aborted: timeout') {
+                    reportMsg += 'XHR timeout';
+                } else if (error.message) {
+                    reportMsg += error.message;
+                } else {
+                    reportMsg += 'status' in request ? request.status : '';
+                }
+                raven.captureMessage(reportMsg, {
+                    tags: {
+                        contentType: 'comments',
+                        discussionId: this.getDiscussionId(),
+                        status: 'status' in request ? request.status : '',
+                        readyState: 'readyState' in request ? request.readyState : '',
+                        response: 'response' in request ? request.response : '',
+                        statusText: 'status' in request ? request.statusText : ''
+                    }
+                });
+            }.bind(this));
+    });
+    this.getUser();
+};
+
+Loader.prototype.initPageSizeDropdown = function(pageSize) {
+
+    var $pagesizeLabel = $('.js-comment-pagesize');
+    $pagesizeLabel.text(pageSize);
+    this.on('click', '.js-comment-pagesize-dropdown .popup__action', function(e) {
+        bean.fire(qwery('.js-comment-pagesize-dropdown [data-toggle]')[0], 'click');
+        var selectedPageSize = bonzo(e.currentTarget).data('pagesize');
+        this.comments.options.pagesize = selectedPageSize;
+        $pagesizeLabel.text(selectedPageSize);
+        userPrefs.set('discussion.pagesize', selectedPageSize);
+        this.loadComments({page: 1});
     });
 
-    this.checkCommentsLoaded();
+};
 
+Loader.prototype.initToolbar = function() {
+
+    var $orderLabel = $('.js-comment-order');
+    $orderLabel.text(this.comments.options.order);
+    this.on('click', '.js-comment-order-dropdown .popup__action', function(e) {
+        bean.fire(qwery('.js-comment-order-dropdown [data-toggle]')[0], 'click');
+        this.comments.options.order = bonzo(e.currentTarget).data('order');
+        $orderLabel.text(this.comments.options.order);
+        userPrefs.set('discussion.order', this.comments.options.order);
+        this.loadComments({page: 1});
+    });
+
+    var $threadingLabel = $('.js-comment-threading');
+    $threadingLabel.text(this.comments.options.threading);
+    this.on('click', '.js-comment-threading-dropdown .popup__action', function(e) {
+        bean.fire(qwery('.js-comment-threading-dropdown [data-toggle]')[0], 'click');
+        this.comments.options.threading = bonzo(e.currentTarget).data('threading');
+        $threadingLabel.text(this.comments.options.threading);
+        userPrefs.set('discussion.threading', this.comments.options.threading);
+        this.loadComments();
+    });
+};
+
+Loader.prototype.isOpenForRecommendations = function() {
+    return qwery('.d-discussion--recommendations-open', this.elem).length !== 0;
+};
+
+Loader.prototype.initRecommend = function() {
+    this.on('click', '.js-recommend-comment', function(e) {
+        if (this.user && this.isOpenForRecommendations()) {
+            var elem = e.currentTarget,
+                $el = bonzo(elem);
+
+            $el.removeClass('js-recommend-comment');
+
+            var id = elem.getAttribute('data-comment-id'),
+                result = DiscussionApi.recommendComment(id);
+
+            $el.addClass('d-comment__recommend--clicked');
+            return result.then(
+                $el.addClass.bind($el, 'd-comment__recommend--recommended')
+            );
+        }
+    });
+};
+
+Loader.prototype.ready = function() {
+
+    this.$topCommentsContainer = $('.js-discussion-top-comments');
+
+    this.initTopComments();
+    this.initMainComments();
+    this.initToolbar();
     this.renderCommentCount();
+    this.initPagination();
+    this.initRecommend();
 
     DiscussionAnalytics.init();
 
     bean.on(window, 'hashchange', function() {
-        var commentId = self.getCommentIdFromHash();
+        var commentId = this.getCommentIdFromHash();
         if (commentId) {
-            self.comments.gotoComment(commentId);
+            this.gotoComment(commentId);
         }
-    });
+    }.bind(this));
 
     // More for analytics than anything
     if (window.location.hash === '#comments') {
         mediator.emit('discussion:seen:comments-anchor');
     }
 
+    mediator.on('discussion:commentbox:post:success', this.removeState.bind(this, 'empty'));
+
+    mediator.on('module:clickstream:click', function(clickspec) {
+        if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
+            this.removeTruncation();
+        }
+    }.bind(this));
+
     register.end('discussion');
 };
 
-Loader.prototype.initShowAll = function() {
-    var $showAllBtn = $('.js-show-all'),
-        offClass = 'discussion__show-all--off';
-
-    if (userPrefs.get('discussion.expand')) {
-        $showAllBtn.removeClass(offClass);
-    }
-
-    this.on('click', '.js-show-all', function(e) {
-        var $btn = bonzo(e.currentTarget).toggleClass(offClass),
-            expand = !$btn.hasClass(offClass);
-        
-        this.comments.options.expand = expand;
-        userPrefs.set('discussion.expand', expand);
-        this.comments.fetchComments();
-    });
-};
-
-Loader.prototype.initUnthreaded = function() {
-    if (userPrefs.get('discussion.unthreaded')) {
-        this.setState('unthreaded');
-    }
-
-    this.on('click', '.js-show-threaded', function() {
-        this.toggleState('unthreaded');
-        var unthreaded = this.hasState('unthreaded');
-        this.comments.options.unthreaded = unthreaded;
-        userPrefs.set('discussion.unthreaded', unthreaded);
-        this.comments.fetchComments();
-    });
-};
-
-/** @return {Reqwest|null} */
 Loader.prototype.getUser = function() {
-    var self = this;
-
     if (Id.getUserFromCookie()) {
         DiscussionApi.getUser().then(function(resp) {
-            self.user = resp.userProfile;
-            self.emit('user:loaded');
-        });
+            this.user = resp.userProfile;
+            this.emit('user:loaded');
+        }.bind(this));
     } else {
-        self.emit('user:loaded');
+        this.emit('user:loaded');
     }
 };
 
 Loader.prototype.isCommentable = function() {
     // not readonly, not closed and user is signed in
-    return !this.comments.isReadOnly() && !this.getDiscussionClosed() && Id.getUserFromCookie();
+    var userCanPost = this.user && this.user.privateFields && this.user.privateFields.canPostComment;
+    return userCanPost && !this.comments.isReadOnly() && !this.getDiscussionClosed();
 };
 
 Loader.prototype.initState = function() {
@@ -218,7 +298,7 @@ Loader.prototype.initState = function() {
     } else if (this.comments.isReadOnly()) {
         this.setState('readonly');
     } else if (Id.getUserFromCookie()) {
-        if (this.user.privateFields && !this.user.privateFields.canPostComment) {
+        if (this.user && this.user.privateFields && !this.user.privateFields.canPostComment) {
             this.setState('banned');
         } else {
             this.setState('open');
@@ -228,81 +308,35 @@ Loader.prototype.initState = function() {
     }
 };
 
-/**
- * If discussion is closed -> render closed
- * If not signed in -> render signin,
- * Else render comment box
- */
 Loader.prototype.renderCommentBar = function() {
     if (this.isCommentable()) {
-        this.renderCommentBox();
-        this.comments.on('first-load', this.renderBottomCommentBox.bind(this));
-        this.comments.on('first-load', this.cleanUpOnShowComments.bind(this));
+        this.renderCommentBox(qwery('.js-discussion-comment-box--top')[0]);
+        this.renderCommentBox(qwery('.js-discussion-comment-box--bottom')[0]);
     }
 };
 
-Loader.prototype.renderCommentBox = function() {
-    this.commentBox = new CommentBox({
-        discussionId: this.getDiscussionId(),
-        premod: this.user.privateFields.isPremoderated
-    });
-    this.commentBox.render(this.getElem('commentBox'));
-    this.commentBox.on('post:success', this.commentPosted.bind(this));
-};
-
-/* Logic determining if extra comments should be shown along with the posted comment to ensure context */
 Loader.prototype.commentPosted = function () {
+    this.removeState('truncated');
     this.comments.addComment.apply(this.comments, arguments);
-
-    // Should more comments be shown?
-    if (!this.firstComment) {
-        this.firstComment = true;
-        this.comments.showHiddenComments();
-        this.cleanUpOnShowComments();
-    }
-
 };
 
-/* Configure DOM for viewing of comments once some have been shown */
-Loader.prototype.cleanUpOnShowComments = function () {
-    bonzo(this.comments.getElem('header')).removeClass('u-h');
-};
-
-/**
- * This comment box is only rendered
- * When you load more comments
- */
-Loader.prototype.renderBottomCommentBox = function() {
-    if (this.bottomCommentBox) { return; }
-    this.bottomCommentBox = new CommentBox({
+Loader.prototype.renderCommentBox = function(elem) {
+    return new CommentBox({
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated
-    });
-    this.bottomCommentBox.render(this.getElem('commentBoxBottom'));
-    this.bottomCommentBox.on('post:success', function(comment) {
-        this.comments.addComment(comment, true);
-    }.bind(this));
+    }).render(elem).on('post:success', this.commentPosted.bind(this));
 };
 
-/**
- * @return {string}
- */
 Loader.prototype.getDiscussionId = function() {
     return this.elem.getAttribute('data-discussion-key');
 };
 
-/**
- * @return {boolean}
- */
 Loader.prototype.getDiscussionClosed = function() {
     return this.elem.getAttribute('data-discussion-closed') === 'true';
 };
 
-/**
- * TODO (jamesgorrie): Needs a refactor, good ol' copy and paste.
- */
 Loader.prototype.renderCommentCount = function() {
-    ajax({
+    ajaxPromise({
         url: '/discussion/comment-counts.json?shortUrls=' + this.getDiscussionId(),
         type: 'json',
         method: 'get',
@@ -319,8 +353,9 @@ Loader.prototype.renderCommentCount = function() {
                                '  <i class="i"></i>' + commentCount +
                                '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
                                '</a>';
+                    $('.js-comment-count').html(html);
 
-                    bonzo(qwery('.js-comment-count')).html(html);
+                    $('.js-discussion-comment-count').text('(' + commentCount + ')');
                 } else {
                     this.setState('empty');
                 }
@@ -329,30 +364,72 @@ Loader.prototype.renderCommentCount = function() {
     });
 };
 
-/**
- * @return {number}
- */
 Loader.prototype.getCommentIdFromHash = function() {
     var reg = (/#comment-(\d+)/);
     return reg.exec(window.location.hash) ? parseInt(reg.exec(window.location.hash)[1], 10) : null;
 };
 
-Loader.prototype.checkCount = 0;
+Loader.prototype.initPagination = function() {
+    this.on('click', '.js-discussion-change-page', function(e) {
+        e.preventDefault();
+        var page = parseInt(e.currentTarget.getAttribute('data-page'), 10);
+        this.setState('loading');
+        this.gotoPage(page);
+    });
+};
 
-Loader.prototype.checkCommentsLoaded = function() {
+Loader.prototype.gotoComment = function(id) {
+    var comment = $('#comment-'+ id, this.elem);
 
-    // Limit the number of tries.
-    if (++this.checkCount > 10 ) {
+    if (comment.length > 0) {
+        window.location.replace('#comment-'+ id);
         return;
     }
 
-    if (this.topComments.rendered && this.comments.rendered) {
-        if (this.topComments.topCommentsAmount > 0) {
-            this.comments.removeState('partial');
-            this.comments.setState('shut');
+    this.loadComments({comment: id}).then(function() {
+        window.location.replace('#comment-'+ id);
+    });
+};
+
+Loader.prototype.gotoPage = function(page) {
+    scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
+    this.comments.relativeDates();
+    this.loadComments({page: page});
+};
+
+Loader.prototype.loadComments = function(options) {
+
+    this.setState('loading');
+
+    // If the caller specified truncation, do not load all comments.
+    if (options && options.shouldTruncate && this.comments.isAllPageSizeActive()) {
+        options.pageSize = 10;
+    }
+
+    return this.comments.fetchComments(options)
+    .then(function(){
+        this.removeState('loading');
+        if (options && options.shouldTruncate) {
+            this.setState('truncated');
+        } else {
+            // do not call removeTruncation because it could invoke another fetch.
+            this.removeState('truncated');
         }
+        if (this.comments.shouldShowPageSizeMessage()){
+            this.setState('pagesize-msg-show');
+        } else {
+            this.removeState('pagesize-msg-show');
+        }
+    }.bind(this));
+};
+
+Loader.prototype.removeTruncation = function() {
+
+    // When the pagesize is 'All', the full page is not yet loaded, so load the comments.
+    if (this.comments.isAllPageSizeActive()) {
+        this.loadComments();
     } else {
-        _.delay(this.checkCommentsLoaded.bind(this), 1000);
+        this.removeState('truncated');
     }
 };
 

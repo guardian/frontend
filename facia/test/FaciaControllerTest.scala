@@ -1,7 +1,8 @@
 package test
 
-import com.gu.facia.client.models.{Front, Config}
-import play.api.libs.json.{JsNull, Json}
+import com.gu.facia.client.models.{FrontJson, ConfigJson}
+import common.editions.{Us, Uk}
+import implicits.FakeRequests
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, FlatSpec}
@@ -9,7 +10,7 @@ import common.ExecutionContexts
 import controllers.FaciaController
 import services.ConfigAgent
 
-@DoNotDiscover class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite with BeforeAndAfterAll {
+@DoNotDiscover class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite with BeforeAndAfterAll with FakeRequests {
 
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
@@ -18,8 +19,8 @@ import services.ConfigAgent
 
   override def beforeAll() {
     ConfigAgent.refreshWith(
-      Config(
-        fronts = Map("technology" -> Front(Nil, None, None, None, None, None, None, None, None, None, None, None)),
+      ConfigJson(
+        fronts = Map("music" -> FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None)),
         collections = Map.empty)
     )
   }
@@ -40,7 +41,7 @@ import services.ConfigAgent
 
     val result = FaciaController.renderFrontRss("film")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/applications/film/rss"))
+    header("X-Accel-Redirect", result) should be (Some("/rss_server/film/rss"))
   }
 
   it should "keep query params for X-Accel-Redirect" in {
@@ -56,28 +57,48 @@ import services.ConfigAgent
 
     val result = FaciaController.renderFrontRss("film")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/applications/film/rss?page=77"))
+    header("X-Accel-Redirect", result) should be (Some("/rss_server/film/rss?page=77"))
   }
 
   it should "not serve X-Accel for a path facia serves" in {
-    val fakeRequest = FakeRequest("GET", "/technology")
+    val fakeRequest = FakeRequest("GET", "/music")
 
-    val result = FaciaController.renderFront("technology")(fakeRequest)
+    val result = FaciaController.renderFront("music")(fakeRequest)
     header("X-Accel-Redirect", result) should be (None)
   }
 
   it should "redirect to applications when 'page' query param" in {
-    val fakeRequest = FakeRequest("GET", "/technology?page=77")
+    val fakeRequest = FakeRequest("GET", "/music?page=77")
 
-    val result = FaciaController.renderFront("technology")(fakeRequest)
+    val result = FaciaController.renderFront("music")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/applications/technology?page=77"))
+    header("X-Accel-Redirect", result) should be (Some("/applications/music?page=77"))
   }
 
   it should "not redirect to applications when any other query param" in {
-    val fakeRequest = FakeRequest("GET", "/technology?id=77")
+    val fakeRequest = FakeRequest("GET", "/music?id=77")
 
-    val result = FaciaController.renderFront("technology")(fakeRequest)
+    val result = FaciaController.renderFront("music")(fakeRequest)
     header("X-Accel-Redirect", result) should be (None)
+  }
+
+  it should "redirect to editionalised fronts" in {
+    val ukRequest = FakeRequest("GET", "/").from(Uk)
+    val ukResult = FaciaController.renderFront("")(ukRequest)
+    header("Location", ukResult).head should endWith ("/uk")
+
+    val usRequest = FakeRequest("GET", "/").from(Us)
+    val usResult = FaciaController.renderFront("")(usRequest)
+    header("Location", usResult).head should endWith ("/us")
+  }
+
+  it should "redirect to editionalised pages" in {
+    val ukRequest = FakeRequest("GET", "/technology").from(Uk)
+    val ukResult = FaciaController.renderFront("technology")(ukRequest)
+    header("Location", ukResult).head should endWith ("/uk/technology")
+
+    val usRequest = FakeRequest("GET", "/technology").from(Us)
+    val usResult = FaciaController.renderFront("technology")(usRequest)
+    header("Location", usResult).head should endWith ("/us/technology")
   }
 }

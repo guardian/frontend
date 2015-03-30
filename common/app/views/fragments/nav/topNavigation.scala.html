@@ -1,7 +1,8 @@
-@(metaData: MetaData, navigation: Seq[common.NavItem])(implicit request: RequestHeader)
-@import common._
+@(metaData: model.MetaData, navigation: Seq[common.NavItem])(implicit request: RequestHeader)
 
-<ul class="top-navigation">
+@import _root_.common._
+
+<ul class="top-navigation js-top-navigation">
     <li class="top-navigation__item top-navigation__item--home">
         <a href="@LinkTo{/}"
            class="top-navigation__action top-navigation__action--has-icon"

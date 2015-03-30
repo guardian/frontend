@@ -2,63 +2,40 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'qwery',
-    'lodash/functions/debounce',
-    'lodash/arrays/flatten',
-    'lodash/arrays/uniq',
-    'lodash/collections/forEach',
-    'lodash/collections/map',
-    'lodash/functions/once',
-    'lodash/objects/defaults',
-    'lodash/objects/forOwn',
-    'lodash/objects/keys',
-    'lodash/objects/isArray',
-    'lodash/objects/pairs',
+    'raven',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/_',
     'common/utils/config',
-    'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/template',
-    'common/modules/commercial/keywords',
-    'common/modules/commercial/tags/audience-science',
-    'common/modules/commercial/tags/audience-science-gateway',
-    'common/modules/commercial/tags/criteo',
-    'common/modules/commercial/user-ad-targeting',
+    'common/utils/url',
+    'common/utils/user-timing',
+    'common/modules/commercial/ads/sticky-mpu',
+    'common/modules/commercial/build-page-targeting',
+    'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab'
 ], function (
     bean,
     bonzo,
+    fastdom,
     qwery,
-    debounce,
-    flatten,
-    uniq,
-    forEach,
-    map,
-    once,
-    defaults,
-    forOwn,
-    keys,
-    isArray,
-    pairs,
+    raven,
     $,
     $css,
     _,
-    globalConfig,
-    cookies,
+    config,
     detect,
     mediator,
-    template,
-    keywords,
-    audienceScience,
-    audienceScienceGateway,
-    criteo,
-    userAdTargeting,
+    urlUtils,
+    userTiming,
+    StickyMpu,
+    buildPageTargeting,
+    geoMostPopular,
     ab
 ) {
-
     /**
      * Right, so an explanation as to how this works...
      *
@@ -83,68 +60,47 @@ define([
     /**
      * Private variables
      */
-    var displayed         = false,
-        rendered          = false,
-        slots             = {},
-        slotsToRefresh    = [],
-        config            = {},
-        breakoutClasses   = [
+    var resizeTimeout,
+        adSlotSelector       = '.js-ad-slot',
+        displayed            = false,
+        rendered             = false,
+        slots                = {},
+        slotsToRefresh       = [],
+        hasBreakpointChanged = detect.hasCrossedBreakpoint(true),
+        breakoutClasses      = [
             'breakout__html',
             'breakout__script'
         ],
-        adSlotDefinitions = {
-            right: {
-                sizeMappings: {
-                    mobile: '300,250|300,600'
+        callbacks = {
+            '300,251': function (event, $adSlot) {
+                new StickyMpu($adSlot).create();
+            },
+            '300,250': function (event, $adSlot) {
+                var mtMasterTest = ab.getParticipations().MtMaster;
+
+                if (ab.testCanBeRun('MtMaster') &&
+                    mtMasterTest && mtMasterTest.variant === 'variant') {
+                    if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
+                        new StickyMpu($adSlot).create();
+                    }
                 }
             },
-            'right-small': {
-                name: 'right',
-                sizeMappings: {
-                    mobile: '300,250'
+            '1,1': function (event, $adSlot) {
+                if (!event.slot.getOutOfPage()) {
+                    $adSlot.addClass('u-h');
+                    var $parent = $adSlot.parent();
+                    // if in a slice, add the 'no mpu' class
+                    $parent.hasClass('js-fc-slice-mpu-candidate') &&
+                        $parent.addClass('fc-slice__item--no-mpu');
                 }
             },
-            im: {
-                label: false,
-                refresh: false,
-                sizeMappings: {
-                    mobile: '88,85'
-                }
-            },
-            inline1: {
-                sizeMappings: {
-                    mobile: '300,50',
-                    'mobile-landscape': '300,50|320,50',
-                    tablet: '300,250'
-                }
-            },
-            inline2: {
-                sizeMappings: {
-                    mobile: '300,50',
-                    'mobile-landscape': '300,50|320,50',
-                    tablet: '300,250'
-                }
-            },
-            'merchandising-high': {
-                label: false,
-                refresh: false,
-                sizeMappings: {
-                    mobile: '88,87'
-                }
-            },
-            spbadge: {
-                label: false,
-                refresh: false,
-                sizeMappings: {
-                    mobile: '140,90'
-                }
-            },
-            adbadge: {
-                label: false,
-                refresh: false,
-                sizeMappings: {
-                    mobile: '140,90'
-                }
+            '300,1050': function () {
+                // remove geo most popular
+                geoMostPopular.whenRendered.then(function (geoMostPopular) {
+                    fastdom.write(function () {
+                        bonzo(geoMostPopular.elem).remove();
+                    });
+                });
             }
         },
 
@@ -152,14 +108,14 @@ define([
          * Initial commands
          */
         setListeners = function () {
-            googletag.pubads().addEventListener('slotRenderEnded', function (event) {
+            googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
-            });
+            }));
         },
         setPageTargeting = function () {
-            forOwn(buildPageTargeting(config), function (value, key) {
+            _.forOwn(buildPageTargeting(), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
@@ -168,16 +124,26 @@ define([
          * attributes on the element.
          */
         defineSlots = function () {
-            slots = _(qwery(config.adSlotSelector))
+            slots = _(qwery(adSlotSelector))
                 .map(function (adSlot) {
                     return bonzo(adSlot);
                 })
-                // filter out hidden ads
+                // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
-                    return $css($adSlot, 'display') !== 'none';
+                    if ($css($adSlot, 'display') === 'none') {
+                        fastdom.write(function () {
+                            $adSlot.remove();
+                        });
+                        return false;
+                    } else {
+                        return true;
+                    }
                 })
                 .map(function ($adSlot) {
-                    return [$adSlot.attr('id'), defineSlot($adSlot)];
+                    return [$adSlot.attr('id'), {
+                        isRendered: false,
+                        slot: defineSlot($adSlot)
+                    }];
                 })
                 .zipObject()
                 .valueOf();
@@ -186,51 +152,40 @@ define([
             googletag.pubads().enableSingleRequest();
             googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
-            // as this is an single request call, only need to make a single display call (to the first ad slot)
-            googletag.display(keys(slots).shift());
+            // as this is an single request call, only need to make a single display call (to the first ad
+            // slot)
+            googletag.display(_.keys(slots).shift());
             displayed = true;
         },
+        windowResize = _.debounce(
+            function () {
+                // refresh on resize
+                hasBreakpointChanged(refresh);
+            }, resizeTimeout
+        ),
         postDisplay = function () {
-            var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
-            mediator.on('window:resize',
-                debounce(function () {
-                    // refresh on resize
-                    hasBreakpointChanged(refresh);
-                }, 2000)
-            );
+            mediator.on('window:resize', windowResize);
         },
 
         /**
          * Public functions
          */
-        init = function (c) {
+        init = function (options) {
 
-            config = defaults(
-                c || {},
-                globalConfig,
-                {
-                    adSlotSelector: '.ad-slot--dfp',
-                    page: {},
-                    switches: {}
-                }
-            );
+            var opts = _.defaults(options || {}, {
+                resizeTimeout: 2000
+            });
 
-            if (!config.switches.standardAdverts && !config.switches.commercialComponents) {
-                return false;
-            }
-
-            if (!config.switches.standardAdverts) {
-                config.adSlotSelector = '.ad-slot--commercial-component';
-            } else if (!config.switches.commercialComponents) {
-                config.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
-            }
+            resizeTimeout = opts.resizeTimeout;
 
             // if we don't already have googletag, create command queue and load it async
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
-                require(['googletag']);
+                require(['js!googletag']);
             }
+
+            window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
 
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
@@ -245,7 +200,10 @@ define([
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),
                 displayAd = function ($adSlot) {
-                    slots[slotId] = defineSlot($adSlot);
+                    slots[slotId] = {
+                        isRendered: false,
+                        slot: defineSlot($adSlot)
+                    };
                     googletag.display(slotId);
                     refreshSlot($adSlot);
                 };
@@ -261,7 +219,7 @@ define([
             }
         },
         refreshSlot = function ($adSlot) {
-            var slot = slots[$adSlot.attr('id')];
+            var slot = slots[$adSlot.attr('id')].slot;
             if (slot) {
                 googletag.pubads().refresh([slot]);
             }
@@ -269,96 +227,21 @@ define([
         getSlots = function () {
             return slots;
         },
-        createAdSlot = function (name, types, keywords, slotTarget) {
-            var attrName,
-                definition = adSlotDefinitions[slotTarget ? slotTarget : name],
-                dataAttrs = {
-                    refresh: definition.refresh !== undefined ? definition.refresh : true,
-                    label: definition.label !== undefined ? definition.label : true
-                },
-                $adSlot = $.create(template(
-                        '<div id="dfp-ad--{{name}}" ' +
-                        'class="ad-slot ad-slot--dfp ad-slot--{{normalisedName}} {{types}}" ' +
-                        'data-link-name="ad slot {{name}}" ' +
-                        'data-test-id="ad-slot-{{name}}" ' +
-                        'data-name="{{name}}"' +
-                        '{{sizeMappings}}></div>',
-                    {
-                        name: definition.name || name,
-                        // badges now append their index to the name
-                        normalisedName: (definition.name || name).replace(/((?:ad|sp)badge).*/, '$1'),
-                        types: map((isArray(types) ? types : [types]), function (type) { return 'ad-slot--' + type; }).join(' '),
-                        sizeMappings: map(pairs(definition.sizeMappings), function (size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
-                    }));
-            for (attrName in dataAttrs) {
-                if (dataAttrs[attrName] === false) {
-                    $adSlot.attr('data-' + attrName, 'false');
-                }
-            }
-            if (slotTarget) {
-                $adSlot.attr('data-slot-target', slotTarget);
-            }
-            if (keywords) {
-                $adSlot.attr('data-keywords', keywords);
-            }
-            return $adSlot[0];
-        },
-        /**
-         * Builds the appropriate page level targeting
-         *
-         * a      = audience science
-         * at     = adtest cookie
-         * bp     = current breakpoint
-         * ct     = content type
-         * k      = keywords
-         * p      = platform
-         * pt     = content type
-         * url    = path
-         */
-        buildPageTargeting = function (config) {
-
-            function encodeTargetValue(value) {
-                return value ? keywords.format(value).replace(/&/g, 'and').replace(/'/g, '') : '';
-            }
-
-            var page        = config.page,
-                series      = parseSeries(page),
-                contentType = encodeTargetValue(page.contentType),
-                edition     = encodeTargetValue(page.edition),
-                mediaSource = encodeTargetValue(page.source);
-
-            return defaults({
-                url:     window.location.pathname,
-                edition: edition,
-                se:      series,
-                ct:      contentType,
-                pt:      contentType,
-                p:       'ng',
-                k:       parseKeywords(page.keywordIds || page.pageId),
-                su:      page.isSurging,
-                bp:      detect.getBreakpoint(),
-                a:       audienceScience.getSegments(),
-                at:      cookies.get('adtest') || cookies.get('GU_TEST') || '',
-                gdncrm:  userAdTargeting.getUserSegments(),
-                ab:      abParam(),
-                co:      parseTargets(page.authorIds),
-                bl:      parseKeywords(page.blogIds),
-                ms:      mediaSource,
-                tn:      parseTargets(page.tones)
-            }, audienceScienceGateway.getSegments(), criteo.getSegments());
-        },
 
         /**
          * Private functions
          */
         defineSlot = function ($adSlot) {
-            var slotTarget  = $adSlot.data('slot-target') || $adSlot.data('name'),
-                adUnit      = config.page.adUnit,
-                id          = $adSlot.attr('id'),
-                sizeMapping = defineSlotSizes($adSlot),
+            var slotTarget     = $adSlot.data('slot-target') || $adSlot.data('name'),
+                adUnitOverride = urlUtils.getUrlVars()['ad-unit'],
+                // if ?ad-unit=x, use that
+                adUnit         = adUnitOverride ?
+                    ['/', config.page.dfpAccountId, '/', adUnitOverride].join('') : config.page.adUnit,
+                id             = $adSlot.attr('id'),
+                sizeMapping    = defineSlotSizes($adSlot),
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-                size        = uniq(
-                    flatten(sizeMapping, true, function (map) {
+                size           = _.uniq(
+                    _.flatten(sizeMapping, true, function (map) {
                         return map[1];
                     }),
                     function (size) {
@@ -373,6 +256,10 @@ define([
                     .addService(googletag.pubads())
                     .defineSizeMapping(sizeMapping)
                     .setTargeting('slot', slotTarget);
+
+            if ($adSlot.data('series')) {
+                slot.setTargeting('se', parseKeywords($adSlot.data('series')));
+            }
 
             if ($adSlot.data('keywords')) {
                 slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
@@ -390,52 +277,120 @@ define([
             return slot;
         },
         parseAd = function (event) {
-            var $slot = $('#' + event.slot.getSlotId().getDomId());
+            var size,
+                slotId = event.slot.getSlotId().getDomId(),
+                $slot = $('#' + slotId),
+                $placeholder,
+                $adSlotContent;
 
-            // remove any placeholder ad content
-            $('.ad-slot__content--placeholder', $slot[0]).remove();
+            allAdsRendered(slotId);
 
             if (event.isEmpty) {
                 removeLabel($slot);
             } else {
+                // remove any placeholder ad content
+                $placeholder = $('.ad-slot__content--placeholder', $slot);
+                $adSlotContent = $('#' + slotId + ' div');
+                fastdom.write(function () {
+                    $placeholder.remove();
+                    $adSlotContent.addClass('ad-slot__content');
+                });
                 checkForBreakout($slot);
                 addLabel($slot);
+                size = event.size.join(',');
+                // is there a callback for this size
+                callbacks[size] && callbacks[size](event, $slot);
+
+                if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
+                    fastdom.write(function () {
+                        $slot.parent().css('display', 'flex');
+                    });
+                } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
+                    fastdom.write(function () {
+                        $slot.parent().css('display', 'block');
+                    });
+                }
+
+                if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
+                || ($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
+                    fastdom.write(function () {
+                        $slot.addClass('ad-slot__fluid250');
+                    });
+                }
+            }
+        },
+        allAdsRendered = function (slotId) {
+            if (slots[slotId] && !slots[slotId].isRendered) {
+                slots[slotId].isRendered = true;
+            }
+
+            if (_.every(slots, 'isRendered')) {
+                userTiming.mark('All ads are rendered');
             }
         },
         addLabel = function ($slot) {
-            if (shouldRenderLabel($slot)) {
-                $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
-            }
+            fastdom.write(function () {
+                if (shouldRenderLabel($slot)) {
+                    $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
+                }
+            });
         },
         removeLabel = function ($slot) {
-            $('.ad-slot__label', $slot).remove();
+            fastdom.write(function () {
+                $('.ad-slot__label', $slot).remove();
+            });
         },
         shouldRenderLabel = function ($slot) {
             return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
         },
-        breakoutIFrame = function (iFrame) {
+        breakoutIFrame = function (iFrame, $slot) {
             /* jshint evil: true */
-            var iFrameBody    = iFrame.contentDocument.body,
-                $iFrameParent = bonzo(iFrame).parent();
+            var shouldRemoveIFrame = false,
+                $iFrame            = bonzo(iFrame),
+                iFrameBody         = iFrame.contentDocument.body,
+                $iFrameParent      = $iFrame.parent();
 
             if (iFrameBody) {
-                forEach (breakoutClasses, function (breakoutClass) {
-                    var $breakout = $('.' + breakoutClass, iFrameBody);
-                    if ($breakout.length) {
-                        // remove the iframe before breaking out
-                        bonzo(iFrame).remove();
-                        if ($breakout[0].nodeName.toLowerCase() === 'script') {
-                            // evil, but we own the returning js snippet
-                            eval($breakout.html());
+                _.forEach(breakoutClasses, function (breakoutClass) {
+                    $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
+                        var creativeConfig,
+                            $breakoutEl     = bonzo(breakoutEl),
+                            breakoutContent = $breakoutEl.html();
+
+                        if (breakoutClass === 'breakout__script') {
+                            // new way of passing data from DFP
+                            if ($breakoutEl.attr('type') === 'application/json') {
+                                creativeConfig = JSON.parse(breakoutContent);
+                                require('bootstraps/creatives')
+                                    .next(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
+                                        new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
+                                    });
+                            } else {
+                                // evil, but we own the returning js snippet
+                                eval(breakoutContent);
+                            }
+
                         } else {
-                            $iFrameParent.append($breakout.html());
+                            fastdom.write(function () {
+                                $iFrameParent.append(breakoutContent);
+                                $breakoutEl.remove();
+                            });
+
                             $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
                                 window.setTimeout(function () {
-                                    bonzo(responsiveAd).addClass('ad--responsive--open');
+                                    fastdom.write(function () {
+                                        bonzo(responsiveAd).addClass('ad--responsive--open');
+                                    });
                                 }, 50);
                             });
                         }
-                    }
+                        shouldRemoveIFrame = true;
+                    });
+                });
+            }
+            if (shouldRemoveIFrame) {
+                fastdom.write(function () {
+                    $iFrame.hide();
                 });
             }
         },
@@ -449,18 +404,23 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            $('iframe', $slot[0]).each(function (iFrame) {
+            $('iframe', $slot).each(function (iFrame) {
                 // IE needs the iFrame to have loaded before we can interact with it
                 if (iFrame.readyState && iFrame.readyState !== 'complete') {
                     bean.on(iFrame, 'readystatechange', function (e) {
                         var updatedIFrame = e.srcElement;
-                        if (typeof updatedIFrame.readyState !== 'unknown' && updatedIFrame.readyState === 'complete') {
-                            breakoutIFrame(updatedIFrame);
+
+                        if (
+                            updatedIFrame &&
+                                typeof updatedIFrame.readyState !== 'unknown' &&
+                                updatedIFrame.readyState === 'complete'
+                        ) {
+                            breakoutIFrame(updatedIFrame, $slot);
                             bean.off(updatedIFrame, 'readystatechange');
                         }
                     });
                 } else {
-                    breakoutIFrame(iFrame);
+                    breakoutIFrame(iFrame, $slot);
                 }
             });
         },
@@ -484,7 +444,8 @@ define([
                 .valueOf(),
                 // have we changed breakpoints
                 slotBreakpoint = getSlotsBreakpoint(breakpoint, slotBreakpoints);
-            return slotBreakpoint && getSlotsBreakpoint(previousBreakpoint, slotBreakpoints) !== slotBreakpoint;
+            return slotBreakpoint &&
+                getSlotsBreakpoint(previousBreakpoint, slotBreakpoints) !== slotBreakpoint;
         },
         refresh = function (breakpoint, previousBreakpoint) {
             googletag.pubads().refresh(
@@ -506,8 +467,8 @@ define([
          * Multiple sizes - `data-mobile="300,50|320,50"`
          */
         createSizeMapping = function (attr) {
-            return map(attr.split('|'), function (size) {
-                return map(size.split(','), Number);
+            return _.map(attr.split('|'), function (size) {
+                return _.map(size.split(','), Number);
             });
         },
         /**
@@ -523,7 +484,7 @@ define([
         defineSlotSizes = function (slot) {
             var mapping = googletag.sizeMapping();
 
-            forEach(detect.breakpoints, function (breakpointInfo) {
+            _.forEach(detect.breakpoints, function (breakpointInfo) {
                 // turn breakpoint name into attribute style (lowercase, hyphenated)
                 var attr  = slot.data(breakpointNameToAttribute(breakpointInfo.name));
                 if (attr) {
@@ -533,34 +494,9 @@ define([
 
             return mapping.build();
         },
-        abParam = function () {
-            var hchTest = ab.getParticipations().HighCommercialComponent;
-            if (hchTest) {
-                switch (hchTest.variant) {
-                    case 'control':
-                        return '1';
-                    case 'variant':
-                        return '2';
-                }
-            }
-            return '3';
-        },
         parseKeywords = function (keywords) {
-            return map((keywords || '') .split(','), function (keyword) {
+            return _.map((keywords || '').split(','), function (keyword) {
                 return keyword.split('/').pop();
-            });
-        },
-        parseSeries = function (page) {
-            if (page.seriesId) {
-                return page.seriesId.split('/').pop();
-            }
-            var seriesIdFromUrl = /\/series\/(.+)$/.exec(page.pageId);
-            return seriesIdFromUrl === null ? '' : seriesIdFromUrl[1];
-        },
-        parseTargets = function (targets) {
-            var targetArray = parseKeywords(targets);
-            return map(targetArray, function (target) {
-                return keywords.format(target);
             });
         },
 
@@ -568,27 +504,20 @@ define([
          * Module
          */
         dfp = {
-
-            init: once(init),
-
-            addSlot: addSlot,
-
+            init:        init,
+            addSlot:     addSlot,
             refreshSlot: refreshSlot,
+            getSlots:    getSlots,
 
-            getSlots: getSlots,
-
-            buildPageTargeting: buildPageTargeting,
-
-            createAdSlot: createAdSlot,
-
-            // really only useful for testing
+            // testing
             reset: function () {
-                displayed = false;
-                slots = {};
+                displayed      = false;
+                rendered       = false;
+                slots          = {};
                 slotsToRefresh = [];
-                dfp.init = once(init);
+                mediator.off('window:resize', windowResize);
+                hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
             }
-
         };
 
     return dfp;

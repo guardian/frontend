@@ -1,94 +1,70 @@
 package dfp
 
-import common.{AkkaAsync, Jobs, ExecutionContexts}
+import common.{ExecutionContexts, Logging}
+import conf.Switches.DfpCachingSwitch
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
-import play.api.{Application, GlobalSettings}
 import play.api.libs.json.Json.{toJson, _}
-import play.api.libs.json.{JsValue, Json, Writes}
 import tools.Store
 
-import scala.concurrent.future
+import scala.concurrent.Future
 
-object DfpDataCacheJob extends ExecutionContexts {
+object DfpDataCacheJob extends ExecutionContexts with Logging {
 
-  private implicit val pageSkinSponsorshipReportWrites = new Writes[PageSkinSponsorshipReport] {
-    def writes(report: PageSkinSponsorshipReport): JsValue = {
-      Json.obj(
-        "updatedTimeStamp" -> report.updatedTimeStamp,
-        "sponsorships" -> report.sponsorships
-      )
+  def run(): Future[Unit] = Future {
+    if (DfpCachingSwitch.isSwitchedOn) {
+      log.info("Refreshing data cache")
+      val start = System.currentTimeMillis
+      val data = loadLineItems()
+      val duration = System.currentTimeMillis - start
+      log.info(s"Loading DFP data took $duration ms")
+      write(data)
     }
+    else log.info("DFP caching switched off")
   }
 
-  private implicit val inlineMerchandisingTagSetWrites = new Writes[InlineMerchandisingTagSet] {
-    def writes(tagSet: InlineMerchandisingTagSet): JsValue = {
-      Json.obj(
-        "keywords" -> tagSet.keywords,
-        "series" -> tagSet.series,
-        "contributors" -> tagSet.contributors
-      )
-    }
-  }
-
-  private implicit val inlineMerchandisingTargetedTagsReportWrites = new Writes[InlineMerchandisingTargetedTagsReport] {
-    def writes(report: InlineMerchandisingTargetedTagsReport): JsValue = {
-      Json.obj(
-        "updatedTimeStamp" -> report.updatedTimeStamp,
-        "targetedTags" -> report.targetedTags
-      )
-    }
-  }
-
-  def run() {
-    future {
-      val data = DfpDataExtractor(DfpDataHydrator.loadCurrentLineItems())
-
-      if (data.isValid) {
-        val now = printLondonTime(DateTime.now())
-
-        val sponsorships = data.sponsorships
-        Store.putDfpSponsoredTags(stringify(toJson(SponsorshipReport(now, sponsorships))))
-
-        val advertisementFeatureSponsorships = data.advertisementFeatureSponsorships
-        Store.putDfpAdvertisementFeatureTags(stringify(toJson(SponsorshipReport(now, advertisementFeatureSponsorships))))
-
-        val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
-        Store.putInlineMerchandisingSponsorships(stringify(toJson(InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))))
-
-        val foundationSupported = data.foundationSupported
-        Store.putDfpFoundationSupportedTags(stringify(toJson(SponsorshipReport(now, foundationSupported))))
-
-        val pageSkinSponsorships = data.pageSkinSponsorships
-        Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
-
-        Store.putDfpLineItemsReport(stringify(toJson(data.lineItems)))
+  /*
+  for initialization and total refresh of data,
+  so would be used for first read and for emergency data update.
+  */
+  def refreshAllDfpData(): Unit = {
+    for {
+      _ <- AdUnitAgent.refresh()
+      _ <- CustomFieldAgent.refresh()
+      _ <- CustomTargetingKeyAgent.refresh()
+      _ <- CustomTargetingValueAgent.refresh()
+      _ <- PlacementAgent.refresh()
+    } {
+      DfpAdFeatureCacheJob.run()
+      val data = loadLineItems()
+      val paidForTags = PaidForTag.fromLineItems(data.lineItems)
+      CapiLookupAgent.refresh(paidForTags) map {
+        _ => write(data)
       }
     }
   }
-}
 
+  private def loadLineItems(): DfpDataExtractor = {
+    DfpDataExtractor(DfpDataHydrator().loadCurrentLineItems())
+  }
 
-trait DfpDataCacheLifecycle extends GlobalSettings {
+  private def write(data: DfpDataExtractor): Unit = {
+    if (data.isValid) {
+      val now = printLondonTime(DateTime.now())
 
-  private val jobName = "DfpDataCacheJob"
-  private val every5Mins = "0 2/5 * * * ?"
+      val paidForTags = PaidForTag.fromLineItems(data.lineItems)
+      CapiLookupAgent.refresh(paidForTags)
+      Store.putDfpPaidForTags(stringify(toJson(PaidForTagsReport(now, paidForTags))))
 
-  override def onStart(app: Application) {
-    super.onStart(app)
+      val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
+      Store.putInlineMerchandisingSponsorships(stringify(toJson(
+        InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))))
 
-    Jobs.deschedule(jobName)
-    Jobs.schedule(jobName, every5Mins) {
-      DfpDataCacheJob.run()
-    }
+      val pageSkinSponsorships = data.pageSkinSponsorships
+      Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now,
+        pageSkinSponsorships))))
 
-    AkkaAsync {
-      DfpDataCacheJob.run()
+      Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems))))
     }
   }
 
-  override def onStop(app: Application) {
-    Jobs.deschedule(jobName)
-    super.onStop(app)
-  }
 }

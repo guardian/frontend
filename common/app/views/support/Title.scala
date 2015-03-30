@@ -1,23 +1,40 @@
 package views.support
 
-import model.{Tag, Content, MetaData}
+import model._
 import play.twirl.api.Html
 import play.api.mvc.RequestHeader
-import common.{Edition, Navigation}
+import common.Localisation
 
 object Title {
+  val SectionsToIgnore = Set(
+    "global"
+  )
 
   def apply(page: MetaData)(implicit request: RequestHeader): Html = Html{
     val title = page match {
-      case c: Content => s"${c.webTitle}${pagination(c)}${getSectionConsideringWebtitle(c.webTitle, Option(c.sectionName))}"
-      case t: Tag     => s"${t.webTitle}${pagination(page)}${getSectionConsideringWebtitle(t.webTitle, Option(page.section))}"
-      case _          => page.title.filter(_.nonEmpty).getOrElse(s"${page.webTitle}${pagination(page)}${getSectionConsideringWebtitle(page.webTitle, Option(page.section))}")
+      case faciaPage: FaciaPage =>
+        page.title.filter(_.nonEmpty).map(Localisation(_)).getOrElse(
+          s"${Localisation(page.webTitle)}${pagination(page)}"
+        )
+      case c: Content =>
+        s"${c.webTitle}${pagination(c)}${getSectionConsideringWebtitle(c.webTitle, Option(c.sectionName))}"
+      case t: Tag     =>
+        s"${Localisation(t.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(t.webTitle, Option(t.sectionName))}"
+      case s: Section =>
+        s"${Localisation(s.webTitle)}${pagination(page)}"
+      case _          =>
+        page.title.filter(_.nonEmpty).map(Localisation(_)).getOrElse(
+          s"${Localisation(page.webTitle)}${pagination(page)}${getSectionConsideringWebtitle(page.webTitle, Option(page.section))}"
+        )
     }
     s"${title.trim} | The Guardian"
   }
 
   private def getSectionConsideringWebtitle(webTitle: String, section: Option[String]): String =
-    section.filter(_.nonEmpty).filterNot(_.toLowerCase == webTitle.toLowerCase).fold(""){ s => s" | ${s.capitalize}"}
+    section.filter(_.nonEmpty)
+      .filterNot(_.toLowerCase == webTitle.toLowerCase)
+      .filterNot(SectionsToIgnore.contains)
+      .fold("") { s => s" | ${s.capitalize}"}
 
   private def pagination(page: MetaData) = page.pagination.filterNot(_.isFirstPage).map{ pagination =>
     s" | Page ${pagination.currentPage} of ${pagination.lastPage}"

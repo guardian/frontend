@@ -73,7 +73,6 @@ class DiscussionTestSuite extends Suites (
   new discussion.model.CommentTest,
   new discussion.model.DiscussionKeyTest,
   new discussion.DiscussionApiTest,
-  new CommentBoxControllerTest,
   new CommentCountControllerTest,
   new ProfileTest
   ) with SingleServerSuite {

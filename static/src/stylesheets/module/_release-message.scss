@@ -1,5 +1,5 @@
 .site-message {
-    background: $c-newsDefault;
+    background: colour(news-default);
     display: block;
 }
 
@@ -20,7 +20,7 @@
         min-height: gs-height(2) - $gs-baseline;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         min-height: gs-height(2) - $gs-baseline*2;
     }
 
@@ -39,7 +39,7 @@
         display: block;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         display: table-cell;
         vertical-align: middle;
     }
@@ -78,13 +78,9 @@
         max-width: gs-span(4) + $gs-gutter;
     }
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         @include fs-headline(2, true);
         padding-right: $gs-gutter/2;
-        max-width: gs-span(6) + $gs-gutter/2;
-    }
-
-    @include mq(desktop) {
         max-width: gs-span(7) - $gs-gutter*2;
     }
 
@@ -159,7 +155,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     vertical-align: middle;
     padding-right: $gs-gutter/2;
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         padding-right: $gs-gutter;
     }
 }
@@ -228,9 +224,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         bottom: auto;
         width: $gs-gutter;
         height: $gs-gutter;
-        background-color: $c-neutral1;
+        background-color: colour(neutral-1);
         @include border-radius(50%);
-        @include box-shadow(0px 1px 0px $c-neutral3);
+        @include box-shadow(0px 1px 0px colour(neutral-3));
 
         &:before {
             display: block;
@@ -238,9 +234,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             content: '×';
             left: 6px;
             top: 3px;
-            background-color: $c-neutral1;
+            background-color: colour(neutral-1);
             @include font(arial, bold, 14px);
-            color: $c-neutral4;
+            color: colour(neutral-4);
         }
 
         i {
@@ -331,7 +327,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             top: -($gs-baseline/2);
             left: 2px;
             @include font($helvetica, 200, 24px);
-            color: $c-neutral2;
+            color: colour(neutral-2);
         }
 
         i {
@@ -360,13 +356,13 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
     .app__heading {
         @include font($helvetica, normal, 14px);
-        color: $c-neutral1 !important;
+        color: colour(neutral-1) !important;
     }
 
     .app__copy {
         margin-bottom: 0;
         @include font($helvetica, 200, 12px, 14px);
-        color: $c-neutral1;
+        color: colour(neutral-1);
 
         strong {
             font-weight: normal;

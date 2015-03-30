@@ -1,13 +1,13 @@
 package test
 
+import common.ExecutionContexts
 import conf.{LiveContentApi, Configuration}
 import java.net.URLEncoder
-import org.scalatest.Suites
+import contentapi.Http
 import org.scalatestplus.play._
 import play.api.test._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import java.io.File
-import com.gu.openplatform.contentapi.connection.Http
 import recorder.ContentApiHttpRecorder
 import play.api.GlobalSettings
 import org.apache.commons.codec.digest.DigestUtils
@@ -61,10 +61,10 @@ trait TestSettings {
     }
   }
 
-  LiveContentApi.http = toRecorderHttp(LiveContentApi.http)
+  LiveContentApi._http = toRecorderHttp(LiveContentApi._http)
 }
 
-trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser {
+trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
   this: ConfiguredTestSuite with org.scalatest.Suite =>
 
   lazy val host = s"http://localhost:${port}"
@@ -89,7 +89,6 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser {
 
   def withHost(path: String) = s"http://localhost:$port$path"
 
-  def classicVersionLink(path: String) = s"http://localhost:$port/preference/platform/classic?page=${URLEncoder.encode(s"$path?view=classic", "UTF-8")}"
 }
 
 trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrowserPerSuite with HtmlUnitFactory {
@@ -102,7 +101,9 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
       withGlobal = globalSettingsOverride,
       additionalPlugins = testPlugins,
       additionalConfiguration = Map(
-        ("application.secret", "this_is_not_a_real_secret_just_for_tests")
+        ("application.secret", "this_is_not_a_real_secret_just_for_tests"),
+        ("guardian.projectName", "test-project"),
+        ("ws.compressionEnabled", true)
       )
   )
 }

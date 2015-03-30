@@ -1,45 +1,72 @@
-define(['common/utils/ajax'], function (ajax) {
+define([
+    'helpers/injector'
+], function (
+    Injector
+) {
 
-    var config = {
-        page: {
-            ajaxUrl: "http://m.guardian.co.uk",
-            edition: "UK"
-        }
-    };
-
-    describe("AJAX Wrapper", function () {
-
-        beforeEach(function () {
-            sinon.stub(ajax, 'reqwest');
-            ajax.init(config);
-        });
-
-        afterEach(function () {
-            ajax.reqwest.restore();
-        });
-
-        it("should proxy calls to reqwest", function () {
-            expect(ajax.reqwest.callCount).toBe(0);
-            ajax({
-                url: "/foo"
-            });
-            expect(ajax.reqwest.callCount).toBe(1);
-            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("http://m.guardian.co.uk/foo");
-        });
-
-        it("should not touch a url that is already absolute", function () {
-            ajax({
-                url: "http://apis.guardian.co.uk/test-url"
-            });
-            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("http://apis.guardian.co.uk/test-url");
-        });
-
-        it("should not touch a url that is already absolute (https)", function () {
-            ajax({
-                url: "https://apis.guardian.co.uk/test-url"
-            });
-            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("https://apis.guardian.co.uk/test-url");
-        });
+    var reqwestSpy = sinon.spy(function () {
+        return {
+            then: function () { }
+        };
     });
+
+    return new Injector()
+        .mock({
+            reqwest:  reqwestSpy,
+            'common/utils/config': {
+                page: {
+                    ajaxUrl: 'http://api.nextgen.guardianapps.co.uk'
+                }
+            }
+        })
+        .require(['common/utils/ajax'], function (ajax) {
+
+            describe('AJAX', function () {
+
+                it('should be defined', function () {
+                    expect(ajax).toBeDefined();
+                });
+
+                it('should proxy calls to reqwest', function () {
+                    ajax({url: '/endpoint.json', param: 'value'});
+
+                    expect(reqwestSpy).toHaveBeenCalledWith({
+                        url: 'http://api.nextgen.guardianapps.co.uk/endpoint.json',
+                        crossOrigin: true,
+                        param: 'value'
+                    });
+                });
+
+                it('should not touch a url that is already absolute', function () {
+                    ajax({url: 'http://apis.guardian.co.uk/endpoint.json'});
+
+                    expect(reqwestSpy).toHaveBeenCalledWith({url: 'http://apis.guardian.co.uk/endpoint.json'});
+                });
+
+                it('should not touch a url that is already absolute (https)', function () {
+                    ajax({url: 'https://apis.guardian.co.uk/endpoint.json'});
+
+                    expect(reqwestSpy).toHaveBeenCalledWith({url: 'https://apis.guardian.co.uk/endpoint.json'});
+                });
+
+                it('should not touch a protocol-less url', function () {
+                    ajax({url: '//apis.guardian.co.uk/endpoint.json'});
+
+                    expect(reqwestSpy).toHaveBeenCalledWith({url: '//apis.guardian.co.uk/endpoint.json'});
+                });
+
+                it('should be able to update host', function () {
+                    ajax.setHost('http://apis.guardian.co.uk');
+                    ajax({url: '/endpoint.json'});
+
+                    expect(reqwestSpy).toHaveBeenCalledWith({
+                        url: 'http://apis.guardian.co.uk/endpoint.json',
+                        crossOrigin: true
+                    });
+                });
+
+            });
+
+        });
 
 });

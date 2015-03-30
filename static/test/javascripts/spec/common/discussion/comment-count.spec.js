@@ -2,13 +2,11 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/mediator',
-    'common/utils/ajax',
     'common/modules/discussion/comment-count',
     'fixtures/commentcounts'], function(
     qwery,
     $,
     mediator,
-    ajax,
     commentCount,
     testData) {
 
@@ -21,11 +19,6 @@ define([
                     + '<div class="trail" data-discussion-id="/p/3ghx3"><a href="/article/2">1</a></div>'
                     + '<div class="trail" data-discussion-id="/p/3gh4n"><a href="/article/3">1</a></div>'
                     + '</div>';
-
-        ajax.init({page: {
-            ajaxUrl: "",
-            edition: "UK"
-        }});
 
         beforeEach(function() {
 
@@ -50,8 +43,8 @@ define([
         });
 
         it("should get discussion id's from the DOM", function(){
-            var data = '/p/3ghv5,/p/3ghx3,/p/3gh4n';
-            expect(commentCount.getContentIds()).toEqual(data);
+            var data = '/p/3gh4n,/p/3ghv5,/p/3ghx3';
+            expect(commentCount.getContentIds(commentCount.getElementsIndexedById())).toEqual(data);
         });
 
         it("should get comment counts from ajax end-point", function (done) {
@@ -64,7 +57,7 @@ define([
 
         it("should append comment counts to DOM", function (done) {
             mediator.once('modules:commentcount:loaded', function () {
-                expect(qwery('.trail__count--commentcount').length).toBe(3);
+                expect(qwery('.fc-trail__count--commentcount').length).toBe(3);
                 done();
             });
 

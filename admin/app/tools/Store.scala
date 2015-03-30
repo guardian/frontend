@@ -6,6 +6,7 @@ import conf.Configuration.commercial._
 import dfp._
 import implicits.Dates
 import org.joda.time.DateTime
+import play.api.libs.json.Json
 import services.S3
 
 trait Store extends Logging with Dates {
@@ -26,14 +27,8 @@ trait Store extends Logging with Dates {
   def getTopStories = S3.get(topStoriesKey)
   def putTopStories(config: String) { S3.putPublic(topStoriesKey, config, "application/json") }
 
-  def putDfpSponsoredTags(keywordsJson: String) {
-    S3.putPublic(dfpSponsoredTagsDataKey, keywordsJson, defaultJsonEncoding)
-  }
-  def putDfpAdvertisementFeatureTags(keywordsJson: String) {
-    S3.putPublic(dfpAdvertisementFeatureTagsDataKey, keywordsJson, defaultJsonEncoding)
-  }
-  def putDfpFoundationSupportedTags(keywordsJson: String) {
-    S3.putPublic(dfpFoundationSupportedTagsDataKey, keywordsJson, defaultJsonEncoding)
+  def putDfpPaidForTags(content: String) {
+    S3.putPublic(dfpPaidForTagsDataKey, content, defaultJsonEncoding)
   }
   def putInlineMerchandisingSponsorships(keywordsJson: String) {
     S3.putPublic(dfpInlineMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
@@ -44,18 +39,23 @@ trait Store extends Logging with Dates {
   def putDfpLineItemsReport(everything: String) {
     S3.putPublic(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
+  def putDfpAdFeatureReport(adFeaturesJson: String) {
+    S3.putPublic(dfpAdFeatureReportKey, adFeaturesJson, defaultJsonEncoding)
+  }
+  def putDfpActiveAdUnitList(adUnits: String) {
+    S3.putPublic(dfpActiveAdUnitListKey, adUnits, "text/plain")
+  }
   def putCachedTravelOffersFeed(everything: String) {
     S3.putPublic(travelOffersS3Key, everything, "text/plain")
   }
 
   val now: String = DateTime.now().toHttpDateTimeString
 
-  def getDfpSponsoredTags() =
-    S3.get(dfpSponsoredTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
-  def getDfpAdvertisementTags() =
-    S3.get(dfpAdvertisementFeatureTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
-  def getDfpFoundationSupportedTags() =
-    S3.get(dfpFoundationSupportedTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
+  def getDfpPaidForTags(key: String = dfpPaidForTagsDataKey): PaidForTagsReport =
+    S3.get(key).map {
+    Json.parse(_).as[PaidForTagsReport]
+  }.getOrElse(PaidForTagsReport(now, Nil))
+
   def getDfpPageSkinnedAdUnits() =
     S3.get(dfpPageSkinnedAdUnitsKey).flatMap(PageSkinSponsorshipReportParser(_)) getOrElse PageSkinSponsorshipReport(now, Nil)
 

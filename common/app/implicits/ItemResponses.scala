@@ -1,6 +1,6 @@
 package implicits
 
-import com.gu.openplatform.contentapi.model.ItemResponse
+import com.gu.contentapi.client.model.ItemResponse
 
 
 trait ItemResponses {

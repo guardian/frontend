@@ -1,16 +1,25 @@
 define([
-    'common/utils/$',
     'bean',
-    'common/modules/identity/api',
-    'membership/masker',
     'stripe',
+    'common/utils/$',
     'common/utils/ajax',
-    'membership/stripe-error-messages',
-    'common/utils/config'
-], function ($, bean, userUtil, masker, stripe, ajax, stripeErrorMessages, config) {
+    'common/utils/config',
+    'membership/masker',
+    'membership/stripe-error-messages'
+], function (
+    bean,
+    stripe,
+    $,
+    ajax,
+    config,
+    masker,
+    stripeErrorMessages
+) {
+    //TODO-benc this work needs to be swapped out for the form.js work found on membership coming up in a separate PR
+    /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
     'use strict';
 
-    function StripePaymentForm () {
+    function StripePaymentForm() {
         this.PUBLIC_STRIPE_KEY = config.page.stripePublicToken;
 
         return this;
@@ -71,17 +80,18 @@ define([
 
     StripePaymentForm.prototype.stripeResponseHandler = function (status, response) {
 
-        var self = this;
+        var errorMessage, token,
+            self = this;
 
         if (response.error) {
-            var errorMessage = self.getErrorMessage(response.error);
+            errorMessage = self.getErrorMessage(response.error);
             if (errorMessage) {
                 self.handleErrors([errorMessage]);
             }
         } else {
 
             // token contains id, last4, and card type
-            var token = response.id;
+            token = response.id;
 
             ajax({
                 url: config.page.membershipUrl + '/subscription/update-card',
@@ -94,11 +104,11 @@ define([
                 data: {
                     stripeToken: token
                 }
-            }).then(function success () {
+            }).then(function success() {
                 self.stopLoader();
                 self.reset();
                 self.successCallback.apply(this, arguments);
-            }, function fail (error) {
+            }, function fail(error) {
 
                 var errorObj,
                     errorMessage;
@@ -194,13 +204,14 @@ define([
             $formElement = $(self.context);
 
         bean.on($creditCardNumberElement[0], 'keyup blur', function (e) {
-            var $creditCardNumberElement = $(e.target);
+            var validationResult,
+                $creditCardNumberElement = $(e.target);
 
             masker(' ', 4).bind(this)(e);
             self.displayCardTypeImage($creditCardNumberElement.val());
 
             if (e.type === 'blur') {
-                var validationResult = self.validateCardNumber($creditCardNumberElement);
+                validationResult = self.validateCardNumber($creditCardNumberElement);
 
                 self.manageErrors(validationResult);
             }
@@ -309,8 +320,6 @@ define([
         this.displayMonthError = $creditCardExpiryYearElement[0].selectedIndex !== 0;
     };
 
-
-
     /**
      *
      * @returns Object
@@ -353,20 +362,21 @@ define([
      */
     StripePaymentForm.prototype.isFormValid = function () {
 
-        var errors = [],
+        var profile, validationProfile, validationProfileResult,
+            errors = [],
             validationProfiles = [
                 this.validateCardNumber,
                 this.validateCVC,
                 this.validateExpiry
             ];
 
-        for (var profile in validationProfiles) {
+        for (profile in validationProfiles) {
 
-            var validationProfile = validationProfiles[profile];
+            validationProfile = validationProfiles[profile];
 
-            if (validationProfiles.hasOwnProperty(profile) && 'function' === typeof validationProfile) {
+            if (validationProfiles.hasOwnProperty(profile) && typeof validationProfile === 'function') {
 
-                var validationProfileResult = validationProfile.call(this);
+                validationProfileResult = validationProfile.call(this);
 
                 if (!validationProfileResult.isValid) {
                     errors.push(validationProfileResult);
@@ -454,21 +464,13 @@ define([
         this.getElement('CREDIT_CARD_EXPIRY_YEAR')[0].selectedIndex = 0;
     };
 
-    StripePaymentForm.prototype.init = function (context, successCallback) {
-
+    StripePaymentForm.prototype.init = function (form, successCallback) {
+        this.context = form;
         this.successCallback = successCallback;
-
-        this.context = context || document.querySelector('.' + this.config.classes.STRIPE_FORM);
-
-        if (!this.context.className.match(this.config.classes.STRIPE_FORM)) {
-            this.context = $('.' + this.config.classes.STRIPE_FORM, this.context)[0];
-        }
 
         if (this.context) {
             this.domElementSetup();
-
             this.addListeners();
-
             stripe.setPublishableKey(this.PUBLIC_STRIPE_KEY);
         }
     };

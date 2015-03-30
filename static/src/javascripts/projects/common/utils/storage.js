@@ -1,8 +1,12 @@
 /*
-    Module: storage.js
-    Description: Wrapper around localStorage functionality
-*/
-define(function () {
+ Module: storage.js
+ Description: Wrapper around localStorage functionality
+ */
+define([
+    'common/utils/_'
+], function (
+    _
+) {
 
     var w = window,
         Storage = function (type) {
@@ -12,6 +16,10 @@ define(function () {
     Storage.prototype.setWindow = function (window) {
         w = window;
     };
+
+    Storage.prototype.isStorageAvailable = _.once(function () {
+        return this.isAvailable();
+    });
 
     Storage.prototype.isAvailable = function (data) {
         var testKey = 'local-storage-module-test',
@@ -34,69 +42,99 @@ define(function () {
      *     {Date} expires - When should the storage expire
      */
     Storage.prototype.set = function (key, data, options) {
-        if (!w[this.type]) { return; }
-        var opts = options || {},
-            value = JSON.stringify({
-                value: data,
-                expires: opts.expires
-            });
-        if (!this.isAvailable(value)) {
-            return false;
+        if (this.isStorageAvailable()) {
+            if (!w[this.type]) {
+                return;
+            }
+            var opts = options || {},
+                value = JSON.stringify({
+                    value: data,
+                    expires: opts.expires
+                });
+            if (!this.isAvailable(value)) {
+                return false;
+            }
+            return w[this.type].setItem(key, value);
         }
-        return w[this.type].setItem(key, value);
     };
 
     Storage.prototype.get = function (key) {
-        var data,
-            dataParsed;
-        if (!w[this.type]) { return; }
-        data = w[this.type].getItem(key);
-        if (data === null) {
-            return null;
-        }
+        if (this.isStorageAvailable()) {
+            var data,
+                dataParsed;
+            if (!w[this.type]) {
+                return;
+            }
+            data = w[this.type].getItem(key);
+            if (data === null) {
+                return null;
+            }
 
-        // try and parse the data
-        try {
-            dataParsed = JSON.parse(data);
-        } catch (e) {
-            // remove the key
-            this.remove(key);
-            return null;
-        }
+            // try and parse the data
+            try {
+                dataParsed = JSON.parse(data);
+            } catch (e) {
+                // remove the key
+                this.remove(key);
+                return null;
+            }
 
-        // has it expired?
-        if (dataParsed.expires && new Date() > new Date(dataParsed.expires)) {
-            this.remove(key);
-            return null;
-        }
+            // has it expired?
+            if (dataParsed.expires && new Date() > new Date(dataParsed.expires)) {
+                this.remove(key);
+                return null;
+            }
 
-        return dataParsed.value;
+            return dataParsed.value;
+        }
+    };
+
+    /**
+     * Retrieve a value from storage without parsing as JSON
+     *
+     * @param  {String} key
+     * @return {String} value
+     */
+    Storage.prototype.getRaw = function (key) {
+        if (this.isStorageAvailable()) {
+            return w[this.type].getItem(key);
+        }
     };
 
     Storage.prototype.remove = function (key) {
-        return w[this.type].removeItem(key);
+        if (this.isStorageAvailable()) {
+            return w[this.type].removeItem(key);
+        }
     };
 
     Storage.prototype.removeAll = function () {
-        return w[this.type].clear();
+        if (this.isStorageAvailable()) {
+            return w[this.type].clear();
+        }
     };
 
     Storage.prototype.length = function () {
-        return w[this.type].length;
+        if (this.isStorageAvailable()) {
+            return w[this.type].length;
+        }
     };
 
     Storage.prototype.getKey = function (i) {
-        return w[this.type].key(i);
+        if (this.isStorageAvailable()) {
+            return w[this.type].key(i);
+        }
     };
 
     Storage.prototype.clearByPrefix = function (prefix) {
-        // Loop in reverse because storage indexes will change as you delete items.
-        var i,
-            name;
-        for (i = this.length() - 1; i > -1; --i) {
-            name = this.getKey(i);
-            if (name.indexOf(prefix) === 0) {
-                this.remove(name);
+        if (this.isStorageAvailable()) {
+            // Loop in reverse because storage indexes will change as you delete items.
+            var i,
+                name;
+            for (i = this.length() - 1; i > -1; --i) {
+                name = this.getKey(i);
+                if (name.indexOf(prefix) === 0) {
+                    this.remove(name);
+                }
             }
         }
     };

@@ -14,6 +14,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   private val GoogleBot = """.*(Googlebot).*""".r
   private val CombinerSection = """^(www.theguardian.com/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+$""".r
   private val CombinerSectionRss = """^(www.theguardian.com/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+/rss$""".r
+  private val Guardian = """^www.theguardian.com/Guardian/(.*)$""".r
 
   def lookup(path: String) = Action.async{ implicit request =>
 
@@ -22,15 +23,16 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
 
       // if we do not have a location in the database then follow these rules
       path match {
-        case Decoded(decodedPath)         => redirectTo(decodedPath)
-        case Gallery(gallery)             => redirectTo(gallery)
-        case Century(century)             => redirectTo(century)
-        case Lowercase(lower)             => redirectTo(lower)
+        case Gallery(gallery)             => redirectTo(gallery, "gallery")
+        case Century(century)             => redirectTo(century, "century")
+        case Guardian(endOfUrl)           => redirectTo(s"www.theguardian.com/$endOfUrl", "guardian")
+        case Lowercase(lower)             => redirectTo(lower, "lowercase")
 
         // Googlebot hits a bunch of really old combiners and combiner RSS
         // bounce these to the section
-        case CombinerSectionRss(section)  => redirectTo(s"$section/rss")
-        case CombinerSection(section)     => redirectTo(section)
+        case CombinerSectionRss(section)  => redirectTo(s"$section/rss", "combinerrss")
+        case CombinerSection(section)     => redirectTo(section, "combinersection")
+        case Combiner(combiner)           => redirectTo(combiner, "combiner")
 
         case _ =>
           log404(request)
@@ -54,15 +56,16 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     case PathPattern(_, r1path) => destination contains r1path
     case _ => false
   }
- 
+
   private def destinationFor(path: String) = DynamoDB.destinationFor(path).map(_.filterNot { destination =>
       linksToItself(path, destination.location)
   })
 
-  private object Decoded {
+  private object Combiner {
     def unapply(path: String): Option[String] = {
-        val decodedPath = URLDecoder.decode(path, "UTF-8").replace(" ", "+") // the + is for combiner pages
-        if (decodedPath != path) Some(decodedPath) else None
+        val decodedPath = URLDecoder.decode(path, "UTF-8")
+        val combinerPath = decodedPath.replace(" ", "+") // the + is for combiner pages
+        if (combinerPath != decodedPath && combinerPath != path) Some(combinerPath) else None
     }
   }
 
@@ -95,9 +98,9 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     }
   }
 
-  private def redirectTo(path: String)(implicit request: RequestHeader): Result = {
-    log.info(s"301,${RequestLog(request)}")
-    Cached(300)(Redirect(s"http://$path", 301))
+  private def redirectTo(path: String, identifier: String)(implicit request: RequestHeader): Result = {
+    log.info(s"301, $identifier, ${RequestLog(request)}")
+    Cached(300)(Redirect(s"http://$path?redirection=$identifier", 301))
   }
 
   private def logDestination(path: String, msg: String, destination: String) {

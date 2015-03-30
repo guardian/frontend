@@ -265,6 +265,14 @@ select {
 }
 
 /**
+ * As pasteup-buttons are adding :focus and :active pseudo classes to the button
+ * class as default we can safely set outline to 0 and keep the accessibility.
+ */
+.button {
+    outline: 0;
+}
+
+/**
  * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
  *    and `video` controls.
  * 2. Correct inability to style clickable `input` types in iOS.

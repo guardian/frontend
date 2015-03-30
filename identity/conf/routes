@@ -20,7 +20,7 @@ POST        /password/change                        @controllers.ChangePasswordC
 GET         /password/reset-confirmation            @controllers.ResetPasswordController.renderPasswordResetConfirmation
 GET         /password/email-sent                    @controllers.ResetPasswordController.renderEmailSentConfirmation
 GET         /requestnewtoken                        @controllers.ResetPasswordController.requestNewToken
-GET         /register                               @controllers.RegistrationController.renderForm(returnUrl : Option[String])
+GET         /register                               @controllers.RegistrationController.renderForm(returnUrl : Option[String], skipConfirmation : Option[Boolean])
 POST        /register                               @controllers.RegistrationController.processForm
 GET         /register/confirm                       @controllers.RegistrationController.renderRegistrationConfirmation(returnUrl)
 GET         /email-prefs                            @controllers.EmailController.preferences
@@ -42,5 +42,3 @@ GET         /form/:formReference                    @controllers.FormstackContro
 GET         /form/embed/:formReference              @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = true)
 
 GET         /et/subscribe/:subDefId                 @controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)
-
-GET         /membership.json                        @controllers.EditProfileController.renderMembershipTab

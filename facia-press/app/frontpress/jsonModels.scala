@@ -1,11 +1,12 @@
 package frontpress
 
-import com.gu.facia.client.models.CollectionConfig
-import com.gu.openplatform.contentapi.model.Asset
-import conf.Switches
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import com.gu.contentapi.client.model.Asset
 import model._
 import org.joda.time.DateTime
 import play.api.libs.json._
+import com.gu.contentapi.client.model.{Element => ApiElement}
+import views.support.Naked
 
 object ElementJson {
   implicit val assetFormat = Json.format[Asset]
@@ -125,10 +126,20 @@ object TrailJson {
       content.trailText,
       content.byline,
       content.delegate.safeFields,
-      content.elements.map(ElementJson.fromElement),
+      apiElementsToElements(slimElements(content)).map(ElementJson.fromElement),
       ItemMeta.fromContent(content)
     )
   }
+
+  def slimElements(content: Content): List[ApiElement] = content.trailPictureAll(5, 3).map {
+    imageContainer =>
+      imageContainer.delegate.copy(assets =
+        Naked.elementFor(imageContainer).map(_.delegate).toList)} ++
+    content.mainVideo.map(_.delegate)
+
+
+  def apiElementsToElements(apiElements: List[ApiElement]): List[Element] =
+    apiElements.zipWithIndex.map{case (element, index) => Element(element, index)}
 }
 
 case class TrailJson(
@@ -156,6 +167,7 @@ object CollectionJson {
       editorsPicks   = collection.editorsPicks.map(TrailJson.fromContent),
       mostViewed     = collection.mostViewed.map(TrailJson.fromContent),
       results        = collection.results.map(TrailJson.fromContent),
+      treats         = collection.treats.map(TrailJson.fromContent),
       lastUpdated    = collection.lastUpdated,
       updatedBy      = collection.updatedBy,
       updatedEmail   = collection.updatedEmail,
@@ -166,7 +178,8 @@ object CollectionJson {
       showSections   = config.showSections.getOrElse(false),
       hideKickers    = config.hideKickers.getOrElse(false),
       showDateHeader = config.showDateHeader.getOrElse(false),
-      showLatestUpdate = config.showLatestUpdate.getOrElse(false)
+      showLatestUpdate = config.showLatestUpdate.getOrElse(false),
+      excludeFromRss = config.excludeFromRss.getOrElse(false)
     )
 }
 
@@ -178,6 +191,7 @@ case class CollectionJson(
   editorsPicks: Seq[TrailJson],
   mostViewed:   Seq[TrailJson],
   results:      Seq[TrailJson],
+  treats:       Seq[TrailJson],
   lastUpdated:  Option[String],
   updatedBy:    Option[String],
   updatedEmail: Option[String],
@@ -187,5 +201,6 @@ case class CollectionJson(
   showSections: Boolean,
   hideKickers:  Boolean,
   showDateHeader: Boolean,
-  showLatestUpdate: Boolean
+  showLatestUpdate: Boolean,
+  excludeFromRss: Boolean
 )

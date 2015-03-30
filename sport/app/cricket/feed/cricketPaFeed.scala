@@ -75,7 +75,9 @@ object PaFeed extends ExecutionContexts with Logging {
           case 200 => { XML.loadString(response.body) \\ "match" map (content =>
             (content \ "@id").text ) }
 
-          case _ => throw CricketFeedException(s"PA endpoint returned: ${response.status}, $endpoint")
+          case 204 => Nil // No content for this date range.
+
+          case _ => throw CricketFeedException(s"PA endpoint returned: ${response.status} $start $end $endpoint")
         }
       }
     }).getOrElse(Future.failed(CricketFeedException("No cricket api key found")))

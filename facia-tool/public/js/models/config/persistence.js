@@ -1,9 +1,10 @@
-/* global _: true */
 define([
+    'underscore',
     'modules/authed-ajax',
     'modules/vars',
     'utils/identity'
 ], function (
+    _,
     authedAjax,
     vars,
     identity
@@ -15,7 +16,7 @@ define([
 
         authedAjax.request(_.extend({
             type: 'POST'
-        }, opts)).then(function () {
+        }, opts)).always(function () {
             _.each(onUpdateCallbacks, function (callback) {
                 callback();
             });

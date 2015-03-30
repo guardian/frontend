@@ -1,8 +1,9 @@
 package util
 
+import fronts.MetadataDefaults
 import model.Content
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
-import com.gu.openplatform.contentapi.parser.JsonParser._
+import com.gu.contentapi.client.model.{Content => ApiContent}
+import com.gu.contentapi.client.parser.JsonParser._
 import org.json4s.JValue
 import org.json4s.JsonAST._
 import org.json4s.native.JsonMethods

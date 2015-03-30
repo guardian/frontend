@@ -2,8 +2,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET         /humans.txt                                                                                              controllers.Assets.at(path="/public", file="humans.txt")
-GET         /surveys/*file                                                                                           controllers.Assets.at(path="/public/surveys", file)
+GET         /humans.txt                                                                                              dev.DevAssetsController.humans()
+GET         /surveys/*file                                                                                           dev.DevAssetsController.surveys(file)
 GET         /commercial/test-page                                                                                    controllers.commercial.CreativeTestPage.allComponents
 
 # For dev machines
@@ -15,41 +15,70 @@ GET         /ab.gif                                                             
 GET         /js.gif                                                                                                  controllers.DiagnosticsController.js
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
 GET         /counts.gif                                                                                              controllers.DiagnosticsController.analyticsCounts()
+POST        /tech-feedback                                                                                           controllers.DiagnosticsController.techFeedback()
+POST        /css                                                                                                     controllers.DiagnosticsController.css
+OPTIONS     /css                                                                                                     controllers.DiagnosticsController.cssOptions
+POST        /accept-beacon                                                                                           controllers.DiagnosticsController.acceptBeacon
+OPTIONS     /accept-beacon                                                                                           controllers.DiagnosticsController.acceptBeaconOptions
+
+# Crosswords
+# NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: CrosswordType, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
+
+# Business data
+GET        /business-data/stocks.json                 controllers.StocksController.stocks
+
+#Weather - OLD
+GET         /weather/city/:id.json                                                                                   controllers.WeatherController.forCity(id)
+GET         /weather/city.json                                                                                       controllers.LocationsController.whatIsMyCity()
+GET         /weather/locations                                                                                       controllers.LocationsController.findCity(query: String)
+GET         /weather/forecast/:id.json                                                                               controllers.WeatherController.forecastForCityId(id)
+
+#Weather
+GET         /weatherapi/city/:id.json                                                                                controllers.WeatherController.forCity(id)
+GET         /weatherapi/city.json                                                                                    controllers.LocationsController.whatIsMyCity()
+GET         /weatherapi/locations                                                                                    controllers.LocationsController.findCity(query: String)
+GET         /weatherapi/forecast/:id.json                                                                            controllers.WeatherController.forecastForCityId(id)
 
 # Analytics
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /analytics/google-referrers                                                                              controllers.admin.GoogleReferrerController.renderGoogleReferrerDashboard()
 GET         /analytics/content/gallery                                                                               controllers.admin.ContentPerformanceController.renderGalleryDashboard()
+GET         /analytics/content/liveblog                                                                              controllers.admin.ContentPerformanceController.renderLiveBlogDashboard()
+GET         /analytics/content/video                                                                                 controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
 GET         /analytics/omniture/segments/:rsid                                                                       controllers.admin.OmnitureReportController.getSegments(rsid)
 GET         /analytics/omniture/*reportName                                                                          controllers.admin.OmnitureReportController.getReport(reportName)
 GET         /analytics/commercial                                                                                    controllers.admin.CommercialController.renderCommercial()
-GET         /analytics/commercial/sponsorships                                                                       controllers.admin.CommercialController.renderSponsorships()
+GET         /analytics/commercial/specialadunits                                                                     controllers.admin.CommercialController.renderSpecialAdUnits()
+GET         /analytics/commercial/sponsorships                                                                       controllers.admin.CommercialController.renderPaidForTags()
 GET         /analytics/commercial/pageskins                                                                          controllers.admin.CommercialController.renderPageskins()
 GET         /analytics/commercial/surging                                                                            controllers.admin.CommercialController.renderSurgingContent()
 GET         /analytics/commercial/im-sponsorships                                                                    controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
 GET         /analytics/commercial/templates                                                                          controllers.admin.CommercialController.renderCreativeTemplates()
+GET         /analytics/commercial/sponsored-containers                                                               controllers.admin.CommercialController.sponsoredContainers()
+GET         /analytics/commercial/adtests                                                                            controllers.admin.CommercialController.renderAdTests()
+
 
 # Discussion
-GET         /discussion/comment-box.json                                                                             controllers.CommentBoxController.commentBox()
-
 GET         /discussion/comment-counts                                                                               controllers.CommentCountController.commentCount(shortUrls: String)
 GET         /discussion/comment-counts.json                                                                          controllers.CommentCountController.commentCountJson(shortUrls: String)
-
 GET         /discussion/comment/*id.json                                                                             controllers.CommentsController.commentJson(id: Int)
 GET         /discussion/comment/*id                                                                                  controllers.CommentsController.comment(id: Int)
 GET         /discussion/comment-context/*commentId.json                                                              controllers.CommentsController.commentContextJson(commentId: Int)
+OPTIONS     /discussion/comment-context/*commentId.json                                                              controllers.CommentsController.commentContextJsonOptions(commentId: Int)
+GET         /discussion/top-comments/$discussionKey</?p/\w+>.json                                                    controllers.CommentsController.topCommentsJson(discussionKey: discussion.model.DiscussionKey)
+OPTIONS     /discussion/top-comments/$discussionKey</?p/\w+>.json                                                    controllers.CommentsController.topCommentsJsonOptions(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.CommentsController.commentsJson(discussionKey: discussion.model.DiscussionKey)
+OPTIONS     /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.CommentsController.commentsJsonOptions(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.CommentsController.comments(discussionKey: discussion.model.DiscussionKey)
-
 GET         /discussion/profile/:id/search/:q.json                                                                   controllers.ProfileActivityController.profileSearch(id: String, q: String)
 GET         /discussion/profile/:id/discussions.json                                                                 controllers.ProfileActivityController.profileDiscussions(id: String)
 GET         /discussion/profile/:id/replies.json                                                                     controllers.ProfileActivityController.profileReplies(id: String)
 GET         /discussion/profile/:id/picks.json                                                                       controllers.ProfileActivityController.profilePicks(id: String)
 GET         /discussion/profile/:id/witness.json                                                                     controllers.WitnessActivityController.witnessActivity(id: String)
-
 GET         /open/cta/article/*discussionKey.json                                                                    controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
-
 
 # Onward
 GET         /most-read.json                                                                                          controllers.MostPopularController.render(path = "")
@@ -60,9 +89,9 @@ GET         /most-read-day.json                                                 
 GET         /top-stories.json                                                                                        controllers.TopStoriesController.renderTopStories()
 GET         /top-stories/trails.json                                                                                 controllers.TopStoriesController.renderTrails()
 GET         /related/*path.json                                                                                      controllers.RelatedController.render(path)
+GET         /related/*path                                                                                           controllers.RelatedController.renderHtml(path)
 GET         /popular-in-tag/*tag.json                                                                                controllers.PopularInTag.render(tag)
 
-GET         /preference/platform/:platform                                                                           controllers.ChangeViewController.render(platform, page)
 GET         /preference/edition/:edition                                                                             controllers.ChangeEditionController.render(edition)
 GET         /preference/front-alphas/:optAction                                                                      controllers.ChangeAlphaController.render(optAction, page)
 
@@ -73,16 +102,21 @@ GET         /:mediaType/section/:sectionId/*seriesId.json                       
 GET         /:mediaType/section/:sectionId.json                                                                      controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
 GET         /video/most-viewed.json                                                                                  controllers.MostViewedVideoController.renderMostViewed()
 GET         /audio/most-viewed.json                                                                                  controllers.MostViewedAudioController.renderMostViewed()
+GET         /podcast/most-viewed.json                                                                                controllers.MostViewedAudioController.renderMostViewedPodcast()
 GET         /gallery/most-viewed.json                                                                                controllers.MostViewedGalleryController.renderMostViewed()
 GET         /video/end-slate/series/*seriesId.json                                                                   controllers.VideoEndSlateController.renderSeries(seriesId)
 GET         /video/end-slate/section/*sectionId.json                                                                 controllers.VideoEndSlateController.renderSection(sectionId)
+GET         /embed/card/*path.json                                                                                   controllers.RichLinkController.render(path)
+GET         /embed/card/*path                                                                                        controllers.RichLinkController.renderHtml(path)
 
 # Sport
 GET         /sport/cricket/match/:matchId.json                                                                       controllers.CricketMatchController.renderMatchIdJson(matchId)
 GET         /sport/cricket/match/:matchId                                                                            controllers.CricketMatchController.renderMatchId(matchId)
 
-GET         /football/fixtures/:year/:month/:day.json                                                                football.controllers.FixturesController.allFixturesForJson(year, month, day)
+GET         /football/fixtures/more/:year/:month/:day.json                                                           football.controllers.FixturesController.moreFixturesForJson(year, month, day)
+GET         /football/fixtures/more/:year/:month/:day                                                                football.controllers.FixturesController.moreFixturesFor(year, month, day)
 GET         /football/fixtures/:year/:month/:day                                                                     football.controllers.FixturesController.allFixturesFor(year, month, day)
+GET         /football/fixtures/:year/:month/:day.json                                                                football.controllers.FixturesController.allFixturesForJson(year, month, day)
 GET         /football/fixtures                                                                                       football.controllers.FixturesController.allFixtures()
 GET         /football/fixtures.json                                                                                  football.controllers.FixturesController.allFixturesJson()
 GET         /football/:tag/fixtures/:year/:month/:day.json                                                           football.controllers.FixturesController.tagFixturesForJson(year, month, day, tag)
@@ -92,6 +126,8 @@ GET         /football/:tag/fixtures.json                                        
 
 GET         /football/results/:year/:month/:day.json                                                                 football.controllers.ResultsController.allResultsForJson(year, month, day)
 GET         /football/results/:year/:month/:day                                                                      football.controllers.ResultsController.allResultsFor(year, month, day)
+GET         /football/results/more/:year/:month/:day.json                                                            football.controllers.ResultsController.moreResultsForJson(year, month, day)
+GET         /football/results/more/:year/:month/:day                                                                 football.controllers.ResultsController.moreResultsFor(year, month, day)
 GET         /football/results                                                                                        football.controllers.ResultsController.allResults()
 GET         /football/results.json                                                                                   football.controllers.ResultsController.allResultsJson()
 GET         /football/:tag/results/:year/:month/:day.json                                                            football.controllers.ResultsController.tagResultsForJson(year, month, day, tag)
@@ -115,6 +151,7 @@ GET         /football/:competition/table                                        
 GET         /football/:competition/table.json                                                                        football.controllers.LeagueTableController.renderCompetitionJson(competition)
 GET         /football/:competition/:group/table                                                                      football.controllers.LeagueTableController.renderCompetitionGroup(competition, group)
 GET         /football/:competition/:group/table.json                                                                 football.controllers.LeagueTableController.renderCompetitionGroupJson(competition, group)
+GET         /football/:team/fixtures-and-results-container                                                           football.controllers.FixturesAndResultsContainerController.renderContainer(team)
 
 GET         /football/:competitionTag/overview/embed                                                                 football.controllers.WallchartController.renderWallchartEmbed(competitionTag)
 GET         /football/:competitionTag/overview                                                                       football.controllers.WallchartController.renderWallchart(competitionTag)
@@ -161,6 +198,7 @@ GET         /metrics/errors/4xx                                                 
 GET         /metrics/errors/5xx                                                                                      controllers.admin.MetricsController.render5XX()
 GET         /metrics/memory                                                                                          controllers.admin.MetricsController.renderMemory()
 GET         /metrics/assets                                                                                          controllers.admin.MetricsController.renderAssets()
+GET         /metrics/afg                                                                                             controllers.admin.MetricsController.renderAfg()
 GET         /radiator                                                                                                controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                        controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                                   controllers.admin.RadiatorController.commitDetail(hash)
@@ -170,6 +208,12 @@ GET         /troubleshoot/test                                                  
 GET         /redirects                                                                                               controllers.admin.RedirectController.redirect()
 POST        /redirect-post                                                                                           controllers.admin.RedirectController.redirectPost()
 
+# css reports
+GET         /css-reports                                                                                             controllers.admin.CssReportController.entry
+GET         /css-reports.json                                                                                        controllers.admin.CssReportController.index
+GET         /css-reports/:date.json                                                                                  controllers.admin.CssReportController.report(date: org.joda.time.LocalDate)
+
+
 # Football admin
 
 GET         /admin/football                                                                                          controllers.admin.SiteController.index
@@ -178,7 +222,9 @@ POST        /admin/football/browserRedirect                                     
 GET         /admin/football/browser/*query                                                                           controllers.admin.PaBrowserController.browser(query)
 GET         /admin/football/player                                                                                   controllers.admin.PlayerController.playerIndex
 POST        /admin/football/player/card                                                                              controllers.admin.PlayerController.redirectToCard
+GET         /admin/football/player/card/competition/:cardType/:playerId/:teamId/:compId.json                         controllers.admin.PlayerController.playerCardCompetitionJson(cardType: String, playerId: String, teamId: String, compId: String)
 GET         /admin/football/player/card/competition/:cardType/:playerId/:teamId/:compId                              controllers.admin.PlayerController.playerCardCompetition(cardType: String, playerId: String, teamId: String, compId: String)
+GET         /admin/football/player/card/date/:cardType/:playerId/:teamId/:startDate.json                             controllers.admin.PlayerController.playerCardDateJson(cardType: String, playerId: String, teamId: String, startDate: String)
 GET         /admin/football/player/card/date/:cardType/:playerId/:teamId/:startDate                                  controllers.admin.PlayerController.playerCardDate(cardType: String, playerId: String, teamId: String, startDate: String)
 GET         /admin/football/tables                                                                                   controllers.admin.TablesController.tablesIndex
 POST        /admin/football/tables/league                                                                            controllers.admin.TablesController.redirectToTable
@@ -203,67 +249,36 @@ GET         /admin/football/fronts/match/:matchId                               
 GET         /admin/football/api/squad/:teamId                                                                        controllers.admin.PlayerController.squad(teamId: String)
 
 # Commercial
-GET         /commercial/travel/offers                                                                                controllers.commercial.TravelOffers.travelOffersLowHtml
-GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.travelOffersLowJson
-GET         /commercial/travel/offers-high                                                                           controllers.commercial.TravelOffers.travelOffersHighHtml
-GET         /commercial/travel/offers-high.json                                                                      controllers.commercial.TravelOffers.travelOffersHighJson
+GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.renderTravel
 
-GET         /commercial/jobs                                                                                         controllers.commercial.JobAds.jobsLowHtml
-GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobsLowJson
-GET         /commercial/jobs-high                                                                                    controllers.commercial.JobAds.jobsHighHtml
-GET         /commercial/jobs-high.json                                                                               controllers.commercial.JobAds.jobsHighJson
-GET         /commercial/jobs-v2.json                                                                                 controllers.commercial.JobAds.jobsLowJsonV2
-GET         /commercial/jobs-high-v2.json                                                                            controllers.commercial.JobAds.jobsHighJsonV2
+GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.renderJobs
 
-GET         /commercial/masterclasses                                                                                controllers.commercial.MasterClasses.masterclassesLowHtml
-GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.masterclassesLowJson
-GET         /commercial/masterclasses-high                                                                           controllers.commercial.MasterClasses.masterclassesHighHtml
-GET         /commercial/masterclasses-high.json                                                                      controllers.commercial.MasterClasses.masterclassesHighJson
-GET         /commercial/masterclasses-v2.json                                                                        controllers.commercial.MasterClasses.masterclassesLowJsonV2
-GET         /commercial/masterclasses-high-v2.json                                                                   controllers.commercial.MasterClasses.masterclassesHighJsonV2
+GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.renderMasterclasses
 
-GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.mixedLowHtml
-GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixedLowJson
-GET         /commercial/soulmates/mixed-high                                                                         controllers.commercial.SoulmateAds.mixedHighHtml
-GET         /commercial/soulmates/mixed-high.json                                                                    controllers.commercial.SoulmateAds.mixedHighJson
+GET         /commercial/soulmates/$subgroup<\w+>.json                                                                controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
 
-GET         /commercial/soulmates/mixed-v2                                                                           controllers.commercial.SoulmateAds.mixedLowHtmlV2
-GET         /commercial/soulmates/mixed-v2.json                                                                      controllers.commercial.SoulmateAds.mixedLowJsonV2
-GET         /commercial/soulmates/mixed-high-v2                                                                      controllers.commercial.SoulmateAds.mixedHighHtmlV2
-GET         /commercial/soulmates/mixed-high-v2.json                                                                 controllers.commercial.SoulmateAds.mixedHighJsonV2
+GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffersController.renderBook
+GET         /commercial/books/books.json                                                                             controllers.commercial.BookOffersController.renderBooks
 
-GET         /commercial/books/bestsellers                                                                            controllers.commercial.BookOffers.bestsellersLowHtml
-GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellersLowJson
-GET         /commercial/books/bestsellers-medium                                                                     controllers.commercial.BookOffers.bestsellersMediumHtml
-GET         /commercial/books/bestsellers-medium.json                                                                controllers.commercial.BookOffers.bestsellersMediumJson
-GET         /commercial/books/bestsellers-high                                                                       controllers.commercial.BookOffers.bestsellersHighHtml
-GET         /commercial/books/bestsellers-high.json                                                                  controllers.commercial.BookOffers.bestsellersHighJson
-GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffers.bestsellersSuperHighJson
-GET         /commercial/books/book                                                                                   controllers.commercial.BookOffers.bestsellersSuperHighHtml
-GET         /commercial/books/bestsellers-v2.json                                                                    controllers.commercial.BookOffers.bestsellersLowJsonV2
-GET         /commercial/books/bestsellers-medium-v2.json                                                             controllers.commercial.BookOffers.bestsellersMediumJsonV2
-GET         /commercial/books/bestsellers-high-v2.json                                                               controllers.commercial.BookOffers.bestsellersHighJsonV2
-GET         /commercial/books/book-v2.json                                                                           controllers.commercial.BookOffers.bestsellersSuperHighJsonV2
-
-
-GET         /commercial/money/bestbuys                                                                               controllers.commercial.MoneyOffers.bestBuysLowHtml
-GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuysLowJson
-GET         /commercial/money/bestbuys-high                                                                          controllers.commercial.MoneyOffers.bestBuysHighHtml
-GET         /commercial/money/bestbuys-high.json                                                                     controllers.commercial.MoneyOffers.bestBuysHighJson
+GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.renderBestBuys
 GET         /commercial/money/savings/:savingsType                                                                   controllers.commercial.MoneyOffers.savings(savingsType)
 GET         /commercial/money/current-accounts/:currentAccountType                                                   controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
 GET         /commercial/money/credit-cards/:creditCardType                                                           controllers.commercial.MoneyOffers.creditCards(creditCardType)
 GET         /commercial/money/loans/:loanType                                                                        controllers.commercial.MoneyOffers.loans(loanType)
-GET         /commercial/money/bestbuys-v2.json                                                                       controllers.commercial.MoneyOffers.bestBuysLowJsonV2
-GET         /commercial/money/bestbuys-high-v2.json                                                                  controllers.commercial.MoneyOffers.bestBuysHighJsonV2
 
 GET         /commercial/capi.json                                                                                    controllers.commercial.ContentApiOffers.itemsJson
 GET         /commercial/capi                                                                                         controllers.commercial.ContentApiOffers.itemsHtml
+GET         /commercial/capi-single.json                                                                             controllers.commercial.ContentApiOffers.itemJson
+GET         /commercial/capi-single                                                                                  controllers.commercial.ContentApiOffers.itemHtml
+GET         /commercial/capi-single-merch.json                                                                       controllers.commercial.ContentApiOffers.itemJson
+GET         /commercial/capi-single-merch                                                                            controllers.commercial.ContentApiOffers.itemHtml
 
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()
 GET         /admin/commercial/fluid250                                                                               controllers.admin.CommercialController.renderFluidAds()
 GET         /commercial/multi.json                                                                                   controllers.commercial.Multi.renderMulti
+GET         /admin/commercial/dfp/flush/view                                                                         controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
+GET         /admin/commercial/dfp/flush                                                                              controllers.admin.commercial.DfpDataController.flushCache()
 
 # dev-build only
 GET         /commercial/magento/token                                                                                controllers.commercial.magento.AccessTokenGenerator.generate
@@ -289,11 +304,14 @@ GET         /*path/lite.json                                                    
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 
 # Applications
+GET         /preferences                                                                                             controllers.PreferencesController.userPrefs()
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                     controllers.IndexController.renderTrailsJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                          controllers.IndexController.renderTrails(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                                            controllers.IndexController.renderJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                                 controllers.IndexController.render(path)
 GET         /$leftSide<[^+]+>+*rightSide                                                                             controllers.IndexController.renderCombiner(leftSide, rightSide)
+GET         /embed/video/*path                                                                                       controllers.EmbedController.render(path)
+
 
 # Editionalised pages
 GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)

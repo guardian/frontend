@@ -19,7 +19,7 @@ trait BestsellersApi extends ExecutionContexts with Logging {
 
   protected val path: String
 
-  protected def url = CommercialConfiguration.getProperty("gu.bookshop.api.url") map (_ + path)
+  protected def maybeUrl = CommercialConfiguration.getProperty("gu.bookshop.api.url") map (_ + path)
 
   def parse(xml: Elem): Seq[Book] = {
 
@@ -47,7 +47,16 @@ trait BestsellersApi extends ExecutionContexts with Logging {
   }
 
   def loadBestsellers(): Future[Seq[Book]] = {
-    FeedReader.readSeqFromXml[Book](FeedRequest(adTypeName, GuBookshopFeedsSwitch, url, timeout = 5.seconds))(parse)
+    maybeUrl map { url =>
+      val request = FeedRequest(
+        feedName = adTypeName,
+        switch = GuBookshopFeedsSwitch,
+        url,
+        timeout = 5.seconds)
+      FeedReader.readSeqFromXml[Book](request)(parse)
+    } getOrElse {
+      Future.failed(FeedMissingConfigurationException(adTypeName))
+    }
   }
 
 }
@@ -59,7 +68,8 @@ object MagentoBestsellersFeed extends BestsellersApi {
   protected val keywordIds = Nil
   protected val path = "bertrams/feed/independentsTop20"
 
-  override protected def url: Option[String] = magento.domain map (domain => s"http://$domain/$path")
+  override protected def maybeUrl: Option[String] = magento.domain map (domain =>
+    s"http://$domain/$path")
 
   override def loadBestsellers(): Future[Seq[Book]] = super.loadBestsellers() map {
     _ map (book => book.copy(jacketUrl = book.jacketUrl.map(_.stripPrefix("http:"))))

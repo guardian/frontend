@@ -14,6 +14,7 @@
         vAxis: {
             title: 'Kb',
             textPosition: 'in',
+            viewWindowMode: 'pretty'
         },
         fontName : 'Helvetica'
     });
@@ -28,12 +29,12 @@
             <table class="table table-bordered table--asset">
                 <thead>
                     <tr>
-                        <th class="table__head" colspan="4">Size in Kb (last 14 days)</th>
+                        <th class="table__head" colspan="4">GZipped size in Kb (last 14 days)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="4">@chart(asset.raw)</td>
+                        <td colspan="4">@chart(asset.zipped)</td>
                     </tr>
                 </tbody>
             </table>
@@ -64,9 +65,9 @@
                             <th>Average Selectors</th>
                         </tr>
                         <tr>
-                            <td>@asset.rules.latest</td>
-                            <td>@asset.selectors.latest</td>
-                            <td></td>
+                            <td>@asset.rules.latest.toInt</td>
+                            <td>@asset.selectors.latest.toInt</td>
+                            <td>@{ "%.2f".format(asset.selectors.latest / asset.rules.latest) }</td>
                         </tr>
                     }
                 </tbody>

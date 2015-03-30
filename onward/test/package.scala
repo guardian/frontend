@@ -6,7 +6,6 @@ class OnwardTestSuite extends Suites (
   new controllers.ChangeEditionControllerTest,
   new model.TopStoriesFeatureTest,
   new services.OnwardHealthcheckTest,
-  new ChangeViewControllerTest,
   new MostPopularControllerTest,
   new MostPopularFeatureTest,
   new MostViewedVideoTest,
@@ -14,7 +13,8 @@ class OnwardTestSuite extends Suites (
   new RelatedFeatureTest,
   new SeriesControllerTest,
   new TopStoriesControllerTest,
-  new VideoInSectionTest ) with SingleServerSuite {
+  new VideoInSectionTest,
+  new RichLinkControllerTest ) with SingleServerSuite {
 
   override lazy val port: Int = conf.HealthCheck.testPort
 }

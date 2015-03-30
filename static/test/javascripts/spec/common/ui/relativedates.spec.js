@@ -81,17 +81,17 @@ define(['common/modules/ui/relativedates',
                 },
                 'yesterday': {
                     'date'           :      '2012-08-12T08:45:00+01:00',
-                    'expectedOutput' :      'Yesterday, 8:45am',
+                    'expectedOutput' :      'Yesterday 8:45',
                     'expectedShortOutput' : '1d',
                     'expectedMedOutput' :   '1d ago',
-                    'expectedLongOutput' :  'Yesterday, 8:45am'
+                    'expectedLongOutput' :  'Yesterday 8:45'
                 },
                 'yesterdayButWithinTwentyFourHours': {
                     'date'           :      '2012-08-12T20:00:00+01:00',
-                    'expectedOutput' :      'Yesterday, 8:00pm',
+                    'expectedOutput' :      'Yesterday 20:00',
                     'expectedShortOutput' : '16h',
                     'expectedMedOutput' :   '16h ago',
-                    'expectedLongOutput' :  'Yesterday, 8:00pm'
+                    'expectedLongOutput' :  'Yesterday 20:00'
                 },
                 'moreThanTwoDaysAgo': {
                     'date'           :      '2012-08-09T08:34:00+01:00',
@@ -151,7 +151,7 @@ define(['common/modules/ui/relativedates',
 
         it("Convert valid timestamps in the HTML document into their expected output", function(){
             RelativeDates.init();
-            expect(document.getElementById('time-valid').innerHTML).toBe('Yesterday, 7:43pm');
+            expect(document.getElementById('time-valid').innerHTML).toBe('Yesterday 19:43');
             expect(document.getElementById('time-valid').getAttribute('title')).toBe('12th August');
         });
 

@@ -21,21 +21,20 @@ DOMAIN=`hostname -d`
 
 echo ''
 echo "********************************* JAVA VERSION *********************************"
-/usr/lib/jvm/java-1.7.0/bin/java -version
+/usr/lib/jvm/java-1.8.0/bin/java -version
 echo "********************************************************************************"
 echo ''
 
-export JAVA_HOME=/usr/lib/jvm/java-1.7.0/bin/java
-export JDK_HOME=/usr/lib/jvm/java-1.7.0/bin/java
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0/bin/java
+export JDK_HOME=/usr/lib/jvm/java-1.8.0/bin/java
 
 # NOTE this is not a REAL APP_SECRET it is just for DEV environments
 fake_secret="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
 
-cat /dev/null | /usr/lib/jvm/java-1.7.0/bin/java -Xmx4096M -XX:MaxPermSize=2048m \
+cat /dev/null | /usr/lib/jvm/java-1.8.0/bin/java -Xmx4096M \
   -XX:ReservedCodeCacheSize=128m \
   -Dsbt.log.noformat=true \
   -XX:+UseConcMarkSweepGC \
-  -XX:+CMSIncrementalMode \
   -DAPP_SECRET=$fake_secret \
   -Duser.timezone=Australia/Sydney \
   $BUILD_PARAMS \

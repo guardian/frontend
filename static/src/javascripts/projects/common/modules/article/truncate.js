@@ -3,7 +3,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'lodash/collections/find',
+    'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -13,7 +13,7 @@ define([
     bean,
     bonzo,
     qwery,
-    find,
+    _,
     config,
     detect,
     mediator,
@@ -35,7 +35,7 @@ define([
 
     function hashLinkedBlockIsTruncated() {
         var id = window.location.hash.slice(1);
-        return find(truncatedBlocks, function (el) { return el.id === id; });
+        return _.find(truncatedBlocks, function (el) { return el.id === id; });
     }
 
     function truncate() {
@@ -54,7 +54,7 @@ define([
 
             $.create(
                 '<button class="u-button-reset button button--large button--show-more liveblog__show-more article-elongator" data-link-name="continue reading" data-test-id="article-expand">' +
-                    '<i class="i i-plus-white-small"></i>' +
+                    '<i class="i i-plus-white"></i>' +
                     viewUpdatesLabel +
                 '</button>'
             ).each(function (el) {

@@ -1,16 +1,23 @@
-/* global _: true */
 define([
+    'underscore',
+    'modules/vars',
+    'utils/alert',
     'utils/mediator',
     'utils/url-abs-path',
     'utils/remove-by-id'
 ], function(
+    _,
+    vars,
+    alert,
     mediator,
     urlAbsPath,
     removeById
 ) {
+    var alreadyInitialised = false,
+        listeners = mediator.scope();
 
     function alertBadContent(msg) {
-        window.alert(msg ? msg : 'Sorry, but you can\'t add that item');
+        alert(msg ? msg : 'Sorry, but you can\'t add that item');
     }
 
     /* opts:
@@ -25,11 +32,22 @@ define([
         targetGroup
 
         isAfter (optional)
+
+        mediaItem (optional)
     */
     function listManager(opts) {
         var position,
             newItems,
             insertAt;
+
+        if (opts.mediaItem) {
+            if (_.isFunction(opts.mediaHandler)) {
+                opts.mediaHandler(opts);
+            } else {
+                alertBadContent('Unhandled media item');
+            }
+            return;
+        }
 
         position = opts.targetItem && _.isFunction(opts.targetItem.id) ? opts.targetItem.id() : undefined;
 
@@ -47,23 +65,56 @@ define([
 
         opts.targetGroup.items.splice(insertAt, 0, newItems[0]);
 
-        opts.newItemsValidator(newItems)
+        opts.newItemsValidator(newItems, opts.targetContext)
         .fail(function(err) {
             _.each(newItems, function(item) { opts.targetGroup.items.remove(item); });
             alertBadContent(err);
         })
         .done(function() {
             if (opts.targetGroup.parent) {
-                opts.newItemsPersister(newItems, opts.sourceGroup, opts.targetGroup, position, opts.isAfter);
+                opts.newItemsPersister(newItems, opts.sourceContext, opts.sourceGroup, opts.targetContext, opts.targetGroup, position, opts.isAfter);
             }
         });
     }
 
+    function alternateAction (opts) {
+        if (opts.targetGroup.parentType === 'Article') {
+            var id = urlAbsPath(opts.sourceItem.id);
+
+            if (id.indexOf(vars.CONST.internalContentPrefix) !== 0) {
+                return;
+            }
+
+            var newItems = opts.newItemsConstructor(urlAbsPath(id), null, opts.targetGroup);
+
+            if (!newItems[0]) {
+                alertBadContent();
+                return;
+            }
+
+            opts.mergeItems(newItems[0], opts.targetGroup.parent, opts.targetContext);
+        }
+    }
+
     return {
-        init: _.once(function(newItems) {
-            mediator.on('collection:updates', function(opts) {
-                listManager(_.extend(opts, newItems));
+        init: function(newItems) {
+            if (alreadyInitialised) {
+                return;
+            }
+            alreadyInitialised = true;
+
+            listeners.on('collection:updates', function(opts) {
+                var options = _.extend(opts, newItems);
+                if (opts.alternateAction) {
+                    alternateAction(options);
+                } else {
+                    listManager(options);
+                }
             });
-        })
+        },
+        reset: function () {
+            listeners.dispose();
+            alreadyInitialised = false;
+        }
     };
 });

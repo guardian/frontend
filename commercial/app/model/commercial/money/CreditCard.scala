@@ -37,7 +37,17 @@ case class CreditExample(amount: Double,
                          interestRateFixed: Boolean,
                          apr: Double,
                          aprFixed: Boolean,
-                         fee: Double)
+                         fee: Double) {
+
+  override val toString: String = {
+    val spend = f"£$amount%,.0f"
+    def fixedText(b: Boolean) = if (b) "fixed" else "variable"
+    val rateType = fixedText(interestRateFixed)
+    val aprType = fixedText(aprFixed)
+    s"If you spend $spend at $interestRateDescription interest rate of $interestRate% p.a. " +
+      s"($rateType) your representative rate will be $apr% APR ($aprType)"
+  }
+}
 
 
 trait CreditCardsApi extends MoneySupermarketApi[CreditCard] {

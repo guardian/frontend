@@ -1,25 +1,40 @@
 define([
-    'common/utils/mediator',
-    'common/utils/$',
     'fence',
-    'common/modules/ui/rhc',
+    'qwery',
+    'common/utils/$',
+    'common/utils/config',
+    'common/utils/detect',
+    'common/utils/mediator',
+    'common/utils/url',
+    'common/modules/article/rich-links',
+    'common/modules/article/open-module',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
-    'common/modules/open/cta'
-
+    'common/modules/onward/geo-most-popular',
+    'common/modules/open/cta',
+    'common/modules/ui/rhc',
+    'common/modules/ui/selection-sharing'
 ], function (
-    mediator,
-    $,
     fence,
-    rhc,
+    qwery,
+    $,
+    config,
+    detect,
+    mediator,
+    urlutils,
+    richLinks,
+    openModule,
     truncate,
     twitter,
-    OpenCta
+    geoMostPopular,
+    OpenCta,
+    rhc,
+    selectionSharing
 ) {
 
     var modules = {
 
-            initOpen: function (config) {
+            initOpenCta: function () {
                 if (config.switches.openCta && config.page.commentable) {
                     var openCta = new OpenCta(mediator, {
                         discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
@@ -38,21 +53,48 @@ define([
                 });
             },
 
+            initFormStack: function () {
+                var allvars = urlutils.getUrlVars();
+
+                if (allvars.CMP) {
+                    $('.element-formstack').each(function (el) {
+                        el.src = el.src + '?CMP=' + allvars.CMP;
+                    });
+                }
+            },
+
             initTruncateAndTwitter: function () {
                 // Ensure that truncation occurs before the tweet upgrading.
                 truncate();
                 twitter.init();
                 twitter.enhanceTweets();
-            }
+            },
 
+            initRightHandComponent: function () {
+                var mainColumn = qwery('.js-content-main-column');
+                // only render when we have >1000px or more (enough space for ad + most popular)
+                if (mainColumn[0] && mainColumn[0].offsetHeight > 1000 && !detect.isBreakpoint('mobile')) {
+                    geoMostPopular.render();
+                }
+            },
+
+            initSelectionSharing: function () {
+                selectionSharing.init();
+            }
         },
 
-        ready = function (config) {
-            modules.initOpen(config);
+        ready = function () {
+            modules.initOpenCta();
             modules.initFence();
             modules.initTruncateAndTwitter();
+            modules.initRightHandComponent();
+            modules.initSelectionSharing();
+            modules.initFormStack();
+            richLinks.upgradeRichLinks();
+            richLinks.insertTagRichLink();
+            openModule.init();
 
-            mediator.emit('page:article:ready', config);
+            mediator.emit('page:article:ready');
         };
 
     return {

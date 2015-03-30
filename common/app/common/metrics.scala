@@ -122,6 +122,11 @@ object ContentApiMetrics {
     "Elastic Content api calls that timeout"
   )
 
+  object ContentApiErrorMetric extends CountMetric(
+    "content-api-errors",
+    "Number of times the Content API returns errors (not counting when circuit breaker is on)"
+  )
+
   object ContentApi404Metric extends CountMetric(
     "content-api-404",
     "Number of times the Content API has responded with a 404"
@@ -185,6 +190,11 @@ object FaciaMetrics {
   object FaciaToApplicationRedirectMetric extends CountMetric(
     "redirects-to-applications",
     "Number of requests to facia that have been redirected to Applications via X-Accel-Redirect"
+  )
+
+  object FaciaToRssRedirectMetric extends CountMetric(
+    "redirects-to-rss",
+    "Number of requests to Facia that have been redirected to RSS via X-Accel-Redirect"
   )
 }
 
@@ -336,6 +346,13 @@ object PerformanceMetrics {
   val dogPileMissMetric = CountMetric(
     "dogpile-miss",
     "Count of misses through use of DogPile action"
+  )
+}
+
+object WeatherMetrics {
+  val whatIsMyCityRequests = CountMetric(
+    "what-is-my-city-requests",
+    "Count of requests for user's location"
   )
 }
 

@@ -57,7 +57,11 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   def commentContext(id: Int, params: DiscussionParams): Future[(DiscussionKey, String)] = {
     def onError(r: WSResponse) =
       s"Discussion API: Cannot load comment context, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val apiUrl = s"$apiRoot/comment/$id/context?pageSize=${params.pageSize}&orderBy=${params.orderBy}"
+    val apiUrl = s"$apiRoot/comment/$id/context" +
+                   s"""?pageSize=${params.pageSize}
+                      |&orderBy=${params.orderBy}
+                      |${if(params.displayThreaded) "" else "&displayThreaded=false"}
+                      |""".stripMargin.replace("\n", "")
 
     getJsonOrError(apiUrl, onError) map { json =>
         (DiscussionKey((json \ "discussionKey").as[String]), (json \ "page").as[Int].toString)
@@ -161,12 +165,12 @@ object AuthHeaders {
 }
 
 case class DiscussionParams(
-  orderBy: String,
-  page: String,
-  pageSize: String,
-  topComments: Boolean,
-  maxResponses: Option[String],
-  displayThreaded: Boolean)
+  orderBy: String = "newest",
+  page: String = "1",
+  pageSize: String = "50",
+  topComments: Boolean = false,
+  maxResponses: Option[String] = None,
+  displayThreaded: Boolean = false)
 
 object DiscussionParams extends {
   def apply(request: RequestHeader): DiscussionParams = {
@@ -175,7 +179,6 @@ object DiscussionParams extends {
       page = request.getQueryString("page").getOrElse("1"),
       pageSize = request.getQueryString("pageSize").getOrElse("50"),
       maxResponses = request.getQueryString("maxResponses"),
-      topComments = request.getQueryString("topComments").exists(_ == "true"),
       displayThreaded = request.getQueryString("displayThreaded").exists(_ == "true")
     )
   }

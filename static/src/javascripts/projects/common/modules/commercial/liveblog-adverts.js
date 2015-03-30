@@ -1,22 +1,20 @@
 define([
     'bean',
     'bonzo',
-    'lodash/collections/contains',
-    'lodash/functions/debounce',
-    'lodash/functions/once',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
+    'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/dfp'
 ], function (
     bean,
     bonzo,
-    contains,
-    debounce,
-    once,
+    _,
     $,
     config,
     mediator,
+    createAdSlot,
     dfp
 ) {
 
@@ -74,7 +72,7 @@ define([
             var criteriaType;
             if (config.page.isDev) {
                 criteriaType = 'test';
-            } else if (contains(config.page.toneIds.split(','), 'tone/minutebyminute')) {
+            } else if (_.contains(config.page.toneIds.split(','), 'tone/minutebyminute')) {
                 criteriaType = 'minutebyminute';
             } else {
                 criteriaType = 'default';
@@ -91,7 +89,7 @@ define([
                     var displaySlot = adSlotNames.length,
                         // add the first ad slot we haven't already
                         $adSlot = displaySlot ?
-                            bonzo(dfp.createAdSlot(adSlotNames.shift(), 'liveblog-inline')) :
+                            bonzo(createAdSlot(adSlotNames.shift(), 'liveblog-inline')) :
                             // otherwise get the ad furthest down the page
                             $('.js-liveblog-body .ad-slot')
                                 .last()
@@ -107,13 +105,13 @@ define([
                     state = 'further';
                 }
             });
-            bean.on(document.body, 'mousemove', debounce(function () {
+            bean.on(document.body, 'mousemove', _.debounce(function () {
                 lastInteraction = new Date();
             }, 200));
         };
 
     return {
-        init: once(init)
+        init: _.once(init)
     };
 
 });

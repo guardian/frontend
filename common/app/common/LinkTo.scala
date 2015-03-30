@@ -1,5 +1,6 @@
 package common
 
+import layout.ContentCard
 import play.twirl.api.Html
 import play.api.mvc.{Result, AnyContent, Request, RequestHeader}
 import conf.Configuration
@@ -8,7 +9,6 @@ import org.jsoup.Jsoup
 import scala.collection.JavaConversions._
 import conf.Configuration.environment
 import dev.HttpSwitch
-
 
 /*
  * Builds absolute links to the core site (www.theguardian.com)
@@ -20,22 +20,24 @@ trait LinkTo extends Logging {
   private val AbsoluteGuardianUrl = "^http://www.theguardian.com/(.*)$".r
   private val AbsolutePath = "^/(.+)".r
   private val RssPath = "^/(.+)(/rss)".r
+  private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
-  def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request), Region(request))
-  def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request), Region(request))
+  def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
+  def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
 
-  def apply(url: String, edition: Edition, region: Option[Region] = None)(implicit request : RequestHeader): String = {
-    val processedUrl: String = processUrl(url, edition, region).url
+  def apply(url: String, edition: Edition)(implicit request : RequestHeader): String = {
+    val processedUrl: String = processUrl(url, edition).url
     handleQueryStrings(processedUrl)
   }
 
-  def handleQueryStrings(url: String)(implicit request : RequestHeader) = HttpSwitch.queryString(url).trim
+  def handleQueryStrings(url: String)(implicit request : RequestHeader) =
+    HttpSwitch.queryString(url).trim
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
 
-  def processUrl(url: String, edition: Edition, region: Option[Region] = None) = url match {
-    case "http://www.theguardian.com" => ProcessedUrl(homeLink(edition, region))
-    case "/" => ProcessedUrl(homeLink(edition, region))
+  def processUrl(url: String, edition: Edition) = url match {
+    case "http://www.theguardian.com" => ProcessedUrl(homeLink(edition))
+    case "/" => ProcessedUrl(homeLink(edition))
     case protocolRelative if protocolRelative.startsWith("//") => ProcessedUrl(protocolRelative)
     case AbsoluteGuardianUrl(path) =>  ProcessedUrl(urlFor(path, edition))
     case "/rss" => ProcessedUrl(urlFor("", edition) + "/rss")
@@ -45,32 +47,21 @@ trait LinkTo extends Logging {
   }
 
   def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = trail match {
-    case snap: Snap => snap.snapUrl.filter(_.nonEmpty).map(apply(_))
+    case snap: Snap => snap.snapHref.filter(_.nonEmpty).map(apply(_))
     case t: Trail => Option(apply(t.url))
   }
 
-  def getHrefWithRel(trail: Trail)(implicit request: RequestHeader): String = {
-    val urlToProcess = trail match {
-      case snap: Snap => snap.snapUrl.filter(_.nonEmpty)
-      case t: Trail => Option(t.url)
-    }
+  def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
+    faciaCard.url.get(request)
 
-    val processedUrlMaybe: Option[ProcessedUrl] = urlToProcess map { url =>
-      processUrl(url, Edition(request), Region(request))
-    }
+  private def urlFor(path: String, edition: Edition) = s"$host/${Editionalise(clean(path), edition)}"
 
-    processedUrlMaybe match {
-      case Some(ProcessedUrl(url, true)) => """href="%s" rel="nofollow"""".format(handleQueryStrings(url))
-      case Some(ProcessedUrl(url, false)) => """href="%s"""".format(handleQueryStrings(url))
-      case None => ""
-    }
+  private def clean(path: String) = path match {
+    case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books
+    case _ => path
   }
 
-  private def urlFor(path: String, edition: Edition) = s"$host/${Editionalise(path, edition)}"
-
-  private def homeLink(edition: Edition, region: Option[Region]) = region.map(_.id.toLowerCase)
-    .map(urlFor(_, edition))
-    .getOrElse(urlFor("", edition))
+  private def homeLink(edition: Edition) = urlFor("", edition)
 
   def redirectWithParameters(request: Request[AnyContent], realPath: String): Result = {
     val params = if (request.hasParameters) s"?${request.rawQueryString}" else ""
@@ -102,25 +93,6 @@ object LinkTo extends LinkTo {
     )
   }
 
-}
-
-object ClassicLink {
-
-  import java.net.URLEncoder.encode
-
-  def apply(page: MetaData)(implicit request: RequestHeader) = {
-
-    // quick fix for xx-alpha bug
-    val fixedId = page.id match {
-      case "uk-alpha" => "uk"
-      case "au-alpha" => "au"
-      case "us-alpha" => "us"
-      case id => id
-    }
-
-    val targetUrl = encode(LinkTo(s"/$fixedId?view=classic"), "UTF-8")
-    LinkTo{s"/preference/platform/classic?page=$targetUrl"}
-  }
 }
 
 class CanonicalLink {

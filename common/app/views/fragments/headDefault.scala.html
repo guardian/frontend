@@ -4,13 +4,7 @@
     <div class="gs-container">
         <div class="content__main-column">
 
-            <div class="content__labels">
-                <div class="content__section-label">
-                    <a class="content__section-label__link" data-link-name="article section" href="@LinkTo{/@content.section}">@Html(content.sectionName)</a>
-                </div>
-
-                @fragments.meta.metaInline(content)
-            </div>
+            @fragments.meta.metaInline(content)
 
             <h1 class="content__headline js-score" itemprop="headline">@Html(content.headline)</h1>
 
@@ -20,10 +14,6 @@
 
             @if(showBadge) {
                 @fragments.commercial.badge(content)
-            }
-
-            @if(content.isCommentable) {
-                <div class="content__head__comment-count content__head__comment-count--standfirst js-comment-count"></div>
             }
 
         </div>

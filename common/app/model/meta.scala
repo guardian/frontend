@@ -16,8 +16,9 @@ trait MetaData extends Tags {
   def description: Option[String] = None
   def rssPath: Option[String] = None
 
-  // i.e. show the link back to the desktop site
-  def hasClassicVersion: Boolean = !special
+  def hasSlimHeader: Boolean = contentType == "Interactive"
+
+  lazy val canonicalUrl: Option[String] = None
 
   // Special means "Next Gen platform only".
   private lazy val special = id.contains("-sp-")
@@ -34,10 +35,13 @@ trait MetaData extends Tags {
 
   lazy val isFront = false
   lazy val contentType = ""
+  lazy val hideUi = false
+  lazy val isImmersive = false
 
   def adUnitSuffix = section
 
   def hasPageSkin(edition: Edition) = false
+  lazy val isInappropriateForSponsorship: Boolean = false
 
   def isSurging: Seq[Int] = Seq(0)
 
@@ -46,12 +50,14 @@ trait MetaData extends Tags {
     ("section", JsString(section)),
     ("webTitle", JsString(webTitle)),
     ("buildNumber", JsString(buildNumber)),
-    ("revisionNumber", JsString(revision.take(7))),
+    ("revisionNumber", JsString(revision)),
     ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
     ("isSurging", JsString(isSurging.mkString(","))),
-    ("hasClassicVersion", JsBoolean(hasClassicVersion))
+    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature)),
+    ("videoJsFlashSwf", JsString(conf.Static("flash/components/video-js-swf/video-js.swf").path)),
+    ("videoJsVpaidSwf", JsString(conf.Static("flash/components/video-js-vpaid/video-js.swf").path))
   )
 
   def openGraph: Map[String, String] = Map(
@@ -60,6 +66,8 @@ trait MetaData extends Tags {
     "og:type"      -> "website",
     "og:url"       -> s"${Configuration.site.host}$url"
   )
+
+  def openGraphImages: Seq[String] = Seq()
 
   def cards: List[(String, String)] = List(
     "twitter:site" -> "@guardian",
@@ -73,9 +81,13 @@ trait MetaData extends Tags {
 
   def customSignPosting: Option[NavItem] = None
 
-  override lazy val isSponsored: Boolean = DfpAgent.isSponsored(tags, Some(section))
+  override def isSponsored(maybeEdition: Option[Edition]): Boolean =
+    DfpAgent.isSponsored(tags, Some(section), maybeEdition)
   override lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
   override lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(tags, Some(section))
+  lazy val isExpiredAdvertisementFeature: Boolean =
+    DfpAgent.isExpiredAdvertisementFeature(id, tags, Some(section))
+  lazy val sponsorshipTag: Option[Tag] = DfpAgent.sponsorshipTag(tags, Some(section))
 }
 
 class Page(
@@ -94,30 +106,56 @@ object Page {
     analyticsName: String,
     pagination: Option[Pagination] = None,
     description: Option[String] = None,
-    maybeContentType: Option[String] = None
+    maybeContentType: Option[String] = None,
+    maybeCanonicalUrl: Option[String] = None
   ) = new Page(id, section, webTitle, analyticsName, pagination, description) {
     override lazy val contentType = maybeContentType.getOrElse("")
-
+    override lazy val canonicalUrl = maybeCanonicalUrl
     override def metaData: Map[String, JsValue] =
       super.metaData ++ maybeContentType.map(contentType => List("contentType" -> JsString(contentType))).getOrElse(Nil)
   }
 }
 
+class TagCombiner(
+  id: String,
+  val leftTag: Tag,
+  val rightTag: Tag,
+  override val pagination: Option[Pagination] = None
+) extends Page(
+  id,
+  leftTag.section,
+  s"${leftTag.name} + ${rightTag.name}",
+  s"GFE:${leftTag.section}:${leftTag.name} + ${rightTag.name}",
+  pagination,
+  Some(GuardianContentTypes.TagIndex)
+)
+
+
 trait Elements {
 
   private val trailPicMinDesiredSize = 460
 
+  val AspectRatioThreshold = 0.01
+
   // Find a main picture crop which matches this aspect ratio.
-  def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] =
+  def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[ImageContainer] = {
+    val desiredAspectRatio = aspectWidth.toDouble / aspectHeight
+
     (thumbnail.find(_.imageCrops.exists(_.width >= trailPicMinDesiredSize)) ++ mainPicture ++ thumbnail)
-      .map{ image =>
-        image.imageCrops.filter{ crop => crop.aspectRatioWidth == aspectWidth && crop.aspectRatioHeight == aspectHeight } match {
-          case Nil   => None
-          case crops => Option(ImageContainer(crops, image.delegate, image.index))
-        }
+      .map { image =>
+      image.imageCrops.filter { crop =>
+        aspectHeight.toDouble * crop.width != 0 &&
+          Math.abs((aspectWidth.toDouble * crop.height) / (aspectHeight.toDouble * crop.width) - 1 ) <= AspectRatioThreshold
+      } match {
+        case Nil => None
+        case crops => Option(ImageContainer(crops, image.delegate, image.index))
       }
+    }
       .flatten
-      .headOption
+      .toList
+  }
+
+  def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] = trailPictureAll(aspectWidth, aspectHeight).headOption
 
   // trail picture is used on index pages (i.e. Fronts and tag pages)
   def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= trailPicMinDesiredSize))
@@ -202,6 +240,7 @@ trait Tags {
   private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.tagType == tagType)
 
   lazy val keywords: Seq[Tag] = tagsOfType("keyword")
+  lazy val nonKeywordTags: Seq[Tag] = tags.filterNot(_.tagType == "keyword")
   lazy val contributors: Seq[Tag] = tagsOfType("contributor")
   lazy val isContributorPage: Boolean = contributors.nonEmpty
   lazy val series: Seq[Tag] = tagsOfType("series")
@@ -209,13 +248,26 @@ trait Tags {
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
 
-  def isSponsored: Boolean
+  def isSponsored(maybeEdition: Option[Edition] = None): Boolean
   def hasMultipleSponsors: Boolean = DfpAgent.hasMultipleSponsors(tags)
   def isAdvertisementFeature: Boolean
   def hasMultipleFeatureAdvertisers: Boolean = DfpAgent.hasMultipleFeatureAdvertisers(tags)
   def isFoundationSupported: Boolean
   def hasInlineMerchandise: Boolean = DfpAgent.hasInlineMerchandise(tags)
+  lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
+  lazy val openModule: Option[String] = tags.flatMap(_.openModuleId).headOption
   def sponsor: Option[String] = DfpAgent.getSponsor(tags)
+  def sponsorshipType: Option[String] = {
+    if (isSponsored()) {
+      Option("sponsoredfeatures")
+    } else if (isAdvertisementFeature) {
+      Option("advertisement-features")
+    } else if (isFoundationSupported) {
+      Option("foundation-features")
+    } else {
+      None
+    }
+  }
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   /**
@@ -238,20 +290,45 @@ trait Tags {
   lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
   lazy val isMedia = types.exists(t => Tags.mediaTypes.contains(t.id))
   lazy val isAnalysis = tones.exists(_.id == Tags.Analysis)
-  lazy val isPodcast = types.exists(_.id == Tags.Podcast)
+  lazy val isPodcast = isAudio && (types.exists(_.id == Tags.Podcast) || tags.exists(_.podcast.isDefined))
+  lazy val isAudio = types.exists(_.id == Tags.Audio)
   lazy val isEditorial = tones.exists(_.id == Tags.Editorial)
+  lazy val isCartoon = types.exists(_.id == Tags.Cartoon)
+  lazy val isLetters = tones.exists(_.id == Tags.Letters)
+  lazy val isCrossword = types.exists(_.id == Tags.Crossword)
+
+  lazy val isArticle: Boolean = tags.exists { _.id == Tags.Article }
+  lazy val isSudoku: Boolean = tags.exists { _.id == Tags.Sudoku } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
+  lazy val isGallery: Boolean = tags.exists { _.id == Tags.Gallery }
+  lazy val isVideo: Boolean = tags.exists { _.id == Tags.Video }
+  lazy val isPoll: Boolean = tags.exists { _.id == Tags.Poll }
+  lazy val isImageContent: Boolean = tags.exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
+  lazy val isInteractive: Boolean = tags.exists { _.id == Tags.Interactive }
 
   lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.contributorLargeImagePath.nonEmpty).nonEmpty
 
   lazy val isCricketLiveBlog = isLiveBlog &&
     tags.exists(t => t.id == "sport/england-cricket-team") &&
     tags.exists(t => t.id == "sport/over-by-over-reports")
+
+  lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
 }
 
 object Tags {
   val Analysis = "tone/analysis"
-  val Podcast = "type/podcast"
+  val Audio = "type/audio"
+  val Cartoon = "type/cartoon"
+  val Crossword = "type/crossword"
   val Editorial = "tone/editorials"
+  val Letters = "tone/letters"
+  val Podcast = "type/podcast"
+
+  val Article = "type/article"
+  val Gallery = "type/gallery"
+  val Video = "type/video"
+  val Poll = "type/poll"
+  val Interactive = "type/interactive"
+  val Sudoku = "type/sudoku"
 
   object VisualTone {
     val Live = "live"
@@ -271,7 +348,8 @@ object Tags {
   val mediaTypes = Seq(
     "type/video",
     "type/audio",
-    "type/gallery"
+    "type/gallery",
+    "type/picture"
   )
 
   val featureMappings = Seq(

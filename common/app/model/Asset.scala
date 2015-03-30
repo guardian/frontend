@@ -1,20 +1,10 @@
 package model
 
-import com.gu.openplatform.contentapi.model.Asset
-import org.apache.commons.math3.fraction.Fraction
-import views.support.{Naked, ImgSrc}
-import scala.util.matching.Regex
+import com.gu.contentapi.client.model.Asset
+import views.support.{Orientation, Naked, ImgSrc}
 
-case class ImageAsset(private val delegate: Asset, index: Int) {
-
-  private lazy val fields: Map[String,String] = delegate.typeData
-  private lazy val aspectRatio: Fraction = {
-    val heightAsRatio: Int = height match {
-      case 0 => 1
-      case denom:Int => denom
-    }
-    new Fraction(width, heightAsRatio)
-  }
+case class ImageAsset(delegate: Asset, index: Int) {
+  private lazy val fields: Map[String, String] = delegate.typeData
 
   lazy val mediaType: String = delegate.`type`
   lazy val mimeType: Option[String] = delegate.mimeType
@@ -25,20 +15,20 @@ case class ImageAsset(private val delegate: Asset, index: Int) {
   lazy val thumbnail: Option[String] = fields.get("thumbnail")
   lazy val thumbnailPath: Option[String] = thumbnail.map(ImgSrc(_, Naked))
 
-  lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
-  lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(0)
+  lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(1)
+  lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(1)
+  lazy val ratio: Int = width/height
   lazy val role: Option[String] = fields.get("role")
+  lazy val orientation: Orientation = Orientation.fromDimensions(width, height)
 
   lazy val caption: Option[String] = fields.get("caption")
   lazy val altText: Option[String] = fields.get("altText")
+  lazy val mediaId: Option[String] = fields.get("mediaId")
 
   lazy val source: Option[String] = fields.get("source")
   lazy val photographer: Option[String] = fields.get("photographer")
   lazy val credit: Option[String] = fields.get("credit")
   lazy val displayCredit: Boolean = fields.get("displayCredit").exists(_=="true")
-
-  lazy val aspectRatioWidth: Int = aspectRatio.getNumerator
-  lazy val aspectRatioHeight: Int = aspectRatio.getDenominator
 }
 
 case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]) {
@@ -62,6 +52,7 @@ case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]
   lazy val blockVideoAds: Boolean = fields.get("blockAds").exists(_.toBoolean)
 
   lazy val source: Option[String] = fields.get("source")
+  lazy val embeddable: Boolean = fields.get("embeddable").exists(_.toBoolean)
   lazy val caption: Option[String] = fields.get("caption")
 }
 

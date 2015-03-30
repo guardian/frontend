@@ -11,23 +11,34 @@
     }
 }
 .ad-slot--dark {
-    background-color: lighten($c-mediaBackground, 2.5%);
+    background-color: lighten(colour(media-background), 2.5%);
 }
+.ad-slot--mobile {
+    @include mq(tablet) {
+        display: none;
+    }
+}
+.ad-slot--not-mobile {
+    @include mq($until: tablet) {
+        display: none;
+    }
+ }
+
 .ad-slot__label {
     height: $mpu-ad-label-height;
-    background-color: $c-neutral8;
+    background-color: colour(neutral-8);
     margin: 0 auto;
     padding: 0 ($gs-baseline/3)*2;
-    border-top: 1px solid $c-neutral5;
-    color: $c-neutral2-contrasted;
+    border-top: 1px solid colour(neutral-5);
+    color: colour(neutral-2-contrasted);
     text-align: right;
     @include box-sizing(border-box);
     font-family: $f-sans-serif-text;
     @include font-size(12, 20);
 
     .ad-slot--dark & {
-        color: $c-neutral3;
-        border-top-color: $c-neutral2;
+        color: colour(neutral-3);
+        border-top-color: colour(neutral-2);
         background-color: transparent;
     }
 }
@@ -35,19 +46,28 @@
 /**
  * Banner ads
  */
+
 .top-banner-ad-container--mobile {
     background-color: #f0f0f0;
 }
 .top-banner-ad-container--desktop {
-    background-color: $c-neutral8;
-    border-bottom: 2px solid $c-neutral4;
+    background-color: colour(neutral-8);
+    border-bottom: 2px solid colour(neutral-4);
     display: none;
 
-    @include mq(tablet) {
-        .js-on & {
-            display: block;
+    &.top-banner-ad-container--below-nav {
+        border-bottom-width: 1px;
+
+        .ad-slot--top-banner-ad {
+            width: 970px;
+            padding-left: 0;
+        }
+
+        .ad-slot__label {
+            width: 970px;
         }
     }
+
     .ad-slot__label {
         /* this is the minimum width of possible ads sizes */
         width: 728px;
@@ -64,6 +84,20 @@
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
         @include transition(height 1s cubic-bezier(0, 0, 0, .985));
+    }
+}
+.top-banner-ad-container--above-nav {
+    @include mq(tablet) {
+        .js-on & {
+            display: block;
+        }
+    }
+}
+.top-banner-ad-container--below-nav {
+    @include mq(desktop) {
+        .js-on & {
+            display: block;
+        }
     }
 }
 .ad-slot--top-banner-ad {
@@ -88,6 +122,14 @@
         min-height: 90 + ($gs-row-height / 2);
         padding-bottom: $gs-row-height / 2;
 
+        .ad-below-nav & {
+            min-height: 0;
+            padding-bottom: 0;
+
+            > div:last-of-type {
+                margin-bottom: $gs-row-height / 2;
+            }
+        }
         @include mq(tablet) {
             .js-on & {
                 display: block;
@@ -108,6 +150,10 @@
             }
         }
     }
+}
+/* horrible, but to centre align new doubleclick studio ads */
+.ad-slot--top > div > div {
+    margin: 0 auto;
 }
 
 /**
@@ -133,9 +179,17 @@
         background-color: transparent;
     }
 }
+.ad-slot--gallery-inline {
+    @include mq(mobileLandscape) {
+        width: 300px;
+    }
+    @include mq(tablet) {
+        width: auto;
+    }
+}
 .ad-slot--inline,
 .ad-slot--container-inline {
-    background-color: $c-neutral8;
+    background-color: colour(neutral-8);
 
     @include mq(tablet) {
         width: 300px;
@@ -149,47 +203,75 @@
     }
 }
 .ad-slot--container-inline {
+    .ad-slot__content {
+        margin: 0 auto;
+    }
     @include mq(tablet) {
-        margin: 0 $gs-gutter/2 0 auto;
-
+        position: relative;
+        height: auto;
+        margin: 0 $gs-gutter/2;
+        width: gs-span(4.5);
+        
+        .content-footer & {
+            width: 300px;
+        }
+        
         .linkslist-container & {
             position: absolute;
             top: 0;
             right: 0;
+        }
+
+        .ad-slot__label {
+            padding: 0 $gs-gutter;
+        }
+
+        .ad-slot__content {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            top: $mpu-ad-label-height;
+            height: 250px;
         }
     }
 }
 .ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
     @include mq(tablet) {
-        margin-top: $gs-baseline*2;
-        margin-bottom: $gs-baseline*2;
         padding-bottom: $gs-baseline*2;
+
+        & > div:not(.ad-slot__label) {
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
     }
 }
 .ad-slot--liveblog-inline {
-    background-color: $c-neutral6;
+    background-color: colour(neutral-6);
 
     .ad-slot__label {
-        color: $c-neutral2;
-        border-top-color: $c-neutral3;
+        color: colour(neutral-2);
+        border-top-color: colour(neutral-3);
     }
 }
 .ad-slot--mpu-banner-ad {
     display: none;
+    width: 300px;
     min-height: 250 + $mpu-ad-label-height;
     margin-bottom: $gs-baseline*2;
 
-    @include mq(rightCol) {
+    @include mq(desktop) {
         display: block;
     }
 }
 .ad-slot--sponsored {
     min-height: 250px;
     @include box-sizing(border-box);
-    background-color: $c-neutral8;
+    background-color: colour(neutral-8);
     overflow: hidden;
-    border-top: 1px solid $c-neutral5;
+    border-top: 1px solid colour(neutral-5);
     padding-top: $gs-baseline/2;
 }
 .ad-slot--sponsored__article {
@@ -199,7 +281,7 @@
     min-height: gs-height(2);
     padding: 0 $gs-gutter/2 $gs-baseline/2 (gs-span(2) + $gs-gutter);
     margin-bottom: $gs-baseline/2;
-    border-bottom: 1px solid $c-neutral5;
+    border-bottom: 1px solid colour(neutral-5);
 }
 .ad-slot--sponsored__image {
     position: absolute;
@@ -209,7 +291,7 @@
 .ad-slot--sponsored__article,
 .ad-slot--sponsored__label,
 .ad-slot--sponsored__help {
-    color: $c-neutral2;
+    color: colour(neutral-2);
 }
 .ad-slot--sponsored__article {
     @include f-headlineSans;
@@ -234,10 +316,8 @@
  */
 .ad-slot--commercial-component,
 .ad-slot--commercial-component-high {
-    min-height: 88px;
-
-    @include mq(wide) {
-        .has-page-skin & {
+    .has-page-skin & {
+        @include mq(wide) {
             margin-left: auto;
             margin-right: auto;
             width: gs-span(12) + ($gs-gutter*2);
@@ -267,11 +347,20 @@
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__help {
         @include fs-textSans(1);
-        color: $c-neutral2;
+        color: colour(neutral-2);
+    }
+    .ad-slot--paid-for-badge__help {
+        @include font-size(11, 14);
     }
     .ad-slot--paid-for-badge__header {
         margin: 0;
+        padding-top: $gs-baseline / 2;
         font-weight: bold;
+        clear: left;
+
+        &:first-child {
+            padding-top: 0;
+        }
     }
     .ad-slot--paid-for-badge__link,
     .ad-slot--paid-for-badge__logo {
@@ -291,29 +380,58 @@
 }
 .ad-slot--adbadge {
     .ad-slot--paid-for-badge__header,
-    .ad-slot--paid-for-badge__label,
     .ad-slot--paid-for-badge__help {
-        color: $c-neutral2-contrasted;
+        color: colour(neutral-2-contrasted);
     }
 }
+.ad-slot--im {
+    @include box-sizing(border-box);
+    max-width: 50%;
+    float: left;
+
+    @include mq(mobileLandscape) {
+        max-width: $left-column-wide + $gs-gutter;
+    }
+}
+.ad-slot--fobadge.ad-slot--im {
+    min-width: gs-span(2) + $gs-gutter;
+
+    .ad-slot--paid-for-badge__inner {
+        padding: $gs-baseline / 2 0 $gs-baseline;
+        border-top: 1px solid colour(neutral-3);
+        border-bottom: 1px dotted colour(neutral-3);
+    }
+ }
 .ad-slot--paid-for-badge--article {
-    border-bottom: 1px dotted $c-neutral5;
-    min-height: 135px;
+    padding-bottom: $gs-baseline * 2;
+    border-bottom: 1px dotted colour(neutral-5);
 
     @include mq(leftCol) {
+        min-height: 0;
         border-bottom-width: 0;
-        border-top: 1px dotted $c-neutral5;
+        border-top: 1px dotted colour(neutral-5);
     }
-}
-.ad-slot--paid-for-badge--live-blog {
-    @include mq(rightCol) {
-        padding-top: $gs-baseline*2;
+
+    @include mq(mobile, $until: leftCol) {
+        padding-bottom: $gs-baseline / 2;
+        .ad-slot--paid-for-badge__link {
+            margin-top: 6px;
+        }
+    }
+
+    .ad-slot--paid-for-badge__logo {
+        @include mq(mobile, $until: leftCol) {
+            max-height: 60px;
+        }
+    }
+    .content--media--video & {
+        min-height: 0;
     }
 }
 .ad-slot--paid-for-badge--interactive {
-    min-width: 140px;
+    width: 140px;
     min-height: 135px;
-    border-top: 1px dotted $c-neutral5;
+    border-top: 1px dotted colour(neutral-5);
 
     @include mq(tablet) {
         float: right;
@@ -322,58 +440,84 @@
 }
 .ad-slot--paid-for-badge--front {
     @include clearfix;
-    position: relative;
     min-height: 90px;
     z-index: auto;
 
+    .index-page & {
+        min-height: 0;
+    }
+
     @include mq(tablet) {
-        margin-left: 50%;
-        padding-top: 0;
-        margin-top: -$gs-row-height;
+        padding-left: $gs-gutter / 2;
     }
-    @include mq(desktop) {
-        margin-left: 62%;
-    }
-    .container--has-toggle & {
+
+    .fc-container--has-toggle & {
         @include mq(tablet, $until: leftCol) {
             margin-right: gs-span(1);
         }
     }
+    .commercial--dfp-single & {
+        margin: 0;
+    }
     .ad-slot--paid-for-badge__link {
         position: relative;
-        float: right;
+
+        &:after {
+            display: block;
+            height: 0;
+            width: $left-column + $gs-gutter;
+            content: '';
+            border-bottom: 1px dotted colour(neutral-5);
+            margin-top: $gs-gutter/4;
+
+            @include mq(leftCol) {
+                width: $left-column;
+            }
+
+            @include mq(wide) {
+                width: $left-column-wide;
+            }
+        }
 
         @include mq(mobile, $until: leftCol) {
-            margin-top: get-line-height(data, 3)*-1;
-
-            .ad-slot--commercial-component & {
-                margin-top: get-line-height(data, 3)*-2;
-            }
+            margin-top: 0;
+        }
+    }
+    .ad-slot--paid-for-badge__logo {
+        @include mq(mobile, $until: leftCol) {
+            max-height: 60px;
         }
     }
 
-    @mixin comm-paid-logo-placement {
+    @include mq(leftCol) {
         clear: left;
+        width: $left-column;
         padding: 0;
         margin: 0;
         float: left;
         min-height: 0;
         margin-top: 4px;
+        padding-top: 2px;
+        border-top: 1px dotted colour(neutral-5);
+
+        .commercial-dfp-multi & {
+            position: absolute;
+            bottom: $gs-gutter;
+        }
 
         .ad-slot--paid-for-badge__link {
             float: none;
             margin-top: $gs-row-height/4;
         }
     }
-
-    @include mq(leftCol) {
-        .l-side-margins--layout-content .ad-slot--commercial-component & {
-            @include comm-paid-logo-placement;
-        }
-        @include comm-paid-logo-placement;
+    @include mq(tablet, $until: leftCol) {
+        float: right;
+        clear: right;
+        width: $left-column + $gs-gutter;
     }
-    
     @include mq(wide) {
+        width: $left-column-wide;
+
         .has-page-skin & {
             margin-left: 50%;
             width: auto;
@@ -383,23 +527,27 @@
             .ad-slot--paid-for-badge__link {
                 float: right;
             }
-            &.ad-slot--adbadge .ad-slot--paid-for-badge__link {
-                margin-top: get-line-height(data, 3)*-2;
-            }
-            &.ad-slot--spbadge .ad-slot--paid-for-badge__link {
-                margin-top: get-line-height(data, 3)*-1;
-            }
         }
-        .has-page-skin .container--has-toggle & {
+        .has-page-skin .fc-container--has-toggle & {
             margin-right: gs-span(1);
         }
     }
+    @include mq($until: tablet) {
+        clear: both;
+        border-top: 1px dotted colour(neutral-5);
+
+        .fc-container--tag & {
+            width: gs-span(2);
+        }
+    }
 }
-.facia-container--sponsored .container:first-child,
-.facia-container--advertisement-feature .container:first-child,
-.container--sponsored,
-.container--advertisement-feature {
-    .container__header + .container__body {
+.fc-container--sponsored .fc-container:first-child,
+.fc-container--advertisement-feature .fc-container:first-child,
+.fc-container--foundation-supported .fc-container:first-child,
+.fc-container--sponsored,
+.fc-container--advertisement-feature,
+.fc-container--foundation-supported {
+    .fc-container__header + .fc-container__body {
         margin-top: 104px;
 
         @include mq(tablet) {

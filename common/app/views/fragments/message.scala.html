@@ -1,13 +1,10 @@
 @(page: model.MetaData)(implicit request: RequestHeader)
-@import conf.Switches.{SearchSwitch, ReleaseMessageSwitch, IdentityProfileNavigationSwitch}
-@import java.net.URLEncoder.encode
-@import common.ClassicLink
 
 <div class="site-message js-site-message is-hidden" data-link-name="release message" role="dialog" aria-label="welcome" aria-describedby="site-message__message">
     <div class="gs-container">
         <div class="site-message__inner js-site-message-inner">
             <div class="site-message__media">
-                <i class="i i-marque-36"></i>
+                @fragments.inlineSvg("marque-36", "icon")
             </div>
             <div class="site-message__copy js-site-message-copy u-cf">
 

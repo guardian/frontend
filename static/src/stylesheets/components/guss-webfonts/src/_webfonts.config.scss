@@ -15,19 +15,21 @@ $guss-webfonts-base-url: './' !default;
  *
  * @group webfonts
  */
-$guss-webfonts-version: '0.1.0' !default;
+$guss-webfonts-version: '1.0.0' !default;
 
 /**
  * Hinting
  *
- * - on: larger file, better rendering in Windows
+ * - cleartype: larger file, better rendering in Windows
+ * - auto: even larger file, better rendering in Windows in Chrome with
+ *   font-smoothing disabled (the default in XP pre-servicepack 1)
  * - off: smaller files, render well on HiDPI displays
  *
  *  @type String
  *
  * @group webfonts
  */
-$guss-webfonts-hinting: 'on' !default;
+$guss-webfonts-hinting: 'cleartype' !default;
 
 /**
  * Kerning
@@ -57,15 +59,11 @@ $guss-webfonts-charset: 'original' !default;
 /**
  * Complete path
  *
- * @requires {variable} guss-webfonts-charset
- * @requires {variable} guss-webfonts-hinting
- * @requires {variable} guss-webfonts-kerning
- *
  * @type String
  *
  * @group webfonts
  */
-$guss-webfonts-path: '#{$guss-webfonts-version}/hinting-#{$guss-webfonts-hinting}/kerning-#{$guss-webfonts-kerning}/#{$guss-webfonts-charset}/' !default;
+$guss-webfonts-path: false !default;
 
 
 /**

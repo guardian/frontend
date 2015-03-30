@@ -17,6 +17,8 @@ import sun.misc.BASE64Encoder
 import com.amazonaws.auth.AWSSessionCredentials
 import common.S3Metrics.S3ClientExceptionsMetric
 import com.gu.googleauth.UserIdentity
+import java.util.zip.GZIPOutputStream
+import java.io._
 
 trait S3 extends Logging {
 
@@ -58,25 +60,20 @@ trait S3 extends Logging {
     }
   }
 
-  def get(key: String)(implicit codec: Codec): Option[String] = try {
-    withS3Result(key) {
-      result => Source.fromInputStream(result.getObjectContent).mkString
-    }
+  def get(key: String)(implicit codec: Codec): Option[String] = withS3Result(key) {
+    result => Source.fromInputStream(result.getObjectContent).mkString
   }
 
-  def getWithLastModified(key: String): Option[(String, DateTime)] = try {
-    withS3Result(key) {
-      result =>
-        val content = Source.fromInputStream(result.getObjectContent).mkString
-        val lastModified = new DateTime(result.getObjectMetadata.getLastModified)
-        (content, lastModified)
-    }
+
+  def getWithLastModified(key: String): Option[(String, DateTime)] = withS3Result(key) {
+    result =>
+      val content = Source.fromInputStream(result.getObjectContent).mkString
+      val lastModified = new DateTime(result.getObjectMetadata.getLastModified)
+      (content, lastModified)
   }
 
-  def getLastModified(key: String): Option[DateTime] = try {
-    withS3Result(key) {
-      result => new DateTime(result.getObjectMetadata.getLastModified)
-    }
+  def getLastModified(key: String): Option[DateTime] = withS3Result(key) {
+    result => new DateTime(result.getObjectMetadata.getLastModified)
   }
 
   def putPublic(key: String, value: String, contentType: String) {
@@ -85,6 +82,39 @@ trait S3 extends Logging {
 
   def putPrivate(key: String, value: String, contentType: String) {
     put(key: String, value: String, contentType: String, Private)
+  }
+
+  def putPrivateGzipped(key: String, value: String, contentType: String) {
+    putGzipped(key: String, value: String, contentType: String, Private)
+  }
+
+  private def putGzipped(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList) {
+    lazy val request = {
+      val metadata = new ObjectMetadata()
+
+      metadata.setCacheControl("no-cache,no-store")
+      metadata.setContentType(contentType)
+      metadata.setContentEncoding("gzip")
+
+      val valueAsBytes = value.getBytes("UTF-8")
+      val os = new ByteArrayOutputStream()
+      val gzippedStream = new GZIPOutputStream(os)
+      gzippedStream.write(valueAsBytes)
+      gzippedStream.flush()
+      gzippedStream.close()
+
+      metadata.setContentLength(os.size())
+
+      new PutObjectRequest(bucket, key, new ByteArrayInputStream(os.toByteArray), metadata).withCannedAcl(accessControlList)
+    }
+
+    try {
+      client.foreach(_.putObject(request))
+    } catch {
+      case e: Exception =>
+        S3ClientExceptionsMetric.increment()
+        throw e
+    }
   }
 
   private def put(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList) {
@@ -125,7 +155,7 @@ object S3FrontsApi extends S3 {
   def getBlock(id: String) = get(s"$location/collection/$id/collection.json")
   def listConfigsIds: List[String] = getConfigIds(s"$location/config/")
   def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")
-  def putBlock(id: String, json: String) =
+  def putCollectionJson(id: String, json: String) =
     putPublic(s"$location/collection/$id/collection.json", json, "application/json")
 
   def archive(id: String, json: String, identity: UserIdentity) = {
@@ -156,10 +186,10 @@ object S3FrontsApi extends S3 {
   def getCollectionIds(prefix: String): List[String] = getListing(prefix, "/collection.json")
 
   def putLivePressedJson(path: String, json: String) =
-    putPrivate(getLivePressedKeyForPath(path), json, "application/json")
+    putPrivateGzipped(getLivePressedKeyForPath(path), json, "application/json")
 
   def putDraftPressedJson(path: String, json: String) =
-    putPrivate(getDraftPressedKeyForPath(path), json, "application/json")
+    putPrivateGzipped(getDraftPressedKeyForPath(path), json, "application/json")
 
   def getPressedLastModified(path: String): Option[String] =
     getLastModified(getLivePressedKeyForPath(path)).map(_.toString)
@@ -226,3 +256,11 @@ object S3Archive extends S3 {
  override lazy val bucket = "aws-frontend-archive"
  def getHtml(path: String) = get(path)
 }
+
+object S3Infosec extends S3 {
+  override lazy val bucket = "aws-frontend-infosec"
+  val key = "blocked-email-domains.txt"
+  def getBlockedEmailDomains = get(key)
+}
+
+

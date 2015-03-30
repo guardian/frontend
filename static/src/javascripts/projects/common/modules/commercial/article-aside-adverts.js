@@ -1,35 +1,33 @@
 define([
-    'qwery',
-    'lodash/objects/defaults',
-    'lodash/functions/once',
+    'fastdom',
+    'Promise',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
-    'common/modules/commercial/dfp'
+    'common/modules/commercial/create-ad-slot'
 ], function (
-    qwery,
-    defaults,
-    once,
+    fastdom,
+    Promise,
+    _,
     $,
     $css,
-    globalConfig,
-    dfp
+    config,
+    createAdSlot
 ) {
-
-    function init(c) {
+    function init(options) {
         var $mainCol, adType,
-            config = defaults(
-                c || {},
-                globalConfig,
+            opts = _.defaults(
+                options || {},
                 {
-                    columnSelector: '.content__secondary-column',
-                    adSlotContainerSelector: '.js-mpu-ad-slot',
-                    switches: {},
-                    page: {}
+                    columnSelector: '.js-secondary-column',
+                    adSlotContainerSelector: '.js-mpu-ad-slot'
                 }
             ),
-            $col = $(config.columnSelector),
-            colIsHidden = $col.length && $css($col, 'display') === 'none';
+            $col        = $(opts.columnSelector),
+            colIsHidden = $col.length && $css($col, 'display') === 'none',
+            $componentsContainer,
+            $adSlotContainer;
 
         // is the switch off, or not an article, or the secondary column hidden
         if (!config.switches.standardAdverts || !/Article|LiveBlog/.test(config.page.contentType) || colIsHidden) {
@@ -37,21 +35,37 @@ define([
         }
 
         $mainCol = config.page.contentType === 'Article' ? $('.js-content-main-column') : false;
-        adType   = !$mainCol.length || $mainCol.dim().height >= 600 ? 'right' : 'right-small';
+        $componentsContainer = $('.js-components-container', '.js-secondary-column');
+        $adSlotContainer = $(opts.adSlotContainerSelector);
 
-        return $(config.adSlotContainerSelector)
-            .append(dfp.createAdSlot(adType, 'mpu-banner-ad'));
+        return new Promise(function (resolve) {
+            fastdom.read(function () {
+                if (
+                    !$mainCol.length ||
+                    (config.page.section !== 'football' && $mainCol.dim().height >= 1300) ||
+                    (config.page.section === 'football' && $mainCol.dim().height >= 2200)
+                ) {
+                    adType = 'right-sticky';
+                } else if ($mainCol.dim().height >= 600) {
+                    adType = 'right';
+                } else {
+                    adType = 'right-small';
+                }
+
+                fastdom.write(function () {
+                    if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {
+                        $componentsContainer.addClass('u-h');
+                    }
+
+                    $adSlotContainer.append(createAdSlot(adType, 'mpu-banner-ad'));
+
+                    resolve($adSlotContainer);
+                });
+            });
+        });
     }
 
     return {
-
-        init: once(init),
-
-        // for testing
-        reset: function () {
-            this.init = once(init);
-        }
-
+        init: init
     };
-
 });

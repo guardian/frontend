@@ -1,11 +1,12 @@
 @import conf.Switches._
 
-<div class="top-banner-ad-container top-banner-ad-container--desktop">
+<div class="top-banner-ad-container top-banner-ad-container--desktop top-banner-ad-container--above-nav">
     @fragments.commercial.standardAd(
         "top-above-nav",
-        Seq("top-banner-ad"), Map(
-            "mobile" -> Seq("88,70", "728,90"),
-            "desktop" -> Seq("88,70", "728,90", "940,230", "900,250", "970,250")
+        Seq("top-banner-ad"),
+        Map(
+            "mobile" -> Seq("1,1", "88,70", "728,90"),
+            "desktop" -> Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
         )
     )
 </div>

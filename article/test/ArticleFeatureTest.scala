@@ -149,12 +149,12 @@ import collection.JavaConversions._
       }
     }
 
-    scenario("Poster image on embedded video", ArticleComponents) {
-      goTo("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
-        import browser._
-        findFirst("video").getAttribute("poster") should endWith("Westgate-shopping-centre--016.jpg")
-      }
-    }
+    // scenario("Poster image on embedded video", ArticleComponents) {
+    //   goTo("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
+    //     import browser._
+    //     findFirst("video").getAttribute("poster") should endWith("Westgate-shopping-centre--016.jpg")
+    //   }
+    // }
 
     scenario("Display the article publication date", ArticleComponents) {
 
@@ -163,7 +163,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see the publication date of the article")
-        findFirst(".content__dateline").getText should be("Monday 6 August 2012 20.30 BST")
+        findFirst(".content__dateline-wpd").getText should be("Monday 6 August 2012 20.30 BST")
         findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00+0100")
       }
     }
@@ -223,12 +223,11 @@ import collection.JavaConversions._
 
         Then("I should see pictures in the body of the article")
 
-        $("figure[itemprop=associatedMedia]").length should be(2)
+        $(".content__article-body .element-image").length should be(2)
 
-        val inBodyImage = findFirst("figure[itemprop=associatedMedia]")
+        val inBodyImage = findFirst(".content__article-body .element-image")
 
         ImageServerSwitch.switchOn()
-        inBodyImage.getAttribute("class") should include("img--extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
           endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
@@ -341,15 +340,13 @@ import collection.JavaConversions._
         Then("the ad slot placeholder is rendered")
         val adPlaceholder = $(".ad-slot--top-banner-ad")
 
-        System.out.println(adPlaceholder);
-
         And("the placeholder has the correct data attributes")
         adPlaceholder.getAttribute("data-name") should be("top-above-nav")
-        adPlaceholder.getAttribute("data-mobile") should be("88,70|728,90")
-        adPlaceholder.getAttribute("data-desktop") should be("88,70|728,90|940,230|900,250|970,250")
+        adPlaceholder.getAttribute("data-mobile") should be("1,1|88,70|728,90")
+        adPlaceholder.getAttribute("data-desktop") should be("1,1|88,70|728,90|940,230|900,250|970,250")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--dfp ad-slot--top-above-nav ad-slot--top-banner-ad")
+        adPlaceholder.getAttribute("class") should be("js-ad-slot ad-slot ad-slot--dfp ad-slot--top-above-nav ad-slot--top-banner-ad")
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-above-nav")
@@ -357,29 +354,6 @@ import collection.JavaConversions._
 
       // put it back in the state we found it
       StandardAdvertsSwitch.switchOff()
-    }
-
-    scenario("Navigate to the classic site (UK edition - www.guardian.co.uk)") {
-      Given("I'm on article entitled 'We must capitalise on a low-carbon future'")
-      And("I am using the UK edition")
-      goTo("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
-        import browser._
-
-        Then("I should see a link to the corresponding classic article")
-        findFirst(".js-main-site-link").getAttribute("href") should be(classicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
-      }
-    }
-
-    scenario("Navigate to the classic site (US edition - www.guardiannews.com)") {
-      Given("I'm on article entitled 'We must capitalise on a low-carbon future'")
-      And("I am using the US edition")
-      US("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
-        import browser._
-
-        Then("I should see a link to the corresponding classic article")
-        findFirst(".js-main-site-link").getAttribute("href") should
-          be(classicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
-      }
     }
 
     scenario("Direct link to paragraph") {
@@ -390,7 +364,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see paragraph 16")
-        findFirst("#block-16").getText should startWith("11.31am: Vince Cable, the business secretary")
+        findFirst("#block-16").getText should startWith("11.31am:Vince Cable, the business secretary")
       }
     }
 
@@ -403,16 +377,16 @@ import collection.JavaConversions._
       }
     }
 
-    scenario("Hide main picture if video is at start of article") {
-      Given("I am on an article with a video at the start of the body")
-      goTo("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
-        import browser._
-        Then("the main picture should be hidden")
-        $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
-
-        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309869688/Jeremy-Hunt-announcing-ch-016.jpg")
-      }
-    }
+//    scenario("Hide main picture if video is at start of article") {
+//      Given("I am on an article with a video at the start of the body")
+//      goTo("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
+//        import browser._
+//        Then("the main picture should be hidden")
+//        $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
+//
+//        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309869688/Jeremy-Hunt-announcing-ch-016.jpg")
+//      }
+//    }
 
     scenario("SEO Thumbnail") {
       goTo("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
@@ -424,18 +398,18 @@ import collection.JavaConversions._
       }
     }
 
-    scenario("Show main picture if video is further down article") {
-      Given("I am on an article with a video further down inside the body")
-      goTo("/music/musicblog/2013/mar/28/glastonbury-2013-lineup-everybody-happy") { browser =>
-        import browser._
-
-        Then("the main picture should be shown")
-        $("[itemprop='contentURL representativeOfPage']") should have size 1
-
-        And("the embedded video should not have a poster when there are no images in the video element")
-        findFirst("video").getAttribute("poster") should be("")
-      }
-    }
+//    scenario("Show main picture if video is further down article") {
+//      Given("I am on an article with a video further down inside the body")
+//      goTo("/music/musicblog/2013/mar/28/glastonbury-2013-lineup-everybody-happy") { browser =>
+//        import browser._
+//
+//        Then("the main picture should be shown")
+//        $("[itemprop='contentURL representativeOfPage']") should have size 1
+//
+//        And("the embedded video should not have a poster when there are no images in the video element")
+//        findFirst("video").getAttribute("poster") should be("")
+//      }
+//    }
 
     scenario("Show embedded video in live blogs") {
       Given("I am on a live blog with an embedded video")
@@ -450,15 +424,6 @@ import collection.JavaConversions._
       goTo("/football/live/2014/aug/03/arsenal-v-monaco-emirates-cup-live") { browser =>
         withClue("There should be no 'classic version' link") {
           browser.find(".js-main-site-link") should be(empty)
-        }
-      }
-    }
-
-    scenario("Show 'classic' link on non-Football live blogs") {
-      goTo("/business/blog/live/2014/aug/20/bank-of-england-minutes-to-shed-light-on-interest-rate-rises-business-live") { browser =>
-        import browser._
-        withClue("There should be a 'classic version' link") {
-          browser.find(".js-main-site-link") should not be empty
         }
       }
     }
@@ -489,10 +454,10 @@ import collection.JavaConversions._
       goTo("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
 
-        val mailShareUrl = s"mailto:?subject=Mark%20Kermode%27s%20DVD%20round-up&body=http%3A%2F%2Flocalhost%3A${port}%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
-        val fbShareUrl = s"https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A${port}%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&ref=responsive"
-        val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark+Kermode%27s+DVD+round-up&url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Ftw"
-        val gplusShareUrl = s"https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A${port}%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&hl=en-GB&wwc=1"
+        val mailShareUrl = "mailto:?subject=Mark%20Kermode's%20DVD%20round-up&body=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsbl"
+        val fbShareUrl = "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsfb&ref=responsive"
+        val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark+Kermode%27s+DVD+round-up&url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fstw"
+        val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Fsgp&amp;hl=en-GB&amp;wwc=1"
 
         Then("I should see buttons for my favourite social network")
         findFirst(".social__item[data-link-name=email] .social__action").getAttribute("href") should be(mailShareUrl)
@@ -523,7 +488,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see the main ARIA roles described")
-        findFirst(".related__container").getAttribute("role") should be("complementary")
+        findFirst(".related").getAttribute("role") should be("complementary")
         findFirst("aside").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
         findFirst(".l-footer__secondary").getAttribute("role") should be("contentinfo")
@@ -532,8 +497,18 @@ import collection.JavaConversions._
         browser.find("nav", 1).getAttribute("role") should be("navigation")
         browser.find("nav", 1).getAttribute("aria-label") should not be empty
         findFirst("#article").getAttribute("role") should be("main")
-        findFirst(".related__container").getAttribute("role") should be("complementary")
-        findFirst(".related__container").getAttribute("aria-labelledby") should be("related-content-head")
+        findFirst(".related").getAttribute("aria-labelledby") should be("related-content-head")
+      }
+    }
+
+    scenario("Progressive related content") {
+      Given("I visit a Guardian article page")
+      goTo("/technology/askjack/2015/feb/05/how-should-i-upgrade-my-old-hi-fi-in-a-digital-world") { browser =>
+        import browser._
+
+        Then("There should be a placeholder for related content")
+        val relatedLink = findFirst("[data-test-id=related-content]")
+        relatedLink.getText() should be (empty)
       }
     }
 
@@ -544,7 +519,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see a fancy gallery trail")
-        $(".item--gallery") should have size 1
+        $(".fc-item--gallery") should have size 1
       }
 
     }
@@ -555,7 +530,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see link to most popular in the article section")
-        $(".js-popular a") should have size 1
+        $("[data-link-name=most-popular] a") should have size 1
       }
     }
 
@@ -566,7 +541,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see links to keywords")
-        $(".keyword-list a").size should be(18)
+        $(".keyword-list a").size should be(16)
       }
     }
 
@@ -612,25 +587,6 @@ import collection.JavaConversions._
       }
     }
 
-
-    scenario("'Classic' link") {
-      Given("I am on a piece of content that has an R2 version")
-      goTo("/world/2014/mar/24/egypt-death-sentence-529-morsi-supporters") { browser =>
-        import browser._
-        Then("I should see a 'Classic' link")
-        $(".js-main-site-link").isEmpty should be(false)
-      }
-    }
-
-    scenario("Remove 'Classic' link") {
-      Given("I am on a piece of content that is only Next Gen")
-      goTo("/science/antarctica-live/2014/feb/28/-sp-rescue-from-antarctica") { browser =>
-        import browser._
-        Then("I should not see a 'Classic' link")
-        $(".js-main-site-link").isEmpty should be(true)
-      }
-    }
-
     scenario("Display breadcrumbs correctly") {
       Given("I am on a piece of content with a primary nav, secondary nav and a key woro")
       goTo("/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism") { browser =>
@@ -652,7 +608,7 @@ import collection.JavaConversions._
         Then("I should see three breadcrumbs")
         $(".breadcrumb .signposting__item").size() should be(2)
 
-        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Comment"))
+        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Opinion"))
         link.length should be > 0
         val link2 = browser.find(".breadcrumb .signposting__item a", withText().contains("Heritage"))
         link2.length should be > 0
@@ -667,6 +623,30 @@ import collection.JavaConversions._
         val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Observer Ethical Awards"))
         link.length should be > 0
       }
+    }
+
+    scenario("Outbrain") {
+
+      Given("I am on an article")
+      goTo("/society/2014/oct/15/lord-freud-unreserved-apology-comment-disabled-people-mimimu-wage") {
+        browser =>
+          import browser._
+          Then("Then the Outbrain placeholder should be rendered")
+          var outbrainPlaceholder = $(".OUTBRAIN")
+          outbrainPlaceholder.length should be(1)
+          outbrainPlaceholder.getAttribute("data-src") should be("DROP_PERMALINK_HERE")
+          outbrainPlaceholder.getAttribute("data-ob-template") should be("guardian")
+      }
+
+      Given("I am on a live blog")
+      goTo("/politics/blog/live/2014/oct/15/cameron-and-miliband-at-pmqs-politics-live-blog") {
+        browser =>
+          import browser._
+          Then("Then the Outbrain placeholder should not be rendered")
+          $(".OUTBRAIN").isEmpty should be(true)
+
+      }
+
     }
 
   }

@@ -1,95 +1,80 @@
 define([
-    'common/utils/_',
     'bean',
     'bonzo',
     'qwery',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
-    'common/utils/url',
     'common/utils/config',
-    'common/utils/mediator',
-    'common/utils/fsm',
     'common/utils/detect',
+    'common/utils/fsm',
+    'common/utils/mediator',
+    'common/utils/template',
+    'common/utils/url',
     'common/modules/component',
+    'common/modules/ui/blockSharing',
     'common/modules/ui/images',
-    'common/utils/template'
+    'text!common/views/content/block-sharing.html',
+    'text!common/views/content/button.html',
+    'text!common/views/content/endslate.html',
+    'text!common/views/content/loader.html',
+    'text!common/views/content/share-button.html',
+    'text!common/views/content/share-button-mobile.html'
 ], function (
-    _,
     bean,
     bonzo,
     qwery,
+    _,
     $,
     ajax,
-    url,
     config,
-    mediator,
-    FiniteStateMachine,
     detect,
+    FiniteStateMachine,
+    mediator,
+    template,
+    url,
     Component,
+    blockSharing,
     imagesModule,
-    template
+    blockSharingTpl,
+    buttonTpl,
+    endslateTpl,
+    loaderTpl,
+    shareButtonTpl,
+    shareButtonMobileTpl
 ) {
+
     function GalleryLightbox() {
 
         // CONFIG
-        this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site';
+        this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site' && config.page.contentType === 'Gallery';
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
 
         // TEMPLATE
         function generateButtonHTML(label) {
-            var tmpl =
-                '<div class="gallery-lightbox__btn gallery-lightbox__btn--{{label}} js-gallery-{{label}}">' +
-                    '<button class="gallery-lightbox__btn-body"><i></i>{{label}}</button>' +
-                '</div>';
+            var tmpl = buttonTpl;
             return template(tmpl, {label: label});
         }
 
-        this.endslateHTML =
-            '<li class="gallery-lightbox__item gallery-lightbox__item--endslate js-gallery-slide">' +
-                '<div class="gallery-lightbox__endslate js-gallery-endslate"></div>' +
-            '</li>';
-
-        this.loaderHTML =
-            '<div class="pamplemousse gallery-lightbox__loader js-loader">' +
-                '<div class="pamplemousse__pip"><i></i></div>' +
-                '<div class="pamplemousse__pip"><i></i></div>' +
-                '<div class="pamplemousse__pip"><i></i></div>' +
-            '</div>';
-
-        this.imgElementHtml =
-            '<li class="gallery-lightbox__item gallery-lightbox__item--img js-gallery-slide">' +
-                '<div class="gallery-lightbox__img-container"><img class="gallery-lightbox__img js-gallery-lightbox-img""></div>' +
-                '<div class="gallery-lightbox__info js-gallery-lightbox-info">' +
-                    '<div class="gallery-lightbox__progress gallery-lightbox__progress--info">' +
-                        '<span class="gallery-lightbox__index">{{index}}</span>' +
-                        '<span class="gallery-lightbox__progress-separator"></span>' +
-                        '<span class="gallery-lightbox__count">{{count}}</span>' +
-                    '</div>' +
-                    '<div class="gallery-lightbox__img-caption">{{caption}}</div>' +
-                    '<div class="gallery-lightbox__img-credit">{{credit}}</div>' +
-                '</div>' +
-            '</li>';
-
-
         this.galleryLightboxHtml =
             '<div class="overlay gallery-lightbox gallery-lightbox--closed gallery-lightbox--hover">' +
-                '<div class="gallery-lightbox__sidebar">' +
-                    generateButtonHTML('close') +
-                    '<div class="gallery-lightbox__progress  gallery-lightbox__progress--sidebar">' +
-                        '<span class="gallery-lightbox__index js-gallery-index"></span>' +
-                        '<span class="gallery-lightbox__progress-separator"></span>' +
-                        '<span class="gallery-lightbox__count js-gallery-count"></span>' +
-                    '</div>' +
-                    generateButtonHTML('next') +
-                    generateButtonHTML('prev') +
-                    generateButtonHTML('info-button') +
-                '</div>' +
+            '<div class="gallery-lightbox__sidebar">' +
+            generateButtonHTML('close') +
+            '<div class="gallery-lightbox__progress  gallery-lightbox__progress--sidebar">' +
+            '<span class="gallery-lightbox__index js-gallery-index"></span>' +
+            '<span class="gallery-lightbox__progress-separator"></span>' +
+            '<span class="gallery-lightbox__count js-gallery-count"></span>' +
+            '</div>' +
+            generateButtonHTML('next') +
+            generateButtonHTML('prev') +
+            generateButtonHTML('info-button') +
+            '</div>' +
 
-                '<div class="js-gallery-swipe gallery-lightbox__swipe-container">' +
-                    '<ul class="gallery-lightbox__content js-gallery-content">' +
-                    '</ul>' +
-                '</div>' +
+            '<div class="js-gallery-swipe gallery-lightbox__swipe-container">' +
+            '<ul class="gallery-lightbox__content js-gallery-content">' +
+            '</ul>' +
+            '</div>' +
 
             '</div>';
 
@@ -108,13 +93,13 @@ define([
         bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev'));
         bean.on(this.closeBtn, 'click', this.close.bind(this));
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
-        this.handleKeyEvents = this._handleKeyEvents.bind(this); // bound for event handler
+        this.handleKeyEvents = this.handleKeyEvents.bind(this); // bound for event handler
         this.resize = this.trigger.bind(this, 'resize');
-        this.toggleInfo = function(e) {
+        this.toggleInfo = function (e) {
             var infoPanelClick =
                 bonzo(e.target).hasClass('js-gallery-lightbox-info') ||
                 $.ancestor(e.target, 'js-gallery-lightbox-info');
-            if (!infoPanelClick){
+            if (!infoPanelClick) {
                 this.trigger('toggle-info');
             }
         }.bind(this);
@@ -123,7 +108,7 @@ define([
             this.disableHover();
         }
 
-        bean.on(window, 'popstate', function(event) {
+        bean.on(window, 'popstate', function (event) {
             if (!event.state) {
                 this.trigger('close');
             }
@@ -132,7 +117,7 @@ define([
         // FSM CONFIG
         this.fsm = new FiniteStateMachine({
             initial: 'closed',
-            onChangeState: function(oldState, newState) {
+            onChangeState: function (oldState, newState) {
                 this.$lightboxEl
                     .removeClass('gallery-lightbox--' + oldState)
                     .addClass('gallery-lightbox--' + newState);
@@ -142,29 +127,49 @@ define([
         });
     }
 
-    GalleryLightbox.prototype.generateImgHTML = function(img, i) {
-        return template(this.imgElementHtml, {
+    GalleryLightbox.prototype.generateImgHTML = function (img, i) {
+        var blockShortUrl = config.page.shortUrl,
+            urlPrefix = img.src.indexOf('//') === 0 ? 'http:' : '',
+            shareItems = [{
+                'text': 'Facebook',
+                'css': 'facebook',
+                'url': 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(blockShortUrl + '/sfb#img-' + i)
+            }, {
+                'text': 'Twitter',
+                'css': 'twitter',
+                'url': 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(config.page.webTitle) + '&url=' + encodeURIComponent(blockShortUrl + '/stw#img-' + i)
+            }, {
+                'text': 'Pinterest',
+                'css': 'pinterest',
+                'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + urlPrefix + img.src)
+            }];
+
+        return template(blockSharingTpl.replace(/^\s+|\s+$/gm, ''), {
+            articleType: 'gallery',
             count: this.images.length,
             index: i,
             caption: img.caption,
-            credit: img.displayCredit ? img.credit : ''
+            credit: img.displayCredit ? img.credit : '',
+            blockShortUrl: blockShortUrl,
+            shareButtons: _.map(shareItems, template.bind(null, shareButtonTpl)).join(''),
+            shareButtonsMobile: _.map(shareItems, template.bind(null, shareButtonMobileTpl)).join('')
         });
     };
 
-    GalleryLightbox.prototype.initSwipe = function() {
+    GalleryLightbox.prototype.initSwipe = function () {
 
-        var threshold, ox, dx,
+        var threshold, ox, dx, touchMove,
             updateTime = 20; // time in ms
 
-        bean.on(this.$swipeContainer[0], 'touchstart', function(e) {
+        bean.on(this.$swipeContainer[0], 'touchstart', function (e) {
             threshold = this.swipeContainerWidth * this.swipeThreshold;
             ox = e.touches[0].pageX;
             dx = 0;
         }.bind(this));
 
-        var touchMove = function(e) {
+        touchMove = function (e) {
             e.preventDefault();
-            if ( e.touches.length > 1 || e.scale && e.scale !== 1) {
+            if (e.touches.length > 1 || e.scale && e.scale !== 1) {
                 return;
             }
             dx = e.touches[0].pageX - ox;
@@ -173,7 +178,7 @@ define([
 
         bean.on(this.$swipeContainer[0], 'touchmove', _.throttle(touchMove, updateTime, {trailing: false}));
 
-        bean.on(this.$swipeContainer[0], 'touchend', function() {
+        bean.on(this.$swipeContainer[0], 'touchend', function () {
             var direction;
             if (Math.abs(dx) > threshold) {
                 direction = dx > threshold ? 1 : -1;
@@ -193,15 +198,15 @@ define([
         }.bind(this));
     };
 
-    GalleryLightbox.prototype.disableHover = function() {
+    GalleryLightbox.prototype.disableHover = function () {
         this.$lightboxEl.removeClass('gallery-lightbox--hover');
     };
 
-    GalleryLightbox.prototype.trigger = function(event, data) {
+    GalleryLightbox.prototype.trigger = function (event, data) {
         this.fsm.trigger(event, data);
     };
 
-    GalleryLightbox.prototype.loadGalleryfromJson = function(galleryJson, startIndex) {
+    GalleryLightbox.prototype.loadGalleryfromJson = function (galleryJson, startIndex) {
         this.index = startIndex;
         if (this.galleryJson && galleryJson.id === this.galleryJson.id) {
             this.trigger('open');
@@ -210,33 +215,23 @@ define([
         }
     };
 
-    GalleryLightbox.prototype.getImgSrc = function(imgJson, width, height) {
-        var possibleWidths = _.filter(imagesModule.availableWidths, function(w) {
-            var widthBigger = w > width,
-                calculatedHeight = (w/imgJson.ratio),
-                heightBigger =  calculatedHeight > height;
-            return widthBigger || heightBigger;
-        }).sort(function(a,b){ return a > b; }),
-            chosenWidth = possibleWidths.length ? possibleWidths[0] : '-';
+    GalleryLightbox.prototype.loadSurroundingImages = function (index, count) {
 
-        return imgJson.src.replace('{width}', chosenWidth);
-    };
+        var imageContent, $img, $parent;
+        _([-1, 0, 1]).map(function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; })
+            .each(function (i) {
+                imageContent = this.images[i];
+                $img = bonzo(this.$images[i]);
+                if (!$img.attr('src')) {
+                    $parent = $img.parent()
+                        .append(bonzo.create(loaderTpl));
 
-    GalleryLightbox.prototype.loadSurroundingImages = function(index, count) {
+                    $img.attr('src', imageContent.src);
+                    $img.attr('srcset', imageContent.srcsets);
+                    $img.attr('sizes', imageContent.sizes);
 
-        var dim = this.$lightboxEl.dim();
-        _([-1,0,1]).map(function(i) { return index+i === 0 ? count - 1 : (index-1+i) % count; })
-            .each(function(i){
-                var imgSrc = this.getImgSrc(this.images[i], dim.width, dim.height),
-                    $img = bonzo(this.$images[i]);
-                if ($img.attr('src') !== imgSrc) {
-                    var $parent = $img.parent()
-                        .append(bonzo.create(this.loaderHTML));
-
-                    $img.attr('src', imgSrc); // src can change with width so overwrite every time
-
-                    bean.one($img[0], 'load', function() {
-                        $('.js-loader', $parent[0]).remove();
+                    bean.one($img[0], 'load', function () {
+                        $('.js-loader').remove();
                     });
 
                 }
@@ -244,41 +239,41 @@ define([
 
     };
 
-    GalleryLightbox.prototype.translateContent = function(imgIndex, offset, duration) {
-        var px = -1 * (imgIndex-1) * this.swipeContainerWidth,
+    GalleryLightbox.prototype.translateContent = function (imgIndex, offset, duration) {
+        var px = -1 * (imgIndex - 1) * this.swipeContainerWidth,
             contentEl = this.$contentEl[0];
         contentEl.style.webkitTransitionDuration = duration + 'ms';
         contentEl.style.mozTransitionDuration = duration + 'ms';
         contentEl.style.msTransitionDuration = duration + 'ms';
         contentEl.style.transitionDuration = duration + 'ms';
-        contentEl.style.webkitTransform = 'translate(' + (px+offset) + 'px,0)' + 'translateZ(0)';
-        contentEl.style.mozTransform = 'translate(' + (px+offset) + 'px,0)';
-        contentEl.style.msTransform = 'translate(' + (px+offset) + 'px,0)';
-        contentEl.style.transform = 'translate(' + (px+offset) + 'px,0)' + 'translateZ(0)';
+        contentEl.style.webkitTransform = 'translate(' + (px + offset) + 'px,0)' + 'translateZ(0)';
+        contentEl.style.mozTransform = 'translate(' + (px + offset) + 'px,0)';
+        contentEl.style.msTransform = 'translate(' + (px + offset) + 'px,0)';
+        contentEl.style.transform = 'translate(' + (px + offset) + 'px,0)' + 'translateZ(0)';
     };
 
     GalleryLightbox.prototype.states = {
 
         'closed': {
-            enter: function() {
+            enter: function () {
                 this.hide();
             },
-            leave: function() {
+            leave: function () {
                 this.show();
                 url.pushUrl({}, document.title, '/' + this.galleryJson.id);
             },
             events: {
-                'open': function() {
+                'open': function () {
                     this.swipe && this.swipe.slide(this.index, 0);
                     this.state = 'image';
                 },
-                'loadJson': function(json) {
+                'loadJson': function (json) {
                     this.galleryJson = json;
                     this.images = json.images;
                     this.$countEl.text(this.images.length);
 
                     var imagesHtml = _(this.images)
-                        .map(function(img, i) { return this.generateImgHTML(img, i+1); }.bind(this))
+                        .map(function (img, i) { return this.generateImgHTML(img, i + 1); }.bind(this))
                         .join('');
 
                     this.$contentEl.html(imagesHtml);
@@ -295,13 +290,18 @@ define([
                         this.initSwipe();
                     }
 
+                    if (this.galleryJson.images.length < 2) {
+                        bonzo([this.nextBtn, this.prevBtn]).hide();
+                        $('.gallery-lightbox__progress', this.lightboxEl).hide();
+                    }
+
                     this.state = 'image';
                 }
             }
         },
 
         'image': {
-            enter: function() {
+            enter: function () {
 
                 this.swipeContainerWidth = this.$swipeContainer.dim().width;
 
@@ -310,21 +310,23 @@ define([
 
                 this.translateContent(this.index, 0, (this.useSwipe && detect.isBreakpoint({max: 'tablet'}) ? 100 : 0));
 
-                url.pushUrl({}, document.title, '/' + this.galleryJson.id + '?index=' + this.index, true);
+                url.pushUrl({}, document.title, '/' + this.galleryJson.id + '#img-' + this.index, true);
 
                 // event bindings
                 bean.on(this.$swipeContainer[0], 'click', '.js-gallery-content', this.toggleInfo);
-                bean.on(window, 'resize', this.resize);
+                mediator.on('window:resize', this.resize);
 
                 // meta
                 this.$indexEl.text(this.index);
+
+                imagesModule.upgradePictures();
             },
-            leave: function() {
+            leave: function () {
                 bean.off(this.$swipeContainer[0], 'click', this.toggleInfo);
-                bean.off(window, 'resize', this.resize);
+                mediator.off('window:resize', this.resize);
             },
             events: {
-                'next': function(interactionType) {
+                'next': function (interactionType) {
                     this.trackInteraction(interactionType + ':next');
                     this.pulseButton(this.nextBtn);
                     if (this.index === this.images.length) { // last img
@@ -339,7 +341,7 @@ define([
                         this.reloadState = true;
                     }
                 },
-                'prev': function(interactionType) {
+                'prev': function (interactionType) {
                     this.trackInteraction(interactionType + ':previous');
                     this.pulseButton(this.prevBtn);
                     if (this.index === 1) { // first img
@@ -354,66 +356,65 @@ define([
                         this.reloadState = true;
                     }
                 },
-                'reload': function() {
+                'reload': function () {
                     this.reloadState = true;
                 },
-                'toggle-info': function() {
+                'toggle-info': function () {
                     this.pulseButton(this.infoBtn);
                     this.$lightboxEl.toggleClass('gallery-lightbox--show-info');
                 },
-                'hide-info': function() {
+                'hide-info': function () {
                     this.pulseButton(this.infoBtn);
                     this.$lightboxEl.removeClass('gallery-lightbox--show-info');
                 },
-                'show-info': function() {
+                'show-info': function () {
                     this.pulseButton(this.infoBtn);
                     this.$lightboxEl.addClass('gallery-lightbox--show-info');
                 },
-                'resize': function() {
+                'resize': function () {
                     this.swipeContainerWidth = this.$swipeContainer.dim().width;
                     this.loadSurroundingImages(this.index, this.images.length); // regenerate src
                     this.translateContent(this.index, 0, 0);
                 },
-                'close': function() { this.state = 'closed'; }
+                'close': function () { this.state = 'closed'; }
             }
         },
 
         'endslate': {
-            enter: function() {
+            enter: function () {
                 this.translateContent(this.$slides.length, 0, 0);
                 this.index = this.images.length + 1;
-                bean.on(window, 'resize', this.resize);
-                imagesModule.upgrade(this.endslateEl);
+                mediator.on('window:resize', this.resize);
             },
-            leave: function() {
-                bean.off(window, 'resize', this.resize);
+            leave: function () {
+                mediator.off('window:resize', this.resize);
             },
             events: {
-                'next': function(interactionType) {
+                'next': function (interactionType) {
                     this.trackInteraction(interactionType + ':next');
                     this.pulseButton(this.nextBtn);
                     this.index = 1;
                     this.state = 'image';
                 },
-                'prev': function(interactionType) {
+                'prev': function (interactionType) {
                     this.trackInteraction(interactionType + ':previous');
                     this.pulseButton(this.prevBtn);
                     this.index = this.images.length;
                     this.state = 'image';
                 },
-                'reload': function() {
+                'reload': function () {
                     this.reloadState = true;
                 },
-                'resize': function() {
+                'resize': function () {
                     this.swipeContainerWidth = this.$swipeContainer.dim().width;
                     this.translateContent(this.$slides.length, 0, 0);
                 },
-                'close': function() { this.state = 'closed'; }
+                'close': function () { this.state = 'closed'; }
             }
         }
     };
 
-    GalleryLightbox.prototype.show = function() {
+    GalleryLightbox.prototype.show = function () {
         var $body = bonzo(document.body);
         this.bodyScrollPosition = $body.scrollTop();
         $body.addClass('has-overlay');
@@ -422,33 +423,34 @@ define([
         bean.on(document.body, 'keydown', this.handleKeyEvents);
     };
 
-    GalleryLightbox.prototype.close = function() {
+    GalleryLightbox.prototype.close = function () {
         url.hasHistorySupport ? url.back() : this.trigger('close');
+        this.trigger('close');
     };
 
-    GalleryLightbox.prototype.hide = function() {
+    GalleryLightbox.prototype.hide = function () {
         // remove has-overlay first to show body behind lightbox then scroll and
         // close the lightbox at the same time. this way we get no scroll flicker
         var $body = bonzo(document.body);
         $body.removeClass('has-overlay');
         bean.off(document.body, 'keydown', this.handleKeyEvents);
-        window.setTimeout(function() {
+        window.setTimeout(function () {
             if (this.bodyScrollPosition) {
                 $body.scrollTop(this.bodyScrollPosition);
             }
             this.$lightboxEl.removeClass('gallery-lightbox--open');
-            imagesModule.upgrade();
+            imagesModule.upgradePictures();
             mediator.emit('ui:images:vh');
         }.bind(this), 1);
     };
 
-    GalleryLightbox.prototype.pulseButton = function(button) {
+    GalleryLightbox.prototype.pulseButton = function (button) {
         var $btn = bonzo(button);
         $btn.addClass('gallery-lightbox__button-pulse');
-        window.setTimeout(function() { $btn.removeClass('gallery-lightbox__button-pulse'); }, 75);
+        window.setTimeout(function () { $btn.removeClass('gallery-lightbox__button-pulse'); }, 75);
     };
 
-    GalleryLightbox.prototype._handleKeyEvents = function(e) {
+    GalleryLightbox.prototype.handleKeyEvents = function (e) {
         if (e.keyCode === 37) { // left
             this.trigger('prev');
         } else if (e.keyCode === 39) { // right
@@ -466,17 +468,17 @@ define([
 
     GalleryLightbox.prototype.endslate = new Component();
 
-    GalleryLightbox.prototype.loadEndslate = function() {
+    GalleryLightbox.prototype.loadEndslate = function () {
         if (!this.endslate.rendered) {
-            this.endslateEl = bonzo.create(this.endslateHTML);
+            this.endslateEl = bonzo.create(endslateTpl);
             this.$contentEl.append(this.endslateEl);
 
             this.endslate.componentClass = 'gallery-lightbox__endslate';
             this.endslate.endpoint = '/gallery/most-viewed.json';
             this.endslate.ready = function () {
-                imagesModule.upgrade(this.endslateEl);
+                mediator.emit('module:lightbox-end-slate:loaded');
             }.bind(this);
-            this.endslate.prerender = function() {
+            this.endslate.prerender = function () {
                 bonzo(this.elem).addClass(this.componentClass);
             };
             this.endslate.fetch(qwery('.js-gallery-endslate', this.endslateEl), 'html');
@@ -488,26 +490,38 @@ define([
     };
 
     function bootstrap() {
-        var lightbox;
-        bean.on(document.body, 'click', '.js-gallerythumbs', function(e) {
-            e.preventDefault();
+        if ('lightboxImages' in config.page && config.page.lightboxImages.images.length > 0) {
+            var lightbox,
+                galleryId,
+                match,
+                galleryHash = window.location.hash,
+                images = config.page.lightboxImages,
+                res;
 
-            var $el = bonzo(e.currentTarget),
-                galleryHref = $el.attr('href') || $el.attr('data-gallery-url'),
-                galleryHrefParts = galleryHref.split('?index='),
-                parsedGalleryIndex = parseInt(galleryHrefParts[1], 10),
-                galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
-            lightbox = lightbox || new GalleryLightbox();
-            lightbox.loadGalleryfromJson(config.page.galleryLightbox, galleryIndex);
-        });
+            bean.on(document.body, 'click', '.js-gallerythumbs', function (e) {
+                e.preventDefault();
 
-        if (config.page.contentType === 'Gallery') {
+                var $el = bonzo(e.currentTarget),
+                    galleryHref = $el.attr('href') || $el.attr('data-gallery-url'),
+                    galleryHrefParts = galleryHref.split('#img-'),
+                    parsedGalleryIndex = parseInt(galleryHrefParts[1], 10),
+                    galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
+                lightbox = lightbox || new GalleryLightbox();
+
+                lightbox.loadGalleryfromJson(images, galleryIndex);
+            });
+
             lightbox = lightbox || new GalleryLightbox();
-            var galleryId = '/' + config.page.pageId,
-                match = /\?index=(\d+)/.exec(document.location.href);
+            galleryId = '/' + config.page.pageId;
+            match = /\?index=(\d+)/.exec(document.location.href);
             if (match) { // index specified so launch lightbox at that index
                 url.pushUrl(null, document.title, galleryId, true); // lets back work properly
-                lightbox.loadGalleryfromJson(config.page.galleryLightbox, parseInt(match[1], 10));
+                lightbox.loadGalleryfromJson(images, parseInt(match[1], 10));
+            } else {
+                res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
+                if (res) {
+                    lightbox.loadGalleryfromJson(images, parseInt(res[1], 10));
+                }
             }
         }
     }

@@ -2,13 +2,17 @@
 
 ![Fronts architecture](/docs/images/fronts-archirecture.png)
 
-The goal of the Fronts architecture is the production of aggregation files (`pressed.json`, one for each front) containing all the structured content required by each front. Each `pressed.json` file is a complete snapshot of the ContentApi data, override data, and configuration metdata for every article and collection on its respective front; each serves as the single blocking call - made by the Facia app - to service a request for that front.
+The goal of the Fronts architecture is serve each front via a _single_ blocking call to a persitence layer.
 
-The global list of defined fronts - and the definitions of the collections on those fronts - is held in a single configuration file (`config.json`). This file is edited using the Configuration Editor. It is polled and referred to by each component in the architecture. 
+The system produces static aggregation files, offline, one for each front (`pressed.json`). Each file contains all the content required for one front; it is a complete snapshot of its required ContentApi data, structured by collection, and overlaid by the temporary fronts-only article metdata. Each fulfills the single call made by the Facia app in order to service a request for that front.
 
-The running order of articles in each collection - and various tweaks to those articles - are represented in multiple `collection.json` files. These are individually edited using the Fronts Editor. These `collection.json` files dictate which articles need to be requested from the ContentApi during the production of each front's `pressed.json` files.
+The global list of defined fronts - and the definitions of the collections on those fronts - is held in a single configuration file (`config.json`). This file is edited using the Configuration Tool. It is polled and referred to by each component in the architecture. 
 
-As soon as an individual collection is edited, the Presser re-creates a `pressed.json` file for each front containing that collection. Additionally, every front is periodically queued for re-pressing. The `pressed.json` files - one for each front - are stored on S3. Both preview and live versions are produced.
+The running order of articles in each collection - and various tweaks to those articles - are represented in multiple `collection.json` files. These are individually edited using the Fronts Tool and persisted to S3. These `collection.json` files dictate which articles need to be requested from the ContentApi during the production of each front's `pressed.json` files.
+
+As soon as a collection is edited, its id is added to a queue consumed the Presser, which will re-create a `pressed.json` file for any front containing that collection. Additionally, each front is periodically queued for re-pressing by the Admin app; fronts have differential rates of periodic re-pressing, to reflect their differing priorities.
+
+The `pressed.json` files - one for each front - are persisted to S3. Both preview and live versions are produced.
 
 ## Service Level Metrics & Alerts
 

@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{Asset, Element => ApiElement}
+import com.gu.contentapi.client.model.{Asset, Element => ApiElement}
 import org.joda.time.DateTime
 
 object ImageOverride {

@@ -13,6 +13,7 @@ class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSug
   val omnitureTracking = mock[TrackingData]
   when(idRequest.trackingData) thenReturn omnitureTracking
   when(idRequest.returnUrl) thenReturn None
+  when(idRequest.skipConfirmation) thenReturn None
   when(omnitureTracking.registrationType) thenReturn None
 
   val idUrlBuilder = new IdentityUrlBuilder(conf)
@@ -34,7 +35,15 @@ class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSug
       }
     }
 
-    "if provided a regitration type parameter" - {
+    "if told to skip confirmation" - {
+      when(idRequest.skipConfirmation) thenReturn Some(true)
+
+      "should include skipConfirmation in the returned params" in {
+        idUrlBuilder.queryParams(idRequest) should contain("skipConfirmation" -> "true")
+      }
+    }
+
+    "if provided a registration type parameter" - {
       when(omnitureTracking.registrationType) thenReturn Some("test")
 
       "should include type parameter" in {
@@ -42,7 +51,7 @@ class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSug
       }
     }
 
-    "if not provided a regitration type" - {
+    "if not provided a registration type" - {
       when(omnitureTracking.registrationType) thenReturn None
 
       "should not include returnUrl in returned params" in {

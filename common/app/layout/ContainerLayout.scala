@@ -1,56 +1,117 @@
 package layout
 
-import model.{Collection, Trail}
-import slices.{RestrictTo, MobileShowMore, ContainerDefinition, Slice}
-import views.support.TemplateDeduping
+import model.{Content, Trail}
+import slices._
+import scalaz.syntax.traverse._
+import scalaz.std.list._
+
+case class IndexedTrail(trail: Trail, index: Int)
 
 object ContainerLayout extends implicits.Collections {
-  def apply(sliceDefinitions: Seq[Slice], items: Seq[Trail], mobileShowMore: MobileShowMore): ContainerLayout = {
-    val cards = items.zipWithIndex map {
-      case (trail, index) => Card(
+  def apply(
+      sliceDefinitions: Seq[Slice],
+      items: Seq[Trail],
+      initialContext: ContainerLayoutContext,
+      config: ContainerDisplayConfig,
+      mobileShowMore: MobileShowMore
+  ): (ContainerLayout, ContainerLayoutContext) = {
+    val indexedTrails = items.zipWithIndex.map((IndexedTrail.apply _).tupled)
+
+    val (slices, showMore, finalContext) = sliceDefinitions.foldLeft(
+      (Seq.empty[SliceWithCards], indexedTrails, initialContext)
+    ) {
+      case ((slicesSoFar, Nil, context), _) => (slicesSoFar, Nil, context)
+      case ((slicesSoFar, trailsForUse, context), sliceDefinition) =>
+        val (slice, remainingTrails, newContext) = SliceWithCards.fromItems(
+          trailsForUse,
+          sliceDefinition.layout,
+          context,
+          config.collectionConfigWithId.config,
+          mobileShowMore,
+          config.showSeriesAndBlogKickers
+        )
+        (slicesSoFar :+ slice, remainingTrails, newContext)
+    }
+
+    (ContainerLayout(slices, showMore map { case IndexedTrail(trail, index) =>
+      FaciaCardAndIndex(
         index,
-        trail,
-        mobileShowMore match {
-          case RestrictTo(nToShowOnMobile) if index >= nToShowOnMobile => Some(Mobile)
-          case _ => None
-        }
+        FaciaCard.fromTrail(
+          trail,
+          config.collectionConfigWithId.config,
+          ItemClasses.showMore,
+          config.showSeriesAndBlogKickers
+        ),
+        hideUpTo = Some(Desktop)
       )
-    }
-
-    val ContainerLayout(slices, showMore) = sliceDefinitions.foldLeft(ContainerLayout(Seq.empty, cards)) {
-      case (s @ ContainerLayout(_, Nil), _) => s
-      case (ContainerLayout(slicesSoFar, cardsForUse), sliceDefinition) =>
-        val (slice, remainingCards) = SliceWithCards.fromItems(cardsForUse, sliceDefinition.layout)
-        ContainerLayout(slicesSoFar :+ slice, remainingCards)
-    }
-
-    ContainerLayout(slices, showMore.map(_.copy(hideUpTo = Some(Desktop))))
+    }), finalContext)
   }
 
-  def apply(containerDefinition: ContainerDefinition,
-            collection: Collection,
-            maybeTemplateDeduping: Option[TemplateDeduping]): ContainerLayout = {
-    /** TODO move this to earlier in the process, so that we can make the de-duping a functional transformation */
-    val items = collection.items
+  def singletonFromContainerDefinition(
+    containerDefinition: ContainerDefinition,
+    config: ContainerDisplayConfig,
+    items: Seq[Trail]
+  ) = fromContainerDefinition(
+    containerDefinition,
+    ContainerLayoutContext.empty,
+    config,
+    items
+  )._1
 
-    val trails = maybeTemplateDeduping map { templateDeduping =>
-      val numItems = containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
-      val unusedTrailsForThisSlice = templateDeduping(numItems, items).take(numItems)
-      (unusedTrailsForThisSlice ++ items).distinctBy(_.url)
-    } getOrElse items
+  def fromContainerDefinition(
+      containerDefinition: ContainerDefinition,
+      containerLayoutContext: ContainerLayoutContext,
+      config: ContainerDisplayConfig,
+      items: Seq[Trail]
+  ) = apply(
+      containerDefinition.slices,
+      items,
+      containerLayoutContext,
+      config,
+      containerDefinition.mobileShowMore
+    )
 
-    val layout = apply(containerDefinition.slices, trails, containerDefinition.mobileShowMore)
-
-    //Cap the remaining card size to 9 only on automated collections
-    if (collection.curated.isEmpty) {
-      layout.copy(remainingCards = layout.remainingCards.take(9))
-    } else {
-      layout
+  def fromContainer(
+      container: Container,
+      containerLayoutContext: ContainerLayoutContext,
+      config: ContainerDisplayConfig,
+      items: Seq[Trail]
+  ) =
+    ContainerDefinition.fromContainer(container, items collect { case c: Content => c }) map {
+      case definition: ContainerDefinition =>
+        fromContainerDefinition(definition, containerLayoutContext, config, items)
     }
+
+  def forHtmlBlobs(sliceDefinitions: Seq[Slice], blobs: Seq[HtmlAndClasses]) = {
+    val slicesWithCards = (sliceDefinitions zip sliceDefinitions.map(_.layout.columns.map(_.numItems).sum))
+      .toList
+      .mapAccumL(blobs) {
+      case (blobsRemaining, (slice, numToConsume)) =>
+        val (blobsConsumed, blobsUnconsumed) = blobsRemaining.splitAt(numToConsume)
+        (blobsUnconsumed, SliceWithCards.fromBlobs(slice.layout, blobsConsumed))
+    }._2
+
+    ContainerLayout(
+      slicesWithCards,
+      Nil
+    )
   }
 }
 
 case class ContainerLayout(
   slices: Seq[SliceWithCards],
-  remainingCards: Seq[Card]
-)
+  remainingCards: Seq[FaciaCardAndIndex]
+) {
+  def transformCards(f: ContentCard => ContentCard) = copy(
+    slices = slices.map(_.transformCards(f)),
+    remainingCards.map(cardAndIndex => cardAndIndex.transformCard(f))
+  )
+
+  def hasMobileShowMore =
+    slices.flatMap(_.columns.flatMap(_.cards)).exists(_.hideUpTo.contains(Mobile))
+
+  def hasDesktopShowMore =
+    remainingCards.nonEmpty
+
+  def hasShowMore = hasDesktopShowMore || hasMobileShowMore
+}

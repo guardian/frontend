@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.facia.client.models.{Front, CollectionConfig}
+import com.gu.facia.client.models.{FrontJson, CollectionConfigJson}
 import play.api.mvc.Controller
 import services.PressAndNotify
 import util.Requests._
@@ -10,7 +10,7 @@ import com.gu.googleauth.UserIdentity
 import auth.ExpiringActions
 
 object CreateFront {
-  implicit val jsonFormat = Json.format[CreateFront]
+  implicit val jsonFormat = Json.format[CreateFront].filter(_.id.matches("""^[a-z0-9\/\-+]*$"""))
 }
 
 case class CreateFront(
@@ -26,7 +26,7 @@ case class CreateFront(
   onPageDescription: Option[String],
   priority: Option[String],
   isHidden: Option[Boolean],
-  initialCollection: CollectionConfig
+  initialCollection: CollectionConfigJson
 )
 
 object FrontController extends Controller {
@@ -43,7 +43,7 @@ object FrontController extends Controller {
   }
 
   def update(frontId: String) = ExpiringActions.ExpiringAuthAction { request =>
-    request.body.read[Front] match {
+    request.body.read[FrontJson] match {
       case Some(front) =>
         val identity = UserIdentity.fromRequest(request).get
         UpdateManager.updateFront(frontId, front, identity)

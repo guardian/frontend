@@ -1,12 +1,14 @@
 package controllers
 
-import com.gu.openplatform.contentapi.model.ItemResponse
+import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
 import common._
+import conf.Configuration.commercial.expiredAdFeatureUrl
+import conf.LiveContentApi.getResponse
 import conf._
 import model._
 import org.jsoup.nodes.Document
 import performance.MemcachedAction
-import play.api.mvc.{Content => _, _}
+import play.api.mvc._
 import views.BodyCleaner
 import views.support._
 
@@ -20,9 +22,17 @@ trait ArticleWithStoryPackage {
 case class ArticlePage(article: Article, related: RelatedContent) extends ArticleWithStoryPackage
 case class LiveBlogPage(article: LiveBlog, related: RelatedContent) extends ArticleWithStoryPackage
 
-object ArticleController extends Controller with Logging with ExecutionContexts {
+object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   def renderArticle(path: String) = MemcachedAction { implicit request =>
+    renderItem(path)
+  }
+
+
+  private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
+  override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
+
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
@@ -55,26 +65,25 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticleWithStoryPackage, Result]] = {
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
-    val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
-      .showExpired(true)
-      .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
+    val response: Future[ItemResponse] = getResponse(LiveContentApi.item(path, edition)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
-      .response
+    )
 
     val result = response map { response =>
-      val storyPackage = response.storyPackage map { Content(_) }
-      val related = response.relatedContent map { Content(_) }
 
-
-      val supportedContent = response.content.filter { c => c.isArticle || c.isLiveBlog || c.isSudoku }
-      val content = supportedContent map { Content(_) } map {
+      val supportedContent = response.content.filter(isSupported).map(Content(_))
+      val content: Option[ArticleWithStoryPackage] = supportedContent.map {
         case liveBlog: LiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
         case article: Article => ArticlePage(article, RelatedContent(article, response))
       }
 
-      ModelOrResult(content, response)
+      if (content.exists(_.article.isExpiredAdvertisementFeature)) {
+        Right(MovedPermanently(expiredAdFeatureUrl))
+      } else {
+        ModelOrResult(content, response)
+      }
     }
 
     result recover convertApiExceptions

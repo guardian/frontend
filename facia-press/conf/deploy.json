@@ -7,6 +7,7 @@
                 "secondsToWait": 1200,
                 "port": 18080,
                 "healthcheckGrace": 20,
+                "warmupGrace":30,
                 "bucket": "aws-frontend-artifacts",
                 "healthcheck_paths": [
                     "/management/healthcheck"

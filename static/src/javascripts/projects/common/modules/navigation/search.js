@@ -1,18 +1,23 @@
 define([
+    'bean',
+    'fastdom',
+    'common/utils/_',
     'common/utils/$',
-    'lodash/functions/throttle',
-    'bean'
+    'common/utils/config'
 ], function (
+    bean,
+    fastdom,
+    _,
     $,
-    throttle,
-    bean
+    config
 ) {
 
-    var Search = function (config) {
+    var Search = function () {
 
         var searchLoader,
             enabled,
             gcsUrl,
+            resultSetSize,
             container,
             self = this;
 
@@ -20,8 +25,9 @@ define([
 
             enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
+            resultSetSize = config.page.section === 'identity' ? 3 : 10;
 
-            searchLoader = throttle(function () {
+            searchLoader = _.throttle(function () {
                 self.load();
             });
 
@@ -61,26 +67,32 @@ define([
             // Unload any search placeholders elsewhere in the DOM
             Array.prototype.forEach.call(document.querySelectorAll('.js-search-placeholder'), function (c) {
                 if (c !== container) {
-                    c.innerHTML = '';
+                    fastdom.write(function () {
+                        c.innerHTML = '';
+                    });
                 }
             });
 
             // Load the Google search monolith, if not already present in this context.
             // We have to re-run their script each time we do this.
             if (!container.innerHTML) {
-                container.innerHTML = '' +
-                    '<div class="search-box" role="search">' +
-                        '<gcse:searchbox></gcse:searchbox>' +
-                    '</div>' +
-                    '<div class="search-results" data-link-name="search">' +
-                        '<gcse:searchresults></gcse:searchresults>' +
-                    '</div>';
+                fastdom.write(function () {
+                    container.innerHTML = '' +
+                        '<div class="search-box" role="search">' +
+                            '<gcse:searchbox></gcse:searchbox>' +
+                        '</div>' +
+                        '<div class="search-results" data-link-name="search">' +
+                            '<gcse:searchresults webSearchResultSetSize="' + resultSetSize + '"></gcse:searchresults>' +
+                        '</div>';
+                });
 
                 s = document.createElement('script');
                 s.async = true;
                 s.src = gcsUrl;
                 x = document.getElementsByTagName('script')[0];
-                x.parentNode.insertBefore(s, x);
+                fastdom.write(function () {
+                    x.parentNode.insertBefore(s, x);
+                });
             }
         };
 

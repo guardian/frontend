@@ -29,7 +29,7 @@ object TravelOffersCacheJob extends ExecutionContexts with Dates with Logging {
 
 
   def run() {
-    future {
+    Future {
       url map {u =>
         val start = System.currentTimeMillis
 

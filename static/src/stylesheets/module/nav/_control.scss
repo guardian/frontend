@@ -26,20 +26,19 @@ $control-size: 36px;
         max-width: 200px;
     }
 
-    @include mq(tablet) {
-        display: block;
-    }
-
     .brand-bar__item--right & {
         @include mq(tablet) {
             margin: 0;
         }
     }
 
-    .brand-bar__item--profile & {
-        @include mq(mobileLandscape) {
-            display: block;
-        }
+    // TODO: @extend .hide-on-mobile;
+    @include mq(tablet) {
+        display: block;
+    }
+
+    .l-header--is-slim & {
+        display: none;
     }
 }
 
@@ -53,36 +52,16 @@ $control-size: 36px;
     float: left;
     height: 34px;
     width: 34px;
+    text-align: center;
+    line-height: 3; // 3 x 14px = 42px
 
     .brand-bar__item--right & {
         @include mq(tablet) {
             display: none;
         }
-    }
-}
 
-.control__icon {
-    display: block;
-    text-align: center;
-    height: 32px;
-    padding-top: 7px;
-
-    .i {
-        display: none;
-        margin: 0 auto;
-
-        &:first-child {
+        .l-header--is-slim & {
             display: block;
-        }
-
-        .control:active &,
-        .control:focus &,
-        .control.is-active & {
-            display: block;
-
-            &:first-child {
-                display: none;
-            }
         }
     }
 }

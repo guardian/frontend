@@ -1,0 +1,13 @@
+{
+  "name": "Squire.js",
+  "version": "0.1.0",
+  "main": "src/Squire.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "test/",
+    "package.json",
+    "grunt.js"
+  ]
+}

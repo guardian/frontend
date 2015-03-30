@@ -10,25 +10,27 @@ category: Common
     <li class="social__item">
         <a class="social__action social-icon-wrapper" href="#">
             <span class="u-h">Share via Email</span>
-            <span class="social-icon"><i class="i-share-email i"></i></span>
+            <span class="social-icon"><i class="i-share-email--white i"></i></span>
         </a>
     </li>
     <li class="social__item">
         <a class="social__action social-icon-wrapper" href="#">
             <span class="u-h">Share on Facebook</span>
-            <span class="social-icon"><i class="i-share-facebook i"></i></span>
+            <span class="social-icon"><i class="i-share-facebook--white i"></i></span>
         </a>
     </li>
     <li class="social__item">
         <a class="social__action social-icon-wrapper" href="#">
             <span class="u-h">Share on Twitter</span>
-            <span class="social-icon"><i class="i-share-twitter i"></i></span>
+            <span class="social-icon"><i class="i-share-twitter--white i"></i></span>
         </a>
     </li>
     <li class="social__item">
         <a class="social__action social-icon-wrapper" href="#">
-            <span class="u-h">Share on Google+</span>
-            <span class="social-icon"><i class="i-share-gplus i"></i></span>
+            <span class="social-icon">
+                <i class="i-share-gplus--white i"></i>
+                <span class="social-icon__label">Share on Google+</span>
+            </span>
         </a>
     </li>
 </ul>
@@ -38,21 +40,26 @@ category: Common
 .social {
     overflow-y: hidden;
     height: 32px;
-    margin-left: -$gs-gutter/5;
 }
 
 .social__item {
     float: left;
-    width: 36px;
-    padding: 0 $gs-gutter/5;
+    min-width: 36px;
+    padding: 0 3px $gs-baseline/2 0;
 
-    @include mq(leftCol, wide) {
-        width: 32px;
-        padding-right: 0;
+    @include mq(leftCol) {
+        min-width: 32px;
     }
 }
+
+.social__item--whatsapp {
+    @include mq(tablet) {
+        display: none;
+    }
+}
+
 .social__action {
-    display: block;
+    display: inline-block;
 }
 
 
@@ -64,34 +71,191 @@ category: Common
  *         <i class="i share-icon-xxx"></i>
  *     </span>
  * </element>
+ * <element class="social-icon-wrapper">
+ *     <span class="social-icon social-icon--small">
+ *         <i class="i share-icon-xxx"></i>
+ *         <span class="social-icon__label">Share on xxx</span>
+ *     </span>
+ * </element>
  */
-
-@include mq(desktop) {
-    .social-icon-wrapper {
-        opacity: .6;
-
-        &:hover,
-        &:focus {
-            opacity: 1;
-        }
-    }
-}
-
-$social-icon: (
-    width: 36px,
-    height: 36px,
-    color: $c-neutral2,
-    space-in-between: 2px
-);
 
 .social-icon {
     @extend %icon-holder-circle;
-    border-color: map-get($social-icon, color);
+    border: 0;
+    min-width: 32px;
+    max-width: 100%;
+    width: auto;
+    height: 32px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .svg & {
+        i {
+            width: 100%;
+            height: 100%;
+            vertical-align: middle;
+            background-size: 88%;
+            background-position: center;
+        }
+    }
+
+    .social-icon__label {
+        @include fs-textSans(2);
+        margin: 0 .8em 0 -.5em;
+    }
+}
+
+.social-icon--small {
+    min-width: 24px;
+    height: 24px;
 
     i {
-        display: block;
-        margin-bottom: 2px;
-        margin-top: -1px;
-        margin-left: -1px;
+        width: 24px;
+        background-size: 100% !important;
     }
+
+    .social-icon__label {
+        @include fs-textSans(1);
+        margin: 0 .7em 0 -.3em;
+    }
+}
+
+.social-icon__label {
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+.social-icon--facebook {
+    background-color: colour(social-facebook);
+    &:hover {
+        background-color: darken(colour(social-facebook), 10%);
+    }
+}
+
+.social-icon--gplus {
+    background-color: colour(social-gplus);
+    &:hover {
+        background-color: darken(colour(social-gplus), 10%);
+    }
+
+    .content--media & {
+        display: block;
+    }
+}
+
+.social-icon--whatsapp {
+    background-color: colour(social-whatsapp);
+    &:hover {
+        background-color: darken(colour(social-whatsapp), 10%);
+    }
+}
+
+.social-icon--twitter {
+    background-color: colour(social-twitter);
+    &:hover {
+        background-color: darken(colour(social-twitter), 10%);
+    }
+}
+
+.social-icon--linkedin {
+    background-color: colour(social-linkedin);
+
+    &:hover {
+        background-color: darken(colour(social-linkedin), 10%);
+    }
+}
+
+.social-icon--pinterest {
+    background-color: colour(social-pinterest);
+
+    .i {
+        background-size: 49% !important;
+        background-position: 45% center !important;
+    }
+
+    &:hover {
+        background-color: darken(colour(social-pinterest), 10%);
+    }
+}
+
+.social-icon--email {
+    background-color: colour(social-email);
+    &:hover {
+        background-color: darken(colour(social-email), 10%);
+    }
+}
+
+.selection-sharing {
+    position: absolute;
+    top: 0;
+    padding-top: $gs-baseline / 3;
+    opacity: 0;
+    visibility: hidden;
+    @include transition(opacity .15s ease);
+
+    .social__item {
+        padding: 0 $gs-gutter / 10;
+        width: 32px;
+    }
+}
+
+.selection-sharing.selection-sharing--active {
+    visibility: visible;
+    opacity: 1;
+}
+
+// Testing static social on mobile
+
+.social-fixed {
+    height: 40px;
+    position: fixed;
+    left: 0;
+    bottom: -40px;
+    width: 100%;
+    opacity: 0;
+    z-index: 10;
+    @include transition(bottom .4s ease);
+}
+
+.social-fixed__item {
+    color: #ffffff;
+    float: left;
+    border-radius: 20px;
+
+    .i {
+        height: 40px;
+        width: 40px;
+        float: left;
+        margin: 0 (-$gs-gutter/2) 0 (-$gs-gutter*.6) !important;
+    }
+}
+
+.social-fixed__item--facebook {
+    background-color: colour(social-facebook);
+    margin: 0 $gs-gutter/4 0 $gs-gutter/2 !important;
+}
+
+.social-fixed__item--twitter {
+    background-color: colour(social-twitter);
+}
+
+.social-fixed--show {
+    bottom: $gs-baseline/2;
+    opacity: 1;
+}
+
+.share-text {
+    float: left;
+    @include fs-textSans(3);
+    font-weight: 700;
+    padding: ($gs-baseline/3*2) ($gs-gutter/10) 0 ($gs-gutter/2);
 }

@@ -1,17 +1,22 @@
 package controllers
 
-import com.gu.facia.client.models.CollectionConfig
+import com.gu.facia.client.models.CollectionConfigJson
 import common._
+import layout.{CollectionEssentials, FaciaContainer}
 import model._
-import views.support.{TemplateDeduping, ForceGroupsCollection, MultimediaContainer}
+import services.CollectionConfigWithId
+import slices.{Fixed, FixedContainers}
 import play.api.mvc.{RequestHeader, Controller, Action}
 import feed.MostViewedGalleryAgent
 
 object MostViewedGalleryController extends Controller with Logging with ExecutionContexts {
 
-  private val page = Page("More galleries", "inpictures", "More Galleries", "more galleries")
+  private val page = Page("more galleries", "inpictures", "more galleries", "more galleries")
   private val dataId: String = "multimedia/gallery"
-  private val config = CollectionConfig.withDefaults(displayName = Some("more galleries"), groups = Some(List("multimedia/gallery")))
+  private val config = CollectionConfigJson.withDefaults(
+    displayName = Some("more galleries"),
+    groups = Some(List("multimedia/gallery"))
+  )
 
   val featuredSeries = Seq(
     ("Photographs of the day", "/news/series/ten-best-photographs-of-the-day"),
@@ -34,17 +39,15 @@ object MostViewedGalleryController extends Controller with Logging with Executio
   }
 
   private def renderMostViewedGallery(galleries: Seq[Content])(implicit request: RequestHeader) = {
-    val collection = Collection(galleries)
-    val templateDeduping = new TemplateDeduping
-
-    val html = views.html.fragments.containers.gallery(
-      page,
-      ForceGroupsCollection.firstTwoBig(collection),
-      MultimediaContainer(),
-      1,
-      featuredSeries = featuredSeries,
-      dataId = dataId
-    )(request, templateDeduping, config)
+    val html = views.html.fragments.containers.facia_cards.container(
+      FaciaContainer(
+        1,
+        Fixed(FixedContainers.fixedMediumSlowVI),
+        CollectionConfigWithId(dataId, config),
+        CollectionEssentials(galleries, Nil, Some("more galleries"), None, None, None)
+      ).withTimeStamps,
+      FrontProperties.empty
+    )(request)
 
     val htmlResponse = () => views.html.mostViewedGalleries(page, html)
     val jsonResponse = () => html

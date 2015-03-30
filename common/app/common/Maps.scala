@@ -11,5 +11,11 @@ object Maps {
       (map.toSeq map {
         case (k, v) => (f(k), v)
       }).toMap
+
+    def reverseMap = (map.toSeq map { case (a, b) => (b, a) }).toMap
+  }
+
+  implicit class RichMapSeq[A, B](map: Map[A, Seq[B]]) {
+    def meanFrequency = map.values.map(_.length.toDouble).sum / map.size
   }
 }

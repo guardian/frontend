@@ -1,6 +1,6 @@
 package util
 
-import com.gu.facia.client.models.{Front, Config}
+import com.gu.facia.client.models.{FrontJson => Front, ConfigJson => Config}
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import test.ConfiguredTestSuite
 

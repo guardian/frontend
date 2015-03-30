@@ -1,81 +1,174 @@
 define([
+    'common/utils/storage',
     'common/modules/onward/history',
     'fixtures/history/contains',
     'fixtures/history/max',
-], function(hist, contains, max) {
+], function(
+    storage,
+    hist,
+    contains,
+    max
+) {
 
-    var setStorageItem = function(item) {
-        window.localStorage.setItem('gu.history', JSON.stringify({
-            'value' : item
-        }));
-    };
+    var today =  Math.floor(Date.now() / 86400000); // 1 day in ms
 
-    var item = {
-            id:"/p/3jbcb",
-            meta: {
-                section: "foobar",
-                keywords: ['foo', 'bar']
-            }
+
+    var pageConfig = {
+            pageId: "/p/3jbcb",
+
+            section: "foobar",
+            sectionName: "Foobar Section",
+
+            keywordIds: "foo/bar,baz/poo",
+            keywords: "Foobar Tag,Bazpoo Tag",
+
+            seriesId: "foo/series/bar",
+            series: "Foobar Series",
+
+            authorIds: "profile/finbarrsaunders,profile/rogermellie",
+            author: "Finbarr Saunders, Roger Mellie"
         },
-        hist;
+        oftenVisited = {
+            pageId: "123",
+            section: "often/visited",
+            sectionName: "Often Visited Section"
+        },
+        lessVisited = {
+            pageId: "456",
+            section: "less/visited",
+            sectionName: "Less Visited Section"
+        };
 
     describe('History', function() {
 
         beforeEach(function() {
             hist.reset();
-            setStorageItem(contains);
+            storage.local.set('gu.history', contains);
         });
 
         it('should get history from local storage', function() {
-            expect(hist.get()).toEqual(contains);
+            expect(hist.test.getHistory()).toEqual(contains);
         });
 
         it('should set history to local storage', function() {
-            hist.log(item);
+            hist.logHistory(pageConfig);
 
-            expect(hist.get()[0].id).toEqual(item.id);
+            expect(hist.test.getHistory()[0][0]).toEqual(pageConfig.pageId);
         });
 
-        it('should set current timestamp for new log entries', function() {
-            hist.log(item);
+        it('should set the count of entries', function() {
+            hist.logHistory(pageConfig);
+            expect(hist.test.getHistory()[0][1]).toEqual(1);
 
-            expect(hist.get()[0].timestamp).toBeDefined();
-            expect(hist.get()[0].timestamp).toEqual(jasmine.any(Number));
+            hist.logHistory(pageConfig);
+            expect(hist.test.getHistory()[0][1]).toEqual(2);
         });
 
-        it('should extend any optional meta data directly onto the logged items object', function() {
-            hist.log(item);
+        it('should be able to check a page revisit', function() {
+            hist.logHistory(pageConfig);
+            expect(hist.isRevisit(pageConfig.pageId)).toBeFalsy();
 
-            expect(hist.get()[0].section).toBeDefined();
-            expect(hist.get()[0].section).toEqual("foobar");
+            hist.logHistory(pageConfig);
+            expect(hist.isRevisit(pageConfig.pageId)).toBeTruthy();
         });
 
-        it('should be able to check if an item id exists', function() {
-            hist.log(item);
+        it('should only store 50 latest entries', function() {
+            storage.local.set('gu.history', max);
+            hist.logHistory(pageConfig);
 
-            expect(hist.contains(item.id)).toBeTruthy();
+            expect(hist.test.getHistory().length).toEqual(50);
         });
 
-        it('should only store 100 latest entries', function() {
-            setStorageItem(max);
-            hist.log(item);
+        it('should increment a count in the summary, for the 1st value from each of various page metadata', function() {
+            hist.logSummary(pageConfig);
 
-            expect(hist.getSize()).toEqual(100);
+            expect(hist.test.getSummary().tags['foobar'][0]).toEqual('Foobar Section');
+            expect(hist.test.getSummary().tags['foobar'][1][0][1]).toEqual(1);
+
+            expect(hist.test.getSummary().tags['foo/bar'][0]).toEqual('Foobar Tag');
+            expect(hist.test.getSummary().tags['foo/bar'][1][0][1]).toEqual(1);
+            expect(hist.test.getSummary().tags['baz/poo']).toBeUndefined();
+
+            expect(hist.test.getSummary().tags['foo/series/bar'][0]).toEqual('Foobar Series');
+            expect(hist.test.getSummary().tags['foo/series/bar'][1][0][1]).toEqual(1);
+
+            expect(hist.test.getSummary().tags['profile/finbarrsaunders'][0]).toEqual('Finbarr Saunders');
+            expect(hist.test.getSummary().tags['profile/finbarrsaunders'][1][0][1]).toEqual(1);
+            expect(hist.test.getSummary().tags['profile/rogermellie']).toBeUndefined();
+
+            hist.logSummary(pageConfig);
+            hist.logSummary(pageConfig);
+
+            expect(hist.test.getSummary().tags['foobar'][0]).toEqual('Foobar Section');
+            expect(hist.test.getSummary().tags['foobar'][1][0][1]).toEqual(3);
         });
 
-        it('should set the section count in the summary, once per article', function() {
-            hist.log(item);
-            hist.log(item);
+        it('should age the data points in the the summary', function() {
+            expect(
+                hist.test.pruneSummary({
+                    periodEnd: today,
+                    tags: {foo: ["Foo", [[0, 1]]]}
+                })
+                .tags['foo'][1][0][0]
+            ).toEqual(0);
 
-            expect(hist.getSummary().sections.foobar).toEqual(1);
+            expect(
+                hist.test.pruneSummary({
+                    periodEnd: today - 5,
+                    tags: {foo: ["Foo", [[0, 1]]]}
+                })
+                .tags['foo'][1][0][0]
+            ).toEqual(5);
         });
 
-        it('should set the first keyword\'s count in the summary, once per article', function() {
-            hist.log(item);
-            hist.log(item);
+        it('should drop the obsoleted data points from the summary', function() {
+            expect(
+                hist.test.pruneSummary({
+                    periodEnd: today - 500,
+                    tags: {foo: ["Foo", [[0, 1]]]}
+                })
+                .tags['foo']
+            ).toBeUndefined();
+        });
 
-            expect(hist.getSummary().keywords.foo).toEqual(1);
-            expect(hist.getSummary().keywords.bar).toEqual(undefined);
+        it('should return equally visited items in last-in-first-out order', function() {
+            hist.logSummary(oftenVisited, today);
+            hist.logSummary(lessVisited,  today);
+
+            hist.logSummary(oftenVisited, today + 1);
+            hist.logSummary(lessVisited,  today + 1);
+
+            hist.logSummary(oftenVisited, today + 2);
+            hist.logSummary(lessVisited,  today + 2);
+
+            expect(
+                hist.getPopular()[0][0]
+            ).toEqual('less/visited');
+
+            expect(
+                hist.getPopular()[1][0]
+            ).toEqual('often/visited');
+        });
+
+        it('should return most visited items first', function() {
+            hist.logSummary(oftenVisited, today);
+            hist.logSummary(oftenVisited, today);
+            hist.logSummary(lessVisited,  today);
+
+            hist.logSummary(oftenVisited, today + 1);
+            hist.logSummary(lessVisited,  today + 1);
+
+            hist.logSummary(oftenVisited, today + 2);
+            hist.logSummary(lessVisited,  today + 2);
+
+
+            expect(
+                hist.getPopular()[0][0]
+            ).toEqual('often/visited');
+
+            expect(
+                hist.getPopular()[1][0]
+            ).toEqual('less/visited');
         });
     });
 });

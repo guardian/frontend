@@ -7,31 +7,24 @@
 /*global DocumentTouch: true */
 
 define([
-    'lodash/arrays/findIndex',
-    'lodash/arrays/first',
-    'lodash/arrays/last',
-    'lodash/arrays/rest',
-    'lodash/objects/defaults',
     'common/utils/_',
     'common/utils/mediator'
 ], function (
-    findIndex,
-    first,
-    last,
-    rest,
-    defaults,
     _,
     mediator
 ) {
 
     var supportsPushState,
+        getUserAgent,
         pageVisibility = document.visibilityState ||
                          document.webkitVisibilityState ||
                          document.mozVisibilityState ||
                          document.msVisibilityState ||
                          'visible',
         // Ordered lists of breakpoints
-        // These should match those defined in stylesheets/_vars.scss
+        // These should match those defined in:
+        //   stylesheets/_vars.scss
+        //   common/app/layout/Breakpoint.scala
         breakpoints = [
             {
                 name: 'mobile',
@@ -45,17 +38,13 @@ define([
             },
             {
                 name: 'phablet',
-                isTweakpoint: true
+                isTweakpoint: true,
+                width: 660
             },
             {
                 name: 'tablet',
                 isTweakpoint: false,
                 width: 740
-            },
-            {
-                name: 'rightCol',
-                isTweakpoint: true,
-                width: 980
             },
             {
                 name: 'desktop',
@@ -118,13 +107,55 @@ define([
         return totalTime;
     }
 
+    function isReload() {
+        var perf = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+        if (!!perf && !!perf.navigation) {
+            return perf.navigation.type === perf.navigation.TYPE_RELOAD;
+        } else {
+            // We have no way of knowing if it was a reload on unsupported browsers.
+            // I figure we could only possibly want to treat it as false in that case.
+            return false;
+        }
+    }
+
+    function isIOS() {
+        return /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
+    }
+
+    function isAndroid() {
+        return /Android/i.test(navigator.userAgent);
+    }
+
+    function isFireFoxOSApp() {
+        return navigator.mozApps && !window.locationbar.visible;
+    }
+
+    getUserAgent = (function () {
+        var ua = navigator.userAgent, tem,
+            M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+        if (/trident/i.test(M[1])) {
+            tem =  /\brv[ :]+(\d+)/g.exec(ua) || [];
+            return 'IE ' + (tem[1] || '');
+        }
+        if (M[1] === 'Chrome') {
+            tem = ua.match(/\bOPR\/(\d+)/);
+            if (tem !== null) { return 'Opera ' + tem[1]; }
+        }
+        M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+        if ((tem = ua.match(/version\/(\d+)/i)) !== null) { M.splice(1, 1, tem[1]); }
+        return {
+            browser: M[0],
+            version: M[1]
+        };
+    })();
+
     function getConnectionSpeed(performance, connection, reportUnknown) {
 
         connection = connection || navigator.connection || navigator.mozConnection || navigator.webkitConnection || {type: 'unknown'};
 
         var isMobileNetwork = connection.type === 3 // connection.CELL_2G
-                  || connection.type === 4 // connection.CELL_3G
-                  || /^[23]g$/.test(connection.type), // string value in new spec
+                || connection.type === 4 // connection.CELL_3G
+                || /^[23]g$/.test(connection.type), // string value in new spec
             loadTime,
             speed;
 
@@ -218,17 +249,43 @@ define([
         return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
     }
 
-    function getBreakpoint(includeTweakpoint) {
-        // default to mobile
-        var breakpoint = (
-                window.getComputedStyle
-                    ? window.getComputedStyle(document.body, ':after').getPropertyValue('content')
-                    : document.getElementsByTagName('head')[0].currentStyle.fontFamily
-            ).replace(/['",]/g, '') || 'mobile',
-            index;
+    function getViewport() {
+        var w = window,
+            d = document,
+            e = d.documentElement,
+            g = d.getElementsByTagName('body')[0];
 
+        return {
+            width:  w.innerWidth  || e.clientWidth  || g.clientWidth,
+            height: w.innerHeight || e.clientHeight || g.clientHeight
+        };
+    }
+
+    /** TEMPORARY: I'm going to update lodash in a separate pull request. */
+    function takeWhile(xs, f) {
+        var acc = [],
+            i,
+            size = xs.length;
+
+        for (i = 0; i < size; i++) {
+            if (f(xs[i])) {
+                acc.push(xs[i]);
+            } else {
+                break;
+            }
+        }
+
+        return acc;
+    }
+
+    function getBreakpoint(includeTweakpoint) {
+        var viewportWidth = getViewport().width,
+            index,
+            breakpoint = _.last(takeWhile(breakpoints, function (bp) {
+                return bp.width <= viewportWidth;
+            })).name;
         if (!includeTweakpoint) {
-            index = findIndex(breakpoints, function (b) {
+            index = _.findIndex(breakpoints, function (b) {
                 return b.name === breakpoint;
             });
             breakpoint = _(breakpoints)
@@ -244,11 +301,11 @@ define([
     }
 
     function isBreakpoint(criteria) {
-        var c = defaults(
+        var c = _.defaults(
                 criteria,
                 {
-                    min: first(breakpoints).name,
-                    max: last(breakpoints).name
+                    min: _.first(breakpoints).name,
+                    max: _.last(breakpoints).name
                 }
             ),
             currentBreakpoint = getBreakpoint(true);
@@ -314,6 +371,34 @@ define([
         return 'WebSocket' in window;
     }
 
+    // Determine if what type of font-hinting we want.
+    // Duplicated in /common/app/views/fragments/javaScriptLaterSteps.scala.html
+    function fontHinting() {
+        var ua = navigator.userAgent,
+            windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
+            hinting = 'Off',
+            version;
+
+        if (windowsNT) {
+            version = parseFloat(windowsNT[1], 10);
+            // For Windows XP-7
+            if (version >= 5.1 && version <= 6.1) {
+                if (/Chrome/.exec(ua) && version < 6.0) {
+                    // Chrome on windows XP wants auto-hinting
+                    hinting = 'Auto';
+                } else {
+                    // All others use cleartype
+                    hinting = 'Cleartype';
+                }
+            }
+        }
+        return hinting;
+    }
+
+    function isModernBrowser() {
+        return window.guardian.isModernBrowser;
+    }
+
     return {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
@@ -323,12 +408,20 @@ define([
         hasPushStateSupport: hasPushStateSupport,
         getOrientation: getOrientation,
         getBreakpoint: getBreakpoint,
+        getViewport: getViewport,
+        getUserAgent: getUserAgent,
+        isIOS: isIOS,
+        isAndroid: isAndroid,
+        isFireFoxOSApp: isFireFoxOSApp,
         isBreakpoint: isBreakpoint,
+        isReload:  isReload,
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
-        breakpoints: breakpoints
+        breakpoints: breakpoints,
+        fontHinting: fontHinting(),
+        isModernBrowser: isModernBrowser
     };
 
 });

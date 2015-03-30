@@ -5,10 +5,10 @@
 define([
     'bean',
     'bonzo',
-    'lodash/collections/toArray',
-    'lodash/objects/assign',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
+    'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/article/twitter',
@@ -16,10 +16,10 @@ define([
 ], function (
     bean,
     bonzo,
-    toArray,
-    assign,
+    _,
     $,
     ajax,
+    config,
     detect,
     mediator,
     twitter,
@@ -33,15 +33,15 @@ define([
             switches         : {Object}              Global switches object
             manipulationType : {String}              Which manipulation method used to insert content into DOM
     */
-    function Autoupdate(config) {
+    function Autoupdate(opts) {
 
-        var options = assign({
-            'activeClass': 'is-active',
-            'btnClass' : '.js-auto-update',
-            'manipulationType' : 'html',
-            'backoff': 1, // 1 = no backoff
-            'backoffMax': 1000 * 60 * 20 // 20 mins
-        }, config);
+        var options = _.assign({
+            'activeClass':      'is-active',
+            'btnClass':         '.js-auto-update',
+            'manipulationType': 'html',
+            'backoff':          1, // 1 = no backoff
+            'backoffMax':       1000 * 60 * 20 // 20 mins
+        }, opts);
 
         this.unreadBlocks = 0;
         this.notification = '<';
@@ -52,19 +52,19 @@ define([
             '          data-action="off" data-link-name="autoupdate off" title="Turn auto update off">' +
             '    <span class="live-toggler__label">Auto update:</span>' +
             '    <span class="u-h">is</span>' +
-            '    <span class="live-toggle__value">On</span>' +
+            '    <span class="rounded-icon live-toggle__value">On</span>' +
             '    <span class="u-h">(turn off)</span>' +
             '  </button>' +
             '  <button class="u-button-reset live-toggler live-toggler--autoupdate live-toggler--off js-auto-update js-auto-update--off"' +
             '          data-action="on" data-link-name="autoupdate on" title="Turn auto update on">' +
             '    <span class="live-toggler__label">Auto update:</span>' +
             '    <span class="u-h">is</span>' +
-            '    <span class="live-toggle__value">Off</span>' +
+            '    <span class="rounded-icon live-toggle__value">Off</span>' +
             '    <span class="u-h">(turn on)</span>' +
             '  </button>';
 
         this.view = {
-            render: function(res) {
+            render: function (res) {
                 var attachTo = options.attachTo,
                     manipulation = this.getManipulationType(),
                     date = new Date().toString(),
@@ -76,10 +76,10 @@ define([
 
                 if (manipulation === 'prepend') {
                     bonzo(resultHtml.children).addClass('autoupdate--hidden');
-                    elementsToAdd = toArray(resultHtml.children);
+                    elementsToAdd = _.toArray(resultHtml.children);
                 } else if (manipulation === 'append') {
                     bonzo(resultHtml.children).addClass('autoupdate--hidden');
-                    elementsToAdd = toArray(resultHtml.children).reverse();
+                    elementsToAdd = _.toArray(resultHtml.children).reverse();
                 }
 
                 $attachTo[manipulation](elementsToAdd);
@@ -91,16 +91,16 @@ define([
                 $attachTo.attr('data-last-updated', date);
                 twitter.enhanceTweets();
 
-                if(this.isUpdating) {
+                if (this.isUpdating && detect.pageVisible()) {
                     this.notificationBar.setState('hidden');
                     this.view.revealNewElements.call(this);
-                } else if(this.unreadBlocks > 0) {
+                } else if (this.unreadBlocks > 0) {
                     this.notificationBar.notify(this.unreadBlocks);
                     mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
                 }
             },
 
-            toggle: function(btn) {
+            toggle: function (btn) {
                 var action = btn.getAttribute('data-action');
 
                 $(options.btnClass).removeClass(options.activeClass);
@@ -109,12 +109,12 @@ define([
                 this[action]();
             },
 
-            destroy: function() {
+            destroy: function () {
                 $('.update').remove();
                 mediator.emit('modules:autoupdate:destroyed');
             },
 
-            revealNewElements: function() {
+            revealNewElements: function () {
                 var $newElements = $('.autoupdate--hidden', options.attachTo);
                 $newElements.addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
 
@@ -125,13 +125,13 @@ define([
                 }
                 mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
 
-                setTimeout(function() {
+                setTimeout(function () {
                     $newElements.removeClass('autoupdate--highlight');
                 }, 5000);
             }
         };
 
-        this.load = function() {
+        this.load = function () {
             var that = this,
                 path = (typeof options.path === 'function') ? options.path() : options.path + '.json';
 
@@ -140,24 +140,23 @@ define([
                 type: 'json',
                 crossOrigin: true
             }).then(
-                function(response) {
-                    if(response.refreshStatus === false) {
+                function (response) {
+                    if (response.refreshStatus === false) {
                         that.off();
                         that.view.destroy();
                     } else {
                         that.view.render.call(that, response);
-                        mediator.emit('modules:autoupdate:loaded', response);
                     }
                 }
             );
         };
 
-        this.on = function() {
+        this.on = function () {
             this.isUpdating = true;
 
-            if(this.timeout) { window.clearTimeout(this.timeout); }
+            if (this.timeout) { window.clearTimeout(this.timeout); }
 
-            var updateLoop = function() {
+            var updateLoop = function () {
                 this.load();
                 var newDelay = detect.pageVisible() ? options.delay : this.updateDelay * options.backoff;
                 this.updateDelay = Math.min(newDelay, options.backoffMax);
@@ -167,12 +166,12 @@ define([
             updateLoop();
         };
 
-        this.off = function() {
+        this.off = function () {
             this.isUpdating = false;
         };
 
-        this.init = function() {
-            if (options.switches && options.switches.autoRefresh !== true) {
+        this.init = function () {
+            if (config.switches && config.switches.autoRefresh !== true) {
                 return;
             }
 
@@ -184,8 +183,8 @@ define([
 
             detect.initPageVisibility();
 
-            mediator.on('modules:detect:pagevisibility:visible', function() {
-                if(this.isUpdating) {
+            mediator.on('modules:detect:pagevisibility:visible', function () {
+                if (this.isUpdating) {
                     this.on(); // reset backoff
                     that.view.revealNewElements();
                 }
@@ -208,11 +207,11 @@ define([
             this.view.toggle.call(this, this.btns[1]);
         };
 
-        this.setManipulationType = function(manipulation) {
+        this.setManipulationType = function (manipulation) {
             options.manipulationType = manipulation;
         };
 
-        this.getManipulationType = function() {
+        this.getManipulationType = function () {
             return options.manipulationType;
         };
     }

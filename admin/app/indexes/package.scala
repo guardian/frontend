@@ -1,4 +1,4 @@
-import com.gu.openplatform.contentapi.model.TagsResponse
+import com.gu.contentapi.client.model.TagsResponse
 
 package object indexes {
   implicit class RichTagsResponse(tagsResponse: TagsResponse) {

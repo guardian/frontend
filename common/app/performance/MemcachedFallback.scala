@@ -1,6 +1,6 @@
 package performance
 
-import common.{Logging, ExecutionContexts}
+import common.{InternalContentCode, Logging, ExecutionContexts}
 import implicits.Dates
 import shade.memcached.{Configuration => MemcachedConf, Codec, Memcached}
 import scala.concurrent.Future
@@ -12,10 +12,23 @@ import Play.current
 import scala.util.Try
 import common.FaciaPressMetrics.MemcachedFallbackMetric
 
+object MemcacheTypeclass {
+  trait MemcacheKey[T] {
+    def key(t: T): Option[String]
+  }
+
+  object MemcacheKey {
+    implicit object ContentMemcacheKey extends MemcacheKey[com.gu.contentapi.client.model.Content] {
+      def key(c: com.gu.contentapi.client.model.Content): Option[String] =
+        c.fields.flatMap(_.get("internalContentCode"))
+          .filter(_.nonEmpty)
+          .map(InternalContentCode.toFormattedInternalContentCode)}}
+}
+
 object MemcachedFallback extends ExecutionContexts with Dates with Logging {
   private def connectToMemcached(host: String) = {
     val tryConnect = Try {
-      Memcached(MemcachedConf(host), actorSystem.scheduler, memcachedExecutionContext)
+      Memcached(MemcachedConf(host), memcachedExecutionContext)
     }
 
     tryConnect.failed foreach { error =>
@@ -42,7 +55,7 @@ object MemcachedFallback extends ExecutionContexts with Dates with Logging {
     f onSuccess {
       case a => memcached foreach { m => try { m.set(key, a, cacheTime) } catch { case e: Exception => log.warn(e.toString)} }
     }
-    
+
     f recoverWith {
       case error: Throwable =>
         (memcached map { _.get[A](key) map {
@@ -53,6 +66,38 @@ object MemcachedFallback extends ExecutionContexts with Dates with Logging {
               a
         }
       }).getOrElse(throw error)
+    }
+  }
+
+  def withMemcachedFallBack[A](
+    keys: Seq[String],
+    cacheTime: FiniteDuration
+    )(f: Future[Seq[A]])(implicit codec: Codec[A], memcachedKey: MemcacheTypeclass.MemcacheKey[A]): Future[Seq[A]] = {
+
+    f onSuccess {
+      case seqA =>
+        for(a <- seqA)
+          memcached foreach { m =>
+            try {
+              memcachedKey.key(a).foreach(k => m.set(k, a, cacheTime)) }
+            catch { case e: Exception =>
+              log.warn(e.toString)}
+          }
+    }
+
+    f recoverWith {
+      case error: Throwable =>
+        (memcached map { m =>
+          Future.traverse(keys) { key =>
+            m.get[A](key) map {
+              case None => throw error
+              case Some(a) =>
+                MemcachedFallbackMetric.increment()
+                log.logger.warn(s"Used Memcached value for $key to recover from Content API error", error)
+                a
+            }
+          }
+        }).getOrElse(throw error)
     }
   }
 }

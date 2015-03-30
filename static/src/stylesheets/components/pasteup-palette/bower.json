@@ -1,7 +1,7 @@
 {
   "name": "pasteup-palette",
   "description": "Palette component in the Pasteup collection",
-  "version": "3.3.1",
+  "version": "3.3.3",
   "main": [
     "src/_palette.scss"
   ],

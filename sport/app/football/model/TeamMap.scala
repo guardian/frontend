@@ -2,9 +2,9 @@ package model
 
 import common._
 import conf.LiveContentApi
+import feed.Competitions
 import pa._
-import org.joda.time.DateTime
-
+import LiveContentApi.getResponse
 
 case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
   lazy val url = tag.map(_.url)
@@ -96,7 +96,8 @@ object TeamMap extends ExecutionContexts with Logging {
     ("32309", "Hannover"),
     ("7520", "Helsingborg"),
     ("26322", "Twente"),
-    ("26398", "Basel")
+    ("26398", "Basel"),
+    ("7012", "Dynamo Kyiv")
   )
 
   def apply(team: FootballTeam) = Team(team, teamAgent().get(team.id), shortNames.get(team.id))
@@ -107,12 +108,12 @@ object TeamMap extends ExecutionContexts with Logging {
 
   def refresh(page: Int = 1) { //pages are 1 based
     log.info(s"Refreshing team tag mappings - page $page")
-    LiveContentApi.tags
+    getResponse(LiveContentApi.tags
       .page(page)
       .pageSize(50)
       .referenceType("pa-football-team")
       .showReferences("pa-football-team")
-      .response.foreach{ response =>
+    ).foreach{ response =>
       if (response.pages > page) {
         refresh(page + 1)
       }
@@ -131,6 +132,8 @@ object TeamName {
   def apply(team: FootballTeam) = {
     TeamMap.shortNames.get(team.id).getOrElse(team.name)
   }
+
+  def fromId(id: String) = Competitions().findTeam(id).map(apply)
 }
 
 // if we have tags for the matches we can make a sensible url for it

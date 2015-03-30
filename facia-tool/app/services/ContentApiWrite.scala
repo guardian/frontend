@@ -3,13 +3,13 @@ package services
 import common.FaciaToolMetrics.{ContentApiPutFailure, ContentApiPutSuccess}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
-import com.gu.facia.client.models.{CollectionConfig, TrailMetaData, Trail}
+import com.gu.facia.client.models.{CollectionConfigJson, TrailMetaData, Trail}
 import model.Snap
 import org.joda.time.DateTime
 import play.Play
 import play.api.libs.json.{JsNull, JsNumber, JsValue, Json}
 import play.api.libs.ws.{WSAuthScheme, WSResponse, WS}
-import tools.FaciaApi
+import tools.FaciaApiIO
 
 import scala.concurrent.Future
 
@@ -45,7 +45,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     .filter(_.startsWith("https://") || Play.isDev)
     .map(_ + s"/collections/$id")
 
-  def writeToContentapi(id: String, config: CollectionConfig): Future[WSResponse] = {
+  def writeToContentapi(id: String, config: CollectionConfigJson): Future[WSResponse] = {
     import play.api.Play.current
     (for {
       username      <- Configuration.contentApi.write.username
@@ -53,11 +53,11 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
       url           <- getCollectionUrlForWrite(id)
     } yield
     {
-      val contentApiPut = generateContentApiPut(id, config)
+      val futureContentApiPut = generateContentApiPut(id, config)
 
-      val response = WS
-        .url(url).withAuth(username, password, WSAuthScheme.NONE)
-        .put(Json.toJson(contentApiPut))
+      val response = futureContentApiPut.flatMap { contentApiPut =>
+        WS.url(url).withAuth(username, password, WSAuthScheme.NONE)
+          .put(Json.toJson(contentApiPut))}
 
       response.onSuccess{case r =>
         r.status match {
@@ -74,24 +74,23 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     }) getOrElse Future.failed(new RuntimeException(s"Missing config properties for Content API write"))
   }
 
-  private def generateContentApiPut(id: String, config: CollectionConfig): ContentApiPut = {
-    val maybeBlock = FaciaApi.getBlock(id)
+  def generateContentApiPut(id: String, config: CollectionConfigJson): Future[ContentApiPut] = {
+    FaciaApiIO.getCollectionJson(id) map { maybeCollectionJson =>
 
     ContentApiPut(
       config.`type`.getOrElse(defaultCollectionType),
-      config.displayName.orElse(maybeBlock.flatMap(_.displayName)).getOrElse(defaultTitle),
+      config.displayName.orElse(maybeCollectionJson.flatMap(_.displayName)).getOrElse(defaultTitle),
       config.groups.getOrElse(Nil),
       ConfigAgent.editorsPicksForCollection(id),
-      maybeBlock map { block => generateItems(block.live) } getOrElse Nil,
+      maybeCollectionJson map { collectionJson => generateItems(collectionJson.live) } getOrElse Nil,
       config.apiQuery,
-      maybeBlock map { _.lastUpdated } getOrElse { DateTime.now.toString },
-      maybeBlock map { _.updatedEmail } getOrElse { defaultEmail }
-    )
-  }
+      maybeCollectionJson map { _.lastUpdated.toString } getOrElse { DateTime.now.toString },
+      maybeCollectionJson map { _.updatedEmail } getOrElse { defaultEmail }
+    )}}
 
   private def generateItems(items: List[Trail]): List[Item] =
     items.filterNot(t => Snap.isSnap(t.id)).map { trail =>
-      Item(trail.id, trail.meta)
+      Item(trail.id, trail.meta.map(trailMetaData => trailMetaData.copy(json = trailMetaData.json.map(convertFields))))
     }
 
   //TODO: These are in transition and will be removed

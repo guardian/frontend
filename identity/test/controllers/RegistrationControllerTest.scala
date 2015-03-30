@@ -22,13 +22,13 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val api = mock[IdApiClient]
-  val requestParser = mock[IdRequestParser]
+  val requestParser = mock[TorNodeLoggingIdRequestParser]
   val urlBuilder = mock[IdentityUrlBuilder]
   val userCreationService = mock[UserCreationService]
   val createdUser = mock[User]
   val trackingData = mock[TrackingData]
 
-  val identityRequest = IdentityRequest(trackingData, Some("http://example.com/comeback"), Some("123.456.789.12"))
+  val identityRequest = IdentityRequest(trackingData, Some("http://example.com/comeback"), Some("123.456.789.12"), Some(false))
   val conf = new IdentityConfiguration
   val signinService = new PlaySigninService(conf)
   val user = User("test@example.com", "123")
@@ -37,6 +37,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
   when(userCreationService.createUser(Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[Boolean], Matchers.any[Boolean], Matchers.any[Option[String]]))
     .thenReturn(user)
   when(requestParser.apply(Matchers.anyObject())).thenReturn(identityRequest)
+  when(requestParser.apply(Matchers.anyObject(), Matchers.anyString())).thenReturn(identityRequest)
   when(trackingData.ipAddress).thenReturn(Some("123.456.789.12"))
 
   val registrationController = new RegistrationController(returnUrlVerifier, userCreationService, api, requestParser, urlBuilder, signinService)
@@ -46,7 +47,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
       val request = TestRequest()
       val returnUrl = Some("http://example.com/return")
       when(returnUrlVerifier.getVerifiedReturnUrl(request)).thenReturn(returnUrl)
-      val result = registrationController.renderForm(returnUrl)(request)
+      val result = registrationController.renderForm(returnUrl, Some(false))(request)
       status(result) should equal(OK)
     }
   }
@@ -103,12 +104,12 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
         verify(api).register(Matchers.same(user), Matchers.anyObject())
       }
 
-      "shuold pass the the omniture data to the the api" in Fake {
+      "should pass the the omniture data to the the api" in Fake {
         registrationController.processForm()(fakeRequest)
         verify(api).register(Matchers.anyObject(), Matchers.same(trackingData))
       }
 
-      "should provide user IP, exrtacted from the X-Forwarded-For header value" in Fake {
+      "should provide user IP, extracted from the X-Forwarded-For header value" in Fake {
         registrationController.processForm()(fakeRequest)
 
         object TrackingDataIpMatcher extends ArgumentMatcher {

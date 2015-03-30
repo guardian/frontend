@@ -1,11 +1,15 @@
 define(function() {
-    // Returns the abspath of a url, without a leading slash (because ContentApi ids are formed like that)
+    var a = document.createElement('a');
+
     return function(url) {
-        var a, path;
-        if(typeof url !== 'string') { return; }
-        a = document.createElement('a');
-        a.href = url;
-        path = a.pathname;
-        return path.indexOf('/') === 0 ? path.substr(1) : path; // because IE already omits the leading slash
+        if(typeof url === 'string') {
+            // If necessary, add a leading slash to stop the browser resolving it against the current path
+            url = url.match(/^\//) || url.match(/^https?:\/\//)? url : '/' + url;
+
+            a.href = url;
+
+            // Return the abspath without a leading slash, because ContentApi ids are formed like that
+            return a.pathname.replace(/^\//, '');
+        }
     };
 });

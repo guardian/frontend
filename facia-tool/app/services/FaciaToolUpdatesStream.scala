@@ -4,7 +4,7 @@ import java.nio.ByteBuffer
 
 import com.amazonaws.regions.{Region, Regions}
 import frontsapi.model.StreamUpdate
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 import scala.collection.JavaConversions._
 import com.amazonaws.handlers.AsyncHandler
@@ -32,7 +32,9 @@ object FaciaToolUpdatesStream extends Logging {
   }
 
   def putStreamUpdate(streamUpdate: StreamUpdate): Unit =
-    putString(Json.stringify(Json.toJson(streamUpdate)))
+    Json.toJson(streamUpdate.update).transform[JsObject](Reads.JsObjectReads) match {
+      case JsSuccess(jsonObject, _)  => putString(Json.stringify(jsonObject + ("email", JsString(streamUpdate.email))))
+      case JsError(errors)           => log.warn(s"Error converting StreamUpdate: $errors")}
 
   private def putString(s: String): Unit =
     Configuration.faciatool.faciaToolUpdatesStream.map { streamName =>

@@ -1,14 +1,15 @@
 package model
 
-import commercial.TravelOffersCacheJob
+import common.{AkkaAsync, Jobs, Logging}
 import conf.Configuration
+import conf.Configuration.environment
 import football.feed.MatchDayRecorder
-import play.api.GlobalSettings
-import tools.{LoadBalancer, CloudWatch}
-import common.{AkkaAsync, Jobs}
 import jobs._
+import play.api.GlobalSettings
+import services.EmailService
+import tools.{CloudWatch, LoadBalancer}
 
-trait AdminLifecycle extends GlobalSettings {
+trait AdminLifecycle extends GlobalSettings with Logging {
 
   lazy val adminPressJobStandardPushRateInMinutes: Int = Configuration.faciatool.adminPressJobStandardPushRateInMinutes
   lazy val adminPressJobHighPushRateInMinutes: Int = Configuration.faciatool.adminPressJobHighPushRateInMinutes
@@ -30,10 +31,6 @@ trait AdminLifecycle extends GlobalSettings {
 
     Jobs.schedule("AnalyticsSanityCheckJob", "0 0/15 * * * ?") {
       AnalyticsSanityCheckJob.run()
-    }
-
-    Jobs.schedule("VideoSanityCheckJob", "0 0/15 * * * ?") {
-      VideoSanityCheckJob.run()
     }
 
     Jobs.scheduleEveryNMinutes("FrontPressJobHighFrequency", adminPressJobHighPushRateInMinutes) {
@@ -68,6 +65,26 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.schedule("MatchDayRecorderJob", "0 * * * * ?") {
       MatchDayRecorder.record()
     }
+
+    Jobs.schedule("AdImpressionCountJob", "0 * * * * ?") {
+      AdImpressionCounter.count()
+    }
+
+    if (environment.isProd) {
+      Jobs.schedule("AdsStatusEmailJob", "0 44 8 ? * MON-FRI") {
+        AdsStatusEmailJob.run()
+      }
+      Jobs.schedule("ExpiringAdFeaturesEmailJob", "0 47 8 ? * MON-FRI") {
+        log.info(s"Starting ExpiringAdFeaturesEmailJob")
+        ExpiringAdFeaturesEmailJob.run()
+      }
+    }
+
+    Jobs.schedule("VideoEncodingsJob", "0 0/15 * * * ?") {
+      log.info("Starting VideoEncodingsJob")
+      VideoEncodingsJob.run()
+    }
+
   }
 
   private def descheduleJobs() {
@@ -75,7 +92,6 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("LoadBalancerLoadJob")
     Jobs.deschedule("FastlyCloudwatchLoadJob")
     Jobs.deschedule("AnalyticsSanityCheckJob")
-    Jobs.deschedule("VideoSanityCheckJob")
     Jobs.deschedule("FrontPressJob")
     Jobs.deschedule("TravelOffersCacheJob")
     Jobs.deschedule("RebuildIndexJob")
@@ -85,6 +101,10 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("FrontPressJobHighFrequency")
     Jobs.deschedule("FrontPressJobStandardFrequency")
     Jobs.deschedule("FrontPressJobLowFrequency")
+    Jobs.deschedule("AdImpressionCountJob")
+    Jobs.deschedule("AdsStatusEmailJob")
+    Jobs.deschedule("ExpiringAdFeaturesEmailJob")
+    Jobs.deschedule("VideoEncodingsJob")
   }
 
   override def onStart(app: play.api.Application) {
@@ -97,12 +117,14 @@ trait AdminLifecycle extends GlobalSettings {
       TravelOffersCacheJob.run()
       OmnitureReportJob.run()
       SentryReportJob.run()
+      VideoEncodingsJob.run()
     }
   }
 
   override def onStop(app: play.api.Application) {
     descheduleJobs()
     CloudWatch.shutdown()
+    EmailService.shutdown()
     super.onStop(app)
   }
 }

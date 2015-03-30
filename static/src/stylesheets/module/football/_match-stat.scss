@@ -76,13 +76,13 @@
 }
 
 .team-result--won {
-    background-color: $c-statusPositive;
+    background-color: colour(status-positive);
 }
 
 .team-result--drew {
-    background-color: $c-statusNeutral;
+    background-color: colour(status-neutral);
 }
 
 .team-result--lost {
-    background-color: $c-statusNegative;
+    background-color: colour(status-negative);
 }

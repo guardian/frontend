@@ -1,23 +1,30 @@
-/* global _: true */
 define([
     'knockout',
+    'underscore',
     'config',
     'models/config/persistence',
     'modules/vars',
     'modules/content-api',
-    'utils/strip-empty-query-params',
+    'utils/sanitize-api-query',
     'utils/as-observable-props',
     'utils/populate-observables',
+    'utils/full-trim',
+    'utils/mediator',
+    'utils/url-abs-path',
     'utils/identity'
 ], function(
     ko,
+    _,
     pageConfig,
     persistence,
     vars,
     contentApi,
-    stripEmptyQueryParams,
+    sanitizeApiQuery,
     asObservableProps,
     populateObservables,
+    fullTrim,
+    mediator,
+    urlAbsPath,
     identity
 ) {
     var checkCount = 0;
@@ -42,17 +49,37 @@ define([
             'hideKickers',
             'showDateHeader',
             'showLatestUpdate',
-            'apiQuery']);
+            'excludeFromRss',
+            'apiQuery',
+            'importance']);
 
         populateObservables(this.meta, opts);
 
+        this.props = {
+            optionsImportance: [
+                'critical', 'important'
+            ]
+        };
+
         this.state = asObservableProps([
             'isOpen',
+            'isOpenTypePicker',
             'underDrag',
+            'underControlDrag',
             'apiQueryStatus']);
 
         this.state.withinPriority = ko.computed(function() {
             return _.some(this.parents(), function(front) {return front.props.priority() === vars.priority; });
+        }, this);
+
+        this.containerThumbnail = ko.computed(function () {
+            var containerId = this.meta.type();
+
+            if (/^(fixed|dynamic)\//.test(containerId)) {
+                return '/thumbnails/' + containerId + '.svg';
+            } else {
+                return null;
+            }
         }, this);
 
         this.meta.apiQuery.subscribe(function(apiQuery) {
@@ -68,10 +95,21 @@ define([
                 .groups
             );
         }, this);
+
+        this.typePicker = this._typePicker.bind(this);
     }
 
     Collection.prototype.toggleOpen = function() {
         this.state.isOpen(!this.state.isOpen());
+    };
+
+    Collection.prototype.toggleOpenTypePicker = function() {
+        this.state.isOpenTypePicker(!this.state.isOpenTypePicker());
+    };
+
+    Collection.prototype._typePicker = function(type) {
+        this.meta.type(type);
+        this.state.isOpenTypePicker(false);
     };
 
     Collection.prototype.close = function() {
@@ -98,9 +136,25 @@ define([
     };
 
     Collection.prototype.save = function() {
-        this.state.isOpen(false);
-        this.meta.apiQuery(stripEmptyQueryParams(this.meta.apiQuery()));
+        var self = this,
+            errs = _.chain([
+                    {key: 'displayName', errMsg: 'enter a title'},
+                    {key: 'type', errMsg: 'choose a layout'}
+                ])
+                .filter(function(test) { return !fullTrim(_.result(self.meta, test.key)); })
+                .pluck('errMsg')
+                .value();
+
+        if (errs.length) {
+            window.alert('Oops! You must ' + errs.join(', and ') + '...');
+            return;
+        }
+
+        this.meta.href(urlAbsPath(this.meta.href()));
+        this.meta.apiQuery(sanitizeApiQuery(this.meta.apiQuery()));
+
         this.state.apiQueryStatus(undefined);
+        this.state.isOpen(false);
 
         if (vars.model.collections.indexOf(this) === -1) {
             vars.model.collections.unshift(this);
@@ -138,11 +192,22 @@ define([
         apiQuery += 'show-editors-picks=true&show-fields=headline';
 
         contentApi.fetchContent(apiQuery)
-        .always(function(results) {
+        .done(function(results) {
             if (cc === checkCount) {
-                self.capiResults(results);
-                self.state.apiQueryStatus(results.length ? 'valid' : 'invalid');
+                self.capiResults(results || []);
+                self.state.apiQueryStatus(results && results.length ? 'valid' : 'invalid');
             }
+        });
+    };
+
+    Collection.prototype.drop = function (source, targetGroup) {
+        mediator.emit('collection:updates', {
+            sourceItem: source.sourceItem,
+            sourceGroup: source.sourceGroup,
+            targetItem: this,
+            targetGroup: targetGroup,
+            isAfter: false,
+            mediaItem: null
         });
     };
 

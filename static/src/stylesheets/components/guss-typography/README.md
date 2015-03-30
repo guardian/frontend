@@ -81,11 +81,8 @@ html {
     font-family: "Guardian Text Egyptian Web", Georgia, serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    font-size: 62.5%;
-    font-size: calc(1em * .625);
 }
 body {
-    font-size: 1.6em;
     line-height: 1.5;
 }
 ```

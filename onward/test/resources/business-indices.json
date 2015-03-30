@@ -1,0 +1,95 @@
+{ "indices" : [
+	{	"description"	: "FTSE 100 INDEX",
+		"name"		: "FTSE 100",
+		"ticker"	: ".FTSE",
+		"source"	: "ThomsonReuters",
+		"snapshottime"	: "2015-01-26T12:41:36.8775851Z",
+		"generatedtime"	: "2015-01-26T12:00:06",
+		"marketclosed"	: "&nbsp;",
+		"value" : {
+			"localtime"	: "1200",
+			"price"		: "6,799.80",
+			"currency"	: "GBP",
+			"volume"	: "222,065,472.00",
+			"change" : {
+				"day"		: "-33.03",
+				"pctday"	: "-0.48",
+				"trendday"	: "down"
+			},
+			"yearhighvalue" : "6,841.73",
+			"yearhighdate"  : "23 JAN 2015",
+			"yearlowvalue"  : "6,298.15",
+			"yearlowdate"  : "15 JAN 2015"
+		}
+	}
+,	{	"description"	: "DJ INDU AVERAGE",
+		"name"		: "Dow Jones",
+		"ticker"	: ".DJI",
+		"source"	: "ThomsonReuters",
+		"snapshottime"	: "2015-01-26T12:41:36.8775851Z",
+		"generatedtime"	: "2015-01-26T12:00:06",
+		"marketclosed"	: "Closed",
+		"value" : {
+			"localtime"	: "0700",
+			"price"		: "17,672.60",
+			"currency"	: "USD",
+			"volume"	: "97,113,736.00",
+			"change" : {
+				"day"		: "-141.38",
+				"pctday"	: "-0.79",
+				"trendday"	: "down"
+			},
+			"yearhighvalue" : "18,103.40",
+			"yearhighdate"  : "26 DEC 2014",
+			"yearlowvalue"  : "15,340.69",
+			"yearlowdate"  : "05 FEB 2014"
+		}
+	}
+,	{	"description"	: "XETRA DAX PF",
+		"name"		: "DAX",
+		"ticker"	: ".GDAXI",
+		"source"	: "ThomsonReuters",
+		"snapshottime"	: "2015-01-26T12:41:36.8775851Z",
+		"generatedtime"	: "2015-01-26T12:00:06",
+		"marketclosed"	: "&nbsp;",
+		"value" : {
+			"localtime"	: "1300",
+			"price"		: "10,725.22",
+			"currency"	: "EUR",
+			"volume"	: "43,314,596.00",
+			"change" : {
+				"day"		: "+75.64",
+				"pctday"	: "0.71",
+				"trendday"	: "up"
+			},
+			"yearhighvalue" : "10,704.32",
+			"yearhighdate"  : "23 JAN 2015",
+			"yearlowvalue"  : "9,382.82",
+			"yearlowdate"  : "06 JAN 2015"
+		}
+	}
+,	{	"description"	: "NIKKEI 225 INDEX",
+		"name"		: "Nikkei",
+		"ticker"	: ".N225",
+		"source"	: "ThomsonReuters",
+		"snapshottime"	: "2015-01-26T12:41:36.8775851Z",
+		"generatedtime"	: "2015-01-26T12:00:06",
+		"marketclosed"	: "Closed",
+		"value" : {
+			"localtime"	: "2100",
+			"price"		: "17,468.52",
+			"currency"	: "JPY",
+			"volume"	: "111,603.00",
+			"change" : {
+				"day"		: "-43.23",
+				"pctday"	: "-0.25",
+				"trendday"	: "down"
+			},
+			"yearhighvalue" : "17,540.92",
+			"yearhighdate"  : "05 JAN 2015",
+			"yearlowvalue"  : "16,592.57",
+			"yearlowdate"  : "16 JAN 2015"
+		}
+	}
+	]
+}

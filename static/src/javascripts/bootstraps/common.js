@@ -5,24 +5,29 @@ define([
     'bonzo',
     'enhancer',
     'fastclick',
-    'lodash/functions/debounce',
     'qwery',
 
     'common/utils/$',
-    'common/utils/ajax',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
+    'common/utils/proximity-loader',
     'common/utils/mediator',
+    'common/utils/template',
     'common/utils/url',
+    'common/utils/robust',
 
     'common/modules/analytics/clickstream',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
+    'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
-    'common/modules/discussion/api',
+    'common/modules/analytics/css-logging',
+    'common/modules/analytics/simple-metrics',
+    'common/modules/analytics/tech-feedback',
+    'common/modules/commercial/user-ad-targeting',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
     'common/modules/experiments/ab',
@@ -31,77 +36,98 @@ define([
     'common/modules/navigation/navigation',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
-    'common/modules/onward/breaking-news',
-    'common/modules/onward/geo-most-popular',
     'common/modules/onward/history',
     'common/modules/onward/more-tags',
-    'common/modules/onward/most-popular-factory',
     'common/modules/onward/onward-content',
+    'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
-    'common/modules/release-message',
+    'common/modules/social/share-count',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
+    'common/modules/ui/fonts',
+    'common/modules/ui/last-modified',
     'common/modules/ui/message',
     'common/modules/ui/relativedates',
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
-    'common/modules/userPrefs'
+    'common/modules/user-prefs',
+    'common/modules/onward/breaking-news',
+    'bootstraps/identity'
 ], function (
     bean,
     bonzo,
     enhancer,
     FastClick,
-    debounce,
     qwery,
 
     $,
-    ajax,
     config,
-    Cookies,
+    cookies,
     detect,
+    proximityLoader,
     mediator,
-    Url,
+    template,
+    url,
+    robust,
 
     Clickstream,
     Foresee,
     liveStats,
-    Omniture,
+    mediaListener,
+    omniture,
     register,
     ScrollDepth,
-    discussionApi,
+    logCss,
+    simpleMetrics,
+    techFeedback,
+    userAdTargeting,
     CommentCount,
     DiscussionLoader,
     ab,
     id,
     AutoSignin,
-    Navigation,
+    navigation,
     Profile,
     Search,
-    breakingNews,
-    GeoMostPopular,
     history,
     MoreTags,
-    MostPopularFactory,
     Onward,
+    Popular,
     Related,
     TonalComponent,
-    releaseMessage,
+    shareCount,
     Dropdowns,
     fauxBlockLink,
+    fonts,
+    LastModified,
     Message,
     RelativeDates,
     smartAppBanner,
     Tabs,
     Toggles,
-    userPrefs
-    ) {
+    userPrefs,
+    breakingNews,
+    identity
+) {
 
     var modules = {
 
+            loadFonts: function () {
+                fonts.load();
+            },
+
+            initId: function () {
+                identity.init(config);
+            },
+
+            initUserAdTargeting: function () {
+                userAdTargeting.requestUserSegmentsFromId();
+            },
+
             initFastClick: function () {
-                new FastClick(document.body);
+                FastClick.attach(document.body);
             },
 
             initialiseFauxBlockLink: function () {
@@ -110,12 +136,12 @@ define([
 
             initialiseTopNavItems: function () {
                 var profile,
-                    search = new Search(config),
+                    search = new Search(),
                     header = document.getElementById('header');
 
                 if (header) {
                     if (config.switches.idProfileNavigation) {
-                        profile = new Profile(header, {
+                        profile = new Profile({
                             url: config.page.idUrl
                         });
                         profile.init();
@@ -126,25 +152,71 @@ define([
             },
 
             initialiseNavigation: function () {
-                Navigation.init(config);
+                navigation.init();
             },
 
             transcludeRelated: function () {
-                var r = new Related();
-                r.renderRelatedComponent(config);
+                var opts = {
+                    excludeTags: []
+                };
+
+                // exclude ad features from non-ad feature content
+                if (config.page.sponsorshipType !== 'advertisement-features') {
+                    opts.excludeTags.push('tone/advertisement-features');
+                }
+                // don't want to show professional network content on videos or interactives
+                if ('contentType' in config.page && ['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) >= 0) {
+                    opts.excludeTags.push('guardian-professional/guardian-professional');
+                }
+                new Related(opts).renderRelatedComponent();
+            },
+
+            initRelated: function () {
+                if (window.location.hash) {
+                    modules.transcludeRelated();
+                } else {
+                    var relatedEl = qwery('.js-related')[0];
+                    if (relatedEl) {
+                        proximityLoader.add(relatedEl, 1500, modules.transcludeRelated);
+                    }
+                }
             },
 
             transcludePopular: function () {
-                new MostPopularFactory(config);
+                new Popular().init();
+            },
+
+            initPopular: function () {
+                if (!config.page.isFront) {
+                    if (window.location.hash) {
+                        modules.transcludePopular();
+                    } else {
+                        var onwardEl = qwery('.js-popular-trails')[0];
+                        if (onwardEl) {
+                            proximityLoader.add(onwardEl, 1500, modules.transcludePopular);
+                        }
+                    }
+                }
             },
 
             transcludeOnwardContent: function () {
-                if ('seriesId' in config.page) {
-                    new Onward(config, qwery('.js-onward'));
+                if ((config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent) {
+                    new Onward(qwery('.js-onward'));
                 } else if (config.page.tones !== '') {
                     $('.js-onward').each(function (c) {
-                        new TonalComponent(config, c).fetch(c, 'html');
+                        new TonalComponent().fetch(c, 'html');
                     });
+                }
+            },
+
+            initOnwardContent: function () {
+                if (window.location.hash) {
+                    modules.transcludeOnwardContent();
+                } else {
+                    var onwardEl = qwery('.js-onward')[0];
+                    if (onwardEl) {
+                        proximityLoader.add(onwardEl, 1500, modules.transcludeOnwardContent);
+                    }
                 }
             },
 
@@ -158,17 +230,13 @@ define([
             showToggles: function () {
                 var toggles = new Toggles();
                 toggles.init(document);
-                mediator.on('page:common:ready', function () {
-                    toggles.reset();
-                    Dropdowns.init();
-                });
+                toggles.reset();
+                Dropdowns.init();
             },
 
             showRelativeDates: function () {
                 var dates = RelativeDates;
-                mediator.on('page:common:ready', function () {
-                    dates.init();
-                });
+                dates.init();
                 mediator.on('fragment:ready:dates', function (el) {
                     dates.init(el);
                 });
@@ -178,22 +246,12 @@ define([
                 new Clickstream({filter: ['a', 'button']});
             },
 
-            initRightHandComponent: function () {
-                if (config.page.contentType === 'Article' &&
-                    detect.getBreakpoint() !== 'mobile' &&
-                    parseInt(config.page.wordCount, 10) > 500) {
-                    new GeoMostPopular({});
-                }
-            },
-
             logLiveStats: function () {
-                liveStats.log(config);
+                liveStats.log();
             },
 
             loadAnalytics: function () {
-                var omniture = new Omniture();
-
-                omniture.go(config);
+                omniture.go();
 
                 if (config.switches.ophan) {
                     require('ophan/ng', function (ophan) {
@@ -211,123 +269,47 @@ define([
             },
 
             cleanupCookies: function () {
-                Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA']);
-                Cookies.cleanUpDuplicates(['GU_VIEW']);
+                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at']);
             },
 
-            // opt-in to the responsive alpha
-            optIn: function () {
-                var countMeIn = /#countmein/.test(window.location.hash);
-                if (countMeIn) {
-                    Cookies.add('GU_VIEW', 'responsive', 365);
+            updateHistory: function () {
+                if (config.page.contentType !== 'Network Front') {
+                    history.logSummary(config.page);
+                }
+
+                if (config.page.contentType === 'Video') {
+                    history.logHistory(config.page);
                 }
             },
 
-            // display a flash message to devices over 600px who don't have the mobile cookie
-            displayReleaseMessage: function () {
-
-                var exitLink, msg, usMsg,
-                    path = (document.location.pathname) ? document.location.pathname : '/',
-                    releaseMessage = new Message('alpha', {pinOnHide: true});
-
-                if (
-                    config.switches.releaseMessage &&
-                    config.page.showClassicVersion &&
-                    (detect.getBreakpoint() !== 'mobile')
-                ) {
-                    // force the visitor in to the alpha release for subsequent visits
-                    Cookies.add('GU_VIEW', 'responsive', 365);
-
-                    exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
-
-                    msg = '<p class="site-message__message" id="site-message__message">' +
-                        'You’re viewing a beta release of the Guardian’s responsive website.' +
-                        ' We’d love to hear what you think.' +
-                        '</p>' +
-                        '<ul class="site-message__actions u-unstyled">' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-back"></i>' +
-                        '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                        'data-link-name="opt-out">Use current version</a>' +
-                        '</li>' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" target="_blank">Leave feedback</a>' +
-                        '</li>' +
-                        '</ul>';
-
-                    usMsg = '<p class="site-message__message" id="site-message__message">' +
-                        'You’re viewing a beta release of the Guardian’s responsive website.' +
-                        ' We’d love to hear what you think.' +
-                        '</p>' +
-                        '<ul class="site-message__actions u-unstyled">' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" target="_blank">Leave feedback</a>' +
-                        '</li>' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="http://next.theguardian.com" target="_blank">Find out more</a>' +
-                        '</li>' +
-                        '</ul>';
-
-                    if (config.page.edition === 'US') {
-                        releaseMessage.show(usMsg);
-                    } else {
-                        releaseMessage.show(msg);
-                    }
+            showHistoryInMegaNav: function () {
+                if (config.switches.historyTags) {
+                    mediator.once('modules:nav:open', function () {
+                        history.showInMegaNav();
+                    });
                 }
-            },
-
-            displayBreakingNews: function () {
-                if (config.switches.breakingNews) {
-                    breakingNews(config);
-                }
-            },
-
-            unshackleParagraphs: function () {
-                if (userPrefs.isOff('para-indents')) {
-                    $('.paragraph-spacing--indents').removeClass('paragraph-spacing--indents');
-                }
-            },
-
-            logReadingHistory: function () {
-                mediator.on('page:common:ready', function () {
-                    if (config.page.contentType !== 'Network Front') {
-                        history.log({
-                            id: '/' + config.page.pageId,
-                            meta: {
-                                section: config.page.section,
-                                keywords: config.page.keywordIds && (config.page.keywordIds + '').split(',').slice(0, 5)
-                            }
-                        });
-                    }
-                });
             },
 
             initAutoSignin: function () {
-                mediator.on('page:common:ready', function () {
-                    if (config.switches && config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
-                        new AutoSignin(config).init();
-                    }
-                });
+                if (config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
+                    new AutoSignin().init();
+                }
             },
 
             windowEventListeners: function () {
                 var event,
                     events = {
-                        resize: 'window:resize',
-                        orientationchange: 'window:orientationchange',
-                        scroll: 'window:scroll'
-                    },
-                    emitEvent = function (eventName) {
-                        return function (e) {
-                            mediator.emit(eventName, e);
-                        };
+                        resize:            'window:resize',
+                        scroll:            'window:scroll',
+                        orientationchange: 'window:orientationchange'
                     };
                 for (event in events) {
-                    bean.on(window, event, debounce(emitEvent(events[event]), 200));
+                    bean.on(window, event, mediator.emit.bind(mediator, events[event]));
                 }
+            },
+
+            mediaEventListeners: function () {
+                mediaListener.init();
             },
 
             checkIframe: function () {
@@ -343,27 +325,23 @@ define([
             },
 
             augmentInteractive: function () {
-                mediator.on('page:common:ready', function () {
-                    if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
-                        $('figure.interactive').each(function (el) {
-                            enhancer.render(el, config, mediator);
-                        });
-                    }
-                });
+                if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
+                    $('figure.interactive').each(function (el) {
+                        enhancer.render(el, document, config, mediator);
+                    });
+                }
             },
 
             startRegister: function () {
                 if (!config.page.isSSL) {
-                    register.initialise(config);
+                    register.initialise();
                 }
             },
 
             repositionComments: function () {
-                mediator.on('page:common:ready', function () {
-                    if (!id.isUserLoggedIn()) {
-                        $('.js-comments').appendTo(qwery('.js-repositioned-comments'));
-                    }
-                });
+                if (!id.isUserLoggedIn()) {
+                    $('.js-comments').appendTo(qwery('.js-repositioned-comments'));
+                }
             },
 
             showMoreTagsLink: function () {
@@ -375,25 +353,31 @@ define([
             },
 
             initDiscussion: function () {
-                discussionApi.init(config);
-                mediator.on('page:common:ready', function () {
-                    if (config.page.commentable && config.switches.discussion) {
-                        var discussionLoader = new DiscussionLoader();
-                        discussionLoader.attachTo($('.discussion')[0]);
-                    }
+                if (config.switches.discussion) {
                     CommentCount.init();
-                });
-            },
-
-            testCookie: function () {
-                var queryParams = Url.getUrlVars();
-                if (queryParams.test) {
-                    Cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
+                    if (config.page.commentable) {
+                        var el = qwery('.discussion')[0];
+                        if (el) {
+                            new DiscussionLoader().attachTo(el);
+                        }
+                    }
                 }
             },
 
-            initReleaseMessage: function () {
-                releaseMessage.init(config);
+            testCookie: function () {
+                var queryParams = url.getUrlVars();
+                if (queryParams.test) {
+                    cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
+                }
+            },
+
+            adTestCookie: function () {
+                var queryParams = url.getUrlVars();
+                if (queryParams.adtest === 'clear') {
+                    cookies.remove('adtest');
+                } else if (queryParams.adtest) {
+                    cookies.add('adtest', encodeURIComponent(queryParams.adtest), 10);
+                }
             },
 
             initOpenOverlayOnClick: function () {
@@ -419,44 +403,86 @@ define([
                         }, 1);
                     }
                 });
-            }
-        },
-        ready = function () {
-            modules.initFastClick();
-            modules.testCookie();
-            modules.windowEventListeners();
-            modules.initialiseFauxBlockLink();
-            modules.checkIframe();
-            modules.showTabs();
-            modules.initialiseTopNavItems();
-            modules.initialiseNavigation();
-            modules.displayBreakingNews();
-            modules.showToggles();
-            modules.showRelativeDates();
-            modules.initClickstream();
-            modules.optIn();
-            modules.displayReleaseMessage();
-            modules.logReadingHistory();
-            modules.unshackleParagraphs();
-            modules.initAutoSignin();
-            modules.augmentInteractive();
-            modules.runForseeSurvey();
-            modules.startRegister();
-            modules.repositionComments();
-            modules.showMoreTagsLink();
-            modules.showSmartBanner();
-            modules.initDiscussion();
-            modules.logLiveStats();
-            modules.loadAnalytics();
-            modules.cleanupCookies();
-            modules.transcludePopular();
-            modules.transcludeRelated();
-            modules.transcludeOnwardContent();
-            modules.initRightHandComponent();
-            modules.initReleaseMessage();
-            modules.initOpenOverlayOnClick();
+            },
 
-            mediator.emit('page:common:ready');
+            initShareCounts: function () {
+                shareCount.init();
+            },
+
+            initLastModified: function () {
+                LastModified.init();
+            },
+
+            loadBreakingNews: function () {
+                if (config.switches.breakingNews) {
+                    breakingNews();
+                }
+            },
+
+            runCssLogging: function () {
+                if (config.switches.cssLogging) {
+                    logCss();
+                }
+            },
+
+            initSimpleMetrics: function () {
+                simpleMetrics.init();
+            },
+
+            initTechFeedback: function () {
+                techFeedback.init();
+            },
+
+            initPublicApi: function () {
+                // BE CAREFUL what you expose here...
+                window.guardian.api = {
+                    logCss: logCss
+                };
+            }
+
+        },
+
+        ready = function () {
+            robust('c-fonts',           modules.loadFonts);
+            robust('c-identity',        modules.initId);
+            robust('c-adverts',         modules.initUserAdTargeting);
+            robust('c-discussion',      modules.initDiscussion);
+            robust('c-fast-click',      modules.initFastClick);
+            robust('c-test-cookie',     modules.testCookie);
+            robust('c-ad-cookie',       modules.adTestCookie);
+            robust('c-event-listeners', modules.windowEventListeners);
+            robust('c-breaking-news',   modules.loadBreakingNews);
+            robust('c-shares',          modules.initShareCounts);
+            robust('c-last-modified',   modules.initLastModified);
+            robust('c-block-link',      modules.initialiseFauxBlockLink);
+            robust('c-iframe',          modules.checkIframe);
+            robust('c-tabs',            modules.showTabs);
+            robust('c-top-nav',         modules.initialiseTopNavItems);
+            robust('c-init-nav',        modules.initialiseNavigation);
+            robust('c-toggles',         modules.showToggles);
+            robust('c-dates',           modules.showRelativeDates);
+            robust('c-clickstream',     modules.initClickstream);
+            robust('c-history',         modules.updateHistory);
+            robust('c-sign-in',         modules.initAutoSignin);
+            robust('c-interactive',     modules.augmentInteractive);
+            robust('c-history-nav',     modules.showHistoryInMegaNav);
+            robust('c-forsee',          modules.runForseeSurvey);
+            robust('c-start-register',  modules.startRegister);
+            robust('c-comments',        modules.repositionComments);
+            robust('c-tag-links',       modules.showMoreTagsLink);
+            robust('c-smart-banner',    modules.showSmartBanner);
+            robust('c-log-stats',       modules.logLiveStats);
+            robust('c-analytics',       modules.loadAnalytics);
+            robust('c-cookies',         modules.cleanupCookies);
+            robust('c-popular',         modules.initPopular);
+            robust('c-related',         modules.initRelated);
+            robust('c-onward',          modules.initOnwardContent);
+            robust('c-overlay',         modules.initOpenOverlayOnClick);
+            robust('c-css-logging',     modules.runCssLogging);
+            robust('c-public-api',      modules.initPublicApi);
+            robust('c-simple-metrics',  modules.initSimpleMetrics);
+            robust('c-tech-feedback',   modules.initTechFeedback);
+            robust('c-media-listeners', modules.mediaEventListeners);
         };
 
     return {

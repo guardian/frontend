@@ -9,39 +9,44 @@ requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/static/src/javascripts',
     paths: {
-        bootsraps:    'bootstraps',
         admin:        'projects/admin',
         common:       'projects/common',
         facia:        'projects/facia',
         membership:   'projects/membership',
         bean:         'components/bean/bean',
         bonzo:        'components/bonzo/bonzo',
-        EventEmitter: 'components/eventEmitter/EventEmitter',
-        qwery:        'components/qwery/qwery',
-        reqwest:      'components/reqwest/reqwest',
-        lodash:       'components/lodash-amd',
-        imager:       'components/imager.js/container',
-        fence:        'components/fence/fence',
         enhancer:     'components/enhancer/enhancer',
-        raven:        'components/raven-js/raven',
+        EventEmitter: 'components/eventEmitter/EventEmitter',
         fastclick:    'components/fastclick/fastclick',
+        fastdom:      'components/fastdom/index',
+        fence:        'components/fence/fence',
+        lodash:       'components/lodash',
+        picturefill:  'projects/common/utils/picturefill',
+        Promise:      'components/native-promise-only/npo.src',
+        qwery:        'components/qwery/qwery',
+        raven:        'components/raven-js/raven',
+        reqwest:      'components/reqwest/reqwest',
         omniture:     '/base/static/public/javascripts/vendor/omniture',
         stripe:       '/base/static/public/javascripts/vendor/stripe/stripe.min',
-        jasq:         '/base/static/test/javascripts/components/jasq/jasq',
+        squire:       '/base/static/test/javascripts/components/squire/src/Squire',
         fixtures:     '/base/static/test/javascripts/fixtures',
-        helpers:      '/base/static/test/javascripts/helpers'
+        helpers:      '/base/static/test/javascripts/helpers',
+        svgs:         '/base/common/conf/assets/inline-svgs',
+        // plugins
+        text:         'components/requirejs-text/text',
+        inlineSvg:    'projects/common/utils/inlineSvg'
     },
     shim: {
-        imager: {
-            deps: ['/base/static/src/javascripts/components/imager.js/imager.js'],
-            exports: 'Imager'
-        },
         googletag: {
             exports: 'googletag'
         }
     }
 });
 
-require(tests, function() {
-    window.__karma__.start();
+require(['Promise', 'common/utils/to-array'], function (Promise, toArray) {
+    require(tests, function () {
+        Promise.all(toArray(arguments)).then(function () {
+            window.__karma__.start()
+        });
+    });
 });

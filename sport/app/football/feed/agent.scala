@@ -34,21 +34,28 @@ trait LiveMatches extends ExecutionContexts with Logging {
 }
 
 trait LeagueTables extends ExecutionContexts with Logging {
-  def getLeagueTable(competition: Competition) = FootballClient.leagueTable(competition.id, new LocalDate).map{_.map{ t =>
+  def getLeagueTable(competition: Competition) = {
     log.info(s"refreshing table for ${competition.id}")
-    val team = t.team.copy(name = TeamName(t.team))
-    t.copy(team = team)
-  }}
+    FootballClient.leagueTable(competition.id, new LocalDate).map {
+      _.map { t =>
+        val team = t.team.copy(name = TeamName(t.team))
+        t.copy(team = team)
+      }
+    }
+  }
 }
 
-
 trait Fixtures extends ExecutionContexts with Logging {
-  def getFixtures(competition: Competition) = FootballClient.fixtures(competition.id).map{ _.map { f =>
+  def getFixtures(competition: Competition) = {
     log.info(s"refreshing fixtures for ${competition.id}")
-    val homeTeam = f.homeTeam.copy(name = TeamName(f.homeTeam))
-    val awayTeam = f.awayTeam.copy(name = TeamName(f.awayTeam))
-    f.copy(homeTeam = homeTeam, awayTeam = awayTeam)
-  }}
+    FootballClient.fixtures(competition.id).map {
+      _.map { f =>
+        val homeTeam = f.homeTeam.copy(name = TeamName(f.homeTeam))
+        val awayTeam = f.awayTeam.copy(name = TeamName(f.awayTeam))
+        f.copy(homeTeam = homeTeam, awayTeam = awayTeam)
+      }
+    }
+  }
 }
 
 trait Results extends ExecutionContexts with Logging with implicits.Collections {

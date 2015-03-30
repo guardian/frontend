@@ -3,15 +3,23 @@ package contentapi
 import java.net.InetAddress
 import java.util.concurrent.TimeoutException
 
-import com.gu.openplatform.contentapi.connection.{Http, HttpResponse}
-import common.ContentApiMetrics.ContentApi404Metric
+import com.gu.contentapi.client.ContentApiClientLogic
+import common.ContentApiMetrics.{ContentApiErrorMetric, ContentApi404Metric}
 import common.{Logging, ExecutionContexts}
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
 import metrics.{CountMetric, FrontendTimingMetric}
 import play.api.libs.ws.{WS, WSAuthScheme}
 
-import scala.util.Try
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Success, Failure, Try}
+
+case class Response(body: String, status: Int, statusText: String)
+
+trait Http {
+  def GET(url: String, headers: Iterable[(String, String)]): Future[Response]
+}
 
 class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: CountMetric)
   extends Http with ExecutionContexts with Logging {
@@ -19,8 +27,7 @@ class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: 
   import java.lang.System.currentTimeMillis
   import play.api.Play.current
 
-  override def GET(url: String, headers: Iterable[(String, String)]) = {
-
+  def GET(url: String, headers: Iterable[(String, String)]): Future[Response] = {
     //append with a & as there are always params in there already
     val urlWithDebugInfo = s"$url&${RequestDebugInfo.debugParams}"
 
@@ -36,6 +43,7 @@ class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: 
     response.onSuccess {
       case r if r.status == 404 => ContentApi404Metric.increment()
       case r if r.status == 200 => httpTimingMetric.recordDuration(currentTimeMillis - start)
+      case _ =>
     }
 
     response.onFailure {
@@ -46,28 +54,34 @@ class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: 
         log.warn(s"Content API client exception for $url in ${currentTimeMillis - start}: $e")
     }
 
-    response
-  }.map {
-    r => HttpResponse(r.body, r.status, r.statusText)
+    response onComplete {
+      case Success(r) if r.status >= 500 =>
+        ContentApiErrorMetric.increment()
+      case Failure(_) =>
+        ContentApiErrorMetric.increment()
+      case _ =>
+    }
+
+    response map { wsResponse =>
+      Response(wsResponse.body, wsResponse.status, wsResponse.statusText)
+    }
   }
 }
 
 // allows us to inject a test Http
-trait DelegateHttp extends Http with ExecutionContexts {
-
+trait DelegateHttp { self: ContentApiClientLogic =>
   val httpTimingMetric: FrontendTimingMetric
   val httpTimeoutMetric: CountMetric
 
-  private var _http: Http = new WsHttp(httpTimingMetric, httpTimeoutMetric)
+  var _http: Http = new WsHttp(httpTimingMetric, httpTimeoutMetric)
 
-  def http = _http
-  def http_=(delegateHttp: Http) { _http = delegateHttp }
-
-  override def GET(url: String, headers: scala.Iterable[scala.Tuple2[String, String]]) = _http.GET(url, headers)
+  override def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext) =
+    _http.GET(url, headers) map { response: Response =>
+      self.HttpResponse(response.body, response.status, response.statusText)
+  }
 }
 
 private object RequestDebugInfo {
-
   import java.net.URLEncoder.encode
 
   private lazy val host: String = Try(InetAddress.getLocalHost.getCanonicalHostName).getOrElse("unable-to-determine-host")
@@ -79,5 +93,4 @@ private object RequestDebugInfo {
     s"ngw-stage=${encode(stage, "UTF-8")}",
     s"ngw-project=${encode(project, "UTF-8")}"
   ).mkString("&")
-
 }

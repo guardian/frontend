@@ -1,0 +1,117 @@
+<style type="text/css">
+.creative--fluid250 .fluid250_layer.fluid250_layer1 {
+    background-size: 90%;
+    width: 90%;
+    top: 10px;
+}
+@media (min-width: 480px) {
+    .creative--fluid250 .fluid250_layer.fluid250_layer1 {
+        background-size: 64%;
+        top: 0;
+    }
+}
+@media (min-width: 740px){
+    .creative--fluid250 .fluid250_layer.fluid250_layer1 {
+        background-size: 90%;
+        width: 100%;
+    }
+    .creative--fluid250 .fluid250_layer.fluid250_layer2 {
+        width: 25%;
+    }
+    .creative--fluid250 .fluid250_layer.fluid250_layer3 {
+        background-size: 795px;
+        width: 75%;
+    }
+    .creative--fluid250.hide-until-tablet {
+        background-image: url({{backgroundImageOffset}});
+    }
+}
+
+@media (min-width: 980px){
+    .creative--fluid250 .fluid250_layer.fluid250_layer1 {
+        background-size: contain;
+    }
+    .creative--fluid250 .fluid250_layer.fluid250_layer2 {
+        width: 20%;
+    }
+    .creative--fluid250 .fluid250_layer.fluid250_layer3 {
+    background-size: contain;
+    width: 80%;
+    }
+}
+
+@media (min-width: 1140px){
+    .creative--fluid250.hide-until-tablet {
+        background-image: url({{backgroundImage}});
+    }
+}
+</style>
+<div class="ad-slot__label creative--fluid250__label fc-container--layout-front" data-test-id="ad-slot-label">
+    <div class="fc-container__inner">Advertisement</div>
+</div>
+<div class="creative--fluid250 l-side-margins hide-until-tablet creative--fluid250__height--tall" style="
+        background-color: #ffffff;
+        background-position: 50% 0;
+        background-repeat: no-repeat;
+    ">
+    <a href="{{clickMacro}}{{link}}" target="_blank">
+        <div class="gs-container">
+            <div class="fluid250_layer fluid250_layer1" style="
+                background-image: url({{textImage}});
+                background-position: 50% 0;
+                top: 40px;
+                height: 52px;
+                margin-left: 0;
+            "></div>
+            <div class="fluid250_layer fluid250_layer2" style="
+                background-image: url({{logoImage}});
+                background-position: 100% 100%;
+                background-size: contain;
+                bottom: 0;
+                left: initial;
+                right: 0;
+                top: inherit;
+            "></div>
+            <div class="fluid250_layer fluid250_layer3" style="
+                background-image: url({{peopleImage}});
+                background-position: 100% 100%;
+            "></div>
+        </div>
+    </a>
+</div>
+<div class="creative--fluid250 l-side-margins mobile-only" style="
+        background-color: #ffffff;
+    ">
+    <a href="{{link}}" target="_blank">
+        <div class="gs-container">
+            <div class="fluid250_layer fluid250_layer1" style="
+                background-image: url({{textImage}});
+                background-position: 50% 0;
+                height: 48px;
+                margin-left: 5%;
+                z-index: 1;
+            "></div>
+            <div class="fluid250_layer fluid250_layer2" style="
+                background-image: url({{logoImage}});
+                background-position: 100% 100%;
+                background-repeat: no-repeat;
+                background-size: contain;
+                width: 30%;
+                height: 90px;
+                z-index: 1;
+                right: 0;
+                left: initial;
+                top: initial;
+                bottom: 0;
+            "></div>
+            <div class="fluid250_layer fluid250_layer3" style="
+                background-image: url({{peopleImage}});
+                background-position: 100% 100%;
+                background-repeat: no-repeat;
+                background-size: 115%;
+                width: 60%;
+                z-index: 1;
+            "></div>
+        </div>
+    </a>
+</div>

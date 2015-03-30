@@ -49,10 +49,14 @@ function s_doPlugins(s) {
 //    s.events=s.apl(s.events,'event4',',',2);
 
     /* External Paid Campaign Tracking */
-    if (!s.eVar38){
-        s.eVar38=s.Util.getQueryParam('CMP');
+    if (!s.campaign){
+        s.campaign=s.getParamValue('CMP');
     }
-    s.eVar38=s.getValOnce(s.eVar38,'s_eVar38',0);
+    s.campaign=s.getValOnce(s.campaign,'s_campaign',0);
+
+    if (s.campaign){
+        s.eVar38=s.eVar39="D=v0";
+    }
 
     /* Users with a Daily Habit Diary */
     var dtmNow=new Date();
@@ -80,7 +84,10 @@ function s_doPlugins(s) {
     s.eVar10=s.getDaysSinceLastVisit('s_lv');
 
     /* New/Repeat Status */
-//    s.prop16=s.eVar16=s.getNewRepeat(365);
+    s.prop16=s.getNewRepeat(30);
+
+    // Previous Site section
+	s.prop71 = s.getPreviousValue(s.channel,"s_prev_ch");
 
     /* Copy pageName into eVar7 */
 //    if (s.pageName && !s.eVar7) {
@@ -270,6 +277,18 @@ s.getNewRepeat=new Function("d","cn",""
     +"-sval[0]<30*60*1000&&sval[1]=='New'){s.c_w(cn,ct+'-New',e);return'N"
     +"ew';}else{s.c_w(cn,ct+'-Repeat',e);return'Repeat';}");
 
+/*
+ * Plugin: getPreviousValue_v1.0 - return previous value of designated
+ *   variable (requires split utility)
+ */
+s.getPreviousValue=new Function("v","c","el",""
++"var s=this,t=new Date,i,j,r='';t.setTime(t.getTime()+1800000);if(el"
++"){if(s.events){i=s.split(el,',');j=s.split(s.events,',');for(x in i"
++"){for(y in j){if(i[x]==j[y]){if(s.c_r(c)) r=s.c_r(c);v?s.c_w(c,v,t)"
++":s.c_w(c,'no value',t);return r}}}}}else{if(s.c_r(c)) r=s.c_r(c);v?"
++"s.c_w(c,v,t):s.c_w(c,'no value',t);return r}");
+
+
 /**
  * getLoadTimeDim v.0.1
  */
@@ -319,6 +338,33 @@ s.getTimeParting=new Function("h","z",""
     +"kday';if(H>=12){U='PM';H=H-12;}if(H==0){H=12;}if(D==6||D==0){W='Wee"
     +"kend';}D=da[D];tm=H+':'+M+U;tt=H+':'+((M>30)?'30':'00')+U;a=[tm,tt,"
     +"D,W];return a;}");
+
+// This is a Guardian fix to avoid using getQueryParam(), which passes through
+// hash locations,eg. example.com?CMP=campaign#example
+s.getParamValue = function(paramName) {
+	var requestIndex;
+	var params = window.location.search;
+	var separator ="&";
+	if (paramName &&
+     	params &&
+	    	(requestIndex = params.indexOf("?"),
+		     requestIndex >= 0 &&
+		     	(params = separator + params.substring(requestIndex + 1) + separator,
+				 requestIndex = params.indexOf(separator + paramName + "="),
+				 requestIndex >= 0 &&
+					(params = params.substring(requestIndex + separator.length + paramName.length + 1),
+					 requestIndex = params.indexOf(separator),
+					 requestIndex >= 0 && (params = params.substring(0, requestIndex)),
+					 params.length>0
+					)
+				)
+		    )
+		) {
+		return s.unescape(params);
+	}
+	return ""
+}
+
 
 
 /****************************** MODULES *****************************/

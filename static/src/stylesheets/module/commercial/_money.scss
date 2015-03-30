@@ -1,0 +1,10 @@
+/* ==========================================================================
+   Best Buys component
+   ========================================================================== */
+.commercial--money {
+    /* Line items */
+    .lineitem__meta {
+        @include f-textSans;
+        margin-top: $gs-baseline;
+    }
+}

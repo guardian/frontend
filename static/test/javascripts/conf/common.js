@@ -4,4 +4,4 @@ module.exports = function(config) {
         { pattern: 'static/test/javascripts/spec/common/**/*.spec.js', included: false }
     );
     config.set(settings);
-}
+};

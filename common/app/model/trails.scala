@@ -34,9 +34,17 @@ trait Trail extends Elements with Tags with FaciaFields with Dates {
     isAdvertisementFeature && webPublicationDate.isOlderThan(2.weeks)
   }
 
-  override def isSponsored: Boolean = DfpAgent.isSponsored(tags, Some(section))
-  override def isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(tags, Some(section))
-  override def isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
+  override def isSponsored(maybeEdition: Option[Edition]): Boolean =
+    DfpAgent.isSponsored(tags, Some(section))
+  override lazy val isAdvertisementFeature: Boolean =
+    DfpAgent.isAdvertisementFeature(tags, Some(section))
+  override lazy val isFoundationSupported: Boolean =
+    DfpAgent.isFoundationSupported(tags, Some(section))
+
+  def faciaUrl: Option[String] = this match {
+    case snap: Snap => snap.snapHref.filter(_.nonEmpty)
+    case t: Trail => Option(t.url)
+  }
 }
 
 //Facia tool values
@@ -59,4 +67,7 @@ trait FaciaFields {
   def showQuotedHeadline: Boolean = false
   def imageCutoutReplace: Boolean = false
   def customImageCutout: Option[FaciaImageElement]
+
+  def snapType: Option[String]
+  def snapUri: Option[String]
 }

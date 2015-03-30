@@ -5,7 +5,7 @@ import org.joda.time.{DateTimeZone, DateTime}
 import services.Omniture._
 import OmnitureMethods._
 import scala.concurrent.duration._
-import scala.concurrent.future
+import scala.concurrent.Future
 
 object OmnitureVariables {
   // Metrics
@@ -50,7 +50,7 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
     val dateFrom = dateTo.minusWeeks(2)
 
     // Stagger each report request, otherwise omniture request nonce values will be identical.
-    akka.pattern.after(1.seconds, actorSystem.scheduler) (future {
+    akka.pattern.after(1.seconds, actorSystem.scheduler) (Future {
       generateReport(OmnitureReportDescription(
         dateGranularity = Some("day"),
         dateTo = dateTo.toString("yyyy-MM-dd"),
@@ -60,7 +60,7 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
       ), QUEUE_OVERTIME, galleryPageViews)
     })
 
-    akka.pattern.after(5.seconds, actorSystem.scheduler) (future {
+    akka.pattern.after(5.seconds, actorSystem.scheduler) (Future {
       generateReport(OmnitureReportDescription(
         dateGranularity = Some("day"),
         dateTo = dateTo.toString("yyyy-MM-dd"),
@@ -70,7 +70,7 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
       ), QUEUE_OVERTIME, galleryVisits)
     })
 
-    akka.pattern.after(10.seconds, actorSystem.scheduler) (future {
+    akka.pattern.after(10.seconds, actorSystem.scheduler) (Future {
       generateReport(OmnitureReportDescription(
         dateGranularity = Some("day"),
         dateTo = dateTo.toString("yyyy-MM-dd"),
@@ -80,7 +80,7 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
       ), QUEUE_OVERTIME, galleryLightBox)
     })
 
-    akka.pattern.after(15.seconds, actorSystem.scheduler) ( future {
+    akka.pattern.after(15.seconds, actorSystem.scheduler) (Future {
       generateReport(OmnitureReportDescription(
         dateGranularity = Some("day"),
         dateTo = dateTo.toString("yyyy-MM-dd"),
@@ -90,7 +90,7 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
       ), QUEUE_OVERTIME, gallerySocialShare)
     })
 
-    akka.pattern.after(20.seconds, actorSystem.scheduler) ( future {
+    akka.pattern.after(20.seconds, actorSystem.scheduler) (Future {
       generateReport(OmnitureReportDescription(
         dateGranularity = Some("day"),
         dateTo = dateTo.toString("yyyy-MM-dd"),
@@ -101,7 +101,7 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
       ), QUEUE_OVERTIME, googleReferrerVisits)
     })
 
-    akka.pattern.after(25.seconds, actorSystem.scheduler) ( future {
+    akka.pattern.after(25.seconds, actorSystem.scheduler) (Future {
       generateReport(OmnitureReportDescription(
         dateGranularity = Some("day"),
         dateTo = dateTo.toString("yyyy-MM-dd"),
@@ -111,7 +111,7 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
       ), QUEUE_OVERTIME, networkTotalVisits)
     })
 
-    akka.pattern.after(30.seconds, actorSystem.scheduler) ( future {
+    akka.pattern.after(30.seconds, actorSystem.scheduler) (Future {
       generateReport(OmnitureReportDescription(
         dateGranularity = Some("day"),
         dateTo = dateTo.toString("yyyy-MM-dd"),

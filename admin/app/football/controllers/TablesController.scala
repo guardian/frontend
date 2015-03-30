@@ -3,7 +3,7 @@ package controllers.admin
 import common.ExecutionContexts
 import football.model.PA
 import football.services.GetPaClient
-import model.{Cached, Cors, NoCache}
+import model.{Cors, Cached, NoCache}
 import org.joda.time.LocalDate
 import pa._
 import play.api.mvc._
@@ -61,7 +61,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
 
   def leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String) = AuthActions.AuthActionTest.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
-      seasonOpt.fold(Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))){ season =>
+      seasonOpt.fold(Future.successful(NoCache(InternalServerError(views.html.football.error("Please provide a valid league"))))){ season =>
         client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
           val aroundTeam1 = surroundingItems[LeagueTableEntry](1, tableEntries, _.team.id == team1Id)
           val aroundTeam2 = surroundingItems[LeagueTableEntry](1, tableEntries, _.team.id == team2Id)

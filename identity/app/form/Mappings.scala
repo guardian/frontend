@@ -6,6 +6,8 @@ import play.api.data.format.Formats._
 import play.api.i18n.Messages
 import model.Countries
 import org.scala_tools.time.Imports._
+import jobs.BlockedEmailDomainList
+import conf.Switches
 
 trait Mappings {
 
@@ -20,7 +22,21 @@ trait Mappings {
     { value => value.isEmpty || UrlPattern.findFirstIn(value).isDefined }
   )
 
-  val idEmail: Mapping[String] = email
+  private val EmailPattern = """(.*)@(.*)""".r
+
+  val idRegEmail = text.verifying (
+    Messages("error.emailDomainInvalid"),
+    { value =>
+      //Let the identity API validate emails - don't try to extadct the domain from a badll formed email
+      if( Switches.IdentityBlockSpamEmails.isSwitchedOn && value.matches(EmailPattern.toString))
+      {
+        val EmailPattern(name, domain) = value
+        !(BlockedEmailDomainList.getBlockedDomains.contains(domain))
+      } else { true }
+    }
+  )
+
+  val idEmail: Mapping[String] = text.verifying(Messages("error.email"), value => value.isEmpty || EmailPattern.findFirstIn(value).isDefined)
 
   val idFirstName: Mapping[String] = nonEmptyText(maxLength = 50)
 

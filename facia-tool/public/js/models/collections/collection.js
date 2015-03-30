@@ -1,38 +1,62 @@
-/* global _: true */
 define([
     'config',
     'knockout',
+    'underscore',
+    'jquery',
     'modules/vars',
     'utils/as-observable-props',
-    'utils/populate-observables',
+    'utils/fetch-visible-stories',
     'utils/human-time',
+    'utils/mediator',
+    'utils/populate-observables',
     'modules/authed-ajax',
+    'modules/modal-dialog',
     'models/group',
     'models/collections/article',
     'modules/content-api'
 ], function(
     config,
     ko,
+    _,
+    $,
     vars,
     asObservableProps,
-    populateObservables,
+    fetchVisibleStories,
     humanTime,
+    mediator,
+    populateObservables,
     authedAjax,
+    modalDialog,
     Group,
     Article,
     contentApi
-    ) {
+) {
     function Collection(opts) {
 
         if (!opts || !opts.id) { return; }
 
         this.id = opts.id;
+
+        this.front = opts.front;
+
         this.raw = undefined;
+
         this.groups = this.createGroups(opts.groups);
+
         this.alsoOn = opts.alsoOn || [];
+
+        this.isDynamic = !!_.findWhere(vars.CONST.typesDynamic, {name: opts.type});
+
+        this.dom = undefined;
+
+        this.visibleStories = null;
+        this.visibleCount = ko.observable({});
+
+        this.listeners = mediator.scope();
 
         // properties from the config, about this collection
         this.configMeta   = asObservableProps([
+            'type',
             'displayName',
             'uneditable']);
         populateObservables(this.configMeta, opts);
@@ -53,10 +77,38 @@ define([
             'pending',
             'editingConfig',
             'count',
-            'timeAgo']);
+            'timeAgo',
+            'alsoOnVisible',
+            'showIndicators',
+            'hasExtraActions',
+            'isHistoryOpen']);
+
+        this.itemDefaults = _.reduce({
+            showTags: 'showKickerTag',
+            showSections: 'showKickerSection'
+        }, function(defaults, val, key) {
+            if(_.has(opts, key)) {
+                defaults = defaults || {};
+                defaults[val] = opts[key];
+            }
+            return defaults;
+        }, undefined);
+
+        this.history = ko.observableArray();
+        this.state.isHistoryOpen(this.front.confirmSendingAlert());
 
         this.setPending(true);
-        this.load();
+        this.loaded = this.load();
+
+        var that = this;
+        this.listeners.on('ui:open', function () {
+            setTimeout(function () {
+                that.refreshVisibleStories(true);
+            }, 50);
+        });
+        this.listeners.on('ui:close', function () {
+            that.refreshVisibleStories(true);
+        });
     }
 
     Collection.prototype.setPending = function(asPending) {
@@ -84,14 +136,20 @@ define([
                 name: name,
                 parent: self,
                 parentType: 'Collection',
-                omitItem: self.drop.bind(self)
+                omitItem: self.drop.bind(self),
+                front: self.front
             });
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
     };
 
     Collection.prototype.toggleCollapsed = function() {
-        this.state.collapsed(!this.state.collapsed());
+        var collapsed = !this.state.collapsed();
+        this.state.collapsed(collapsed);
         this.closeAllArticles();
+        if (!collapsed) {
+            this.refreshVisibleStories(true);
+        }
+        mediator.emit('collection:collapse', this, collapsed);
     };
 
     Collection.prototype.toggleEditingConfig = function() {
@@ -104,8 +162,40 @@ define([
         this.load();
     };
 
+    Collection.prototype.addedInDraft = function () {
+        var live = (this.raw || {}).live || [];
+
+        return _.chain(this.groups)
+            .map(function (group) {
+                return group.items();
+            })
+            .flatten()
+            .filter(function (draftArticle) {
+                return !_.find(live, function (liveArticle) {
+                    return liveArticle.id === draftArticle.id();
+                });
+            })
+            .value();
+    };
+
     Collection.prototype.publishDraft = function() {
-        this.processDraft(true);
+        var that = this,
+            addedInDraft = this.front.confirmSendingAlert() ? this.addedInDraft() : [];
+
+        if (addedInDraft.length) {
+            modalDialog.confirm({
+                name: 'confirm_breaking_changes',
+                data: {
+                    articles: this.addedInDraft(),
+                    target: this.configMeta.displayName()
+                }
+            })
+            .done(function () {
+                that.processDraft(true);
+            });
+        } else {
+            this.processDraft(true);
+        }
     };
 
     Collection.prototype.discardDraft = function() {
@@ -127,42 +217,47 @@ define([
             self.load()
             .then(function(){
                 if (goLive) {
-                    vars.model.deferredDetectPressFailure();
+                    mediator.emit('presser:detectfailures', self.front.front());
                 }
             });
         });
     };
 
     Collection.prototype.drop = function(item) {
+        var front = this.front;
         this.setPending(true);
 
+        this.state.showIndicators(false);
         authedAjax.updateCollections({
             remove: {
                 collection: this,
                 item:       item.id(),
-                live:       vars.state.liveMode(),
-                draft:     !vars.state.liveMode()
+                mode:       front.mode()
             }
         })
         .then(function() {
-            if(vars.state.liveMode()) {
-                vars.model.deferredDetectPressFailure();
+            if (front.mode() === 'live') {
+                mediator.emit('presser:detectfailures', front.front());
             }
         });
     };
 
     Collection.prototype.load = function(opts) {
-        var self = this;
+        var self = this,
+            deferred = new $.Deferred();
 
         opts = opts || {};
 
-        return authedAjax.request({
+        authedAjax.request({
             url: vars.CONST.apiBase + '/collection/' + this.id
         })
         .done(function(raw) {
             if (opts.isRefresh && self.isPending()) { return; }
 
-            if (!raw) { return; }
+            if (!raw) {
+                self.loaded.resolve();
+                return;
+            }
 
             self.state.hasConcurrentEdits(false);
 
@@ -174,9 +269,18 @@ define([
 
             self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
         })
+        .fail(function () {
+            self.loaded.resolve();
+        })
         .always(function() {
             self.setPending(false);
         });
+
+        return deferred;
+    };
+
+    Collection.prototype.registerElement = function (element) {
+        this.dom = element;
     };
 
     Collection.prototype.hasOpenArticles = function() {
@@ -185,21 +289,26 @@ define([
         });
     };
 
-    Collection.prototype.populate = function(raw) {
+    Collection.prototype.isHistoryEnabled = function () {
+        return this.front.mode() !== 'treats' && this.history().length;
+    };
+
+
+    Collection.prototype.populate = function(rawCollection) {
         var self = this,
-            list;
+            list,
+            loading = [];
 
-        raw = raw ? raw : this.raw;
-        this.raw = raw;
+        this.raw = rawCollection || this.raw;
 
-        if (raw) {
-            this.state.hasDraft(_.isArray(raw.draft));
+        if (this.raw) {
+            this.state.hasDraft(_.isArray(this.raw.draft));
 
             if (this.hasOpenArticles()) {
-                this.state.hasConcurrentEdits(raw.updatedEmail !== config.email && self.state.lastUpdated());
+                this.state.hasConcurrentEdits(this.raw.updatedEmail !== config.email && this.state.lastUpdated());
 
-            } else if (raw.lastUpdated !== this.state.lastUpdated()) {
-                list = vars.state.liveMode() ? raw.live : raw.draft || raw.live || [];
+            } else if (!rawCollection || this.raw.lastUpdated !== this.state.lastUpdated()) {
+                list = this.front.getCollectionList(this.raw);
 
                 _.each(this.groups, function(group) {
                     group.items.removeAll();
@@ -209,35 +318,76 @@ define([
                     var group = _.find(self.groups, function(g) {
                         return (parseInt((item.meta || {}).group, 10) || 0) === g.index;
                     }) || self.groups[0];
+                    var article = new Article(_.extend(item, {
+                        group: group,
+                        slimEditor: self.front.slimEditor()
+                    }));
 
-                    group.items.push(
-                        new Article(_.extend(item, {
-                            group: group
-                        }))
-                    );
+                    group.items.push(article);
                 });
 
-                this.state.lastUpdated(raw.lastUpdated);
+                this.populateHistory(this.raw.previously);
+                this.state.lastUpdated(this.raw.lastUpdated);
                 this.state.count(list.length);
-                this.decorate();
+                loading.push(this.decorate());
             }
         }
 
-        self.setPending(false);
+        this.refreshVisibleStories();
+        this.setPending(false);
+        $.when.apply($, loading).always(function () {
+            mediator.emit('collection:populate', self);
+            self.loaded.resolve();
+        });
     };
 
-    Collection.prototype.closeAllArticles = function() {
+    Collection.prototype.populateHistory = function(list) {
+        if (!list || list.length === 0) {
+            return;
+        }
+        this.state.hasExtraActions(true);
+
+        list = list.slice(0, this.front.maxArticlesInHistory);
+        this.history(_.map(list, function (opts) {
+            return new Article(_.extend(opts, {
+                uneditable: true,
+                slimEditor: this.front.slimEditor()
+            }));
+        }, this));
+    };
+
+    Collection.prototype.eachArticle = function (fn) {
         _.each(this.groups, function(group) {
             _.each(group.items(), function(item) {
-                item.close();
+                fn(item, group);
             });
         });
     };
 
-    Collection.prototype.decorate = function() {
-        _.each(this.groups, function(group) {
-            contentApi.decorateItems(group.items());
+    Collection.prototype.contains = function (article) {
+        return _.some(this.groups, function (group) {
+            return _.some(group.items(), function (item) {
+                return item === article;
+            });
         });
+    };
+
+    Collection.prototype.closeAllArticles = function() {
+        this.eachArticle(function(item) {
+            item.close();
+        });
+    };
+
+    Collection.prototype.decorate = function() {
+        var allItems = [],
+            done;
+        this.eachArticle(function(item) {
+            allItems.push(item);
+        });
+        done = contentApi.decorateItems(allItems);
+        contentApi.decorateItems(this.history());
+
+        return done;
     };
 
     Collection.prototype.refresh = function() {
@@ -248,24 +398,70 @@ define([
         });
     };
 
-    Collection.prototype.refreshSparklines = function() {
-        _.each(this.groups, function(group) {
-            _.each(group.items(), function(item) {
-                item.refreshSparkline();
-            });
+    Collection.prototype.refreshRelativeTimes = function() {
+        this.eachArticle(function(item) {
+            item.setRelativeTimes();
         });
     };
 
-    Collection.prototype.refreshRelativeTimes = function() {
-        _.each(this.groups, function(group) {
-            _.each(group.items(), function(item) {
-                item.setRelativeTimes();
-            });
-        });
+    Collection.prototype.refreshVisibleStories = function (stale) {
+        if (!this.front.showIndicatorsEnabled()) {
+            return this.state.showIndicators(false);
+        }
+        if (!stale || !this.visibleStories) {
+            this.visibleStories = fetchVisibleStories(
+                this.configMeta.type(),
+                this.groups
+            );
+        }
+        this.visibleStories.then(
+            this.updateVisibleStories.bind(this),
+            this.updateVisibleStories.bind(this, false)
+        );
     };
 
     Collection.prototype.getTimeAgo = function(date) {
         return date ? humanTime(date) : '';
+    };
+
+    Collection.prototype.alsoOnToggle = function () {
+        this.state.alsoOnVisible(!this.state.alsoOnVisible());
+    };
+
+    Collection.prototype.updateVisibleStories = function (numbers) {
+        var container = this.dom;
+        if (!container || !numbers || this.state.collapsed()) {
+            this.state.showIndicators(false);
+            return;
+        }
+
+        this.state.showIndicators(true);
+        this.visibleCount(numbers);
+    };
+
+    Collection.prototype.dispose = function () {
+        this.listeners.dispose();
+    };
+
+    ko.bindingHandlers.indicatorHeight = {
+        update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+            var target = ko.unwrap(valueAccessor()),
+                numbers = bindingContext.$data.visibleCount(),
+                container = bindingContext.$data.dom,
+                top, bottomElementPosition, bottomElement, bottom, height;
+
+            if (!(target in numbers) || !container) {
+                return;
+            }
+
+            top = $(element).parents('.article-group')[0].getBoundingClientRect().top;
+            bottomElementPosition = numbers[target] - 1;
+            bottomElement = bottomElementPosition >= 0 ? container.querySelectorAll('.article')[bottomElementPosition] : null;
+            bottom = bottomElement ? bottomElement.getBoundingClientRect().bottom : NaN;
+            height = bottom - top - 15;
+
+            element.style.height = (height || 0) + 'px';
+        }
     };
 
     return Collection;

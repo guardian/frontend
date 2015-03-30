@@ -1,120 +1,121 @@
 define([
+    'fastdom',
     'qwery',
+    'Promise',
     'common/utils/$',
     'helpers/fixtures',
-    'jasq'
+    'helpers/injector'
 ], function (
+    fastdom,
     qwery,
+    Promise,
     $,
-    fixtures
+    fixtures,
+    Injector
 ) {
-
-    var getParaWithSpaceStub, $fixturesContainer;
-
-    describe('Article Body Adverts', {
-        moduleName: 'common/modules/commercial/article-body-adverts',
-        mock: function () {
-            return {
-                'common/utils/config': function () {
-                    return {
-                        switches: {
-                            standardAdverts: true
-                        },
-                        page: {
-                            contentType: 'Article',
-                            isLiveBlog: false,
-                            hasInlineMerchandise: false
-                        }
+    return new Injector()
+        .store([
+            'common/utils/config',
+            'common/utils/detect',
+            'common/modules/article/spacefinder'
+        ])
+        .require(['common/modules/commercial/article-body-adverts', 'mocks'], function (articleBodyAdverts, mocks) {
+            describe('Article Body Adverts', function () {
+                var getParaWithSpaceStub, $fixturesContainer, $style,
+                    fixturesConfig = {
+                        id: 'article-body-adverts',
+                        fixtures: [
+                            '<p class="first-para"></p>',
+                            '<p class="second-para"></p>',
+                            '<p class="third-para"></p>'
+                        ]
                     };
-                },
-                'common/modules/article/spacefinder': function () {
+
+                beforeEach(function () {
+                    $fixturesContainer = fixtures.render(fixturesConfig);
+                    $style = $.create('<style type="text/css"></style>')
+                        .html('body:after{ content: "desktop"}')
+                        .appendTo('head');
+
+                    mocks.store['common/utils/config'].page = {
+                        contentType: 'Article',
+                        isLiveBlog: false,
+                        hasInlineMerchandise: false
+                    };
+                    mocks.store['common/utils/config'].switches = {
+                        standardAdverts: true
+                    };
+                    mocks.store['common/utils/detect'].getBreakpoint = function () {
+                        return 'desktop';
+                    };
+
                     getParaWithSpaceStub = sinon.stub();
                     var paras = qwery('p', $fixturesContainer);
-                    getParaWithSpaceStub.onFirstCall().returns(paras[0]);
-                    getParaWithSpaceStub.onSecondCall().returns(paras[1]);
-                    return {
-                        getParaWithSpace: getParaWithSpaceStub
+                    getParaWithSpaceStub.onFirstCall().returns(Promise.resolve(paras[0]));
+                    getParaWithSpaceStub.onSecondCall().returns(Promise.resolve(paras[1]));
+                    mocks.store['common/modules/article/spacefinder'].getParaWithSpace = getParaWithSpaceStub;
+                });
+
+                afterEach(function () {
+                    fixtures.clean(fixturesConfig.id);
+                    $style.remove();
+                    articleBodyAdverts.reset();
+                });
+
+                it('should exist', function () {
+                    expect(articleBodyAdverts).toBeDefined();
+                });
+
+                it('should call "getParaWithSpace" with correct arguments', function (done) {
+                    mocks.store['common/utils/detect'].isBreakpoint = function () {
+                        return false;
                     };
-                }
-            }
-        },
-        specify: function () {
 
-            var $style,
-                fixturesConfig = {
-                    id: 'article-body-adverts',
-                    fixtures: [
-                        '<p class="first-para"></p>',
-                        '<p class="second-para"></p>',
-                        '<p class="third-para"></p>'
-                    ]
-                };
+                    articleBodyAdverts.init().then(function () {
+                        expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                            minAbove: 700,
+                            minBelow: 300,
+                            selectors: {
+                                ' > h2': {minAbove: 0, minBelow: 250},
+                                ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                                ' .ad-slot': {minAbove: 500, minBelow: 500}
+                            }
+                        });
+                        done();
+                    });
+                });
 
-            beforeEach(function () {
-                $fixturesContainer = fixtures.render(fixturesConfig);
-                $style = $.create('<style type="text/css"></style>')
-                    .html('body:after{ content: "desktop"}')
-                    .appendTo('head');
+                it('should not not display ad slot if standard-adverts switch is off', function () {
+                    mocks.store['common/utils/config'].switches.standardAdverts = false;
+                    expect(articleBodyAdverts.init()).toBe(false);
+                });
+
+                it('should not display ad slot if not on an article', function () {
+                    mocks.store['common/utils/config'].page.contentType = 'Gallery';
+                    expect(articleBodyAdverts.init()).toBe(false);
+                });
+
+                it('should not display ad slot if a live blog', function () {
+                    mocks.store['common/utils/config'].page.contentType = 'LiveBlog';
+                    expect(articleBodyAdverts.init()).toBe(false);
+                });
+
+                it('should insert an inline ad container to the available slot', function (done) {
+                    articleBodyAdverts.init().then(function () {
+                        expect(getParaWithSpaceStub).toHaveBeenCalledOnce();
+                        expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
+                        done();
+                    });
+                });
+
+                it('should insert an inline merchandising slot if page has one', function (done) {
+                    mocks.store['common/utils/config'].page.hasInlineMerchandise = true;
+                    articleBodyAdverts.init().then(function () {
+                        expect(qwery('#dfp-ad--im', $fixturesContainer).length).toBe(1);
+                        expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
+                        done();
+                    });
+                });
             });
-
-            afterEach(function () {
-                fixtures.clean(fixturesConfig.id);
-                $style.remove();
-            });
-
-            it('should exist', function (articleBodyAdverts) {
-                expect(articleBodyAdverts).toBeDefined();
-            });
-
-            it('should call "getParaWithSpace" with correct arguments', function (articleBodyAdverts) {
-                articleBodyAdverts.init();
-                expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                    minAbove: 700,
-                    minBelow: 300,
-                    selectors: {
-                        ' > h2': {minAbove: 0, minBelow: 250},
-                        ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 250},
-                        ' .ad-slot': {minAbove: 500, minBelow: 500}
-                    }
-                })
-            });
-
-            it('should not not display ad slot if standard-adverts switch is off', function (articleBodyAdverts, deps) {
-                deps['common/utils/config'].switches.standardAdverts = false;
-                expect(articleBodyAdverts.init()).toBe(false);
-            });
-
-            it('should not display ad slot if not on an article', function (articleBodyAdverts, deps) {
-                deps['common/utils/config'].page.contentType = 'Gallery';
-                expect(articleBodyAdverts.init()).toBe(false);
-            });
-
-            it('should not display ad slot if a live blog', function (articleBodyAdverts, deps) {
-                deps['common/utils/config'].page.contentType = 'LiveBlog';
-                expect(articleBodyAdverts.init()).toBe(false);
-            });
-
-            it('should insert an inline ad container to the available slot', function (articleBodyAdverts) {
-                articleBodyAdverts.init();
-                expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
-                expect(getParaWithSpaceStub).toHaveBeenCalledOnce();
-            });
-
-            it('should insert two inline ad slots if less than desktop', function (articleBodyAdverts) {
-                $style.html('body:after{ content: "mobile"}');
-                articleBodyAdverts.init();
-                expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
-                expect(qwery('#dfp-ad--inline2', $fixturesContainer).length).toBe(1);
-            });
-
-            it('should insert an inline merchandising slot if page has one', function (articleBodyAdverts, deps) {
-                deps['common/utils/config'].page.hasInlineMerchandise = true;
-                articleBodyAdverts.init();
-                expect(qwery('#dfp-ad--im', $fixturesContainer).length).toBe(1);
-                expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
-            });
-
-        }
-    });
-
+        });
 });

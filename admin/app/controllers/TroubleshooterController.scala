@@ -7,9 +7,11 @@ import controllers.AuthLogging
 import tools.LoadBalancer
 import play.api.libs.ws.WS
 import scala.concurrent.Future
-import conf.LiveContentApi
+import conf.{PreviewContentApi, LiveContentApi}
+import LiveContentApi.getResponse
 
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
+
 object TestPassed{
   def apply(name: String) = EndpointStatus(name, true)
 }
@@ -19,7 +21,7 @@ object TestFailed{
 
 object TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def index() =AuthActions.AuthActionTest{ request =>
+  def index() = AuthActions.AuthActionTest{ request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
   }
 
@@ -37,9 +39,20 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
 
     val directToRouter = testOnRouter(testPath, id)
 
+    val directToPreviewContentApi = testOnPreviewContentApi(testPath, id)
+
+    val viaPreviewWebsite = testOnPreviewSite(testPath, id)
+
     // NOTE - the order of these is important, they are ordered so that the first failure is furthest 'back'
     // in the stack
-    Future.sequence(Seq(directToContentApi, directToLoadBalancer, directToRouter, viaWebsite)).map{ results =>
+    Future.sequence(
+      Seq(directToContentApi,
+        directToLoadBalancer,
+        directToRouter,
+        viaWebsite,
+        directToPreviewContentApi,
+        viaPreviewWebsite)
+    ).map { results =>
       NoCache(Ok(views.html.troubleshooterResults(thisLoadBalancer, results)))
     }
   }
@@ -55,7 +68,6 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
         TestFailed(result.name, result.messages.toSeq :+
           "NOTE: if hitting the Router you MUST set Host header to 'www.theguardian.com' or else you will get '403 Forbidden'":_*)
     }
-
   }
 
   private def testOnLoadBalancer(thisLoadBalancer: LoadBalancer, testPath: String, id: String): Future[EndpointStatus] = {
@@ -65,7 +77,7 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
   private def testOnContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Content API"
     val request = LiveContentApi.item(testPath, "UK").showFields("all")
-    request.response.map {
+    getResponse(request).map {
       response =>
         if (response.status == "ok") {
           TestPassed(testName)
@@ -77,8 +89,27 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
     }
   }
 
+  private def testOnPreviewContentApi(testPath: String, id: String): Future[EndpointStatus] = {
+    val testName = "Can fetch directly from Preview Content API"
+    val request = PreviewContentApi.item(testPath, "UK").showFields("all")
+    getResponse(request).map {
+      response =>
+        if (response.status == "ok") {
+          TestPassed(testName)
+        } else {
+          TestFailed(testName, request.toString)
+        }
+    }.recoverWith {
+      case t: Throwable => Future.successful(TestFailed("Direct to Preview Content API", t.getMessage, request.toString))
+    }
+  }
+
   private def testOnGuardianSite(testPath: String, id: String): Future[EndpointStatus] = {
-    httpGet("Can fetch from www.theguardian.com", s"http://www.theguardian.com$testPath?view=responsive")
+    httpGet("Can fetch from www.theguardian.com", s"http://www.theguardian.com$testPath")
+  }
+
+  private def testOnPreviewSite(testPath: String, id: String): Future[EndpointStatus] = {
+    httpGet("Can fetch from preview.gutools.co.uk", s"http://preview.gutools.co.uk$testPath")
   }
 
   private def httpGet(testName: String, url: String) =  {

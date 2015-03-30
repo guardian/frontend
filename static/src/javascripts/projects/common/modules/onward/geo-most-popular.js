@@ -3,21 +3,26 @@
  Description: Shows popular trails for a given country.
  */
 define([
+    'Promise',
     'qwery',
-    'lodash/objects/assign',
+    'common/utils/_',
     'common/modules/component',
     'common/utils/mediator'
 ], function (
+    Promise,
     qwery,
-    extend,
+    _,
     Component,
     mediator
 ) {
 
-    function GeoMostPopular(config) {
+    var promise = new Promise(function (resolve, reject) {
+        mediator.on('modules:onward:geo-most-popular:ready', resolve);
+        mediator.on('modules:onward:geo-most-popular:error', reject);
+    });
+
+    function GeoMostPopular() {
         mediator.emit('register:begin', 'geo-most-popular');
-        this.config = extend(this.config, config);
-        this.fetch(qwery('.js-components-container'), 'rightHtml');
     }
 
     Component.define(GeoMostPopular);
@@ -25,8 +30,23 @@ define([
     GeoMostPopular.prototype.endpoint = '/most-read-geo.json';
 
     GeoMostPopular.prototype.ready = function () {
-        mediator.emit('register:begin', 'geo-most-popular');
+        mediator.emit('register:end', 'geo-most-popular');
+        mediator.emit('modules:onward:geo-most-popular:ready', this);
     };
 
-    return GeoMostPopular;
+    GeoMostPopular.prototype.error = function (error) {
+        mediator.emit('modules:onward:geo-most-popular:error', error);
+    };
+
+    return {
+
+        render: _.once(function () {
+            new GeoMostPopular().fetch(qwery('.js-components-container'), 'rightHtml');
+            return promise;
+        }),
+
+        whenRendered: promise
+
+    };
+
 });

@@ -1,14 +1,15 @@
 package common
 
-import akka.pattern.CircuitBreakerOpenException
-import com.gu.openplatform.contentapi.ApiError
-import conf.Switch
-import play.api.Logger
-import play.api.libs.json.{JsString, JsObject}
-import play.api.mvc.{ Result, RequestHeader }
-import play.twirl.api.Html
-import model.{NoCache, Cached}
 import java.util.concurrent.TimeoutException
+
+import akka.pattern.CircuitBreakerOpenException
+import com.gu.contentapi.client.GuardianContentApiError
+import conf.SwitchTrait
+import model.{Cached, NoCache}
+import play.api.Logger
+import play.api.libs.json.{JsObject, JsString}
+import play.api.mvc.{RequestHeader, Result}
+import play.twirl.api.Html
 
 object `package` extends implicits.Strings with implicits.Requests with play.api.mvc.Results {
 
@@ -16,15 +17,21 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     case e: CircuitBreakerOpenException =>
       log.error(s"Got a circuit breaker open error while calling content api")
       Right(NoCache(ServiceUnavailable))
-    case ApiError(404, message) =>
+    case GuardianContentApiError(404, message) =>
       log.info(s"Got a 404 while calling content api: $message")
       Right(NoCache(NotFound))
-    case ApiError(410, message) =>
+    case GuardianContentApiError(410, message) =>
       log.info(s"Got a 410 while calling content api: $message")
       Right(NoCache(Gone))
     case timeout: TimeoutException =>
       log.info(s"Got a timeout while calling content api: ${timeout.getMessage}")
       Right(NoCache(GatewayTimeout(timeout.getMessage)))
+    case error =>
+      log.info(s"Content api exception: ${error.getMessage}")
+      Option(error.getCause).map { cause =>
+        log.info(s"Content api exception cause: ", cause)
+      }
+      Right(NoCache(InternalServerError))
   }
 
   /*
@@ -39,7 +46,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       Ok(htmlResponse())
   }
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, metaData: model.MetaData, switches: Seq[Switch])(implicit request: RequestHeader) = Cached(metaData) {
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, metaData: model.MetaData, switches: Seq[SwitchTrait])(implicit request: RequestHeader) = Cached(metaData) {
     if (request.isJson)
       JsonComponent(metaData, jsonResponse())
     else

@@ -1,7 +1,6 @@
 package config
 
-import com.gu.facia.client.models.{Config, Front, Collection, CollectionConfig}
-import org.joda.time.DateTime
+import com.gu.facia.client.models.{ConfigJson => Config, FrontJson => Front, CollectionConfigJson => CollectionConfig}
 import org.scalatest._
 import controllers.CreateFront
 import test.ConfiguredTestSuite
@@ -38,6 +37,9 @@ import test.ConfiguredTestSuite
   )
 
   val emptyCollectionFixture = CollectionConfig(
+    None,
+    None,
+    None,
     None,
     None,
     None,

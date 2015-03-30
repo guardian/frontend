@@ -61,6 +61,8 @@ case class FrontendTimingMetric(name: String, description: String) extends Front
   def putDataPoints(points: List[DataPoint]): Unit = points.map(_.value).map(recordDuration)
 
   def isEmpty: Boolean = currentCount.get() == 0L
+
+  def getCount: Long = currentCount.get()
 }
 
 case class GaugeMetric(name: String, description: String, get: () => Long, metricUnit: StandardUnit = StandardUnit.Megabytes) extends FrontendMetric {

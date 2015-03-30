@@ -26,6 +26,18 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       .getOrElse(throw new BadConfigurationException(s"$property not configured"))
   }
 
+  object crosswords {
+    lazy val apiKey = configuration.getStringProperty("crosswords_api.key")
+  }
+
+  object business {
+    lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
+  }
+
+  object weather {
+    lazy val apiKey = configuration.getStringProperty("weather.api.key")
+  }
+
   object indexes {
     lazy val tagIndexesBucket =
       configuration.getMandatoryStringProperty("tag_indexes.bucket")
@@ -49,6 +61,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
+    lazy val isProd = stage == "prod"
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
 
     lazy val isPreview = projectName == "preview"
@@ -80,6 +93,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object contentApi {
     val defaultContentApi: String = "http://content.guardianapis.com"
     lazy val contentApiLiveHost: String = configuration.getStringProperty("content.api.elastic.host").getOrElse(defaultContentApi)
+    lazy val contentApiPreviewHost: String = configuration.getStringProperty("content.api.preview.elastic.host").getOrElse(defaultContentApi)
+
     def contentApiDraftHost: String =
         configuration.getStringProperty("content.api.draft.host")
           .filter(_ => Switches.FaciaToolDraftContent.isSwitchedOn)
@@ -87,6 +102,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
+
+    lazy val circuitBreakerErrorThreshold =
+      configuration.getIntegerProperty("content.api.circuit_breaker.max_failures").getOrElse(5)
+
+    lazy val circuitBreakerResetTimeout =
+      configuration.getIntegerProperty("content.api.circuit_breaker.reset_timeout").getOrElse(20000)
 
     lazy val previewAuth: Option[Auth] = for {
       user <- configuration.getStringProperty("content.api.preview.user")
@@ -108,6 +129,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object ophan {
     lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("//j.ophan.co.uk/ophan.ng")
+    lazy val embedJsLocation = configuration.getStringProperty("ophan.embed.js.location").getOrElse("//j.ophan.co.uk/ophan.embed")
+  }
+
+  object omniture {
+    lazy val account = configuration.getStringProperty("guardian.page.omnitureAccount").getOrElse("guardiangu-frontend,guardiangu-network")
   }
 
   object googletag {
@@ -157,6 +183,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val url =
       if (environment.secure) configuration.getStringProperty("ajax.secureUrl").getOrElse("")
       else configuration.getStringProperty("ajax.url").getOrElse("")
+    lazy val nonSecureUrl =
+      configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigins: Seq[String] = configuration.getStringProperty("ajax.cors.origin").map(_.split(",")
       .map(_.trim).toSeq).getOrElse(Nil)
   }
@@ -167,6 +195,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val webappUrl = configuration.getStringProperty("id.webapp.url").getOrElse("")
+    lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
     lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("membership.theguardian.com")
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
   }
@@ -185,6 +214,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val path =
       if (environment.secure) configuration.getMandatoryStringProperty("assets.securePath")
       else configuration.getMandatoryStringProperty("assets.path")
+    lazy val securePath = configuration.getMandatoryStringProperty("assets.securePath")
   }
 
   object staticSport {
@@ -192,7 +222,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object sport {
-    lazy val apiUrl = configuration.getStringProperty("sport.apiUrl").getOrElse(ajax.url)
+    lazy val apiUrl = configuration.getStringProperty("sport.apiUrl").getOrElse(ajax.nonSecureUrl)
   }
 
   object oas {
@@ -233,12 +263,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val guMerchandisingAdvertiserId = configuration.getMandatoryStringProperty("dfp.guMerchandising.advertiserId")
 
     private lazy val dfpRoot = s"${environment.stage.toUpperCase}/commercial/dfp"
-    lazy val dfpSponsoredTagsDataKey = s"$dfpRoot/sponsored-tags-v5.json"
-    lazy val dfpAdvertisementFeatureTagsDataKey = s"$dfpRoot/advertisement-feature-tags-v5.json"
-    lazy val dfpFoundationSupportedTagsDataKey = s"$dfpRoot/foundation-supported-tags-v5.json"
+    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v2.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
-    lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v5.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems.json"
+    lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
+    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v1.json"
+    lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v1.json"
+    lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
 
@@ -251,6 +281,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       lazy val authorizationPath = configuration.getStringProperty("magento.auth.path")
       lazy val isbnLookupPath = configuration.getStringProperty("magento.isbn.lookup.path")
     }
+
+    lazy val adOpsTeam = configuration.getStringProperty("email.adOpsTeam")
+    lazy val adOpsAuTeam = configuration.getStringProperty("email.adOpsTeam.au")
+    lazy val adOpsUsTeam = configuration.getStringProperty("email.adOpsTeam.us")
+    lazy val adTechTeam = configuration.getStringProperty("email.adTechTeam")
+    lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
+
+    lazy val expiredAdFeatureUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
   }
 
   object open {
@@ -266,13 +304,15 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     // But does not change across environments
     // See https://issues.scala-lang.org/browse/SI-6723 for why we don't always use ->
     lazy val config: Map[String, String] = Map(
-      "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
+      "googleSearchUrl" -> "//www.google.co.uk/cse/cse.js",
       "idWebAppUrl" -> id.webappUrl,
       "idApiUrl" -> id.apiRoot,
+      "idOAuthUrl" -> id.oauthUrl,
       "discussionApiRoot" -> discussion.apiRoot,
       ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
       ("ophanJsUrl", ophan.jsLocation),
+      ("ophanEmbedJsUrl", ophan.embedJsLocation),
       ("googletagJsUrl", googletag.jsLocation),
       ("membershipUrl", id.membershipUrl),
       ("stripePublicToken", id.stripePublicToken)
@@ -301,6 +341,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
     /** When retrieving items from Content API, maximum number of requests to make concurrently */
     lazy val frontPressItemBatchSize = configuration.getIntegerProperty("frontpress.item_batch_size", 30)
+    /** When retrieving items from Content API, maximum number of items to request per concurrent request */
+    lazy val frontPressItemSearchBatchSize = {
+      val size = configuration.getIntegerProperty("frontpress.item_search_batch_size", 20)
+      assert(size <= 100, "Best to keep this less then 50 because of pageSize on search queries")
+      size
+    }
     lazy val configBeforePressTimeout: Int = 1000
 
     val oauthCredentials: Option[OAuthCredentials] =
@@ -309,6 +355,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         oauthSecret <- configuration.getStringProperty("faciatool.oauth.secret")
         oauthCallback <- configuration.getStringProperty("faciatool.oauth.callback")
       } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
+
+    val showTestContainers = configuration.getStringProperty("faciatool.show_test_containers").exists(_ == "true")
 
     lazy val adminPressJobStandardPushRateInMinutes: Int =
       Try(configuration.getStringProperty("admin.pressjob.standard.push.rate.inminutes").get.toInt)
@@ -341,7 +389,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val region = configuration.getMandatoryStringProperty("aws.region")
     lazy val bucket = configuration.getMandatoryStringProperty("aws.bucket")
     lazy val notificationSns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
+    lazy val videoEncodingsSns: String = configuration.getMandatoryStringProperty("sns.missing_video_encodings.topic.arn")
     lazy val frontPressSns: Option[String] = configuration.getStringProperty("frontpress.sns.topic")
+
 
     def mandatoryCredentials: AWSCredentialsProvider = credentials.getOrElse(throw new BadConfigurationException("AWS credentials are not configured"))
     val credentials: Option[AWSCredentialsProvider] = {
@@ -391,13 +441,18 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val signingKey = configuration.getMandatoryStringProperty("avatars.signing.key")
   }
 
-  object preview {
-    lazy val oauthCredentials: Option[OAuthCredentials] =
-      for {
-        oauthClientId <- configuration.getStringProperty("preview.oauth.clientid")
-        oauthSecret <- configuration.getStringProperty("preview.oauth.secret")
-        oauthCallback <- configuration.getStringProperty("preview.oauth.callback")
-      } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
+  object standalone {
+    lazy val oauthCredentials: Option[OAuthCredentials] = for {
+      oauthClientId <- configuration.getStringProperty("standalone.oauth.clientid")
+      // TODO needs the orElse fallback till we roll out new properties files
+      oauthSecret <- configuration.getStringProperty("standalone.oauth.secret").orElse(configuration.getStringProperty("preview.oauth.secret"))
+      oauthCallback <- configuration.getStringProperty("standalone.oauth.callback")
+    } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
+  }
+
+  object pngResizer {
+    val cacheTimeInSeconds = configuration.getIntegerProperty("png_resizer.image_cache_time").getOrElse(86400)
+    val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
   }
 }
 
