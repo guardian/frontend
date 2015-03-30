@@ -143,6 +143,7 @@ define([
                 resolve();
             } else {
                 mediator.on('rich-link:loaded', onRichLinkLoaded);
+                window.setTimeout(resolve, 10000); // timeout after 10s and resolve
             }
         });
     }
