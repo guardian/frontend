@@ -2,6 +2,7 @@
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'omniture',
+    'common/utils/$',
     'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
@@ -16,6 +17,7 @@ define([
     'common/modules/identity/api'
 ], function (
     s,
+    $,
     _,
     config,
     cookies,
@@ -180,6 +182,12 @@ define([
 
         // see http://blogs.adobe.com/digitalmarketing/mobile/responsive-web-design-and-web-analytics/
         this.s.eVar18    = detect.getBreakpoint();
+
+        // List of components on the page
+        this.s.prop21 = _.uniq($('[data-component]')
+            .map(function (x) { return $(x).attr('data-component'); }))
+            .toString();
+
         // getting clientWidth causes a reflow, so avoid using if possible
         this.s.eVar21    = (window.innerWidth || document.documentElement.clientWidth)
                     + 'x'
