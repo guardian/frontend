@@ -12,7 +12,9 @@ object OmnitureAnalyticsAccount {
   def apply(page: MetaData): String = {
     val sectionSpecficAccounts = Map(
       ("guardian-masterclasses", "guardiangu-masterclasses"),
-      ("Guardian Masterclasses", "guardiangu-masterclasses")
+      ("Guardian Masterclasses", "guardiangu-masterclasses"),
+      ("careers", "guardiangu-careers"),
+      ("Guardian Careers", "guardiangu-careers")
     )
     Seq(Some(Configuration.omniture.account), sectionSpecficAccounts.get(page.section)).flatten.mkString(",")
   }

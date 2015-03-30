@@ -31,6 +31,10 @@ sealed trait ContentType {
   val name: String
 }
 
-case object articleType extends ContentType {
-  override val name: String = "article"
+case object ArticleType extends ContentType {
+  override val name: String = "Article"
+}
+
+case object SectionFrontType extends ContentType {
+  override val name: String = "Section"
 }

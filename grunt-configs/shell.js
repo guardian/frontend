@@ -24,11 +24,29 @@ module.exports = function(grunt, options) {
                      'static/abtests.json'
         },
 
-        jspmFaciaTool: {
+        jspmInstallFaciaTool: {
             command: 'node ../../node_modules/jspm/jspm.js install',
             options: {
                 execOptions: {
                     cwd: 'facia-tool/public'
+                }
+            }
+        },
+
+        jspmInstallStatic: {
+            command: './node_modules/.bin/jspm install',
+            options: {
+                execOptions: {
+                    cwd: '.'
+                }
+            }
+        },
+
+        jspmBundleStatic: {
+            command: './node_modules/.bin/jspm bundle-sfx es6/bootstraps/app static/target/bundles/app.js',
+            options: {
+                execOptions: {
+                    cwd: '.'
                 }
             }
         }
