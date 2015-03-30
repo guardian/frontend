@@ -12,6 +12,7 @@
 @defining((
     metaData match {
         case c: model.Content if c.shouldHideAdverts => { false }
+        case p: model.Page if p.section == "identity" => { false }
         case _ => { true }
     },
     Edition(request),
