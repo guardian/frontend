@@ -6,15 +6,13 @@ import scala.collection.JavaConversions._
 
 object CmpParamCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    val formStackHost: String = "guardiannewsampampmedia.formstack.com"
-    val profileFormstackWrapper: String = "profile.theguardian.com/form/embed"
+    val formstackSrcValues = List("guardiannewsampampmedia.formstack.com",  // straight from Formstack
+                                  "profile.theguardian.com/form/embed")     // Guardian embed wrapper
 
-    document.getElementsByAttributeValueContaining("src", formStackHost).foreach { elem: Element =>
-      elem.addClass("element-pass-cmp")
-    }
-
-    document.getElementsByAttributeValueContaining("src", profileFormstackWrapper).foreach { elem: Element =>
-      elem.addClass("element-pass-cmp")
+    for (url <- formstackSrcValues) {
+      document.getElementsByAttributeValueContaining("src", url).foreach { elem: Element =>
+        elem.addClass("element-pass-cmp")
+      }
     }
 
     document
