@@ -207,6 +207,7 @@ define([
 
         this.s.prop51  = mvt;
         this.s.eVar51  = mvt;
+        this.s.list1  = mvt; // allows us to 'unstack' the AB test names (allows longer names)
 
         // List of components on the page
         this.s.list2 = _.uniq($('[data-component]')
