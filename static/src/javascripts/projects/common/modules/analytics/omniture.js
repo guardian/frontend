@@ -183,11 +183,6 @@ define([
         // see http://blogs.adobe.com/digitalmarketing/mobile/responsive-web-design-and-web-analytics/
         this.s.eVar18    = detect.getBreakpoint();
 
-        // List of components on the page
-        this.s.prop21 = _.uniq($('[data-component]')
-            .map(function (x) { return $(x).attr('data-component'); }))
-            .toString();
-
         // getting clientWidth causes a reflow, so avoid using if possible
         this.s.eVar21    = (window.innerWidth || document.documentElement.clientWidth)
                     + 'x'
@@ -213,6 +208,10 @@ define([
         this.s.prop51  = mvt;
         this.s.eVar51  = mvt;
 
+        // List of components on the page
+        this.s.list2 = _.uniq($('[data-component]')
+            .map(function (x) { return $(x).attr('data-component'); }))
+            .toString();
         this.s.list3 = _.map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
 
         if (this.s.prop51) {
