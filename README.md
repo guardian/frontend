@@ -173,6 +173,7 @@ npm install
 Install additional dependencies:
 ```
 bundle
+./node_modules/.bin/jspm install
 ```
 
 After this, you can compile the assets:

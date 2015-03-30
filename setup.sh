@@ -136,6 +136,7 @@ install_libpng() {
 install_packages() {
   npm install
   bundle
+  ./node_modules/.bin/jspm install
 }
 
 compile() {
