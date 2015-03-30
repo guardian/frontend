@@ -17,6 +17,7 @@ define([
         var searchLoader,
             enabled,
             gcsUrl,
+            resultSetSize,
             container,
             self = this;
 
@@ -24,6 +25,7 @@ define([
 
             enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
+            resultSetSize = config.page.section === 'identity' ? 3 : 10;
 
             searchLoader = _.throttle(function () {
                 self.load();
@@ -80,7 +82,7 @@ define([
                             '<gcse:searchbox></gcse:searchbox>' +
                         '</div>' +
                         '<div class="search-results" data-link-name="search">' +
-                            '<gcse:searchresults></gcse:searchresults>' +
+                            '<gcse:searchresults webSearchResultSetSize="' + resultSetSize + '"></gcse:searchresults>' +
                         '</div>';
                 });
 

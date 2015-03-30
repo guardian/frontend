@@ -6,6 +6,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
+    'common/modules/experiments/tests/identity-social-oauth',
     'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/mt-master',
     'common/modules/experiments/tests/signed-out',
@@ -14,6 +15,7 @@ define([
     'common/modules/experiments/tests/mt-top-below-nav',
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/mt-top-below-first-container',
+    'common/modules/experiments/tests/mt-sticky-nav',
     'common/modules/experiments/tests/across-the-country'
 ], function (
     raven,
@@ -23,6 +25,7 @@ define([
     store,
     mvtCookie,
     HighCommercialComponent,
+    IdentitySocialOAuth,
     KruxAudienceScience,
     MtMaster,
     SignedOut,
@@ -31,12 +34,14 @@ define([
     MtTopBelowNav,
     HeatMap,
     MtTopBelowFirstContainer,
+    MtStickyNav,
     AcrossTheCountry
 ) {
 
     var ab,
         TESTS = [
             new HighCommercialComponent(),
+            new IdentitySocialOAuth(),
             new KruxAudienceScience(),
             new MtMaster(),
             new SignedOut(),
@@ -45,6 +50,7 @@ define([
             new MtTopBelowNav(),
             new HeatMap(),
             new MtTopBelowFirstContainer(),
+            new MtStickyNav(),
             new AcrossTheCountry()
         ],
         participationsKey = 'gu.ab.participations';

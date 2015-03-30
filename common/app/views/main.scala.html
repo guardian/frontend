@@ -39,12 +39,13 @@
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
         @if(!hideUi) {
+            <div class="sticky-nav-mt-test">
             @if(showAdverts) {
                 @fragments.commercial.topBanner()
             }
 
             @fragments.header(metaData)
-
+            </div>
             @if(showAdverts && adBelowNav) {
                 @fragments.commercial.topBannerBelowNav()
             }
