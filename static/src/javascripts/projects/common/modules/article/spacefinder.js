@@ -62,7 +62,8 @@ define([
 
     function _enforceRules(slots, rules, bodyHeight, debug) {
 
-        var filtered = _(slots);
+        var filtered = _(slots),
+            contentMeta;
 
         // enforce minAbove and minBelow rules
         filtered = filtered.filter(function (p) {
@@ -80,8 +81,8 @@ define([
 
         // enforce content meta rule
         if (rules.clearContentMeta) {
-            var contentMeta = _mapElementToDimensions(qwery('.js-content-meta')[0]);
-            filtered = filtered.filter(function(p) {
+            contentMeta = _mapElementToDimensions(qwery('.js-content-meta')[0]);
+            filtered = filtered.filter(function (p) {
                 var valid = p.top > (contentMeta.bottom + rules.clearContentMeta);
                 if (debug && !valid) { _debugErrPara(p.element, 'too close to content meta'); }
                 return valid;
