@@ -114,7 +114,13 @@ object Switches {
   val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
     "If this switch is switched on then the preview server requires login",
     safeState = On,
-    sellByDate = new LocalDate(2015, 3, 31)
+    sellByDate = new LocalDate(2015, 4, 30)
+  )
+
+  val PreviewAuthByCookie = Switch("Performance", "preview-auth-by-cookie",
+    "If this switch is switched on then preview auth will be lengthened by a cookie",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 4, 30)
   )
 
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
