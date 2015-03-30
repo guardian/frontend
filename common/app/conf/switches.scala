@@ -598,7 +598,7 @@ object Switches {
 
   val IphoneConfidence = Switch("Performance", "iphone-confidence",
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
   )
 
   val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",
