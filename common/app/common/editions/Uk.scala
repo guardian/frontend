@@ -50,6 +50,7 @@ object Uk extends Edition(
       NavItem(fashion),
       NavItem(environment, Seq(cities, globalDevelopment)),
       NavItem(technology),
+      NavItem(election2015),
       NavItem(money, Seq(property, savings, borrowing, workAndCareers)),
       NavItem(travel, Seq(uktravel, europetravel, usTravel)),
       NavItem(science),
@@ -57,7 +58,7 @@ object Uk extends Edition(
       NavItem(media),
       NavItem(guardianProfessional),
       NavItem(observer),
-      NavItem(todaysPaper, Seq(editorialsandletters, obituaries, g2, weekend, theguide, saturdayreview)),
+      NavItem(todaysPaper, Seq(editorialsandletters, obituaries, g2, weekend, theGuide, saturdayreview)),
       NavItem(crosswords),
       NavItem(video)
     )
@@ -76,7 +77,7 @@ object Uk extends Edition(
     NavItem(fashion),
     NavItem(environment, Seq(cities, globalDevelopment)),
     NavItem(technology),
-    NavItem(money, Seq(property, savings, borrowing, workAndCareers)),
+    NavItem(election2015),
     NavItem(travel, Seq(uktravel, europetravel, usTravel))
   )
 }
