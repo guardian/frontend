@@ -8,6 +8,10 @@
     fill: #ffffff;
 }
 
+.crossword__cell--intersecting {
+    fill: hsl(0, 0%, 80%);
+}
+
 .crossword__cell--highlighted {
     fill: lighten(colour(crosswordAccent2), 30%);
 }

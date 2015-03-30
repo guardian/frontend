@@ -52,7 +52,8 @@ var Cell = React.createClass({
                 className: classNames({
                     'crossword__cell': true,
                     'crossword__cell--focussed': this.props.isFocussed,
-                    'crossword__cell--highlighted': this.props.isHighlighted
+                    'crossword__cell--highlighted': this.props.isHighlighted,
+                    'crossword__cell--intersecting': this.props.intersectsFocussedEntry
                 })
             }),
             innerNodes
@@ -80,6 +81,7 @@ export default React.createClass({
                     cellProps.y = y;
                     cellProps.key = 'cell_' + x + '_' + y;
                     cellProps.isHighlighted = this.props.isHighlighted(x, y);
+                    cellProps.intersectsFocussedEntry = this.props.cellIntersectsFocussedEntry(x, y);
                     cellProps.isFocussed = this.props.focussedCell && x === this.props.focussedCell.x &&
                         y === this.props.focussedCell.y;
                     cells.push(Cell(cellProps));
