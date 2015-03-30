@@ -78,7 +78,7 @@ object Switches {
   val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
     "If this switch is on, containers past the 8th will be lazily loaded on mobile and tablet",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 4, 1)
+    sellByDate = never
   )
 
   val TagPageSizeSwitch = Switch("Performance", "tag-page-size",
