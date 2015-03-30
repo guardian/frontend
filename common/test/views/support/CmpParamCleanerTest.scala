@@ -15,7 +15,7 @@ class CmpParamCleanerTest extends FlatSpec with Matchers {
 
   }
 
-  "CmpParamCleaner" should "attach an element-pass-cmp class to formstack iframes" in {
+  "CmpParamCleaner" should "attach an element-pass-cmp class to formstack wrappers" in {
     val doc = """<html><body><figure><iframe src="https://profile.theguardian.com/form/embed/blahyblah" /></figure></body></html>"""
     val document: Document = Jsoup.parse(doc)
     val result: Document = CmpParamCleaner.clean(document)
