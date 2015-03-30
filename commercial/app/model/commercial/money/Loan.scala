@@ -58,7 +58,14 @@ object LoansFeed extends MoneySupermarketFeed[Loan] {
 
   protected lazy val path = "loans"
 
-  def parse(xml: Elem): Seq[Loan] = xml \ "Product" map (Loan(_))
+  def parse(xml: Elem): Seq[Loan] = {
+    for {
+      node <- xml \ "Product"
+      if (node \ "CategoryName").text == "Good"
+    } yield {
+      Loan(node)
+    }
+  }
 }
 
 
