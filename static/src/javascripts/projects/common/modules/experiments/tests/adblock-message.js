@@ -10,12 +10,12 @@ define([
     doNotUseAdblockTemplate
 ) {
     return function () {
-        this.id = 'AdBlockMessage';
+        this.id = 'AdBlock';
         this.start = '2015-03-27';
         this.expiry = '2015-04-27';
         this.author = 'Zofia Korcz';
         this.description = 'Test if the users will disable adblock or at least click support link';
-        this.audience = 0.1;
+        this.audience = 0.5;
         this.audienceOffset = 0;
         this.successMeasure = 'Users will disable adblock or at least click support link';
         this.audienceCriteria = 'All users';
@@ -28,7 +28,7 @@ define([
 
         this.variants = [
             {
-                id: 'join',
+                id: 'A',
                 test: function () {
                     var adblockLink = 'https://membership.theguardian.com/about/supporter';
 
@@ -49,7 +49,7 @@ define([
                 }
             },
             {
-                id: 'support',
+                id: 'B',
                 test: function () {
                     var adblockLink = 'https://membership.theguardian.com/about/supporter';
 
