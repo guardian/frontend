@@ -11,7 +11,7 @@ import test.ConfiguredTestSuite
                                     webTitle: Option[String] = None,
                                     description: Option[String] = None,
                                     onPageDescription: Option[String] = None) = Config(
-    Map("uk" -> Front(Nil, section, webTitle, title, description, onPageDescription, None, None, None, None, None, None)),
+    Map("uk" -> Front(Nil, section, webTitle, title, description, onPageDescription, None, None, None, None, None, None, None)),
     Map.empty)
 
   "StripTags" should "strip tag from title" in {

@@ -14,7 +14,7 @@ System.config({
   "map": {
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
     "bean": "npm:bean@1.0.15",
-    "bonzo": "npm:bonzo@2.0.0",
+    "bonzo": "npm:bonzo@1.4.0",
     "domready": "npm:domready@1.0.7",
     "lodash": "npm:lodash@2.4.1",
     "qwery": "npm:qwery@4.0.0",
@@ -48,7 +48,7 @@ System.config({
     "npm:bean@1.0.15": {
       "fs": "github:jspm/nodelibs-fs@0.1.1"
     },
-    "npm:bonzo@2.0.0": {
+    "npm:bonzo@1.4.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.1",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },

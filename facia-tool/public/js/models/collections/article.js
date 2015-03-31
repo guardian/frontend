@@ -335,9 +335,18 @@ define([
             }, this);
 
             this.viewUrl = ko.pureComputed(function() {
-                return this.fields.isLive() === 'false' ?
-                    vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl()) :
-                    this.meta.href() || this.props.webUrl();
+                var url;
+                if (this.fields.isLive() === 'false') {
+                    url = vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl());
+                } else {
+                    url = this.meta.href() || this.props.webUrl();
+
+                    if (url && !/^https?:\/\//.test(url)) {
+                        url = 'http://' + vars.CONST.mainDomain + url;
+                    }
+                }
+
+                return url;
             }, this);
 
             // Populate supporting

@@ -16,16 +16,16 @@ to apply any necessary changes to non-shared code there too.
         <div class="gs-container l-header__inner">
             <div class="l-header-pre u-cf">
                 <div class="brand-bar">
-                    <div class="u-h brand-bar__item brand-bar__item--profile
+                    <div class="brand-bar__item brand-bar__item--profile
                                 brand-bar__item--has-control brand-bar__item--register
                                 popup-container has-popup js-register">
-                        <a href="@Configuration.id.url/register"
+                        <a href="@Configuration.id.url/register?skipConfirmation=true&returnUrl=@URLEncode("https://membership.theguardian.com/join/friend/enter-details")"
                            data-link-name="Register link"
                            class="brand-bar__item--action">
                             @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                            <span class="control__info js-control-info">register</span>
+                            <span class="control__info js-control-info">become a member</span>
                         </a>
-                        <span class="u-h brand-bar__item__badge">free</span>
+                        <span class="brand-bar__item__badge">free</span>
                         <div class="u-h js-popup-polly-toynbee-quote popup popup--text popup--text--register">
                             <img src="//i.guim.co.uk/static/w-140/h--/q-95/sys-images/Guardian/Pix/contributor/2014/6/30/1404146756739/Polly-Toynbee-L.png"
                                  alt="Polly Toynbee"
@@ -39,7 +39,6 @@ to apply any necessary changes to non-shared code there too.
                                 </blockquote>
                                 <p>
                                     <a href="@Configuration.id.url/register?returnUrl=https://membership.theguardian.com/join/friend/enter-details&skipConfirmation=true"
-                                       class="popup--text--signed-out__highlight"
                                        data-link-name="Register popup link">
                                         Become a member</a>
                                     of the Guardian for free
@@ -53,7 +52,6 @@ to apply any necessary changes to non-shared code there too.
                                 <p>
                                     When you
                                     <a href="@Configuration.id.url/register?returnUrl=https://membership.theguardian.com/join/friend/enter-details&skipConfirmation=true"
-                                       class="popup--text--signed-out__highlight"
                                        data-link-name="Register popup link">
                                         register free</a>
                                     or sign in to theguardian.com, we’re able to
@@ -78,19 +76,6 @@ to apply any necessary changes to non-shared code there too.
                                       data-test-id="sign-in-name">sign in</span>
                             </a>
                             <div class="js-profile-popup"></div>
-                            <div class="js-popup-signed-out popup popup--text popup--text--signed-out u-h">
-                                <button class="js-popup-toggle u-button-reset popup--text__toggle"
-                                        data-link-name="Signed out link | Close">
-                                    @fragments.inlineSvg("cross", "icon", Seq("popup--text__toggle__icon"))
-                                </button>
-                                <div class="popup--text__content">
-                                    <a class="popup--text--signed-out__link"
-                                       href="@Configuration.id.url/signin"
-                                       data-link-name="Signed out link"></a>
-                                    You are signed out of the Guardian.
-                                    <span class="popup--text--signed-out__highlight">Sign In</span>
-                                </div>
-                            </div>
                         </div>
                     }
 
@@ -121,43 +106,40 @@ to apply any necessary changes to non-shared code there too.
             <div class="popup popup--search is-off"><div class="js-search-placeholder"></div></div>
 
             <div class="l-header-main">
-                <span itemscope itemtype="http://schema.org/Organization">
-                    <meta itemprop="logo" content="https://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
-                    @if(metaData.section == "observer" && metaData.isFront) {
-                        <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" itemprop="url" data-component="logo">
-                            @if(metaData.hasSlimHeader) {
-                                @fragments.inlineSvg("observer-logo-160", "logo")
-                            } else {
-                                <span class="u-h" itemprop="name">The Observer</span>
-                                @fragments.inlineSvg("observer-logo-320", "logo")
-                            }
-                        </a>
-                    } else {
-                        <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url" data-component="logo">
-                            <span class="u-h" itemprop="name">The Guardian</span>
-                            @if(metaData.hasSlimHeader) {
-                                @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
-                                <!--[if (gt IE 8)&(IEMobile)]><!-->
-                                    @fragments.inlineSvg("guardian-logo-160", "logo")
-                                <!--<![endif]-->
-                                <!--[if (lt IE 9)&(!IEMobile)]>
-                                  <span class="inline-logo inline-guardian-logo-160"></span>
-                                <![endif]-->
-                            } else {
-                                <!--[if (gt IE 8)&(IEMobile)]><!-->
-                                    @fragments.inlineSvg("guardian-logo-320", "logo")
-                                <!--<![endif]-->
-                                <!--[if (lt IE 9)&(!IEMobile)]>
-                                    <span class="inline-logo inline-guardian-logo-320"></span>
-                                <![endif]-->
-                                <span class="logo__tagline hide-on-mobile">Winner of the Pulitzer prize</span>
-                            }
-                        </a>
-                    }
-                    @if(metaData.hasSlimHeader) {
-                        @fragments.nav.navigationToggle(metaData)
-                    }
-                </span>
+                @if(metaData.section == "observer" && metaData.isFront) {
+                    <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" itemprop="url" data-component="logo">
+                        @if(metaData.hasSlimHeader) {
+                            @fragments.inlineSvg("observer-logo-160", "logo")
+                        } else {
+                            <span class="u-h">The Observer</span>
+                            @fragments.inlineSvg("observer-logo-320", "logo")
+                        }
+                    </a>
+                } else {
+                    <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url" data-component="logo">
+                        <span class="u-h">The Guardian</span>
+                        @if(metaData.hasSlimHeader) {
+                            @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
+                            <!--[if (gt IE 8)&(IEMobile)]><!-->
+                                @fragments.inlineSvg("guardian-logo-160", "logo")
+                            <!--<![endif]-->
+                            <!--[if (lt IE 9)&(!IEMobile)]>
+                              <span class="inline-logo inline-guardian-logo-160"></span>
+                            <![endif]-->
+                        } else {
+                            <!--[if (gt IE 8)&(IEMobile)]><!-->
+                                @fragments.inlineSvg("guardian-logo-320", "logo")
+                            <!--<![endif]-->
+                            <!--[if (lt IE 9)&(!IEMobile)]>
+                                <span class="inline-logo inline-guardian-logo-320"></span>
+                            <![endif]-->
+                            <span class="logo__tagline hide-on-mobile">Winner of the Pulitzer prize</span>
+                        }
+                    </a>
+                }
+                @if(metaData.hasSlimHeader) {
+                    @fragments.nav.navigationToggle(metaData)
+                }
             </div>
         </div>
         @fragments.nav.navigation(metaData)

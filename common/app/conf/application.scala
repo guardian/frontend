@@ -4,10 +4,9 @@ import common.Assets.Assets
 import common.{ExecutionContexts, GuardianConfiguration}
 import filters.RequestLoggingFilter
 import contentapi.{ElasticSearchPreviewContentApiClient, ElasticSearchLiveContentApiClient}
-import model.{Page, Cached}
+import implicits.Responses
 import play.api.mvc._
 import play.filters.gzip.GzipFilter
-import Switches.CareersMaintenanceSwitch
 
 import scala.concurrent.Future
 
@@ -20,9 +19,8 @@ object PreviewContentApi extends ElasticSearchPreviewContentApiClient
 object Static extends Assets(Configuration.assets.path)
 object StaticSecure extends Assets(Configuration.assets.securePath)
 
-object Gzipper extends GzipFilter(
-  shouldGzip = (req, resp) => !resp.headers.get("Content-Type").exists(_.startsWith("image/"))
-)
+import Responses._
+object Gzipper extends GzipFilter(shouldGzip = (_, resp) => !resp.isImage)
 
 object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicits.Requests {
 
@@ -65,22 +63,6 @@ object BackendHeaderFilter extends Filter with ExecutionContexts {
   }
 }
 
-object CareersFilter extends Filter with ExecutionContexts with Results {
-
-  private val page = new Page("careers/maintenance", "careers", "Guardian Careers - under maintenance", "GFE:careers:maintenance")
-
-  // we want to be able to build the front and check things on preview
-  private lazy val notPreview = !Configuration.environment.isPreview
-
-  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    if (CareersMaintenanceSwitch.isSwitchedOn && request.path.startsWith("/careers") && notPreview) {
-      Future.successful(Cached(5)(Ok(views.html.careersMaintenance(page)(request))))
-    } else {
-      nextFilter(request)
-    }
-  }
-}
-
 object Filters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
@@ -89,7 +71,6 @@ object Filters {
     Gzipper,
     BackendHeaderFilter,
     RequestLoggingFilter,
-    GNUFilter,
-    CareersFilter
+    GNUFilter
   )
 }
