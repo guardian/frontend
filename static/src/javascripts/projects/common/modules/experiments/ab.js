@@ -15,6 +15,7 @@ define([
     'common/modules/experiments/tests/mt-top-below-first-container',
     'common/modules/experiments/tests/mt-sticky-nav',
     'common/modules/experiments/tests/across-the-country',
+    'common/modules/experiments/tests/defer-spacefinder',
     'common/modules/experiments/tests/adblock-message'
 ], function (
     raven,
@@ -33,6 +34,7 @@ define([
     MtTopBelowFirstContainer,
     MtStickyNav,
     AcrossTheCountry,
+    DeferSpacefinder,
     AdblockMessage
 ) {
 
@@ -48,6 +50,7 @@ define([
             new MtTopBelowFirstContainer(),
             new MtStickyNav(),
             new AcrossTheCountry(),
+            new DeferSpacefinder(),
             new AdblockMessage()
         ],
         participationsKey = 'gu.ab.participations';

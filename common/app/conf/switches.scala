@@ -511,6 +511,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 4, 8)
   )
 
+  val ABDeferSpacefinder = Switch("A/B Tests", "ab-defer-spacefinder",
+    "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
+  )
+
   val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block",
     "Switch for the Adblock Message A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
