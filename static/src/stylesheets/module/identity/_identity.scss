@@ -20,8 +20,9 @@
         max-width: gs-span(10);
     }
 }
+
 .identity-wrapper--stretched {
-    max-width: none;
+    max-width: gs-span(16);
 }
 
 .identity-wrapper--with-membership {
