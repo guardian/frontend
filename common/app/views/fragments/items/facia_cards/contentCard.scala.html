@@ -1,7 +1,7 @@
 @(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
 
 @import model.InlineImage
-@import model.{InlineVideo, VideoPlayer, CrosswordSvg}
+@import model.{InlineVideo, VideoPlayer, CrosswordSvg, LiveBlog}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
@@ -112,8 +112,12 @@ data-test-id="facia-card"
             }
         </div>
 
-        @item.trailText.filter(const(item.showStandfirst)).map { text =>
-            <div class="fc-item__standfirst">@Html(text)</div>
+        @if(item.isLive) {
+            <div class="fc-item__latest-block u-faux-block-link__promote js-live-blog-latest-block" data-article-id="@item.id"></div>
+        } else {
+            @item.trailText.filter(const(item.showStandfirst)).map { text =>
+                <div class="fc-item__standfirst">@Html(text)</div>
+            }
         }
 
         @if(item.sublinks.nonEmpty) {

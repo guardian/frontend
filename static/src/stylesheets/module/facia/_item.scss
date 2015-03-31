@@ -328,6 +328,12 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
+.fc-item__latest-block {
+    @include fs-headline(1);
+    padding-bottom: .5em;
+    color: #ffffff;
+}
+
 .fc-item__meta {
     position: absolute;
     bottom: 0;

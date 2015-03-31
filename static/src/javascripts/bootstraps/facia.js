@@ -16,6 +16,7 @@ define([
     'facia/modules/ui/container-show-more',
     'facia/modules/ui/lazy-load-containers',
     'facia/modules/ui/snaps',
+    'facia/modules/ui/live-blog-updates',
     'facia/modules/onwards/weather'
 ], function (
     bonzo,
@@ -33,6 +34,7 @@ define([
     containerShowMore,
     lazyLoadContainers,
     snaps,
+    liveblogUpdates,
     weather
 ) {
 
@@ -73,6 +75,12 @@ define([
                         weather.init();
                     });
                 }
+            },
+
+            showLiveblogUpdates: function () {
+                if (true) {
+                    mediator.on('page:front:ready', liveblogUpdates);
+                }
             }
         },
 
@@ -86,6 +94,7 @@ define([
                 lazyLoadContainers();
                 stocks();
                 modules.showWeather();
+                modules.showLiveblogUpdates();
             }
             mediator.emit('page:front:ready');
         };
