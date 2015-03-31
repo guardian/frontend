@@ -355,11 +355,6 @@ object Switches {
     sellByDate = never
   )
 
-  val HideInteractiveUi = Switch("Feature", "hide-interactive-ui",
-    "If this is switched on interactives can be rendered without page furniture.",
-    safeState = On, sellByDate = new LocalDate(2015, 3, 31)
-  )
-
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
     safeState = On, sellByDate = never)
@@ -509,11 +504,6 @@ object Switches {
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
     "Switch for the UK Network Front heatmap test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
-  )
-
-  val ABSignedOut = Switch("A/B Tests", "ab-signed-out",
-    "Switch for the Signed Out messaging test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
   )
 
   val ABRegister = Switch("A/B Tests", "ab-register",
