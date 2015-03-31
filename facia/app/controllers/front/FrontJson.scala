@@ -142,11 +142,11 @@ trait FrontJson extends ExecutionContexts with Logging {
       showSections    = (json \ "showSections").asOpt[Boolean],
       uneditable      = (json \ "uneditable").asOpt[Boolean],
       hideKickers     = (json \ "hideKickers").asOpt[Boolean],
-      showDateHeader =  (json \ "showDateHeader").asOpt[Boolean],
+      showDateHeader  =  (json \ "showDateHeader").asOpt[Boolean],
       showLatestUpdate = (json \ "showLatestUpdate").asOpt[Boolean],
-      excludeFromRss = (json \ "excludeFromRss").asOpt[Boolean],
-      showTimestamps = (json \ "showTimestamps").asOpt[Boolean],
-      importance = (json \ "importance").asOpt[String]
+      excludeFromRss  = (json \ "excludeFromRss").asOpt[Boolean],
+      showTimestamps  = (json \ "showTimestamps").asOpt[Boolean],
+      important       = (json \ "important").asOpt[Boolean]
     )
 
   private def parsePressedJson(j: String): Option[FaciaPage] = {
