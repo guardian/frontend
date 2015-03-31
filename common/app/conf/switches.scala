@@ -506,11 +506,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
-  val ABRegister = Switch("A/B Tests", "ab-register",
-    "Switch for the Register A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 1)
-  )
-
   val ABRegisterPopup = Switch("A/B Tests", "ab-register-popup",
     "Switch for the Register Popup A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 8)
