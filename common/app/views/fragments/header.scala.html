@@ -16,16 +16,16 @@ to apply any necessary changes to non-shared code there too.
         <div class="gs-container l-header__inner">
             <div class="l-header-pre u-cf">
                 <div class="brand-bar">
-                    <div class="u-h brand-bar__item brand-bar__item--profile
+                    <div class="brand-bar__item brand-bar__item--profile
                                 brand-bar__item--has-control brand-bar__item--register
                                 popup-container has-popup js-register">
-                        <a href="@Configuration.id.url/register"
+                        <a href="@Configuration.id.url/register?skipConfirmation=true&returnUrl=@URLEncode("https://membership.theguardian.com/join/friend/enter-details")"
                            data-link-name="Register link"
                            class="brand-bar__item--action">
                             @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                            <span class="control__info js-control-info">register</span>
+                            <span class="control__info js-control-info">become a member</span>
                         </a>
-                        <span class="u-h brand-bar__item__badge">free</span>
+                        <span class="brand-bar__item__badge">free</span>
                         <div class="u-h js-popup-polly-toynbee-quote popup popup--text popup--text--register">
                             <img src="//i.guim.co.uk/static/w-140/h--/q-95/sys-images/Guardian/Pix/contributor/2014/6/30/1404146756739/Polly-Toynbee-L.png"
                                  alt="Polly Toynbee"

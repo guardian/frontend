@@ -24,25 +24,7 @@ define([
             return !Id.isUserLoggedIn();
         };
 
-        var $register = $('.js-register'),
-            $registerText = $('.js-control-info', $register),
-            $registerLink = $('a', $register),
-            // Common mutations
-            show = function () {
-                $register.removeClass('u-h');
-            },
-            applyMembershipLink = function () {
-                $registerLink.attr('href', $registerLink.attr('href')
-                    + '?skipConfirmation=true'
-                    + '&returnUrl=' + encodeURIComponent('https://membership.theguardian.com/join/friend/enter-details'));
-            },
-            becomeAMember = function () {
-                $registerText.text('become a member');
-                applyMembershipLink();
-            },
-            free = function () {
-                $('.brand-bar__item__badge', $register).removeClass('u-h');
-            };
+        var $register = $('.js-register');
 
         this.variants = [
             {
@@ -52,10 +34,6 @@ define([
             {
                 id: 'polly-toynbee-quote',
                 test: function () {
-                    show();
-                    becomeAMember();
-                    free();
-
                     var $popup = $('.js-popup-polly-toynbee-quote', $register);
 
                     // FIXME: Find a nicer way to fade in/out whilst toggling
@@ -75,10 +53,6 @@ define([
             {
                 id: 'membership-benefits',
                 test: function () {
-                    show();
-                    becomeAMember();
-                    free();
-
                     var $popup = $('.js-popup-membership-benefits', $register);
 
                     // FIXME: Find a nicer way to fade in/out whilst toggling
