@@ -24,7 +24,7 @@ define([
             return !Id.isUserLoggedIn();
         };
 
-        var $register = $('.js-register');
+        var $register = $('.js-profile-register');
 
         this.variants = [
             {
