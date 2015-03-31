@@ -6,7 +6,7 @@ define(function () {
         this.expiry = '2015-05-01';
         this.author = 'Sam Desborough';
         this.description = 'Using Krux rather than Audience Science parameters in DFP ad requests';
-        this.audience = 1;
+        this.audience = 0.75;
         this.audienceOffset = 0;
         this.successMeasure = '';
         this.audienceCriteria = 'All users';
@@ -21,10 +21,6 @@ define(function () {
          * nothing happens in here, we just use this to bucket users
          */
         this.variants = [
-            {
-                id: 'control',
-                test: function () { }
-            },
             {
                 id: 'variant',
                 test: function () { }
