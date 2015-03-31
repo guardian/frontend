@@ -29,7 +29,7 @@ define([
         };
 
         function updatePosition(config) {
-            console.log(config);
+            //console.log(config);
             config.$stickyTopAd.css({
                 position:     'fixed',
                 bottom:       0,
@@ -38,7 +38,7 @@ define([
                 'border-top': '#ccc 1px solid'
             });
 
-            console.log('');
+            console.log(config.$secondContainer);
 
             /*if (window.scrollY < 500) {
                 //topAd is sticky from the beginning
@@ -140,8 +140,20 @@ define([
                             $stickyTopAd: $('.sticky-nav-mt-test .top-banner-ad-container'),
                             //$header: $('.sticky-nav-mt-test .l-header__inner'),
                             $bannnerMobile: $('.top-banner-ad-container--mobile'),
-                            $contentBelowMobile: $('#maincontent')
-                        };
+                            $contentBelowMobile: $('#maincontent'),
+                            $secondContainer: $('.facia-page .fc-container__inner').get(1)
+                        },
+                        windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+                    if (windowHeight <= 960 && $secondContainer) {
+                        mediator.on('window:scroll', _.throttle(function () {
+                            //height of topAd needs to be recalculated because we don't know when we will get repspond from DFP
+                            stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
+                            updatePosition(stickyConfig);
+                        }, 10));
+                    }
+
+                    //if ($('window').dim().height >= )
 
                     //$('.sticky-nav-mt-test .l-header-main').css('overflow', 'hidden');
                     //stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
