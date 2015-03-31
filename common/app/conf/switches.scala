@@ -511,11 +511,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
-  val ABSignedOut = Switch("A/B Tests", "ab-signed-out",
-    "Switch for the Signed Out messaging test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
-  )
-
   val ABRegister = Switch("A/B Tests", "ab-register",
     "Switch for the Register A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 1)

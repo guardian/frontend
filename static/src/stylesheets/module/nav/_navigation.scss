@@ -935,21 +935,6 @@ $popup-text-padding: $gs-gutter / 3;
     color: hsl(0, 0%, 50%);
 }
 
-// Signed out
-
-.popup--text--signed-out__link {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
-
-.popup--text--signed-out__highlight {
-    color: colour(news-main-1);
-    text-decoration: underline;
-}
-
 // Register
 
 .popup--text--register {
