@@ -15,7 +15,8 @@ define([
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/mt-top-below-first-container',
     'common/modules/experiments/tests/mt-sticky-nav',
-    'common/modules/experiments/tests/across-the-country'
+    'common/modules/experiments/tests/across-the-country',
+    'common/modules/experiments/tests/defer-spacefinder'
 ], function (
     raven,
     _,
@@ -33,7 +34,8 @@ define([
     HeatMap,
     MtTopBelowFirstContainer,
     MtStickyNav,
-    AcrossTheCountry
+    AcrossTheCountry,
+    DeferSpacefinder
 ) {
 
     var ab,
@@ -48,7 +50,8 @@ define([
             new HeatMap(),
             new MtTopBelowFirstContainer(),
             new MtStickyNav(),
-            new AcrossTheCountry()
+            new AcrossTheCountry(),
+            new DeferSpacefinder()
         ],
         participationsKey = 'gu.ab.participations';
 

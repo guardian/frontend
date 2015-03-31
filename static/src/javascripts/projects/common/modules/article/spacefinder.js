@@ -7,7 +7,8 @@ define([
     'bean',
     'Promise',
     'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/modules/experiments/ab'
 ], function (
     $,
     fastdom,
@@ -16,7 +17,8 @@ define([
     bean,
     Promise,
     _,
-    mediator
+    mediator,
+    ab
 ) {
     // find spaces in articles for inserting ads and other inline content
     var bodySelector = '.js-article__body',
@@ -135,8 +137,15 @@ define([
         });
     }
 
-    function onReadyToSpacefind() {
-        return Promise.all([onImagesLoaded(), onRichLinksUpgraded()]);
+    function getReady() {
+        var group = ab.getParticipations().DeferSpacefinder,
+            eligible = group && group.variant === 'variant';
+
+        if (ab.testCanBeRun('DeferSpacefinder') && eligible) {
+            return Promise.all([onImagesLoaded(), onRichLinksUpgraded()]);
+        }
+
+        return Promise.resolve();
     }
 
     // getParaWithSpace returns a paragraph that satisfies the given/default rules:
@@ -145,7 +154,7 @@ define([
         rules = rules || defaultRules;
 
         // get all immediate children
-        return onReadyToSpacefind().then(function () {
+        return getReady().then(function () {
             fastdom.read(function () {
                 bodyBottom = qwery(bodySelector)[0].offsetHeight;
                 paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
