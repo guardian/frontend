@@ -25,6 +25,7 @@ define([
         this.dom.container = document.body.querySelector('.' + Profile.CONFIG.classes.container);
         this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
         this.dom.popup = document.body.querySelector('.' + Profile.CONFIG.classes.popup);
+        this.dom.register = document.body.querySelector('.' + Profile.CONFIG.classes.register);
     }
 
     /** @type {Object.<string.*>} */
@@ -33,7 +34,8 @@ define([
         classes: {
             container: 'js-profile-nav',
             content: 'js-profile-info',
-            popup: 'js-profile-popup'
+            popup: 'js-profile-popup',
+            register: 'js-profile-register'
         }
     };
 
@@ -54,7 +56,8 @@ define([
         var user = id.getUserFromCookie(),
             $container = bonzo(this.dom.container),
             $content = bonzo(this.dom.content),
-            $popup = bonzo(this.dom.popup);
+            $popup = bonzo(this.dom.popup),
+            $register = bonzo(this.dom.register);
 
         if (user) {
             // Run this code only if we haven't already inserted
@@ -63,6 +66,7 @@ define([
                 fastdom.write(function () {
                     $content.text(user.displayName);
                     $container.addClass('is-signed-in');
+                    $register.hide();
                 });
             }
 
