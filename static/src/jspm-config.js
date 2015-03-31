@@ -14,7 +14,7 @@ System.config({
   "map": {
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
     "bean": "npm:bean@1.0.15",
-    "bonzo": "npm:bonzo@2.0.0",
+    "bonzo": "npm:bonzo@1.4.0",
     "classnames": "npm:classnames@1.2.0",
     "domready": "npm:domready@1.0.7",
     "jsx": "github:floatdrop/plugin-jsx@1.1.0",
@@ -97,8 +97,8 @@ System.config({
     "npm:bean@1.0.15": {
       "fs": "github:jspm/nodelibs-fs@0.1.2"
     },
-    "npm:bonzo@2.0.0": {
-      "fs": "github:jspm/nodelibs-fs@0.1.2",
+    "npm:bonzo@1.4.0": {
+      "fs": "github:jspm/nodelibs-fs@0.1.1",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:browserify-aes@1.0.0": {
