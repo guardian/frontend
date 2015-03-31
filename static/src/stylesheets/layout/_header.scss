@@ -110,6 +110,13 @@ $c-guardian-services-action: #ffffff;
             }
         }
     }
+
+    .no-svg .l-header--is-slim & {
+        .inline-logo {
+            width: 160px;
+            height: 30px;
+        }
+    }
 }
 
 
