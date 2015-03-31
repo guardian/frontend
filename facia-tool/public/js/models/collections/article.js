@@ -107,7 +107,20 @@ define([
                     omitForSupporting: true,
                     'if': 'imageReplace',
                     label: 'replacement image URL',
-                    validator: 'validateImageMain',
+                    validator: {
+                        fn: 'validateImage',
+                        params: {
+                            src: 'imageSrc',
+                            width: 'imageSrcWidth',
+                            height: 'imageSrcHeight',
+                            options: {
+                                maxWidth: 1000,
+                                minWidth: 400,
+                                widthAspectRatio: 5,
+                                heightAspectRatio: 3
+                            }
+                        }
+                    },
                     type: 'text'
                 },
                 {
@@ -128,7 +141,18 @@ define([
                     omitForSupporting: true,
                     'if': 'imageCutoutReplace',
                     label: 'replacement cutout image URL',
-                    validator: 'validateImageCutout',
+                    validator: {
+                        fn: 'validateImage',
+                        params: {
+                            src: 'imageCutoutSrc',
+                            width: 'imageCutoutSrcWidth',
+                            height: 'imageCutoutSrcHeight',
+                            options: {
+                                maxWidth: 1000,
+                                minWidth: 400
+                            }
+                        }
+                    },
                     type: 'text'
                 },
                 {
@@ -238,6 +262,12 @@ define([
                     type: 'boolean'
                 },
                 {
+                    key: 'slideshowImages',
+                    editable: true,
+                    label: 'slideshow',
+                    type: 'boolean'
+                },
+                {
                     key: 'snapUri',
                     label: 'snap target',
                     type: 'text'
@@ -255,6 +285,41 @@ define([
             ],
 
             rxScriptStriper = new RegExp(/<script.*/gi);
+
+        for (var i = 0; i < vars.CONST.maxSlideshowImages; i += 1) {
+            metaFields.push({
+                key: 'slideshowImageSrc_' + i,
+                editable: true,
+                omitForSupporting: true,
+                'if': 'slideshowImages',
+                label: 'slideshow image ' + (i + 1) + ' URL',
+                validator: {
+                    fn: 'validateImage',
+                    params: {
+                        src: 'slideshowImageSrc_' + i,
+                        width: 'slideshowImageSrcWidth_' + i,
+                        height: 'slideshowImageSrcHeight_' + i,
+                        options: {
+                            maxWidth: 1000,
+                            minWidth: 400,
+                            widthAspectRatio: 5,
+                            heightAspectRatio: 3
+                        }
+                    }
+                },
+                type: 'text'
+            }, {
+                key: 'slideshowImageSrcWidth_' + i,
+                'if': 'slideshowImages',
+                label: 'slideshow image ' + i + ' width',
+                type: 'text'
+            }, {
+                key: 'slideshowImageSrcHeight_' + i,
+                'if': 'slideshowImages',
+                label: 'slideshow image ' + i + ' height',
+                type: 'text'
+            });
+        }
 
         function Article(opts, withCapiData) {
             var self = this;
@@ -275,6 +340,7 @@ define([
             this.meta = asObservableProps(_.pluck(metaFields, 'key'));
 
             populateObservables(this.meta, opts.meta);
+            populateSlideshow(this.meta, opts.meta ? opts.meta.slideshow : null);
 
             this.metaDefaults = {};
 
@@ -447,8 +513,8 @@ define([
             meta = self.meta[key] || function() {};
             field = self.fields[key] || function() {};
 
-            if (opts.validator && _.isFunction(self[opts.validator])) {
-                meta.subscribe(function() { self[opts.validator](); });
+            if (opts.validator && _.isFunction(self[opts.validator.fn])) {
+                meta.subscribe(function() { self[opts.validator.fn](opts.validator.params); });
             }
 
             return {
@@ -517,32 +583,6 @@ define([
             };
         };
 
-        Article.prototype.validateImageMain = function() {
-            validateImage(
-                this.meta.imageSrc,
-                this.meta.imageSrcWidth,
-                this.meta.imageSrcHeight,
-                {
-                    maxWidth: 1000,
-                    minWidth: 400,
-                    widthAspectRatio: 5,
-                    heightAspectRatio: 3
-                }
-            );
-        };
-
-        Article.prototype.validateImageCutout = function() {
-            validateImage(
-                this.meta.imageCutoutSrc,
-                this.meta.imageCutoutSrcWidth,
-                this.meta.imageCutoutSrcHeight,
-                {
-                    maxWidth: 1000,
-                    minWidth: 400
-                }
-            );
-        };
-
         Article.prototype.addCapiData = function(opts) {
             var missingProps;
 
@@ -598,7 +638,7 @@ define([
 
         Article.prototype.getMeta = function() {
             var self = this,
-                cleanMeta;
+                cleanMeta, slideshow = [];
 
             cleanMeta = _.chain(self.meta)
                 .pairs()
@@ -627,6 +667,22 @@ define([
                     return obj;
                 }, {})
                 .value();
+
+            for (var i = 0; i < vars.CONST.maxSlideshowImages; i += 1) {
+                if (cleanMeta['slideshowImageSrc_' + i]) {
+                    slideshow.push({
+                        src: cleanMeta['slideshowImageSrc_' + i],
+                        width: cleanMeta['slideshowImageSrcWidth_' + i],
+                        height: cleanMeta['slideshowImageSrcHeight_' + i]
+                    });
+                    delete cleanMeta['slideshowImageSrc_' + i];
+                    delete cleanMeta['slideshowImageSrcWidth_' + i];
+                    delete cleanMeta['slideshowImageSrcHeight_' + i];
+                }
+            }
+            if (slideshow.length) {
+                cleanMeta.slideshow = slideshow;
+            }
 
             if (this.group && this.group.parentType === 'Collection') {
                 cleanMeta.group = this.group.index + '';
@@ -793,6 +849,28 @@ define([
             });
         };
 
+        Article.prototype.validateImage = function (params) {
+            var imageSrc = this.meta[params.src],
+                imageSrcWidth = this.meta[params.width],
+                imageSrcHeight = this.meta[params.height],
+                opts = params.height;
+
+            if (imageSrc()) {
+                validateImageSrc(imageSrc(), opts)
+                    .done(function(img) {
+                        imageSrc(img.src);
+                        imageSrcWidth(img.width);
+                        imageSrcHeight(img.height);
+                    })
+                    .fail(function(err) {
+                        undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
+                        alert(err);
+                    });
+            } else {
+                undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
+            }
+        };
+
         function getMainMediaType(contentApiArticle) {
             return _.chain(contentApiArticle.elements).where({relation: 'main'}).pluck('type').first().value();
         }
@@ -811,20 +889,16 @@ define([
                 !!_.find(contentApiArticle.tags, {id: 'news/series/looking-back'});
         }
 
-        function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
-            if (imageSrc()) {
-                validateImageSrc(imageSrc(), opts)
-                    .done(function(img) {
-                        imageSrc(img.src);
-                        imageSrcWidth(img.width);
-                        imageSrcHeight(img.height);
-                    })
-                    .fail(function(err) {
-                        undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
-                        alert(err);
-                    });
-            } else {
-                undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
+        function populateSlideshow (meta, slideshow) {
+            if (!slideshow) {
+                return;
+            }
+            for (var i = 0; i < vars.CONST.maxSlideshowImages; i += 1) {
+                if (slideshow[i]) {
+                    meta['slideshowImageSrc_' + i](slideshow[i].src);
+                    meta['slideshowImageSrcWidth_' + i](slideshow[i].width);
+                    meta['slideshowImageSrcHeight_' + i](slideshow[i].height);
+                }
             }
         }
 
@@ -844,8 +918,9 @@ define([
 
         ko.bindingHandlers.autoResize = {
             init: function(el) {
-                resize(el);
-                $(el).keydown(function() { resize(el); });
+                var resizeCallback = function () { resize(el); };
+                resizeCallback();
+                $(el).keydown(resizeCallback).on('paste', resizeCallback);
             }
         };
 
