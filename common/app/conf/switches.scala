@@ -355,11 +355,6 @@ object Switches {
     sellByDate = never
   )
 
-  val HideInteractiveUi = Switch("Feature", "hide-interactive-ui",
-    "If this is switched on interactives can be rendered without page furniture.",
-    safeState = On, sellByDate = new LocalDate(2015, 3, 31)
-  )
-
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
     safeState = On, sellByDate = never)

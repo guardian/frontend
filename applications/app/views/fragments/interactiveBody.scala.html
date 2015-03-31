@@ -2,7 +2,7 @@
 @import common.Edition
 @import views.support.TrailCssClasses.articleToneClass
 
-@if((page.interactive.hideUi && conf.Switches.HideInteractiveUi.isSwitchedOn) || page.interactive.isImmersive) {
+@if(page.interactive.hideUi || page.interactive.isImmersive) {
     @bodyRaw(page.interactive)
 } else {
     @body(page.interactive)

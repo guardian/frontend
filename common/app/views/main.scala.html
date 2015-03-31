@@ -22,7 +22,7 @@
         (AppleAdNetworkFrontSwitch.isSwitchedOn && metaData.id == "uk") ||
         (AppleAdCultureFrontSwitch.isSwitchedOn && metaData.id == "uk/culture")
     ),
-    metaData.hideUi && HideInteractiveUi.isSwitchedOn
+    metaData.hideUi
 )) { case (showAdverts, edition, adBelowNav, hideUi) =>
     <body
         id="top"
