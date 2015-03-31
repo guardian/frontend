@@ -39,6 +39,7 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
 }
 
 trait Navigation {
+  val election2015 = SectionLink("politics/general-election-2015", "election", "Election", "/politics/general-election-2015")
 
   //News
   val home = SectionLink("news", "home", "Home", "/")
@@ -195,7 +196,7 @@ trait Navigation {
   val obituaries = SectionLink("todayspaper", "obituaries", "Obituaries", "/tone/obituaries")
   val g2 = SectionLink("todayspaper", "g2", "G2", "/theguardian/g2")
   val weekend = SectionLink("todayspaper", "weekend", "Weekend", "/theguardian/weekend")
-  val theguide = SectionLink("todayspaper", "the guide", "The Guide", "/theguardian/theguide")
+  val theGuide = SectionLink("todayspaper", "the guide", "The Guide", "/theguardian/theguide")
   val saturdayreview = SectionLink("todayspaper", "saturday review", "Saturday Review", "/theguardian/guardianreview")
 
   val footballNav = Seq(

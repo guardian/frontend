@@ -78,7 +78,7 @@ object Switches {
   val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
     "If this switch is on, containers past the 8th will be lazily loaded on mobile and tablet",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 4, 1)
+    sellByDate = never
   )
 
   val TagPageSizeSwitch = Switch("Performance", "tag-page-size",
@@ -114,7 +114,13 @@ object Switches {
   val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
     "If this switch is switched on then the preview server requires login",
     safeState = On,
-    sellByDate = new LocalDate(2015, 3, 31)
+    sellByDate = new LocalDate(2015, 4, 30)
+  )
+
+  val PreviewAuthByCookie = Switch("Performance", "preview-auth-by-cookie",
+    "If this switch is switched on then preview auth will be lengthened by a cookie",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 4, 30)
   )
 
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
@@ -293,11 +299,11 @@ object Switches {
 
   val AppleAdNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-network-front",
     "If this switch is on, Apple ads will appear on the network front during active periods.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 1))
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
 
   val AppleAdCultureFrontSwitch = Switch("Commercial", "apple-ads-on-culture-front",
     "If this switch is on, Apple ads will appear on the culture front during active periods.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 1))
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
 
   val AdImpressionCountingSwitch = Switch("Commercial", "ad-impression-counting",
     "If this switch is on, ad impression counts will be kept in Cloudwatch.",
@@ -354,12 +360,6 @@ object Switches {
     safeState = On, sellByDate = new LocalDate(2015, 3, 31)
   )
 
-  val CareersMaintenanceSwitch = Switch("Feature", "careers-maintenance-switch",
-    "If this is switched on then we will display a maintenance message for anything with path /careers*.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 4, 10)
-  )
-
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
     safeState = On, sellByDate = never)
@@ -405,6 +405,11 @@ object Switches {
   val FacebookShareUseTrailPicFirstSwitch = Switch("Feature", "facebook-shareimage",
     "Facebook shares try to use article trail picture image first when switched ON, or largest available image when switched OFF.",
     safeState = On, sellByDate = never
+  )
+
+  val FacebookAppLinksSwitch = Switch("Feature", "facebook-applinks",
+    "If this switch is on then shared links on the facebook mobile app will be opened in the native app instead of the mobile browser",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
   )
 
   val IdentityFormstackSwitch = Switch("Feature", "id-formstack",
@@ -521,6 +526,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 4, 8)
   )
 
+  val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block",
+    "Switch for the Adblock Message A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
+  )
+
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
     safeState = Off, sellByDate = never)
@@ -599,7 +609,7 @@ object Switches {
 
   val IphoneConfidence = Switch("Performance", "iphone-confidence",
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
   )
 
   val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",
