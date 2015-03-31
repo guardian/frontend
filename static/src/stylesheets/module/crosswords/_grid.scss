@@ -32,7 +32,7 @@
     text-anchor: middle;
     opacity: 1;
     -webkit-font-smoothing: subpixel-antialiased;
-    fill: #3F4AC3; // biro blue
+    fill: #3f4ac3; // biro blue
 
     @include transition(opacity .15s ease-in);
 }

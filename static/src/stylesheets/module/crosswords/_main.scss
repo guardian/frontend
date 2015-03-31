@@ -1,9 +1,9 @@
 $crossword-native-size: 417px; // calcuated in the JS, keep this aligned with it.
 
-@import "grid";
-@import "clues";
-@import "focussed-clue";
-@import "controls";
+@import 'grid';
+@import 'clues';
+@import 'focussed-clue';
+@import 'controls';
 
 .crossword__container {
     position: relative;

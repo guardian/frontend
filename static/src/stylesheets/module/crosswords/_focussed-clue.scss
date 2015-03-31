@@ -42,7 +42,7 @@
 .crossword__focussed-clue--direction-down,
 .crossword__contextual-clue--direction-down {
     &:before {
-        border-width: 9px 5px 0 5px;
+        border-width: 9px 5px 0;
         border-top-color: colour(crosswordAccent2);
     }
 }
