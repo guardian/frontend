@@ -106,45 +106,32 @@ define([
         return filtered.valueOf();
     }
 
-    function isImageLoaded(img) {
-        return img.complete;
-    }
-
     function onImagesLoaded() {
-        var images = $('.js-article__body img');
-        return new Promise(function (resolve) {
-            var imgLoadedPromises,
-                notLoaded = _.reject(images, isImageLoaded);
-            if (notLoaded.length === 0) {
-                resolve();
-            } else {
-                imgLoadedPromises = _.map(notLoaded, function (img) {
-                    return new Promise(function (imgResolve) {
-                        bean.on(img, 'load', imgResolve);
-                    });
-                });
-                Promise.all(imgLoadedPromises).then(resolve);
-                window.setTimeout(resolve, 10000); // timeout after 10s and resolve
-            }
+        var notLoaded = _.filter($('.js-article__body img'), function (img) {
+            return !img.complete;
         });
+
+        return Promise.all(notLoaded.map(function (img) {
+            return new Promise(function (resolve) {
+                window.setTimeout(resolve, 5000);
+                bean.on(img, 'load', resolve);
+            });
+        }));
     }
 
     function onRichLinksUpgraded() {
         return new Promise(function (resolve) {
-            var unloadedRichLinks = qwery('.js-article__body .element-rich-link--not-upgraded'),
-                onRichLinkLoaded = function (richLink) {
-                    unloadedRichLinks = _.without(unloadedRichLinks, richLink);
-                    if (unloadedRichLinks.length === 0) {
-                        mediator.off('rich-link:loaded', onRichLinkLoaded);
-                        resolve();
-                    }
-                };
-            if (unloadedRichLinks.length === 0) {
-                resolve();
-            } else {
-                mediator.on('rich-link:loaded', onRichLinkLoaded);
-                window.setTimeout(resolve, 10000); // timeout after 10s and resolve
-            }
+            window.setTimeout(resolve, 5000);
+
+            (function check() {
+                var unloaded = qwery('.js-article__body .element-rich-link--not-upgraded');
+
+                if (!unloaded.length) {
+                    return resolve();
+                }
+
+                mediator.once('rich-link:loaded', check);
+            })();
         });
     }
 
@@ -158,31 +145,29 @@ define([
         rules = rules || defaultRules;
 
         // get all immediate children
-        return new Promise(function (resolve) {
-            onReadyToSpacefind().then(function () {
-                fastdom.read(function () {
-                    bodyBottom = qwery(bodySelector)[0].offsetHeight;
-                    paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
+        return onReadyToSpacefind().then(function () {
+            fastdom.read(function () {
+                bodyBottom = qwery(bodySelector)[0].offsetHeight;
+                paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
 
-                    if (debug) { // reset any previous debug messages
-                        fastdom.write(function () {
-                            bonzo(paraElems.pluck('element').valueOf())
-                                .attr('data-spacefinder-msg', '')
-                                .removeClass('spacefinder--valid')
-                                .removeClass('spacefinder--error');
-                        });
-                    }
+                if (debug) { // reset any previous debug messages
+                    fastdom.write(function () {
+                        bonzo(paraElems.pluck('element').valueOf())
+                            .attr('data-spacefinder-msg', '')
+                            .removeClass('spacefinder--valid')
+                            .removeClass('spacefinder--error');
+                    });
+                }
 
-                    slots = _enforceRules(paraElems, rules, bodyBottom, debug);
+                slots = _enforceRules(paraElems, rules, bodyBottom, debug);
 
-                    if (debug) {
-                        fastdom.write(function () {
-                            bonzo(_.pluck(slots, 'element')).addClass('spacefinder--valid');
-                        });
-                    }
+                if (debug) {
+                    fastdom.write(function () {
+                        bonzo(_.pluck(slots, 'element')).addClass('spacefinder--valid');
+                    });
+                }
 
-                    resolve(slots.length ? slots[0].element : undefined);
-                });
+                return Promise.resolve(slots.length ? slots[0].element : undefined);
             });
         });
     }
