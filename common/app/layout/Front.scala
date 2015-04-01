@@ -29,7 +29,7 @@ case class ContainerLayoutContext(
   private def dedupCutOut(cardAndContext: CardAndContext): CardAndContext = {
     val (content, context) = cardAndContext
 
-    if (content.snapStuff.snapType == FrontendLatestSnap) {
+    if (content.snapStuff.map(_.snapType) == Some(FrontendLatestSnap)) {
       (content, context)
     } else {
       val newCard = if (content.cutOut.exists(cutOutsSeen.contains)) {

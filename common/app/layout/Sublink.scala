@@ -105,20 +105,12 @@ case object FrontendLinkSnap extends SnapType
 case object FrontendOtherSnap extends SnapType
 
 object SnapStuff {
-  def fromTrail(faciaContent: FaciaContent) = SnapStuff(
-    SnapData(faciaContent),
+  def fromTrail(faciaContent: FaciaContent): Option[SnapStuff] = {
+    lazy val snapData = SnapData(faciaContent)
     faciaContent match {
-      case l: LinkSnap => l.snapCss
-      case l: LatestSnap => l.snapCss
-      case _ => None
-    },
-    if (faciaContent.snapType.exists(_ == "latest")) {
-      FrontendLatestSnap
-    } else if (faciaContent.snapType.exists(_ == "link")) {
-      FrontendLinkSnap
-    } else {
-      FrontendOtherSnap
-    })
+      case linkSnap: LinkSnap => Option(SnapStuff(snapData, linkSnap.snapCss, FrontendLinkSnap))
+      case latestSnap: LatestSnap => Option(SnapStuff(snapData, latestSnap.snapCss, FrontendLatestSnap))
+      case _ => None}}
 }
 
 case class SnapStuff(
@@ -245,7 +237,7 @@ case class ContentCard(
   starRating: Option[Int],
   url: EditionalisedLink,
   discussionSettings: DiscussionSettings,
-  snapStuff: SnapStuff,
+  snapStuff: Option[SnapStuff],
   webPublicationDate: Option[DateTime],
   trailText: Option[String],
   mediaType: Option[MediaType],

@@ -28,10 +28,10 @@ data-link-name="@item.cardStyle.toneString | @{index + 1}"
     }
 data-item-visibility="@visibilityDataAttribute"
 data-test-id="facia-card"
-    @item.snapStuff.dataAttributes>
+    @item.snapStuff.map(_.dataAttributes)>
 
     <div class="fc-item__container">
-        @if(item.snapStuff.snapType == FrontendLatestSnap) {
+        @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
         }
 
@@ -94,14 +94,14 @@ data-test-id="facia-card"
         }
 
     <div class="fc-item__content">
-        @if(item.snapStuff.snapType == FrontendLatestSnap) {
+        @if(item.snapStuff.map(_.snapType) == FrontendLatestSnap) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap"))
         }
         <div class="@RenderClasses(Map(
             ("fc-item__header", true),
             ("fc-item__header--inline-video", item.isVideo && item.displaySettings.isBoosted)
         ))">
-            @title(item.header, index, containerIndex, snapType = Option(item.snapStuff.snapType))
+            @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
 
             @item.byline.map { byline =>
                 <div class="fc-item__byline">@byline.htmlWithLinks(request)</div>
