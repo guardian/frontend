@@ -328,10 +328,30 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
+.fc-item__latest-blocks {
+    height: 205px;
+    overflow: hidden;
+}
+
 .fc-item__latest-block {
     @include fs-headline(1);
-    padding-bottom: .5em;
     color: #ffffff;
+    display: block;
+    display: -webkit-box;
+    margin-bottom: 2px;
+    height: 39px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.fc-item__latest-block-time {
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.5);
+    display: inline-block;
+    margin-right: 4px;
 }
 
 .fc-item__meta {
