@@ -481,11 +481,6 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ABKruxAudienceScience = Switch("A/B Tests", "ab-krux-audience-science",
-    "Switch for the Krux/Audience Science A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 1)
-  )
-
   val ABMtMaster = Switch("A/B Tests", "ab-mt-master",
     "Switch for the Sticky mpu test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 11)

@@ -7,7 +7,6 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/identity-social-oauth',
-    'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/mt-master',
     'common/modules/experiments/tests/mt-top-below-nav',
     'common/modules/experiments/tests/heatmap',
@@ -24,7 +23,6 @@ define([
     mvtCookie,
     HighCommercialComponent,
     IdentitySocialOAuth,
-    KruxAudienceScience,
     MtMaster,
     MtTopBelowNav,
     HeatMap,
@@ -38,7 +36,6 @@ define([
         TESTS = [
             new HighCommercialComponent(),
             new IdentitySocialOAuth(),
-            new KruxAudienceScience(),
             new MtMaster(),
             new MtTopBelowNav(),
             new HeatMap(),
