@@ -343,7 +343,7 @@ $fc-item-gutter: $gs-gutter / 4;
     overflow: hidden;
     text-overflow: ellipsis;
     height: 39px;
-    transition: height 0.8s linear;
+    transition: height .8s linear;
 }
 
 .fc-item__latest-block--hidden {
@@ -356,7 +356,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__latest-block-time {
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, .5);
     display: inline-block;
     margin-right: 4px;
 }
