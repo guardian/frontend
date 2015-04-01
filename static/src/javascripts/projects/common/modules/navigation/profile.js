@@ -66,7 +66,10 @@ define([
                 fastdom.write(function () {
                     $content.text(user.displayName);
                     $container.addClass('is-signed-in');
-                    $register.hide();
+                    // Only exists when switched on
+                    if ($register) {
+                        $register.hide();
+                    }
                 });
             }
 
