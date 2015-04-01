@@ -9,7 +9,6 @@
     <ul class="treats__container">
     @containerDefinition.collectionEssentials.treats.zipWithIndex.map { case (treat, index) =>
         @defining(LinkTo(treat).getOrElse("")) { link =>
-            @println(s"Treat is: $treat")
             <li class="treats__list-item">
                 @if(internalPath(link).contains("/crosswords")) {
                     <a class="treats__crossword-link" data-link-name="treat | @{index + 1}" href="@link">
