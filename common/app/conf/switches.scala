@@ -78,7 +78,7 @@ object Switches {
   val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
     "If this switch is on, containers past the 8th will be lazily loaded on mobile and tablet",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 4, 1)
+    sellByDate = never
   )
 
   val TagPageSizeSwitch = Switch("Performance", "tag-page-size",
@@ -114,7 +114,13 @@ object Switches {
   val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
     "If this switch is switched on then the preview server requires login",
     safeState = On,
-    sellByDate = new LocalDate(2015, 3, 31)
+    sellByDate = new LocalDate(2015, 4, 30)
+  )
+
+  val PreviewAuthByCookie = Switch("Performance", "preview-auth-by-cookie",
+    "If this switch is switched on then preview auth will be lengthened by a cookie",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 4, 30)
   )
 
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
@@ -349,9 +355,9 @@ object Switches {
     sellByDate = never
   )
 
-  val HideInteractiveUi = Switch("Feature", "hide-interactive-ui",
-    "If this is switched on interactives can be rendered without page furniture.",
-    safeState = On, sellByDate = new LocalDate(2015, 3, 31)
+  val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
+    "If this switch is on the “Become a Member” button will be broken",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 15)
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
@@ -505,19 +511,9 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
-  val ABSignedOut = Switch("A/B Tests", "ab-signed-out",
-    "Switch for the Signed Out messaging test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
-  )
-
-  val ABRegister = Switch("A/B Tests", "ab-register",
-    "Switch for the Register A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 1)
-  )
-
-  val ABRegisterPopup = Switch("A/B Tests", "ab-register-popup",
-    "Switch for the Register Popup A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 8)
+  val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block",
+    "Switch for the Adblock Message A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
@@ -591,14 +587,9 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val FaciaTreats = Switch("Facia", "facia-treats",
-    "If this switch is on then treats will be available to edit in the tool and will be pressed",
-    safeState = Off, sellByDate = never
-  )
-
   val IphoneConfidence = Switch("Performance", "iphone-confidence",
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
-    safeState = Off, sellByDate = new LocalDate(2015, 3, 31)
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
   )
 
   val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",

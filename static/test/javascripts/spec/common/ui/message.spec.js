@@ -14,7 +14,7 @@ define([
                 id: 'message',
                 fixtures: [
                     '<div id="header" class="l-header"></div>' +
-                    '<div class="site-message is-hidden">' +
+                    '<div class="js-site-message is-hidden">' +
                         '<div class="js-site-message-copy">...</div>' +
                         '<button class="site-message__close"></button>' +
                     '</div>' +
@@ -37,21 +37,21 @@ define([
             new Message('foo').show('hello world');
             expect($('.js-site-message-copy').text()).toContain('hello world');
             expect($('.js-footer-site-message-copy').text()).not.toContain('hello world');
-            expect($('.site-message').hasClass('is-hidden')).toBeFalsy();
+            expect($('.js-site-message').hasClass('is-hidden')).toBeFalsy();
         })
 
         it("Show a pinnable message", function(){
             new Message('foo', {pinOnHide: true}).show('hello world');
             expect($('.js-site-message-copy').text()).toContain('hello world');
             expect($('.js-footer-site-message-copy').text()).toContain('hello world');
-            expect($('.site-message').hasClass('is-hidden')).toBeFalsy();
+            expect($('.js-site-message').hasClass('is-hidden')).toBeFalsy();
         })
 
         it("Hide a message", function(){
             var m = new Message('foo');
             m.show('hello world');
             m.hide();
-            expect($('.site-message').hasClass('is-hidden')).toBeTruthy();
+            expect($('.js-site-message').hasClass('is-hidden')).toBeTruthy();
             expect($('.js-footer-message').hasClass('is-hidden')).toBeTruthy();
         })
 
@@ -59,7 +59,7 @@ define([
             var m = new Message('foo', {pinOnHide: true});
             m.show('hello world');
             m.hide();
-            expect($('.site-message').hasClass('is-hidden')).toBeTruthy();
+            expect($('.js-site-message').hasClass('is-hidden')).toBeTruthy();
             expect($('.js-footer-message').hasClass('is-hidden')).toBeFalsy();
         })
 
