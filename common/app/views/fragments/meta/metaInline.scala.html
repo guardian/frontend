@@ -3,10 +3,11 @@
 @import common.{LinkTo, Localisation}
 
 <div class="content__labels">
+    @fragments.meta.pseudoBadge(content)
+
     <div class="content__section-label">
         <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@content.sectionLabelLink}">@Html(Localisation(content.sectionLabelName))</a>
     </div>
-
 
     @content.blogOrSeriesTag.map { series =>
         <div class="content__series-label">
