@@ -19,7 +19,7 @@ define([
     createAdSlot,
     userPrefs
 ) {
-    var adNames = ['inline1', 'inline2'],
+    var adNames = ['inline1', 'inline2', 'inline3'],
         init = function (options) {
             if (!config.switches.standardAdverts) {
                 return false;
@@ -64,6 +64,8 @@ define([
                             .addClass('ad-slot--mobile'),
                         $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
                             .addClass('ad-slot--not-mobile');
+
+
 
                     return new Promise(function (resolve) {
                         fastdom.write(function () {
