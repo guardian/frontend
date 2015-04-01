@@ -94,7 +94,6 @@ define([
 
             it("should push data after click on list item", function() {
                 spyOn(sut, "pushData").and.callThrough();
-                spyOn(sut, "track");
                 spyOn(mocks.store['common/utils/mediator'], "emit");
 
                 $(".js-search-tool-list").html("<li><a class='js-search-tool-link active'></a><a class='js-search-tool-link' data-weather-id='292177' data-weather-city='Ufa'><span></span></a></li>");
@@ -110,13 +109,10 @@ define([
                         'store': 'set'
                     }
                 );
-                expect(sut.track).toHaveBeenCalledWith('Ufa');
                 expect($(".active").length).toEqual(1);
             });
 
             it("should not push data after enter without selecting from the list", function() {
-                spyOn(sut, "track");
-
                 sut.init();
                 $('.js-search-tool-input').val('');
 
@@ -180,7 +176,6 @@ define([
 
             it("should clear after pushing data", function() {
                 spyOn(sut, "destroy");
-                spyOn(sut, "track");
 
                 $(".js-search-tool-list").html('<li><a class="active" data-weather-city="test2"></a></li>');
 

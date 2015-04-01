@@ -96,11 +96,9 @@ define([
                     expect(sut.getUserLocation()).toEqual(result);
                 });
 
-                it("should get the default location and track it", function(done) {
+                it("should get the default location", function(done) {
                     var server = sinon.fakeServer.create(),
                         data = {id: '1', city: "London"};
-
-                    spyOn(sut, "track");
                     spyOn(sut, "fetchWeatherData");
 
                     server.autoRespond = true;
@@ -110,7 +108,6 @@ define([
 
                     sut.getDefaultLocation().then(function () {
                         expect(sut.fetchWeatherData).toHaveBeenCalled();
-                        expect(sut.track).toHaveBeenCalled();
                         done();
                     });
 

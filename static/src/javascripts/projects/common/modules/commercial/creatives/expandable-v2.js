@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'lodash/objects/merge',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
@@ -12,7 +12,7 @@ define([
 ], function (
     bean,
     bonzo,
-    merge,
+    _,
     $,
 	detect,
     mediator,
@@ -75,9 +75,9 @@ define([
             },
             showmorePlus = {
                 showPlus: (this.params.showMoreType === 'plus-only' || this.params.showMoreType === 'plus-and-arrow') ?
-                    '<button class="ad-exp__close-button ad-exp__open"><i class="i i-close-icon-white-small"></i></button>' : ''
+                    '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>' : ''
             },
-            $expandablev2 = $.create(template(expandableV2Tpl, merge(this.params, showmoreArrow, showmorePlus, videoDesktop)));
+            $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop)));
 
         this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
         this.$button = $('.ad-exp__open', $expandablev2);

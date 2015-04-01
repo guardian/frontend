@@ -1,12 +1,10 @@
 define([
     'bonzo',
-    'lodash/functions/throttle',
-    'lodash/objects/defaults',
+    'common/utils/_',
     'common/utils/mediator'
 ], function (
     bonzo,
-    throttle,
-    defaults,
+    _,
     mediator
 ) {
 
@@ -16,13 +14,13 @@ define([
     var Sticky = function (element, options) {
         this.$element = bonzo(element);
         this.$parent  = this.$element.parent();
-        this.opts     = defaults(options || {}, {
+        this.opts     = _.defaults(options || {}, {
             top: 0
         });
     };
 
     Sticky.prototype.init = function () {
-        mediator.on('window:scroll', throttle(this.updatePosition.bind(this), 10));
+        mediator.on('window:scroll', _.throttle(this.updatePosition.bind(this), 10));
         // kick off an initial position update
         this.updatePosition();
     };

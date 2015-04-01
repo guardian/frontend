@@ -4,9 +4,8 @@
 @import views.html.fragments.form.{inputField, checkbox}
 @import views.html.fragments.socialSignin
 @import views.html.fragments.identityPageHeader
-@import views.html.fragments.identityBenefits
 
-@identityMain(page, conf.Switches.all){
+@main(page, projectName = Option("identity")){
 }{
 <div class="identity-wrapper monocolumn-wrapper">
     @identityPageHeader("Sign in to the Guardian") {
@@ -61,5 +60,4 @@
     </form>
 </div>
 
-@identityBenefits()
 }

@@ -254,6 +254,17 @@
                             checked: props.priority" />
                         <span class="radio-label">training</span>
 
+                        <label>Canonical container</label>
+                        <select data-bind="
+                            optionsCaption: 'Select a container',
+                            options: collections.items,
+                            optionsText: function (collection) {
+                                return collection.meta.displayName();
+                            },
+                            optionsValue: 'id',
+                            value: props.canonical,
+                            valueAllowUnset: true"></select>
+
                         <div class="tools action-buttons">
                             <span class="tool" data-bind="click: saveProps">Save metadata</span>
                         </div>
@@ -267,10 +278,8 @@
                             &middot;
                             <a class='tool--content' data-bind="attr: {href: '/@{priority}?layout=latest,front:' + id()}">edit content</a>
                             &middot;
-                            @if(Switches.FaciaTreats.isSwitchedOn) {
                             <a class='tool--content' data-bind="attr: {href: '/@{priority}?treats=please&amp;front=' + id()}">edit treats</a>
                             &middot;
-                            }
                             <a class='tool--live' data-bind="attr: {href: '@urlBase(env)' + id()}" target="_blank">view live</a>
                             &middot;
                             <a class='tool--live' data-bind="attr: {href: ophanPerformances()}" target="_blank">view performance</a>

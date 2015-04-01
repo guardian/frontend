@@ -24,7 +24,8 @@ object BodyCleaner {
         DropCaps(article.isComment || article.isFeature),
         FigCaptionCleaner,
         RichLinkCleaner,
-        BlockquoteCleaner
+        BlockquoteCleaner,
+        CmpParamCleaner
       )
   }
 }

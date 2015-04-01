@@ -1,10 +1,8 @@
 define([
-    'lodash/objects/defaults',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/url'
 ], function (
-    defaults,
     config,
     cookies,
     urlUtils

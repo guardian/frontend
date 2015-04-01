@@ -1,7 +1,7 @@
 define([
     'fastdom',
     'Promise',
-    'lodash/objects/defaults',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
@@ -9,7 +9,7 @@ define([
 ], function (
     fastdom,
     Promise,
-    defaults,
+    _,
     $,
     $css,
     config,
@@ -17,7 +17,7 @@ define([
 ) {
     function init(options) {
         var $mainCol, adType,
-            opts = defaults(
+            opts = _.defaults(
                 options || {},
                 {
                     columnSelector: '.js-secondary-column',

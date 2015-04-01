@@ -16,15 +16,10 @@ define([
             'common/utils/config': config,
             'common/utils/mediator': mediator
         })
-        .require(['common/modules/analytics/omniture'], function (Omniture) {
+        .require(['common/modules/analytics/omniture'], function (omniture) {
 
-            describe('Omniture', function () {
-
-                var s,
-                    w = {
-                    performance: { timing: { requestStart: 1, responseEnd: 5000 } },
-                    innerWidth: 500
-                };
+            describe('omniture', function () {
+                var s;
 
                 beforeEach(function () {
                     config.page = {
@@ -39,9 +34,7 @@ define([
                         t: function () {},
                         tl: function () {},
                         apl: function () {},
-                        Util: {
-                            getQueryParam: function () { return 'test'; }
-                        },
+                        Util: { getQueryParam: function () { return 'test'; } },
                         getValOnce: function () { return 'test'; },
                         getTimeParting: function () { return ['4:03PM', '4:00PM', 'Thursday', 'Weekday']; },
                         getParamValue: function() { return ''; }
@@ -49,24 +42,35 @@ define([
                     sinon.spy(s, 't');
                     sinon.spy(s, 'tl');
                     sinon.spy(s, 'apl');
+                    omniture.s = s;
+                    omniture.addHandlers();
                 });
 
                 afterEach(function(){
                     sessionStorage.removeItem('gu.analytics.referrerVars');
+                    mediator.removeEvent('module:clickstream:interaction');
+                    mediator.removeEvent('module:clickstream:click');
+                    mediator.removeEvent('module:analytics:omniture:pageview:sent');
                 });
 
-                it('should record clicks with correct analytics name', function () {
+                it('should track clicks with correct analytics name', function () {
                     s.pageType = 'article';
-                    var o = new Omniture(s);
-                    o.go();
-                    o.populateEventProperties('outer:link');
+                    omniture.go();
+                    omniture.trackLink('link object', 'outer:link');
 
-                    expect(s.linkTrackVars).toBe('eVar37,eVar7,prop37,events');
-                    expect(s.linkTrackEvents).toBe('event37');
-                    expect(s.events).toBe('event37');
                     expect(s.eVar37).toBe('Article:outer:link');
                     expect(s.prop37).toBe('D=v37');
                     expect(s.eVar7).toBe('D=pageName');
+                });
+
+                it('should track clicks with a standardised set of variables', function () {
+                    s.pageType = 'article';
+                    omniture.go();
+                    omniture.trackLink('link object', 'outer:link');
+
+                    expect(s.linkTrackVars).toBe('channel,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,prop51,prop61,prop64,prop65,eVar7,eVar37,eVar38,eVar39,eVar50,events');
+                    expect(s.linkTrackEvents).toBe('event37');
+                    expect(s.events).toBe('event37');
                 });
 
                 it('should correctly set page properties', function () {
@@ -88,7 +92,7 @@ define([
                         inBodyExternalLinkCount: '0'
                     };
                     s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk';
-                    new Omniture(s, w).go();
+                    omniture.go();
 
                     expect(s.linkInternalFilters).toBe('guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com,theguardian.com');
                     expect(s.pageName).toBe('GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long');
@@ -104,7 +108,6 @@ define([
                     expect(s.prop47).toBe('US');
                     expect(s.prop58).toBe('7');
                     expect(s.prop69).toBe('0');
-                    expect(s.prop68).toBe('low');
                     expect(s.prop56).toBe('Javascript');
                     expect(s.prop30).toBe('content');
                     expect(s.prop19).toBe('frontend');
@@ -118,66 +121,47 @@ define([
 
                 it('should correctly set cookieDomainPeriods for UK edition', function () {
                     s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk';
-                    new Omniture(s, w).go();
+                    omniture.go();
 
                     expect(s.cookieDomainPeriods).toBe('2')
                 });
 
                 it('should log a page view event', function () {
-                    new Omniture(s).go();
+                    omniture.go();
 
                     expect(s.t).toHaveBeenCalledOnce();
                 });
 
                 it('should send event46 when a page has comments', function () {
-                    new Omniture(s).go();
+                    omniture.go();
 
                     expect(s.apl).toHaveBeenCalled();
                     expect(s.apl.args[0][1]).toBe('event46');
                 });
 
                 it('should log a clickstream event', function () {
-                    var o         = new Omniture(s),
-                        clickSpec = {
+                    var clickSpec = {
                             target: document.documentElement,
                             samePage: true,
                             sameHost: true,
                             tag: 'something'
                         };
 
-                    o.go();
+                    omniture.go();
                     mediator.emit('module:clickstream:click', clickSpec);
 
                     expect(s.tl).toHaveBeenCalledOnce();
                 });
 
-                it('should send event16 when social button has been clicked', function () {
-                    var o         = new Omniture(s),
-                        clickSpec = {
-                            target: document.documentElement,
-                            samePage: false,
-                            sameHost: false,
-                            tag: 'social | facebook | top'
-                        };
-
-                    o.go();
-                    mediator.emit('module:clickstream:click', clickSpec);
-
-                    expect(s.apl).toHaveBeenCalled();
-                    expect(s.apl.args[1][1]).toBe('event16');
-                });
-
                 it('should make a non-delayed s.tl call for same-page links', function () {
-                    var o                 = new Omniture(s),
-                        el                = document.createElement('a'),
+                    var el                = document.createElement('a'),
                         clickSpecSamePage = {
                             target: el,
                             samePage: true,
                             sameHost: true,
                             tag: 'tag'
                         };
-
-                    o.go();
+                    omniture.go();
                     // same page  (non-delayed s.tl call)
                     mediator.emit('module:clickstream:click', clickSpecSamePage);
 
@@ -185,8 +169,7 @@ define([
                 });
 
                 it('should use local storage for same-host links', function () {
-                    var o         = new Omniture(s),
-                        el        = document.createElement('a'),
+                    var el        = document.createElement('a'),
                         clickSpec = {
                             target: el,
                             samePage: false,
@@ -194,15 +177,14 @@ define([
                             tag: 'tag in localstorage'
                         };
 
-                    o.go();
+                    omniture.go();
                     mediator.emit('module:clickstream:click', clickSpec);
 
                     expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage')
                 });
 
                 it('should make a delayed s.tl call for other-host links', function () {
-                    var o         = new Omniture(s),
-                        el        = document.createElement('a'),
+                    var el        = document.createElement('a'),
                         clickSpec = {
                             target: el,
                             samePage: false,
@@ -210,7 +192,7 @@ define([
                             tag: 'tag'
                         };
 
-                    o.go();
+                    omniture.go();
                     mediator.emit('module:clickstream:click', clickSpec);
 
                     expect(s.tl.withArgs(el, 'o', 'tag')).toHaveBeenCalledOnce();

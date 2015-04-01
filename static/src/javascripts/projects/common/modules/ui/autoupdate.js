@@ -5,8 +5,7 @@
 define([
     'bean',
     'bonzo',
-    'lodash/collections/toArray',
-    'lodash/objects/assign',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
@@ -17,8 +16,7 @@ define([
 ], function (
     bean,
     bonzo,
-    toArray,
-    assign,
+    _,
     $,
     ajax,
     config,
@@ -37,7 +35,7 @@ define([
     */
     function Autoupdate(opts) {
 
-        var options = assign({
+        var options = _.assign({
             'activeClass':      'is-active',
             'btnClass':         '.js-auto-update',
             'manipulationType': 'html',
@@ -78,10 +76,10 @@ define([
 
                 if (manipulation === 'prepend') {
                     bonzo(resultHtml.children).addClass('autoupdate--hidden');
-                    elementsToAdd = toArray(resultHtml.children);
+                    elementsToAdd = _.toArray(resultHtml.children);
                 } else if (manipulation === 'append') {
                     bonzo(resultHtml.children).addClass('autoupdate--hidden');
-                    elementsToAdd = toArray(resultHtml.children).reverse();
+                    elementsToAdd = _.toArray(resultHtml.children).reverse();
                 }
 
                 $attachTo[manipulation](elementsToAdd);
@@ -148,7 +146,6 @@ define([
                         that.view.destroy();
                     } else {
                         that.view.render.call(that, response);
-                        mediator.emit('modules:autoupdate:loaded', response);
                     }
                 }
             );

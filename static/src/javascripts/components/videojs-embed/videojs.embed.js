@@ -1,4 +1,5 @@
 (function(){
+
     videojs.plugin('embed', function(options) {
 
         if (!options.embeddable) { return false; }

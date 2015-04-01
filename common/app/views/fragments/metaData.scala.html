@@ -26,6 +26,10 @@
 <link rel="dns-prefetch" href="//oas.theguardian.com" />
 <link rel="dns-prefetch" href="@Configuration.debug.beaconUrl" />
 
+@Static.js.jspmFile(item.section).map { file =>
+    <link rel="subresource" href="@Static(file)" />
+}
+
 
 @* Additional meta data that does not impact rendering speed (and can live at the end of the <head>) *@
 
@@ -107,3 +111,31 @@
 @if(play.Play.isDev()) {
     @Configuration.javascript.pageData.get("guardian.page.iphoneDebugger").map{ scriptUrl => <script src="@scriptUrl"></script> }
 }
+
+<meta name="google-site-verification" content="LR-FN6c2gIEUoo3k049w1nxyHykmac5ZE3SaUOiKc30" />
+
+@* Metadata to deep-link into native apps from facebook. http://applinks.org/documentation/ *@
+@if(Switches.FacebookAppLinksSwitch.isSwitchedOn && item.id == "music/2015/mar/26/frankie-knuckles-house-dance-music-elton-john") {
+    <meta property="al:ios:url" content="theguardian://applinks">
+    <meta property="al:ios:app_store_id" content="@Configuration.ios.ukAppId">
+    <meta property="al:ios:app_name" content="The Guardian">
+    <meta property="al:android:url" content="theguardian://applinks">
+    <meta property="al:android:package" content="com.guardian">
+    <meta property="al:android:app_name" content="The Guardian">
+}
+
+<script data-schema="organization" type="application/ld+json">
+    {
+        "@@context" : "http://schema.org",
+        "@@type" : "Organization",
+        "name" : "The Guardian",
+        "url" : "http://www.theguardian.com/",
+        "logo" : "@Static("images/favicons/152x152.png")",
+        "sameAs" : [
+            "https://www.facebook.com/theguardian",
+            "https://twitter.com/guardian",
+            "https://plus.google.com/+theGuardian",
+            "https://www.youtube.com/user/TheGuardian"
+        ]
+    }
+</script>
