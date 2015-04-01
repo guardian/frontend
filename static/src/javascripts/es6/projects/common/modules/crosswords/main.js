@@ -229,24 +229,6 @@ var Crossword = React.createClass({
         return this.clueMap[helpers.clueMapKey(x, y)];
     },
 
-    getContextualClues: function (clue) {
-        if (!clue) {return false};
-
-        let clueDirection = clue.direction,
-            [x, y] = clueDirection === 'down' ? ['x', 'y'] : ['y', 'x'],
-            {[x]: clueX, [y]: clueY} = clue.position,
-            clueLength = clue.length;
-
-        return _.filter(this.props.data.entries, (test) => {
-            let {[x]: testX, [y]: testY} = test.position,
-                testLength = test.length;
-
-            return test.direction !== clueDirection &&
-                testX <= clueX && testX + testLength >= clueX &&
-                testY >= clueY && testY < clueY + clueLength;
-        });
-    },
-
     clueInFocus: function () {
         if (this.state.cellInFocus) {
             var cluesForCell = this.cluesFor(this.state.cellInFocus.x, this.state.cellInFocus.y);
@@ -418,7 +400,7 @@ var Crossword = React.createClass({
         }))),
         FocussedClue({
             focussedClue: focussed ? focussed : null,
-            contextualClues: this.getContextualClues(focussed)
+            contextualClues: intersectingEntries
         }),
         Controls({
             hasSolutions: this.hasSolutions(),
