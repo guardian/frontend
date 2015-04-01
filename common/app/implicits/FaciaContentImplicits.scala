@@ -295,6 +295,8 @@ object FaciaContentImplicits {
     lazy val types: Seq[Tag] = tagsOfType("type")
 
     lazy val isVideo = types.exists(_.id == "type/video")
+    lazy val isGallery = types.exists(_.id == "type/gallery")
+    lazy val isAudio = types.exists(_.id == "type/audio")
     lazy val isCartoon = types.exists(_.id == Tags.Cartoon)
     lazy val isCrossword = types.exists(_.id == Tags.Crossword)
 
