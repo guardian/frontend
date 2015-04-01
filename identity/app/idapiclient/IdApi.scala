@@ -3,7 +3,7 @@ package idapiclient
 import com.gu.identity.model._
 import client.{Anonymous, Auth, Response, Parameters}
 import client.connection.{Http, HttpResponse}
-import model.FrontendSyncedPrefs
+import model.FrontendSavedArtcles
 import scala.concurrent.{Future, ExecutionContext}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import idapiclient.responses.{CookiesResponse, AccessTokenResponse}
@@ -26,10 +26,12 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
 
   def extractUser: (client.Response[HttpResponse]) => client.Response[User] = extract(jsonField("user"))
 
-  def extractSyncedPrefs: (client.Response[HttpResponse]) => client.Response[FrontendSyncedPrefs] = extract(jsonField("syncedPrefs"))
+  def extractSyncedPrefs: (client.Response[HttpResponse]) => client.Response[FrontendSavedArtcles] = {
+    extract(jsonField("savedArticles"))
+  }
 
   // AUTH
-  def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {
+  def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None):Future[Response[CookiesResponse]] = {
     val params = buildParams(Some(userAuth), Some(trackingData), Seq("format" -> "cookies") ++ persistent.map("persistent" -> _.toString))
     val headers = buildHeaders(Some(userAuth))
     val response = http.POST(apiUrl("auth"), None, params, headers)
@@ -39,8 +41,8 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
   def unauth(auth: Auth, trackingData: TrackingData): Future[Response[CookiesResponse]] =
     post("unauth", Some(auth), Some(trackingData)) map extract[CookiesResponse](jsonField("cookies"))
 
-  def syncedPrefs(userId: String, auth: Auth): Future[Response[FrontendSyncedPrefs]] = {
-    val apiPath = urlJoin("syncedPrefs", userId)
+  def syncedPrefs(auth: Auth): Future[Response[FrontendSavedArtcles]] = {
+    val apiPath = urlJoin("syncedPrefs", "me", "savedArticles")
     val params = buildParams(Some(auth))
     val headers = buildHeaders(Some(auth))
 
@@ -48,8 +50,8 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     response map extractSyncedPrefs
   }
 
-  def saveArticle(userId: String, auth: Auth, savedArticles: SavedArticles): Future[Response[FrontendSyncedPrefs]] = {
-    val apiPath = urlJoin("syncedPrefs", "savedArticles", userId)
+  def saveArticle(userId: String, auth: Auth, savedArticles: SavedArticles): Future[Response[FrontendSavedArtcles]] = {
+    val apiPath = urlJoin("syncedPrefs", "me", "savedArticles")
     val updatedSavedArticles = write(savedArticles)
     val params = buildParams(Some(auth))
     val headers = buildHeaders(Some(auth))

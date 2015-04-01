@@ -57,22 +57,22 @@ class SaveContentControllerTest extends path.FreeSpec with ShouldMatchers with M
 
        "Should look up the users saved article list in their saved preferences" in {
 
-         controller.saveContentItem(userId)(testRequest)
+         controller.saveContentItem()(testRequest)
          verify(api).syncedPrefs(Matchers.eq(userId), Matchers.eq(testAuth))
        }
 
        "should add the add the article to the saved list if not present" in {
-         controller.saveContentItem(userId)(testRequest)
+         controller.saveContentItem()(testRequest)
          verify(api).syncedPrefs(Matchers.eq(userId), Matchers.eq(testAuth))
          verify(syncedPrefs).addArticle(Matchers.eq(returnUrl), Matchers.eq(shortUrl))
       }
 
       "should save the altered list of articles to the api" in {
-          controller.saveContentItem(userId)(testRequest)
+          controller.saveContentItem()(testRequest)
           verify(api).syncedPrefs(Matchers.eq(userId), Matchers.eq(testAuth))
           verify(syncedPrefs).contains(Matchers.eq(shortUrl))
           verify(syncedPrefs).addArticle(Matchers.eq(returnUrl), Matchers.eq(shortUrl))
           verify(api).saveArticle(Matchers.eq(userId), Matchers.eq(testAuth), Matchers.eq(savedArticles))
       }
-   }
+0   }
 }
