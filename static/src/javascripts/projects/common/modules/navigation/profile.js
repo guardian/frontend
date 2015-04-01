@@ -2,6 +2,7 @@ define([
     'bean',
     'bonzo',
     'fastdom',
+    'common/utils/config',
     'common/utils/_',
     'common/utils/ajax',
     'common/utils/mediator',
@@ -10,6 +11,7 @@ define([
     bean,
     bonzo,
     fastdom,
+    config,
     _,
     ajax,
     mediator,
@@ -66,8 +68,7 @@ define([
                 fastdom.write(function () {
                     $content.text(user.displayName);
                     $container.addClass('is-signed-in');
-                    // Only exists when switched on
-                    if ($register) {
+                    if (config.switches.becomeAMember) {
                         $register.hide();
                     }
                 });
