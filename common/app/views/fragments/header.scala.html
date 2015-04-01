@@ -3,11 +3,6 @@
 @import common.{LinkTo, Navigation, Edition}
 @import common.editions._
 
-@*<!--
-Identity pages use identityHeader.scala.html, be sure
-to apply any necessary changes to non-shared code there too.
--->*@
-
 <header id="header"
         class="l-header u-cf @if(metaData.hasSlimHeader) { l-header--is-slim }"
         role="banner"
@@ -16,53 +11,19 @@ to apply any necessary changes to non-shared code there too.
         <div class="gs-container l-header__inner">
             <div class="l-header-pre u-cf">
                 <div class="brand-bar">
-                    <div class="u-h brand-bar__item brand-bar__item--profile
-                                brand-bar__item--has-control brand-bar__item--register
-                                popup-container has-popup js-register">
-                        <a href="@Configuration.id.url/register"
-                           data-link-name="Register link"
-                           class="brand-bar__item--action">
-                            @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                            <span class="control__info js-control-info">register</span>
-                        </a>
-                        <span class="u-h brand-bar__item__badge">free</span>
-                        <div class="u-h js-popup-polly-toynbee-quote popup popup--text popup--text--register">
-                            <img src="//i.guim.co.uk/static/w-140/h--/q-95/sys-images/Guardian/Pix/contributor/2014/6/30/1404146756739/Polly-Toynbee-L.png"
-                                 alt="Polly Toynbee"
-                                 class="popup--text--quote__image">
-                            <div class="popup--text--register__content popup--text__content">
-                                <blockquote class="popup--text__content__blockquote quoted">
-                                    <div class="quoted__contents">
-                                        <p>Support fearless, open, independent journalism</p>
-                                        <div class="popup--text__content__blockquote__citation">Polly Toynbee</div>
-                                    </div>
-                                </blockquote>
-                                <p>
-                                    <a href="@Configuration.id.url/register?returnUrl=https://membership.theguardian.com/join/friend/enter-details&skipConfirmation=true"
-                                       class="popup--text--signed-out__highlight"
-                                       data-link-name="Register popup link">
-                                        Become a member</a>
-                                    of the Guardian for free
-                                </p>
-                            </div>
+                    @if(BecomeAMemberSwitch.isSwitchedOn) {
+                        <div class="brand-bar__item brand-bar__item--profile
+                                    brand-bar__item--has-control brand-bar__item--register
+                                    popup-container has-popup js-profile-register">
+                            <a href="@Configuration.id.url/register?skipConfirmation=true&INTCMP=HEADER_GU_REG&returnUrl=@URLEncode("https://membership.theguardian.com/join/friend/enter-details")"
+                               data-link-name="Register link"
+                               class="brand-bar__item--action">
+                                @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                                <span class="control__info js-control-info">become a member</span>
+                            </a>
+                            <span class="brand-bar__item__badge">free</span>
                         </div>
-                        <div class="u-h js-popup-membership-benefits popup popup--text popup--text--register">
-                            <div class="popup--text--register__content
-                                        popup--text__content
-                                        u-font-weight-normal">
-                                <p>
-                                    When you
-                                    <a href="@Configuration.id.url/register?returnUrl=https://membership.theguardian.com/join/friend/enter-details&skipConfirmation=true"
-                                       class="popup--text--signed-out__highlight"
-                                       data-link-name="Register popup link">
-                                        register free</a>
-                                    or sign in to theguardian.com, we’re able to
-                                    give you a better experience on our website.
-                                    It also helps to support our journalism.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    }
                     @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                         <div class="brand-bar__item brand-bar__item--profile popup-container
                                     has-popup brand-bar__item--has-control js-profile-nav"

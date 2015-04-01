@@ -355,6 +355,11 @@ object Switches {
     sellByDate = never
   )
 
+  val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
+    "If this switch is on the “Become a Member” button will be broken",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 15)
+  )
+
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
     safeState = On, sellByDate = never)
@@ -506,16 +511,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
-  val ABRegister = Switch("A/B Tests", "ab-register",
-    "Switch for the Register A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 1)
-  )
-
-  val ABRegisterPopup = Switch("A/B Tests", "ab-register-popup",
-    "Switch for the Register Popup A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 8)
-  )
-
   val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block",
     "Switch for the Adblock Message A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
@@ -589,11 +584,6 @@ object Switches {
 
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
-    safeState = Off, sellByDate = never
-  )
-
-  val FaciaTreats = Switch("Facia", "facia-treats",
-    "If this switch is on then treats will be available to edit in the tool and will be pressed",
     safeState = Off, sellByDate = never
   )
 
