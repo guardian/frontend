@@ -13,16 +13,16 @@ object Uk extends Edition(
 
   val sportLocalNav: Seq[SectionLink] = Seq(
     football,
-    rugbyunion,
     cricket,
+    rugbyunion,
+    formulaOne,
     tennis,
     golf,
     cycling,
     boxing,
-    usSport,
+    racing,
     rugbyLeague,
-    formulaOne,
-    racing
+    usSport
   )
 
   val cultureLocalNav: Seq[SectionLink] = Seq(
