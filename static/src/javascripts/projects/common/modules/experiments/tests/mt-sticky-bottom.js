@@ -29,150 +29,71 @@ define([
         };
 
         function updatePosition(config) {
-            //console.log(config);
-            config.$stickyTopAd.css({
+            var bannerScrollPos = 0,
+                $stickyBanner;
+
+            if (detect.getBreakpoint() === 'mobile') {
+                $stickyBanner = config.$stickyTopAdMobile;
+            } else {
+                $stickyBanner = config.$stickyTopAd;
+            }
+
+            config.$stickyBanner.css({
                 position:     'fixed',
                 bottom:       0,
+                top:          null,
                 width:        '100%',
                 'z-index':    '1001',
                 'border-top': '#ccc 1px solid'
             });
 
-            console.log(config.$secondContainer);
+            $(config.$container.get(1)).css({
+                'padding-top': config.stickyTopAdHeight
+            });
 
-            /*if (window.scrollY < 500) {
-                //topAd is sticky from the beginning
-                config.$stickyTopAd.css({
-                    position:  'fixed',
-                    top:       0,
-                    width:     '100%',
-                    'z-index': '1001'
-                });
-                config.$header.css('margin-top', config.stickyTopAdHeight);
+            bannerScrollPos = window.scrollY + config.windowHeight - config.stickyTopAdHeight;
 
-                //navigation is not sticky yet
-                config.$stickyNavigation.css({
-                    position:  null,
-                    top:       null
-                });
-                config.$bannnerMobile.css('margin-top', null);
-
-                //when scroll will pass height of the header with logo
-                if (window.scrollY >= config.headerHeight) {
-                    config.$stickyNavigation.css({
-                        position:  'fixed',
-                        top:       config.stickyTopAdHeight,
-                        width:     '100%',
-                        'z-index': '1001'
-                    });
-                    config.$bannnerMobile.css('margin-top', config.stickyNavigationHeight);
-                }
-            } else {
-                //after 500px of scrolling 'release' topAd
-                config.$stickyTopAd.css({
-                    position:  'absolute',
-                    top:       500
-                });
-
-                //move naigation toward top
-                config.$stickyNavigation.css({
-                    position:  'fixed',
-                    top:       config.stickyTopAdHeight - (window.scrollY - 500)
-                });
-
-                //from now on, navigation stays on top
-                if (window.scrollY > (500 + config.stickyTopAdHeight)) {
-                    config.$stickyNavigation.css({
-                        position:  'fixed',
-                        top:       0
-                    });
-                }
-            } */
-        }
-
-        /*function updatePositionMobile(config) {
-            if (window.scrollY < 500) {
-                //navigation is not sticky yet
-                config.$stickyNavigation.css({
-                    position:  null,
-                    top:       null
-                });
-                config.$bannnerMobile.css('margin-top', null);
-                config.$bannnerMobile.css({
-                    position:  null,
-                    top:       null
-                });
-                config.$contentBelowMobile.css('margin-top', null);
-
-                //when scroll will pass height of the header with logo
-                if (window.scrollY >= config.headerHeight) {
-                    config.$stickyNavigation.css({
-                        position:  'fixed',
-                        top:       0,
-                        width:     '100%',
-                        'z-index': '1001'
-                    });
-
-                    //also banner below nav becomes sticky
-                    config.$bannnerMobile.css({
-                        position:  'fixed',
-                        top:       config.stickyNavigationHeight,
-                        width:     '100%',
-                        'z-index': '1000'
-                    });
-                    config.$contentBelowMobile.css('margin-top', config.belowMobileMargin);
-                }
-            } else {
-                //after 500px of scrolling 'release' banner below nav
-                config.$bannnerMobile.css({
-                    position:  'absolute',
-                    top:       500
+            if (bannerScrollPos >= config.containerOffset) {
+                config.$stickyBanner.css({
+                    position:     'absolute',
+                    top:           config.containerOffset,
+                    bottom:        null,
+                    width:        '100%',
+                    'z-index':    '1001',
+                    'border-top': '#ccc 1px solid'
                 });
             }
-        }*/
+            console.log(config.$container.get(1).offsetTop, config.$stickyBanner.get(0).offsetTop, bannerScrollPos);
+        }
 
         this.variants = [
             {
                 id: 'A',
                 test: function () {
                     var stickyConfig = {
-                            //$stickyNavigation: $('.sticky-nav-mt-test .navigation'),
-                            $stickyTopAd: $('.sticky-nav-mt-test .top-banner-ad-container'),
-                            //$header: $('.sticky-nav-mt-test .l-header__inner'),
-                            $bannnerMobile: $('.top-banner-ad-container--mobile'),
-                            $contentBelowMobile: $('#maincontent'),
-                            $secondContainer: $('.facia-page .fc-container__inner').get(1)
-                        },
-                        windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                            $stickyTopAd: $('.top-banner-ad-container--desktop'),
+                            $stickyTopAdMobile: $('.top-banner-ad-container--mobile'),
+                            $container: $('.facia-page .fc-container'),
+                            headerHeight: $('#header').dim().height,
+                            windowHeight: window.innerHeight || document.documentElement.clientHeight
+                        };
 
-                    if (windowHeight <= 960 && $secondContainer) {
+                    stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
+                    stickyConfig.stickyTopAdMobileHeight = stickyConfig.$stickyTopAdMobile.dim().height;
+                    $('fc-container__inner',stickyConfig.$container).css('border-top', 'none');
+                    updatePosition(stickyConfig);
+
+                    if (stickyConfig.windowHeight <= 960 && stickyConfig.$container.length >= 2 && !window.scrollY) {
+                        stickyConfig.containerOffset = stickyConfig.$container.get(1).offsetTop + stickyConfig.headerHeight;
+
                         mediator.on('window:scroll', _.throttle(function () {
-                            //height of topAd needs to be recalculated because we don't know when we will get repspond from DFP
-                            stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
+                            //height of topAd needs to be recalculated on desktop and tablet because we don't know when we will get respond from DFP
+                            if (detect.getBreakpoint() !== 'mobile') {
+                                stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
+                            }
                             updatePosition(stickyConfig);
                         }, 10));
                     }
-
-                    //if ($('window').dim().height >= )
-
-                    //$('.sticky-nav-mt-test .l-header-main').css('overflow', 'hidden');
-                    //stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
-                    //stickyConfig.headerHeight = stickyConfig.$header.dim().height;
-                    stickyConfig.belowMobileMargin = stickyConfig.stickyNavigationHeight + stickyConfig.$bannnerMobile.dim().height;
-
-                    /*if (detect.getBreakpoint() === 'mobile') {
-                        updatePositionMobile(stickyConfig);
-
-                        mediator.on('window:scroll', _.throttle(function () {
-                            updatePositionMobile(stickyConfig);
-                        }, 10));
-                    } else {*/
-                        mediator.on('window:scroll', _.throttle(function () {
-                            //height of topAd needs to be recalculated because we don't know when we will get repspond from DFP
-                            stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
-                            updatePosition(stickyConfig);
-                        }, 10));
-                   // }
                 }
             }
         ];
