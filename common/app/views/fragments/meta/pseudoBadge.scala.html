@@ -2,19 +2,24 @@
 @import common.Edition
 @import conf.Switches.ElectionLiveBadgeSwitch
 
-@defining(ElectionLiveBadgeSwitch.isSwitchedOn,
-            content.tags.indexWhere(_.id == "politics/general-election-2015") == 0 ||
-            content.tags.indexWhere(_.id == "politics/series/election-live-2015") == 0,
-            content.isSponsored(Some(Edition(request))) ||
-            content.isAdvertisementFeature ||
-            content.isFoundationSupported) { case (electionBadgingEnabled, isElectionTopTag, isCommercialContent) =>
-@if(electionBadgingEnabled && isElectionTopTag && !isCommercialContent) {
-        @defining("ge15badge", "TODO-path-to-badge-image.png") { case (name, badgePath) =>
-            @fragments.meta.pseudoBadgeSlot(name) {
-                <div class="badge-slot--meta-badge__inner badge-slot__content--placeholder">
-                    <img src="@badgePath" />
-                </div>
+@defining(
+    ElectionLiveBadgeSwitch.isSwitchedOn,
+    content.tags.indexWhere(_.id == "politics/general-election-2015") == 0 ||
+    content.tags.indexWhere(_.id == "politics/series/election-live-2015") == 0,
+    content.isSponsored(Some(Edition(request))) ||
+    content.isAdvertisementFeature ||
+    content.isFoundationSupported
+) { case (electionBadgingEnabled, isElectionTopTag, isCommercialContent) =>
+        @if(electionBadgingEnabled && isElectionTopTag && !isCommercialContent) {
+            @defining(
+                "ge15badge",
+                "http://i.guim.co.uk/static/w-90/h--/q-95/sys-images/Guardian/Pix/pictures/2015/4/1/1427904404288/election-2015-logo-160x160.png"
+            ){ case (name, badgePath) =>
+                @fragments.meta.pseudoBadgeSlot(name) {
+                    <div class="badge-slot--meta-badge__inner badge-slot__content--placeholder">
+                        <img src="@badgePath" />
+                    </div>
+                }
             }
         }
     }
-}
