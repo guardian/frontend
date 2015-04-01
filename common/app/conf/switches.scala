@@ -355,6 +355,11 @@ object Switches {
     sellByDate = never
   )
 
+  val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
+    "If this switch is on the “Become a Member” button will be broken",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 15)
+  )
+
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
     "If switched on then will will infer the video player tech priority based on the video source codec",
     safeState = On, sellByDate = never)
