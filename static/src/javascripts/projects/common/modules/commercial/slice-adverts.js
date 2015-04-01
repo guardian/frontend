@@ -65,8 +65,6 @@ define([
                         $tabletAdSlot = bonzo(createAdSlot(adName, 'container-inline'))
                             .addClass('ad-slot--not-mobile');
 
-
-
                     return new Promise(function (resolve) {
                         fastdom.write(function () {
                             // add a tablet+ ad to the slice
