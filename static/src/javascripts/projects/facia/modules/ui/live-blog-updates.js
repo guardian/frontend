@@ -72,25 +72,25 @@ define([
         });
     }
 
-    function renderBlocks (options) {
-        var opts = _.pick(options, ['targets', 'blocks', 'blocksAlreadyRendered', 'markAsRead','fakeUpdate']),
+    function renderBlocks(options) {
+        var opts = _.pick(options, ['targets', 'blocks', 'blocksAlreadyRendered', 'markAsRead', 'fakeUpdate']),
             omitBlockIds = _.pluck(opts.blocksAlreadyRendered, 'blockId');
 
         _.forEach(opts.targets, function (element) {
             _.chain(opts.blocks)
                 .slice(0, maxDisplayedBlocks)
-                .filter(function(block) {
+                .filter(function (block) {
                     return !_.contains(omitBlockIds, block.blockId);
                 })
                 .forEachRight(function (block, index) {
                     var classes = [];
 
                     if (opts.markAsRead || (opts.fakeUpdate && index > 0)) {
-                        classes.push(seenBlockClassname)
+                        classes.push(seenBlockClassname);
                     }
 
                     if (opts.blocksAlreadyRendered || (opts.fakeUpdate && index === 0)) {
-                        classes.push(hiddenBlockClassname)
+                        classes.push(hiddenBlockClassname);
                     }
 
                     block.classes = classes.join(' ');
@@ -99,29 +99,29 @@ define([
                 .value();
 
             if (opts.blocksAlreadyRendered || opts.fakeUpdate) {
-                setTimeout(function() {
-                    $('.' + hiddenBlockClassname, element).removeClass(hiddenBlockClassname)
+                setTimeout(function () {
+                    $('.' + hiddenBlockClassname, element).removeClass(hiddenBlockClassname);
                 }, 1000);
             }
         });
     }
 
     function sanitizeBlocks(blocks) {
-        return _.reduce(blocks, function(blocks, block) {
+        return _.reduce(blocks, function (blocks, block) {
             return (blocks || []).concat({
                 blockId: block.blockId,
                 posted: block.posted,
                 body: block.body
             });
-        }, null)
+        }, null);
     }
 
     function updateLatestBlocks(elementsById) {
         var persistedBlocksById = storage.session.get(storageKeyPreviousBlocks) || {},
             persistableBlocksById = {};
 
-        _.forEach(elementsById, function(elements, articleId) {
-            var persistedBlocks = persistedBlocksById[articleId]
+        _.forEach(elementsById, function (elements, articleId) {
+            var persistedBlocks = persistedBlocksById[articleId];
 
             if (persistedBlocks) {
                 renderBlocks({
@@ -151,11 +151,11 @@ define([
                             blocksAlreadyRendered: persistedBlocks,
                             fakeUpdate: !persistedBlocks
                         });
-                        
+
                         // TEMP:
                         persistableBlocksById[articleId] = latestBlocks.slice(2);
                         //persistableBlocksById[articleId] = latestBlocks;
-                        
+
                         storage.session.set(storageKeyPreviousBlocks, persistableBlocksById);
                     }
                 }
