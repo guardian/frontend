@@ -127,6 +127,10 @@ define([
             }
         });
 
+        if (config.tests.internationalEditionVariant) {
+            tag.push(['AB', 'InternationalEdition', config.tests.internationalEditionVariant].join(' | '));
+        }
+
         return tag.join(',');
     }
 
