@@ -33,6 +33,10 @@ $control-offset: 36 + $gs-gutter/2;
         @include mq(tablet) {
             left: $control-offset;
         };
+
+        .l-header--is-slim & {
+            left: 0;
+        }
     }
 
     .brand-bar__item--right & {
@@ -206,18 +210,6 @@ $control-offset: 36 + $gs-gutter/2;
                 display: none;
             }
         }
-    }
-
-    .popup {
-        @include mq(mobileLandscape) {
-            left: $control-offset;
-        };
-    }
-
-    .brand-bar__item--action:before {
-        @include mq(mobileLandscape) {
-            margin-left: $control-offset * .5 - $popup-anchor-arrow-size;
-        };
     }
 }
 

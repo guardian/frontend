@@ -4,9 +4,6 @@
 @import common.{Edition, Navigation}
 @import views.support.RenderClasses
 
-@* Identity pages use identityMain.scala.html, most of which is shared fragments,
-   be sure to apply any necessary changes to non-shared code there too. *@
-
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" lang="en-GB" data-page-path="@request.path">
 <head>
@@ -15,15 +12,15 @@
 @defining((
     metaData match {
         case c: model.Content if c.shouldHideAdverts => { false }
+        case p: model.Page if p.section == "identity" => { false }
         case _ => { true }
     },
     Edition(request),
     Edition(request).id == "UK" && (
         (AppleAdNetworkFrontSwitch.isSwitchedOn && metaData.id == "uk") ||
         (AppleAdCultureFrontSwitch.isSwitchedOn && metaData.id == "uk/culture")
-    ),
-    metaData.hideUi && HideInteractiveUi.isSwitchedOn
-)) { case (showAdverts, edition, adBelowNav, hideUi) =>
+    )
+)) { case (showAdverts, edition, adBelowNav) =>
     <body
         id="top"
         class="@RenderClasses(Map(
@@ -38,45 +35,41 @@
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(!hideUi) {
-            <div class="sticky-nav-mt-test">
+        <div class="sticky-nav-mt-test">
             @if(showAdverts) {
                 @fragments.commercial.topBanner()
             }
 
             @fragments.header(metaData)
+        </div>
 
-            @if(showAdverts && adBelowNav) {
-                @fragments.commercial.topBannerBelowNav()
-            }
-            </div>
-            <div class="top-banner-below-nav-mt-test"></div>
+        @if(showAdverts && adBelowNav) {
+            @fragments.commercial.topBannerBelowNav()
+        }
 
-            @if(showAdverts) {
-                @fragments.commercial.topBannerMobile()
-            }
+        <div class="top-banner-below-nav-mt-test"></div>
 
-            <div id="maincontent" tabindex="0"></div>
+        @if(showAdverts) {
+            @fragments.commercial.topBannerMobile()
+        }
 
-            @if(BreakingNewsSwitch.isSwitchedOn) {
-                <div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in"
-                data-link-name="breaking news"
-                data-component="breaking-news"></div>
-            }
+        <div id="maincontent" tabindex="0"></div>
+
+        @if(BreakingNewsSwitch.isSwitchedOn) {
+            <div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in"
+            data-link-name="breaking news"
+            data-component="breaking-news"></div>
         }
 
         @body
 
-        @if(!hideUi) {
-            @fragments.footer(metaData)
-        }
+        @fragments.footer(metaData)
+
         @fragments.analytics(metaData)
 
         @fragments.footerJavaScript()
 
-        @if(!hideUi) {
-            @fragments.commercial.pageSkin()
-        }
+        @fragments.commercial.pageSkin()
 
     </body>
     </html>

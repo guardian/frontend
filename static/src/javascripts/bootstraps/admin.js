@@ -1,4 +1,4 @@
-require([
+define([
     'common/utils/ajax',
     'admin/bootstraps/abtests',
     'admin/bootstraps/adunitapproval',
