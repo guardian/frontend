@@ -85,6 +85,11 @@ $avatarPadding: $gs-gutter / 2;
     }
 }
 
+.discussion__warning {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
 .discussion--disabled {
     min-height: $gs-baseline * 4;
 }
