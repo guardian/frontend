@@ -50,11 +50,11 @@ define([
                     expect(sliceAdverts).toBeDefined();
                 });
 
-                it('should only create a maximum of 4 advert slots', function (done) {
+                it('should only create a maximum of 6 advert slots', function (done) {
                     sliceAdverts.init();
 
                     fastdom.defer(function () {
-                        expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(4);
+                        expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(6);
                         done();
                     });
                 });
@@ -81,6 +81,8 @@ define([
                         expect($adSlots[1].data('name')).toEqual('inline1');
                         expect($adSlots[2].data('name')).toEqual('inline2');
                         expect($adSlots[3].data('name')).toEqual('inline2');
+                        expect($adSlots[4].data('name')).toEqual('inline3');
+                        expect($adSlots[5].data('name')).toEqual('inline3');
 
                         done();
                     });
