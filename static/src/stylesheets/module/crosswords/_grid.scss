@@ -6,18 +6,30 @@
 .crossword__cell {
     cursor: pointer;
     fill: #ffffff;
+
+    .crossword__grid--focussed & {
+        fill: colour(neutral-4);
+    }
 }
 
 .crossword__cell--intersecting {
-    fill: colour(neutral-4);
+    .crossword__grid--focussed & {
+        fill: #ffffff;
+    }
 }
 
 .crossword__cell--highlighted {
-    fill: lighten(colour(crosswordAccent2), 30%);
+    &,
+    .crossword__grid--focussed & {
+        fill: lighten(colour(crosswordAccent2), 30%);
+    }
 }
 
 .crossword__cell--focussed {
-    fill: lighten(colour(crosswordAccent2), 10%);
+    &,
+    .crossword__grid--focussed & {
+        fill: lighten(colour(crosswordAccent2), 10%);
+    }
 }
 
 .crossword__cell-number {

@@ -91,7 +91,10 @@ export default React.createClass({
 
         return React.DOM.svg({
             viewBox: '0 0 ' + width + ' ' + height,
-            className: 'crossword__grid'
+            className: classNames({
+                'crossword__grid': true,
+                'crossword__grid--focussed': !! this.props.focussedCell
+            })
         }, React.DOM.rect({
             x: 0,
             y: 0,
