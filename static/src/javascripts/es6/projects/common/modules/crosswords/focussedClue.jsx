@@ -21,11 +21,10 @@ export default React.createClass({
                     'crossword__contextual-clue--direction-down': contextualClue.direction === 'down',
                     'crossword__contextual-clue--direction-across': contextualClue.direction === 'across'
                 };
-                let focusClue = () => {
+                const focusClue = () =>
                     this.props.focusClue(contextualClue.position.x,
                                          contextualClue.position.y,
-                                         contextualClue.direction)
-                };
+                                         contextualClue.direction);
                 return <button className='crossword__contextual-clue u-button-reset'
                                onClick={focusClue}>
                     <div className={classNames(classList)}>{contextualClue.number} {contextualClue.direction}</div>
