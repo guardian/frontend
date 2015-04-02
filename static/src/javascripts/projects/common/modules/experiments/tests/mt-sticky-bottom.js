@@ -28,45 +28,48 @@ define([
             return config.page.edition === 'US' && config.page.isFront;
         };
 
-        function updatePosition(config) {
-            var bannerScrollPos = 0,
+        function updatePosition(stickyConfig, containerNo) {
+            var bannerScrollPos,
                 $stickyBanner,
                 stickyBannerHeight;
 
             if (detect.getBreakpoint() === 'mobile') {
-                $stickyBanner = config.$stickyTopAdMobile;
+                $stickyBanner = stickyConfig.$stickyTopAdMobile;
             } else {
-                $stickyBanner = config.$stickyTopAd;
+                $stickyBanner = stickyConfig.$stickyTopAd;
             }
 
             stickyBannerHeight = $stickyBanner.dim().height;
 
+            //banner is sticky at the bottom from the beginning
             $stickyBanner.css({
-                position:     'fixed',
-                bottom:       0,
-                top:          null,
-                width:        '100%',
-                'z-index':    '1001',
-                'border-top': '#ccc 1px solid'
+                position:        'fixed',
+                bottom:          0,
+                top:             null,
+                width:           '100%',
+                'z-index':       '1001',
+                'border-top':    '#ccc 1px solid'
             });
 
-            $(config.$container.get(1)).css({
+            //add a proper padding between nth and nth + 1 container
+            $(stickyConfig.$container.get(containerNo)).css({
                 'padding-top': stickyBannerHeight
             });
 
-            bannerScrollPos = window.scrollY + config.windowHeight - stickyBannerHeight;
+            bannerScrollPos = window.scrollY + stickyConfig.windowHeight - stickyBannerHeight;
 
-            if (bannerScrollPos >= config.containerOffset) {
+            //leave the banner behind when we will scroll to the end of the nth container
+            if (bannerScrollPos >= stickyConfig.containerOffset) {
                 $stickyBanner.css({
                     position:     'absolute',
-                    top:           config.containerOffset,
+                    top:           stickyConfig.containerOffset,
                     bottom:        null,
                     width:        '100%',
                     'z-index':    '1001',
-                    'border-top': '#ccc 1px solid'
+                    'border-top': '#ccc 1px solid',
+                    'border-bottom': '#ccc 1px solid'
                 });
             }
-            console.log(config.$container.get(1).offsetTop, $stickyBanner.get(0).offsetTop, bannerScrollPos);
         }
 
         this.variants = [
@@ -79,21 +82,18 @@ define([
                             $container: $('.facia-page .fc-container'),
                             headerHeight: $('#header').dim().height,
                             windowHeight: window.innerHeight || document.documentElement.clientHeight
-                        };
+                        },
+                        containerNo = 2; //leave banner between the nth and nth+1 container
 
-                    //stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
-                    //stickyConfig.stickyTopAdMobileHeight = stickyConfig.$stickyTopAdMobile.dim().height;
-                    $('.fc-container__inner', stickyConfig.$container).css('border-top', 'none');
-                    updatePosition(stickyConfig);
+                    //we need at least nth + 1 containers
+                    if (stickyConfig.windowHeight <= 960 && stickyConfig.$container.length >= containerNo + 1 && !window.scrollY) {
+                        $('.fc-container__inner', $(stickyConfig.$container.get(containerNo))).css('border-top', 'none');
+                        stickyConfig.containerOffset = stickyConfig.$container.get(containerNo).offsetTop + stickyConfig.headerHeight;
 
-                    if (stickyConfig.windowHeight <= 960 && stickyConfig.$container.length >= 2 && !window.scrollY) {
-                        stickyConfig.containerOffset = stickyConfig.$container.get(1).offsetTop + stickyConfig.headerHeight;
+                        updatePosition(stickyConfig, containerNo);
 
                         mediator.on('window:scroll', _.throttle(function () {
-                            //height of topAd needs to be recalculated because we don't know when we will get respond from DFP
-                            //stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
-
-                            updatePosition(stickyConfig);
+                            updatePosition(stickyConfig, containerNo);
                         }, 10));
                     }
                 }
