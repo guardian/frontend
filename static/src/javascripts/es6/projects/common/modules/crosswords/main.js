@@ -400,7 +400,8 @@ var Crossword = React.createClass({
         }))),
         FocussedClue({
             focussedClue: focussed ? focussed : null,
-            contextualClues: intersectingEntries
+            contextualClues: intersectingEntries,
+            focusClue: this.focusClue
         }),
         Controls({
             hasSolutions: this.hasSolutions(),
