@@ -1,5 +1,4 @@
 @(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, reauthenticationForm: Form[String])(implicit request: RequestHeader)
-
 @import form.IdFormHelpers._
 @import views.html.fragments.form.inputField
 @import views.html.fragments.socialSignin
@@ -23,7 +22,7 @@
                 </div>
             </div>
             <div class="fieldset__fields">
-                @socialSignin("Confirm", page, idRequest, idUrlBuilder, confirm = true)
+                @socialSignin(views.SocialSigninRoute.Confirm, page, idRequest, idUrlBuilder)
             </div>
         </fieldset>
 
