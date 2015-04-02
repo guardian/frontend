@@ -13,7 +13,8 @@ define([
     'common/modules/experiments/tests/mt-top-below-first-container',
     'common/modules/experiments/tests/mt-sticky-nav',
     'common/modules/experiments/tests/across-the-country',
-    'common/modules/experiments/tests/adblock-message'
+    'common/modules/experiments/tests/adblock-message',
+    'common/modules/experiments/tests/mt-sticky-bottom'
 ], function (
     raven,
     _,
@@ -29,7 +30,8 @@ define([
     MtTopBelowFirstContainer,
     MtStickyNav,
     AcrossTheCountry,
-    AdblockMessage
+    AdblockMessage,
+    MtStickyBottom
 ) {
 
     var ab,
@@ -42,7 +44,8 @@ define([
             new MtTopBelowFirstContainer(),
             new MtStickyNav(),
             new AcrossTheCountry(),
-            new AdblockMessage()
+            new AdblockMessage(),
+            new MtStickyBottom()
         ],
         participationsKey = 'gu.ab.participations';
 
