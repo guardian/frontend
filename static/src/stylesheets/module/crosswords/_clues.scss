@@ -1,0 +1,58 @@
+.crossword__clues {
+    @include flex-display;
+}
+
+.crossword__clues-header {
+    @include fs-header(1);
+    border-top: 1px solid colour(crosswordAccent2);
+    border-bottom: 1px dotted colour(neutral-3);
+    padding-bottom: $gs-baseline * .75;
+}
+
+.crossword__clues-list {
+    margin: 0;
+    margin-bottom: $gs-baseline;
+}
+
+.crossword__clues--across,
+.crossword__clues--down {
+    @include flex-basis(100%);
+
+    @include mq(desktop) {
+        width: 50%;
+        float: left;
+    }
+}
+
+.crossword__clues--across {
+    padding-right: $gs-gutter / 2;
+}
+
+.crossword__clues--down {
+    padding-left: $gs-gutter / 2;
+}
+
+.crossword__clue {
+    position: relative;
+    cursor: pointer;
+    @include fs-textSans(1);
+    margin-bottom: $gs-baseline / 2;
+    list-style-type: none;
+    padding-left: 2em;
+
+    &:before {
+        content: attr(value);
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+        -webkit-font-smoothing: initial;
+    }
+}
+
+.crossword__clue--selected {
+    color: darken(colour(crosswordAccent2), 15%);
+}
+
+.crossword__clue--answered {
+    color: colour(neutral-4);
+}
