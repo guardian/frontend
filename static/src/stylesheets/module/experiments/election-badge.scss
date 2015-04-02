@@ -1,0 +1,21 @@
+.badge-slot-meta-ge15badge {
+    float: left;
+    width: 45px;
+    margin-right: $gs-gutter / 2;
+
+    @include mq(desktop) {
+        width: 90px;
+        float: none;
+    }
+
+    .badge-slot__img {
+        width: 100%;
+    }
+}
+
+.content__section-label--election,
+.content__series-label--election {
+    @include mq($until: desktop) {
+        margin-top: $gs-baseline;
+    }
+}
