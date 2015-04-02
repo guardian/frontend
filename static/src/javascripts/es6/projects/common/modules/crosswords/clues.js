@@ -1,9 +1,10 @@
 /* jshint newcap: false */
-import _ from 'common/utils/_';
-import React from 'react/addons';
+import classNames from 'classnames';
+import React from 'react';
 
-var classSet = React.addons.classSet,
-    Clue = React.createClass({
+import _ from 'common/utils/_';
+
+var Clue = React.createClass({
         onClick: function (event) {
             event.preventDefault();
             this.props.focusClue();
@@ -11,13 +12,13 @@ var classSet = React.addons.classSet,
 
         render: function () {
             return React.DOM.li({
-                className: classSet({
+                className: classNames({
                     'crossword__clue': true,
                     'crossword__clue--answered': this.props.hasAnswered,
                     'crossword__clue--selected': this.props.isSelected
                 }),
                 onClick: this.onClick,
-                value: this.props.number,
+                value: parseInt(this.props.number, 10),
                 dangerouslySetInnerHTML: {
                     '__html': this.props.clue
                 }
@@ -27,26 +28,20 @@ var classSet = React.addons.classSet,
 
 export default React.createClass({
     render: function () {
-        var that = this,
-            headerClass = 'crossword__clues-header';
+        var headerClass = 'crossword__clues-header';
 
-        function cluesByDirection(direction) {
-            return _.chain(that.props.clues)
-                .filter(function (clue) {
-                    return clue.entry.direction === direction;
-                })
-                .map(function (clue) {
-                    return Clue({
-                        number: clue.entry.number + '.',
-                        clue: clue.entry.clue,
-                        hasAnswered: clue.hasAnswered,
-                        isSelected: clue.isSelected,
-                        focusClue: function () {
-                            that.props.focusClue(clue.entry.position.x, clue.entry.position.y, direction);
-                        }
-                    });
-                });
-        }
+        let cluesByDirection = (direction) => _.chain(this.props.clues)
+            .filter((clue) => clue.entry.direction === direction)
+            .map((clue) => Clue({
+                number: clue.entry.number + '.',
+                clue: clue.entry.clue,
+                hasAnswered: clue.hasAnswered,
+                isSelected: clue.isSelected,
+                focusClue: () => {
+                    this.props.focusClue(clue.entry.position.x, clue.entry.position.y, direction);
+                }
+            })
+        );
 
         return React.DOM.div({
             className: 'crossword__clues'
