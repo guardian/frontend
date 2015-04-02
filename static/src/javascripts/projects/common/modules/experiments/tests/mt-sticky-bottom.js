@@ -30,7 +30,8 @@ define([
 
         function updatePosition(config) {
             var bannerScrollPos = 0,
-                $stickyBanner;
+                $stickyBanner,
+                stickyBannerHeight;
 
             if (detect.getBreakpoint() === 'mobile') {
                 $stickyBanner = config.$stickyTopAdMobile;
@@ -38,7 +39,9 @@ define([
                 $stickyBanner = config.$stickyTopAd;
             }
 
-            config.$stickyBanner.css({
+            stickyBannerHeight = $stickyBanner.dim().height;
+
+            $stickyBanner.css({
                 position:     'fixed',
                 bottom:       0,
                 top:          null,
@@ -48,13 +51,13 @@ define([
             });
 
             $(config.$container.get(1)).css({
-                'padding-top': config.stickyTopAdHeight
+                'padding-top': stickyBannerHeight
             });
 
-            bannerScrollPos = window.scrollY + config.windowHeight - config.stickyTopAdHeight;
+            bannerScrollPos = window.scrollY + config.windowHeight - stickyBannerHeight;
 
             if (bannerScrollPos >= config.containerOffset) {
-                config.$stickyBanner.css({
+                $stickyBanner.css({
                     position:     'absolute',
                     top:           config.containerOffset,
                     bottom:        null,
@@ -63,7 +66,7 @@ define([
                     'border-top': '#ccc 1px solid'
                 });
             }
-            console.log(config.$container.get(1).offsetTop, config.$stickyBanner.get(0).offsetTop, bannerScrollPos);
+            console.log(config.$container.get(1).offsetTop, $stickyBanner.get(0).offsetTop, bannerScrollPos);
         }
 
         this.variants = [
@@ -78,19 +81,18 @@ define([
                             windowHeight: window.innerHeight || document.documentElement.clientHeight
                         };
 
-                    stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
-                    stickyConfig.stickyTopAdMobileHeight = stickyConfig.$stickyTopAdMobile.dim().height;
-                    $('fc-container__inner',stickyConfig.$container).css('border-top', 'none');
+                    //stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
+                    //stickyConfig.stickyTopAdMobileHeight = stickyConfig.$stickyTopAdMobile.dim().height;
+                    $('.fc-container__inner', stickyConfig.$container).css('border-top', 'none');
                     updatePosition(stickyConfig);
 
                     if (stickyConfig.windowHeight <= 960 && stickyConfig.$container.length >= 2 && !window.scrollY) {
                         stickyConfig.containerOffset = stickyConfig.$container.get(1).offsetTop + stickyConfig.headerHeight;
 
                         mediator.on('window:scroll', _.throttle(function () {
-                            //height of topAd needs to be recalculated on desktop and tablet because we don't know when we will get respond from DFP
-                            if (detect.getBreakpoint() !== 'mobile') {
-                                stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
-                            }
+                            //height of topAd needs to be recalculated because we don't know when we will get respond from DFP
+                            //stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
+
                             updatePosition(stickyConfig);
                         }, 10));
                     }
