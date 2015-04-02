@@ -96,8 +96,8 @@ object FaciaContentImplicits {
     def href: String = fold(
         curatedContent => curatedContent.href.getOrElse(SupportedUrl(curatedContent.content)),
         supportingCuratedContent => supportingCuratedContent.href.getOrElse(SupportedUrl(supportingCuratedContent.content)),
-        linkSnap => linkSnap.snapUri.getOrElse(linkSnap.id),
-        latestSnap => latestSnap.snapUri.getOrElse(latestSnap.id)
+        linkSnap => linkSnap.snapUri.orElse(linkSnap.snapUri).getOrElse(linkSnap.id),
+        latestSnap => latestSnap.snapUri.orElse(latestSnap.snapUri).getOrElse(latestSnap.id)
     )
 
     def mediaType: Option[MediaType] = {
