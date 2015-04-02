@@ -329,8 +329,16 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__latest-blocks {
-    height: 195px;
+    height: 215px;
     overflow: hidden;
+}
+
+.fc-item__latest-blocks__inner {
+    transition: transform .5s ease-in;
+}
+
+.fc-item__latest-blocks__inner--landed {
+    transform: translate3d(0);
 }
 
 .fc-item__latest-block {
@@ -342,7 +350,9 @@ $fc-item-gutter: $gs-gutter / 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: 39px;
+    height: 38px;
+    border-top: 1px solid rgba(254, 254, 254 , .3);
+    margin-bottom: 5px;
     transition: height .8s linear;
 }
 
