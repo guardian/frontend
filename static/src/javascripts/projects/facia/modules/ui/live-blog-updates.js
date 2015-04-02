@@ -29,7 +29,7 @@ define([
     function createUpdateHtml(block) {
         return template(latestBlockTemplate, {
             classes: block.isNew ? '' : seenBlockClassname,
-            relativeTimeString: relativeDates.makeRelativeDate(Date(block.publishedDateTime || null)),
+            relativeTimeString: relativeDates.makeRelativeDate(new Date(block.publishedDateTime || null)),
             blockBody: block.body
         });
     }
