@@ -557,9 +557,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   override def metaData: Map[String, JsValue] = super.metaData ++ cricketMetaData
   override lazy val lightboxImages = mainFiltered
 
-  lazy val latestUpdateText = LiveBlogParser.parse(body) collectFirst {
-    case Block(_, _, _, _, BlockToText(text), _) if !text.trim.nonEmpty => text
-  }
+  lazy val blocks = LiveBlogParser.parse(body)
 }
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {
@@ -745,9 +743,6 @@ class Interactive(content: ApiContentWithMeta) extends Content(content) {
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
 
   override lazy val metaData: Map[String, JsValue] = super.metaData + ("contentType" -> JsString(contentType))
-  override lazy val hideUi: Boolean = body.exists{ b =>
-    Jsoup.parseBodyFragment(b).body().getElementsByClass("element-interactive").attr("data-interactive").contains("/visuals-blank-page/")
-  }
   override lazy val isImmersive: Boolean = displayHint.contains("immersive")
 }
 

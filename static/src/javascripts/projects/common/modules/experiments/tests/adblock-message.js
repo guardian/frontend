@@ -2,11 +2,13 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/modules/ui/message',
+    'common/views/svgs',
     'text!common/views/donot-use-adblock.html'
 ], function (
     detect,
     template,
     Message,
+    svgs,
     doNotUseAdblockTemplate
 ) {
     return function () {
@@ -42,7 +44,8 @@ define([
                             {
                                 adblockLink: adblockLink,
                                 messageText: 'If you\'re reading the Guardian without ads, why not join the Guardian instead?',
-                                linkText: 'Become a supporter today'
+                                linkText: 'Become a supporter today',
+                                arrowWhiteRight: svgs('arrowWhiteRight')
                             }
                         ));
                     }
@@ -63,7 +66,8 @@ define([
                             {
                                 adblockLink: adblockLink,
                                 messageText: 'We notice you\'ve got an ad-blocker switched on. Perhaps you\'d like to support the Guardian another way?',
-                                linkText: 'Become a supporter today'
+                                linkText: 'Become a supporter today',
+                                arrowWhiteRight: svgs('arrowWhiteRight')
                             }
                         ));
                     }
