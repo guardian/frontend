@@ -356,19 +356,25 @@ $fc-item-gutter: $gs-gutter / 4;
     transition: height .8s linear;
 }
 
-.fc-item__latest-block--hidden {
-    height: 0px;
-}
-
-.fc-item__latest-block--seen {
-    opacity: .7;
-}
-
 .fc-item__latest-block-time {
     font-weight: bold;
-    color: rgba(255, 255, 255, .5);
-    display: inline-block;
+}
+
+.fc-item__latest-block--new .fc-item__latest-block-time:before {
+    content: 'Updated';
     margin-right: 4px;
+}
+
+.fc-item__latest-block--old .fc-item__latest-block-time {
+    opacity: .8;
+}
+
+.fc-item__latest-block-title {
+    font-weight: bold;
+}
+
+.fc-item__latest-block-text {
+    opacity: .7;
 }
 
 .fc-item__meta {

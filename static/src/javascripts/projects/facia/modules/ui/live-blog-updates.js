@@ -6,6 +6,7 @@ define([
     'bonzo',
     'common/modules/ui/relativedates',
     'common/utils/template',
+    'text!facia/views/liveblog-latest-blocks.html',
     'text!facia/views/liveblog-latest-block.html'
 ], function (
     _,
@@ -15,22 +16,24 @@ define([
     bonzo,
     relativeDates,
     template,
+    latestBlocksTemplate,
     latestBlockTemplate
 ) {
     var forgetAfterHours = 24,
         maxDisplayedBlocks = 5,
         blockHeightPx = 44,
         selectorClassname = '.js-live-blog-latest-blocks',
-        listClassname = 'fc-item__latest-blocks__inner',
+        newBlockClassname = 'fc-item__latest-block--new',
+        oldBlockClassname = 'fc-item__latest-block--old',
         articleIdAttribute = 'data-article-id',
-        seenBlockClassname = 'fc-item__latest-block--seen',
         storageKeyPreviousBlocks = 'gu.liveblog.updates';
 
     function createUpdateHtml(block) {
         return template(latestBlockTemplate, {
-            classes: block.isNew ? '' : seenBlockClassname,
-            relativeTimeString: relativeDates.makeRelativeDate(new Date(block.publishedDateTime || null)),
-            blockBody: block.body
+            classes: block.isNew ? newBlockClassname : oldBlockClassname,
+            relativeTime: relativeDates.makeRelativeDate(new Date(block.publishedDateTime || null)),
+            title: block.title || '',
+            body: block.body.slice(0, 100)
         });
     }
 
@@ -55,12 +58,10 @@ define([
                     .join('');
 
             if (blocksHtml) {
-                el = bonzo.create(
-                    '<div ' +
-                        'style="transform: translate3d(0, -' + (numNewBlocks * blockHeightPx) + 'px, 0)" ' +
-                        'class="' + listClassname + '">' +
-                        blocksHtml +
-                    '</div>');
+                el = bonzo.create(template(latestBlocksTemplate, {
+                    newBlocksHeight: numNewBlocks * blockHeightPx,
+                    blocksHtml: blocksHtml
+                }));
 
                 bonzo(element).prepend(el);
 
@@ -75,7 +76,7 @@ define([
 
     function sanitizeBlocks(blocks) {
         return _.filter(blocks, function (block) {
-            return block.id && block.body && block.body.length > 10;
+            return block.id && block.publishedDateTime && block.body && block.body.length >= 10;
         });
     }
 
