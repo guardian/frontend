@@ -38,6 +38,65 @@ define([
             this.openedHeight = '300';
         }
     };
+    
+    /**
+     * TODO: rather blunt instrument this, due to the fact *most* mobile devices don't have a fixed
+     * background-attachment - need to make this more granular
+     */
+    ExpandableV2.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
+    
+    ExpandableV2.prototype.updateBgPosition = function () {
+
+            var
+
+            adHeight = (this.isClosed) ?
+                this.closedHeight : this.openedHeight,
+
+            inViewB = ((window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top),
+    
+            inViewT = ((window.pageYOffset - adHeight) < this.$adSlot.offset().top),
+
+            topCusp = (inViewT &&
+                ((window.pageYOffset + (bonzo.viewport().height*.3333) - adHeight) > this.$adSlot.offset().top)) ?
+                'true' : 'false',
+            
+            bottomCusp = (inViewB &&
+                (window.pageYOffset + (bonzo.viewport().height*.6666)) < this.$adSlot.offset().top) ?
+                'true' : 'false',
+                
+            inView = (inViewB && inViewT) ?
+                'true' : 'false';
+                
+            if(bottomCusp === 'true'){
+                bottomScroll = 50 - ((window.pageYOffset + (bonzo.viewport().height*.6666) - this.$adSlot.offset().top)* -0.2);
+            } else {
+                bottomScroll = 50;
+            }
+            
+            if(topCusp === 'true'){
+                topScroll = ((window.pageYOffset + (bonzo.viewport().height*.3333) - this.$adSlot.offset().top)* 0.2) - 50;
+            } else {
+                topScroll = 0;
+            }
+            
+            this.scrollAmount = bottomScroll + topScroll + "%";
+            
+            $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + this.scrollAmount);
+
+        console.log("to top of page = " + this.$adSlot.offset().top);
+        console.log("viewport height = " + bonzo.viewport().height);
+        console.log("pageYoffset = " + window.pageYOffset);
+        console.log("top cusp = " + topCusp);
+        console.log("bottom cusp = " + bottomCusp);
+        console.log("inviewT = " + inViewT);
+        console.log("inviewB = " + inViewB);
+        console.log("inview = " + inView);
+        console.log("bottom ratio = " + bottomScroll);
+        console.log("top ratio = " + topScroll);
+        console.log(this.scrollAmount);
+        console.log("is closed = " + this.isClosed);
+        console.log("ad height = " + adHeight);
+    };
 
     ExpandableV2.prototype.listener = function () {
         if ((window.pageYOffset + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
@@ -56,6 +115,7 @@ define([
     ExpandableV2.prototype.create = function () {
         var videoHeight = this.closedHeight - 24,
             videoWidth = (videoHeight * 16) / 9,
+            scrollbgtemp = ''
             leftMargin = (this.params.videoPositionH === 'center' ?
                 'margin-left: ' + videoWidth / -2 + 'px; ' : ''
             ),
@@ -77,10 +137,18 @@ define([
                 showPlus: (this.params.showMoreType === 'plus-only' || this.params.showMoreType === 'plus-and-arrow') ?
                     '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>' : ''
             },
-            $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop)));
+            scrollingbg = {
+                scrollbg: (this.params.showMoreType === 'arrow-only' || this.params.showMoreType === 'plus-and-arrow' || this.params.showMoreType === 'plus-only') ?
+                
+                // bg position = 50 + variable, make top variable negative number!
+                    '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(http://local.sandbox.co.uk/commercial-responsive-ads/test-images/bgfadescroll.png); background-position: 50% 50%; background-repeat: no-repeat;"></div>' : ''
+            },
+            $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
 
         this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
         this.$button = $('.ad-exp__open', $expandablev2);
+        
+        console.log(scrollingbg);
 
         $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
 
@@ -100,6 +168,15 @@ define([
             this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
             this.isClosed = !this.isClosed;
         }.bind(this));
+        
+        if (ExpandableV2.hasScrollEnabled) {
+            // update bg position
+            this.updateBgPosition();
+
+            mediator.on('window:scroll', this.updateBgPosition.bind(this));
+            // to be safe, also update on window resize
+            mediator.on('window:resize', this.updateBgPosition.bind(this));
+        }
     };
 
     return ExpandableV2;

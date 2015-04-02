@@ -347,6 +347,14 @@
             z-index: 3;
         }
     }
+
+    .ad-exp--expand-scrolling-bg {
+        position: absolute;
+        top: 0;
+        height: 500px;
+        width: 100%;
+        border: 1px solid red;
+    }
 }
 
 .creative--expandable-ga {
