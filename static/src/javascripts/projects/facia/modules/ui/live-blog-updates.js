@@ -1,35 +1,35 @@
 define([
+    'bonzo',
     'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/storage',
-    'bonzo',
     'common/modules/ui/relativedates',
     'common/utils/template',
-    'text!facia/views/liveblog-latest-blocks.html',
-    'text!facia/views/liveblog-latest-block.html'
+    'text!facia/views/liveblog-blocks.html',
+    'text!facia/views/liveblog-block.html'
 ], function (
+    bonzo,
     _,
     $,
     ajax,
     storage,
-    bonzo,
     relativeDates,
     template,
-    latestBlocksTemplate,
-    latestBlockTemplate
+    blocksTemplate,
+    blockTemplate
 ) {
     var forgetAfterHours = 24,
         maxDisplayedBlocks = 5,
         blockHeightPx = 44,
-        selectorClassname = '.js-live-blog-latest-blocks',
-        newBlockClassname = 'fc-item__latest-block--new',
-        oldBlockClassname = 'fc-item__latest-block--old',
+        selector = '.js-liveblog-blocks',
+        newBlockClassname = 'fc-item__liveblog-block--new',
+        oldBlockClassname = 'fc-item__liveblog-block--old',
         articleIdAttribute = 'data-article-id',
-        storageKeyPreviousBlocks = 'gu.liveblog.updates';
+        storageKey = 'gu.liveblog.block-dates';
 
-    function createUpdateHtml(block) {
-        return template(latestBlockTemplate, {
+    function renderBlock(block) {
+        return template(blockTemplate, {
             classes: block.isNew ? newBlockClassname : oldBlockClassname,
             relativeTime: relativeDates.makeRelativeDate(new Date(block.publishedDateTime || null)),
             title: block.title || '',
@@ -45,20 +45,18 @@ define([
                 numNewBlocks = 0,
                 blocksHtml = _.chain(blocks)
                     .slice(0, maxDisplayedBlocks)
-                    .sortBy('publishedDateTime')
-                    .reverse()
                     .map(function (block, index) {
                         if (block.publishedDateTime > lastDateTime || (fakeUpdate && index === 0)) {
                             block.isNew = true;
                             numNewBlocks += 1;
                         }
-                        return createUpdateHtml(block);
+                        return renderBlock(block);
                     })
                     .value()
                     .join('');
 
             if (blocksHtml) {
-                el = bonzo.create(template(latestBlocksTemplate, {
+                el = bonzo.create(template(blocksTemplate, {
                     newBlocksHeight: numNewBlocks * blockHeightPx,
                     blocksHtml: blocksHtml
                 }));
@@ -80,27 +78,28 @@ define([
         });
     }
 
-    function updateLatestBlocks(elementsById) {
-        var oldBlockDates = storage.session.get(storageKeyPreviousBlocks) || {};
+    function pruneOldBlockDates(obj) {
+        return _.omit(obj, function (date) {
+            return (new Date() - new Date(date)) / 3600000 > forgetAfterHours; // hours old
+        });
+    }
+
+    function updateBlocks(elementsById) {
+        var oldBlockDates = storage.session.get(storageKey) || {};
 
         _.forEach(elementsById, function (elements, articleId) {
             ajax({
                 url: '/' + articleId + '.json?rendered=false',
                 type: 'json',
-                method: 'get',
-                crossOrigin: true,
-                success: function (response) {
-                    var blocks = response && sanitizeBlocks(response.blocks);
+                crossOrigin: true
+            })
+            .then(function (response) {
+                var blocks = response && sanitizeBlocks(response.blocks);
 
-                    if (blocks.length) {
-                        renderBlocks(elements, blocks, oldBlockDates[articleId]);
-
-                        oldBlockDates = _.omit(oldBlockDates, function (lastDate) {
-                            return (new Date() - new Date(lastDate)) / 3600000 > forgetAfterHours; // hours old
-                        });
-                        oldBlockDates[articleId] = blocks[0].publishedDateTime;
-                        storage.session.set(storageKeyPreviousBlocks, oldBlockDates);
-                    }
+                if (blocks.length) {
+                    renderBlocks(elements, blocks, oldBlockDates[articleId]);
+                    oldBlockDates[articleId] = blocks[0].publishedDateTime;
+                    storage.session.set(storageKey, pruneOldBlockDates(oldBlockDates));
                 }
             });
         });
@@ -109,7 +108,7 @@ define([
     function start() {
         var elementsById = {};
 
-        $(selectorClassname).each(function (element) {
+        $(selector).each(function (element) {
             if (element.hasAttribute(articleIdAttribute)) {
                 var articleId = element.getAttribute(articleIdAttribute);
 
@@ -119,7 +118,7 @@ define([
         });
 
         if (!_.isEmpty(elementsById)) {
-            updateLatestBlocks(elementsById);
+            updateBlocks(elementsById);
         }
     }
 

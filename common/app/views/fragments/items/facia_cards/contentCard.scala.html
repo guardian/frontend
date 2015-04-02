@@ -113,7 +113,7 @@ data-test-id="facia-card"
         </div>
 
         @if(item.isLive) {
-            <div class="fc-item__latest-blocks u-faux-block-link__promote js-live-blog-latest-blocks" data-article-id="@item.id"></div>
+            <div class="fc-item__liveblog-blocks u-faux-block-link__promote js-liveblog-blocks" data-article-id="@item.id"></div>
         } else {
             @item.trailText.filter(const(item.showStandfirst)).map { text =>
                 <div class="fc-item__standfirst">@Html(text)</div>
