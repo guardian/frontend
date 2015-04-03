@@ -20,13 +20,20 @@ define([
     blockTemplate
 ) {
     var forgetAfterHours = 24,
-        maxDisplayedBlocks = 5,
+        numDisplayedBlocks = 5,
         blockHeightPx = 44,
+
+        refreshSecs = 60,
+        refreshDecay = 2,
+        refreshMaxTimes = 10,
+
         selector = '.js-liveblog-blocks',
         newBlockClassname = 'fc-item__liveblog-block--new',
         oldBlockClassname = 'fc-item__liveblog-block--old',
         articleIdAttribute = 'data-article-id',
-        storageKey = 'gu.liveblog.block-dates';
+        storageKey = 'gu.liveblog.block-dates',
+
+        elementsById = {};
 
     function renderBlock(block) {
         return template(blockTemplate, {
@@ -37,37 +44,37 @@ define([
         });
     }
 
-    function renderBlocks(targets, blocks, lastDateTime) {
-        var fakeUpdate = _.isUndefined(lastDateTime);
+    function renderBlocks(targets, blocks, oldBlockDate) {
+        var fakeUpdate = _.isUndefined(oldBlockDate);
 
         _.forEach(targets, function (element) {
             var el,
                 numNewBlocks = 0,
                 blocksHtml = _.chain(blocks)
-                    .slice(0, maxDisplayedBlocks)
+                    .slice(0, numDisplayedBlocks * 2)
                     .map(function (block, index) {
-                        if (block.publishedDateTime > lastDateTime || (fakeUpdate && index === 0)) {
+                        if (numNewBlocks < numDisplayedBlocks
+                            && (block.publishedDateTime > oldBlockDate || (fakeUpdate && index === 0))) {
                             block.isNew = true;
                             numNewBlocks += 1;
                         }
                         return renderBlock(block);
                     })
+                    .slice(0, numDisplayedBlocks + numNewBlocks)
                     .value()
                     .join('');
 
-            if (blocksHtml) {
-                el = bonzo.create(template(blocksTemplate, {
-                    newBlocksHeight: numNewBlocks * blockHeightPx,
-                    blocksHtml: blocksHtml
-                }));
+            el = bonzo.create(template(blocksTemplate, {
+                newBlocksHeight: numNewBlocks * blockHeightPx,
+                blocksHtml: blocksHtml
+            }));
 
-                bonzo(element).prepend(el);
+            bonzo(element).empty().prepend(el);
 
-                if (numNewBlocks) {
-                    setTimeout(function () {
-                        bonzo(el).removeAttr('style');
-                    }, 1000);
-                }
+            if (numNewBlocks) {
+                setTimeout(function () {
+                    bonzo(el).removeAttr('style');
+                }, 1000);
             }
         });
     }
@@ -80,11 +87,11 @@ define([
 
     function pruneOldBlockDates(obj) {
         return _.omit(obj, function (date) {
-            return (new Date() - new Date(date)) / 3600000 > forgetAfterHours; // hours old
+            return !date || (new Date() - new Date(date)) / 3600000 > forgetAfterHours; // hours old
         });
     }
 
-    function updateBlocks(elementsById) {
+    function updateBlocks() {
         var oldBlockDates = storage.session.get(storageKey) || {};
 
         _.forEach(elementsById, function (elements, articleId) {
@@ -96,18 +103,22 @@ define([
             .then(function (response) {
                 var blocks = response && sanitizeBlocks(response.blocks);
 
-                if (blocks.length) {
+                if (blocks && blocks.length) {
                     renderBlocks(elements, blocks, oldBlockDates[articleId]);
                     oldBlockDates[articleId] = blocks[0].publishedDateTime;
                     storage.session.set(storageKey, pruneOldBlockDates(oldBlockDates));
                 }
             });
         });
+
+        if (refreshMaxTimes) {
+            refreshMaxTimes -= 1;
+            setTimeout(updateBlocks, refreshSecs * 1000);
+            refreshSecs = refreshSecs * refreshDecay;
+        }
     }
 
     function start() {
-        var elementsById = {};
-
         $(selector).each(function (element) {
             if (element.hasAttribute(articleIdAttribute)) {
                 var articleId = element.getAttribute(articleIdAttribute);
@@ -118,7 +129,7 @@ define([
         });
 
         if (!_.isEmpty(elementsById)) {
-            updateBlocks(elementsById);
+            updateBlocks();
         }
     }
 
