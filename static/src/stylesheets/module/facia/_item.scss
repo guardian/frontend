@@ -334,7 +334,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__liveblog-blocks__inner {
-    transition: transform .5s ease-in;
+    transition: transform .5s ease-in-out;
 }
 
 .fc-item__liveblog-blocks__inner--landed {

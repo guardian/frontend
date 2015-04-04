@@ -48,26 +48,26 @@ define([
         var fakeUpdate = _.isUndefined(oldBlockDate);
 
         _.forEach(targets, function (element) {
-            var el,
-                numNewBlocks = 0,
+            var numNewBlocks = 0,
+
                 blocksHtml = _.chain(blocks)
-                    .slice(0, numDisplayedBlocks * 2)
                     .map(function (block, index) {
                         if (numNewBlocks < numDisplayedBlocks
                             && (block.publishedDateTime > oldBlockDate || (fakeUpdate && index === 0))) {
                             block.isNew = true;
                             numNewBlocks += 1;
                         }
-                        return renderBlock(block);
+                        return block;
                     })
                     .slice(0, numDisplayedBlocks + numNewBlocks)
+                    .map(renderBlock)
                     .value()
-                    .join('');
+                    .join(''),
 
-            el = bonzo.create(template(blocksTemplate, {
-                newBlocksHeight: numNewBlocks * blockHeightPx,
-                blocksHtml: blocksHtml
-            }));
+                el = bonzo.create(template(blocksTemplate, {
+                    newBlocksHeight: numNewBlocks * blockHeightPx,
+                    blocksHtml: blocksHtml
+                }));
 
             bonzo(element).empty().prepend(el);
 
