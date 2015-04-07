@@ -2,6 +2,7 @@ define([
     'raven',
     'common/utils/_',
     'common/utils/config',
+    'common/utils/cookies',
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
@@ -19,6 +20,7 @@ define([
     raven,
     _,
     config,
+    cookies,
     mediator,
     store,
     mvtCookie,
@@ -122,13 +124,25 @@ define([
 
     function makeOmnitureTag() {
         var participations = getParticipations(),
-            tag = [];
+            tag = [], editionFromCookie;
 
         _.forEach(_.keys(participations), function (k) {
             if (testCanBeRun(getTest(k))) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
             }
         });
+
+        if (config.tests.internationalEditionVariant) {
+            tag.push(['AB', 'InternationalEditionTest', config.tests.internationalEditionVariant].join(' | '));
+
+            // don't use the edition of the page - we specifically want the cookie version
+            // this allows us to figure out who has "opted out" and "opted into" the test
+            editionFromCookie = cookies.get('GU_EDITION');
+
+            if (editionFromCookie) {
+                tag.push(['AB', 'InternationalEditionPreference', editionFromCookie].join(' | '));
+            }
+        }
 
         return tag.join(',');
     }
