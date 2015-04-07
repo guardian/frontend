@@ -78,8 +78,16 @@ object Editionalise {
   import common.editions.EditionalisedSections._
 
   def apply(id: String, edition: Edition, request: Option[RequestHeader] = None): String = {
+    val internationalEdition = request.flatMap(InternationalEdition.apply)
+
     if (isEditionalised(id)) id match {
-        case "" => s"${edition.id.toLowerCase}"
+        case "" =>
+
+          if (internationalEdition.exists(_.isInternational)) {
+            s"international"
+          } else {
+            edition.id.toLowerCase
+          }
         case _ => s"${edition.id.toLowerCase}/$id"
     } else {
       id
@@ -90,7 +98,11 @@ object Editionalise {
 
 }
 
-case class InternationalEdition(variant: String)
+case class InternationalEdition(variant: String) {
+  def isControl = variant == "control"
+
+  def isInternational = !isControl
+}
 
 object InternationalEdition {
   private val variants = Seq("control", "international")
