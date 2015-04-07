@@ -7,16 +7,14 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/identity-social-oauth',
-    'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/mt-master',
-    'common/modules/experiments/tests/signed-out',
-    'common/modules/experiments/tests/register',
-    'common/modules/experiments/tests/register-popup',
     'common/modules/experiments/tests/mt-top-below-nav',
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/mt-top-below-first-container',
     'common/modules/experiments/tests/mt-sticky-nav',
-    'common/modules/experiments/tests/across-the-country'
+    'common/modules/experiments/tests/across-the-country',
+    'common/modules/experiments/tests/adblock-message',
+    'common/modules/experiments/tests/mt-sticky-bottom'
 ], function (
     raven,
     _,
@@ -26,32 +24,28 @@ define([
     mvtCookie,
     HighCommercialComponent,
     IdentitySocialOAuth,
-    KruxAudienceScience,
     MtMaster,
-    SignedOut,
-    Register,
-    RegisterPopup,
     MtTopBelowNav,
     HeatMap,
     MtTopBelowFirstContainer,
     MtStickyNav,
-    AcrossTheCountry
+    AcrossTheCountry,
+    AdblockMessage,
+    MtStickyBottom
 ) {
 
     var ab,
         TESTS = [
             new HighCommercialComponent(),
             new IdentitySocialOAuth(),
-            new KruxAudienceScience(),
             new MtMaster(),
-            new SignedOut(),
-            new Register(),
-            new RegisterPopup(),
             new MtTopBelowNav(),
             new HeatMap(),
             new MtTopBelowFirstContainer(),
             new MtStickyNav(),
-            new AcrossTheCountry()
+            new AcrossTheCountry(),
+            new AdblockMessage(),
+            new MtStickyBottom()
         ],
         participationsKey = 'gu.ab.participations';
 

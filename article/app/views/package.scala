@@ -25,7 +25,7 @@ object BodyCleaner {
         FigCaptionCleaner,
         RichLinkCleaner,
         BlockquoteCleaner,
-        FormStackCleaner
+        CmpParamCleaner
       )
   }
 }
