@@ -64,8 +64,7 @@ define([
                     }),
 
                     edition = (page.edition || '').toLowerCase(),
-                    section = (page.section || '').toLowerCase(),
-                    editionSection = _.contains(supportedSections, section) ? edition + '/' + section : false,
+                    editionSection = _.contains(supportedSections, page.section) ? edition + '/' + page.section : false,
 
                     articles = _.flatten([
                         collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
