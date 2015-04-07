@@ -86,7 +86,7 @@ module.exports = function (grunt) {
         }
 
         if (options.isDev) {
-            grunt.task.run('replace:cssSourceMaps');
+            grunt.task.run('replace:jspmSourceMaps');
         }
 
         grunt.task.run(['concurrent:requireJS', 'copy:javascript']);
