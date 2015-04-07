@@ -18,9 +18,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
   import authenticatedActions.authAction
 
-//  def saveContentItem(userId: String) = authAction.apply { implicit request =>
   def saveContentItem = authAction.apply { implicit request =>
-
 
     val idRequest = identityRequestParser(request)
     val userId = request.user.getId()
@@ -39,9 +37,8 @@ class SaveContentController @Inject() ( api: IdApiClient,
         SeeOther(returnUrl)
       }
       case _ =>
-        SeeOther(returnUrlVerifier.defaultReturnUrl)
+         SeeOther(returnUrlVerifier.defaultReturnUrl)
     }
   }
-
 
 }

@@ -225,5 +225,18 @@ define([
         return request;
     };
 
+    Id.getUsersSavedDocuments = function() {
+        var endpoint = '/syncedPrefs/me/savedArticles',
+            request = ajax({
+                url: Id.idApiRoot + endpoint,
+                type: 'jsonp',
+                crossOrigin: true
+            });
+
+        return request
+    };
+
+
+
     return Id;
 });
