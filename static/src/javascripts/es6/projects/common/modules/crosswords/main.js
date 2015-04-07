@@ -8,6 +8,7 @@ import bonzo from 'bonzo';
 
 import Clues from './clues';
 import Controls from './controls';
+import deepIntersection from './helpers/deep-intersection';
 import FocussedClue from './focussedClue.jsx!';
 import Grid from './grid';
 import helpers from './helpers';
@@ -348,14 +349,10 @@ const Crossword = React.createClass({
         const focussed = this.clueInFocus();
         const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
 
-        // Deep equal version of _.intersection
-        const findIntersectingCells = (array1, array2) =>
-            array1.filter(cell1 => array2.some(cell2 => _.isEqual(cell1, cell2)));
-
         const focussedCells = focussed ? helpers.cellsForEntry(focussed) : [];
         const entryHasIntersectingCell = entry => {
             const cells = helpers.cellsForEntry(entry);
-            const intersecting = findIntersectingCells(cells, focussedCells);
+            const intersecting = deepIntersection(cells, focussedCells);
             return !! intersecting.length;
         };
 
