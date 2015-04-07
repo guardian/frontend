@@ -225,6 +225,12 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val ElectionLiveBadgeSwitch = Switch("Feature", "election-2015-badging",
+    "Display Election Live 2015 Badge",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 5, 28)
+  )
+
   val LiveblogAdvertsSwitch = Switch("Commercial", "liveblog-adverts",
     "Show inline adverts on liveblogs",
     safeState = Off, sellByDate = never
@@ -499,6 +505,11 @@ object Switches {
   val ABMtStickyNav = Switch("A/B Tests", "ab-mt-sticky-nav",
     "Top navigation and top ad slot are sticky.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
+  )
+
+  val ABMtStickyBottom = Switch("A/B Tests", "ab-mt-sticky-bottom",
+    "Top ad slot is sticky at the bottom of page.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
   )
 
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",

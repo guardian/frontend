@@ -1,22 +1,37 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
 @import common.{LinkTo, Localisation}
+@import conf.Switches.ElectionLiveBadgeSwitch
 
-<div class="content__labels">
-    <div class="content__section-label">
+@defining(
+    ElectionLiveBadgeSwitch.isSwitchedOn &&
+    (content.tags.indexWhere(_.id == "politics/general-election-2015") == 0 ||
+    content.tags.indexWhere(_.id == "politics/series/election-live-2015") == 0) &&
+    !(content.isSponsored(Some(Edition(request))) ||
+        content.isAdvertisementFeature ||
+        content.isFoundationSupported)
+) { electionBadgingEnabled =>
+
+    <div class="content__labels">
+
+        @if(electionBadgingEnabled) {
+            @fragments.meta.pseudoBadge()
+        }
+
+    <div class="content__section-label@if(electionBadgingEnabled) { content__section-label--election}">
         <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@content.sectionLabelLink}">@Html(Localisation(content.sectionLabelName))</a>
     </div>
 
-
-    @content.blogOrSeriesTag.map { series =>
-        <div class="content__series-label">
-            <a class="content__series-label__link" href="@LinkTo{/@series.id}">@series.name</a>
+        @content.blogOrSeriesTag.map { series =>
+        <div class="content__series-label @if(electionBadgingEnabled) { content__series-label--election}">
+            <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
         </div>
-    }.getOrElse{
-        @if(content.isFromTheObserver ) {
-            <div class="content__series-label">
-                <a class="content__series-label__link" href="http://observer.theguardian.com">The Observer</a>
-            </div>
+        }.getOrElse {
+            @if(content.isFromTheObserver) {
+                <div class="content__series-label">
+                    <a class="content__series-label__link" href="http://observer.theguardian.com">The Observer</a>
+                </div>
+            }
         }
-    }
-</div>
+    </div>
+}
