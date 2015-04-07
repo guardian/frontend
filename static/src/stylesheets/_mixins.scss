@@ -309,3 +309,30 @@
 
     @return $width;
 }
+
+// Table helpers (moved from 'base/_tables.scss')
+// =============================================================================
+@mixin table--hide-none {
+    th, td { display: table-cell !important; }
+}
+
+@mixin table--hide-from-importance-1 {
+    .table-column--importance-1 {
+        display: none;
+    }
+}
+
+@mixin table--hide-from-importance-2 {
+    .table-column--importance-1,
+    .table-column--importance-2 {
+        display: none;
+    }
+}
+
+@mixin table--hide-from-importance-3 {
+    .table-column--importance-1,
+    .table-column--importance-2,
+    .table-column--importance-3 {
+        display: none;
+    }
+}
