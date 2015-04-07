@@ -5,8 +5,6 @@ import React from 'react';
 
 import $ from 'common/utils/$';
 import _ from 'common/utils/_';
-import bean from 'bean';
-import bonzo from 'bonzo';
 
 import Clues from './clues';
 import Controls from './controls';
