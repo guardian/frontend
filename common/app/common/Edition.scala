@@ -89,3 +89,14 @@ object Editionalise {
   def apply(id: String, request: RequestHeader): String = this(id, Edition(request), Some(request))
 
 }
+
+case class InternationalEdition(variant: String)
+
+object InternationalEdition {
+  private val variants = Seq("control", "international")
+
+  def apply(request: RequestHeader): Option[InternationalEdition] = request.headers.get("X-GU-International")
+    .filter(variants.contains)
+    .map(InternationalEdition(_))
+
+}
