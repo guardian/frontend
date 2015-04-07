@@ -5,8 +5,7 @@
 
 @defining(
     ElectionLiveBadgeSwitch.isSwitchedOn &&
-    (content.tags.indexWhere(_.id == "politics/general-election-2015") == 0 ||
-    content.tags.indexWhere(_.id == "politics/series/election-live-2015") == 0) &&
+    content.tags.exists(_.id == "politics/general-election-2015") &&
     !(content.isSponsored(Some(Edition(request))) ||
         content.isAdvertisementFeature ||
         content.isFoundationSupported)
