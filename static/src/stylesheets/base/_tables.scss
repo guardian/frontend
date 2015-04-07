@@ -1,33 +1,3 @@
-$table-baseline: 8px;
-$table-gutter: 8px;
-$table-breakpoint-importance-1: tablet;
-$table-breakpoint-importance-2: mobile;
-$table-breakpoint-importance-3: 220px;
-
-@mixin table--hide-none {
-    th, td { display: table-cell !important; }
-}
-
-@mixin table--hide-from-importance-1 {
-    .table-column--importance-1 {
-        display: none;
-    }
-}
-
-@mixin table--hide-from-importance-2 {
-    .table-column--importance-1,
-    .table-column--importance-2 {
-        display: none;
-    }
-}
-
-@mixin table--hide-from-importance-3 {
-    .table-column--importance-1,
-    .table-column--importance-2,
-    .table-column--importance-3 {
-        display: none;
-    }
-}
 .table--hide-none { @include table--hide-none; }
 .table--hide-from-importance-1 { @include table--hide-from-importance-1; }
 .table--hide-from-importance-2 { @include table--hide-from-importance-2; }
