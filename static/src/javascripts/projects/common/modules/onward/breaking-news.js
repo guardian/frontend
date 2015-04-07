@@ -28,8 +28,8 @@ define([
     alertHtml
 ) {
     var supportedSections = {
-            'sport' : 'sport',
-            'football' : 'sport'
+            'sport': 'sport',
+            'football': 'sport'
         },
         breakingNewsSource = '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
