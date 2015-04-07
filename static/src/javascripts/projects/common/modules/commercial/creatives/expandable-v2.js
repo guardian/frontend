@@ -53,49 +53,29 @@ define([
                 this.closedHeight : this.openedHeight,
 
             inViewB = ((window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top),
-    
+
             inViewT = ((window.pageYOffset - adHeight) < this.$adSlot.offset().top),
 
             topCusp = (inViewT &&
-                ((window.pageYOffset + (bonzo.viewport().height*.3333) - adHeight) > this.$adSlot.offset().top)) ?
+                ((window.pageYOffset + (bonzo.viewport().height*0.3333) - adHeight) > this.$adSlot.offset().top)) ?
                 'true' : 'false',
-            
-            bottomCusp = (inViewB &&
-                (window.pageYOffset + (bonzo.viewport().height*.6666)) < this.$adSlot.offset().top) ?
-                'true' : 'false',
-                
-            inView = (inViewB && inViewT) ?
-                'true' : 'false';
-                
-            if(bottomCusp === 'true'){
-                bottomScroll = 50 - ((window.pageYOffset + (bonzo.viewport().height*.6666) - this.$adSlot.offset().top)* -0.2);
-            } else {
-                bottomScroll = 50;
-            }
-            
-            if(topCusp === 'true'){
-                topScroll = ((window.pageYOffset + (bonzo.viewport().height*.3333) - this.$adSlot.offset().top)* 0.2) - 50;
-            } else {
-                topScroll = 0;
-            }
-            
-            this.scrollAmount = bottomScroll + topScroll + "%";
-            
-            $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + this.scrollAmount);
 
-        console.log("to top of page = " + this.$adSlot.offset().top);
-        console.log("viewport height = " + bonzo.viewport().height);
-        console.log("pageYoffset = " + window.pageYOffset);
-        console.log("top cusp = " + topCusp);
-        console.log("bottom cusp = " + bottomCusp);
-        console.log("inviewT = " + inViewT);
-        console.log("inviewB = " + inViewB);
-        console.log("inview = " + inView);
-        console.log("bottom ratio = " + bottomScroll);
-        console.log("top ratio = " + topScroll);
-        console.log(this.scrollAmount);
-        console.log("is closed = " + this.isClosed);
-        console.log("ad height = " + adHeight);
+            bottomCusp = (inViewB &&
+                (window.pageYOffset + (bonzo.viewport().height*0.6666)) < this.$adSlot.offset().top) ?
+                'true' : 'false',
+
+            inView = (inViewB && inViewT) ?
+                'true' : 'false',
+
+            bottomScroll = (bottomCusp === 'true') ?
+                50 - ((window.pageYOffset + (bonzo.viewport().height*0.6666) - this.$adSlot.offset().top)* -0.2) : 50,
+
+            topScroll = (topCusp === 'true') ?
+                ((window.pageYOffset + (bonzo.viewport().height*0.3333) - this.$adSlot.offset().top)* 0.2) - 50 : 0;
+
+            this.scrollAmount = bottomScroll + topScroll + '%';
+
+            $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + this.scrollAmount);
     };
 
     ExpandableV2.prototype.listener = function () {
