@@ -30,5 +30,6 @@
       "semi": 2,
       "no-var": 2,
       "quotes": [2, "single"],
+      "no-undef": 2,
   }
 }
