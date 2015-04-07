@@ -1,4 +1,6 @@
 /* jshint newcap: false */
+/* eslint new-cap: 0 */
+
 import React from 'react';
 
 import $ from 'common/utils/$';
@@ -16,7 +18,9 @@ import persistence from './persistence';
 import loadFont from './font';
 
 // make react available to dev tool
-window.React || (window.React = React);
+if (!window.React) {
+    window.React = React;
+}
 
 const Crossword = React.createClass({
     getInitialState () {
@@ -115,7 +119,7 @@ const Crossword = React.createClass({
                 direction = 'down';
             } else if (deltaX !== 0) {
                 direction = 'across';
-            };
+            }
             this.focusClue(x, y, direction);
         }
     },
@@ -356,7 +360,7 @@ const Crossword = React.createClass({
         const entryHasIntersectingCell = entry => {
             const cells = helpers.cellsForEntry(entry);
             const intersecting = findIntersectingCells(cells, focussedCells);
-            return !! intersecting.length;
+            return !!intersecting.length;
         };
 
         const otherEntries = _.difference(this.props.data.entries, focussed ? [focussed] : []);
@@ -426,5 +430,4 @@ export default function () {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }
     });
-};
-
+}
