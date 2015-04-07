@@ -20,7 +20,7 @@ const cellsForEntry = (entry) => isAcross(entry) ?
  * Builds the initial state of the grid given the number of rows, columns, and a list of clues.
  */
 const buildGrid = (rows, columns, entries, savedState) => {
-    var grid = _.map(_.range(columns), (x) => _.map(_.range(rows), (y) => ({
+    const grid = _.map(_.range(columns), (x) => _.map(_.range(rows), (y) => ({
         isHighlighted: false,
         isEditable: false,
         isError: false,
@@ -29,8 +29,8 @@ const buildGrid = (rows, columns, entries, savedState) => {
     })));
 
     _.forEach(entries, (entry) => {
-        var x = entry.position.x,
-            y = entry.position.y;
+        const x = entry.position.x;
+        const y = entry.position.y;
 
         grid[x][y].number = entry.number;
 

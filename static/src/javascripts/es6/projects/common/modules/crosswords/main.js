@@ -270,8 +270,8 @@ const Crossword = React.createClass({
 
         if (entry.solution) {
             const badCells = _.map(_.filter(_.zip(cells, entry.solution), (cellAndSolution) => {
-                var cell = cellAndSolution[0],
-                    solution = cellAndSolution[1];
+                const cell = cellAndSolution[0];
+                const solution = cellAndSolution[1];
                 return /^[A-Z]$/.test(cell.value) && cell.value !== solution;
             }), (cellAndSolution) => cellAndSolution[0]);
 

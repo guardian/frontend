@@ -4,9 +4,9 @@ const buttonClassName = 'button button--small';
 
 export default React.createClass({
     render () {
-        var hasSolutions = this.props.hasSolutions,
-            hasFocus = this.props.clueInFocus,
-            controls = [];
+        const hasSolutions = this.props.hasSolutions;
+        const hasFocus = this.props.clueInFocus;
+        const controls = [];
 
         if (hasFocus && hasSolutions) {
             controls.unshift(
