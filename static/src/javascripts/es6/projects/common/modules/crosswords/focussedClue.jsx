@@ -5,7 +5,7 @@ export default React.createClass({
     render: function () {
         if(this.props.focussedClue === null) {return false}
 
-        let classList = {
+        const classList = {
             'crossword__focussed-clue--direction': true,
             'crossword__focussed-clue--direction-down': this.props.focussedClue.direction === 'down',
             'crossword__focussed-clue--direction-across': this.props.focussedClue.direction === 'across'
@@ -16,7 +16,7 @@ export default React.createClass({
                 {this.props.focussedClue.clue}
             </div>
             {this.props.contextualClues.map((contextualClue) => {
-                let classList = {
+                const classList = {
                     'crossword__contextual-clue--direction': true,
                     'crossword__contextual-clue--direction-down': contextualClue.direction === 'down',
                     'crossword__contextual-clue--direction-across': contextualClue.direction === 'across'

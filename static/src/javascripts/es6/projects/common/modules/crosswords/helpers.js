@@ -2,14 +2,14 @@ import _ from 'common/utils/_';
 
 import constants from 'es6/projects/common/modules/crosswords/constants';
 
-let isAcross = (clue) => clue.direction === 'across';
+const isAcross = (clue) => clue.direction === 'across';
 
-let otherDirection = (direction) => direction === 'across' ? 'down' : 'across';
+const otherDirection = (direction) => direction === 'across' ? 'down' : 'across';
 
 /**
  * Builds the initial state of the grid given the number of rows, columns, and a list of clues.
  */
-let buildGrid = (rows, columns, entries, savedState) => {
+const buildGrid = (rows, columns, entries, savedState) => {
     var grid = _.map(_.range(columns), (x) => _.map(_.range(rows), (y) => ({
         isHighlighted: false,
         isEditable: false,
@@ -33,10 +33,10 @@ let buildGrid = (rows, columns, entries, savedState) => {
 }
 
 /** Hash key for the cell at x, y in the clue map */
-let clueMapKey = (x, y) => `${x}_${y}`;
+const clueMapKey = (x, y) => `${x}_${y}`;
 
 /** A map for looking up clues that a given cell relates to */
-let buildClueMap = (clues) => {
+const buildClueMap = (clues) => {
     var map = {};
 
     _.forEach(clues, (clue) => {
@@ -58,7 +58,7 @@ let buildClueMap = (clues) => {
     return map;
 }
 
-let cellsForEntry = (entry) => isAcross(entry) ?
+const cellsForEntry = (entry) => isAcross(entry) ?
     _.map(_.range(entry.position.x, entry.position.x + entry.length), (x) => ({
         x: x,
         y: entry.position.y
@@ -68,10 +68,10 @@ let cellsForEntry = (entry) => isAcross(entry) ?
         y: y
     }));
 
-let entryHasCell = (entry, x, y) => _.any(cellsForEntry(entry), (cell) => cell.x === x && cell.y === y);
+const entryHasCell = (entry, x, y) => _.any(cellsForEntry(entry), (cell) => cell.x === x && cell.y === y);
 
 /** Can be used for width or height, as the cell height == cell width */
-let gridSize = (cells) => cells * (constants.cellSize + constants.borderSize) + constants.borderSize;
+const gridSize = (cells) => cells * (constants.cellSize + constants.borderSize) + constants.borderSize;
 
 export default {
     isAcross: isAcross,

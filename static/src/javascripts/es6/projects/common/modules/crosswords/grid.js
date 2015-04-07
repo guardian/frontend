@@ -7,16 +7,16 @@ import _ from 'common/utils/_';
 import constants from 'es6/projects/common/modules/crosswords/constants';
 import helpers from 'es6/projects/common/modules/crosswords/helpers';
 
-var Cell = React.createClass({
+const Cell = React.createClass({
     onClick: function (event) {
         event.preventDefault();
         this.props.handleSelect();
     },
 
     render: function () {
-        var innerNodes = [],
-            top = helpers.gridSize(this.props.y),
-            left = helpers.gridSize(this.props.x);
+        const innerNodes = [];
+        const top = helpers.gridSize(this.props.y);
+        const left = helpers.gridSize(this.props.x);
 
         if (this.props.number !== undefined) {
             innerNodes.push(
@@ -67,13 +67,13 @@ export default React.createClass({
     },
 
     render: function () {
-        var width = helpers.gridSize(this.props.columns),
-            height = helpers.gridSize(this.props.rows),
-            cells = [];
+        const width = helpers.gridSize(this.props.columns);
+        const height = helpers.gridSize(this.props.rows);
+        const cells = [];
 
         _.forEach(_.range(this.props.rows), (y) => {
             _.map(_.range(this.props.columns), (x) => {
-                var cellProps = this.props.cells[x][y];
+                const cellProps = this.props.cells[x][y];
 
                 if (cellProps.isEditable) {
                     cellProps.handleSelect = this.handleSelect.bind(this, x, y);

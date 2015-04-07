@@ -4,7 +4,7 @@ import React from 'react';
 
 import _ from 'common/utils/_';
 
-var Clue = React.createClass({
+const Clue = React.createClass({
         onClick: function (event) {
             event.preventDefault();
             this.props.focusClue();
@@ -28,9 +28,8 @@ var Clue = React.createClass({
 
 export default React.createClass({
     render: function () {
-        var headerClass = 'crossword__clues-header';
-
-        let cluesByDirection = (direction) => _.chain(this.props.clues)
+        const headerClass = 'crossword__clues-header';
+        const cluesByDirection = (direction) => _.chain(this.props.clues)
             .filter((clue) => clue.entry.direction === direction)
             .map((clue) => Clue({
                 number: clue.entry.number + '.',
