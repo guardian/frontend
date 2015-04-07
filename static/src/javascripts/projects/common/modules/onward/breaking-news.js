@@ -27,7 +27,8 @@ define([
     svgs,
     alertHtml
 ) {
-    var breakingNewsSource = '/breaking-news/lite.json',
+    var supportedSections = ['sport'],
+        breakingNewsSource = '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
         maxSimultaneousAlerts = 1,
         $breakingNews,
@@ -63,10 +64,13 @@ define([
                     }),
 
                     edition = (page.edition || '').toLowerCase(),
+                    section = (page.section || '').toLowerCase(),
+                    editionSection = _.contains(supportedSections, section) ? edition + '/' + section : false,
 
                     articles = _.flatten([
                         collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
-                        collections.filter(function (c) { return c.href === edition;  }).map(function (c) { return c.content; })
+                        collections.filter(function (c) { return c.href === edition;  }).map(function (c) { return c.content; }),
+                        collections.filter(function (c) { return editionSection && c.href === editionSection; }).map(function (c) { return c.content; })
                     ]),
 
                     articleIds = articles.map(function (article) { return article.id; }),
