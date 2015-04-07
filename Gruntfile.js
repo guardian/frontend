@@ -85,10 +85,6 @@ module.exports = function (grunt) {
             grunt.task.run('shell:jspmBundleStatic');
         }
 
-        if (options.isDev) {
-            grunt.task.run('replace:jspmSourceMaps');
-        }
-
         grunt.task.run(['concurrent:requireJS', 'copy:javascript']);
         if (!options.isDev) {
             grunt.task.run('uglify:javascript');

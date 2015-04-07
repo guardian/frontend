@@ -1,30 +1,40 @@
+// vendor
 import _ from 'common/utils/_';
 
+// app
 import constants from 'es6/projects/common/modules/crosswords/constants';
 
-let isAcross = (clue) => clue.direction === 'across';
+function isAcross(clue) {
+    return clue.direction === 'across';
+}
 
-let otherDirection = (direction) => direction === 'across' ? 'down' : 'across';
+function otherDirection(direction) {
+    return direction === 'across' ? 'down' : 'across';
+}
 
 /**
  * Builds the initial state of the grid given the number of rows, columns, and a list of clues.
  */
-let buildGrid = (rows, columns, entries, savedState) => {
-    var grid = _.map(_.range(columns), (x) => _.map(_.range(rows), (y) => ({
-        isHighlighted: false,
-        isEditable: false,
-        isError: false,
-        isAnimating: false,
-        value: (savedState && savedState[x] && savedState[x][y]) ? savedState[x][y] : ''
-    })));
+function buildGrid(rows, columns, entries, savedState) {
+    var grid = _.map(_.range(columns), function (x) {
+        return _.map(_.range(rows), function (y) {
+            return {
+                isHighlighted: false,
+                isEditable: false,
+                isError: false,
+                isAnimating: false,
+                value: (savedState && savedState[x] && savedState[x][y]) ? savedState[x][y] : ''
+            };
+        });
+    });
 
-    _.forEach(entries, (entry) => {
+    _.forEach(entries, function (entry) {
         var x = entry.position.x,
             y = entry.position.y;
 
         grid[x][y].number = entry.number;
 
-        _.forEach(cellsForEntry(entry), (cell) => {
+        _.forEach(cellsForEntry(entry), function (cell) {
             grid[cell.x][cell.y].isEditable = true;
         });
     });
@@ -33,14 +43,16 @@ let buildGrid = (rows, columns, entries, savedState) => {
 }
 
 /** Hash key for the cell at x, y in the clue map */
-let clueMapKey = (x, y) => `${x}_${y}`;
+function clueMapKey(x, y) {
+    return x + '_' + y;
+}
 
 /** A map for looking up clues that a given cell relates to */
-let buildClueMap = (clues) => {
+function buildClueMap(clues) {
     var map = {};
 
-    _.forEach(clues, (clue) => {
-        _.forEach(cellsForEntry(clue), (cell) => {
+    _.forEach(clues, function (clue) {
+        _.forEach(cellsForEntry(clue), function (cell) {
             var key = clueMapKey(cell.x, cell.y);
 
             if (map[key] === undefined) {
@@ -58,20 +70,34 @@ let buildClueMap = (clues) => {
     return map;
 }
 
-let cellsForEntry = (entry) => isAcross(entry) ?
-    _.map(_.range(entry.position.x, entry.position.x + entry.length), (x) => ({
-        x: x,
-        y: entry.position.y
-    })) :
-    _.map(_.range(entry.position.y, entry.position.y + entry.length), (y) => ({
-        x: entry.position.x,
-        y: y
-    }));
+function cellsForEntry(entry) {
+    if (isAcross(entry)) {
+        return _.map(_.range(entry.position.x, entry.position.x + entry.length), function (x) {
+            return {
+                x: x,
+                y: entry.position.y
+            };
+        });
+    } else {
+        return _.map(_.range(entry.position.y, entry.position.y + entry.length), function (y) {
+            return {
+                x: entry.position.x,
+                y: y
+            };
+        });
+    }
+}
 
-let entryHasCell = (entry, x, y) => _.any(cellsForEntry(entry), (cell) => cell.x === x && cell.y === y);
+function entryHasCell(entry, x, y) {
+    return _.any(cellsForEntry(entry), function (cell) {
+        return cell.x === x && cell.y === y;
+    });
+}
 
 /** Can be used for width or height, as the cell height == cell width */
-let gridSize = (cells) => cells * (constants.cellSize + constants.borderSize) + constants.borderSize;
+function gridSize(cells) {
+    return cells * (constants.cellSize + constants.borderSize) + constants.borderSize;
+}
 
 export default {
     isAcross: isAcross,

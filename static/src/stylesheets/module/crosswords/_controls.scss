@@ -1,9 +1,0 @@
-.crossword__controls {
-    display: block;
-    margin-bottom: $gs-baseline;
-
-    @include mq(tablet) {
-        float: left;
-        clear: both;
-    }
-}
