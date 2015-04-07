@@ -8,7 +8,7 @@ export default (entries, focussed) => {
     const entryHasIntersectingCell = entry => {
         const cells = helpers.cellsForEntry(entry);
         const intersecting = deepIntersection(cells, focussedCells);
-        return !! intersecting.length;
+        return !!intersecting.length;
     };
 
     const otherEntries = _.difference(entries, focussed ? [focussed] : []);
