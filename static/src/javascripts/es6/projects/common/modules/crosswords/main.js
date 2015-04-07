@@ -8,7 +8,7 @@ import bonzo from 'bonzo';
 
 import Clues from './clues';
 import Controls from './controls';
-import FocussedClue from './focussedClue.jsx!';
+import FocussedClue from './focussed-clue.jsx!';
 import Grid from './grid';
 import helpers from './helpers';
 import keycodes from './keycodes';
