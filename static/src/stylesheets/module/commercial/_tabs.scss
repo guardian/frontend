@@ -23,6 +23,10 @@
             width: auto;
         }
 
+        @include mq(tablet) {
+            width: 25%;
+        }
+
         a {
             background-color: transparent;
             padding-left: $gs-gutter/2;
