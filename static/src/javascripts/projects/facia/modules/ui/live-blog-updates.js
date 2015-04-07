@@ -1,5 +1,6 @@
 define([
     'bonzo',
+    'fastdom',
     'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
@@ -10,6 +11,7 @@ define([
     'text!facia/views/liveblog-block.html'
 ], function (
     bonzo,
+    fastdom,
     _,
     $,
     ajax,
@@ -48,37 +50,39 @@ define([
     function renderBlocks(articleId, targets, blocks, oldBlockDate) {
         var fakeUpdate = _.isUndefined(oldBlockDate);
 
-        _.forEach(targets, function (element) {
-            var numNewBlocks = 0,
+        fastdom.write(function () {
+            _.forEach(targets, function (element) {
+                var numNewBlocks = 0,
 
-                blocksHtml = _.chain(blocks)
-                    .map(function (block, index) {
-                        if (numNewBlocks < numDisplayedBlocks
-                            && (block.publishedDateTime > oldBlockDate || (fakeUpdate && index === 0))) {
-                            block.isNew = true;
-                            numNewBlocks += 1;
-                        }
-                        return block;
-                    })
-                    .slice(0, numDisplayedBlocks + numNewBlocks)
-                    .map(function (block, index) {
-                        return renderBlock(articleId, block, index);
-                    })
-                    .value()
-                    .join(''),
+                    blocksHtml = _.chain(blocks)
+                        .map(function (block, index) {
+                            if (numNewBlocks < numDisplayedBlocks
+                                && (block.publishedDateTime > oldBlockDate || (fakeUpdate && index === 0))) {
+                                block.isNew = true;
+                                numNewBlocks += 1;
+                            }
+                            return block;
+                        })
+                        .slice(0, numDisplayedBlocks + numNewBlocks)
+                        .map(function (block, index) {
+                            return renderBlock(articleId, block, index);
+                        })
+                        .value()
+                        .join(''),
 
-                el = bonzo.create(template(blocksTemplate, {
-                    newBlocksHeight: numNewBlocks * blockHeightPx,
-                    blocksHtml: blocksHtml
-                }));
+                    el = bonzo.create(template(blocksTemplate, {
+                        newBlocksHeight: numNewBlocks * blockHeightPx,
+                        blocksHtml: blocksHtml
+                    }));
 
-            bonzo(element).empty().prepend(el);
+                bonzo(element).empty().prepend(el);
 
-            if (numNewBlocks) {
-                setTimeout(function () {
-                    bonzo(el).removeAttr('style');
-                }, 1000);
-            }
+                if (numNewBlocks) {
+                    setTimeout(function () {
+                        bonzo(el).removeAttr('style');
+                    }, 1000);
+                }
+            });            
         });
     }
 
@@ -122,18 +126,20 @@ define([
     }
 
     function start() {
-        $(selector).each(function (element) {
-            if (element.hasAttribute(articleIdAttribute)) {
-                var articleId = element.getAttribute(articleIdAttribute);
+        fastdom.read(function () {
+            $(selector).each(function (element) {
+                if (element.hasAttribute(articleIdAttribute)) {
+                    var articleId = element.getAttribute(articleIdAttribute);
 
-                elementsById[articleId] = elementsById[articleId] || [];
-                elementsById[articleId].push(element);
+                    elementsById[articleId] = elementsById[articleId] || [];
+                    elementsById[articleId].push(element);
+                }
+            });
+
+            if (!_.isEmpty(elementsById)) {
+                updateBlocks();
             }
         });
-
-        if (!_.isEmpty(elementsById)) {
-            updateBlocks();
-        }
     }
 
     return start;
