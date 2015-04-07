@@ -12,7 +12,11 @@ function saveGridState(id, grid) {
      * Take only the entries from the grid. Other state information like what cells are highlighted ought not
      * to be persisted.
      */
-    var entries = _.map(grid, (row) => _.map(row, (cell) => cell.value));
+    var entries = _.map(grid, function (row) {
+        return _.map(row, function (cell) {
+            return cell.value;
+        });
+    });
 
     try {
         localStorage.set(localStorageKey(id), entries);
