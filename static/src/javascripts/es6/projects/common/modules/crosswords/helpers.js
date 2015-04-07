@@ -37,11 +37,11 @@ const clueMapKey = (x, y) => `${x}_${y}`;
 
 /** A map for looking up clues that a given cell relates to */
 const buildClueMap = (clues) => {
-    var map = {};
+    const map = {};
 
     _.forEach(clues, (clue) => {
         _.forEach(cellsForEntry(clue), (cell) => {
-            var key = clueMapKey(cell.x, cell.y);
+            const key = clueMapKey(cell.x, cell.y);
 
             if (map[key] === undefined) {
                 map[key] = {};

@@ -87,10 +87,9 @@ const Crossword = React.createClass({
     focusPreviousClue: function () {
         const i = this.indexOfClueInFocus();
         const entries = this.props.data.entries;
-        const newClue;
 
         if (i !== -1) {
-            newClue = entries[(i === 0) ? entries.length - 1 : i - 1];
+            const newClue = entries[(i === 0) ? entries.length - 1 : i - 1];
             this.focusClue(newClue.position.x, newClue.position.y, newClue.direction);
         }
     },
@@ -98,10 +97,9 @@ const Crossword = React.createClass({
     focusNextClue: function () {
         const i = this.indexOfClueInFocus();
         const entries = this.props.data.entries;
-        const newClue;
 
         if (i !== -1) {
-            newClue = entries[(i === entries.length - 1) ? 0 : i + 1];
+            const newClue = entries[(i === entries.length - 1) ? 0 : i + 1];
             this.focusClue(newClue.position.x, newClue.position.y, newClue.direction);
         }
     },
@@ -327,8 +325,10 @@ const Crossword = React.createClass({
     hiddenInputValue: function () {
         const cell = this.state.cellInFocus;
 
+        let currentValue;
+
         if (cell) {
-            const currentValue = this.state.grid[cell.x][cell.y].value;
+            currentValue = this.state.grid[cell.x][cell.y].value;
         }
 
         return currentValue ? currentValue : '';
