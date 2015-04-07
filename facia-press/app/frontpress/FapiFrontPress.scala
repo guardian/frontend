@@ -89,7 +89,8 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
       collection <- FAPI.getCollection(collectionId)
       curatedCollection <- FAPI.collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
       backfill <- getBackfill(collection)
-    } yield PressedCollection.fromCollectionWithCuratedAndBackfill(collection, curatedCollection, backfill)
+      treats <- FAPI.getTreatsForCollection(collection, searchApiQuery, itemApiQuery)
+    } yield PressedCollection.fromCollectionWithCuratedAndBackfill(collection, curatedCollection, backfill, treats)
 
   private def getBackfill(collection: Collection): Response[List[FaciaContent]] =
     collection
