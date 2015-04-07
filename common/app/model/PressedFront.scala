@@ -171,13 +171,14 @@ object PressedCollection {
   def fromCollectionWithCuratedAndBackfill(
       collection: com.gu.facia.api.models.Collection,
       curated: List[FaciaContent],
-      backfill: List[FaciaContent]): PressedCollection =
+      backfill: List[FaciaContent],
+      treats: List[FaciaContent]): PressedCollection =
     PressedCollection(
       collection.id,
       collection.displayName,
       curated,
       backfill,
-      Nil,
+      treats,
       collection.lastUpdated,
       collection.updatedBy,
       collection.updatedEmail,
