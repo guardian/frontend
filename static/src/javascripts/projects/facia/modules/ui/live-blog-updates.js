@@ -62,7 +62,7 @@ define([
                         return block;
                     })
                     .slice(0, numDisplayedBlocks + numNewBlocks)
-                    .map(function(block, index) {
+                    .map(function (block, index) {
                         return renderBlock(articleId, block, index);
                     })
                     .value()
