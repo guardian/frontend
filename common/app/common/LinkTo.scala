@@ -25,12 +25,12 @@ trait LinkTo extends Logging {
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
 
-  def apply(url: String, edition: Edition)(implicit request : RequestHeader): String = {
+  def apply(url: String, edition: Edition)(implicit request: RequestHeader): String = {
     val processedUrl: String = processUrl(url, edition).url
     handleQueryStrings(processedUrl)
   }
 
-  def handleQueryStrings(url: String)(implicit request : RequestHeader) =
+  def handleQueryStrings(url: String)(implicit request: RequestHeader) =
     HttpSwitch.queryString(url).trim
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)

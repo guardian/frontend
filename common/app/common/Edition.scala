@@ -78,12 +78,10 @@ object Editionalise {
   import common.editions.EditionalisedSections._
 
   def apply(id: String, edition: Edition, request: Option[RequestHeader] = None): String = {
-    val internationalEdition = request.flatMap(InternationalEdition.apply)
-
     if (isEditionalised(id)) id match {
         case "" =>
 
-          if (internationalEdition.exists(_.isInternational)) {
+          if (request.exists(InternationalEdition.isInternationalEdition)) {
             s"international"
           } else {
             edition.id.toLowerCase
@@ -111,4 +109,5 @@ object InternationalEdition {
     .filter(variants.contains)
     .map(InternationalEdition(_))
 
+  def isInternationalEdition(request: RequestHeader) = apply(request).exists(_.isInternational)
 }
