@@ -92,25 +92,21 @@ object FapiJsonFormats {
     def writes(faciaContent: FaciaContent) = faciaContent match {
       case linkSnap: LinkSnap => Json.toJson(linkSnap)(linkSnapFormat).transform[JsObject](Reads.JsObjectReads) match {
         case JsSuccess(l, _) =>
-          println(s"Coming through linkSnapFormat writes")
           l ++ Json.obj("type" -> "LinkSnap")
         case JsError(_) => JsNull
       }
       case latestSnap: LatestSnap => Json.toJson(latestSnap)(latestSnapFormat).transform[JsObject](Reads.JsObjectReads) match {
         case JsSuccess(l, _) =>
-          println(s"Coming through latestSnapFormat writes")
           l ++ Json.obj("type" -> "LatestSnap")
         case JsError(_) => JsNull
       }
       case content: CuratedContent => Json.toJson(content)(curatedContentFormat).transform[JsObject](Reads.JsObjectReads) match {
         case JsSuccess(l, _) =>
-          println(s"Coming through curatedContentFormat writes")
           l ++ Json.obj("type" -> "CuratedContent")
         case JsError(_) => JsNull
       }
       case supportingContent: SupportingCuratedContent => Json.toJson(supportingContent)(supportingCuratedContentFormat).transform[JsObject](Reads.JsObjectReads) match {
         case JsSuccess(l, _) =>
-          println(s"Coming through supportingCuratedContentFormat writes")
           l ++ Json.obj("type" -> "SupportingCuratedContent")
         case JsError(_) => JsNull
       }
