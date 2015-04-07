@@ -1,4 +1,6 @@
 /* jshint newcap: false */
+/* eslint new-cap: 0 */
+
 import classNames from 'classnames';
 import React from 'react';
 
@@ -96,7 +98,7 @@ export default React.createClass({
             viewBox: '0 0 ' + width + ' ' + height,
             className: classNames({
                 'crossword__grid': true,
-                'crossword__grid--focussed': !! this.props.focussedCell
+                'crossword__grid--focussed': !!this.props.focussedCell
             })
         }, React.DOM.rect({
             x: 0,
