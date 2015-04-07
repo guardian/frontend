@@ -1,49 +1,44 @@
-import bonzo from 'bonzo';
-import qwery from 'qwery';
 import _ from 'common/utils/_';
 import $ from 'common/utils/$';
+import bonzo from 'bonzo';
+import qwery from 'qwery';
 import ajax from 'common/utils/ajax';
 
 import helpers from 'es6/projects/common/modules/crosswords/helpers';
 import persistence from 'es6/projects/common/modules/crosswords/persistence';
 
-var textXOffset = 15,
-    textYOffset = 19;
+const textXOffset = 15;
+const textYOffset = 19;
 
 function makeTextCells(savedState) {
-    var columns = savedState.length,
-        rows = savedState[0].length;
+    const columns = savedState.length;
+    const rows = savedState[0].length;
 
-    return _.flatten(_.map(_.range(columns), function (column) {
-        return _.map(_.range(rows), function (row) {
-            var enteredText = savedState[column][row],
-                el,
-                top,
-                left;
+    return _.flatten(_.map(_.range(columns), (column) => _.map(_.range(rows), (row) => {
+        const enteredText = savedState[column][row];
 
-            if (enteredText) {
-                el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                top = helpers.gridSize(row);
-                left = helpers.gridSize(column);
+        if (enteredText) {
+            const el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            const top = helpers.gridSize(row);
+            const left = helpers.gridSize(column);
 
-                bonzo(el).attr({
-                    x: left + textXOffset,
-                    y: top + textYOffset,
-                    'class': 'crossword__cell-text'
-                }).text(enteredText);
+            bonzo(el).attr({
+                x: left + textXOffset,
+                y: top + textYOffset,
+                'class': 'crossword__cell-text'
+            }).text(enteredText);
 
-                return [el];
-            } else {
-                return [];
-            }
-        });
-    }));
+            return [el];
+        } else {
+            return [];
+        }
+    })));
 }
 
 function init() {
-    _.forEach(qwery('.js-crossword-thumbnail'), function (elem) {
-        var $elem = bonzo(elem),
-            savedState = persistence.loadGridState($elem.attr('data-crossword-id'));
+    _.forEach(qwery('.js-crossword-thumbnail'), (elem) => {
+        const $elem = bonzo(elem);
+        const savedState = persistence.loadGridState($elem.attr('data-crossword-id'));
 
         if (savedState) {
             ajax({
@@ -52,8 +47,8 @@ function init() {
                 method: 'get',
                 crossOrigin: true,
                 success: function (data) {
-                    var cells = makeTextCells(savedState),
-                        svg = qwery('svg', data)[0];
+                    const cells = makeTextCells(savedState);
+                    const svg = qwery('svg', data)[0];
                     bonzo(svg).append(cells);
                     $elem.replaceWith(svg);
                 }
