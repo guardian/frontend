@@ -64,9 +64,6 @@ define([
                 (window.pageYOffset + (bonzo.viewport().height*0.6666)) < this.$adSlot.offset().top) ?
                 'true' : 'false',
 
-            inView = (inViewB && inViewT) ?
-                'true' : 'false',
-
             bottomScroll = (bottomCusp === 'true') ?
                 50 - ((window.pageYOffset + (bonzo.viewport().height*0.6666) - this.$adSlot.offset().top)* -0.2) : 50,
 
@@ -95,7 +92,6 @@ define([
     ExpandableV2.prototype.create = function () {
         var videoHeight = this.closedHeight - 24,
             videoWidth = (videoHeight * 16) / 9,
-            scrollbgtemp = ''
             leftMargin = (this.params.videoPositionH === 'center' ?
                 'margin-left: ' + videoWidth / -2 + 'px; ' : ''
             ),
@@ -119,8 +115,7 @@ define([
             },
             scrollingbg = {
                 scrollbg: (this.params.showMoreType === 'arrow-only' || this.params.showMoreType === 'plus-and-arrow' || this.params.showMoreType === 'plus-only') ?
-                
-                // bg position = 50 + variable, make top variable negative number!
+// temp url for image, needs to come from DFP.
                     '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(http://local.sandbox.co.uk/commercial-responsive-ads/test-images/bgfadescroll.png); background-position: 50% 50%; background-repeat: no-repeat;"></div>' : ''
             },
             $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
