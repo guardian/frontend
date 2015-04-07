@@ -20,7 +20,7 @@ module.exports = function(grunt, options) {
 
         abTestInfo: {
             command: 'node tools/ab-test-info/ab-test-info.js ' +
-                     'static/src/javascripts/modules/experiments/tests ' +
+                     'static/src/javascripts/projects/common/modules/experiments/tests ' +
                      'static/abtests.json'
         },
 

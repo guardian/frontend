@@ -8,12 +8,12 @@ import constants from 'es6/projects/common/modules/crosswords/constants';
 import helpers from 'es6/projects/common/modules/crosswords/helpers';
 
 const Cell = React.createClass({
-    onClick: function (event) {
+    onClick (event) {
         event.preventDefault();
         this.props.handleSelect();
     },
 
-    render: function () {
+    render () {
         const innerNodes = [];
         const top = helpers.gridSize(this.props.y);
         const left = helpers.gridSize(this.props.x);
@@ -62,14 +62,17 @@ const Cell = React.createClass({
 });
 
 export default React.createClass({
-    handleSelect: function (x, y) {
+    handleSelect (x, y) {
         this.props.onSelect(x, y);
     },
 
-    render: function () {
+    render () {
         const width = helpers.gridSize(this.props.columns);
         const height = helpers.gridSize(this.props.rows);
         const cells = [];
+
+        const cellIntersectsFocussedEntry = (x, y) =>
+            this.props.intersectingEntries.some(entry => helpers.entryHasCell(entry, x, y));
 
         _.forEach(_.range(this.props.rows), (y) => {
             _.map(_.range(this.props.columns), (x) => {
@@ -81,7 +84,7 @@ export default React.createClass({
                     cellProps.y = y;
                     cellProps.key = 'cell_' + x + '_' + y;
                     cellProps.isHighlighted = this.props.isHighlighted(x, y);
-                    cellProps.intersectsFocussedEntry = this.props.cellIntersectsFocussedEntry(x, y);
+                    cellProps.intersectsFocussedEntry = cellIntersectsFocussedEntry(x, y);
                     cellProps.isFocussed = this.props.focussedCell && x === this.props.focussedCell.x &&
                         y === this.props.focussedCell.y;
                     cells.push(Cell(cellProps));
