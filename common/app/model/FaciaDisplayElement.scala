@@ -3,6 +3,7 @@ package model
 import com.gu.facia.api.models.FaciaContent
 import conf.Switches
 import implicits.FaciaContentImplicits._
+import conf.{Switches,Configuration}
 
 object FaciaDisplayElement {
   def fromFaciaContent(faciaContent: FaciaContent): Option[FaciaDisplayElement] = {
@@ -46,5 +47,5 @@ case class InlineImage(imageContainer: ImageContainer) extends FaciaDisplayEleme
 case class CrosswordSvg(id: String) extends FaciaDisplayElement {
   def persistenceId = id.stripPrefix("crosswords/")
 
-  def imageUrl = s"/$id.svg"
+  def imageUrl = s"${Configuration.ajax.url}/$id.svg"
 }

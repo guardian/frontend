@@ -1,7 +1,6 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
-@import common.StringEncodings
-
-@import common.Edition
+@import common.{Edition, InternationalEdition, StringEncodings}
+@import conf.Static
 @import views.support.{JavaScriptPage, CamelCase}
 @import play.api.libs.json.Json
 
@@ -11,6 +10,7 @@
         "switches" : { @{Html(conf.Switches.all.map{ switch =>
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },
+        "tests": { @InternationalEdition(request).map{ international => "internationalEditionVariant" : "@international.variant" } },
         "modules": { },
         "images": {
             "commercial": {

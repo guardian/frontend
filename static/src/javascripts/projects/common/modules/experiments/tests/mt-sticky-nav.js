@@ -35,7 +35,7 @@ define([
 
         function updatePosition(config) {
             fastdom.write(function () {
-                if (window.scrollY < 500) {
+                if (window.scrollY < config.scrollThreshold) {
                     //topAd is sticky from the beginning
                     config.$stickyTopAd.css({
                         position: 'fixed',
@@ -63,20 +63,20 @@ define([
                         config.$bannnerMobile.css('margin-top', config.stickyNavigationHeight);
                     }
                 } else {
-                    //after 500px of scrolling 'release' topAd
+                    //after config.scrollThreshold px of scrolling 'release' topAd
                     config.$stickyTopAd.css({
                         position: 'absolute',
-                        top: 500
+                        top: config.scrollThreshold
                     });
 
                     //move navigation toward top
                     config.$stickyNavigation.css({
                         position: 'fixed',
-                        top: config.stickyTopAdHeight - (window.scrollY - 500)
+                        top: config.stickyTopAdHeight - (window.scrollY - config.scrollThreshold)
                     });
 
                     //from now on, navigation stays on top
-                    if (window.scrollY > (500 + config.stickyTopAdHeight)) {
+                    if (window.scrollY > (config.scrollThreshold + config.stickyTopAdHeight)) {
                         config.$stickyNavigation.css({
                             position: 'fixed',
                             top: 0
@@ -88,7 +88,7 @@ define([
 
         function updatePositionMobile(config) {
             fastdom.write(function () {
-                if (window.scrollY < 500) {
+                if (window.scrollY < config.scrollThreshold) {
                     //navigation is not sticky yet
                     config.$stickyNavigation.css({
                         position:  null,
@@ -120,10 +120,10 @@ define([
                         config.$contentBelowMobile.css('margin-top', config.belowMobileMargin);
                     }
                 } else {
-                    //after 500px of scrolling 'release' banner below nav
+                    //after config.scrollThreshold px of scrolling 'release' banner below nav
                     config.$bannnerMobile.css({
                         position:  'absolute',
-                        top:       500
+                        top:       config.scrollThreshold
                     });
                 }
             });
@@ -139,7 +139,8 @@ define([
                             $stickyTopAd: $('.sticky-nav-mt-test .top-banner-ad-container'),
                             $header: $('.sticky-nav-mt-test .l-header__inner'),
                             $bannnerMobile: $('.top-banner-ad-container--mobile'),
-                            $contentBelowMobile: $('#maincontent')
+                            $contentBelowMobile: $('#maincontent'),
+                            scrollThreshold: 480
                         };
 
                         fastdom.write(function () {

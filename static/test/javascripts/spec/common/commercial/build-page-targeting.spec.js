@@ -11,7 +11,7 @@ define([
             'common/utils/detect',
             'common/modules/commercial/user-ad-targeting',
             'common/modules/experiments/ab',
-            'common/modules/commercial/third-party-tags/audience-science',
+            'common/modules/commercial/third-party-tags/krux',
             'common/modules/commercial/third-party-tags/audience-science-gateway',
             'common/modules/commercial/third-party-tags/criteo'
         ])
@@ -39,35 +39,35 @@ define([
                         audienceScienceGateway: true
                     };
                     mocks.store['common/utils/cookies'].get = function () {
-                        return 'ng101'
+                        return 'ng101';
                     };
                     mocks.store['common/utils/detect'].getBreakpoint = function () {
-                        return 'mobile'
+                        return 'mobile';
                     };
                     mocks.store['common/modules/commercial/user-ad-targeting'].getUserSegments = function () {
-                        return ['seg1', 'seg2']
+                        return ['seg1', 'seg2'];
                     };
                     mocks.store['common/modules/experiments/ab'].getParticipations = function () {
                         return {
                             MtMaster: {
                                 variant: 'variant'
                             }
-                        }
+                        };
                     };
-                    mocks.store['common/modules/commercial/third-party-tags/audience-science'].getSegments = function () {
+                    mocks.store['common/modules/commercial/third-party-tags/krux'].getSegments = function () {
                         return ['E012712', 'E012390', 'E012478'];
                     };
                     mocks.store['common/modules/commercial/third-party-tags/audience-science-gateway'].getSegments = function () {
                         return {
                             asg1: 'value-one',
                             asg2: 'value-two'
-                        }
+                        };
                     };
                     mocks.store['common/modules/commercial/third-party-tags/criteo'].getSegments = function () {
                         return {
                             c1: 'value-one',
                             c2: 'value-two'
-                        }
+                        };
                     };
                 });
 
@@ -127,8 +127,8 @@ define([
                     expect(pageTargeting.c2).toBe('value-two');
                 });
 
-                it('should set correct audience science params', function () {
-                    expect(buildPageTargeting().a).toEqual(['E012712', 'E012390', 'E012478']);
+                it('should set correct krux params', function () {
+                    expect(buildPageTargeting().x).toEqual(['E012712', 'E012390', 'E012478']);
                 });
 
                 it('should set correct audience science gateway params', function () {
@@ -143,7 +143,7 @@ define([
                     mocks.store['common/modules/commercial/user-ad-targeting'].getUserSegments = function () {
                         return [];
                     };
-                    mocks.store['common/modules/commercial/third-party-tags/audience-science'].getSegments = function () {
+                    mocks.store['common/modules/commercial/third-party-tags/krux'].getSegments = function () {
                         return [];
                     };
                     mocks.store['common/modules/commercial/third-party-tags/audience-science-gateway'].getSegments = function () {

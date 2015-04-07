@@ -2,50 +2,52 @@ define([
     'raven',
     'common/utils/_',
     'common/utils/config',
+    'common/utils/cookies',
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/identity-social-oauth',
-    'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/mt-master',
     'common/modules/experiments/tests/mt-top-below-nav',
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/mt-top-below-first-container',
     'common/modules/experiments/tests/mt-sticky-nav',
     'common/modules/experiments/tests/across-the-country',
-    'common/modules/experiments/tests/adblock-message'
+    'common/modules/experiments/tests/adblock-message',
+    'common/modules/experiments/tests/mt-sticky-bottom'
 ], function (
     raven,
     _,
     config,
+    cookies,
     mediator,
     store,
     mvtCookie,
     HighCommercialComponent,
     IdentitySocialOAuth,
-    KruxAudienceScience,
     MtMaster,
     MtTopBelowNav,
     HeatMap,
     MtTopBelowFirstContainer,
     MtStickyNav,
     AcrossTheCountry,
-    AdblockMessage
+    AdblockMessage,
+    MtStickyBottom
 ) {
 
     var ab,
         TESTS = [
             new HighCommercialComponent(),
             new IdentitySocialOAuth(),
-            new KruxAudienceScience(),
             new MtMaster(),
             new MtTopBelowNav(),
             new HeatMap(),
             new MtTopBelowFirstContainer(),
             new MtStickyNav(),
             new AcrossTheCountry(),
-            new AdblockMessage()
+            new AdblockMessage(),
+            new MtStickyBottom()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -122,13 +124,25 @@ define([
 
     function makeOmnitureTag() {
         var participations = getParticipations(),
-            tag = [];
+            tag = [], editionFromCookie;
 
         _.forEach(_.keys(participations), function (k) {
             if (testCanBeRun(getTest(k))) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
             }
         });
+
+        if (config.tests.internationalEditionVariant) {
+            tag.push(['AB', 'InternationalEditionTest', config.tests.internationalEditionVariant].join(' | '));
+
+            // don't use the edition of the page - we specifically want the cookie version
+            // this allows us to figure out who has "opted out" and "opted into" the test
+            editionFromCookie = cookies.get('GU_EDITION');
+
+            if (editionFromCookie) {
+                tag.push(['AB', 'InternationalEditionPreference', editionFromCookie].join(' | '));
+            }
+        }
 
         return tag.join(',');
     }
