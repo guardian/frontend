@@ -20,7 +20,10 @@
                data-toggle="top-bar__popup--more" data-link-name="uk : topNav : more"
                aria-haspopup="true" aria-controls="guardian-services-top-menu">
                 <span class="rounded-icon control__icon-wrapper">
-                   @fragments.inlineSvg("ellipsis-36", "icon")
+                    @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
+                    <!--[if (gt IE 8)&(IEMobile)]><!-->
+                    @fragments.inlineSvg("ellipsis-36", "icon")
+                    <!--<![endif]-->
                 </span>
                 <span class="control__info" data-test-id="sign-in-name">more</span>
             </a>
@@ -81,7 +84,10 @@
                data-toggle="top-bar__popup--more" data-link-name="topNav : more"
                aria-haspopup="true" aria-controls="guardian-services-top-menu">
                 <span class="rounded-icon control__icon-wrapper">
-                    <i class="i i-ellipsis-white-36"></i>
+                    @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
+                    <!--[if (gt IE 8)&(IEMobile)]><!-->
+                    @fragments.inlineSvg("ellipsis-36", "icon")
+                    <!--<![endif]-->
                 </span>
                 <span class="control__info" data-test-id="sign-in-name">more</span>
             </a>
@@ -121,7 +127,10 @@
                data-toggle="top-bar__popup--more" data-link-name="topNav : more"
                aria-haspopup="true" aria-controls="guardian-services-top-menu">
                 <span class="rounded-icon control__icon-wrapper">
-                    <i class="i i-ellipsis-white-36"></i>
+                    @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
+                    <!--[if (gt IE 8)&(IEMobile)]><!-->
+                    @fragments.inlineSvg("ellipsis-36", "icon")
+                    <!--<![endif]-->
                 </span>
                 <span class="control__info" data-test-id="sign-in-name">more</span>
             </a>

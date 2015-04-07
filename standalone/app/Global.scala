@@ -1,6 +1,7 @@
 import com.gu.googleauth.{UserIdentity, FilterExemption, GoogleAuthFilters}
 import common.ExecutionContexts
 import conf.{Switches, Filters}
+import controllers.AuthCookie
 import dfp.DfpAgentLifecycle
 import feed.OnwardJourneyLifecycle
 import play.Play
@@ -29,22 +30,23 @@ object FilterExemptions {
 
 object PreviewAuthFilters {
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
-  class AuthFilterWithExemptions(
-                                  loginUrl: FilterExemption,
+  class AuthFilterWithExemptions( loginUrl: FilterExemption,
                                   exemptions: Seq[FilterExemption]) extends Filter {
 
-    def apply(nextFilter: (RequestHeader) => Future[Result])
-             (requestHeader: RequestHeader): Future[Result] = {
+    private def doNotAuthenticate(request: RequestHeader) = Play.isTest ||
+      request.path.startsWith(loginUrl.path) ||
+      Switches.EnableOauthOnPreview.isSwitchedOff ||
+      exemptions.exists(exemption => request.path.startsWith(exemption.path))
 
-      if (Play.isTest || requestHeader.path.startsWith(loginUrl.path) || Switches.EnableOauthOnPreview.isSwitchedOff ||
-        exemptions.exists(exemption => requestHeader.path.startsWith(exemption.path)))
-        nextFilter(requestHeader)
-      else {
-        UserIdentity.fromRequest(requestHeader) match {
-          case Some(identity) if identity.isValid => nextFilter(requestHeader)
+    def apply(nextFilter: (RequestHeader) => Future[Result]) (request: RequestHeader): Future[Result] = {
+      if (doNotAuthenticate(request)) {
+        nextFilter(request)
+      } else {
+        AuthCookie.toUserIdentity(request).filter(_.isValid).orElse(UserIdentity.fromRequest(request)) match {
+          case Some(identity) if identity.isValid => nextFilter(request)
           case otherIdentity =>
             Future.successful(Redirect(loginUrl.path)
-              .addingToSession((LOGIN_ORIGIN_KEY, requestHeader.uri))(requestHeader))
+              .addingToSession((LOGIN_ORIGIN_KEY, request.uri))(request))
         }
       }
     }

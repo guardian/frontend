@@ -29,7 +29,8 @@ object Transformations {
       imageHeight =       createCommand.imageHeight,
       isImageDisplayed =  createCommand.isImageDisplayed,
       isHidden =          createCommand.isHidden,
-      priority =          createCommand.priority
+      priority =          createCommand.priority,
+      canonical =         Some(newCollectionId)
     )
 
     config.copy(

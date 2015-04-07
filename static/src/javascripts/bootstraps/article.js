@@ -53,11 +53,11 @@ define([
                 });
             },
 
-            initFormStack: function () {
+            initCmpParam: function () {
                 var allvars = urlutils.getUrlVars();
 
                 if (allvars.CMP) {
-                    $('.element-formstack').each(function (el) {
+                    $('.element-pass-cmp').each(function (el) {
                         el.src = el.src + '?CMP=' + allvars.CMP;
                     });
                 }
@@ -89,7 +89,7 @@ define([
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
             modules.initSelectionSharing();
-            modules.initFormStack();
+            modules.initCmpParam();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             openModule.init();
