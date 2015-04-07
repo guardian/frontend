@@ -122,8 +122,6 @@ define([
 
         this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
         this.$button = $('.ad-exp__open', $expandablev2);
-        
-        console.log(scrollingbg);
 
         $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
 
