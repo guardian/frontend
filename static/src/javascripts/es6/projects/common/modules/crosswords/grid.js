@@ -71,6 +71,9 @@ export default React.createClass({
         const height = helpers.gridSize(this.props.rows);
         const cells = [];
 
+        const cellIntersectsFocussedEntry = (x, y) =>
+            this.props.intersectingEntries.some(entry => helpers.entryHasCell(entry, x, y));
+
         _.forEach(_.range(this.props.rows), (y) => {
             _.map(_.range(this.props.columns), (x) => {
                 const cellProps = this.props.cells[x][y];
@@ -81,7 +84,7 @@ export default React.createClass({
                     cellProps.y = y;
                     cellProps.key = 'cell_' + x + '_' + y;
                     cellProps.isHighlighted = this.props.isHighlighted(x, y);
-                    cellProps.intersectsFocussedEntry = this.props.cellIntersectsFocussedEntry(x, y);
+                    cellProps.intersectsFocussedEntry = cellIntersectsFocussedEntry(x, y);
                     cellProps.isFocussed = this.props.focussedCell && x === this.props.focussedCell.x &&
                         y === this.props.focussedCell.y;
                     cells.push(Cell(cellProps));

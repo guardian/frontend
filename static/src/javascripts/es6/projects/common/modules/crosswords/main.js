@@ -348,11 +348,7 @@ const Crossword = React.createClass({
     render: function () {
         const focussed = this.clueInFocus();
         const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
-
         const intersectingEntries = getIntersectingEntries(this.props.data.entries, focussed);
-
-        const cellIntersectsFocussedEntry = (x, y) =>
-            intersectingEntries.some(entry => helpers.entryHasCell(entry, x, y));
 
         return React.DOM.div({
             className: 'crossword__container'
@@ -367,7 +363,7 @@ const Crossword = React.createClass({
             setCellValue: this.setCellValue,
             onSelect: this.onSelect,
             isHighlighted: isHighlighted,
-            cellIntersectsFocussedEntry,
+            intersectingEntries,
             focussedCell: this.state.cellInFocus,
             ref: 'grid'
         }),
@@ -387,7 +383,7 @@ const Crossword = React.createClass({
         }))),
         FocussedClue({
             focussedClue: focussed ? focussed : null,
-            contextualClues: intersectingEntries,
+            intersectingEntries,
             focusClue: this.focusClue
         }),
         Controls({
