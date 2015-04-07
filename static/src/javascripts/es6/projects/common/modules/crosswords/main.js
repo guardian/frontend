@@ -8,7 +8,7 @@ import bonzo from 'bonzo';
 
 import Clues from './clues';
 import Controls from './controls';
-import deepIntersection from './helpers/deep-intersection';
+import getIntersectingEntries from './helpers/get-intersecting-entries';
 import FocussedClue from './focussedClue.jsx!';
 import Grid from './grid';
 import helpers from './helpers';
@@ -349,15 +349,7 @@ const Crossword = React.createClass({
         const focussed = this.clueInFocus();
         const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
 
-        const focussedCells = focussed ? helpers.cellsForEntry(focussed) : [];
-        const entryHasIntersectingCell = entry => {
-            const cells = helpers.cellsForEntry(entry);
-            const intersecting = deepIntersection(cells, focussedCells);
-            return !! intersecting.length;
-        };
-
-        const otherEntries = _.difference(this.props.data.entries, focussed ? [focussed] : []);
-        const intersectingEntries = otherEntries.filter(entryHasIntersectingCell);
+        const intersectingEntries = getIntersectingEntries(this.props.data.entries, focussed);
 
         const cellIntersectsFocussedEntry = (x, y) =>
             intersectingEntries.some(entry => helpers.entryHasCell(entry, x, y));
