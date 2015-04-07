@@ -93,11 +93,12 @@ object FaciaContentImplicits {
       linkSnap => linkSnap.snapUri,
       latestSnap => latestSnap.latestContent.map(_.webUrl))
 
+    val DefaultSnapHref: String = "/"
     def href: String = fold(
         curatedContent => curatedContent.href.getOrElse(SupportedUrl(curatedContent.content)),
         supportingCuratedContent => supportingCuratedContent.href.getOrElse(SupportedUrl(supportingCuratedContent.content)),
-        linkSnap => linkSnap.snapUri.orElse(linkSnap.snapUri).getOrElse(linkSnap.id),
-        latestSnap => latestSnap.snapUri.orElse(latestSnap.snapUri).getOrElse(latestSnap.id)
+        linkSnap => linkSnap.href.orElse(linkSnap.snapUri).getOrElse(DefaultSnapHref),
+        latestSnap => latestSnap.latestContent.map(_.id).orElse(latestSnap.snapUri).getOrElse(DefaultSnapHref)
     )
 
     def mediaType: Option[MediaType] = {
