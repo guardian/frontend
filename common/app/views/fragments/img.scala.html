@@ -3,11 +3,13 @@
   isFeature: Boolean = false,
   isImageContent: Boolean = false,
   url: Option[String] = None,
-  isLightboxable: Boolean = false)
+  isLightboxable: Boolean = false)(implicit request: RequestHeader)
+
 
 @import layout.WidthsByBreakpoint
 @import layout.ContentWidths.{PictureMedia, MainMedia}
 @import views.support.ImgSrc
+@import conf.Switches.{ImgixSwitch}
 
 @img.map{ picture =>
 
@@ -36,7 +38,7 @@
     </figure>
 }
 
-@lightbox(picture: model.ImageContainer, widths: WidthsByBreakpoint) = {
+@lightbox(picture: model.ImageContainer, widths: WidthsByBreakpoint) =  {
 
     @if(isLightboxable) {
         <a href="@url#img-1" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
@@ -52,12 +54,14 @@
 }
 
 @image(picture: model.ImageContainer, widths: WidthsByBreakpoint) = {
-    <img src="@ImgSrc.getFallbackUrl(picture)"
-        srcset="@ImgSrc.srcset(picture, widths)"
+    @defining(Seq("/sport", "/football").exists(request.path.startsWith) && ImgixSwitch.isSwitchedOn) { imgix =>
+        <img src="@ImgSrc.getFallbackUrl(picture, imgix)"
+        srcset="@ImgSrc.srcset(picture, widths, imgix)"
         sizes="@widths.sizes"
         class="maxed responsive-img"
         itemprop="contentURL representativeOfPage"
         alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
+    }
 }
 
 @caption(picture: model.ImageContainer) = {

@@ -1,11 +1,12 @@
-@(tags: Tags)
+@(tags: Tags)(implicit request: RequestHeader)
 
 @import views.support.Profile
+@import conf.Switches.{ImgixSwitch}
 
 @tags.contributors.headOption.map { profile =>
     @profile.contributorLargeImagePath.map{ src =>
         <div class="byline-img">
-            <img class="byline-img__img" src="@ImgSrc(src, Item300)" alt="@profile.name" />
+            <img class="byline-img__img" src="@ImgSrc(src, Item300, Seq("/sport", "/football").exists(request.path.startsWith) && ImgixSwitch.isSwitchedOn)" alt="@profile.name" />
         </div>
     }
 }
