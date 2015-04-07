@@ -1,11 +1,9 @@
 import _ from 'common/utils/_';
 import storage from 'common/utils/storage';
 
-var localStorage = storage.local;
+const localStorage = storage.local;
 
-function localStorageKey(id) {
-    return 'crosswords.' + id;
-}
+const localStorageKey = (id) => 'crosswords.' + id;
 
 function saveGridState(id, grid) {
     /**
@@ -21,9 +19,7 @@ function saveGridState(id, grid) {
     }
 }
 
-function loadGridState(id) {
-    return localStorage.get(localStorageKey(id));
-}
+const loadGridState = (id) => localStorage.get(localStorageKey(id));
 
 export default {
     'saveGridState': saveGridState,
