@@ -38,16 +38,16 @@ define([
             this.openedHeight = '300';
         }
     };
-    
+
     /**
      * TODO: rather blunt instrument this, due to the fact *most* mobile devices don't have a fixed
      * background-attachment - need to make this more granular
      */
     ExpandableV2.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
-    
+
     ExpandableV2.prototype.updateBgPosition = function () {
 
-            var
+        var
 
             adHeight = (this.isClosed) ?
                 this.closedHeight : this.openedHeight,
@@ -57,22 +57,22 @@ define([
             inViewT = ((window.pageYOffset - adHeight) < this.$adSlot.offset().top),
 
             topCusp = (inViewT &&
-                ((window.pageYOffset + (bonzo.viewport().height*0.3333) - adHeight) > this.$adSlot.offset().top)) ?
+                ((window.pageYOffset + (bonzo.viewport().height * 0.3333) - adHeight) > this.$adSlot.offset().top)) ?
                 'true' : 'false',
 
             bottomCusp = (inViewB &&
-                (window.pageYOffset + (bonzo.viewport().height*0.6666)) < this.$adSlot.offset().top) ?
+                (window.pageYOffset + (bonzo.viewport().height * 0.6666)) < this.$adSlot.offset().top) ?
                 'true' : 'false',
 
             bottomScroll = (bottomCusp === 'true') ?
-                50 - ((window.pageYOffset + (bonzo.viewport().height*0.6666) - this.$adSlot.offset().top)* -0.2) : 50,
+                50 - ((window.pageYOffset + (bonzo.viewport().height * 0.6666) - this.$adSlot.offset().top) * -0.2) : 50,
 
             topScroll = (topCusp === 'true') ?
-                ((window.pageYOffset + (bonzo.viewport().height*0.3333) - this.$adSlot.offset().top)* 0.2) - 50 : 0;
+                ((window.pageYOffset + (bonzo.viewport().height * 0.3333) - this.$adSlot.offset().top) * 0.2) - 50 : 0;
 
-            this.scrollAmount = bottomScroll + topScroll + '%';
+        this.scrollAmount = bottomScroll + topScroll + '%';
 
-            $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + this.scrollAmount);
+        $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + this.scrollAmount);
     };
 
     ExpandableV2.prototype.listener = function () {
@@ -141,7 +141,7 @@ define([
             this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
             this.isClosed = !this.isClosed;
         }.bind(this));
-        
+
         if (ExpandableV2.hasScrollEnabled) {
             // update bg position
             this.updateBgPosition();
