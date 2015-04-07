@@ -23,9 +23,9 @@ define([
         numDisplayedBlocks = 4,
         blockHeightPx = 44,
 
-        refreshSecs = 60,
-        refreshDecay = 2,
-        refreshMaxTimes = 10,
+        refreshSecs = 30,
+        refreshDecay = 1,
+        refreshMaxTimes = 100,
 
         selector = '.js-liveblog-blocks',
         newBlockClassname = 'fc-item__liveblog-block--new',
@@ -35,16 +35,18 @@ define([
 
         elementsById = {};
 
-    function renderBlock(block) {
+    function renderBlock(articleId, block, index) {
         return template(blockTemplate, {
             classes: block.isNew ? newBlockClassname : oldBlockClassname,
+            href: '/' + articleId + '#' + block.id,
             relativeTime: relativeDates.makeRelativeDate(new Date(block.publishedDateTime || null)),
             title: block.title || '',
-            body: block.body.slice(0, 200)
+            body: block.body.slice(0, 200),
+            index: index + 1
         });
     }
 
-    function renderBlocks(targets, blocks, oldBlockDate) {
+    function renderBlocks(articleId, targets, blocks, oldBlockDate) {
         var fakeUpdate = _.isUndefined(oldBlockDate);
 
         _.forEach(targets, function (element) {
@@ -60,7 +62,9 @@ define([
                         return block;
                     })
                     .slice(0, numDisplayedBlocks + numNewBlocks)
-                    .map(renderBlock)
+                    .map(function(block, index) {
+                        return renderBlock(articleId, block, index);
+                    })
                     .value()
                     .join(''),
 
@@ -104,7 +108,7 @@ define([
                 var blocks = response && sanitizeBlocks(response.blocks);
 
                 if (blocks && blocks.length) {
-                    renderBlocks(elements, blocks, oldBlockDates[articleId]);
+                    renderBlocks(articleId, elements, blocks, oldBlockDates[articleId]);
                     oldBlockDates[articleId] = blocks[0].publishedDateTime;
                     storage.session.set(storageKey, pruneOldBlockDates(oldBlockDates));
                 }
