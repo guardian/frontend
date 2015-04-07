@@ -329,16 +329,12 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__liveblog-blocks {
-    height: 215px;
+    height: 170px;
     overflow: hidden;
 }
 
 .fc-item__liveblog-blocks__inner {
     transition: transform .5s ease-in-out;
-}
-
-.fc-item__liveblog-blocks__inner--landed {
-    transform: translate3d(0);
 }
 
 .fc-item__liveblog-block {

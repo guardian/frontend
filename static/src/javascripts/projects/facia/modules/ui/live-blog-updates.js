@@ -20,7 +20,7 @@ define([
     blockTemplate
 ) {
     var forgetAfterHours = 24,
-        numDisplayedBlocks = 5,
+        numDisplayedBlocks = 4,
         blockHeightPx = 44,
 
         refreshSecs = 60,
@@ -40,7 +40,7 @@ define([
             classes: block.isNew ? newBlockClassname : oldBlockClassname,
             relativeTime: relativeDates.makeRelativeDate(new Date(block.publishedDateTime || null)),
             title: block.title || '',
-            body: block.body.slice(0, 100)
+            body: block.body.slice(0, 200)
         });
     }
 
