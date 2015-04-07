@@ -3,7 +3,7 @@ import React from 'react';
 var buttonClassName = 'button button--small';
 
 export default React.createClass({
-    render: function () {
+    render () {
         var hasSolutions = this.props.hasSolutions,
             hasFocus = this.props.clueInFocus,
             controls = [];

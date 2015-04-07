@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 export default React.createClass({
-    render: function () {
+    render () {
         if(this.props.focussedClue === null) {return false}
 
         const classList = {

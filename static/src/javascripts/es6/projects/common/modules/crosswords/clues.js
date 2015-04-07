@@ -5,12 +5,12 @@ import React from 'react';
 import _ from 'common/utils/_';
 
 const Clue = React.createClass({
-        onClick: function (event) {
+        onClick (event) {
             event.preventDefault();
             this.props.focusClue();
         },
 
-        render: function () {
+        render () {
             return React.DOM.li({
                 className: classNames({
                     'crossword__clue': true,
@@ -27,7 +27,7 @@ const Clue = React.createClass({
     });
 
 export default React.createClass({
-    render: function () {
+    render () {
         const headerClass = 'crossword__clues-header';
         const cluesByDirection = (direction) => _.chain(this.props.clues)
             .filter((clue) => clue.entry.direction === direction)

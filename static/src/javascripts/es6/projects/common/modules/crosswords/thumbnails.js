@@ -46,7 +46,7 @@ function init() {
                 type: 'xml',
                 method: 'get',
                 crossOrigin: true,
-                success: function (data) {
+                success (data) {
                     const cells = makeTextCells(savedState);
                     const svg = qwery('svg', data)[0];
                     bonzo(svg).append(cells);

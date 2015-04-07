@@ -8,12 +8,12 @@ import constants from 'es6/projects/common/modules/crosswords/constants';
 import helpers from 'es6/projects/common/modules/crosswords/helpers';
 
 const Cell = React.createClass({
-    onClick: function (event) {
+    onClick (event) {
         event.preventDefault();
         this.props.handleSelect();
     },
 
-    render: function () {
+    render () {
         const innerNodes = [];
         const top = helpers.gridSize(this.props.y);
         const left = helpers.gridSize(this.props.x);
@@ -62,11 +62,11 @@ const Cell = React.createClass({
 });
 
 export default React.createClass({
-    handleSelect: function (x, y) {
+    handleSelect (x, y) {
         this.props.onSelect(x, y);
     },
 
-    render: function () {
+    render () {
         const width = helpers.gridSize(this.props.columns);
         const height = helpers.gridSize(this.props.rows);
         const cells = [];
