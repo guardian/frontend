@@ -1,4 +1,6 @@
 /* jshint newcap: false */
+/* eslint new-cap: 0 */
+
 import React from 'react';
 
 import $ from 'common/utils/$';
@@ -8,7 +10,8 @@ import bonzo from 'bonzo';
 
 import Clues from './clues';
 import Controls from './controls';
-import FocussedClue from './focussedClue.jsx!';
+import getIntersectingEntries from './helpers/get-intersecting-entries';
+import FocussedClue from './focussed-clue.jsx!';
 import Grid from './grid';
 import helpers from './helpers';
 import keycodes from './keycodes';
@@ -16,7 +19,9 @@ import persistence from './persistence';
 import loadFont from './font';
 
 // make react available to dev tool
-window.React || (window.React = React);
+if (!window.React) {
+    window.React = React;
+}
 
 const Crossword = React.createClass({
     getInitialState () {
@@ -115,7 +120,7 @@ const Crossword = React.createClass({
                 direction = 'down';
             } else if (deltaX !== 0) {
                 direction = 'across';
-            };
+            }
             this.focusClue(x, y, direction);
         }
     },
@@ -347,23 +352,7 @@ const Crossword = React.createClass({
     render () {
         const focussed = this.clueInFocus();
         const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
-
-        // Deep equal version of _.intersection
-        const findIntersectingCells = (array1, array2) =>
-            array1.filter(cell1 => array2.some(cell2 => _.isEqual(cell1, cell2)));
-
-        const focussedCells = focussed ? helpers.cellsForEntry(focussed) : [];
-        const entryHasIntersectingCell = entry => {
-            const cells = helpers.cellsForEntry(entry);
-            const intersecting = findIntersectingCells(cells, focussedCells);
-            return !! intersecting.length;
-        };
-
-        const otherEntries = _.difference(this.props.data.entries, focussed ? [focussed] : []);
-        const intersectingEntries = otherEntries.filter(entryHasIntersectingCell);
-
-        const cellIntersectsFocussedEntry = (x, y) =>
-            intersectingEntries.some(entry => helpers.entryHasCell(entry, x, y));
+        const intersectingEntries = getIntersectingEntries(this.props.data.entries, focussed);
 
         return React.DOM.div({
             className: 'crossword__container'
@@ -378,7 +367,7 @@ const Crossword = React.createClass({
             setCellValue: this.setCellValue,
             onSelect: this.onSelect,
             isHighlighted: isHighlighted,
-            cellIntersectsFocussedEntry,
+            intersectingEntries,
             focussedCell: this.state.cellInFocus,
             ref: 'grid'
         }),
@@ -398,7 +387,7 @@ const Crossword = React.createClass({
         }))),
         FocussedClue({
             focussedClue: focussed ? focussed : null,
-            contextualClues: intersectingEntries,
+            intersectingEntries,
             focusClue: this.focusClue
         }),
         Controls({
@@ -426,5 +415,5 @@ export default function () {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }
     });
-};
+}
 

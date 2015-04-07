@@ -15,20 +15,20 @@ export default React.createClass({
                 <div className={classNames(classList)}>{this.props.focussedClue.number} {this.props.focussedClue.direction}</div>
                 {this.props.focussedClue.clue}
             </div>
-            {this.props.contextualClues.map((contextualClue) => {
+            {this.props.intersectingEntries.map((intersectingEntry) => {
                 const classList = {
                     'crossword__contextual-clue--direction': true,
-                    'crossword__contextual-clue--direction-down': contextualClue.direction === 'down',
-                    'crossword__contextual-clue--direction-across': contextualClue.direction === 'across'
+                    'crossword__contextual-clue--direction-down': intersectingEntry.direction === 'down',
+                    'crossword__contextual-clue--direction-across': intersectingEntry.direction === 'across'
                 };
                 const focusClue = () =>
-                    this.props.focusClue(contextualClue.position.x,
-                                         contextualClue.position.y,
-                                         contextualClue.direction);
+                    this.props.focusClue(intersectingEntry.position.x,
+                                         intersectingEntry.position.y,
+                                         intersectingEntry.direction);
                 return <button className='crossword__contextual-clue u-button-reset'
                                onClick={focusClue}>
-                    <div className={classNames(classList)}>{contextualClue.number} {contextualClue.direction}</div>
-                    {contextualClue.clue}
+                    <div className={classNames(classList)}>{intersectingEntry.number} {intersectingEntry.direction}</div>
+                    {intersectingEntry.clue}
                 </button>;
             })}
         </div>;
