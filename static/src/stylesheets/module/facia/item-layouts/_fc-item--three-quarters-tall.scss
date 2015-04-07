@@ -31,6 +31,16 @@ x x x x x x x x x x x x x x x x x x
 @mixin fc-item--three-quarters-tall {
     @include fc-item--standard;
 
+    .fc-item__image-container {
+        display: block;
+        padding-bottom: 40%;
+    }
+
+    .responsive-img {
+        top: -25%;
+        height: auto;
+    }
+
     .fc-item__header {
         @include fs-headline(3, true);
         @include headline-boost(4);
