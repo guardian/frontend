@@ -331,6 +331,10 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__liveblog-blocks {
     height: 170px;
     overflow: hidden;
+
+    @include mq($until: tablet) {
+        height: 82px;
+    }
 }
 
 .fc-item__liveblog-blocks__inner {
@@ -362,7 +366,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__liveblog-block--old .fc-item__liveblog-block__time {
-    opacity: .8;
+    opacity: .5;
 }
 
 .fc-item__liveblog-block__title {
@@ -370,7 +374,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__liveblog-block__text {
-    opacity: .7;
+    opacity: .9;
 }
 
 .fc-item__meta {
