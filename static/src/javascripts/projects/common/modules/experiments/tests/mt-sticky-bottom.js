@@ -72,6 +72,26 @@ define([
             }
         }
 
+        function findPos(obj) {
+            var curleft = curtop = 0;
+            if (obj.offsetParent) {
+                do {
+                    curtop += obj.offsetTop;
+                } while (obj = obj.offsetParent);
+                return curtop;
+            }
+        }
+
+        function addContainers(stickyConfig, containerNo) {
+            var result = 0;
+            for (var i = 0; i < containerNo; i++) {
+                console.log($(stickyConfig.$container.get(i)).dim().height);
+                result += $(stickyConfig.$container.get(i)).dim().height;
+            }
+
+            return result + stickyConfig.headerHeight;
+        }
+
         this.variants = [
             {
                 id: 'A',
@@ -79,16 +99,18 @@ define([
                     var stickyConfig = {
                             $stickyTopAd: $('.top-banner-ad-container--desktop'),
                             $stickyTopAdMobile: $('.top-banner-ad-container--mobile'),
-                            $container: $('.facia-page .fc-container'),
+                            $container: $('.fc-container'),
                             headerHeight: $('#header').dim().height,
                             windowHeight: window.innerHeight || document.documentElement.clientHeight
                         },
                         containerNo = 2; //leave banner between the nth and nth+1 container
 
+                    console.log(stickyConfig.windowHeight, stickyConfig.$container.length, window.scrollY);
                     //we need at least nth + 1 containers
                     if (stickyConfig.windowHeight <= 960 && stickyConfig.$container.length >= containerNo + 1 && !window.scrollY) {
                         $('.fc-container__inner', $(stickyConfig.$container.get(containerNo))).css('border-top', 'none');
                         stickyConfig.containerOffset = stickyConfig.$container.get(containerNo).offsetTop + stickyConfig.headerHeight;
+                        console.log(stickyConfig.containerOffset, addContainers(stickyConfig, containerNo), findPos(stickyConfig.$container.get(containerNo)));
 
                         updatePosition(stickyConfig, containerNo);
 
