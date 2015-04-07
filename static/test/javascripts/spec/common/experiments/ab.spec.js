@@ -25,6 +25,8 @@ define([
                         abDummyTest2: true
                     };
 
+                    mocks.store['common/utils/config'].tests = [];
+
                     // a list of ab-tests that can be used in the spec's
                     test = {
                         one: new ABTest('DummyTest'),
