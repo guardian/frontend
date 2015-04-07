@@ -1,6 +1,6 @@
 import React from 'react';
 
-var buttonClassName = 'button button--small';
+const buttonClassName = 'button button--small';
 
 export default React.createClass({
     render () {
