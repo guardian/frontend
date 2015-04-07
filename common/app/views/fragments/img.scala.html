@@ -9,7 +9,7 @@
 @import layout.WidthsByBreakpoint
 @import layout.ContentWidths.{PictureMedia, MainMedia}
 @import views.support.ImgSrc
-@import conf.Switches.{ImgixSwitch}
+@import implicits.Requests._
 
 @img.map{ picture =>
 
@@ -54,14 +54,14 @@
 }
 
 @image(picture: model.ImageContainer, widths: WidthsByBreakpoint) = {
-    @defining(Seq("/sport", "/football").exists(request.path.startsWith) && ImgixSwitch.isSwitchedOn) { imgix =>
-        <img src="@ImgSrc.getFallbackUrl(picture, imgix)"
-        srcset="@ImgSrc.srcset(picture, widths, imgix)"
-        sizes="@widths.sizes"
-        class="maxed responsive-img"
-        itemprop="contentURL representativeOfPage"
-        alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
-    }
+
+    <img src="@ImgSrc.getFallbackUrl(picture, request.isInImgixTest)"
+    srcset="@ImgSrc.srcset(picture, widths, request.isInImgixTest)"
+    sizes="@widths.sizes"
+    class="maxed responsive-img"
+    itemprop="contentURL representativeOfPage"
+    alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
+
 }
 
 @caption(picture: model.ImageContainer) = {
