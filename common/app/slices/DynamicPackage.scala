@@ -8,9 +8,9 @@ object DynamicPackage extends DynamicContainer {
       None
     } else {
       Some(if (stories.length == 1) {
-        FullMedia100
+        FullMedia75
       } else if (stories.length == 2) {
-        ThreeQuarterQuarter
+        ThreeQuarterTallQuarter
       } else if (stories.length == 3) {
         ThreeQuarterTallQuarter2
       } else if (stories.length == 4) {
