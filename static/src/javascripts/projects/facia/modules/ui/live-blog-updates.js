@@ -82,7 +82,7 @@ define([
                         bonzo(el).removeAttr('style');
                     }, 1000);
                 }
-            });            
+            });
         });
     }
 
