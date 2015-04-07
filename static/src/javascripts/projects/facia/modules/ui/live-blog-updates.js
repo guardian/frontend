@@ -24,8 +24,8 @@ define([
         blockHeightPx = 44,
 
         refreshSecs = 30,
-        refreshDecay = 1,
-        refreshMaxTimes = 100,
+        refreshDecay = 2,
+        refreshMaxTimes = 10,
 
         selector = '.js-liveblog-blocks',
         newBlockClassname = 'fc-item__liveblog-block--new',
@@ -40,8 +40,7 @@ define([
             classes: block.isNew ? newBlockClassname : oldBlockClassname,
             href: '/' + articleId + '#' + block.id,
             relativeTime: relativeDates.makeRelativeDate(new Date(block.publishedDateTime || null)),
-            title: block.title || '',
-            body: block.body.slice(0, 200),
+            text: _.compact([block.title, block.body.slice(0, 200)]).join('. '),
             index: index + 1
         });
     }
