@@ -149,11 +149,14 @@ define([
                 .valueOf();
         },
         displayAds = function () {
+            console.log('DPF');
             googletag.pubads().enableSingleRequest();
-            googletag.pubads().collapseEmptyDivs();
-            googletag.enableServices();
+            googletag.pubads().disableInitialLoad();
+            //googletag.pubads().collapseEmptyDivs();
+            //googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
+            console.log('Slots: ', slots);
             googletag.display(_.keys(slots).shift());
             displayed = true;
         },
