@@ -30,28 +30,12 @@ define([
 
         function updatePosition(stickyConfig, containerNo) {
             var bannerScrollPos,
-                $stickyBanner,
                 stickyBannerHeight;
 
-            if (detect.getBreakpoint() === 'mobile') {
-                $stickyBanner = stickyConfig.$stickyTopAdMobile;
-            } else {
-                $stickyBanner = stickyConfig.$stickyTopAd;
-            }
+            //we need to check it every time during scroll because we don't know when there will be a respond from DFP
+            stickyBannerHeight = stickyConfig.$stickyBanner.dim().height;
 
-            stickyBannerHeight = $stickyBanner.dim().height;
-
-            //banner is sticky at the bottom from the beginning
-            $stickyBanner.css({
-                position:        'fixed',
-                bottom:          0,
-                top:             null,
-                width:           '100%',
-                'z-index':       '1001',
-                'border-top':    '#ccc 1px solid'
-            });
-
-            //add a proper padding between nth and nth + 1 container
+            //add a proper padding between the nth and nth + 1 container
             $(stickyConfig.$container.get(containerNo)).css({
                 'padding-top': stickyBannerHeight
             });
@@ -60,36 +44,51 @@ define([
 
             //leave the banner behind when we will scroll to the end of the nth container
             if (bannerScrollPos >= stickyConfig.containerOffset) {
-                $stickyBanner.css({
-                    position:     'absolute',
-                    top:           stickyConfig.containerOffset,
-                    bottom:        null,
+                stickyConfig.$stickyBanner.css({
+                    position:         'absolute',
+                    top:              stickyConfig.containerOffset,
+                    bottom:           null,
+                    width:           '100%',
+                    'z-index':       '1001',
+                    'border-top':    '#ccc 1px solid',
+                    'border-bottom': '#ccc 1px solid'
+                });
+            } else {
+                stickyConfig.$stickyBanner.css({
+                    position:     'fixed',
+                    bottom:       0,
+                    top:          null,
                     width:        '100%',
                     'z-index':    '1001',
-                    'border-top': '#ccc 1px solid',
-                    'border-bottom': '#ccc 1px solid'
+                    'border-top': '#ccc 1px solid'
                 });
             }
         }
 
-        function findPos(obj) {
-            var curleft = curtop = 0;
-            if (obj.offsetParent) {
-                do {
-                    curtop += obj.offsetTop;
-                } while (obj = obj.offsetParent);
-                return curtop;
+        function setPosition(stickyConfig, containerNo) {
+            $('.fc-container__inner', $(stickyConfig.$container.get(containerNo))).css('border-top', 'none');
+
+            if (detect.getBreakpoint() === 'mobile') {
+                stickyConfig.$stickyBanner = stickyConfig.$stickyTopAdMobile;
+            } else {
+                stickyConfig.$stickyBanner = stickyConfig.$stickyTopAd;
             }
+
+            //banner is sticky at the bottom of the page
+            stickyConfig.$stickyBanner.css({
+                position:     'fixed',
+                bottom:       0,
+                top:          null,
+                width:        '100%',
+                'z-index':    '1001',
+                'border-top': '#ccc 1px solid'
+            });
+
+            stickyConfig.containerOffset = getBouncing(stickyConfig.$container.get(containerNo));
         }
 
-        function addContainers(stickyConfig, containerNo) {
-            var result = 0;
-            for (var i = 0; i < containerNo; i++) {
-                console.log($(stickyConfig.$container.get(i)).dim().height);
-                result += $(stickyConfig.$container.get(i)).dim().height;
-            }
-
-            return result + stickyConfig.headerHeight;
+        function getBouncing(elem) {
+            return elem.getBoundingClientRect().top;
         }
 
         this.variants = [
@@ -103,16 +102,11 @@ define([
                             headerHeight: $('#header').dim().height,
                             windowHeight: window.innerHeight || document.documentElement.clientHeight
                         },
-                        containerNo = 2; //leave banner between the nth and nth+1 container
+                        containerNo = detect.getBreakpoint() === 'mobile' ? 1 : 2; //leave banner between the nth and nth+1 container
 
-                    console.log(stickyConfig.windowHeight, stickyConfig.$container.length, window.scrollY);
                     //we need at least nth + 1 containers
                     if (stickyConfig.windowHeight <= 960 && stickyConfig.$container.length >= containerNo + 1 && !window.scrollY) {
-                        $('.fc-container__inner', $(stickyConfig.$container.get(containerNo))).css('border-top', 'none');
-                        stickyConfig.containerOffset = stickyConfig.$container.get(containerNo).offsetTop + stickyConfig.headerHeight;
-                        console.log(stickyConfig.containerOffset, addContainers(stickyConfig, containerNo), findPos(stickyConfig.$container.get(containerNo)));
-
-                        updatePosition(stickyConfig, containerNo);
+                        setPosition(stickyConfig, containerNo);
 
                         mediator.on('window:scroll', _.throttle(function () {
                             updatePosition(stickyConfig, containerNo);
