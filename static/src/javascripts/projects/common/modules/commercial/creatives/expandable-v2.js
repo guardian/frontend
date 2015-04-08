@@ -113,11 +113,10 @@ define([
             },
             $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
 
-            this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
-            this.$button = $('.ad-exp__open', $expandablev2);
+        this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
+        this.$button = $('.ad-exp__open', $expandablev2);
 
-            $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
-
+        $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
 
         if (this.params.trackingPixel) {
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
