@@ -12,7 +12,7 @@ define([
     mediator
 ) {
     return function () {
-        this.id = 'MtStickyBottom';
+        this.id = 'MtStickyBtm';
         this.start = '2015-03-26';
         this.expiry = '2015-05-26';
         this.author = 'Zofia Korcz';

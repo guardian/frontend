@@ -507,7 +507,7 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
   )
 
-  val ABMtStickyBottom = Switch("A/B Tests", "ab-mt-sticky-bottom",
+  val ABMtStickyBtm = Switch("A/B Tests", "ab-mt-sticky-btm",
     "Top ad slot is sticky at the bottom of page.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
   )
