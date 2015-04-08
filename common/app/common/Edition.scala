@@ -39,6 +39,8 @@ object Edition {
       case Left(ed) => ed.displayName
       case Right(international) => "International edition"
     }
+
+    def isBeta = edition.isRight
   }
 
   private val allWithInternational: List[EditionOrInternational] =
@@ -127,9 +129,15 @@ object InternationalEdition {
 
   private val variants = Seq("control", "international")
 
-  def apply(request: RequestHeader): Option[InternationalEdition] = request.headers.get("X-GU-International")
-    .filter(variants.contains)
-    .map(InternationalEdition(_))
+  def apply(request: RequestHeader): Option[InternationalEdition] = {
+    val fromHeader = request.headers.get("X-GU-International").map(_.toLowerCase)
+
+    val fromCookie = request.cookies.get("GU_EDITION").map(_.value.toLowerCase)
+
+    (fromHeader orElse fromCookie)
+      .filter(variants.contains)
+      .map(InternationalEdition(_))
+  }
 
   def isInternationalEdition(request: RequestHeader) = apply(request).exists(_.isInternational)
 }

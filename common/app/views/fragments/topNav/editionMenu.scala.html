@@ -11,7 +11,11 @@
                 data-link-name="switch to @edition.id edition"
                 href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
                 title="Switch to the @edition.id edition">
-                    <span class="u-h">switch to the </span>@edition.id<span class="u-h"> edition</span>
+                    @if(edition.isBeta) {
+                        <span class="u-h">switch to the </span> Int <span class="brand-bar__beta">beta</span> <span class="u-h"> edition</span>
+                    }else{
+                        <span class="u-h">switch to the </span> @edition.id <span class="u-h"> edition</span>
+                    }
                 </a>
             }
         </li>

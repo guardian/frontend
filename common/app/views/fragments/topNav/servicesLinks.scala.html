@@ -2,6 +2,7 @@
 
 @import conf.Switches._
 @import dev.HttpSwitch
+@import common.InternationalEdition
 @import common.LinkTo
 @import common.Edition
 @import common.editions._
@@ -130,7 +131,11 @@
         <a href="#guardian-edition-menu" class="brand-bar__item--action popup__toggle"
            data-link-name="topNav : edition" data-toggle="top-bar__popup--edition"
            aria-haspopup="true" aria-controls="guardian-edition-menu">
-        @Edition(request).displayName
+        @if(InternationalEdition.isInternationalEdition(request)) {
+            International edition
+        } else {
+            @Edition(request).displayName
+        }
         </a>
         <ul class="popup popup__group is-off top-bar__popup--edition" id="guardian-edition-menu">
             @Edition.others(request).map{ edition =>
@@ -141,6 +146,9 @@
                         title="Switch to the @edition.id edition">
                         <span class="u-h">switch to the </span>@edition.displayName
                     </a>
+                    @if(edition.isBeta) {
+                        <span class="brand-bar__beta">beta</span>
+                    }
                 </li>
             }
         </ul>
