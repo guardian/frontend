@@ -98,63 +98,113 @@
     }
 }
 
+$c-story-package-neutral: #484f53;
+
+@mixin kicker-override($tone, $colour) {
+    .tone-#{$tone}--item {
+        .fc-item__kicker,
+        .rich-link__kicker,
+        .fc-item__byline {
+            color: $colour;
+        }
+    }
+    
+    .tone-#{$tone}--sublink {
+        .fc-sublink__kicker {
+            color: $colour;
+        }
+    }
+}
+
 .fc-container--story-package {
-    background-color: colour(news-support-6);
-    border-top: 1px solid #ffffff;
+    background-color: colour(neutral-4);
     margin-bottom: $gs-baseline;
+    border-top: 1px solid #ffffff;
 
     .fc-container__header__title {
-        border-top-color: colour(news-support-1);
-        color: #ffffff;
+        border-top-color: $c-story-package-neutral;
+        color: colour(news-support-2);
+
+        & a:hover {
+            color: $c-story-package-neutral;
+        }
     }
 
-/*
-    .fc-slice--qqqtall-q,
-    .fc-slice--qqqtall-q2,
-    .fc-slice--qqqtall-q3,
-    .fc-slice--qqqtall-q2-ql2 {
-        position: relative;
-        margin-left: 0;
-        margin-right: 0;
-        margin-bottom: $gs-baseline;
-        border-top: 1px solid colour(news-accent);
-        padding-top: $gs-baseline;
-        background-color: colour(neutral-8);
-     }
-*/
+    .fc-container__header__description {
+        color: $c-story-package-neutral;
+    }
 
     .fc-item {
-        background-color: darken(colour(news-support-6), 5%) !important;
+        // This shouldn't need to be important but too specific selectors on some tones force it to be
+        background-color: $c-story-package-neutral !important;
 
         .fc-item__header,
         .fc-sublink__title {
-            color: #ffffff !important;
+            color: #ffffff;
         }
 
         .fc-sublink__title:before {
-            border-color: #ffffff !important;
+            border-color: mix($c-story-package-neutral, #ffffff, 80%);
         }
 
         .fc-item__standfirst {
-            color: mix(#ffffff, colour(news-support-6), 90%) !important;
+            color: colour(neutral-4);
+        }
+
+        .fc-item__kicker,
+        .fc-sublink__kicker {
+            &:after {
+                color: mix($c-story-package-neutral, #ffffff, 80%);
+            }
+        }
+
+        .fc-item__link,
+        .rich-link__link,
+        .fc-sublink__link {
+            &:visited {
+                color: mix(#ffffff, $c-story-package-neutral, 80%);
+            }
         }
 
         .fc-item__title--quoted .inline-quote {
-            fill: colour(news-support-1);
+            fill: colour(neutral-4);
+        }
+
+        .u-faux-block-link--hover {
+            color: inherit;
+            background-color: mix($c-story-package-neutral, colour(neutral-1), 50%);
         }
     }
+
+    // This need to exist for all kickers because of tone on tone matching
+    @include kicker-override(analysis, colour(analysis-accent));
 
     .fc-slice__item+.fc-slice__item:before {
         border-left-color: lighten(colour(news-support-6), 30%);
     }
 
     .button--primary {
-        background-color: colour(news-support-1);
-        border-color: colour(news-support-1);
-        color: colour(news-support-6);
+        background-color: colour(news-support-2);
+        border-color: colour(news-support-2);
+        color: #ffffff;
+
+        &:hover {
+            background-color: mix(colour(news-support-2), colour(neutral-1), 60%);
+            border-color: mix(colour(news-support-2), colour(neutral-1), 60%);
+        }
 
         svg {
-            fill: colour(news-support-6);
+            fill: #ffffff;
+        }
+    }
+
+    .treats__treat {
+        border-color: colour(news-support-2);
+        background-color: transparent;
+        color: $c-story-package-neutral;
+
+        &:hover {
+            background-color: inherit;
         }
     }
 
