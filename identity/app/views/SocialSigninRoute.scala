@@ -14,5 +14,5 @@ object SocialSigninRoute {
 case class SocialSigninRoutes(facebook: SocialSigninRoute, google: SocialSigninRoute)
 
 object SocialSigninRoutes {
-  def apply(route: SocialSigninRoute) = SocialSigninRoutes(route, route)
+  def apply(route: SocialSigninRoute): SocialSigninRoutes = SocialSigninRoutes(route, route)
 }
