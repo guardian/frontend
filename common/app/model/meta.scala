@@ -16,7 +16,7 @@ trait MetaData extends Tags {
   def description: Option[String] = None
   def rssPath: Option[String] = None
 
-  def hasSlimHeader: Boolean = contentType == "Interactive"
+  def hasSlimHeader: Boolean = contentType == "Interactive" || section == "identity"
 
   lazy val canonicalUrl: Option[String] = None
 
@@ -310,6 +310,8 @@ trait Tags {
   lazy val isCricketLiveBlog = isLiveBlog &&
     tags.exists(t => t.id == "sport/england-cricket-team") &&
     tags.exists(t => t.id == "sport/over-by-over-reports")
+
+  lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
 }
 
 object Tags {

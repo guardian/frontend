@@ -5,15 +5,6 @@ define([
     'fastdom',
     'qwery',
     'raven',
-    'lodash/functions/debounce',
-    'lodash/arrays/flatten',
-    'lodash/arrays/uniq',
-    'lodash/collections/forEach',
-    'lodash/collections/map',
-    'lodash/functions/once',
-    'lodash/objects/defaults',
-    'lodash/objects/forOwn',
-    'lodash/objects/keys',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/_',
@@ -32,15 +23,6 @@ define([
     fastdom,
     qwery,
     raven,
-    debounce,
-    flatten,
-    uniq,
-    forEach,
-    map,
-    once,
-    defaults,
-    forOwn,
-    keys,
     $,
     $css,
     _,
@@ -133,7 +115,7 @@ define([
             }));
         },
         setPageTargeting = function () {
-            forOwn(buildPageTargeting(), function (value, key) {
+            _.forOwn(buildPageTargeting(), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
@@ -172,10 +154,10 @@ define([
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
-            googletag.display(keys(slots).shift());
+            googletag.display(_.keys(slots).shift());
             displayed = true;
         },
-        windowResize = debounce(
+        windowResize = _.debounce(
             function () {
                 // refresh on resize
                 hasBreakpointChanged(refresh);
@@ -190,7 +172,7 @@ define([
          */
         init = function (options) {
 
-            var opts = defaults(options || {}, {
+            var opts = _.defaults(options || {}, {
                 resizeTimeout: 2000
             });
 
@@ -258,8 +240,8 @@ define([
                 id             = $adSlot.attr('id'),
                 sizeMapping    = defineSlotSizes($adSlot),
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-                size           = uniq(
-                    flatten(sizeMapping, true, function (map) {
+                size           = _.uniq(
+                    _.flatten(sizeMapping, true, function (map) {
                         return map[1];
                     }),
                     function (size) {
@@ -369,7 +351,7 @@ define([
                 $iFrameParent      = $iFrame.parent();
 
             if (iFrameBody) {
-                forEach(breakoutClasses, function (breakoutClass) {
+                _.forEach(breakoutClasses, function (breakoutClass) {
                     $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
                         var creativeConfig,
                             $breakoutEl     = bonzo(breakoutEl),
@@ -485,8 +467,8 @@ define([
          * Multiple sizes - `data-mobile="300,50|320,50"`
          */
         createSizeMapping = function (attr) {
-            return map(attr.split('|'), function (size) {
-                return map(size.split(','), Number);
+            return _.map(attr.split('|'), function (size) {
+                return _.map(size.split(','), Number);
             });
         },
         /**
@@ -502,7 +484,7 @@ define([
         defineSlotSizes = function (slot) {
             var mapping = googletag.sizeMapping();
 
-            forEach(detect.breakpoints, function (breakpointInfo) {
+            _.forEach(detect.breakpoints, function (breakpointInfo) {
                 // turn breakpoint name into attribute style (lowercase, hyphenated)
                 var attr  = slot.data(breakpointNameToAttribute(breakpointInfo.name));
                 if (attr) {
@@ -513,7 +495,7 @@ define([
             return mapping.build();
         },
         parseKeywords = function (keywords) {
-            return map((keywords || '').split(','), function (keyword) {
+            return _.map((keywords || '').split(','), function (keyword) {
                 return keyword.split('/').pop();
             });
         },

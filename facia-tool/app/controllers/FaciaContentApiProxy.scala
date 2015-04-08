@@ -6,11 +6,10 @@ import implicits.Strings
 import play.api.mvc._
 import play.api.libs.ws.WS
 import model.Cached
-import implicits.WSRequests.WsWithAuth
 import auth.ExpiringActions
 import util.ContentUpgrade.rewriteBody
 
-object FaciaContentApiProxy extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
+object FaciaContentApiProxy extends Controller with Logging with AuthLogging with ExecutionContexts with Strings with implicits.WSRequests{
 
   import play.api.Play.current
 

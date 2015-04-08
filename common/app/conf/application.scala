@@ -4,6 +4,7 @@ import common.Assets.Assets
 import common.{ExecutionContexts, GuardianConfiguration}
 import filters.RequestLoggingFilter
 import contentapi.{ElasticSearchPreviewContentApiClient, ElasticSearchLiveContentApiClient}
+import implicits.Responses
 import play.api.mvc._
 import play.filters.gzip.GzipFilter
 
@@ -18,9 +19,8 @@ object PreviewContentApi extends ElasticSearchPreviewContentApiClient
 object Static extends Assets(Configuration.assets.path)
 object StaticSecure extends Assets(Configuration.assets.securePath)
 
-object Gzipper extends GzipFilter(
-  shouldGzip = (req, resp) => !resp.headers.get("Content-Type").exists(_.startsWith("image/"))
-)
+import Responses._
+object Gzipper extends GzipFilter(shouldGzip = (_, resp) => !resp.isImage)
 
 object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicits.Requests {
 
@@ -43,6 +43,16 @@ object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicit
   }
 }
 
+object GNUFilter extends Filter with ExecutionContexts {
+
+  //http://www.theguardian.com/books/shortcuts/2015/mar/17/terry-pratchetts-name-lives-on-in-the-clacks-with-hidden-web-code
+  private val GNUHeader = "X-Clacks-Overhead" -> "GNU Terry Pratchett"
+
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    nextFilter(request).map(_.withHeaders(GNUHeader))
+  }
+}
+
 // this lets the CDN log the exact part of the backend this response came from
 object BackendHeaderFilter extends Filter with ExecutionContexts {
 
@@ -60,6 +70,7 @@ object Filters {
     JsonVaryHeadersFilter,
     Gzipper,
     BackendHeaderFilter,
-    RequestLoggingFilter
+    RequestLoggingFilter,
+    GNUFilter
   )
 }

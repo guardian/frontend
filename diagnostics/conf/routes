@@ -12,6 +12,7 @@ GET        /count/$path<.+>.gif             controllers.DiagnosticsController.an
 GET        /counts.gif                      controllers.DiagnosticsController.analyticsCounts()
 
 POST       /tech-feedback                   controllers.DiagnosticsController.techFeedback()
+GET        /tech-feedback                   controllers.DiagnosticsController.techFeedback()
 
 GET        /robots.txt                      controllers.Assets.at(path="/public", file="robots.txt")
 
@@ -20,3 +21,8 @@ OPTIONS    /css                             controllers.DiagnosticsController.cs
 
 POST       /accept-beacon                   controllers.DiagnosticsController.acceptBeacon
 OPTIONS    /accept-beacon                   controllers.DiagnosticsController.acceptBeaconOptions
+
+GET        /quiz/results/:quizId            controllers.QuizzesController.results(quizId)
+OPTIONS    /quiz/results/:quizId            controllers.QuizzesController.resultsOptions(quizId)
+POST       /quiz/update                     controllers.QuizzesController.update()
+OPTIONS    /quiz/update                     controllers.QuizzesController.updateOptions

@@ -52,6 +52,7 @@ module.exports = function (grunt) {
     grunt.registerTask('validate:js', function(app) {
         var target = (app) ? ':' + app : '';
         grunt.task.run(['jshint' + target, 'jscs' + target]);
+        grunt.task.run(['eslint']); // ES6 modules
     });
     grunt.registerTask('validate', function(app) {
         grunt.task.run(['validate:css', 'validate:sass', 'validate:js:' + (app || '')]);
@@ -65,13 +66,12 @@ module.exports = function (grunt) {
 
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration']);
     grunt.registerTask('compile:css', function(fullCompile) {
-        grunt.task.run(['mkdir:css', 'compile:images', 'sass:compile', 'sass:compileStyleguide']);
+        grunt.task.run(['clean:css', 'mkdir:css', 'compile:images', 'sass:compile', 'sass:compileStyleguide']);
 
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }
 
-        grunt.task.run(['copy:pxCss']);
         grunt.task.run(['px_to_rem']);
 
         if (isOnlyTask(this) && !fullCompile) {
@@ -80,7 +80,17 @@ module.exports = function (grunt) {
 
     });
     grunt.registerTask('compile:js', function(fullCompile) {
-        grunt.task.run(['compile:inlineSvgs', 'concurrent:requireJS', 'copy:javascript']);
+        grunt.task.run(['clean:js', 'compile:inlineSvgs']);
+
+        if (!options.isDev) {
+            grunt.task.run('shell:jspmBundleStatic');
+        }
+
+        if (options.isDev) {
+            grunt.task.run('replace:jspmSourceMaps');
+        }
+
+        grunt.task.run(['concurrent:requireJS', 'copy:javascript']);
         if (!options.isDev) {
             grunt.task.run('uglify:javascript');
         }
@@ -102,9 +112,9 @@ module.exports = function (grunt) {
         'compile:conf'
     ]);
 
-    grunt.registerTask('prepare', ['jspm']);
+    grunt.registerTask('prepare', ['jspmInstall']);
 
-    grunt.registerTask('jspm', ['shell:jspmFaciaTool']);
+    grunt.registerTask('jspmInstall', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool']);
 
     /**
      * compile:js:<requiretask> tasks. Generate one for each require task

@@ -41,21 +41,6 @@ import collection.JavaConversions._
       }
     }
 
-    scenario("Include organisation metadata", ArticleComponents) {
-
-      Given("I am on an article entitled 'Liu Xiang pulls up in opening race at second consecutive Olympics'")
-      goTo("/sport/2012/aug/07/liu-xiang-injured-olympics") { browser =>
-        import browser._
-
-        Then("there should be organisation metadata")
-
-        val org = findFirst("span[itemtype='http://schema.org/Organization']")
-
-        org.findFirst("[itemprop=name]").getText should be("The Guardian")
-        org.findFirst("meta[itemprop=logo]").getAttribute("content") should be("https://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png")
-      }
-    }
-
     scenario("Display a short description of the article", ArticleComponents) {
 
       Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all'")
@@ -502,14 +487,13 @@ import collection.JavaConversions._
     }
 
     scenario("Progressive related content") {
-      Given("I vist a Guardian article page")
+      Given("I visit a Guardian article page")
       goTo("/technology/askjack/2015/feb/05/how-should-i-upgrade-my-old-hi-fi-in-a-digital-world") { browser =>
         import browser._
 
-        Then("I should see a link to related to related content")
-        val relatedLink = findFirst("[data-test-id=related-content]").findFirst("a")
-        relatedLink.getAttribute("href") should endWith ("/related/technology/askjack/2015/feb/05/how-should-i-upgrade-my-old-hi-fi-in-a-digital-world")
-        relatedLink.getText() should be ("related content >")
+        Then("There should be a placeholder for related content")
+        val relatedLink = findFirst("[data-test-id=related-content]")
+        relatedLink.getText() should be (empty)
       }
     }
 

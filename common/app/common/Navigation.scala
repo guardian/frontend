@@ -2,8 +2,6 @@ package common
 
 import model.{Content, MetaData}
 import play.api.mvc.RequestHeader
-import conf.Switches._
-import dev.HttpSwitch
 
 case class SectionLink(zone: String, title: String, breadcrumbTitle: String, href: String) {
   def currentFor(page: MetaData): Boolean = page.url == href ||
@@ -41,6 +39,7 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
 }
 
 trait Navigation {
+  val election2015 = SectionLink("politics/general-election-2015", "election", "Election", "/politics/general-election-2015")
 
   //News
   val home = SectionLink("news", "home", "Home", "/")
@@ -197,7 +196,7 @@ trait Navigation {
   val obituaries = SectionLink("todayspaper", "obituaries", "Obituaries", "/tone/obituaries")
   val g2 = SectionLink("todayspaper", "g2", "G2", "/theguardian/g2")
   val weekend = SectionLink("todayspaper", "weekend", "Weekend", "/theguardian/weekend")
-  val theguide = SectionLink("todayspaper", "the guide", "The Guide", "/theguardian/theguide")
+  val theGuide = SectionLink("todayspaper", "the guide", "The Guide", "/theguardian/theguide")
   val saturdayreview = SectionLink("todayspaper", "saturday review", "Saturday Review", "/theguardian/guardianreview")
 
   val footballNav = Seq(
@@ -249,17 +248,37 @@ object Navigation {
   def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] =
     topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
-  def rotatedLocalNav(topSection: NavItem, metaData: MetaData)(implicit request: RequestHeader): Seq[SectionLink] =
-    topSection.searchForCurrentSublink(metaData) match {
-      case Some(currentSection) =>
-        val navSlices = topSection.links.span(_.href != currentSection.href)
-        navSlices._2.drop(1) ++ navSlices._1
-      case None =>
-        topSection.links
-    }
+  def rotatedLocalNav(topSection: Option[NavItem], metaData: MetaData)(implicit request: RequestHeader): Seq[SectionLink] =
+    sectionSpecificSublinks.get(metaData.section)
+      .orElse(topSection.map{ section =>
+        section.searchForCurrentSublink(metaData) match {
+          case Some(currentSection) =>
+            val navSlices = section.links.span(_.href != currentSection.href)
+            navSlices._2.drop(1) ++ navSlices._1
+          case None =>
+            section.links
+    }}).getOrElse(Nil)
 
   def isEditionFront(topSection: NavItem): Boolean = ("/" :: Edition.editionFronts).contains(topSection.name.href)
 
-  def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] =
-    Navigation.topLevelItem(navigation, metaData).map(_.links).getOrElse(List())
+  // second level nav for sections that do not appear in the top level nav
+  private val sectionSpecificSublinks: Map[String, Seq[SectionLink]] = Map(
+    "careers" -> Seq(
+      SectionLink("careers", "careers", "careers", "/careers"),
+      SectionLink("careers", "interviews", "interviews", "/careers/interview-help"),
+      SectionLink("careers", "CVs", "CVs", "/careers/cv"),
+      SectionLink("careers", "graduate", "graduate", "/careers/graduate-jobs"),
+      SectionLink("careers", "Q&As", "Q&As", "/careers/live-q-a"),
+      SectionLink("careers", "sectors", "sectors", "/careers/sectors-industry-roles"),
+      SectionLink("careers", "newsletter", "newsletter", "https://register.theguardian.com/careers"),
+      SectionLink("careers", "courses", "courses", "http://jobs.theguardian.com/courses"),
+      SectionLink("careers", "jobs", "jobs", "http://jobs.theguardian.com"),
+      SectionLink("careers", "top employers UK", "top employers UK", "/careers/britains-top-employers")
+    )
+  ).withDefault( _ => Nil)
+
+  def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] = sectionSpecificSublinks.get(metaData.section)
+    .orElse(Navigation.topLevelItem(navigation, metaData).map(_.links).filter(_.nonEmpty))
+    .getOrElse(Nil)
+
 }

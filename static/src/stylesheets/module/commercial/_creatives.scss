@@ -4,6 +4,7 @@
 
 .creative--scrollable-mpu {
     .creative--scrollable-mpu-inner {
+        margin: 0 auto;
         width: 300px;
         height: 250px;
         overflow: hidden;
@@ -446,6 +447,12 @@
         height: auto;
         padding-top: 0;
         padding-bottom: $gs-baseline*1.5;
+    }
+}
+
+.ad-slot--merchandising-high {
+    .creative__label--hidden {
+        display: none;
     }
 }
 

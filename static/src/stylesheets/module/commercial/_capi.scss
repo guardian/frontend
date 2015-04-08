@@ -32,8 +32,10 @@
         @include f-headlineSans;
     }
 
-    .fc-item__header {
-        @include fs-bodyHeading(2, $size-only: true);
+    &.commercial-dfp-multi {
+        .fc-item__header {
+            @include fs-bodyHeading(2, $size-only: true);
+        }
     }
 }
 

@@ -83,9 +83,43 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 
   }
 
+  "The Guardian" should "remember Terry Pratchett" in {
+    val result = route(app, TestRequest("/books/2015/mar/12/terry-pratchett")).head
+    header("X-Clacks-Overhead", result).head should be ("GNU Terry Pratchett")
+  }
+
   it should "know which backend served the request" in {
     val result = route(app, TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")).head
     status(result) should be (200)
     header("X-Gu-Backend-App", result).head should be ("test-project")
+  }
+
+  "International users" should "still be in the UK edition" in {
+    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
+      .withHeaders(
+        "X-GU-Edition" -> "intl"
+      )
+    val result = route(app, request).head
+    contentAsString(result) should include ("\"edition\":\"UK\"")
+  }
+
+  they can "be in the control variant" in {
+    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
+      .withHeaders(
+        "X-GU-Edition" -> "intl",
+        "X-GU-International" -> "control"
+      )
+    val result = route(app, request).head
+    contentAsString(result) should include ("\"internationalEditionVariant\" : \"control\"")
+  }
+
+  they can "be in the test variant" in {
+    val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
+      .withHeaders(
+        "X-GU-Edition" -> "intl",
+        "X-GU-International" -> "international"
+      )
+    val result = route(app, request).head
+    contentAsString(result) should include ("\"internationalEditionVariant\" : \"international\"")
   }
 }

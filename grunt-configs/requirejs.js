@@ -14,7 +14,7 @@ module.exports = function(grunt, options) {
                 fastclick:            'components/fastclick/fastclick',
                 fastdom:              'components/fastdom/index',
                 fence:                'components/fence/fence',
-                lodash:               'components/lodash-amd',
+                lodash:               'components/lodash',
                 picturefill:          'projects/common/utils/picturefill',
                 Promise:              'components/native-promise-only/npo.src',
                 qwery:                'components/qwery/qwery',
@@ -33,12 +33,12 @@ module.exports = function(grunt, options) {
                 videojsplaylist:      'components/videojs-playlist-audio/videojs.playlist',
                 // plugins
                 text:                 'components/requirejs-text/text',
-                inlineSvg:            'components/requirejs-inline-svg/inlineSvg'
+                inlineSvg:            'projects/common/utils/inlineSvg'
             },
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
             preserveLicenseComments: false,
-            fileExclusionRegExp: /^bower_components$/
+            fileExclusionRegExp: /^bower_components|es6$/i
         },
         common: {
             options: {
@@ -73,18 +73,6 @@ module.exports = function(grunt, options) {
                             'inlineSvg'
                         ]
                     }
-                ]
-            }
-        },
-        crosswords: {
-            options: {
-                name: 'bootstraps/crosswords',
-                out: options.staticTargetDir + 'javascripts/bootstraps/crosswords.js',
-                exclude: [
-                    'core',
-                    'bootstraps/app',
-                    'text',
-                    'inlineSvg'
                 ]
             }
         },

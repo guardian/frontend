@@ -16,6 +16,7 @@ GET         /js.gif                                                             
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
 GET         /counts.gif                                                                                              controllers.DiagnosticsController.analyticsCounts()
 POST        /tech-feedback                                                                                           controllers.DiagnosticsController.techFeedback()
+GET         /tech-feedback                                                                                           controllers.DiagnosticsController.techFeedback()
 POST        /css                                                                                                     controllers.DiagnosticsController.css
 OPTIONS     /css                                                                                                     controllers.DiagnosticsController.cssOptions
 POST        /accept-beacon                                                                                           controllers.DiagnosticsController.acceptBeacon
@@ -25,6 +26,9 @@ OPTIONS     /accept-beacon                                                      
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: CrosswordType, id: Int)
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
+
+# Business data
+GET        /business-data/stocks.json                 controllers.StocksController.stocks
 
 #Weather - OLD
 GET         /weather/city/:id.json                                                                                   controllers.WeatherController.forCity(id)
@@ -252,7 +256,6 @@ GET         /commercial/jobs.json                                               
 
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.renderMasterclasses
 
-GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmatesController.renderMixedSoulmates
 GET         /commercial/soulmates/$subgroup<\w+>.json                                                                controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
 
 GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffersController.renderBook
@@ -296,7 +299,7 @@ GET        /$path<.+>/all                                                       
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
-GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>           controllers.FaciaController.renderFrontPressSpecial(path)
+GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>  controllers.FaciaController.renderFrontPressSpecial(path)
 GET         /$path<(uk|au|us)(/(culture|sport|commentisfree|business|money|travel|rss))?>                            controllers.FaciaController.renderFrontPress(path)
 GET         /*path/lite.json                                                                                         controllers.FaciaController.renderFrontJsonLite(path)
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)

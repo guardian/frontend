@@ -34,6 +34,11 @@ $c-guardian-services-action: #ffffff;
     float: right;
     margin: $gs-baseline/4 $gs-gutter/2 $gs-baseline 0;
 
+    svg {
+        width: 160px;
+        height: 30px;
+    }
+
     @include mq(mobileLandscape) {
         margin-right: $gs-gutter;
     }
@@ -41,11 +46,16 @@ $c-guardian-services-action: #ffffff;
     @include mq(tablet) {
         margin-top: $gs-baseline * .5;
         margin-bottom: $gs-baseline * .5;
+
+        svg {
+            width: 320px;
+            height: 60px;
+        }
     }
 
     .l-header--is-slim & {
         margin-top: $gs-baseline * .75;
-        margin-bottom: $gs-baseline * .75;
+        margin-bottom: 0;
         float: left;
 
         @include mq(mobileLandscape) {
@@ -56,9 +66,8 @@ $c-guardian-services-action: #ffffff;
 
         @include mq($until: tablet) {
             margin-top: $gs-baseline * .83;
-            margin-bottom: $gs-baseline * .83;
 
-            i {
+            svg {
                 // Height / width
                 $height-to-width-ratio: 30 / 160;
                 // Magic number to fit the logo to 320px+ screens
@@ -67,9 +76,23 @@ $c-guardian-services-action: #ffffff;
                 height: $width * $height-to-width-ratio;
             }
         }
+
+        @include mq(tablet) {
+            svg {
+                width: 160px;
+                height: 30px;
+            }
+        }
+
+        .no-svg & {
+            .inline-logo {
+                width: 160px;
+                height: 30px;
+            }
+        }
     }
 
-    i {
+    .inline-logo {
         display: block;
     }
 
@@ -81,6 +104,18 @@ $c-guardian-services-action: #ffffff;
         color: #aad8f1; // To match custom colour of 'the' in logotype. Shouldn't be used elsewhere
         font-weight: bold;
         white-space: nowrap;
+    }
+
+    .no-svg & {
+        .inline-logo {
+            width: 160px;
+            height: 30px;
+
+            @include mq(tablet) {
+                width: 320px;
+                height: 60px;
+            }
+        }
     }
 }
 

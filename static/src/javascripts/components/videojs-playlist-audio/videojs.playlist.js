@@ -3,10 +3,10 @@
  videojs.plugin('playlist', function(options) {
   //this.L="vjs_common_one";
   
-  var id=this.id();
- // if(typeof this.L!="undefined") var id=this.L;
-  //else workData.myPlayer.id=this.tag.id;
-  //else var id=this.id_;
+
+  console.log(this);
+  var id=this.el().id;
+
   //console.log('begin playlist plugin with video id:'+id);
 
  //console.log(this);
@@ -65,18 +65,20 @@
           ]);
         }
         else{
-            if((player.tag && player.tag.tagName=="AUDIO") || (typeof options.mediaType!='undefined' && options.mediaType=="audio") ){
-            player.src([
-                { type: "audio/mp4", src:  src+".m4a" },
-                { type: "audio/webm", src: src+".webm" },
-                { type: "audio/ogg", src: src+".ogg" }
-                /*{ type: "audio/mpeg", src:  src+".mp3" },
-                { type: "audio/ogg", src: src+".oga" }*/
-             ]);
+
+            if(player.el().firstChild.tagName=="AUDIO" || (typeof options.mediaType!='undefined' && options.mediaType=="audio") ){
+
+              player.src([
+                  { type: "audio/mp4", src:  src+".m4a" },
+                  { type: "audio/webm", src: src+".webm" },
+                  { type: "audio/ogg", src: src+".ogg" }
+                  /*{ type: "audio/mpeg", src:  src+".mp3" },
+                  { type: "audio/ogg", src: src+".oga" }*/
+               ]);
             }
             else{
             //console.log("video");
-              player.src([
+              player.src([                
                 { type: "video/mp4", src:  src+".mp4" },
                 { type: "video/webm", src: src+".webm" }
                 //{ type: "video/ogv", src: src+".ogv" }
@@ -97,6 +99,7 @@
         //add 'currentTrack' CSS class
         track.className = track.className + " currentTrack";
         if(typeof onTrackSelected === 'function') onTrackSelected.apply(track);
+
     }
 
     //if want to start at track other than 1st track

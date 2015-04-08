@@ -19,6 +19,7 @@
     "grunt-contrib-watch": "0.6.1",
     "grunt-csdevmode": "0.1.2",
     "grunt-css-metrics": "0.1.2",
+    "grunt-eslint": "^10.0.0",
     "grunt-frequency-graph": "^0.1.6",
     "grunt-hologram": "0.0.4",
     "grunt-jscs": "0.7.1",
@@ -34,7 +35,7 @@
     "handlebars": "2.0.0",
     "jit-grunt": "0.8.0",
     "jsonfile": "2.0.0",
-    "jspm": "0.13.4",
+    "jspm": "0.14.0",
     "karma": "0.12.31",
     "karma-chrome-launcher": "0.1.7",
     "karma-coffee-preprocessor": "0.2.1",
@@ -56,5 +57,26 @@
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
+  },
+  "jspm": {
+    "directories": {
+      "baseURL": "static/src",
+      "lib": "static/src",
+      "packages": "static/src/jspm_packages"
+    },
+    "configFile": "static/src/jspm-config.js",
+    "dependencies": {
+      "EventEmitter": "github:Wolfy87/EventEmitter@~4.2.6",
+      "bean": "npm:bean@^1.0.15",
+      "bonzo": "npm:bonzo@^1.4.0",
+      "classnames": "npm:classnames@^1.2.0",
+      "domready": "npm:domready@^1.0.7",
+      "jsx": "github:floatdrop/plugin-jsx@^1.1.0",
+      "lodash": "npm:lodash@~2.4.1",
+      "qwery": "npm:qwery@^4.0.0",
+      "raven": "github:getsentry/raven-js@~1.1.16",
+      "react": "npm:react@~0.12",
+      "reqwest": "github:ded/reqwest@1.1.5"
+    }
   }
 }

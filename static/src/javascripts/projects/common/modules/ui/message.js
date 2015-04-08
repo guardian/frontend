@@ -3,13 +3,13 @@ define([
     'bean',
     'common/utils/storage',
     'common/modules/user-prefs',
-    'lodash/arrays/uniq'
+    'common/utils/_'
 ], function (
     $,
     bean,
     storage,
     userPrefs,
-    uniq
+    _
 ) {
 
    /**
@@ -26,6 +26,8 @@ define([
         this.permanent = opts.permanent || false;
         this.type = opts.type || 'banner';
         this.pinOnHide = opts.pinOnHide || false;
+        this.siteMessageLinkName = opts.siteMessageLinkName || '';
+        this.siteMessageCloseBtn = opts.siteMessageCloseBtn || '';
         this.prefs = 'messages';
 
         this.$footerMessage = $('.js-footer-message');
@@ -37,7 +39,7 @@ define([
         }
 
         // don't let messages unknowingly overwrite each other
-        if ((!$('.site-message').hasClass('is-hidden') && !this.important) || this.hasSeen()) {
+        if ((!$('.js-site-message').hasClass('is-hidden') && !this.important) || this.hasSeen()) {
             // if we're not showing a banner message, display it in the footer
             if (this.pinOnHide) {
                 this.$footerMessage.removeClass('is-hidden');
@@ -45,10 +47,18 @@ define([
             return false;
         }
         $('.js-site-message-copy').html(message);
-        $('.site-message').addClass('site-message--' + this.type).addClass('site-message--' +  this.id);
-        $('.site-message').removeClass('is-hidden');
+
+        if (this.siteMessageLinkName) {
+            $('.js-site-message').attr('data-link-name', this.siteMessageLinkName);
+        }
+        if (this.siteMessageCloseBtn) {
+            $('.site-message__close-btn', '.js-site-message').attr('data-link-name', this.siteMessageCloseBtn);
+        }
+
+        $('.js-site-message').addClass('site-message--' + this.type).addClass('site-message--' +  this.id);
+        $('.js-site-message').removeClass('is-hidden');
         if (this.permanent) {
-            $('.site-message').addClass('site-message--permanent');
+            $('.js-site-message').addClass('site-message--permanent');
             $('.site-message__close').addClass('is-hidden');
         } else {
             bean.on(document, 'click', '.js-site-message-close', this.acknowledge.bind(this));
@@ -68,7 +78,7 @@ define([
 
     Message.prototype.hide = function () {
         $('#header').removeClass('js-site-message');
-        $('.site-message').addClass('is-hidden');
+        $('.js-site-message').addClass('is-hidden');
         if (this.pinOnHide) {
             this.$footerMessage.removeClass('is-hidden');
         }
@@ -82,7 +92,7 @@ define([
     Message.prototype.remember = function () {
         var messageStates = userPrefs.get(this.prefs) || [];
         messageStates.push(this.id);
-        userPrefs.set(this.prefs, uniq(messageStates));
+        userPrefs.set(this.prefs, _.uniq(messageStates));
     };
 
     Message.prototype.acknowledge = function () {
