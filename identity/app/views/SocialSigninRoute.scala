@@ -10,3 +10,9 @@ object SocialSigninRoute {
   object Confirm extends SocialSigninRoute("Confirm", "confirm")
 
 }
+
+case class SocialSigninRoutes(facebook: SocialSigninRoute, google: SocialSigninRoute)
+
+object SocialSigninRoutes {
+  def apply(route: SocialSigninRoute) = SocialSigninRoutes(route, route)
+}

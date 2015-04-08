@@ -1,8 +1,8 @@
 package views
 
-import views.SocialSigninRoute.{Signin, Request}
+import views.SocialSigninRoute.Request
 
 object SocialErrorMapper {
-  def route(registrationErrorOpt: Option[String]): SocialSigninRoute =
-    registrationErrorOpt.filter(_ == "fbEmail").map(_ => Request).getOrElse(Signin)
+  def route(registrationErrorOpt: Option[String], routes: SocialSigninRoutes): SocialSigninRoutes =
+    registrationErrorOpt.filter(_ == "fbEmail").map(_ => views.SocialSigninRoutes(Request, routes.google)).getOrElse(routes)
 }

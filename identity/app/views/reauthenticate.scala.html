@@ -1,7 +1,9 @@
 @(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, reauthenticationForm: Form[String])(implicit request: RequestHeader)
+
 @import form.IdFormHelpers._
 @import views.html.fragments.form.inputField
 @import views.html.fragments.socialSignin
+@import views.SocialSigninRoute.Confirm
 
 @main(page, projectName = Option("identity")){
 }{
@@ -22,7 +24,7 @@
                 </div>
             </div>
             <div class="fieldset__fields">
-                @socialSignin(views.SocialSigninRoute.Confirm, idRequest, idUrlBuilder)
+                @socialSignin(views.SocialSigninRoutes(Confirm), idRequest, idUrlBuilder)
             </div>
         </fieldset>
 
