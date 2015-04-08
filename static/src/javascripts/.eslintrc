@@ -28,7 +28,10 @@
   },
   "rules": {
       "semi": 2,
-      "no-var": true,
-      "quotes": "single"
+      "no-var": 2,
+      "quotes": [2, "single"],
+      "no-undef": 2,
+      "no-unused-vars": 2,
+      "no-caller": 2
   }
 }
