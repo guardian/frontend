@@ -145,10 +145,10 @@
                         href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
                         title="Switch to the @edition.id edition">
                         <span class="u-h">switch to the </span>@edition.displayName
+                        @if(edition.isBeta) {
+                            <span class="brand-bar__beta">beta</span>
+                        }
                     </a>
-                    @if(edition.isBeta) {
-                        <span class="brand-bar__beta">beta</span>
-                    }
                 </li>
             }
         </ul>
