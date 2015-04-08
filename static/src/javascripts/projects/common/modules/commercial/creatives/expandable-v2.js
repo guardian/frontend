@@ -1,6 +1,7 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'common/utils/_',
     'common/utils/$',
     'common/utils/detect',
@@ -12,6 +13,7 @@ define([
 ], function (
     bean,
     bonzo,
+    fastdom,
     _,
     $,
 	detect,
@@ -48,30 +50,22 @@ define([
     ExpandableV2.prototype.updateBgPosition = function () {
 
         var
-
             adHeight = (this.isClosed) ?
                 this.closedHeight : this.openedHeight,
-
             inViewB = ((window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top),
-
             inViewT = ((window.pageYOffset - (adHeight * 2)) < this.$adSlot.offset().top + 20),
-
             topCusp = (inViewT &&
                 ((window.pageYOffset + (bonzo.viewport().height * 0.4) - adHeight) > this.$adSlot.offset().top)) ?
                 'true' : 'false',
-
             bottomCusp = (inViewB &&
                 (window.pageYOffset + (bonzo.viewport().height * 0.5)) < this.$adSlot.offset().top) ?
                 'true' : 'false',
-
             bottomScroll = (bottomCusp === 'true') ?
                 50 - ((window.pageYOffset + (bonzo.viewport().height * 0.5) - this.$adSlot.offset().top) * -0.2) : 50,
-
             topScroll = (topCusp === 'true') ?
                 ((window.pageYOffset + (bonzo.viewport().height * 0.4) - this.$adSlot.offset().top - adHeight) * 0.2) : 0;
 
         this.scrollAmount = bottomScroll + topScroll + '%';
-
         $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + this.scrollAmount);
     };
 
@@ -119,10 +113,11 @@ define([
             },
             $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
 
-        this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
-        this.$button = $('.ad-exp__open', $expandablev2);
+            this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
+            this.$button = $('.ad-exp__open', $expandablev2);
 
-        $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
+            $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
+
 
         if (this.params.trackingPixel) {
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
