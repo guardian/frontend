@@ -15,7 +15,9 @@
 
 .content__section-label--election,
 .content__series-label--election {
-    @include mq($until: desktop) {
+    margin-top: 0;
+
+    @include mq(mobileLandscape, desktop) {
         margin-top: $gs-baseline;
     }
 }
