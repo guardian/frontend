@@ -54,23 +54,29 @@ define([
 
             inViewB = ((window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top),
 
-            inViewT = ((window.pageYOffset - adHeight) < this.$adSlot.offset().top),
+            inViewT = ((window.pageYOffset - (adHeight * 2)) < this.$adSlot.offset().top + 20),
 
             topCusp = (inViewT &&
-                ((window.pageYOffset + (bonzo.viewport().height * 0.3333) - adHeight) > this.$adSlot.offset().top)) ?
+                ((window.pageYOffset + (bonzo.viewport().height * 0.4) - adHeight) > this.$adSlot.offset().top)) ?
                 'true' : 'false',
 
             bottomCusp = (inViewB &&
-                (window.pageYOffset + (bonzo.viewport().height * 0.6666)) < this.$adSlot.offset().top) ?
+                (window.pageYOffset + (bonzo.viewport().height * 0.5)) < this.$adSlot.offset().top) ?
                 'true' : 'false',
 
             bottomScroll = (bottomCusp === 'true') ?
-                50 - ((window.pageYOffset + (bonzo.viewport().height * 0.6666) - this.$adSlot.offset().top) * -0.2) : 50,
+                50 - ((window.pageYOffset + (bonzo.viewport().height * 0.5) - this.$adSlot.offset().top) * -0.2) : 50,
 
             topScroll = (topCusp === 'true') ?
-                ((window.pageYOffset + (bonzo.viewport().height * 0.3333) - this.$adSlot.offset().top) * 0.2) - 50 : 0;
+                ((window.pageYOffset + (bonzo.viewport().height * 0.4) - this.$adSlot.offset().top - adHeight) * 0.2) : 0;
 
         this.scrollAmount = bottomScroll + topScroll + '%';
+        
+        console.log("scrollAmount = " + this.scrollAmount);
+        console.log("inViewT = " + inViewT);
+        console.log("topScroll = " + topScroll);
+        console.log("adheight = " + adHeight);
+        console.log("topCusp = " + topCusp);
 
         $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + this.scrollAmount);
     };
@@ -114,9 +120,8 @@ define([
                     '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>' : ''
             },
             scrollingbg = {
-                scrollbg: (this.params.showMoreType === 'arrow-only' || this.params.showMoreType === 'plus-and-arrow' || this.params.showMoreType === 'plus-only') ?
-// temp url for image, needs to come from DFP.
-                    '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(http://local.sandbox.co.uk/commercial-responsive-ads/test-images/bgfadescroll.png); background-position: 50% 50%; background-repeat: no-repeat;"></div>' : ''
+                scrollbg: (this.params.backgroundImageP !== '') ?
+                    '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%; background-repeat: no-repeat;"></div>' : ''
             },
             $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
 
