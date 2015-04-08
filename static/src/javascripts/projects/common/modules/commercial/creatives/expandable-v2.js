@@ -71,12 +71,6 @@ define([
                 ((window.pageYOffset + (bonzo.viewport().height * 0.4) - this.$adSlot.offset().top - adHeight) * 0.2) : 0;
 
         this.scrollAmount = bottomScroll + topScroll + '%';
-        
-        console.log("scrollAmount = " + this.scrollAmount);
-        console.log("inViewT = " + inViewT);
-        console.log("topScroll = " + topScroll);
-        console.log("adheight = " + adHeight);
-        console.log("topCusp = " + topCusp);
 
         $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + this.scrollAmount);
     };
