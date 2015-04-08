@@ -1,5 +1,6 @@
 package common
 
+import conf.Switches
 import org.joda.time.DateTimeZone
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -130,13 +131,17 @@ object InternationalEdition {
   private val variants = Seq("control", "international")
 
   def apply(request: RequestHeader): Option[InternationalEdition] = {
-    val fromHeader = request.headers.get("X-GU-International").map(_.toLowerCase)
+    if (Switches.InternationalEditionSwitch.isSwitchedOn) {
+      val fromHeader = request.headers.get("X-GU-International").map(_.toLowerCase)
 
-    val fromCookie = request.cookies.get("GU_EDITION").map(_.value.toLowerCase)
+      val fromCookie = request.cookies.get("GU_EDITION").map(_.value.toLowerCase)
 
-    (fromHeader orElse fromCookie)
-      .filter(variants.contains)
-      .map(InternationalEdition(_))
+      (fromHeader orElse fromCookie)
+        .filter(variants.contains)
+        .map(InternationalEdition(_))
+    } else {
+      None
+    }
   }
 
   def isInternationalEdition(request: RequestHeader) = apply(request).exists(_.isInternational)
