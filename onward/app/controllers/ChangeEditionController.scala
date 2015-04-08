@@ -11,6 +11,10 @@ object ChangeEditionController extends Controller with PreferenceController {
     }.getOrElse(NotFound)
   }
 
-  private def fromEdition(editionId: String)(implicit request: RequestHeader) = Edition.byId(editionId).map(_.id)
+  private def fromEdition(editionId: String)(implicit request: RequestHeader) = {
+    if (editionId != "international") {
+      Edition.byId(editionId).map(_.id)
+    } else Some(editionId)
+  }
 
 }

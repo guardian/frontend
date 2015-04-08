@@ -1,0 +1,20 @@
+@()(implicit request: RequestHeader)
+
+@import common.{Edition, LinkTo}
+
+<div class="brand-bar__popup--edition">
+    <h3 class="popup__group-header">change edition:</h3>
+    <ul class="popup__group">
+        <li class="popup__item">
+            @Edition.others(request).map { edition =>
+                <a class="brand-bar__item--action brand-bar__item--inline-action" data-edition="@edition.id"
+                data-link-name="switch to @edition.id edition"
+                href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
+                title="Switch to the @edition.id edition">
+                    <span class="u-h">switch to the </span>@edition.id<span class="u-h"> edition</span>
+                </a>
+            }
+        </li>
+    </ul>
+</div>
+

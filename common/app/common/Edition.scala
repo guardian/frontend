@@ -16,9 +16,8 @@ abstract class Edition(
 }
 
 object Edition {
-
   // gives templates an implicit edition
-  implicit def edition(implicit request: RequestHeader) = this(request)
+  implicit def edition(implicit request: RequestHeader): Edition = this(request)
 
   val defaultEdition = editions.Uk
 
@@ -27,6 +26,23 @@ object Edition {
     editions.Us,
     editions.Au
   )
+
+  type EditionOrInternational = Either[Edition, InternationalEdition]
+
+  implicit class RichEditionOrInternational(edition: EditionOrInternational) {
+    def id = edition match {
+      case Left(ed) => ed.id
+      case Right(international) => international.variant
+    }
+
+    def displayName = edition match {
+      case Left(ed) => ed.displayName
+      case Right(international) => "International edition"
+    }
+  }
+
+  private val allWithInternational: List[EditionOrInternational] =
+    all.map(Left(_)) ++ Seq(Right(InternationalEdition.international))
 
   lazy val editionFronts = Edition.all.map {e => "/" + e.id.toLowerCase}
 
@@ -54,14 +70,18 @@ object Edition {
     all.find(_.id == id).getOrElse(defaultEdition)
   }
 
-  def others(implicit request: RequestHeader): Seq[Edition] = {
-    val currentEdition = Edition(request)
-    others(currentEdition)
+  def others(implicit request: RequestHeader): Seq[EditionOrInternational] = {
+    if (InternationalEdition.isInternationalEdition(request)) {
+      allWithInternational.filter(_.isLeft)
+    } else {
+      val currentEdition = Edition(request)
+      others(currentEdition)
+    }
   }
 
-  def others(edition: Edition): Seq[Edition] = all.filterNot(_ == edition)
+  def others(edition: Edition): Seq[EditionOrInternational] = allWithInternational.filterNot(_.left.exists(_ == edition))
 
-  def others(id: String): Seq[Edition] = byId(id).map(others(_)).getOrElse(Nil)
+  def others(id: String): Seq[EditionOrInternational] = byId(id).map(others(_)).getOrElse(Nil)
 
   def byId(id: String) = all.find(_.id.equalsIgnoreCase(id))
 
@@ -103,6 +123,8 @@ case class InternationalEdition(variant: String) {
 }
 
 object InternationalEdition {
+  val international = InternationalEdition("international")
+
   private val variants = Seq("control", "international")
 
   def apply(request: RequestHeader): Option[InternationalEdition] = request.headers.get("X-GU-International")
