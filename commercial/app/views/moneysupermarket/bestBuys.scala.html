@@ -21,42 +21,46 @@
             <div class="commercial__body">
                 <div class="tabs">
                     <ol class="tabs__container js-tabs" role="tablist">
-                        <li id="mortgages-tab" class="tabs__tab tabs__tab--selected" role="tab" aria-selected="true" aria-controls="mortgages"><a href="#mortgages">Mortgages</a></li>
+                        <li id="credit-cards-tab" class="tabs__tab tabs__tab--selected" role="tab" aria-selected="true" aria-controls="credit-cards"><a href="#credit-cards">Credit Cards</a></li>
                         <li id="current-accounts-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="current-accounts"><a href="#current-accounts">Current accounts</a></li>
                         <li id="savings-account-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="savings-account"><a href="#savings-account">Savings <span class="hide-on-mobile-inline">account</span></a></li>
+                        <li id="loans-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="loans"><a href="#loans">Loans</a></li>
                     </ol>
                     <div class="tabs__content">
-                        <div class="tabs__pane mortgages" id="mortgages" role="tabpanel" aria-labelledby="mortgages-tab">
-                            <h4 class="commercial__headline">Featured offers on fixed rate mortgages</h4>
+                        <div class="tabs__pane credit-cards" id="credit-cards" role="tabpanel" aria-labelledby="credit-cards-tab">
+                            <h4 class="commercial__headline">Featured offers on credit cards</h4>
                             <table class="table--commercial">
                                 <thead class="table--commercial__head">
                                     <tr class="table--commercial__row">
-                                        <th class="table--commercial__cell" scope="col">Name</th>
-                                        <th class="table--commercial__cell" scope="col">Initial&nbsp;rate</th>
-                                        <th class="table--commercial__cell hide-cell-on-mobile" scope="col">Scheme type</th>
-                                        <th class="table--commercial__cell hide-cell-on-mobile" scope="col">Overall cost for comparison (APR %)</th>
-                                        <th class="table--commercial__cell"></th>
+                                        <th class="table--commercial__cell">Account Name</th>
+                                        <th class="table--commercial__cell hide-cell-on-mobile">Balance Transfer</th>
+                                        <th class="table--commercial__cell hide-cell-on-mobile">Purchases</th>
+                                        <th class="table--commercial__cell">Representative APR (Variable)</th>
+                                        <th class="table--commercial__cell u-h">Link to product</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table--commercial__body">
-                                 @bestBuys.mortgages.take(3).map { mortgage =>
+                                @bestBuys.creditCards.get("balance-transfer").getOrElse(Nil).take(3).map { creditCard =>
                                     <tr class="table--commercial__row">
-                                        <th class="table--commercial__cell" scope="row"><a href="@clickMacro@mortgage.detailsUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@mortgage.lender">@mortgage.lender</a></th>
-                                        <td class="table--commercial__cell">@mortgage.rate</td>
-                                        <td class="table--commercial__cell hide-cell-on-mobile">@mortgage.description</td>
-                                        <td class="table--commercial__cell hide-cell-on-mobile">@mortgage.overallCost%</td>
-                                        <td class="table--commercial__cell"><a href="@clickMacro@mortgage.detailsUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@mortgage.lender-more">More <span class="u-h">about @mortgage.lender's offer</span></a></td>
+                                        <th class="table--commercial__cell"><a href="@creditCard.applyUrl">@creditCard.name</a></td>
+                                        <td class="table--commercial__cell hide-cell-on-mobile">Transfer rate: @creditCard.balanceTransferRate%<br/>Duration: @creditCard.balanceTransferRateDuration months<br/>Transfer fee: @creditCard.balanceTransferFee%</td>
+                                        <td class="table--commercial__cell hide-cell-on-mobile">Purchase rate: @creditCard.purchaseRate%<br/>Duration: @creditCard.purchaseRateDuration months</td>
+                                        <td class="table--commercial__cell">@creditCard.representativeApr%</td>
+                                        <td class="table--commercial__cell"><a href="@creditCard.applyUrl" data-link-name="merchandising-creditcards-v@{version}_@{date}-@creditCard.name-more">More</a></td>
+                                    </tr>
+                                    <tr class="table--commercial__row table--commercial__row-example">
+                                        <td class="table--commercial__cell" colspan="5">@creditCard.example</td>
                                     </tr>
                                 }
                                 </tbody>
                             </table>
-                            <a class="lineitem__cta button button--primary button--small" href="@{clickMacro}http://guardian.lcplc-online.co.uk/">
-                                Get free mortgage advice@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+                            <a class="lineitem__cta button button--primary button--small" href="@{clickMacro}http://www.moneysupermarket.com/credit-cards/?source=GU6" data-link-name="merchandising-creditcards-v@{version}_@{date}-browse-compare-current-rates">
+                                Compare credit card deals@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
                             </a>
                             <a class="lineitem__cta button button--tertiary button--small" href="@{clickMacro}/money/financial-tools-calculators-mortgage-debt-consolidation-loan-repayment-savings">
-                                Tools and calculators@fragments.inlineSvg("arrow-right", "icon", List("i-right", "i-arrow-black"))
+                                Tools and calculators@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
                             </a>
-                            <p class="lineitem__meta">Data provided by London &amp; Country Mortgages Ltd</p>
+                            <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
                         </div>
                         <div class="tabs__pane current-accounts modern-hidden" id="current-accounts" role="tabpanel" aria-labelledby="current-accounts-tab">
                             <h4 class="commercial__headline">Looking after your day-to-day finances</h4>
@@ -118,10 +122,44 @@
                             </a>
                             <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
                         </div>
+                        <div class="tabs__pane loans modern-hidden" id="loans" role="tabpanel" aria-labelledby="loans-tab">
+                            <h4 class="commercial__headline">Featured offers on loans</h4>
+                            <table class="table--commercial">
+                                <thead class="table--commercial__head">
+                                    <tr class="table--commercial__row">
+                                        <th class="table--commercial__cell">Loan</th>
+                                        <th class="table--commercial__cell">Headline Rate</th>
+                                        <th class="table--commercial__cell">APR</th>
+                                        <th class="table--commercial__cell hide-cell-on-mobile">Min Loan Amount</th>
+                                        <th class="table--commercial__cell hide-cell-on-mobile">Max Loan Amount</th>
+                                        <th class="table--commercial__cell u-h">Link to product</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table--commercial__body">
+                                @bestBuys.loans.take(5).map { loan =>
+                                    <tr>
+                                        <td class="table--commercial__cell"><a href="@loan.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-browse-@loan.name-name">@loan.name</a></td>
+                                        <td class="table--commercial__cell">@loan.headlineApr%</td>
+                                        <td class="table--commercial__cell">@loan.apr%</td>
+                                        <td class="table--commercial__cell hide-cell-on-mobile">£@{"%,.0f".format(loan.minAdvance)}</td>
+                                        <td class="table--commercial__cell hide-cell-on-mobile">£@{"%,.0f".format(loan.maxAdvance)}</td>
+                                        <td class="table--commercial__cell"><a href="@loan.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-browse-@loan.name-more">More <span class="u-h">about @loan.name's offer</span></a></td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                            <a class="lineitem__cta button button--primary button--small" href="@{clickMacro}http://www.moneysupermarket.com/loans/?source=GU6" data-link-name="merchandising-loans-v@{version}_@{date}-browse-compare-loans">
+                                Compare loan deals@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+                            </a>
+                            <a class="lineitem__cta button button--tertiary button--small" href="@{clickMacro}/money/financial-tools-calculators-mortgage-debt-consolidation-loan-repayment-savings">
+                                Tools and calculators@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+                            </a>
+                            <p class="lineitem__meta">Your home may be repossessed if you do not keep up repayments on a mortgage, loan or any other debt secured on it.</p>
+                            <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 }
