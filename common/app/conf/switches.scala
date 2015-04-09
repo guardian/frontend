@@ -349,6 +349,14 @@ object Switches {
   )
 
   // Features
+  val InternationalEditionSwitch = Switch(
+    "Feature",
+    "international-edition",
+    "International edition A/B test on",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 1)
+  )
+
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
