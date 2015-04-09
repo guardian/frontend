@@ -138,11 +138,12 @@ object InternationalEdition {
       def constrainToInternational(maybeS: Option[String]) =
         maybeS.map(_.toLowerCase).filter(variants.contains)
 
-      val fromInternationalHeader = constrainToInternational(request.headers.get("X-GU-International"))
-      val fromEditionHeader = constrainToInternational(request.headers.get("X-GU-Edition"))
+      val editionIsIntl = request.headers.get("X-GU-Edition").map(_.toLowerCase).contains("intl")
       val fromCookie = constrainToInternational(request.cookies.get("GU_EDITION").map(_.value))
+      val fromInternationalHeader = constrainToInternational(request.headers.get("X-GU-International"))
+        .filter(_ => editionIsIntl)
 
-      (fromCookie orElse fromEditionHeader orElse fromInternationalHeader)
+      (fromCookie orElse fromInternationalHeader)
         .filter(variants.contains)
         .map(InternationalEdition(_))
     } else {
