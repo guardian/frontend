@@ -48,50 +48,64 @@ define([
     ExpandableV2.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     ExpandableV2.prototype.updateBgPosition = function () {
-
-        var
-            adHeight = (this.isClosed) ?
-                this.closedHeight : this.openedHeight,
-            inViewB = ((window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top),
-            inViewT = ((window.pageYOffset - (adHeight * 2)) < this.$adSlot.offset().top + 20),
+        var adHeight, inViewB, inViewT, topCusp, bottomCusp, bottomScroll, topScroll, that = this;
+        fastdom.read(function(){
+            adHeight = (that.isClosed) ?
+                that.closedHeight : that.openedHeight,
+            inViewB = ((window.pageYOffset + bonzo.viewport().height) > that.$adSlot.offset().top),
+            inViewT = ((window.pageYOffset - (adHeight * 2)) < that.$adSlot.offset().top + 20),
             topCusp = (inViewT &&
-                ((window.pageYOffset + (bonzo.viewport().height * 0.4) - adHeight) > this.$adSlot.offset().top)) ?
+                ((window.pageYOffset + (bonzo.viewport().height * 0.4) - adHeight) > that.$adSlot.offset().top)) ?
                 'true' : 'false',
             bottomCusp = (inViewB &&
-                (window.pageYOffset + (bonzo.viewport().height * 0.5)) < this.$adSlot.offset().top) ?
+                (window.pageYOffset + (bonzo.viewport().height * 0.5)) < that.$adSlot.offset().top) ?
                 'true' : 'false',
             bottomScroll = (bottomCusp === 'true') ?
-                50 - ((window.pageYOffset + (bonzo.viewport().height * 0.5) - this.$adSlot.offset().top) * -0.2) : 50,
+                50 - ((window.pageYOffset + (bonzo.viewport().height * 0.5) - that.$adSlot.offset().top) * -0.2) : 50,
             topScroll = (topCusp === 'true') ?
-                ((window.pageYOffset + (bonzo.viewport().height * 0.4) - this.$adSlot.offset().top - adHeight) * 0.2) : 0;
+                ((window.pageYOffset + (bonzo.viewport().height * 0.4) - that.$adSlot.offset().top - adHeight) * 0.2) : 0;
+        });
 
         switch (this.params.backgroundImagePType) {
             case 'split':
-                this.scrollAmount = bottomScroll + topScroll + '%';
-                $('.ad-exp--expand-scrolling-bg').css('background-repeat', 'no-repeat');
+                fastdom.write(function(){
+                    that.scrollAmount = bottomScroll + topScroll + '%';
+                    $('.ad-exp--expand-scrolling-bg').css('background-repeat', 'no-repeat');
+                });
                 break;
             case 'fixed':
-                this.scrollAmount = (window.pageYOffset - this.$adSlot.offset().top) + 'px';
+                fastdom.read(function(){
+                    that.scrollAmount = (window.pageYOffset - that.$adSlot.offset().top) + 'px';
+                });
                 break;
             case 'parallax':
-                this.scrollAmount = ((window.pageYOffset - this.$adSlot.offset().top) * 0.15) + '%';
+                fastdom.read(function(){
+                    that.scrollAmount = ((window.pageYOffset - that.$adSlot.offset().top) * 0.15) + '%';
+                });
                 break;
         }
-        $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + this.scrollAmount);
+        fastdom.write(function(){
+            $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + that.scrollAmount);
+        });
     };
 
     ExpandableV2.prototype.listener = function () {
-        if ((window.pageYOffset + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
-            // expires in 1 week
-            var week = 1000 * 60 * 60 * 24 * 7;
+        var that = this;
+        fastdom.read(function(){
+            if ((window.pageYOffset + bonzo.viewport().height) > (that.$adSlot.offset().top + that.openedHeight)) {
+                // expires in 1 week
+                var week = 1000 * 60 * 60 * 24 * 7;
 
-            storage.local.set('gu.commercial.expandable.' + this.params.ecid, true, { expires: Date.now() + week });
-            this.$button.toggleClass('button-spin');
-            $('.ad-exp__open-chevron').toggleClass('chevron-down');
-            this.$ad.css('height', this.openedHeight);
-            this.isClosed = false;
-            return true;
-        }
+                storage.local.set('gu.commercial.expandable.' + that.params.ecid, true, { expires: Date.now() + week });
+                fastdom.write(function(){
+                    that.$button.toggleClass('button-spin');
+                    $('.ad-exp__open-chevron').toggleClass('chevron-down');
+                    that.$ad.css('height', that.openedHeight);
+                    that.isClosed = false;
+                });
+                return true;
+            }
+        });
     };
 
     ExpandableV2.prototype.create = function () {
@@ -122,28 +136,34 @@ define([
                 scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
                     '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%;"></div>' : 'boo'
             },
-            $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
+            $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg))), 
+            that = this;
 
-        this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);
-        this.$button = $('.ad-exp__open', $expandablev2);
+        fastdom.write(function(){
 
-        $('.ad-exp-collapse__slide', $expandablev2).css('height', this.closedHeight);
+            that.$ad     = $('.ad-exp--expand', $expandablev2).css('height', that.closedHeight);
+            that.$button = $('.ad-exp__open', $expandablev2);
 
-        if (this.params.trackingPixel) {
-            this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
-        }
+            $('.ad-exp-collapse__slide', $expandablev2).css('height', that.closedHeight);
 
-        $expandablev2.appendTo(this.$adSlot);
+            if (that.params.trackingPixel) {
+                that.$adSlot.before('<img src="' + that.params.trackingPixel + that.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+            }
+
+            $expandablev2.appendTo(that.$adSlot);
+        });
 
         if (!storage.local.get('gu.commercial.expandable.' + this.params.ecid)) {
             mediator.on('window:scroll', this.listener.bind(this));
         }
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
-            $('.ad-exp__close-button').toggleClass('button-spin');
-            $('.ad-exp__open-chevron').toggleClass('chevron-down');
-            this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
-            this.isClosed = !this.isClosed;
+            fastdom.write(function(){
+                $('.ad-exp__close-button').toggleClass('button-spin');
+                $('.ad-exp__open-chevron').toggleClass('chevron-down');
+                this.$ad.css('height', this.isClosed ? this.openedHeight : this.closedHeight);
+                this.isClosed = !this.isClosed;
+            }.bind(this));
         }.bind(this));
 
         if (ExpandableV2.hasScrollEnabled) {
