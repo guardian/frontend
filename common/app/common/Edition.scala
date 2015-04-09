@@ -44,8 +44,9 @@ object Edition {
     def isBeta = edition.isRight
   }
 
-  private val allWithInternational: List[EditionOrInternational] =
-    all.map(Left(_)) ++ Seq(Right(InternationalEdition.international))
+  private def allWithInternational: List[EditionOrInternational] =
+    all.map(Left(_)) ++
+      (if (Switches.InternationalEditionSwitch.isSwitchedOn) Seq(Right(InternationalEdition.international)) else Nil)
 
   lazy val editionFronts = Edition.all.map {e => "/" + e.id.toLowerCase}
 
