@@ -30,6 +30,7 @@ define([
         refreshMaxTimes = 10,
 
         selector = '.js-liveblog-blocks',
+        blocksClassname = 'fc-item__liveblog-blocks',
         newBlockClassname = 'fc-item__liveblog-block--new',
         oldBlockClassname = 'fc-item__liveblog-block--old',
         articleIdAttribute = 'data-article-id',
@@ -75,7 +76,7 @@ define([
                         blocksHtml: blocksHtml
                     }));
 
-                bonzo(element).empty().prepend(el);
+                bonzo(element).empty().addClass(blocksClassname).append(el);
 
                 if (numNewBlocks) {
                     setTimeout(function () {

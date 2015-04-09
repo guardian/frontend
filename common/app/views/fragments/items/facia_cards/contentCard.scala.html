@@ -114,7 +114,7 @@ data-test-id="facia-card"
         </div>
 
         @if(ABLiveblogBlocksOnFronts.isSwitchedOn && item.isLive) {
-            <div class="fc-item__liveblog-blocks js-liveblog-blocks" data-article-id="@item.id">
+            <div class="js-liveblog-blocks" data-article-id="@item.id">
                 @item.trailText.filter(const(item.showStandfirst)).map { text =>
                     <div class="fc-item__standfirst">@Html(text)</div>
                 }
