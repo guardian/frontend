@@ -140,13 +140,20 @@ object InternationalEdition {
   private val variants = Seq("control", "international")
 
   def apply(request: RequestHeader): Option[InternationalEdition] = {
+
+    // This is all a bit hacky because it is a large scale AB test.
+    // most of this is not necessary if we formalise this (or of course if we delete it).
     if (Switches.InternationalEditionSwitch.isSwitchedOn) {
       val editionIsIntl = request.headers.get("X-GU-Edition").map(_.toLowerCase).contains("intl")
       val editionSetByCookie = request.headers.get("X-GU-Edition-From-Cookie").contains("true")
       val fromInternationalHeader = request.headers.get("X-GU-International").map(_.toLowerCase)
       val setByCookie = request.cookies.get("GU_EDITION").map(_.value.toLowerCase).contains("intl")
 
-      if (setByCookie || (editionIsIntl && editionSetByCookie)) {
+      // environments NOT behind the CDN will not have these. In this case assume they are in the
+      // "international" bucket
+      val noInternationalHeader = request.headers.get("X-GU-International").isEmpty
+
+      if (setByCookie || (editionIsIntl && (editionSetByCookie || noInternationalHeader))) {
         Some(international)
       } else {
         fromInternationalHeader
