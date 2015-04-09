@@ -36,7 +36,7 @@ define([
 
     var ab,
         TESTS = [
-            new LiveblogBlocksOnFronts();
+            new LiveblogBlocksOnFronts(),
             new HighCommercialComponent(),
             new IdentitySocialOAuth(),
             new MtMaster(),
