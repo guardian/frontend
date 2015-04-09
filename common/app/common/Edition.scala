@@ -135,11 +135,14 @@ object InternationalEdition {
 
   def apply(request: RequestHeader): Option[InternationalEdition] = {
     if (Switches.InternationalEditionSwitch.isSwitchedOn) {
-      val fromHeader = request.headers.get("X-GU-International").map(_.toLowerCase)
+      def constrainToInternational(maybeS: Option[String]) =
+        maybeS.map(_.toLowerCase).filter(variants.contains)
 
-      val fromCookie = request.cookies.get("GU_EDITION").map(_.value.toLowerCase)
+      val fromInternationalHeader = constrainToInternational(request.headers.get("X-GU-International"))
+      val fromEditionHeader = constrainToInternational(request.headers.get("X-GU-Edition"))
+      val fromCookie = constrainToInternational(request.cookies.get("GU_EDITION").map(_.value))
 
-      (fromHeader orElse fromCookie)
+      (fromCookie orElse fromEditionHeader orElse fromInternationalHeader)
         .filter(variants.contains)
         .map(InternationalEdition(_))
     } else {
