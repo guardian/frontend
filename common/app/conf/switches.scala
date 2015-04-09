@@ -464,6 +464,10 @@ object Switches {
     "If switched on, any user registrations from a known tor esit node will be logged",
     safeState = On, sellByDate = never)
 
+  val LiveblogBlocksOnFronts = Switch("Feature", "liveblog-blocks-on-fronts",
+    "If switched on, liveblogs on fronts display their latest blocks",
+    safeState = On, sellByDate = new LocalDate(2015, 6, 3))
+
   // A/B Tests
 
   val ABIdentitySocialOAuth = Switch("A/B Tests", "ab-id-social-oauth",

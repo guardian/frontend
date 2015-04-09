@@ -10,6 +10,7 @@
 @import views.support.ImgSrc
 @import layout.{LatestSnap, FaciaWidths}
 @import Function.const
+@import conf.Switches._
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
     @if(item.discussionSettings.isCommentable) {
@@ -112,7 +113,7 @@ data-test-id="facia-card"
             }
         </div>
 
-        @if(item.isLive) {
+        @if(LiveblogBlocksOnFronts.isSwitchedOn && item.isLive) {
             <div class="fc-item__liveblog-blocks js-liveblog-blocks" data-article-id="@item.id">
                 @item.trailText.filter(const(item.showStandfirst)).map { text =>
                     <div class="fc-item__standfirst">@Html(text)</div>
