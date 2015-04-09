@@ -32,6 +32,8 @@ import test.{ConfiguredTestSuite, TestRequest}
 
     GU_EDITION.maxAge.getOrElse(0) should be (5184000 +- 1)  // 60 days, this is seconds
     GU_EDITION.value should be ("INTL")
+
+    Switches.InternationalEditionSwitch.switchOff()
   }
 
   it should "not set the international cookie if not enabled" in {
