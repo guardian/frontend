@@ -1,5 +1,9 @@
 .crossword__container {
     position: relative;
+
+    @include mq(tablet) {
+        padding-left: $crossword-native-size;
+    }
 }
 
 .crossword__focussed-clue-wrapper {
@@ -12,24 +16,32 @@
     font-size: 0;
 
     @include mq(tablet) {
+        margin-left: 0 - $crossword-native-size;
         width: $crossword-native-size;
-        position: absolute;
+        float: left;
     }
 }
 
 .crossword__controls {
-    padding-bottom: $gs-baseline;
+    margin-top: $gs-baseline;
+    float: left;
+    clear: both;
+
+    @include mq(tablet) {
+        margin-left: 0 - $crossword-native-size;
+    }
 }
 
 .crossword__clues {
-    margin-bottom: $gs-baseline * 2;
+    width: 100%;
+    clear: both;
 
     @include mq(tablet) {
-        padding-left: $gs-gutter + $crossword-native-size;
-        width: 100%;
+        clear: none;
+        padding-left: $gs-gutter;
         display: table;
-        @include box-sizing(border-box);
         table-layout: fixed;
+        @include box-sizing(border-box);
     }
 }
 
