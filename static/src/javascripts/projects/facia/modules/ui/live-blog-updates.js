@@ -27,7 +27,7 @@ define([
 
         refreshSecs = 30,
         refreshDecay = 2,
-        refreshMaxTimes = 10,
+        refreshMaxTimes = 0,
 
         selector = '.js-liveblog-blocks',
         blocksClassname = 'fc-item__liveblog-blocks',

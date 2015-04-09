@@ -338,18 +338,23 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__liveblog-block {
+    display: block;
+    position: relative;
     @include fs-headline(1);
     color: #ffffff;
-    display: block;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
-    height: 38px;
-    border-top: 1px solid rgba(254, 254, 254 , .3);
-    margin-bottom: 5px;
+    height: $gs-baseline * 3 + 2;
+    margin-bottom: $gs-baseline / 2;
     transition: height .8s linear;
+}
+
+.fc-item__liveblog-block__more {
+    position: absolute;
+    bottom: $gs-baseline / 6;
+    right: 0;
+    width: $gs-gutter / 2;
+    padding-left: 2px;
+    background-color: colour(live-default);
 }
 
 .fc-item__liveblog-block__time {
@@ -358,7 +363,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__liveblog-block--new .fc-item__liveblog-block__time:before {
     content: 'Updated';
-    margin-right: 4px;
+    margin-right: $gs-baseline / 3;
 }
 
 .fc-item__liveblog-block--old .fc-item__liveblog-block__time {
