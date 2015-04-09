@@ -329,16 +329,8 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__liveblog-blocks {
-    height: 170px;
+    height: 82px;
     overflow: hidden;
-
-    @include mq($until: tablet) {
-        height: 82px;
-    }
-
-    .l-list__item & {
-        height: 38px;
-    }
 }
 
 .fc-item__liveblog-blocks__inner {
