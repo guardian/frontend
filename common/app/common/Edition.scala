@@ -38,7 +38,7 @@ object Edition {
 
     def displayName = edition match {
       case Left(ed) => ed.displayName
-      case Right(international) => "International edition"
+      case Right(international) => InternationalEdition.displayName
     }
 
     def isBeta = edition.isRight
@@ -133,6 +133,8 @@ object InternationalEdition {
   val id: String = "intl"
   val path: String = "/international"
 
+  val displayName = "Intl. edition"
+
   val international = InternationalEdition("international")
 
   private val variants = Seq("control", "international")
@@ -142,8 +144,9 @@ object InternationalEdition {
       val editionIsIntl = request.headers.get("X-GU-Edition").map(_.toLowerCase).contains("intl")
       val editionSetByCookie = request.headers.get("X-GU-Edition-From-Cookie").contains("true")
       val fromInternationalHeader = request.headers.get("X-GU-International").map(_.toLowerCase)
+      val setByCookie = request.cookies.get("GU_EDITION").map(_.value.toLowerCase).contains("intl")
 
-      if (editionIsIntl && editionSetByCookie) {
+      if (setByCookie || (editionIsIntl && editionSetByCookie)) {
         Some(international)
       } else {
         fromInternationalHeader
