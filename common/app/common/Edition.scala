@@ -33,7 +33,7 @@ object Edition {
   implicit class RichEditionOrInternational(edition: EditionOrInternational) {
     def id = edition match {
       case Left(ed) => ed.id
-      case Right(international) => international.variant
+      case Right(international) => InternationalEdition.id
     }
 
     def displayName = edition match {
@@ -127,6 +127,9 @@ case class InternationalEdition(variant: String) {
 
 object InternationalEdition {
 
+  // These values end up in cookies and URLs
+  // Make sure you know exactly what you are doing if you change them
+  val id: String = "intl"
   val path: String = "/international"
 
   val international = InternationalEdition("international")

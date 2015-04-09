@@ -1,4 +1,5 @@
 @()(implicit request: RequestHeader)
+@import common.InternationalEdition
 
 @import common.{Edition, LinkTo}
 
@@ -9,7 +10,7 @@
             @Edition.others(request).map { edition =>
                 <a class="brand-bar__item--action brand-bar__item--inline-action" data-edition="@edition.id"
                 data-link-name="switch to @edition.id edition"
-                href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
+                href="@LinkTo(s"/preference/edition/${InternationalEdition.id}")"
                 title="Switch to the @edition.id edition">
                     @if(edition.isBeta) {
                         <span class="u-h">switch to the </span> Int <span class="brand-bar__beta">beta</span> <span class="u-h"> edition</span>
