@@ -135,7 +135,7 @@ import services.ConfigAgent
 
   it should "obey the control group when the international edition is not set by cookie" in {
     Switches.InternationalEditionSwitch.switchOn()
-    
+
     val control = FakeRequest("GET", "/").withHeaders(
       "X-GU-Edition" -> "INTL",
       "X-GU-International" -> "control"

@@ -132,7 +132,7 @@
            data-link-name="topNav : edition" data-toggle="top-bar__popup--edition"
            aria-haspopup="true" aria-controls="guardian-edition-menu">
         @if(InternationalEdition.isInternationalEdition(request)) {
-            International edition
+            @InternationalEdition.displayName
         } else {
             @Edition(request).displayName
         }

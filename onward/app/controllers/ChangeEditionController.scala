@@ -7,8 +7,9 @@ import conf.Switches.InternationalEditionSwitch
 object ChangeEditionController extends Controller with PreferenceController {
 
   def render(editionId: String) = Action { implicit request =>
-    fromEdition(editionId).map{ id =>
-      switchTo("GU_EDITION" -> id.toUpperCase, s"/${id.toLowerCase}")
+    fromEdition(editionId).map{
+      case InternationalEdition.id => switchTo("GU_EDITION" -> InternationalEdition.id.toUpperCase, InternationalEdition.path)
+      case id => switchTo("GU_EDITION" -> id.toUpperCase, s"/${id.toLowerCase}")
     }.getOrElse(NotFound)
   }
 
