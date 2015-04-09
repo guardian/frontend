@@ -383,9 +383,8 @@ const Crossword = React.createClass({
             onClick: this.onClickHiddenInput,
             autoComplete: 'off'
         }))),
-        FocussedClue({
-            focussedClue: focussed ? focussed : null,
-            intersectingEntries,
+        Clues({
+            clues: this.cluesData(),
             focusClue: this.focusClue
         }),
         Controls({
@@ -397,8 +396,9 @@ const Crossword = React.createClass({
             onCheckAll: this.onCheckAll,
             onClearAll: this.onClearAll
         }),
-        Clues({
-            clues: this.cluesData(),
+        FocussedClue({
+            focussedClue: focussed ? focussed : null,
+            intersectingEntries,
             focusClue: this.focusClue
         }));
     }

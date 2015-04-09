@@ -25,7 +25,24 @@
     margin-bottom: $gs-baseline * 2;
 
     @include mq(tablet) {
-        margin-left: $gs-gutter + $crossword-native-size;
-        width: auto;
+        padding-left: $gs-gutter + $crossword-native-size;
+        width: 100%;
+        display: table;
+        @include box-sizing(border-box);
+        table-layout: fixed;
+    }
+}
+
+.crossword__clues--across {
+    @include mq(desktop) {
+        display: table-cell;
+        padding-right: $gs-gutter / 2;
+    }
+}
+
+.crossword__clues--down {
+    @include mq(desktop) {
+        display: table-cell;
+        padding-left: $gs-gutter / 2;
     }
 }
