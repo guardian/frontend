@@ -65,7 +65,18 @@ define([
             topScroll = (topCusp === 'true') ?
                 ((window.pageYOffset + (bonzo.viewport().height * 0.4) - this.$adSlot.offset().top - adHeight) * 0.2) : 0;
 
-        this.scrollAmount = bottomScroll + topScroll + '%';
+        switch (this.params.backgroundImagePType) {
+            case 'split':
+                this.scrollAmount = bottomScroll + topScroll + '%';
+                $('.ad-exp--expand-scrolling-bg').css('background-repeat', 'no-repeat');
+                break;
+            case 'fixed':
+                this.scrollAmount = (window.pageYOffset - this.$adSlot.offset().top) + 'px';
+                break;
+            case 'parallax':
+                this.scrollAmount = ((window.pageYOffset - this.$adSlot.offset().top) * 0.15) + '%';
+                break;
+        }
         $('.ad-exp--expand-scrolling-bg').css('background-position', '50%' + this.scrollAmount);
     };
 
@@ -108,8 +119,8 @@ define([
                     '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>' : ''
             },
             scrollingbg = {
-                scrollbg: (this.params.backgroundImageP !== '') ?
-                    '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%; background-repeat: no-repeat;"></div>' : ''
+                scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
+                    '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%;"></div>' : 'boo'
             },
             $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
 
