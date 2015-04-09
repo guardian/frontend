@@ -1,12 +1,12 @@
 import React from 'react';
 
-var buttonClassName = 'button button--small';
+const buttonClassName = 'button button--small';
 
 export default React.createClass({
-    render: function () {
-        var hasSolutions = this.props.hasSolutions,
-            hasFocus = this.props.clueInFocus,
-            controls = [];
+    render () {
+        const hasSolutions = this.props.hasSolutions;
+        const hasFocus = this.props.clueInFocus;
+        const controls = [];
 
         if (hasFocus && hasSolutions) {
             controls.unshift(

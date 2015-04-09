@@ -19,6 +19,7 @@
     "grunt-contrib-watch": "0.6.1",
     "grunt-csdevmode": "0.1.2",
     "grunt-css-metrics": "0.1.2",
+    "grunt-eslint": "^10.0.0",
     "grunt-frequency-graph": "^0.1.6",
     "grunt-hologram": "0.0.4",
     "grunt-jscs": "0.7.1",
@@ -68,11 +69,13 @@
       "EventEmitter": "github:Wolfy87/EventEmitter@~4.2.6",
       "bean": "npm:bean@^1.0.15",
       "bonzo": "npm:bonzo@^1.4.0",
+      "classnames": "npm:classnames@^1.2.0",
       "domready": "npm:domready@^1.0.7",
+      "jsx": "github:floatdrop/plugin-jsx@^1.1.0",
       "lodash": "npm:lodash@~2.4.1",
       "qwery": "npm:qwery@^4.0.0",
       "raven": "github:getsentry/raven-js@~1.1.16",
-      "react": "npm:react@~0.11.2",
+      "react": "npm:react@~0.12",
       "reqwest": "github:ded/reqwest@1.1.5"
     }
   }

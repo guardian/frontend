@@ -30,6 +30,9 @@ define([
                         edition:         'NOT-US',
                         omnitureAccount: 'the_account'
                     };
+
+                    config.tests = [];
+
                     s = {
                         t: function () {},
                         tl: function () {},

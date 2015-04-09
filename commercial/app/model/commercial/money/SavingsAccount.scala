@@ -29,7 +29,7 @@ case class SavingsAccount(
                            access: Map[String, Boolean])
 
 
-trait SavingsApi extends MoneySupermarketApi[SavingsAccount] {
+trait SavingsFeed extends MoneySupermarketFeed[SavingsAccount] {
 
   def parse(xml: Elem): Seq[SavingsAccount] = {
     xml \ "Product" map {
@@ -58,31 +58,31 @@ trait SavingsApi extends MoneySupermarketApi[SavingsAccount] {
 
 package savingsApi {
 
-  object CashIsas extends SavingsApi {
+  object CashIsas extends SavingsFeed {
     protected val adTypeName = "Savings Accounts - Cash ISAs"
     protected lazy val path = "savings/cash-isas"
   }
-  object EasyAccess extends SavingsApi {
+  object EasyAccess extends SavingsFeed {
     protected val adTypeName = "Savings Accounts - Easy Access"
     protected lazy val path = "savings/easy-access"
   }
-  object FixedRateBonds extends SavingsApi {
+  object FixedRateBonds extends SavingsFeed {
     protected val adTypeName = "Savings Accounts - Fixed Rate Bonds"
     protected lazy val path = "savings/fixed-rate-bonds"
   }
-  object RegularSavings extends SavingsApi {
+  object RegularSavings extends SavingsFeed {
     protected val adTypeName = "Savings Accounts - Regular Savings"
     protected lazy val path = "savings/regular-savings"
   }
-  object ChildrensAccounts extends SavingsApi {
+  object ChildrensAccounts extends SavingsFeed {
     protected val adTypeName = "Savings Accounts - Childrens Accounts"
     protected lazy val path = "savings/childrens-accounts"
   }
-  object NoticeAccounts extends SavingsApi {
+  object NoticeAccounts extends SavingsFeed {
     protected val adTypeName = "Savings Accounts - Notice Accounts"
     protected lazy val path = "savings/notice-accounts"
   }
-  object OffshoreAccounts extends SavingsApi {
+  object OffshoreAccounts extends SavingsFeed {
     protected val adTypeName = "Savings Accounts - Offshore Accounts"
     protected lazy val path = "savings/offshore-accounts"
   }
