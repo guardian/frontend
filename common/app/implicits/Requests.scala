@@ -6,7 +6,7 @@ import play.api.mvc.RequestHeader
 
 trait Requests {
 
-  private val imgixTestSections: Seq[String] = Seq("/money")
+  private val imgixTestSections: Seq[String] = Seq("/uk/money", "/au/money", "/uk/money", "/money")
 
   implicit class RichRequestHeader(r: RequestHeader) {
 
