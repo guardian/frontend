@@ -9,7 +9,6 @@
 @import layout.WidthsByBreakpoint
 @import layout.ContentWidths.{PictureMedia, MainMedia}
 @import views.support.ImgSrc
-@import implicits.Requests._
 
 @img.map{ picture =>
 
@@ -55,8 +54,8 @@
 
 @image(picture: model.ImageContainer, widths: WidthsByBreakpoint) = {
 
-    <img src="@ImgSrc.getFallbackUrl(picture, request.isInImgixTest)"
-    srcset="@ImgSrc.srcset(picture, widths, request.isInImgixTest)"
+    <img src="@ImgSrc.getFallbackUrl(picture)"
+    srcset="@ImgSrc.srcset(picture, widths)"
     sizes="@widths.sizes"
     class="maxed responsive-img"
     itemprop="contentURL representativeOfPage"

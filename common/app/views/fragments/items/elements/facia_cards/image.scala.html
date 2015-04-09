@@ -1,6 +1,5 @@
 @(imageContainer: model.ImageContainer, inlineImage: Boolean = false, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None)(implicit request: RequestHeader)
 
-@import implicits.Requests._
 @import fragments.items.elements.facia_cards.lazyImage
 @import views.support.ImgSrc
 
@@ -10,7 +9,7 @@
             case Some(widths) => {
                 @lazyImage(
                     Seq("responsive-img"),
-                    ImgSrc.srcset(imageContainer, widths, request.isInImgixTest),
+                    ImgSrc.srcset(imageContainer, widths),
                     widths.sizes,
                     ImgSrc.getFallbackUrl(imageContainer),
                     inlineImage

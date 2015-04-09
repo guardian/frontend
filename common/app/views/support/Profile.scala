@@ -8,6 +8,8 @@ import java.net.{URISyntaxException, URI}
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
 import conf.Configuration
+import implicits.Requests._
+import play.api.mvc.RequestHeader
 
 sealed trait ElementProfile {
 
@@ -119,31 +121,36 @@ object ImgSrc extends Logging {
     }
   }
 
-  def findLargestSrc(imageContainer: ImageContainer, profile: Profile): Option[String] = {
+  def findLargestSrc(imageContainer: ImageContainer, profile: Profile)(implicit request: RequestHeader): Option[String] = {
     profile.largestFor(imageContainer).flatMap(_.url).map{ largestImage =>
-      ImgSrc(largestImage, profile, (true && ImgixSwitch.isSwitchedOn))
+      ImgSrc(largestImage, profile,(request.isInImgixTest && ImgixSwitch.isSwitchedOn))
     }
   }
 
-  def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint, imgix: Boolean = false): String = {
-    widths.profiles.map { profile =>
-
-      if(imgix && ImgixSwitch.isSwitchedOn) {
-        s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
+  def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint)(implicit request: RequestHeader): String = {
+      if(request.isInImgixTest && ImgixSwitch.isSwitchedOn) {
+        widths.profiles.map { profile =>
+          s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
+        } mkString ", "
       } else {
-        s"${findSrc(imageContainer, profile).get} ${profile.width.get}w"
+        normalSrcset(imageContainer, widths)
       }
+  }
+
+  def normalSrcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
+    widths.profiles.map { profile =>
+        s"${findSrc(imageContainer, profile).get} ${profile.width.get}w"
     } mkString ", "
   }
 
-  def srcset(path: String, widths: WidthsByBreakpoint): String = {
+  def srcset(path: String, widths: WidthsByBreakpoint)(implicit request: RequestHeader): String = {
     widths.profiles map { profile =>
-      s"${ImgSrc(path, profile)} ${profile.width.get}w"
+        s"${ImgSrc(path, profile, (request.isInImgixTest && ImgixSwitch.isSwitchedOn))} ${profile.width.get}w"
     } mkString ", "
   }
 
-  def getFallbackUrl(imageContainer: ImageContainer, imgix: Boolean = false): Option[String] = {
-    if(imgix && ImgixSwitch.isSwitchedOn) {
+  def getFallbackUrl(imageContainer: ImageContainer)(implicit request: RequestHeader): Option[String] = {
+    if(request.isInImgixTest && ImgixSwitch.isSwitchedOn) {
       findLargestSrc(imageContainer, Item300)
     } else {
       findSrc(imageContainer, Item300)
@@ -156,7 +163,7 @@ object ImgSrc extends Logging {
 }
 
 object SeoThumbnail {
-  def apply(metadata: MetaData): Option[String] = metadata match {
+  def apply(metadata: MetaData)(implicit request: RequestHeader): Option[String] = metadata match {
     case content: Content => content.thumbnail.flatMap(Item620.bestFor)
     case _ => None
   }
