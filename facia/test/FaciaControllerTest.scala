@@ -6,12 +6,13 @@ import conf.Switches
 import implicits.FakeRequests
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest._
 import common.ExecutionContexts
 import controllers.FaciaController
 import services.ConfigAgent
 
-@DoNotDiscover class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite with BeforeAndAfterAll with FakeRequests {
+@DoNotDiscover class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite
+                                                      with BeforeAndAfterAll with FakeRequests with BeforeAndAfterEach {
 
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
@@ -24,6 +25,10 @@ import services.ConfigAgent
         fronts = Map("music" -> FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None)),
         collections = Map.empty)
     )
+  }
+
+  override def afterEach(): Unit = {
+    Switches.InternationalEditionSwitch.switchOff()
   }
 
   "FaciaController" should "200 when content type is front" in {
@@ -120,7 +125,6 @@ import services.ConfigAgent
     val redirectToUk2 = FaciaController.renderFront("")(international2)
     header("Location", redirectToUk2).head should endWith ("/uk")
 
-    Switches.InternationalEditionSwitch.switchOff()
   }
 
   it should "obey when the international edition is set by cookie" in {
@@ -133,8 +137,6 @@ import services.ConfigAgent
     )
     val redirectToUk = FaciaController.renderFront("")(control)
     header("Location", redirectToUk).head should endWith ("/international")
-
-    Switches.InternationalEditionSwitch.switchOff()
   }
 
   it should "obey the control group when the international edition is not set by cookie" in {
@@ -146,7 +148,5 @@ import services.ConfigAgent
     )
     val redirectToUk = FaciaController.renderFront("")(control)
     header("Location", redirectToUk).head should endWith ("/uk")
-
-    Switches.InternationalEditionSwitch.switchOff()
   }
 }
