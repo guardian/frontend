@@ -33,6 +33,8 @@ import test.{ConfiguredTestSuite, TestRequest}
     GU_EDITION.maxAge.getOrElse(0) should be (5184000 +- 1)  // 60 days, this is seconds
     GU_EDITION.value should be ("INTL")
 
+    header("Location", result).head should endWith ("/international")
+
     Switches.InternationalEditionSwitch.switchOff()
   }
 
