@@ -32,7 +32,7 @@ trait Requests {
 
     lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase  "X-Gu-Management-Healthcheck")
 
-    lazy val isInImgixTest: Boolean = imgixTestSections.exists(r.path.startsWith) && Switches.ImgixSwitch.isSwitchedOn
+    def isInImgixTest: Boolean = imgixTestSections.exists(r.path.startsWith) && Switches.ImgixSwitch.isSwitchedOn
 
     // see http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/TerminologyandKeyConcepts.html#x-forwarded-proto
     lazy val isSecure: Boolean = r.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))

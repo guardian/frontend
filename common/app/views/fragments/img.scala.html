@@ -55,11 +55,11 @@
 @image(picture: model.ImageContainer, widths: WidthsByBreakpoint) = {
 
     <img src="@ImgSrc.getFallbackUrl(picture)"
-    srcset="@ImgSrc.srcset(picture, widths)"
-    sizes="@widths.sizes"
-    class="maxed responsive-img"
-    itemprop="contentURL representativeOfPage"
-    alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
+        srcset="@ImgSrc.srcset(picture, widths)"
+        sizes="@widths.sizes"
+        class="maxed responsive-img"
+        itemprop="contentURL representativeOfPage"
+        alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
 
 }
 

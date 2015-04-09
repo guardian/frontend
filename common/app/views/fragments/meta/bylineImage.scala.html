@@ -1,7 +1,6 @@
 @(tags: Tags)(implicit request: RequestHeader)
 
 @import views.support.Profile
-@import conf.Switches.{ImgixSwitch}
 
 @tags.contributors.headOption.map { profile =>
     @profile.contributorLargeImagePath.map{ src =>

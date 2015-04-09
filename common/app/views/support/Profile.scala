@@ -105,8 +105,6 @@ object ImgSrc extends Logging {
             s"$imageHost/$pathPrefix${imageType.resizeString}${uri.getPath}"
           }
         ).getOrElse(url)
-
-
     } catch {
       case error: URISyntaxException =>
         log.error("Unable to decode image url", error)
@@ -121,7 +119,7 @@ object ImgSrc extends Logging {
     }
   }
 
-  def findLargestSrc(imageContainer: ImageContainer, profile: Profile)(implicit request: RequestHeader): Option[String] = {
+  private def findLargestSrc(imageContainer: ImageContainer, profile: Profile)(implicit request: RequestHeader): Option[String] = {
     profile.largestFor(imageContainer).flatMap(_.url).map{ largestImage =>
       ImgSrc(largestImage, profile,(request.isInImgixTest && ImgixSwitch.isSwitchedOn))
     }
@@ -139,13 +137,13 @@ object ImgSrc extends Logging {
 
   def normalSrcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
     widths.profiles.map { profile =>
-        s"${findSrc(imageContainer, profile).get} ${profile.width.get}w"
+      s"${findSrc(imageContainer, profile).get} ${profile.width.get}w"
     } mkString ", "
   }
 
   def srcset(path: String, widths: WidthsByBreakpoint)(implicit request: RequestHeader): String = {
     widths.profiles map { profile =>
-        s"${ImgSrc(path, profile, (request.isInImgixTest && ImgixSwitch.isSwitchedOn))} ${profile.width.get}w"
+      s"${ImgSrc(path, profile, (request.isInImgixTest && ImgixSwitch.isSwitchedOn))} ${profile.width.get}w"
     } mkString ", "
   }
 
@@ -163,7 +161,7 @@ object ImgSrc extends Logging {
 }
 
 object SeoThumbnail {
-  def apply(metadata: MetaData)(implicit request: RequestHeader): Option[String] = metadata match {
+  def apply(metadata: MetaData): Option[String] = metadata match {
     case content: Content => content.thumbnail.flatMap(Item620.bestFor)
     case _ => None
   }
