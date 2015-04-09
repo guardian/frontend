@@ -8,7 +8,6 @@ import _ from 'common/utils/_';
 
 import Clues from './clues';
 import Controls from './controls';
-import getIntersectingEntries from './helpers/get-intersecting-entries';
 import FocussedClue from './focussed-clue.jsx!';
 import Grid from './grid';
 import helpers from './helpers';
@@ -350,14 +349,12 @@ const Crossword = React.createClass({
     render () {
         const focussed = this.clueInFocus();
         const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
-        const intersectingEntries = getIntersectingEntries(this.props.data.entries, focussed);
 
         return React.DOM.div({
             className: `crossword__container crossword__container--${this.props.data.crosswordType}`
         },
         FocussedClue({
             focussedClue: focussed ? focussed : null,
-            intersectingEntries,
             focusClue: this.focusClue
         }),
         React.DOM.div({
@@ -370,7 +367,6 @@ const Crossword = React.createClass({
             setCellValue: this.setCellValue,
             onSelect: this.onSelect,
             isHighlighted: isHighlighted,
-            intersectingEntries,
             focussedCell: this.state.cellInFocus,
             ref: 'grid'
         }),
