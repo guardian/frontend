@@ -285,7 +285,9 @@
 }
 
 .brand-bar__beta {
-    text-transform: uppercase;
-    color: colour(error);
+    position: relative;
+    top: -6px;
+    font-weight: bold;
+    color: colour(news-main-2);
     font-size: 12px;
 }
