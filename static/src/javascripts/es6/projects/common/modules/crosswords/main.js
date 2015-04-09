@@ -353,7 +353,7 @@ const Crossword = React.createClass({
         const intersectingEntries = getIntersectingEntries(this.props.data.entries, focussed);
 
         return React.DOM.div({
-            className: 'crossword__container'
+            className: `crossword__container crossword__container--${this.props.data.crosswordType}`
         },
         FocussedClue({
             focussedClue: focussed ? focussed : null,
