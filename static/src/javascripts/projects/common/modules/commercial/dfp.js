@@ -149,16 +149,20 @@ define([
                 .valueOf();
         },
         displayAds = function () {
-            console.log('DPF');
             googletag.pubads().enableSingleRequest();
-            googletag.pubads().disableInitialLoad();
-            //googletag.pubads().collapseEmptyDivs();
-            //googletag.enableServices();
+            googletag.pubads().collapseEmptyDivs();
+            googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
-            console.log('Slots: ', slots);
             googletag.display(_.keys(slots).shift());
             displayed = true;
+        },
+        defineLazySlots = function () {
+            googletag.pubads().enableSingleRequest();
+            googletag.pubads().disableInitialLoad();
+            googletag.pubads().collapseEmptyDivs();
+            googletag.enableServices();
+            displayed = true;  
         },
         windowResize = _.debounce(
             function () {
@@ -169,6 +173,10 @@ define([
         postDisplay = function () {
             mediator.on('window:resize', windowResize);
         },
+
+        dfpAbParam = function () {
+            return true;
+        };
 
         /**
          * Public functions
@@ -192,13 +200,33 @@ define([
 
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
-            window.googletag.cmd.push(defineSlots);
+            (dfpAbParam()) ? window.googletag.cmd.push(defineLazySlots) : window.googletag.cmd.push(defineSlots);
             window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
+            mediator.on('window:scroll', lazyLoad);
+            lazyLoad();
+
             return dfp;
 
+        },
+        lazyLoad = function () {
+            if (slots.length === 0) {
+                mediator.off('window:scroll', lazyLoad);
+            } else {
+                fastdom.read(function () {
+                    var scrollTop = bonzo(document.body).scrollTop(),
+                        scrollBottom = scrollTop + bonzo.viewport().height,
+                        bottomOffset = $frontBottom.offset().top;
+
+                    console.log('lazyload');
+                    /*console.log(_.keys(slots).find(function(slot) {
+                        return scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop;
+                    }).result());*/
+
+                });
+            }
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),
