@@ -36,7 +36,7 @@ sealed trait ElementProfile {
     elementFor(image).flatMap(_.altText)
 
   def resizeString = s"/w-${toResizeString(width)}/h-${toResizeString(height)}/q-$compression"
-  def imgixResizeString = s"?w=${toResizeString(width)}&q=$compression&auto=format"
+  def imgixResizeString = s"?w=${toResizeString(width)}&q=85&auto=format&sharp=10"
 
 
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
