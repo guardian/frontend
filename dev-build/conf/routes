@@ -16,6 +16,7 @@ GET         /js.gif                                                             
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
 GET         /counts.gif                                                                                              controllers.DiagnosticsController.analyticsCounts()
 POST        /tech-feedback                                                                                           controllers.DiagnosticsController.techFeedback()
+GET         /tech-feedback                                                                                           controllers.DiagnosticsController.techFeedback()
 POST        /css                                                                                                     controllers.DiagnosticsController.css
 OPTIONS     /css                                                                                                     controllers.DiagnosticsController.cssOptions
 POST        /accept-beacon                                                                                           controllers.DiagnosticsController.acceptBeacon
