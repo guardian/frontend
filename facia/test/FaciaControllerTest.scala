@@ -115,6 +115,10 @@ import services.ConfigAgent
     val redirectToInternational = FaciaController.renderFront("")(international)
     header("Location", redirectToInternational).head should endWith ("/international")
 
+    val ukOptInRequest = FakeRequest("GET", "/").withHeaders("X-GU-Edition" -> "UK", "X-GU-International" -> "international")
+    val redirect = FaciaController.renderFront("")(international)
+    header("Location", redirect).head should endWith ("/uk")
+
     Switches.InternationalEditionSwitch.switchOff()
     val international2 = FakeRequest("GET", "/").withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
     val redirectToUk2 = FaciaController.renderFront("")(international2)
