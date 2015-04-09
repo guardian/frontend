@@ -721,7 +721,7 @@ trait Lightboxable extends Content {
           "credit" -> JsString(img.credit.getOrElse("")),
           "displayCredit" -> JsBoolean(img.displayCredit),
           "src" -> JsString(ImgSrc.findSrc(imgContainer, Item700).getOrElse("")),
-          "srcsets" -> JsString(ImgSrc.srcset(imgContainer, GalleryMedia.Lightbox)),
+          "srcsets" -> JsString(ImgSrc.normalSrcset(imgContainer, GalleryMedia.Lightbox)),
           "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
           "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
           "role" -> JsString(img.role.toString)

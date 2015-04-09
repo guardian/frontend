@@ -365,6 +365,11 @@ object Switches {
     sellByDate = never
   )
 
+  val ImgixSwitch = Switch("Feature", "imgix",
+    "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
+  )
+
   val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
     "If this switch is on the “Become a Member” button will be broken",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 15)

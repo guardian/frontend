@@ -1,0 +1,72 @@
+@each $xword, $size in $xword-native-sizes {
+    .crossword__container--#{$xword} {
+        @include mq(tablet) {
+            padding-left: $size;
+        }
+
+        .crossword__grid-wrapper {
+            @include mq(tablet) {
+                margin-left: 0 - $size;
+                width: $size;
+            }
+        }
+
+        .crossword__controls {
+            @include mq(tablet) {
+                margin-left: 0 - $size;
+            }
+        }
+    }
+}
+
+
+.crossword__container {
+    position: relative;
+}
+
+.crossword__focussed-clue-wrapper {
+    display: none;
+}
+
+.crossword__grid-wrapper {
+    position: relative;
+    height: auto;
+    font-size: 0;
+
+    @include mq(tablet) {
+        float: left;
+    }
+}
+
+.crossword__controls {
+    margin-top: $gs-baseline;
+    float: left;
+    clear: both;
+}
+
+.crossword__clues {
+    width: 100%;
+    clear: both;
+
+    @include mq(tablet) {
+        clear: none;
+        padding-left: $gs-gutter;
+        display: table;
+        table-layout: fixed;
+        @include box-sizing(border-box);
+    }
+}
+
+.crossword__clues--across {
+    @include mq(desktop) {
+        display: table-cell;
+        padding-right: $gs-gutter / 2;
+    }
+}
+
+.crossword__clues--down {
+    @include mq(desktop) {
+        display: table-cell;
+        padding-left: $gs-gutter / 2;
+    }
+}
