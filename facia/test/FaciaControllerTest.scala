@@ -119,6 +119,8 @@ import services.ConfigAgent
     val international2 = FakeRequest("GET", "/").withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
     val redirectToUk2 = FaciaController.renderFront("")(international2)
     header("Location", redirectToUk2).head should endWith ("/uk")
+
+    Switches.InternationalEditionSwitch.switchOff()
   }
 
   it should "obey when the international edition is set by cookie" in {
@@ -131,16 +133,20 @@ import services.ConfigAgent
     )
     val redirectToUk = FaciaController.renderFront("")(control)
     header("Location", redirectToUk).head should endWith ("/international")
+
+    Switches.InternationalEditionSwitch.switchOff()
   }
 
   it should "obey the control group when the international edition is not set by cookie" in {
     Switches.InternationalEditionSwitch.switchOn()
-    
+
     val control = FakeRequest("GET", "/").withHeaders(
       "X-GU-Edition" -> "INTL",
       "X-GU-International" -> "control"
     )
     val redirectToUk = FaciaController.renderFront("")(control)
     header("Location", redirectToUk).head should endWith ("/uk")
+
+    Switches.InternationalEditionSwitch.switchOff()
   }
 }
