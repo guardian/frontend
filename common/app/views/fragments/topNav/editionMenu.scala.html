@@ -15,7 +15,7 @@
                     "brand-bar__item--action-beta" -> edition.isBeta
                 ))" data-edition="@edition.id"
                 data-link-name="switch to @edition.id edition"
-                href="@LinkTo(s"/preference/edition/${InternationalEdition.id}")"
+                href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
                 title="Switch to the @edition.id edition">
                     @if(edition.isBeta) {
                         <span class="u-h">switch to the </span>
