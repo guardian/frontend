@@ -139,17 +139,17 @@ object InternationalEdition {
 
   def apply(request: RequestHeader): Option[InternationalEdition] = {
     if (Switches.InternationalEditionSwitch.isSwitchedOn) {
-      def constrainToInternational(maybeS: Option[String]) =
-        maybeS.map(_.toLowerCase).filter(variants.contains)
-
       val editionIsIntl = request.headers.get("X-GU-Edition").map(_.toLowerCase).contains("intl")
-      val fromCookie = constrainToInternational(request.cookies.get("GU_EDITION").map(_.value))
-      val fromInternationalHeader = constrainToInternational(request.headers.get("X-GU-International"))
-        .filter(_ => editionIsIntl)
+      val editionSetByCookie = request.headers.get("X-GU-Edition-From-Cookie").contains("true")
+      val fromInternationalHeader = request.headers.get("X-GU-International").map(_.toLowerCase)
 
-      (fromCookie orElse fromInternationalHeader)
-        .filter(variants.contains)
-        .map(InternationalEdition(_))
+      if (editionIsIntl && editionSetByCookie) {
+        Some(international)
+      } else {
+        fromInternationalHeader
+          .filter(variants.contains(_) && editionIsIntl)
+          .map(InternationalEdition(_))
+      }
     } else {
       None
     }
