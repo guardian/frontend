@@ -185,7 +185,7 @@ object Switches {
 
   val PngResizingSwitch = Switch("Performance", "png-resizing",
     "If this switch is on png images will be resized via the png-resizing server",
-    safeState = On, sellByDate = never
+    safeState = Off, sellByDate = never
   )
 
   // Commercial
@@ -359,7 +359,7 @@ object Switches {
 
   val ImgixSwitch = Switch("Feature", "imgix",
     "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
-    safeState = On, sellByDate = new LocalDate(2015, 4, 30)
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
   )
 
   val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
