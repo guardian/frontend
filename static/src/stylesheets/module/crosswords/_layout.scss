@@ -1,0 +1,31 @@
+.crossword__container {
+    position: relative;
+}
+
+.crossword__focussed-clue-wrapper {
+    display: none;
+}
+
+.crossword__grid-wrapper {
+    position: relative;
+    height: auto;
+    font-size: 0;
+
+    @include mq(tablet) {
+        width: $crossword-native-size;
+        position: absolute;
+    }
+}
+
+.crossword__controls {
+    padding-bottom: $gs-baseline;
+}
+
+.crossword__clues {
+    margin-bottom: $gs-baseline * 2;
+
+    @include mq(tablet) {
+        margin-left: $gs-gutter + $crossword-native-size;
+        width: auto;
+    }
+}
