@@ -171,7 +171,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
   def findVideoApiElement(id:String): Option[VideoElement] = article.bodyVideos.filter(_.id == id).headOption
 }
 
-case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(article: Article)(implicit request: RequestHeader) extends HtmlCleaner with implicits.Numbers {
 
   def replacePictures(body: Document): Document = {
     for {
