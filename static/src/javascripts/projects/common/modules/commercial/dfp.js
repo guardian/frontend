@@ -157,12 +157,13 @@ define([
             googletag.display(_.keys(slots).shift());
             displayed = true;
         },
-        defineLazySlots = function () {
+        displayLazyAds = function () {
             googletag.pubads().enableSingleRequest();
             googletag.pubads().disableInitialLoad();
             googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
-            displayed = true;  
+            mediator.on('window:scroll', _.throttle(lazyLoad, 10));
+            lazyLoad();
         },
         windowResize = _.debounce(
             function () {
@@ -200,30 +201,33 @@ define([
 
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
-            (dfpAbParam()) ? window.googletag.cmd.push(defineLazySlots) : window.googletag.cmd.push(defineSlots);
-            window.googletag.cmd.push(displayAds);
+            window.googletag.cmd.push(defineSlots);
+            (dfpAbParam()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
-            window.googletag.cmd.push(postDisplay);
-
-            mediator.on('window:scroll', lazyLoad);
-            lazyLoad();
+            window.googletag.cmd.push(postDisplay);            
 
             return dfp;
-
         },
         lazyLoad = function () {
             if (slots.length === 0) {
-                mediator.off('window:scroll', lazyLoad);
+                mediator.off('window:scroll');
             } else {
                 fastdom.read(function () {
                     var scrollTop = bonzo(document.body).scrollTop(),
-                        scrollBottom = scrollTop + bonzo.viewport().height,
-                        bottomOffset = $frontBottom.offset().top;
+                        scrollBottom = scrollTop + bonzo.viewport().height;
 
-                    console.log('lazyload');
-                    /*console.log(_.keys(slots).find(function(slot) {
+                    var slotToLoad = _(slots).keys().find(function(slot) {
                         return scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop;
-                    }).result());*/
+                    });
+
+                    if (slotToLoad) {
+                        googletag.display(slotToLoad);
+                        googletag.pubads().refresh([slots[slotToLoad].slot]);
+
+                        slots = _(slots).omit(slotToLoad).value();
+
+                        displayed = true;
+                    }
 
                 });
             }
