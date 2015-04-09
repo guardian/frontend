@@ -213,22 +213,19 @@ define([
                 mediator.off('window:scroll');
             } else {
                 fastdom.read(function () {
-                    var scrollTop = bonzo(document.body).scrollTop(),
-                        scrollBottom = scrollTop + bonzo.viewport().height;
-
-                    var slotToLoad = _(slots).keys().find(function(slot) {
-                        return scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop;
-                    });
+                    var scrollTop    = bonzo(document.body).scrollTop(),
+                        scrollBottom = scrollTop + bonzo.viewport().height,
+                        slotToLoad   = _(slots).keys().find(function(slot) {
+                            return scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop
+                        });
 
                     if (slotToLoad) {
                         googletag.display(slotToLoad);
                         googletag.pubads().refresh([slots[slotToLoad].slot]);
 
                         slots = _(slots).omit(slotToLoad).value();
-
                         displayed = true;
                     }
-
                 });
             }
         },

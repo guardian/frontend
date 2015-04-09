@@ -189,7 +189,7 @@ object Switches {
   )
 
   // Commercial
-
+  
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
@@ -485,6 +485,11 @@ object Switches {
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
+  )
+
+  val ABLazyLoadAds = Switch("A/B Tests", "ab-ld-ads",
+    "Lazy loading ads.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
   )
 
   val ABMtMaster = Switch("A/B Tests", "ab-mt-master",
