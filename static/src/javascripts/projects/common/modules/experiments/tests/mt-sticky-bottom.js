@@ -106,7 +106,7 @@ define([
                         headerHeight: $('#header').dim().height,
                         windowHeight: window.innerHeight || document.documentElement.clientHeight
                     },
-                    containerNo = 1; //leave banner between the nth and nth+1 container
+                    containerNo = config.page.contentType === 'Section' ? 2 : 1; //leave banner between the nth and nth+1 container
 
                 //we need at least nth + 1 containers
                 if (stickyConfig.windowHeight <= 960 && stickyConfig.$container.length >= containerNo + 1 && !window.scrollY) {
