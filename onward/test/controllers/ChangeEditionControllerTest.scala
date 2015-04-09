@@ -1,11 +1,12 @@
 package controllers
 
+import conf.Switches
 import play.api.test.Helpers.{cookies => playCookies, _}
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import test.{ConfiguredTestSuite, TestRequest}
 
 @DoNotDiscover class ChangeEditionControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
-  
+
   val callbackName = "aFunction"
 
   "ChangeEditionController" should "redirect to correct page" in {
@@ -20,6 +21,25 @@ import test.{ConfiguredTestSuite, TestRequest}
 
     GU_EDITION.maxAge.getOrElse(0) should be (5184000 +- 1)  // 60 days, this is seconds
     GU_EDITION.value should be ("AU")
+  }
+
+  it should "set the international cookie if enabled" in {
+
+    Switches.InternationalEditionSwitch.switchOn()
+
+    val result = controllers.ChangeEditionController.render("intl")(TestRequest())
+    val GU_EDITION = playCookies(result).apply("GU_EDITION")
+
+    GU_EDITION.maxAge.getOrElse(0) should be (5184000 +- 1)  // 60 days, this is seconds
+    GU_EDITION.value should be ("INTL")
+  }
+
+  it should "not set the international cookie if not enabled" in {
+
+    Switches.InternationalEditionSwitch.switchOff()
+
+    val result = controllers.ChangeEditionController.render("intl")(TestRequest())
+    status(result) should be (404)
   }
 
   it should "not cache" in {

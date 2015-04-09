@@ -1,7 +1,8 @@
 package controllers
 
-import common.Edition
+import common.{Edition, InternationalEdition }
 import play.api.mvc._
+import conf.Switches.InternationalEditionSwitch
 
 object ChangeEditionController extends Controller with PreferenceController {
 
@@ -12,9 +13,9 @@ object ChangeEditionController extends Controller with PreferenceController {
   }
 
   private def fromEdition(editionId: String)(implicit request: RequestHeader) = {
-    if (editionId != "international") {
-      Edition.byId(editionId).map(_.id)
-    } else Some(editionId)
+    if (InternationalEditionSwitch.isSwitchedOn && editionId == InternationalEdition.id) {
+      Some(InternationalEdition.id)
+    } else Edition.byId(editionId).map(_.id)
   }
 
 }
