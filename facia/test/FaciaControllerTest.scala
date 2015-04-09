@@ -2,6 +2,7 @@ package test
 
 import com.gu.facia.client.models.{FrontJson, ConfigJson}
 import common.editions.{Us, Uk}
+import conf.Switches
 import implicits.FakeRequests
 import play.api.test._
 import play.api.test.Helpers._
@@ -100,5 +101,23 @@ import services.ConfigAgent
     val usRequest = FakeRequest("GET", "/technology").from(Us)
     val usResult = FaciaController.renderFront("technology")(usRequest)
     header("Location", usResult).head should endWith ("/us/technology")
+  }
+
+  it should "understand the international edition" in {
+
+    Switches.InternationalEditionSwitch.switchOn()
+
+    val control = FakeRequest("GET", "/").withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "control")
+    val redirectToUk = FaciaController.renderFront("")(control)
+    header("Location", redirectToUk).head should endWith ("/uk")
+
+    val international = FakeRequest("GET", "/").withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
+    val redirectToInternational = FaciaController.renderFront("")(international)
+    header("Location", redirectToInternational).head should endWith ("/international")
+
+    Switches.InternationalEditionSwitch.switchOff()
+    val international2 = FakeRequest("GET", "/").withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
+    val redirectToUk2 = FaciaController.renderFront("")(international2)
+    header("Location", redirectToUk2).head should endWith ("/uk")
   }
 }

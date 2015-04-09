@@ -37,7 +37,7 @@ trait LinkTo extends Logging {
 
   def processUrl(url: String, edition: Edition, isInternational: Boolean) = url match {
     case "http://www.theguardian.com" => ProcessedUrl(homeLink(edition))
-    case "/" if isInternational => ProcessedUrl("/international")
+    case "/" if isInternational => ProcessedUrl(InternationalEdition.path)
     case "/" => ProcessedUrl(homeLink(edition))
     case protocolRelative if protocolRelative.startsWith("//") => ProcessedUrl(protocolRelative)
     case AbsoluteGuardianUrl(path) =>  ProcessedUrl(urlFor(path, edition))

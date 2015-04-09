@@ -126,6 +126,9 @@ case class InternationalEdition(variant: String) {
 }
 
 object InternationalEdition {
+
+  val path: String = "/international"
+
   val international = InternationalEdition("international")
 
   private val variants = Seq("control", "international")
