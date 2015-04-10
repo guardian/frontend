@@ -13,7 +13,7 @@ define([
         this.author = 'Stephan Fowler';
         this.description = 'Checking effect of showing the latest liveblog blocks on fronts';
         this.audience = 0.2;
-        this.audienceOffset = 0.8;
+        this.audienceOffset = 0.5;
         this.successMeasure = '';
         this.audienceCriteria = 'Front visitors';
         this.dataLinkNames = '';
