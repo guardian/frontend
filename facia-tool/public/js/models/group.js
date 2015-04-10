@@ -80,7 +80,8 @@ define([
         var isAfter = false, groups;
         // assume it's to be appended *after* the other items in this group,
         var targetItem = _.last(targetGroup.items());
-        if (targetItem) { isAfter = true;
+        if (targetItem) {
+            isAfter = true;
         // or if there arent't any other items, after those in the first preceding group that contains items.
         } else if (targetGroup.parentType === 'Collection') {
             groups = targetGroup.parent.groups;

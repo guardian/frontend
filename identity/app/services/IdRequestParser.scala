@@ -14,7 +14,6 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
     val ip = clientIp(request)
     val skipConfirmation = request.getQueryString("skipConfirmation").map(_ == "true")
     val shortUrl = request.getQueryString("shortUrl")
-
     IdentityRequest(
       TrackingData(
         returnUrl,

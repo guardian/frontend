@@ -16,7 +16,7 @@ import org.joda.time.DateTime
 import client.connection.util.ExecutionContexts
 
 import org.joda.time.format.ISODateTimeFormat
-import com.gu.identity.model._
+import com.gu.identity.model.{LiftJsonConfig, StatusFields, PublicFields, User}
 import net.liftweb.json.Serialization.write
 import scala.concurrent.duration._
 import scala.language.postfixOps
@@ -28,7 +28,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
   implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
-  val fmt = ISODateTimeFormat.dateTimeNoMillis() //TODO check
+  val fmt = ISODateTimeFormat.dateTimeNoMillis()
 
   val apiRoot = "http://example.com/"
   val http = mock[Http]

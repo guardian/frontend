@@ -188,7 +188,6 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-
   // Commercial
 
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
@@ -532,10 +531,10 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
   )
 
-  //TODO - change safestate
+  //TODO - change safestate  #
   val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
     "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
-    safeState = On, sellByDate = never
+    safeState = Off, sellByDate = never
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",

@@ -1,6 +1,6 @@
 package model
 
-import com.gu.identity.model.{SavedArticle, SavedArticles, SyncedPrefs}
+import com.gu.identity.model.{SavedArticle, SavedArticles}
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 
@@ -23,6 +23,6 @@ class FrontendSavedArtcles(version: String, articles: List[SavedArticle]) extend
       case Nil =>
         SavedArticles(timeStamp, List(articleToSave))
 
-      case _ => SavedArticles(timeStamp, articleToSave :: articles) }
+      case _ => SavedArticles(version, articleToSave :: articles) }
   }
 }

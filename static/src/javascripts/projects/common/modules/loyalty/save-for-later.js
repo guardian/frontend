@@ -42,10 +42,13 @@ define([
             function success(resp) {
                 if (resp.status === 'error') {
                     if (JSON.stringify(notFound) ===  JSON.stringify(resp.errors)) {
-                        self.userData = {articles:[]};
+                            //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
+                            var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
+
+                            self.userData = {version: date, articles:[]};
                     }
                 } else {
-                    self.userData = resp.savedArticles;
+                    self.userData = { version: resp.version, articles: resp.savedArticles}
                 }
 
                 var saved = self.hasŬserSavedArticle(self.userData.articles, config.page.shortUrl);
@@ -73,7 +76,7 @@ define([
             newArticle = {id: document.location.href, shortUrl: config.page.shortUrl, date: date, read: false  };
 
         this.userData.articles.push(newArticle);
-        data = {version: date, articles: this.userData.articles };
+        data = {version: this.userData.version, articles: this.userData.articles };
         identity.saveToArticles(data).then(
             function success(resp) {
                 if (resp.status === 'error') {
