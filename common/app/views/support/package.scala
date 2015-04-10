@@ -17,6 +17,7 @@ import play.api.mvc.Result
 import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
+import implicits.FaciaContentImplicits._
 
 /**
  * Encapsulates previous and next urls
@@ -191,10 +192,7 @@ object RenderClasses {
 object SnapData {
   def apply(faciaContent: FaciaContent): String = generateDataAttributes(faciaContent).mkString(" ")
 
-  private def generateDataAttributes(faciaContent: FaciaContent): Iterable[String] = faciaContent match {
-    case linkSnap: LinkSnap =>
-        Seq(s"data-snap-type=${linkSnap.snapType}") ++
-        linkSnap.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
-    case _  => Nil
-  }
+  private def generateDataAttributes(faciaContent: FaciaContent): Iterable[String] =
+    faciaContent.embedType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
+    faciaContent.embedUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
 }
