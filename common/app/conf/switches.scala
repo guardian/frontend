@@ -2,6 +2,7 @@ package conf
 
 import common._
 import conf.Configuration.environment
+import org.joda.time
 import org.joda.time._
 import play.api.Play.current
 import play.api.libs.ws.WS
@@ -349,6 +350,14 @@ object Switches {
   )
 
   // Features
+  val ABTestHeadlines = Switch(
+    "Feature",
+    "a-b-test-headlines",
+    "A/B test headlines",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 5, 1)
+  )
+
   val InternationalEditionSwitch = Switch(
     "Feature",
     "international-edition",

@@ -5,7 +5,7 @@ import java.net.URI
 import com.google.gdata.client.spreadsheet.{FeedURLFactory, SpreadsheetService}
 import com.google.gdata.data.spreadsheet.{WorksheetFeed, ListFeed}
 import common.{Logging, AutoRefresh}
-import conf.Configuration
+import conf.{Switches, Configuration}
 import play.api.libs.json.Json
 
 import scala.collection.JavaConverters._
@@ -19,8 +19,12 @@ object ABTestHeadlines extends AutoRefresh[Map[String, Set[String]]](0.seconds, 
   val SpreadsheetKey = Configuration.facia.spreadsheetKey
 
   // headlines to AB test given the article id
-  def headlines(id: String): Option[Set[String]] = get flatMap { entries =>
-    entries.get(id)
+  def headlines(id: String): Option[Set[String]] = if (Switches.ABTestHeadlines.isSwitchedOn) {
+    get flatMap { entries =>
+      entries.get(id)
+    }
+  } else {
+    None
   }
 
   def headlinesJsonString(id: String): Option[String] = headlines(id).filter(_.nonEmpty) map { headlines =>
