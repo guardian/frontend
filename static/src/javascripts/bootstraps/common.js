@@ -442,7 +442,8 @@ define([
 
             stickyBtmAb: function () {
                 var stickyTest = ab.getTest('MtStickyBtm');
-                if (stickyTest && ab.isParticipating(stickyTest) && ab.getTestVariant('MtStickyBtm') === 'A') {
+                if (stickyTest && ab.isParticipating(stickyTest) && ab.getTestVariant('MtStickyBtm') === 'A'
+                    && ab.testCanBeRun('MtStickyBtm')) {
                     stickyTest.fireStickyBottom();
                 }
             }

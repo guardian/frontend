@@ -557,9 +557,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   override def metaData: Map[String, JsValue] = super.metaData ++ cricketMetaData
   override lazy val lightboxImages = mainFiltered
 
-  lazy val latestUpdateText = LiveBlogParser.parse(body) collectFirst {
-    case Block(_, _, _, _, BlockToText(text), _) if !text.trim.nonEmpty => text
-  }
+  lazy val blocks = LiveBlogParser.parse(body)
 }
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {
