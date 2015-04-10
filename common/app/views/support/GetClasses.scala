@@ -1,5 +1,6 @@
 package views.support
 
+import ab_headlines.ABTestHeadlines
 import layout._
 
 object GetClasses {
@@ -23,7 +24,8 @@ object GetClasses {
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
       ("fc-item--live", item.isLive),
-      ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable)
+      ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable),
+      ("js-a-b-headlines", item.id.flatMap(ABTestHeadlines.headlines).isDefined)
     ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty) ++ mediaTypeClass(item).map(_ -> true))
   }
 

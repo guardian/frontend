@@ -15,7 +15,8 @@ define([
     'common/modules/experiments/tests/mt-sticky-nav',
     'common/modules/experiments/tests/across-the-country',
     'common/modules/experiments/tests/adblock-message',
-    'common/modules/experiments/tests/mt-sticky-bottom'
+    'common/modules/experiments/tests/mt-sticky-bottom',
+    'common/modules/experiments/tests/headlines'
 ], function (
     raven,
     _,
@@ -33,11 +34,12 @@ define([
     MtStickyNav,
     AcrossTheCountry,
     AdblockMessage,
-    MtStickyBottom
+    MtStickyBottom,
+    ABHeadline
 ) {
 
     var ab,
-        TESTS = [
+        TESTS = _.flatten([
             new HighCommercialComponent(),
             new IdentitySocialOAuth(),
             new MtMaster(),
@@ -47,8 +49,11 @@ define([
             new MtStickyNav(),
             new AcrossTheCountry(),
             new AdblockMessage(),
-            new MtStickyBottom()
-        ],
+            new MtStickyBottom(),
+            _.map(_.range(1, 11), function (n) {
+                return new ABHeadline(n);
+            })
+        ]),
         participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
