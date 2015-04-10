@@ -241,13 +241,17 @@ define([
         segmentUser: function () {
             mvtCookie.generateMvtCookie();
 
-            var tokens, test, variant,
+            var tokens,
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
-                tokens = window.location.hash.replace('#ab-', '').split('=');
-                test = tokens[0];
-                variant = tokens[1];
-                ab.forceSegment(test, variant);
+                tokens = window.location.hash.replace('#ab-', '').split(',');
+                tokens.forEach(function (token) {
+                    var abParam, test, variant;
+                    abParam = token.split('=');
+                    test = abParam[0];
+                    variant = abParam[1];
+                    ab.forceSegment(test, variant);
+                });
             } else {
                 ab.segment();
             }
