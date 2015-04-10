@@ -10,6 +10,7 @@ import play.api.mvc.WithFilters
 import services.{IndexListingsLifecycle, ConfigAgentLifecycle}
 import play.api.Application
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 
 object Global extends WithFilters(Filters.common: _*)

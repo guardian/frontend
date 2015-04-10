@@ -331,7 +331,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object facia {
-    lazy val abHeadlineBucket = configuration.getStringProperty("")
+    lazy val spreadsheetKey = configuration.getStringProperty("ab_headlines.spreadsheet_key")
 
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
     lazy val collectionCap: Int = 35
