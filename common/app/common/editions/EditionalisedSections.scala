@@ -30,9 +30,15 @@ object EditionalisedSections {
 
   private lazy val EditionalisedId = s"^/($editionRegex)(/[\\w\\d-]+)$$".r
 
+  def otherNonInternationalEditions(editionId: String) = Edition.others(editionId) collect {
+    case Left(edition) => edition
+  }
+
   def otherPagesFor(request: RequestHeader): Seq[EditionLink] = request.path match {
-    case EditionalisedId(editionId, section) if isEditionalised(section.drop(1)) => Edition.others(editionId).map(EditionLink(_, section))
-    case EditionalisedFront(editionId) => Edition.others(editionId).map(EditionLink(_, "/"))
+    case EditionalisedId(editionId, section) if isEditionalised(section.drop(1)) =>
+      otherNonInternationalEditions(editionId).map(EditionLink(_, section))
+    case EditionalisedFront(editionId) =>
+      otherNonInternationalEditions(editionId).map(EditionLink(_, "/"))
     case _ => Nil
   }
 }

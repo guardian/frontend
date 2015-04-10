@@ -3,8 +3,9 @@
 @import form.IdFormHelpers._
 @import views.html.fragments.form.inputField
 @import views.html.fragments.socialSignin
+@import views.SocialSigninRoute.Confirm
 
-@identityMain(page, conf.Switches.all){
+@main(page, projectName = Option("identity")){
 }{
 <div class="identity-wrapper monocolumn-wrapper">
     <h1 class="identity-title" data-test-id="reauthentication-header">Confirm your identity</h1>
@@ -23,7 +24,7 @@
                 </div>
             </div>
             <div class="fieldset__fields">
-                @socialSignin("Confirm", page, idRequest, idUrlBuilder, confirm = true)
+                @socialSignin(views.SocialSigninRoutes(Confirm), idRequest, idUrlBuilder)
             </div>
         </fieldset>
 

@@ -12,12 +12,9 @@ header {
     font-size: 18px;
 }
 .navbar { display: none; }
-#pingdom li, #riffraff li, #sell-by-date li { font-size: 30px; line-height: 30px; } 
+#pingdom li, #riffraff li, #sell-by-date li { font-size: 30px; line-height: 30px; }
 #pingdom small, #riffraff small { font-size: 20px; }
-.up, .Completed {
-    color: #B8FAA0;
 
-} 
 .down, .Failed { color: red; }
 .Running { color: orange; }
 ul {
@@ -41,6 +38,13 @@ ul {
     margin: 5px 5px 0 0;
 }
 
+.riffraff li {
+    font-size: 9px;
+    color: #000000;
+    text-align: center;
+    line-height: 10px;
+}
+
 #pingdom li.up, .riffraff li.Completed {
     background-color: #B8FAA0;
 }
@@ -55,13 +59,6 @@ ul {
 
 .riffraff li.Behind {
     background-color: #21fa41;
-}
-
-.riffraff li.Behind, .riffraff li.Failed,  .riffraff li.Running {
-    color: #000000;
-    font-size: 9px;
-    text-align: center;
-    line-height: 10px;
 }
 
 .expiry-days-0, .expiry-days-1, .expiry-days-2 {
