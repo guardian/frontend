@@ -1,6 +1,9 @@
+import classNames from 'classnames';
 import React from 'react';
 
 const buttonClassName = 'button button--small';
+const buttonCurrentClassName = 'button--crossword--current';
+const buttonGenericClassName = 'button--secondary';
 
 export default React.createClass({
     render () {
@@ -11,7 +14,7 @@ export default React.createClass({
         if (hasFocus && hasSolutions) {
             controls.unshift(
                 React.DOM.button({
-                    className: buttonClassName,
+                    className: `${buttonClassName} ${buttonCurrentClassName}`,
                     onClick: this.props.onCheck,
                     key: 'check'
                 }, 'Check')
@@ -19,7 +22,7 @@ export default React.createClass({
 
             controls.unshift(
                 React.DOM.button({
-                    className: buttonClassName,
+                    className: `${buttonClassName} ${buttonCurrentClassName}`,
                     onClick: this.props.onCheat,
                     key: 'cheat'
                 }, 'Cheat')
@@ -29,7 +32,7 @@ export default React.createClass({
         if (hasSolutions) {
             controls.unshift(
                 React.DOM.button({
-                    className: buttonClassName,
+                    className: `${buttonClassName} ${buttonGenericClassName}`,
                     onClick: this.props.onCheckAll,
                     key: 'checkAll'
                 }, 'Check all')
@@ -37,7 +40,7 @@ export default React.createClass({
 
             controls.unshift(
                 React.DOM.button({
-                    className: buttonClassName,
+                    className: `${buttonClassName} ${buttonGenericClassName}`,
                     onClick: this.props.onSolution,
                     key: 'solution'
                 }, 'Solution')
@@ -46,7 +49,7 @@ export default React.createClass({
 
         controls.unshift(
             React.DOM.button({
-                className: buttonClassName,
+                className: `${buttonClassName} ${buttonGenericClassName}`,
                 onClick: this.props.onClearAll,
                 key: 'clear'
             }, 'Clear')
