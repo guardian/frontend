@@ -220,6 +220,11 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
       figure.addClass("fig--narrow-caption")
       figure.addClass("fig--has-shares")
 
+      val figcaption = figure.getElementsByTag("figcaption")
+      if(figcaption.length < 1) {
+        figure.addClass("fig--no-caption")
+      }
+
       val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
       image.after(html.toString())
       image.wrap("<a href='" + article.url + "#img-" + linkIndex + "' class='article__img-container js-gallerythumbs' data-link-name='Launch Article Lightbox' data-is-ajax></a>")
