@@ -1,5 +1,6 @@
 artifacts.zip
 /dist
+facia-tool/public/js/build
 
 frontend-article.properties
 frontend-core-navigation.properties

@@ -1,4 +1,4 @@
-@(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[com.gu.googleauth.UserIdentity] = None)(content: Html)
+@(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[com.gu.googleauth.UserIdentity] = None, model: Option[String] = None)(content: Html)
 
 @import conf.Configuration
 
@@ -26,6 +26,22 @@
 
         <script src="@routes.UncachedAssets.at("jspm_packages/system.js")"></script>
         <script src="@routes.UncachedAssets.at("js/jspm-config.js")"></script>
+
+        @model match {
+            case Some("collections") => {
+                @if(!Play.isDev) {
+                    <script src="@routes.UncachedAssets.at("js/build/collections.js")"></script>
+                }
+                <script>System.import('models/collections/loader');</script>
+            }
+            case Some("config") => {
+                @if(!Play.isDev) {
+                    <script src="@routes.UncachedAssets.at("js/build/config.js")"></script>
+                }
+                <script>System.import('models/config/loader');</script>
+            }
+            case _ => {}
+        }
     </head>
     <body class="@if(isAuthed){is-authed}">
 

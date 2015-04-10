@@ -1,4 +1,6 @@
 module.exports = function(grunt, options) {
+    var jspm = './node_modules/.bin/jspm';
+
     return {
         spriteGeneration: {
             command: 'find . -name \'*.json\' -exec node spricon.js {} \\;',
@@ -25,7 +27,7 @@ module.exports = function(grunt, options) {
         },
 
         jspmInstallFaciaTool: {
-            command: 'node ../../node_modules/jspm/jspm.js install',
+            command: '../../' + jspm + ' install',
             options: {
                 execOptions: {
                     cwd: 'facia-tool/public'
@@ -34,7 +36,7 @@ module.exports = function(grunt, options) {
         },
 
         jspmInstallStatic: {
-            command: './node_modules/.bin/jspm install',
+            command: jspm + ' install',
             options: {
                 execOptions: {
                     cwd: '.'
@@ -43,10 +45,40 @@ module.exports = function(grunt, options) {
         },
 
         jspmBundleStatic: {
-            command: './node_modules/.bin/jspm bundle-sfx es6/bootstraps/app static/target/bundles/app.js',
+            command: jspm + ' bundle-sfx es6/bootstraps/app static/target/bundles/app.js',
             options: {
                 execOptions: {
                     cwd: '.'
+                }
+            }
+        },
+
+        jspmBundleFaciaToolCollections: {
+            command: '../../' + jspm + ' bundle --minify ' + [
+                'models/collections/loader',
+                'widgets/fronts',
+                'widgets/latest',
+                'widgets/clipboard',
+                'widgets/fronts.html!text',
+                'widgets/latest.html!text',
+                'widgets/search_controls.html!text',
+                'widgets/collection.html!text',
+                'widgets/clipboard.html!text'
+            ].join(' + ') + ' js/build/collections.js',
+            options: {
+                execOptions: {
+                    cwd: 'facia-tool/public'
+                }
+            }
+        },
+
+        jspmBundleFaciaToolConfig: {
+            command: '../../' + jspm + ' bundle --minify ' + [
+                'models/config/loader'
+            ].join(' + ') + ' js/build/config.js',
+            options: {
+                execOptions: {
+                    cwd: 'facia-tool/public'
                 }
             }
         }
