@@ -1,4 +1,6 @@
 /* jshint newcap: false */
+/* eslint new-cap: 0 */
+
 import classNames from 'classnames';
 import React from 'react';
 
@@ -7,16 +9,16 @@ import _ from 'common/utils/_';
 import constants from 'es6/projects/common/modules/crosswords/constants';
 import helpers from 'es6/projects/common/modules/crosswords/helpers';
 
-var Cell = React.createClass({
-    onClick: function (event) {
+const Cell = React.createClass({
+    onClick (event) {
         event.preventDefault();
         this.props.handleSelect();
     },
 
-    render: function () {
-        var innerNodes = [],
-            top = helpers.gridSize(this.props.y),
-            left = helpers.gridSize(this.props.x);
+    render () {
+        const innerNodes = [];
+        const top = helpers.gridSize(this.props.y);
+        const left = helpers.gridSize(this.props.x);
 
         if (this.props.number !== undefined) {
             innerNodes.push(
@@ -62,18 +64,18 @@ var Cell = React.createClass({
 });
 
 export default React.createClass({
-    handleSelect: function (x, y) {
+    handleSelect (x, y) {
         this.props.onSelect(x, y);
     },
 
-    render: function () {
-        var width = helpers.gridSize(this.props.columns),
-            height = helpers.gridSize(this.props.rows),
-            cells = [];
+    render () {
+        const width = helpers.gridSize(this.props.columns);
+        const height = helpers.gridSize(this.props.rows);
+        const cells = [];
 
         _.forEach(_.range(this.props.rows), (y) => {
             _.map(_.range(this.props.columns), (x) => {
-                var cellProps = this.props.cells[x][y];
+                const cellProps = this.props.cells[x][y];
 
                 if (cellProps.isEditable) {
                     cellProps.handleSelect = this.handleSelect.bind(this, x, y);
@@ -81,7 +83,6 @@ export default React.createClass({
                     cellProps.y = y;
                     cellProps.key = 'cell_' + x + '_' + y;
                     cellProps.isHighlighted = this.props.isHighlighted(x, y);
-                    cellProps.intersectsFocussedEntry = this.props.cellIntersectsFocussedEntry(x, y);
                     cellProps.isFocussed = this.props.focussedCell && x === this.props.focussedCell.x &&
                         y === this.props.focussedCell.y;
                     cells.push(Cell(cellProps));
@@ -93,7 +94,7 @@ export default React.createClass({
             viewBox: '0 0 ' + width + ' ' + height,
             className: classNames({
                 'crossword__grid': true,
-                'crossword__grid--focussed': !! this.props.focussedCell
+                'crossword__grid--focussed': !!this.props.focussedCell
             })
         }, React.DOM.rect({
             x: 0,

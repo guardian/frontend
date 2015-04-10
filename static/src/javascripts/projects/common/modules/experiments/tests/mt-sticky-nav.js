@@ -19,7 +19,7 @@ define([
         this.expiry = '2015-04-26';
         this.author = 'Zofia Korcz';
         this.description = 'Top navigation and top ad slot are sticky';
-        this.audience = 0.01;
+        this.audience = 0.02;
         this.audienceOffset = 0.3;
         this.successMeasure = '';
         this.audienceCriteria = '1% of US edition';
@@ -165,6 +165,10 @@ define([
                         }
                     });
                 }
+            },
+            {
+                id: 'control',
+                test: function () { }
             }
         ];
     };

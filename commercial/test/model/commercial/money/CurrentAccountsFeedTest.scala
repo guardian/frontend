@@ -4,7 +4,7 @@ import scala.xml.XML
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class CurrentAccountsApiTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class CurrentAccountsFeedTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   private val xmlStr =
     """<CurrentAccounts>
@@ -84,11 +84,11 @@ import test.ConfiguredTestSuite
 
   "parse" should "parse Current Accounts from xml feed" in {
 
-    object CurrentAccountsApi extends CurrentAccountsApi {
+    object CurrentAccountsFeed extends CurrentAccountsFeed {
       protected val adTypeName = "Current Accounts - Test"
       protected lazy val path = "current-accounts/test"
     }
-    val accounts = CurrentAccountsApi.parse(XML.loadString(CurrentAccountsApi.cleanResponseBody(xmlStr)))
+    val accounts = CurrentAccountsFeed.parse(XML.loadString(CurrentAccountsFeed.cleanResponseBody(xmlStr)))
 
     accounts should be(Seq(
 

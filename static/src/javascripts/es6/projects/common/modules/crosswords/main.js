@@ -1,14 +1,14 @@
 /* jshint newcap: false */
+/* eslint new-cap: 0 */
+
 import React from 'react';
 
 import $ from 'common/utils/$';
 import _ from 'common/utils/_';
-import bean from 'bean';
-import bonzo from 'bonzo';
 
 import Clues from './clues';
 import Controls from './controls';
-import FocussedClue from './focussedClue.jsx!';
+import FocussedClue from './focussed-clue.jsx!';
 import Grid from './grid';
 import helpers from './helpers';
 import keycodes from './keycodes';
@@ -16,11 +16,13 @@ import persistence from './persistence';
 import loadFont from './font';
 
 // make react available to dev tool
-window.React || (window.React = React);
+if (!window.React) {
+    window.React = React;
+}
 
-var Crossword = React.createClass({
-    getInitialState: function () {
-        var dimensions = this.props.data.dimensions;
+const Crossword = React.createClass({
+    getInitialState () {
+        const dimensions = this.props.data.dimensions;
 
         this.columns = dimensions.cols;
         this.rows = dimensions.rows;
@@ -40,16 +42,16 @@ var Crossword = React.createClass({
         };
     },
 
-    setCellValue: function (x, y, value) {
-        var cell = this.state.grid[x][y];
+    setCellValue (x, y, value) {
+        const cell = this.state.grid[x][y];
 
         cell.value = value;
         cell.isError = false;
         this.forceUpdate();
     },
 
-    onKeyDown: function (event) {
-        var cell = this.state.cellInFocus;
+    onKeyDown (event) {
+        const cell = this.state.cellInFocus;
 
         if (event.keyCode === keycodes.tab) {
             event.preventDefault();
@@ -80,53 +82,51 @@ var Crossword = React.createClass({
         }
     },
 
-    indexOfClueInFocus: function () {
+    indexOfClueInFocus () {
         return this.props.data.entries.indexOf(this.clueInFocus());
     },
 
-    focusPreviousClue: function () {
-        var i = this.indexOfClueInFocus(),
-            entries = this.props.data.entries,
-            newClue;
+    focusPreviousClue () {
+        const i = this.indexOfClueInFocus();
+        const entries = this.props.data.entries;
 
         if (i !== -1) {
-            newClue = entries[(i === 0) ? entries.length - 1 : i - 1];
+            const newClue = entries[(i === 0) ? entries.length - 1 : i - 1];
             this.focusClue(newClue.position.x, newClue.position.y, newClue.direction);
         }
     },
 
-    focusNextClue: function () {
-        var i = this.indexOfClueInFocus(),
-            entries = this.props.data.entries,
-            newClue;
+    focusNextClue () {
+        const i = this.indexOfClueInFocus();
+        const entries = this.props.data.entries;
 
         if (i !== -1) {
-            newClue = entries[(i === entries.length - 1) ? 0 : i + 1];
+            const newClue = entries[(i === entries.length - 1) ? 0 : i + 1];
             this.focusClue(newClue.position.x, newClue.position.y, newClue.direction);
         }
     },
 
-    moveFocus: function (deltaX, deltaY) {
-        var cell = this.state.cellInFocus,
-            x = cell.x + deltaX,
-            y = cell.y + deltaY,
-            direction;
+    moveFocus (deltaX, deltaY) {
+        const cell = this.state.cellInFocus;
+        const x = cell.x + deltaX;
+        const y = cell.y + deltaY;
+        let direction;
 
         if (this.state.grid[x] && this.state.grid[x][y] && this.state.grid[x][y].isEditable) {
             if (deltaY !== 0) {
                 direction = 'down';
             } else if (deltaX !== 0) {
                 direction = 'across';
-            };
+            }
             this.focusClue(x, y, direction);
         }
     },
 
-    isAcross: function () {
+    isAcross () {
         return this.state.directionOfEntry === 'across';
     },
 
-    focusPrevious: function () {
+    focusPrevious () {
         if (this.isAcross()) {
             this.moveFocus(-1, 0);
         } else {
@@ -134,7 +134,7 @@ var Crossword = React.createClass({
         }
     },
 
-    focusNext: function () {
+    focusNext () {
         if (this.isAcross()) {
             this.moveFocus(1, 0);
         } else {
@@ -142,9 +142,9 @@ var Crossword = React.createClass({
         }
     },
 
-    asPercentage: function (x, y) {
-        var width = helpers.gridSize(this.columns),
-            height = helpers.gridSize(this.rows);
+    asPercentage (x, y) {
+        const width = helpers.gridSize(this.columns);
+        const height = helpers.gridSize(this.rows);
 
         return {
             x: 100 * x / width,
@@ -152,17 +152,17 @@ var Crossword = React.createClass({
         };
     },
 
-    focusHiddenInput: function (x, y) {
-        var wrapper = this.refs.hiddenInputWrapper.getDOMNode(),
-            left = helpers.gridSize(x),
-            top = helpers.gridSize(y),
-            position = this.asPercentage(left, top);
+    focusHiddenInput (x, y) {
+        const wrapper = this.refs.hiddenInputWrapper.getDOMNode();
+        const left = helpers.gridSize(x);
+        const top = helpers.gridSize(y);
+        const position = this.asPercentage(left, top);
 
         /** This has to be done before focus to move viewport accordingly */
         wrapper.style.left = position.x + '%';
         wrapper.style.top = position.y + '%';
 
-        let hiddenInputNode = this.refs.hiddenInput.getDOMNode();
+        const hiddenInputNode = this.refs.hiddenInput.getDOMNode();
 
         if (document.activeElement !== hiddenInputNode) {
             hiddenInputNode.focus();
@@ -170,14 +170,14 @@ var Crossword = React.createClass({
     },
 
     // called when cell is selected (by click or programtically focussed)
-    onSelect: function (x, y) {
-        var cellInFocus = this.state.cellInFocus,
-            clue = this.cluesFor(x, y),
-            focussedClue = this.clueInFocus(),
-            newDirection,
-            isStartOfClue;
+    onSelect (x, y) {
+        const cellInFocus = this.state.cellInFocus;
+        const clue = this.cluesFor(x, y);
+        const focussedClue = this.clueInFocus();
 
-        let isInsideFocussedClue = () => focussedClue ? helpers.entryHasCell(focussedClue, x, y) : false;
+        let newDirection;
+
+        const isInsideFocussedClue = () => focussedClue ? helpers.entryHasCell(focussedClue, x, y) : false;
 
         if (cellInFocus && cellInFocus.x === x && cellInFocus.y === y) {
             /** User has clicked again on the highlighted cell, meaning we ought to swap direction */
@@ -196,7 +196,7 @@ var Crossword = React.createClass({
         } else {
             this.state.cellInFocus = {x: x, y: y};
 
-            let isStartOfClue = (clue) => clue && clue.position.x === x && clue.position.y === y;
+            const isStartOfClue = (clue) => clue && clue.position.x === x && clue.position.y === y;
 
             /**
              * If the user clicks on the start of a down clue midway through an across clue, we should
@@ -214,8 +214,8 @@ var Crossword = React.createClass({
         }
     },
 
-    focusClue: function (x, y, direction) {
-        var clues = this.cluesFor(x, y);
+    focusClue (x, y, direction) {
+        const clues = this.cluesFor(x, y);
 
         if (clues && clues[direction]) {
             this.focusHiddenInput(x, y);
@@ -225,20 +225,20 @@ var Crossword = React.createClass({
         }
     },
 
-    cluesFor: function (x, y) {
+    cluesFor (x, y) {
         return this.clueMap[helpers.clueMapKey(x, y)];
     },
 
-    clueInFocus: function () {
+    clueInFocus () {
         if (this.state.cellInFocus) {
-            var cluesForCell = this.cluesFor(this.state.cellInFocus.x, this.state.cellInFocus.y);
+            const cluesForCell = this.cluesFor(this.state.cellInFocus.x, this.state.cellInFocus.y);
             return cluesForCell[this.state.directionOfEntry];
         } else {
             return null;
         }
     },
 
-    cluesData: function () {
+    cluesData () {
         return _.map(this.props.data.entries, (entry) => ({
             entry: entry,
             hasAnswered: _.every(helpers.cellsForEntry(entry), (position) => {
@@ -248,12 +248,12 @@ var Crossword = React.createClass({
         }));
     },
 
-    save: function () {
+    save () {
         persistence.saveGridState(this.props.data.id, this.state.grid);
     },
 
-    cheat: function (entry) {
-        var cells = helpers.cellsForEntry(entry);
+    cheat (entry) {
+        const cells = helpers.cellsForEntry(entry);
 
         if (entry.solution) {
             _.forEach(cells, (cell, n) => {
@@ -264,14 +264,13 @@ var Crossword = React.createClass({
         }
     },
 
-    check: function (entry) {
-        var cells = _.map(helpers.cellsForEntry(entry), (cell) => this.state.grid[cell.x][cell.y]),
-            badCells;
+    check (entry) {
+        const cells = _.map(helpers.cellsForEntry(entry), (cell) => this.state.grid[cell.x][cell.y]);
 
         if (entry.solution) {
-            badCells = _.map(_.filter(_.zip(cells, entry.solution), (cellAndSolution) => {
-                var cell = cellAndSolution[0],
-                    solution = cellAndSolution[1];
+            const badCells = _.map(_.filter(_.zip(cells, entry.solution), (cellAndSolution) => {
+                const cell = cellAndSolution[0];
+                const solution = cellAndSolution[1];
                 return /^[A-Z]$/.test(cell.value) && cell.value !== solution;
             }), (cellAndSolution) => cellAndSolution[0]);
 
@@ -292,16 +291,16 @@ var Crossword = React.createClass({
         }
     },
 
-    onCheat: function () {
+    onCheat () {
         this.cheat(this.clueInFocus());
         this.save();
     },
 
-    onCheck: function () {
+    onCheck () {
         this.check(this.clueInFocus());
     },
 
-    onSolution: function () {
+    onSolution () {
         _.forEach(this.props.data.entries, (entry) => {
             this.cheat(entry);
         });
@@ -309,13 +308,13 @@ var Crossword = React.createClass({
         this.save();
     },
 
-    onCheckAll: function () {
+    onCheckAll () {
         _.forEach(this.props.data.entries, (entry) => {
             this.check(entry);
         });
     },
 
-    onClearAll: function () {
+    onClearAll () {
         _.forEach(this.state.grid, function (row) {
             _.forEach(row, function (cell) {
                 cell.value = '';
@@ -325,9 +324,10 @@ var Crossword = React.createClass({
         this.forceUpdate();
     },
 
-    hiddenInputValue: function () {
-        var cell = this.state.cellInFocus,
-            currentValue;
+    hiddenInputValue () {
+        const cell = this.state.cellInFocus;
+
+        let currentValue;
 
         if (cell) {
             currentValue = this.state.grid[cell.x][cell.y].value;
@@ -336,40 +336,27 @@ var Crossword = React.createClass({
         return currentValue ? currentValue : '';
     },
 
-    onClickHiddenInput: function () {
-        var focussed = this.state.cellInFocus;
+    onClickHiddenInput () {
+        const focussed = this.state.cellInFocus;
 
         this.onSelect(focussed.x, focussed.y);
     },
 
-    hasSolutions: function () {
+    hasSolutions () {
         return 'solution' in this.props.data.entries[0];
     },
 
-    render: function () {
-        let focussed = this.clueInFocus(),
-            isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
-
-        // Deep equal version of _.intersection
-        const findIntersectingCells = (array1, array2) =>
-            array1.filter(cell1 => array2.some(cell2 => _.isEqual(cell1, cell2)));
-
-        const focussedCells = focussed ? helpers.cellsForEntry(focussed) : [];
-        const entryHasIntersectingCell = entry => {
-            const cells = helpers.cellsForEntry(entry);
-            const intersecting = findIntersectingCells(cells, focussedCells);
-            return !! intersecting.length;
-        };
-
-        const otherEntries = _.difference(this.props.data.entries, focussed ? [focussed] : []);
-        const intersectingEntries = otherEntries.filter(entryHasIntersectingCell);
-
-        const cellIntersectsFocussedEntry = (x, y) =>
-            intersectingEntries.some(entry => helpers.entryHasCell(entry, x, y));
+    render () {
+        const focussed = this.clueInFocus();
+        const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
 
         return React.DOM.div({
-            className: 'crossword__container'
+            className: `crossword__container crossword__container--${this.props.data.crosswordType}`
         },
+        FocussedClue({
+            focussedClue: focussed ? focussed : null,
+            focusClue: this.focusClue
+        }),
         React.DOM.div({
             className: 'crossword__grid-wrapper'
         },
@@ -380,7 +367,6 @@ var Crossword = React.createClass({
             setCellValue: this.setCellValue,
             onSelect: this.onSelect,
             isHighlighted: isHighlighted,
-            cellIntersectsFocussedEntry,
             focussedCell: this.state.cellInFocus,
             ref: 'grid'
         }),
@@ -398,11 +384,6 @@ var Crossword = React.createClass({
             onClick: this.onClickHiddenInput,
             autoComplete: 'off'
         }))),
-        FocussedClue({
-            focussedClue: focussed ? focussed : null,
-            contextualClues: intersectingEntries,
-            focusClue: this.focusClue
-        }),
         Controls({
             hasSolutions: this.hasSolutions(),
             clueInFocus: focussed,
@@ -422,11 +403,11 @@ var Crossword = React.createClass({
 export default function () {
     $('.js-crossword').each(function (element) {
         if (element.hasAttribute('data-crossword-data')) {
-            var crosswordData = JSON.parse(element.getAttribute('data-crossword-data'));
+            const crosswordData = JSON.parse(element.getAttribute('data-crossword-data'));
             React.renderComponent(new Crossword({data: crosswordData}), element);
         } else {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }
     });
-};
+}
 
