@@ -273,15 +273,15 @@ object FaciaContentImplicits {
     def byline: Option[String] = fold(
       curatedContent => curatedContent.byline,
       supportingCuratedContent => supportingCuratedContent.byline,
-      linkSnap => None,
+      linkSnap => linkSnap.byline,
       latestSnap => latestSnap.latestContent.flatMap(_.safeFields.get("byline"))
     )
 
     def showByline: Boolean = fold(
       curatedContent => curatedContent.showByLine,
       supportingCuratedContent => supportingCuratedContent.showByLine,
-      linkSnap => false,
-      latestSnap => false
+      linkSnap => linkSnap.showByLine,
+      latestSnap => latestSnap.showByLine
     )
 
     private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.`type` == tagType)
