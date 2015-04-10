@@ -6,16 +6,6 @@
 .crossword__cell {
     cursor: pointer;
     fill: #ffffff;
-
-    .crossword__grid--focussed & {
-        fill: colour(neutral-4);
-    }
-}
-
-.crossword__cell--intersecting {
-    .crossword__grid--focussed & {
-        fill: #ffffff;
-    }
 }
 
 .crossword__cell--highlighted {

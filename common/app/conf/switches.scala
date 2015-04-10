@@ -374,6 +374,11 @@ object Switches {
     sellByDate = never
   )
 
+  val ImgixSwitch = Switch("Feature", "imgix",
+    "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
+  )
+
   val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
     "If this switch is on the “Become a Member” button will be broken",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 15)
@@ -520,7 +525,7 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
   )
 
-  val ABMtStickyBottom = Switch("A/B Tests", "ab-mt-sticky-bottom",
+  val ABMtStickyBtm = Switch("A/B Tests", "ab-mt-sticky-btm",
     "Top ad slot is sticky at the bottom of page.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
   )
@@ -533,6 +538,11 @@ object Switches {
   val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block",
     "Switch for the Adblock Message A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
+  )
+
+  val ABLiveblogBlocksOnFronts = Switch("A/B Tests", "ab-liveblog-blocks-on-fronts",
+    "Switch for the latest liveblog blocks on fronts A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 23)
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",

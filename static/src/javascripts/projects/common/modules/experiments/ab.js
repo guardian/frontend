@@ -6,6 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/liveblog-blocks-on-fronts',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/identity-social-oauth',
     'common/modules/experiments/tests/mt-master',
@@ -25,6 +26,7 @@ define([
     mediator,
     store,
     mvtCookie,
+    LiveblogBlocksOnFronts,
     HighCommercialComponent,
     IdentitySocialOAuth,
     MtMaster,
@@ -40,6 +42,7 @@ define([
 
     var ab,
         TESTS = _.flatten([
+            new LiveblogBlocksOnFronts(),
             new HighCommercialComponent(),
             new IdentitySocialOAuth(),
             new MtMaster(),
@@ -246,13 +249,17 @@ define([
         segmentUser: function () {
             mvtCookie.generateMvtCookie();
 
-            var tokens, test, variant,
+            var tokens,
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
-                tokens = window.location.hash.replace('#ab-', '').split('=');
-                test = tokens[0];
-                variant = tokens[1];
-                ab.forceSegment(test, variant);
+                tokens = window.location.hash.replace('#ab-', '').split(',');
+                tokens.forEach(function (token) {
+                    var abParam, test, variant;
+                    abParam = token.split('=');
+                    test = abParam[0];
+                    variant = abParam[1];
+                    ab.forceSegment(test, variant);
+                });
             } else {
                 ab.segment();
             }
@@ -319,6 +326,8 @@ define([
         },
 
         getParticipations: getParticipations,
+        isParticipating: isParticipating,
+        getTest: getTest,
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
