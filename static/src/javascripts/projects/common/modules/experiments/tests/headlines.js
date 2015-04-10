@@ -2,30 +2,28 @@ define([
     'common/utils/_',
     'bonzo',
     'fastdom',
-    'qwery',
-    'common/utils/config'
+    'qwery'
 ], function (
     _,
     bonzo,
     fastdom,
-    qwery,
-    config
+    qwery
 ) {
     return function (n) {
-        this.id = 'HeadlineAB' + n;
-        this.start = '2015-04-10';
+        this.id = 'Headline' + n;
+        this.start = '2015-04-9';
         this.expiry = '2015-06-10';
         this.author = 'Robert Berry';
-        this.description = 'AB test for headlines number ' + n;
+        this.description = 'A/B test for headline number ' + n;
         this.audience = 0.01;
-        this.audienceOffset = 0;
+        this.audienceOffset = 0.01 * n;
         this.successMeasure = '';
         this.audienceCriteria = '1% of our audience, only on fronts';
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return config.page.isFront;
+            return true;
         };
 
         function setHeadlineVariant(i) {
@@ -46,13 +44,13 @@ define([
             {
                 id: 'a',
                 test: function () {
-                    setHeadlineVariant(1);
+                    setHeadlineVariant(0);
                 }
             },
             {
                 id: 'b',
                 test: function () {
-                    setHeadlineVariant(0);
+                    setHeadlineVariant(1);
                 }
             }
         ];

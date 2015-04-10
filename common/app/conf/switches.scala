@@ -545,6 +545,16 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 4, 23)
   )
 
+  val ABHeadlineSwitches = (1 to 10) map { n =>
+    Switch(
+      "A/B Tests",
+      s"ab-headline$n",
+      s"Switch for headline $n",
+      safeState = On,
+      sellByDate = new LocalDate(2015, 6, 10)
+    )
+  }
+
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
     safeState = Off, sellByDate = never)
