@@ -87,7 +87,7 @@
 }
 
 .fc-item__liveblog-blocks__inner {
-    transition: transform .5s ease-in-out;
+    @include transition(transform .5s ease-in-out);
 }
 
 .fc-item__liveblog-block {
@@ -98,7 +98,6 @@
     overflow: hidden;
     height: $gs-baseline * 3 + 2;
     margin-bottom: $gs-baseline / 2;
-    transition: height .8s linear;
 }
 
 .fc-item__liveblog-block__more {
