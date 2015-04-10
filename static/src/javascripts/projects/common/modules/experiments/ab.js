@@ -15,7 +15,8 @@ define([
     'common/modules/experiments/tests/mt-sticky-nav',
     'common/modules/experiments/tests/across-the-country',
     'common/modules/experiments/tests/adblock-message',
-    'common/modules/experiments/tests/mt-sticky-bottom'
+    'common/modules/experiments/tests/mt-sticky-bottom',
+    'common/modules/experiments/tests/lazy-load-ads'
 ], function (
     raven,
     _,
@@ -33,7 +34,8 @@ define([
     MtStickyNav,
     AcrossTheCountry,
     AdblockMessage,
-    MtStickyBottom
+    MtStickyBottom,
+    LzAds
 ) {
 
     var ab,
@@ -47,7 +49,8 @@ define([
             new MtStickyNav(),
             new AcrossTheCountry(),
             new AdblockMessage(),
-            new MtStickyBottom()
+            new MtStickyBottom(),
+            new LzAds()
         ],
         participationsKey = 'gu.ab.participations';
 

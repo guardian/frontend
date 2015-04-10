@@ -176,7 +176,9 @@ define([
         },
 
         dfpAbParam = function () {
-            return true;
+            var test = ab.getParticipations().LzAds;
+
+            return ab.testCanBeRun('LzAds') && test && test.variant === 'A';
         };
 
         /**
@@ -214,18 +216,18 @@ define([
             } else {
                 fastdom.read(function () {
                     var scrollTop    = bonzo(document.body).scrollTop(),
-                        scrollBottom = scrollTop + bonzo.viewport().height,
-                        slotToLoad   = _(slots).keys().find(function(slot) {
-                            return scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop
-                        });
+                        scrollBottom = scrollTop + bonzo.viewport().height;
 
-                    if (slotToLoad) {
-                        googletag.display(slotToLoad);
-                        googletag.pubads().refresh([slots[slotToLoad].slot]);
-
-                        slots = _(slots).omit(slotToLoad).value();
-                        displayed = true;
-                    }
+                    _(slots).keys().forEach(function(slot) {
+                        // if the position of the ad is above the viewport - offset (half screen size)
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height / 2) {
+                            googletag.display(slot);
+                            googletag.pubads().refresh([slots[slot].slot]);
+                            console.log('Trigger call for ', slot);
+                            slots = _(slots).omit(slot).value();
+                            displayed = true;
+                        }
+                    });
                 });
             }
         },
