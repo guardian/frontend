@@ -44,7 +44,8 @@ object DiagnosticsController extends Controller with Logging {
   }
 
   def techFeedback() = Action { implicit request =>
-    Analytics.report("tech-feedback")
+    if (request.method == "POST")
+      Analytics.report("tech-feedback")
     val uri = request.queryString.get("uri").map(_.fold("")(_+" "+_))
     val uriKV = uri.map(uri => ("URL", uri))
     val width = request.queryString.get("width").map(value => ("Browser width", value.fold("")(_+" "+_)))

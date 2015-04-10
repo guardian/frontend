@@ -1,5 +1,4 @@
 .crossword__clues {
-    @include flex-display;
 }
 
 .crossword__clues-header {
@@ -16,20 +15,6 @@
 
 .crossword__clues--across,
 .crossword__clues--down {
-    @include flex-basis(100%);
-
-    @include mq(desktop) {
-        width: 50%;
-        float: left;
-    }
-}
-
-.crossword__clues--across {
-    padding-right: $gs-gutter / 2;
-}
-
-.crossword__clues--down {
-    padding-left: $gs-gutter / 2;
 }
 
 .crossword__clue {

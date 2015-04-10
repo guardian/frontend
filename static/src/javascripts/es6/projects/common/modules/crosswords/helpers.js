@@ -6,11 +6,21 @@ const isAcross = (clue) => clue.direction === 'across';
 
 const otherDirection = (direction) => direction === 'across' ? 'down' : 'across';
 
+const cellsForEntry = (entry) => isAcross(entry) ?
+    _.map(_.range(entry.position.x, entry.position.x + entry.length), (x) => ({
+        x: x,
+        y: entry.position.y
+    })) :
+    _.map(_.range(entry.position.y, entry.position.y + entry.length), (y) => ({
+        x: entry.position.x,
+        y: y
+    }));
+
 /**
  * Builds the initial state of the grid given the number of rows, columns, and a list of clues.
  */
 const buildGrid = (rows, columns, entries, savedState) => {
-    var grid = _.map(_.range(columns), (x) => _.map(_.range(rows), (y) => ({
+    const grid = _.map(_.range(columns), (x) => _.map(_.range(rows), (y) => ({
         isHighlighted: false,
         isEditable: false,
         isError: false,
@@ -19,8 +29,8 @@ const buildGrid = (rows, columns, entries, savedState) => {
     })));
 
     _.forEach(entries, (entry) => {
-        var x = entry.position.x,
-            y = entry.position.y;
+        const x = entry.position.x;
+        const y = entry.position.y;
 
         grid[x][y].number = entry.number;
 
@@ -30,7 +40,7 @@ const buildGrid = (rows, columns, entries, savedState) => {
     });
 
     return grid;
-}
+};
 
 /** Hash key for the cell at x, y in the clue map */
 const clueMapKey = (x, y) => `${x}_${y}`;
@@ -56,17 +66,7 @@ const buildClueMap = (clues) => {
     });
 
     return map;
-}
-
-const cellsForEntry = (entry) => isAcross(entry) ?
-    _.map(_.range(entry.position.x, entry.position.x + entry.length), (x) => ({
-        x: x,
-        y: entry.position.y
-    })) :
-    _.map(_.range(entry.position.y, entry.position.y + entry.length), (y) => ({
-        x: entry.position.x,
-        y: y
-    }));
+};
 
 const entryHasCell = (entry, x, y) => _.any(cellsForEntry(entry), (cell) => cell.x === x && cell.y === y);
 

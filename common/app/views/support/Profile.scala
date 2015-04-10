@@ -3,11 +3,13 @@ package views.support
 import common.Logging
 import layout.WidthsByBreakpoint
 import model.{Content, MetaData, ImageContainer, ImageAsset}
-import conf.Switches.{ImageServerSwitch, PngResizingSwitch}
+import conf.Switches.{ImageServerSwitch, PngResizingSwitch, ImgixSwitch}
 import java.net.{URISyntaxException, URI}
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
 import conf.Configuration
+import implicits.Requests._
+import play.api.mvc.RequestHeader
 
 sealed trait ElementProfile {
 
@@ -22,6 +24,8 @@ sealed trait ElementProfile {
     }.orElse(image.largestImage)
   }
 
+  def largestFor(image: ImageContainer): Option[ImageAsset] = image.largestImage
+
   def bestFor(image: ImageContainer): Option[String] =
     elementFor(image).flatMap(_.url).map{ url => ImgSrc(url, this) }
 
@@ -32,6 +36,7 @@ sealed trait ElementProfile {
     elementFor(image).flatMap(_.altText)
 
   def resizeString = s"/w-${toResizeString(width)}/h-${toResizeString(height)}/q-$compression"
+  def imgixResizeString = s"?w=${toResizeString(width)}&q=85&auto=format&sharp=10"
 
 
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
@@ -82,7 +87,7 @@ object ImgSrc extends Logging {
     "media.guim.co.uk" -> "media"
   )
 
-  def apply(url: String, imageType: ElementProfile): String = {
+  def apply(url: String, imageType: ElementProfile, imgix: Boolean = false): String = {
     try {
       val uri = new URI(url.trim)
 
@@ -94,7 +99,11 @@ object ImgSrc extends Logging {
         .filter(_ => isSupportedImage)
         .filter(_ => ImageServerSwitch.isSwitchedOn)
         .map( pathPrefix =>
-        s"$imageHost/$pathPrefix${imageType.resizeString}${uri.getPath}"
+          if(imgix) {
+            s"http://$pathPrefix-guim.imgix.net${uri.getPath}${imageType.imgixResizeString}"
+          } else {
+            s"$imageHost/$pathPrefix${imageType.resizeString}${uri.getPath}"
+          }
         ).getOrElse(url)
     } catch {
       case error: URISyntaxException =>
@@ -110,20 +119,40 @@ object ImgSrc extends Logging {
     }
   }
 
-  def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
+  private def findLargestSrc(imageContainer: ImageContainer, profile: Profile)(implicit request: RequestHeader): Option[String] = {
+    profile.largestFor(imageContainer).flatMap(_.url).map{ largestImage =>
+      ImgSrc(largestImage, profile,(request.isInImgixTest && ImgixSwitch.isSwitchedOn))
+    }
+  }
+
+  def srcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint)(implicit request: RequestHeader): String = {
+      if(request.isInImgixTest && ImgixSwitch.isSwitchedOn) {
+        widths.profiles.map { profile =>
+          s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get}w"
+        } mkString ", "
+      } else {
+        normalSrcset(imageContainer, widths)
+      }
+  }
+
+  def normalSrcset(imageContainer: ImageContainer, widths: WidthsByBreakpoint): String = {
     widths.profiles.map { profile =>
       s"${findSrc(imageContainer, profile).get} ${profile.width.get}w"
     } mkString ", "
   }
 
-  def srcset(path: String, widths: WidthsByBreakpoint): String = {
+  def srcset(path: String, widths: WidthsByBreakpoint)(implicit request: RequestHeader): String = {
     widths.profiles map { profile =>
-      s"${ImgSrc(path, profile)} ${profile.width.get}w"
+      s"${ImgSrc(path, profile, (request.isInImgixTest && ImgixSwitch.isSwitchedOn))} ${profile.width.get}w"
     } mkString ", "
   }
 
-  def getFallbackUrl(imageContainer: ImageContainer): Option[String] = {
-    findSrc(imageContainer, Item300)
+  def getFallbackUrl(imageContainer: ImageContainer)(implicit request: RequestHeader): Option[String] = {
+    if(request.isInImgixTest && ImgixSwitch.isSwitchedOn) {
+      findLargestSrc(imageContainer, Item300)
+    } else {
+      findSrc(imageContainer, Item300)
+    }
   }
 
   def getFallbackAsset(imageContainer: ImageContainer): Option[ImageAsset] = {

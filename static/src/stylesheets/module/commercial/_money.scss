@@ -2,7 +2,10 @@
    Best Buys component
    ========================================================================== */
 .commercial--money {
-    /* Line items */
+    .commercial__body .button--tertiary .inline-arrow-right {
+        fill: colour(neutral-2);
+    }
+
     .lineitem__meta {
         @include f-textSans;
         margin-top: $gs-baseline;

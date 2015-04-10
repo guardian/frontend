@@ -2,14 +2,15 @@ package layout
 
 import com.gu.facia.api.models._
 import com.gu.facia.api.utils.ItemKicker
-import common.{Edition, LinkTo}
-import model.{InlineImage, InlineVideo, FaciaDisplayElement}
+import common.{Edition, InternationalEdition, LinkTo}
+import implicits.FaciaContentImplicits._
+import model.{FaciaDisplayElement, InlineImage, InlineVideo}
 import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.support._
-import Function.const
-import implicits.FaciaContentImplicits._
+
+import scala.Function.const
 
 object MediaType {
   def fromFaciaContent(faciaContent: FaciaContent): Option[MediaType] = faciaContent.mediaType
@@ -34,7 +35,7 @@ case class EditionalisedLink(
     LinkTo(baseUrl)(requestHeader)
 
   def hrefWithRel(implicit requestHeader: RequestHeader): String =
-    processUrl(baseUrl, Edition(requestHeader)) match {
+    processUrl(baseUrl, Edition(requestHeader), InternationalEdition.isInternationalEdition(requestHeader)) match {
       case ProcessedUrl(url, true) => s"""href="${handleQueryStrings(url)}" rel="nofollow""""
       case ProcessedUrl(url, false) => s"""href="${handleQueryStrings(url)}""""
     }

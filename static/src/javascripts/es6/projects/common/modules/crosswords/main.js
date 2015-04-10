@@ -1,14 +1,13 @@
 /* jshint newcap: false */
+/* eslint new-cap: 0 */
+
 import React from 'react';
 
 import $ from 'common/utils/$';
 import _ from 'common/utils/_';
-import bean from 'bean';
-import bonzo from 'bonzo';
 
 import Clues from './clues';
 import Controls from './controls';
-import getIntersectingEntries from './helpers/get-intersecting-entries';
 import FocussedClue from './focussed-clue.jsx!';
 import Grid from './grid';
 import helpers from './helpers';
@@ -17,7 +16,9 @@ import persistence from './persistence';
 import loadFont from './font';
 
 // make react available to dev tool
-window.React || (window.React = React);
+if (!window.React) {
+    window.React = React;
+}
 
 const Crossword = React.createClass({
     getInitialState () {
@@ -116,7 +117,7 @@ const Crossword = React.createClass({
                 direction = 'down';
             } else if (deltaX !== 0) {
                 direction = 'across';
-            };
+            }
             this.focusClue(x, y, direction);
         }
     },
@@ -268,8 +269,8 @@ const Crossword = React.createClass({
 
         if (entry.solution) {
             const badCells = _.map(_.filter(_.zip(cells, entry.solution), (cellAndSolution) => {
-                var cell = cellAndSolution[0],
-                    solution = cellAndSolution[1];
+                const cell = cellAndSolution[0];
+                const solution = cellAndSolution[1];
                 return /^[A-Z]$/.test(cell.value) && cell.value !== solution;
             }), (cellAndSolution) => cellAndSolution[0]);
 
@@ -348,11 +349,14 @@ const Crossword = React.createClass({
     render () {
         const focussed = this.clueInFocus();
         const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
-        const intersectingEntries = getIntersectingEntries(this.props.data.entries, focussed);
 
         return React.DOM.div({
-            className: 'crossword__container'
+            className: `crossword__container crossword__container--${this.props.data.crosswordType}`
         },
+        FocussedClue({
+            focussedClue: focussed ? focussed : null,
+            focusClue: this.focusClue
+        }),
         React.DOM.div({
             className: 'crossword__grid-wrapper'
         },
@@ -363,7 +367,6 @@ const Crossword = React.createClass({
             setCellValue: this.setCellValue,
             onSelect: this.onSelect,
             isHighlighted: isHighlighted,
-            intersectingEntries,
             focussedCell: this.state.cellInFocus,
             ref: 'grid'
         }),
@@ -381,11 +384,6 @@ const Crossword = React.createClass({
             onClick: this.onClickHiddenInput,
             autoComplete: 'off'
         }))),
-        FocussedClue({
-            focussedClue: focussed ? focussed : null,
-            intersectingEntries,
-            focusClue: this.focusClue
-        }),
         Controls({
             hasSolutions: this.hasSolutions(),
             clueInFocus: focussed,
@@ -411,5 +409,5 @@ export default function () {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }
     });
-};
+}
 

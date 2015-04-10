@@ -1,5 +1,6 @@
 package common
 
+import conf.Switches
 import org.joda.time.DateTimeZone
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -16,9 +17,8 @@ abstract class Edition(
 }
 
 object Edition {
-
   // gives templates an implicit edition
-  implicit def edition(implicit request: RequestHeader) = this(request)
+  implicit def edition(implicit request: RequestHeader): Edition = this(request)
 
   val defaultEdition = editions.Uk
 
@@ -27,6 +27,26 @@ object Edition {
     editions.Us,
     editions.Au
   )
+
+  type EditionOrInternational = Either[Edition, InternationalEdition]
+
+  implicit class RichEditionOrInternational(edition: EditionOrInternational) {
+    def id = edition match {
+      case Left(ed) => ed.id
+      case Right(international) => InternationalEdition.id
+    }
+
+    def displayName = edition match {
+      case Left(ed) => ed.displayName
+      case Right(international) => InternationalEdition.displayName
+    }
+
+    def isBeta = edition.isRight
+  }
+
+  private def allWithInternational: List[EditionOrInternational] =
+    all.map(Left(_)) ++
+      (if (Switches.InternationalEditionSwitch.isSwitchedOn) Seq(Right(InternationalEdition.international)) else Nil)
 
   lazy val editionFronts = Edition.all.map {e => "/" + e.id.toLowerCase}
 
@@ -54,14 +74,18 @@ object Edition {
     all.find(_.id == id).getOrElse(defaultEdition)
   }
 
-  def others(implicit request: RequestHeader): Seq[Edition] = {
-    val currentEdition = Edition(request)
-    others(currentEdition)
+  def others(implicit request: RequestHeader): Seq[EditionOrInternational] = {
+    if (InternationalEdition.isInternationalEdition(request)) {
+      allWithInternational.filter(_.isLeft)
+    } else {
+      val currentEdition = Edition(request)
+      others(currentEdition)
+    }
   }
 
-  def others(edition: Edition): Seq[Edition] = all.filterNot(_ == edition)
+  def others(edition: Edition): Seq[EditionOrInternational] = allWithInternational.filterNot(_.left.exists(_ == edition))
 
-  def others(id: String): Seq[Edition] = byId(id).map(others(_)).getOrElse(Nil)
+  def others(id: String): Seq[EditionOrInternational] = byId(id).map(others(_)).getOrElse(Nil)
 
   def byId(id: String) = all.find(_.id.equalsIgnoreCase(id))
 
@@ -79,7 +103,13 @@ object Editionalise {
 
   def apply(id: String, edition: Edition, request: Option[RequestHeader] = None): String = {
     if (isEditionalised(id)) id match {
-        case "" => s"${edition.id.toLowerCase}"
+        case "" =>
+
+          if (request.exists(InternationalEdition.isInternationalEdition)) {
+            s"international"
+          } else {
+            edition.id.toLowerCase
+          }
         case _ => s"${edition.id.toLowerCase}/$id"
     } else {
       id
@@ -90,13 +120,57 @@ object Editionalise {
 
 }
 
-case class InternationalEdition(variant: String)
+case class InternationalEdition(variant: String) {
+  def isControl = variant == "control"
+
+  def isInternational = !isControl
+}
 
 object InternationalEdition {
+
+  // These values end up in cookies and URLs
+  // Make sure you know exactly what you are doing if you change them
+  val id: String = "intl"
+  val path: String = "/international"
+
+  val abbreviation: String = "Int."
+  val displayName = s"$abbreviation edition"
+
+  val international = InternationalEdition("international")
+
   private val variants = Seq("control", "international")
 
-  def apply(request: RequestHeader): Option[InternationalEdition] = request.headers.get("X-GU-International")
-    .filter(variants.contains)
-    .map(InternationalEdition(_))
+  def apply(request: RequestHeader): Option[InternationalEdition] = {
+
+    // This is all a bit hacky because it is a large scale AB test.
+    // most of this is not necessary if we formalise this (or of course if we delete it).
+    if (Switches.InternationalEditionSwitch.isSwitchedOn) {
+      val editionIsIntl = request.headers.get("X-GU-Edition").map(_.toLowerCase).contains("intl")
+      val editionSetByCookie = request.headers.get("X-GU-Edition-From-Cookie").contains("true")
+      val fromInternationalHeader = request.headers.get("X-GU-International").map(_.toLowerCase)
+      val setByCookie = request.cookies.get("GU_EDITION").map(_.value.toLowerCase).contains("intl")
+
+      // environments NOT behind the CDN will not have these. In this case assume they are in the
+      // "international" bucket
+      val noInternationalHeader = request.headers.get("X-GU-International").isEmpty
+
+      if (setByCookie || (editionIsIntl && (editionSetByCookie || noInternationalHeader))) {
+        Some(international)
+      } else {
+        fromInternationalHeader
+          .filter(variants.contains(_) && editionIsIntl)
+          .map(InternationalEdition(_))
+      }
+    } else {
+      None
+    }
+  }
+
+  def isInternationalEdition(request: RequestHeader) = apply(request).exists(_.isInternational)
+}
+
+object InternationalEditionVariant {
+
+  def apply(request: RequestHeader): Option[String] = request.headers.get("X-GU-International")
 
 }

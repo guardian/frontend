@@ -13,9 +13,9 @@ function saveGridState(id, grid) {
     const entries = _.map(grid, (row) => _.map(row, (cell) => cell.value));
 
     try {
-        localStorage.set(localStorageKey(id), entries);
+        return localStorage.set(localStorageKey(id), entries);
     } catch (e) {
-        // probably out of space
+        return false;
     }
 }
 

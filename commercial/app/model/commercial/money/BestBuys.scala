@@ -2,19 +2,14 @@ package model.commercial.money
 
 import model.commercial.Segment
 
-case class BestBuys(
-                     mortgages: Seq[Mortgage],
-                     creditCards: Map[String, Seq[CreditCard]],
+case class BestBuys(creditCards: Map[String, Seq[CreditCard]],
                      loans: Seq[Loan],
                      currentAccounts: Map[String, Seq[CurrentAccount]],
-                     savings: Map[String, Seq[SavingsAccount]]
-                     )
-
+                     savings: Map[String, Seq[SavingsAccount]])
 
 object BestBuysAgent {
 
   protected val agents = Seq(
-    MortgagesAgent,
     LoansAgent,
     creditCardsAgent.BalanceTransfer,
     creditCardsAgent.Purchase,
@@ -39,24 +34,22 @@ object BestBuysAgent {
   )
 
   def adsTargetedAt(segment: Segment): Option[BestBuys] = {
-    val mortgages = MortgagesAgent.available
     val creditCards = CreditCards.currentAds
     val loans = LoansAgent.available
     val currentAccounts = CurrentAccounts.currentAds
     val savings = SavingsAccounts.currentAds
 
-    if (mortgages.isEmpty
-      && creditCards.isEmpty
+    if (creditCards.isEmpty
       && loans.isEmpty
       && currentAccounts.isEmpty
       && savings.isEmpty) {
       None
     } else {
-      Some(BestBuys(mortgages, creditCards, loans, currentAccounts, savings))
+      Some(BestBuys(creditCards, loans, currentAccounts, savings))
     }
   }
 
-  def refresh() {
+  def refresh(): Unit = {
     agents foreach (_.refresh())
   }
 }

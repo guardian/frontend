@@ -171,7 +171,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
   def findVideoApiElement(id:String): Option[VideoElement] = article.bodyVideos.filter(_.id == id).headOption
 }
 
-case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(article: Article)(implicit request: RequestHeader) extends HtmlCleaner with implicits.Numbers {
 
   def replacePictures(body: Document): Document = {
     for {
@@ -219,6 +219,11 @@ case class PictureCleaner(article: Article) extends HtmlCleaner with implicits.N
       figure.attr("id", hashSuffix)
       figure.addClass("fig--narrow-caption")
       figure.addClass("fig--has-shares")
+
+      val figcaption = figure.getElementsByTag("figcaption")
+      if(figcaption.length < 1) {
+        figure.addClass("fig--no-caption")
+      }
 
       val html = views.html.fragments.share.blockLevelSharing(hashSuffix, article.elementShares(Some(hashSuffix), crop.url), article.contentType)
       image.after(html.toString())

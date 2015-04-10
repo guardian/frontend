@@ -37,7 +37,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       applicationsRedirect(path)
     } else {
       val edition = Edition(request)
-      val editionBase = s"/${edition.id.toLowerCase}"
+      val editionBase = InternationalEdition(request)
+        .filter(_.isInternational)
+        .map(_ => InternationalEdition.path)
+        .getOrElse(s"/${edition.id.toLowerCase}")
 
       val redirectPath = path match {
         case "" => editionBase
