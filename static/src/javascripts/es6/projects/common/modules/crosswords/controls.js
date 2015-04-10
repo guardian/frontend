@@ -17,7 +17,7 @@ export default React.createClass({
                     className: `${buttonClassName} ${buttonCurrentClassName}`,
                     onClick: this.props.onCheck,
                     key: 'check'
-                }, 'Check')
+                }, 'Check this')
             );
 
             controls.unshift(
@@ -25,7 +25,7 @@ export default React.createClass({
                     className: `${buttonClassName} ${buttonCurrentClassName}`,
                     onClick: this.props.onCheat,
                     key: 'cheat'
-                }, 'Cheat')
+                }, 'Reveal this')
             );
         }
 
@@ -43,7 +43,7 @@ export default React.createClass({
                     className: `${buttonClassName} ${buttonGenericClassName}`,
                     onClick: this.props.onSolution,
                     key: 'solution'
-                }, 'Solution')
+                }, 'Reveal all')
             );
         }
 
@@ -52,7 +52,7 @@ export default React.createClass({
                 className: `${buttonClassName} ${buttonGenericClassName}`,
                 onClick: this.props.onClearAll,
                 key: 'clear'
-            }, 'Clear')
+            }, 'Clear all')
         );
 
         return React.DOM.div({
