@@ -170,5 +170,8 @@ GET        /weatherapi/locations                                                
 # Articles
 GET        /*path.json                                                                         controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
 
+# Don't forward requests for favicon.ico to the Content API
+GET        /favicon.ico                                                                        controllers.FaviconController.favicon
+
 # Any "item" from the Content API
 GET        /*path                                                                              controllers.ItemController.render(path)
