@@ -21,6 +21,7 @@ object Dependencies {
   val faciaScalaClient = "com.gu" %% "facia-json" % "0.29"
   val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.4"
   val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.6"
+  val googleSheetsApi = "org.openengsb.wrapped" % "com.google.gdata" % "1.41.5.w1"
   val guardianConfiguration = "com.gu" %% "configuration" % "4.0"
   val guice = "com.google.inject" % "guice" % "3.0"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion

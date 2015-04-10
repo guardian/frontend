@@ -60,7 +60,10 @@ object Frontend extends Build with Prototypes {
   val sanityTest = application("sanity-tests")
 
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies += scalaCheck
+    libraryDependencies ++= Seq(
+      scalaCheck,
+      googleSheetsApi
+    )
   )
 
   val article = application("article").dependsOn(commonWithTests).aggregate(common)

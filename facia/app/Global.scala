@@ -1,3 +1,4 @@
+import ab_headlines.ABTestHeadlines
 import common._
 import conf.Filters
 import crosswords.TodaysCrosswordGridLifecycle
@@ -8,6 +9,8 @@ import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
 import services.{IndexListingsLifecycle, ConfigAgentLifecycle}
 import play.api.Application
+
+import scala.util.{Failure, Success}
 
 object Global extends WithFilters(Filters.common: _*)
   with ConfigAgentLifecycle
@@ -25,4 +28,14 @@ object Global extends WithFilters(Filters.common: _*)
     FaciaMetrics.FaciaToRssRedirectMetric,
     ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric
   )
+
+  override def onStart(app: Application): Unit = {
+    ab_headlines.ABTestHeadlines.getOrRefresh onComplete {
+      case Success(x) => println(x)
+      case Failure(er) => println(er)
+        er.printStackTrace()
+    }
+
+    super.onStart(app)
+  }
 }
