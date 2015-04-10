@@ -65,11 +65,23 @@ object FaciaContentImplicits {
         linkSnap => linkSnap.id,
         latestSnap => latestSnap.id)
 
-    def snapType: Option[String] = fold(
-        curatedContent => None,
+    def embedType: Option[String] = fold(
+        curatedContent => curatedContent.embedType,
         supportingCuratedContent => None,
-        linkSnap => Option("LinkSnap"),
-        latestSnap => Option("LatestSnap"))
+        linkSnap => Option(linkSnap.snapType),
+        latestSnap => Option("latest"))
+
+    def embedCss: Option[String] = fold(
+        curatedContent => curatedContent.embedCss,
+        supportingCuratedContent => None,
+        linkSnap => linkSnap.snapCss,
+        latestSnap => latestSnap.snapCss)
+
+    def embedUri: Option[String] = fold(
+        curatedContent => curatedContent.embedUri,
+        supportingCuratedContent => None,
+        linkSnap => linkSnap.snapUri,
+        latestSnap => latestSnap.snapUri)
 
     def itemKicker: Option[ItemKicker] =
       fold(
