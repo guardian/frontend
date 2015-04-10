@@ -38,8 +38,16 @@
                 </div>
 
                 <div class="gs-container" data-test-id="interactive-content-body">
-                    <div class="content__main-column content__main-column--interactive">
-                        @bodyRaw(interactive)
+                    <div class="content__main-column-wrapper">
+                        <div class="content__main-column content__main-column--interactive">
+                            @bodyRaw(interactive)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gs-container u-cf">
+                    <div class="content__main-column content__meta-footer">
+                    @fragments.contentMeta(interactive, showBadge = false)
                     </div>
                 </div>
             </div>
