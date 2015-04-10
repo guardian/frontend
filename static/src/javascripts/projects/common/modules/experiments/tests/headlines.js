@@ -44,13 +44,13 @@ define([
 
         this.variants = [
             {
-                id: 'variant',
+                id: 'a',
                 test: function () {
                     setHeadlineVariant(1);
                 }
             },
             {
-                id: 'control',
+                id: 'b',
                 test: function () {
                     setHeadlineVariant(0);
                 }
