@@ -292,6 +292,21 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
   }
 }
 
+case class BloggerBylineImage(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
+  def clean(body: Document): Document = {
+    if (article.isLiveBlog && LiveBlogContributorImagesSwitch.isSwitchedOn) {
+      body.select(".block").foreach { el =>
+        val contributorId = el.attributes().get("data-block-contributor")
+        article.tags.find(_.id == contributorId).map{ contributorTag =>
+          val html = views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
+          el.append(html.toString())
+        }
+      }
+    }
+    body
+  }
+}
+
 case class LiveBlogShareButtons(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
   def clean(body: Document): Document = {
     if (article.isLiveBlog) {

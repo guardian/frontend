@@ -225,6 +225,12 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val LiveBlogContributorImagesSwitch = Switch("Feature", "liveblog-contributor-image",
+    "Show contributor byline images in live blog blocks",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 5, 28)
+  )
+
   val ElectionLiveBadgeSwitch = Switch("Feature", "election-2015-badging",
     "Display Election Live 2015 Badge",
     safeState = On,
