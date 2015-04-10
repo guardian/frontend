@@ -50,8 +50,8 @@ define([
     }
 
     function cssTransformRules(offset) {
-        return ('-webkit-transform: translate3d(0, -{{offset}}px, 0);' + 
-                    '-ms-transform: translate3d(0, -{{offset}}px, 0);' + 
+        return ('-webkit-transform: translate3d(0, -{{offset}}px, 0);' +
+                    '-ms-transform: translate3d(0, -{{offset}}px, 0);' +
                         'transform: translate3d(0, -{{offset}}px, 0)').replace(/{{offset}}/g, offset || 0);
     }
 
@@ -79,9 +79,9 @@ define([
                         .join(''),
 
                     el = bonzo.create(
-                        '<div class="fc-item__liveblog-blocks__inner u-faux-block-link__promote"' + 
-                            ' style="' + cssTransformRules(numNewBlocks * blockHeightPx) + '">' + 
-                            blocksHtml + 
+                        '<div class="fc-item__liveblog-blocks__inner u-faux-block-link__promote"' +
+                            ' style="' + cssTransformRules(numNewBlocks * blockHeightPx) + '">' +
+                            blocksHtml +
                         '</div>'
                     );
 
