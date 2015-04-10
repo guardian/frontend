@@ -3,7 +3,7 @@
 import Raven from 'raven-js';
 import Bootstrap from 'modules/bootstrap';
 import 'font-awesome/css/font-awesome.min.css!';
-import {init, update, differs} from 'modules/vars';
+import vars from 'modules/vars';
 
 export default function load (Module) {
     var module, bootstrap;
@@ -29,7 +29,7 @@ export default function load (Module) {
     }
 
     function loadModule (res) {
-        init(res);
+        vars.init(res);
 
         module = new Module();
         module.init(bootstrap, res);
@@ -38,8 +38,8 @@ export default function load (Module) {
     }
 
     function updateModuleConfig (res) {
-        if (differs(res)) {
-            update(res);
+        if (vars.differs(res)) {
+            vars.update(res);
             module.update(res);
         }
     }

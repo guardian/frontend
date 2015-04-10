@@ -1,58 +1,68 @@
-import CONST from 'constants/defaults';
-import isEqual from 'underscore';
+define([
+    'underscore',
+    'constants/defaults'
+], function (
+    _,
+    CONST
+) {
+    var currentRes;
 
-export const priority = (function (pathname) {
-    let priority = pathname.match(/^\/?([^\/]+)/);
-    if (priority && priority[1] !== 'editorial') {
-        return priority[1];
-    }
-})(window.location.pathname);
+    var exports = {
+        CONST: CONST,
 
-export {CONST};
+        priority: (function (pathname) {
+            var priority = pathname.match(/^\/?([^\/]+)/);
+            if (priority && priority[1] !== 'editorial') {
+                return priority[1];
+            }
+        })(window.location.pathname),
 
-export let model;
-export function setModel (currentModel) {
-    model = currentModel;
-}
+        model: null,
+        setModel: function (currentModel) {
+            exports.model = currentModel;
+        },
 
-let currentRes;
-export function differs (res) {
-    return isEqual(res, currentRes);
-}
+        differs: function (res) {
+            return _.isEqual(res, currentRes);
+        },
 
-export let state = {
-    config: {}
-};
-export function update (res) {
-    currentRes = res;
-    state.config = res.config;
-    if (model) {
-        model.switches(res.switches);
-    }
-}
+        state: {
+            config: {}
+        },
 
-export let pageConfig;
-export function init (res) {
-    currentRes = res;
-    pageConfig = res.defaults;
+        update: function (res) {
+            currentRes = res;
+            exports.state.config = res.config;
+            if (exports.model) {
+                exports.model.switches(res.switches);
+            }
+        },
 
-    CONST.types = res.defaults.dynamicContainers
-        .concat(res.defaults.fixedContainers)
-        .concat(CONST.extendDynamicContainers);
+        pageConfig: null,
+        init: function (res) {
+            currentRes = res;
+            exports.pageConfig = res.defaults;
 
-    CONST.typesDynamic = res.defaults.dynamicContainers;
+            CONST.types = res.defaults.dynamicContainers
+                .concat(res.defaults.fixedContainers)
+                .concat(CONST.extendDynamicContainers);
 
-    CONST.frontAgeAlertMs = {
-        front:      60000 * 2 * (res.defaults.highFrequency || 1),
-        editorial:  60000 * 2 * (res.defaults.standardFrequency || 5),
-        commercial: 60000 * 2 * (res.defaults.lowFrequency || 60)
+            CONST.typesDynamic = res.defaults.dynamicContainers;
+
+            CONST.frontAgeAlertMs = {
+                front:      60000 * 2 * (res.defaults.highFrequency || 1),
+                editorial:  60000 * 2 * (res.defaults.standardFrequency || 5),
+                commercial: 60000 * 2 * (res.defaults.lowFrequency || 60)
+            };
+
+            CONST.identity = {
+                email: res.defaults.email,
+                avatarUrl: res.defaults.avatarUrl
+            };
+
+            exports.update(res);
+        }
     };
 
-    CONST.identity = {
-        email: res.defaults.email,
-        avatarUrl: res.defaults.avatarUrl
-    };
-
-    update(res);
-}
-
+    return exports;
+});
