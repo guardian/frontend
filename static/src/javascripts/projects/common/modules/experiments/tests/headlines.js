@@ -28,26 +28,32 @@ define([
             return config.page.isFront;
         };
 
+        function setHeadlineVariant(i) {
+            _.forEach(qwery('.js-a-b-headline-' + n), function (el) {
+                var $el = bonzo(el),
+                    headlineEls = qwery('.js-headline-text', el),
+                    variantHeadline = JSON.parse($el.attr('data-headline-variants'))[i];
+
+                fastdom.write(function () {
+                    _.forEach(headlineEls, function (headlineEl) {
+                        bonzo(headlineEl).html(variantHeadline);
+                    });
+                });
+            });
+        }
+
         this.variants = [
             {
                 id: 'variant',
                 test: function () {
-                    _.forEach(qwery('.js-a-b-headline-' + n), function (el) {
-                        var $el = bonzo(el),
-                            headlineEls = qwery('.js-headline-text', el),
-                            variantHeadline = JSON.parse($el.attr('data-headline-variants'))[0];
-
-                        fastdom.write(function () {
-                            _.forEach(headlineEls, function (headlineEl) {
-                                bonzo(headlineEl).html(variantHeadline);
-                            });
-                        });
-                    });
+                    setHeadlineVariant(1);
                 }
             },
             {
                 id: 'control',
-                test: function () {}
+                test: function () {
+                    setHeadlineVariant(0);
+                }
             }
         ];
     };
