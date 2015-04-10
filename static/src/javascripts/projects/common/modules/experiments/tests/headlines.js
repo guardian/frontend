@@ -32,7 +32,7 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    _.forEach(qwery('.js-a-b-headlines'), function (el) {
+                    _.forEach(qwery('.js-a-b-headline-' + n), function (el) {
                         var $el = bonzo(el),
                             headlineEls = qwery('.js-headline-text', el),
                             variantHeadline = JSON.parse($el.attr('data-headline-variants'))[0];
