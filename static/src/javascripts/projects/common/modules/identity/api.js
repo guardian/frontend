@@ -1,9 +1,9 @@
-/*global escape:true */
 define([
     'common/utils/ajax',
     'common/utils/atob',
     'common/utils/config',
     'common/utils/cookies',
+    'common/utils/mediator',
     'common/utils/storage',
     'common/modules/asyncCallMerger'
 ], function (
@@ -11,6 +11,7 @@ define([
     utilAtob,
     config,
     cookies,
+    mediator,
     storage,
     asyncCallMerger
 ) {
@@ -32,6 +33,8 @@ define([
     Id.init = function () {
         Id.idApiRoot = config.page.idApiUrl;
         Id.idUrl = config.page.idUrl;
+        console.log("++ Id Loaded");
+        mediator.emit("module:identity:api:loaded")
     };
 
     /**
@@ -61,7 +64,7 @@ define([
     Id.getUserFromCookie = function () {
         if (userFromCookieCache === null) {
             var cookieData = cookies.get(Id.cookieName),
-            userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
+                userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
             if (userData) {
                 userFromCookieCache = {
                     id: userData[0],
@@ -226,6 +229,7 @@ define([
     };
 
     Id.getUsersSavedDocuments = function() {
+
         var endpoint = '/syncedPrefs/me/savedArticles',
             request = ajax({
                 url: Id.idApiRoot + endpoint,
@@ -236,7 +240,24 @@ define([
         return request
     };
 
+    Id.saveToArticles = function(data) {
+        var endpoint = '/syncedPrefs/me/savedArticles',
+            request = ajax({
+                url: Id.idApiRoot + endpoint,
+                type: 'jsonp',
+                crossOrigin: true,
+                data: {
+                    body: JSON.stringify(data),
+                    method: 'post'
+                }
+            });
+
+        return request
+
+    };
+
 
 
     return Id;
 });
+/*global escape:true */

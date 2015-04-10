@@ -54,9 +54,7 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
-    'bootstraps/identity',
-    'common/modules/loyalty/save-for-later'
-
+    'bootstraps/identity'
 ], function (
     bean,
     bonzo,
@@ -111,8 +109,7 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
-    identity,
-    SaveForLater
+    identity
 ) {
 
     var modules = {
@@ -441,17 +438,6 @@ define([
                 window.guardian.api = {
                     logCss: logCss
                 };
-            },
-
-            initSaveForLater: function() {
-                if(config.switches.saveForLater) {
-                    console.log("+++ Save For Later") ;
-                    var saveForLater = new SaveForLater();
-                    saveForLater.init();
-                }
-                else {
-                    console.log("++ Save switch off ") ;
-                }
             }
         }
 
@@ -496,7 +482,6 @@ define([
             robust('c-simple-metrics',  modules.initSimpleMetrics);
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
-            robust('c-save-for-later',  modules.initSaveForLater);
         };
 
     return {

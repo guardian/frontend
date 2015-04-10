@@ -23,7 +23,6 @@ class FrontendSavedArtcles(version: String, articles: List[SavedArticle]) extend
       case Nil =>
         SavedArticles(timeStamp, List(articleToSave))
 
-      case _ => SavedArticles(timeStamp, articleToSave :: articles)
-    }
+      case _ => SavedArticles(timeStamp, articleToSave :: articles) }
   }
 }

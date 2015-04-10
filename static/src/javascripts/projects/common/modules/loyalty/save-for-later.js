@@ -4,6 +4,7 @@ define([
        'bean',
        'common/utils/_',
        'common/utils/config',
+       'common/utils/mediator',
        'common/modules/identity/api'
 
 ], function (
@@ -12,70 +13,91 @@ define([
         bean,
         _,
         config,
+        mediator,
         identity
     ){
 
     function SaveForLater() {
-        this.saveLinkHolder = document.body.querySelector('.meta__save-for-later');
+        this.saveLinkHolder = qwery('.meta__save-for-later')[0];
         this.userData = null;
         this.encodedPageUrl = encodeURIComponent(document.location.href);
-        this.$saver = bonzo(this.saveLinkHolder)
+        this.$saver = bonzo(this.saveLinkHolder);
+        this.savedArticlesUrl = config.page.idUrl + "/saved-articles";
     }
 
-
-
     SaveForLater.prototype.init = function() {
-        console.log("++ Save init");
-
-
         if(identity.isUserLoggedIn()) {
+            console.log("logged in: " + this.savedArticlesUrl);
             this.getSavedArticles();
-            console.log("++ Got saved");
         }  else {
+            console.log(" not logged in");
             var url = config.page.idUrl + '/prefs/save-content?returnUrl='+this.encodedPageUrl+'&shortUrl='+config.page.shortUrl;
             this.$saver.html(
                 '<a href="' + url + ' "data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>'
             );
         }
-        console.log("++ Done!");
+        console.log("+++ Done! " + this.saveLinkHolder);
     };
 
     SaveForLater.prototype.getSavedArticles = function() {
         var notFound  = [{message:"Not found",description:"Resource not found"}];
         var self = this;
+        console.log("Get saved");
 
         identity.getUsersSavedDocuments().then(
             function success(resp) {
+                console.log("++ Success");
+
                 if (resp.status === 'error') {
+                    console.log("++ Error");
+
                     if( JSON.stringify(notFound) ===  JSON.stringify(resp.errors)) {
                         self.userData = {articles:[]};
                     }
                 }
                 else {
+                    console.log("++ Empty");
+
                     self.userData = resp.savedArticles;
                 }
-                console.log("++  SavedArticles: " + JSON.stringify(self.userData));
                 var saved = self.hasŬserSavedArticle(self.userData.articles, config.page.shortUrl);
                 if (saved) {
-                    console.log("++ Saved");
-                    self.$saver.html('<a href="/savedListUrl" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Signed inr</a>');
+                    self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
                 } else {
-                    console.log("++ Not a saved article");
-                    self.$saver.html('<a href="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Signed inr</a>');
+                    self.$saver.html('<a class="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>');
+                    bean.on(self.saveLinkHolder, 'click', '.meta__save-for-later--link', self.saveArticle.bind(self))
                 }
+            },
+
+            function fail() {
+                console.log("++ API GFIL");
             }
         );
     };
 
     SaveForLater.prototype.hasŬserSavedArticle = function(articles, shortUrl) {
-        console.log("++ Short url: " + shortUrl + " Articles: " + JSON.stringify(articles) );
         return _.some(articles, function(article) {
             return article.shortUrl == shortUrl
         })
     };
 
     SaveForLater.prototype.saveArticle = function() {
-        console.log("++ Savi it");
+        var self = this;
+        var date = new Date().toISOString().replace(/\.[0-9]+Z/,"+00:00");
+        var newArticle = {id: document.location.href, shortUrl: config.page.shortUrl, date: date, read: false  };
+        this.userData.articles.push(newArticle);
+        var data = {version: date, articles: this.userData.articles };
+        identity.saveToArticles(data).then(
+            function success(resp) {
+                if (resp.status === 'error') {
+                    self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Error saving</a>');
+                }
+                else {
+                    bean.off(qwery('.meta__save-for-later--link', self.saveLinkHolder)[0], 'click', self.saveArticle);
+                    self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
+                }
+            }
+        );
     };
 
     return SaveForLater;
