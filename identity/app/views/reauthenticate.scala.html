@@ -3,6 +3,7 @@
 @import form.IdFormHelpers._
 @import views.html.fragments.form.inputField
 @import views.html.fragments.socialSignin
+@import views.SocialSigninRoute.Confirm
 
 @main(page, projectName = Option("identity")){
 }{
@@ -23,7 +24,7 @@
                 </div>
             </div>
             <div class="fieldset__fields">
-                @socialSignin("Confirm", page, idRequest, idUrlBuilder, confirm = true)
+                @socialSignin(views.SocialSigninRoutes(Confirm), idRequest, idUrlBuilder)
             </div>
         </fieldset>
 

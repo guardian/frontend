@@ -9,5 +9,6 @@ trait FakeRequests {
     def withHost(host: String): FakeRequest[A] = req.withHeaders("Host" -> host)
 
     def from(edition: Edition): FakeRequest[A] = req.withCookies(Cookie("GU_EDITION", edition.id))
+    def from(edition: String): FakeRequest[A] = req.withCookies(Cookie("GU_EDITION", edition))
   }
 }

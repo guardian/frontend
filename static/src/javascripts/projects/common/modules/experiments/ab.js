@@ -2,6 +2,7 @@ define([
     'raven',
     'common/utils/_',
     'common/utils/config',
+    'common/utils/cookies',
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
@@ -14,11 +15,13 @@ define([
     'common/modules/experiments/tests/mt-top-below-first-container',
     'common/modules/experiments/tests/mt-sticky-nav',
     'common/modules/experiments/tests/across-the-country',
-    'common/modules/experiments/tests/adblock-message'
+    'common/modules/experiments/tests/adblock-message',
+    'common/modules/experiments/tests/mt-sticky-bottom'
 ], function (
     raven,
     _,
     config,
+    cookies,
     mediator,
     store,
     mvtCookie,
@@ -31,7 +34,8 @@ define([
     MtTopBelowFirstContainer,
     MtStickyNav,
     AcrossTheCountry,
-    AdblockMessage
+    AdblockMessage,
+    MtStickyBottom
 ) {
 
     var ab,
@@ -45,7 +49,8 @@ define([
             new MtTopBelowFirstContainer(),
             new MtStickyNav(),
             new AcrossTheCountry(),
-            new AdblockMessage()
+            new AdblockMessage(),
+            new MtStickyBottom()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -122,13 +127,25 @@ define([
 
     function makeOmnitureTag() {
         var participations = getParticipations(),
-            tag = [];
+            tag = [], editionFromCookie;
 
         _.forEach(_.keys(participations), function (k) {
             if (testCanBeRun(getTest(k))) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
             }
         });
+
+        if (config.tests.internationalEditionVariant) {
+            tag.push(['AB', 'InternationalEditionTest', config.tests.internationalEditionVariant].join(' | '));
+
+            // don't use the edition of the page - we specifically want the cookie version
+            // this allows us to figure out who has "opted out" and "opted into" the test
+            editionFromCookie = cookies.get('GU_EDITION');
+
+            if (editionFromCookie) {
+                tag.push(['AB', 'InternationalEditionPreference', editionFromCookie].join(' | '));
+            }
+        }
 
         return tag.join(',');
     }
@@ -227,13 +244,17 @@ define([
         segmentUser: function () {
             mvtCookie.generateMvtCookie();
 
-            var tokens, test, variant,
+            var tokens,
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
-                tokens = window.location.hash.replace('#ab-', '').split('=');
-                test = tokens[0];
-                variant = tokens[1];
-                ab.forceSegment(test, variant);
+                tokens = window.location.hash.replace('#ab-', '').split(',');
+                tokens.forEach(function (token) {
+                    var abParam, test, variant;
+                    abParam = token.split('=');
+                    test = abParam[0];
+                    variant = abParam[1];
+                    ab.forceSegment(test, variant);
+                });
             } else {
                 ab.segment();
             }
@@ -300,6 +321,8 @@ define([
         },
 
         getParticipations: getParticipations,
+        isParticipating: isParticipating,
+        getTest: getTest,
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,

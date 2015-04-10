@@ -32,12 +32,12 @@ define([
             {
                 id: 'A',
                 test: function () {
-                    var adblockLink = 'https://membership.theguardian.com/about/supporter';
+                    var adblockLink = 'https://membership.theguardian.com/about/supporter?INTCMP=adb-ma';
 
                     if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse()) {
                         new Message('adblock', {
                             pinOnHide: false,
-                            siteMessageLinkName: 'adblock message',
+                            siteMessageLinkName: 'adblock message A',
                             siteMessageCloseBtn: 'hide'
                         }).show(template(
                             doNotUseAdblockTemplate,
@@ -54,12 +54,12 @@ define([
             {
                 id: 'B',
                 test: function () {
-                    var adblockLink = 'https://membership.theguardian.com/about/supporter';
+                    var adblockLink = 'https://membership.theguardian.com/about/supporter?INTCMP=adb-mb';
 
                     if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse()) {
                         new Message('adblock', {
                             pinOnHide: false,
-                            siteMessageLinkName: 'adblock message',
+                            siteMessageLinkName: 'adblock message B',
                             siteMessageCloseBtn: 'hide'
                         }).show(template(
                             doNotUseAdblockTemplate,

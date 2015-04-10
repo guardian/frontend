@@ -4,6 +4,7 @@
 @import views.html.fragments.form.{inputField, checkbox}
 @import views.html.fragments.socialSignin
 @import views.html.fragments.identityPageHeader
+@import views.SocialSigninRoute.Signin
 
 @main(page, projectName = Option("identity")){
 }{
@@ -25,7 +26,7 @@
                 </div>
             </div>
             <div class="fieldset__fields">
-                @socialSignin("Sign in", page, idRequest, idUrlBuilder)
+                @socialSignin(views.SocialSigninRoutes(Signin), idRequest, idUrlBuilder)
             </div>
         </fieldset>
 

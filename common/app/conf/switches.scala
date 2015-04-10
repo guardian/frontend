@@ -225,6 +225,12 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
+  val ElectionLiveBadgeSwitch = Switch("Feature", "election-2015-badging",
+    "Display Election Live 2015 Badge",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 5, 28)
+  )
+
   val LiveblogAdvertsSwitch = Switch("Commercial", "liveblog-adverts",
     "Show inline adverts on liveblogs",
     safeState = Off, sellByDate = never
@@ -285,10 +291,6 @@ object Switches {
     "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
     safeState = Off, sellByDate = never)
 
-  val LCMortgageFeedSwitch = Switch("Commercial", "lc-mortgages",
-    "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
-    safeState = Off, sellByDate = never)
-
   val GuBookshopFeedsSwitch = Switch("Commercial", "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
@@ -347,12 +349,25 @@ object Switches {
   )
 
   // Features
+  val InternationalEditionSwitch = Switch(
+    "Feature",
+    "international-edition",
+    "International edition A/B test on",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 1)
+  )
+
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
     "Fixtures and results container on football tag pages",
     safeState = On,
     sellByDate = never
+  )
+
+  val ImgixSwitch = Switch("Feature", "imgix",
+    "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
   )
 
   val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
@@ -499,6 +514,11 @@ object Switches {
   val ABMtStickyNav = Switch("A/B Tests", "ab-mt-sticky-nav",
     "Top navigation and top ad slot are sticky.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
+  )
+
+  val ABMtStickyBtm = Switch("A/B Tests", "ab-mt-sticky-btm",
+    "Top ad slot is sticky at the bottom of page.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
   )
 
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",

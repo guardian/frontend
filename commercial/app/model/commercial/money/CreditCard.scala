@@ -40,17 +40,20 @@ case class CreditExample(amount: Double,
                          fee: Double) {
 
   override val toString: String = {
-    val spend = f"£$amount%,.0f"
+    def moneyFormat(d: Double) = f"£$d%,.0f"
     def fixedText(b: Boolean) = if (b) "fixed" else "variable"
     val rateType = fixedText(interestRateFixed)
     val aprType = fixedText(aprFixed)
-    s"If you spend $spend at $interestRateDescription interest rate of $interestRate% p.a. " +
-      s"($rateType) your representative rate will be $apr% APR ($aprType)"
+    val spendText = s"If you spend ${moneyFormat(amount)}"
+    val rateText = s"at $interestRateDescription interest rate of $interestRate% p.a. ($rateType)"
+    val feeText = if (fee > 0) s" with a ${moneyFormat(fee)} annual fee" else ""
+    val aprText = s"your representative rate will be $apr% APR ($aprType)"
+    s"$spendText $rateText$feeText $aprText"
   }
 }
 
 
-trait CreditCardsApi extends MoneySupermarketApi[CreditCard] {
+trait CreditCardsFeed extends MoneySupermarketFeed[CreditCard] {
 
   def parse(xml: Elem): Seq[CreditCard] = {
 
@@ -89,31 +92,31 @@ trait CreditCardsApi extends MoneySupermarketApi[CreditCard] {
 
 package creditCardsApi {
 
-  object BalanceTransfer extends CreditCardsApi {
+  object BalanceTransfer extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Balance Transfer"
     protected lazy val path = "cards/balance-transfer"
   }
-  object Purchase extends CreditCardsApi {
+  object Purchase extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Purchase"
     protected lazy val path = "cards/purchase"
   }
-  object BalanceTransferAndPurchase extends CreditCardsApi {
+  object BalanceTransferAndPurchase extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Balance Transfer and Purchase"
     protected lazy val path = "cards/balance-transfer-and-purchase"
   }
-  object Cashback extends CreditCardsApi {
+  object Cashback extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Cashback"
     protected lazy val path = "cards/cashback"
   }
-  object LowStandardRate extends CreditCardsApi {
+  object LowStandardRate extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Low Standard Rate"
     protected lazy val path = "cards/low-standard-rate"
   }
-  object Rewards extends CreditCardsApi {
+  object Rewards extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Rewards"
     protected lazy val path = "cards/rewards"
   }
-  object LowCredit extends CreditCardsApi {
+  object LowCredit extends CreditCardsFeed {
     protected val adTypeName = "Credit Cards - Low Credit"
     protected lazy val path = "cards/low-credit"
   }
