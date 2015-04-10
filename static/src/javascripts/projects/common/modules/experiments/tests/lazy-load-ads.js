@@ -9,7 +9,7 @@ define([
         this.expiry = '2015-04-26';
         this.author = 'Steve Vadocz';
         this.description = 'Lazy loading ads';
-        this.audience = 0.01;
+        this.audience = 0.02;
         this.audienceOffset = 0.5;
         this.successMeasure = '';
         this.audienceCriteria = '1% of US and UK edition';
@@ -26,6 +26,10 @@ define([
         this.variants = [
             {
                 id: 'A',
+                test: function () { }
+            },
+            {
+                id: 'B',
                 test: function () { }
             }
         ];
