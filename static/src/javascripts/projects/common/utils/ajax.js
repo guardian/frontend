@@ -19,6 +19,11 @@ define([
             params.url = ajaxHost + params.url;
             params.crossOrigin = true;
         }
+
+        if(config.page.section === "money" && config.switches.imgix) {
+            if(!!params.data) { params.data.inImgixTest = true; } else { params.data = { inImgixTest: true }; }
+        }
+
         r = reqwest(params);
         raven.wrap({ deep: true }, r.then);
         return r;
