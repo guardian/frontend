@@ -1,7 +1,5 @@
 package ab_headlines
 
-import java.net.URL
-
 import com.google.gdata.client.spreadsheet.{FeedURLFactory, SpreadsheetService}
 import com.google.gdata.data.spreadsheet.{WorksheetFeed, ListFeed}
 import common.AutoRefresh
@@ -16,6 +14,11 @@ import scala.concurrent.duration._
 
 object ABTestHeadlines extends AutoRefresh[Map[String, Set[String]]](0.seconds, 15.seconds) {
   val SpreadsheetKey = Configuration.facia.spreadsheetKey
+
+  // headlines to AB test given the article id
+  def headlines(id: String): Option[Set[String]] = get flatMap { entries =>
+    entries.get(id)
+  }
 
   override protected def refresh(): Future[Map[String, Set[String]]] = {
     Future {
