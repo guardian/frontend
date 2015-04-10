@@ -133,7 +133,7 @@ define([
             },
             scrollingbg = {
                 scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
-                    '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%;"></div>' : 'boo'
+                    '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%;"></div>' : ''
             },
             $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
 
