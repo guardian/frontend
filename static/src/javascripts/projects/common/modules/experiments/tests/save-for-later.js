@@ -24,26 +24,22 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            var isFront = /Network Front|Section/.test(config.page.contentType),
+            var isNotContent = /Network Front|Section/.test(config.page.contentType),
                 isDesktop = detect.getBreakpoint() === 'desktop' || detect.getBreakpoint() === 'wide';
 
-            var canRun = !isFront && isDesktop;
-            console.log("++ Can I Run this:" + canRun + " Front: " + !isFront + " Desktop: " + isDesktop + "B " + detect.getBreakpoint());
-            return canRun;                                                                          1
+            return !isNotContent && isDesktop;
         };
 
         this.variants = [
             {
                 id: 'variant',
                 test: function () {
-                    console.log("+++ Saved For Later switched on");
-                    mediator.on("module:identity:api:loaded", function() {
-                        console.log("+++ Identity loaded");
+                    mediator.on('module:identity:api:loaded', function() {
                         var saveForLater = new SaveForLater();
                         saveForLater.init();
                     });
                 }
             }
         ];
-    }
+    };
 });

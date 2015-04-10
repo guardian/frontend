@@ -22,68 +22,56 @@ define([
         this.userData = null;
         this.encodedPageUrl = encodeURIComponent(document.location.href);
         this.$saver = bonzo(this.saveLinkHolder);
-        this.savedArticlesUrl = config.page.idUrl + "/saved-articles";
+        this.savedArticlesUrl = config.page.idUrl + '/saved-articles';
     }
 
     SaveForLater.prototype.init = function() {
         if(identity.isUserLoggedIn()) {
-            console.log("logged in: " + this.savedArticlesUrl);
             this.getSavedArticles();
         }  else {
-            console.log(" not logged in");
             var url = config.page.idUrl + '/prefs/save-content?returnUrl='+this.encodedPageUrl+'&shortUrl='+config.page.shortUrl;
             this.$saver.html(
                 '<a href="' + url + ' "data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>'
             );
         }
-        console.log("+++ Done! " + this.saveLinkHolder);
     };
 
     SaveForLater.prototype.getSavedArticles = function() {
-        var notFound  = [{message:"Not found",description:"Resource not found"}];
+        var notFound  = [{message:'Not found',description:'Resource not found'}];
         var self = this;
-        console.log("Get saved");
 
         identity.getUsersSavedDocuments().then(
             function success(resp) {
-                console.log("++ Success");
-
                 if (resp.status === 'error') {
-                    console.log("++ Error");
-
                     if( JSON.stringify(notFound) ===  JSON.stringify(resp.errors)) {
                         self.userData = {articles:[]};
                     }
                 }
                 else {
-                    console.log("++ Empty");
-
                     self.userData = resp.savedArticles;
                 }
+
                 var saved = self.hasŬserSavedArticle(self.userData.articles, config.page.shortUrl);
                 if (saved) {
                     self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
                 } else {
                     self.$saver.html('<a class="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>');
-                    bean.on(self.saveLinkHolder, 'click', '.meta__save-for-later--link', self.saveArticle.bind(self))
+                    bean.on(self.saveLinkHolder, 'click', '.meta__save-for-later--link', self.saveArticle.bind(self));
                 }
-            },
-
-            function fail() {
-                console.log("++ API GFIL");
             }
         );
     };
 
     SaveForLater.prototype.hasŬserSavedArticle = function(articles, shortUrl) {
         return _.some(articles, function(article) {
-            return article.shortUrl == shortUrl
-        })
+            return article.shortUrl === shortUrl;
+        });
     };
 
     SaveForLater.prototype.saveArticle = function() {
         var self = this;
-        var date = new Date().toISOString().replace(/\.[0-9]+Z/,"+00:00");
+        //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
+        var date = new Date().toISOString().replace(/\.[0-9]+Z/,'+00:00');
         var newArticle = {id: document.location.href, shortUrl: config.page.shortUrl, date: date, read: false  };
         this.userData.articles.push(newArticle);
         var data = {version: date, articles: this.userData.articles };

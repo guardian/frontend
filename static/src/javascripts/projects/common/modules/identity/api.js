@@ -33,8 +33,7 @@ define([
     Id.init = function () {
         Id.idApiRoot = config.page.idApiUrl;
         Id.idUrl = config.page.idUrl;
-        console.log("++ Id Loaded");
-        mediator.emit("module:identity:api:loaded")
+        mediator.emit('module:identity:api:loaded');
     };
 
     /**
@@ -64,7 +63,7 @@ define([
     Id.getUserFromCookie = function () {
         if (userFromCookieCache === null) {
             var cookieData = cookies.get(Id.cookieName),
-                userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
+            userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
             if (userData) {
                 userFromCookieCache = {
                     id: userData[0],
@@ -237,7 +236,7 @@ define([
                 crossOrigin: true
             });
 
-        return request
+        return request;
     };
 
     Id.saveToArticles = function(data) {
@@ -252,12 +251,10 @@ define([
                 }
             });
 
-        return request
-
+        return request;
     };
 
 
 
     return Id;
 });
-/*global escape:true */
