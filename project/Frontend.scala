@@ -22,6 +22,7 @@ object Frontend extends Build with Prototypes {
       filters,
       flexibleContentBlockToText,
       flexibleContentBodyParser,
+      googleSheetsApi,
       guardianConfiguration,
       jacksonCore,
       jacksonMapper,
@@ -60,10 +61,7 @@ object Frontend extends Build with Prototypes {
   val sanityTest = application("sanity-tests")
 
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies ++= Seq(
-      scalaCheck,
-      googleSheetsApi
-    )
+    libraryDependencies += scalaCheck
   )
 
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
