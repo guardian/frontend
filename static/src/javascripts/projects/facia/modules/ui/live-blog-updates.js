@@ -25,9 +25,9 @@ define([
         numDisplayedBlocks = 4,
         blockHeightPx = 44,
 
-        refreshSecs = 30,
+        refreshSecs = 60,
         refreshDecay = 2,
-        refreshMaxTimes = 0,
+        refreshMaxTimes = 3,
 
         selector = '.js-liveblog-blocks',
         blocksClassname = 'fc-item__liveblog-blocks',
