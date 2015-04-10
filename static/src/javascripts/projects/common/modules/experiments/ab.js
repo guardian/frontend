@@ -314,6 +314,8 @@ define([
         },
 
         getParticipations: getParticipations,
+        isParticipating: isParticipating,
+        getTest: getTest,
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
