@@ -289,7 +289,7 @@ object Front extends implicits.Collections {
     containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
 
   // Never de-duplicate snaps.
-  def participatesInDeduplication(faciaContent: FaciaContent) = !faciaContent.snapType.isDefined
+  def participatesInDeduplication(faciaContent: FaciaContent) = !faciaContent.embedType.isDefined
 
   /** Given a set of already seen trail URLs, a container type, and a set of trails, returns a new set of seen urls
     * for further de-duplication and the sequence of trails in the order that they ought to be shown for that
