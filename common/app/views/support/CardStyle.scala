@@ -12,7 +12,7 @@ object CardStyle {
   } yield snapType == "link" && ExternalLinks.external(href)) getOrElse false
 
   def isExternalLink(faciaContent: FaciaContent): Boolean = (for {
-    snapType <- faciaContent.snapType
+    snapType <- faciaContent.embedType
     href <- Option(faciaContent.href)
   } yield snapType == "link" && ExternalLinks.external(href)) getOrElse false
 

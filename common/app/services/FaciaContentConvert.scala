@@ -27,7 +27,10 @@ object FaciaContentConvert {
       kicker = ItemKicker.fromContentAndTrail(contentApiContent, trailMetaData, resolvedMetaData, maybeCollectionConfig),
       imageCutout = ImageCutout.fromContentAndTrailMeta(contentApiContent, trailMetaData),
       showBoostedHeadline = resolvedMetaData.showBoostedHeadline,
-      showQuotedHeadline = resolvedMetaData.showQuotedHeadline)
+      showQuotedHeadline = resolvedMetaData.showQuotedHeadline,
+      embedType = frontendContent.snapType,
+      embedUri = frontendContent.snapUri,
+      embedCss = frontendContent.snapCss)
   }
 
   def frontentContentToFaciaContent(frontendContent: model.Content): FaciaContent = frontentContentToFaciaContent(frontendContent, None)
