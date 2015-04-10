@@ -8,12 +8,16 @@
 
             <h1 class="content__headline js-score" itemprop="headline">@Html(content.headline)</h1>
 
-            @if(!content.delegate.isVideo && !content.delegate.isGallery) {
+            @if(!content.delegate.isVideo && !content.delegate.isGallery && !content.isInteractive) {
                 @fragments.standfirst(content)
             }
 
             @if(showBadge) {
                 @fragments.commercial.badge(content)
+            }
+
+            @if(content.isInteractive && !content.shouldHidePublicationDate) {
+                @fragments.meta.dateline(content.webPublicationDate, content.lastModified, content.hasBeenModified, secondary = true)
             }
 
         </div>
