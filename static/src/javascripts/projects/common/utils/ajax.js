@@ -20,8 +20,12 @@ define([
             params.crossOrigin = true;
         }
 
-        if(config.page.section === "money" && config.switches.imgix) {
-            if(!!params.data) { params.data.inImgixTest = true; } else { params.data = { inImgixTest: true }; }
+        if (config.page.section === 'money' && config.switches.imgix) {
+            if (!!params.data) {
+                params.data.inImgixTest = true;
+            } else {
+                params.data = { inImgixTest: true };
+            }
         }
 
         r = reqwest(params);
