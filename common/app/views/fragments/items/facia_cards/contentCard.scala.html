@@ -1,5 +1,6 @@
 @(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
 
+@import ab_headlines.ABTestHeadlines.headlinesJsonString
 @import model.InlineImage
 @import model.{InlineVideo, VideoPlayer, CrosswordSvg}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
@@ -22,6 +23,11 @@
             data-discussion-hide-label="true"
         }
     }
+
+    @for(id <- item.id; headlines <- headlinesJsonString(id)) {
+        data-headline-variants="@headlines"
+    }
+
 data-link-name="@item.cardStyle.toneString | @{index + 1}"
     @item.id.map { id =>
     data-id="@id"
