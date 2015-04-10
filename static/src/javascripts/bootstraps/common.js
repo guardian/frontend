@@ -446,7 +446,8 @@ define([
                     stickyTest.fireStickyBottom();
                 }
             }
-        }
+
+        },
 
         ready = function () {
             robust('c-fonts',           modules.loadFonts);

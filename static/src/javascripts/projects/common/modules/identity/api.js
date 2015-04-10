@@ -1,3 +1,4 @@
+/*global escape:true */
 define([
     'common/utils/ajax',
     'common/utils/atob',
@@ -227,7 +228,7 @@ define([
         return request;
     };
 
-    Id.getUsersSavedDocuments = function() {
+    Id.getUsersSavedDocuments = function () {
 
         var endpoint = '/syncedPrefs/me/savedArticles',
             request = ajax({
@@ -239,7 +240,7 @@ define([
         return request;
     };
 
-    Id.saveToArticles = function(data) {
+    Id.saveToArticles = function (data) {
         var endpoint = '/syncedPrefs/me/savedArticles',
             request = ajax({
                 url: Id.idApiRoot + endpoint,
@@ -253,8 +254,6 @@ define([
 
         return request;
     };
-
-
 
     return Id;
 });

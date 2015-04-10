@@ -3,14 +3,14 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/loyalty/save-for-later'
-], function(
+], function (
     detect,
     config,
     mediator,
     SaveForLater
 ) {
 
-    return function() {
+    return function () {
         this.id = 'SaveForLater';
         this.start = '2015-04-09';
         this.expiry = '2015-07-09';
@@ -34,7 +34,7 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    mediator.on('module:identity:api:loaded', function() {
+                    mediator.on('module:identity:api:loaded', function () {
                         var saveForLater = new SaveForLater();
                         saveForLater.init();
                     });

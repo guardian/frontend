@@ -1,4 +1,4 @@
-0define([
+define([
     'raven',
     'common/utils/_',
     'common/utils/config',
@@ -38,23 +38,23 @@
     SaveForLater
 ) {
 
+    var ab,
+        TESTS = [
+            new HighCommercialComponent(),
+            new IdentitySocialOAuth(),
+            new MtMaster(),
+            new MtTopBelowNav(),
+            new HeatMap(),
+            new MtTopBelowFirstContainer(),
+            new MtStickyNav(),
+            new AcrossTheCountry(),
+            new AdblockMessage(),
+            new MtStickyBottom(),
+            new SaveForLater()
+        ],
+        participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
-        var ab,
-            TESTS = [
-                new HighCommercialComponent(),
-                new IdentitySocialOAuth(),
-                new MtMaster(),
-                new MtTopBelowNav(),
-                new HeatMap(),
-                new MtTopBelowFirstContainer(),
-                new MtStickyNav(),
-                new AcrossTheCountry(),
-                new AdblockMessage(),
-                new MtStickyBottom(),
-                new SaveForLater()
-            ],
-            participationsKey = 'gu.ab.participations';
         return store.local.get(participationsKey) || {};
     }
 
