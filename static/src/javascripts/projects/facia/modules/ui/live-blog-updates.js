@@ -30,9 +30,9 @@ define([
         refreshMaxTimes = 3,
 
         selector = '.js-liveblog-blocks',
-        blocksClassname = 'fc-item__liveblog-blocks',
-        newBlockClassname = 'fc-item__liveblog-block--new',
-        oldBlockClassname = 'fc-item__liveblog-block--old',
+        blocksClassName = 'fc-item__liveblog-blocks',
+        newBlockClassName = 'fc-item__liveblog-block--new',
+        oldBlockClassName = 'fc-item__liveblog-block--old',
         articleIdAttribute = 'data-article-id',
         storageKey = 'gu.liveblog.block-dates',
 
@@ -40,7 +40,7 @@ define([
 
     function renderBlock(articleId, block, index) {
         return template(blockTemplate, {
-            classes: block.isNew ? newBlockClassname : oldBlockClassname,
+            classes: block.isNew ? newBlockClassName : oldBlockClassName,
             href: '/' + articleId + '#' + block.id,
             relativeTime: relativeDates.makeRelativeDate(new Date(block.publishedDateTime || null)),
             text: _.compact([block.title, block.body.slice(0, 200)]).join('. '),
@@ -76,7 +76,7 @@ define([
                         blocksHtml: blocksHtml
                     }));
 
-                bonzo(element).empty().addClass(blocksClassname).append(el);
+                bonzo(element).empty().addClass(blocksClassName).append(el);
 
                 if (numNewBlocks) {
                     setTimeout(function () {
@@ -126,22 +126,20 @@ define([
         }
     }
 
-    function start() {
-        fastdom.read(function () {
-            $(selector).each(function (element) {
-                if (element.hasAttribute(articleIdAttribute)) {
-                    var articleId = element.getAttribute(articleIdAttribute);
+    function inject() {
+        $(selector).each(function (element) {
+            if (element.hasAttribute(articleIdAttribute)) {
+                var articleId = element.getAttribute(articleIdAttribute);
 
-                    elementsById[articleId] = elementsById[articleId] || [];
-                    elementsById[articleId].push(element);
-                }
-            });
-
-            if (!_.isEmpty(elementsById)) {
-                updateBlocks();
+                elementsById[articleId] = elementsById[articleId] || [];
+                elementsById[articleId].push(element);
             }
         });
+
+        if (!_.isEmpty(elementsById)) {
+            updateBlocks();
+        }
     }
 
-    return start;
+    return inject;
 });
