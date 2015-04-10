@@ -179,7 +179,7 @@ define([
             var test = ab.getParticipations().LzAds;
 
             return ab.testCanBeRun('LzAds') && test && test.variant === 'A';
-        };
+        },
 
         /**
          * Public functions
@@ -206,7 +206,7 @@ define([
             window.googletag.cmd.push(defineSlots);
             (dfpAbParam()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
-            window.googletag.cmd.push(postDisplay);            
+            window.googletag.cmd.push(postDisplay);
 
             return dfp;
         },
@@ -218,12 +218,12 @@ define([
                     var scrollTop    = bonzo(document.body).scrollTop(),
                         scrollBottom = scrollTop + bonzo.viewport().height;
 
-                    _(slots).keys().forEach(function(slot) {
+                    _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
                         if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height / 2) {
                             googletag.display(slot);
                             googletag.pubads().refresh([slots[slot].slot]);
-                            console.log('Trigger call for ', slot);
+
                             slots = _(slots).omit(slot).value();
                             displayed = true;
                         }
