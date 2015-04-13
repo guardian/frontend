@@ -299,12 +299,16 @@ object Switches {
     "If this switch is on, book data will be looked up using a third-party service.",
     safeState = Off, sellByDate = never)
 
-  val AppleAdNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-network-front",
-    "If this switch is on, Apple ads will appear on the network front during active periods.",
+  val AppleAdUkNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-uk-network-front",
+    "If this switch is on, Apple ads will appear below nav on the UK network front.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
 
-  val AppleAdCultureFrontSwitch = Switch("Commercial", "apple-ads-on-culture-front",
-    "If this switch is on, Apple ads will appear on the culture front during active periods.",
+  val AppleAdAuNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-au-network-front",
+    "If this switch is on, Apple ads will appear below nav on the AU network front.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+
+  val AppleAdTechFrontSwitch = Switch("Commercial", "apple-ads-on-tech-front",
+    "If this switch is on, Apple ads will appear below nav on the tech section front.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
 
   val AdImpressionCountingSwitch = Switch("Commercial", "ad-impression-counting",
