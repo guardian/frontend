@@ -9,7 +9,7 @@ define([
         this.expiry = '2015-05-12';
         this.author = 'Zofia Korcz';
         this.description = 'Sticky mpu everywhere where possible instead of the standard RH mpu';
-        this.audience = 0.01;
+        this.audience = 0.02;
         this.audienceOffset = 0;
         this.successMeasure = '';
         this.audienceCriteria = '1% of US and UK edition';
@@ -26,6 +26,10 @@ define([
         this.variants = [
             {
                 id: 'variant',
+                test: function () { }
+            },
+            {
+                id: 'control',
                 test: function () { }
             }
         ];

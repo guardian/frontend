@@ -305,6 +305,7 @@ GET         /*path/lite.json                                                    
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 
 # Applications
+GET         /$path<international>                                                                                    controllers.FaciaController.renderFront(path)
 GET         /preferences                                                                                             controllers.PreferencesController.userPrefs()
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                     controllers.IndexController.renderTrailsJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                          controllers.IndexController.renderTrails(path)
@@ -333,5 +334,5 @@ GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json   
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                                             controllers.InteractiveController.renderInteractive(path)
 
 # Articles
-GET         /*path.json                                                                                              controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
-GET         /*path                                                                                                   controllers.ArticleController.renderArticle(path)
+GET         /*path.json                                                                                              controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
+GET         /*path                                                                                                   controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
