@@ -158,7 +158,7 @@ define([
             displayed = true;
         },
         displayLazyAds = function () {
-            googletag.pubads().enableSingleRequest();
+            googletag.pubads().disableSingleRequest();
             googletag.pubads().disableInitialLoad();
             googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
@@ -222,7 +222,6 @@ define([
                         // if the position of the ad is above the viewport - offset (half screen size)
                         if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height / 2) {
                             googletag.display(slot);
-                            googletag.pubads().refresh([slots[slot].slot]);
 
                             slots = _(slots).omit(slot).value();
                             displayed = true;
