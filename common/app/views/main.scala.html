@@ -9,14 +9,14 @@
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
-@defining((
+@defining(
     metaData match {
         case c: model.Content if c.shouldHideAdverts => { false }
         case p: model.Page if p.section == "identity" => { false }
         case _ => { true }
     },
     Edition(request)
-)) { case (showAdverts, edition) =>
+) { case (showAdverts, edition) =>
     @defining(
         showAdverts &&
             ((AppleAdUkNetworkFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk") ||
