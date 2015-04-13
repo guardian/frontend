@@ -184,11 +184,15 @@ $c-story-package-neutral: #484f53;
     @include kicker-override(external, colour(maps-support-1));
     @include kicker-override(feature, colour(feature-mute));
     @include kicker-override(letters, colour(comment-accent));
-    @include kicker-override(live, colour(live-support-1);
+    @include kicker-override(live, colour(live-support-1));
     @include kicker-override(media, colour(media-default));
     @include kicker-override(news, colour(news-support-2));
     @include kicker-override(podcast, colour(media-default));
     @include kicker-override(review, colour(review-accent));
+
+    .live-pulse-icon:before {
+        background-color: colour(live-support-1);
+    }
 
     .fc-slice__item+.fc-slice__item:before {
         border-left-color: lighten(colour(news-support-6), 30%);
@@ -223,34 +227,68 @@ $c-story-package-neutral: #484f53;
         .fc-item--standard-tablet {
             .fc-item__media-wrapper,
             .fc-item__standfirst {
-                display: block !important;
+                display: block;
             }
         }
     }
 
     .fc-slice--qqqtall-q2 {
-        // This targets the first item in the right-hand column only
-        .l-row__item--span-1:first-of-type {
-            .fc-item__media-wrapper {
-                display: block !important;
+        .l-row__item--span-1 .l-list {
+            .fc-slice__item:first-of-type {
+                .fc-item__media-wrapper,
+                .fc-item__standfirst {
+                    display: block;
+                }
+
+                [class*="fc-item--has-sublinks"] {
+                    .fc-item__standfirst {
+                        display: none;
+                    }
+                }
+            }
+
+            // This targets the first item in the right-hand column only
+            .fc-slice__item:nth-of-type(n+2) {
+                .fc-item__media-wrapper,
+                .fc-item__avatar {
+                    display: none;
+                }
+
+                .fc-item--has-cutout .fc-item__container {
+                    padding-bottom: 0;
+                }
+
+                .fc-sublink:nth-of-type(n+2) {
+                    display: none;
+                }
             }
         }
     }
 
-    .fc-slice--qqqtall-q3,
     .fc-slice--qqqtall-q2-ql2 {
+        .fc-item--three-quarters-tall-tablet {
+            .fc-item__image-container {
+                padding-bottom: 60%;
+            }
+
+            .responsive-img {
+                top: 0;
+                height: 100%;
+            }
+        }
+
         .fc-item--standard-tablet {
             &.fc-item--has-sublinks-1 {
                 .fc-item__media-wrapper {
                     display: none;
                 }
             }
-        }
 
-        // Hide images on all except the first item in right-hand column
-        .l-list__item.l-row__item--span-1:nth-of-type(n+2) {
-            .fc-item__media-wrapper {
-                display: none !important;
+            // Only allows one sublink on each item in the right col
+            &[class*="fc-item--has-sublinks"] {
+                .fc-sublink:nth-of-type(n+2) {
+                    display: none;
+                }
             }
         }
     }
