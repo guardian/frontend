@@ -48,7 +48,7 @@ define([
     };
 
     GeoMostPopularFront.prototype.ready = function () {
-        if (this.isNetworkFront && !this.isInternational) {
+        if (this.isNetworkFront) {
             $('.js-tabs-content', this.parent).addClass('tabs__content--no-border');
             $('.js-tabs', this.parent).addClass('u-h');
         }
