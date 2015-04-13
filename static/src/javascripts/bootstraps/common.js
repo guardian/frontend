@@ -111,9 +111,7 @@ define([
     breakingNews,
     identity
 ) {
-
     var modules = {
-
             loadFonts: function () {
                 fonts.load();
             },
