@@ -447,8 +447,8 @@ define([
             },
 
             internationalSignposting: function () {
-                if ('internationalEdition' in config) {
-                    if (config.internationalEdition === 'international') {
+                if ('internationalEdition' in config.page) {
+                    if (config.page.internationalEdition === 'international') {
                         console.log("Hello international edition");
                     } else {
                         console.log("Hello international control");
