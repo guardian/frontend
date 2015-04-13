@@ -95,7 +95,7 @@ data-test-id="facia-card"
         }
 
     <div class="fc-item__content">
-        @if(item.snapStuff.map(_.snapType) == FrontendLatestSnap) {
+        @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap"))
         }
         <div class="@RenderClasses(Map(
