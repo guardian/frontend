@@ -74,5 +74,5 @@ class SaveContentControllerTest extends path.FreeSpec with ShouldMatchers with M
           verify(syncedPrefs).addArticle(Matchers.eq(returnUrl), Matchers.eq(shortUrl))
           verify(api).saveArticle(Matchers.eq(userId), Matchers.eq(testAuth), Matchers.eq(savedArticles))
       }
-0   }
+   }
 }
