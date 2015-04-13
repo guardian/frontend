@@ -94,7 +94,7 @@ object FaciaContentImplicits {
         curatedContent => curatedContent.headline,
         supportingCuratedContent => supportingCuratedContent.headline,
         linkSnap => linkSnap.headline.getOrElse("Missing Headline"),
-        latestSnap => latestSnap.headline.orElse(latestSnap.latestContent.map(_.webTitle)).getOrElse("Missing Headline"))
+        latestSnap => latestSnap.headline.orElse(latestSnap.latestContent.map(_.fields.get("headline"))).getOrElse("Missing Headline"))
 
     def standfirst: Option[String] = fieldsGet(_.get("standfirst"))
     def body: Option[String] = fieldsGet(_.get("body"))
