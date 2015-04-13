@@ -7,7 +7,7 @@ import org.joda.time.format.ISODateTimeFormat
 /**
  * Created by nbennett on 27/03/15.
  */
-class FrontendSavedArtcles(version: String, articles: List[SavedArticle]) extends SavedArticles(version, articles) {
+class FrontendSavedArticles(version: String, articles: List[SavedArticle]) extends SavedArticles(version, articles) {
 
   val fmt = ISODateTimeFormat.dateTimeNoMillis()
 

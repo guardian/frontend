@@ -13,7 +13,6 @@ trait JsonBodyParser extends Logging {
 
   def extract[T](extractJsonObj: JValue => JValue = {json => json})(httpResponseResponse: Response[HttpResponse])(implicit successType: Manifest[T]): Response[T] = {
     httpResponseResponse.right.flatMap { httpResponse =>
-      println("++ Body" + httpResponse.body)
       try {
         httpResponse match {
           case HttpResponse(body, status, message) if status == 502 =>
