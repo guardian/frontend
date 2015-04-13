@@ -32,7 +32,7 @@ module.exports = function(grunt, options) {
                 dest: dir
             }],
             options: {
-                browsers: ['ie 9']
+                browsers: ['Explorer 9']
             }
         }
     }
