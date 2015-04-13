@@ -444,8 +444,11 @@ define([
                     && ab.testCanBeRun('MtStickyBtm')) {
                     stickyTest.fireStickyBottom();
                 }
-            }
+            },
 
+            internationalSignposting: function () {
+                console.log("LOOOL");
+            }
         },
 
         ready = function () {
@@ -490,6 +493,7 @@ define([
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
             robust('c-sticky-btm-ab',   modules.stickyBtmAb);
+            robust('c-international-signposting', modules.internationalSignposting);
         };
 
     return {
