@@ -52,8 +52,7 @@ define([
             new MtStickyNav(),
             new AcrossTheCountry(),
             new AdblockMessage(),
-            new MtStickyBottom(),
-            new LzAds()
+            new MtStickyBottom()
         ],
         participationsKey = 'gu.ab.participations';
 
