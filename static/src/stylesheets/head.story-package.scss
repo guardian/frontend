@@ -1,8 +1,6 @@
 @import '_vars';
 @import '_mixins';
 
-$c-story-package-neutral: #484f53;
-
 @mixin kicker-override($tone, $colour) {
     .tone-#{$tone}--item {
         .fc-item__kicker,
@@ -24,81 +22,28 @@ $c-story-package-neutral: #484f53;
     margin-bottom: $gs-baseline;
     border-top: 1px solid #ffffff;
 
+    // Container Chrome
     .fc-container__header__title {
-        border-top-color: $c-story-package-neutral;
+        border-top-color: colour(story-package);
         color: colour(news-support-2);
 
         & a:hover {
-            color: $c-story-package-neutral;
+            color: colour(story-package);
         }
     }
 
     .fc-container__header__description {
-        color: $c-story-package-neutral;
+        color: colour(story-package);
     }
 
-    .fc-item {
-        // This shouldn't need to be important but too specific selectors on some tones force it to be
-        background-color: $c-story-package-neutral !important;
+    .treats__treat {
+        border-color: colour(news-support-2);
+        background-color: transparent;
+        color: colour(story-package);
 
-        .fc-item__header,
-        .fc-sublink__title {
-            color: #ffffff;
+        &:hover {
+            background-color: inherit;
         }
-
-        .fc-sublink__title:before {
-            border-color: mix($c-story-package-neutral, #ffffff, 80%);
-        }
-
-        .fc-item__standfirst {
-            color: colour(neutral-4);
-        }
-
-        .fc-item__kicker,
-        .fc-sublink__kicker {
-            &:after {
-                color: mix($c-story-package-neutral, #ffffff, 80%);
-            }
-        }
-
-        .fc-item__link,
-        .rich-link__link,
-        .fc-sublink__link {
-            &:visited {
-                color: mix(#ffffff, $c-story-package-neutral, 80%);
-            }
-        }
-
-        .fc-item__title--quoted .inline-quote {
-            fill: colour(neutral-4);
-        }
-
-        .u-faux-block-link--hover {
-            color: inherit;
-            background-color: mix($c-story-package-neutral, colour(neutral-1), 50%);
-        }
-    }
-
-    // These need to exist for all kickers because of tone on tone action
-    @include kicker-override(analysis, colour(analysis-accent));
-    @include kicker-override(comment, colour(comment-accent));
-    @include kicker-override(dead, colour(live-support-1));
-    @include kicker-override(editorial, colour(news-support-1));
-    @include kicker-override(external, colour(maps-support-1));
-    @include kicker-override(feature, colour(feature-mute));
-    @include kicker-override(letters, colour(comment-accent));
-    @include kicker-override(live, colour(live-support-1));
-    @include kicker-override(media, colour(media-default));
-    @include kicker-override(news, colour(news-support-2));
-    @include kicker-override(podcast, colour(media-default));
-    @include kicker-override(review, colour(review-accent));
-
-    .live-pulse-icon:before {
-        background-color: colour(live-support-1);
-    }
-
-    .fc-slice__item+.fc-slice__item:before {
-        border-left-color: lighten(colour(news-support-6), 30%);
     }
 
     .button--primary {
@@ -116,16 +61,72 @@ $c-story-package-neutral: #484f53;
         }
     }
 
-    .treats__treat {
-        border-color: colour(news-support-2);
-        background-color: transparent;
-        color: $c-story-package-neutral;
+    .fc-slice__item+.fc-slice__item:before {
+        border-left-color: lighten(colour(news-support-6), 30%);
+    }
 
-        &:hover {
-            background-color: inherit;
+    // Item Level
+    .fc-item {
+        // This shouldn't need to be important but too specific selectors on some tones force it to be
+        background-color: colour(story-package) !important;
+
+        .u-faux-block-link--hover {
+            color: inherit;
+            background-color: mix(colour(story-package), colour(neutral-1), 50%);
         }
     }
 
+    .fc-item__header,
+    .fc-sublink__title {
+        color: #ffffff;
+    }
+
+    .fc-sublink__title:before {
+        border-color: mix(colour(story-package), #ffffff, 80%);
+    }
+
+    .fc-item__standfirst {
+        color: colour(neutral-4);
+    }
+
+    .fc-item__kicker,
+    .fc-sublink__kicker {
+        &:after {
+            color: mix(colour(story-package), #ffffff, 80%);
+        }
+    }
+
+    .fc-item__link,
+    .rich-link__link,
+    .fc-sublink__link {
+        &:visited {
+            color: mix(#ffffff, colour(story-package), 80%);
+        }
+    }
+
+    .fc-item__title--quoted .inline-quote {
+        fill: colour(neutral-4);
+    }
+
+    .live-pulse-icon:before {
+        background-color: colour(live-support-1);
+    }
+
+    // These need to exist for all kickers because of tone on tone action
+    @include kicker-override(analysis, colour(analysis-accent));
+    @include kicker-override(comment, colour(comment-accent));
+    @include kicker-override(dead, colour(live-support-1));
+    @include kicker-override(editorial, colour(news-support-1));
+    @include kicker-override(external, colour(maps-support-1));
+    @include kicker-override(feature, colour(feature-mute));
+    @include kicker-override(letters, colour(comment-accent));
+    @include kicker-override(live, colour(live-support-1));
+    @include kicker-override(media, colour(media-default));
+    @include kicker-override(news, colour(news-support-2));
+    @include kicker-override(podcast, colour(media-default));
+    @include kicker-override(review, colour(review-accent));
+
+    // Slice Level
     .fc-slice--qqqtall-q {
         .fc-item--standard-tablet {
             .fc-item__media-wrapper,
