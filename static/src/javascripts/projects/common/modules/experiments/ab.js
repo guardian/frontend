@@ -16,8 +16,7 @@ define([
     'common/modules/experiments/tests/mt-sticky-nav',
     'common/modules/experiments/tests/across-the-country',
     'common/modules/experiments/tests/adblock-message',
-    'common/modules/experiments/tests/mt-sticky-bottom',
-    'common/modules/experiments/tests/lazy-load-ads'
+    'common/modules/experiments/tests/mt-sticky-bottom'
 ], function (
     raven,
     _,
@@ -36,8 +35,7 @@ define([
     MtStickyNav,
     AcrossTheCountry,
     AdblockMessage,
-    MtStickyBottom,
-    LzAds
+    MtStickyBottom
 ) {
 
     var ab,

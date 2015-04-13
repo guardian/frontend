@@ -176,7 +176,7 @@ define([
         },
 
         dfpSwitchParam = function () {
-            return config.switches.LzAds && config.page.edition === 'US' && config.page.section === 'politics';
+            return config.switches.lzAds && config.page.edition === 'US' && config.page.section === 'politics';
         },
 
         /**
