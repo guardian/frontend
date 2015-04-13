@@ -23,9 +23,9 @@ define([
 ) {
     var forgetAfterHours = 24,
         numDisplayedBlocks = 4,
-        blockHeightPx = 44,
+        blockHeightPx = 42,
 
-        animateDelaySecs = 3,
+        animateDelaySecs = 2,
         refreshSecs = 60,
         refreshDecay = 2,
         refreshMaxTimes = 0,

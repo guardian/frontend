@@ -99,9 +99,10 @@
     display: block;
     position: relative;
     @include fs-headline(1);
+    line-height: 16px;
     color: #ffffff;
     height: $gs-baseline * 3 + 2;
-    padding: 2px 5px 2px 5px;
+    padding: 4px 5px 0px 5px;
 }
 
 .fc-item__liveblog-block:before {
@@ -122,6 +123,10 @@
 .fc-item__liveblog-block--new .fc-item__liveblog-block__time:before {
     content: 'Updated';
     margin-right: $gs-gutter / 5;
+}
+
+.fc-item__liveblog-block--old .fc-item__liveblog-block__time {
+    color: mix(#ffffff, colour(live-default), 50%);
 }
 
 .fc-item__liveblog-block__text {
