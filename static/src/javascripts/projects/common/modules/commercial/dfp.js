@@ -158,8 +158,6 @@ define([
             displayed = true;
         },
         displayLazyAds = function () {
-            googletag.pubads().disableSingleRequest();
-            googletag.pubads().disableInitialLoad();
             googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
             mediator.on('window:scroll', _.throttle(lazyLoad, 10));
