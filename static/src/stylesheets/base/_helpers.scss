@@ -151,6 +151,10 @@
     hyphens: auto;
 }
 
+.u-test-ellipsis {
+    @include ellipsis();
+}
+
 
 /**
  * Reset button styles
