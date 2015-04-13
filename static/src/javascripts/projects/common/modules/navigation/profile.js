@@ -101,7 +101,7 @@ define([
         mediator.emit(Profile.CONFIG.eventName + ':loaded', user);
     };
 
-    /*
+    /**
      * @param {Object} resp response from the server
      */
     Profile.prototype.emitErrorEvent = function () {
