@@ -90,7 +90,10 @@
 }
 
 .fc-item__liveblog-blocks__inner {
-    @include transition(transform .5s ease-in-out);
+    -webkit-transition: -webkit-transform .5s ease-in-out;
+    -moz-transition: -moz-transform .5s ease-in-out;
+    -o-transition: -o-transform .5s ease-in-out;
+    transition: transform .5s ease-in-out;
 }
 
 .fc-item__liveblog-block {
