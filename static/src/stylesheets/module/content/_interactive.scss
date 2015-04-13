@@ -1,6 +1,10 @@
 .content--interactive {
     padding: 0;
 
+    .content__headline {
+        padding-bottom: $gs-baseline/2;
+    }
+
     // Ensure margins don't overlay interactives
     .content__main {
         padding: 0;
@@ -8,44 +12,26 @@
         z-index: 2;
     }
 
-    .content__main-column {
+    .content__main-column--interactive {
         @include mq(desktop) {
             max-width: none;
             margin: 0;
         }
     }
-    .content__labels {
-        width: 100%;
-        margin-left: 0;
-        margin-bottom: $gs-baseline/2;
-        border-bottom: 1px dotted colour(neutral-5);
+
+    .meta__numbers {
+        position: relative;
+        border-top: 1px dotted colour(neutral-5);
+
+        @include mq(leftCol) {
+            border-bottom: 0;
+        }
     }
+
     .content__section-label,
     .content__series-label {
         @include mq(desktop) {
             float: left;
-        }
-    }
-    .content__headline,
-    .content__standfirst {
-        @include box-sizing(border-box);
-
-        @include mq(desktop) {
-            float: left;
-            width: 50%;
-            padding-top: $gs-baseline / 6;
-            padding-bottom: 0;
-            margin-bottom: $gs-baseline * 2;
-        }
-    }
-    .content__headline {
-        @include mq(desktop) {
-            padding-right: $gs-gutter / 2;
-        }
-    }
-    .content__standfirst {
-        @include mq(desktop) {
-            padding-left: $gs-gutter / 2;
         }
     }
     &.content--sponsored,
@@ -56,37 +42,30 @@
                 width: gs-span(5) + ($gs-gutter / 2);
             }
             @include mq(leftCol) {
-                width: gs-span(6) + ($gs-gutter / 2);
+                width: gs-span(6);
             }
             @include mq(wide) {
                 width: gs-span(6) + ($gs-gutter / 2);
-            }
-        }
-        .content__standfirst {
-            @include mq(tablet) {
-                float: left;
-                padding-right: $gs-gutter / 2;
-                width: gs-span(7);
-            }
-            @include mq(desktop) {
-                width: gs-span(5) + ($gs-gutter / 2);
-            }
-            @include mq(leftCol) {
-                width: gs-span(6) + ($gs-gutter / 2);
-            }
-            @include mq(wide) {
-                width: gs-span(8) + ($gs-gutter / 2);
             }
         }
     }
     .content__meta-container {
         margin-left: 0;
         width: 100%;
+        border-top: 0;
         border-bottom: 0;
+
+        .meta__number {
+            border-left: 1px solid colour(neutral-5);
+            padding-left: $gs-gutter / 2;
+        }
+
+        .meta__social {
+            float: left;
+        }
 
         @include mq(leftCol) {
             position: relative;
-            border-top: 1px dotted colour(neutral-5);
         }
         .commentcount {
             top: $gs-baseline / 3;
@@ -104,23 +83,6 @@
             .meta__social {
                 margin-right: ($gs-gutter / 2) + 2px;
             }
-
-            .meta__extras {
-                position: absolute;
-                top: 0;
-                right: 0;
-            }
-
-            .meta__social,
-            .meta__numbers {
-                float: left;
-                position: static;
-                border: 0;
-            }
-            .meta__number {
-                border-left: 1px solid colour(neutral-5);
-                padding-left: $gs-gutter / 2;
-            }
         }
     }
     .content__meta-container--twitter,
@@ -128,6 +90,9 @@
         padding-top: $gs-baseline/2;
     }
     .byline {
+        display: none;
+    }
+    .content__meta-footer .byline {
         @include mq(desktop) {
             width: gs-span(7);
         }
@@ -142,18 +107,22 @@
     }
     .meta__email,
     .meta__twitter {
-        display: inline !important;
+        display: none;
     }
     .content__dateline {
-        margin: 0;
-        border-top: 0;
-        padding-bottom: $gs-baseline;
+        display: none;
+    }
+    .content__head .content__dateline {
+        display: block;
+        margin-bottom: ($gs-baseline/3) * 2;
 
         @include mq(leftCol) {
-            height: $gs-row-height + ($gs-baseline * 2/3);
-            padding-top: $gs-baseline / 3;
+            min-height: 0;
+            border-top: 0;
+            margin-bottom: 0;
         }
     }
+
     // Ensure margins don't overlay full-page take over interactives
     .element-interactive {
         background-color: #ffffff;
@@ -162,5 +131,18 @@
     //TODO: Temporary hack for live-streams until we discuss a better solution with composer
     [data-alt="Live stream"] {
         @extend %u-responsive-ratio;
+    }
+
+    .content__meta-footer {
+        .meta__email,
+        .meta__twitter {
+            display: inline !important;
+        }
+        .meta__extras {
+            display: none;
+        }
+        .content__meta-container {
+            border: 0;
+        }
     }
 }
