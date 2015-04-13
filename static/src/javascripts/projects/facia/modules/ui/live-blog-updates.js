@@ -28,7 +28,7 @@ define([
         animateDelaySecs = 3,
         refreshSecs = 60,
         refreshDecay = 2,
-        refreshMaxTimes = 3,
+        refreshMaxTimes = 0,
 
         selector = '.js-liveblog-blocks',
         blocksClassName = 'fc-item__liveblog-blocks',

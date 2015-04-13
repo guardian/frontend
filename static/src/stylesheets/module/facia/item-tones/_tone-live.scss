@@ -9,10 +9,7 @@
     }
 
     .u-faux-block-link--hover {
-        &,
-        & .fc-item__liveblog-block__more {
-            background-color: darken(colour(live-default), 4%);
-        }
+        background-color: darken(colour(live-default), 4%);
     }
 
     .fc-item__link,
@@ -87,6 +84,8 @@
 .fc-item__liveblog-blocks {
     height: 82px;
     overflow: hidden;
+    margin-left: -5px;
+    margin-right: -10px;
 }
 
 .fc-item__liveblog-blocks__inner {
@@ -101,18 +100,19 @@
     position: relative;
     @include fs-headline(1);
     color: #ffffff;
-    overflow: hidden;
     height: $gs-baseline * 3 + 2;
-    margin-bottom: $gs-baseline / 2;
+    padding: 2px 5px 2px 5px;
 }
 
-.fc-item__liveblog-block__more {
+.fc-item__liveblog-block:before {
+    content: '';
     position: absolute;
-    bottom: $gs-baseline / 6;
-    right: 0;
-    width: $gs-gutter * .75;
-    padding-left: $gs-gutter / 10;
-    background-color: colour(live-default);
+    top: 0;
+    bottom: 0;
+    left: -10px;
+    right: -10px;
+    background: rgba(0,0,0,0.2);
+    z-index: -1;
 }
 
 .fc-item__liveblog-block__time {
@@ -124,10 +124,7 @@
     margin-right: $gs-gutter / 5;
 }
 
-.fc-item__liveblog-block--old .fc-item__liveblog-block__time {
-    color: mix(#ffffff, colour(live-default), 50%);
-}
-
 .fc-item__liveblog-block__text {
-    color: mix(#ffffff, colour(live-default), 80%);
+    color: #ffffff;
+    @include ellipsis();
 }

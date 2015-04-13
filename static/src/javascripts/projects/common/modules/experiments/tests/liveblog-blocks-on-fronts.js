@@ -22,7 +22,8 @@ define([
         this.idealOutcome = 'Higher engagement, measured as increased onward journeys to ANY content on the affected front, or increased dewll time on that front';
 
         this.canRun = function () {
-            return ['football', 'uk/sport', 'us/sport', 'au/sport'].indexOf(config.page.pageId) > -1 && ['desktop', 'wide'].indexOf(detect.getBreakpoint()) > -1;
+            return true;
+            //return ['football', 'uk/sport', 'us/sport', 'au/sport'].indexOf(config.page.pageId) > -1 && ['desktop', 'wide'].indexOf(detect.getBreakpoint()) > -1;
         };
 
         this.variants = [
