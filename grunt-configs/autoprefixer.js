@@ -9,8 +9,9 @@ module.exports = function(grunt, options) {
                 dest: dir
             }],
             options: {
-              map: true,
-              diff: true
+                // browserslist for 'modern' is specified in /browserslist
+                map: true,
+                diff: true
             }
         },
         'old-ie': {
