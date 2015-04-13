@@ -16,10 +16,8 @@ $control-size: 36px;
     margin-left: $gs-gutter/2;
     max-width: 140px;
     vertical-align: top;
-    white-space: nowrap;
-    overflow: hidden;
+    @include ellipsis();
     float: left;
-    text-overflow: ellipsis;
     text-align: left;
 
     @include mq($from: 540px) {
