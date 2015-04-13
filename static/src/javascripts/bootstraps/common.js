@@ -54,6 +54,10 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
+
+    'text!common/views/international-message.html',
+    'text!common/views/international-control-message.html',
+
     'bootstraps/identity'
 ], function (
     bean,
@@ -109,6 +113,10 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
+
+    internationalMessage,
+    internationalControlMessage,
+
     identity
 ) {
     var modules = {
@@ -449,9 +457,9 @@ define([
             internationalSignposting: function () {
                 if ('internationalEdition' in config.page) {
                     if (config.page.internationalEdition === 'international') {
-                        console.log("Hello international edition");
+                        new Message().show(template(internationalMessage, {}));
                     } else {
-                        console.log("Hello international control");
+                        new Message().show(template(internationalControlMessage, {}));
                     }
                 }
             }
