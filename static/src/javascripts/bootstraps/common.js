@@ -447,7 +447,13 @@ define([
             },
 
             internationalSignposting: function () {
-                console.log("LOOOL");
+                if ('internationalEdition' in config) {
+                    if (config.internationalEdition === 'international') {
+                        console.log("Hello international edition");
+                    } else {
+                        console.log("Hello international control");
+                    }
+                }
             }
         },
 
