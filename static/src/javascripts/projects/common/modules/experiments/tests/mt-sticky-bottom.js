@@ -27,7 +27,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return config.page.edition === 'US' && config.page.isFront;
+            return config.page.edition === 'US' && config.page.isFront && detect.getBreakpoint() !== 'mobile';
         };
 
         function updatePosition(stickyConfig, containerNo) {
