@@ -175,10 +175,8 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
-        dfpAbParam = function () {
-            var test = ab.getParticipations().LzAds;
-
-            return ab.testCanBeRun('LzAds') && test && test.variant === 'A';
+        dfpSwitchParam = function () {
+            return config.switches.LzAds && config.page.edition === 'US' && config.page.section === 'politics';
         },
 
         /**
@@ -204,7 +202,7 @@ define([
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
-            (dfpAbParam()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            (dfpSwitchParam()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
