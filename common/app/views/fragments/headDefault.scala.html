@@ -8,7 +8,7 @@
 
             <h1 class="content__headline js-score" itemprop="headline">@Html(content.headline)</h1>
 
-            @if(!content.delegate.isVideo && !content.delegate.isGallery && !content.isInteractive) {
+            @if(!content.delegate.isVideo && !content.delegate.isGallery) {
                 @fragments.standfirst(content)
             }
 

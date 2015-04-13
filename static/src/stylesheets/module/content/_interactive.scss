@@ -12,6 +12,13 @@
         z-index: 2;
     }
 
+    .content__main-column--interactive {
+        @include mq(desktop) {
+            max-width: none;
+            margin: 0;
+        }
+    }
+
     .meta__numbers {
         position: relative;
         border-top: 1px dotted colour(neutral-5);
@@ -27,9 +34,6 @@
             float: left;
         }
     }
-    .content__standfirst {
-        display: none;
-    }
     &.content--sponsored,
     &.content--foundation-supported,
     &.content--advertisement-feature {
@@ -38,7 +42,7 @@
                 width: gs-span(5) + ($gs-gutter / 2);
             }
             @include mq(leftCol) {
-                width: gs-span(6) + ($gs-gutter / 2);
+                width: gs-span(6);
             }
             @include mq(wide) {
                 width: gs-span(6) + ($gs-gutter / 2);
