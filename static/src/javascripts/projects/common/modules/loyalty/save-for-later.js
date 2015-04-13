@@ -42,17 +42,15 @@ define([
             function success(resp) {
                 if (resp.status === 'error') {
                     if (JSON.stringify(notFound) ===  JSON.stringify(resp.errors)) {
-                            //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
-                            var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
-
-                            self.userData = {version: date, articles:[]};
+                        //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
+                        var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
+                        self.userData = {version: date, articles:[]};
                     }
                 } else {
-                    self.userData = { version: resp.version, articles: resp.savedArticles}
+                    self.userData = resp.savedArticles;
                 }
 
-                var saved = self.hasŬserSavedArticle(self.userData.articles, config.page.shortUrl);
-                if (saved) {
+                if (self.hasŬserSavedArticle(self.userData.articles, config.page.shortUrl)) {
                     self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
                 } else {
                     self.$saver.html('<a class="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>');
@@ -70,14 +68,13 @@ define([
 
     SaveForLater.prototype.saveArticle = function () {
         var self = this,
-            data,
             //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
             date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
             newArticle = {id: document.location.href, shortUrl: config.page.shortUrl, date: date, read: false  };
 
-        this.userData.articles.push(newArticle);
-        data = {version: this.userData.version, articles: this.userData.articles };
-        identity.saveToArticles(data).then(
+        self.userData.articles.push(newArticle);
+
+        identity.saveToArticles(self.userData).then(
             function success(resp) {
                 if (resp.status === 'error') {
                     self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Error saving</a>');
