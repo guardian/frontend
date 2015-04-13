@@ -191,9 +191,8 @@ $c-soulmates-high: colour(neutral-1);
     .lineitem__title {
         @include fs-header(1);
         font-size: 14px;
-        text-overflow: ellipsis;
+        @include ellipsis();
         white-space: pre;
-        overflow: hidden;
         margin-bottom: 0;
     }
 
