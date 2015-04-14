@@ -1,5 +1,6 @@
 @import '_vars';
 @import '_mixins';
+@import 'components/pasteup-buttons/src/_mixins';
 
 @mixin kicker-override($tone, $colour) {
     .tone-#{$tone}--item {
@@ -50,7 +51,7 @@
         @include button-colour(
             colour(news-support-2),
             #ffffff,
-            mix(colour(news-support-2, colour(neutral-1), 60%);
+            mix(colour(news-support-2), colour(neutral-1), 60%)
         );
     }
 
