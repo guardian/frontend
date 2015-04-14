@@ -70,3 +70,4 @@ POST          /stories-visible/*containerType   controllers.StoriesVisibleContro
 
 #Vanity URL
 GET           /breaking-news                    controllers.VanityRedirects.breakingnews
+GET           /acl-test                         controllers.AccessTestController.test
