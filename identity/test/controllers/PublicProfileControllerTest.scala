@@ -30,7 +30,6 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
       aboutMe = Some("I read the Guardian"),
       location = Some("London"),
       interests = Some("I like stuff"),
-      webPage = Some("http://www.mypage.com"),
       vanityUrl = Some(vanityUrl)
     ),
     dates = UserDates(

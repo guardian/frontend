@@ -9,8 +9,7 @@ object ProfileMapping extends UserFormMapping[ProfileFormData] {
   protected lazy val formMapping = mapping(
     "location" -> textField,
     "aboutMe" -> textArea,
-    "interests" -> textField,
-    "webPage" -> idUrl
+    "interests" -> textField
   )(ProfileFormData.apply)(ProfileFormData.unapply)
 
   protected def fromUser(user: User) = ProfileFormData(user)
@@ -29,15 +28,13 @@ trait ProfileMapping {
 case class ProfileFormData(
   location: String,
   aboutMe: String,
-  interests: String,
-  webPage: String
+  interests: String
 ) extends UserFormData{
 
   def toUserUpdate(currentUser: User): UserUpdate = UserUpdate(
     publicFields = Some(PublicFields(
       location = toUpdate(location, currentUser.publicFields.location),
       aboutMe = toUpdate(aboutMe, currentUser.publicFields.aboutMe),
-      webPage = toUpdate(webPage, currentUser.publicFields.webPage),
       interests = toUpdate(interests, currentUser.publicFields.interests)
     ))
   )
@@ -48,7 +45,6 @@ object ProfileFormData {
   def apply(user: User): ProfileFormData = ProfileFormData(
     location = user.publicFields.location getOrElse "",
     aboutMe = user.publicFields.aboutMe getOrElse "",
-    interests = user.publicFields.interests getOrElse "",
-    webPage = user.publicFields.webPage getOrElse ""
+    interests = user.publicFields.interests getOrElse ""
   )
 }
