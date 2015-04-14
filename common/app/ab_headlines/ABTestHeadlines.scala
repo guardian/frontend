@@ -20,7 +20,7 @@ case class HeadlineABTest(
   headlines: Set[String]
 )
 
-object ABTestHeadlines extends AutoRefresh[Map[String, HeadlineABTest]](0.seconds, 15.seconds) with Logging {
+object ABTestHeadlines extends AutoRefresh[Map[String, HeadlineABTest]](0.seconds, 1.minute) with Logging {
   val SpreadsheetKey = Configuration.facia.spreadsheetKey
 
   private def entryFor(id: String): Option[HeadlineABTest] = if (Switches.ABTestHeadlines.isSwitchedOn) {
