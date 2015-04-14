@@ -5,7 +5,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
-    'text!common/views/commercial/creatives/fluid250GoogleAndroid.html'
+    'common/views/commercial/creatives/fluid250GoogleAndroid.html!text'
 ], function (
     bean,
     bonzo,

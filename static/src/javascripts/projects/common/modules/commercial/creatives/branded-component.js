@@ -4,9 +4,9 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/creatives/branded-component-jobs.html',
-    'text!common/views/commercial/creatives/branded-component-membership.html',
-    'text!common/views/commercial/creatives/branded-component-soulmates.html',
+    'common/views/commercial/creatives/branded-component-jobs.html!text',
+    'common/views/commercial/creatives/branded-component-membership.html!text',
+    'common/views/commercial/creatives/branded-component-soulmates.html!text',
     'common/utils/_'
 ], function (
     qwery,

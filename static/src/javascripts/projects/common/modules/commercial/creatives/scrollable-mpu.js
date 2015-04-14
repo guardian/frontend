@@ -3,7 +3,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
-    'text!common/views/commercial/creatives/scrollable-mpu.html'
+    'common/views/commercial/creatives/scrollable-mpu.html!text'
 ], function (
     $,
     detect,

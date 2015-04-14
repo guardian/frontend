@@ -8,7 +8,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
-    'text!common/views/ui/selection-sharing.html'
+    'common/views/ui/selection-sharing.html!text'
 ], function (
     bean,
     bonzo,

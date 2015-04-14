@@ -7,8 +7,8 @@ define([
     'common/utils/storage',
     'common/modules/ui/relativedates',
     'common/utils/template',
-    'text!facia/views/liveblog-blocks.html',
-    'text!facia/views/liveblog-block.html'
+    'facia/views/liveblog-blocks.html!text',
+    'facia/views/liveblog-block.html!text'
 ], function (
     bonzo,
     fastdom,

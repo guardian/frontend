@@ -78,7 +78,8 @@
       "qwery": "npm:qwery@^4.0.0",
       "raven": "github:getsentry/raven-js@~1.1.16",
       "react": "npm:react@~0.12",
-      "reqwest": "github:ded/reqwest@1.1.5"
+      "reqwest": "github:ded/reqwest@1.1.5",
+      "text": "github:systemjs/plugin-text@^0.0.2"
     }
   }
 }

@@ -28,6 +28,7 @@ System.config({
     "raven": "github:getsentry/raven-js@1.1.18",
     "react": "npm:react@0.12.2",
     "reqwest": "github:ded/reqwest@1.1.5",
+    "text": "github:systemjs/plugin-text@0.0.2",
     "github:floatdrop/plugin-jsx@1.1.0": {
       "react-tools": "npm:react-tools@0.13.1"
     },
