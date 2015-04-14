@@ -1,5 +1,7 @@
 package model
 
+import java.util.TimeZone
+
 import common.{AkkaAsync, Jobs, Logging}
 import conf.Configuration
 import conf.Configuration.environment
@@ -71,10 +73,11 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     }
 
     if (environment.isProd) {
-      Jobs.schedule("AdsStatusEmailJob", "0 44 8 ? * MON-FRI") {
+      val londonTime = TimeZone.getTimeZone("Europe/London")
+      Jobs.schedule("AdsStatusEmailJob", "0 44 8 ? * MON-FRI", londonTime) {
         AdsStatusEmailJob.run()
       }
-      Jobs.schedule("ExpiringAdFeaturesEmailJob", "0 47 8 ? * MON-FRI") {
+      Jobs.schedule("ExpiringAdFeaturesEmailJob", "0 47 8 ? * MON-FRI", londonTime) {
         log.info(s"Starting ExpiringAdFeaturesEmailJob")
         ExpiringAdFeaturesEmailJob.run()
       }
