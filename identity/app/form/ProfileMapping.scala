@@ -18,8 +18,7 @@ object ProfileMapping extends UserFormMapping[ProfileFormData] {
   protected lazy val contextMap =  Map(
     "publicFields.location" -> "location",
     "publicFields.aboutMe" -> "aboutMe",
-    "publicFields.interests" -> "interests",
-    "publicFields.webPage" -> "webPage"
+    "publicFields.interests" -> "interests"
   )
 }
 

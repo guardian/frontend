@@ -47,23 +47,20 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
     val location = "Test location"
     val aboutMe = "Interesting"
     val interests = "Other interesting things"
-    val webPage = "http://example.com/test"
 
     "with a valid CSRF request" - Fake{
       val fakeRequest = FakeCSRFRequest()
         .withFormUrlEncodedBody(
           "location" -> location,
           "aboutMe" -> aboutMe,
-          "interests" -> interests,
-          "webPage" -> webPage
+          "interests" -> interests
         )
 
       val updatedUser = user.copy(
         publicFields = PublicFields(
           location = Some(location),
           aboutMe = Some(aboutMe),
-          interests = Some(interests),
-          webPage = Some(webPage)
+          interests = Some(interests)
         )
       )
       when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
@@ -81,7 +78,6 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
         userUpdate.publicFields.value.location.value should equal(location)
         userUpdate.publicFields.value.aboutMe.value should equal(aboutMe)
         userUpdate.publicFields.value.interests.value should equal(interests)
-        userUpdate.publicFields.value.webPage.value should equal(webPage)
       }
 
       "then a status 200 should be returned" in {
