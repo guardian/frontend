@@ -310,7 +310,7 @@ define([
             // return 'Sorry, you can only add links to treats.';
             return false;
         }
-        if (this.confirmSendingAlert() && item.group && (item.group.items().length !== 1 || item.group.items()[0] !== item)) {
+        if (this.confirmSendingAlert() && !isOnlyArticle(item, this)) {
             return 'You can only have one article in this collection.';
         }
     };
@@ -326,6 +326,17 @@ define([
         sparklines.unsubscribe(this);
         mediator.emit('front:disposed', this);
     };
+
+    function isOnlyArticle(item, front) {
+        var only = true;
+        _.find(front.collections(), function (collection) {
+            collection.eachArticle(function (article) {
+                only = only && article.id() === item.id();
+            });
+            return !only;
+        });
+        return only;
+    }
 
     return Front;
 });
