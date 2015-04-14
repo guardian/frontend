@@ -294,8 +294,8 @@ define([
                     .filter(function (test) {
                         var testEvents = test.events;
                         return testEvents && _.some(testEvents, function (testEvent) {
-                                return startsWith(eventTag, testEvent);
-                            });
+                            return startsWith(eventTag, testEvent);
+                        });
                     })
                     .map(function (test) {
                         return test.id;
@@ -308,7 +308,6 @@ define([
 
             try {
                 _.forEach(getActiveTests(), function (test) {
-
                     if (isParticipating(test) && testCanBeRun(test)) {
                         var variant = getTestVariant(test.id);
                         if (variant && variant !== 'notintest') {
