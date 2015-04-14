@@ -183,15 +183,14 @@ define([
             addedInDraft = this.front.confirmSendingAlert() ? this.addedInDraft() : [];
 
         if (addedInDraft.length) {
-            var sendingAlertFor = this.addedInDraft(),
-                isMajorAlert = !!_.find(sendingAlertFor, function (article) {
+            var isMajorAlert = !!_.find(addedInDraft, function (article) {
                     return article.group.index === 1;
                 });
 
             modalDialog.confirm({
                 name: 'confirm_breaking_changes',
                 data: {
-                    articles: sendingAlertFor,
+                    articles: addedInDraft,
                     target: this.configMeta.displayName(),
                     targetGroup: isMajorAlert ? 'APP & WEB' : 'WEB',
                     targetGroupClass: isMajorAlert ? 'major-alert' : 'minor-alert'
