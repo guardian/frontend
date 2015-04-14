@@ -1,3 +1,4 @@
+import ab_headlines.ABTHeadlinesLifecycle
 import common.{CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
 import conf.Filters
 import contentapi.SectionsLookUpLifecycle
@@ -67,6 +68,7 @@ with DfpAgentLifecycle
 with ConfigAgentLifecycle
 with SurgingContentAgentLifecycle
 with SectionsLookUpLifecycle
+with ABTHeadlinesLifecycle
 with CorsErrorHandler {
   override val allowedParams: Seq[String] =
     CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")
