@@ -6,6 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/liveblog-blocks-on-fronts',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/identity-social-oauth',
     'common/modules/experiments/tests/mt-master',
@@ -25,6 +26,7 @@ define([
     mediator,
     store,
     mvtCookie,
+    LiveblogBlocksOnFronts,
     HighCommercialComponent,
     IdentitySocialOAuth,
     MtMaster,
@@ -40,6 +42,7 @@ define([
 
     var ab,
         TESTS = _.flatten([
+            new LiveblogBlocksOnFronts(),
             new HighCommercialComponent(),
             new IdentitySocialOAuth(),
             new MtMaster(),
@@ -181,7 +184,7 @@ define([
         var variantIds, testVariantId,
             smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset,
             largestTestId  = smallestTestId + mvtCookie.getMvtNumValues() * test.audience,
-            // Get this browser's mvt test id.
+        // Get this browser's mvt test id.
             mvtCookieId = mvtCookie.getMvtValue();
 
         if (smallestTestId <= mvtCookieId && largestTestId > mvtCookieId) {
@@ -246,13 +249,17 @@ define([
         segmentUser: function () {
             mvtCookie.generateMvtCookie();
 
-            var tokens, test, variant,
+            var tokens,
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
-                tokens = window.location.hash.replace('#ab-', '').split('=');
-                test = tokens[0];
-                variant = tokens[1];
-                ab.forceSegment(test, variant);
+                tokens = window.location.hash.replace('#ab-', '').split(',');
+                tokens.forEach(function (token) {
+                    var abParam, test, variant;
+                    abParam = token.split('=');
+                    test = abParam[0];
+                    variant = abParam[1];
+                    ab.forceSegment(test, variant);
+                });
             } else {
                 ab.segment();
             }
@@ -284,16 +291,16 @@ define([
 
             var eventTag = event.tag;
             return eventTag && _(getActiveTests())
-                .filter(function (test) {
-                    var testEvents = test.events;
-                    return testEvents && _.some(testEvents, function (testEvent) {
-                        return startsWith(eventTag, testEvent);
-                    });
-                })
-                .map(function (test) {
-                    return test.id;
-                })
-                .valueOf();
+                    .filter(function (test) {
+                        var testEvents = test.events;
+                        return testEvents && _.some(testEvents, function (testEvent) {
+                                return startsWith(eventTag, testEvent);
+                            });
+                    })
+                    .map(function (test) {
+                        return test.id;
+                    })
+                    .valueOf();
         },
 
         getAbLoggableObject: function () {
@@ -319,6 +326,8 @@ define([
         },
 
         getParticipations: getParticipations,
+        isParticipating: isParticipating,
+        getTest: getTest,
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
