@@ -355,7 +355,7 @@ object Switches {
     "a-b-test-headlines",
     "A/B test headlines",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 1)
+    sellByDate = new LocalDate(2015, 6, 1)
   )
 
   val InternationalEditionSwitch = Switch(
