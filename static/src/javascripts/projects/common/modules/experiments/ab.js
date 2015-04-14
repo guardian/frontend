@@ -50,7 +50,7 @@ define([
             new AcrossTheCountry(),
             new AdblockMessage(),
             new MtStickyBottom(),
-            _.map(_.range(0, 11), function (n) {
+            _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             })
         ]),
