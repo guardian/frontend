@@ -14,6 +14,7 @@ System.config({
 System.config({
   "map": {
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
+    "Promise": "github:guardian/native-promise-only@0.7.6-c",
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@1.4.0",
     "classnames": "npm:classnames@1.2.0",
