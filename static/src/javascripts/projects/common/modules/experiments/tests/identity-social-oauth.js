@@ -33,7 +33,7 @@ define([
                     $('.social-signin__action').each(function (el) {
                         el.href = el.href.replace(config.page.idWebAppUrl, config.page.idOAuthUrl);
                     });
-                    config.page.idWebAppUrl = config.page.idOAuthUrl
+                    config.page.idWebAppUrl = config.page.idOAuthUrl;
                 }
             }
         ];
