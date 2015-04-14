@@ -192,7 +192,7 @@ object Switches {
   val LzAds = Switch("Commercial", "lz-ads", "Lazy loading ads.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 13)
   )
-  
+
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
@@ -351,6 +351,12 @@ object Switches {
     "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
     safeState = Off, new LocalDate(2015, 4, 24)
   )
+
+  val SendExpiringSwitchesEmail = Switch("Monitoring", "expiring-switches-email",
+    "Send an email when switches are expiring soon",
+    safeState = Off, new LocalDate(2015, 5, 6)
+  )
+
 
   // Features
   val InternationalEditionSwitch = Switch(
