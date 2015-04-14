@@ -1,8 +1,9 @@
 package idapiclient
 
-import com.gu.identity.model.{EmailList, Subscriber, LiftJsonConfig, User}
+import com.gu.identity.model.{EmailList, Subscriber, LiftJsonConfig, User, SavedArticles}
 import client.{Anonymous, Auth, Response, Parameters}
 import client.connection.{Http, HttpResponse}
+import model.FrontendSavedArticles
 import scala.concurrent.{Future, ExecutionContext}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import idapiclient.responses.{CookiesResponse, AccessTokenResponse}
@@ -25,6 +26,10 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
 
   def extractUser: (client.Response[HttpResponse]) => client.Response[User] = extract(jsonField("user"))
 
+  def extractSavedArticles: (client.Response[HttpResponse]) => client.Response[FrontendSavedArticles] = {
+    extract(jsonField("savedArticles"))
+  }
+
   // AUTH
   def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {
     val params = buildParams(Some(userAuth), Some(trackingData), Seq("format" -> "cookies") ++ persistent.map("persistent" -> _.toString))
@@ -35,6 +40,25 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
 
   def unauth(auth: Auth, trackingData: TrackingData): Future[Response[CookiesResponse]] =
     post("unauth", Some(auth), Some(trackingData)) map extract[CookiesResponse](jsonField("cookies"))
+
+  def syncedPrefs(auth: Auth): Future[Response[FrontendSavedArticles]] = {
+    val apiPath = urlJoin("syncedPrefs", "me", "savedArticles")
+    val params = buildParams(Some(auth))
+    val headers = buildHeaders(Some(auth))
+
+    val response = http.GET(apiUrl(apiPath), params, headers)
+    response map extractSavedArticles
+  }
+
+  def saveArticle(userId: String, auth: Auth, savedArticles: SavedArticles): Future[Response[FrontendSavedArticles]] = {
+    val apiPath = urlJoin("syncedPrefs", "me", "savedArticles")
+    val updatedSavedArticles = write(savedArticles)
+    val params = buildParams(Some(auth))
+    val headers = buildHeaders(Some(auth))
+
+    val response = http.POST(apiUrl(apiPath), Some(updatedSavedArticles), params, headers)
+    response map extractSavedArticles }
+
 
   // USERS
 

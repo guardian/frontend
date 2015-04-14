@@ -541,6 +541,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
   )
 
+  val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
+    "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
+    safeState = Off, sellByDate = never
+  )
+
   val ABLiveblogBlocksOnFronts = Switch("A/B Tests", "ab-liveblog-blocks-on-fronts",
     "Switch for the latest liveblog blocks on fronts A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 23)
