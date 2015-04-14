@@ -60,6 +60,19 @@ define([
                     new Popular().init();
                 });
 
+                it("should only request global most popular for blacklisted sections", function (done) {
+                    mocks.store['common/utils/config'].page.section = 'info';
+
+                    server.respondWith('/most-read.json', [200, {}, '{ "html": "' + html + '" }']);
+                    mocks.store['common/utils/mediator'].once('modules:popular:loaded', function (el) {
+                        var innerHtml = el.innerHTML;
+                        expect(innerHtml).toBe('popular');
+                        done();
+                    });
+
+                    new Popular().init();
+                });
+
             });
 
         });
