@@ -15,7 +15,7 @@
 }
 
 @headline() = {
-    <span class="@labelCssClasses fc-item__headline">@icon @RemoveOuterParaHtml(header.headline)</span>
+    <span class="@labelCssClasses fc-item__headline">@icon <span class="js-headline-text">@RemoveOuterParaHtml(header.headline)</span></span>
 }
 
 @articleLink(html: Html) = {<a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a>}

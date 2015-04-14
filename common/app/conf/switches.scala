@@ -2,6 +2,7 @@ package conf
 
 import common._
 import conf.Configuration.environment
+import org.joda.time
 import org.joda.time._
 import play.api.Play.current
 import play.api.libs.ws.WS
@@ -359,6 +360,14 @@ object Switches {
 
 
   // Features
+  val ABTestHeadlines = Switch(
+    "Feature",
+    "a-b-test-headlines",
+    "A/B test headlines",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 1)
+  )
+
   val InternationalEditionSwitch = Switch(
     "Feature",
     "international-edition",
@@ -550,6 +559,16 @@ object Switches {
     "Switch for the latest liveblog blocks on fronts A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 23)
   )
+
+  val ABHeadlineSwitches = (1 to 10) map { n =>
+    Switch(
+      "A/B Tests",
+      s"ab-headline$n",
+      s"Switch for headline $n",
+      safeState = On,
+      sellByDate = new LocalDate(2015, 6, 10)
+    )
+  }
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",

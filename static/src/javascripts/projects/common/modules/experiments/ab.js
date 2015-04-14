@@ -17,7 +17,8 @@ define([
     'common/modules/experiments/tests/across-the-country',
     'common/modules/experiments/tests/adblock-message',
     'common/modules/experiments/tests/mt-sticky-bottom',
-    'common/modules/experiments/tests/save-for-later'
+    'common/modules/experiments/tests/save-for-later',
+    'common/modules/experiments/tests/headlines'
 ], function (
     raven,
     _,
@@ -37,11 +38,12 @@ define([
     AcrossTheCountry,
     AdblockMessage,
     MtStickyBottom,
-    SaveForLater
+    SaveForLater,
+    Headline
 ) {
 
     var ab,
-        TESTS = [
+        TESTS = _.flatten([
             new LiveblogBlocksOnFronts(),
             new HighCommercialComponent(),
             new IdentitySocialOAuth(),
@@ -53,8 +55,11 @@ define([
             new AcrossTheCountry(),
             new AdblockMessage(),
             new MtStickyBottom(),
-            new SaveForLater()
-        ],
+            new SaveForLater(),
+            _.map(_.range(1, 10), function (n) {
+                return new Headline(n);
+            })
+        ]),
         participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
@@ -182,7 +187,7 @@ define([
         var variantIds, testVariantId,
             smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset,
             largestTestId  = smallestTestId + mvtCookie.getMvtNumValues() * test.audience,
-            // Get this browser's mvt test id.
+        // Get this browser's mvt test id.
             mvtCookieId = mvtCookie.getMvtValue();
 
         if (smallestTestId <= mvtCookieId && largestTestId > mvtCookieId) {
@@ -289,16 +294,16 @@ define([
 
             var eventTag = event.tag;
             return eventTag && _(getActiveTests())
-                .filter(function (test) {
-                    var testEvents = test.events;
-                    return testEvents && _.some(testEvents, function (testEvent) {
-                        return startsWith(eventTag, testEvent);
-                    });
-                })
-                .map(function (test) {
-                    return test.id;
-                })
-                .valueOf();
+                    .filter(function (test) {
+                        var testEvents = test.events;
+                        return testEvents && _.some(testEvents, function (testEvent) {
+                            return startsWith(eventTag, testEvent);
+                        });
+                    })
+                    .map(function (test) {
+                        return test.id;
+                    })
+                    .valueOf();
         },
 
         getAbLoggableObject: function () {
@@ -306,7 +311,6 @@ define([
 
             try {
                 _.forEach(getActiveTests(), function (test) {
-
                     if (isParticipating(test) && testCanBeRun(test)) {
                         var variant = getTestVariant(test.id);
                         if (variant && variant !== 'notintest') {

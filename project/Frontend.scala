@@ -22,6 +22,7 @@ object Frontend extends Build with Prototypes {
       filters,
       flexibleContentBlockToText,
       flexibleContentBodyParser,
+      googleSheetsApi,
       guardianConfiguration,
       jacksonCore,
       jacksonMapper,
