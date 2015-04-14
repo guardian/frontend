@@ -25,7 +25,7 @@ define([
 
         this.canRun = function () {
             var isNotContent = /Network Front|Section/.test(config.page.contentType),
-                isDesktop = detect.getBreakpoint() === 'desktop' || detect.getBreakpoint() === 'wide';
+                isDesktop = detect.isBreakpoint({ min: 'desktop'});
 
             return !isNotContent && isDesktop;
         };

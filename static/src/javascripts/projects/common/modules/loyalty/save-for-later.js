@@ -36,12 +36,11 @@ define([
 
     SaveForLater.prototype.getSavedArticles = function () {
         var self = this,
-            notFound  = [{message:'Not found', description:'Resource not found'}];
-
+            notFound  = {message:'Not found', description:'Resource not found'};
         identity.getUsersSavedDocuments().then(
             function success(resp) {
                 if (resp.status === 'error') {
-                    if (JSON.stringify(notFound) ===  JSON.stringify(resp.errors)) {
+                    if (resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description ) {
                         //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
                         var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
                         self.userData = {version: date, articles:[]};
@@ -50,7 +49,7 @@ define([
                     self.userData = resp.savedArticles;
                 }
 
-                if (self.hasŬserSavedArticle(self.userData.articles, config.page.shortUrl)) {
+                if (self.hasUserSavedArticle(self.userData.articles, config.page.shortUrl)) {
                     self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
                 } else {
                     self.$saver.html('<a class="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>');
@@ -60,7 +59,7 @@ define([
         );
     };
 
-    SaveForLater.prototype.hasŬserSavedArticle = function (articles, shortUrl) {
+    SaveForLater.prototype.hasUserSavedArticle = function (articles, shortUrl) {
         return _.some(articles, function (article) {
             return article.shortUrl === shortUrl;
         });
