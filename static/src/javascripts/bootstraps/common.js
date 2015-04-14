@@ -447,11 +447,17 @@ define([
             },
 
             internationalSignposting: function () {
+                var message;
+
                 if ('internationalEdition' in config.page) {
+                    message = new Message('international', {
+                        pinOnHide: true
+                    });
+
                     if (config.page.internationalEdition === 'international') {
-                        new Message().show(template(internationalMessage, {}));
+                        message.show(template(internationalMessage, {}));
                     } else {
-                        new Message().show(template(internationalControlMessage, {}));
+                        message.show(template(internationalControlMessage, {}));
                     }
                 }
             }
