@@ -16,7 +16,9 @@ object Table {
   def hasBreakingNewsAccess(email: String): Future[Boolean] = {
     client.getItemFuture(new GetItemRequest().withTableName(TableName).withKey(Map(
       "email" -> new AttributeValue().withS(email)
-    ))).map(_ => true) recover {
+    ))).map({ item =>
+      Option(item.getItem).isDefined
+    }) recover {
       case error: ResourceNotFoundException => false
     }
   }
