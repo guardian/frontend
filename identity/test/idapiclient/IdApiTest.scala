@@ -230,7 +230,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
     "when recieving a valid response" - {
       "accesses the synced prefs endpoint with the users id" in {
           api.syncedPrefs(Anonymous)
-          verify(http).GET("http://example.com/savedArticles/me", Iterable.empty, clientAuthHeaders)
+          verify(http).GET("http://example.com/syncedPrefs/me/savedArticles", Iterable.empty, clientAuthHeaders)
         }
 
        "returns the synced Prefs Ofbject " in {
