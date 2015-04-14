@@ -297,9 +297,11 @@ case class BloggerBylineImage(article: Article)(implicit val request: RequestHea
     if (article.isLiveBlog && LiveBlogContributorImagesSwitch.isSwitchedOn) {
       body.select(".block").foreach { el =>
         val contributorId = el.attributes().get("data-block-contributor")
-        article.tags.find(_.id == contributorId).map{ contributorTag =>
-          val html = views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
-          el.getElementsByClass("block-elements").prepend(html.toString())
+        if (contributorId.nonEmpty) {
+          article.tags.find(_.id == contributorId).map{ contributorTag =>
+            val html = views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
+            el.getElementsByClass("block-elements").headOption.foreach(_.prepend(html.toString()))
+          }
         }
       }
     }
