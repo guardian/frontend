@@ -71,9 +71,7 @@ $football-crest--large: 60px;
     @include box-sizing(border-box);
     padding-right: $gs-gutter*2;
     display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include ellipsis();
 }
 
 .team__score {

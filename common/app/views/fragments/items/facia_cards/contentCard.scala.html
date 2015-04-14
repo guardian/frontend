@@ -1,7 +1,7 @@
 @(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
 
 @import model.InlineImage
-@import model.{InlineVideo, VideoPlayer, CrosswordSvg}
+@import model.{InlineVideo, VideoPlayer, CrosswordSvg, LiveBlog}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
@@ -10,6 +10,7 @@
 @import views.support.ImgSrc
 @import layout.{LatestSnap, FaciaWidths}
 @import Function.const
+@import conf.Switches.ABLiveblogBlocksOnFronts
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
     @if(item.discussionSettings.isCommentable) {
@@ -112,8 +113,16 @@ data-test-id="facia-card"
             }
         </div>
 
-        @item.trailText.filter(const(item.showStandfirst)).map { text =>
-            <div class="fc-item__standfirst">@Html(text)</div>
+        @if(ABLiveblogBlocksOnFronts.isSwitchedOn && item.isLive) {
+            <div class="js-liveblog-blocks" data-article-id="@item.id">
+                @item.trailText.filter(const(item.showStandfirst)).map { text =>
+                    <div class="fc-item__standfirst">@Html(text)</div>
+                }
+            </div>
+        } else {
+            @item.trailText.filter(const(item.showStandfirst)).map { text =>
+                <div class="fc-item__standfirst">@Html(text)</div>
+            }
         }
 
         @if(item.sublinks.nonEmpty) {

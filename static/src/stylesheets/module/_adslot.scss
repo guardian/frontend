@@ -211,11 +211,11 @@
         height: auto;
         margin: 0 $gs-gutter/2;
         width: gs-span(4.5);
-        
+
         .content-footer & {
             width: 300px;
         }
-        
+
         .linkslist-container & {
             position: absolute;
             top: 0;
@@ -433,9 +433,15 @@
     min-height: 135px;
     border-top: 1px dotted colour(neutral-5);
 
-    @include mq(tablet) {
-        float: right;
+    @include mq(desktop) {
+        position: absolute;
+        top: $gs-baseline / 2;
+        right: -1 * (gs-span(4) + $gs-gutter / 2);
         border-top-width: 0;
+    }
+
+    @include mq(wide) {
+        right: -1 * (gs-span(5) + $gs-gutter);
     }
 }
 .ad-slot--paid-for-badge--front {

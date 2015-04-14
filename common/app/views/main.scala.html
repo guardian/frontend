@@ -9,18 +9,20 @@
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
-@defining((
+@defining(
     metaData match {
         case c: model.Content if c.shouldHideAdverts => { false }
         case p: model.Page if p.section == "identity" => { false }
         case _ => { true }
     },
-    Edition(request),
-    Edition(request).id == "UK" && (
-        (AppleAdNetworkFrontSwitch.isSwitchedOn && metaData.id == "uk") ||
-        (AppleAdCultureFrontSwitch.isSwitchedOn && metaData.id == "uk/culture")
-    )
-)) { case (showAdverts, edition, adBelowNav) =>
+    Edition(request)
+) { case (showAdverts, edition) =>
+    @defining(
+        showAdverts &&
+            ((AppleAdUkNetworkFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk") ||
+                (AppleAdAuNetworkFrontSwitch.isSwitchedOn && edition.id == "AU" && metaData.id == "au") ||
+                (AppleAdTechFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk/technology"))
+    ) { adBelowNav =>
     <body
         id="top"
         class="@RenderClasses(Map(
@@ -43,7 +45,7 @@
             @fragments.header(metaData)
         </div>
 
-        @if(showAdverts && adBelowNav) {
+        @if(adBelowNav) {
             @fragments.commercial.topBannerBelowNav()
         }
 
@@ -73,4 +75,5 @@
 
     </body>
     </html>
+}
 }

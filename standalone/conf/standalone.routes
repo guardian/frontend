@@ -168,7 +168,7 @@ GET        /weatherapi/city.json                                                
 GET        /weatherapi/locations                                                               controllers.LocationsController.findCity(query: String)
 
 # Articles
-GET        /*path.json                                                                         controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
+GET        /*path.json                                                                         controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
 
 # Don't forward requests for favicon.ico to the Content API
 GET        /favicon.ico                                                                        controllers.FaviconController.favicon

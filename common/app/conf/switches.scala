@@ -189,7 +189,10 @@ object Switches {
   )
 
   // Commercial
-
+  val LzAds = Switch("Commercial", "lz-ads", "Lazy loading ads.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 13)
+  )
+  
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
@@ -305,17 +308,18 @@ object Switches {
     "If this switch is on, book data will be looked up using a third-party service.",
     safeState = Off, sellByDate = never)
 
-  val AppleAdNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-network-front",
-    "If this switch is on, Apple ads will appear on the network front during active periods.",
+  val AppleAdUkNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-uk-network-front",
+    "If this switch is on, Apple ads will appear below nav on the UK network front.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
 
-  val AppleAdCultureFrontSwitch = Switch("Commercial", "apple-ads-on-culture-front",
-    "If this switch is on, Apple ads will appear on the culture front during active periods.",
+  val AppleAdAuNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-au-network-front",
+    "If this switch is on, Apple ads will appear below nav on the AU network front.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
 
-  val AdImpressionCountingSwitch = Switch("Commercial", "ad-impression-counting",
-    "If this switch is on, ad impression counts will be kept in Cloudwatch.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 15))
+  val AppleAdTechFrontSwitch = Switch("Commercial", "apple-ads-on-tech-front",
+    "If this switch is on, Apple ads will appear below nav on the tech section front.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+
 
   // Monitoring
 
@@ -378,7 +382,7 @@ object Switches {
 
   val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
     "If this switch is on the “Become a Member” button will be broken",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 15)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
@@ -479,7 +483,7 @@ object Switches {
 
   val QuizScoresService = Switch("Feature", "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 16))
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 16))
 
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
     "If switched on, any user registrations from a known tor esit node will be logged",
@@ -535,6 +539,11 @@ object Switches {
   val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block",
     "Switch for the Adblock Message A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
+  )
+
+  val ABLiveblogBlocksOnFronts = Switch("A/B Tests", "ab-liveblog-blocks-on-fronts",
+    "Switch for the latest liveblog blocks on fronts A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 23)
   )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
