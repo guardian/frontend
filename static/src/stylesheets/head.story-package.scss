@@ -132,12 +132,13 @@
 
     .fc-slice--qqqtall-q2 {
         .l-row__item--span-1 .l-list {
-            .fc-slice__item:first-of-type {
+            .fc-slice__item {
                 .fc-item__media-wrapper,
-                .fc-item__standfirst {
+                .fc-item__avatar {
                     display: block;
                 }
-
+            }
+            .fc-slice__item:first-of-type {
                 [class*="fc-item--has-sublinks"] {
                     .fc-item__standfirst {
                         display: none;
@@ -147,11 +148,6 @@
 
             // This targets the first item in the right-hand column only
             .fc-slice__item:nth-of-type(n+2) {
-                .fc-item__media-wrapper,
-                .fc-item__avatar {
-                    display: none;
-                }
-
                 .fc-item--has-cutout .fc-item__container {
                     padding-bottom: 0;
                 }
@@ -164,17 +160,6 @@
     }
 
     .fc-slice--qqqtall-q2-ql2 {
-        .fc-item--three-quarters-tall-tablet {
-            .fc-item__image-container {
-                padding-bottom: 60%;
-            }
-
-            .responsive-img {
-                top: 0;
-                height: 100%;
-            }
-        }
-
         .fc-item--standard-tablet {
             &.fc-item--has-sublinks-1 {
                 .fc-item__media-wrapper {
