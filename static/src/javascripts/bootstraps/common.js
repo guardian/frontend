@@ -6,7 +6,6 @@ define([
     'enhancer',
     'fastclick',
     'qwery',
-
     'common/utils/$',
     'common/utils/config',
     'common/utils/cookies',
@@ -16,7 +15,6 @@ define([
     'common/utils/template',
     'common/utils/url',
     'common/utils/robust',
-
     'common/modules/analytics/clickstream',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
@@ -54,10 +52,8 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
-
     'text!common/views/international-message.html',
     'text!common/views/international-control-message.html',
-
     'bootstraps/identity'
 ], function (
     bean,
@@ -65,7 +61,6 @@ define([
     enhancer,
     FastClick,
     qwery,
-
     $,
     config,
     cookies,
@@ -75,7 +70,6 @@ define([
     template,
     url,
     robust,
-
     Clickstream,
     Foresee,
     liveStats,
@@ -113,10 +107,8 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
-
     internationalMessage,
     internationalControlMessage,
-
     identity
 ) {
     var modules = {
