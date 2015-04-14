@@ -299,7 +299,7 @@ case class BloggerBylineImage(article: Article)(implicit val request: RequestHea
         val contributorId = el.attributes().get("data-block-contributor")
         article.tags.find(_.id == contributorId).map{ contributorTag =>
           val html = views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
-          el.append(html.toString())
+          el.getElementsByClass("block-elements").prepend(html.toString())
         }
       }
     }

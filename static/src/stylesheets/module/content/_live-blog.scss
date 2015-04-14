@@ -271,6 +271,27 @@ $block-padding-right: $gs-gutter;
 
     .block-elements {
 
+        /* Bylines
+           ========================================================= */
+        .liveblog-block-byline {
+            border-bottom: 1px dotted #dcdcdc;
+            padding-bottom: 8px;
+        }
+        .liveblog-block-byline__img {
+            display: inline;
+            border-radius: 50%;
+            max-width: 36px;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+        .liveblog-block-byline__name {
+            font-family: 'EgyptianText', Georgia;
+            font-weight: normal;
+            font-size: 16px;
+            display: inline;
+            color: #333;
+        }
+
         /* Quotes
            ========================================================= */
         > blockquote,
