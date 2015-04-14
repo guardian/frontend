@@ -3,6 +3,7 @@ System.config({
   "transpiler": "babel",
   "paths": {
     "*": "javascripts/projects/*.js",
+    "common/*": "javascripts/projects/common/*.js",
     "es6/*": "javascripts/es6/*.js",
     "bootstraps/*": "javascripts/bootstraps/*.js",
     "github:*": "jspm_packages/github/*.js",
