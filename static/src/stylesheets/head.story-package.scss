@@ -49,15 +49,10 @@
     .button--primary {
         background-color: colour(news-support-2);
         border-color: colour(news-support-2);
-        color: #ffffff;
 
         &:hover {
             background-color: mix(colour(news-support-2), colour(neutral-1), 60%);
             border-color: mix(colour(news-support-2), colour(neutral-1), 60%);
-        }
-
-        svg {
-            fill: #ffffff;
         }
     }
 
