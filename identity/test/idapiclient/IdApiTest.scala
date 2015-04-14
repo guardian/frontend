@@ -230,7 +230,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
     "when recieving a valid response" - {
       "accesses the synced prefs endpoint with the users id" in {
           api.syncedPrefs(Anonymous)
-          verify(http).GET("http://example.com/syncedPrefs/123", Iterable.empty, clientAuthHeaders)
+          verify(http).GET("http://example.com/savedArticles/me", Iterable.empty, clientAuthHeaders)
         }
 
        "returns the synced Prefs Ofbject " in {
@@ -373,7 +373,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "accesses the savedArticles endpoing" in {
         api.saveArticle( "123", Anonymous, savedArticles)
-        verify(http).POST(Matchers.eq("http://example.com/syncedPrefs/savedArticles/123"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
+        verify(http).POST(Matchers.eq("http://example.com/syncedPrefs/me/savedArticles"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "passes the updated articles list as json to the endpoint" in  {
