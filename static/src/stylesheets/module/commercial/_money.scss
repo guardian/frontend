@@ -6,6 +6,14 @@
         fill: colour(neutral-2);
     }
 
+    .commercial__headline {
+        float: left;
+    }
+
+    .commercial__money-buttons {
+        float: right;
+    }
+
     .lineitem__meta {
         @include f-textSans;
         margin-top: $gs-baseline;
