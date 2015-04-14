@@ -16,7 +16,7 @@ import org.joda.time.DateTime
 import client.connection.util.ExecutionContexts
 
 import org.joda.time.format.ISODateTimeFormat
-import com.gu.identity.model.{LiftJsonConfig, StatusFields, PublicFields, User}
+import com.gu.identity.model._
 import net.liftweb.json.Serialization.write
 import scala.concurrent.duration._
 import scala.language.postfixOps
@@ -222,28 +222,27 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
 
   "the prefs method" - {
-      val userPrefsJSON = """{"id":"10010871","savedArticles":{"version":"1418141910657","articles":[{"id":"world/2014/oct/11/thailand-murders-hannah-witheridge-david-miller-police-say-concrete-evidence-links-burmese-suspects","shortUrl":"http://gu.com/p/42c5t","date":"2014-10-11T12:09:07Z","read":false},{"id":"technology/2014/oct/12/teenagers-snapchat-images-leaked-internet","shortUrl":"http://gu.com/p/42cg4","date":"2014-10-14T06:39:36Z","read":false}]}}"""
+      val userPrefsJSON = """{"status":ok","savedArticles":{"version":"1418141910657","articles":[{"id":"world/2014/oct/11/thailand-murders-hannah-witheridge-david-miller-police-say-concrete-evidence-links-burmese-suspects","shortUrl":"http://gu.com/p/42c5t","date":"2014-10-11T12:09:07Z","read":false},{"id":"technology/2014/oct/12/teenagers-snapchat-images-leaked-internet","shortUrl":"http://gu.com/p/42cg4","date":"2014-10-14T06:39:36Z","read":false}]}}"""
       val validUserPrefsResponse = HttpResponse(userPrefsJSON, 200, "OK")
       when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters]))
       .thenReturn(toFuture(Right(validUserPrefsResponse)))
 
     "when recieving a valid response" - {
       "accesses the synced prefs endpoint with the users id" in {
-          api.syncedPrefs("123", Anonymous)
+          api.syncedPrefs(Anonymous)
           verify(http).GET("http://example.com/syncedPrefs/123", Iterable.empty, clientAuthHeaders)
         }
 
        "returns the synced Prefs Ofbject " in {
-         api.syncedPrefs("123", Anonymous) map {
+         api.syncedPrefs(Anonymous) map {
             case Left(result) => fail("Got Right (%s), instead of expect Right".format(result.toString) )
             case Right(prefs) => {
-              prefs.userId should be ("10010871")
-              prefs.savedArticles map {
-                savedArticles =>
-                  savedArticles should have ('version("1418141910657"))
-                  savedArticles.articles.head should have ('id("world/2014/oct/11/thailand-murders-hannah-witheridge-david-miller-police-say-concrete-evidence-links-burmese-suspects"))
-                  savedArticles.articles.head should have ('shortUrl("http://gu.com/p/42c5t"))
-                  savedArticles.articles.head should have ('date("2014-10-14T06:39:36Z"))
+              prefs.version should be ("10010871")
+              prefs.articles map {
+                savedArticle =>
+                  savedArticle should have ('id("world/2014/oct/11/thailand-murders-hannah-witheridge-david-miller-police-say-concrete-evidence-links-burmese-suspects"))
+                  savedArticle should have ('shortUrl("http://gu.com/p/42c5t"))
+                  savedArticle should have ('date("2014-10-14T06:39:36Z"))
               } orElse(fail("did not get expected articles"))
 
             }
@@ -253,12 +252,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
     "when provididinmg authentication to the request" - {
       "adds the url paremeters" in  {
-        api.syncedPrefs("123", ParamAuth)
+        api.syncedPrefs(ParamAuth)
         verify(http).GET(Matchers.any[String], argThat(new ParamsMatcher(Iterable("testParam" -> "value"))), Matchers.argThat(new ParamsMatcher(clientAuthHeaders)))
       }
 
       "adds the headers" in {
-        api.syncedPrefs("123", HeaderAuth)
+        api.syncedPrefs(HeaderAuth)
         verify(http).GET(Matchers.any[String], Matchers.eq(Nil), argThat(new ParamsMatcher(Iterable("testHeader" -> "value") ++ clientAuthHeaders)))
       }
     }
@@ -268,7 +267,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         .thenReturn(toFuture(Left(errors)))
 
       "returns the errors" in {
-        api.syncedPrefs("123", Anonymous).map {
+        api.syncedPrefs(Anonymous).map {
           case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
           case Left(responseErrors) => {
             responseErrors should equal(errors)
