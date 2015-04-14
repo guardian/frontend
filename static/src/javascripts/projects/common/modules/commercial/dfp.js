@@ -112,13 +112,19 @@ define([
 
         placeUnderMostPopular = function ($adSlot) {
             var mtStickyNavTest = ab.getParticipations().MtStickyNav,
+                $secondaryColumn;
+
+            fastdom.read(function () {
                 $secondaryColumn = $('.js-secondary-column');
 
-            if (ab.testCanBeRun('MtStickyNav') &&
-                mtStickyNavTest && mtStickyNavTest.variant === 'variant' && $adSlot.hasClass('ad-slot--right')) {
-                $('.right-most-popular', $secondaryColumn).css('margin-top', '0').append($adSlot);
-                $('.component--rhc .open-cta', $secondaryColumn).css('margin-top', '0');
-            }
+                if (ab.testCanBeRun('MtStickyNav') &&
+                    mtStickyNavTest && mtStickyNavTest.variant === 'variant' && $adSlot.hasClass('ad-slot--right')) {
+                    fastdom.write(function () {
+                        $('.right-most-popular', $secondaryColumn).css('margin-top', '0').append($adSlot);
+                        $('.component--rhc .open-cta', $secondaryColumn).css('margin-top', '0');
+                    });
+                }
+            });
         },
         /**
          * Initial commands

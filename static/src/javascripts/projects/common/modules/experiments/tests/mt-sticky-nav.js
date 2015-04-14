@@ -140,7 +140,7 @@ define([
                             $header: $('.sticky-nav-mt-test .l-header__inner'),
                             $bannnerMobile: $('.top-banner-ad-container--mobile'),
                             $contentBelowMobile: $('#maincontent'),
-                            scrollThreshold: config.page.contentType === 'Video' ? 280 : 480
+                            scrollThreshold: config.page.contentType === 'Video' || config.page.contentType === 'Gallery' ? 280 : 480
                         };
 
                         fastdom.write(function () {
