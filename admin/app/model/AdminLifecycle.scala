@@ -78,6 +78,10 @@ trait AdminLifecycle extends GlobalSettings with Logging {
         log.info(s"Starting ExpiringAdFeaturesEmailJob")
         ExpiringAdFeaturesEmailJob.run()
       }
+      Jobs.schedule("ExpiringSwitchesEmailJob", "0 48 8 ? * MON-FRI") {
+        log.info(s"Starting ExpiringSwitchesEmailJob")
+        ExpiringSwitchesEmailJob.run()
+      }
     }
 
     Jobs.schedule("VideoEncodingsJob", "0 0/15 * * * ?") {
@@ -105,6 +109,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("AdsStatusEmailJob")
     Jobs.deschedule("ExpiringAdFeaturesEmailJob")
     Jobs.deschedule("VideoEncodingsJob")
+    Jobs.deschedule("ExpiringSwitchesEmailJob")
   }
 
   override def onStart(app: play.api.Application) {

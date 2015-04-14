@@ -142,6 +142,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object frontend {
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
+    lazy val webEngineersEmail = configuration.getStringProperty("email.web.engineers")
   }
 
   object site {
