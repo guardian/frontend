@@ -72,7 +72,7 @@ module.exports = function (grunt) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }
 
-        grunt.task.run(['px_to_rem', 'autoprefixer']);
+        grunt.task.run(['px_to_rem', 'shell:updateCanIUse', 'autoprefixer']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
