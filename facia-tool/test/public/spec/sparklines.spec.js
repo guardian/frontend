@@ -23,9 +23,9 @@ define([
         beforeEach(function () {
             setUpMockRequest();
             if (!vars.model) {
-                vars.model = {
+                vars.setModel({
                     switches: ko.observable({})
-                };
+                });
             }
             var switches = vars.model.switches();
             switches['facia-tool-sparklines'] = true;

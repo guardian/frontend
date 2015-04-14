@@ -10,24 +10,38 @@ define([
         'facia-tool-disable': false,
         'facia-tool-draft-content': true,
         'facia-tool-sparklines': false
-    };
+    }, id;
 
-    $.mockjax({
-        url: "/switches",
-        response: function (req) {
-            this.responseText = mockResponse;
-        },
-        onAfterComplete: function () {
-            mediator.emit('mock:switches');
-        }
-    });
+    function use () {
+        id = $.mockjax({
+            url: "/switches",
+            response: function (req) {
+                this.responseText = mockResponse;
+            },
+            onAfterComplete: function () {
+                mediator.emit('mock:switches');
+            }
+        });
+    }
 
     return {
         set: function (response) {
             mockResponse = response;
+            if (!id) {
+                use();
+            }
         },
-        override: function (keys) {
+        update: function (keys) {
             mockResponse = _.extend(mockResponse, keys);
+            if (!id) {
+                use();
+            }
+        },
+        clear: function () {
+            if (id) {
+                $.mockjax.clear(id);
+                id = null;
+            }
         }
     };
 });

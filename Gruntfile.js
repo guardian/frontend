@@ -83,7 +83,7 @@ module.exports = function (grunt) {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
         if (!options.isDev) {
-            grunt.task.run('shell:jspmBundleStatic');
+            grunt.task.run('shell:jspmBundleStatic', 'jspmBundleFaciaTool');
         }
 
         if (options.isDev) {
@@ -115,6 +115,7 @@ module.exports = function (grunt) {
     grunt.registerTask('prepare', ['jspmInstall']);
 
     grunt.registerTask('jspmInstall', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool']);
+    grunt.registerTask('jspmBundleFaciaTool', ['shell:jspmBundleFaciaToolCollections', 'shell:jspmBundleFaciaToolConfig']);
 
     /**
      * compile:js:<requiretask> tasks. Generate one for each require task
