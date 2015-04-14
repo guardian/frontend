@@ -1,4 +1,5 @@
 define([
+    'common/utils/_',
     'qwery',
     'common/utils/$',
     'common/utils/config',
@@ -7,6 +8,7 @@ define([
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/dfp'
 ], function (
+    _,
     qwery,
     $,
     config,
@@ -18,7 +20,7 @@ define([
 
     function MostPopular() {
         mediator.emit('register:begin', 'popular-in-section');
-        this.hasSection = config.page && config.page.section && config.page.section !== 'global';
+        this.hasSection = config.page && config.page.section && !_.contains(['info', 'global'], config.page.section);
         this.endpoint = '/most-read' + (this.hasSection ? '/' + config.page.section : '') + '.json';
     }
 
