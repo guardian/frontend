@@ -43,6 +43,7 @@
     "karma-firefox-launcher": "0.1.4",
     "karma-html2js-preprocessor": "0.1.0",
     "karma-jasmine": "0.3.5",
+    "karma-jspm": "rich-nguyen/karma-jspm.git#1.1.5",
     "karma-phantomjs-launcher": "0.1.4",
     "karma-requirejs": "0.2.2",
     "karma-script-launcher": "0.1.0",
