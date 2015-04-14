@@ -19,7 +19,7 @@ define([
 ) {
 
     function MostPopular() {
-        // This is not going to evolve into a random list of sections. If anyone wants more than these 2 then 
+        // This is not going to evolve into a random list of sections. If anyone wants more than these 2 then
         // they get to comission the work to have it go through the entire tooling chain so that a section has a
         // property that tells us whether it shows most popular or not.
         // Don't even come ask...
