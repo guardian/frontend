@@ -1,5 +1,7 @@
 package controllers
 
+import java.net.URI
+
 import com.google.inject.Inject
 import common.ExecutionContexts
 import idapiclient.IdApiClient
@@ -23,13 +25,13 @@ class SaveContentController @Inject() ( api: IdApiClient,
     val idRequest = identityRequestParser(request)
     val userId = request.user.getId()
 
-    (idRequest.returnUrl, idRequest.shortUrl) match {
-      case (Some(returnUrl), Some(shortUrl) ) => {
+    (idRequest.returnUrl, idRequest.shortUrl, idRequest.pageId) match {
+      case (Some(returnUrl), Some(shortUrl), Some(pageId) ) => {
         val prefsResponse = api.syncedPrefs(request.user.auth)
         savedArticleService.getOrCreateArticlesList(prefsResponse) map {
           case Right(prefs) =>
             if (!prefs.contains(shortUrl)) {
-              val savedArticles = prefs.addArticle(returnUrl, shortUrl)
+              val savedArticles = prefs.addArticle(pageId, shortUrl)
               api.saveArticle(userId, request.user.auth, savedArticles)
             }
           case Left(errors) => logger.error(errors.toString)
