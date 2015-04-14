@@ -85,7 +85,15 @@
     height: 82px;
     overflow: hidden;
     margin-left: -5px;
-    margin-right: -10px;
+    margin-right: -5px;
+    margin-bottom: -24px;
+
+    .fc-item--has-sublinks-1 &,
+    .fc-item--has-sublinks-2 &,
+    .fc-item--has-sublinks-3 &,
+    .fc-item--has-sublinks-4 & {
+        margin-bottom: 0;
+    }
 }
 
 .fc-item__liveblog-blocks__inner {
