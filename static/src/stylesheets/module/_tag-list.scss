@@ -1,9 +1,7 @@
 .button--tag {
     margin-right: $gs-gutter / 5;
     margin-bottom: $gs-row-height / 4.5;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @include ellipsis();
     max-width: gs-span(4);
 
     @include mq(leftCol) {

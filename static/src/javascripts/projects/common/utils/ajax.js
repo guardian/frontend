@@ -20,7 +20,7 @@ define([
             params.crossOrigin = true;
         }
 
-        if (config.page.section === 'money' && config.switches.imgix) {
+        if (!!config && config.page.section === 'money' && config.switches.imgix) {
             if (!!params.data) {
                 params.data.inImgixTest = true;
             } else {

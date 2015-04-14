@@ -198,7 +198,6 @@ define([
         this.s.prop60    = detect.isFireFoxOSApp() ? 'firefoxosapp' : null;
 
         this.s.prop19     = platform;
-        this.s.eVar19     = platform;
 
         this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
         this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';

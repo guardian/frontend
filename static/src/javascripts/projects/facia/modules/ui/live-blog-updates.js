@@ -25,6 +25,7 @@ define([
         numDisplayedBlocks = 4,
         blockHeightPx = 44,
 
+        animateDelaySecs = 3,
         refreshSecs = 60,
         refreshDecay = 2,
         refreshMaxTimes = 3,
@@ -46,6 +47,12 @@ define([
             text: _.compact([block.title, block.body.slice(0, 200)]).join('. '),
             index: index + 1
         });
+    }
+
+    function cssTransformRules(offset) {
+        return ('-webkit-transform: translate3d(0, -{{offset}}px, 0);' +
+                    '-ms-transform: translate3d(0, -{{offset}}px, 0);' +
+                        'transform: translate3d(0, -{{offset}}px, 0)').replace(/{{offset}}/g, offset || 0);
     }
 
     function renderBlocks(articleId, targets, blocks, oldBlockDate) {
@@ -71,17 +78,19 @@ define([
                         .value()
                         .join(''),
 
-                    el = bonzo.create(template(blocksTemplate, {
-                        newBlocksHeight: numNewBlocks * blockHeightPx,
-                        blocksHtml: blocksHtml
-                    }));
+                    el = bonzo.create(
+                        '<div class="fc-item__liveblog-blocks__inner u-faux-block-link__promote"' +
+                            ' style="' + cssTransformRules(numNewBlocks * blockHeightPx) + '">' +
+                            blocksHtml +
+                        '</div>'
+                    );
 
                 bonzo(element).empty().addClass(blocksClassName).append(el);
 
                 if (numNewBlocks) {
                     setTimeout(function () {
-                        bonzo(el).removeAttr('style');
-                    }, 1000);
+                        bonzo(el).attr('style', cssTransformRules(0));
+                    }, animateDelaySecs * 1000);
                 }
             });
         });

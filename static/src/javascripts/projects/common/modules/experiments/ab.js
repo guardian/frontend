@@ -17,6 +17,7 @@ define([
     'common/modules/experiments/tests/across-the-country',
     'common/modules/experiments/tests/adblock-message',
     'common/modules/experiments/tests/mt-sticky-bottom',
+    'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/tests/headlines'
 ], function (
     raven,
@@ -37,6 +38,7 @@ define([
     AcrossTheCountry,
     AdblockMessage,
     MtStickyBottom,
+    SaveForLater,
     Headline
 ) {
 
@@ -53,6 +55,7 @@ define([
             new AcrossTheCountry(),
             new AdblockMessage(),
             new MtStickyBottom(),
+            new SaveForLater(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             })
