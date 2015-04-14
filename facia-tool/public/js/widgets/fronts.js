@@ -327,13 +327,16 @@ define([
         mediator.emit('front:disposed', this);
     };
 
-    function isOnlyArticle(item, front) {
-        var only = true;
-        _.find(front.collections(), function (collection) {
-            collection.eachArticle(function (article) {
-                only = only && article.id() === item.id();
+    function isOnlyArticle (item, front) {
+        var only = true,
+            containingCollection = _.find(front.collections(), function (collection) {
+                return _.find(collection.groups, function (group) {
+                    return group === item.group;
+                });
             });
-            return !only;
+
+        containingCollection.eachArticle(function (article) {
+            only = only && article.id() === item.id();
         });
         return only;
     }
