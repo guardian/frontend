@@ -2,7 +2,7 @@
 
 @import dfp.{Keyword, Series}
 @import layout.MetaDataHeader
-@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList}
+@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, DynamicPackage}
 @import views.html.fragments.containers.facia_cards.{containerMetaData, mostPopularContainer, navListContainer, navMediaListContainer, standardContainer}
 @import views.support.GetClasses
 
@@ -28,6 +28,17 @@
              }
              data-component="@componentName"
              aria-expanded="true">
+
+             @containerDefinition.container match {
+                 case Dynamic(DynamicPackage) => {
+                     <style scoped>
+                        @Html(conf.Static.css.head(Some("story-package")))
+                     </style>
+                 }
+                 
+                 case _ => {}
+             }
+
         <div class="fc-container__inner">
             @containerDefinition.container match {
                 case _: Dynamic | _: Fixed => {

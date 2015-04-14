@@ -2,6 +2,7 @@ package conf
 
 import common._
 import conf.Configuration.environment
+import org.joda.time
 import org.joda.time._
 import play.api.Play.current
 import play.api.libs.ws.WS
@@ -192,7 +193,7 @@ object Switches {
   val LzAds = Switch("Commercial", "lz-ads", "Lazy loading ads.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 13)
   )
-  
+
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
@@ -294,6 +295,10 @@ object Switches {
     "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
     safeState = Off, sellByDate = never)
 
+  val LCMortgageFeedSwitch = Switch("Commercial", "lc-mortgages",
+    "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
+    safeState = Off, sellByDate = never)
+
   val GuBookshopFeedsSwitch = Switch("Commercial", "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
@@ -352,7 +357,21 @@ object Switches {
     safeState = Off, new LocalDate(2015, 4, 24)
   )
 
+  val SendExpiringSwitchesEmail = Switch("Monitoring", "expiring-switches-email",
+    "Send an email when switches are expiring soon",
+    safeState = Off, new LocalDate(2015, 5, 6)
+  )
+
+
   // Features
+  val ABTestHeadlines = Switch(
+    "Feature",
+    "a-b-test-headlines",
+    "A/B test headlines",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 1)
+  )
+
   val InternationalEditionSwitch = Switch(
     "Feature",
     "international-edition",
@@ -375,8 +394,8 @@ object Switches {
   )
 
   val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
-    "If this switch is on the “Become a Member” button will be broken",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 15)
+    "If this switch is on the “Become a Member” button will be visible.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
@@ -535,10 +554,25 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
   )
 
+  val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
+    "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
+    safeState = Off, sellByDate = never
+  )
+
   val ABLiveblogBlocksOnFronts = Switch("A/B Tests", "ab-liveblog-blocks-on-fronts",
     "Switch for the latest liveblog blocks on fronts A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 23)
   )
+
+  val ABHeadlineSwitches = (1 to 10) map { n =>
+    Switch(
+      "A/B Tests",
+      s"ab-headline$n",
+      s"Switch for headline $n",
+      safeState = On,
+      sellByDate = new LocalDate(2015, 6, 10)
+    )
+  }
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",

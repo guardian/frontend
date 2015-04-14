@@ -9,7 +9,9 @@ import awswrappers.cloudwatch._
 import scala.concurrent.Future
 
 object MemoryMetrics extends ExecutionContexts {
-  def memory = withErrorLogging(Future.traverse(loadBalancers) { loadBalancer =>
+  private def jvmLoadBalancers = loadBalancers.diff(List(LoadBalancer("frontend-router"), LoadBalancer("frontend-image")).flatten)
+
+  def memory = withErrorLogging(Future.traverse(jvmLoadBalancers) { loadBalancer =>
     val applicationName: Dimension = new Dimension().withName("ApplicationName").withValue(loadBalancer.project)
     for {
       usedHeapMemory <- euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()

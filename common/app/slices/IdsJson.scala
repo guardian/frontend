@@ -15,6 +15,12 @@ object IdsJson {
   ))
 
   def dynamic(ids: Seq[String]) = Json.stringify(Json.toJson(
-    ids.map(id => ContainerJsonConfig(id, Some(DynamicGroups)))
+    ids.map(id => 
+      if (id == "dynamic/package") {
+        ContainerJsonConfig(id, None)
+      } else {
+        ContainerJsonConfig(id, Some(DynamicGroups))
+      }
+    )
   ))
 }
