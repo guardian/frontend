@@ -1,14 +1,8 @@
-define([
-    'bonzo',
-    'common/utils/_',
-    'common/modules/crosswords/helpers',
-    'common/modules/crosswords/thumbnails'
-], function (
-    bonzo,
-    _,
-    helpers,
-    thumbs
-) {
+import bonzo from 'bonzo';
+import _ from 'common/utils/_';
+import helpers from 'es6/projects/common/modules/crosswords/helpers';
+import thumbs from 'es6/projects/common/modules/crosswords/thumbnails';
+
     var fixture = [
         ["", "", "", "H", ""],
         ["", "", "", "I", ""],
@@ -59,4 +53,3 @@ define([
             });
         });
     });
-});
