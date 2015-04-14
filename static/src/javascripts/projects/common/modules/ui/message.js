@@ -51,7 +51,7 @@ define([
         $('.js-site-message-copy').html(message);
 
         if (this.siteMessageLinkName) {
-           siteMessage.attr('data-link-name', this.siteMessageLinkName);
+            siteMessage.attr('data-link-name', this.siteMessageLinkName);
         }
         if (this.siteMessageCloseBtn) {
             $('.site-message__close-btn', '.js-site-message').attr('data-link-name', this.siteMessageCloseBtn);
