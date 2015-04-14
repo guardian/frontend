@@ -375,7 +375,7 @@ object Switches {
   )
 
   val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
-    "If this switch is on the “Become a Member” button will be broken",
+    "If this switch is on the “Become a Member” button will be visible.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
