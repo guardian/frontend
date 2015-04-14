@@ -10,10 +10,15 @@ object AdminConfiguration {
   val configuration = ConfigurationFactory.getConfiguration("frontend", "env")
 
   object pa {
-    lazy val apiKey = configuration.getStringProperty("pa.api.key")
-        .getOrElse(throw new RuntimeException("unable to load pa api key"))
+    lazy val footballApiKey = configuration.getStringProperty("pa.api.key")
+        .getOrElse(throw new RuntimeException("unable to load pa football api key"))
 
-    lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
+    lazy val cricketApiKey = configuration.getStringProperty("pa.cricket.api.key")
+        .getOrElse(throw new RuntimeException("unable to load pa cricket api key"))
+
+    lazy val footballHost = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
+    lazy val cricketHost = "http://cricket.api.press.net/v1"
+    lazy val cricketExplorer = "http://developer.press.net/io-docs"
   }
 
   lazy val configKey = configuration.getStringProperty("admin.config.file").getOrElse(throw new RuntimeException("Config file name is not setup"))
