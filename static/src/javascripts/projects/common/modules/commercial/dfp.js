@@ -83,6 +83,8 @@ define([
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         new StickyMpu($adSlot).create();
                     }
+                } else {
+                    placeUnderMostPopular($adSlot);
                 }
             },
             '1,1': function (event, $adSlot) {
@@ -94,16 +96,30 @@ define([
                         $parent.addClass('fc-slice__item--no-mpu');
                 }
             },
-            '300,1050': function () {
+            '300,1050': function (event, $adSlot) {
                 // remove geo most popular
                 geoMostPopular.whenRendered.then(function (geoMostPopular) {
                     fastdom.write(function () {
                         bonzo(geoMostPopular.elem).remove();
                     });
                 });
+                placeUnderMostPopular($adSlot);
+            },
+            '300,600': function (event, $adSlot) {
+                placeUnderMostPopular($adSlot);
             }
         },
 
+        placeUnderMostPopular = function ($adSlot) {
+            var mtStickyNavTest = ab.getParticipations().MtStickyNav,
+                $secondaryColumn = $('.js-secondary-column');
+
+            if (ab.testCanBeRun('MtStickyNav') &&
+                mtStickyNavTest && mtStickyNavTest.variant === 'variant' && $adSlot.hasClass('ad-slot--right')) {
+                $('.right-most-popular', $secondaryColumn).css('margin-top', '0').append($adSlot);
+                $('.component--rhc .open-cta', $secondaryColumn).css('margin-top', '0');
+            }
+        },
         /**
          * Initial commands
          */
