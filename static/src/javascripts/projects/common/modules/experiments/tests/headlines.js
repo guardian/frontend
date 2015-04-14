@@ -17,7 +17,7 @@ define([
         this.description = 'A/B test for headline number ' + n;
         this.audience = 0.01;
         this.audienceOffset = 0.01 * n;
-        this.successMeasure = '';
+        this.successMeasure = 'Greater page views per visit';
         this.audienceCriteria = '1% of our audience, only on fronts';
         this.dataLinkNames = '';
         this.idealOutcome = '';
