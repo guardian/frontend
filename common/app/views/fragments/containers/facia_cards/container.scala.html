@@ -31,7 +31,7 @@
 
              @containerDefinition.container match {
                  case Dynamic(DynamicPackage) => {
-                     <style>
+                     <style scope>
                         @Html(conf.Static.css.head(Some("story-package")))
                      </style>
                  }
