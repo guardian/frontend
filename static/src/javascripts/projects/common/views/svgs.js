@@ -4,18 +4,18 @@
 
 define([
     'common/utils/_',
-    'inlineSvg!svgs/comment-16!icon',
-    'inlineSvg!svgs/marque-36!icon',
-    'inlineSvg!svgs/marque-54!icon',
-    'inlineSvg!svgs/market-down!icon',
-    'inlineSvg!svgs/market-up!icon',
-    'inlineSvg!svgs/market-same!icon',
-    'inlineSvg!svgs/arrow!icon',
-    'inlineSvg!svgs/arrow-down!icon',
-    'inlineSvg!svgs/logo-guardian!logo',
-    'inlineSvg!svgs/logo-soulmates!commercial',
-    'inlineSvg!svgs/close-central!icon',
-    'inlineSvg!svgs/arrow-white-right!icon'
+    'svgs/icon/comment-16!svg',
+    'svgs/icon/marque-36!svg',
+    'svgs/icon/marque-54!svg',
+    'svgs/icon/market-down!svg',
+    'svgs/icon/market-up!svg',
+    'svgs/icon/market-same!svg',
+    'svgs/icon/arrow!svg',
+    'svgs/icon/arrow-down!svg',
+    'svgs/logo/logo-guardian!svg',
+    'svgs/commercial/logo-soulmates!svg',
+    'svgs/icon/close-central!svg',
+    'svgs/icon/arrow-white-right!svg'
 ], function (
     _,
     commentCount16icon,
