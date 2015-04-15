@@ -73,7 +73,7 @@ object Switches {
 
   // Switch names can be letters numbers and hyphens only
 
-  private lazy val never = new LocalDate(2100, 1, 1)
+  lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
   val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
@@ -497,6 +497,10 @@ object Switches {
   val QuizScoresService = Switch("Feature", "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 16))
+
+  val ServerSideTests = Switch("Feature", "server-side-tests",
+    "Enables the server side testing system",
+    safeState = Off, sellByDate = never)
 
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
     "If switched on, any user registrations from a known tor esit node will be logged",
