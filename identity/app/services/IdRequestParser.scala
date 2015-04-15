@@ -1,11 +1,11 @@
 package services
 
-import com.google.inject.{Inject, Singleton}
-import conf.Switches
 import idapiclient.TrackingData
-import jobs.TorExitNodeList
 import play.api.mvc.RequestHeader
+import com.google.inject.{Inject, Singleton}
 import utils.RemoteAddress
+import jobs.TorExitNodeList
+import conf.Switches
 
 @Singleton
 class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddress {
