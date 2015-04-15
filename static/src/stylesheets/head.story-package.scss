@@ -120,6 +120,16 @@
     @include kicker-override(podcast, colour(media-default));
     @include kicker-override(review, colour(review-accent));
 
+    // Item Level
+    .fc-item--three-quarters-tall-tablet,
+    .fc-item--full-media-75-tablet {
+        @include mq(tablet) {
+            .fc-item__standfirst {
+                display: block !important;
+            }
+        }
+    }
+
     // Slice Level
     .fc-slice--qqqtall-q {
         .fc-item--standard-tablet {
@@ -138,6 +148,7 @@
                     display: block;
                 }
             }
+
             .fc-slice__item:first-of-type {
                 [class*="fc-item--has-sublinks"] {
                     .fc-item__standfirst {
@@ -148,10 +159,6 @@
 
             // This targets the first item in the right-hand column only
             .fc-slice__item:nth-of-type(n+2) {
-                .fc-item--has-cutout .fc-item__container {
-                    padding-bottom: 0;
-                }
-
                 .fc-sublink:nth-of-type(n+2) {
                     display: none;
                 }
