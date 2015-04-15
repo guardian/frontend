@@ -11,7 +11,7 @@ define([
     return function () {
         this.id = 'AcrossTheCountry';
         this.start = '2015-03-19';
-        this.expiry = '2015-04-19';
+        this.expiry = '2015-04-26';
         this.author = 'Grant Klopper';
         this.description = 'Checking effect of moving "across the country" container higher up the US front';
         this.audience = 0.5;

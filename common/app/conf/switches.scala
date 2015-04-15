@@ -511,7 +511,7 @@ object Switches {
 
   val ABAcrossTheCountry = Switch("A/B Tests", "ab-across-the-country",
     "Tests container placement on the US front",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 19)
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
   )
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
