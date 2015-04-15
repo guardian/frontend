@@ -124,17 +124,14 @@
     z-index: -1;
 }
 
-.fc-item__liveblog-block__time {
-    font-weight: bold;
-}
-
 .fc-item__liveblog-block--new .fc-item__liveblog-block__time:before {
+    font-weight: bold;
     content: 'Updated';
     margin-right: $gs-gutter / 5;
 }
 
 .fc-item__liveblog-block--old .fc-item__liveblog-block__time {
-    color: mix(#ffffff, colour(live-default), 50%);
+    color: mix(#ffffff, colour(live-default), 70%);
 }
 
 .fc-item__liveblog-block__text {

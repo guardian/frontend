@@ -7,6 +7,8 @@ define([
     'common/utils/storage',
     'common/modules/ui/relativedates',
     'common/utils/template',
+    'common/utils/mediator',
+    'common/utils/detect',
     'text!facia/views/liveblog-blocks.html',
     'text!facia/views/liveblog-block.html'
 ], function (
@@ -18,6 +20,8 @@ define([
     storage,
     relativeDates,
     template,
+    mediator,
+    detect,
     blocksTemplate,
     blockTemplate
 ) {
@@ -25,7 +29,7 @@ define([
         numDisplayedBlocks = 4,
         blockHeightPx = 42,
 
-        animateDelaySecs = 2,
+        animateDelayMs = 1000,
         refreshSecs = 60,
         refreshDecay = 2,
         refreshMaxTimes = 0,
@@ -37,6 +41,7 @@ define([
         articleIdAttribute = 'data-article-id',
         storageKey = 'gu.liveblog.block-dates',
 
+        veiwportHeightPx = detect.getViewport().height,
         elementsById = {};
 
     function renderBlock(articleId, block, index) {
@@ -84,16 +89,27 @@ define([
                             blocksHtml +
                         '</div>'
                     );
-
+ 
                 bonzo(element).empty().addClass(blocksClassName).append(el);
 
-                if (numNewBlocks) {
-                    setTimeout(function () {
-                        bonzo(el).attr('style', cssTransformRules(0));
-                    }, animateDelaySecs * 1000);
+                if (numNewBlocks && !maybeAnimateBlocks(el[0])) {
+                    mediator.on('window:scroll', _.debounce(function() {
+                        return maybeAnimateBlocks(el[0], true);
+                    }, animateDelayMs));
                 }
             });
         });
+    }
+
+    function maybeAnimateBlocks(el, immediate) {
+        var top = el.getBoundingClientRect().top;
+
+        if (top > 0 && top < veiwportHeightPx) {
+            setTimeout(function () {
+                bonzo(el).attr('style', cssTransformRules(0));
+            }, immediate ? 0 : animateDelayMs);
+            return true;
+        }
     }
 
     function sanitizeBlocks(blocks) {
