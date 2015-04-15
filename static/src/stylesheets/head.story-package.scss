@@ -121,8 +121,7 @@
     @include kicker-override(review, colour(review-accent));
 
     // Item Level
-    .fc-item--three-quarters-tall-tablet,
-    .fc-item--full-media-75-tablet {
+    .fc-item--three-quarters-tall-tablet {
         @include mq(tablet) {
             .fc-item__standfirst {
                 display: block !important;
