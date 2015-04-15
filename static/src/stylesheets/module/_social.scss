@@ -86,9 +86,7 @@ category: Common
     max-width: 100%;
     width: auto;
     height: 32px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @include ellipsis();
 
     &,
     &:hover,

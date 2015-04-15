@@ -61,51 +61,6 @@
     .fc-sublink__title:before {
         border-color: mix($c-headline, colour(live-default), 20%);
     }
-
-    .fc-item__liveblog-blocks {
-        height: 82px;
-        overflow: hidden;
-    }
-
-    .fc-item__liveblog-blocks__inner {
-        @include transition(transform .5s ease-in-out);
-    }
-
-    .fc-item__liveblog-block {
-        display: block;
-        position: relative;
-        @include fs-headline(1);
-        color: #ffffff;
-        overflow: hidden;
-        height: $gs-baseline * 3 + 2;
-        margin-bottom: $gs-baseline / 2;
-    }
-
-    .fc-item__liveblog-block__more {
-        position: absolute;
-        bottom: $gs-baseline / 6;
-        right: 0;
-        width: $gs-gutter * .75;
-        padding-left: $gs-gutter / 10;
-        background-color: colour(live-default);
-    }
-
-    .fc-item__liveblog-block__time {
-        font-weight: bold;
-    }
-
-    .fc-item__liveblog-block--new .fc-item__liveblog-block__time:before {
-        content: 'Updated';
-        margin-right: $gs-gutter / 5;
-    }
-
-    .fc-item__liveblog-block--old .fc-item__liveblog-block__time {
-        color: mix(#ffffff, colour(live-default), 50%);
-    }
-
-    .fc-item__liveblog-block__text {
-        color: mix(#ffffff, colour(live-default), 80%);
-    }
 }
 
 .tone-live--sublink {
@@ -127,4 +82,52 @@
 
 .tone-live--most-popular .fc-item__kicker {
     color: colour(live-accent);
+}
+
+.fc-item__liveblog-blocks {
+    height: 82px;
+    overflow: hidden;
+}
+
+.fc-item__liveblog-blocks__inner {
+    -webkit-transition: -webkit-transform .5s ease-in-out;
+    -moz-transition: -moz-transform .5s ease-in-out;
+    -o-transition: -o-transform .5s ease-in-out;
+    transition: transform .5s ease-in-out;
+}
+
+.fc-item__liveblog-block {
+    display: block;
+    position: relative;
+    @include fs-headline(1);
+    color: #ffffff;
+    overflow: hidden;
+    height: $gs-baseline * 3 + 2;
+    margin-bottom: $gs-baseline / 2;
+}
+
+.fc-item__liveblog-block__more {
+    position: absolute;
+    bottom: $gs-baseline / 6;
+    right: 0;
+    width: $gs-gutter * .75;
+    padding-left: $gs-gutter / 10;
+    background-color: colour(live-default);
+}
+
+.fc-item__liveblog-block__time {
+    font-weight: bold;
+}
+
+.fc-item__liveblog-block--new .fc-item__liveblog-block__time:before {
+    content: 'Updated';
+    margin-right: $gs-gutter / 5;
+}
+
+.fc-item__liveblog-block--old .fc-item__liveblog-block__time {
+    color: mix(#ffffff, colour(live-default), 50%);
+}
+
+.fc-item__liveblog-block__text {
+    color: mix(#ffffff, colour(live-default), 80%);
 }

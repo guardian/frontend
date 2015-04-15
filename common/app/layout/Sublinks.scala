@@ -27,7 +27,7 @@ object Sublinks {
     case ListItem | MediaList | Fluid => unit(0)
     case FullMedia100 => InclusiveRange(2, 4)
     case Standard | Third => fromZero(2)
-    case ThreeQuarters | ThreeQuartersRight => fromZero(3)
+    case ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall => fromZero(3)
   }
 
   def takeSublinks(supporting: Seq[FaciaContent], itemClasses: ItemClasses) = {

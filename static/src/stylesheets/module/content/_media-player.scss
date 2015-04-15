@@ -603,8 +603,7 @@ $ima-controls-height: 70px;
 
 .vjs-overlay--small-title {
     text-align: left;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include ellipsis();
     @include fs-headline(2);
     position: absolute;
     $height: get-line-height(headline, 2);
@@ -761,9 +760,7 @@ $ima-controls-height: 70px;
         color: #ffffff;
         display: inline-block;
         max-width: 90%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        @include ellipsis();
         &:hover {
             color: colour(media-default);
         }

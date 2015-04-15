@@ -9,6 +9,7 @@ object Container extends Logging {
   val all: Map[String, Container] = Map(
     ("dynamic/fast", Dynamic(DynamicFast)),
     ("dynamic/slow", Dynamic(DynamicSlow)),
+    ("dynamic/package", Dynamic(DynamicPackage)),
     ("nav/list", NavList),
     ("nav/media-list", NavMediaList),
     ("news/most-popular", MostPopular)
@@ -34,6 +35,7 @@ object Container extends Logging {
   }
 
   def customClasses(container: Container) = container match {
+    case Dynamic(DynamicPackage) => Set("fc-container--story-package")
     case Fixed(fixedContainer) => fixedContainer.customCssClasses
     case _ => Nil
   }
