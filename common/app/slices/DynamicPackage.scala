@@ -1,6 +1,5 @@
 package slices
 
-import common.Seqs._
 import slices.Story._
 
 object DynamicPackage extends DynamicContainer {
