@@ -25,7 +25,7 @@ define([
     }
 
     SaveForLater.prototype.init = function () {
-        if (identity.isUserLoggedIn()) {                                                                                                  1
+        if (identity.isUserLoggedIn()) {
             this.getSavedArticles();
         } else {
             var url = config.page.idUrl + '/prefs/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
