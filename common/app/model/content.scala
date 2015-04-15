@@ -744,6 +744,10 @@ class Interactive(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val metaData: Map[String, JsValue] = super.metaData + ("contentType" -> JsString(contentType))
   override lazy val isImmersive: Boolean = displayHint.contains("immersive")
+  override def cards: List[(String, String)] = super.cards ++ List(
+    "twitter:title" -> linkText,
+    "twitter:card" -> "summary_large_image"
+  )
 }
 
 object Interactive {
