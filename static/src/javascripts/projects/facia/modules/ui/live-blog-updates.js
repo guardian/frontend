@@ -89,11 +89,11 @@ define([
                             blocksHtml +
                         '</div>'
                     );
- 
+
                 bonzo(element).empty().addClass(blocksClassName).append(el);
 
                 if (numNewBlocks && !maybeAnimateBlocks(el[0])) {
-                    mediator.on('window:scroll', _.debounce(function() {
+                    mediator.on('window:scroll', _.debounce(function () {
                         return maybeAnimateBlocks(el[0], true);
                     }, animateDelayMs));
                 }
