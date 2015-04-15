@@ -12,7 +12,7 @@ module.exports = function(config) {
         jspm: {
             moduleIDs: ['test/spec/common/**/*.spec.js'],
             modulePath: 'javascripts',
-            config: 'jspm-config.js'
+            config: 'systemjs-config.js'
         },
 
         // list of files / patterns to load in the browser
