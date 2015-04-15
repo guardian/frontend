@@ -51,7 +51,7 @@ define([
                     self.userData = resp.savedArticles;
                 }
 
-                if (self.hasUserSavedArticle(self.userData.articles, config.page.shortUrl)) {
+                if (self.hasUserSavedArticle(self.userData.articles, self.shortUrl)) {
                     self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
                 } else {
                     self.$saver.html('<a class="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>');
