@@ -1,6 +1,7 @@
 package controllers
 
 import acl.Table
+import auth.ExpiringActions
 import play.api.libs.json.Json
 import play.api.mvc.{Controller, Action}
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -15,8 +16,8 @@ case class FaciaToolAccessControlList(
 )
 
 object AccessControlListController extends Controller {
-  def test(email: String) = Action.async { request =>
-    Table.hasBreakingNewsAccess(email) map { hasAccess =>
+  def test() = ExpiringActions.ExpiringAuthAction.async { request =>
+    Table.hasBreakingNewsAccess(request.user.email) map { hasAccess =>
       Ok(Json.toJson(FaciaToolAccessControlList(
         breakingNews = hasAccess
       )))

@@ -70,4 +70,4 @@ POST          /stories-visible/*containerType   controllers.StoriesVisibleContro
 
 #Vanity URL
 GET           /breaking-news                    controllers.VanityRedirects.breakingnews
-GET           /acl-test                         controllers.AccessControlListController.test(email: String)
+GET           /acl                              controllers.AccessControlListController.test()
