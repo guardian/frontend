@@ -11,8 +11,7 @@ import services.ConfigAgentLifecycle
 object Global extends WithFilters(Gzipper)
   with GlobalSettings
   with CloudWatchApplicationMetrics
-  with ConfigAgentLifecycle
-  with BreakingNewsCollectionsAutoRefresh.Lifecycle {
+  with ConfigAgentLifecycle {
   lazy val devConfig = Configuration.from(Map("session.secure" -> "false"))
 
   override lazy val applicationName = "frontend-facia-tool"
