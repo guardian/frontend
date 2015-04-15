@@ -1,22 +1,26 @@
 package model.facia
 
-import com.gu.contentapi.client.model._
-import com.gu.facia.api.models.CuratedContent
-import com.gu.facia.api.models._
+
+import com.gu.facia.api.models.{CuratedContent, _}
 import com.gu.facia.api.utils._
-import model.{SeoData, FrontProperties}
 import org.joda.time.DateTime
 import play.api.libs.json._
 import services.CollectionConfigWithId
+import com.gu.contentapi.client.model.Reference
+import com.gu.contentapi.client.model.Podcast
+import com.gu.contentapi.client.model.Tag
+import com.gu.contentapi.client.model.Asset
+import com.gu.contentapi.client.model.Element
+import com.gu.contentapi.client.model.Content
 
 object FapiJsonFormats {
   /* Content API Formats */
-  implicit val contentApiReferenceFormat = Json.format[com.gu.contentapi.client.model.Reference]
-  implicit val contentApiPodcastFormat = Json.format[com.gu.contentapi.client.model.Podcast]
-  implicit val contentApiTagFormat = Json.format[com.gu.contentapi.client.model.Tag]
-  implicit val contentApiAssetFormat = Json.format[com.gu.contentapi.client.model.Asset]
-  implicit val contentApiElementFormat = Json.format[com.gu.contentapi.client.model.Element]
-  implicit val contentApiContentFormat = Json.format[com.gu.contentapi.client.model.Content]
+  implicit val contentApiReferenceFormat = Json.format[Reference]
+  implicit val contentApiPodcastFormat = Json.format[Podcast]
+  implicit val contentApiTagFormat = Json.format[Tag]
+  implicit val contentApiAssetFormat = Json.format[Asset]
+  implicit val contentApiElementFormat = Json.format[Element]
+  implicit val contentApiContentFormat = Json.format[Content]
 
   implicit val frontImageFormat = Json.format[FrontImage]
   implicit object frontPriorityFormat extends Format[FrontPriority] {
