@@ -30,7 +30,7 @@ module.exports = function(grunt, options) {
                 videojsembed:         'components/videojs-embed/videojs.embed',
                 videojsima:           'components/videojs-ima/videojs.ima',
                 videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
-                videojsplaylist:      'components/videojs-playlist-audio/videojs.playlist',
+                videojsplaylist:      'components/videojs-playlist-audio',
                 // plugins
                 text:                 'components/requirejs-text/text',
                 inlineSvg:            'projects/common/utils/inlineSvg'
