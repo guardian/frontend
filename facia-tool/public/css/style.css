@@ -1984,6 +1984,9 @@ hr {
 .minor-alert {
     color: #304ffe;
 }
+.small-text {
+    font-size: 85%;
+}
 
 .buttons button {
     height: 26px;
