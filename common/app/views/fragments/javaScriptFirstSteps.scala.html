@@ -243,7 +243,7 @@
                 ipad1 & 2 (unfortunately this also includes ipad mini) - mitigate that by checking older ios version too.
                 Apple seems to purposefully make this a difficult thing to do.
             *@
-            var isOlderIpad = !isIphone && window.devicePixelRatio === 1 || /.*iPad; CPU OS ([345])_\d+.*/.test(navigator.userAgent);
+            var isOlderIpad = !isIphone && window.devicePixelRatio === 1 || /.*iPad; CPU OS ([3456])_\d+.*/.test(navigator.userAgent);
 
 
             if ( isOlderIpad ) {
