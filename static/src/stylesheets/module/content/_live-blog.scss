@@ -26,10 +26,10 @@ $block-padding-right: $gs-gutter;
         margin-left: 0;
         width: $right-column;
         min-height: gs-height(1)*1.5;
-        position: initial;
+        position: static;
 
         .meta__numbers {
-            position: initial;
+            position: static;
             border-top: 1px dotted colour(neutral-5);
             border-bottom: 0;
         }
