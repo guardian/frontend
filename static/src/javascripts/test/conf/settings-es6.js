@@ -7,7 +7,7 @@ module.exports = function(config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jspm', 'jasmine'],
+        frameworks: ['jspm', 'jasmine', 'phantomjs-shim'],
 
         jspm: {
             moduleIDs: ['test/spec/common/**/*.spec.js'],
@@ -59,9 +59,7 @@ module.exports = function(config) {
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         // Use Firefox as it's the only browser available on Travis
-        browsers: ['Chrome'],
-        // TODO:
-        // browsers: ['PhantomJS'],
+        browsers: ['PhantomJS'],
 
 
         // Continuous Integration mode
