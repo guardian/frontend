@@ -102,9 +102,9 @@ define([
     }
 
     function maybeAnimateBlocks(el, immediate) {
-        var top = el.getBoundingClientRect().top;
+        var vPosition = el.getBoundingClientRect().top;
 
-        if (top > 0 && top < veiwportHeightPx) {
+        if (vPosition > blockHeightPx * -1 && vPosition < veiwportHeightPx - blockHeightPx) {
             setTimeout(function () {
                 bonzo(el).attr('style', cssTransformRules(0));
             }, immediate ? 0 : animateDelayMs);
