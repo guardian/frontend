@@ -115,7 +115,7 @@ sudo npm -g install grunt-cli
 Ubuntu/Mac:
 ```
 sudo npm -g install jspm
-jspm endpoint config github
+jspm registry config github
 ```
 
 It'll ask for a GitHub access token. Go to GitHub Settings -> Applications and [generate new token](https://github.com/settings/tokens/new). Default scopes are fine.

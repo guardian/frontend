@@ -1,6 +1,6 @@
 /*global FB:false*/
 /* jscs:disable disallowDanglingUnderscores */
-define([''], function () {
+define(function () {
 
     var instance = null,
         scriptId = 'facebook-jssdk';

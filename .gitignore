@@ -57,6 +57,7 @@ static/hash
 static/requirejs
 static/target
 
+static/src/bundles
 static/src/stylesheets/icons/*
 
 ivy-sbt

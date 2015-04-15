@@ -26,10 +26,6 @@
 <link rel="dns-prefetch" href="//oas.theguardian.com" />
 <link rel="dns-prefetch" href="@Configuration.debug.beaconUrl" />
 
-@Static.js.jspmFile(item.section).map { file =>
-    <link rel="subresource" href="@Static(file)" />
-}
-
 
 @* Additional meta data that does not impact rendering speed (and can live at the end of the <head>) *@
 

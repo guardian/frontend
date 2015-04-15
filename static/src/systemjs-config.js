@@ -9,6 +9,7 @@ System.config({
   "paths": {
     "/*": "javascripts/*.js",
     "*": "javascripts/projects/*.js",
+    "bundles/*": "bundles/*.js",
     "test/*": "javascripts/test/*.js",
     "es6/*": "javascripts/es6/*.js",
     "bootstraps/*": "javascripts/bootstraps/*.js",
@@ -51,6 +52,8 @@ System.config({
     "socketio": "bower:socket.io-client@1.1.0",
     "stripe": "public/vendor/stripe/stripe.min",
     "svg": "common/utils/svg",
+    "system-script": "npm:system-script@0.1.8",
+    "systemjs/systemjs": "github:systemjs/systemjs@0.16.7",
     "text": "github:systemjs/plugin-text@0.0.2",
     "videojs": "github:guardian/video.js@4.11.1.1",
     "videojsads": "github:guardian/videojs-contrib-ads@0.4.1",

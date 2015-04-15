@@ -9,7 +9,6 @@ define([
     'common/utils/mediator',
     'common/modules/experiments/ab',
     'common/utils/_'
-
 ], function (
     mediator,
     ab,
@@ -42,7 +41,11 @@ define([
     }
 
     function sendEvent() {
-        require('ophan/ng', function (ophan) {
+        // TODO: Update SystemJS when https://github.com/systemjs/systemjs/issues/404 is fixed
+        // SystemJS doesn't currently support async require inside AMD modules.
+        // Workaround:
+        // require('ophan/ng', function (ophan) {
+        System.amdRequire(['ophan/ng'], function (ophan) {
             ophan.record({
                 register: register,
                 abTestRegister: ab.getAbLoggableObject()
