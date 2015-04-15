@@ -1,13 +1,13 @@
 package slices
 
 object DynamicSlow extends DynamicContainer {
-  override protected def standardSlice(stories: Seq[Story]): Option[Slice] = {
+  override protected def standardSlices(stories: Seq[Story]): Seq[Slice] = {
     val BigsAndStandards(bigs, _) = bigsAndStandards(stories)
 
     if (stories.isEmpty) {
-      None
+      Nil
     } else {
-      Some(if (bigs.length == 0) {
+      Seq(if (bigs.length == 0) {
         Hl4Hl4
       } else if (bigs.length == 1) {
         Hl4Half
