@@ -609,7 +609,7 @@ object Switches {
   )
 
   val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
-    "If this is switched on then lazy load the related and series containers on content pages",
+    "If this is switched on then lazy load the most-popular container on content pages",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
   )
 
