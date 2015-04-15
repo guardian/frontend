@@ -119,21 +119,6 @@ object FapiJsonFormats {
   val curatedContentFormat = Json.format[CuratedContent]
   val supportingCuratedContentFormat = Json.format[SupportingCuratedContent]
 
-  implicit object importanceFormat extends Format[Importance] {
-    def reads(json: JsValue) = (json \ "type").transform[JsString](Reads.JsStringReads) match {
-      case JsSuccess(JsString("CriticalImportance"), _) => JsSuccess(Critical)
-      case JsSuccess(JsString("ImportanceImportance"), _) => JsSuccess(Important)
-      case JsSuccess(JsString("DefaultImportance"), _) => JsSuccess(DefaultImportance)
-      case _ => JsError("Could not convert Importance")
-    }
-
-    def writes(importance: Importance) = importance match {
-      case Critical => JsObject(Seq("type" -> JsString("CriticalImportance")))
-      case Important => JsObject(Seq("type" -> JsString("ImportanceImportance")))
-      case DefaultImportance => JsObject(Seq("type" -> JsString("DefaultImportance")))
-    }
-  }
-
   implicit val groupsFormat = Json.format[Groups]
   implicit val collectionConfigFormat = Json.format[CollectionConfig]
 }
