@@ -36,6 +36,7 @@ System.config({
     "raven": "github:getsentry/raven-js@1.1.18",
     "react": "npm:react@0.12.2",
     "reqwest": "github:ded/reqwest@1.1.5",
+    "socketio": "bower:socket.io-client@1.1.0",
     "stripe": "public/vendor/stripe/stripe.min",
     "svg": "common/utils/svg",
     "text": "github:systemjs/plugin-text@0.0.2",
