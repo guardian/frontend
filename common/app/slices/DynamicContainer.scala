@@ -14,7 +14,7 @@ private [slices] case class BigsAndStandards(
 private [slices] trait DynamicContainer {
   protected def standardSlice(stories: Seq[Story]): Option[Slice]
 
-  private def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])] = {
+  protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])] = {
     val byGroup = segmentByGroup(stories)
 
     val huges = byGroup.getOrElse(3, Seq.empty)
