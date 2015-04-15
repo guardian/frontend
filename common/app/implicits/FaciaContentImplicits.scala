@@ -41,7 +41,7 @@ object FaciaContentImplicits {
       curatedContent => curatedContent.content.tags,
       supportingCuratedContent => supportingCuratedContent.content.tags,
       _ => Nil,
-      _ => Nil)
+      latestSnap => latestSnap.latestContent.map(_.tags).getOrElse(Nil))
 
     def frontendTags = tags.map(_.toFrontendTag)
 
@@ -49,7 +49,7 @@ object FaciaContentImplicits {
         curatedContent => Option(curatedContent.content.webPublicationDate),
         supportingCuratedContent => Option(supportingCuratedContent.content.webPublicationDate),
         _ => None,
-        _ => None)
+        latestSnap => latestSnap.latestContent.map(_.webPublicationDate))
 
     def webPublicationDate: DateTime = webPublicationDateOption.getOrElse(DateTime.now)
 
@@ -230,40 +230,36 @@ object FaciaContentImplicits {
     def isBoosted: Boolean = fold(
       curatedContent => curatedContent.isBoosted,
       supportingCuratedContent => supportingCuratedContent.isBoosted,
-      //TODO: Carry TrailMetaData through snaps
-      linkSnap => false,
-      latestSnap => false
+      linkSnap => linkSnap.isBoosted,
+      latestSnap => latestSnap.isBoosted
     )
 
     def showBoostedHeadline: Boolean = fold(
       curatedContent => curatedContent.showBoostedHeadline,
       supportingCuratedContent => supportingCuratedContent.showBoostedHeadline,
-      //TODO: Carry TrailMetaData through snaps
-      linkSnap => false,
-      latestSnap => false
+      linkSnap => linkSnap.showBoostedHeadline,
+      latestSnap => latestSnap.showBoostedHeadline
     )
 
     def showQuotedHeadline: Boolean = fold(
       curatedContent => curatedContent.showQuotedHeadline,
       supportingCuratedContent => supportingCuratedContent.showQuotedHeadline,
-      //TODO: Carry TrailMetaData through snaps
-      linkSnap => false,
-      latestSnap => false
+      linkSnap => linkSnap.showQuotedHeadline,
+      latestSnap => latestSnap.showQuotedHeadline
     )
 
     def showMainVideo: Boolean = fold(
       curatedContent => curatedContent.showMainVideo,
       supportingCuratedContent => supportingCuratedContent.showMainVideo,
-      linkSnap => false,
+      linkSnap => linkSnap.showMainVideo,
       latestSnap => latestSnap.showMainVideo
     )
 
     def imageHide: Boolean = fold(
       curatedContent => curatedContent.imageHide,
       supportingCuratedContent => supportingCuratedContent.imageHide,
-      //TODO: Carry TrailMetaData through snaps
-      linkSnap => false,
-      latestSnap => false
+      linkSnap => linkSnap.imageHide,
+      latestSnap => latestSnap.imageHide
     )
 
     def sectionName: Option[String] = fold(
