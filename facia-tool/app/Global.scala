@@ -1,5 +1,6 @@
 import java.io.File
 
+import acl.BreakingNewsCollectionsAutoRefresh
 import common._
 import conf.{Gzipper, Configuration => GuardianConfiguration}
 import metrics.FrontendMetric
@@ -10,7 +11,8 @@ import services.ConfigAgentLifecycle
 object Global extends WithFilters(Gzipper)
   with GlobalSettings
   with CloudWatchApplicationMetrics
-  with ConfigAgentLifecycle {
+  with ConfigAgentLifecycle
+  with BreakingNewsCollectionsAutoRefresh.Lifecycle {
   lazy val devConfig = Configuration.from(Map("session.secure" -> "false"))
 
   override lazy val applicationName = "frontend-facia-tool"

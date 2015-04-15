@@ -3,6 +3,7 @@ package acl
 import com.gu.googleauth.UserIdentity
 import play.api.libs.json.Json
 import play.api.mvc._
+import services.ConfigAgent
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -24,15 +25,19 @@ trait AccessControlVerification { self: Controller =>
   def withModifyPermissionForCollections[A](ids: Set[String])(block: => Future[Result])
       (implicit request: Security.AuthenticatedRequest[AnyContent, UserIdentity],
                 executionContext: ExecutionContext): Future[Result] = {
-    Table.hasBreakingNewsAccess(request.user.email) flatMap { hasAccess =>
-      if (hasAccess) {
-        block
-      } else {
-        Future.successful(Unauthorized(Json.toJson(AuthorizationError(
-          "You do not have access to publish breaking news alerts",
-          "breakingNews"
-        ))))
+    if ((ConfigAgent.getBreakingNewsCollectionIds intersect ids).nonEmpty) {
+      Table.hasBreakingNewsAccess(request.user.email) flatMap { hasAccess =>
+        if (hasAccess) {
+          block
+        } else {
+          Future.successful(Unauthorized(Json.toJson(AuthorizationError(
+            "You do not have access to publish breaking news alerts",
+            "breakingNews"
+          ))))
+        }
       }
+    } else {
+      block
     }
   }
 }
