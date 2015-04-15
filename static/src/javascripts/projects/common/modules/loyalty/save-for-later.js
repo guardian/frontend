@@ -21,7 +21,7 @@ define([
         this.pageId = config.page.pageId;
         this.$saver = bonzo(this.saveLinkHolder);
         this.savedArticlesUrl = config.page.idUrl + '/saved-articles';
-        this.shortUrl = config.page.shortUrl.replace('http:/', '');   //  Keep the fitst trailing slash
+        this.shortUrl = config.page.shortUrl.replace('http://gu.com', '');   //  Keep the fitst trailing slash
     }
 
     SaveForLater.prototype.init = function () {
