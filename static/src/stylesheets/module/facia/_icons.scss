@@ -137,18 +137,6 @@
     }
 }
 
-.tone-special-report--item,
-.tone-podcast--item,
-.tone-podcast--sublink {
-    &.fc-item--audio,
-    &.rich-link--audio,
-    &.fc-sublink--audio {
-        .inline-icon {
-            fill: colour(podcast-default);
-        }
-    }
-}
-
 .tone-media--item {
     .inline-icon {
         fill: colour(neutral-3);
