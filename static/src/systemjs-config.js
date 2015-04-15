@@ -4,6 +4,7 @@ System.config({
   "paths": {
     "/*": "javascripts/*.js",
     "*": "javascripts/projects/*.js",
+    "test/*": "javascripts/test/*.js",
     "es6/*": "javascripts/es6/*.js",
     "bootstraps/*": "javascripts/bootstraps/*.js",
     "public/*": "../public/javascripts/*.js",
