@@ -28,9 +28,9 @@ define([
             this.getSavedArticles();
         } else {
             var url = config.page.idUrl + '/prefs/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
-                '&shortUrl=' + config.page.shortUrl + '&pageId=' + this.pageId;
+                '&shortUrl=' + config.page.shortUrl;
             this.$saver.html(
-                '<a href="' + url + ' "data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saver for later</a>'
+                '<a href="' + url + ' "data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>'
             );
         }
     };

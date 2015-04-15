@@ -1,11 +1,11 @@
 package services
 
-import idapiclient.TrackingData
-import play.api.mvc.RequestHeader
 import com.google.inject.{Inject, Singleton}
-import utils.RemoteAddress
-import jobs.TorExitNodeList
 import conf.Switches
+import idapiclient.TrackingData
+import jobs.TorExitNodeList
+import play.api.mvc.RequestHeader
+import utils.RemoteAddress
 
 @Singleton
 class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddress {
@@ -14,7 +14,6 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
     val ip = clientIp(request)
     val skipConfirmation = request.getQueryString("skipConfirmation").map(_ == "true")
     val shortUrl = request.getQueryString("shortUrl")
-    val pageId = request.getQueryString("pageId")
     IdentityRequest(
     TrackingData(
         returnUrl,
@@ -27,8 +26,7 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
       returnUrl,
       ip,
       skipConfirmation,
-      shortUrl,
-      pageId
+      shortUrl
     )
   }
 }
@@ -50,4 +48,4 @@ class TorNodeLoggingIdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifi
   }
 }
 
-case class IdentityRequest(trackingData: TrackingData, returnUrl: Option[String], clientIp: Option[String], skipConfirmation: Option[Boolean], shortUrl: Option[String] = None, pageId: Option[String] = None)
+case class IdentityRequest(trackingData: TrackingData, returnUrl: Option[String], clientIp: Option[String], skipConfirmation: Option[Boolean], shortUrl: Option[String] = None)

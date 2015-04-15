@@ -1,13 +1,13 @@
 package controllers
 
-import java.net.URI
+import java.net.URL
 
+import actions.AuthenticatedActions
 import com.google.inject.Inject
 import common.ExecutionContexts
 import idapiclient.IdApiClient
 import play.api.mvc._
-import actions.AuthenticatedActions
-import services.{PlaySavedArticlesService, IdRequestParser, ReturnUrlVerifier}
+import services.{IdRequestParser, PlaySavedArticlesService, ReturnUrlVerifier}
 import utils.SafeLogging
 
 class SaveContentController @Inject() ( api: IdApiClient,
@@ -25,13 +25,13 @@ class SaveContentController @Inject() ( api: IdApiClient,
     val idRequest = identityRequestParser(request)
     val userId = request.user.getId()
 
-    (idRequest.returnUrl, idRequest.shortUrl, idRequest.pageId) match {
-      case (Some(returnUrl), Some(shortUrl), Some(pageId) ) => {
+    (idRequest.returnUrl, idRequest.shortUrl) match {
+      case (Some(returnUrl), Some(shortUrl) ) => {
         val prefsResponse = api.syncedPrefs(request.user.auth)
         savedArticleService.getOrCreateArticlesList(prefsResponse) map {
           case Right(prefs) =>
             if (!prefs.contains(shortUrl)) {
-              val savedArticles = prefs.addArticle(pageId, shortUrl)
+              val savedArticles = prefs.addArticle(new URL(returnUrl).getPath.drop(1), shortUrl)
               api.saveArticle(userId, request.user.auth, savedArticles)
             }
           case Left(errors) => logger.error(errors.toString)
