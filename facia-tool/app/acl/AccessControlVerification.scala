@@ -16,10 +16,15 @@ case class AuthorizationError(
 )
 
 trait AccessControlVerification { self: Controller =>
+  def withModifyPermissionForCollection[A](id: String)(block: => Future[Result])
+      (implicit request: Security.AuthenticatedRequest[AnyContent, UserIdentity],
+                executionContext: ExecutionContext) =
+    withModifyPermissionForCollections(Set(id))(block)(request, executionContext)
+
   def withModifyPermissionForCollections[A](ids: Set[String])(block: => Future[Result])
-      (implicit request: Request[Security.AuthenticatedRequest[AnyContent, UserIdentity]],
+      (implicit request: Security.AuthenticatedRequest[AnyContent, UserIdentity],
                 executionContext: ExecutionContext): Future[Result] = {
-    Table.hasBreakingNewsAccess(request.body.user.email) flatMap { hasAccess =>
+    Table.hasBreakingNewsAccess(request.user.email) flatMap { hasAccess =>
       if (hasAccess) {
         block
       } else {
