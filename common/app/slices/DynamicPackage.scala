@@ -24,7 +24,7 @@ object DynamicPackage extends DynamicContainer {
       Some(if (stories.length == 1) {
         FullMedia75
       } else if (stories.length == 2) {
-        ThreeQuarterTallQuarter
+        ThreeQuarterQuarter
       } else if (stories.length == 3) {
         ThreeQuarterTallQuarter2
       } else if (stories.length == 4) {
