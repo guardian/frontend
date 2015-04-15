@@ -35,7 +35,7 @@
     "handlebars": "2.0.0",
     "jit-grunt": "0.8.0",
     "jsonfile": "2.0.0",
-    "jspm": "0.14.0",
+    "jspm": "0.15.0",
     "jspm-bower-endpoint": "^0.3.2",
     "karma": "0.12.31",
     "karma-chrome-launcher": "0.1.7",
@@ -64,8 +64,7 @@
   "jspm": {
     "directories": {
       "baseURL": "static/src",
-      "lib": "static/src",
-      "packages": "static/src/jspm_packages"
+      "lib": "static/src"
     },
     "configFile": "static/src/systemjs-config.js",
     "dependencies": {
@@ -93,6 +92,10 @@
       "videojsima": "github:guardian/videojs-ima@0.1.2",
       "videojspersistvolume": "bower:videojs-persistvolume@~0.1.0",
       "videojsplaylist": "github:tim-peterson/videojs-playlist@master"
+    },
+    "devDependencies": {
+      "babel": "npm:babel@^4.7.16",
+      "babel-runtime": "npm:babel-runtime@^4.7.16"
     }
   }
 }
