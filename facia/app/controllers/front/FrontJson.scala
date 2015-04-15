@@ -1,6 +1,6 @@
 package controllers.front
 
-import com.gu.facia.api.models.{DefaultImportance, Importance, Groups, CollectionConfig}
+import com.gu.facia.api.models.{Groups, CollectionConfig}
 import com.gu.facia.client.models.CollectionConfigJson
 import model._
 import model.facia.FapiJsonFormats
@@ -147,8 +147,7 @@ trait FrontJson extends ExecutionContexts with Logging {
       showDateHeader =  (json \ "showDateHeader").asOpt[Boolean].exists(identity),
       showLatestUpdate = (json \ "showLatestUpdate").asOpt[Boolean].exists(identity),
       excludeFromRss = (json \ "excludeFromRss").asOpt[Boolean].exists(identity),
-      showTimestamps = (json \ "showTimestamps").asOpt[Boolean].exists(identity),
-      importance     = (json \ "importance").asOpt[Importance](FapiJsonFormats.importanceFormat).getOrElse(DefaultImportance)
+      showTimestamps = (json \ "showTimestamps").asOpt[Boolean].exists(identity)
     )
 
   private def parsePressedJson(j: String): Option[FaciaPage] = {
