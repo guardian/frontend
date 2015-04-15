@@ -193,7 +193,12 @@ define([
                     articles: addedInDraft,
                     target: this.configMeta.displayName(),
                     targetGroup: isMajorAlert ? 'APP & WEB' : 'WEB',
-                    targetGroupClass: isMajorAlert ? 'major-alert' : 'minor-alert'
+                    targetGroupClass: isMajorAlert ? 'major-alert' : 'minor-alert',
+                    alertAlreadySent: function (article) {
+                        return _.find(that.history(), function (previously) {
+                            return previously.id() === article.id();
+                        });
+                    }
                 }
             })
             .done(function () {
