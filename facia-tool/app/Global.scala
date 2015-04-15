@@ -1,6 +1,5 @@
 import java.io.File
 
-import acl.BreakingNewsCollectionsAutoRefresh
 import common._
 import conf.{Gzipper, Configuration => GuardianConfiguration}
 import metrics.FrontendMetric
