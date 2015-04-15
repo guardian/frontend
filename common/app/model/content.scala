@@ -209,7 +209,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:app:url:googleplay" -> webUrl.replace("http", "guardian")
-  )
+  ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   override def elements: Seq[Element] = delegate.elements
     .map(imageElement ++: _)
@@ -228,6 +228,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val showKickerCustom: Boolean = apiContent.metaData.flatMap(_.showKickerCustom).getOrElse(false)
   override lazy val customKicker: Option[String] = apiContent.metaData.flatMap(_.customKicker).filter(_.nonEmpty)
   override lazy val showBoostedHeadline: Boolean = apiContent.metaData.flatMap(_.showBoostedHeadline).getOrElse(false)
+
+  lazy val contributorTwitterHandle: Option[String] = contributors.headOption.flatMap(_.twitterHandle)
 
   override lazy val showQuotedHeadline: Boolean =
     apiContent.metaData.flatMap(_.showQuotedHeadline).getOrElse(metaDataDefault("showQuotedHeadline"))
