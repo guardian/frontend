@@ -113,7 +113,7 @@
     line-height: 16px;
     color: #ffffff;
     height: $gs-baseline * 3 + 2;
-    padding: 4px 5px 0px 5px;
+    padding: 4px 5px 0;
 }
 
 .fc-item__liveblog-block:before {
@@ -123,7 +123,7 @@
     bottom: 0;
     left: -10px;
     right: -10px;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
     z-index: -1;
 }
 
