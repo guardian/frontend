@@ -10,7 +10,8 @@ System.config({
     "public/*": "../public/javascripts/*.js",
     "svgs/*": "../../common/conf/assets/inline-svgs/*.svg",
     "github:*": "jspm_packages/github/*.js",
-    "npm:*": "jspm_packages/npm/*.js"
+    "npm:*": "jspm_packages/npm/*.js",
+    "bower:*": "jspm_packages/bower/*.js"
   }
 });
 

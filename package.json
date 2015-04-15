@@ -36,6 +36,7 @@
     "jit-grunt": "0.8.0",
     "jsonfile": "2.0.0",
     "jspm": "0.14.0",
+    "jspm-bower-endpoint": "^0.3.2",
     "karma": "0.12.31",
     "karma-chrome-launcher": "0.1.7",
     "karma-coffee-preprocessor": "0.2.1",
