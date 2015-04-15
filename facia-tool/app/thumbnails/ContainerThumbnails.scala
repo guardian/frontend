@@ -49,6 +49,8 @@ object ContainerThumbnails {
         Some(Rectangle(x + 1 + third, y + 1, third * 2, height - 2))
       case cards.ThreeQuartersRight =>
         Some(Rectangle(x + 1, y + 1, third * 2, height - 2))
+      case cards.ThreeQuartersTall =>
+        Some(Rectangle(x + 1, y + 1, width - 2, height * .8))
       case cards.Standard  =>
         Some(Rectangle(x + 1, y + 1, width - 2, height * .4))
       case cards.Half =>
@@ -116,7 +118,7 @@ object ContainerThumbnails {
                 style="font: 10px Arial, Verdana, sans-serif; alignment-baseline: central; fill: white;">MPU</text>
         </g>
 
-      case SplitColumn(_, topItemClasses, bottomItemClasses) =>
+      case SplitColumn(_, _, topItemClasses, _, bottomItemClasses) =>
         val centreY = y + height / 2
 
         <g>
@@ -150,6 +152,9 @@ object ContainerThumbnails {
 
       case "dynamic/slow" =>
         Some(Seq(HalfHl4))
+
+      case "dynamic/package" =>
+        Some(Seq(ThreeQuarterTallQuarter2))
 
       case _ =>
         FixedContainers.unapply(Some(id)).map(_.slices)

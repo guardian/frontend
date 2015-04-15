@@ -10,7 +10,7 @@ import play.api.test.Helpers._
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
 
   it should "Include organisation metadata" in {
-    val result = controllers.ArticleController.renderArticle(articleUrl)(TestRequest(articleUrl))
+    val result = controllers.ArticleController.renderArticle(articleUrl, None, None)(TestRequest(articleUrl))
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
 

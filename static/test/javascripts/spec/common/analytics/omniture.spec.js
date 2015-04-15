@@ -30,6 +30,9 @@ define([
                         edition:         'NOT-US',
                         omnitureAccount: 'the_account'
                     };
+
+                    config.tests = [];
+
                     s = {
                         t: function () {},
                         tl: function () {},
@@ -112,7 +115,7 @@ define([
                     expect(s.prop30).toBe('content');
                     expect(s.prop19).toBe('frontend');
                     expect(s.prop67).toBe('nextgen-served');
-                    expect(s.eVar19).toBe('frontend');
+                    expect(s.prop19).toBe('frontend');
                     expect(s.eVar50).toBe('test');
                     expect(s.cookieDomainPeriods).toBe('2');
                     expect(s.trackingServer).toBe('hits.theguardian.com');

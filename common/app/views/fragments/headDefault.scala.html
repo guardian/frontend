@@ -16,6 +16,10 @@
                 @fragments.commercial.badge(content)
             }
 
+            @if(content.isInteractive && !content.shouldHidePublicationDate) {
+                @fragments.meta.dateline(content.webPublicationDate, content.lastModified, content.hasBeenModified, secondary = true)
+            }
+
         </div>
     </div>
 </header>

@@ -15,7 +15,7 @@ case class Mortgage(lender: String,
                     detailsUrl: String)
 
 
-object MortgagesApi extends ExecutionContexts with Logging {
+object MortgagesFeed extends ExecutionContexts with Logging {
 
   private lazy val maybeUrl = CommercialConfiguration.getProperty("lc.mortgages.api.url")
 
@@ -50,5 +50,5 @@ object MortgagesApi extends ExecutionContexts with Logging {
 
 
 object MortgagesAgent extends MoneyAgent[Mortgage] {
-  protected def loadProducts() = MortgagesApi.loadAds()
+  protected def loadProducts() = MortgagesFeed.loadAds()
 }

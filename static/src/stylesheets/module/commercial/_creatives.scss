@@ -347,6 +347,13 @@
             z-index: 3;
         }
     }
+
+    .ad-exp--expand-scrolling-bg {
+        position: absolute;
+        top: 0;
+        height: 500px;
+        width: 100%;
+    }
 }
 
 .creative--expandable-ga {
@@ -447,6 +454,12 @@
         height: auto;
         padding-top: 0;
         padding-bottom: $gs-baseline*1.5;
+    }
+}
+
+.ad-slot--merchandising-high {
+    .creative__label--hidden {
+        display: none;
     }
 }
 

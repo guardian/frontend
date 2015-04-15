@@ -20,8 +20,9 @@
         max-width: gs-span(10);
     }
 }
+
 .identity-wrapper--stretched {
-    max-width: none;
+    max-width: gs-span(16);
 }
 
 .identity-wrapper--with-membership {
@@ -243,9 +244,7 @@
     display: block;
     margin-bottom: $gs-baseline/3;
     max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include ellipsis();
     word-break: break-all;
 }
 

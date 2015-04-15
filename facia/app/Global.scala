@@ -1,3 +1,4 @@
+import ab_headlines.ABTHeadlinesLifecycle
 import common._
 import conf.Filters
 import crosswords.TodaysCrosswordGridLifecycle
@@ -16,6 +17,7 @@ object Global extends WithFilters(Filters.common: _*)
   with DfpAgentLifecycle
   with SurgingContentAgentLifecycle
   with IndexListingsLifecycle
+  with ABTHeadlinesLifecycle
   with TodaysCrosswordGridLifecycle {
   override lazy val applicationName = "frontend-facia"
 

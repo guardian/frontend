@@ -80,10 +80,12 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
     private def css(project: String): String = {
 
       val suffix = project match {
+        case "footballSnaps" => "footballSnaps.css"
         case "facia" => "facia.css"
         case "identity" => "identity.css"
         case "football" => "football.css"
         case "index" => "index.css"
+        case "story-package" => "story-package.css"
         case "rich-links" => "rich-links.css"
         case _ => "content.css"
       }

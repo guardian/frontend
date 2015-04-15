@@ -82,14 +82,13 @@ define([
 
                         var li = document.createElement('li');
                         li.className = d.status;
-                        li.innerHTML = nameAbbreviation;
+                        li.innerHTML = nameAbbreviation + ' ' + d.build;
                         li.setAttribute('title', d.projectName);
                         link.appendChild(li);
 
                         if (latestDeployments['CODE'][deployment] && stage === 'PROD' && d.status === 'Completed') {
                             var codeBuild = (latestDeployments['CODE'][deployment] || {}).build;
                             if (codeBuild !== d.build){
-                                li.innerHTML = nameAbbreviation + ' ' + codeBuild;
                                 li.className = 'Behind';
                             }
                         }

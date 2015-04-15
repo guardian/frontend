@@ -43,7 +43,8 @@ define([
             'imageHeight',
             'isImageDisplayed',
             'isHidden',
-            'priority']);
+            'priority',
+            'canonical']);
 
         populateObservables(this.props, opts);
 
@@ -216,6 +217,9 @@ define([
         collection.state.isOpen(false);
         collection.parents.remove(this);
         this.collections.items.remove(collection);
+        if (this.props.canonical() === collection.id) {
+            this.props.canonical(null);
+        }
         this.saveProps();
     };
 

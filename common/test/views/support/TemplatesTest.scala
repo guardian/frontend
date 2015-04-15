@@ -6,7 +6,9 @@ import common.editions.Uk
 import conf.Configuration
 import model._
 import org.scalatest.{FlatSpec, Matchers}
+import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
+import test.TestRequest
 
 import scala.xml.XML
 
@@ -48,7 +50,7 @@ class TemplatesTest extends FlatSpec with Matchers {
   }
 
   "PictureCleaner" should "correctly format inline pictures" in {
-
+    implicit val request: RequestHeader = TestRequest()
     val body = XML.loadString(withJsoup(bodyTextWithInlineElements)(PictureCleaner(testContent)).body.trim)
 
     val figures = (body \\ "figure").toList

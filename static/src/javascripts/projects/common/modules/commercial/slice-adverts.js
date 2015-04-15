@@ -19,7 +19,7 @@ define([
     createAdSlot,
     userPrefs
 ) {
-    var adNames = ['inline1', 'inline2'],
+    var adNames = ['inline1', 'inline2', 'inline3'],
         init = function (options) {
             if (!config.switches.standardAdverts) {
                 return false;

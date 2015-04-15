@@ -2,57 +2,64 @@ define([
     'raven',
     'common/utils/_',
     'common/utils/config',
+    'common/utils/cookies',
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/liveblog-blocks-on-fronts',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/identity-social-oauth',
-    'common/modules/experiments/tests/krux-audience-science',
     'common/modules/experiments/tests/mt-master',
-    'common/modules/experiments/tests/signed-out',
-    'common/modules/experiments/tests/register',
-    'common/modules/experiments/tests/register-popup',
     'common/modules/experiments/tests/mt-top-below-nav',
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/mt-top-below-first-container',
     'common/modules/experiments/tests/mt-sticky-nav',
-    'common/modules/experiments/tests/across-the-country'
+    'common/modules/experiments/tests/across-the-country',
+    'common/modules/experiments/tests/adblock-message',
+    'common/modules/experiments/tests/mt-sticky-bottom',
+    'common/modules/experiments/tests/save-for-later',
+    'common/modules/experiments/tests/headlines'
 ], function (
     raven,
     _,
     config,
+    cookies,
     mediator,
     store,
     mvtCookie,
+    LiveblogBlocksOnFronts,
     HighCommercialComponent,
     IdentitySocialOAuth,
-    KruxAudienceScience,
     MtMaster,
-    SignedOut,
-    Register,
-    RegisterPopup,
     MtTopBelowNav,
     HeatMap,
     MtTopBelowFirstContainer,
     MtStickyNav,
-    AcrossTheCountry
+    AcrossTheCountry,
+    AdblockMessage,
+    MtStickyBottom,
+    SaveForLater,
+    Headline
 ) {
 
     var ab,
-        TESTS = [
+        TESTS = _.flatten([
+            new LiveblogBlocksOnFronts(),
             new HighCommercialComponent(),
             new IdentitySocialOAuth(),
-            new KruxAudienceScience(),
             new MtMaster(),
-            new SignedOut(),
-            new Register(),
-            new RegisterPopup(),
             new MtTopBelowNav(),
             new HeatMap(),
             new MtTopBelowFirstContainer(),
             new MtStickyNav(),
-            new AcrossTheCountry()
-        ],
+            new AcrossTheCountry(),
+            new AdblockMessage(),
+            new MtStickyBottom(),
+            new SaveForLater(),
+            _.map(_.range(1, 10), function (n) {
+                return new Headline(n);
+            })
+        ]),
         participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
@@ -128,13 +135,25 @@ define([
 
     function makeOmnitureTag() {
         var participations = getParticipations(),
-            tag = [];
+            tag = [], editionFromCookie;
 
         _.forEach(_.keys(participations), function (k) {
             if (testCanBeRun(getTest(k))) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
             }
         });
+
+        if (config.tests.internationalEditionVariant) {
+            tag.push(['AB', 'InternationalEditionTest', config.tests.internationalEditionVariant].join(' | '));
+
+            // don't use the edition of the page - we specifically want the cookie version
+            // this allows us to figure out who has "opted out" and "opted into" the test
+            editionFromCookie = cookies.get('GU_EDITION');
+
+            if (editionFromCookie) {
+                tag.push(['AB', 'InternationalEditionPreference', editionFromCookie].join(' | '));
+            }
+        }
 
         return tag.join(',');
     }
@@ -168,7 +187,7 @@ define([
         var variantIds, testVariantId,
             smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset,
             largestTestId  = smallestTestId + mvtCookie.getMvtNumValues() * test.audience,
-            // Get this browser's mvt test id.
+        // Get this browser's mvt test id.
             mvtCookieId = mvtCookie.getMvtValue();
 
         if (smallestTestId <= mvtCookieId && largestTestId > mvtCookieId) {
@@ -233,13 +252,17 @@ define([
         segmentUser: function () {
             mvtCookie.generateMvtCookie();
 
-            var tokens, test, variant,
+            var tokens,
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
-                tokens = window.location.hash.replace('#ab-', '').split('=');
-                test = tokens[0];
-                variant = tokens[1];
-                ab.forceSegment(test, variant);
+                tokens = window.location.hash.replace('#ab-', '').split(',');
+                tokens.forEach(function (token) {
+                    var abParam, test, variant;
+                    abParam = token.split('=');
+                    test = abParam[0];
+                    variant = abParam[1];
+                    ab.forceSegment(test, variant);
+                });
             } else {
                 ab.segment();
             }
@@ -271,16 +294,16 @@ define([
 
             var eventTag = event.tag;
             return eventTag && _(getActiveTests())
-                .filter(function (test) {
-                    var testEvents = test.events;
-                    return testEvents && _.some(testEvents, function (testEvent) {
-                        return startsWith(eventTag, testEvent);
-                    });
-                })
-                .map(function (test) {
-                    return test.id;
-                })
-                .valueOf();
+                    .filter(function (test) {
+                        var testEvents = test.events;
+                        return testEvents && _.some(testEvents, function (testEvent) {
+                            return startsWith(eventTag, testEvent);
+                        });
+                    })
+                    .map(function (test) {
+                        return test.id;
+                    })
+                    .valueOf();
         },
 
         getAbLoggableObject: function () {
@@ -288,7 +311,6 @@ define([
 
             try {
                 _.forEach(getActiveTests(), function (test) {
-
                     if (isParticipating(test) && testCanBeRun(test)) {
                         var variant = getTestVariant(test.id);
                         if (variant && variant !== 'notintest') {
@@ -306,6 +328,8 @@ define([
         },
 
         getParticipations: getParticipations,
+        isParticipating: isParticipating,
+        getTest: getTest,
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,

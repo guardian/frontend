@@ -1,10 +1,10 @@
 package model.commercial.money
 
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
-import test.ConfiguredTestSuite
+import org.scalatest.{FlatSpec, Matchers}
+
 import scala.xml.XML
 
-@DoNotDiscover class MortgagesApiTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+class MortgagesFeedTest extends FlatSpec with Matchers {
 
   private val xmlStr =
     """<NewDataSet><!--Comments: GU Products XML updated: 23/01/2014 09:00:03-->
@@ -14,7 +14,7 @@ import scala.xml.XML
       |</NewDataSet>""".stripMargin
 
   "parse" should "parse Mortgages from xml feed" in {
-    val accounts = MortgagesApi.parse(XML.loadString(xmlStr))
+    val accounts = MortgagesFeed.parse(XML.loadString(xmlStr))
 
     accounts should be(Seq(
       Mortgage("HSBC", "1.49%", "Fixed until 30/04/16", 3.7, "http://guardian.lcplc-online.co.uk/BestBuy.aspx?GUProdID=165303&amp;Type=F"),

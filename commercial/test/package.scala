@@ -1,7 +1,7 @@
 package test
 
-import org.scalatest.Suites
 import model.commercial._
+import org.scalatest.Suites
 
 class CommercialTestSuite extends Suites (
   new services.CommercialHealthcheckTest,
@@ -13,10 +13,9 @@ class CommercialTestSuite extends Suites (
   new jobs.JobTest,
   new masterclasses.EventbriteMasterClassFeedParsingTest,
   new masterclasses.SingleEventbriteMasterClassParsingTest,
-  new money.CreditCardsApiTest,
-  new money.CurrentAccountsApiTest,
-  new money.MortgagesApiTest,
-  new money.SavingsApiTest,
+  new money.CreditCardsFeedTest,
+  new money.CurrentAccountsFeedTest,
+  new money.SavingsFeedTest,
   new soulmates.SoulmatesFeedTest,
   new travel.TravelOffersApiTest,
   new LookupTest

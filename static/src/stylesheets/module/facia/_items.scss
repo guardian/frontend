@@ -9,6 +9,7 @@
 @import 'item-layouts/fc-item--half';
 @import 'item-layouts/fc-item--three-quarters';
 @import 'item-layouts/fc-item--three-quarters-right';
+@import 'item-layouts/fc-item--three-quarters-tall';
 @import 'item-layouts/fc-item--list';
 @import 'item-layouts/fc-item--list-compact';
 @import 'item-layouts/fc-item--list-compact--media';
@@ -216,6 +217,12 @@
 .fc-item--three-quarters-right-tablet {
     @include mq(tablet) {
         @include fc-item--three-quarters-right;
+    }
+}
+
+.fc-item--three-quarters-tall-tablet {
+    @include mq(tablet) {
+        @include fc-item--three-quarters-tall;
     }
 }
 

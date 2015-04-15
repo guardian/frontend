@@ -1,6 +1,6 @@
 package model
 
-import conf.Switches
+import conf.{Switches,Configuration}
 
 object FaciaDisplayElement {
   def fromTrail(trail: Trail): Option[FaciaDisplayElement] = {
@@ -43,5 +43,5 @@ case class InlineImage(imageContainer: ImageContainer) extends FaciaDisplayEleme
 case class CrosswordSvg(id: String) extends FaciaDisplayElement {
   def persistenceId = id.stripPrefix("crosswords/")
 
-  def imageUrl = s"/$id.svg"
+  def imageUrl = s"${Configuration.ajax.url}/$id.svg"
 }

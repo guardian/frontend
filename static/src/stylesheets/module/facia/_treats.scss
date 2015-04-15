@@ -37,9 +37,7 @@
     font-weight: 700;
     border-width: 1px;
     border-style: solid;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @include ellipsis();
     text-decoration: none;
     max-width: gs-span(4);
     line-height: $gs-baseline * 2 - 2px;

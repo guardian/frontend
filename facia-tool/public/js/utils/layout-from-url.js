@@ -1,10 +1,8 @@
 define([
     'underscore',
-    'modules/vars',
     'utils/parse-query-params'
 ], function (
     _,
-    vars,
     parseQueryParams
 ) {
     function get () {
@@ -16,7 +14,7 @@ define([
             queryParams = parseQueryParams(window.location.search),
             configFromURL = queryParams.layout;
 
-        if (queryParams.treats === 'please' && vars.model.switches()['facia-treats']) {
+        if (queryParams.treats === 'please') {
             columns = [{
                 type: 'clipboard'
             }, {

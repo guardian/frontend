@@ -116,6 +116,12 @@
     }
 }
 
+@mixin ellipsis() {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @mixin icon($name, $with-width: true) {
     @if ($svg-support) {
         .svg & {

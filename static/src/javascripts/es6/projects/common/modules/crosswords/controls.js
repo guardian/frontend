@@ -1,35 +1,38 @@
+import classNames from 'classnames';
 import React from 'react';
 
-var buttonClassName = 'button button--small';
+const buttonClassName = 'button button--small';
+const buttonCurrentClassName = 'button--crossword--current';
+const buttonGenericClassName = 'button--secondary';
 
 export default React.createClass({
-    render: function () {
-        var hasSolutions = this.props.hasSolutions,
-            hasFocus = this.props.clueInFocus,
-            controls = [];
+    render () {
+        const hasSolutions = this.props.hasSolutions;
+        const hasFocus = this.props.clueInFocus;
+        const controls = [];
 
         if (hasFocus && hasSolutions) {
             controls.unshift(
                 React.DOM.button({
-                    className: buttonClassName,
+                    className: `${buttonClassName} ${buttonCurrentClassName}`,
                     onClick: this.props.onCheck,
                     key: 'check'
-                }, 'Check')
+                }, 'Check this')
             );
 
             controls.unshift(
                 React.DOM.button({
-                    className: buttonClassName,
+                    className: `${buttonClassName} ${buttonCurrentClassName}`,
                     onClick: this.props.onCheat,
                     key: 'cheat'
-                }, 'Cheat')
+                }, 'Reveal this')
             );
         }
 
         if (hasSolutions) {
             controls.unshift(
                 React.DOM.button({
-                    className: buttonClassName,
+                    className: `${buttonClassName} ${buttonGenericClassName}`,
                     onClick: this.props.onCheckAll,
                     key: 'checkAll'
                 }, 'Check all')
@@ -37,19 +40,19 @@ export default React.createClass({
 
             controls.unshift(
                 React.DOM.button({
-                    className: buttonClassName,
+                    className: `${buttonClassName} ${buttonGenericClassName}`,
                     onClick: this.props.onSolution,
                     key: 'solution'
-                }, 'Solution')
+                }, 'Reveal all')
             );
         }
 
         controls.unshift(
             React.DOM.button({
-                className: buttonClassName,
+                className: `${buttonClassName} ${buttonGenericClassName}`,
                 onClick: this.props.onClearAll,
                 key: 'clear'
-            }, 'Clear')
+            }, 'Clear all')
         );
 
         return React.DOM.div({

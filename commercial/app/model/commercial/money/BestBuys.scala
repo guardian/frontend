@@ -2,19 +2,16 @@ package model.commercial.money
 
 import model.commercial.Segment
 
-case class BestBuys(
-                     mortgages: Seq[Mortgage],
-                     creditCards: Map[String, Seq[CreditCard]],
-                     loans: Seq[Loan],
-                     currentAccounts: Map[String, Seq[CurrentAccount]],
-                     savings: Map[String, Seq[SavingsAccount]]
-                     )
+case class BestBuys(creditCards: Map[String, Seq[CreditCard]],
+                    loans: Seq[Loan],
+                    currentAccounts: Map[String, Seq[CurrentAccount]],
+                    savings: Map[String, Seq[SavingsAccount]],
+                    mortgages: Seq[Mortgage])
 
 
 object BestBuysAgent {
 
   protected val agents = Seq(
-    MortgagesAgent,
     LoansAgent,
     creditCardsAgent.BalanceTransfer,
     creditCardsAgent.Purchase,
@@ -35,28 +32,29 @@ object BestBuysAgent {
     savingsAgent.RegularSavings,
     savingsAgent.ChildrensAccounts,
     savingsAgent.NoticeAccounts,
-    savingsAgent.OffshoreAccounts
+    savingsAgent.OffshoreAccounts,
+    MortgagesAgent
   )
 
   def adsTargetedAt(segment: Segment): Option[BestBuys] = {
-    val mortgages = MortgagesAgent.available
     val creditCards = CreditCards.currentAds
     val loans = LoansAgent.available
     val currentAccounts = CurrentAccounts.currentAds
     val savings = SavingsAccounts.currentAds
+    val mortgages = MortgagesAgent.available
 
-    if (mortgages.isEmpty
-      && creditCards.isEmpty
+    if (creditCards.isEmpty
       && loans.isEmpty
       && currentAccounts.isEmpty
-      && savings.isEmpty) {
+      && savings.isEmpty
+      && mortgages.isEmpty) {
       None
     } else {
-      Some(BestBuys(mortgages, creditCards, loans, currentAccounts, savings))
+      Some(BestBuys(creditCards, loans, currentAccounts, savings, mortgages))
     }
   }
 
-  def refresh() {
+  def refresh(): Unit = {
     agents foreach (_.refresh())
   }
 }
