@@ -36,28 +36,46 @@ define([
 
         selector = '.js-liveblog-blocks',
         blocksClassName = 'fc-item__liveblog-blocks',
+        messageClassName = 'fc-item__liveblog-message',
         newBlockClassName = 'fc-item__liveblog-block--new',
         oldBlockClassName = 'fc-item__liveblog-block--old',
         articleIdAttribute = 'data-article-id',
         storageKey = 'gu.liveblog.block-dates',
+        prefixedTransforms = ['-webkit-transform', '-ms-transform', 'transform'],
 
         veiwportHeightPx = detect.getViewport().height,
         elementsById = {};
+
+    function blockRelativeTime(block) {
+        return relativeDates.makeRelativeDate(new Date((block || {}).publishedDateTime || null));
+    }
 
     function renderBlock(articleId, block, index) {
         return template(blockTemplate, {
             classes: block.isNew ? newBlockClassName : oldBlockClassName,
             href: '/' + articleId + '#' + block.id,
-            relativeTime: relativeDates.makeRelativeDate(new Date(block.publishedDateTime || null)),
+            relativeTime: blockRelativeTime(block),
             text: _.compact([block.title, block.body.slice(0, 200)]).join('. '),
             index: index + 1
         });
     }
 
-    function cssTransformRules(offset) {
-        return ('-webkit-transform: translate3d(0, -{{offset}}px, 0);' +
-                    '-ms-transform: translate3d(0, -{{offset}}px, 0);' +
-                        'transform: translate3d(0, -{{offset}}px, 0)').replace(/{{offset}}/g, offset || 0);
+    function translateVertical(offset) {
+        return 'translate3d(0, -' + offset + 'px, 0)';
+    }
+
+    function translateHorizontal(offset) {
+        return 'translate3d(-' + offset + 'px, 0, 0)';
+    }
+
+    function translateNone() {
+        return 'translate3d(0, 0, 0)';
+    }
+
+    function translateCss(genValue, offset) {
+        return prefixedTransforms.map(function (rule) {
+            return rule + ':' + genValue(offset);
+        }).join(';');
     }
 
     function renderBlocks(articleId, targets, blocks, oldBlockDate) {
@@ -85,7 +103,7 @@ define([
 
                     el = bonzo.create(
                         '<div class="fc-item__liveblog-blocks__inner u-faux-block-link__promote"' +
-                            ' style="' + cssTransformRules(numNewBlocks * blockHeightPx) + '">' +
+                            ' style="' + translateCss(translateVertical, numNewBlocks * blockHeightPx) + '">' +
                             blocksHtml +
                         '</div>'
                     );
@@ -101,12 +119,37 @@ define([
         });
     }
 
+    function renderMessage(articleId, targets, blocks, oldBlockDate) {
+        var fakeUpdate = _.isUndefined(oldBlockDate);
+
+        fastdom.write(function () {
+            _.forEach(targets, function (element) {
+                var hasUpdate = fakeUpdate || _.some(blocks, function (block) {
+                        return block.publishedDateTime > oldBlockDate;
+                    }),
+                    el;
+
+                if (hasUpdate) {
+                    el = bonzo.create('<div style="' + translateCss(translateHorizontal, 100) + '">Updated ' + blockRelativeTime(blocks[0]) + '</div>');
+
+                    bonzo(element).addClass(messageClassName).append(el);
+
+                    if (hasUpdate && !maybeAnimateBlocks(el[0])) {
+                        mediator.on('window:scroll', _.debounce(function () {
+                            return maybeAnimateBlocks(el[0], true);
+                        }, animateDelayMs));
+                    }
+                }
+            });
+        });
+    }
+
     function maybeAnimateBlocks(el, immediate) {
         var vPosition = el.getBoundingClientRect().top;
 
         if (vPosition > blockHeightPx * -1 && vPosition < veiwportHeightPx - blockHeightPx) {
             setTimeout(function () {
-                bonzo(el).attr('style', cssTransformRules(0));
+                bonzo(el).attr('style', translateCss(translateNone));
             }, immediate ? 0 : animateDelayMs);
             return true;
         }
@@ -124,34 +167,9 @@ define([
         });
     }
 
-    function updateBlocks() {
-        var oldBlockDates = storage.session.get(storageKey) || {};
+    function updateView(callback, doPoll) {
+        var oldBlockDates;
 
-        _.forEach(elementsById, function (elements, articleId) {
-            ajax({
-                url: '/' + articleId + '.json?rendered=false',
-                type: 'json',
-                crossOrigin: true
-            })
-            .then(function (response) {
-                var blocks = response && sanitizeBlocks(response.blocks);
-
-                if (blocks && blocks.length) {
-                    renderBlocks(articleId, elements, blocks, oldBlockDates[articleId]);
-                    oldBlockDates[articleId] = blocks[0].publishedDateTime;
-                    storage.session.set(storageKey, pruneOldBlockDates(oldBlockDates));
-                }
-            });
-        });
-
-        if (refreshMaxTimes) {
-            refreshMaxTimes -= 1;
-            setTimeout(updateBlocks, refreshSecs * 1000);
-            refreshSecs = refreshSecs * refreshDecay;
-        }
-    }
-
-    function inject() {
         $(selector).each(function (element) {
             if (element.hasAttribute(articleIdAttribute)) {
                 var articleId = element.getAttribute(articleIdAttribute);
@@ -162,9 +180,37 @@ define([
         });
 
         if (!_.isEmpty(elementsById)) {
-            updateBlocks();
+            oldBlockDates = storage.session.get(storageKey) || {};
+
+            _.forEach(elementsById, function (elements, articleId) {
+                ajax({
+                    url: '/' + articleId + '.json?rendered=false',
+                    type: 'json',
+                    crossOrigin: true
+                })
+                .then(function (response) {
+                    var blocks = response && sanitizeBlocks(response.blocks);
+
+                    if (blocks && blocks.length) {
+                        callback(articleId, elements, blocks, oldBlockDates[articleId]);
+                        oldBlockDates[articleId] = blocks[0].publishedDateTime;
+                        storage.session.set(storageKey, pruneOldBlockDates(oldBlockDates));
+                    }
+                });
+            });
+
+            if (doPoll && refreshMaxTimes) {
+                refreshMaxTimes -= 1;
+                setTimeout(function () {
+                    updateView(callback);
+                }, refreshSecs * 1000);
+                refreshSecs = refreshSecs * refreshDecay;
+            }
         }
     }
 
-    return inject;
+    return {
+        injectBlocks:  updateView.bind(null, renderBlocks, true),
+        injectMessage: updateView.bind(null, renderMessage)
+    };
 });

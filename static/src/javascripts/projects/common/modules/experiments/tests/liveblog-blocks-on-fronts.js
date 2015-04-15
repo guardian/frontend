@@ -33,7 +33,7 @@ define([
             },
             {
                 id: 'show',
-                test: liveblogUpdates
+                test: liveblogUpdates.injectBlocks
             }
         ];
     };
