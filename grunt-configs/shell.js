@@ -44,8 +44,8 @@ module.exports = function(grunt, options) {
 
         jspmBundleStatic: {
             command:
-                './node_modules/.bin/jspm bundle-sfx es6/bootstraps/app static/target/bundles/app.js && ' +
                 './node_modules/.bin/jspm bundle core static/target/bundles/core.js && ' +
+                // './node_modules/.bin/jspm bundle es6/bootstraps/app - core static/target/bundles/app.js && ' +
                 './node_modules/.bin/jspm bundle bootstraps/app - core static/target/bundles/app.js && ' +
                 './node_modules/.bin/jspm bundle bootstraps/commercial - core static/target/bundles/commercial.js && ' +
                 './node_modules/.bin/jspm bundle bootstraps/sudoku - core static/target/bundles/sudoku.js && ' +
