@@ -274,7 +274,7 @@ $block-padding-right: $gs-gutter;
         /* Bylines
            ========================================================= */
         .liveblog-block-byline {
-            border-bottom: 1px dotted #dcdcdc;
+            border-bottom: 1px dotted colour(neutral-4);
             padding-bottom: $gs-baseline * .5;
         }
         .liveblog-block-byline__img {
