@@ -133,6 +133,10 @@ define([
         setListeners = function () {
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
+
+                // record first ad on page rendered
+                _.once((new Image()).src = guardian.config.page.beaconUrl + '/count/ad-render.gif');
+
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
             }));
