@@ -39,25 +39,25 @@ define([
         if (!!this.params.backgroundPosition && !!this.params.backgroundImageScroll) {
             bgpositionx = this.params.backgroundPosition.split(' ')[0];
             fastdom.write(function () {
-                $('.ad-slot--top-banner-ad .creative--fluid250').css('background-position', bgpositionx + ' ' + window.pageYOffset * (this.params.backgroundImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
+                $('.ad-slot--top-banner-ad .creative--fluid250').css('background-position', bgpositionx + ' ' + window.pageYOffset * (this.params.backgroundImageScroll / 100) + 'px').css('background-repeat', 'no-repeat');
             }.bind(this));
         }
         if (!!this.params.layerOneBGPosition && this.params.layerOneImageScroll) {
             layeronebgpositionx = this.params.layerOneBGPosition.split(' ')[0];
             fastdom.write(function () {
-                $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer1').css('background-position', layeronebgpositionx + ' ' + window.pageYOffset * (this.params.layerOneImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
+                $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer1').css('background-position', layeronebgpositionx + ' ' + window.pageYOffset * (this.params.layerOneImageScroll / 100) + 'px').css('background-repeat', 'no-reapeat');
             }.bind(this));
         }
         if (!!this.params.layerTwoBGPosition && this.params.layerTwoImageScroll) {
             layertwobgpositionx = this.params.layerTwoBGPosition.split(' ')[0];
             fastdom.write(function () {
-                $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer2').css('background-position', layertwobgpositionx + ' ' + window.pageYOffset * (this.params.layerTwoImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
+                $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer2').css('background-position', layertwobgpositionx + ' ' + window.pageYOffset * (this.params.layerTwoImageScroll / 100) + 'px').css('background-repeat', 'no-repeat');
             }.bind(this));
         }
         if (!!this.params.layerThreeBGPosition && this.params.layerThreeImageScroll) {
             layerthreebgpositionx = this.params.layerThreeBGPosition.split(' ')[0];
             fastdom.write(function () {
-                $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer3').css('background-position', layerthreebgpositionx + ' ' + window.pageYOffset * (this.params.layerThreeImageScroll / 100) + 'px').css('background-repeat', 'repeat-y');
+                $('.ad-slot--top-banner-ad .creative--fluid250 .fluid250_layer3').css('background-position', layerthreebgpositionx + ' ' + window.pageYOffset * (this.params.layerThreeImageScroll / 100) + 'px').css('background-repeat', 'no-repeat');
             }.bind(this));
         }
     };
