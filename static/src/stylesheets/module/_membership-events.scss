@@ -41,3 +41,10 @@
         }
     }
 }
+
+.element-membership--upgraded {
+    float: left;
+    clear: both;
+    margin: 5px $gs-gutter $gs-baseline  0;
+    width: gs-span(2);
+}
