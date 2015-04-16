@@ -262,7 +262,10 @@ case class FaciaContainer(
     * Then if we end up adding more of these over time, there's an in-built mechanism for doing so. Will also mean apps
     * can consume this data if they want to.
     */
-  def showCPScottHeader = dataId == "uk/commentisfree/regular-stories"
+  def showCPScottHeader = Set(
+    "uk/commentisfree/regular-stories",
+    "au/commentisfree/regular-stories"
+  ).contains(dataId)
 
   def addShowMoreClasses = useShowMore && containerLayout.exists(_.hasShowMore)
 
