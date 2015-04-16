@@ -181,6 +181,7 @@ define([
             displayed = true;
         },
         displayLazyAds = function () {
+            console.log('Variant A');
             googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
             mediator.on('window:scroll', _.throttle(lazyLoad, 10));
@@ -224,7 +225,7 @@ define([
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
-            (dfpSwitchParam()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            (dfpAbParam()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 

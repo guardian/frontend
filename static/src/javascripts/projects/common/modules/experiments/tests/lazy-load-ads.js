@@ -15,8 +15,8 @@ define([
 ) {
     return function () {
         this.id = 'LzAds';
-        this.start = '2015-04-16';
-        this.expiry = '2015-05-16';
+        this.start = '2015-04-15';
+        this.expiry = '2015-05-15';
         this.author = 'Steve Vadocz';
         this.description = 'Testing lazy loaded ads on 1% of the US audience';
         this.audience = 0.02;

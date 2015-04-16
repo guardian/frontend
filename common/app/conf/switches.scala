@@ -500,8 +500,8 @@ object Switches {
 
   // A/B Tests
   
-  val ABLzAds = Switch("A/B Tests", "ab-lazy-load-ads", "Lazy loading ads.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 16)
+  val ABLzAds = Switch("A/B Tests", "ab-lz-ads", "Lazy loading ads.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   val ABIdentitySocialOAuth = Switch("A/B Tests", "ab-id-social-oauth",
