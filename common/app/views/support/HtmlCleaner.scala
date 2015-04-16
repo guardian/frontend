@@ -526,3 +526,15 @@ object RichLinkCleaner extends HtmlCleaner {
     document
   }
 }
+
+object MembershipEventCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    val membershipEvents = document.getElementsByClass("element-membership")
+    membershipEvents
+      .addClass("element-membership--not-upgraded")
+      .attr("data-component", "membership-events")
+      .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"membership-event-${membershipEvents.length} | ${index+1}") }
+
+    document
+  }
+}
