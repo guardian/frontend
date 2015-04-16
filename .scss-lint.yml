@@ -89,6 +89,7 @@ linters:
       - static/src/stylesheets/module/content/_live-blog.scss
       - static/src/stylesheets/module/_discussion.scss
       - static/src/stylesheets/module/commercial/_travel.scss
+      - static/src/stylesheets/head.story-package.scss
 
   Shorthand:
     enabled: true

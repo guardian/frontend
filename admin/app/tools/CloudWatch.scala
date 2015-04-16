@@ -50,7 +50,6 @@ object CloudWatch extends Logging with ExecutionContexts {
     LoadBalancer("frontend-sport"),
     LoadBalancer("frontend-commercial"),
     LoadBalancer("frontend-onward"),
-    LoadBalancer("frontend-r2football"),
     LoadBalancer("frontend-diagnostics"),
     LoadBalancer("frontend-archive"),
     LoadBalancer("frontend-rss")

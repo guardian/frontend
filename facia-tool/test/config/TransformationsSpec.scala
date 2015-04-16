@@ -49,7 +49,6 @@ import test.ConfiguredTestSuite
     None,
     None,
     None,
-    None,
     None
   )
 

@@ -1,0 +1,25 @@
+@(expiringImminently: Seq[conf.SwitchTrait], expiringSoon: Seq[conf.SwitchTrait])
+
+@showSwitch(switch: conf.SwitchTrait) = {
+    <li>
+        <div>@{switch.name}</div>
+        <div>expires @{switch.sellByDate.toString("E dd MMM")} 00:01 UTC</div>
+        <div>@{switch.description}</div>
+    </li>
+}
+
+@if(expiringImminently.nonEmpty) {
+    <div>
+        <p style="color:red">These switches are going to expire imminently!</p>
+        <ul>@for(switch <- expiringImminently) {@showSwitch(switch)}</ul>
+    </div>
+}
+
+@if(expiringSoon.nonEmpty) {
+    <div>
+        <p style="color:orange">These switches are going to expire soon:</p>
+        <ul>@for(switch <- expiringSoon) {@showSwitch(switch)}</ul>
+    </div>
+}
+
+<p>See https://frontend.gutools.co.uk/dev/switchboard</p>

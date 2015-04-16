@@ -60,6 +60,10 @@ case object ThreeQuartersRight extends CardType {
   override val cssClassName: String = "three-quarters-right"
 }
 
+case object ThreeQuartersTall extends CardType {
+  override val cssClassName: String = "three-quarters-tall"
+}
+
 case object FullMedia50 extends CardType {
   override val cssClassName: String = "full-media-50"
 }

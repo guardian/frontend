@@ -1,3 +1,4 @@
+import ab_headlines.ABTHeadlinesLifecycle
 import common.{ContentApiMetrics, CloudWatchApplicationMetrics}
 import conf.Filters
 import contentapi.SectionsLookUpLifecycle
@@ -16,6 +17,7 @@ object Global extends WithFilters(Filters.common: _*)
   with SurgingContentAgentLifecycle
   with IndexListingsLifecycle
   with SectionsLookUpLifecycle
+  with ABTHeadlinesLifecycle
   with CorsErrorHandler {
   override lazy val applicationName = "frontend-applications"
 

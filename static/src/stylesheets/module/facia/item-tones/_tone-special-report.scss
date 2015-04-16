@@ -68,7 +68,7 @@
         color: colour(news-default);
     }
 
-    @include sublink-style(editorial, feature, live, media, podcast) {
+    @include sublink-style(editorial, feature, live, media) {
         .fc-sublink__kicker {
             color: #ffffff;
         }
