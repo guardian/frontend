@@ -181,7 +181,6 @@ define([
             displayed = true;
         },
         displayLazyAds = function () {
-            console.log('Variant A');
             googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
             mediator.on('window:scroll', _.throttle(lazyLoad, 10));

@@ -2,16 +2,12 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/_',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/mediator'
+    'common/utils/config'
 ], function (
     fastdom,
     $,
     _,
-    config,
-    detect,
-    mediator
+    config
 ) {
     return function () {
         this.id = 'LzAds';
@@ -30,7 +26,6 @@ define([
             return config.page.edition === 'US';
         };
 
-        
         /**
          * nothing happens in here, we just use this to bucket users
          */
