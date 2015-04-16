@@ -63,7 +63,7 @@ define([
 
     SaveForLater.prototype.hasUserSavedArticle = function (articles, shortUrl) {
         return _.some(articles, function (article) {
-            return article.shortUrl === shortUrl;
+            return article.shortUrl.indexOf(shortUrl) > -1;
         });
     };
 
