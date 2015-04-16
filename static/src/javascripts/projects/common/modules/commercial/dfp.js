@@ -196,8 +196,9 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
-        dfpSwitchParam = function () {
-            return config.switches.lzAds && config.page.edition === 'US' && config.page.section === 'politics';
+        dfpAbParam = function () {
+            var test = ab.getParticipations().LzAds;
+            return test && test.variant === 'A' && ab.testCanBeRun('LzAds');
         },
 
         /**

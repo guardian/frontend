@@ -18,7 +18,8 @@ define([
     'common/modules/experiments/tests/adblock-message',
     'common/modules/experiments/tests/mt-sticky-bottom',
     'common/modules/experiments/tests/save-for-later',
-    'common/modules/experiments/headlines'
+    'common/modules/experiments/headlines',
+    'common/modules/experiments/tests/lazy-load-ads'
 ], function (
     raven,
     _,
@@ -39,7 +40,8 @@ define([
     AdblockMessage,
     MtStickyBottom,
     SaveForLater,
-    Headline
+    Headline,
+    LazyLoadAds
 ) {
 
     var ab,
@@ -56,6 +58,7 @@ define([
             new AdblockMessage(),
             new MtStickyBottom(),
             new SaveForLater(),
+            new LazyLoadAds(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             })

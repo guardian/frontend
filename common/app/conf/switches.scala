@@ -190,10 +190,6 @@ object Switches {
   )
 
   // Commercial
-  val LzAds = Switch("Commercial", "lz-ads", "Lazy loading ads.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 13)
-  )
-
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
@@ -503,6 +499,10 @@ object Switches {
     safeState = On, sellByDate = never)
 
   // A/B Tests
+  
+  val ABLzAds = Switch("A/B Tests", "ab-lazy-load-ads", "Lazy loading ads.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 16)
+  )
 
   val ABIdentitySocialOAuth = Switch("A/B Tests", "ab-id-social-oauth",
     "Switch to direct users to OAuth social sign-in app.",
