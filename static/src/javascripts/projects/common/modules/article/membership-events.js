@@ -45,6 +45,6 @@ define([
 
     return {
         upgradeEvent: upgradeEvent,
-        upgradeEvents: upgradeEvents,
+        upgradeEvents: upgradeEvents
     };
 });
