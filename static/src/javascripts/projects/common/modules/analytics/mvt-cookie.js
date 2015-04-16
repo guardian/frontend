@@ -44,10 +44,6 @@ define([
         return MAX_INT;
     }
 
-    function generateRandomInteger(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
-    }
-
     return {
         getMvtFullId: getMvtFullId,
         getMvtValue: getMvtValue,
