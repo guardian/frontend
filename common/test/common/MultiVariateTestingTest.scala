@@ -22,8 +22,8 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
         "X-GU-mvt-variant" -> "variant-2"
       )
     MultiVariateTesting.getVariant(testRequest) should be (Some(Variant2))
-    TestCases.isPartOfATest(testRequest) should be (true)
-    TestCases.getTest(testRequest) should be (Some(TestCases.Test1))
+    TestCases.isParticipatingInATest(testRequest) should be (true)
+    TestCases.getParticipatingTest(testRequest) should be (Some(TestCases.Test1))
     TestCases.Test1.switch.switchOff
   }
 
@@ -33,8 +33,8 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
         "X-GU-mvt-variant" -> "variant-invalid"
       )
     MultiVariateTesting.getVariant(testRequest) should be (None)
-    TestCases.isPartOfATest(testRequest) should be (false)
-    TestCases.getTest(testRequest) should be (None)
+    TestCases.isParticipatingInATest(testRequest) should be (false)
+    TestCases.getParticipatingTest(testRequest) should be (None)
   }
 
   "a test definition" should "have a default switch state to off" in {
