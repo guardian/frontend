@@ -1,6 +1,6 @@
 package views.support
 
-import common.Edition
+import common.{InternationalEdition, Edition}
 import common.Maps.RichMap
 import conf.Configuration
 import conf.Configuration.environment
@@ -16,6 +16,9 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
 
   def get = {
     val edition = Edition(request)
+    val internationalEdition = InternationalEdition(request) map { edition =>
+      ("internationalEdition", JsString(edition.variant))
+    }
 
     val pageData = Configuration.javascript.pageData mapKeys { key =>
       CamelCase.fromHyphenated(key.split('.').lastOption.getOrElse(""))
@@ -23,7 +26,7 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
 
     val config = (Configuration.javascript.config ++ pageData).mapValues(JsString.apply)
 
-    Json.toJson(metaData.metaData ++ config ++ Map(
+    Json.toJson(metaData.metaData ++ config ++ internationalEdition ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
       ("isDev", JsBoolean(Play.isDev)),

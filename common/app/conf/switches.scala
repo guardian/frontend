@@ -295,6 +295,10 @@ object Switches {
     "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
     safeState = Off, sellByDate = never)
 
+  val LCMortgageFeedSwitch = Switch("Commercial", "lc-mortgages",
+    "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
+    safeState = Off, sellByDate = never)
+
   val GuBookshopFeedsSwitch = Switch("Commercial", "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
@@ -507,7 +511,7 @@ object Switches {
 
   val ABAcrossTheCountry = Switch("A/B Tests", "ab-across-the-country",
     "Tests container placement on the US front",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 19)
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
   )
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -602,6 +606,11 @@ object Switches {
   val MissingVideoEndcodingsJobSwitch = Switch("Feature", "check-for-missing-video-encodings",
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
      safeState = Off, sellByDate = never
+  )
+
+  val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
+    "If this is switched on then lazy load the most-popular container on content pages",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
   )
 
   // Facia

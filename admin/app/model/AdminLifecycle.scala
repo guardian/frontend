@@ -81,7 +81,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
         log.info(s"Starting ExpiringAdFeaturesEmailJob")
         ExpiringAdFeaturesEmailJob.run()
       }
-      Jobs.schedule("ExpiringSwitchesEmailJob", "0 48 8 ? * MON-FRI") {
+      Jobs.schedule("ExpiringSwitchesEmailJob", "0 48 8 ? * MON-FRI", londonTime) {
         log.info(s"Starting ExpiringSwitchesEmailJob")
         ExpiringSwitchesEmailJob.run()
       }

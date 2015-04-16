@@ -6,7 +6,6 @@ define([
     'enhancer',
     'fastclick',
     'qwery',
-
     'common/utils/$',
     'common/utils/config',
     'common/utils/cookies',
@@ -16,7 +15,6 @@ define([
     'common/utils/template',
     'common/utils/url',
     'common/utils/robust',
-
     'common/modules/analytics/clickstream',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
@@ -54,6 +52,8 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
+    'text!common/views/international-message.html',
+    'text!common/views/international-control-message.html',
     'bootstraps/identity'
 ], function (
     bean,
@@ -61,7 +61,6 @@ define([
     enhancer,
     FastClick,
     qwery,
-
     $,
     config,
     cookies,
@@ -71,7 +70,6 @@ define([
     template,
     url,
     robust,
-
     Clickstream,
     Foresee,
     liveStats,
@@ -109,11 +107,11 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
+    internationalMessage,
+    internationalControlMessage,
     identity
 ) {
-
     var modules = {
-
             loadFonts: function () {
                 fonts.load();
             },
@@ -188,7 +186,7 @@ define([
 
             initPopular: function () {
                 if (!config.page.isFront) {
-                    if (window.location.hash) {
+                    if (!config.switches.lazyLoadOnwards || window.location.hash) {
                         modules.transcludePopular();
                     } else {
                         var onwardEl = qwery('.js-popular-trails')[0];
@@ -446,8 +444,23 @@ define([
                     && ab.testCanBeRun('MtStickyBtm')) {
                     stickyTest.fireStickyBottom();
                 }
-            }
+            },
 
+            internationalSignposting: function () {
+                var message;
+
+                if ('internationalEdition' in config.page) {
+                    message = new Message('international', {
+                        pinOnHide: true
+                    });
+
+                    if (config.page.internationalEdition === 'international') {
+                        message.show(template(internationalMessage, {}));
+                    } else {
+                        message.show(template(internationalControlMessage, {}));
+                    }
+                }
+            }
         },
 
         ready = function () {
@@ -492,6 +505,7 @@ define([
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
             robust('c-sticky-btm-ab',   modules.stickyBtmAb);
+            robust('c-international-signposting', modules.internationalSignposting);
         };
 
     return {

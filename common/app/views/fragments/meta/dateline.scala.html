@@ -7,7 +7,7 @@
         @Format(webPublicationDate, "EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(webPublicationDate)</span>
     </time>
     @if(hasBeenModified) {
-        <time itemprop="lastModified" datetime='@Format(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")'
+        <time itemprop="dateModified" datetime='@Format(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")'
         data-timestamp="@lastModified.getMillis" class="content__dateline-lm js-lm u-h">
             Last modified on @Format(lastModified, "EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(lastModified)</span>
         </time>
