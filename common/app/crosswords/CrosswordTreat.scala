@@ -52,7 +52,7 @@ object CrosswordGrid {
 
 case class CrosswordGrid(cellsInPlay: Set[Position])
 
-object CrosswordTreat {
+object CrosswordPreview {
   val Rows = 7
   val Columns = 7
   val BorderSize = 1
