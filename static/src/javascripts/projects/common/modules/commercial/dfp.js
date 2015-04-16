@@ -122,7 +122,7 @@ define([
                 $secondaryColumn = $('.js-secondary-column');
 
                 fastdom.write(function () {
-                    $('.right-most-popular', $secondaryColumn).css('margin-top', '0').append($adSlot.parent());
+                    $('.js-right-most-popular', $secondaryColumn).css('margin-top', '0').append($adSlot.parent());
                     $('.component--rhc .open-cta', $secondaryColumn).css('margin-top', '0');
                 });
             });
