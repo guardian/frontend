@@ -265,7 +265,6 @@ define([
                 width:  window.innerWidth  || docEl.clientWidth  || body.clientWidth,
                 height: window.innerHeight || docEl.clientHeight || body.clientHeight
             };
-
         }
 
         return viewportCache;

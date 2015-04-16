@@ -31,8 +31,8 @@ define([
 
         animateDelayMs = 1000,
         refreshSecs = 60,
-        refreshDecay = 2,
-        refreshMaxTimes = 0,
+        refreshDecay = 1,
+        refreshMaxTimes = 3,
         messageAnimateDistance = 200,
 
         selector = '.js-liveblog-blocks',
@@ -73,9 +73,9 @@ define([
         return 'translate3d(0, 0, 0)';
     }
 
-    function translateCss(genValue, offset) {
+    function translateCss(valueFn, offset) {
         return prefixedTransforms.map(function (rule) {
-            return rule + ':' + genValue(offset);
+            return rule + ':' + valueFn(offset);
         }).join(';');
     }
 
@@ -153,7 +153,7 @@ define([
             setTimeout(function () {
                 bonzo(el).attr('style', translateCss(translateNone));
             }, immediate ? 0 : animateDelayMs);
-            return true;
+            return true; // remove listener
         }
     }
 

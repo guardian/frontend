@@ -103,6 +103,6 @@ Full item with 75% width media.
     }
 
     .fc-item__liveblog-blocks {
-        height: 160px;
+        height: 158px; // 4 * block height - 2px margin
     }
 }
