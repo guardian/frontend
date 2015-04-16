@@ -2,7 +2,7 @@ package mvt
 
 import MultiVariateTesting._
 import common.InternationalEditionVariant
-import conf.{Switches, Switch}
+import conf.Switch
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
@@ -11,7 +11,7 @@ object ChimneyTest extends TestDefinition(
   List(Variant9, Variant8),
   "chimney-test",
   "an example test that adds a chimney to the home icon",
-  Switches.never
+  new LocalDate(2015, 4, 30)
 )
 
 object ActiveTests extends Tests {
