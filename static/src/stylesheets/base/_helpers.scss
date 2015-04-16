@@ -47,12 +47,6 @@
     }
 }
 
-.wide-only {
-    @include mq($until: wide) {
-        display: none !important;
-    }
-}
-
 .hide-on-mobile {
     display: none !important;
 
