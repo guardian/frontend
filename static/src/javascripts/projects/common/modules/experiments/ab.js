@@ -18,7 +18,7 @@ define([
     'common/modules/experiments/tests/adblock-message',
     'common/modules/experiments/tests/mt-sticky-bottom',
     'common/modules/experiments/tests/save-for-later',
-    'common/modules/experiments/tests/headlines'
+    'common/modules/experiments/headlines'
 ], function (
     raven,
     _,

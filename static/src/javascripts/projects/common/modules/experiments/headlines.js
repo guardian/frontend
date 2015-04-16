@@ -9,6 +9,14 @@ define([
     fastdom,
     qwery
 ) {
+    /**
+     * DO NOT MOVE THIS INSIDE THE `tests` FOLDER
+     * ------------------------------------------
+     * Rich has written some funky thing that parses the JavaScript in that folder in order to provide an endpoint with
+     * test IDs. As we're programmatically generating test IDs here, the parser gets confused, and then provides a test
+     * without an ID, which breaks the data team's loader. As this is a temporary thing, let's just not send it to the
+     * data team at all to begin with.
+     */
     return function (n) {
         this.id = 'Headline' + n;
         this.start = '2015-04-9';

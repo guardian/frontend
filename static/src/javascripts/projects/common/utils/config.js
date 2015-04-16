@@ -12,7 +12,6 @@ define([
     pad,
     urlUtils
 ) {
-
     var config         = guardian.config,
         adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
 
@@ -59,7 +58,5 @@ define([
         },
 
         isMedia: _.contains(['Video', 'Audio'], config.page.contentType)
-
     }, config);
-
 });
