@@ -285,10 +285,9 @@ $block-padding-right: $gs-gutter;
             margin-right: $gs-gutter * .2;
         }
         .liveblog-block-byline__name {
-            @include fs-bodyCopy(2) {
-                display: inline;
-                color: colour($neutral-1);
-            }
+            @include fs-bodyCopy(2);
+            display: inline;
+            color: colour(neutral-1);
         }
 
         /* Quotes
