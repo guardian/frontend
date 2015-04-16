@@ -498,10 +498,6 @@ object Switches {
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 16))
 
-  val ServerSideTests = Switch("Feature", "server-side-tests",
-    "Enables the server side testing system",
-    safeState = Off, sellByDate = never)
-
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
     "If switched on, any user registrations from a known tor esit node will be logged",
     safeState = On, sellByDate = never)
@@ -658,6 +654,17 @@ object Switches {
     "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please check the DB size.",
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
   )
+
+  // Server-side A/B Tests
+
+  val ServerSideTests = {
+    // It's for the side effect. Blame agents.
+    val tests = mvt.ActiveTests.tests
+
+    Switch("Server-side A/B Tests", "server-side-tests",
+      "Enables the server side testing system",
+      safeState = Off, sellByDate = never)
+  }
 
   def all: Seq[SwitchTrait] = Switch.allSwitches
 

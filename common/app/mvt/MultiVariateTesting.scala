@@ -1,19 +1,27 @@
 package mvt
 
 import MultiVariateTesting._
+import common.InternationalEditionVariant
 import conf.{Switches, Switch}
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
+import views.support.CamelCase
+
+object ChimneyTest extends TestDefinition(
+  List(Variant9, Variant8),
+  "chimney-test",
+  "an example test that adds a chimney to the home icon",
+  Switches.never
+)
 
 object ActiveTests extends Tests {
-  object Test0 extends TestDefinition(
-    List(Variant9),
-    "Test0",
-    "an experiment test",
-    Switches.never
-  )
+  val tests = List(ChimneyTest)
 
-  val tests = List(Test0)
+  def getJavascriptConfig(implicit request: RequestHeader): String = {
+    val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
+    List(ActiveTests.getParticipatingTest(request).map{ test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}"""})
+    configEntries.flatten.mkString(",")
+  }
 }
 
 case class TestDefinition (
@@ -28,21 +36,27 @@ case class TestDefinition (
     description,
     conf.Off,
     sellByDate)
+
+  def isParticipating(implicit request: RequestHeader): Boolean = {
+    ActiveTests.getParticipatingTest(request).contains(this)
+  }
 }
 
 trait Tests {
 
   protected def tests: Seq[TestDefinition]
 
-  def getTest(request: RequestHeader): Option[TestDefinition] = {
+  def getParticipatingTest(request: RequestHeader): Option[TestDefinition] = {
     getVariant(request).flatMap { variant =>
-      tests.find(_.variants.contains(variant))
+      tests.find { test =>
+        test.variants.contains(variant) &&
+        test.switch.isSwitchedOn &&
+        conf.Switches.ServerSideTests.isSwitchedOn
+      }
     }
   }
 
-  def isPartOfATest(request: RequestHeader): Boolean = {
-    getTest(request).exists(_.switch.isSwitchedOn && conf.Switches.ServerSideTests.isSwitchedOn)
-  }
+  def isParticipatingInATest(request: RequestHeader): Boolean = getParticipatingTest(request).isDefined
 }
 
 object MultiVariateTesting {
