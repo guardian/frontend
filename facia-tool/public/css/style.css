@@ -2100,6 +2100,32 @@ hr {
     top: 15px;
 }
 
+.unauthorized-message {
+    background-color: #b51800;
+}
+
+.huge {
+    font-size: 200px;
+}
+.unauthorized-message {
+    color: #FFF;
+    text-align: center;
+}
+.frown-face {
+    margin: 20px 0 40px;
+}
+.unauthorized-message i {
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 1px 4px 6px #b51800, 0 0 0 #000, 1px 4px 6px #b51800, 1px 4px 6px #b51800;
+}
+.unauthorized-message p {
+    line-height: 200%;
+    font-size: 22px;
+}
+.unauthorized-message a {
+    color: #2ea3eb;
+}
+
 /*****************************************/
 /* MEDIA QUERIES */
 /*****************************************/
