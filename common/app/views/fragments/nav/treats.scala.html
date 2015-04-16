@@ -2,20 +2,46 @@
 
 @import common.LinkTo
 @import common.ExternalLinks.internalPath
-@import crosswords.{CrosswordGrid, CrosswordTreat, TodaysCrosswordGrid}
+@import crosswords.{CrosswordGrid, CrosswordPreview, TodaysCrosswordGrid}
+@import views.support.{Treat, CrosswordTreat, RegisterToVoteTreat, NormalTreat, RegisterCountdown}
 
 @if(containerDefinition.collectionEssentials.treats.nonEmpty) {
     <ul class="treats__container">
     @containerDefinition.collectionEssentials.treats.zipWithIndex.map { case (treat, index) =>
         @defining(LinkTo(treat).getOrElse("")) { link =>
             <li class="treats__list-item">
-                @if(internalPath(link).contains("/crosswords")) {
-                    <a class="treats__crossword-link" data-link-name="treat | @{index + 1}" href="@link">
-                        @CrosswordTreat.fromCrosswordGrid(TodaysCrosswordGrid.get.getOrElse(CrosswordGrid.DefaultTreat))
-                        <span class="treats__treat">@treat.headline</span>
-                    </a>
-                } else {
-                    <a href="@link" data-link-name="treat | @{index + 1} | @treat.headline" class="treats__treat">@treat.headline</a>
+                @Treat.fromUrl(link) match {
+                    case RegisterToVoteTreat => {
+                        <a class="treats__register-to-vote" data-link-name="treat | @{index + 1}" href="@link">
+                            <img class="treats__register-to-vote__logo" src="http://i.guim.co.uk/static/w-90/h--/q-95/sys-images/Guardian/Pix/pictures/2015/4/2/1427982061285/election2015logo160x160opt.png" />
+                            <h2 class="treats__register-to-vote__title">
+                                <strong>Register to vote</strong><br />
+                                @RegisterCountdown.daysLeft match {
+                                    case 0 => {
+                                        Last day to register&#8230;
+                                    }
+                                    case 1 => {
+                                        Only @RegisterCountdown.daysLeft day left&#8230;
+                                    }
+                                    case _ => {
+                                        Only @RegisterCountdown.daysLeft days left&#8230;
+                                    }
+                                }
+                            </h2>
+                            <span class="treats__treat">Find out how to register</span>
+                        </a>
+                    }
+
+                    case CrosswordTreat => {
+                        <a class="treats__crossword-link" data-link-name="treat | @{index + 1}" href="@link">
+                            @CrosswordPreview.fromCrosswordGrid(TodaysCrosswordGrid.get.getOrElse(CrosswordGrid.DefaultTreat))
+                            <span class="treats__treat">@treat.headline</span>
+                        </a>
+                    }
+
+                    case NormalTreat => {
+                        <a href="@link" data-link-name="treat | @{index + 1} | @treat.headline" class="treats__treat">@treat.headline</a>
+                    }
                 }
             </li>
         }
