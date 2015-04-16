@@ -4,7 +4,7 @@ object Treat {
     def fromUrl(url: String) = {
         if (url.contains("/crosswords")) {
             CrosswordTreat
-        } else if (url.contains("/register")) {
+        } else if (url.contains("/how-to-register-to-vote")) {
             RegisterToVoteTreat
         } else {
             NormalTreat
