@@ -27,12 +27,13 @@ define([
 ) {
     var forgetAfterHours = 24,
         numDisplayedBlocks = 4,
-        blockHeightPx = 42,
+        blockHeightPx = 40,
 
         animateDelayMs = 1000,
         refreshSecs = 60,
         refreshDecay = 2,
         refreshMaxTimes = 0,
+        messageAnimateDistance = 200,
 
         selector = '.js-liveblog-blocks',
         blocksClassName = 'fc-item__liveblog-blocks',
@@ -78,7 +79,7 @@ define([
         }).join(';');
     }
 
-    function renderBlocks(articleId, targets, blocks, oldBlockDate) {
+    function showBlocks(articleId, targets, blocks, oldBlockDate) {
         var fakeUpdate = _.isUndefined(oldBlockDate);
 
         fastdom.write(function () {
@@ -110,38 +111,39 @@ define([
 
                 bonzo(element).empty().addClass(blocksClassName).append(el);
 
-                if (numNewBlocks && !maybeAnimateBlocks(el[0])) {
-                    mediator.on('window:scroll', _.debounce(function () {
-                        return maybeAnimateBlocks(el[0], true);
-                    }, animateDelayMs));
+                if (numNewBlocks) {
+                    animateBlocks(el[0]);
                 }
             });
         });
     }
 
-    function renderMessage(articleId, targets, blocks, oldBlockDate) {
+    function showMessage(articleId, targets, blocks, oldBlockDate) {
         var fakeUpdate = _.isUndefined(oldBlockDate);
 
         fastdom.write(function () {
             _.forEach(targets, function (element) {
-                var hasUpdate = fakeUpdate || _.some(blocks, function (block) {
-                        return block.publishedDateTime > oldBlockDate;
-                    }),
+                var hasUpdate = fakeUpdate || _.some(blocks, function (block) { return block.publishedDateTime > oldBlockDate; }),
                     el;
 
                 if (hasUpdate) {
-                    el = bonzo.create('<div style="' + translateCss(translateHorizontal, 100) + '">Updated ' + blockRelativeTime(blocks[0]) + '</div>');
-
+                    el = bonzo.create('<div class="fc-item__liveblog-message__inner" ' +
+                            'style="' + translateCss(translateHorizontal, messageAnimateDistance) + '">' +
+                            'Updated ' + blockRelativeTime(blocks[0]) + ' ago' +
+                        '</div>');
                     bonzo(element).addClass(messageClassName).append(el);
-
-                    if (hasUpdate && !maybeAnimateBlocks(el[0])) {
-                        mediator.on('window:scroll', _.debounce(function () {
-                            return maybeAnimateBlocks(el[0], true);
-                        }, animateDelayMs));
-                    }
+                    animateBlocks(el[0]);
                 }
             });
         });
+    }
+
+    function animateBlocks(el) {
+        if (!maybeAnimateBlocks(el)) {
+            mediator.on('window:scroll', _.debounce(function () {
+                return maybeAnimateBlocks(el, true);
+            }, animateDelayMs));
+        }
     }
 
     function maybeAnimateBlocks(el, immediate) {
@@ -167,7 +169,7 @@ define([
         });
     }
 
-    function updateView(callback, doPoll) {
+    function showUpdates(callback, doPoll) {
         var oldBlockDates;
 
         $(selector).each(function (element) {
@@ -202,7 +204,7 @@ define([
             if (doPoll && refreshMaxTimes) {
                 refreshMaxTimes -= 1;
                 setTimeout(function () {
-                    updateView(callback);
+                    showUpdates(callback);
                 }, refreshSecs * 1000);
                 refreshSecs = refreshSecs * refreshDecay;
             }
@@ -210,7 +212,7 @@ define([
     }
 
     return {
-        injectBlocks:  updateView.bind(null, renderBlocks, true),
-        injectMessage: updateView.bind(null, renderMessage)
+        showBlocks:  showUpdates.bind(null, showBlocks, true),
+        showMessage: showUpdates.bind(null, showMessage)
     };
 });

@@ -82,9 +82,8 @@
 }
 
 .fc-item__liveblog-blocks {
-    height: 82px;
+    height: 78px; // 2 * block height - 2px margin
     overflow: hidden;
-    margin-left: -5px;
     margin-right: -5px;
 
     .fc-item--has-metadata & {
@@ -99,7 +98,12 @@
     }
 }
 
-.fc-item__liveblog-blocks__inner {
+.fc-item__liveblog-message {
+    overflow: hidden;
+}
+
+.fc-item__liveblog-blocks__inner,
+.fc-item__liveblog-message__inner {
     -webkit-transition: -webkit-transform .5s ease-in-out;
     -moz-transition: -moz-transform .5s ease-in-out;
     -o-transition: -o-transform .5s ease-in-out;
@@ -107,28 +111,25 @@
 }
 
 .fc-item__liveblog-block {
+    @include box-sizing(border-box);
     display: block;
     position: relative;
     @include fs-headline(1);
     line-height: 16px;
     color: #ffffff;
     height: $gs-baseline * 3 + 2;
+    margin-bottom: 2px;
+    margin-top: 0;
     padding: 4px 5px 0;
+    background: rgba(0, 0, 0, .2);
 }
 
-.fc-item__liveblog-block:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: -10px;
-    right: -10px;
-    background: rgba(0, 0, 0, 0.2);
-    z-index: -1;
+.fc-item__liveblog-block__time {
+    font-weight: bold;
+    @include ellipsis();
 }
 
 .fc-item__liveblog-block--new .fc-item__liveblog-block__time:before {
-    font-weight: bold;
     content: 'Updated';
     margin-right: $gs-gutter / 5;
 }
@@ -140,4 +141,10 @@
 .fc-item__liveblog-block__text {
     color: #ffffff;
     @include ellipsis();
+}
+
+.fc-item__liveblog-message__inner {
+    @include fs-headline(1);
+    color: #ffffff;
+    font-weight: bold;
 }

@@ -32,8 +32,12 @@ define([
                 test: function () {}
             },
             {
-                id: 'show',
-                test: liveblogUpdates.injectBlocks
+                id: 'blocks',
+                test: liveblogUpdates.showBlocks
+            },
+            {
+                id: 'message',
+                test: liveblogUpdates.showMessage
             }
         ];
     };
