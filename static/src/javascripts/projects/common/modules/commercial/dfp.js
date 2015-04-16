@@ -135,7 +135,7 @@ define([
                 rendered = true;
 
                 // record first ad on page rendered
-                _.once((new Image()).src = guardian.config.page.beaconUrl + '/count/ad-render.gif');
+                _.once((new Image()).src = config.page.beaconUrl + '/count/ad-render.gif');
 
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
