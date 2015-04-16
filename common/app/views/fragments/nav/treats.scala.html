@@ -15,10 +15,10 @@
                         <a class="treats__register-to-vote" data-link-name="treat | @{index + 1}" href="@link">
                             <img class="treats__register-to-vote__logo" src="http://i.guim.co.uk/static/w-90/h--/q-95/sys-images/Guardian/Pix/pictures/2015/4/2/1427982061285/election2015logo160x160opt.png" />
                             <h2 class="treats__register-to-vote__title">
-                                <strong>Register to vote</strong><br />
+                                <strong>Register to vote</strong>
                                 @RegisterCountdown.daysLeft match {
                                     case 0 => {
-                                        Last day to register&#8230;
+                                        Last day&#8230;
                                     }
                                     case 1 => {
                                         Only @RegisterCountdown.daysLeft day left&#8230;
