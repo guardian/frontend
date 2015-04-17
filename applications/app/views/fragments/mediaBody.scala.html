@@ -1,5 +1,6 @@
 @(page: MediaPage)(implicit request: RequestHeader)
 
+@import common.LinkTo
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}
 @import views.support.{Video640, SeoOptimisedContentImage, StripHtmlTags}
 @import views.support.TrailCssClasses.articleToneClass
@@ -48,7 +49,7 @@
                                     <figure data-component="main video">
                                         <meta itemprop="name" content="@Html(video.headline)"/>
                                         <meta itemprop="headline" content="@Html(video.headline)"/>
-                                        <meta itemprop="url" content="@video.url"/>
+                                        <meta itemprop="url" content="@LinkTo(video.url)"/>
                                         @video.trailText.map{ t =>
                                             <meta itemprop="description" content="@StripHtmlTags(t)" />
                                             <meta itemprop="about" content="@StripHtmlTags(t)" />
