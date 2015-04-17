@@ -57,13 +57,13 @@ object FaciaContentImplicits {
         curatedContent => SupportedUrl(curatedContent.content),
         supportingCuratedContent => SupportedUrl(supportingCuratedContent.content),
         linkSnap => linkSnap.id,
-        latestSnap => latestSnap.id)
+        latestSnap => latestSnap.latestContent.map(SupportedUrl(_)).getOrElse(latestSnap.id))
 
     def id: String = fold(
         curatedContent => curatedContent.content.id,
         supportingCuratedContent => supportingCuratedContent.content.id,
         linkSnap => linkSnap.id,
-        latestSnap => latestSnap.id)
+        latestSnap => latestSnap.latestContent.map(_.id).getOrElse(latestSnap.id))
 
     def embedType: Option[String] = fold(
         curatedContent => curatedContent.embedType,
@@ -228,35 +228,35 @@ object FaciaContentImplicits {
 
 
     def isBoosted: Boolean = fold(
-      curatedContent => curatedContent.isBoosted,
+      curatedContent => curatedContent.properties.isBoosted,
       supportingCuratedContent => supportingCuratedContent.isBoosted,
       linkSnap => linkSnap.isBoosted,
       latestSnap => latestSnap.isBoosted
     )
 
     def showBoostedHeadline: Boolean = fold(
-      curatedContent => curatedContent.showBoostedHeadline,
+      curatedContent => curatedContent.properties.showBoostedHeadline,
       supportingCuratedContent => supportingCuratedContent.showBoostedHeadline,
       linkSnap => linkSnap.showBoostedHeadline,
       latestSnap => latestSnap.showBoostedHeadline
     )
 
     def showQuotedHeadline: Boolean = fold(
-      curatedContent => curatedContent.showQuotedHeadline,
+      curatedContent => curatedContent.properties.showQuotedHeadline,
       supportingCuratedContent => supportingCuratedContent.showQuotedHeadline,
       linkSnap => linkSnap.showQuotedHeadline,
       latestSnap => latestSnap.showQuotedHeadline
     )
 
     def showMainVideo: Boolean = fold(
-      curatedContent => curatedContent.showMainVideo,
+      curatedContent => curatedContent.properties.showMainVideo,
       supportingCuratedContent => supportingCuratedContent.showMainVideo,
       linkSnap => linkSnap.showMainVideo,
       latestSnap => latestSnap.showMainVideo
     )
 
     def imageHide: Boolean = fold(
-      curatedContent => curatedContent.imageHide,
+      curatedContent => curatedContent.properties.imageHide,
       supportingCuratedContent => supportingCuratedContent.imageHide,
       linkSnap => linkSnap.imageHide,
       latestSnap => latestSnap.imageHide
@@ -286,7 +286,7 @@ object FaciaContentImplicits {
     )
 
     def showByline: Boolean = fold(
-      curatedContent => curatedContent.showByLine,
+      curatedContent => curatedContent.properties.showByline,
       supportingCuratedContent => supportingCuratedContent.showByLine,
       linkSnap => linkSnap.showByLine,
       latestSnap => latestSnap.showByLine
