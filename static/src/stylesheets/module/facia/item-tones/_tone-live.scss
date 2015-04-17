@@ -85,17 +85,7 @@
     height: 78px; // 2 * block height - 2px margin
     overflow: hidden;
     margin-right: -1 * $gs-gutter / 4;
-
-    .fc-item--has-metadata & {
-        margin-bottom: -1 * $gs-baseline * 2;
-    }
-
-    .fc-item--has-sublinks-1 &,
-    .fc-item--has-sublinks-2 &,
-    .fc-item--has-sublinks-3 &,
-    .fc-item--has-sublinks-4 & {
-        margin-bottom: 0;
-    }
+    margin-bottom: $gs-baseline / 2;
 }
 
 .fc-item__liveblog-message {
