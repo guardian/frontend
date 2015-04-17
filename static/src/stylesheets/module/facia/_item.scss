@@ -82,6 +82,14 @@ $fc-item-gutter: $gs-gutter / 4;
             width: 0;
         }
 
+        .has-flex .most-viewed--media & {
+            width: 50%;
+
+            @include mq($until: desktop) {
+                width: 33.3%;
+            }
+        }
+
         .has-flex-wrap & {
             @include flex-display;
         }
