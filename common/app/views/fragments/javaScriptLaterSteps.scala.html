@@ -10,8 +10,11 @@
     instead of "XHR", like Curl. Soon this will become the default:
     https://github.com/systemjs/systemjs/issues/225#issuecomment-93953146
     We need this to allow cross-domain downloads, e.g. Ophan -->
-    <script src="/assets/jspm_packages/es6-module-loader.js"></script>
-    <script src="/assets/jspm_packages/github/systemjs/systemjs@@0.16.7/dist/system-csp.js"></script>
+    <!-- <script src="/assets/jspm_packages/es6-module-loader.js"></script> -->
+    <!-- <script src="/assets/jspm_packages/github/systemjs/systemjs@@0.16.7/dist/system-csp.js"></script> -->
+    <!-- FIXME: Babel not working with CSP SystemJS https://github.com/systemjs/systemjs/issues/407 -->
+    <!-- <script src="/assets/jspm_packages/system-csp.js"></script> -->
+    <script src="/assets/jspm_packages/system.js"></script>
     <script src="/assets/systemjs-config.js"></script>
     <!-- TODO: Only if in PROD -->
     <script src="/assets/systemjs-bundle-config.js"></script>
