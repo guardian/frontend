@@ -9,7 +9,7 @@
             Map("content--advertisement-feature" -> gallery.isAdvertisementFeature),
             "content", "content--media", "content--gallery", "tonal", s"tonal--${articleToneClass(gallery)}"
         )"
-        itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
+        itemscope itemtype="@gallery.schemaType" role="main">
 
         @fragments.headTonal(gallery)
 
