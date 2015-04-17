@@ -74,8 +74,7 @@ export default ({ isDev, isDiagnosticsLoggingSwitchOn }) => {
 
     if (guardian.isModernBrowser) {
         if(isDev) {
-            // TODO: Make me work
-            // System.import('bootstraps/dev').then(function (devmode) { devmode.init(); });
+            System.import('bootstraps/dev').then(function (devmode) { devmode.init(); });
         }
 
         System.import('bootstraps/app').then(function(bootstrap) {

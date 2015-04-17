@@ -1,5 +1,7 @@
 define([
-    'socketio',
+    // TODO: npm
+    // 'socketio',
+    'socketio/socket.io',
     'common/modules/dev/debugObject'
 ], function (
     io,
