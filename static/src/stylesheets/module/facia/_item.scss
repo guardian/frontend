@@ -82,6 +82,7 @@ $fc-item-gutter: $gs-gutter / 4;
             width: 0;
         }
 
+        // Temporary fix for the above! - for video most popular
         .has-flex .most-viewed--media & {
             width: 50%;
 
