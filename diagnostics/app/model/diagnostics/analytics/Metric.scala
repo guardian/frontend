@@ -20,6 +20,7 @@ object Metric extends Logging {
     ("pva", CountMetric("kpis-analytics-page-views")), // page view fires after analytics
 
     ("ads-blocked", CountMetric("ads-blocked")),
+    ("ad-render", CountMetric("first-ad-rendered")),
 
     // error pages
     ("50x", CountMetric("kpis-user-50x")),             // beacon on the 50x page that tells us that real users are getting 500 errors
