@@ -14,7 +14,7 @@ define([
         this.expiry = '2015-04-23';
         this.author = 'Stephan Fowler';
         this.description = 'Checking effect of showing the latest liveblog blocks on fronts';
-        this.audience = 0.2;
+        this.audience = 0.3;
         this.audienceOffset = 0.5;
         this.successMeasure = '';
         this.audienceCriteria = 'Front visitors';
@@ -22,7 +22,7 @@ define([
         this.idealOutcome = 'Higher engagement, measured as increased onward journeys to ANY content on the affected front, or increased dewll time on that front';
 
         this.canRun = function () {
-            return ['football', 'uk/sport', 'us/sport', 'au/sport'].indexOf(config.page.pageId) > -1 && ['desktop', 'wide'].indexOf(detect.getBreakpoint()) > -1;
+            return ['Network Front', 'Section'].indexOf(config.page.contentType) > -1;
         };
 
         this.variants = [
@@ -31,8 +31,12 @@ define([
                 test: function () {}
             },
             {
-                id: 'show',
-                test: liveblogUpdates
+                id: 'blocks',
+                test: liveblogUpdates.showBlocks
+            },
+            {
+                id: 'message',
+                test: liveblogUpdates.showMessage
             }
         ];
     };

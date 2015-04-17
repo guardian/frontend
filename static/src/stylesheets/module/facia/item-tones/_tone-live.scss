@@ -9,10 +9,7 @@
     }
 
     .u-faux-block-link--hover {
-        &,
-        & .fc-item__liveblog-block__more {
-            background-color: darken(colour(live-default), 4%);
-        }
+        background-color: darken(colour(live-default), 4%);
     }
 
     .fc-item__link,
@@ -85,11 +82,28 @@
 }
 
 .fc-item__liveblog-blocks {
-    height: 82px;
+    height: 78px; // 2 * block height - 2px margin
+    overflow: hidden;
+    margin-right: -1 * $gs-gutter / 4;
+
+    .fc-item--has-metadata & {
+        margin-bottom: -1 * $gs-baseline * 2;
+    }
+
+    .fc-item--has-sublinks-1 &,
+    .fc-item--has-sublinks-2 &,
+    .fc-item--has-sublinks-3 &,
+    .fc-item--has-sublinks-4 & {
+        margin-bottom: 0;
+    }
+}
+
+.fc-item__liveblog-message {
     overflow: hidden;
 }
 
-.fc-item__liveblog-blocks__inner {
+.fc-item__liveblog-blocks__inner,
+.fc-item__liveblog-message__inner {
     -webkit-transition: -webkit-transform .5s ease-in-out;
     -moz-transition: -moz-transform .5s ease-in-out;
     -o-transition: -o-transform .5s ease-in-out;
@@ -97,26 +111,22 @@
 }
 
 .fc-item__liveblog-block {
+    @include box-sizing(border-box);
     display: block;
     position: relative;
     @include fs-headline(1);
+    line-height: 1rem;
     color: #ffffff;
-    overflow: hidden;
     height: $gs-baseline * 3 + 2;
-    margin-bottom: $gs-baseline / 2;
-}
-
-.fc-item__liveblog-block__more {
-    position: absolute;
-    bottom: $gs-baseline / 6;
-    right: 0;
-    width: $gs-gutter * .75;
-    padding-left: $gs-gutter / 10;
-    background-color: colour(live-default);
+    margin-bottom: $gs-baseline / 6;
+    margin-top: 0;
+    padding: $gs-baseline/3 $gs-gutter/4 0;
+    background-color: darken(colour(live-default), 10%);
 }
 
 .fc-item__liveblog-block__time {
     font-weight: bold;
+    @include ellipsis();
 }
 
 .fc-item__liveblog-block--new .fc-item__liveblog-block__time:before {
@@ -125,9 +135,16 @@
 }
 
 .fc-item__liveblog-block--old .fc-item__liveblog-block__time {
-    color: mix(#ffffff, colour(live-default), 50%);
+    color: mix(#ffffff, colour(live-default), 70%);
 }
 
 .fc-item__liveblog-block__text {
-    color: mix(#ffffff, colour(live-default), 80%);
+    color: #ffffff;
+    @include ellipsis();
+}
+
+.fc-item__liveblog-message__inner {
+    @include fs-headline(1);
+    color: #ffffff;
+    font-weight: bold;
 }
