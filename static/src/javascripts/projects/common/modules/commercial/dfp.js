@@ -16,7 +16,8 @@ define([
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'common/modules/analytics/beacon'
 ], function (
     bean,
     bonzo,
@@ -34,7 +35,8 @@ define([
     StickyMpu,
     buildPageTargeting,
     geoMostPopular,
-    ab
+    ab,
+    beacon
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -76,10 +78,7 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                var mtMasterTest = ab.getParticipations().MtMaster;
-
-                if (ab.testCanBeRun('MtMaster') &&
-                    mtMasterTest && mtMasterTest.variant === 'variant') {
+                if (isMasterTest() && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         new StickyMpu($adSlot).create();
                     }
@@ -104,12 +103,23 @@ define([
             }
         },
 
+        isMasterTest = function () {
+            var mtMasterTest = ab.getParticipations().MtMaster;
+
+            return ab.testCanBeRun('MtMaster') && mtMasterTest && mtMasterTest.variant === 'variant';
+        },
+
+        recordFirstAdRendered = _.once(function () {
+            beacon.beaconCounts('ad-render');
+        }),
+
         /**
          * Initial commands
          */
         setListeners = function () {
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
+                recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
             }));

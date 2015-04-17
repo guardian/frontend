@@ -1,15 +1,15 @@
 package slices
 
 object DynamicFast extends DynamicContainer {
-  protected def standardSlice(stories: Seq[Story]): Option[Slice] = {
+  protected def standardSlices(stories: Seq[Story]): Seq[Slice] = {
     val isFirstBoosted = stories.headOption.exists(_.isBoosted)
 
     val BigsAndStandards(bigs, _) = bigsAndStandards(stories)
 
     if (stories.isEmpty) {
-      None
+      Nil
     } else {
-      Some(
+      Seq(
         if (stories.forall(_.group == 0)) {
           Ql3Ql3Ql3Ql3
         } else if (isFirstBoosted) {

@@ -40,6 +40,8 @@ trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
 
   def expiresSoon = daysToExpiry < 7
 
+  def hasExpired = daysToExpiry == 0
+
   Switch.switches.send(this :: _)
 }
 
@@ -73,7 +75,7 @@ object Switches {
 
   // Switch names can be letters numbers and hyphens only
 
-  private lazy val never = new LocalDate(2100, 1, 1)
+  lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
   val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
@@ -227,6 +229,12 @@ object Switches {
   val SponsoredSwitch = Switch("Commercial", "sponsored",
     "Show sponsored badges, logos, etc.",
     safeState = On, sellByDate = never
+  )
+
+  val LiveBlogContributorImagesSwitch = Switch("Feature", "liveblog-contributor-image",
+    "Show contributor byline images in live blog blocks",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 5, 28)
   )
 
   val ElectionLiveBadgeSwitch = Switch("Feature", "election-2015-badging",
@@ -608,6 +616,11 @@ object Switches {
      safeState = Off, sellByDate = never
   )
 
+  val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
+    "If this is switched on then lazy load the most-popular container on content pages",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
+  )
+
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
@@ -654,6 +667,17 @@ object Switches {
     "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please check the DB size.",
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
   )
+
+  // Server-side A/B Tests
+
+  val ServerSideTests = {
+    // It's for the side effect. Blame agents.
+    val tests = mvt.ActiveTests.tests
+
+    Switch("Server-side A/B Tests", "server-side-tests",
+      "Enables the server side testing system",
+      safeState = Off, sellByDate = never)
+  }
 
   def all: Seq[SwitchTrait] = Switch.allSwitches
 
