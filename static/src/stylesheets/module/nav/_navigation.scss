@@ -48,6 +48,10 @@ $c-navigation-expandable-background: colour(neutral-1);
 /* Styles common to all states
    ========================================================================== */
 
+.navigation-container {
+    background: colour(guardian-brand);
+}
+
 .navigation {
     position: relative;
     overflow: hidden;
@@ -133,6 +137,13 @@ $c-navigation-expandable-background: colour(neutral-1);
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+
+.navigation--sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1001;
 }
 
 

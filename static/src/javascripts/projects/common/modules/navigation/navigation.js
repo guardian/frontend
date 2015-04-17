@@ -25,6 +25,14 @@ define([
                     $('.navigation__scroll').css({'-webkit-overflow-scrolling': 'touch'});
                 });
             }
+
+            if (this.stickyNavAbParam()) {
+                this.stickyNav();
+            }
+        },
+
+        stickyNavAbParam: function () {
+            return true;
         },
 
         copyMegaNavMenu: function () {
@@ -52,6 +60,10 @@ define([
                     mediator.emit(target.hasClass('navigation-container--expanded') ? 'modules:nav:open' : 'modules:nav:close');
                 });
             });
+        },
+
+        stickyNav: function () {
+            $('.js-navigation-header').addClass('navigation--sticky');
         }
     };
 
