@@ -133,7 +133,7 @@ object InternationalEdition {
   val id: String = "intl"
   val path: String = "/international"
 
-  val abbreviation: String = "Int'l"
+  val abbreviation: String = "INT"
   val displayName = "International"
 
   val international = InternationalEdition("international")
