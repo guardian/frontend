@@ -33,7 +33,7 @@
                         <div class="media-primary player">
                             @media match {
                                 case audio: Audio => {
-                                    <figure itemprop="audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio">
+                                    <figure data-component="main audio">
                                     @audio.mainAudio.map { audioElement =>
                                         @fragments.media.audio(AudioPlayer(
                                             audio,
@@ -45,7 +45,7 @@
                                     </figure>
                                 }
                                 case video: Video => {
-                                    <figure itemprop="video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video">
+                                    <figure data-component="main video">
                                         <meta itemprop="name" content="@Html(video.headline)"/>
                                         <meta itemprop="headline" content="@Html(video.headline)"/>
                                         <meta itemprop="url" content="@video.url"/>
