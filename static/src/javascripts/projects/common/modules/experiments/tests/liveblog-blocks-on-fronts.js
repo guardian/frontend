@@ -22,7 +22,7 @@ define([
         this.idealOutcome = 'Higher engagement, measured as increased onward journeys to ANY content on the affected front, or increased dewll time on that front';
 
         this.canRun = function () {
-            return true;
+            return ['Network Front', 'Section'].indexOf(config.page.contentType) > -1
         };
 
         this.variants = [
