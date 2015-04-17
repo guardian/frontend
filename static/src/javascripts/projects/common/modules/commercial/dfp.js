@@ -130,7 +130,9 @@ define([
             });
         },
 
-        recordFirstAdRendered = _.once(beacon.beaconCounts('ad-render')),
+        recordFirstAdRendered = _.once(function () {
+            beacon.beaconCounts('ad-render');
+        }),
 
         /**
          * Initial commands
