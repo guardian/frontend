@@ -454,9 +454,9 @@ define([
                         pinOnHide: true
                     });
 
-                    if (config.page.internationalEdition === 'international' && config.page.pageId == 'international') {
+                    if (config.page.internationalEdition === 'international' && config.page.pageId === 'international') {
                         message.show(template(internationalMessage, {}));
-                    } else if (config.page.internationalEdition === 'control' && config.page.pageId == 'uk') {
+                    } else if (config.page.internationalEdition === 'control' && config.page.pageId === 'uk') {
                         message.show(template(internationalControlMessage, {}));
                     }
                 }
