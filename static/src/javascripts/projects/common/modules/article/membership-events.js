@@ -1,16 +1,15 @@
 define([
     'fastdom',
-    'common/utils/config',
     'common/utils/$',
     'common/utils/ajax-promise'
-], function (fastdom, config, $, ajax) {
+], function (fastdom, $, ajax) {
 
     var ELEMENT_INITIAL_CLASS = 'element-membership--not-upgraded',
         ELEMENT_UPGRADED_CLASS = 'element-membership--upgraded';
 
     function upgradeEvent(el) {
         var href = $('a', el).attr('href'),
-            matches = (href.indexOf(config.page.membershipUrl) > -1);
+            matches = href.match(/https:\/\/membership.theguardian.com/);
 
         if (matches) {
             ajax({
