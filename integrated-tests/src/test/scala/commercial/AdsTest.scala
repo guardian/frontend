@@ -6,9 +6,9 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover @Retryable class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
 
-  "Ads" should "display on the network front" in {
+  "Ads" should "display on the sport front" in {
 
-    webDriver.get(theguardianWithAds("/uk"))
+    webDriver.get(theguardianWithAds("/uk/sport"))
     webDriver.navigate().refresh()
 
     // This is an essential sleep, because the implicitlyWait isn't sufficient to ensure that
