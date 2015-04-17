@@ -20,6 +20,7 @@ object BodyCleaner {
         VideoEmbedCleaner(article),
         PictureCleaner(article),
         LiveBlogDateFormatter(article.isLiveBlog),
+        BloggerBylineImage(article),
         LiveBlogShareButtons(article),
         DropCaps(article.isComment || article.isFeature),
         FigCaptionCleaner,
