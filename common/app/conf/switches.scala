@@ -40,6 +40,8 @@ trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
 
   def expiresSoon = daysToExpiry < 7
 
+  def hasExpired = daysToExpiry == 0
+
   Switch.switches.send(this :: _)
 }
 

@@ -19,7 +19,6 @@
 }
 
 .abtest-item__titlebar {
-    border-bottom: 1px solid #ccc;
     margin-top: 10px;
     margin-bottom: 10px;
     padding-bottom: 4px;
@@ -50,15 +49,20 @@
     display: none;
 }
 
+.abtest-item--active .abtest-item__active-label,
 .abtest-item--expired .abtest-item__expired-label,
 .abtest-item--switched-on .abtest-item__switched-on-label,
-.abtest-item--switched-off .abtest-item__switched-off-label
-{
+.abtest-item--switched-off .abtest-item__switched-off-label {
     display: inline-block;
     position: relative;
     top: -5px;
 }
 
+.abtest-server-label {
+    display: inline-block;
+    position: relative;
+    top: -2px;
+}
 
 .abtest-item__participation {
     margin-bottom: 12px;
