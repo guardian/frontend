@@ -33,7 +33,7 @@ object Story {
     Story(
       /** Stories that are not assigned to a group are treated as standard (0) items */
       Try(curatedContent.group.toInt).getOrElse(0),
-      curatedContent.isBoosted
+      curatedContent.properties.isBoosted
     )
   }
 }
