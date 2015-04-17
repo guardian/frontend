@@ -1,13 +1,14 @@
 package layout
 
 import com.gu.facia.api.models._
-import com.gu.facia.api.utils.ItemKicker
+import com.gu.facia.api.utils.{CardStyle, ItemKicker}
 import common.{Edition, InternationalEdition, LinkTo}
 import implicits.FaciaContentImplicits._
 import model.{FaciaDisplayElement, InlineImage, InlineVideo}
 import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
+import views.support.CardStyleForFrontend
 import views.support._
 
 import scala.Function.const
@@ -47,7 +48,7 @@ object Sublink {
       faciaContent.itemKicker,
       faciaContent.headline,
       EditionalisedLink.fromFaciaContent(faciaContent),
-      CardStyle(faciaContent),
+      faciaContent.cardStyle,
       MediaType.fromFaciaContent(faciaContent)
     )
 }
@@ -136,7 +137,7 @@ object FaciaCardHeader {
 
   def fromTrailAndKicker(faciaContent: FaciaContent, itemKicker: Option[ItemKicker], config: Option[CollectionConfig]) = FaciaCardHeader(
     faciaContent.showQuotedHeadline,
-    CardStyle(faciaContent).toneString.equals("external"),
+    faciaContent.cardStyle.toneString.equals("external"),
     faciaContent.isVideo,
     faciaContent.isGallery,
     faciaContent.isAudio,
@@ -207,7 +208,7 @@ object FaciaCard {
       getByline(faciaContent).filterNot(Function.const(suppressByline)),
       FaciaDisplayElement.fromFaciaContent(faciaContent),
       CutOut.fromTrail(faciaContent),
-      CardStyle(faciaContent),
+      faciaContent.cardStyle,
       cardTypes,
       Sublinks.takeSublinks(faciaContent.supporting, cardTypes).map(Sublink.fromFaciaContent),
       faciaContent.starRating,

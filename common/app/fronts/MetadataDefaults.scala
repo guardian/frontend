@@ -1,9 +1,10 @@
 package fronts
 
 import com.gu.facia.api.models.FaciaContent
-import model.Content
-import views.support.{CardStyle, Comment, Podcast}
+import com.gu.facia.api.utils.Comment
 import implicits.FaciaContentImplicits._
+import model.Content
+import views.support.CardStyleForFrontend
 
 /** TODO this needs to be moved to Facia scala client & be integrated with Facia */
 object MetadataDefaults {
@@ -29,7 +30,7 @@ object MetadataDefaults {
 
   val Defaults = ImmutableDefaults ++ MutableDefaults
 
-  def apply(content: Content) = CardStyle(content) match {
+  def apply(content: Content) = CardStyleForFrontend(content) match {
     case _ if content.isCartoon => Defaults ++ Map(
       "showByline" -> true
     )
@@ -45,7 +46,7 @@ object MetadataDefaults {
     case _ => Defaults
   }
 
-  def apply(faciaContent: FaciaContent) = CardStyle(faciaContent) match {
+  def apply(faciaContent: FaciaContent) = faciaContent.cardStyle match {
     case _ if faciaContent.isCartoon => Defaults ++ Map(
       "showByline" -> true
     )
