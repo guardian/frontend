@@ -63,9 +63,7 @@ define([
                 isTweakpoint: false,
                 width: 1300
             }
-        ],
-
-        viewportCache;
+        ];
 
     /**
      *     Util: returns a function that:
@@ -254,20 +252,15 @@ define([
     }
 
     function getViewport() {
-        var docEl,
-            body;
+        var w = window,
+            d = document,
+            e = d.documentElement,
+            g = d.getElementsByTagName('body')[0];
 
-        if (!viewportCache) {
-            docEl = document.documentElement;
-            body = document.getElementsByTagName('body')[0];
-
-            viewportCache = {
-                width:  window.innerWidth  || docEl.clientWidth  || body.clientWidth,
-                height: window.innerHeight || docEl.clientHeight || body.clientHeight
-            };
-        }
-
-        return viewportCache;
+        return {
+            width:  w.innerWidth  || e.clientWidth  || g.clientWidth,
+            height: w.innerHeight || e.clientHeight || g.clientHeight
+        };
     }
 
     /** TEMPORARY: I'm going to update lodash in a separate pull request. */
