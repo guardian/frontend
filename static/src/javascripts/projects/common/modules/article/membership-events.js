@@ -1,28 +1,19 @@
 define([
     'fastdom',
-    'qwery',
-    'Promise',
-    'common/utils/_',
+    'common/utils/config',
     'common/utils/$',
     'common/utils/ajax-promise'
-], function (
-    fastdom,
-    qwery,
-    Promise,
-    _,
-    $,
-    ajax
-) {
+], function (fastdom, config, $, ajax) {
 
     var ELEMENT_INITIAL_CLASS = 'element-membership--not-upgraded',
         ELEMENT_UPGRADED_CLASS = 'element-membership--upgraded';
 
     function upgradeEvent(el) {
         var href = $('a', el).attr('href'),
-            matches = href.match(/https:\/\/membership.theguardian.com/);
+            matches = (href.indexOf(config.page.membershipUrl) > -1);
 
         if (matches) {
-            return ajax({
+            ajax({
                 url: href + '/card',
                 crossOrigin: true
             }).then(function (resp) {
@@ -34,8 +25,6 @@ define([
                     });
                 }
             });
-        } else {
-            return Promise.resolve(null);
         }
     }
 
