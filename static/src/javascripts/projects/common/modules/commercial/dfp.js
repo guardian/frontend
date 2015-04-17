@@ -196,7 +196,7 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
-        dfpAbParam = function () {
+        isLzAdsTest = function () {
             var test = ab.getParticipations().LzAds;
             return test && test.variant === 'A' && ab.testCanBeRun('LzAds');
         },
@@ -224,7 +224,7 @@ define([
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
-            (dfpAbParam()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            (isLzAdsTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
