@@ -24,7 +24,7 @@ const Cell = React.createClass({
             innerNodes.push(
                 React.DOM.text({
                     x: left + 1,
-                    y: top + constants.numberSize + 1,
+                    y: top + constants.numberSize,
                     key: 'number',
                     className: 'crossword__cell-number'
                 }, this.props.number)

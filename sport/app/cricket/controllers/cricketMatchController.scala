@@ -4,7 +4,6 @@ import common._
 import cricketPa.PaFeed
 import model._
 import play.api.mvc.{ Controller, Action }
-import jobs.CricketStatsJob
 import cricketPa.PaFeed.dateFormat
 import cricketModel.Match
 
@@ -23,7 +22,7 @@ object CricketMatchController extends Controller with Logging with ExecutionCont
   // this remains an implicit reference to 'england match on this date'.
   def renderMatchId(date: String) = {
     Action { implicit request =>
-      findMatchFromDate(date).map { matchData =>
+      PaFeed.findMatchFromDate(date).map { matchData =>
         val page = CricketMatchPage(matchData, date)
 
         Cached(60){
@@ -38,16 +37,5 @@ object CricketMatchController extends Controller with Logging with ExecutionCont
     }
   }
 
-  private def findMatchFromDate(date: String): Option[Match] = {
-    // A test match runs over 5 days, so check the dates for the whole period.
-    val requestDate = PaFeed.dateFormat.parseLocalDate(date)
 
-    val matchObjects = for {
-      day <- (0 until 5)
-      date <- Some(PaFeed.dateFormat.print(requestDate.minusDays(day)))
-    } yield {
-      CricketStatsJob.getMatch(date)
-    }
-    matchObjects.flatten.headOption
-  }
 }

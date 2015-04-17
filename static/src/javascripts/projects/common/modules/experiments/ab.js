@@ -250,8 +250,6 @@ define([
         },
 
         segmentUser: function () {
-            mvtCookie.generateMvtCookie();
-
             var tokens,
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {

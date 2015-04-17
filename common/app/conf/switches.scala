@@ -73,7 +73,7 @@ object Switches {
 
   // Switch names can be letters numbers and hyphens only
 
-  private lazy val never = new LocalDate(2100, 1, 1)
+  lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
   val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
@@ -659,6 +659,17 @@ object Switches {
     "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please check the DB size.",
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
   )
+
+  // Server-side A/B Tests
+
+  val ServerSideTests = {
+    // It's for the side effect. Blame agents.
+    val tests = mvt.ActiveTests.tests
+
+    Switch("Server-side A/B Tests", "server-side-tests",
+      "Enables the server side testing system",
+      safeState = Off, sellByDate = never)
+  }
 
   def all: Seq[SwitchTrait] = Switch.allSwitches
 
