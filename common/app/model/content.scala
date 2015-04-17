@@ -572,7 +572,7 @@ abstract class Media(content: ApiContentWithMeta) extends Content(content) {
     "og:type" -> "video",
     "og:type" -> "video",
     "og:video:type" -> "text/html",
-    "og:video:url" -> webUrl,
+    "og:video" -> webUrl,
     "video:tag" -> keywords.map(_.name).mkString(",")
   )
 }
