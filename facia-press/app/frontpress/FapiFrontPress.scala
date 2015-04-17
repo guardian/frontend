@@ -5,7 +5,7 @@ import com.gu.contentapi.client.GuardianContentClient
 import com.gu.contentapi.client.model._
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
 import com.gu.facia.api.models.{Collection, _}
-import com.gu.facia.api.{FAPI, Response}
+import com.gu.facia.api.{ApiError, FAPI, Response}
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
 import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 import common.{ContentApiMetrics, Edition, ExecutionContexts, Logging}
@@ -67,7 +67,6 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
     searchQuery
       .showFields(showFields)
       .showElements("all")
-      .pageSize(Configuration.faciatool.frontPressItemSearchBatchSize)
       .showTags("all")
       .showReferences(references)
 
@@ -75,7 +74,6 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
     itemQuery
       .showFields(showFields)
       .showElements("all")
-      .pageSize(Configuration.faciatool.frontPressItemSearchBatchSize)
       .showTags("all")
       .showReferences(references)
 
