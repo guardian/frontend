@@ -15,7 +15,7 @@
                 <tbody>
                     @tests.map { test =>
                         <tr>
-                            <td colspan="4">@status(test) @test.name </td>
+                            <td colspan="4">@test.name @status(test)</td>
                             <td colspan="3">@{test.variants.map(_.name).sorted.mkString(", ")}</td>
                         </tr>
                     }
