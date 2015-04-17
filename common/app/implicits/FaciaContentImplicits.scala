@@ -2,7 +2,7 @@ package implicits
 
 import com.gu.contentapi.client.model.{Content, Element, Tag}
 import com.gu.facia.api.models._
-import com.gu.facia.api.utils.ItemKicker
+import com.gu.facia.api.utils.{Default, CardStyle, FaciaContentUtils, ItemKicker}
 import dfp.DfpAgent
 import layout.{Video, Audio, Gallery, MediaType}
 import model.VideoElement
@@ -409,6 +409,12 @@ object FaciaContentImplicits {
     }
 
     def mainVideo: Option[VideoElement] = videos.find(_.isMain).headOption
+
+    def cardStyle: CardStyle = fold(
+      curatedContent => curatedContent.cardStyle,
+      supportingCuratedContent => Default,
+      linkSnap => Default,
+      latestSnap => Default)
 
   }
 
