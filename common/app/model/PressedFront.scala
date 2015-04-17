@@ -12,6 +12,7 @@ import com.gu.contentapi.client.model.Tag
 import com.gu.contentapi.client.model.Asset
 import com.gu.contentapi.client.model.Element
 import com.gu.contentapi.client.model.Content
+import com.gu.facia.api.utils.CardStyle
 
 object FapiJsonFormats {
   /* Content API Formats */
@@ -81,8 +82,46 @@ object FapiJsonFormats {
     }
   }
 
+  implicit object CardStyleFormat extends Format[com.gu.facia.api.utils.CardStyle] {
+    def reads(json: JsValue) = {
+      (json \ "type").transform[JsString](Reads.JsStringReads) match {
+        case JsSuccess(JsString("SpecialReport"), _) => JsSuccess(SpecialReport)
+        case JsSuccess(JsString("LiveBlog"), _) => JsSuccess(LiveBlog)
+        case JsSuccess(JsString("DeadBlog"), _) => JsSuccess(DeadBlog)
+        case JsSuccess(JsString("Feature"), _) => JsSuccess(Feature)
+        case JsSuccess(JsString("Editorial"), _) => JsSuccess(Editorial)
+        case JsSuccess(JsString("Comment"), _) =>  JsSuccess(Comment)
+        case JsSuccess(JsString("Podcast"), _) => JsSuccess(com.gu.facia.api.utils.Podcast)
+        case JsSuccess(JsString("Media"), _) => JsSuccess(Media)
+        case JsSuccess(JsString("Analysis"), _) => JsSuccess(Analysis)
+        case JsSuccess(JsString("Review"), _) => JsSuccess(Review)
+        case JsSuccess(JsString("Letters"), _) => JsSuccess(Letters)
+        case JsSuccess(JsString("ExternalLink"), _) => JsSuccess(ExternalLink)
+        case JsSuccess(JsString("Default"), _) => JsSuccess(Default)
+        case _ => JsError("Could not convert ItemKicker")
+      }
+    }
+
+    def writes(cardStyle: com.gu.facia.api.utils.CardStyle) = cardStyle match {
+      case SpecialReport => JsObject(Seq("type" -> JsString("SpecialReport")))
+      case LiveBlog => JsObject(Seq("type" -> JsString("LiveBlog")))
+      case DeadBlog => JsObject(Seq("type" -> JsString("DeadBlog")))
+      case Feature => JsObject(Seq("type" -> JsString("Feature")))
+      case Editorial => JsObject(Seq("type" -> JsString("Editorial")))
+      case Comment => JsObject(Seq("type" -> JsString("Comment")))
+      case com.gu.facia.api.utils.Podcast => JsString("Podcast")
+      case Media => JsObject(Seq("type" -> JsString("Media")))
+      case Analysis => JsObject(Seq("type" -> JsString("Analysis")))
+      case Review => JsObject(Seq("type" -> JsString("Review")))
+      case Letters => JsObject(Seq("type" -> JsString("Letters")))
+      case ExternalLink => JsObject(Seq("type" -> JsString("ExternalLink")))
+      case Default => JsObject(Seq("type" -> JsString("Default")))
+    }
+  }
+
   implicit val imageCutoutFormat = Json.format[ImageCutout]
   implicit val imageFormat = Json.format[ImageReplace]
+  implicit val contentPropertiesFormat = Json.format[ContentProperties]
 
   implicit object faciaContentFormat extends Format[FaciaContent] {
     def reads(json: JsValue) = (json \ "type").transform[JsString](Reads.JsStringReads) match {
