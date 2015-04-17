@@ -36,7 +36,7 @@ object LiveFapiFrontPress extends FapiFrontPress {
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
       .map { pressedFront => S3FrontsApi.putLiveFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
-      .asFuture.map(_.fold(_ => (), _ => ()))
+      .asFuture.map(_.fold(e => throw new RuntimeException(s"${e.cause} ${e.message}"), _ => ()))
 }
 
 object DraftFapiFrontPress extends FapiFrontPress {
@@ -52,7 +52,7 @@ object DraftFapiFrontPress extends FapiFrontPress {
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
       .map { pressedFront => S3FrontsApi.putDraftFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
-      .asFuture.map(_.fold(_ => (), _ => ()))
+      .asFuture.map(_.fold(e => throw new RuntimeException(s"${e.cause} ${e.message}"), _ => ()))
 }
 
 trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
