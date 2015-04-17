@@ -20,9 +20,9 @@ module.exports = function(grunt, options) {
                 },
                 {
                     expand: true,
-                    cwd: 'static/public/javascripts/vendor',
+                    cwd: 'static/src/javascripts/vendor',
                     src: [
-                        'foresee*/**'
+                        '**/*'
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
                 },
