@@ -15,6 +15,13 @@ $c-guardian-services-action: #ffffff;
     }
 }
 
+.l-header--sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1001;
+}
+
 .l-header--is-slim {
     // TODO: Palette?
     background: darken(colour(guardian-brand), 2%);

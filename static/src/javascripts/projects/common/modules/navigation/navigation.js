@@ -63,7 +63,16 @@ define([
         },
 
         stickyNav: function () {
-            $('.js-navigation-header').addClass('navigation--sticky');
+            var stickyHeight;
+
+            fastdom.read(function () {
+                stickyHeight = $('.js-navigation-header').dim().height + $('.top-banner-ad-container').dim().height;
+            });
+
+            fastdom.write(function () {
+                $('#header').addClass('l-header--sticky');
+                $('#maincontent').css('margin-top', stickyHeight);
+            });
         }
     };
 
