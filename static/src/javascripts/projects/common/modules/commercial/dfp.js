@@ -16,7 +16,8 @@ define([
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'common/modules/analytics/beacon'
 ], function (
     bean,
     bonzo,
@@ -34,7 +35,8 @@ define([
     StickyMpu,
     buildPageTargeting,
     geoMostPopular,
-    ab
+    ab,
+    beacon
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -127,16 +129,16 @@ define([
                 });
             });
         },
+
+        recordFirstAdRendered = _.once(beacon.beaconCounts('ad-render')),
+
         /**
          * Initial commands
          */
         setListeners = function () {
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
-
-                // record first ad on page rendered
-                _.once((new Image()).src = config.page.beaconUrl + '/count/ad-render.gif');
-
+                recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
             }));
