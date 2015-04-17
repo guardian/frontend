@@ -14,7 +14,7 @@ System.config({
     "es6/*": "javascripts/es6/*.js",
     "bootstraps/*": "javascripts/bootstraps/*.js",
     "public/*": "../public/javascripts/*.js",
-    "svgs/*": "../../common/conf/assets/inline-svgs/*.svg",
+    "svgs/*": "inline-svgs/*.svg",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js",
     "bower:*": "jspm_packages/bower/*.js"
