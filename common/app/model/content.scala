@@ -209,7 +209,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:app:url:googleplay" -> webUrl.replace("http", "guardian")
-  )
+  ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   override def elements: Seq[Element] = delegate.elements
     .map(imageElement ++: _)
@@ -228,6 +228,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val showKickerCustom: Boolean = apiContent.metaData.flatMap(_.showKickerCustom).getOrElse(false)
   override lazy val customKicker: Option[String] = apiContent.metaData.flatMap(_.customKicker).filter(_.nonEmpty)
   override lazy val showBoostedHeadline: Boolean = apiContent.metaData.flatMap(_.showBoostedHeadline).getOrElse(false)
+
+  lazy val contributorTwitterHandle: Option[String] = contributors.headOption.flatMap(_.twitterHandle)
 
   override lazy val showQuotedHeadline: Boolean =
     apiContent.metaData.flatMap(_.showQuotedHeadline).getOrElse(metaDataDefault("showQuotedHeadline"))
@@ -557,9 +559,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   override def metaData: Map[String, JsValue] = super.metaData ++ cricketMetaData
   override lazy val lightboxImages = mainFiltered
 
-  lazy val latestUpdateText = LiveBlogParser.parse(body) collectFirst {
-    case Block(_, _, _, _, BlockToText(text), _) if !text.trim.nonEmpty => text
-  }
+  lazy val blocks = LiveBlogParser.parse(body)
 }
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {
@@ -746,6 +746,10 @@ class Interactive(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val metaData: Map[String, JsValue] = super.metaData + ("contentType" -> JsString(contentType))
   override lazy val isImmersive: Boolean = displayHint.contains("immersive")
+  override def cards: List[(String, String)] = super.cards ++ List(
+    "twitter:title" -> linkText,
+    "twitter:card" -> "summary_large_image"
+  )
 }
 
 object Interactive {

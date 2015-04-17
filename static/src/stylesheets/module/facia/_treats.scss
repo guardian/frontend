@@ -37,9 +37,7 @@
     font-weight: 700;
     border-width: 1px;
     border-style: solid;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @include ellipsis();
     text-decoration: none;
     max-width: gs-span(4);
     line-height: $gs-baseline * 2 - 2px;
@@ -82,7 +80,8 @@
     margin-bottom: $gs-baseline * 2/3;
 }
 
-.treats__crossword-link {
+.treats__crossword-link,
+.treats__register-to-vote {
     &:hover,
     &:focus,
     &:active {
@@ -90,5 +89,49 @@
             color: colour(neutral-1);
             border-color: darken(colour(neutral-3), 10%);
         }
+    }
+}
+
+.treats__register-to-vote {
+    display: block;
+    width: gs-span(2);
+    padding-top: $gs-baseline / 4;
+    border-top: 1px solid colour(neutral-5);
+    border-bottom: 1px solid colour(neutral-5);
+
+    @include mq(wide) {
+        width: gs-span(3);
+    }
+
+    .treats__treat {
+        margin: $gs-baseline/2 0 $gs-baseline*2;
+    }
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.treats__register-to-vote__logo {
+    height: 40px;
+    padding-top: 3px;
+    padding-right: $gs-gutter / 2;
+
+    @include mq(wide) {
+        float: left;
+    }
+}
+
+.treats__register-to-vote__title {
+    color: colour(neutral-2);
+    @include fs-header(1);
+
+    @include mq(wide) {
+        @include fs-header(3);
+    }
+
+    strong {
+        display: block;
+        color: colour(neutral-1);
     }
 }

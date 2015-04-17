@@ -324,7 +324,7 @@ and [Vagrant](http://docs.vagrantup.com/v2/installation/index.html) installed
 
 There is a `grunt watch` task available to build and watch for development
 changes, but `grunt-watch` is pretty inefficient to compile our Sass into CSS
-so @mattosborn created a script called [grunt-csdevmode][grunt-csdevmode].
+so @mattosborn created a script called [grunt-csdevmode](https://github.com/mattosborn/grunt-csdevmode).
 
 `grunt csdevmode` also pushes stylesheets to all connected browsers:
 no need to reload a page to preview your changes, just like with Livereload.
@@ -341,7 +341,7 @@ grunt csdevmode
 Play Framework will recompile code changes on refresh.
 
 Further information on using the Play console is available
-[here][play2-console].
+[here](https://github.com/playframework/Play20/wiki/PlayConsole).
 
 ###Endpoints
 
@@ -358,7 +358,7 @@ typically include:
 
 ###Deploying
 
-Deployment uses the [Magenta][magenta] library.
+Deployment uses the [Magenta](https://github.com/guardian/deploy) library.
 
 
 ###Debugging
@@ -378,7 +378,7 @@ Start a new Debug session, and your breakpoints should be active.
 
 Additional Documentation
 ------------------------
-If you're new, you'll want to see what [libraries we use](docs/libraries.md) in frontned.
+If you're new, you'll want to see what [libraries we use](docs/libraries.md) in frontend.
 
 Further documentation notes and useful items can be found in [docs](docs).
 

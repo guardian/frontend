@@ -203,7 +203,8 @@ GET         /metrics/afg                                                        
 GET         /radiator                                                                                                controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                        controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                                   controllers.admin.RadiatorController.commitDetail(hash)
-GET         /troubleshoot/football                                                                                   controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
+GET         /troubleshoot/football                                                                                   controllers.admin.SportTroubleshooterController.renderFootballTroubleshooter()
+GET         /troubleshoot/cricket                                                                                    controllers.admin.SportTroubleshooterController.renderCricketTroubleshooter()
 GET         /troubleshoot/pages                                                                                      controllers.admin.TroubleshooterController.index()
 GET         /troubleshoot/test                                                                                       controllers.admin.TroubleshooterController.test(id, testPath)
 GET         /redirects                                                                                               controllers.admin.RedirectController.redirect()
@@ -334,5 +335,5 @@ GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json   
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                                             controllers.InteractiveController.renderInteractive(path)
 
 # Articles
-GET         /*path.json                                                                                              controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
-GET         /*path                                                                                                   controllers.ArticleController.renderArticle(path)
+GET         /*path.json                                                                                              controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
+GET         /*path                                                                                                   controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])

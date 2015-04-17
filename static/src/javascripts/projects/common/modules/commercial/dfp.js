@@ -76,10 +76,8 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                var mtMasterTest = ab.getParticipations().MtMaster;
-
-                if (ab.testCanBeRun('MtMaster') &&
-                    mtMasterTest && mtMasterTest.variant === 'variant') {
+                if (isMasterTest() && $adSlot.hasClass('ad-slot--right')) {
+                    placeUnderMostPopular($adSlot);
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         new StickyMpu($adSlot).create();
                     }
@@ -94,16 +92,41 @@ define([
                         $parent.addClass('fc-slice__item--no-mpu');
                 }
             },
-            '300,1050': function () {
+            '300,1050': function (event, $adSlot) {
                 // remove geo most popular
                 geoMostPopular.whenRendered.then(function (geoMostPopular) {
                     fastdom.write(function () {
                         bonzo(geoMostPopular.elem).remove();
                     });
                 });
+                if (isMasterTest() && $adSlot.hasClass('ad-slot--right')) {
+                    placeUnderMostPopular($adSlot);
+                }
+            },
+            '300,600': function (event, $adSlot) {
+                if (isMasterTest() && $adSlot.hasClass('ad-slot--right')) {
+                    placeUnderMostPopular($adSlot);
+                }
             }
         },
 
+        isMasterTest = function () {
+            var mtMasterTest = ab.getParticipations().MtMaster;
+
+            return ab.testCanBeRun('MtMaster') && mtMasterTest && mtMasterTest.variant === 'variant';
+        },
+        placeUnderMostPopular = function ($adSlot) {
+            var $secondaryColumn;
+
+            fastdom.read(function () {
+                $secondaryColumn = $('.js-secondary-column');
+
+                fastdom.write(function () {
+                    $('.js-right-most-popular', $secondaryColumn).css('margin-top', '0').append($adSlot.parent());
+                    $('.component--rhc .open-cta', $secondaryColumn).css('margin-top', '0');
+                });
+            });
+        },
         /**
          * Initial commands
          */
@@ -157,6 +180,12 @@ define([
             googletag.display(_.keys(slots).shift());
             displayed = true;
         },
+        displayLazyAds = function () {
+            googletag.pubads().collapseEmptyDivs();
+            googletag.enableServices();
+            mediator.on('window:scroll', _.throttle(lazyLoad, 10));
+            lazyLoad();
+        },
         windowResize = _.debounce(
             function () {
                 // refresh on resize
@@ -165,6 +194,10 @@ define([
         ),
         postDisplay = function () {
             mediator.on('window:resize', windowResize);
+        },
+
+        dfpSwitchParam = function () {
+            return config.switches.lzAds && config.page.edition === 'US' && config.page.section === 'politics';
         },
 
         /**
@@ -190,12 +223,31 @@ define([
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
-            window.googletag.cmd.push(displayAds);
+            (dfpSwitchParam()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
             return dfp;
+        },
+        lazyLoad = function () {
+            if (slots.length === 0) {
+                mediator.off('window:scroll');
+            } else {
+                fastdom.read(function () {
+                    var scrollTop    = bonzo(document.body).scrollTop(),
+                        scrollBottom = scrollTop + bonzo.viewport().height;
 
+                    _(slots).keys().forEach(function (slot) {
+                        // if the position of the ad is above the viewport - offset (half screen size)
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height / 2) {
+                            googletag.display(slot);
+
+                            slots = _(slots).omit(slot).value();
+                            displayed = true;
+                        }
+                    });
+                });
+            }
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),

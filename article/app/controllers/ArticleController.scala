@@ -1,13 +1,17 @@
 package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, ItemResponse}
+import com.gu.util.liveblogs.{BlockToText, BlockType, Block}
 import common._
 import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi.getResponse
 import conf._
 import model._
+import org.joda.time.DateTime
 import org.jsoup.nodes.Document
 import performance.MemcachedAction
+import play.api.libs.functional.syntax._
+import play.api.libs.json.{Json, _}
 import play.api.mvc._
 import views.BodyCleaner
 import views.support._
@@ -24,43 +28,83 @@ case class LiveBlogPage(article: LiveBlog, related: RelatedContent) extends Arti
 
 object ArticleController extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
-  def renderArticle(path: String) = MemcachedAction { implicit request =>
-    renderItem(path)
-  }
-
-
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(_))
 
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
+  private def renderLatestFrom(model: ArticleWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
+      val html = withJsoup(BodyCleaner(model.article, model.article.body)) {
+        new HtmlCleaner {
+          def clean(d: Document): Document = {
+            val blocksToKeep = d.getElementsByTag("div") takeWhile {
+              _.attr("id") != lastUpdateBlockId
+            }
+            val blocksToDrop = d.getElementsByTag("div") drop blocksToKeep.size
+
+            blocksToDrop foreach {
+              _.remove()
+            }
+            d
+          }
+        }
+      }
+      Cached(model.article)(JsonComponent(html))
+  }
+
+  case class TextBlock(
+    id: String,
+    title: Option[String],
+    publishedDateTime: DateTime,
+    lastUpdatedDateTime: Option[DateTime],
+    body: String
+    )
+
+  implicit val blockWrites = (
+    (__ \ "id").write[String] ~
+      (__ \ "title").write[Option[String]] ~
+      (__ \ "publishedDateTime").write[DateTime] ~
+      (__ \ "lastUpdatedDateTime").write[Option[DateTime]] ~
+      (__ \ "body").write[String]
+    )(unlift(TextBlock.unapply))
+
+  private def blockText(model: ArticleWithStoryPackage, number: Int)(implicit request: RequestHeader) = model match {
+    case LiveBlogPage(liveBlog, _) =>
+      val blocks = liveBlog.blocks.collect {
+        case Block(id, title, publishedAt, updatedAt, BlockToText(text), _) if text.trim.nonEmpty => TextBlock(id, title, publishedAt, updatedAt, text)
+      }.take(number)
+      Cached(model.article)(JsonComponent(("blocks" -> Json.toJson(blocks))))
+    case _ => Cached(600)(NotFound("Can only return block text for a live blog"))
+
+  }
+
+  private def render(model: ArticleWithStoryPackage)(implicit request: RequestHeader) = model match {
+    case blog: LiveBlogPage =>
+      val htmlResponse = () => views.html.liveBlog(blog)
+      val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
+      renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
+
+    case article: ArticlePage =>
+      val htmlResponse = () => views.html.article(article)
+      val jsonResponse = () => views.html.fragments.articleBody(article)
+      renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
+  }
+
+  def renderArticle(path: String, lastUpdate: Option[String], rendered: Option[Boolean]) = MemcachedAction { implicit request =>
+    mapModel(path) { model =>
+      (lastUpdate, rendered) match {
+        case (Some(lastUpdate), _) => renderLatestFrom(model, lastUpdate)
+        case (None, Some(false)) => blockText(model, 6)
+        case (_, _) => render(model)
+      }
+    }
+  }
+
+  def mapModel(path: String)(render: ArticleWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
     }
   }
-
-  def renderLatestFrom(path: String, lastUpdateBlockId: String) = MemcachedAction { implicit request =>
-    lookup(path) map {
-      case Right(other) => RenderOtherStatus(other)
-      case Left(model) =>
-        val html = withJsoup(BodyCleaner(model.article, model.article.body)) {
-          new HtmlCleaner {
-            def clean(d: Document): Document = {
-              val blocksToKeep = d.getElementsByTag("div") takeWhile { _.attr("id") != lastUpdateBlockId }
-              val blocksToDrop = d.getElementsByTag("div") drop blocksToKeep.size
-
-              blocksToDrop foreach { _.remove() }
-              d
-            }
-          }
-        }
-        Cached(model.article)(JsonComponent(html))
-    }
-  }
-
-
-
-  def renderLatest(path: String, lastUpdate: Option[String]) = lastUpdate map { renderLatestFrom(path, _) } getOrElse { renderArticle(path) }
 
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticleWithStoryPackage, Result]] = {
     val edition = Edition(request)
@@ -89,15 +133,4 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
     result recover convertApiExceptions
   }
 
-  private def render(model: ArticleWithStoryPackage)(implicit request: RequestHeader) = model match {
-    case blog: LiveBlogPage =>
-      val htmlResponse = () => views.html.liveBlog(blog)
-      val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
-      renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
-
-    case article: ArticlePage =>
-      val htmlResponse = () => views.html.article(article)
-      val jsonResponse = () => views.html.fragments.articleBody(article)
-      renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
-  }
 }

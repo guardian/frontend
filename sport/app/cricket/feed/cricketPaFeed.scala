@@ -2,6 +2,8 @@ package cricketPa
 
 import common.{ExecutionContexts, Logging}
 import cricket.feed.ThrottledTask
+import cricketModel.Match
+import jobs.CricketStatsJob
 import org.joda.time.LocalDate
 import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
 import play.api.libs.ws.WS
@@ -14,7 +16,7 @@ object PaFeed extends ExecutionContexts with Logging {
 
   import play.api.Play.current
 
-  lazy val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
+  val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
   private val paEndpoint = "http://cricket.api.press.net/v1"
   private val englandTeamId = "a359844f-fc07-9cfa-d4cc-9a9ac0d5d075"
   private val credentials = conf.Configuration.pa.cricketKey.map { ("Apikey", _) }
@@ -81,4 +83,17 @@ object PaFeed extends ExecutionContexts with Logging {
         }
       }
     }).getOrElse(Future.failed(CricketFeedException("No cricket api key found")))
+
+  def findMatchFromDate(date: String): Option[Match] = {
+    // A test match runs over 5 days, so check the dates for the whole period.
+    val requestDate = dateFormat.parseLocalDate(date)
+
+    val matchObjects = for {
+      day <- 0 until 5
+      date <- Some(dateFormat.print(requestDate.minusDays(day)))
+    } yield {
+      CricketStatsJob.getMatch(date)
+    }
+    matchObjects.flatten.headOption
+  }
 }

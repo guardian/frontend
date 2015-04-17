@@ -1978,6 +1978,16 @@ hr {
     background-color: #ddd;
 }
 
+.major-alert {
+    color: #d50000;
+}
+.minor-alert {
+    color: #304ffe;
+}
+.small-text {
+    font-size: 85%;
+}
+
 .buttons button {
     height: 26px;
     margin: 0 4px;
