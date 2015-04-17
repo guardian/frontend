@@ -93,8 +93,6 @@ object Uk extends Edition(
       NavItem(travel, Seq(uktravel, europetravel, usTravel)),
       NavItem(money, Seq(property, savings, pensions, borrowing, workAndCareers)),
       NavItem(science),
-      NavItem(education, Seq(students, teachersNetwork)),
-      NavItem(media),
       NavItem(guardianProfessional),
       NavItem(observer),
       NavItem(todaysPaper, Seq(editorialsandletters, obituaries, g2, weekend, theGuide, saturdayreview)),
