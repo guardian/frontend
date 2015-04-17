@@ -30,7 +30,7 @@ define([
         blockHeightPx = 40,
 
         animateDelayMs = 1000,
-        refreshSecs = 60,
+        refreshSecs = 30,
         refreshDecay = 1,
         refreshMaxTimes = 3,
         messageAnimateDistance = 200,
@@ -70,7 +70,7 @@ define([
     }
 
     function translateNone() {
-        return 'translate3d(0, 0, 0)';
+        return 'translate3d(0)';
     }
 
     function translateCss(valueFn, offset) {

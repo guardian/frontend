@@ -84,10 +84,10 @@
 .fc-item__liveblog-blocks {
     height: 78px; // 2 * block height - 2px margin
     overflow: hidden;
-    margin-right: -5px;
+    margin-right: -1 * $gs-gutter / 4;
 
     .fc-item--has-metadata & {
-        margin-bottom: -24px;
+        margin-bottom: -1 * $gs-baseline * 2;
     }
 
     .fc-item--has-sublinks-1 &,
@@ -115,13 +115,13 @@
     display: block;
     position: relative;
     @include fs-headline(1);
-    line-height: 16px;
+    line-height: 1rem;
     color: #ffffff;
     height: $gs-baseline * 3 + 2;
-    margin-bottom: 2px;
+    margin-bottom: $gs-baseline / 6;
     margin-top: 0;
-    padding: 4px 5px 0;
-    background: rgba(0, 0, 0, .2);
+    padding: $gs-baseline/3 $gs-gutter/4 0;
+    background-color: darken(colour(live-default), 10%);
 }
 
 .fc-item__liveblog-block__time {
