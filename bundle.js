@@ -8,7 +8,8 @@ var mkdirp = require('mkdirp');
 
 // TODO: Read from package.json
 var jspmBaseUrl = 'static/src';
-var bundlesDir = 'bundles';
+var prefixPath = 'static/target';
+var bundlesUri = 'bundles';
 var bundleConfigs = [
     ['core', 'core.js'],
     ['es6/bootstraps/app - core', 'es6/bootstraps/app.js'],
@@ -40,21 +41,23 @@ Promise.all(bundleConfigs.map(function (bundleConfig) {
     return builder.build(moduleExpression, null, { sourceMaps: true })
         .then(function (output) {
             var hash = getHash(output.source);
-            var relativeFileName = path.join(bundlesDir, hash, outFile);
-            var fileName = path.join(jspmBaseUrl, relativeFileName);
+            // Relative to jspm client base URL
+            var bundleUri = path.join(bundlesUri, hash, outFile);
+            var bundleFileName = path.join(prefixPath, bundleUri);
+            var bundleMapFileName = bundleFileName + '.map';
 
-            mkdirp.sync(path.dirname(fileName));
-            console.log('writing to %s', fileName);
-            fs.writeFileSync(fileName, output.source);
-            console.log('writing to %s', fileName + '.map');
-            fs.writeFileSync(fileName + '.map', output.sourceMap);
+            mkdirp.sync(path.dirname(bundleFileName));
+            console.log('writing to %s', bundleFileName);
+            fs.writeFileSync(bundleFileName, output.source);
+            console.log('writing to %s', bundleMapFileName);
+            fs.writeFileSync(bundleMapFileName, output.sourceMap);
 
-            return { relativeFileName: relativeFileName, modules: output.modules };
+            return { bundleUri: bundleUri, modules: output.modules };
         });
 }))
     .then(function (bundles) {
         var bundlesConfig = bundles.reduce(function (accumulator, bundle) {
-            accumulator[bundle.relativeFileName.replace('.js', '')] = bundle.modules;
+            accumulator[bundle.bundleUri.replace('.js', '')] = bundle.modules;
             return accumulator;
         }, {});
         var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
