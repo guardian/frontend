@@ -44,9 +44,8 @@ module.exports = function(grunt, options) {
 
         jspmBundleStatic: {
             command:
-                // TODO: Why must we unbundle first?
                 // TODO: Move bundle script
-                'jspm unbundle; node ./bundle',
+                'node ./bundle',
             options: {
                 execOptions: {
                     cwd: '.'
