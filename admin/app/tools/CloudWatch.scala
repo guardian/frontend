@@ -236,7 +236,7 @@ object CloudWatch extends Logging with ExecutionContexts {
 
   def user50x = for {
     metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusMinutes(60).toDate)
+      .withStartTime(new DateTime().minusHours(2).toDate)
       .withEndTime(new DateTime().toDate)
       .withPeriod(60)
       .withStatistics("Sum")
