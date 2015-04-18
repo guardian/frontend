@@ -68,6 +68,7 @@ var writeBundlesConfig = function (bundles) {
     }, {});
     var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
     var configFileData = 'System.bundles = ' + JSON.stringify(bundlesConfig, null, '\t');
+    console.log('writing to %s', configFilePath);
     fs.writeFileSync(configFilePath, configFileData);
 };
 
