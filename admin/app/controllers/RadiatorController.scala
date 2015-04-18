@@ -1,5 +1,6 @@
 package controllers.admin
 
+import implicits.Requests
 import play.api.mvc.Controller
 import common.Logging
 import controllers.AuthLogging
@@ -14,7 +15,7 @@ import conf.Switches
 import org.joda.time.LocalDate
 import play.api.Play.current
 
-object RadiatorController extends Controller with Logging with AuthLogging {
+object RadiatorController extends Controller with Logging with AuthLogging with Requests{
 
   // if you are reading this you are probably being rate limited...
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting
@@ -36,8 +37,12 @@ object RadiatorController extends Controller with Logging with AuthLogging {
       NoCache(Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8"))
     }
   }
+  def renderRadiator(external: Boolean = false) = AuthActions.AuthActionTest.async { implicit request =>
 
-  def renderRadiator() = AuthActions.AuthActionTest.async { implicit request =>
+    // Some features do not work outside our network
+    // /radiator?features=external disables these
+    val external = request.getParameter("features").contains("external")
+
     for {
       user50x <- CloudWatch.user50x
       shortLatency <- CloudWatch.shortStackLatency
@@ -46,7 +51,10 @@ object RadiatorController extends Controller with Logging with AuthLogging {
       cost <- CloudWatch.cost
     } yield {
       val graphs = Seq(user50x) ++ shortLatency ++ fastlyErrors
-      NoCache(Ok(views.html.radiator(graphs, multiLineGraphs, cost, switchesExpiringThisWeek, Configuration.environment.stage)))
+      NoCache(Ok(views.html.radiator(
+        graphs, multiLineGraphs, cost, switchesExpiringThisWeek,
+        Configuration.environment.stage, external
+      )))
     }
   }
 
