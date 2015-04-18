@@ -37,7 +37,7 @@ object RadiatorController extends Controller with Logging with AuthLogging with 
       NoCache(Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8"))
     }
   }
-  def renderRadiator(external: Boolean = false) = AuthActions.AuthActionTest.async { implicit request =>
+  def renderRadiator() = AuthActions.AuthActionTest.async { implicit request =>
 
     // Some features do not work outside our network
     // /radiator?features=external disables these
