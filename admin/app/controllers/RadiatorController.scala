@@ -23,7 +23,7 @@ object RadiatorController extends Controller with Logging with AuthLogging {
   // put it in your properties file as github.token=XXXXXXX
   lazy val githubAccessToken = Configuration.github.token.map{ token => s"?access_token=$token" }.getOrElse("")
 
-  def switchesExpiringThisWeek() = {
+  def switchesExpiringThisWeek = {
     Switches.all.filter { switch =>
       switch.sellByDate.isBefore(new LocalDate().plusDays(7))
     }
@@ -39,14 +39,14 @@ object RadiatorController extends Controller with Logging with AuthLogging {
 
   def renderRadiator() = AuthActions.AuthActionTest.async { implicit request =>
     for {
+      user50x <- CloudWatch.user50x
       shortLatency <- CloudWatch.shortStackLatency
       fastlyErrors <- CloudWatch.fastlyErrors
       multiLineGraphs <- CloudWatch.fastlyHitMissStatistics
       cost <- CloudWatch.cost
     } yield {
-      val graphs = shortLatency ++ fastlyErrors
-      val switches = switchesExpiringThisWeek
-      NoCache(Ok(views.html.radiator(graphs, multiLineGraphs, cost, switches, Configuration.environment.stage)))
+      val graphs = Seq(user50x) ++ shortLatency ++ fastlyErrors
+      NoCache(Ok(views.html.radiator(graphs, multiLineGraphs, cost, switchesExpiringThisWeek, Configuration.environment.stage)))
     }
   }
 
