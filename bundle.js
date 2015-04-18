@@ -35,34 +35,46 @@ var getHash = function (outputSource) {
         .digest('hex');
 };
 
-Promise.all(bundleConfigs.map(function (bundleConfig) {
+var createBundle = function (bundleConfig) {
     var moduleExpression = bundleConfig[0];
     var outFile = bundleConfig[1];
     return builder.build(moduleExpression, null, { sourceMaps: true })
+        // Attach URI
         .then(function (output) {
             var hash = getHash(output.source);
             // Relative to jspm client base URL
-            var bundleUri = path.join(bundlesUri, hash, outFile);
-            var bundleFileName = path.join(prefixPath, bundleUri);
-            var bundleMapFileName = bundleFileName + '.map';
-
-            mkdirp.sync(path.dirname(bundleFileName));
-            console.log('writing to %s', bundleFileName);
-            fs.writeFileSync(bundleFileName, output.source);
-            console.log('writing to %s', bundleMapFileName);
-            fs.writeFileSync(bundleMapFileName, output.sourceMap);
-
-            return { bundleUri: bundleUri, modules: output.modules };
+            output.uri = path.join(bundlesUri, hash, outFile);
+            return output;
         });
-}))
+};
+
+var writeBundlesToDisk = function (bundles) {
+    bundles.forEach(function (bundle) {
+        var bundleFileName = path.join(prefixPath, bundle.uri);
+        var bundleMapFileName = bundleFileName + '.map';
+
+        mkdirp.sync(path.dirname(bundleFileName));
+        console.log('writing to %s', bundleFileName);
+        fs.writeFileSync(bundleFileName, bundle.source);
+        console.log('writing to %s', bundleMapFileName);
+        fs.writeFileSync(bundleMapFileName, bundle.sourceMap);
+    });
+};
+
+var writeBundlesConfig = function (bundles) {
+    var bundlesConfig = bundles.reduce(function (accumulator, bundle) {
+        accumulator[bundle.uri.replace('.js', '')] = bundle.modules;
+        return accumulator;
+    }, {});
+    var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
+    var configFileData = 'System.bundles = ' + JSON.stringify(bundlesConfig, null, '\t');
+    fs.writeFileSync(configFilePath, configFileData);
+};
+
+Promise.all(bundleConfigs.map(createBundle))
     .then(function (bundles) {
-        var bundlesConfig = bundles.reduce(function (accumulator, bundle) {
-            accumulator[bundle.bundleUri.replace('.js', '')] = bundle.modules;
-            return accumulator;
-        }, {});
-        var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
-        var configFileData = 'System.bundles = ' + JSON.stringify(bundlesConfig, null, '\t');
-        fs.writeFileSync(configFilePath, configFileData);
+        writeBundlesToDisk(bundles);
+        writeBundlesConfig(bundles);
     })
     .catch(function (error) {
         console.error(error);
