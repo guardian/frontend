@@ -75,8 +75,8 @@ define([
                         });
                     $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + $('.top-banner-ad-container--mobile').dim().height);
                 } else {
-                    $('#header').css('top', $('.top-banner-ad-container--desktop').dim().height);
-                    $('.top-banner-ad-container--desktop').css({
+                    //$('.sticky-nav-mt-test').css('top', $('.top-banner-ad-container--desktop').dim().height);
+                    $('.sticky-nav-mt-test').css({
                         position:  'fixed',
                         top:       0,
                         width:     '100%',
@@ -122,10 +122,7 @@ define([
             } else {
                 fastdom.write(function () {
                     if (window.scrollY > 600) {
-                        $('.top-banner-ad-container--desktop').css({
-                            position: 'absolute',
-                            top     : 600
-                        });
+                        $('.top-banner-ad-container--desktop').css('height', $('.top-banner-ad-container--desktop').dim().height - (window.scrollY - 600));
                     } if (window.scrollY > 400) {
                         /*$('.top-banner-ad-container--sticky').css({
                             'transform': 'translateY(0)',
