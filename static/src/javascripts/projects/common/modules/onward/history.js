@@ -277,7 +277,6 @@ define([
         var flush = opts && opts.flush,
             filterOpts = {
                 blacklist: blacklistCache || getTopNavItems(),
-                whitelist: whitelist,
                 number: 10
             };
 
@@ -295,7 +294,7 @@ define([
             filterOpts.whitelist = whitelist;
             filterOpts.weights = {
                 'content': 1,
-                'front': 10
+                'front': 1
             };
             filterOpts.thresholds = {
                 'content': 1,
