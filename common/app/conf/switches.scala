@@ -389,6 +389,14 @@ object Switches {
     sellByDate = new LocalDate(2015, 6, 1)
   )
 
+  val PulitzerSwitch = Switch(
+    "Feature",
+    "pulitzer",
+    "If switched on the Pulitzer prize banner will show.",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 6, 1)
+  )
+
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
@@ -512,7 +520,6 @@ object Switches {
     safeState = On, sellByDate = never)
 
   // A/B Tests
-  
   val ABLzAds = Switch("A/B Tests", "ab-lz-ads", "Lazy loading ads.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
