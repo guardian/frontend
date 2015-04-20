@@ -1,6 +1,7 @@
 define([
     'qwery',
     'raven',
+    'fastdom',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -16,6 +17,7 @@ define([
 ], function (
     qwery,
     raven,
+    fastdom,
     config,
     detect,
     mediator,
@@ -119,7 +121,13 @@ define([
             }
 
             // Mark the end of synchronous execution.
-            userTiming.mark('App End');
+            if (config.switches.robustFastdom) {
+                fastdom.defer(function () {
+                    userTiming.mark('App End');
+                });
+            } else {
+                userTiming.mark('App End');
+            }
         };
 
     return {
