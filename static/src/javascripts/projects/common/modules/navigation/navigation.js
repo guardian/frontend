@@ -63,16 +63,84 @@ define([
         },
 
         stickyNav: function () {
-            var stickyHeight;
-
-            fastdom.read(function () {
-                stickyHeight = $('.js-navigation-header').dim().height + $('.top-banner-ad-container').dim().height;
-            });
-
             fastdom.write(function () {
                 $('#header').addClass('l-header--sticky');
-                $('#maincontent').css('margin-top', stickyHeight);
-            });
+
+                if (detect.getBreakpoint() === 'mobile') {
+                    $('.top-banner-ad-container--mobile').addClass('top-banner-ad-container--sticky').css({
+                            position:  'fixed',
+                            top:       $('.js-navigation-header').dim().height,
+                            width:     '100%',
+                            'z-index': '1000'
+                        });
+                    $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + $('.top-banner-ad-container--mobile').dim().height);
+                } else {
+                    $('#header').css('top', $('.top-banner-ad-container--desktop').dim().height);
+                    $('.top-banner-ad-container--desktop').css({
+                        position:  'fixed',
+                        top:       0,
+                        width:     '100%',
+                        'z-index': '1000'
+                    });
+                    $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + $('.top-banner-ad-container--desktop').dim().height);
+                }
+            }.bind(this));
+
+            mediator.on('window:scroll', _.throttle(function () {
+                this.updateStickyNavPosition();
+            }.bind(this), 10));
+        },
+
+        updateStickyNavPosition: function () {
+            var scrollThreshold = 480,
+                headerHeight    = $('.js-navigation-header').dim().height;
+
+            if (detect.getBreakpoint() === 'mobile') {
+                fastdom.write(function () {
+                    if (window.scrollY > scrollThreshold) {
+                        /*$('.top-banner-ad-container--sticky').css({
+                            'transform': 'translateY(0)',
+                            'z-index'  : '0'
+                        });*/
+                        $('.top-banner-ad-container--sticky').css({
+                            position: 'absolute',
+                            top:      scrollThreshold + headerHeight
+                        });
+                    } else {
+                        /*$('.top-banner-ad-container--sticky').css({
+                           'transform': 'translateY(' + headerHeight + 'px)',
+                           'z-index': '1000'
+                        });*/
+                        $('.top-banner-ad-container--sticky').css({
+                            position:  'fixed',
+                            top:       headerHeight,
+                            width:     '100%',
+                            'z-index': '1000'
+                        });
+                    }
+                });
+            } else {
+                fastdom.write(function () {
+                    if (window.scrollY > 600) {
+                        $('.top-banner-ad-container--desktop').css({
+                            position: 'absolute',
+                            top     : 600
+                        });
+                    } if (window.scrollY > 400) {
+                        /*$('.top-banner-ad-container--sticky').css({
+                            'transform': 'translateY(0)',
+                            'z-index'  : '0'
+                        });*/
+                        $('#header').addClass('l-header--is-slim');
+                    } else {
+                        /*$('.top-banner-ad-container--sticky').css({
+                           'transform': 'translateY(' + headerHeight + 'px)',
+                           'z-index': '1000'
+                        });*/
+                        $('#header').removeClass('l-header--is-slim');
+                    }
+                });
+            }
         }
     };
 
