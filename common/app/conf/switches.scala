@@ -191,11 +191,6 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val RobustFastdom = Switch("Performance", "robust-fastdom",
-    "If this switch is on robust defers module loading using fastdom",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 20)
-  )
-
   // Commercial
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
