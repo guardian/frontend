@@ -8,8 +8,7 @@ var mkdirp = require('mkdirp');
 
 // TODO: Read from package.json
 var jspmBaseUrl = 'static/src';
-// TODO: Output to static/hash?
-var prefixPath = 'static/target';
+var prefixPath = 'static/hash';
 var bundlesUri = 'bundles';
 var bundleConfigs = [
     ['core', 'core.js'],
