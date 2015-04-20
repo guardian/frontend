@@ -184,8 +184,8 @@ define([
         },
 
         isLzAdsTest = function () {
-            var test = ab.getParticipations().LzAds;
-            return test && test.variant === 'A' && ab.testCanBeRun('LzAds');
+            var test = ab.getParticipations().MtLzAds;
+            return test && test.variant === 'A' && ab.testCanBeRun('MtLzAds');
         },
 
         /**
