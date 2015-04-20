@@ -26,8 +26,8 @@
 <link rel="dns-prefetch" href="//oas.theguardian.com" />
 <link rel="dns-prefetch" href="@Configuration.debug.beaconUrl" />
 
-@Static.js.jspmFile(item.section).map { file =>
-    @if(!play.Play.isDev()) {
+@if(!play.Play.isDev()) {
+    @Static.js.jspmFile(item.section).map { file =>
         <link rel="subresource" href="@Static(file)" />
     }
 }
