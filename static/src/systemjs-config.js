@@ -7,7 +7,6 @@ System.config({
     ]
   },
   "paths": {
-    "/*": "javascripts/*.js",
     "*": "javascripts/*.js",
     "admin/*": "javascripts/projects/admin/*.js",
     "common/*": "javascripts/projects/common/*.js",
