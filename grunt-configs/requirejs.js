@@ -21,9 +21,9 @@ module.exports = function(grunt, options) {
                 raven:                'components/raven-js/raven',
                 react:                'components/react/react',
                 reqwest:              'components/reqwest/reqwest',
-                omniture:             '../../public/javascripts/vendor/omniture',
+                omniture:             'vendor/omniture',
                 socketio:             'components/socket.io-client/socket.io',
-                stripe:               '../../public/javascripts/vendor/stripe/stripe.min',
+                stripe:               'vendor/stripe/stripe.min',
                 svgs:                 '../../../common/conf/assets/inline-svgs',
                 videojs:              'components/videojs/video',
                 videojsads:           'components/videojs-contrib-ads/videojs.ads',
@@ -38,7 +38,16 @@ module.exports = function(grunt, options) {
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
             preserveLicenseComments: false,
-            fileExclusionRegExp: /^bower_components|es6$/i
+            onBuildRead: function (moduleName, path, contents) {
+                return contents.replace(/'(.+?)!(text|svg)'/g, function (match, depModuleName, depPluginName) {
+                    var plugins = {
+                        'text': 'text',
+                        'svg': 'inlineSvg'
+                    };
+                    return '\'' + plugins[depPluginName] + '!' + depModuleName + '\'';
+                });
+            },
+            fileExclusionRegExp: /^bower_components|es6|test$/i
         },
         common: {
             options: {
@@ -143,7 +152,7 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    '../../public/javascripts/vendor/stripe/stripe.min',
+                    'vendor/stripe/stripe.min',
                     'text',
                     'inlineSvg'
                 ]
