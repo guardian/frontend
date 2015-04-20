@@ -1,6 +1,7 @@
 package layout
 
 import com.gu.facia.api.models.{LatestSnap, FaciaContent}
+import com.gu.facia.api.utils.{Default, CardStyle, ResolvedMetaData, ContentProperties}
 import model.{ApiContentWithMeta, Content}
 import org.joda.time.DateTime
 import org.scalatest.{Matchers, FlatSpec}
@@ -38,6 +39,7 @@ class FrontTest extends FlatSpec with Matchers {
 
     LatestSnap(
       id = theUrl,
+      cardStyle = Default,
       snapUri = None,
       snapCss = None,
       latestContent = Option(content),
@@ -46,18 +48,10 @@ class FrontTest extends FlatSpec with Matchers {
       trailText = None,
       group = "",
       image = None,
-      isBreaking = false,
-      isBoosted = false,
-      imageHide = false,
-      imageReplace = false,
-      showMainVideo = false,
-      showKickerTag = false,
+      properties = ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default),
       byline = None,
-      showByLine = false,
       kicker = None,
-      imageCutout = None,
-      showBoostedHeadline = false,
-      showQuotedHeadline = false)}
+      imageCutout = None)}
 
 
 
