@@ -77,18 +77,6 @@ $fc-item-gutter: $gs-gutter / 4;
     @include mq(tablet) {
         .has-flex & {
             @include flex(1);
-            // see: http://stackoverflow.com/questions/7813783/firefox-and-flexbox-when-using-white-space-nowrap-on-child-element-the-flexib
-            // width:0 fixes child elements with white-space:nowrap below flex
-            width: 0;
-        }
-
-        // Temporary fix for the above! - for video most popular
-        .has-flex .most-viewed--media & {
-            width: 50%;
-
-            @include mq($until: desktop) {
-                width: 33.3%;
-            }
         }
 
         .has-flex-wrap & {
@@ -111,6 +99,9 @@ $fc-item-gutter: $gs-gutter / 4;
             @include flex-direction(column);
             @include flex-display;
             @include flex(1);
+            // see: http://stackoverflow.com/questions/7813783/firefox-and-flexbox-when-using-white-space-nowrap-on-child-element-the-flexib
+            // width:0 fixes child elements with white-space:nowrap below flex
+            width: 0;
         }
     }
 }

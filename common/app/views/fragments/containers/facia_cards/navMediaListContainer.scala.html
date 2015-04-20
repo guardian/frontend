@@ -16,7 +16,7 @@
                     @InlineImage.fromTrail(item).map { imageContainer =>
                         @image(imageContainer.imageContainer)
                     }
-                    <div class="fc-item__container">@item.headline</div>
+                    @item.headline
                 </a>
             </li>
         }
