@@ -39,13 +39,15 @@ module.exports = function(grunt, options) {
             generateSourceMaps: true,
             preserveLicenseComments: false,
             onBuildRead: function (moduleName, path, contents) {
-                return contents.replace(/'(.+?)!(text|svg)'/g, function (match, depModuleName, depPluginName) {
-                    var plugins = {
-                        'text': 'text',
-                        'svg': 'inlineSvg'
-                    };
-                    return '\'' + plugins[depPluginName] + '!' + depModuleName + '\'';
-                });
+                return contents
+                    .replace(/'(.+?)!(text|svg)'/g, function (match, depModuleName, depPluginName) {
+                        var plugins = {
+                            'text': 'text',
+                            'svg': 'inlineSvg'
+                        };
+                        return '\'' + plugins[depPluginName] + '!' + depModuleName + '\'';
+                    })
+                    .replace('\'socketio/socket.io\'', 'socketio');
             },
             fileExclusionRegExp: /^bower_components|es6|test$/i
         },
