@@ -8,11 +8,13 @@ var mkdirp = require('mkdirp');
 
 // TODO: Read from package.json
 var jspmBaseUrl = 'static/src';
+// TODO: Output to static/hash?
 var prefixPath = 'static/target';
 var bundlesUri = 'bundles';
 var bundleConfigs = [
     ['core', 'core.js'],
-    ['es6/bootstraps/app - core', 'es6/bootstraps/app.js'],
+    // TODO: Bundle crossword thumbnails?
+    ['es6/bootstraps/crosswords - core', 'es6/bootstraps/crosswords.js'],
     ['bootstraps/app - core', 'bootstraps/app.js'],
     ['bootstraps/commercial - core', 'bootstraps/commercial.js'],
     ['bootstraps/sudoku - core', 'bootstraps/sudoku.js'],

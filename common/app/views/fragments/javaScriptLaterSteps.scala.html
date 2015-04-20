@@ -209,21 +209,29 @@
         // TODO: Add .js to the original value instead of prepending here
         System.paths['ophan/ng'] = '@{Configuration.javascript.config("ophanJsUrl")}.js';
 
-        System.import('es6/bootstraps/app')
-            .then(function (module) {
-                var initialise = module.default;
+        // RequireJS
+
+        // require('boot');
+
+        // SystemJS
+
+        System.import('boot')
+            .then(function (initialise) {
                 initialise({
                     isDev: @play.Play.isDev(),
                     isDiagnosticsLoggingSwitchOn: @conf.Switches.DiagnosticsLogging.isSwitchedOn
                 });
-            })
-            .catch(function (error) {
-                // TODO: Is this caught by Sentry?
-                // Throw error outside of promise
-                setTimeout(function () {
-                    throw error;
-                });
             });
+
+        // SystemJS - crosswords (all)
+
+        System.import('es6/bootstraps/crosswords').then(function (crosswords) {
+            crosswords.default.init();
+        });
+
+        System.import('es6/projects/common/modules/crosswords/thumbnails').then(function (crosswordThumbnails) {
+            crosswordThumbnails.default.init();
+        });
 
     </script>
 }
