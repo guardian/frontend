@@ -1,5 +1,6 @@
 package controllers.admin
 
+import implicits.Requests
 import play.api.mvc.Controller
 import common.Logging
 import controllers.AuthLogging
@@ -14,7 +15,7 @@ import conf.Switches
 import org.joda.time.LocalDate
 import play.api.Play.current
 
-object RadiatorController extends Controller with Logging with AuthLogging {
+object RadiatorController extends Controller with Logging with AuthLogging with Requests{
 
   // if you are reading this you are probably being rate limited...
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting
@@ -23,7 +24,7 @@ object RadiatorController extends Controller with Logging with AuthLogging {
   // put it in your properties file as github.token=XXXXXXX
   lazy val githubAccessToken = Configuration.github.token.map{ token => s"?access_token=$token" }.getOrElse("")
 
-  def switchesExpiringThisWeek() = {
+  def switchesExpiringThisWeek = {
     Switches.all.filter { switch =>
       switch.sellByDate.isBefore(new LocalDate().plusDays(7))
     }
@@ -36,17 +37,24 @@ object RadiatorController extends Controller with Logging with AuthLogging {
       NoCache(Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8"))
     }
   }
-
   def renderRadiator() = AuthActions.AuthActionTest.async { implicit request =>
+
+    // Some features do not work outside our network
+    // /radiator?features=external disables these
+    val external = request.getParameter("features").contains("external")
+
     for {
+      user50x <- CloudWatch.user50x
       shortLatency <- CloudWatch.shortStackLatency
       fastlyErrors <- CloudWatch.fastlyErrors
       multiLineGraphs <- CloudWatch.fastlyHitMissStatistics
       cost <- CloudWatch.cost
     } yield {
-      val graphs = shortLatency ++ fastlyErrors
-      val switches = switchesExpiringThisWeek
-      NoCache(Ok(views.html.radiator(graphs, multiLineGraphs, cost, switches, Configuration.environment.stage)))
+      val graphs = Seq(user50x) ++ shortLatency ++ fastlyErrors
+      NoCache(Ok(views.html.radiator(
+        graphs, multiLineGraphs, cost, switchesExpiringThisWeek,
+        Configuration.environment.stage, external
+      )))
     }
   }
 

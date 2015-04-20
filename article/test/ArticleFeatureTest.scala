@@ -213,7 +213,7 @@ import collection.JavaConversions._
         val inBodyImage = findFirst(".content__article-body .element-image")
 
         ImageServerSwitch.switchOn()
-        inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
+        inBodyImage.findFirst("[itemprop=contentUrl]").getAttribute("src") should
           endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
         And("I should see the image caption")
