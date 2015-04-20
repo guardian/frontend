@@ -1,10 +1,5 @@
 @(rating: Int)(implicit request: RequestHeader)
 
-<span class="u-h" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
-    <meta itemprop="worstRating" content="1" />
-    <span itemprop="ratingValue">@rating</span> /
-    <span itemprop="bestRating">5</span> stars
-</span>
 <div class="stars" role="presentation">
     @List(1,2,3,4,5).map{ i =>
         @fragments.inlineSvg("star", "icon", List("star__item", if(i <= rating){ "star__item--golden" }else{ "star__item--grey" }))
