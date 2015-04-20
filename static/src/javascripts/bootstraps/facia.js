@@ -7,6 +7,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/robust',
     'common/utils/storage',
     'common/utils/to-array',
     // Modules
@@ -25,6 +26,7 @@ define([
     config,
     detect,
     mediator,
+    robust,
     storage,
     toArray,
     stocks,
@@ -36,59 +38,66 @@ define([
     weather
 ) {
 
-    var modules = {
-            showSnaps: function () {
-                snaps.init();
-                mediator.on('modules:container:rendered', snaps.init);
-            },
+    var showSnaps = function () {
+            snaps.init();
+            mediator.on('modules:container:rendered', snaps.init);
+        },
 
-            showContainerShowMore: function () {
-                mediator.addListeners({
-                    'modules:container:rendered': containerShowMore.init,
-                    'page:front:ready': containerShowMore.init
-                });
-            },
+        showContainerShowMore = function () {
+            mediator.addListeners({
+                'modules:container:rendered': containerShowMore.init,
+                'page:front:ready': containerShowMore.init
+            });
+        },
 
-            showContainerToggle: function () {
-                var containerToggleAdd = function (context) {
-                        $('.js-container--toggle', $(context || document)[0]).each(function (container) {
-                            new ContainerToggle(container).addToggle();
-                        });
-                    };
-                mediator.addListeners({
-                    'page:front:ready': containerToggleAdd,
-                    'modules:geomostpopular:ready': _.partial(containerToggleAdd, '.js-popular-trails')
-                });
-            },
-
-            upgradeMostPopularToGeo: function () {
-                if (config.switches.geoMostPopular) {
-                    new GeoMostPopularFront().go();
-                }
-            },
-
-            showWeather: function () {
-                if (config.switches.weather) {
-                    mediator.on('page:front:ready', function () {
-                        weather.init();
+        showContainerToggle = function () {
+            var containerToggleAdd = function (context) {
+                    $('.js-container--toggle', $(context || document)[0]).each(function (container) {
+                        new ContainerToggle(container).addToggle();
                     });
-                }
+                };
+            mediator.addListeners({
+                'page:front:ready': containerToggleAdd,
+                'modules:geomostpopular:ready': _.partial(containerToggleAdd, '.js-popular-trails')
+            });
+        },
+
+        upgradeMostPopularToGeo = function () {
+            if (config.switches.geoMostPopular) {
+                new GeoMostPopularFront().go();
+            }
+        },
+
+        showWeather = function () {
+            if (config.switches.weather) {
+                weather.init();
             }
         },
 
         ready = function () {
-            if (!this.initialised) {
-                this.initialised = true;
-                modules.showSnaps();
-                modules.showContainerShowMore();
-                modules.showContainerToggle();
-                modules.upgradeMostPopularToGeo();
-                lazyLoadContainers();
-                stocks();
-                modules.showWeather();
+            if (!initialised) {
+                initialised = true;
+                if (config.switches.robustFastdom) {
+                    robust('f-snaps', showSnaps);
+                    robust('f-show-more', showContainerShowMore);
+                    robust('f-toggle', showContainerToggle);
+                    robust('f-most-popular', upgradeMostPopularToGeo);
+                    robust('f-lazy-load', lazyLoadContainers);
+                    robust('f-stocks', stocks);
+                    robust('f-weather', showWeather);
+                } else {
+                    showSnaps();
+                    showContainerShowMore();
+                    showContainerToggle();
+                    upgradeMostPopularToGeo();
+                    lazyLoadContainers();
+                    stocks();
+                    showWeather();
+                }
             }
             mediator.emit('page:front:ready');
-        };
+        },
+        initialised = false;
 
     return {
         init: ready

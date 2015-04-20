@@ -1,9 +1,11 @@
 define([
     'qwery',
     'raven',
+    'fastdom',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/robust',
     'common/utils/user-timing',
     'bootstraps/article',
     'bootstraps/common',
@@ -15,9 +17,11 @@ define([
 ], function (
     qwery,
     raven,
+    fastdom,
     config,
     detect,
     mediator,
+    robust,
     userTiming,
     article,
     common,
@@ -29,11 +33,15 @@ define([
 ) {
 
     var bootstrapContext = function (featureName, boostrap) {
-            raven.context(
-                { tags: { feature: featureName } },
-                boostrap.init,
-                []
-            );
+            if (config.switches.robustFastdom) {
+                robust(featureName, boostrap.init);
+            } else {
+                raven.context(
+                    { tags: { feature: featureName } },
+                    boostrap.init,
+                    []
+                );
+            }
         },
 
         routes = function () {
@@ -113,7 +121,13 @@ define([
             }
 
             // Mark the end of synchronous execution.
-            userTiming.mark('App End');
+            if (config.switches.robustFastdom) {
+                fastdom.defer(function () {
+                    userTiming.mark('App End');
+                });
+            } else {
+                userTiming.mark('App End');
+            }
         };
 
     return {
