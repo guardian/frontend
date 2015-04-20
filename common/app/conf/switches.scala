@@ -507,7 +507,7 @@ object Switches {
     safeState = On, sellByDate = never)
 
   // A/B Tests
-  
+
   val ABLzAds = Switch("A/B Tests", "ab-lz-ads", "Lazy loading ads.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
@@ -527,8 +527,8 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ABMtMaster = Switch("A/B Tests", "ab-mt-master",
-    "Switch for the Sticky mpu test.",
+  val ABMtMain = Switch("A/B Tests", "ab-mt-main",
+    "Switch for the moat main test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 11)
   )
 
