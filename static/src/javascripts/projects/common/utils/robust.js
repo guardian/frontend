@@ -5,13 +5,9 @@
     For example "comments throwing an exception should not stop auto refresh"
  */
 define([
-    'raven',
-    'fastdom',
-    'common/utils/config'
+    'raven'
 ], function (
-    raven,
-    fastdom,
-    config
+    raven
 ) {
     function Robust(name, block, reporter) {
 
@@ -19,18 +15,10 @@ define([
             reporter = raven.captureException;
         }
 
-        var run = function () {
-            try {
-                block();
-            } catch (e) {
-                reporter(e, { tags: { module: name } });
-            }
-        };
-
-        if (config.switches.robustFastdom) {
-            fastdom.defer(run);
-        } else {
-            run();
+        try {
+            block();
+        } catch (e) {
+            reporter(e, { tags: { module: name } });
         }
     }
 
