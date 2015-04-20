@@ -287,9 +287,9 @@ object FaciaContentImplicits {
 
     def showByline: Boolean = fold(
       curatedContent => curatedContent.properties.showByline,
-      supportingCuratedContent => supportingCuratedContent.showByLine,
+      supportingCuratedContent => supportingCuratedContent.properties.showByline,
       linkSnap => linkSnap.showByLine,
-      latestSnap => latestSnap.showByLine
+      latestSnap => latestSnap.properties.showByline
     )
 
     private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.`type` == tagType)
