@@ -581,6 +581,8 @@ class Audio(content: ApiContentWithMeta) extends Media(content) {
 
   override lazy val contentType = GuardianContentTypes.Audio
 
+  override def schemaType = Some("https://schema.org/AudioObject")
+
   override lazy val metaData: Map[String, JsValue] =
     super.metaData ++ Map("contentType" -> JsString(contentType))
 
@@ -601,6 +603,8 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
   override lazy val contentType = GuardianContentTypes.Video
 
   lazy val source: Option[String] = videos.find(_.isMain).flatMap(_.source)
+
+  override def schemaType = Some("http://schema.org/VideoObject")
 
   override lazy val metaData: Map[String, JsValue] =
     super.metaData ++ Map(
