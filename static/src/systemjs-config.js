@@ -8,7 +8,11 @@ System.config({
   },
   "paths": {
     "/*": "javascripts/*.js",
-    "*": "javascripts/projects/*.js",
+    "*": "javascripts/*.js",
+    "admin/*": "javascripts/projects/admin/*.js",
+    "common/*": "javascripts/projects/common/*.js",
+    "facia/*": "javascripts/projects/facia/*.js",
+    "membership/*": "javascripts/projects/membership/*.js",
     "bundles/*": "bundles/*.js",
     "test/*": "javascripts/test/*.js",
     "es6/*": "javascripts/es6/*.js",
