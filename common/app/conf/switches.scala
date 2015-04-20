@@ -520,7 +520,6 @@ object Switches {
     safeState = On, sellByDate = never)
 
   // A/B Tests
-
   val ABLzAds = Switch("A/B Tests", "ab-lz-ads", "Lazy loading ads.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
