@@ -125,7 +125,7 @@ import collection.JavaConversions._
         ImageServerSwitch.switchOn()
 
         Then("I should see the article's image")
-        findFirst("[itemprop='contentURL representativeOfPage']").getAttribute("src") should
+        findFirst("[itemprop='contentUrl representativeOfPage']").getAttribute("src") should
           include("Gunnerside-village-Swaled")
 
         And("I should see the image caption")
@@ -213,7 +213,7 @@ import collection.JavaConversions._
         val inBodyImage = findFirst(".content__article-body .element-image")
 
         ImageServerSwitch.switchOn()
-        inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
+        inBodyImage.findFirst("[itemprop=contentUrl]").getAttribute("src") should
           endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
         And("I should see the image caption")
@@ -425,10 +425,10 @@ import collection.JavaConversions._
 
     scenario("Show primary picture on composer articles") {
       Given("I am on an article created in composer tools")
-      goTo("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { broswer =>
-        import broswer._
+      goTo("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { browser =>
+        import browser._
         Then("The main picture should be show")
-        $("[itemprop='contentURL representativeOfPage']") should have size 1
+        $("[itemprop='contentUrl representativeOfPage']") should have size 1
       }
     }
 

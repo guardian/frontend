@@ -19,7 +19,7 @@ $ npm install -g bower
 Then install this component with
 
 ```
-$ bower install pasteup-buttons --save
+$ bower install pasteup-palette --save
 ```
 
 ## Usage

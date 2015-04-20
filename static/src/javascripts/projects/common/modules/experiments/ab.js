@@ -13,12 +13,13 @@ define([
     'common/modules/experiments/tests/mt-top-below-nav',
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/mt-top-below-first-container',
-    'common/modules/experiments/tests/mt-sticky-nav',
+    'common/modules/experiments/tests/mt-depth',
     'common/modules/experiments/tests/across-the-country',
     'common/modules/experiments/tests/adblock-message',
     'common/modules/experiments/tests/mt-sticky-bottom',
     'common/modules/experiments/tests/save-for-later',
-    'common/modules/experiments/headlines'
+    'common/modules/experiments/headlines',
+    'common/modules/experiments/tests/lazy-load-ads'
 ], function (
     raven,
     _,
@@ -34,12 +35,13 @@ define([
     MtTopBelowNav,
     HeatMap,
     MtTopBelowFirstContainer,
-    MtStickyNav,
+    MtDepth,
     AcrossTheCountry,
     AdblockMessage,
     MtStickyBottom,
     SaveForLater,
-    Headline
+    Headline,
+    LazyLoadAds
 ) {
 
     var ab,
@@ -51,11 +53,12 @@ define([
             new MtTopBelowNav(),
             new HeatMap(),
             new MtTopBelowFirstContainer(),
-            new MtStickyNav(),
+            new MtDepth(),
             new AcrossTheCountry(),
             new AdblockMessage(),
             new MtStickyBottom(),
             new SaveForLater(),
+            new LazyLoadAds(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             })
@@ -250,8 +253,6 @@ define([
         },
 
         segmentUser: function () {
-            mvtCookie.generateMvtCookie();
-
             var tokens,
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {

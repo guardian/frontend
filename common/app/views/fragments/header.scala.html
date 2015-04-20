@@ -70,7 +70,7 @@
 
             <div class="l-header-main">
                 @if(metaData.section == "observer" && metaData.isFront) {
-                    <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" itemprop="url" data-component="logo">
+                    <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" data-component="logo">
                         @if(metaData.hasSlimHeader) {
                             @fragments.inlineSvg("observer-logo-160", "logo")
                         } else {
@@ -79,7 +79,7 @@
                         }
                     </a>
                 } else {
-                    <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url" data-component="logo">
+                    <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" data-component="logo">
                         <span class="u-h">The Guardian</span>
                         @if(metaData.hasSlimHeader) {
                             @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@

@@ -438,8 +438,14 @@ define([
                 };
             },
 
-            stickyBtmAb: function () {
-                var stickyTest = ab.getTest('MtStickyBtm');
+            runCustomAbTests: function () {
+                var stickyTest = ab.getTest('MtStickyBtm'),
+                    masterTest = ab.getTest('MtMaster');
+
+                if (masterTest && ab.isParticipating(masterTest) && ab.getTestVariant('MtMaster') === 'variant'
+                    && ab.testCanBeRun('MtMaster')) {
+                    masterTest.fireMasterTest();
+                }
                 if (stickyTest && ab.isParticipating(stickyTest) && ab.getTestVariant('MtStickyBtm') === 'A'
                     && ab.testCanBeRun('MtStickyBtm')) {
                     stickyTest.fireStickyBottom();
@@ -454,9 +460,9 @@ define([
                         pinOnHide: true
                     });
 
-                    if (config.page.internationalEdition === 'international') {
+                    if (config.page.internationalEdition === 'international' && config.page.pageId === 'international') {
                         message.show(template(internationalMessage, {}));
-                    } else {
+                    } else if (config.page.internationalEdition === 'control' && config.page.pageId === 'uk') {
                         message.show(template(internationalControlMessage, {}));
                     }
                 }
@@ -504,7 +510,7 @@ define([
             robust('c-simple-metrics',  modules.initSimpleMetrics);
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
-            robust('c-sticky-btm-ab',   modules.stickyBtmAb);
+            robust('c-run-custom-ab',   modules.runCustomAbTests);
             robust('c-international-signposting', modules.internationalSignposting);
         };
 
