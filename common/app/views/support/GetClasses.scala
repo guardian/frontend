@@ -1,5 +1,6 @@
 package views.support
 
+import ab_headlines.ABTestHeadlines
 import layout._
 
 object GetClasses {
@@ -12,6 +13,8 @@ object GetClasses {
   }
 
   def forItem(item: ContentCard, isFirstContainer: Boolean) = {
+    val abHeadlineClass = item.id.flatMap(ABTestHeadlines.abTestId).map(n => s"js-a-b-headline-$n")
+
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
@@ -24,7 +27,10 @@ object GetClasses {
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
       ("fc-item--live", item.isLive),
       ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable)
-    ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty) ++ mediaTypeClass(item).map(_ -> true))
+    ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
+      ++ mediaTypeClass(item).map(_ -> true)
+      ++ abHeadlineClass.map(_ -> true)
+    )
   }
 
   def forSubLink(sublink: Sublink) = RenderClasses(Seq(

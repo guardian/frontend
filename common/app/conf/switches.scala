@@ -2,6 +2,7 @@ package conf
 
 import common._
 import conf.Configuration.environment
+import org.joda.time
 import org.joda.time._
 import play.api.Play.current
 import play.api.libs.ws.WS
@@ -39,6 +40,8 @@ trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
 
   def expiresSoon = daysToExpiry < 7
 
+  def hasExpired = daysToExpiry == 0
+
   Switch.switches.send(this :: _)
 }
 
@@ -72,7 +75,7 @@ object Switches {
 
   // Switch names can be letters numbers and hyphens only
 
-  private lazy val never = new LocalDate(2100, 1, 1)
+  lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
   val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
@@ -189,7 +192,6 @@ object Switches {
   )
 
   // Commercial
-
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
@@ -223,6 +225,12 @@ object Switches {
   val SponsoredSwitch = Switch("Commercial", "sponsored",
     "Show sponsored badges, logos, etc.",
     safeState = On, sellByDate = never
+  )
+
+  val LiveBlogContributorImagesSwitch = Switch("Feature", "liveblog-contributor-image",
+    "Show contributor byline images in live blog blocks",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 5, 28)
   )
 
   val ElectionLiveBadgeSwitch = Switch("Feature", "election-2015-badging",
@@ -291,6 +299,10 @@ object Switches {
     "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
     safeState = Off, sellByDate = never)
 
+  val LCMortgageFeedSwitch = Switch("Commercial", "lc-mortgages",
+    "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
+    safeState = Off, sellByDate = never)
+
   val GuBookshopFeedsSwitch = Switch("Commercial", "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
@@ -299,17 +311,18 @@ object Switches {
     "If this switch is on, book data will be looked up using a third-party service.",
     safeState = Off, sellByDate = never)
 
-  val AppleAdNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-network-front",
-    "If this switch is on, Apple ads will appear on the network front during active periods.",
+  val AppleAdUkNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-uk-network-front",
+    "If this switch is on, Apple ads will appear below nav on the UK network front.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
 
-  val AppleAdCultureFrontSwitch = Switch("Commercial", "apple-ads-on-culture-front",
-    "If this switch is on, Apple ads will appear on the culture front during active periods.",
+  val AppleAdAuNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-au-network-front",
+    "If this switch is on, Apple ads will appear below nav on the AU network front.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
 
-  val AdImpressionCountingSwitch = Switch("Commercial", "ad-impression-counting",
-    "If this switch is on, ad impression counts will be kept in Cloudwatch.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 15))
+  val AppleAdTechFrontSwitch = Switch("Commercial", "apple-ads-on-tech-front",
+    "If this switch is on, Apple ads will appear below nav on the tech section front.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+
 
   // Monitoring
 
@@ -348,7 +361,21 @@ object Switches {
     safeState = Off, new LocalDate(2015, 4, 24)
   )
 
+  val SendExpiringSwitchesEmail = Switch("Monitoring", "expiring-switches-email",
+    "Send an email when switches are expiring soon",
+    safeState = Off, new LocalDate(2015, 5, 6)
+  )
+
+
   // Features
+  val ABTestHeadlines = Switch(
+    "Feature",
+    "a-b-test-headlines",
+    "A/B test headlines",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 1)
+  )
+
   val InternationalEditionSwitch = Switch(
     "Feature",
     "international-edition",
@@ -371,8 +398,8 @@ object Switches {
   )
 
   val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
-    "If this switch is on the “Become a Member” button will be broken",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 15)
+    "If this switch is on the “Become a Member” button will be visible.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
@@ -473,13 +500,17 @@ object Switches {
 
   val QuizScoresService = Switch("Feature", "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 16))
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 16))
 
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
     "If switched on, any user registrations from a known tor esit node will be logged",
     safeState = On, sellByDate = never)
 
   // A/B Tests
+  
+  val ABLzAds = Switch("A/B Tests", "ab-lz-ads", "Lazy loading ads.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
+  )
 
   val ABIdentitySocialOAuth = Switch("A/B Tests", "ab-id-social-oauth",
     "Switch to direct users to OAuth social sign-in app.",
@@ -488,7 +519,7 @@ object Switches {
 
   val ABAcrossTheCountry = Switch("A/B Tests", "ab-across-the-country",
     "Tests container placement on the US front",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 19)
+    safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
   )
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -511,9 +542,9 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 18)
   )
 
-  val ABMtStickyNav = Switch("A/B Tests", "ab-mt-sticky-nav",
-    "Top navigation and top ad slot are sticky.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
+  val ABMtDepth = Switch("A/B Tests", "ab-mt-depth",
+    "Top navigation and top ad slot are sticky with different variants of depth.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
   )
 
   val ABMtStickyBtm = Switch("A/B Tests", "ab-mt-sticky-btm",
@@ -531,10 +562,25 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
   )
 
+  val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
+    "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
+    safeState = Off, sellByDate = never
+  )
+
   val ABLiveblogBlocksOnFronts = Switch("A/B Tests", "ab-liveblog-blocks-on-fronts",
     "Switch for the latest liveblog blocks on fronts A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 23)
   )
+
+  val ABHeadlineSwitches = (1 to 10) map { n =>
+    Switch(
+      "A/B Tests",
+      s"ab-headline$n",
+      s"Switch for headline $n",
+      safeState = On,
+      sellByDate = new LocalDate(2015, 6, 10)
+    )
+  }
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
@@ -568,6 +614,11 @@ object Switches {
   val MissingVideoEndcodingsJobSwitch = Switch("Feature", "check-for-missing-video-encodings",
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
      safeState = Off, sellByDate = never
+  )
+
+  val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
+    "If this is switched on then lazy load the most-popular container on content pages",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
   )
 
   // Facia
@@ -616,6 +667,17 @@ object Switches {
     "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please check the DB size.",
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
   )
+
+  // Server-side A/B Tests
+
+  val ServerSideTests = {
+    // It's for the side effect. Blame agents.
+    val tests = mvt.ActiveTests.tests
+
+    Switch("Server-side A/B Tests", "server-side-tests",
+      "Enables the server side testing system",
+      safeState = Off, sellByDate = never)
+  }
 
   def all: Seq[SwitchTrait] = Switch.allSwitches
 

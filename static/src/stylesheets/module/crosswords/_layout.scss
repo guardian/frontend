@@ -12,6 +12,8 @@
         }
 
         .crossword__controls {
+            width: $size;
+
             @include mq(tablet) {
                 margin-left: 0 - $size;
             }

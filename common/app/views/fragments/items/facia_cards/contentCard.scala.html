@@ -1,5 +1,6 @@
 @(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
 
+@import ab_headlines.ABTestHeadlines.headlinesJsonString
 @import model.InlineImage
 @import model.{InlineVideo, VideoPlayer, CrosswordSvg, LiveBlog}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
@@ -23,6 +24,11 @@
             data-discussion-hide-label="true"
         }
     }
+
+    @for(id <- item.id; headlines <- headlinesJsonString(id)) {
+        data-headline-variants="@headlines"
+    }
+
 data-link-name="@item.cardStyle.toneString | @{index + 1}"
     @item.id.map { id =>
     data-id="@id"
@@ -152,6 +158,6 @@ data-test-id="facia-card"
             <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
         }
 
-    <a @Html(item.url.hrefWithRel) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.headline)</a>
+    <a @Html(item.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.headline)</a>
     </div>
 </div>

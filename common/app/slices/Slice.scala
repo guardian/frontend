@@ -263,10 +263,12 @@ case object HalfQuarterQl2Ql4 extends Slice {
       ),
       SplitColumn(
         colSpan = 1,
+        topItemRows = 1,
         topItemClasses = ItemClasses(
           mobile = MediaList,
           tablet = Standard
         ),
+        bottomItemRows = 2,
         bottomItemsClasses = ItemClasses(
           mobile = ListItem,
           tablet = ListItem
@@ -478,6 +480,86 @@ case object QuarterThreeQuarter extends Slice {
         ItemClasses(
           mobile = Standard,
           tablet = ThreeQuartersRight
+        )
+      )
+    )
+  )
+}
+
+/* .__________________________.________.
+ * |##########################|########|
+ * |##########################|########|
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|--------|
+ * |##########################|########|
+ * |##########################|########|
+ * |                          |        |
+ * |                          |        |
+ * |                          |        |
+ * `--------------------------'--------'
+ */
+case object ThreeQuarterTallQuarter2 extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "qqqtall-q2",
+    columns = Seq(
+      SingleItem(
+        colSpan = 3,
+        ItemClasses(
+          mobile = Standard,
+          tablet = ThreeQuartersTall
+        )
+      ),
+      Rows(
+        colSpan = 1,
+        columns = 1,
+        rows = 2,
+        ItemClasses(
+          mobile = ListItem,
+          tablet = Standard
+        )
+      )
+    )
+  )
+}
+
+/* .__________________________.________.
+ * |##########################|########|
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|--------|
+ * |##########################|########|
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|--------|
+ * |                          |        |
+ * |                          |--------|
+ * |                          |        |
+ * `--------------------------'--------'
+ */
+case object ThreeQuarterTallQuarter2Ql2 extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "qqqtall-q2-ql2",
+    columns = Seq(
+      SingleItem(
+        colSpan = 3,
+        ItemClasses(
+          mobile = Standard,
+          tablet = ThreeQuartersTall
+        )
+      ),
+      SplitColumn(
+        colSpan = 1,
+        topItemRows = 2,
+        topItemClasses = ItemClasses(
+          mobile = ListItem,
+          tablet = Standard
+        ),
+        bottomItemRows = 2,
+        bottomItemsClasses = ItemClasses(
+          mobile = ListItem,
+          tablet = ListItem
         )
       )
     )

@@ -16,7 +16,8 @@ define([
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'common/modules/analytics/beacon'
 ], function (
     bean,
     bonzo,
@@ -34,7 +35,8 @@ define([
     StickyMpu,
     buildPageTargeting,
     geoMostPopular,
-    ab
+    ab,
+    beacon
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -76,10 +78,7 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                var mtMasterTest = ab.getParticipations().MtMaster;
-
-                if (ab.testCanBeRun('MtMaster') &&
-                    mtMasterTest && mtMasterTest.variant === 'variant') {
+                if (isMasterTest() && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         new StickyMpu($adSlot).create();
                     }
@@ -104,12 +103,23 @@ define([
             }
         },
 
+        isMasterTest = function () {
+            var mtMasterTest = ab.getParticipations().MtMaster;
+
+            return ab.testCanBeRun('MtMaster') && mtMasterTest && mtMasterTest.variant === 'variant';
+        },
+
+        recordFirstAdRendered = _.once(function () {
+            beacon.beaconCounts('ad-render');
+        }),
+
         /**
          * Initial commands
          */
         setListeners = function () {
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
+                recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
             }));
@@ -157,6 +167,12 @@ define([
             googletag.display(_.keys(slots).shift());
             displayed = true;
         },
+        displayLazyAds = function () {
+            googletag.pubads().collapseEmptyDivs();
+            googletag.enableServices();
+            mediator.on('window:scroll', _.throttle(lazyLoad, 10));
+            lazyLoad();
+        },
         windowResize = _.debounce(
             function () {
                 // refresh on resize
@@ -165,6 +181,11 @@ define([
         ),
         postDisplay = function () {
             mediator.on('window:resize', windowResize);
+        },
+
+        isLzAdsTest = function () {
+            var test = ab.getParticipations().LzAds;
+            return test && test.variant === 'A' && ab.testCanBeRun('LzAds');
         },
 
         /**
@@ -190,12 +211,31 @@ define([
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
-            window.googletag.cmd.push(displayAds);
+            (isLzAdsTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
             return dfp;
+        },
+        lazyLoad = function () {
+            if (slots.length === 0) {
+                mediator.off('window:scroll');
+            } else {
+                fastdom.read(function () {
+                    var scrollTop    = bonzo(document.body).scrollTop(),
+                        scrollBottom = scrollTop + bonzo.viewport().height;
 
+                    _(slots).keys().forEach(function (slot) {
+                        // if the position of the ad is above the viewport - offset (half screen size)
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height / 2) {
+                            googletag.display(slot);
+
+                            slots = _(slots).omit(slot).value();
+                            displayed = true;
+                        }
+                    });
+                });
+            }
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),

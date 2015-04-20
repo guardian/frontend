@@ -1,5 +1,7 @@
 package common
 
+import java.util.TimeZone
+
 import org.quartz.impl.StdSchedulerFactory
 import org.quartz._
 import scala.collection.mutable
@@ -19,15 +21,22 @@ object Jobs extends Logging {
 
   scheduler.start()
 
-  def schedule(name: String, cron: String)(block: => Unit) {
+  def schedule(name: String, cron: String)(block: => Unit): Unit = {
+    schedule(name, CronScheduleBuilder.cronSchedule(new CronExpression(cron)))(block)
+  }
+
+  def schedule(name: String, cron: String, timeZone: TimeZone)(block: => Unit): Unit = {
+    schedule(name,
+      CronScheduleBuilder.cronSchedule(new CronExpression(cron)).inTimeZone(timeZone))(block)
+  }
+
+  def schedule(name: String, schedule: => CronScheduleBuilder)(block: => Unit): Unit = {
     // running cron scheduled jobs in tests is useless
     // it just results in unexpected data files when you
     // want to check in
     if (!Play.isTest) {
       log.info(s"Scheduling $name")
       jobs.put(name, () => block)
-
-      val schedule = CronScheduleBuilder.cronSchedule(new CronExpression(cron))
 
       scheduler.scheduleJob(
         JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),

@@ -1,0 +1,59 @@
+@(env: String)(implicit request: RequestHeader)
+@import conf.AdminConfiguration.pa
+@import org.joda.time.DateTime
+@import views.support.Format
+
+@admin_main("Cricket Troubleshooter", env, isAuthed = true) {
+
+@defining((Format(DateTime.now(), "yyyy-MM-dd"), Format(DateTime.now().minusYears(1), "yyyy-MM-dd"), "a359844f-fc07-9cfa-d4cc-9a9ac0d5d075")){ case (today, lastYear, englandTeam) =>
+
+    <h1>Cricket Troubleshooter</h1>
+
+    <p>This page helps the user access the raw PA (Press Association) feeds to check if a cricket problem is external or internal. <strong>Currently, the Guardian dotcom website only uses PA to populate England matches.</strong></p>
+
+    <p>The current API host is <i>@pa.cricketHost</i> and the API key is <i>@pa.cricketApiKey</i>.</p>
+
+    <p>The PA API explorer is <a href=@pa.cricketExplorer>@pa.cricketExplorer</a>. Select 'Press Association Cricket API' from the drop-down menu, and enter the key supplied above into the key text box.</p>
+
+    <h2>FAQ: Why doesn't the cricket score appear on the Guardian over-by-over report?</h2>
+
+    <p>Firstly, the cricket score component only appears on an article that has the following tags:</p>
+
+    <ul>
+        <li>"sport/england-cricket-team”</li>
+        <li>"sport/over-by-over-reports”</li>
+        <li>"tone/minutebyminute”</li>
+    </ul>
+
+    <p>If these tags are present, and the score is still missing, then it may be an external problem. PA's feed is not providing us the right information. To investigate this, follow the steps below.</p>
+
+    <h3>1. Find the ID for an England Team match</h3>
+
+    <p>Here is the API call for England's matches today. A match that hasn't yet begun will appear here, as a 'pre-match' status entry. Click on the link below, and examine the page. You should see "match id=" value; note it down.</p>
+
+    <p>
+        <a href="@pa.cricketHost/team/@englandTeam/fixtures?apikey=@pa.cricketApiKey&startDate=@today&endDate=@today">@pa.cricketHost/team/@englandTeam/fixtures</a>
+    </p>
+
+    <p>Alternatively, to find the match ID for a result in the past, use the API call below with the logical startDate and endDates that fit the desired match.</p>
+
+    <p>
+        <a href="@pa.cricketHost/team/@englandTeam/results?apikey=@pa.cricketApiKey&startDate=@lastYear&endDate=@today">@pa.cricketHost/team/@englandTeam/results?startDate=@lastYear&endDate=@today</a>
+    </p>
+
+    <h3>2. Check the match has the correct information</h3>
+
+    <p>We can use the match ID from the previous step to find the lineups, scorecard and match details. All three of these data points need to be working, otherwise the scorecard won't appear.</p>
+
+    <p>So for each of the links below, enter the match ID in place of '-MATCH-ID-' in the address bar, and examine the page.</p>
+
+    <ol>
+        <li>Match details - <a href="@pa.cricketHost/match/paste-match-id-here?apikey=@pa.cricketApiKey">@pa.cricketHost/match/<strong>paste-match-id-here</strong>?apikey=@pa.cricketApiKey</a></li>
+        <li>Lineups - <a href="@pa.cricketHost/match/paste-match-id-here/line-ups?apikey=@pa.cricketApiKey">@pa.cricketHost/match/<strong>paste-match-id-here</strong>/line-ups?apikey=@pa.cricketApiKey</a></li>
+        <li>Scorecard - <a href="@pa.cricketHost/match/paste-match-id-here/scorecard?apikey=@pa.cricketApiKey">@pa.cricketHost/match/<strong>paste-match-id-here</strong>/scorecard?apikey=@pa.cricketApiKey</a></li>
+    </ol>
+
+    <link href="@routes.Assets.at("css/football.css")" rel="stylesheet">
+}
+
+}

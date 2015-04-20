@@ -99,7 +99,8 @@ object FixedContainers {
 object DynamicContainers {
   val all: Map[String, DynamicContainer] = Map(
     ("dynamic/fast", DynamicFast),
-    ("dynamic/slow", DynamicSlow)
+    ("dynamic/slow", DynamicSlow),
+    ("dynamic/package", DynamicPackage)
   )
 
   def apply(collectionType: Option[String], items: Seq[Content]): Option[ContainerDefinition] = {

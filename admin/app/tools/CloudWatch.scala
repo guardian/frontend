@@ -50,7 +50,6 @@ object CloudWatch extends Logging with ExecutionContexts {
     LoadBalancer("frontend-sport"),
     LoadBalancer("frontend-commercial"),
     LoadBalancer("frontend-onward"),
-    LoadBalancer("frontend-r2football"),
     LoadBalancer("frontend-diagnostics"),
     LoadBalancer("frontend-archive"),
     LoadBalancer("frontend-rss")
@@ -234,6 +233,17 @@ object CloudWatch extends Logging with ExecutionContexts {
       .withMetricName("ophan-percent-conversion")
       .withDimensions(stage)))
   } yield new AwsLineChart("ophan-percent-conversion", Seq("Time", "%"), ChartFormat.SingleLineBlue, metric)
+
+  def user50x = for {
+    metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusHours(2).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(60)
+      .withStatistics("Sum")
+      .withNamespace("Diagnostics")
+      .withMetricName("kpis-user-50x")
+      .withDimensions(stage)))
+  } yield new AwsLineChart("User 50x", Seq("Time", "50x/min"), ChartFormat.SingleLineRed, metric)
 
   def ratioConfidence = for {
     metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()

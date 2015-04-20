@@ -292,6 +292,23 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
   }
 }
 
+case class BloggerBylineImage(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
+  def clean(body: Document): Document = {
+    if (article.isLiveBlog && LiveBlogContributorImagesSwitch.isSwitchedOn) {
+      body.select(".block").foreach { el =>
+        val contributorId = el.attributes().get("data-block-contributor")
+        if (contributorId.nonEmpty) {
+          article.tags.find(_.id == contributorId).map{ contributorTag =>
+            val html = views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
+            el.getElementsByClass("block-elements").headOption.foreach(_.prepend(html.toString()))
+          }
+        }
+      }
+    }
+    body
+  }
+}
+
 case class LiveBlogShareButtons(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
   def clean(body: Document): Document = {
     if (article.isLiveBlog) {
@@ -522,6 +539,18 @@ object RichLinkCleaner extends HtmlCleaner {
       .addClass("element-rich-link--not-upgraded")
       .attr("data-component", "rich-link")
       .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.length} | ${index+1}") }
+
+    document
+  }
+}
+
+object MembershipEventCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    val membershipEvents = document.getElementsByClass("element-membership")
+    membershipEvents
+      .addClass("element-membership--not-upgraded")
+      .attr("data-component", "membership-events")
+      .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"membership-event-${membershipEvents.length} | ${index+1}") }
 
     document
   }

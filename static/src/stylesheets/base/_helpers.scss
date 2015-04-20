@@ -151,6 +151,10 @@
     hyphens: auto;
 }
 
+.u-test-ellipsis {
+    @include ellipsis();
+}
+
 
 /**
  * Reset button styles
@@ -222,4 +226,10 @@
 
 .u-font-weight-normal {
     font-weight: normal;
+}
+
+.u-vertical-align-middle-icon {
+    svg {
+        vertical-align: middle;
+    }
 }

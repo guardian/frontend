@@ -3,7 +3,7 @@
 
 .fc-container__header__title a {
     .inline-icon {
-        fill: colour(news);
+        fill: colour(news-main-1);
         position: relative;
         height: .7em;
         width: 1em;
@@ -110,6 +110,10 @@
         width: 1.2em;
         margin-right: .1em;
     }
+
+    .inline-icon {
+        fill: colour(media-default);
+    }
 }
 
 
@@ -130,18 +134,6 @@
 
     .fc-sublink--audio .inline-icon {
         fill: #000000;
-    }
-}
-
-.tone-special-report--item,
-.tone-podcast--item,
-.tone-podcast--sublink {
-    &.fc-item--audio,
-    &.rich-link--audio,
-    &.fc-sublink--audio {
-        .inline-icon {
-            fill: colour(podcast-default);
-        }
     }
 }
 
