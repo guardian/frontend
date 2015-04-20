@@ -10,6 +10,7 @@ define([
     'common/utils/template',
     'common/utils/storage',
     'common/utils/url',
+    'common/modules/experiments/ab',
     'text!common/views/history/tag.html',
     'text!common/views/history/mega-nav.html'
 ], function (
@@ -20,6 +21,7 @@ define([
     template,
     storage,
     url,
+    ab,
     viewTag,
     viewMegaNav
 ) {
@@ -157,6 +159,9 @@ define([
 
         inMegaNav = false,
 
+        // Temporary...
+        useVariant = ab.getTestVariant('HistoryWithoutWhitelist') === 'no-whitelist',
+
         isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
         stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
 
@@ -241,7 +246,8 @@ define([
             tids = _.keys(tags),
             op = _.extend({
                 number: 100,
-                weights: {}
+                weights: {},
+                thresholds: {}
             }, opts);
 
         tids = op.whitelist ? tids.filter(function (tid) { return op.whitelist.indexOf(tid) > -1; }) : tids;
@@ -251,7 +257,7 @@ define([
             .map(function (tid) {
                 var record = tags[tid],
                     rank = _.reduce(buckets, function (rank, bucket) {
-                        return rank + tally(record[bucket.indexInRecord], op.weights[bucket.type] || 1);
+                        return rank + tally(record[bucket.indexInRecord], op.weights[bucket.type], op.thresholds[bucket.type]);
                     }, 0);
 
                 return {
@@ -276,19 +282,47 @@ define([
             };
 
         // Temporary...
-        if (window.location.hash === '#alt-history') {
-            delete filterOpts.whitelist;
-            filterOpts.weights = {'content': 1, 'front': 10};
+        if (useVariant) {
+            filterOpts.weights = {
+                'content': 1,
+                'front': 5
+            };
+            filterOpts.thresholds = {
+                'content': 5,
+                'front': 1
+            };
+        } else {
+            filterOpts.whitelist = whitelist;
+            filterOpts.weights = {
+                'content': 1,
+                'front': 10
+            };
+            filterOpts.thresholds = {
+                'content': 1,
+                'front': 1
+            };
         }
 
         popularFilteredCache = (!flush && popularFilteredCache) || getPopular(filterOpts);
         return popularFilteredCache;
     }
 
-    function tally(visits, weight) {
-        return _.reduce(visits, function (tally, day) {
-            return tally + weight * (9 + day[1]) * (summaryPeriodDays - day[0]);
+    function tally(visits, weight, minimum) {
+        var totalVisits = 0,
+            result;
+
+        weight = weight || 1;
+        minimum = minimum || 1;
+
+        result = _.reduce(visits, function (tally, day) {
+            var dayOffset = day[0],
+                dayVisits = day[1];
+
+            totalVisits += dayVisits;
+            return tally + weight * (9 + dayVisits) * (summaryPeriodDays - dayOffset);
         }, 0);
+
+        return totalVisits < minimum ? 0 : result;
     }
 
     function firstCsv(str) {
