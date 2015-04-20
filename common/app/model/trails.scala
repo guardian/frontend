@@ -5,7 +5,9 @@ import dfp.DfpAgent
 import implicits.Dates
 import org.scala_tools.time.Imports._
 
-
+/**
+ * additional information needed to display something on a facia page from CAPI
+ */
 trait Trail extends Elements with Tags with FaciaFields with Dates {
   def webPublicationDate: DateTime
   def webPublicationDate(edition: Edition): DateTime = webPublicationDate(edition.timezone)
@@ -45,9 +47,16 @@ trait Trail extends Elements with Tags with FaciaFields with Dates {
     case snap: Snap => snap.snapHref.filter(_.nonEmpty)
     case t: Trail => Option(t.url)
   }
+
+  def trailSlideshow(aspectWidth: Int, aspectHeight: Int): Iterable[FaciaImageElement] =
+  slideshow
+    .filter(image => IsRatio(5, 3, image.width, image.height))
+
 }
 
-//Facia tool values
+/**
+ * Information needed to display something on a facia page (from the pressed json)
+ */
 trait FaciaFields {
   def group: Option[String] = None
   def supporting: List[Trail] = Nil
@@ -67,6 +76,9 @@ trait FaciaFields {
   def showQuotedHeadline: Boolean = false
   def imageCutoutReplace: Boolean = false
   def customImageCutout: Option[FaciaImageElement]
+
+  def slideshowImages: Boolean
+  def slideshow: Iterable[FaciaImageElement]
 
   def snapType: Option[String]
   def snapUri: Option[String]

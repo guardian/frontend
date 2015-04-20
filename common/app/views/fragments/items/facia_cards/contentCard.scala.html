@@ -2,7 +2,7 @@
 
 @import ab_headlines.ABTestHeadlines.headlinesJsonString
 @import model.InlineImage
-@import model.{InlineVideo, VideoPlayer, CrosswordSvg, LiveBlog}
+@import model.{InlineVideo, InlineSlideshow, VideoPlayer, CrosswordSvg, LiveBlog}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
@@ -95,6 +95,34 @@ data-test-id="facia-card"
                     inlineImage = containerIndex == 0 && index < 4,
                     widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
                 )
+            }
+
+            case Some(InlineSlideshow(imageElements)) => {
+                <div class="fc-item__media-wrapper">
+                    <div class="fc-item__image-container u-responsive-ratio js-slideshow">
+                            @imageElements.headOption.map { imageElement =>
+
+                                @lazyImage(
+                                    Seq("responsive-img"),
+                                    ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
+                                    item.mediaWidthsByBreakpoint.sizes,
+                                    None,
+                                    false
+                                )
+                                @imageElements.tail.map { imageElement =>
+
+                                    @lazyImage(
+                                        Seq("responsive-img"),
+                                        ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
+                                        item.mediaWidthsByBreakpoint.sizes,
+                                        None,
+                                        false,
+                                        true
+                                    )
+                                }
+                            }
+                    </div>
+                </div>
             }
 
             case _ => { }

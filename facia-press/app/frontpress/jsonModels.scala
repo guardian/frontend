@@ -84,7 +84,9 @@ object ItemMeta {
     ("customKicker", content.apiContent.metaData.flatMap(_.customKicker).map(JsString)),
     ("showBoostedHeadline", content.apiContent.metaData.flatMap(_.showBoostedHeadline).map(JsBoolean)),
     ("showQuotedHeadline", content.apiContent.metaData.flatMap(_.showQuotedHeadline).map(JsBoolean)),
-    ("showMainVideo", content.apiContent.metaData.flatMap(_.showMainVideo).map(JsBoolean))
+    ("showMainVideo", content.apiContent.metaData.flatMap(_.showMainVideo).map(JsBoolean)),
+    ("slideshowImages", content.apiContent.metaData.flatMap(_.json.get("slideshowImages"))),
+    ("slideshow", content.apiContent.metaData.flatMap(_.json.get("slideshow")))
   )
 }
 
@@ -108,9 +110,10 @@ case class ItemMeta(
   snapUri:       Option[JsValue],
   showKickerTag: Option[JsValue],
   showKickerSection: Option[JsValue],
-  showMainVideo: Option[JsValue]
+  showMainVideo: Option[JsValue],
+  slideshowImages: Option[Boolean],
+  slideshow: Option[JsValue]
 )
-
 
 object TrailJson {
   implicit val jsonFormat = Json.format[TrailJson]

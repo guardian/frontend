@@ -23,6 +23,9 @@ import scala.collection.JavaConversions._
 import scala.language.postfixOps
 import scala.util.Try
 
+/**
+ * a combination of CAPI content and things from facia tool, in one place
+ */
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData with ShareLinks {
 
   lazy val delegate: ApiContent = apiContent.delegate
@@ -261,6 +264,24 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     width <- apiContent.metaData.flatMap(_.imageCutoutSrcWidth).flatMap(s => Try(s.toInt).toOption)
     height <- apiContent.metaData.flatMap(_.imageCutoutSrcHeight).flatMap(s => Try(s.toInt).toOption)
   } yield FaciaImageElement(src, width, height)
+
+  override lazy val slideshowImages: Boolean = {
+    apiContent.metaData.flatMap(_.json.get("slideshowImages").flatMap(_.asOpt[Boolean])).getOrElse(false)
+  }
+
+  override lazy val slideshow: Iterable[FaciaImageElement] =
+    (for {
+      x <- apiContent.metaData
+      z <- x.json.get("slideshow")
+      w = for {
+        a <- z.asInstanceOf[JsArray].value
+        y = for {
+          src <- a.asInstanceOf[JsObject].\("src").asOpt[String]
+          width <- a.asInstanceOf[JsObject].\("width").asOpt[String].flatMap(s => Try(s.toInt).toOption)
+          height <- a.asInstanceOf[JsObject].\("height").asOpt[String].flatMap(s => Try(s.toInt).toOption)
+        } yield FaciaImageElement(src, width, height)
+      } yield y
+    } yield w).getOrElse(Nil).flatten
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 

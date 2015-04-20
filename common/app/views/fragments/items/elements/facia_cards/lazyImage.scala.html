@@ -1,8 +1,11 @@
-@(classes: Seq[String], srcset: String, sizes: String, fallbackSrc: Option[String], inlineImage: Boolean)
+@(classes: Seq[String], srcset: String, sizes: String, fallbackSrc: Option[String], inlineImage: Boolean, slideshow: Boolean = false)
 
 @import views.support.RenderClasses
 
-<img class="@RenderClasses(Map("js-lazy-loaded-image" -> !inlineImage), classes: _*)"
+<img class="@RenderClasses(Map(
+        "js-lazy-loaded-image" -> (!inlineImage && !slideshow),
+        "js-lazy-loaded-slideshow" -> (!inlineImage && slideshow)
+    ), classes: _*)"
     @if(inlineImage) {
         srcset="@srcset"
         sizes="@sizes"
