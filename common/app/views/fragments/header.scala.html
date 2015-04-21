@@ -1,7 +1,11 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
-@import common.{LinkTo, Navigation, Edition}
+@import common.{LinkTo, Edition}
 @import common.editions._
+@import conf.Configuration
+@import views.support.URLEncode
+
+
 
 <header id="header"
         class="l-header u-cf @if(metaData.hasSlimHeader) { l-header--is-slim }"
@@ -96,7 +100,7 @@
                             <!--[if (lt IE 9)&(!IEMobile)]>
                                 <span class="inline-logo inline-guardian-logo-320"></span>
                             <![endif]-->
-                            <span class="logo__tagline hide-on-mobile">Winner of the Pulitzer prize</span>
+                            @if(PulitzerSwitch.isSwitchedOn){ <span class="logo__tagline hide-on-mobile">Winner of the Pulitzer prize</span> }
                         }
                     </a>
                 }

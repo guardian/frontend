@@ -19,7 +19,7 @@ define([
     'common/modules/experiments/tests/mt-sticky-bottom',
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/lazy-load-ads',
+    'common/modules/experiments/tests/mt-lazy-load-ads',
     'common/modules/experiments/tests/history-without-whitelist'
 ], function (
     raven,
@@ -42,7 +42,7 @@ define([
     MtStickyBottom,
     SaveForLater,
     Headline,
-    LazyLoadAds,
+    MtLazyLoadAds,
     HistoryWithoutWhitelist
 ) {
 
@@ -60,7 +60,7 @@ define([
             new AdblockMessage(),
             new MtStickyBottom(),
             new SaveForLater(),
-            new LazyLoadAds(),
+            new MtLazyLoadAds(),
             new HistoryWithoutWhitelist(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
