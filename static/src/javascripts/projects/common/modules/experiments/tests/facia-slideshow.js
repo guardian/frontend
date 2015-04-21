@@ -16,7 +16,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'Pages per visit improves';
 
-        this.canRun = function(config) {
+        this.canRun = function () {
             return detect.getBreakpoint() !== 'mobile';
         };
 

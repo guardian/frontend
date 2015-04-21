@@ -262,12 +262,6 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'slideshowImages',
-                    editable: true,
-                    label: 'slideshow',
-                    type: 'boolean'
-                },
-                {
                     key: 'snapUri',
                     label: 'snap target',
                     type: 'text'
@@ -284,44 +278,67 @@ define([
                 }
             ],
 
-            rxScriptStriper = new RegExp(/<script.*/gi);
+            rxScriptStriper = new RegExp(/<script.*/gi),
 
-        for (var i = 0; i < vars.CONST.maxSlideshowImages; i += 1) {
-            metaFields.push({
-                key: 'slideshowImageSrc_' + i,
-                editable: true,
-                omitForSupporting: true,
-                'if': 'slideshowImages',
-                label: 'slideshow image ' + (i + 1) + ' URL',
-                validator: {
-                    fn: 'validateImage',
-                    params: {
-                        src: 'slideshowImageSrc_' + i,
-                        width: 'slideshowImageSrcWidth_' + i,
-                        height: 'slideshowImageSrcHeight_' + i,
-                        options: {
-                            maxWidth: 1000,
-                            minWidth: 400,
-                            widthAspectRatio: 5,
-                            heightAspectRatio: 3
-                        }
-                    }
-                },
-                type: 'text'
-            }, {
-                key: 'slideshowImageSrcWidth_' + i,
-                'if': 'slideshowImages',
-                label: 'slideshow image ' + i + ' width',
-                type: 'text'
-            }, {
-                key: 'slideshowImageSrcHeight_' + i,
-                'if': 'slideshowImages',
-                label: 'slideshow image ' + i + ' height',
-                type: 'text'
-            });
-        }
+            slideshowMetaFieldsAdded = false,
+            addSlideshowMetaFields = function () {
+                if (slideshowMetaFieldsAdded) {
+                    return;
+                }
+                slideshowMetaFieldsAdded = true;
+
+                metaFields.push({
+                    key: 'slideshowImages',
+                    editable: true,
+                    label: 'slideshow',
+                    type: 'boolean'
+                });
+
+                for (var i = 0; i < vars.CONST.maxSlideshowImages; i += 1) {
+                    metaFields.push({
+                        key: 'slideshowImageSrc_' + i,
+                        editable: true,
+                        omitForSupporting: true,
+                        'if': 'slideshowImages',
+                        label: 'slideshow image ' + (i + 1) + ' URL',
+                        validator: {
+                            fn: 'validateImage',
+                            params: {
+                                src: 'slideshowImageSrc_' + i,
+                                width: 'slideshowImageSrcWidth_' + i,
+                                height: 'slideshowImageSrcHeight_' + i,
+                                options: {
+                                    maxWidth: 1000,
+                                    minWidth: 400,
+                                    widthAspectRatio: 5,
+                                    heightAspectRatio: 3
+                                }
+                            }
+                        },
+                        type: 'text'
+                    }, {
+                        key: 'slideshowImageSrcWidth_' + i,
+                        'if': 'slideshowImages',
+                        label: 'slideshow image ' + i + ' width',
+                        type: 'text'
+                    }, {
+                        key: 'slideshowImageSrcHeight_' + i,
+                        'if': 'slideshowImages',
+                        label: 'slideshow image ' + i + ' height',
+                        type: 'text'
+                    });
+                }
+            };
+
 
         function Article(opts, withCapiData) {
+            // Once the switch is remove this should be moved outside of the constructor
+            // For the moment it can only be here because the model is not ready yet
+            // when this file is required. It's a sad story.
+            var slideshowEnabled = vars.model.switches()['slideshow-images'];
+            if (slideshowEnabled) {
+                addSlideshowMetaFields();
+            }
             var self = this;
 
             opts = opts || {};
@@ -340,7 +357,9 @@ define([
             this.meta = asObservableProps(_.pluck(metaFields, 'key'));
 
             populateObservables(this.meta, opts.meta);
-            populateSlideshow(this.meta, opts.meta ? opts.meta.slideshow : null);
+            if (slideshowEnabled) {
+                populateSlideshow(this.meta, opts.meta ? opts.meta.slideshow : null);
+            }
 
             this.metaDefaults = {};
 
@@ -449,6 +468,8 @@ define([
                     return meta.imageSrc();
                 } else if (meta.imageCutoutReplace()) {
                     return meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail();
+                } else if (meta.slideshowImages && meta.slideshowImages() && meta.slideshowImageSrc_0()) {
+                    return meta.slideshowImageSrc_0();
                 } else {
                     return fields.thumbnail();
                 }

@@ -118,6 +118,9 @@
             <!-- ko if: state.hasMainVideo -->
                 <div class="has-playable"><i class="fa fa-play"></i></div>
             <!-- /ko -->
+            <!-- ko if: meta.slideshowImages -->
+                <div class="has-playable"><i class="fa fa-picture-o"></i></div>
+            <!-- /ko -->
 
             <div data-bind="if: state.isOpen">
                 <div class="article__overrides"
