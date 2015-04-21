@@ -49,9 +49,9 @@ define([
         });
     }
 
-    function init() {
+    function init(force) {
         // This is called on page load, do as little as possible
-        if (ab.getTestVariant('FaciaSlideshow') === 'slideshow') {
+        if (force || ab.getTestVariant('FaciaSlideshow') === 'slideshow') {
             setTimeout(actualInit, state.interval);
         }
     }

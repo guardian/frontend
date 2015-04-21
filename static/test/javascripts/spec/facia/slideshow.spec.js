@@ -27,7 +27,8 @@ define([
         remove: function () {
             return Promise.resolve();
         }
-    };
+    },
+    originalSetTimeout = setTimeout;
     function imagePath (name) {
         return 'base/static/test/javascripts/fixtures/slideshow/' + name;
     }
@@ -37,7 +38,7 @@ define([
     function tick (ms) {
         jasmine.clock().tick(ms);
         return new Promise(function (resolve) {
-            fastdom.defer(3, resolve);
+            originalSetTimeout(resolve, 46);
         });
     }
 
@@ -350,16 +351,71 @@ define([
 
         describe('Controller', function () {
             beforeEach(function () {
+                this.originalFastdomWrite = fastdom.write;
+                fastdom.write = function (action) {
+                    action();
+                };
                 jasmine.clock().install();
             });
             afterEach(function () {
+                fastdom.write = this.originalFastdomWrite;
                 jasmine.clock().uninstall();
             });
 
-            it('auto plays', function (done) {
+            it('auto plays inline images', function (done) {
                 var testDOM = bonzo.create([
-                    '<div class="TEST_CONTAINER_SLIDESHOW_PLAY js-slideshow">',
+                    '<div class="TEST_CONTAINER_SLIDESHOW_PLAY_INLINE js-slideshow">',
                         '<img class="test-image-1" src="base/static/test/javascripts/fixtures/slideshow/one.svg">',
+                        '<img class="test-image-2 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/two.svg">',
+                        '<img class="test-image-3 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/three.svg">',
+                    '</div>'
+                ].join('')),
+                    container = bonzo(testDOM).appendTo(document.body),
+                    opacityOf = function (selector) {
+                        return opacity(bonzo(qwery(selector)));
+                    },
+                    nextImage = function () {
+                        return tick(slideshowState.interval)
+                        .then(function () {
+                            return tick(slideshowDOM.loadTime);
+                        })
+                        .then(function () {
+                            return tick(slideshowDOM.duration);
+                        });
+                    };
+
+                slideshowController.init(true);
+
+                nextImage()
+                .then(function () {
+                    expect(opacityOf('.test-image-1', container[0])).toBe(0);
+                    expect(opacityOf('.test-image-2', container[0])).toBe(1);
+
+                    return nextImage();
+                })
+                .then(function () {
+                    expect(opacityOf('.test-image-1', container[0])).toBe(0);
+                    expect(opacityOf('.test-image-2', container[0])).toBe(0);
+                    expect(opacityOf('.test-image-3', container[0])).toBe(1);
+
+                    return nextImage();
+                })
+                .then(function () {
+                    expect(opacityOf('.test-image-1', container[0])).toBe(1);
+                    expect(opacityOf('.test-image-2', container[0])).toBe(0);
+                    expect(opacityOf('.test-image-3', container[0])).toBe(0);
+                })
+                .then(function () {
+                    slideshowController.destroy();
+                    container.remove();
+                })
+                .then(done);
+            });
+
+            it('auto plays lazy loaded images', function (done) {
+                var testDOM = bonzo.create([
+                    '<div class="TEST_CONTAINER_SLIDESHOW_PLAY_LAZY js-slideshow">',
+                        '<img class="test-image-1 js-lazy-loaded-image" data-srcset="base/static/test/javascripts/fixtures/slideshow/one.svg">',
                         '<img class="test-image-2 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/two.svg">',
                         '<img class="test-image-3 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/three.svg">',
                     '</div>'
@@ -372,7 +428,7 @@ define([
                         return tick(slideshowState.interval).then(function () {
                             mediator.emit('ui:images:lazyLoaded', img);
                             return new Promise(function (resolve) {
-                                fastdom.defer(2, resolve);
+                                originalSetTimeout(resolve, 100);
                             });
                         })
                         .then(function () {
@@ -383,7 +439,7 @@ define([
                         });
                     };
 
-                slideshowController.init();
+                slideshowController.init(true);
 
                 nextImage(qwery('.test-image-1', container[0])[0])
                 .then(function () {
@@ -406,7 +462,7 @@ define([
                 })
                 .then(function () {
                     slideshowController.destroy();
-                    bonzo(qwery('.TEST_CONTAINER_SLIDESHOW_PLAY')).remove();
+                    container.remove();
                 })
                 .then(done);
             });
