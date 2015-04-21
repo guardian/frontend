@@ -28,8 +28,6 @@ object CardStyleForFrontend {
       } else {
         DeadBlog
       }
-    } else if (trail.isPodcast) {
-      Podcast
     } else if (trail.isMedia) {
       Media
     } else if (trail.isEditorial) {
