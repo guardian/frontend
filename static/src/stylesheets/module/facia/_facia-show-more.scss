@@ -1,4 +1,4 @@
-@include keyframes(spinner) {
+@keyframes spinner {
     from {
         @include rotate(0deg);
     }
