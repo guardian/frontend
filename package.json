@@ -76,10 +76,6 @@
       "raven": "github:getsentry/raven-js@~1.1.16",
       "react": "npm:react@~0.12",
       "reqwest": "github:ded/reqwest@1.1.5"
-    },
-    "devDependencies": {
-      "babel": "npm:babel@^4.7.16",
-      "babel-runtime": "npm:babel-runtime@^4.7.16"
     }
   }
 }
