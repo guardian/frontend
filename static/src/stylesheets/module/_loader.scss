@@ -40,7 +40,7 @@ $pamplemousse-dot-smallscale: .45;
         width: $pamplemousse-dot-size-large;
         height: $pamplemousse-dot-size-large;
 
-        @include transform(scale($pamplemousse-dot-smallscale));
+        transform: scale($pamplemousse-dot-smallscale);
         @include animation(pulsate 2s ease-in-out infinite);
         display: block;
         background-color: colour(neutral-2);

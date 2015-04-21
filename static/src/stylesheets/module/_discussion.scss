@@ -1067,7 +1067,7 @@ $comment-recommend-button-size: 19px;
         }
 
         &:after { // Mask (right-skewed parellelogram)
-            @include transform(skew(-10deg));
+            transform: skew(-10deg);
             background-color: #ffffff;
             height: 24px;
             width: 24px;

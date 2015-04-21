@@ -423,7 +423,7 @@ $header-image-size-desktop: 100px;
     color: #ffffff;
 
     .inline-icon {
-        @include transform(rotate(180deg));
+        transform: rotate(180deg);
         position: absolute;
         top: 6px;
         left: 50%;
@@ -431,7 +431,7 @@ $header-image-size-desktop: 100px;
         fill: colour(neutral-1);
 
         .fc-container--rolled-up & {
-            @include transform(rotate(0deg));
+            transform: rotate(0deg);
         }
     }
 

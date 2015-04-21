@@ -578,7 +578,7 @@ $timeline-width: 15px;
 
 .blog__timeline-container {
     @include mq(desktop) {
-        @include transform(translateZ(0)); //To force on GPU
+        transform: translateZ(0); //To force on GPU
         width: $right-column;
         top: $gs-baseline;
         padding-top: $gs-baseline;

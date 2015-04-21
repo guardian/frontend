@@ -8,7 +8,7 @@ $breaking-news-close-icon-width: 32px;
     right: 0;
     bottom: 0;
     opacity: 1;
-    @include transform(translateY(0));
+    transform: translateY(0);
     @include box-shadow(0 -1px 2px fade-out(#000000, .8));
 
     a,
@@ -39,7 +39,7 @@ $breaking-news-close-icon-width: 32px;
 
 .breaking-news--hidden {
     opacity: 0;
-    @include transform(translateY(100%));
+    transform: translateY(100%);
 }
 
 .breaking-news__item {

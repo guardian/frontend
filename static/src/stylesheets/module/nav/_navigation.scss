@@ -837,13 +837,13 @@ $burger-width: 16px;
             height: 0;
 
             &:before {
-                @include transform(rotate(45deg));
+                transform: rotate(45deg);
 
                 top: 4px;
             }
 
             &:after {
-                @include transform(rotate(-45deg) translate(3px, -3px)); // We need to move line to the center
+                transform: rotate(-45deg) translate(3px, -3px); // We need to move line to the center
 
                 top: 8px;
             }
