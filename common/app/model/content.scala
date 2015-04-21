@@ -51,6 +51,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val keywordTags: Seq[Tag] = keywords.filter(tag => !tag.isSectionTag)
   lazy val productionOffice: Option[String] = delegate.safeFields.get("productionOffice")
   lazy val displayHint: String = fields.getOrElse("displayHint", "")
+  lazy val isSyndicatable: Boolean = delegate.rights.exists(_.syndicatable == true)
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
   lazy val hasSingleContributor: Boolean = {

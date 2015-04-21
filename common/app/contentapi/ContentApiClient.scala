@@ -86,6 +86,7 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
     .showElements("all")
     .showReferences(references)
     .showStoryPackage(true)
+    .showRights("syndicatable")
 
   //common fields that we use across most queries.
   def search(edition: Edition): SearchQuery = search
