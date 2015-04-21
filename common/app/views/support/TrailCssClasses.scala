@@ -3,7 +3,7 @@ package views.support
 import com.gu.facia.api.models.FaciaContent
 import com.gu.facia.api.utils.CardStyle
 import model.Trail
-import implicits.FaciaContentImplicits._
+import com.gu.facia.api.utils.FaciaContentImplicits._
 
 object TrailCssClasses {
   def toneClassFromStyle(cardStyle: CardStyle) =

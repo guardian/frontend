@@ -3,14 +3,15 @@ package views.support
 import com.gu.facia.api.models.FaciaContent
 import common.Seqs._
 import model.{Content, Tag}
-import implicits.FaciaContentImplicits._
+import com.gu.facia.api.utils.FaciaContentImplicits._
 
 object MostPopularTags {
   /** A descending list of the tags that occur most frequently within the given items of content and how frequently
     * they occur
     */
   def apply(items: Seq[FaciaContent]): Seq[(Tag, Int)] =
-    items.foldLeft(List.empty[Tag])(_ ++ _.frontendTags)
+    items
+      .flatMap(_.tags.map(Tag.apply(_)))
       .filter(_.isKeyword)
       .filterNot(_.isSectionTag)
       .frequencies

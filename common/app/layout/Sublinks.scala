@@ -2,7 +2,7 @@ package layout
 
 import cards._
 import com.gu.facia.api.models.FaciaContent
-import implicits.FaciaContentImplicits._
+import com.gu.facia.api.utils.FaciaContentImplicits._
 
 object InclusiveRange {
   def unit(n: Int) = InclusiveRange(n, n)

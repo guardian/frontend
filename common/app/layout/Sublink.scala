@@ -1,10 +1,11 @@
 package layout
 
 import com.gu.facia.api.models._
-import com.gu.facia.api.utils.{CardStyle, ItemKicker}
+import com.gu.facia.api.utils.{MediaType, CardStyle, ItemKicker}
 import common.{Edition, InternationalEdition, LinkTo}
-import implicits.FaciaContentImplicits._
-import model.{FaciaDisplayElement, InlineImage, InlineVideo}
+import com.gu.facia.api.utils.FaciaContentImplicits._
+import implicits.FaciaContentFrontendHelpers._
+import model.{Tag, FaciaDisplayElement, InlineImage, InlineVideo}
 import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
@@ -13,18 +14,8 @@ import views.support._
 
 import scala.Function.const
 
-object MediaType {
-  def fromFaciaContent(faciaContent: FaciaContent): Option[MediaType] = faciaContent.mediaType
-}
-
-sealed trait MediaType
-
-case object Gallery extends MediaType
-case object Video extends MediaType
-case object Audio extends MediaType
-
 object EditionalisedLink {
-  def fromFaciaContent(faciaContent: FaciaContent) = EditionalisedLink(faciaContent.href)
+  def fromFaciaContent(faciaContent: FaciaContent) = EditionalisedLink(faciaContent.href.getOrElse(faciaContent.id))
 }
 
 case class EditionalisedLink(
@@ -182,7 +173,7 @@ case object TimeTimestamp extends FaciaCardTimestamp {
 
 object FaciaCard {
   private def getByline(faciaContent: FaciaContent) = faciaContent.byline.filter(const(faciaContent.showByline)) map { byline =>
-    Byline(byline, faciaContent.contributors.map(_.toFrontendTag))
+    Byline(byline, faciaContent.contributors.map(Tag.apply(_)))
   }
 
   def fromTrail(faciaContent: FaciaContent, config: CollectionConfig, cardTypes: ItemClasses, showSeriesAndBlogKickers: Boolean) = {

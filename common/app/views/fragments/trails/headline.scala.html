@@ -1,6 +1,7 @@
 @(trail: com.gu.facia.api.models.FaciaContent, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
-@import implicits.FaciaContentImplicits._
+@import com.gu.facia.api.utils.FaciaContentImplicits._
+@import implicits.FaciaContentFrontendHelpers._
 
 <@element class="trail trail--headline t@rowNum"
     @if(trail.isCommentable) {

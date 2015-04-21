@@ -1,6 +1,8 @@
 package model
 
 import com.gu.contentapi.client.model.{ Content => ApiContent, Tag => ApiTag, Section => ApiSection }
+import com.gu.facia.api.models.FaciaContent
+import com.gu.facia.api.utils.FaciaContentImplicits._
 
 // NEVER FORGET - Just calling this SupportedUrl doesn't make it not UrlBuilder, y'know.
 object SupportedUrl {
@@ -9,4 +11,6 @@ object SupportedUrl {
   def apply(t: ApiTag): String = s"/${t.id}"
 
   def apply(s: ApiSection): String = s"/${s.id}"
+
+  def fromFaciaContent(fc: FaciaContent): String = fc.href.getOrElse(fc.id)
 }

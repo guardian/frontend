@@ -17,7 +17,7 @@ import play.api.mvc.Result
 import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
-import implicits.FaciaContentImplicits._
+import com.gu.facia.api.utils.FaciaContentImplicits._
 
 /**
  * Encapsulates previous and next urls

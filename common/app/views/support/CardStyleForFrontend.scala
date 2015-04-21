@@ -4,7 +4,7 @@ import com.gu.facia.api.models.FaciaContent
 import com.gu.facia.api.utils._
 import common.ExternalLinks
 import model.Trail
-import implicits.FaciaContentImplicits._
+import com.gu.facia.api.utils.FaciaContentImplicits._
 
 object CardStyleForFrontend {
   def isExternalLink(trail: Trail): Boolean = (for {
@@ -15,7 +15,7 @@ object CardStyleForFrontend {
   def isExternalLink(faciaContent: FaciaContent): Boolean = (for {
     snapType <- faciaContent.embedType
     href <- Option(faciaContent.href)
-  } yield snapType == "link" && ExternalLinks.external(href)) getOrElse false
+  } yield snapType == "link" && href.exists(ExternalLinks.external)) getOrElse false
 
   def apply(trail: Trail): CardStyle = {
     if (isExternalLink(trail)) {

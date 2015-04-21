@@ -9,7 +9,7 @@ import services.FaciaContentConvert
 import slices._
 import com.gu.contentapi.client.model.{Content => ApiContent}
 import contentapi.FixtureTemplates.emptyApiContent
-import implicits.FaciaContentImplicits._
+import com.gu.facia.api.utils.FaciaContentImplicits._
 
 class FrontTest extends FlatSpec with Matchers {
   def trailWithUrl(theUrl: String): FaciaContent = FaciaContentConvert.frontentContentToFaciaContent(new Content(ApiContentWithMeta(

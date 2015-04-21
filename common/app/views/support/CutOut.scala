@@ -3,7 +3,7 @@ package views.support
 import com.gu.facia.api.models.{ImageCutout, FaciaContent}
 import common.Logging
 import model.{Tag, FaciaImageElement}
-import implicits.FaciaContentImplicits._
+import com.gu.facia.api.utils.FaciaContentImplicits._
 
 import scala.util.{Failure, Success, Try}
 

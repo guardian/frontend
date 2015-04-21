@@ -1,7 +1,7 @@
 package model
 
 import com.gu.facia.api.models.FaciaContent
-import implicits.FaciaContentImplicits._
+import com.gu.facia.api.utils.FaciaContentImplicits._
 
 object EndSlateComponents {
   def fromContent(content: Content) = EndSlateComponents(

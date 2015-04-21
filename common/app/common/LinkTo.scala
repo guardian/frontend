@@ -10,7 +10,7 @@ import org.jsoup.Jsoup
 import scala.collection.JavaConversions._
 import conf.Configuration.environment
 import dev.HttpSwitch
-import implicits.FaciaContentImplicits._
+import com.gu.facia.api.utils.FaciaContentImplicits._
 
 /*
  * Builds absolute links to the core site (www.theguardian.com)
@@ -54,7 +54,7 @@ trait LinkTo extends Logging {
     case t: Trail => Option(apply(t.url))
   }
 
-  def apply(faciaContent: FaciaContent)(implicit request: RequestHeader): Option[String] = Option(faciaContent.href)
+  def apply(faciaContent: FaciaContent)(implicit request: RequestHeader): Option[String] = faciaContent.href
 
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
     faciaCard.url.get(request)

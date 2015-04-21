@@ -2,7 +2,7 @@ package fronts
 
 import com.gu.facia.api.models.FaciaContent
 import com.gu.facia.api.utils.Comment
-import implicits.FaciaContentImplicits._
+import com.gu.facia.api.utils.FaciaContentImplicits._
 import model.Content
 import views.support.CardStyleForFrontend
 
