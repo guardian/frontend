@@ -384,14 +384,6 @@ object Switches {
     sellByDate = new LocalDate(2015, 6, 1)
   )
 
-  val PulitzerSwitch = Switch(
-    "Feature",
-    "pulitzer",
-    "If switched on the Pulitzer prize banner will show.",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 6, 1)
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
