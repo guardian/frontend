@@ -95,8 +95,7 @@ The AMD module must return an object with the following properties,
 - `dataLinkNames`: Link names or custom link names used for test.
 - `idealOutcome`: What is the outcome that you want to see from the new variant (We want to see Y when we do X)?
 - `canRun`: A function to determine if the test is allowed to run (Eg, so you can target individual pages, segments etc.).
-- `variants`: An array of two functions - the first representing the _control_ group, the second the variant.
-
+- `variants`: An array of two functions - the first representing the _control_ group, the second the variant.  See "Detecting a user's bucket" below if you want to affect existing code rather than running new code.
 
 You will also need to mark the module as a dependency of the AB testing module.
 
@@ -120,6 +119,14 @@ define([
     })
 ```
 
+### Detecting a user's bucket
+You can use this code to check anywhere in your JS whether you're in a test bucket.
+```
+if (ab.getTestVariant('FaciaSlideshow') === 'slideshow') {
+    ///...
+}
+```
+        
 ## Running the test
 
 Release the test in to the wild just means deploying the frontend software, so you
