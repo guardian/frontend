@@ -80,7 +80,7 @@ $fc-item-gutter: $gs-gutter / 4;
         }
 
         .has-flex-wrap & {
-            @include flex-display;
+            display: flex;
         }
 
         .has-no-flex-wrap & {
@@ -97,7 +97,7 @@ $fc-item-gutter: $gs-gutter / 4;
     @include mq(tablet) {
         .has-flex-wrap & {
             @include flex-direction(column);
-            @include flex-display;
+            display: flex;
             flex: 1 1 auto;
             // see: http://stackoverflow.com/a/9737602/802472
             // width:0 fixes child elements with white-space:nowrap below flex

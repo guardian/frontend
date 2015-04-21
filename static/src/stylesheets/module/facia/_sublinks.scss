@@ -36,7 +36,7 @@
 @mixin fc-sublinks--horizontal {
     .has-flex-wrap & {
         .fc-sublinks {
-            @include flex-display;
+            display: flex;
         }
         .fc-sublink {
             flex: 1 1 100%;

@@ -29,7 +29,7 @@
 
     @include mq(tablet) {
         .has-flex & {
-            @include flex-display;
+            display: flex;
         }
     }
 
