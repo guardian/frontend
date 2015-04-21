@@ -44,8 +44,6 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
             setWindowLocalStorage({
                 setItem: sinon.stub().throws()
             });
-            console.log(storage.local.isAvailable())
-            console.log(storage.local.isStorageAvailable(true))
             expect(storage.local.isAvailable()).toBeFalsy();
             expect(storage.local.isStorageAvailable(true)).toBeFalsy();
         });
