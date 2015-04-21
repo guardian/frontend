@@ -7,7 +7,7 @@ $fc-item-gutter: $gs-gutter / 4;
 @mixin fc-item--horizontal($media-width, $media-align: right) {
 
     .fc-item__image-container {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         padding-left: $gs-gutter * .25;
     }
 
@@ -17,7 +17,7 @@ $fc-item-gutter: $gs-gutter / 4;
         position: relative;
 
         > * {
-            @include box-sizing(border-box);
+            box-sizing: border-box;
             padding-right: $gs-gutter * .75;
         }
     }
@@ -92,7 +92,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__container {
     display: block;
     width: 100%;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 
     @include mq(tablet) {
         .has-flex-wrap & {
@@ -131,7 +131,7 @@ $fc-item-gutter: $gs-gutter / 4;
     @include mq($until: tablet) {
         padding-left: $gs-gutter * .5;
         padding-right: $gs-gutter * .5;
-        @include box-sizing(border-box);
+        box-sizing: border-box;
     }
 
     @include mq(tablet) {
@@ -223,13 +223,13 @@ $fc-item-gutter: $gs-gutter / 4;
 // Wraps all media elements
 .fc-item__media-wrapper,
 .item__media-wrapper {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     position: relative;
 }
 
 // Wraps all non-media content
 .fc-item__content {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 }
 
 .fc-item__content,

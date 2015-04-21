@@ -68,7 +68,7 @@ $football-crest--large: 60px;
 }
 
 .team__name {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding-right: $gs-gutter*2;
     display: block;
     @include ellipsis();
@@ -109,7 +109,7 @@ $football-crest--large: 60px;
 }
 
 .status__time {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     display: inline-block;
     height: $football-crest--small;
     width: $football-crest--small;
@@ -197,7 +197,7 @@ $football-crest--large: 60px;
         white-space: nowrap;
     }
     .match-summary__team {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         display: inline-block;
         width: 50%;
         vertical-align: top;
