@@ -15,7 +15,7 @@ define([
         this.expiry = '2015-05-15';
         this.author = 'Steve Vadocz';
         this.description = 'Testing multiple depths of lazy loaded ads on 1% of the US audience';
-        this.audience = 0.05;
+        this.audience = 0.01;
         this.audienceOffset = 0.5;
         this.successMeasure = '';
         this.audienceCriteria = '1% of US';
