@@ -37,7 +37,7 @@ case class Grid(columns: Int, rows: Int, cells: Map[Position, Cell])
 
 object CrosswordSvg {
   val BorderSize = 1
-  val CellSize = 30
+  val CellSize = 31
 
   implicit val positionOrdering = Ordering.by[Position, (Int, Int)](position => (position.y, position.x))
 
@@ -51,7 +51,7 @@ object CrosswordSvg {
     cell.number map { n =>
       <g>
         {cellRect}
-        <text x={(x + 1).toString} y={(y + 8).toString} class="crossword__cell-number">{n}</text>
+        <text x={(x + 1).toString} y={(y + 9).toString} class="crossword__cell-number">{n}</text>
       </g>
     } getOrElse cellRect
   }
@@ -64,13 +64,7 @@ object CrosswordSvg {
 
     val viewBoxHeight = if (trim) width * 0.6 else height
 
-    <svg xmlns="http://www.w3.org/2000/svg"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         viewBox={s"0, 0, $width, $viewBoxHeight"}
-         preserveAspectRatio="none"
-         width={boxWidth.getOrElse(width + "px")}
-         height={boxHeight.getOrElse(width + "px")}
-         style="font-size: 10px">
+    <svg viewBox={s"0, 0, $width, $viewBoxHeight"} class="crossword__grid" xmlns="http://www.w3.org/2000/svg">
       <rect x="0" y="0" width={width.toString} height={height.toString} style="fill: #000000" />
       {
         for {

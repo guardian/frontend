@@ -1,10 +1,12 @@
 package tools
 
-import com.amazonaws.services.cloudwatch.model.{GetMetricStatisticsResult, Datapoint}
-import java.util.concurrent.Future
-import java.util.{UUID, Date}
-import org.joda.time.DateTime
+import java.util.{Date, UUID}
+
+import com.amazonaws.services.cloudwatch.model.{Datapoint, GetMetricStatisticsResult}
+import common.editions.Uk
+import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.json._
+
 import scala.collection.JavaConversions._
 import scala.collection.mutable.{Map => MutableMap}
 
@@ -75,7 +77,7 @@ trait Chart {
   private def dataString = dataset.map { datapointString }.mkString(",")
 }
 
-case class ChartFormat(colours: Seq[String], cssClass: String = "charts")
+case class ChartFormat(colours: Seq[String], cssClass: String = "charts", timezone: DateTimeZone = Uk.timezone)
 
 object Colour {
   val `tone-news-1` = "#005689"
@@ -125,11 +127,11 @@ class AwsLineChart(
   protected def toValue(dataPoint: Datapoint): Double = Option(dataPoint.getAverage).orElse(Option(dataPoint.getSum))
       .getOrElse(throw new IllegalStateException(s"Don't know how to get a value for $dataPoint"))
 
-  protected def toLabel(date: DateTime): String = date.toString("HH:mm")
+  protected def toLabel(date: DateTime): String = date.withZone(format.timezone).toString("HH:mm")
 }
 
 class AwsDailyLineChart(name: String, labels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*) extends AwsLineChart(name, labels, format, charts:_*) {
-  override def toLabel(date: DateTime): String = date.toString("dd/MM")
+  override def toLabel(date: DateTime): String = date.withZone(format.timezone).toString("dd/MM")
   lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.0)
 }
 

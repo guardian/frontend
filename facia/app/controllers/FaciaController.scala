@@ -38,7 +38,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     } else {
       val edition = Edition(request)
       val editionBase = InternationalEdition(request)
-        .filter(_.isInternational)
+        .filter(_.isInternational && path == "") // ONLY the network front
         .map(_ => InternationalEdition.path)
         .getOrElse(s"/${edition.id.toLowerCase}")
 

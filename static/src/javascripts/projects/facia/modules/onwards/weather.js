@@ -56,7 +56,7 @@ define([
         },
 
         isNetworkFront: function () {
-            return _.contains(['uk', 'us', 'au'], config.page.pageId);
+            return _.contains(['uk', 'us', 'au', 'international'], config.page.pageId);
         },
 
         /**

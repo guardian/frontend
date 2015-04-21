@@ -7,11 +7,11 @@ define([
 ) {
     return function () {
         this.id = 'IdSocialOauth';
-        this.start = '2015-03-26';
+        this.start = '2015-04-17';
         this.expiry = '2015-05-06';
         this.author = 'Marc Hibbins';
         this.description = 'Directs social sign-in attempts to the Identity OAuth app, rather than the Webapp.';
-        this.audience = 0.05;
+        this.audience = 0.25;
         this.audienceOffset = 0;
         this.successMeasure = 'Users authenticated with OAuth';
         this.audienceCriteria = 'All users';

@@ -1,7 +1,11 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
-@import common.{LinkTo, Navigation, Edition}
+@import common.{LinkTo, Edition}
 @import common.editions._
+@import conf.Configuration
+@import views.support.URLEncode
+
+
 
 <header id="header"
         class="l-header u-cf @if(metaData.hasSlimHeader) { l-header--is-slim }"
@@ -70,7 +74,7 @@
 
             <div class="l-header-main">
                 @if(metaData.section == "observer" && metaData.isFront) {
-                    <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" itemprop="url" data-component="logo">
+                    <a href="@LinkTo{@metaData.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" data-component="logo">
                         @if(metaData.hasSlimHeader) {
                             @fragments.inlineSvg("observer-logo-160", "logo")
                         } else {
@@ -79,7 +83,7 @@
                         }
                     </a>
                 } else {
-                    <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url" data-component="logo">
+                    <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" data-component="logo">
                         <span class="u-h">The Guardian</span>
                         @if(metaData.hasSlimHeader) {
                             @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
@@ -96,7 +100,7 @@
                             <!--[if (lt IE 9)&(!IEMobile)]>
                                 <span class="inline-logo inline-guardian-logo-320"></span>
                             <![endif]-->
-                            <span class="logo__tagline hide-on-mobile">Winner of the Pulitzer prize</span>
+                            <span class="logo__tagline hide-on-mobile">Winner of the Pulitzer prize 2014</span>
                         }
                     </a>
                 }

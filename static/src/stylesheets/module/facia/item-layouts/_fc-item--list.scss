@@ -39,6 +39,6 @@ x x x x x x x x x x x x x x x x x x x x x x x x
     }
 
     .fc-item__liveblog-blocks {
-        height: 38px;
+        height: 38px; // 1 * block height - 2px margin
     }
 }

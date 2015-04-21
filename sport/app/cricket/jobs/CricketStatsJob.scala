@@ -3,7 +3,7 @@ package jobs
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import cricketPa.{CricketFeedException, PaFeed}
 import cricketModel.Match
-import org.joda.time.{DateTimeZone, LocalDate}
+import org.joda.time.{Days, DateTimeZone, LocalDate}
 import org.joda.time.format.DateTimeFormat
 
 object CricketStatsJob extends ExecutionContexts with Logging {
@@ -15,14 +15,15 @@ object CricketStatsJob extends ExecutionContexts with Logging {
 
   def run() {
 
-    // Find new ids which are not in the stats agent (always include today's match to update).
-    val knownMatches = cricketStatsAgent().values.filterNot(cricketMatch =>
-      dateFormatUTC.print(cricketMatch.gameDate) == dateFormatUTC.print(LocalDate.now)
+    // Find new ids which are not in the stats agent. Caveat: always include live matches to update.
+    val loadedMatches = cricketStatsAgent().values.filter(cricketMatch =>
+      // Omit any recent match within the last 5 days, to account for test matches.
+      Days.daysBetween(cricketMatch.gameDate.toLocalDate, LocalDate.now).getDays > 5
     ).map(_.matchId).toSeq
 
     PaFeed.getEnglandMatchIds().map { matchIds =>
 
-      val matches = matchIds.filterNot(matchId => knownMatches.contains(matchId)).take(10)
+      val matches = matchIds.diff(loadedMatches).take(10)
 
       matches.map { matchId =>
 

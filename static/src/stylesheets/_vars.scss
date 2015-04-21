@@ -104,9 +104,6 @@ $frontend-palette: (
     media-background:       guss-colour(multimedia-main-1, $pasteup-palette),
     media-mute:             guss-colour(multimedia-support-4, $pasteup-palette),
 
-    podcast-default:        guss-colour(news-support-1, $pasteup-palette),
-    podcast-background:     guss-colour(multimedia-support-4, $pasteup-palette),
-
     review-accent:          guss-colour(comment-support-3, $pasteup-palette),
     review-background:      guss-colour(comment-support-1, $pasteup-palette),
 
@@ -119,7 +116,7 @@ $frontend-palette: (
     sudoku-mute:            lighten(guss-colour(news-main-2, $pasteup-palette), 30%),
     sudoku-accent:          lighten(guss-colour(news-main-2, $pasteup-palette), 10%),
 
-    story-package:          #484f53,
+    story-package:          guss-colour(news-support-7, $pasteup-palette),
 
     // Football
     // =============================================================================

@@ -1,0 +1,50 @@
+/**
+ * Membership event embed
+ * Not-upgraded style (no-js / failures)
+ *
+ * Full, enhanced styles provided directly by card endpoint,
+ * e.g. https://membership.theguardian.com/event/the-observer-election-countdown-16253236869/card
+ */
+.element-membership--not-upgraded {
+    border-top: 1px dotted colour(neutral-3);
+    border-bottom: 1px dotted colour(neutral-3);
+    margin-bottom: $gs-baseline / 1.5;
+
+    @include mq(mobileLandscape) {
+        float: left;
+        width: gs-span(3);
+        margin: $gs-baseline / 3 $gs-gutter $gs-baseline / 2 0;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    span {
+        display: block;
+        @include fs-textSans(1);
+        color: colour(neutral-2);
+        padding: $gs-baseline/4 0;
+    }
+
+    a {
+        @include fs-headline(2);
+        font-weight: 500;
+        display: block;
+        padding: 0;
+        color: colour(neutral-1);
+        border: 0;
+        padding-bottom: $gs-baseline * 1.5;
+
+        &:hover {
+            text-decoration: underline !important;
+        }
+    }
+}
+
+.element-membership--upgraded {
+    float: left;
+    clear: both;
+    margin: 5px $gs-gutter $gs-baseline  0;
+    width: gs-span(2);
+}
