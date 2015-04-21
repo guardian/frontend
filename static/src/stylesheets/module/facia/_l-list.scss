@@ -14,7 +14,7 @@
 
     .has-flex-wrap & {
         @include flex-grow(0);
-        @include flex-basis(100%);
+        flex-basis: 100%;
     }
 }
 
@@ -55,7 +55,7 @@
                 }
 
                 .has-flex-wrap & {
-                    @include flex-basis(100% / $column);
+                    flex-basis: (100% / $column);
                 }
             }
         }

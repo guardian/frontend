@@ -81,11 +81,11 @@
         .fc-slice__item {
             @include mq(tablet) {
                 @include flex-grow(0);
-                @include flex-basis(50%);
+                flex-basis: 50%;
             }
 
             @include mq(desktop) {
-                @include flex-basis(100% / 3);
+                flex-basis: (100% / 3);
             }
         }
     }

@@ -146,7 +146,7 @@ Hence why a greater depth of selector specificity is needed.
                 width: 50%;
 
                 .fc-slice__item {
-                    @include flex-basis(100%);
+                    flex-basis: 100%;
                 }
                 .fc-slice__item:nth-child(5) {
                     padding-bottom: $gs-baseline;

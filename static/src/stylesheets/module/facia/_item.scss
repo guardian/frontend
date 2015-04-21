@@ -33,21 +33,21 @@ $fc-item-gutter: $gs-gutter / 4;
         }
 
         .fc-item__media-wrapper {
-            @include flex-basis($media-width);
+            flex-basis: $media-width;
         }
 
         .fc-item__video-fallback {
-            @include flex-basis($media-width);
+            flex-basis: $media-width;
         }
 
         .fc-item__content {
-            @include flex-basis(100% - $media-width);
+            flex-basis: (100% - $media-width);
             // DAMN YOU IE10/11 FLEXWRAP BOX SIZING BUG
-            max-width: 100% - $media-width;
+            max-width: (100% - $media-width);
         }
 
         .fc-item__footer--horizontal {
-            @include flex-basis(100%);
+            flex-basis: 100%;
         }
     }
 

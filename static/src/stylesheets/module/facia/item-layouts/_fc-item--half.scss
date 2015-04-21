@@ -102,7 +102,7 @@ x x x x x x x x x x x x x x x x x x
     }
 
     .fc-item__footer--horizontal {
-        @include flex-basis(auto);
+        flex-basis: auto;
     }
 
     .vjs-big-play-button > span {
