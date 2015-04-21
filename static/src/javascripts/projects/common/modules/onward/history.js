@@ -155,7 +155,6 @@ define([
         summaryCache,
         popularFilteredCache,
         topNavItemsCache,
-        blacklistCache,
 
         inMegaNav = false,
 
@@ -276,7 +275,7 @@ define([
     function getPopularFiltered(opts) {
         var flush = opts && opts.flush,
             filterOpts = {
-                blacklist: blacklistCache || getTopNavItems(),
+                blacklist: getTopNavItems(),
                 number: 10
             };
 
