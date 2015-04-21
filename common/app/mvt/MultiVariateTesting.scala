@@ -7,6 +7,13 @@ import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
 
+object JspmTest extends TestDefinition(
+  List(Variant0),
+  "jspm-test",
+  "Tests our new JSPM jsavscript configuration",
+  new LocalDate(2015, 5, 30)
+)
+
 object ChimneyTest extends TestDefinition(
   List(Variant9, Variant8),
   "chimney-test",
@@ -15,7 +22,7 @@ object ChimneyTest extends TestDefinition(
 )
 
 object ActiveTests extends Tests {
-  val tests = List(ChimneyTest)
+  val tests = List(ChimneyTest, JspmTest)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
