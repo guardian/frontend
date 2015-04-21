@@ -3,8 +3,7 @@
 @import views.support.RenderClasses
 
 <img class="@RenderClasses(Map(
-        "js-lazy-loaded-image" -> (!inlineImage && !slideshow),
-        "js-lazy-loaded-slideshow" -> (!inlineImage && slideshow)
+        "js-lazy-loaded-image" -> (!inlineImage && !slideshow)
     ), classes: _*)"
     @if(inlineImage) {
         srcset="@srcset"

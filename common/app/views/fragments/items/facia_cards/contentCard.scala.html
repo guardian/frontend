@@ -107,7 +107,8 @@ data-test-id="facia-card"
                                     ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
                                     item.mediaWidthsByBreakpoint.sizes,
                                     None,
-                                    false
+                                    containerIndex == 0 && index < 4,
+                                    true
                                 )
                                 @imageElements.tail.map { imageElement =>
 
