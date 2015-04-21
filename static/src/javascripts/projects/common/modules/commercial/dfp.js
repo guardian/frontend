@@ -78,7 +78,7 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                if (isMasterTest() && $adSlot.hasClass('ad-slot--right')) {
+                if (isMainTest() && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         new StickyMpu($adSlot).create();
                     }
@@ -103,10 +103,10 @@ define([
             }
         },
 
-        isMasterTest = function () {
-            var mtMasterTest = ab.getParticipations().MtMaster;
+        isMainTest = function () {
+            var MtMainTest = ab.getParticipations().MtMain;
 
-            return ab.testCanBeRun('MtMaster') && mtMasterTest && mtMasterTest.variant === 'variant';
+            return ab.testCanBeRun('MtMain') && MtMainTest && MtMainTest.variant === 'A';
         },
 
         recordFirstAdRendered = _.once(function () {
