@@ -271,6 +271,25 @@ $block-padding-right: $gs-gutter;
 
     .block-elements {
 
+        /* Bylines
+           ========================================================= */
+        .liveblog-block-byline {
+            border-bottom: 1px dotted colour(neutral-4);
+            padding-bottom: $gs-baseline * .5;
+        }
+        .liveblog-block-byline__img {
+            display: inline;
+            border-radius: 50%;
+            max-width: 36px;
+            vertical-align: middle;
+            margin-right: $gs-gutter * .2;
+        }
+        .liveblog-block-byline__name {
+            @include fs-bodyCopy(2);
+            display: inline;
+            color: colour(neutral-1);
+        }
+
         /* Quotes
            ========================================================= */
         > blockquote,

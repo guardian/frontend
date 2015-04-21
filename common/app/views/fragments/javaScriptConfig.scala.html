@@ -10,7 +10,7 @@
         "switches" : { @{Html(conf.Switches.all.map{ switch =>
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },
-        "tests": { @InternationalEditionVariant(request).map{ international => "internationalEditionVariant" : "@international" } },
+        "tests": { @Html(mvt.ActiveTests.getJavascriptConfig) },
         "modules": { },
         "images": {
             "commercial": {

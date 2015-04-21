@@ -40,6 +40,8 @@ trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
 
   def expiresSoon = daysToExpiry < 7
 
+  def hasExpired = daysToExpiry == 0
+
   Switch.switches.send(this :: _)
 }
 
@@ -73,7 +75,7 @@ object Switches {
 
   // Switch names can be letters numbers and hyphens only
 
-  private lazy val never = new LocalDate(2100, 1, 1)
+  lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
   val LazyLoadContainersSwitch = Switch("Performance", "lazy-load-containers",
@@ -190,10 +192,6 @@ object Switches {
   )
 
   // Commercial
-  val LzAds = Switch("Commercial", "lz-ads", "Lazy loading ads.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 13)
-  )
-
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
@@ -227,6 +225,12 @@ object Switches {
   val SponsoredSwitch = Switch("Commercial", "sponsored",
     "Show sponsored badges, logos, etc.",
     safeState = On, sellByDate = never
+  )
+
+  val LiveBlogContributorImagesSwitch = Switch("Feature", "liveblog-contributor-image",
+    "Show contributor byline images in live blog blocks",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 5, 28)
   )
 
   val ElectionLiveBadgeSwitch = Switch("Feature", "election-2015-badging",
@@ -503,6 +507,9 @@ object Switches {
     safeState = On, sellByDate = never)
 
   // A/B Tests
+  val ABMtLzAds = Switch("A/B Tests", "ab-mt-lz-ads", "Lazy loading ads.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
+  )
 
   val ABIdentitySocialOAuth = Switch("A/B Tests", "ab-id-social-oauth",
     "Switch to direct users to OAuth social sign-in app.",
@@ -534,9 +541,9 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 18)
   )
 
-  val ABMtStickyNav = Switch("A/B Tests", "ab-mt-sticky-nav",
-    "Top navigation and top ad slot are sticky.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
+  val ABMtDepth = Switch("A/B Tests", "ab-mt-depth",
+    "Top navigation and top ad slot are sticky with different variants of depth.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
   )
 
   val ABMtStickyBtm = Switch("A/B Tests", "ab-mt-sticky-btm",
@@ -549,19 +556,14 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
-  val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block",
-    "Switch for the Adblock Message A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
-  )
-
   val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
     "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
     safeState = Off, sellByDate = never
   )
 
-  val ABLiveblogBlocksOnFronts = Switch("A/B Tests", "ab-liveblog-blocks-on-fronts",
-    "Switch for the latest liveblog blocks on fronts A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 23)
+  val ABLiveblogFrontUpdates = Switch("A/B Tests", "ab-liveblog-front-updates",
+    "Switch for the latest liveblog updates on fronts A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>
@@ -659,6 +661,17 @@ object Switches {
     "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please check the DB size.",
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
   )
+
+  // Server-side A/B Tests
+
+  val ServerSideTests = {
+    // It's for the side effect. Blame agents.
+    val tests = mvt.ActiveTests.tests
+
+    Switch("Server-side A/B Tests", "server-side-tests",
+      "Enables the server side testing system",
+      safeState = Off, sellByDate = never)
+  }
 
   def all: Seq[SwitchTrait] = Switch.allSwitches
 

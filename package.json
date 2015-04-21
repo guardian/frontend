@@ -61,8 +61,7 @@
   "jspm": {
     "directories": {
       "baseURL": "static/src",
-      "lib": "static/src",
-      "packages": "static/src/jspm_packages"
+      "lib": "static/src"
     },
     "configFile": "static/src/jspm-config.js",
     "dependencies": {

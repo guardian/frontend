@@ -12,9 +12,9 @@ private [slices] case class BigsAndStandards(
 )
 
 private [slices] trait DynamicContainer {
-  protected def standardSlice(stories: Seq[Story]): Option[Slice]
+  protected def standardSlices(stories: Seq[Story]): Seq[Slice]
 
-  private def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])] = {
+  protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])] = {
     val byGroup = segmentByGroup(stories)
 
     val huges = byGroup.getOrElse(3, Seq.empty)
@@ -51,11 +51,11 @@ private [slices] trait DynamicContainer {
   }
 
   final def slicesFor(stories: Seq[Story]): Option[Seq[Slice]] = {
-    if (stories.isDescending && stories.forall(story => story.group >= 0 && story.group <= 3)) {
+    if (stories.nonEmpty && stories.isDescending && stories.forall(story => story.group >= 0 && story.group <= 3)) {
       optionalFirstSlice(stories) map { case (firstSlice, remaining) =>
-        Some(Seq(Some(firstSlice), standardSlice(remaining)).flatten)
+        Some(firstSlice +: standardSlices(remaining))
       } getOrElse {
-        standardSlice(stories).map(Seq(_))
+        Some(standardSlices(stories))
       }
     } else {
       None

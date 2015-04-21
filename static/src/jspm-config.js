@@ -7,12 +7,19 @@ System.config({
     "bootstraps/*": "javascripts/bootstraps/*.js",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js"
+  },
+  "babelOptions": {
+    "optional": [
+      "runtime"
+    ]
   }
 });
 
 System.config({
   "map": {
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
+    "babel": "npm:babel@4.7.16",
+    "babel-runtime": "npm:babel-runtime@4.7.16",
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@1.4.0",
     "classnames": "npm:classnames@1.2.0",
@@ -93,6 +100,9 @@ System.config({
     "npm:ast-types@0.6.16": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:babel-runtime@4.7.16": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:bean@1.0.15": {
       "fs": "github:jspm/nodelibs-fs@0.1.2"

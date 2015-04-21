@@ -36,7 +36,7 @@
         color: colour(live-accent);
     }
 
-    @include sublink-style(editorial, feature, live, media, podcast, review) {
+    @include sublink-style(editorial, feature, live, media, review) {
         .fc-sublink__kicker {
             color: #ffffff;
         }

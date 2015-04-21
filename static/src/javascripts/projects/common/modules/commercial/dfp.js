@@ -16,7 +16,8 @@ define([
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'common/modules/analytics/beacon'
 ], function (
     bean,
     bonzo,
@@ -34,7 +35,8 @@ define([
     StickyMpu,
     buildPageTargeting,
     geoMostPopular,
-    ab
+    ab,
+    beacon
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -77,7 +79,6 @@ define([
             },
             '300,250': function (event, $adSlot) {
                 if (isMasterTest() && $adSlot.hasClass('ad-slot--right')) {
-                    placeUnderMostPopular($adSlot);
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         new StickyMpu($adSlot).create();
                     }
@@ -92,21 +93,13 @@ define([
                         $parent.addClass('fc-slice__item--no-mpu');
                 }
             },
-            '300,1050': function (event, $adSlot) {
+            '300,1050': function () {
                 // remove geo most popular
                 geoMostPopular.whenRendered.then(function (geoMostPopular) {
                     fastdom.write(function () {
                         bonzo(geoMostPopular.elem).remove();
                     });
                 });
-                if (isMasterTest() && $adSlot.hasClass('ad-slot--right')) {
-                    placeUnderMostPopular($adSlot);
-                }
-            },
-            '300,600': function (event, $adSlot) {
-                if (isMasterTest() && $adSlot.hasClass('ad-slot--right')) {
-                    placeUnderMostPopular($adSlot);
-                }
             }
         },
 
@@ -115,24 +108,18 @@ define([
 
             return ab.testCanBeRun('MtMaster') && mtMasterTest && mtMasterTest.variant === 'variant';
         },
-        placeUnderMostPopular = function ($adSlot) {
-            var $secondaryColumn;
 
-            fastdom.read(function () {
-                $secondaryColumn = $('.js-secondary-column');
+        recordFirstAdRendered = _.once(function () {
+            beacon.beaconCounts('ad-render');
+        }),
 
-                fastdom.write(function () {
-                    $('.js-right-most-popular', $secondaryColumn).css('margin-top', '0').append($adSlot.parent());
-                    $('.component--rhc .open-cta', $secondaryColumn).css('margin-top', '0');
-                });
-            });
-        },
         /**
          * Initial commands
          */
         setListeners = function () {
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
+                recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
             }));
@@ -196,8 +183,9 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
-        dfpSwitchParam = function () {
-            return config.switches.lzAds && config.page.edition === 'US' && config.page.section === 'politics';
+        isLzAdsTest = function () {
+            var test = ab.getParticipations().MtLzAds;
+            return test && test.variant === 'A' && ab.testCanBeRun('MtLzAds');
         },
 
         /**
@@ -223,7 +211,7 @@ define([
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
-            (dfpSwitchParam()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            (isLzAdsTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 

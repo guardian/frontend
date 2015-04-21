@@ -4,14 +4,16 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/modules/onward/geo-most-popular'
 ], function (
     fastdom,
     $,
     _,
     config,
     detect,
-    mediator
+    mediator,
+    geoMostPopular
 ) {
     return function () {
         this.id = 'MtMaster';
@@ -126,45 +128,56 @@ define([
             });
         }
 
+        this.fireMasterTest = function () {
+            fastdom.read(function () {
+                var stickyConfig = {
+                    $stickyNavigation: $('.sticky-nav-mt-test .navigation'),
+                    $stickyTopAd: $('.sticky-nav-mt-test .top-banner-ad-container'),
+                    $header: $('.sticky-nav-mt-test .l-header__inner'),
+                    $bannnerMobile: $('.top-banner-ad-container--mobile'),
+                    $contentBelowMobile: $('#maincontent'),
+                    scrollThreshold: config.page.contentType === 'Video' || config.page.contentType === 'Gallery' ? 280 : 480
+                },
+                $secondaryColumn = $('.js-secondary-column');
+
+                geoMostPopular.whenRendered.then(function () {
+                    fastdom.write(function () {
+                        var $rightMostPopular = $('.js-right-most-popular');
+                        $('.js-mpu-ad-slot', $secondaryColumn).insertAfter($rightMostPopular);
+                        $rightMostPopular.css('margin-top', '0');
+                        $('.component--rhc .open-cta', $secondaryColumn).css('margin-top', '0');
+                    });
+                });
+                fastdom.write(function () {
+                    $('.sticky-nav-mt-test .l-header-main').css('overflow', 'hidden');
+                    stickyConfig.headerHeight = stickyConfig.$header.dim().height;
+                });
+                stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
+                stickyConfig.belowMobileMargin = stickyConfig.stickyNavigationHeight + stickyConfig.$bannnerMobile.dim().height;
+
+                if (detect.getBreakpoint() === 'mobile') {
+                    updatePositionMobile(stickyConfig);
+
+                    mediator.on('window:scroll', _.throttle(function () {
+                        updatePositionMobile(stickyConfig);
+                    }, 10));
+                } else {
+                    mediator.on('window:scroll', _.throttle(function () {
+                        //height of topAd needs to be recalculated because we don't know when we will get respond from DFP
+                        stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
+                        updatePosition(stickyConfig);
+                    }, 10));
+                }
+            });
+        };
+
         /**
          * nothing happens in here, we just use this to bucket users
          */
         this.variants = [
             {
                 id: 'variant',
-                test: function () {
-                    fastdom.read(function () {
-                        var stickyConfig = {
-                            $stickyNavigation: $('.sticky-nav-mt-test .navigation'),
-                            $stickyTopAd: $('.sticky-nav-mt-test .top-banner-ad-container'),
-                            $header: $('.sticky-nav-mt-test .l-header__inner'),
-                            $bannnerMobile: $('.top-banner-ad-container--mobile'),
-                            $contentBelowMobile: $('#maincontent'),
-                            scrollThreshold: config.page.contentType === 'Video' || config.page.contentType === 'Gallery' ? 280 : 480
-                        };
-
-                        fastdom.write(function () {
-                            $('.sticky-nav-mt-test .l-header-main').css('overflow', 'hidden');
-                            stickyConfig.headerHeight = stickyConfig.$header.dim().height;
-                        });
-                        stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
-                        stickyConfig.belowMobileMargin = stickyConfig.stickyNavigationHeight + stickyConfig.$bannnerMobile.dim().height;
-
-                        if (detect.getBreakpoint() === 'mobile') {
-                            updatePositionMobile(stickyConfig);
-
-                            mediator.on('window:scroll', _.throttle(function () {
-                                updatePositionMobile(stickyConfig);
-                            }, 10));
-                        } else {
-                            mediator.on('window:scroll', _.throttle(function () {
-                                //height of topAd needs to be recalculated because we don't know when we will get respond from DFP
-                                stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
-                                updatePosition(stickyConfig);
-                            }, 10));
-                        }
-                    });
-                }
+                test: function () { }
             },
             {
                 id: 'control',

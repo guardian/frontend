@@ -69,8 +69,13 @@ trait Navigation {
   val video = SectionLink("video", "video", "Video", "/video")
   val guardianProfessional = SectionLink("guardian-professional", "professional networks", "Guardian Professional", "/guardian-professional")
   val observer = SectionLink("observer", "the observer", "The Observer", "/observer")
-
   val health = SectionLink("society", "health", "Health", "/society/health")
+  val scotland = SectionLink("scotland", "scotland", "Scotland", "/uk/scotland")
+  val wales = SectionLink("wales", "wales", "Wales", "/uk/wales")
+  val northernIreland = SectionLink("northernireland", "northern ireland", "Northern Ireland", "/uk/northernireland")
+
+  // Columnists
+  val columnists = SectionLink("columnists", "columnists", "Columnists", "/index/contributors")
 
   //Sport
   val sport = SectionLink("sport", "sport", "Sport", "/sport")
@@ -141,6 +146,8 @@ trait Navigation {
   val banking = SectionLink("business", "banking", "Banking", "/business/banking")
   val marketforceslive = SectionLink("business", "market forces live", "Market Forces live", "/business/marketforceslive")
   val businessblog = SectionLink("business", "business blog", "Business blog", "/business/blog")
+  val retail = SectionLink("business", "retail", "Retail", "/business/retail")
+  val eurozone = SectionLink("business", "eurozone", "Eurozone", "/business/eurozone")
 
   //Money
   val money = SectionLink("money", "money", "Money", "/money")
@@ -186,6 +193,7 @@ trait Navigation {
   val food = SectionLink("environment", "food", "Food", "/environment/food")
   val cities = SectionLink("environment", "cities", "Cities", "/cities")
   val globalDevelopment = SectionLink("environment", "development", "Development", "/global-development")
+  val pollution = SectionLink("environment", "pollution", "Pollution", "/environment/pollution")
 
   //Games
   val crosswords = SectionLink("crosswords", "crosswords", "Crosswords", "/crosswords")
@@ -198,6 +206,9 @@ trait Navigation {
   val weekend = SectionLink("todayspaper", "weekend", "Weekend", "/theguardian/weekend")
   val theGuide = SectionLink("todayspaper", "the guide", "The Guide", "/theguardian/theguide")
   val saturdayreview = SectionLink("todayspaper", "saturday review", "Saturday Review", "/theguardian/guardianreview")
+
+  // Membership
+  val membership = SectionLink("membership", "membership", "Membership", "/membership")
 
   val footballNav = Seq(
     SectionLink("football", "live scores", "Live scores", "/football/live"),

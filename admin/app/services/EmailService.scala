@@ -11,6 +11,7 @@ import conf.Configuration.aws.mandatoryCredentials
 import scala.collection.JavaConversions._
 import scala.concurrent.{Future, Promise}
 import scala.language.implicitConversions
+import scala.util.control.NonFatal
 import scala.util.{Failure, Success}
 
 object EmailService extends ExecutionContexts with Logging {
@@ -57,15 +58,15 @@ object EmailService extends ExecutionContexts with Logging {
 
     val futureResponse = client.sendAsyncEmail(request)
 
-    futureResponse map { response =>
-      log.info(s"Sent message ID ${response.getMessageId}")
-      response
-    } recoverWith {
-      case e: Exception =>
-        val cause = e.getCause
-        log.error(s"Email send failed: ${cause.getMessage}")
-        Future.failed(cause)
+    futureResponse onSuccess {
+      case response => log.info(s"Sent message ID ${response.getMessageId}")
     }
+
+    futureResponse onFailure {
+      case NonFatal(e) => log.error(s"Email send failed: $e")
+    }
+
+    futureResponse
   }
 
 

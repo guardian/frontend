@@ -20,8 +20,6 @@ object CardStyle {
       } else {
         DeadBlog
       }
-    } else if (trail.isPodcast) {
-      Podcast
     } else if (trail.isMedia) {
       Media
     } else if (trail.isEditorial) {
@@ -68,10 +66,6 @@ case object Editorial extends CardStyle {
 
 case object Comment extends CardStyle {
   override def toneString: String = "comment"
-}
-
-case object Podcast extends CardStyle {
-  override def toneString: String = "podcast"
 }
 
 case object Media extends CardStyle {

@@ -1,0 +1,8 @@
+@(profileTag: Tag)(implicit request: RequestHeader)
+
+@profileTag.contributorImagePath.map{ src =>
+    <div class="liveblog-block-byline">
+        <img class="liveblog-block-byline__img" src="@ImgSrc(src, Item300)" alt="@profileTag.name" />
+        <p class="liveblog-block-byline__name">@profileTag.name</p>
+    </div>
+}
