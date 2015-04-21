@@ -97,32 +97,6 @@ $c-guardian-services-action: #ffffff;
             }
         }
     }
-
-    .inline-logo {
-        display: block;
-    }
-
-    .logo__tagline {
-        @include fs-textSans(1);
-        position: absolute;
-        top: 47px;
-        left: 122px;
-        color: #aad8f1; // To match custom colour of 'the' in logotype. Shouldn't be used elsewhere
-        font-weight: bold;
-        white-space: nowrap;
-    }
-
-    .no-svg & {
-        .inline-logo {
-            width: 160px;
-            height: 30px;
-
-            @include mq(tablet) {
-                width: 320px;
-                height: 60px;
-            }
-        }
-    }
 }
 
 
@@ -135,7 +109,8 @@ $c-guardian-services-action: #ffffff;
 .l-header-pre {
     &,
     // Override breakpoint
-    .l-header--is-slim & {
+    .l-header--is-slim &,
+    .l-header--slim & {
         float: left;
     }
 }
@@ -164,6 +139,75 @@ $c-guardian-services-action: #ffffff;
 
     .l-header--is-slim & {
         float: right;
+    }
+}
+
+.l-header--slim {
+
+    // Main logo in the slim mode
+    .logo-wrapper {
+        margin-top: $gs-baseline * .75;
+        margin-bottom: 0;
+        float: left;
+
+        @include mq(mobileLandscape) {
+            // Reset to previous value, as the breakpoint overriding this
+            // does not apply for interactives.
+            margin-right: $gs-gutter/2;
+        }
+
+        @include mq($until: tablet) {
+            margin-top: $gs-baseline * .83;
+
+            svg {
+                // Height / width
+                $height-to-width-ratio: 30 / 160;
+                // Magic number to fit the logo to 320px+ screens
+                $width: 134px;
+                width: $width;
+                height: $width * $height-to-width-ratio;
+            }
+        }
+
+        @include mq(tablet) {
+            svg {
+                width: 160px;
+                height: 30px;
+            }
+        }
+
+        .no-svg & {
+            .inline-logo {
+                width: 160px;
+                height: 30px;
+            }
+        }
+    }
+
+    .inline-logo {
+        display: block;
+    }
+
+    .logo__tagline {
+        @include fs-textSans(1);
+        position: absolute;
+        top: 47px;
+        left: 122px;
+        color: #aad8f1; // To match custom colour of 'the' in logotype. Shouldn't be used elsewhere
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .no-svg & {
+        .inline-logo {
+            width: 160px;
+            height: 30px;
+
+            @include mq(tablet) {
+                width: 320px;
+                height: 60px;
+            }
+        }
     }
 }
 

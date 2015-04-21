@@ -252,3 +252,23 @@ $control-offset: 36 + $gs-gutter/2;
         margin-bottom: -1px;
     }
 }
+
+// Slim modification
+.popup--slim {
+    .brand-bar__item--has-control & {
+        left: 0;
+    }
+}
+
+.popup__toggle--slim {
+    &.is-active,
+    .is-active > & {
+        &:before {
+            margin-left: 0 - $popup-anchor-arrow-size;
+        }
+    }
+
+    &:after {
+        display: none;
+    }
+}

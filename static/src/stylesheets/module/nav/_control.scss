@@ -63,3 +63,14 @@ $control-size: 36px;
         }
     }
 }
+
+// Slim version
+.control__info--slim {
+    display: none;
+}
+
+.control__icon-wrapper--slim {
+    .brand-bar__item--right & {
+        display: block;
+    }
+}

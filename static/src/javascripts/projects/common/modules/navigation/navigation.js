@@ -64,9 +64,8 @@ define([
 
         stickyNav: function () {
             fastdom.write(function () {
-                $('#header').addClass('l-header--sticky');
-
                 if (detect.getBreakpoint() === 'mobile') {
+                    $('#header').addClass('l-header--sticky');
                     $('.top-banner-ad-container--mobile').addClass('top-banner-ad-container--sticky').css({
                             position:  'fixed',
                             top:       $('.js-navigation-header').dim().height,
@@ -75,7 +74,6 @@ define([
                         });
                     $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + $('.top-banner-ad-container--mobile').dim().height);
                 } else {
-                    //$('.sticky-nav-mt-test').css('top', $('.top-banner-ad-container--desktop').dim().height);
                     $('.sticky-nav-mt-test').css({
                         position:  'fixed',
                         top:       0,
@@ -122,19 +120,26 @@ define([
             } else {
                 fastdom.write(function () {
                     if (window.scrollY > 600) {
-                        $('.top-banner-ad-container--desktop').css('height', $('.top-banner-ad-container--desktop').dim().height - (window.scrollY - 600));
+                        $('.top-banner-ad-container--desktop').css('height', 0);
                     } if (window.scrollY > 400) {
                         /*$('.top-banner-ad-container--sticky').css({
                             'transform': 'translateY(0)',
                             'z-index'  : '0'
                         });*/
-                        $('#header').addClass('l-header--is-slim');
+
+                        // Prototype - will have to change this to just one class change
+                        $('#header').addClass('l-header--slim');
+                        $('.brand-bar').addClass('brand-bar--slim');
+                        $('.control__info').addClass('control__info--slim');
+                        $('.control__icon-wrapper').addClass('control__icon-wrapper--slim');
+                        $('.popup').addClass('popup--slim');
+                        $('.popup__toggle').addClass('popup__toggle--slim');
                     } else {
                         /*$('.top-banner-ad-container--sticky').css({
                            'transform': 'translateY(' + headerHeight + 'px)',
                            'z-index': '1000'
                         });*/
-                        $('#header').removeClass('l-header--is-slim');
+                        $('#header').removeClass('l-header--slim');
                     }
                 });
             }
