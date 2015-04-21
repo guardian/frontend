@@ -74,13 +74,7 @@ define([
                         });
                     $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + $('.top-banner-ad-container--mobile').dim().height);
                 } else {
-                    $('.sticky-nav-mt-test').css({
-                        position:  'fixed',
-                        top:       0,
-                        width:     '100%',
-                        'z-index': '1000'
-                    });
-                    $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + $('.top-banner-ad-container--desktop').dim().height);
+                    
                 }
             }.bind(this));
 
@@ -96,19 +90,11 @@ define([
             if (detect.getBreakpoint() === 'mobile') {
                 fastdom.write(function () {
                     if (window.scrollY > scrollThreshold) {
-                        /*$('.top-banner-ad-container--sticky').css({
-                            'transform': 'translateY(0)',
-                            'z-index'  : '0'
-                        });*/
                         $('.top-banner-ad-container--sticky').css({
                             position: 'absolute',
                             top:      scrollThreshold + headerHeight
                         });
                     } else {
-                        /*$('.top-banner-ad-container--sticky').css({
-                           'transform': 'translateY(' + headerHeight + 'px)',
-                           'z-index': '1000'
-                        });*/
                         $('.top-banner-ad-container--sticky').css({
                             position:  'fixed',
                             top:       headerHeight,
@@ -120,13 +106,8 @@ define([
             } else {
                 fastdom.write(function () {
                     if (window.scrollY > 600) {
-                        $('.top-banner-ad-container--desktop').css('height', 0);
-                    } if (window.scrollY > 400) {
-                        /*$('.top-banner-ad-container--sticky').css({
-                            'transform': 'translateY(0)',
-                            'z-index'  : '0'
-                        });*/
-
+                        $('.top-banner-ad-container--above-nav').css('height', 0);
+                    } else if (window.scrollY > 400) {
                         // Prototype - will have to change this to just one class change
                         $('#header').addClass('l-header--slim');
                         $('.brand-bar').addClass('brand-bar--slim');
@@ -134,12 +115,24 @@ define([
                         $('.control__icon-wrapper').addClass('control__icon-wrapper--slim');
                         $('.popup').addClass('popup--slim');
                         $('.popup__toggle').addClass('popup__toggle--slim');
+                        $('.top-banner-ad-container--above-nav').css('height', bannerHeight);
+                    // Top ad and header are visible
                     } else {
-                        /*$('.top-banner-ad-container--sticky').css({
-                           'transform': 'translateY(' + headerHeight + 'px)',
-                           'z-index': '1000'
-                        });*/
+                        $('.top-banner-ad-container--mobile').addClass('top-banner-ad-container--sticky').css({
+                            position:  'fixed',
+                            top:       $('.js-navigation-header').dim().height,
+                            width:     '100%',
+                            'z-index': '1000'
+                        });
+                        $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + $('.top-banner-ad-container--mobile').dim().height);
+                        
                         $('#header').removeClass('l-header--slim');
+                        $('.brand-bar').removeClass('brand-bar--slim');
+                        $('.control__info').removeClass('control__info--slim');
+                        $('.control__icon-wrapper').removeClass('control__icon-wrapper--slim');
+                        $('.popup').removeClass('popup--slim');
+                        $('.popup__toggle').removeClass('popup__toggle--slim');
+                        $('.top-banner-ad-container--above-nav').css('height', bannerHeight);
                     }
                 });
             }

@@ -62,6 +62,7 @@
     background-color: colour(neutral-8);
     border-bottom: 2px solid colour(neutral-4);
     display: none;
+    overflow: hidden;
 
     &.top-banner-ad-container--below-nav {
         border-bottom-width: 1px;
