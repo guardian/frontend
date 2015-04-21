@@ -68,6 +68,8 @@
 }
 
 .site-message__message {
+    // Magic number based on a minimum viewport of 320px, padding, and
+    // showing the close button
     max-width: 269px;
 
     a {
