@@ -368,8 +368,14 @@ define([
                     opacityOf = function (selector) {
                         return opacity(bonzo(qwery(selector)));
                     },
-                    nextImage = function () {
+                    nextImage = function (img) {
                         return tick(slideshowState.interval).then(function () {
+                            mediator.emit('ui:images:lazyLoaded', img);
+                            return new Promise(function (resolve) {
+                                fastdom.defer(2, resolve);
+                            });
+                        })
+                        .then(function () {
                             return tick(slideshowDOM.loadTime);
                         })
                         .then(function () {
@@ -379,7 +385,7 @@ define([
 
                 slideshowController.init();
 
-                nextImage()
+                nextImage(qwery('.test-image-1', container[0])[0])
                 .then(function () {
                     expect(opacityOf('.test-image-1', container[0])).toBe(0);
                     expect(opacityOf('.test-image-2', container[0])).toBe(1);

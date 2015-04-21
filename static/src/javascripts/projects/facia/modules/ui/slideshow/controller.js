@@ -1,17 +1,34 @@
 define([
     'Promise',
     'common/utils/$',
+    'common/utils/mediator',
     'bonzo',
     'facia/modules/ui/slideshow/state',
     'facia/modules/ui/slideshow/dom'
 ], function (
     Promise,
     $,
+    mediator,
     bonzo,
     state,
     dom
 ) {
     var states = [];
+
+    function waitForLazyLoad(listOfImages) {
+        return new Promise(function (resolve) {
+            if (listOfImages[0].loaded) {
+                resolve(listOfImages);
+            } else {
+                mediator.on('ui:images:lazyLoaded', function (image) {
+                    if (dom.equal(image, listOfImages[0])) {
+                        resolve(listOfImages);
+                        return true;
+                    }
+                });
+            }
+        });
+    }
 
     function startSlideshow(listOfImages) {
         if (listOfImages.length > 1) {
@@ -25,7 +42,8 @@ define([
 
     function actualInit() {
         $('.js-slideshow').each(function (container) {
-            return dom.init(container).then(startSlideshow);
+            return dom.init(container)
+                .then(waitForLazyLoad).then(startSlideshow);
         });
     }
 

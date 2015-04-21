@@ -4,16 +4,14 @@ define([
     'qwery',
     'fastdom',
     'common/modules/ui/lazy-load-images',
-    'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/_'
 ], function (
     Promise,
     bonzo,
     qwery,
     fastdom,
     lazyLoadImages,
-    _,
-    mediator
+    _
 ) {
     function hideForInsertion(img) {
         img.attr({
@@ -27,9 +25,12 @@ define([
     function init(container) {
         return new Promise(function (resolve) {
             resolve(_.map(qwery('img', container), function (image, index) {
+                var node = bonzo(image);
                 return {
-                    node: bonzo(image),
-                    loaded: index === 0
+                    node: node,
+                    loaded: index === 0 ?
+                        (!node.hasClass('js-lazy-loaded-image') || node.hasClass('js-lazy-loaded-image-loaded')) :
+                        false
                 };
             }));
         });
@@ -91,11 +92,16 @@ define([
         });
     }
 
+    function equal(domImage, fromListImage) {
+        return domImage === fromListImage.node[0];
+    }
+
     var domObject = {
         init: init,
         insert: insert,
         transition: transition,
         remove: remove,
+        equal: equal,
         duration: 500,
         loadTime: 100
     };

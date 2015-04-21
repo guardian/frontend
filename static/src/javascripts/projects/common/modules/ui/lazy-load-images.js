@@ -20,6 +20,7 @@ define([
             $image.attr('srcset', $image.attr('data-srcset'));
             $image.attr('sizes', $image.attr('data-sizes'));
             $image.removeAttr('src');
+            $image.addClass('js-lazy-loaded-image-loaded');
 
             fastdom.defer(function () {
                 mediator.emit('ui:images:lazyLoaded', $image[0]);
