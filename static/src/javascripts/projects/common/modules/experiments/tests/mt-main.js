@@ -29,7 +29,11 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return config.page.edition === 'UK' || config.page.edition === 'US';
+            var isIE = detect.getUserAgent.browser === 'MSIE' || detect.getUserAgent === 'IE 11',
+                isUK = config.page.edition === 'UK',
+                isUS = config.page.edition === 'US';
+
+            return !isIE && (isUK || isUS);
         };
 
         function updatePosition(config) {
