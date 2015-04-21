@@ -574,8 +574,8 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ABLiveblogBlocksOnFronts = Switch("A/B Tests", "ab-liveblog-blocks-on-fronts",
-    "Switch for the latest liveblog blocks on fronts A/B test.",
+  val ABLiveblogFrontUpdates = Switch("A/B Tests", "ab-liveblog-front-updates",
+    "Switch for the latest liveblog updates on fronts A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 23)
   )
 

@@ -6,7 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/liveblog-blocks-on-fronts',
+    'common/modules/experiments/tests/liveblog-front-updates',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/identity-social-oauth',
     'common/modules/experiments/tests/mt-master',
@@ -28,7 +28,7 @@ define([
     mediator,
     store,
     mvtCookie,
-    LiveblogBlocksOnFronts,
+    LiveblogFrontUpdates,
     HighCommercialComponent,
     IdentitySocialOAuth,
     MtMaster,
@@ -46,7 +46,7 @@ define([
 
     var ab,
         TESTS = _.flatten([
-            new LiveblogBlocksOnFronts(),
+            new LiveblogFrontUpdates(),
             new HighCommercialComponent(),
             new IdentitySocialOAuth(),
             new MtMaster(),
