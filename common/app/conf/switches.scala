@@ -507,8 +507,7 @@ object Switches {
     safeState = On, sellByDate = never)
 
   // A/B Tests
-
-  val ABLzAds = Switch("A/B Tests", "ab-lz-ads", "Lazy loading ads.",
+  val ABMtLzAds = Switch("A/B Tests", "ab-mt-lz-ads", "Lazy loading ads.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
@@ -557,19 +556,14 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
-  val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block",
-    "Switch for the Adblock Message A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
-  )
-
   val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
     "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
     safeState = Off, sellByDate = never
   )
 
-  val ABLiveblogBlocksOnFronts = Switch("A/B Tests", "ab-liveblog-blocks-on-fronts",
-    "Switch for the latest liveblog blocks on fronts A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 23)
+  val ABLiveblogFrontUpdates = Switch("A/B Tests", "ab-liveblog-front-updates",
+    "Switch for the latest liveblog updates on fronts A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>

@@ -10,13 +10,13 @@ define([
     config
 ) {
     return function () {
-        this.id = 'LzAds';
+        this.id = 'MtLzAds';
         this.start = '2015-04-15';
         this.expiry = '2015-05-15';
         this.author = 'Steve Vadocz';
         this.description = 'Testing lazy loaded ads on 1% of the US audience';
         this.audience = 0.02;
-        this.audienceOffset = 0.5;
+        this.audienceOffset = 0.6;
         this.successMeasure = '';
         this.audienceCriteria = '1% of US';
         this.dataLinkNames = '';

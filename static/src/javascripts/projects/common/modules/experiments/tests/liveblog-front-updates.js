@@ -9,9 +9,9 @@ define([
 ) {
 
     return function () {
-        this.id = 'LiveblogBlocksOnFronts';
-        this.start = '2015-04-08';
-        this.expiry = '2015-04-23';
+        this.id = 'LiveblogFrontUpdates';
+        this.start = '2015-04-21';
+        this.expiry = '2015-05-21';
         this.author = 'Stephan Fowler';
         this.description = 'Checking effect of showing the latest liveblog blocks on fronts';
         this.audience = 0.3;

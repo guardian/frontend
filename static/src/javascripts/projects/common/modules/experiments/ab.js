@@ -6,7 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/liveblog-blocks-on-fronts',
+    'common/modules/experiments/tests/liveblog-front-updates',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/identity-social-oauth',
     'common/modules/experiments/tests/mt-main',
@@ -15,11 +15,10 @@ define([
     'common/modules/experiments/tests/mt-top-below-first-container',
     'common/modules/experiments/tests/mt-depth',
     'common/modules/experiments/tests/across-the-country',
-    'common/modules/experiments/tests/adblock-message',
     'common/modules/experiments/tests/mt-sticky-bottom',
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/lazy-load-ads'
+    'common/modules/experiments/tests/mt-lazy-load-ads'
 ], function (
     raven,
     _,
@@ -28,7 +27,7 @@ define([
     mediator,
     store,
     mvtCookie,
-    LiveblogBlocksOnFronts,
+    LiveblogFrontUpdates,
     HighCommercialComponent,
     IdentitySocialOAuth,
     MtMain,
@@ -37,16 +36,15 @@ define([
     MtTopBelowFirstContainer,
     MtDepth,
     AcrossTheCountry,
-    AdblockMessage,
     MtStickyBottom,
     SaveForLater,
     Headline,
-    LazyLoadAds
+    MtLazyLoadAds
 ) {
 
     var ab,
         TESTS = _.flatten([
-            new LiveblogBlocksOnFronts(),
+            new LiveblogFrontUpdates(),
             new HighCommercialComponent(),
             new IdentitySocialOAuth(),
             new MtMain(),
@@ -55,10 +53,9 @@ define([
             new MtTopBelowFirstContainer(),
             new MtDepth(),
             new AcrossTheCountry(),
-            new AdblockMessage(),
             new MtStickyBottom(),
             new SaveForLater(),
-            new LazyLoadAds(),
+            new MtLazyLoadAds(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             })

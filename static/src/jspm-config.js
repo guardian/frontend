@@ -1,17 +1,17 @@
 System.config({
   "baseURL": "/assets",
   "transpiler": "babel",
-  "babelOptions": {
-    "optional": [
-      "runtime"
-    ]
-  },
   "paths": {
     "*": "javascripts/projects/*.js",
     "es6/*": "javascripts/es6/*.js",
     "bootstraps/*": "javascripts/bootstraps/*.js",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js"
+  },
+  "babelOptions": {
+    "optional": [
+      "runtime"
+    ]
   }
 });
 
