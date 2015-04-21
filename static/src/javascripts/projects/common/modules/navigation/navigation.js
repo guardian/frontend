@@ -73,8 +73,6 @@ define([
                             'z-index': '1000'
                         });
                     $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + $('.top-banner-ad-container--mobile').dim().height);
-                } else {
-                    
                 }
             }.bind(this));
 
@@ -105,9 +103,9 @@ define([
                 });
             } else {
                 fastdom.write(function () {
-                    if (window.scrollY > 600) {
+                    if (window.scrollY > 400) {
                         $('.top-banner-ad-container--above-nav').css('height', 0);
-                    } else if (window.scrollY > 400) {
+                    } else if (window.scrollY > 100) {
                         // Prototype - will have to change this to just one class change
                         $('#header').addClass('l-header--slim');
                         $('.brand-bar').addClass('brand-bar--slim');
@@ -118,13 +116,14 @@ define([
                         $('.top-banner-ad-container--above-nav').css('height', bannerHeight);
                     // Top ad and header are visible
                     } else {
-                        $('.top-banner-ad-container--mobile').addClass('top-banner-ad-container--sticky').css({
+                        $('.sticky-nav-mt-test').css({
                             position:  'fixed',
-                            top:       $('.js-navigation-header').dim().height,
+                            top:       0,
                             width:     '100%',
                             'z-index': '1000'
                         });
-                        $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + $('.top-banner-ad-container--mobile').dim().height);
+                        bannerHeight = $('.top-banner-ad-container--above-nav').dim().height;
+                        $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + bannerHeight);
                         
                         $('#header').removeClass('l-header--slim');
                         $('.brand-bar').removeClass('brand-bar--slim');
@@ -132,7 +131,6 @@ define([
                         $('.control__icon-wrapper').removeClass('control__icon-wrapper--slim');
                         $('.popup').removeClass('popup--slim');
                         $('.popup__toggle').removeClass('popup__toggle--slim');
-                        $('.top-banner-ad-container--above-nav').css('height', bannerHeight);
                     }
                 });
             }
