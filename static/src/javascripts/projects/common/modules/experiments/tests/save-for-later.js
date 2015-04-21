@@ -1,9 +1,13 @@
 define([
+    'bonzo',
+    'qwery',
     'common/utils/detect',
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/loyalty/save-for-later'
 ], function (
+    bonzo,
+    qwery,
     detect,
     config,
     mediator,
@@ -38,6 +42,16 @@ define([
                         var saveForLater = new SaveForLater();
                         saveForLater.init();
                     });
+
+                    mediator.on('modules:profilenav:loaded', function () {
+                        var popup = qwery('.popup--profile')[0];
+                        bonzo(popup).append(bonzo.create(
+                            '<li class="popup__item">' +
+                            '<a href="' + config.page.idUrl + '/prefs/saved-content" class="brand-bar__item--action" data-link-name="Saved for Later">Saved for later</a>' +
+                            '</li>'
+                        ));
+                    });
+
                 }
             }
         ];

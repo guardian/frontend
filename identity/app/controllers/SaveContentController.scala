@@ -3,11 +3,14 @@ package controllers
 import java.net.URL
 
 import actions.AuthenticatedActions
+import actions.AuthenticatedActions.AuthRequest
 import com.google.inject.Inject
 import common.ExecutionContexts
 import idapiclient.IdApiClient
+import model.{FrontendSavedArticle, IdentityPage, NoCache}
 import play.api.mvc._
-import services.{IdRequestParser, PlaySavedArticlesService, ReturnUrlVerifier}
+import play.filters.csrf.CSRFCheck
+import services._
 import utils.SafeLogging
 
 class SaveContentController @Inject() ( api: IdApiClient,
@@ -18,7 +21,10 @@ class SaveContentController @Inject() ( api: IdApiClient,
                                         )
   extends Controller with ExecutionContexts with SafeLogging {
 
-  import authenticatedActions.authAction
+  import authenticatedActions._
+
+  val page = IdentityPage("/saved-content", "Saved content", "saved-content")
+
 
   def saveContentItem = authAction.apply { implicit request =>
 
@@ -43,4 +49,17 @@ class SaveContentController @Inject() ( api: IdApiClient,
     }
   }
 
+  def listSavedContentItems = CSRFCheck {
+    recentlyAuthenticated.async { implicit request: AuthRequest[AnyContent] =>
+
+      val prefsResponse = api.syncedPrefs(request.user.auth)
+      savedArticleService.getOrCreateArticlesList(prefsResponse).map {
+        case Right(prefs) =>
+          print("We did fuckin get some")
+          NoCache(Ok(views.html.profile.savedContent(page, prefs.articles.asInstanceOf[List[FrontendSavedArticle]].reverse, "Articles")))
+        case Left(errors) =>
+          NoCache(Ok(views.html.profile.savedContent(page, List.empty, "Errors")))
+      }
+    }
+  }
 }
