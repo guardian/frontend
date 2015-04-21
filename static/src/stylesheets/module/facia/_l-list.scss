@@ -28,7 +28,7 @@
                     float: left;
 
                     .has-flex & {
-                        @include flex($span);
+                        flex: $span 1 auto;
                     }
                 }
             }

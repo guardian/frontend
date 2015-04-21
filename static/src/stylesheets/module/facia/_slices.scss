@@ -142,7 +142,7 @@ Hence why a greater depth of selector specificity is needed.
             }
 
             &:first-child {
-                @include flex(1);
+                flex: 1 1 auto;
                 width: 50%;
 
                 .fc-slice__item {
@@ -181,7 +181,7 @@ Hence why a greater depth of selector specificity is needed.
             width: 25% !important;
 
             &:last-child {
-                @include flex(2);
+                flex: 2 1 auto;
                 width: 50% !important;
             }
         }

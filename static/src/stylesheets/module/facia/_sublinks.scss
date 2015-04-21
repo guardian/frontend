@@ -39,7 +39,7 @@
             @include flex-display;
         }
         .fc-sublink {
-            @include flex(1, 1, 100%);
+            flex: 1 1 100%;
 
             & + * {
                 margin-left: $gs-gutter;
