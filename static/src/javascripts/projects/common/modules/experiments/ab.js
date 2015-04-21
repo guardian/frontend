@@ -18,7 +18,8 @@ define([
     'common/modules/experiments/tests/mt-sticky-bottom',
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/mt-lazy-load-ads'
+    'common/modules/experiments/tests/mt-lazy-load-ads',
+    'common/modules/experiments/tests/mt-sticky-burger'
 ], function (
     raven,
     _,
@@ -39,7 +40,8 @@ define([
     MtStickyBottom,
     SaveForLater,
     Headline,
-    MtLazyLoadAds
+    MtLazyLoadAds,
+    MtStickyBurger
 ) {
 
     var ab,
@@ -56,6 +58,7 @@ define([
             new MtStickyBottom(),
             new SaveForLater(),
             new MtLazyLoadAds(),
+            new MtStickyBurger(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             })
