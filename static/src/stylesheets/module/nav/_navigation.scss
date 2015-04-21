@@ -346,7 +346,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     overflow: hidden;
     position: relative;
     // draws border without adding height
-    @include box-shadow(inset 0 1px $c-global-navigation-border);
+    box-shadow: inset 0 1px $c-global-navigation-border;
     background: $c-local-navigation-background;
     min-height: $navigation-height;
 
