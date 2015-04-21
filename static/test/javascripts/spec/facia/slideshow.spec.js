@@ -41,15 +41,14 @@ define([
         });
     }
 
-    fdescribe('Slideshow component', function () {
+    describe('Slideshow component', function () {
         describe('Initialize from DOM', function () {
             it('generate a list of images', function (done) {
                 var testDOM = bonzo.create([
                     '<div class="TEST_CONTAINER_SLIDESHOW_INITIALIZE">',
                         '<img class="test-image-1" src="base/static/test/javascripts/fixtures/slideshow/one.svg">',
-                        '<!-- <img class="test-image-2" src="base/static/test/javascripts/fixtures/slideshow/two.svg"> -->',
-                        '  \n  ', // random useless characters
-                        '<!-- <img class="test-image-3" src="base/static/test/javascripts/fixtures/slideshow/three.svg"> -->',
+                        '<img class="test-image-2 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/two.svg">',
+                        '<img class="test-image-3 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/three.svg">',
                     '</div>'
                 ].join(''));
 
@@ -57,9 +56,12 @@ define([
                 slideshowDOM.init(container[0])
                 .then(function (listOfImages) {
                     expect(listOfImages.length).toBe(3);
-                    expect(listOfImages[0][0].tagName.toLowerCase()).toBe('img');
-                    expect(listOfImages[1].nodeType).toBe(Node.COMMENT_NODE);
-                    expect(listOfImages[2].nodeType).toBe(Node.COMMENT_NODE);
+                    expect(listOfImages[0].node[0].tagName.toLowerCase()).toBe('img');
+                    expect(listOfImages[0].loaded).toBe(true);
+                    expect(listOfImages[1].node[0].tagName.toLowerCase()).toBe('img');
+                    expect(listOfImages[1].loaded).toBe(false);
+                    expect(listOfImages[2].node[0].tagName.toLowerCase()).toBe('img');
+                    expect(listOfImages[2].loaded).toBe(false);
                 })
                 .then(function () {
                     container.remove();
@@ -72,8 +74,8 @@ define([
             beforeEach(function () {
                 var testDOM = bonzo.create([
                     '<div class="TEST_CONTAINER_SLIDESHOW_LOADER">',
-                        '<!-- <img class="test-image-1" src="base/static/test/javascripts/fixtures/slideshow/one.svg"> -->',
-                        '<!-- <img class="test-image-2" src="this_image_doesnt_exists.png"> -->',
+                        '<img class="test-image-1" data-srcset="base/static/test/javascripts/fixtures/slideshow/one.svg">',
+                        '<img class="test-image-2" data-srcset="this_image_doesnt_exists.png">',
                     '</div>'
                 ].join(''));
 
@@ -89,47 +91,36 @@ define([
                     eventCalled = jasmine.createSpy('eventCalled');
 
                 mediator.on('ui:images:lazyLoaded', eventCalled);
-                slideshowDOM.insert(container[0].childNodes[0])
+                slideshowDOM.insert({
+                    node: bonzo(container[0].childNodes[0]),
+                    loaded: false
+                })
                 .then(function (img) {
-                    expect(img[0].tagName.toLowerCase()).toBe('img');
-                    expect(img[0].src).toMatch('slideshow/one.svg');
-                    expect(qwery('img', container[0]).length).toBe(1);
-                    expect(opacity(img)).toBe(0);
+                    expect(img.loaded).toBe(true);
+                    expect(img.node[0].tagName.toLowerCase()).toBe('img');
+                    expect(opacity(img.node)).toBe(0);
                     expect(eventCalled.calls.count()).toEqual(1);
-                    expect(eventCalled.calls.argsFor(0)[0]).toBe(img[0]);
+                    expect(eventCalled.calls.argsFor(0)[0]).toBe(img.node[0]);
 
                     // Remove the image just to insert it again later
-                    loadedImage = img;
                     return slideshowDOM.remove(img);
                 })
-                .then(function () {
+                .then(function (img) {
                     // Fake the transition by changing the opacity
-                    loadedImage.css('opacity', '1');
-                    return slideshowDOM.insert(loadedImage);
+                    bonzo(img.node).css('opacity', '1');
+                    return slideshowDOM.insert(img);
                 })
                 .then(function (img) {
-                    expect(img[0].tagName.toLowerCase()).toBe('img');
-                    expect(img[0].src).toMatch('slideshow/one.svg');
-                    expect(qwery('img', container[0]).length).toBe(1);
-                    expect(opacity(img)).toBe(0);
+                    expect(img.loaded).toBe(true);
+                    expect(img.node[0].tagName.toLowerCase()).toBe('img');
+                    expect(opacity(img.node)).toBe(0);
                     // The image was already loaded, I don't expect other events
                     expect(eventCalled.calls.count()).toEqual(1);
                 })
                 .then(done);
             });
 
-            it('fails when the image is missing', function (done) {
-                var container = qwery('.TEST_CONTAINER_SLIDESHOW_LOADER'),
-                    loadedImage;
-
-                slideshowDOM.insert(container[0].childNodes[1])
-                .then(function (img) {
-                    expect(false).toBe('Loading an invalid image should fail');
-                    done();
-                }, function () {
-                    done();
-                });
-            });
+            // There's no way to detect image fail
         });
 
         describe('State machine', function () {
@@ -150,7 +141,6 @@ define([
                 var state = slideshowState.init(listOfImages, mockDOM);
 
                 expect(state.active()).toEqual(listOfImages[0]);
-                // Assume that the first image is already in the DOM, don't load it
                 expect(mockDOM.insert).not.toHaveBeenCalled();
 
                 state.goTo(2).then(function () {
@@ -162,22 +152,22 @@ define([
                 })
                 .then(function () {
                     expect(state.active()).toEqual(listOfImages[0]);
-                    // The firs image was already loaded, no need to load it again
-                    expect(mockDOM.insert.calls.count()).toBe(1);
+                    expect(mockDOM.insert.calls.count()).toBe(2);
+                    expect(mockDOM.insert.calls.argsFor(1)).toEqual([listOfImages[0]]);
 
                     return state.next();
                 })
                 .then(function () {
                     expect(state.active()).toEqual(listOfImages[1]);
-                    expect(mockDOM.insert.calls.count()).toBe(2);
-                    expect(mockDOM.insert.calls.argsFor(1)).toEqual([listOfImages[1]]);
+                    expect(mockDOM.insert.calls.count()).toBe(3);
+                    expect(mockDOM.insert.calls.argsFor(2)).toEqual([listOfImages[1]]);
 
                     return state.next();
                 })
                 .then(function () {
                     expect(state.active()).toEqual(listOfImages[2]);
-                    // The third image was loaded before, no need to load it again
-                    expect(mockDOM.insert.calls.count()).toBe(2);
+                    expect(mockDOM.insert.calls.count()).toBe(4);
+                    expect(mockDOM.insert.calls.argsFor(3)).toEqual([listOfImages[2]]);
 
                     // Go to the same state we're in
                     return state.goTo(2);
@@ -185,7 +175,7 @@ define([
                 .then(function () {
                     // Nothing should happen
                     expect(state.active()).toEqual(listOfImages[2]);
-                    expect(mockDOM.insert.calls.count()).toBe(2);
+                    expect(mockDOM.insert.calls.count()).toBe(4);
                 })
                 .then(done);
             });
@@ -228,12 +218,13 @@ define([
                 })
                 .then(function () {
                     expect(state.active()).toEqual(listOfImages[0]);
-                    expect(mockDOM.insert.calls.count()).toBe(2);
-
+                    expect(mockDOM.insert.calls.count()).toBe(3);
+                })
+                .then(function () {
                     jasmine.clock().uninstall();
                     state.stop();
-                })
-                .then(done);
+                    done();
+                });
             });
 
             it('transition with one image errors', function (done) {
@@ -333,13 +324,21 @@ define([
                 expect(opacity(imageTwo)).toBe(0);
 
                 slideshowDOM.duration = 20;
-                slideshowDOM.transition(imageOne, imageTwo)
+                slideshowDOM.transition({
+                    node: imageOne
+                }, {
+                    node: imageTwo
+                })
                 .then(function () {
                     expect(opacity(imageOne)).toBe(0);
                     expect(opacity(imageTwo)).toBe(1);
 
                     // Check that an image that was set hidden can be showed again
-                    return slideshowDOM.transition(imageTwo, imageOne);
+                    return slideshowDOM.transition({
+                        node: imageTwo
+                    }, {
+                        node: imageOne
+                    });
                 })
                 .then(function () {
                     expect(opacity(imageOne)).toBe(1);
@@ -358,64 +357,46 @@ define([
             });
 
             it('auto plays', function (done) {
-                // TODO actual JS class
                 var testDOM = bonzo.create([
                     '<div class="TEST_CONTAINER_SLIDESHOW_PLAY js-slideshow">',
                         '<img class="test-image-1" src="base/static/test/javascripts/fixtures/slideshow/one.svg">',
-                        '<!-- <img class="test-image-2" src="base/static/test/javascripts/fixtures/slideshow/two.svg"> -->',
-                        '<!-- <img class="test-image-3" src="base/static/test/javascripts/fixtures/slideshow/three.svg"> -->',
+                        '<img class="test-image-2 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/two.svg">',
+                        '<img class="test-image-3 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/three.svg">',
                     '</div>'
-                ].join(''));
-
-                var container = bonzo(testDOM).appendTo(document.body);
-                var inDOM = function (selector) {
-                    return qwery(selector, container[0]).length > 0;
-                };
+                ].join('')),
+                    container = bonzo(testDOM).appendTo(document.body),
+                    opacityOf = function (selector) {
+                        return opacity(bonzo(qwery(selector)));
+                    },
+                    nextImage = function () {
+                        return tick(slideshowState.interval).then(function () {
+                            return tick(slideshowDOM.loadTime);
+                        })
+                        .then(function () {
+                            return tick(slideshowDOM.duration);
+                        });
+                    };
 
                 slideshowController.init();
-                expect(inDOM('.test-image-1')).toBe(true);
-                expect(inDOM('.test-image-2')).toBe(false);
-                expect(inDOM('.test-image-3')).toBe(false);
 
-                tick(slideshowState.interval)
+                nextImage()
                 .then(function () {
-                    expect(inDOM('.test-image-1')).toBe(true);
-                    expect(inDOM('.test-image-2')).toBe(true);
-                    expect(inDOM('.test-image-3')).toBe(false);
+                    expect(opacityOf('.test-image-1', container[0])).toBe(0);
+                    expect(opacityOf('.test-image-2', container[0])).toBe(1);
 
-                    return tick(slideshowDOM.duration);
+                    return nextImage();
                 })
                 .then(function () {
-                    expect(opacity(bonzo(qwery('.test-image-1', container[0])))).toBe(0);
-                    expect(opacity(bonzo(qwery('.test-image-2', container[0])))).toBe(1);
+                    expect(opacityOf('.test-image-1', container[0])).toBe(0);
+                    expect(opacityOf('.test-image-2', container[0])).toBe(0);
+                    expect(opacityOf('.test-image-3', container[0])).toBe(1);
 
-                    return tick(slideshowState.interval);
+                    return nextImage();
                 })
                 .then(function () {
-                    expect(inDOM('.test-image-1')).toBe(true);
-                    expect(inDOM('.test-image-2')).toBe(true);
-                    expect(inDOM('.test-image-3')).toBe(true);
-
-                    return tick(slideshowDOM.duration);
-                })
-                .then(function () {
-                    expect(opacity(bonzo(qwery('.test-image-1', container[0])))).toBe(0);
-                    expect(opacity(bonzo(qwery('.test-image-2', container[0])))).toBe(0);
-                    expect(opacity(bonzo(qwery('.test-image-3', container[0])))).toBe(1);
-
-                    return tick(slideshowState.interval);
-                })
-                .then(function () {
-                    expect(inDOM('.test-image-1')).toBe(true);
-                    expect(inDOM('.test-image-2')).toBe(true);
-                    expect(inDOM('.test-image-3')).toBe(true);
-
-                    return tick(slideshowDOM.duration);
-                })
-                .then(function () {
-                    expect(opacity(bonzo(qwery('.test-image-1', container[0])))).toBe(1);
-                    expect(opacity(bonzo(qwery('.test-image-2', container[0])))).toBe(0);
-                    expect(opacity(bonzo(qwery('.test-image-3', container[0])))).toBe(0);
+                    expect(opacityOf('.test-image-1', container[0])).toBe(1);
+                    expect(opacityOf('.test-image-2', container[0])).toBe(0);
+                    expect(opacityOf('.test-image-3', container[0])).toBe(0);
                 })
                 .then(function () {
                     slideshowController.destroy();

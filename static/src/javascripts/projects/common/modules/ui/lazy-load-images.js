@@ -89,6 +89,7 @@ define([
 
     return {
         lazyLoad: attachLazyLoad,
+        reveal: reveal,
         init: init
     };
 });

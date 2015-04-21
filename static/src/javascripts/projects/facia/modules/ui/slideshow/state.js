@@ -10,7 +10,6 @@ define([
     function State(list, overrideDOM) {
         var currentState = 0,
             listOfImages = list,
-            imagesAlreadyLoaded = [list[0]],
             playTimeoutID,
             dom = overrideDOM || defaultDOMUtility;
 
@@ -25,16 +24,12 @@ define([
             if (step === currentState) {
                 return Promise.resolve();
             }
-            var oldImage = imagesAlreadyLoaded[currentState],
-                newImage = imagesAlreadyLoaded[step],
-                insertPromise = newImage ?
-                    Promise.resolve(newImage) :
-                    dom.insert(listOfImages[step]);
+            var oldImage = listOfImages[currentState],
+                newImage = listOfImages[step];
 
             return new Promise(function (resolve) {
-                insertPromise.
-                then(function (newImage) {
-                    imagesAlreadyLoaded[step] = newImage;
+                dom.insert(newImage)
+                .then(function (newImage) {
                     return dom.transition(oldImage, newImage);
                 })
                 .then(function () {
@@ -46,7 +41,6 @@ define([
                 })
                 .catch(function () {
                     listOfImages.splice(step, 1);
-                    imagesAlreadyLoaded.splice(step, 1);
                     this.goTo(step).then(resolve);
                 }.bind(this));
             }.bind(this));
@@ -59,7 +53,7 @@ define([
         function advance() {
             playTimeoutID = setTimeout(function () {
                 this.next().then(advance.bind(this));
-            }.bind(this), stateMachine.interval);
+            }.bind(this), stateMachine.interval - dom.loadTime);
         }
 
         this.start = function () {

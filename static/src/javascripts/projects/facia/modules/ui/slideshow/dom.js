@@ -1,12 +1,18 @@
 define([
     'Promise',
     'bonzo',
+    'qwery',
     'fastdom',
+    'common/modules/ui/lazy-load-images',
+    'common/utils/_',
     'common/utils/mediator'
 ], function (
     Promise,
     bonzo,
+    qwery,
     fastdom,
+    lazyLoadImages,
+    _,
     mediator
 ) {
     function hideForInsertion(img) {
@@ -18,53 +24,35 @@ define([
         });
     }
 
-    function onLoad(img, resolve, reject) {
-        if (img.complete) {
-            // The image was taken from cache
-            'naturalWidth' in img && img.naturalWidth === 0 ? reject() : resolve();
-        } else {
-            img.onload = resolve;
-            img.onerror = reject;
-        }
-    }
-
     function init(container) {
         return new Promise(function (resolve) {
-            var listOfImages = [], i, len, node;
-            for (i = 0, len = container.childNodes.length; i < len; i += 1) {
-                node = container.childNodes[i];
-                if (node.nodeType === Node.COMMENT_NODE) {
-                    listOfImages.push(node);
-                } else if (node.tagName && node.tagName.toLowerCase() === 'img') {
-                    listOfImages.push(bonzo(node));
-                }
-            }
-            resolve(listOfImages);
+            resolve(_.map(qwery('img', container), function (image, index) {
+                return {
+                    node: bonzo(image),
+                    loaded: index === 0
+                };
+            }));
         });
     }
 
     function insert(newImage) {
-        return new Promise(function (resolve, reject) {
-            // This function assumes that images are wrapped inside comment tags
-            if (newImage.nodeType === Node.COMMENT_NODE) {
-                var img = bonzo(bonzo.create(newImage.nodeValue));
-                fastdom.write(function () {
-                    hideForInsertion(img);
-                    onLoad(img[0], function () {
-                        resolve(img);
-                    }, function () {
-                        img.remove();
-                        reject();
-                    });
-                    img.appendTo(newImage.parentNode);
-                });
-                mediator.emit('ui:images:lazyLoaded', img[0]);
-            } else {
-                fastdom.write(function () {
-                    hideForInsertion(newImage);
+        return new Promise(function (resolve) {
+            fastdom.write(function () {
+                var node = newImage.node;
+
+                hideForInsertion(node);
+                if (newImage.loaded) {
                     resolve(newImage);
-                });
-            }
+                } else {
+                    lazyLoadImages.reveal(node);
+                    // Using lazy-load + picturefill there's no way to control the load / error
+                    // just give the browser some time
+                    setTimeout(function () {
+                        newImage.loaded = true;
+                        resolve(newImage);
+                    }, domObject.loadTime);
+                }
+            });
         });
     }
 
@@ -74,11 +62,11 @@ define([
 
         return new Promise(function (resolve) {
             fastdom.write(function () {
-                oldImage.css({
+                oldImage.node.css({
                     transition: 'opacity ' + ms + 'ms linear',
                     opacity: 0
                 });
-                newImage.css({
+                newImage.node.css({
                     transition: 'opacity ' + ms + 'ms linear',
                     opacity: 1
                 })
@@ -95,10 +83,10 @@ define([
     function remove(oldImage) {
         return new Promise(function (resolve) {
             fastdom.write(function () {
-                oldImage.attr({
+                oldImage.node.attr({
                     ariaHidden: true
                 });
-                resolve();
+                resolve(oldImage);
             });
         });
     }
@@ -108,7 +96,8 @@ define([
         insert: insert,
         transition: transition,
         remove: remove,
-        duration: 500
+        duration: 500,
+        loadTime: 100
     };
     return domObject;
 });
