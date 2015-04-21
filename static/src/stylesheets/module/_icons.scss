@@ -41,7 +41,7 @@ blockquote.quoted {
         content: '';
         float: left;
         transform: scale(.8);
-        @include transform-origin(0);
+        transform-origin: 0;
         @include icon(quote-grey);
     }
 
