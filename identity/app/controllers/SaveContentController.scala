@@ -24,6 +24,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
   import authenticatedActions._
 
   val page = IdentityPage("/saved-content", "Saved content", "saved-content")
+  protected def formActionUrl(idUrlBuilder: IdentityUrlBuilder, idRequest: IdentityRequest): String = idUrlBuilder.buildUrl("/saved-content", idRequest )
 
 
   def saveContentItem = authAction.apply { implicit request =>
@@ -49,17 +50,15 @@ class SaveContentController @Inject() ( api: IdApiClient,
     }
   }
 
-  def listSavedContentItems = CSRFCheck {
-    recentlyAuthenticated.async { implicit request: AuthRequest[AnyContent] =>
+  def listSavedContentItems = authAction.async { implicit request  =>
 
       val prefsResponse = api.syncedPrefs(request.user.auth)
+
       savedArticleService.getOrCreateArticlesList(prefsResponse).map {
         case Right(prefs) =>
-          print("We did fuckin get some")
           NoCache(Ok(views.html.profile.savedContent(page, prefs.articles.asInstanceOf[List[FrontendSavedArticle]].reverse, "Articles")))
         case Left(errors) =>
           NoCache(Ok(views.html.profile.savedContent(page, List.empty, "Errors")))
       }
-    }
   }
 }
