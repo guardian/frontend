@@ -9,7 +9,7 @@ define([
         this.expiry = '2015-05-21';
         this.author = 'John Duffell';
         this.description = 'Testing to see if slideshows affect page views per visit.';
-        this.audience = 0.9;
+        this.audience = 0.99;
         this.audienceOffset = 0;
         this.successMeasure = 'Page views per visit are maintained.';
         this.audienceCriteria = 'All users not on mobile';
