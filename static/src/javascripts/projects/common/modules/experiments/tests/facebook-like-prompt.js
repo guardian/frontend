@@ -169,16 +169,16 @@ define([
                 id: 'progress-bar--high-target',
                 test: progressBarTest({
                     'UK': { target: 10000000, textTarget: '10 million' },
-                    'AU': { target: 500000 },
-                    'US': { target: 500000 }
+                    'AU': { target: 750000 },
+                    'US': { target: 1000000 }
                 }, { showIncompleteLabelInsideProgressBar: true })
             },
             {
                 id: 'progress-bar--low-target',
                 test: progressBarTest({
                     'UK': { target: 5000000, textTarget: '5 million' },
-                    'AU': { target: 400000 },
-                    'US': { target: 300000 }
+                    'AU': { target: 300000 },
+                    'US': { target: 400000 }
                 })
             }
         ];
