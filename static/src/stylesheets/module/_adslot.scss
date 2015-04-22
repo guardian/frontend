@@ -81,7 +81,6 @@
         }
     }
     iframe {
-        -webkit-transform: translateZ(0);
         transform: translateZ(0);
         transition: height 1s cubic-bezier(0, 0, 0, .985);
     }
@@ -582,7 +581,6 @@
     .ad--responsive {
         @include mq(tablet) {
             height: 108px;
-            -webkit-transform: translateZ(0);
             transform: translateZ(0);
             transition: height 1s cubic-bezier(0, 0, 0, .985);
 

@@ -70,11 +70,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     margin: 0;
     white-space: nowrap;
     transition: transform 20ms;
-    -webkit-transition-property: -webkit-transform;
-    -moz-transition-property: -moz-transform;
-    transition-property: -webkit-transform;
-    transition-property: -moz-transform;
-    transition-property: transform;
 }
 
 .gallery-lightbox__swipe-container {
