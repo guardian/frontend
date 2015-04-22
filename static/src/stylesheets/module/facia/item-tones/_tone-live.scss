@@ -101,7 +101,7 @@
 }
 
 .fc-item__liveblog-block {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     display: block;
     position: relative;
     @include fs-headline(1);

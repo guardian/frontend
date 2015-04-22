@@ -13,7 +13,7 @@
 
 .gallery2__item {
     position: relative;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     min-height: 200px;
     margin-bottom: $gs-baseline;
 

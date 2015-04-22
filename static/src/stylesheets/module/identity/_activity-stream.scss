@@ -99,7 +99,7 @@
     padding-left: $gs-gutter;
 }
 .activity-stream-search__q {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     vertical-align: bottom;
     width: 100%;
     padding-bottom: $gs-baseline/6;

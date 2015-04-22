@@ -32,7 +32,7 @@
     border-top: 1px solid colour(neutral-5);
     color: colour(neutral-2-contrasted);
     text-align: right;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     font-family: $f-sans-serif-text;
     @include font-size(12, 20);
 
@@ -268,7 +268,7 @@
 }
 .ad-slot--sponsored {
     min-height: 250px;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     background-color: colour(neutral-8);
     overflow: hidden;
     border-top: 1px solid colour(neutral-5);
@@ -385,7 +385,7 @@
     }
 }
 .ad-slot--im {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     max-width: 50%;
     float: left;
 

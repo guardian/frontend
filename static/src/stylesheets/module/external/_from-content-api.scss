@@ -297,7 +297,7 @@ figure.element--thumbnail + h2 {
 
 .element-pullquote {
     width: 100%;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding: 0;
     margin-bottom: $gs-baseline;
 
