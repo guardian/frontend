@@ -253,22 +253,28 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
-// Slim modification
-.popup--slim {
-    .brand-bar__item--has-control & {
-        left: 0;
-    }
-}
-
-.popup__toggle--slim {
-    &.is-active,
-    .is-active > & {
-        &:before {
-            margin-left: 0 - $popup-anchor-arrow-size;
+/*
+ *  Slim modification
+ *
+ *  Used for slim header ^l_header
+ */
+.is-slim {
+    .popup {
+        .brand-bar__item--has-control & {
+            left: 0;
         }
     }
 
-    &:after {
-        display: none;
+    .popup__toggle {
+        &.is-active,
+        .is-active > & {
+            &:before {
+                margin-left: 0 - $popup-anchor-arrow-size;
+            }
+        }
+
+        &:after {
+            display: none;
+        }
     }
 }

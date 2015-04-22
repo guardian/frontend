@@ -321,11 +321,11 @@
 }
 
 /**
- * Slim modification of brand bar
+ *  Slim modification
  *
- * Example: Used in addition with slim header ^header.scss
+ *  Used for slim header ^l_header
  */
-.brand-bar--slim {
+.is-slim {
     .brand-bar__item {
         margin-right: $gs-baseline * .25;
         margin-left: $gs-baseline * .25;

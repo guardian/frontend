@@ -64,13 +64,19 @@ $control-size: 36px;
     }
 }
 
-// Slim version
-.control__info--slim {
-    display: none;
-}
+/**
+ *  Slim modification
+ *
+ *  Used for slim header ^l_header
+ */
+.is-slim {
+    .control__info {
+        display: none;
+    }
 
-.control__icon-wrapper--slim {
-    .brand-bar__item--right & {
-        display: block;
+    .control__icon-wrapper {
+        .brand-bar__item--right & {
+            display: block;
+        }
     }
 }
