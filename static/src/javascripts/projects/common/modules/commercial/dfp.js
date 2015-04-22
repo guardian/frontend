@@ -186,6 +186,18 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
+        lzAdsTestVariants = {
+            'A': 1 / 4,
+            'B': 1 / 2,
+            'C': 3 / 4,
+            'D': 1
+        },
+
+        isLzAdsTest = function () {
+            var test = ab.getParticipations().MtLzAdsDepth;
+            return test && ab.testCanBeRun('MtLzAdsDepth') && _.contains(_.keys(lzAdsTestVariants), test.variant);
+        },
+
         /**
          * Public functions
          */
@@ -209,7 +221,7 @@ define([
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
-            (isMainTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            (isLzAdsTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
@@ -225,7 +237,7 @@ define([
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
-                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height / 2) {
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * lzAdsTestVariants[ab.getParticipations().MtLzAdsDepth.variant]) {
                             googletag.display(slot);
 
                             slots = _(slots).omit(slot).value();

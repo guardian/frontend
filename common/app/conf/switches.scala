@@ -507,6 +507,10 @@ object Switches {
     safeState = On, sellByDate = never)
 
   // A/B Tests
+  val ABMtLzAdsDepth = Switch("A/B Tests", "ab-mt-lz-ads-depth", "Depth for lazy loaded ads.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
+  )
+
   val ABIdentitySocialOAuth = Switch("A/B Tests", "ab-id-social-oauth",
     "Switch to direct users to OAuth social sign-in app.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 25)
