@@ -29,7 +29,7 @@ define([
         this.successMeasure = 'Our Facebook likes increase across all editions';
         this.audienceCriteria = 'All users';
         // We use the FB SDK to listen to like events
-        this.dataLinkNames = '';
+        this.dataLinkNames = 'Facebook like button';
         this.idealOutcome = 'We have higher traffic from Facebook, and we add these buttons permanently.';
 
         var usernames = {
@@ -49,7 +49,8 @@ define([
                  'data-layout="button"' +
                  'data-action="like"' +
                  'data-show-faces="true"' +
-                 'data-share="false"></div>';
+                 'data-share="false"' +
+                 'data-link-name="Facebook like button"></div>';
         };
 
         var getFacebookLikePromptProgressBarTemplate = function (edition, likes, remainingLikes, percentageComplete, options) {
@@ -115,7 +116,7 @@ define([
                 // We can't track clicks on the iframe so we use the FB SDK to
                 // track instead. We do still want a correct link name.
                 FB.Event.subscribe('edge.create', function () {
-                    var linkName = siteMessage.attr('data-link-name') + '| Facebook like button';
+                    var linkName = [siteMessage.attr('data-link-name'), 'Facebook like button'].join(' | ');
                     mediator.emit('module:clickstream:interaction', linkName);
                 });
             });
