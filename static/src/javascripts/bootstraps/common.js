@@ -252,7 +252,7 @@ define([
                 omniture.go();
 
                 if (config.switches.ophan) {
-                    require('ophan/ng', function (ophan) {
+                    require(['ophan/ng!system-script'], function (ophan) {
                         ophan.record({ab: ab.getParticipations()});
 
                         if (config.switches.scrollDepth) {

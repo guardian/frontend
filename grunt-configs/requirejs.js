@@ -47,11 +47,13 @@ module.exports = function(grunt, options) {
                         };
                         return '\'' + plugins[depPluginName] + '!' + depModuleName + '\'';
                     })
+                    .replace(/require\(\['facebook/g, 'require([\'js!facebook')
+                    .replace(/!system-script/g, '')
                     // TODO: Source this from npm and use the module ID
                     // "socketio", consistent with RequireJS. SystemJS will read
                     // the package.json’s main property.
                     // https://github.com/jspm/jspm-cli/issues/685
-                    .replace('\'socketio/socket.io\'', 'socketio');
+                    .replace('\'socketio/socket.io\'', '\'socketio\'');
             },
             fileExclusionRegExp: /^bower_components|es6|test$/i
         },
