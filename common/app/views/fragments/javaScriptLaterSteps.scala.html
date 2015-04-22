@@ -6,22 +6,9 @@
 @* Scripts that should be executed after CSS is loaded *@
 
 @defining(Static.js.jspmFile(item.section)) { jspmFile =>
-    <!-- Load the CSP version of SystemJS, which downloads using type "script"
-    instead of "XHR", like Curl. Soon this will become the default:
-    https://github.com/systemjs/systemjs/issues/225#issuecomment-93953146
-    We need this to allow cross-domain downloads, e.g. Ophan -->
-    <!-- <script src="/assets/jspm_packages/es6-module-loader.js"></script> -->
-    <!-- <script src="/assets/jspm_packages/github/systemjs/systemjs@@0.16.7/dist/system-csp.js"></script> -->
-    <!-- FIXME: Babel not working with CSP SystemJS https://github.com/systemjs/systemjs/issues/407 -->
-    <!-- <script src="/assets/jspm_packages/system-csp.js"></script> -->
-    <!-- OH: The CSP version breaks transpiling. So we have to use the !system-script plugin -->
-    <script src="/assets/jspm_packages/system.js"></script>
-    <script src="/assets/systemjs-config.js"></script>
-    <!-- TODO: Only if in PROD -->
-    <script src="/assets/systemjs-bundle-config.js"></script>
+
 
     <script>
-
         (function(isModern) {
 
             if (!isModern) { return false; }
@@ -207,32 +194,92 @@
 
         })(guardian.isModernBrowser);
 
-        // TODO: Add .js to the original value instead of prepending here
-        System.paths['ophan/ng'] = '@{Configuration.javascript.config("ophanJsUrl")}.js';
+        </script>
 
-        // RequireJS
 
-        // require('boot');
+        @if(mvt.JspmTest.isParticipating) {
 
-        // SystemJS
+            <script src="/assets/jspm_packages/system.js"></script>
 
-        System.import('boot')
-            .then(function (initialise) {
-                initialise({
-                    isDev: @play.Play.isDev(),
-                    isDiagnosticsLoggingSwitchOn: @conf.Switches.DiagnosticsLogging.isSwitchedOn
+            @if(play.Play.isDev) {
+                <script src="/assets/systemjs-config.js"></script>
+            } else {
+                <script src="/assets/systemjs-config.js"></script>
+                <script src="/assets/systemjs-bundle-config.js"></script>
+            }
+
+            <script>
+                // TODO: Add .js to the original value instead of prepending here
+                System.paths['ophan/ng'] = '@{Configuration.javascript.config("ophanJsUrl")}.js';
+
+                window.require = window.requirejs = System.amdRequire.bind(System);
+
+                // SystemJS
+                System.import('core').then(function() {
+                    return System.import('boot')
+                        .then(function (initialise) {
+                            initialise({
+                                isDev: @play.Play.isDev(),
+                                isDiagnosticsLoggingSwitchOn: @conf.Switches.DiagnosticsLogging.isSwitchedOn
+                            });
+                        });
                 });
-            });
+            </script>
+        } else {
+            <script>
+                var curl = {
+                    baseUrl: '@{Configuration.assets.path}javascripts',
+                    apiName: 'require',
+                    paths: {
+                        @curlPaths.map { case (module, path) =>
+                            '@module': '@Static(path)',
+                        }
+                        core:                       '@Static("javascripts/core.js")',
+                        boot:                       '@Static("javascripts/boot.js")',
+                        facebook:                   '//connect.facebook.net/en_US/all.js',
+                        foresee:                    'vendor/foresee/20141107/foresee-trigger.js',
+                        googletag:                  '@{Configuration.javascript.config("googletagJsUrl")}',
+                        'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
+                        stripe:                     '@Static("javascripts/vendor/stripe/stripe.min.js")',
+                        text:                       'text', // noop
+                        inlineSvg:                  'inlineSvg', // noop
+                        zxcvbn:                     '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
+                        'bootstraps/app':           '@Static("javascripts/bootstraps/app.js")',
+                        'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
+                        'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
+                        'bootstraps/dev':           '@Static("javascripts/bootstraps/dev.js")',
+                        'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
+                        'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
+                        'bootstraps/football':      '@Static("javascripts/bootstraps/football.js")',
+                        'bootstraps/image-content': '@Static("javascripts/bootstraps/image-content.js")',
+                        'bootstraps/membership':    '@Static("javascripts/bootstraps/membership.js")',
+                        'bootstraps/sudoku':        '@Static("javascripts/bootstraps/sudoku.js")',
+                        'bootstraps/video-player':  '@Static("javascripts/bootstraps/video-player.js")'
+                    }
+                };
 
-        // SystemJS - crosswords (all)
+                @* inline curl *@
+                @Html(Static.js.curl)
 
-        System.import('es6/bootstraps/crosswords').then(function (crosswords) {
-            crosswords.default.init();
-        });
+                require('core').next('boot', function(initialise) {
+                    initialise({
+                        isDev: @play.Play.isDev(),
+                        isDiagnosticsLoggingSwitchOn: @conf.Switches.DiagnosticsLogging.isSwitchedOn
+                    });
+                });
+            </script>
+        }
 
-        System.import('es6/projects/common/modules/crosswords/thumbnails').then(function (crosswordThumbnails) {
-            crosswordThumbnails.default.init();
-        });
+        @if(mvt.JspmTest.isParticipating) {
+            <script>
+                System.import('es6/bootstraps/crosswords').then(function (crosswords) {
+                crosswords.default.init();
+                });
 
-    </script>
+                System.import('es6/projects/common/modules/crosswords/thumbnails').then(function (crosswordThumbnails) {
+                crosswordThumbnails.default.init();
+                });
+            </script>
+        }
+
 }
