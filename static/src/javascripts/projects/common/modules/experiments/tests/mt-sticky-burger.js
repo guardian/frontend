@@ -43,20 +43,31 @@ define([
                         width: '100%',
                         'z-index': '1001'
                     });
-                    config.$header.css('margin-top', config.stickyTopAdHeight);
 
-                    //navigation is not sticky yet
-                    /*config.$stickyNavigation.css({
+                    //navigation is not sticky yet, header is not slim
+                    config.$header.css({
                         position: null,
-                        top: null
-                    });
-                    config.$bannnerMobile.css('margin-top', null);*/
+                        top: null,
+                        'z-index': null,
+                        'margin-top': config.stickyTopAdHeight
+                    }).removeClass('l-header--is-slim');
+                    config.$bannnerMobile.css('margin-top', null);
 
-                    //when scroll will pass 30px
+                    //burger icon is below the header
+                    config.$burgerIcon.insertAfter(config.$navigationScroll);
+
+                    //when scroll will pass 30px header is sticky and slim
                     if (window.scrollY >= 30) {
-                        config.$header.addClass('l-header--is-slim').css('margin-top', config.stickyTopAdHeight + 30);
-                        $('.js-navigation-toggle').insertAfter($('.l-header-main .logo-wrapper'));
-                        //config.$bannnerMobile.css('margin-top', config.stickyNavigationHeight);
+                        //burger icon is located on the right side of logo
+                        config.$burgerIcon.insertAfter(config.$logoWrapper);
+                        config.$header.css({
+                            position: 'fixed',
+                            top: config.stickyTopAdHeight,
+                            width: '100%',
+                            'z-index': '1001',
+                            'margin-top': 0
+                        }).addClass('l-header--is-slim');
+                        config.$bannnerMobile.css('margin-top', config.stickyNavigationHeight + config.stickyTopAdHeight);
                     }
                 } else {
                     //after config.scrollThreshold px of scrolling 'release' topAd
@@ -66,14 +77,14 @@ define([
                     });
 
                     //move navigation toward top
-                    config.$stickyNavigation.css({
+                    config.$header.css({
                         position: 'fixed',
                         top: config.stickyTopAdHeight - (window.scrollY - config.scrollThreshold)
                     });
 
                     //from now on, navigation stays on top
                     if (window.scrollY > (config.scrollThreshold + config.stickyTopAdHeight)) {
-                        config.$stickyNavigation.css({
+                        config.$header.css({
                             position: 'fixed',
                             top: 0
                         });
@@ -186,8 +197,12 @@ define([
                                 $stickyNavigation: $('.sticky-nav-mt-test .navigation'),
                                 $stickyTopAd: $('.sticky-nav-mt-test .top-banner-ad-container'),
                                 $header: $('#header'),
+                                $burgerIcon: $('.js-navigation-header .js-navigation-toggle'),
                                 $bannnerMobile: $('.top-banner-ad-container--mobile'),
                                 $contentBelowMobile: $('#maincontent'),
+                                $logoWrapper: $('.js-navigation-header .logo-wrapper'),
+                                $navigationScroll: $('.js-navigation-header .navigation__scroll'),
+
                                 scrollThreshold: config.page.contentType === 'Video' || config.page.contentType === 'Gallery' ? 280 : 480
                             };
 
