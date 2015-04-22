@@ -198,13 +198,11 @@
     <script>
         @Html(Static.js.es6ModuleLoader)
         @Html(Static.js.systemJs)
+        @Html(Static.js.systemJsConfig)
     </script>
 
-    @if(play.Play.isDev) {
-        <script src="/assets/systemjs-config.js"></script>
-    } else {
-        <script src="/assets/systemjs-config.js"></script>
-        <script src="/assets/systemjs-bundle-config.js"></script>
+    @if(!play.Play.isDev) {
+        <script>@Html(Static.js.systemJsBundleConfig)</script>
     }
 
     <script>

@@ -16,13 +16,6 @@ module.exports = function(grunt, options) {
                 },
                 {
                     expand: true,
-                    cwd: 'static/src',
-                    src: ['systemjs-config.js',
-                          'systemjs-bundle-config.js',],
-                    dest: options.staticTargetDir
-                },
-                {
-                    expand: true,
                     cwd: 'static/src/javascripts/vendor',
                     src: [
                         'formstack-interactive/0.1/boot.js',
