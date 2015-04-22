@@ -16,6 +16,13 @@ module.exports = function(grunt, options) {
                 },
                 {
                     expand: true,
+                    cwd: 'static/src',
+                    src: ['systemjs-config.js',
+                          'systemjs-bundle-config.js',],
+                    dest: options.staticTargetDir
+                },
+                {
+                    expand: true,
                     cwd: 'static/src/javascripts/vendor',
                     src: [
                         'formstack-interactive/0.1/boot.js',
@@ -81,12 +88,14 @@ module.exports = function(grunt, options) {
             }]
         },
         headJs: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/components/curl',
-                src: ['curl-domReady.js'],
-                dest: 'common/conf/assets'
-            }]
+            files: [
+                {
+                    expand: true,
+                    cwd: 'static/src/javascripts/components/curl',
+                    src: ['curl-domReady.js'],
+                    dest: 'common/conf/assets'
+                }
+            ]
         },
         // assets.map must go where Play can find it from resources at runtime.
         // Everything else goes into frontend-static bundling.

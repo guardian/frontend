@@ -1,17 +1,36 @@
 module.exports = function(grunt, options) {
     return {
         javascript: {
-            files: [{
+            files: [
+                {
+                    expand: true,
+                    cwd: options.staticTargetDir + 'javascripts',
+                    src: [
+                        '{components,vendor}/**/*.js',
+                        '!components/curl/**/*.js',
+                        '!components/zxcvbn/**/*.js',
+                        '!vendor/stripe/*.js'
+                    ],
+                    dest: options.staticTargetDir + 'javascripts'
+                }
+            ]
+        },
+        conf: {
+            files:[
+            {
                 expand: true,
-                cwd: options.staticTargetDir + 'javascripts',
+                cwd: 'static/src/jspm_packages',
                 src: [
-                    '{components,vendor}/**/*.js',
-                    '!components/curl/**/*.js',
-                    '!components/zxcvbn/**/*.js',
-                    '!vendor/stripe/*.js'
+                    'system.src.js',
+                    'es6-module-loader.src.js',
                 ],
-                dest: options.staticTargetDir + 'javascripts'
-            }]
+                dest: 'common/conf/assets'
+            }],
+            options:   {
+                compress:{
+                    evaluate: false
+                }
+            }
         }
     };
 };
