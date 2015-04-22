@@ -21,6 +21,10 @@
     background-color: rgba($color, $opacity);
 }
 
+@mixin circular {
+    border-radius: 1000px;
+}
+
 // Vertical linear gradient with a plain fallback for older browsers
 @mixin simple-gradient($from, $to) {
     // Fix for browsers not understanding transparent
