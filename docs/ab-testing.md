@@ -126,6 +126,7 @@ if (ab.getTestVariant('FaciaSlideshow') === 'slideshow') {
     ///...
 }
 ```
+The ```ab``` module is defined in ```'common/modules/experiments/ab'```.
         
 ## Running the test
 
