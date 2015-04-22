@@ -791,7 +791,7 @@ $comment-recommend-button-size: 19px;
         background-color: colour(news-main-2);
     }
     .d-comment__recommend-pulse {
-        @include animation(pulse .5s ease-in-out 1);
+        animation: pulse .5s ease-in-out 1;
     }
     .d-comment__recommend-button i {
         @include icon(arrow-up-white);

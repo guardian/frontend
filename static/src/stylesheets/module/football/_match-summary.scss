@@ -53,7 +53,7 @@ $football-crest--large: 60px;
 .team__crest__img {
     height: $football-crest--small;
     width: $football-crest--small;
-    @include background-size(contain);
+    background-size: contain;
     background-position: 100% 0;
     display: inline-block;
     background-repeat: no-repeat;
@@ -244,7 +244,7 @@ $football-crest--large: 60px;
     .team__crest__img {
         height: $football-crest--large;
         width: $football-crest--large;
-        @include background-size(contain);
+        background-size: contain;
     }
 
     .team__info {

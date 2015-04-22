@@ -41,13 +41,13 @@ $pamplemousse-dot-smallscale: .45;
         height: $pamplemousse-dot-size-large;
 
         @include transform(scale($pamplemousse-dot-smallscale));
-        @include animation(pulsate 2s ease-in-out infinite);
+        animation: pulsate 2s ease-in-out infinite;
         display: block;
         background-color: colour(neutral-2);
         border-radius: 100px;
     }
 }
 
-.pamplemousse__pip:nth-child(1) i { @include animation-delay(0s); }
-.pamplemousse__pip:nth-child(2) i { @include animation-delay(.33s); }
-.pamplemousse__pip:nth-child(3) i { @include animation-delay(.66s); }
+.pamplemousse__pip:nth-child(1) i { animation-delay: 0s; }
+.pamplemousse__pip:nth-child(2) i { animation-delay: .33s; }
+.pamplemousse__pip:nth-child(3) i { animation-delay: .66s; }
