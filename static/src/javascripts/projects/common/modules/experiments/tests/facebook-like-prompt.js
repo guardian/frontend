@@ -20,7 +20,7 @@ define([
 
     return function () {
         this.id = 'FacebookLikePrompt';
-        this.start = '2015-04-17';
+        this.start = '2015-04-22';
         this.expiry = '2015-05-17';
         this.author = 'Oliver Ash';
         this.description = 'Shows a prompt (site message) asking the user to like the Guardian on Facebook.';
