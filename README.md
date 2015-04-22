@@ -118,7 +118,11 @@ sudo npm -g install jspm
 jspm registry config github
 ```
 
-It'll ask for a GitHub access token. Go to GitHub Settings -> Applications and [generate new token](https://github.com/settings/tokens/new). Default scopes are fine.
+It'll ask for a GitHub access token. Go to GitHub Settings -> Applications and [generate new token](https://github.com/settings/tokens/new). Ensure only the public_repo scope is checked.
+Now create a registry instance.
+```
+jspm registry create bower jspm-bower-endpoint
+```
 
 #### Ruby >= v1.9.x (use `ruby -v` to check if you have it installed)
 
