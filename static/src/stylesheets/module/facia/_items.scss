@@ -271,7 +271,7 @@
 
         .has-flex-wrap & {
             .fc-item__container {
-                @include flex-direction(row);
+                flex-direction: row;
             }
         }
 

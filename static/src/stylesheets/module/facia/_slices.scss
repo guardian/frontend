@@ -16,7 +16,7 @@ Hence why a greater depth of selector specificity is needed.
 */
 .fc-slice--hl4-h {
     .has-flex & {
-        @include flex-direction(row-reverse);
+        flex-direction: row-reverse;
 
         .fc-slice__item:before {
             display: none;
@@ -108,7 +108,7 @@ Hence why a greater depth of selector specificity is needed.
 
 .fc-slice--h14-q-q {
     .has-flex & {
-        @include flex-direction(row-reverse);
+        flex-direction: row-reverse;
 
         .fc-slice__item:before {
             display: none;
