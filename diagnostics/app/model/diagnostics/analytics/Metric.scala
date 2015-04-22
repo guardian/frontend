@@ -22,6 +22,7 @@ object Metric extends Logging {
     ("ads-blocked", CountMetric("ads-blocked")),
     ("ad-render", CountMetric("first-ad-rendered")),
     ("ad-render-article", CountMetric("first-ad-rendered-article")),
+    ("ad-wrapper", CountMetric("first-ad-rendered-dfp")),
 
     // error pages
     ("50x", CountMetric("kpis-user-50x")),             // beacon on the 50x page that tells us that real users are getting 500 errors
