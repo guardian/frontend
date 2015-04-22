@@ -149,4 +149,33 @@ class FrontTest extends FlatSpec with Matchers {
 
     nowSeen shouldEqual Set("one", "two")
   }
+
+  it should "not deduplicate dream snaps" in {
+    val (_, dedupedTrails) = Front.deduplicate(Set("one", "two"), Fixed(FixedContainers.fixedMediumFastXI), Seq(
+      dreamSnapWithUrl("one")
+    ))
+
+    dedupedTrails.map(_.webUrl) shouldEqual Seq("one")
+  }
+
+  it should "not skip dream snaps when considering items visible to be added to the set of seen urls" in {
+    val (nowSeen, _) = Front.deduplicate(Set.empty, Fixed(FixedContainers.fixedSmallSlowIV), Seq(
+      dreamSnapWithUrl("one"),
+      dreamSnapWithUrl("two"),
+      trailWithUrl("three"),
+      trailWithUrl("four"),
+      trailWithUrl("five"),
+      trailWithUrl("six")
+    ))
+
+    nowSeen shouldEqual Set("three", "four")
+  }
+
+  it should "not include dream snaps in the seen urls" in {
+    val (nowSeen, _) = Front.deduplicate(Set.empty, Fixed(FixedContainers.fixedMediumFastXI), Seq(
+      dreamSnapWithUrl("one")
+    ))
+
+    nowSeen shouldEqual Set()
+  }
 }

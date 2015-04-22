@@ -278,6 +278,9 @@ object Front extends implicits.Collections {
   def itemsVisible(containerDefinition: ContainerDefinition) =
     containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
 
+  // Never de-duplicate snaps.
+  def participatesInDeduplication(trail: Trail) = !trail.snapType.isDefined
+
   /** Given a set of already seen trail URLs, a container type, and a set of trails, returns a new set of seen urls
     * for further de-duplication and the sequence of trails in the order that they ought to be shown for that
     * container.
@@ -311,9 +314,9 @@ object Front extends implicits.Collections {
         /** Fixed Containers participate in de-duplication.
           */
         val nToTake = itemsVisible(containerDefinition)
-        val notUsed = trails.filter(trail => !seen.contains(trail.url))
+        val notUsed = trails.filter(trail => !seen.contains(trail.url) || !participatesInDeduplication(trail))
           .distinctBy(_.url)
-        (seen ++ notUsed.take(nToTake).map(_.url), notUsed)
+        (seen ++ notUsed.take(nToTake).filter(participatesInDeduplication).map(_.url), notUsed)
 
       case _ =>
         /** Nav lists and most popular do not participate in de-duplication at all */
