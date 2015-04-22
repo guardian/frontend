@@ -5,7 +5,8 @@ define([
     'common/utils/template',
     'common/modules/ui/message',
     'common/utils/config',
-    'common/utils/ajax-promise'
+    'common/utils/ajax-promise',
+    'common/utils/mediator'
 ], function (
     $,
     _,
@@ -13,7 +14,8 @@ define([
     template,
     Message,
     config,
-    ajax
+    ajax,
+    mediator
 ) {
 
     return function () {
@@ -26,9 +28,7 @@ define([
         this.audienceOffset = 0;
         this.successMeasure = 'Our Facebook likes increase across all editions';
         this.audienceCriteria = 'All users';
-        // We can't track clicks on an iframe. We thought about building our own
-        // like button, but the FB API doesn't allow you to like FB pages, plus
-        // the UX would not be as frictionless.
+        // We use the FB SDK to listen to like events
         this.dataLinkNames = '';
         this.idealOutcome = 'We have higher traffic from Facebook, and we add these buttons permanently.';
 
@@ -94,6 +94,7 @@ define([
                 });
         };
 
+        var siteMessage = $('.js-site-message');
         var loadFacebookSdk = function () {
             // Render like button
             // SDK must be loaded/initialised after the like button is added
@@ -105,6 +106,13 @@ define([
                     status: true, // check login status
                     cookie: true, // enable cookies to allow the server to access the session
                     xfbml: true // parse XFBML
+                });
+
+                // We can't track clicks on the iframe so we use the FB SDK to
+                // track instead. We do still want a correct link name.
+                FB.Event.subscribe('edge.create', function () {
+                    var linkName = siteMessage.attr('data-link-name') + '| Facebook like button';
+                    mediator.emit('module:clickstream:interaction', linkName);
                 });
             });
         };
