@@ -33,6 +33,27 @@ define([
             return !isIE && isUS;
         };
 
+        function scrollDirection(scrollY, config) {
+            var direction = '';
+
+            if (scrollY > config.prevScroll) {
+                direction = 'down';
+            } else {
+                direction = 'up';
+            }
+            config.prevScroll = scrollY;
+
+            return direction;
+        }
+
+        function showNavigation(scrollY, config) {
+            if (scrollDirection(scrollY, config) === 'up') {
+                config.$navigationScroll.css('display', 'block');
+            } else {
+                config.$navigationScroll.css('display', 'none');
+            }
+        }
+
         function updatePosition(config) {
             fastdom.write(function () {
                 if (window.scrollY < config.scrollThreshold) {
@@ -51,10 +72,12 @@ define([
                         'z-index': null,
                         'margin-top': config.stickyTopAdHeight
                     }).removeClass('l-header--is-slim');
-                    config.$bannnerMobile.css('margin-top', null);
+                    config.$bannerMobile.css('margin-top', null);
 
                     //burger icon is below the header
                     config.$burgerIcon.insertAfter(config.$navigationScroll);
+
+                    config.$navigationScroll.css('display', 'block');
 
                     //when scroll will pass 30px header is sticky and slim
                     if (window.scrollY >= 30) {
@@ -67,7 +90,11 @@ define([
                             'z-index': '1001',
                             'margin-top': 0
                         }).addClass('l-header--is-slim');
-                        config.$bannnerMobile.css('margin-top', config.stickyNavigationHeight + config.stickyTopAdHeight);
+                        config.$bannerMobile.css('margin-top', config.stickyNavigationHeight + config.stickyTopAdHeight);
+
+                        //if we are scrolling up show full navigation
+                        showNavigation(window.scrollY, config);
+
                     }
                 } else {
                     //after config.scrollThreshold px of scrolling 'release' topAd
@@ -89,56 +116,10 @@ define([
                             top: 0
                         });
                     }
+
+                    //if we are scrolling up show full navigation
+                    showNavigation(window.scrollY, config);
                 }
-
-                /*if (window.scrollY < config.scrollThreshold) {
-                    //topAd is sticky from the beginning
-                    config.$stickyTopAd.css({
-                        position: 'fixed',
-                        top: 0,
-                        width: '100%',
-                        'z-index': '1001'
-                    });
-                    config.$header.css('margin-top', config.stickyTopAdHeight);
-
-                    //navigation is not sticky yet
-                    config.$stickyNavigation.css({
-                        position: null,
-                        top: null
-                    });
-                    config.$bannnerMobile.css('margin-top', null);
-
-                    //when scroll will pass height of the header with logo
-                    if (window.scrollY >= config.headerHeight) {
-                        config.$stickyNavigation.css({
-                            position: 'fixed',
-                            top: config.stickyTopAdHeight,
-                            width: '100%',
-                            'z-index': '1001'
-                        });
-                        config.$bannnerMobile.css('margin-top', config.stickyNavigationHeight);
-                    }
-                } else {
-                    //after config.scrollThreshold px of scrolling 'release' topAd
-                    config.$stickyTopAd.css({
-                        position: 'absolute',
-                        top: config.scrollThreshold
-                    });
-
-                    //move navigation toward top
-                    config.$stickyNavigation.css({
-                        position: 'fixed',
-                        top: config.stickyTopAdHeight - (window.scrollY - config.scrollThreshold)
-                    });
-
-                    //from now on, navigation stays on top
-                    if (window.scrollY > (config.scrollThreshold + config.stickyTopAdHeight)) {
-                        config.$stickyNavigation.css({
-                            position: 'fixed',
-                            top: 0
-                        });
-                    }
-                }*/
             });
         }
 
@@ -150,8 +131,8 @@ define([
                         position:  null,
                         top:       null
                     });
-                    config.$bannnerMobile.css('margin-top', null);
-                    config.$bannnerMobile.css({
+                    config.$bannerMobile.css('margin-top', null);
+                    config.$bannerMobile.css({
                         position:  null,
                         top:       null
                     });
@@ -167,7 +148,7 @@ define([
                         });
 
                         //also banner below nav becomes sticky
-                        config.$bannnerMobile.css({
+                        config.$bannerMobile.css({
                             position:  'fixed',
                             top:       config.stickyNavigationHeight,
                             width:     '100%',
@@ -177,7 +158,7 @@ define([
                     }
                 } else {
                     //after config.scrollThreshold px of scrolling 'release' banner below nav
-                    config.$bannnerMobile.css({
+                    config.$bannerMobile.css({
                         position:  'absolute',
                         top:       config.scrollThreshold
                     });
@@ -198,12 +179,12 @@ define([
                                 $stickyTopAd: $('.sticky-nav-mt-test .top-banner-ad-container'),
                                 $header: $('#header'),
                                 $burgerIcon: $('.js-navigation-header .js-navigation-toggle'),
-                                $bannnerMobile: $('.top-banner-ad-container--mobile'),
+                                $bannerMobile: $('.top-banner-ad-container--mobile'),
                                 $contentBelowMobile: $('#maincontent'),
                                 $logoWrapper: $('.js-navigation-header .logo-wrapper'),
                                 $navigationScroll: $('.js-navigation-header .navigation__scroll'),
-
-                                scrollThreshold: config.page.contentType === 'Video' || config.page.contentType === 'Gallery' ? 280 : 480
+                                scrollThreshold: config.page.contentType === 'Video' || config.page.contentType === 'Gallery' ? 280 : 480,
+                                prevScroll: 0
                             };
 
                         fastdom.write(function () {
@@ -211,7 +192,7 @@ define([
                             stickyConfig.headerHeight = stickyConfig.$header.dim().height;
                         });
                         stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
-                        stickyConfig.belowMobileMargin = stickyConfig.stickyNavigationHeight + stickyConfig.$bannnerMobile.dim().height;
+                        stickyConfig.belowMobileMargin = stickyConfig.stickyNavigationHeight + stickyConfig.$bannerMobile.dim().height;
 
                         if (detect.getBreakpoint() === 'mobile') {
                             updatePositionMobile(stickyConfig);
