@@ -59,7 +59,7 @@
 
 .identity-section {
     border-top: 1px solid colour(neutral-7);
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     margin: (($gs-baseline/3)*5) 0;
     padding-top: (($gs-baseline/3)*5) - 1;
 
@@ -112,7 +112,7 @@
     }
 
     .social-signin__item {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         display: inline-block;
         margin-bottom: ($gs-baseline/3)*2;
 
@@ -326,7 +326,7 @@
     margin-bottom: $gs-baseline;
 
     @include mq(desktop) {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         @include fs-headline(3, true);
         float: left;
         padding-right: $gs-gutter;

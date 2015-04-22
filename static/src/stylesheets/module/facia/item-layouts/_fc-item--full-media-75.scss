@@ -73,7 +73,7 @@ Full item with 75% width media.
             }
 
             .has-flex-wrap & {
-                @include flex-basis(auto);
+                flex-basis: auto;
             }
         }
 

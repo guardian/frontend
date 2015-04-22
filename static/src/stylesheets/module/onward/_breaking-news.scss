@@ -9,7 +9,7 @@ $breaking-news-close-icon-width: 32px;
     bottom: 0;
     opacity: 1;
     @include transform(translateY(0));
-    @include box-shadow(0 -1px 2px fade-out(#000000, .8));
+    box-shadow: 0 -1px 2px fade-out(#000000, .8);
 
     a,
     .button {
@@ -58,7 +58,7 @@ $breaking-news-close-icon-width: 32px;
 }
 
 .breaking-news__item-content {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding: ($gs-baseline * .5) 0 $gs-baseline ($gs-gutter + $breaking-news-icon-width);
     @include gs-container;
 
@@ -119,7 +119,7 @@ $breaking-news-close-icon-width: 32px;
     background-color: colour(multimedia-support-4);
     opacity: 1;
     z-index: 1;
-    @include box-shadow(none);
+    box-shadow: none;
     @include transition(none);
 
     .breaking-news__items {
