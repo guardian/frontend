@@ -1185,16 +1185,12 @@ $comment-recommend-button-size: 19px;
     background: transparent;
     position: relative;
     z-index: 2;
-    .d-comment-box--top-level & {
-        @include input-placeholder {
-            color: colour(neutral-1);
-            font-weight: bold;
-        }
+    .d-comment-box--top-level &::placeholder {
+        color: colour(neutral-1);
+        font-weight: bold;
     }
-    .d-comment-box--top-level.d-comment-box--expanded & {
-        @include input-placeholder {
-            color: #ffffff;
-        }
+    .d-comment-box--top-level.d-comment-box--expanded &::placeholder {
+        color: #ffffff;
     }
     .discussion__comment-box--bottom & {
         margin-top: 0;
