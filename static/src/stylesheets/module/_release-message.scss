@@ -455,14 +455,14 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 
     .progress-bar__complete {
-        color: white;
+        color: #ffffff;
     }
 
     .progress-bar__incomplete {
         // Needed when the element has no text content
         vertical-align: bottom;
         text-align: right;
-        color: black;
+        color: #000000;
     }
 
     .progress-bar__complete, .progress-bar__incomplete {
