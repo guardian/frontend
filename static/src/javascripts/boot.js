@@ -14,6 +14,7 @@ define([
     lazyLoadImages
 ) {
     return function (options) {
+
         var isDev = options.isDev;
         var isDiagnosticsLoggingSwitchOn = options.isDiagnosticsLoggingSwitchOn;
 
@@ -63,20 +64,22 @@ define([
         images.listen();
 
         if (config.switches.commercial) {
-            System.import('bootstraps/commercial').then(raven.wrap(
-                { tags: { feature: 'commercial' } },
-                function (commercial) {
-                    commercial.init();
-                }
-            ));
+            require(['bootstraps/commercial'], function(){
+                raven.wrap(
+                    { tags: { feature: 'commercial' } },
+                    function (commercial) {
+                        commercial.init();
+                    }
+                );
+            });
         }
 
         if (guardian.isModernBrowser) {
             if(isDev) {
-                System.import('bootstraps/dev').then(function (devmode) { devmode.init(); });
+                require(['bootstraps/dev'], function (devmode) { devmode.init(); });
             }
 
-            System.import('bootstraps/app').then(function(bootstrap) {
+            require(['bootstraps/app'], function(bootstrap) {
                 bootstrap.go();
             });
         }
