@@ -125,7 +125,31 @@ define([
 
         function updatePositionMobile(config) {
             fastdom.write(function () {
+                //header, navigation and banner are sticky from the beginning
                 if (window.scrollY < config.scrollThreshold) {
+                    config.$header.css({
+                        position:  'fixed',
+                        top:       0,
+                        width:     '100%',
+                        'z-index': '1001'
+                    });
+                    config.$bannerMobile.css({
+                        position:  'fixed',
+                        top:       config.stickyNavigationHeight,
+                        width:     '100%',
+                        'z-index': '1000'
+                    });
+                    config.$contentBelowMobile.css('margin-top', config.belowMobileMargin);
+                } else {
+                    //after config.scrollThreshold px of scrolling 'release' banner and navigation
+                    config.$bannerMobile.css({
+                        position:  'absolute',
+                        top:       config.scrollThreshold
+                    });
+                    showNavigation(window.scrollY, config);
+                }
+
+                /*if (window.scrollY < config.scrollThreshold) {
                     //navigation is not sticky yet
                     config.$stickyNavigation.css({
                         position:  null,
@@ -162,7 +186,7 @@ define([
                         position:  'absolute',
                         top:       config.scrollThreshold
                     });
-                }
+                }*/
             });
         }
 
@@ -195,6 +219,14 @@ define([
                         stickyConfig.belowMobileMargin = stickyConfig.stickyNavigationHeight + stickyConfig.$bannerMobile.dim().height;
 
                         if (detect.getBreakpoint() === 'mobile') {
+                            //burger icon is located on the right side of logo
+                            fastdom.write(function () {
+                                stickyConfig.$burgerIcon.css({
+                                    'float': 'right',
+                                    'margin': '8px 8px 0 0'
+                                }).insertBefore(stickyConfig.$logoWrapper);
+                                stickyConfig.$logoWrapper.css('margin', '12px 10px 4px 0');
+                            });
                             updatePositionMobile(stickyConfig);
 
                             mediator.on('window:scroll', _.throttle(function () {
