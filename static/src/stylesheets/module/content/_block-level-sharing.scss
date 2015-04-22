@@ -230,7 +230,7 @@
     }
 
     .block-share__item {
-        @include transition(opacity .15s linear);
+        transition: opacity .15s linear;
     }
 
     .block-share__item--facebook {

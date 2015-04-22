@@ -34,7 +34,7 @@ $breaking-news-close-icon-width: 32px;
 }
 
 .breaking-news--fade-in {
-    @include transition(all .5s ease);
+    transition: all .5s ease;
 }
 
 .breaking-news--hidden {
@@ -46,7 +46,7 @@ $breaking-news-close-icon-width: 32px;
     display: block;
     padding: 0 0 $gs-baseline;
     background: fade-out(colour(live-default), 1 - .95);
-    @include transition(background-color .25s ease);
+    transition: background-color .25s ease;
 
     &:hover {
         background-color: darken(colour(live-default), 2%);
@@ -120,7 +120,7 @@ $breaking-news-close-icon-width: 32px;
     opacity: 1;
     z-index: 1;
     box-shadow: none;
-    @include transition(none);
+    transition: none;
 
     .breaking-news__items {
         visibility: hidden;
