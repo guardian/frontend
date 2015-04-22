@@ -77,8 +77,8 @@ trait FaciaFields {
   def imageCutoutReplace: Boolean = false
   def customImageCutout: Option[FaciaImageElement]
 
-  def slideshowImages: Boolean
-  def slideshow: Iterable[FaciaImageElement]
+  def slideshowImages: Boolean = false
+  def slideshow: Iterable[FaciaImageElement] = Nil
 
   def snapType: Option[String]
   def snapUri: Option[String]
