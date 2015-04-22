@@ -37,6 +37,12 @@ object LiveFapiFrontPress extends FapiFrontPress {
     getPressedFrontForPath(path)
       .map { pressedFront => S3FrontsApi.putLiveFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
       .asFuture.map(_.fold(e => throw new RuntimeException(s"${e.cause} ${e.message}"), _ => ()))
+
+  def collectionContentWithSnaps(
+    collection: Collection,
+    adjustSearchQuery: AdjustSearchQuery = identity,
+    adjustSnapItemQuery: AdjustItemQuery = identity) =
+    FAPI.liveCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery)
 }
 
 object DraftFapiFrontPress extends FapiFrontPress {
@@ -53,6 +59,12 @@ object DraftFapiFrontPress extends FapiFrontPress {
     getPressedFrontForPath(path)
       .map { pressedFront => S3FrontsApi.putDraftFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
       .asFuture.map(_.fold(e => throw new RuntimeException(s"${e.cause} ${e.message}"), _ => ()))
+
+  def collectionContentWithSnaps(
+    collection: Collection,
+    adjustSearchQuery: AdjustSearchQuery = identity,
+    adjustSnapItemQuery: AdjustItemQuery = identity) =
+    FAPI.draftCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery)
 }
 
 trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
@@ -61,6 +73,11 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   implicit val capiClient: GuardianContentClient
   implicit val apiClient: ApiClient
   def pressByPathId(path: String): Future[Unit]
+
+  def collectionContentWithSnaps(
+    collection: Collection,
+    adjustSearchQuery: AdjustSearchQuery = identity,
+    adjustSnapItemQuery: AdjustItemQuery = identity): Response[List[FaciaContent]]
 
   val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalContentCode"
   val searchApiQuery: AdjustSearchQuery = (searchQuery: SearchQuery) =>
@@ -85,7 +102,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
   def generateCollectionJsonFromFapiClient(collectionId: String): Response[PressedCollection] =
     for {
       collection <- FAPI.getCollection(collectionId)
-      curatedCollection <- FAPI.collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
+      curatedCollection <- collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
       backfill <- getBackfill(collection)
       treats <- FAPI.getTreatsForCollection(collection, searchApiQuery, itemApiQuery)
     } yield PressedCollection.fromCollectionWithCuratedAndBackfill(collection, curatedCollection, backfill, treats)
