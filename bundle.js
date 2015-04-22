@@ -43,6 +43,7 @@ var createBundle = function (bundleConfig) {
         // Attach URI
         .then(function (output) {
             var hash = getHash(output.source);
+            output.id = moduleExpression.replace(' - core', '');
             // Relative to jspm client base URL
             output.uri = path.join(bundlesUri, hash, outFile);
             return output;
@@ -64,7 +65,7 @@ var writeBundlesToDisk = function (bundles) {
 
 var writeBundlesConfig = function (bundles) {
     var bundlesConfig = bundles.reduce(function (accumulator, bundle) {
-        accumulator[bundle.uri.replace('.js', '')] = bundle.modules;
+        accumulator[bundle.uri.replace('.js', '')] = [bundle.id];
         return accumulator;
     }, {});
     var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
