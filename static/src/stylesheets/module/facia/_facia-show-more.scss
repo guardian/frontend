@@ -9,7 +9,7 @@
 }
 
 .collection__show-more--loading svg {
-    @include animation(spinner linear 1.5s infinite);
+    animation: spinner linear 1.5s infinite;
 }
 
 .show-more__error-message {

@@ -124,7 +124,7 @@
 
         .summary-arrow {
             transform: rotate(90deg);
-            @include background-size(18px 16px);
+            background-size: 18px 16px;
             width: 18px;
             height: 16px;
 
@@ -133,7 +133,7 @@
             }
 
             @include mq(desktop) {
-                @include background-size(26px 24px);
+                background-size: 26px 24px;
                 width: 26px;
                 height: 24px;
             }
@@ -186,7 +186,7 @@
         .summary-package__icon {
             display: inline-block;
             vertical-align: middle;
-            @include background-size(28px 28px);
+            background-size: 28px 28px;
             height: 28px;
             width: 28px;
         }
@@ -265,7 +265,7 @@
             .membership-tab__card-types--in-field {
                 width: 49px !important;
                 height: $small-card !important;
-                @include background-size(49px $small-card);
+                background-size: 49px $small-card;
             }
         }
     }

@@ -8,7 +8,7 @@
     margin-right: $gs-gutter / 4;
     width: $gs-baseline * 2;
     height: $gs-baseline * 2;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 
     .i {
         width: 100% !important;
@@ -189,7 +189,7 @@
     right: 0;
     margin: gs-height(1) + $gs-baseline auto 0;
     background: transparent;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 
     .i {
         @extend %absolute-center;

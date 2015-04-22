@@ -17,8 +17,7 @@ define([
     'common/modules/experiments/tests/across-the-country',
     'common/modules/experiments/tests/mt-sticky-bottom',
     'common/modules/experiments/tests/save-for-later',
-    'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/mt-lazy-load-ads'
+    'common/modules/experiments/headlines'
 ], function (
     raven,
     _,
@@ -38,8 +37,7 @@ define([
     AcrossTheCountry,
     MtStickyBottom,
     SaveForLater,
-    Headline,
-    MtLazyLoadAds
+    Headline
 ) {
 
     var ab,
@@ -55,7 +53,6 @@ define([
             new AcrossTheCountry(),
             new MtStickyBottom(),
             new SaveForLater(),
-            new MtLazyLoadAds(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             })

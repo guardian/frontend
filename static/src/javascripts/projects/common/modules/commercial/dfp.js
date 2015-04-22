@@ -111,6 +111,9 @@ define([
 
         recordFirstAdRendered = _.once(function () {
             beacon.beaconCounts('ad-render');
+            if (config.page.contentType === 'Article') {
+                beacon.beaconCounts('ad-render-article');
+            }
         }),
 
         /**
@@ -183,11 +186,6 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
-        isLzAdsTest = function () {
-            var test = ab.getParticipations().MtLzAds;
-            return test && test.variant === 'A' && ab.testCanBeRun('MtLzAds');
-        },
-
         /**
          * Public functions
          */
@@ -211,7 +209,7 @@ define([
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
-            (isLzAdsTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            (isMainTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 

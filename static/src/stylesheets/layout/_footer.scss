@@ -69,7 +69,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 }
 
 .l-footer__secondary {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     @include fs-textSans(1);
     padding-right: $gs-gutter * .5;
     padding-left: $gs-gutter * .5;
@@ -119,7 +119,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
 }
 .colophon__item {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 }
 
 .l-footer__misc {

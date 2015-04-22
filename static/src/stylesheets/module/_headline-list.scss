@@ -1,6 +1,6 @@
 .headline-list__item {
     position: relative;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding-left: gs-span(1) - $gs-gutter/2;
     padding-top: $gs-baseline / 3;
     padding-bottom: $gs-baseline * 2;
@@ -60,7 +60,7 @@
     .inline-icon {
         fill: colour(neutral-2);
     }
-    
+
     .inline-video-icon svg {
         width: 1.2em;
         height: .75em;

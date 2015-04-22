@@ -409,7 +409,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__meta-text,
 .d-comment-box__meta-text {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 }
 
 .d-comment__author,
@@ -778,7 +778,7 @@ $comment-recommend-button-size: 19px;
         background-color: colour(news-main-2);
     }
     .d-comment__recommend-pulse {
-        @include animation(pulse .5s ease-in-out 1);
+        animation: pulse .5s ease-in-out 1;
     }
     .d-comment__recommend-button i {
         @include icon(arrow-up-white);
@@ -894,7 +894,7 @@ $comment-recommend-button-size: 19px;
 }
 .d-report-comment__label,
 .d-report-comment__field {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     display: block;
     width: 100%;
 }
@@ -924,7 +924,7 @@ $comment-recommend-button-size: 19px;
 .d-top-comment-container {
     margin: 0;
     list-style: none;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 }
 
 @include mq(tablet) {
@@ -969,7 +969,7 @@ $comment-recommend-button-size: 19px;
 .d-top-comment__bubble {
     color: colour(neutral-1);
     @include fs-textSans(4);
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding: $gs-baseline ($gs-baseline * 4 / 3);
     position: relative;
     background-color: colour(comment-support-2);
@@ -1026,7 +1026,7 @@ $comment-recommend-button-size: 19px;
     padding: 0 0 ($gs-baseline / 3) * 10;
 
     .comment__inner {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         background-color: colour(neutral-7);
         display: inline-block;
         padding: ($gs-baseline / 3) * 2 $gs-gutter / 2 $gs-baseline;
@@ -1174,7 +1174,7 @@ $comment-recommend-button-size: 19px;
     color: colour(neutral-2);
 }
 .d-comment-box__body {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     border: 1px solid colour(neutral-3);
     height: 50px;
     margin: ($gs-baseline / 3) * 2 0;
