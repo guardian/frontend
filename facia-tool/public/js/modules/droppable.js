@@ -11,6 +11,8 @@ define([
     alert,
     draggableElement
 ) {
+    alert = alert.default;
+
     var sourceGroup;
     var listeners = {
         dragstart: function (element, event) {

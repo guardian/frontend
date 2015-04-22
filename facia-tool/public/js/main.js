@@ -1,4 +1,3 @@
-/* global console */
 /* global System */
 import Raven from 'raven-js';
 
@@ -12,7 +11,9 @@ export function load (module) {
 
         System.amdDefine = Raven.wrap({deep: false}, System.amdDefine);
         // ES6 loader uses console.error to log un-handled rejected promises
+        var originalConsole = window.console.error;
         window.console.error = function () {
+            originalConsole.apply(window.console, arguments);
             Raven.captureMessage([].slice.apply(arguments).join(' '));
         };
 
@@ -21,7 +22,7 @@ export function load (module) {
             new Module().init();
         }, function (error) {
             Raven.captureException(error);
-            console.error(error);
+            originalConsole(error);
         });
     });
 }

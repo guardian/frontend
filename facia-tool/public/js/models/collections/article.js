@@ -48,6 +48,8 @@ define([
         contentApi,
         Group
     ) {
+        alert = alert.default;
+
         var capiProps = [
                 'webUrl',
                 'webPublicationDate',

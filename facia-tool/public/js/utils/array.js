@@ -1,30 +1,27 @@
-define([
-    'underscore'
-], function (
-    _
-) {
-    function combine (destination, previous, comparator, generator, update) {
-        previous = previous.slice();
+import _ from  'underscore';
 
-        return _.map(destination, function (item) {
-            var previousItem = _.find(previous, function (old, index) {
-                var areTheSame = comparator(old, item);
-                if (areTheSame) {
-                    previous.splice(index, 1);
-                    return true;
-                }
-                return false;
-            });
+function combine (destination, previous, comparator, generator, update) {
+    previous = previous.slice();
 
-            if (previousItem) {
-                return update(previousItem, item);
-            } else {
-                return generator(item);
+    return _.map(destination, function (item) {
+        var previousIndex, previousItem = _.find(previous, function (old, index) {
+            var areTheSame = comparator(old, item);
+            if (areTheSame) {
+                previousIndex = index;
+                return true;
             }
+            return false;
         });
-    }
 
-    return {
-        combine: combine
-    };
-});
+        if (previousItem) {
+            previous.splice(previousIndex, 1);
+            return update(previousItem, item);
+        } else {
+            return generator(item);
+        }
+    });
+}
+
+export {
+    combine
+};

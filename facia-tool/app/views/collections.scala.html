@@ -18,12 +18,7 @@
     }"></div>
 
     <div class="modalDialog" data-bind="fadeVisible: modalDialog.isOpen">
-        <!-- ko if: modalDialog.templateName() && modalDialog.isOpen() -->
-            <div class="modalDialog-content" data-bind="template: {
-                name: modalDialog.templateName,
-                data: modalDialog.templateData
-            }"></div>
-        <!-- /ko -->
+        <modal-dialog params="modal: modalDialog"></modal-dialog>
     </div>
 
     @templates.vertical_layout()
@@ -112,7 +107,7 @@
 
             <!-- ko if: state.imageCutoutSrcFromCapi() && !meta.imageCutoutReplace() -->
                 <a class="thumb--cutout" data-bind="
-                    style { backgroundImage: 'url(' + state.imageCutoutSrcFromCapi() + ')' }"></a>
+                    style: { backgroundImage: 'url(' + state.imageCutoutSrcFromCapi() + ')' }"></a>
             <!-- /ko -->
 
             <!-- ko if: state.hasMainVideo -->
@@ -245,58 +240,6 @@
             </div>
         </div>
 
-    </script>
-
-    <script type="text/html" id="confirm_breaking_changes">
-        <div class="modalDialog-message">
-            <h3>Confirm <span data-bind="text: targetGroup, css: targetGroupClass"></span> alert before sending</h3>
-            <ul data-bind="foreach: articles">
-                <li>
-                    <span data-bind="html: headline"></span>
-                    <br/>
-                    <span class="major-alert small-text" data-bind="visible: $parent.alertAlreadySent($data)">* This alert has already been sent once.</span>
-                </li>
-            </ul>
-            <h4>Target</h4>
-            <span class="target" data-bind="text: target"></span>
-        </div>
-        <hr>
-        <div class="buttons modalDialog-confirm">
-            <button data-bind="click: cancel">Cancel</button>
-            <button class="draw-attention" data-bind="click: ok">
-                <i class="fa fa-rss"></i>Send alert
-            </button>
-        </div>
-    </script>
-
-    <script type="text/html" id="text_alert">
-        <div class="modalDialog-message">
-            <h3><i class="fa fa-exclamation-circle"></i>Error:</h3>
-            <span data-bind="text: message"></span>
-        </div>
-        <hr>
-        <div class="buttons modalDialog-alert">
-            <button class="button-action" data-bind="click: ok">Ok</button>
-        </div>
-    </script>
-
-    <script type="text/html" id="select_snap_type">
-        <div class="modalDialog-message">
-            <h3>Link type</h3>
-            <p>Click on <span class="button-description" data-bind="text: prefix"></span> to create the item</p>
-            <ul>
-                <li>{
-                    <span data-bind="text: prefix"></span>
-                    <span data-bind="text: resultsTitle"></span>
-                }</li>
-            </ul>
-            <p>or click <span class="button-description">Link</span> to just create a link</p>
-        </div>
-        <hr>
-        <div class="buttons modalDialog-confirm">
-            <button class="button-action" data-bind="click: cancel">Link</button>
-            <button class="draw-attention" data-bind="click: ok, text: prefix"></button>
-        </div>
     </script>
 
 </div>
