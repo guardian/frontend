@@ -152,7 +152,7 @@ $weather-large-size: 60px;
         }
 
         .is-expanded & {
-            @include transform(rotate(180deg));
+            transform: rotate(180deg);
         }
     }
 }

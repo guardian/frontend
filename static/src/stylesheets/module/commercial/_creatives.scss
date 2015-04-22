@@ -257,7 +257,7 @@
         z-index: 3;
         height: 32px;
         width: 32px;
-        @include transform(rotate(45deg));
+        transform: rotate(45deg);
         @include transition(all 1s ease);
 
         @include mq(tablet) {
@@ -269,7 +269,7 @@
             outline-style: none;
         }
         &.button-spin {
-            @include transform(rotate(360deg));
+            transform: rotate(360deg);
         }
     }
 
@@ -314,7 +314,7 @@
         }
 
         &.chevron-down .inline-arrow-down {
-            @include transform(rotate(180deg));
+            transform: rotate(180deg);
         }
 
     }
