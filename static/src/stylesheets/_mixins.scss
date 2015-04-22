@@ -131,7 +131,7 @@
             }
             display: inline-block;
             background-repeat: no-repeat;
-            @include background-size(contain);
+            background-size: contain;
         }
     }
 }
