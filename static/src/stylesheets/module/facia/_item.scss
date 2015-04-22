@@ -24,7 +24,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
     .has-flex-wrap & {
         .fc-item__container {
-            @include flex-wrap(wrap);
+            flex-wrap: wrap;
             @if $media-align == right {
                 @include flex-direction(row-reverse);
             } @else {
