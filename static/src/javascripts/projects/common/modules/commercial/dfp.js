@@ -78,7 +78,7 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                if (isMasterTest() && $adSlot.hasClass('ad-slot--right')) {
+                if (isMainTest() && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         new StickyMpu($adSlot).create();
                     }
@@ -103,14 +103,17 @@ define([
             }
         },
 
-        isMasterTest = function () {
-            var mtMasterTest = ab.getParticipations().MtMaster;
+        isMainTest = function () {
+            var MtMainTest = ab.getParticipations().MtMain;
 
-            return ab.testCanBeRun('MtMaster') && mtMasterTest && mtMasterTest.variant === 'variant';
+            return ab.testCanBeRun('MtMain') && MtMainTest && MtMainTest.variant === 'A';
         },
 
         recordFirstAdRendered = _.once(function () {
             beacon.beaconCounts('ad-render');
+            if (config.page.contentType === 'Article') {
+                beacon.beaconCounts('ad-render-article');
+            }
         }),
 
         /**
@@ -183,11 +186,6 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
-        isLzAdsTest = function () {
-            var test = ab.getParticipations().MtLzAds;
-            return test && test.variant === 'A' && ab.testCanBeRun('MtLzAds');
-        },
-
         /**
          * Public functions
          */
@@ -211,7 +209,7 @@ define([
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
-            (isLzAdsTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            (isMainTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 

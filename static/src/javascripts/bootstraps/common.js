@@ -440,11 +440,11 @@ define([
 
             runCustomAbTests: function () {
                 var stickyTest = ab.getTest('MtStickyBtm'),
-                    masterTest = ab.getTest('MtMaster');
+                    mainTest = ab.getTest('MtMain');
 
-                if (masterTest && ab.isParticipating(masterTest) && ab.getTestVariant('MtMaster') === 'variant'
-                    && ab.testCanBeRun('MtMaster')) {
-                    masterTest.fireMasterTest();
+                if (mainTest && ab.isParticipating(mainTest) && ab.getTestVariant('MtMain') === 'A'
+                    && ab.testCanBeRun('MtMain')) {
+                    mainTest.fireMainTest();
                 }
                 if (stickyTest && ab.isParticipating(stickyTest) && ab.getTestVariant('MtStickyBtm') === 'A'
                     && ab.testCanBeRun('MtStickyBtm')) {

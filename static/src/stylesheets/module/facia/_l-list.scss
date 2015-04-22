@@ -3,7 +3,7 @@
 
     @include mq(tablet) {
         .has-flex-wrap & {
-            @include flex-display;
+            display: flex;
             @include flex-wrap(wrap);
         }
     }
@@ -14,7 +14,7 @@
 
     .has-flex-wrap & {
         @include flex-grow(0);
-        @include flex-basis(100%);
+        flex-basis: 100%;
     }
 }
 
@@ -28,7 +28,7 @@
                     float: left;
 
                     .has-flex & {
-                        @include flex($span);
+                        flex: $span 1 auto;
                     }
                 }
             }
@@ -55,7 +55,7 @@
                 }
 
                 .has-flex-wrap & {
-                    @include flex-basis(100% / $column);
+                    flex-basis: (100% / $column);
                 }
             }
         }

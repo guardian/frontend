@@ -26,7 +26,7 @@
 }
 
 .goal-attempts__label {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding: $gs-baseline/6 ($gs-gutter/5)*2;
     font-weight: normal;
     position: absolute;
@@ -51,7 +51,7 @@
 
 .goal-attempts__off-target,
 .goal-attempts__on-target {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     @include fs-header(2);
     padding: $gs-baseline*1.5 ($gs-gutter/5)*2;
     font-weight: 900;
@@ -65,7 +65,7 @@
     background-size: 8px;
 }
 .goal-attempts__on-target {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     height: $gs-baseline*5;
     border: 4px solid #ffffff;
     border-bottom: 0;
@@ -107,7 +107,7 @@
 }
 
 .bar-fight__bar {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     @include fs-header(2);
     line-height: $gs-baseline*1.5;
     padding: $gs-baseline/4 ($gs-gutter/4)+3 0;
@@ -199,7 +199,7 @@
 }
 
 .home-stat {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     background-color: colour(sport-home);
     border-right: 5px solid #ffffff;
     height: 15px;
@@ -207,7 +207,7 @@
 }
 
 .away-stat {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     background-color: colour(sport-away);
     height: 15px;
 }

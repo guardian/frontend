@@ -34,7 +34,7 @@
 .football-leagues__list {}
 
 .football-leagues__item {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     display: inline-block;
     vertical-align: top;
     width: 50%;

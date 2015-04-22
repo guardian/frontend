@@ -226,7 +226,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         height: $gs-gutter;
         background-color: colour(neutral-1);
         @include border-radius(50%);
-        @include box-shadow(0px 1px 0px colour(neutral-3));
+        box-shadow: 0px 1px 0px colour(neutral-3);
 
         &:before {
             display: block;
@@ -283,7 +283,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         @include font(arial, bold, 14px);
         text-transform: uppercase;
         border: 1px solid #333333;
-        @include box-shadow(0 0 0 1px #ffffff);
+        box-shadow: 0 0 0 1px #ffffff;
     }
 
     .app__screenshots {
@@ -392,8 +392,4 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             width: 28%;
         }
     }
-}
-
-.site-message--adblock {
-    background: colour(news-support-2);
 }

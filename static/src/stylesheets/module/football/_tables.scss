@@ -60,7 +60,7 @@
     height: 12px;
     margin-right: $gs-gutter/4;
     width: 22px;
-    @include background-size(22px 12px);
+    background-size: 22px 12px;
     display: inline-block;
     vertical-align: text-bottom;
 }

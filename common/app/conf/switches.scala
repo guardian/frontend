@@ -384,14 +384,6 @@ object Switches {
     sellByDate = new LocalDate(2015, 6, 1)
   )
 
-  val PulitzerSwitch = Switch(
-    "Feature",
-    "pulitzer",
-    "If switched on the Pulitzer prize banner will show.",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 6, 1)
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     "Feature",
     "fixtures-and-results-container",
@@ -515,10 +507,6 @@ object Switches {
     safeState = On, sellByDate = never)
 
   // A/B Tests
-  val ABMtLzAds = Switch("A/B Tests", "ab-mt-lz-ads", "Lazy loading ads.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
   val ABIdentitySocialOAuth = Switch("A/B Tests", "ab-id-social-oauth",
     "Switch to direct users to OAuth social sign-in app.",
     safeState = Off, sellByDate = new LocalDate(2015, 4, 25)
@@ -534,8 +522,8 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ABMtMaster = Switch("A/B Tests", "ab-mt-master",
-    "Switch for the Sticky mpu test.",
+  val ABMtMain = Switch("A/B Tests", "ab-mt-main",
+    "Switch for the moat main test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 11)
   )
 
@@ -564,19 +552,14 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
-  val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block",
-    "Switch for the Adblock Message A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
-  )
-
   val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
     "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
     safeState = Off, sellByDate = never
   )
 
-  val ABLiveblogBlocksOnFronts = Switch("A/B Tests", "ab-liveblog-blocks-on-fronts",
-    "Switch for the latest liveblog blocks on fronts A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 23)
+  val ABLiveblogFrontUpdates = Switch("A/B Tests", "ab-liveblog-front-updates",
+    "Switch for the latest liveblog updates on fronts A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
   )
 
   val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",

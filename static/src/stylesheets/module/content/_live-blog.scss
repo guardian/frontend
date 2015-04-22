@@ -100,7 +100,7 @@ $block-padding-right: $gs-gutter;
     content: '';
     margin-right: 3px;
     vertical-align: initial;
-    @include animation(live-pulse 1s infinite);
+    animation: live-pulse 1s infinite;
 }
 
 /* Timestamps
@@ -139,7 +139,7 @@ $block-padding-right: $gs-gutter;
         margin-bottom: -1px;
         margin-right: 3px;
         @include border-radius(50%);
-        @include animation(live-pulse 2s infinite);
+        animation: live-pulse 2s infinite;
     }
 
     .block-time__absolute {
@@ -223,7 +223,7 @@ $block-padding-right: $gs-gutter;
 
 .autoupdate--has-animation {
     .autoupdate--highlight {
-        @include animation(new-block-animation 5s ease-out);
+        animation: new-block-animation 5s ease-out;
     }
 }
 
