@@ -43,6 +43,15 @@ define([
             return true;
         };
 
+        var getFacebookLikeButtonTemplate = function () {
+            return '<div class="fb-like"' +
+                 'data-href="https://www.facebook.com/' + username + '"' +
+                 'data-layout="button"' +
+                 'data-action="like"' +
+                 'data-show-faces="true"' +
+                 'data-share="false"></div>';
+        };
+
         var getFacebookLikePromptProgressBarTemplate = function (edition, likes, remainingLikes, percentageComplete, options) {
             options = options || {};
             var textTarget = (edition.textTarget || edition.target.toLocaleString());
@@ -56,12 +65,7 @@ define([
                                  ? 'site-message--facebook-like-prompt__like--inside-label'
                                  : '') +
                     '">' +
-                    '<div class="fb-like"' +
-                         'data-href="https://www.facebook.com/' + username + '"' +
-                         'data-layout="button"' +
-                         'data-action="like"' +
-                         'data-show-faces="true"' +
-                         'data-share="false"></div>' +
+                    getFacebookLikeButtonTemplate() +
                     '<div class="progress-bar" data-percentage="50%">' +
                         '<div class="progress-bar__complete"' +
                              'style="width: ' + percentageComplete + '%"' +
@@ -150,12 +154,7 @@ define([
                     }).show(template(
                         '<p class="site-message__message" id="site-message__message">{{messageText}}</p>' +
                         '<div class="site-message--facebook-like-prompt__like">' +
-                            '<div class="fb-like"' +
-                                 'data-href="https://www.facebook.com/' + username + '"' +
-                                 'data-layout="button_count"' +
-                                 'data-action="like"' +
-                                 'data-show-faces="true"' +
-                                 'data-share="false"></div>' +
+                            getFacebookLikeButtonTemplate() +
                         '</div>',
                         {
                             messageText: 'Like the Guardian on Facebook'
