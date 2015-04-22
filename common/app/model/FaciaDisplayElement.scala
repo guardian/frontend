@@ -14,7 +14,7 @@ object FaciaDisplayElement {
         ))
       case (content: Content, _) if content.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
         Some(CrosswordSvg(content.id))
-      case (content: Content, _) if content.slideshowImages && Switches.SlideshowImages.isSwitchedOn =>
+      case (content: Content, _) if content.imageSlideshowReplace && Switches.SlideshowImages.isSwitchedOn =>
         Some(InlineSlideshow.fromTrail(trail))
       case _ => InlineImage.fromTrail(trail)
     }

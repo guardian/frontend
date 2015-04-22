@@ -85,7 +85,7 @@ object ItemMeta {
     ("showBoostedHeadline", content.apiContent.metaData.flatMap(_.showBoostedHeadline).map(JsBoolean)),
     ("showQuotedHeadline", content.apiContent.metaData.flatMap(_.showQuotedHeadline).map(JsBoolean)),
     ("showMainVideo", content.apiContent.metaData.flatMap(_.showMainVideo).map(JsBoolean)),
-    ("slideshowImages", content.apiContent.metaData.flatMap(_.json.get("slideshowImages"))),
+    ("imageSlideshowReplace", content.apiContent.metaData.flatMap(_.json.get("imageSlideshowReplace"))),
     ("slideshow", content.apiContent.metaData.flatMap(_.json.get("slideshow")))
   )
 }
@@ -111,7 +111,7 @@ case class ItemMeta(
   showKickerTag: Option[JsValue],
   showKickerSection: Option[JsValue],
   showMainVideo: Option[JsValue],
-  slideshowImages: Option[Boolean],
+  imageSlideshowReplace: Option[Boolean],
   slideshow: Option[JsValue]
 )
 

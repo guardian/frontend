@@ -265,23 +265,23 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     height <- apiContent.metaData.flatMap(_.imageCutoutSrcHeight).flatMap(s => Try(s.toInt).toOption)
   } yield FaciaImageElement(src, width, height)
 
-  override lazy val slideshowImages: Boolean = {
-    apiContent.metaData.flatMap(_.json.get("slideshowImages").flatMap(_.asOpt[Boolean])).getOrElse(false)
+  override lazy val imageSlideshowReplace: Boolean = {
+    apiContent.metaData.flatMap(_.json.get("imageSlideshowReplace").flatMap(_.asOpt[Boolean])).getOrElse(false)
   }
 
   override lazy val slideshow: Iterable[FaciaImageElement] =
     (for {
-      x <- apiContent.metaData
-      z <- x.json.get("slideshow")
-      w = for {
-        a <- z.asInstanceOf[JsArray].value
-        y = for {
-          src <- a.asInstanceOf[JsObject].\("src").asOpt[String]
-          width <- a.asInstanceOf[JsObject].\("width").asOpt[String].flatMap(s => Try(s.toInt).toOption)
-          height <- a.asInstanceOf[JsObject].\("height").asOpt[String].flatMap(s => Try(s.toInt).toOption)
+      metaData <- apiContent.metaData
+      slideshowImagesList <- metaData.json.get("slideshow")
+      maybeImageElements = for {
+        slideshowImage <- slideshowImagesList.asInstanceOf[JsArray].value
+        maybeImageElement = for {
+          src <- slideshowImage.asInstanceOf[JsObject].\("src").asOpt[String]
+          width <- slideshowImage.asInstanceOf[JsObject].\("width").asOpt[String].flatMap(s => Try(s.toInt).toOption)
+          height <- slideshowImage.asInstanceOf[JsObject].\("height").asOpt[String].flatMap(s => Try(s.toInt).toOption)
         } yield FaciaImageElement(src, width, height)
-      } yield y
-    } yield w).getOrElse(Nil).flatten
+      } yield maybeImageElement
+    } yield maybeImageElements).getOrElse(Nil).flatten
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 

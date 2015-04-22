@@ -288,7 +288,7 @@ define([
                 slideshowMetaFieldsAdded = true;
 
                 metaFields.push({
-                    key: 'slideshowImages',
+                    key: 'imageSlideshowReplace',
                     editable: true,
                     label: 'slideshow',
                     type: 'boolean'
@@ -299,7 +299,7 @@ define([
                         key: 'slideshowImageSrc_' + i,
                         editable: true,
                         omitForSupporting: true,
-                        'if': 'slideshowImages',
+                        'if': 'imageSlideshowReplace',
                         label: 'slideshow image ' + (i + 1) + ' URL',
                         validator: {
                             fn: 'validateImage',
@@ -318,12 +318,12 @@ define([
                         type: 'text'
                     }, {
                         key: 'slideshowImageSrcWidth_' + i,
-                        'if': 'slideshowImages',
+                        'if': 'imageSlideshowReplace',
                         label: 'slideshow image ' + i + ' width',
                         type: 'text'
                     }, {
                         key: 'slideshowImageSrcHeight_' + i,
-                        'if': 'slideshowImages',
+                        'if': 'imageSlideshowReplace',
                         label: 'slideshow image ' + i + ' height',
                         type: 'text'
                     });
@@ -468,7 +468,7 @@ define([
                     return meta.imageSrc();
                 } else if (meta.imageCutoutReplace()) {
                     return meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail();
-                } else if (meta.slideshowImages && meta.slideshowImages() && meta.slideshowImageSrc_0()) {
+                } else if (meta.imageSlideshowReplace && meta.imageSlideshowReplace() && meta.slideshowImageSrc_0()) {
                     return meta.slideshowImageSrc_0();
                 } else {
                     return fields.thumbnail();

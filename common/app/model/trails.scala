@@ -50,7 +50,7 @@ trait Trail extends Elements with Tags with FaciaFields with Dates {
 
   def trailSlideshow(aspectWidth: Int, aspectHeight: Int): Iterable[FaciaImageElement] =
   slideshow
-    .filter(image => IsRatio(5, 3, image.width, image.height))
+    .filter(image => IsRatio(aspectWidth, aspectHeight, image.width, image.height))
 
 }
 
@@ -77,7 +77,7 @@ trait FaciaFields {
   def imageCutoutReplace: Boolean = false
   def customImageCutout: Option[FaciaImageElement]
 
-  def slideshowImages: Boolean = false
+  def imageSlideshowReplace: Boolean = false
   def slideshow: Iterable[FaciaImageElement] = Nil
 
   def snapType: Option[String]
