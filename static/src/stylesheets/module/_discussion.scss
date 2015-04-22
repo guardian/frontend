@@ -733,7 +733,7 @@ $comment-recommend-button-size: 19px;
     left: 0;
     width: $comment-recommend-button-size;
     height: $comment-recommend-button-size;
-    @include border-radius(18px);
+    border-radius: 18px;
     background-color: colour(neutral-7);
 }
 .d-comment__recommend-count {

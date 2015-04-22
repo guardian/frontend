@@ -128,7 +128,7 @@ $ima-controls-height: 70px;
             margin-left: -.9em; /* [1] */
 
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
-                @include border-radius(.2em);
+                border-radius: .2em;
             }
 
             .gu-media-wrapper:hover &,
