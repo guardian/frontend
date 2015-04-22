@@ -15,15 +15,11 @@ object DevAssetsController extends Controller with ExecutionContexts {
     }
 
     val hashFile = new File(s"static/hash/$path")
-    val x = new File(s"static/src/$path")
-    val y = new File(s"common/conf/assets/$path")
 
     val resolved = if (hashFile.exists()) {
       hashFile.toURI.toURL
-    } else if (x.exists()) {
-      x.toURI.toURL
     } else {
-      y.toURI.toURL
+      new File(s"static/src/$path").toURI.toURL
     }
 
     Result(
