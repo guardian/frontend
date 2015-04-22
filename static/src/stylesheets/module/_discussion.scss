@@ -758,19 +758,6 @@ $comment-recommend-button-size: 19px;
     position: relative;
 }
 
-@-webkit-keyframes pulse {
-    0% {
-        opacity: 1;
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
-
-    100% {
-        opacity: 0;
-        -webkit-transform: scale(2);
-        transform: scale(2);
-    }
-}
 @keyframes pulse {
     0% {
         opacity: 1;
