@@ -55,7 +55,6 @@ class SaveContentController @Inject() ( api: IdApiClient,
       val prefsResponse = api.syncedPrefs(request.user.auth)
       savedArticleService.getOrCreateArticlesList(prefsResponse).map {
         case Right(prefs) =>
-          print("We did fuckin get some")
           NoCache(Ok(views.html.profile.savedContent(page, prefs.articles.asInstanceOf[List[FrontendSavedArticle]].reverse, "Articles")))
         case Left(errors) =>
           NoCache(Ok(views.html.profile.savedContent(page, List.empty, "Errors")))
