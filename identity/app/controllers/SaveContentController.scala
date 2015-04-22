@@ -49,16 +49,15 @@ class SaveContentController @Inject() ( api: IdApiClient,
     }
   }
 
-  def listSavedContentItems = CSRFCheck {
-    recentlyAuthenticated.async { implicit request: AuthRequest[AnyContent] =>
+  def listSavedContentItems = authAction.async { implicit request  =>
 
-      val prefsResponse = api.syncedPrefs(request.user.auth)
-      savedArticleService.getOrCreateArticlesList(prefsResponse).map {
-        case Right(prefs) =>
-          NoCache(Ok(views.html.profile.savedContent(page, prefs.articles.asInstanceOf[List[FrontendSavedArticle]].reverse, "Articles")))
-        case Left(errors) =>
-          NoCache(Ok(views.html.profile.savedContent(page, List.empty, "Errors")))
-      }
+    val prefsResponse = api.syncedPrefs(request.user.auth)
+
+    savedArticleService.getOrCreateArticlesList(prefsResponse).map {
+      case Right(prefs) =>
+        NoCache(Ok(views.html.profile.savedContent(page, prefs.articles.asInstanceOf[List[FrontendSavedArticle]].reverse, "Articles")))
+      case Left(errors) =>
+        NoCache(Ok(views.html.profile.savedContent(page, List.empty, "Errors")))
     }
   }
 }
