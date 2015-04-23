@@ -15,10 +15,8 @@
 // CSS helpers
 // =============================================================================
 
-// Transparent background with fallback for older browsers
-@mixin transparent-background($color, $opacity) {
-    background-color: $color;
-    background-color: rgba($color, $opacity);
+@mixin circular {
+    border-radius: 1000px; // Android 2.3 cannot deal with '50%'
 }
 
 // Vertical linear gradient with a plain fallback for older browsers
@@ -32,8 +30,6 @@
         $to: transparentize($from, 1);
     }
     background-color: $from;
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($from), to($to));
-    background-image: -webkit-linear-gradient($from, $to);
     background-image: linear-gradient(to bottom, $from, $to);
 }
 
@@ -54,7 +50,7 @@
     &:before {
         display: inline-block;
         content: '';
-        @include border-radius(6px);
+        border-radius: 6px;
         height: 12px;
         width: 12px;
         margin-right: $right-space;
@@ -141,7 +137,7 @@
     cursor: pointer;
     width: $buttonSize;
     height: $buttonSize;
-    @include border-radius($buttonSize);
+    border-radius: $buttonSize;
     position: relative;
     display: block;
 
@@ -178,62 +174,11 @@
     font-size: $size/6 // play triangle is em based so this scales it;
 }
 
-@mixin transition-duration($duration: 1s) {
-    -webkit-transition-duration: $duration;
-    transition-duration: $duration;
-}
-
-@mixin display-flex {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-}
-
-@mixin flex-wrap($wrap) {
-    -webkit-flex-wrap: $wrap;
-    -ms-flex-wrap: $wrap;
-    flex-wrap: $wrap;
-}
-
-@mixin flex-direction($direction) {
-    -webkit-flex-direction: $direction;
-    -ms-flex-direction: $direction;
-    flex-direction: $direction;
-}
-
-@mixin align-items--start {
-    -webkit-box-align: start;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
-}
-
-@mixin align-items--end {
-    -webkit-box-align: end;
-    -webkit-align-items: flex-end;
-    -ms-flex-align: end;
-    align-items: flex-end;
-}
-
-@mixin align-items--stretch {
-    -webkit-box-align: stretch;
-    -webkit-align-items: stretch;
-    -ms-flex-align: stretch;
-    align-items: stretch;
-}
-
 // note that if using this in a media query, the fallback needs to
 // be windowed between breakpoints, because the nth-child is not reset
 @mixin columns($cols: 1, $gap: 0, $rule: false) {
     @if $browser-supports-columns {
-        -webkit-column-count: $cols;
-        -moz-column-count: $cols;
         column-count: $cols;
-
-        -webkit-column-gap: $gap;
-        -moz-column-gap: $gap;
         column-gap: $gap;
 
         @if $rule {
@@ -258,8 +203,6 @@
 }
 
 @mixin column-rule($style: 1px solid colour(neutral-5)) {
-    -webkit-column-rule: $style;
-    -moz-column-rule: $style;
     column-rule: $style;
 }
 
@@ -294,13 +237,6 @@
 
 %absolute-center {
     @include absolute-center;
-}
-
-@mixin input-placeholder {
-    &::-webkit-input-placeholder { @content; }
-    &:-moz-placeholder { @content; }
-    &::-moz-placeholder { @content; }
-    &:-ms-input-placeholder { @content; }
 }
 
 // convert a given width to one available in _vars.scss if it's within the tolerance

@@ -53,7 +53,7 @@ $disc-avatar-size: 44px;
 .disc-comment__recommend-button {
     display: inline-block;
     vertical-align: middle;
-    @include border-radius(50%);
+    @include circular;
     height: 19px;
     width: 18px;
     background-color: colour(neutral-2-contrasted);
@@ -95,7 +95,7 @@ $disc-avatar-size: 44px;
 .disc-profile__avatar {
     float: left;
     overflow: hidden;
-    @include border-radius(50%);
+    @include circular;
     height: $disc-avatar-size;
     width: $disc-avatar-size;
 }
