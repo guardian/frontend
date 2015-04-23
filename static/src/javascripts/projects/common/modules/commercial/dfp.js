@@ -224,7 +224,6 @@ define([
 
             // We want to run lazy load if user is in the depth test or main test user group
             (isLzAdsTest() || isMainTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
-            
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
@@ -240,7 +239,7 @@ define([
 
                         // For depth test we want depth based on variant but for main test we want default depth
                         // TODO: this will be removed after tests will finish
-                        depth        = (isLzAdsTest()) ? lzAdsTestVariants[ab.getParticipations().MtLzAdsDepth.variant] : .5;
+                        depth        = (isLzAdsTest()) ? lzAdsTestVariants[ab.getParticipations().MtLzAdsDepth.variant] : 0.5;
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
