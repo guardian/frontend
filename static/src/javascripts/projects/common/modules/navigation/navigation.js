@@ -135,7 +135,7 @@ define([
 
                         // Sync header movement with banner disapearing
                         $els.header.css({
-                            top: Math.round(bannerHeight - (window.scrollY - stickyTresholds.desktop.nobanner)) - 1
+                            top: Math.round(bannerHeight - (window.scrollY - stickyTresholds.desktop.nobanner))
                         });
 
                         // Banner is not visible anymore so stick header to the top of the viewport
