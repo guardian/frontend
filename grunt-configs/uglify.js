@@ -22,7 +22,7 @@ module.exports = function(grunt, options) {
                 cwd: 'static/src/jspm_packages',
                 src: [
                     'system.src.js',
-                    'es6-module-loader.src.js',
+                    'es6-module-loader.src.js'
                 ],
                 dest: 'common/conf/assets'
             },
@@ -30,7 +30,7 @@ module.exports = function(grunt, options) {
                 expand: true,
                 cwd: 'static/src',
                 src: ['systemjs-config.js',
-                      'systemjs-bundle-config.js',],
+                      'systemjs-bundle-config.js'],
                 dest: 'common/conf/assets'
             }],
             options:   {
