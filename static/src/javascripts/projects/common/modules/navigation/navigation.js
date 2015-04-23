@@ -109,6 +109,8 @@ define([
                 });
             } else {
                 fastdom.write(function () {
+                    bannerHeight = $('.top-banner-ad-container--above-nav').dim().height;
+                    
                     // Add is collapsed, header is slim
                     if (window.scrollY > 400) {
                         // Add is not sticky anymore
@@ -131,8 +133,6 @@ define([
                         };
                     // Top ad and header are visible in full height
                     } else {
-                        bannerHeight = $('.top-banner-ad-container--above-nav').dim().height;
-
                         // Make sure that banner and header are sticky
                         $('.top-banner-ad-container--above-nav').css({
                             position:  'fixed',
