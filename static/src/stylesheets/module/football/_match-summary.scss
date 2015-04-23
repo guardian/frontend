@@ -113,7 +113,7 @@ $football-crest--large: 60px;
     display: inline-block;
     height: $football-crest--small;
     width: $football-crest--small;
-    @include border-radius(24px);
+    border-radius: 24px;
     border: 2px dotted colour(neutral-2);
     @include fs-textSans(2);
     line-height: $football-crest--small - 3; // account for the border

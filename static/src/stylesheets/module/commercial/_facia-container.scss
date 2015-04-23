@@ -167,7 +167,7 @@
 }
 .commercial__search__input {
     box-sizing: border-box;
-    @include border-radius(18px);
+    border-radius: 18px;
     @include fs-textSans(2);
     background-color: rgba(#ffffff, .9);
     border: 0;

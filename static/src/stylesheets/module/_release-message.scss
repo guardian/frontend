@@ -129,7 +129,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     @include fs-textSans(2);
     color: #ffffff;
     border: 1px solid rgba(#ffffff, .3);
-    @include border-radius(50%);
+    @include circular;
 
     @include mq(tablet) {
         float: right;
@@ -177,7 +177,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     @include fs-textSans(2);
     background: transparent;
     border: 1px solid rgba(#ffffff, .3);
-    @include border-radius(50%);
+    @include circular;
     color: #ffffff;
 
     &:hover,
@@ -234,7 +234,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         width: $gs-gutter;
         height: $gs-gutter;
         background-color: colour(neutral-1);
-        @include border-radius(50%);
+        @include circular;
         box-shadow: 0px 1px 0px colour(neutral-3);
 
         &:before {
