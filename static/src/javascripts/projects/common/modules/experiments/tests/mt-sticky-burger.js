@@ -44,6 +44,14 @@ define([
             return config.direction;
         }
 
+        function showNavigationMobile(scrollY, config) {
+            if (scrollDirection(scrollY, config) === 'up') {
+                config.$stickyNavigation.css('height', 36);
+            } else {
+                config.$stickyNavigation.css('height', '0');
+            }
+        }
+
         function showNavigation(scrollY, config) {
             if (scrollDirection(scrollY, config) === 'up') {
                 config.$navigationScroll.css('display', 'block');
@@ -133,18 +141,18 @@ define([
                     });
                     config.$bannerMobile.css({
                         position:  'fixed',
-                        top:       config.stickyNavigationHeight,
+                        top:       config.headerHeight,
                         width:     '100%',
                         'z-index': '1000'
                     });
-                    config.$contentBelowMobile.css('margin-top', config.belowMobileMargin);
+                    config.$contentBelowMobile.css('margin-top', config.headerHeight + config.$bannerMobile.dim().height);
                 } else {
                     //after config.scrollThreshold px of scrolling 'release' banner and navigation
                     config.$bannerMobile.css({
                         position:  'absolute',
                         top:       config.scrollThreshold
                     });
-                    showNavigation(window.scrollY, config);
+                    showNavigationMobile(window.scrollY, config);
                 }
 
                 /*if (window.scrollY < config.scrollThreshold) {
@@ -216,16 +224,17 @@ define([
                             stickyConfig.headerHeight = stickyConfig.$header.dim().height;
                         });
                         stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
-                        stickyConfig.belowMobileMargin = stickyConfig.stickyNavigationHeight + stickyConfig.$bannerMobile.dim().height;
+                        stickyConfig.headerHeight = stickyConfig.$header.dim().height;
 
                         if (detect.getBreakpoint() === 'mobile') {
                             //burger icon is located on the right side of logo
                             fastdom.write(function () {
-                                stickyConfig.$burgerIcon.css({
+                                /*stickyConfig.$burgerIcon.css({
                                     'float': 'right',
                                     'margin': '8px 8px 0 0'
                                 }).insertBefore(stickyConfig.$logoWrapper);
-                                stickyConfig.$logoWrapper.css('margin', '12px 10px 4px 0');
+                                stickyConfig.$logoWrapper.css('margin', '12px 80px 4px 0');*/
+                                stickyConfig.$contentBelowMobile.css('margin-top', config.headerHeight + config.$bannerMobile.dim().height);
                             });
                             updatePositionMobile(stickyConfig);
 
