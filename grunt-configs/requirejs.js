@@ -48,6 +48,7 @@ module.exports = function(grunt, options) {
                         return '\'' + plugins[depPluginName] + '!' + depModuleName + '\'';
                     })
                     .replace(/require\(\['facebook/g, 'require([\'js!facebook')
+                    .replace(/require\(\['googletag/g, 'require([\'js!googletag')
                     .replace(/!system-script/g, '')
                     // TODO: Source this from npm and use the module ID
                     // "socketio", consistent with RequireJS. SystemJS will read

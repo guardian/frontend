@@ -55,7 +55,7 @@ System.config({
     "socketio": "bower:socket.io-client@1.1.0",
     "stripe": "vendor/stripe/stripe.min",
     "svg": "common/utils/svg",
-    "system-script": "npm:system-script@0.1.8",
+    "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
     "systemjs/systemjs": "github:systemjs/systemjs@0.16.7",
     "text": "github:systemjs/plugin-text@0.0.2",
     "videojs": "github:guardian/video.js@4.11.1.1",

@@ -337,7 +337,8 @@
             @Html(Static.js.systemJsBundleConfig)
         }
 
-        System.paths['ophan/ng'] = '@{Configuration.javascript.config("ophanJsUrl")}.js';
+        System.paths['ophan/ng']  = '@{Configuration.javascript.config("ophanJsUrl")}.js';
+        System.paths['googletag'] = '@{Configuration.javascript.config("googletagJsUrl")}';
 
         window.require = System.amdRequire.bind(System);
 
