@@ -2,7 +2,7 @@ package implicits
 
 import com.gu.contentapi.client.model.{Element, Tag, Content}
 import com.gu.facia.api.models.{ImageReplace, ImageCutout, FaciaContent}
-import com.gu.facia.api.utils.{MediaType, ItemKicker, FaciaContentUtils}
+import com.gu.facia.api.utils.{MediaType, ItemKicker, FaciaContentUtils, CardStyle}
 import org.joda.time.DateTime
 
 object FaciaContentImplicits {
@@ -114,5 +114,8 @@ object FaciaContentImplicits {
     def imageReplace: Option[ImageReplace] = FaciaContentUtils.imageReplace(fc)
 
     def elements: List[Element] = FaciaContentUtils.elements(fc)
+    def cardStyle: CardStyle = FaciaContentUtils.cardStyle(fc)
+
+    def isClosedForComments = FaciaContentUtils.isClosedForComments(fc)
   }
 }
