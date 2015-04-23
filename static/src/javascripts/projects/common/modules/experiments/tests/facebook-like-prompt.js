@@ -37,7 +37,7 @@ define([
                 'AU': 'theguardianaustralia',
                 'US': 'GuardianUS'
             },
-            username = usernames[config.page.edition],
+            username = usernames[config && config.page.edition],
             getFacebookLikeButtonTemplate = function () {
                 return '<div class="fb-like"' +
                      'data-href="https://www.facebook.com/' + username + '"' +
