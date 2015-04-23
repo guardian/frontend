@@ -6,6 +6,9 @@ import model.NoCache
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import services.ConfigAgent
+import conf.Switches.FaciaPressOnDemand
+
+import scala.concurrent.Future
 
 object Application extends Controller with ExecutionContexts {
   def index = Action {
@@ -20,4 +23,13 @@ object Application extends Controller with ExecutionContexts {
     FrontPress.pressLiveByPathId(path).map(Json.stringify(_))
       .map(Ok.apply(_))
       .map(NoCache.apply)}
+
+  def pressForPath(path: String) = Action.async { request =>
+    if (FaciaPressOnDemand.isSwitchedOn) {
+      FrontPress.pressLiveByPathId(path)
+        .map(_ => Ok(s"Successfully pressed $path on live"))
+        .recover { case t => InternalServerError(t.getMessage)}}
+    else {
+      Future.successful(ServiceUnavailable)}
+  }
 }
