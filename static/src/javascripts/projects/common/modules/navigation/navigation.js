@@ -20,7 +20,7 @@ define([
             "nobanner": 400
         }
     };
-
+    var $els = {};
     var Navigation = {
         init: function () {
             this.copyMegaNavMenu();
@@ -71,15 +71,21 @@ define([
         },
 
         stickyNav: function () {
+            $els.header        = $('#header');
+            $els.bannerDesktop = $('.top-banner-ad-container--above-nav');
+            $els.bannerMobile  = $('.top-banner-ad-container--mobile');
+            $els.main          = $('#maincontent');
+            $els.navHeader     = $('.js-navigation-header');
+
             fastdom.write(function () {
                 if (detect.getBreakpoint() === 'mobile') {
-                    $('.top-banner-ad-container--mobile').css({
+                    $els.bannerMobile.css({
                         position:  'fixed',
-                        top:       $('.js-navigation-header').dim().height,
+                        top:       $els.navHeader.dim().height,
                         width:     '100%',
                         'z-index': '1000'
                     });
-                    $('#maincontent').css('margin-top', $('.top-banner-ad-container--mobile').dim().height);
+                    $els.main.css('margin-top', $els.bannerMobile.dim().height);
                 }
             }.bind(this));
 
@@ -89,25 +95,24 @@ define([
         },
 
         updateStickyNavPosition: function () {
-            var scrollThreshold = 480,
-                headerHeight    = $('.js-navigation-header').dim().height,
+            var headerHeight    = $els.navHeader.dim().height,
                 bannerHeight;
 
             if (detect.getBreakpoint() === 'mobile') {
                 fastdom.write(function () {
-                    if (window.scrollY > scrollThreshold) {
-                        $('.top-banner-ad-container--mobile').css({
+                    if (window.scrollY > stickyTresholds.mobile) {
+                        $els.bannerMobile.css({
                             position: 'absolute',
-                            top:      scrollThreshold + headerHeight
+                            top:      stickyTresholds.mobile + headerHeight
                         });
                     } else {
-                        $('.top-banner-ad-container--mobile').css({
+                        $els.bannerMobile.css({
                             position:  'fixed',
                             top:       headerHeight,
                             width:     '100%',
                             'z-index': '1000'
                         });
-                        $('#header').css({
+                        $els.header.css({
                             position:  'fixed',
                             top:       0,
                             width:     '100%',
@@ -117,38 +122,38 @@ define([
                 });
             } else {
                 fastdom.write(function () {
-                    bannerHeight = $('.top-banner-ad-container--above-nav').dim().height;
+                    bannerHeight = $els.bannerDesktop.dim().height;
 
                     // Add is collapsed, header is slim
-                    if (window.scrollY > 400) {
+                    if (window.scrollY > stickyTresholds.desktop.nobanner) {
                         // Add is not sticky anymore
-                        $('.top-banner-ad-container--above-nav').css({
+                        $els.bannerDesktop.css({
                             position: 'absolute',
                             width: '100%',
-                            top: 400
+                            top: stickyTresholds.desktop.nobanner
                         });
 
                         // Sync header movement with banner disapearing
-                        $('#header').css({
-                            top: Math.round(bannerHeight - (window.scrollY - 400)) - 1
+                        $els.header.css({
+                            top: Math.round(bannerHeight - (window.scrollY - stickyTresholds.desktop.nobanner)) - 1
                         });
 
                         // Banner is not visible anymore so stick header to the top of the viewport
-                        if (window.scrollY > (400 + bannerHeight)) {
-                            $('#header').css({
+                        if (window.scrollY > (stickyTresholds.desktop.nobanner + bannerHeight)) {
+                            $els.header.css({
                                 top: 0
                             });
                         };
                     // Top ad and header are visible in full height
                     } else {
                         // Make sure that banner and header are sticky
-                        $('.top-banner-ad-container--above-nav').css({
+                        $els.bannerDesktop.css({
                             position:  'fixed',
                             top:       0,
                             width:     '100%',
                             'z-index': '1000'
                         });
-                        $('#header').css({
+                        $els.header.css({
                             position:  'fixed',
                             top:       bannerHeight,
                             width:     '100%',
@@ -156,7 +161,7 @@ define([
                         });
 
                         // Make sure header is slim when needed
-                        (window.scrollY > 100) ? $('#header').addClass('is-slim') : $('#header').removeClass('is-slim');
+                        (window.scrollY > stickyTresholds.desktop.slimnav) ? $els.header.addClass('is-slim') : $els.header.removeClass('is-slim');
                     }
                 });
             }
@@ -164,10 +169,10 @@ define([
             // Make sure there is always enough space so the content is below the sticky nav and banner
             fastdom.write(function () {
                 if (detect.getBreakpoint() === 'mobile') {
-                    bannerHeight = $('.top-banner-ad-container--mobile').dim().height;
+                    bannerHeight = $els.bannerMobile.dim().height;
                 }
                 
-                $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + bannerHeight);
+                $els.main.css('margin-top', headerHeight + bannerHeight);
             });
         }
     };
