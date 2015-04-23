@@ -1,0 +1,39 @@
+@import com.gu.identity.model.SavedArticle
+@(page: model.MetaData, articles: List[SavedArticle] )(implicit request: RequestHeader)
+
+@import implicits.Articles._
+
+@savedArticle(articles: List[SavedArticle]) = {
+    @articles.zipWithRowInfo.map { case (article, row) =>
+          <div class="@RenderClasses(Map(
+                "u-cf" -> true,
+                "saved-content" -> true,
+                "saved-content-first" -> row.isFirst))">
+
+            <div>
+                 <div class="saved-content__name"><a href="@article.href">@article.href</a></div>
+                 <div class="saved-content__read">@if(article.read){Read}else{not read}</div>
+            </div>
+            <div class="saved-content__meta u-cf">
+                <button class="saved-content__button"
+                data-link-name="Delete"
+                name="deleteSaveArticle"
+                value="@article.shortUrl">
+                Delete
+                </button>
+                <div class="saved-content__saved-at">@article.savedAt</div>
+            </div>
+        </div>
+    }
+}
+
+@main(page, projectName = Option("identity")) {
+}{
+    <div class="identity-wrapper monocolumn-wrapper">
+        <h1 class="identity-title">Saved Articles</h1>
+          <!-- Open form here and handle errors here -->
+        <div class="saved-contents">
+            @savedArticle(articles)
+        </div>
+    </div>
+}
