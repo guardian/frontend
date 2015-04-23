@@ -138,7 +138,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
      val systemJs: String = inlineJs("assets/system.src.js")
 
-     val systemJsConfig: String = inlineJs("assets/systemjs-config.js")
+     val systemJsAppConfig: String = inlineJs("assets/systemjs-config.js")
 
      val systemJsBundleConfig: String = inlineJs("assets/systemjs-bundle-config.js")
   }
