@@ -1,6 +1,9 @@
-@(page: model.MetaData, savedArticleForm: Form[SavedArticleData], articles: List[FrontendSavedArticle], formActionUrl: String )(implicit request: RequestHeader)
+@import com.gu.identity.model.SavedArticle
+@(page: model.MetaData, articles: List[SavedArticle] )(implicit request: RequestHeader)
 
-@savedArticle(articles: List[FrontendSavedArticle]) = {
+@import implicits.Articles._
+
+@savedArticle(articles: List[SavedArticle]) = {
     @articles.zipWithRowInfo.map { case (article, row) =>
           <div class="@RenderClasses(Map(
                 "u-cf" -> true,

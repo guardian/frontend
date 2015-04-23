@@ -6,12 +6,16 @@ import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
 import client.Error
 import com.google.inject.Inject
+import com.gu.identity.model.SavedArticle
 import common.ExecutionContexts
 import idapiclient.IdApiClient
-import model.{FrontendSavedArticle, IdentityPage, NoCache}
+import model.{ IdentityPage, NoCache}
 import play.api.data.{Forms, Form}
+import com.google.inject.Inject
+import common.ExecutionContexts
+import idapiclient.IdApiClient
+import model.{IdentityPage, NoCache}
 import play.api.mvc._
-import play.filters.csrf.CSRFCheck
 import services._
 import utils.SafeLogging
 
@@ -26,7 +30,6 @@ class SaveContentController @Inject() ( api: IdApiClient,
                                         )
   extends Controller with ExecutionContexts with SafeLogging {
 
-  import authenticatedActions._
   import SavedArticleData._
 
   val page = IdentityPage("/saved-content", "Saved content", "saved-content")
@@ -34,7 +37,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
   protected def formActionUrl(idUrlBuilder: IdentityUrlBuilder, idRequest: IdentityRequest, path: String): String = idUrlBuilder.buildUrl(path, idRequest)
 
 
-  def saveContentItem = authAction.apply { implicit request =>
+  def saveContentItem = authenticatedActions.authAction.apply { implicit request =>
 
     val idRequest = identityRequestParser(request)
     val userId = request.user.getId()
@@ -57,23 +60,20 @@ class SaveContentController @Inject() ( api: IdApiClient,
     }
   }
 
-  def listSavedContentItems = authAction.async { implicit request =>
+
+  def listSavedContentItems = authenticatedActions.authAction.async { implicit request  =>
 
     val prefsResponse = api.syncedPrefs(request.user.auth)
-    val idRequest = identityRequestParser(request)
-
-    val form = savedArticeForm.fill(SavedArticleData(List.empty))
 
     savedArticleService.getOrCreateArticlesList(prefsResponse).map {
       case Right(prefs) =>
-
-        NoCache(Ok(views.html.profile.savedContent(page, form, prefs.articles.asInstanceOf[List[FrontendSavedArticle]].reverse, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content/delete"))))
+        NoCache(Ok(views.html.profile.savedContent(page, prefs.articles.reverse)))
       case Left(errors) =>
-        NoCache(Ok(views.html.profile.savedContent(page, form, List.empty, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content/delete"))))
+        NoCache(Ok(views.html.profile.savedContent(page, List.empty)))
     }
   }
 
-  def deleteSavedContentItem = authAction.async { implicit request =>
+  def deleteSavedContentItem = authenticatedActions.authAction.apply { implicit request =>
     println("delete article")
 
     val prefsResponse = api.syncedPrefs(request.user.auth)
@@ -81,7 +81,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
     val form = savedArticeForm.fill(SavedArticleData(List.empty))
 
-    val articles = List[FrontendSavedArticle]()
+    val articles = List[SavedArticle]()
 
     /*
     savedArticleService.getOrCreateArticlesList(prefsResponse).map {
