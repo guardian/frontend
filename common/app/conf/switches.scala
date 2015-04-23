@@ -560,6 +560,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
+  val ABFacebookLikePrompt = Switch("A/B Tests", "ab-facebook-like-prompt",
+    "Switch for the Facebook Like Prompt A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 17)
+  )
+
   val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
     "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
     safeState = Off, sellByDate = never
