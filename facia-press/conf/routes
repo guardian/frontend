@@ -2,4 +2,6 @@ GET        /_healthcheck        conf.HealthCheck.healthcheck()
 GET        /                    controllers.Application.index
 GET        /debug/config        controllers.Application.showCurrentConfig
 
-GET        /pressed/live/*id      controllers.Application.generateLivePressedFor(id)
+GET        /pressed/live/*id    controllers.Application.generateLivePressedFor(id)
+
+GET        /press/*path         controllers.Application.pressLiveForPath(path)
