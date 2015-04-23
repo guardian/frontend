@@ -10,12 +10,6 @@ module.exports = function(grunt, options) {
                 },
                 {
                     expand: true,
-                    cwd: 'static/src/javascripts',
-                    src: ['boot.js'],
-                    dest: options.staticTargetDir + 'javascripts'
-                },
-                {
-                    expand: true,
                     cwd: 'static/src/javascripts/vendor',
                     src: [
                         'formstack-interactive/0.1/boot.js',
