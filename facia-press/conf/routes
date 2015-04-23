@@ -4,4 +4,5 @@ GET        /debug/config        controllers.Application.showCurrentConfig
 
 GET        /pressed/live/*id    controllers.Application.generateLivePressedFor(id)
 
-GET        /press/*path         controllers.Application.pressLiveForPath(path)
+GET        /press/live/*path    controllers.Application.pressLiveForPath(path)
+GET        /press/draft/*path   controllers.Application.pressDraftForPath(path)
