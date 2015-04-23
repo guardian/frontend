@@ -1,6 +1,9 @@
-@(page: model.MetaData, articles: List[FrontendSavedArticle], mes: String )(implicit request: RequestHeader)
+@import com.gu.identity.model.SavedArticle
+@(page: model.MetaData, articles: List[SavedArticle] )(implicit request: RequestHeader)
 
-@savedArticle(articles: List[FrontendSavedArticle]) = {
+@import implicits.Articles._
+
+@savedArticle(articles: List[SavedArticle]) = {
     @articles.zipWithRowInfo.map { case (article, row) =>
           <div class="@RenderClasses(Map(
                 "u-cf" -> true,
@@ -15,11 +18,10 @@
                 <button class="saved-content__button"
                 data-link-name="Delete"
                 name="deleteSaveArticle"
-                type="submit"
                 value="@article.shortUrl">
                 Delete
                 </button>
-                <div class="saved-content__saved-at"></i>@article.savedAt</div>
+                <div class="saved-content__saved-at">@article.savedAt</div>
             </div>
         </div>
     }

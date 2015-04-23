@@ -2,12 +2,12 @@ package model
 
 import com.gu.identity.model.{SavedArticle, SavedArticles}
 import org.joda.time.DateTime
-import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
+import org.joda.time.format.ISODateTimeFormat
 
 /**
  * Created by nbennett on 27/03/15.
  */
-class FrontendSavedArticles(version: String, articles: List[FrontendSavedArticle]) extends SavedArticles(version, articles) {
+class FrontendSavedArticles(version: String, articles: List[SavedArticle]) extends SavedArticles(version, articles) {
 
   val fmt = ISODateTimeFormat.dateTimeNoMillis()
 
@@ -25,12 +25,4 @@ class FrontendSavedArticles(version: String, articles: List[FrontendSavedArticle
 
       case _ => SavedArticles(version, articleToSave :: articles) }
   }
-}
-
-class FrontendSavedArticle(id: String, shortUrl: String, date: DateTime, read: Boolean) extends SavedArticle(id, shortUrl, date, read) {
-
-  val fmt = DateTimeFormat.forPattern("EEEE d, HH:mm")
-
-  lazy val href = "%s/%s".format(conf.Configuration.site.host, id)
-  lazy val savedAt = fmt.print(date)
 }
