@@ -14,6 +14,8 @@ class FrontendSavedArticles(version: String, articles: List[FrontendSavedArticle
   def this() = this(ISODateTimeFormat.dateTimeNoMillis().print(new DateTime()), List.empty)
   def contains(shortUrl: String) : Boolean = articles.exists( sa => sa.shortUrl == shortUrl)
 
+  def frontendArticles = articles
+
   def addArticle(id: String, shortUrl: String) : SavedArticles = {
 
     val articleToSave = SavedArticle(id, shortUrl, new DateTime(), false )
@@ -25,6 +27,8 @@ class FrontendSavedArticles(version: String, articles: List[FrontendSavedArticle
 
       case _ => SavedArticles(version, articleToSave :: articles) }
   }
+
+  def removeArticle(shortUrl: String) : SavedArticles = SavedArticles(version, articles.filterNot{ article => article.shortUrl != shortUrl })
 }
 
 class FrontendSavedArticle(id: String, shortUrl: String, date: DateTime, read: Boolean) extends SavedArticle(id, shortUrl, date, read) {

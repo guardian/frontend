@@ -50,7 +50,7 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     response map extractSavedArticles
   }
 
-  def saveArticle(userId: String, auth: Auth, savedArticles: SavedArticles): Future[Response[FrontendSavedArticles]] = {
+  def saveArticle(auth: Auth, savedArticles: SavedArticles): Future[Response[FrontendSavedArticles]] = {
     val apiPath = urlJoin("syncedPrefs", "me", "savedArticles")
     val updatedSavedArticles = write(savedArticles)
     val params = buildParams(Some(auth))
