@@ -13,6 +13,10 @@ html {
 body {
     background-color: #ffffff;
 }
+body.has-membership-access-requirement {
+    visibility: hidden !important;
+}
+
 
 @if $old-ie == false {
     html,
