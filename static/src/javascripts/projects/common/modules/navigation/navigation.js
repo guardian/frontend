@@ -86,6 +86,18 @@ define([
                         'z-index': '1000'
                     });
                     $els.main.css('margin-top', $els.bannerMobile.dim().height);
+                } else {
+
+                    // Make sure that we show slim nav when page loaded with anchor
+                    if (window.scrollY > stickyTresholds.desktop.slimnav) {
+                        $els.header.css({
+                            position:  'fixed',
+                            top:       0,
+                            width:     '100%',
+                            'z-index': '1000'
+                        });
+                        $els.header.addClass('is-slim')
+                    }
                 }
             }.bind(this));
 
