@@ -24,12 +24,12 @@ object Application extends Controller with ExecutionContexts {
       .map(Ok.apply(_))
       .map(NoCache.apply)}
 
-  def pressForPath(path: String) = Action.async { request =>
+  def pressLiveForPath(path: String) = Action.async { request =>
     if (FaciaPressOnDemand.isSwitchedOn) {
       FrontPress.pressLiveByPathId(path)
-        .map(_ => Ok(s"Successfully pressed $path on live"))
-        .recover { case t => InternalServerError(t.getMessage)}}
+        .map(_ => NoCache(Ok(s"Successfully pressed $path on live")))
+        .recover { case t => NoCache(InternalServerError(t.getMessage))}}
     else {
-      Future.successful(ServiceUnavailable)}
+      Future.successful(NoCache(ServiceUnavailable))}
   }
 }
