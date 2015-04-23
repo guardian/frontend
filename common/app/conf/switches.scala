@@ -362,7 +362,7 @@ object Switches {
 
   val FeedbackLink = Switch("Monitoring", "tech-feedback",
     "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
-    safeState = Off, new LocalDate(2015, 4, 24)
+    safeState = Off, new LocalDate(2015, 5, 23)
   )
 
   val SendExpiringSwitchesEmail = Switch("Monitoring", "expiring-switches-email",
