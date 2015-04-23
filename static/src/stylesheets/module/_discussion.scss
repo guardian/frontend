@@ -404,7 +404,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__avatar,
 .user-avatar__image {
-    @include border-radius(50%);
+    @include circular;
 }
 
 .d-comment__meta-text,
@@ -733,7 +733,7 @@ $comment-recommend-button-size: 19px;
     left: 0;
     width: $comment-recommend-button-size;
     height: $comment-recommend-button-size;
-    @include border-radius(18px);
+    border-radius: 18px;
     background-color: colour(neutral-7);
 }
 .d-comment__recommend-count {
@@ -1088,7 +1088,7 @@ $comment-recommend-button-size: 19px;
     @include fs-textSans(2, true);
 }
 .person__avatar {
-    @include border-radius(50%);
+    @include circular;
     overflow: hidden;
     float: left;
     height: 36px;

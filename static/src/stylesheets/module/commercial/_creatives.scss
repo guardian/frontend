@@ -249,7 +249,7 @@
         position: absolute;
         top: 0;
         right: 0;
-        @include border-radius(100px);
+        border-radius: 100px;
         border: 1px solid #ffffff;
         background-color: #000000;
         margin: 5px;
@@ -305,7 +305,7 @@
         margin-left: $gs-gutter*-1.5;
         text-align: center;
         @include fs-textSans(1);
-        @include border-radius($gs-gutter $gs-gutter 0 0);
+        border-radius: $gs-gutter $gs-gutter 0 0;
 
         .inline-arrow-down {
             transition: all 1s ease;

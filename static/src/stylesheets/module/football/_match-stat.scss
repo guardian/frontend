@@ -22,11 +22,11 @@
     height: 14px;
     top: 2px;
     width: 2px;
-    @include border-radius(0);
+    border-radius: 0;
 }
 
 @mixin team-result--shrink {
-    @include border-radius(8px);
+    border-radius: 8px;
     height: 4px;
     margin-left: ($gs-gutter/4)+3;
     width: 4px;
@@ -58,7 +58,7 @@
     display: inline-block;
     top: 0;
     vertical-align: middle;
-    @include border-radius(4px);
+    border-radius: 4px;
     height: 8px;
     margin-left: ($gs-gutter/4)+3;
     width: 8px;

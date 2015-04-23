@@ -92,7 +92,7 @@ $block-padding-right: $gs-gutter;
 .live-pulse-icon:before {
     display: inline-block;
     position: relative;
-    @include border-radius(50%);
+    @include circular;
     $size: .75em;
     background-color: #ffffff;
     width: $size;
@@ -138,7 +138,7 @@ $block-padding-right: $gs-gutter;
         height: $size;
         margin-bottom: -1px;
         margin-right: 3px;
-        @include border-radius(50%);
+        @include circular;
         animation: live-pulse 2s infinite;
     }
 
@@ -635,7 +635,7 @@ $timeline-width: 15px;
             left: ($timeline-width/2)*-1;
             width: $timeline-width;
             height: $timeline-width;
-            @include border-radius(50%);
+            @include circular;
             background-color: colour(neutral-3);
         }
 

@@ -15,11 +15,13 @@ define([
     'common/modules/experiments/tests/mt-top-below-first-container',
     'common/modules/experiments/tests/mt-depth',
     'common/modules/experiments/tests/across-the-country',
+    'common/modules/experiments/tests/facebook-like-prompt',
     'common/modules/experiments/tests/mt-sticky-bottom',
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/tests/history-without-whitelist',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/mt-lz-ads-depth'
+    'common/modules/experiments/tests/mt-lz-ads-depth',
+    'common/modules/experiments/tests/facia-slideshow'
 ], function (
     raven,
     _,
@@ -37,11 +39,13 @@ define([
     MtTopBelowFirstContainer,
     MtDepth,
     AcrossTheCountry,
+    FacebookLikePrompt,
     MtStickyBottom,
     SaveForLater,
     HistoryWithoutWhitelist,
     Headline,
-    MtLzAdsDepth
+    MtLzAdsDepth,
+    FaciaSlideshow
 ) {
 
     var ab,
@@ -55,13 +59,15 @@ define([
             new MtTopBelowFirstContainer(),
             new MtDepth(),
             new AcrossTheCountry(),
+            new FacebookLikePrompt(),
             new MtStickyBottom(),
             new SaveForLater(),
             new HistoryWithoutWhitelist(),
             new MtLzAdsDepth(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
-            })
+            }),
+            new FaciaSlideshow()
         ]),
         participationsKey = 'gu.ab.participations';
 

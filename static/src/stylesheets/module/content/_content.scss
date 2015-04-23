@@ -439,7 +439,7 @@
     height: 60px; //Intentionally off grid
     margin: $gs-baseline/2 0;
     overflow: hidden;
-    @include border-radius(50%);
+    @include circular;
     background-color: colour(neutral-7);
 
     // fixes for webkit not properly scaling/clipping the child element (still broken on some android browsers...)

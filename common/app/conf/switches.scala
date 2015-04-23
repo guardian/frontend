@@ -560,6 +560,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
+  val ABFacebookLikePrompt = Switch("A/B Tests", "ab-facebook-like-prompt",
+    "Switch for the Facebook Like Prompt A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 17)
+  )
+
   val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
     "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
     safeState = Off, sellByDate = never
@@ -584,6 +589,11 @@ object Switches {
       sellByDate = new LocalDate(2015, 6, 10)
     )
   }
+
+  val ABFaciaSlideshow = Switch("A/B Tests", "ab-facia-slideshow",
+    "Switch for the facia slideshow A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
+  )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
@@ -622,6 +632,11 @@ object Switches {
   val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
     "If this is switched on then lazy load the most-popular container on content pages",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
+  )
+
+  val SlideshowImages = Switch("Feature", "slideshow-images",
+    "If switched on, slideshows will be displayed on the fronts",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   // Facia

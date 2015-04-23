@@ -95,7 +95,7 @@ $ima-controls-height: 70px;
         display: inline-block;
         vertical-align: middle;
         position: relative;
-        @include border-radius(50%);
+        @include circular;
         @include video-play-button-size($vjs-small-button-size);
         @include mq(mobileLandscape) {
             @include video-play-button-size($vjs-large-button-size);
@@ -128,7 +128,7 @@ $ima-controls-height: 70px;
             margin-left: -.9em; /* [1] */
 
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
-                @include border-radius(.2em);
+                border-radius: .2em;
             }
 
             .gu-media-wrapper:hover &,
@@ -523,7 +523,7 @@ $ima-controls-height: 70px;
     text-indent: -9999px;
     background: transparent;
     border: 1px solid rgba(#ffffff, .3);
-    @include border-radius(50%);
+    @include circular;
 
     &:hover {
         border-color: #ffffff;

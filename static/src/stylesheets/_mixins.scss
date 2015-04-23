@@ -15,6 +15,10 @@
 // CSS helpers
 // =============================================================================
 
+@mixin circular {
+    border-radius: 1000px; // Android 2.3 cannot deal with '50%'
+}
+
 // Vertical linear gradient with a plain fallback for older browsers
 @mixin simple-gradient($from, $to) {
     // Fix for browsers not understanding transparent
@@ -46,7 +50,7 @@
     &:before {
         display: inline-block;
         content: '';
-        @include border-radius(6px);
+        border-radius: 6px;
         height: 12px;
         width: 12px;
         margin-right: $right-space;
@@ -133,7 +137,7 @@
     cursor: pointer;
     width: $buttonSize;
     height: $buttonSize;
-    @include border-radius($buttonSize);
+    border-radius: $buttonSize;
     position: relative;
     display: block;
 
