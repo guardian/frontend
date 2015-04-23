@@ -6,6 +6,7 @@ define([
     'modules/vars',
     'utils/ammended-query-str',
     'utils/mediator',
+    'utils/fetch-acl',
     'utils/fetch-settings',
     'utils/global-listeners',
     'utils/layout-from-url',
@@ -29,6 +30,7 @@ define([
     vars,
     ammendedQueryStr,
     mediator,
+    fetchACL,
     fetchSettings,
     globalListeners,
     layoutFromUrl,
@@ -57,6 +59,7 @@ define([
             fronts: ko.observableArray(),
             loadedFronts: ko.observableArray(),
             isPasteActive: ko.observable(false),
+            permissions: ko.observable(),
             isSparklinesEnabled: ko.pureComputed(function () {
                 return sparklines.isEnabled();
             })
@@ -102,7 +105,13 @@ define([
             model.isPasteActive(hasArticle);
         });
 
-        this.init = function() {
+        this.init = function () {
+            fetchACL().done(initialize).fail(function () {
+                terminate('Unable to get user permissions.');
+            });
+        };
+
+        function initialize (permissions) {
             fetchSettings(function (config, switches) {
                 var fronts;
 
@@ -111,7 +120,7 @@ define([
                     return;
                 }
                 model.switches(switches);
-
+                model.permissions(permissions);
 
                 vars.state.config = config;
 
@@ -160,7 +169,7 @@ define([
             listManager.init(newItems);
             droppable.init();
             copiedArticle.flush();
-        };
+        }
 
     };
 });

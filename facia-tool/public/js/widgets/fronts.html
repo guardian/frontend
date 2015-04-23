@@ -1,4 +1,16 @@
 <div class="front-container" data-bind="css: frontMode">
+    <!-- ko ifnot: authorized -->
+    <div class="col__inner scrollable unauthorized-message">
+        <div class="huge frown-face">
+            <i class="fa fa-frown-o"></i>
+        </div>
+        <p>Sorry. You're not authorized to view this.</p>
+        <p>If you think there's a mistake, please get in touch with <a href="mailto:central.production@theguardian.com">central.production@theguardian.com</a>. Apologies.</p>
+    </div>
+    <!-- /ko -->
+
+
+    <!-- ko if: authorized -->
     <div class="modes">
         <a class="draft-mode" data-bind="
             click: setModeDraft,
@@ -69,4 +81,5 @@
     <div class="col__inner scrollable collection-container" data-bind="foreach: collections">
         <collection-widget params="context: $context" data-bind="ownerClass: $data"></collection-widget>
     </div>
+    <!-- /ko -->
 </div>

@@ -1,5 +1,7 @@
 package common
 
+import play.api.{Application, GlobalSettings}
+
 import scala.concurrent.duration.FiniteDuration
 import akka.agent.Agent
 import akka.actor.Cancellable
@@ -9,7 +11,20 @@ import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /** Simple class for repeatedly updating a value on a schedule */
-abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration) extends Logging {
+abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration) extends Logging { self =>
+
+  trait Lifecycle extends GlobalSettings {
+    override def onStart(app: Application): Unit = {
+      super.onStart(app)
+      self.start()
+    }
+
+    override def onStop(app: Application): Unit = {
+      super.onStop(app)
+      self.stop()
+    }
+  }
+
   private lazy val agent = Agent[Option[A]](None)
 
   @volatile private var subscription: Option[Cancellable] = None

@@ -77,6 +77,7 @@ POST          /config/collections/*id    controllers.CollectionController.update
 # Stories visible
 POST          /stories-visible/*containerType   controllers.StoriesVisibleController.storiesVisible(containerType)
 
+GET        /acl                                                        controllers.AccessControlListController.test()
 
 # FACIA
 # Editionalised redirects

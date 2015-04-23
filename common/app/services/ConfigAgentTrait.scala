@@ -28,6 +28,9 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     futureConfig.map(Option.apply).map(configAgent.send)
   }
 
+  def getBreakingNewsCollectionIds: Set[String] =
+    configAgent.get().flatMap(_.fronts.get("breaking-news").map(_.collections.toSet)).getOrElse(Set.empty)
+
   def refreshWith(config: Config): Unit = {
     configAgent.send(Option(config))
   }

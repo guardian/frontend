@@ -38,6 +38,7 @@ define([
         this.flattenGroups = ko.observable(params.mode === 'treats');
         this.maxArticlesInHistory = this.confirmSendingAlert() ? 20 : 5;
         this.controlsVisible = ko.observable(false);
+        this.authorized = ko.observable(vars.model.permissions()[frontId] !== false);
 
         this.front.subscribe(this.onFrontChange.bind(this));
         this.mode.subscribe(this.onModeChange.bind(this));

@@ -14,7 +14,7 @@ define([
                 contentType: opts.data ? 'application/json' : undefined
             }, opts)
         ).fail(function(xhr) {
-            if (xhr.status === 403) {
+            if (xhr.status === 403 || xhr.status === 401) {
                 window.location.reload(true);
             }
         });
