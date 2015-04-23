@@ -59,7 +59,7 @@ Three quarter item. Looks like a wide standard, a bit like this:
             min-height: gs-height(7);
 
             .has-flex-wrap & {
-                @include flex-direction(row);
+                flex-direction: row;
             }
         }
 
@@ -77,7 +77,7 @@ Three quarter item. Looks like a wide standard, a bit like this:
             }
 
             .has-flex-wrap & {
-                @include flex-basis(auto);
+                flex-basis: auto;
             }
         }
     }

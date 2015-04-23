@@ -43,7 +43,7 @@
     > .nav__item {
         float: left;
         width: 50%;
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         padding-right: $gs-gutter/2;
 
         &:nth-child(odd) {

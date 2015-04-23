@@ -99,7 +99,7 @@
     padding-left: $gs-gutter;
 }
 .activity-stream-search__q {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     vertical-align: bottom;
     width: 100%;
     padding-bottom: $gs-baseline/6;
@@ -165,7 +165,7 @@
 }
 .activity-stream__witness-content:hover {
     background: colour(neutral-6);
-    @include transition(.3s all);
+    transition: .3s all;
 }
 .activity-stream__witness-text {
     display: block;

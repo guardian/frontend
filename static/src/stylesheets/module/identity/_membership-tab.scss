@@ -123,13 +123,13 @@
         }
 
         .summary-arrow {
-            @include transform(rotate(90deg));
+            transform: rotate(90deg);
             background-size: 18px 16px;
             width: 18px;
             height: 16px;
 
             @include mq(tablet) {
-                @include transform(rotate(0deg));
+                transform: rotate(0deg);
             }
 
             @include mq(desktop) {

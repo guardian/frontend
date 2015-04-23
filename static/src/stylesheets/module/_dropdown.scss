@@ -47,7 +47,7 @@
 
     &.dropdown--active {
         .dropdown__button .i {
-            @include rotate(180deg);
+            transform: rotate(180deg);
         }
     }
 }

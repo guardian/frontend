@@ -64,7 +64,7 @@
         padding-right: $gs-gutter;
     }
     @include mq(leftCol) {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         height: 100%;
     }
 }
@@ -166,8 +166,8 @@
     padding-top: $gs-baseline/2;
 }
 .commercial__search__input {
-    @include box-sizing(border-box);
-    @include border-radius(18px);
+    box-sizing: border-box;
+    border-radius: 18px;
     @include fs-textSans(2);
     background-color: rgba(#ffffff, .9);
     border: 0;
@@ -267,7 +267,7 @@
             margin-right: auto;
         }
         .commercial__header__inner {
-            @include box-sizing(content-box);
+            box-sizing: content-box;
             margin: 0;
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;

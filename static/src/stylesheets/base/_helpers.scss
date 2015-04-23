@@ -145,9 +145,6 @@
 
 .u-text-hyphenate {
     word-wrap: break-word;
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-    -ms-hyphens: auto;
     hyphens: auto;
 }
 
@@ -182,7 +179,7 @@
 %u-underline {
     text-decoration: none !important;
     border-bottom: 1px solid colour(neutral-4);
-    @include transition(border-color .15s ease-out);
+    transition: border-color .15s ease-out;
 
     &:hover,
     &:focus {
@@ -232,4 +229,8 @@
     svg {
         vertical-align: middle;
     }
+}
+
+.u-color-black {
+    color: #000000;
 }
