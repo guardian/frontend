@@ -15,13 +15,6 @@ $c-guardian-services-action: #ffffff;
     }
 }
 
-.l-header--sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1001;
-}
-
 .l-header--is-slim {
     // TODO: Palette?
     background: darken(colour(guardian-brand), 2%);
@@ -97,6 +90,32 @@ $c-guardian-services-action: #ffffff;
             }
         }
     }
+
+    .inline-logo {
+        display: block;
+    }
+
+    .logo__tagline {
+        @include fs-textSans(1);
+        position: absolute;
+        top: 47px;
+        left: 122px;
+        color: #aad8f1; // To match custom colour of 'the' in logotype. Shouldn't be used elsewhere
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .no-svg & {
+        .inline-logo {
+            width: 160px;
+            height: 30px;
+
+            @include mq(tablet) {
+                width: 320px;
+                height: 60px;
+            }
+        }
+    }
 }
 
 
@@ -109,8 +128,7 @@ $c-guardian-services-action: #ffffff;
 .l-header-pre {
     &,
     // Override breakpoint
-    .l-header--is-slim &,
-    .l-header--slim & {
+    .l-header--is-slim & {
         float: left;
     }
 }
@@ -123,10 +141,6 @@ $c-guardian-services-action: #ffffff;
     @include mq(tablet) {
         float: none;
     }
-}
-
-.l-header-pre--sticky {
-    float: left;
 }
 
 
@@ -198,14 +212,14 @@ $c-guardian-services-action: #ffffff;
                 height: 30px;
             }
         }
+
+        .logo__tagline {
+            display: none !important;
+        }
     }
 
     .inline-logo {
         display: block;
-    }
-
-    .logo__tagline {
-        display: none;
     }
 
     .no-svg & {

@@ -65,14 +65,13 @@ define([
         stickyNav: function () {
             fastdom.write(function () {
                 if (detect.getBreakpoint() === 'mobile') {
-                    $('#header').addClass('l-header--sticky');
-                    $('.top-banner-ad-container--mobile').addClass('top-banner-ad-container--sticky').css({
-                            position:  'fixed',
-                            top:       $('.js-navigation-header').dim().height,
-                            width:     '100%',
-                            'z-index': '1000'
-                        });
-                    $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + $('.top-banner-ad-container--mobile').dim().height);
+                    $('.top-banner-ad-container--mobile').css({
+                        position:  'fixed',
+                        top:       $('.js-navigation-header').dim().height,
+                        width:     '100%',
+                        'z-index': '1000'
+                    });
+                    $('#maincontent').css('margin-top', $('.top-banner-ad-container--mobile').dim().height);
                 }
             }.bind(this));
 
@@ -83,21 +82,28 @@ define([
 
         updateStickyNavPosition: function () {
             var scrollThreshold = 480,
-                headerHeight    = $('.js-navigation-header').dim().height;
+                headerHeight    = $('.js-navigation-header').dim().height,
+                bannerHeight;
 
             if (detect.getBreakpoint() === 'mobile') {
                 fastdom.write(function () {
                     if (window.scrollY > scrollThreshold) {
-                        $('.top-banner-ad-container--sticky').css({
+                        $('.top-banner-ad-container--mobile').css({
                             position: 'absolute',
                             top:      scrollThreshold + headerHeight
                         });
                     } else {
-                        $('.top-banner-ad-container--sticky').css({
+                        $('.top-banner-ad-container--mobile').css({
                             position:  'fixed',
                             top:       headerHeight,
                             width:     '100%',
                             'z-index': '1000'
+                        });
+                        $('#header').css({
+                            position:  'fixed',
+                            top:       0,
+                            width:     '100%',
+                            'z-index': '1001'
                         });
                     }
                 });
@@ -114,7 +120,7 @@ define([
 
                         // Sync header movement with banner disapearing
                         $('#header').css({
-                            top: bannerHeight - (window.scrollY - 400)
+                            top: Math.round(bannerHeight - (window.scrollY - 400)) - 1
                         });
 
                         // Banner is not visible anymore so stick header to the top of the viewport
@@ -126,7 +132,6 @@ define([
                     // Top ad and header are visible in full height
                     } else {
                         bannerHeight = $('.top-banner-ad-container--above-nav').dim().height;
-                        $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + bannerHeight);
 
                         // Make sure that banner and header are sticky
                         $('.top-banner-ad-container--above-nav').css({
@@ -147,6 +152,15 @@ define([
                     }
                 });
             }
+
+            // Make sure there is always enough space so the content is below the sticky nav and banner
+            fastdom.write(function () {
+                if (detect.getBreakpoint() === 'mobile') {
+                    bannerHeight = $('.top-banner-ad-container--mobile').dim().height;
+                }
+                
+                $('#maincontent').css('margin-top', $('.js-navigation-header').dim().height + bannerHeight);
+            });
         }
     };
 

@@ -329,6 +329,10 @@
     .brand-bar__item {
         margin-right: $gs-baseline * .25;
         margin-left: $gs-baseline * .25;
+
+        &:first-child {
+            margin-left: $gs-gutter / 2;
+        }
     }
 
     .brand-bar__item--right {

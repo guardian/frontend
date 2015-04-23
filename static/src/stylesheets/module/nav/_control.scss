@@ -75,8 +75,6 @@ $control-size: 36px;
     }
 
     .control__icon-wrapper {
-        .brand-bar__item--right & {
-            display: block;
-        }
+        display: block;
     }
 }
