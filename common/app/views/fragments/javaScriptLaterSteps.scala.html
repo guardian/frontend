@@ -256,7 +256,8 @@
                         tags: {
                             edition:        guardian.config.page.edition,
                             contentType:    guardian.config.page.contentType,
-                            revisionNumber: guardian.config.page.revisionNumber
+                            revisionNumber: guardian.config.page.revisionNumber,
+                            loaderType:     'Curl'
                         },
                         dataCallback: function(data) {
                             if (data.culprit) {
@@ -356,7 +357,8 @@
                     tags: {
                         edition:        guardian.config.page.edition,
                         contentType:    guardian.config.page.contentType,
-                        revisionNumber: guardian.config.page.revisionNumber
+                        revisionNumber: guardian.config.page.revisionNumber,
+                        loaderType:     'SystemJs'
                     },
                     dataCallback: function(data) {
                         if (data.culprit) {
