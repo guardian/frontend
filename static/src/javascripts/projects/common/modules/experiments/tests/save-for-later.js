@@ -28,10 +28,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            var isNotContent = /Network Front|Section/.test(config.page.contentType),
-                isDesktop = detect.isBreakpoint({ min: 'desktop'});
-
-            return !isNotContent && isDesktop;
+            return /Network Front|Section/.test(config.page.contentType);
         };
 
         this.variants = [
