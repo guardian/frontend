@@ -104,9 +104,11 @@ $header-image-size-desktop: 100px;
     @include mq($until: tablet) {
         overflow: hidden;
 
-        .fc-container__header__title,
-        .fc-container__header__description {
+        .fc-container__header__title {
             float: left;
+        }
+        .fc-container__header__description {
+            float: right;
         }
         .fc-container__header__title {
             padding-right: $gs-gutter / 4;
