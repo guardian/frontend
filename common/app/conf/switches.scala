@@ -585,6 +585,11 @@ object Switches {
     )
   }
 
+  val ABFaciaSlideshow = Switch("A/B Tests", "ab-facia-slideshow",
+    "Switch for the facia slideshow A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
+  )
+
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
     safeState = Off, sellByDate = never)
@@ -622,6 +627,11 @@ object Switches {
   val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
     "If this is switched on then lazy load the most-popular container on content pages",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
+  )
+
+  val SlideshowImages = Switch("Feature", "slideshow-images",
+    "If switched on, slideshows will be displayed on the fronts",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   // Facia
