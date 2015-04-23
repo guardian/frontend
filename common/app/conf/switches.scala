@@ -690,6 +690,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
   )
 
+  val FaciaPressOnDemand = Switch("Facia", "facia-press-on-demand",
+    "If this is switched on, you can force facia to press on demand (Leave off)",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 30)
+  )
+
   // Server-side A/B Tests
 
   val ServerSideTests = {
