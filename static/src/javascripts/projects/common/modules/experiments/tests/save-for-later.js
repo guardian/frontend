@@ -28,7 +28,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return /Network Front|Section/.test(config.page.contentType);
+            return !/Network Front|Section/.test(config.page.contentType);
         };
 
         this.variants = [
