@@ -76,6 +76,10 @@ $c-navigation-expandable-background: colour(neutral-1);
         .l-header--is-slim & {
             display: none;
         }
+
+        .l-header--is-slim-ab & {
+            display: block;
+        }
     }
 
     &:after {

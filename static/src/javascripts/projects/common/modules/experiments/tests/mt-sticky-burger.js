@@ -34,21 +34,20 @@ define([
         };
 
         function scrollDirection(scrollY, config) {
-            var direction = '';
-
             if (scrollY > config.prevScroll) {
-                direction = 'down';
-            } else {
-                direction = 'up';
+                config.direction = 'down';
+            } else if (scrollY < config.prevScroll) {
+                config.direction = 'up';
             }
             config.prevScroll = scrollY;
 
-            return direction;
+            return config.direction;
         }
 
         function showNavigation(scrollY, config) {
             if (scrollDirection(scrollY, config) === 'up') {
                 config.$navigationScroll.css('display', 'block');
+                config.$navigationGreySection.css('border-top', '36px solid #00456e');
             } else {
                 config.$navigationScroll.css('display', 'none');
             }
@@ -71,13 +70,13 @@ define([
                         top: null,
                         'z-index': null,
                         'margin-top': config.stickyTopAdHeight
-                    }).removeClass('l-header--is-slim');
+                    }).removeClass('l-header--is-slim l-header--is-slim-ab');
                     config.$bannerMobile.css('margin-top', null);
 
                     //burger icon is below the header
                     config.$burgerIcon.insertAfter(config.$navigationScroll);
 
-                    config.$navigationScroll.css('display', 'block');
+                    config.$stickyNavigation.css('display', 'block');
 
                     //when scroll will pass 30px header is sticky and slim
                     if (window.scrollY >= 30) {
@@ -89,12 +88,11 @@ define([
                             width: '100%',
                             'z-index': '1001',
                             'margin-top': 0
-                        }).addClass('l-header--is-slim');
+                        }).addClass('l-header--is-slim l-header--is-slim-ab');
                         config.$bannerMobile.css('margin-top', config.stickyNavigationHeight + config.stickyTopAdHeight);
 
                         //if we are scrolling up show full navigation
                         showNavigation(window.scrollY, config);
-
                     }
                 } else {
                     //after config.scrollThreshold px of scrolling 'release' topAd
@@ -207,8 +205,10 @@ define([
                                 $contentBelowMobile: $('#maincontent'),
                                 $logoWrapper: $('.js-navigation-header .logo-wrapper'),
                                 $navigationScroll: $('.js-navigation-header .navigation__scroll'),
+                                $navigationGreySection: $('.js-navigation-header .navigation__container--first'),
                                 scrollThreshold: config.page.contentType === 'Video' || config.page.contentType === 'Gallery' ? 280 : 480,
-                                prevScroll: 0
+                                prevScroll: 0,
+                                direction: ''
                             };
 
                         fastdom.write(function () {
