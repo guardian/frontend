@@ -4,7 +4,7 @@ import com.gu.facia.api.models.FaciaContent
 import com.gu.facia.api.utils._
 import common.ExternalLinks
 import model.Trail
-import com.gu.facia.api.utils.FaciaContentImplicits._
+import implicits.FaciaContentImplicits._
 
 object CardStyleForFrontend {
   def isExternalLink(trail: Trail): Boolean = (for {

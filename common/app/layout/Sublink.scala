@@ -3,7 +3,7 @@ package layout
 import com.gu.facia.api.models._
 import com.gu.facia.api.utils.{MediaType, CardStyle, ItemKicker}
 import common.{Edition, InternationalEdition, LinkTo}
-import com.gu.facia.api.utils.FaciaContentImplicits._
+import implicits.FaciaContentImplicits._
 import implicits.FaciaContentFrontendHelpers._
 import model.{Tag, FaciaDisplayElement, InlineImage, InlineVideo}
 import org.joda.time.DateTime

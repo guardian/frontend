@@ -2,7 +2,7 @@ package model
 
 import com.gu.contentapi.client.model.{ Content => ApiContent, Tag => ApiTag, Section => ApiSection }
 import com.gu.facia.api.models.FaciaContent
-import com.gu.facia.api.utils.FaciaContentImplicits._
+import implicits.FaciaContentImplicits._
 
 // NEVER FORGET - Just calling this SupportedUrl doesn't make it not UrlBuilder, y'know.
 object SupportedUrl {

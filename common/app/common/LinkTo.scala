@@ -10,7 +10,7 @@ import org.jsoup.Jsoup
 import scala.collection.JavaConversions._
 import conf.Configuration.environment
 import dev.HttpSwitch
-import com.gu.facia.api.utils.FaciaContentImplicits._
+import implicits.FaciaContentImplicits._
 
 /*
  * Builds absolute links to the core site (www.theguardian.com)

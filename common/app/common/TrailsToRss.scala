@@ -13,7 +13,7 @@ import com.sun.syndication.feed.module.mediarss.types.{Credit, Metadata, UrlRefe
 import com.sun.syndication.io.SyndFeedOutput
 import scala.collection.JavaConverters._
 import collection.JavaConversions._
-import com.gu.facia.api.utils.FaciaContentImplicits._
+import implicits.FaciaContentImplicits._
 import implicits.FaciaContentFrontendHelpers._
 
 object TrailsToRss extends implicits.Collections {

@@ -3,7 +3,7 @@ package layout
 import com.gu.facia.api.models.{LatestSnap, CollectionConfig, CuratedContent, FaciaContent}
 import conf.Switches
 import dfp.{DfpAgent, SponsorshipTag}
-import com.gu.facia.api.utils.FaciaContentImplicits._
+import implicits.FaciaContentImplicits._
 import implicits.FaciaContentFrontendHelpers._
 import model.{PressedPage, _}
 import model.facia.PressedCollection

@@ -2,7 +2,7 @@ package layout
 
 import com.gu.facia.api.models.FaciaContent
 import implicits.Collections
-import com.gu.facia.api.utils.FaciaContentImplicits._
+import implicits.FaciaContentImplicits._
 import implicits.Collections
 import model.Trail
 

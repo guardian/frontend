@@ -2,7 +2,7 @@ package model
 
 import com.gu.facia.api.models.FaciaContent
 import conf.Switches
-import com.gu.facia.api.utils.FaciaContentImplicits._
+import implicits.FaciaContentImplicits._
 import implicits.FaciaContentFrontendHelpers._
 import conf.{Switches,Configuration}
 

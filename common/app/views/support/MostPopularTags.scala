@@ -3,7 +3,7 @@ package views.support
 import com.gu.facia.api.models.FaciaContent
 import common.Seqs._
 import model.{Content, Tag}
-import com.gu.facia.api.utils.FaciaContentImplicits._
+import implicits.FaciaContentImplicits._
 
 object MostPopularTags {
   /** A descending list of the tags that occur most frequently within the given items of content and how frequently

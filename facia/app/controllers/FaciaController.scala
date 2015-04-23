@@ -17,7 +17,7 @@ import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
 import slices.Container
 import views.html.fragments.containers.facia_cards.container
-import com.gu.facia.api.utils.FaciaContentImplicits._
+import implicits.FaciaContentImplicits._
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
