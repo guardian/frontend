@@ -13,6 +13,14 @@ define([
     detect,
     $
 ) {
+    var stickyTresholds = {
+        "mobile": 480,
+        "desktop": {
+            "slimnav": 100,
+            "nobanner": 400
+        }
+    };
+
     var Navigation = {
         init: function () {
             this.copyMegaNavMenu();
@@ -110,7 +118,7 @@ define([
             } else {
                 fastdom.write(function () {
                     bannerHeight = $('.top-banner-ad-container--above-nav').dim().height;
-                    
+
                     // Add is collapsed, header is slim
                     if (window.scrollY > 400) {
                         // Add is not sticky anymore
