@@ -81,9 +81,8 @@
         }
     }
     iframe {
-        -webkit-transform: translateZ(0);
         transform: translateZ(0);
-        @include transition(height 1s cubic-bezier(0, 0, 0, .985));
+        transition: height 1s cubic-bezier(0, 0, 0, .985);
     }
 }
 .top-banner-ad-container--above-nav {
@@ -582,9 +581,8 @@
     .ad--responsive {
         @include mq(tablet) {
             height: 108px;
-            -webkit-transform: translateZ(0);
             transform: translateZ(0);
-            @include transition(height 1s cubic-bezier(0, 0, 0, .985));
+            transition: height 1s cubic-bezier(0, 0, 0, .985);
 
             &.ad--responsive--open {
                 height: 250px;

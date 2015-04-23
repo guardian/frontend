@@ -24,11 +24,11 @@ $fc-item-gutter: $gs-gutter / 4;
 
     .has-flex-wrap & {
         .fc-item__container {
-            @include flex-wrap(wrap);
+            flex-wrap: wrap;
             @if $media-align == right {
-                @include flex-direction(row-reverse);
+                flex-direction: row-reverse;
             } @else {
-                @include flex-direction(row);
+                flex-direction: row;
             }
         }
 
@@ -96,7 +96,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
     @include mq(tablet) {
         .has-flex-wrap & {
-            @include flex-direction(column);
+            flex-direction: column;
             display: flex;
             flex: 1 1 auto;
             // see: http://stackoverflow.com/a/9737602/802472

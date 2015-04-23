@@ -233,7 +233,7 @@
         height: 0;
         position: relative;
         overflow: hidden;
-        @include transition(height 1s);
+        transition: height 1s;
     }
     .ad-exp--expand .facia-container__inner {
         height: 100%;
@@ -258,7 +258,7 @@
         height: 32px;
         width: 32px;
         transform: rotate(45deg);
-        @include transition(all 1s ease);
+        transition: all 1s ease;
 
         @include mq(tablet) {
             right: $gs-gutter;
@@ -308,7 +308,7 @@
         border-radius: $gs-gutter $gs-gutter 0 0;
 
         .inline-arrow-down {
-            @include transition(all 1s ease);
+            transition: all 1s ease;
             display: block;
             margin: -2px auto 2px;
         }

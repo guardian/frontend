@@ -60,7 +60,7 @@ Full item with 75% width media.
             min-height: gs-height(5) + $gs-baseline * 3;
 
             .has-flex-wrap & {
-                @include flex-direction(row);
+                flex-direction: row;
             }
         }
 

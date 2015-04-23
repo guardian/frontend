@@ -69,12 +69,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     box-sizing: border-box;
     margin: 0;
     white-space: nowrap;
-    @include transition(transform 20ms);
-    -webkit-transition-property: -webkit-transform;
-    -moz-transition-property: -moz-transform;
-    transition-property: -webkit-transform;
-    transition-property: -moz-transform;
-    transition-property: transform;
+    transition: transform 20ms;
 }
 
 .gallery-lightbox__swipe-container {
@@ -101,7 +96,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 }
 
 .gallery-lightbox__item--img {
-    @include transition(padding-right .1s ease-in);
+    transition: padding-right .1s ease-in;
 }
 
 .gallery-lightbox__item--endslate {
@@ -175,7 +170,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         padding-top: gs-height(2) + $gs-baseline - 2px;
         padding-right: $gs-gutter*2;
         padding-left: $gs-gutter;
-        @include transition(right .1s ease-in, opacity .1s ease-in);
+        transition: right .1s ease-in, opacity .1s ease-in;
         background-color: colour(media-background);
         right: (-1 * $gallery-lightbox-info-width-desktop) + $gallery-lightbox-sidebar-width;
         width: $gallery-lightbox-info-width-desktop;
@@ -279,14 +274,14 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     outline: none;
     text-indent: -9999px;
 
-    @include transition(background-color .2s);
+    transition: background-color .2s;
     &:focus {
         background-color: lighten($c-gallery-lightbox-btn, 8%);
     }
 }
 
 .gallery-lightbox--hover .gallery-lightbox__btn:hover .gallery-lightbox__btn-body {
-    @include transition(none);
+    transition: none;
     background: $c-gallery-lightbox-btn--active;
 }
 
@@ -322,13 +317,13 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         }
     }
     .gallery-lightbox__btn--close-hitbox:hover & {
-        @include transition(none);
+        transition: none;
         background: $c-gallery-lightbox-btn--active;
     }
 }
 
 .gallery-lightbox__button-pulse .gallery-lightbox__btn-body {
-    @include transition(none);
+    transition: none;
     background-color: $c-gallery-lightbox-btn--active;
 }
 
