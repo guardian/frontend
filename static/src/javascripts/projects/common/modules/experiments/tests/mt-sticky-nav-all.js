@@ -33,15 +33,15 @@ define([
         this.variants = [
             {
                 id: 'A',
-                test: function () { 
+                test: function () {
                     var stickyTresholds = {
                         'mobile': 480,
                         'desktop': {
                             'slimnav': 100,
                             'nobanner': 400
                         }
-                    };
-                    var $els = {};
+                    },
+                    $els = {};
 
                     function stickyNav() {
                         $els.header        = $('#header');
@@ -156,7 +156,6 @@ define([
                             if (detect.getBreakpoint() === 'mobile') {
                                 bannerHeight = $els.bannerMobile.dim().height;
                             }
-                            
                             $els.main.css('margin-top', headerHeight + bannerHeight);
                         });
                     }
