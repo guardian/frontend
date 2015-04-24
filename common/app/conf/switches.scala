@@ -524,11 +524,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 4, 25)
   )
 
-  val ABAcrossTheCountry = Switch("A/B Tests", "ab-across-the-country",
-    "Tests container placement on the US front",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
-  )
-
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
@@ -688,6 +683,11 @@ object Switches {
   val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",
     "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please check the DB size.",
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
+  )
+
+  val FaciaPressOnDemand = Switch("Facia", "facia-press-on-demand",
+    "If this is switched on, you can force facia to press on demand (Leave off)",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 30)
   )
 
   // Server-side A/B Tests
