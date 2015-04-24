@@ -39,24 +39,6 @@ module.exports = function(grunt, options) {
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
             preserveLicenseComments: false,
-            onBuildRead: function (moduleName, path, contents) {
-                return contents
-                    .replace(/'(.+?)!(text|svg)'/g, function (match, depModuleName, depPluginName) {
-                        var plugins = {
-                            'text': 'text',
-                            'svg': 'inlineSvg'
-                        };
-                        return '\'' + plugins[depPluginName] + '!' + depModuleName + '\'';
-                    })
-                    .replace(/require\(\['facebook/g, 'require([\'js!facebook')
-                    .replace(/require\(\['googletag/g, 'require([\'js!googletag')
-                    .replace(/!system-script/g, '')
-                    // TODO: Source this from npm and use the module ID
-                    // "socketio", consistent with RequireJS. SystemJS will read
-                    // the package.json’s main property.
-                    // https://github.com/jspm/jspm-cli/issues/685
-                    .replace('\'socketio/socket.io\'', '\'socketio\'');
-            },
             fileExclusionRegExp: /^bower_components|es6|test$/i
         },
         common: {

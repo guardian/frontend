@@ -1,16 +1,16 @@
 define([
     'bonzo',
     'helpers/injector',
-    'fixtures/commercial/ad-slots/adbadge.html!text',
-    'fixtures/commercial/ad-slots/fobadge.html!text',
-    'fixtures/commercial/ad-slots/im.html!text',
-    'fixtures/commercial/ad-slots/inline1.html!text',
-    'fixtures/commercial/ad-slots/inline2.html!text',
-    'fixtures/commercial/ad-slots/inline3.html!text',
-    'fixtures/commercial/ad-slots/merchandising-high.html!text',
-    'fixtures/commercial/ad-slots/right.html!text',
-    'fixtures/commercial/ad-slots/right-small.html!text',
-    'fixtures/commercial/ad-slots/spbadge.html!text'
+    'text!fixtures/commercial/ad-slots/adbadge.html',
+    'text!fixtures/commercial/ad-slots/fobadge.html',
+    'text!fixtures/commercial/ad-slots/im.html',
+    'text!fixtures/commercial/ad-slots/inline1.html',
+    'text!fixtures/commercial/ad-slots/inline2.html',
+    'text!fixtures/commercial/ad-slots/inline3.html',
+    'text!fixtures/commercial/ad-slots/merchandising-high.html',
+    'text!fixtures/commercial/ad-slots/right.html',
+    'text!fixtures/commercial/ad-slots/right-small.html',
+    'text!fixtures/commercial/ad-slots/spbadge.html'
 ], function (
     bonzo,
     Injector,

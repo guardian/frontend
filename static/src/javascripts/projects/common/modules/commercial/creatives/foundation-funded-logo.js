@@ -4,8 +4,8 @@ define([
     'common/utils/template',
 
     // require templates, so they're bundled up as part of the build
-    'common/views/commercial/creatives/logo-foundation-funded.html!text',
-    'common/views/commercial/creatives/logo-foundation-funded-partners.html!text'
+    'text!common/views/commercial/creatives/logo-foundation-funded.html',
+    'text!common/views/commercial/creatives/logo-foundation-funded-partners.html'
 ], function (
     $,
     config,

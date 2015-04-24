@@ -4,13 +4,13 @@ define([
     'common/views/svgs',
 
     // require templates, so they're bundled up as part of the build
-    'common/views/commercial/creatives/ad-feature-mpu.html!text',
-    'common/views/commercial/creatives/ad-feature-mpu-large.html!text',
-    'common/views/commercial/creatives/logo-ad-feature.html!text',
-    'common/views/commercial/creatives/logo-sponsored.html!text',
-    'common/views/commercial/creatives/manual-inline.html!text',
-    'common/views/commercial/creatives/manual-multiple.html!text',
-    'common/views/commercial/creatives/manual-single.html!text'
+    'text!common/views/commercial/creatives/ad-feature-mpu.html',
+    'text!common/views/commercial/creatives/ad-feature-mpu-large.html',
+    'text!common/views/commercial/creatives/logo-ad-feature.html',
+    'text!common/views/commercial/creatives/logo-sponsored.html',
+    'text!common/views/commercial/creatives/manual-inline.html',
+    'text!common/views/commercial/creatives/manual-multiple.html',
+    'text!common/views/commercial/creatives/manual-single.html'
 ], function (
     $,
     template,

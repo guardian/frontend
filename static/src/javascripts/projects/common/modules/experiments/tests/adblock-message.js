@@ -3,7 +3,7 @@ define([
     'common/utils/template',
     'common/modules/ui/message',
     'common/views/svgs',
-    'common/views/donot-use-adblock.html!text'
+    'text!common/views/donot-use-adblock.html'
 ], function (
     detect,
     template,

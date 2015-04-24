@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'stripe',
     'membership/stripe-error-messages',
-    'fixtures/membership/paymentForm.fixture.html!text'
+    'text!fixtures/membership/paymentForm.fixture.html'
 ], function (
     PaymentForm,
     ajax,

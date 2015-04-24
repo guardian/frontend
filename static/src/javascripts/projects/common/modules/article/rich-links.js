@@ -10,7 +10,7 @@ define([
     'common/utils/template',
     'common/modules/article/spacefinder',
     'common/modules/ui/images',
-    'common/views/content/richLinkTag.html!text'
+    'text!common/views/content/richLinkTag.html'
 ], function (
     fastdom,
     qwery,

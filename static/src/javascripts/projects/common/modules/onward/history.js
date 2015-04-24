@@ -10,8 +10,8 @@ define([
     'common/utils/template',
     'common/utils/storage',
     'common/utils/url',
-    'common/views/history/tag.html!text',
-    'common/views/history/mega-nav.html!text'
+    'text!common/views/history/tag.html',
+    'text!common/views/history/mega-nav.html'
 ], function (
     fastdom,
     $,

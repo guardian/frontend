@@ -333,12 +333,14 @@
         @Html(Static.js.systemJs)
         @Html(Static.js.systemJsAppConfig)
 
-        @if(!play.Play.isDev) {
+        @if(play.Play.isDev()) {
             @Html(Static.js.systemJsBundleConfig)
         }
 
         System.paths['ophan/ng']  = '@{Configuration.javascript.config("ophanJsUrl")}.js';
         System.paths['googletag'] = '@{Configuration.javascript.config("googletagJsUrl")}';
+
+        @Html(Static.js.systemJsNormalize)
 
         window.require = System.amdRequire.bind(System);
         window.define = System.amdDefine.bind(System);

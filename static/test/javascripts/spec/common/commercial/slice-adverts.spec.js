@@ -6,7 +6,7 @@ define([
     'common/modules/user-prefs',
     'helpers/fixtures',
     'helpers/injector',
-    'fixtures/commercial/slice-adverts.html!text'
+    'text!fixtures/commercial/slice-adverts.html'
 ], function (
     bonzo,
     fastdom,

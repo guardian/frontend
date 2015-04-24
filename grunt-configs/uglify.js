@@ -29,7 +29,8 @@ module.exports = function(grunt, options) {
             {
                 expand: true,
                 cwd: 'static/src',
-                src: ['systemjs-config.js',
+                src: ['systemjs-normalize.js',
+                      'systemjs-config.js',
                       'systemjs-bundle-config.js'],
                 dest: 'common/conf/assets'
             }],

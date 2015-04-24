@@ -1,9 +1,21 @@
 /*eslint-env node*/
+
+var path = require('path');
+
+var System = require('jspm/node_modules/systemjs');
+// Execute the IIFE
+global.systemJsRuntime = false;
+require(path.join(__dirname, 'static/src/systemjs-normalize'));
+// Modify System before creating the builder because it clones System
+System._extensions.push(function(loader) {
+    // System.normalize is exposed by the IIFE above
+    loader.normalize = System.normalize;
+});
+
 var jspm = require('jspm');
 var builder = new jspm.Builder();
 var crypto = require('crypto');
 var fs = require('fs');
-var path = require('path');
 var mkdirp = require('mkdirp');
 
 // TODO: Read from package.json

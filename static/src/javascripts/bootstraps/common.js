@@ -52,8 +52,8 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
-    'common/views/international-message.html!text',
-    'common/views/international-control-message.html!text',
+    'text!common/views/international-message.html',
+    'text!common/views/international-control-message.html',
     'bootstraps/identity'
 ], function (
     bean,
