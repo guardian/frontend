@@ -128,7 +128,7 @@ define([
                                         $els.header.css({
                                             top: 0
                                         });
-                                    };
+                                    }
                                 // Top ad and header are visible in full height
                                 } else {
                                     // Make sure that banner and header are sticky
