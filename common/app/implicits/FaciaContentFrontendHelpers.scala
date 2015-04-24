@@ -1,6 +1,8 @@
 package implicits
 
+import com.gu.contentapi.client.model.Element
 import com.gu.facia.api.models.FaciaContent
+import com.gu.facia.api.utils.FaciaContentUtils
 import implicits.FaciaContentImplicits._
 import com.gu.facia.api.utils.FaciaContentUtils.fold
 import dfp.DfpAgent
@@ -15,7 +17,9 @@ object FaciaContentFrontendHelpers {
     def imageReplaceElement = for (imageReplace <- faciaContent.imageReplace)
       yield ImageOverride.createElementWithOneAsset(imageReplace.imageSrc, imageReplace.imageSrcWidth, imageReplace.imageSrcHeight)
 
-    def frontendElements: List[model.Element] = faciaContent.elements.zipWithIndex.map { case (e, i) => model.Element(e, i) }
+    def elementsWithImageOverride: List[Element] = imageReplaceElement ++: faciaContent.elements
+
+    def frontendElements: List[model.Element] = faciaContent.elementsWithImageOverride.zipWithIndex.map { case (e, i) => model.Element(e, i) }
 
     def frontendTags: List[model.Tag] = faciaContent.tags.map(Tag.apply(_))
 
