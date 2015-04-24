@@ -5,8 +5,8 @@ import org.joda.time.{Period, LocalDate}
 object RegisterCountdown {
     def daysLeft = {
         val x = LocalDate.now()
-        val lastDay = new LocalDate(2015, 4, 20)
+        val lastDay = new LocalDate(2015, 5, 7)
         val interval = new Period(x, lastDay)
-        interval.getDays
+        interval.toStandardDays.getDays
     }
 }

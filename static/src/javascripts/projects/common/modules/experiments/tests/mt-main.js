@@ -16,20 +16,24 @@ define([
     geoMostPopular
 ) {
     return function () {
-        this.id = 'MtMaster';
+        this.id = 'MtMain';
         this.start = '2015-03-12';
         this.expiry = '2015-05-12';
         this.author = 'Zofia Korcz';
         this.description = 'Sticky mpu everywhere where possible instead of the standard RH mpu';
         this.audience = 0.02;
-        this.audienceOffset = 0;
+        this.audienceOffset = 0.2;
         this.successMeasure = '';
         this.audienceCriteria = '1% of US and UK edition';
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return config.page.edition === 'UK' || config.page.edition === 'US';
+            var isIE = detect.getUserAgent.browser === 'MSIE' || detect.getUserAgent === 'IE 11',
+                isUK = config.page.edition === 'UK',
+                isUS = config.page.edition === 'US';
+
+            return !isIE && (isUK || isUS);
         };
 
         function updatePosition(config) {
@@ -128,7 +132,7 @@ define([
             });
         }
 
-        this.fireMasterTest = function () {
+        this.fireMainTest = function () {
             fastdom.read(function () {
                 var stickyConfig = {
                     $stickyNavigation: $('.sticky-nav-mt-test .navigation'),
@@ -176,11 +180,11 @@ define([
          */
         this.variants = [
             {
-                id: 'variant',
+                id: 'A',
                 test: function () { }
             },
             {
-                id: 'control',
+                id: 'B',
                 test: function () { }
             }
         ];

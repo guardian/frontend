@@ -323,6 +323,14 @@ object Switches {
     "If this switch is on, Apple ads will appear below nav on the tech section front.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
 
+  val RefreshAdsAfterDisplaySwitch = Switch("Commercial", "refresh-ads-after-display",
+    "If this switch is on, ads will be refreshed after they display.",
+    safeState = On, sellByDate = new LocalDate(2015, 5, 6))
+
+  val AdImpressionCountingSwitch = Switch("Commercial", "ad-impression-counting",
+    "If this switch is on, ad impression counts will be kept in Cloudwatch.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+
 
   // Monitoring
 
@@ -358,7 +366,7 @@ object Switches {
 
   val FeedbackLink = Switch("Monitoring", "tech-feedback",
     "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
-    safeState = Off, new LocalDate(2015, 4, 24)
+    safeState = Off, new LocalDate(2015, 5, 23)
   )
 
   val SendExpiringSwitchesEmail = Switch("Monitoring", "expiring-switches-email",
@@ -381,14 +389,6 @@ object Switches {
     "international-edition",
     "International edition A/B test on",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 1)
-  )
-
-  val PulitzerSwitch = Switch(
-    "Feature",
-    "pulitzer",
-    "If switched on the Pulitzer prize banner will show.",
-    safeState = On,
     sellByDate = new LocalDate(2015, 6, 1)
   )
 
@@ -515,7 +515,7 @@ object Switches {
     safeState = On, sellByDate = never)
 
   // A/B Tests
-  val ABLzAds = Switch("A/B Tests", "ab-lz-ads", "Lazy loading ads.",
+  val ABMtLzAdsDepth = Switch("A/B Tests", "ab-mt-lz-ads-depth", "Depth for lazy loaded ads.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
@@ -529,8 +529,8 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ABMtMaster = Switch("A/B Tests", "ab-mt-master",
-    "Switch for the Sticky mpu test.",
+  val ABMtMain = Switch("A/B Tests", "ab-mt-main",
+    "Switch for the moat main test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 11)
   )
 
@@ -559,9 +559,9 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
-  val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block",
-    "Switch for the Adblock Message A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 27)
+  val ABFacebookLikePrompt = Switch("A/B Tests", "ab-facebook-like-prompt",
+    "Switch for the Facebook Like Prompt A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 17)
   )
 
   val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
@@ -569,9 +569,14 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ABLiveblogBlocksOnFronts = Switch("A/B Tests", "ab-liveblog-blocks-on-fronts",
-    "Switch for the latest liveblog blocks on fronts A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 23)
+  val ABLiveblogFrontUpdates = Switch("A/B Tests", "ab-liveblog-front-updates",
+    "Switch for the latest liveblog updates on fronts A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
+  )
+
+  val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",
+    "Switch for removing the whitelist from the user history tags",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>
@@ -583,6 +588,11 @@ object Switches {
       sellByDate = new LocalDate(2015, 6, 10)
     )
   }
+
+  val ABFaciaSlideshow = Switch("A/B Tests", "ab-facia-slideshow",
+    "Switch for the facia slideshow A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
+  )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
@@ -621,6 +631,11 @@ object Switches {
   val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
     "If this is switched on then lazy load the most-popular container on content pages",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
+  )
+
+  val SlideshowImages = Switch("Feature", "slideshow-images",
+    "If switched on, slideshows will be displayed on the fronts",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   // Facia
@@ -668,6 +683,11 @@ object Switches {
   val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",
     "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please check the DB size.",
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
+  )
+
+  val FaciaPressOnDemand = Switch("Facia", "facia-press-on-demand",
+    "If this is switched on, you can force facia to press on demand (Leave off)",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 30)
   )
 
   // Server-side A/B Tests

@@ -2,7 +2,7 @@
 
 @import ab_headlines.ABTestHeadlines.headlinesJsonString
 @import model.InlineImage
-@import model.{InlineVideo, VideoPlayer, CrosswordSvg, LiveBlog}
+@import model.{InlineVideo, InlineSlideshow, VideoPlayer, CrosswordSvg, LiveBlog}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
@@ -11,7 +11,7 @@
 @import views.support.ImgSrc
 @import layout.{LatestSnap, FaciaWidths}
 @import Function.const
-@import conf.Switches.ABLiveblogBlocksOnFronts
+@import conf.Switches.ABLiveblogFrontUpdates
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
     @if(item.discussionSettings.isCommentable) {
@@ -97,6 +97,35 @@ data-test-id="facia-card"
                 )
             }
 
+            case Some(InlineSlideshow(imageElements)) => {
+                <div class="fc-item__media-wrapper">
+                    <div class="fc-item__image-container u-responsive-ratio js-slideshow">
+                            @imageElements.headOption.map { imageElement =>
+
+                                @lazyImage(
+                                    Seq("responsive-img"),
+                                    ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
+                                    item.mediaWidthsByBreakpoint.sizes,
+                                    None,
+                                    containerIndex == 0 && index < 4,
+                                    false
+                                )
+                                @imageElements.tail.map { imageElement =>
+
+                                    @lazyImage(
+                                        Seq("responsive-img"),
+                                        ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
+                                        item.mediaWidthsByBreakpoint.sizes,
+                                        None,
+                                        false,
+                                        true
+                                    )
+                                }
+                            }
+                    </div>
+                </div>
+            }
+
             case _ => { }
         }
 
@@ -119,7 +148,7 @@ data-test-id="facia-card"
             }
         </div>
 
-        @if(ABLiveblogBlocksOnFronts.isSwitchedOn && item.isLive) {
+        @if(ABLiveblogFrontUpdates.isSwitchedOn && item.isLive) {
             <div class="js-liveblog-blocks" data-article-id="@item.id">
                 @item.trailText.filter(const(item.showStandfirst)).map { text =>
                     <div class="fc-item__standfirst">@Html(text)</div>

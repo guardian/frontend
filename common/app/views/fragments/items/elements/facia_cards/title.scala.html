@@ -6,12 +6,11 @@
 @import views.support._
 
 @icon = {
-    @* TODO refactor to some kind of case match *@
-    @if(header.quoted) { @fragments.inlineSvg("quote", "icon") }
     @if(header.isExternal) { @fragments.inlineSvg("external-link", "icon") }
     @if(header.isVideo) { @fragments.inlineSvg("video-icon", "icon") }
     @if(header.isGallery) { @fragments.inlineSvg("camera", "icon") }
     @if(header.isAudio) { @fragments.inlineSvg("volume-high", "icon") }
+    @if(header.quoted) { @fragments.inlineSvg("quote", "icon") }
 }
 
 @headline() = {

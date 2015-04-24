@@ -31,6 +31,8 @@ define([
     Article,
     contentApi
 ) {
+    modalDialog = modalDialog.default;
+
     function Collection(opts) {
 
         if (!opts || !opts.id) { return; }

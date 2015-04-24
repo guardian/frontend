@@ -3,5 +3,5 @@
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    @include border-radius(50%);
+    @include circular;
 }

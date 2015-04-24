@@ -2,7 +2,7 @@ package jobs
 
 import common.{ExecutionContexts, Logging}
 import conf.Configuration.environment
-import conf.Switches.MetricsSwitch
+import conf.Switches.{AdImpressionCountingSwitch, MetricsSwitch}
 import layout.{Breakpoint, Desktop, Mobile}
 import model.commercial._
 import model.diagnostics.CloudWatch
@@ -44,7 +44,8 @@ object AdImpressionCounter extends ExecutionContexts with Logging {
       }
     }
 
-    if (environment.isProd || MetricsSwitch.isSwitchedOn) {
+    if ((environment.isProd || MetricsSwitch.isSwitchedOn) &&
+      AdImpressionCountingSwitch.isSwitchedOn) {
 
       val countriesToMonitor = Seq("gb", "us", "au")
 
