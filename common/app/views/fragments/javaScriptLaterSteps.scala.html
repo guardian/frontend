@@ -330,11 +330,19 @@
                      * - membershipAccess=paid-members-only
                      */
                     (function(isModern) {
+
+                        function reveal() {
+                            $('body').removeClass('has-membership-access-requirement');
+                        }
+
                         /**
                          * Authenticating requires CORS and withCredentials
                          * If we don't cut the mustard then pass through.
                          */
-                        if(!isModern) { return; }
+                        if(!isModern) {
+                            reveal();
+                            return;
+                        }
 
                         require([
                             'common/utils/$',
@@ -357,7 +365,7 @@
                                  */
                                 var canViewContent = (requiresPaidTier) ? !!resp.tier && resp.isPaidTier : !!resp.tier;
                                 if (canViewContent) {
-                                    $('body').removeClass('has-membership-access-requirement');
+                                    reveal();
                                 } else {
                                     window.location.href = membershipAuthUrl;
                                 }
