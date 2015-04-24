@@ -30,6 +30,8 @@ define([
     fullTrim = fullTrim.default;
     sanitizeApiQuery = sanitizeApiQuery.default;
     urlAbsPath = urlAbsPath.default;
+    asObservableProps = asObservableProps.default;
+    populateObservables = populateObservables.default;
 
     var checkCount = 0;
 

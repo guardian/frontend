@@ -39,6 +39,8 @@ define([
     newItems,
     persistence
 ) {
+    findFirstById = findFirstById.default;
+
     return function() {
         var model = vars.model = {};
 

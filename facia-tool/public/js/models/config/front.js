@@ -25,6 +25,10 @@ define([
     findFirstById,
     validateImageSrc
 ) {
+    asObservableProps = asObservableProps.default;
+    findFirstById = findFirstById.default;
+    populateObservables = populateObservables.default;
+
     function Front(opts) {
         var self = this;
 

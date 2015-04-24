@@ -56,6 +56,8 @@ define([
         urlHost = urlHost.default;
         sanitizeHtml = sanitizeHtml.default;
         urlAbsPath = urlAbsPath.default;
+        asObservableProps = asObservableProps.default;
+        populateObservables = populateObservables.default;
 
         var capiProps = [
                 'webUrl',

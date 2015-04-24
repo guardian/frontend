@@ -24,6 +24,7 @@ define([
     removeById
 ) {
     alert = alert.default;
+    removeById = removeById.default;
 
     var maxChars = vars.CONST.restrictedHeadlineLength || 90,
         restrictHeadlinesOn = vars.CONST.restrictHeadlinesOn || [],

@@ -10,6 +10,7 @@ define([
     findFirstById
 ) {
     urlAbsPath = urlAbsPath.default;
+    findFirstById = findFirstById.default;
 
     return {
         newItemsConstructor: function(id) {

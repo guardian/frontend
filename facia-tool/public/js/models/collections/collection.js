@@ -32,6 +32,8 @@ define([
     contentApi
 ) {
     modalDialog = modalDialog.default;
+    asObservableProps = asObservableProps.default;
+    populateObservables = populateObservables.default;
 
     function Collection(opts) {
 
