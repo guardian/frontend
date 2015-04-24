@@ -41,11 +41,7 @@ define([
     }
 
     function sendEvent() {
-        // TODO: Update SystemJS when https://github.com/systemjs/systemjs/issues/404 is fixed
-        // SystemJS doesn't currently support async require inside AMD modules.
-        // Workaround:
-        // require('ophan/ng', function (ophan) {
-        require(['ophan/ng!system-script'], function (ophan) {
+        require(['ophan/ng'], function (ophan) {
             ophan.record({
                 register: register,
                 abTestRegister: ab.getAbLoggableObject()

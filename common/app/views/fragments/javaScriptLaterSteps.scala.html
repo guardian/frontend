@@ -341,6 +341,7 @@
         System.paths['googletag'] = '@{Configuration.javascript.config("googletagJsUrl")}';
 
         window.require = System.amdRequire.bind(System);
+        window.define = System.amdDefine.bind(System);
 
         Promise.all(
             ['core','raven' ].map(function(module){return System.import(module);})
