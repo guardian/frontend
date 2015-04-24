@@ -192,10 +192,11 @@ define([
                             fastdom.write(function () {
                                 stickyConfig.$burgerIcon.css({
                                     'float': 'right',
-                                    'margin': '8px 8px 0 0',
+                                    'margin': '8px 0 0 0',
+                                    'padding': '0 1px',
                                     'position': 'static'
                                 }).insertBefore(stickyConfig.$logoWrapper);
-                                stickyConfig.$logoWrapper.css('margin', '12px 12px 4px 0');
+                                stickyConfig.$logoWrapper.css('margin', '12px 0 4px 0');
                                 stickyConfig.$contentBelowMobile.css('margin-top', config.headerHeight + config.$bannerMobile.dim().height);
                             });
                             updatePositionMobile(stickyConfig);
