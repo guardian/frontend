@@ -453,17 +453,15 @@ define([
             },
 
             internationalSignposting: function () {
-                var message;
-
                 if ('internationalEdition' in config.page) {
-                    message = new Message('international', {
-                        pinOnHide: true
-                    });
-
                     if (config.page.internationalEdition === 'international' && config.page.pageId === 'international') {
-                        message.show(template(internationalMessage, {}));
+                        new Message('international-with-survey', {
+                            pinOnHide: true
+                        }).show(template(internationalMessage, {}));
                     } else if (config.page.internationalEdition === 'control' && config.page.pageId === 'uk') {
-                        message.show(template(internationalControlMessage, {}));
+                        new Message('international', {
+                            pinOnHide: true
+                        }).show(template(internationalControlMessage, {}));
                     }
                 }
             }
