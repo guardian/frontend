@@ -78,7 +78,7 @@ define([
             },
 
             startSlideshow: function () {
-                if (!detect.isBreakpoint('mobile')) {
+                if (!detect.isBreakpoint({ min: 'tablet' })) {
                     mediator.on('page:front:ready', function () {
                         slideshow.init();
                     });
