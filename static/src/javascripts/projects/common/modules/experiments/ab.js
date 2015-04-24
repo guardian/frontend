@@ -18,6 +18,7 @@ define([
     'common/modules/experiments/tests/adblock-message',
     'common/modules/experiments/tests/mt-sticky-bottom',
     'common/modules/experiments/tests/save-for-later',
+    'common/modules/experiments/tests/mt-sticky-nav-all',
     'common/modules/experiments/headlines'
 ], function (
     raven,
@@ -39,6 +40,7 @@ define([
     AdblockMessage,
     MtStickyBottom,
     SaveForLater,
+    MtStickyNavAll,
     Headline
 ) {
 
@@ -56,6 +58,7 @@ define([
             new AdblockMessage(),
             new MtStickyBottom(),
             new SaveForLater(),
+            new MtStickyNavAll(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             })

@@ -503,6 +503,13 @@ object Switches {
     safeState = On, sellByDate = never)
 
   // A/B Tests
+  
+  val ABMtStickyNavAll = Switch(
+    "A/B Tests",
+    "ab-mt-sticky-nav-all",
+    "Testing sticky nav with sticky banner and nav going to slim version",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
+  )
 
   val ABIdentitySocialOAuth = Switch("A/B Tests", "ab-id-social-oauth",
     "Switch to direct users to OAuth social sign-in app.",
