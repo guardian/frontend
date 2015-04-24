@@ -82,12 +82,17 @@ define([
                     }
 
                     function updateStickyNavPosition() {
-                        var headerHeight    = $els.navHeader.dim().height,
-                            bannerHeight;
+                        var headerHeight  = $els.navHeader.dim().height,
+                            bannerHeight,
+                            scrollY;
+
+                        fastdom.read(function () {
+                            scrollY = $(window).scrollTop();
+                        });
 
                         if (detect.getBreakpoint() === 'mobile') {
                             fastdom.write(function () {
-                                if ($(window).scrollTop() > stickyTresholds.mobile) {
+                                if (scrollY > stickyTresholds.mobile) {
                                     $els.bannerMobile.css({
                                         position: 'absolute',
                                         top:      stickyTresholds.mobile + headerHeight
@@ -108,12 +113,6 @@ define([
                                 }
                             });
                         } else {
-                            var scrollY;
-
-                            fastdom.read(function () {
-                                scrollY = $(window).scrollTop();
-                            });
-
                             fastdom.write(function () {
                                 bannerHeight = $els.bannerDesktop.dim().height;
 
