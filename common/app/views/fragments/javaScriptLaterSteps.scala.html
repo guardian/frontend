@@ -333,7 +333,7 @@
         @Html(Static.js.systemJs)
         @Html(Static.js.systemJsAppConfig)
 
-        @if(play.Play.isDev()) {
+        @if(!play.Play.isDev()) {
             @Html(Static.js.systemJsBundleConfig)
         }
 
