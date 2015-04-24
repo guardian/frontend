@@ -46,9 +46,9 @@ define([
 
         function showNavigationMobile(scrollY, config) {
             if (scrollDirection(scrollY, config) === 'up') {
-                config.$stickyNavigation.css('height', 36);
+                config.$stickyNavigation.show();
             } else {
-                config.$stickyNavigation.css('height', '0');
+                config.$stickyNavigation.hide();
             }
         }
 
@@ -154,45 +154,6 @@ define([
                     });
                     showNavigationMobile(window.scrollY, config);
                 }
-
-                /*if (window.scrollY < config.scrollThreshold) {
-                    //navigation is not sticky yet
-                    config.$stickyNavigation.css({
-                        position:  null,
-                        top:       null
-                    });
-                    config.$bannerMobile.css('margin-top', null);
-                    config.$bannerMobile.css({
-                        position:  null,
-                        top:       null
-                    });
-                    config.$contentBelowMobile.css('margin-top', null);
-
-                    //when scroll will pass height of the header with logo
-                    if (window.scrollY >= config.headerHeight) {
-                        config.$stickyNavigation.css({
-                            position:  'fixed',
-                            top:       0,
-                            width:     '100%',
-                            'z-index': '1001'
-                        });
-
-                        //also banner below nav becomes sticky
-                        config.$bannerMobile.css({
-                            position:  'fixed',
-                            top:       config.stickyNavigationHeight,
-                            width:     '100%',
-                            'z-index': '1000'
-                        });
-                        config.$contentBelowMobile.css('margin-top', config.belowMobileMargin);
-                    }
-                } else {
-                    //after config.scrollThreshold px of scrolling 'release' banner below nav
-                    config.$bannerMobile.css({
-                        position:  'absolute',
-                        top:       config.scrollThreshold
-                    });
-                }*/
             });
         }
 
@@ -229,11 +190,12 @@ define([
                         if (detect.getBreakpoint() === 'mobile') {
                             //burger icon is located on the right side of logo
                             fastdom.write(function () {
-                                /*stickyConfig.$burgerIcon.css({
+                                stickyConfig.$burgerIcon.css({
                                     'float': 'right',
-                                    'margin': '8px 8px 0 0'
+                                    'margin': '8px 8px 0 0',
+                                    'position': 'static'
                                 }).insertBefore(stickyConfig.$logoWrapper);
-                                stickyConfig.$logoWrapper.css('margin', '12px 80px 4px 0');*/
+                                stickyConfig.$logoWrapper.css('margin', '12px 12px 4px 0');
                                 stickyConfig.$contentBelowMobile.css('margin-top', config.headerHeight + config.$bannerMobile.dim().height);
                             });
                             updatePositionMobile(stickyConfig);
