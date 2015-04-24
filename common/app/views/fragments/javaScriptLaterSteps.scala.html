@@ -331,18 +331,11 @@
                      */
                     (function(isModern) {
 
-                        function reveal() {
-                            $('body').removeClass('has-membership-access-requirement');
-                        }
-
                         /**
                          * Authenticating requires CORS and withCredentials
                          * If we don't cut the mustard then pass through.
                          */
-                        if(!isModern) {
-                            reveal();
-                            return;
-                        }
+                        if(!isModern) { return; }
 
                         require([
                             'common/utils/$',
@@ -365,7 +358,7 @@
                                  */
                                 var canViewContent = (requiresPaidTier) ? !!resp.tier && resp.isPaidTier : !!resp.tier;
                                 if (canViewContent) {
-                                    reveal();
+                                    $('body').removeClass('has-membership-access-requirement');
                                 } else {
                                     window.location.href = membershipAuthUrl;
                                 }

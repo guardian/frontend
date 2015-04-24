@@ -13,8 +13,8 @@ html {
 body {
     background-color: #ffffff;
 }
-body.has-membership-access-requirement {
-    visibility: hidden !important;
+.is-modern .has-membership-access-requirement {
+    @include u-h;
 }
 
 
