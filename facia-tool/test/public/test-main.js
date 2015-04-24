@@ -12,7 +12,7 @@ System.amdRequire([
 ) {
     var tests = [],
         specFileExpr = /.*\.spec\.js$/,
-        filterTests = document.location.search.match(/[\?\&]test=[a-z]+/gi) || [];
+        filterTests = document.location.search.match(/[\?\&]test=[a-z-\.]+/gi) || [];
 
     filterTests = _.map(filterTests, function (test) {
         return test.split('=')[1] + '.spec.js';

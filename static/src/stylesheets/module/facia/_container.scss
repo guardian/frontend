@@ -104,9 +104,11 @@ $header-image-size-desktop: 100px;
     @include mq($until: tablet) {
         overflow: hidden;
 
-        .fc-container__header__title,
-        .fc-container__header__description {
+        .fc-container__header__title {
             float: left;
+        }
+        .fc-container__header__description {
+            float: right;
         }
         .fc-container__header__title {
             padding-right: $gs-gutter / 4;
@@ -238,6 +240,7 @@ $header-image-size-desktop: 100px;
     @include fs-headline(2);
     padding-bottom: $gs-baseline / 2;
     color: colour(neutral-2);
+    text-align: right;
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline;
@@ -248,6 +251,7 @@ $header-image-size-desktop: 100px;
         clear: left;
         float: left;
         margin-top: 0;
+        text-align: left;
     }
 
     @include mq(wide) {
@@ -375,7 +379,7 @@ $header-image-size-desktop: 100px;
     padding-top: $gs-baseline/2;
     padding-bottom: $gs-baseline;
     opacity: 1;
-    @include transition(opacity .25s linear); // Used to fade-in new updates
+    transition: opacity .25s linear; // Used to fade-in new updates
 
     @include mq(tablet) {
         padding-top: $gs-baseline / 4;
@@ -408,7 +412,7 @@ $header-image-size-desktop: 100px;
 
 .fc-container__body--is-hidden {
     opacity: 0;
-    @include transition(opacity .25s linear); // Used to fade-in new updates
+    transition: opacity .25s linear; // Used to fade-in new updates
 }
 
 .fc-container__toggle {
@@ -423,7 +427,7 @@ $header-image-size-desktop: 100px;
     color: #ffffff;
 
     .inline-icon {
-        @include transform(rotate(180deg));
+        transform: rotate(180deg);
         position: absolute;
         top: 6px;
         left: 50%;
@@ -431,7 +435,7 @@ $header-image-size-desktop: 100px;
         fill: colour(neutral-1);
 
         .fc-container--rolled-up & {
-            @include transform(rotate(0deg));
+            transform: rotate(0deg);
         }
     }
 
@@ -612,7 +616,7 @@ $header-image-size-desktop: 100px;
 }
 
 .index-page-header__image-wrapper--contributor-circle {
-    @include border-radius(50%);
+    @include circular;
 }
 
 .fc-container--lazy-load {

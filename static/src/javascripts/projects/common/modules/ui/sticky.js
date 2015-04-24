@@ -12,10 +12,10 @@ define([
     ab
 ) {
 
-    function isMasterTest() {
-        var mtMasterTest = ab.getParticipations().MtMaster;
+    function isMainTest() {
+        var MtMainTest = ab.getParticipations().MtMain;
 
-        return ab.testCanBeRun('MtMaster') && mtMasterTest && mtMasterTest.variant === 'variant';
+        return ab.testCanBeRun('MtMain') && MtMainTest && MtMainTest.variant === 'A';
     }
 
     /**
@@ -38,7 +38,7 @@ define([
     Sticky.prototype.updatePosition = function () {
         var fixedTop, css, stickyHeaderHeight;
 
-        stickyHeaderHeight = isMasterTest() ? $('.navigation').dim().height : 0;
+        stickyHeaderHeight = isMainTest() ? $('.navigation').dim().height : 0;
 
         // have we scrolled past the element
         if (window.scrollY >= this.$parent.offset().top - this.opts.top - stickyHeaderHeight) {

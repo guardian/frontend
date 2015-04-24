@@ -3,7 +3,7 @@
    ========================================================================== */
 .football-groups {
     .football-group {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         margin: $gs-baseline 0;
         vertical-align: top;
 
@@ -267,7 +267,7 @@
         padding: 0;
     }
     .football-match__victory-line {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         border-right: 1px dotted colour(neutral-2);
         width: 100%;
 
@@ -283,7 +283,7 @@
     text-align: center;
 }
 .football-round__matches {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding-right: $gs-gutter/2;
     height: 530px;
 }

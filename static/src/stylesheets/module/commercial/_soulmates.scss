@@ -203,7 +203,7 @@ $c-soulmates-high: colour(neutral-1);
     /* Search form */
     .commercial__search {
         position: static;
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         width: auto;
         float: none;
         border-top: 1px solid $c-soulmatesBorder;

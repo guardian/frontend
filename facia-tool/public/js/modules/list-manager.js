@@ -13,6 +13,8 @@ define([
     urlAbsPath,
     removeById
 ) {
+    alert = alert.default;
+
     var alreadyInitialised = false,
         listeners = mediator.scope();
 

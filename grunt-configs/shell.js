@@ -51,6 +51,10 @@ module.exports = function(grunt, options) {
                     cwd: '.'
                 }
             }
+        },
+
+        updateCanIUse: {
+          command: 'npm update caniuse-db'
         }
     };
 };

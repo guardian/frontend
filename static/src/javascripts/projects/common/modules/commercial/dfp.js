@@ -78,7 +78,7 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                if (isMasterTest() && $adSlot.hasClass('ad-slot--right')) {
+                if (isMainTest() && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         new StickyMpu($adSlot).create();
                     }
@@ -103,14 +103,17 @@ define([
             }
         },
 
-        isMasterTest = function () {
-            var mtMasterTest = ab.getParticipations().MtMaster;
+        isMainTest = function () {
+            var MtMainTest = ab.getParticipations().MtMain;
 
-            return ab.testCanBeRun('MtMaster') && mtMasterTest && mtMasterTest.variant === 'variant';
+            return ab.testCanBeRun('MtMain') && MtMainTest && MtMainTest.variant === 'A';
         },
 
         recordFirstAdRendered = _.once(function () {
             beacon.beaconCounts('ad-render');
+            if (config.page.contentType === 'Article') {
+                beacon.beaconCounts('ad-render-article');
+            }
         }),
 
         /**
@@ -183,8 +186,16 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
-        dfpSwitchParam = function () {
-            return config.switches.lzAds && config.page.edition === 'US' && config.page.section === 'politics';
+        lzAdsTestVariants = {
+            'A': 1 / 4,
+            'B': 1 / 2,
+            'C': 3 / 4,
+            'D': 1
+        },
+
+        isLzAdsTest = function () {
+            var test = ab.getParticipations().MtLzAdsDepth;
+            return test && ab.testCanBeRun('MtLzAdsDepth') && _.contains(_.keys(lzAdsTestVariants), test.variant);
         },
 
         /**
@@ -210,7 +221,9 @@ define([
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
-            (dfpSwitchParam()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+
+            // We want to run lazy load if user is in the depth test or main test user group
+            (isLzAdsTest() || isMainTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
@@ -222,11 +235,15 @@ define([
             } else {
                 fastdom.read(function () {
                     var scrollTop    = bonzo(document.body).scrollTop(),
-                        scrollBottom = scrollTop + bonzo.viewport().height;
+                        scrollBottom = scrollTop + bonzo.viewport().height,
+
+                        // For depth test we want depth based on variant but for main test we want default depth
+                        // TODO: this will be removed after tests will finish
+                        depth        = (isLzAdsTest()) ? lzAdsTestVariants[ab.getParticipations().MtLzAdsDepth.variant] : 0.5;
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
-                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height / 2) {
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth) {
                             googletag.display(slot);
 
                             slots = _(slots).omit(slot).value();
@@ -244,7 +261,11 @@ define([
                         slot: defineSlot($adSlot)
                     };
                     googletag.display(slotId);
-                    refreshSlot($adSlot);
+
+                    if (config.switches.refreshAdsAfterDisplay) {
+                        refreshSlot($adSlot);
+                    }
+
                 };
             if (displayed && !slots[slotId]) { // dynamically add ad slot
                 // this is horrible, but if we do this before the initial ads have loaded things go awry

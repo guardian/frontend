@@ -139,7 +139,7 @@ $pagination-icon-spacing: 10px;
 
 .pagination__icon--next {
     svg {
-        @include rotate(180deg);
+        transform: rotate(180deg);
     }
 }
 

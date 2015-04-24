@@ -6,8 +6,9 @@ import actions.AuthenticatedActions
 import com.google.inject.Inject
 import common.ExecutionContexts
 import idapiclient.IdApiClient
+import model.{IdentityPage, NoCache}
 import play.api.mvc._
-import services.{IdRequestParser, PlaySavedArticlesService, ReturnUrlVerifier}
+import services._
 import utils.SafeLogging
 
 class SaveContentController @Inject() ( api: IdApiClient,
@@ -18,9 +19,11 @@ class SaveContentController @Inject() ( api: IdApiClient,
                                         )
   extends Controller with ExecutionContexts with SafeLogging {
 
-  import authenticatedActions.authAction
 
-  def saveContentItem = authAction.apply { implicit request =>
+  val page = IdentityPage("/saved-content", "Saved content", "saved-content")
+
+
+  def saveContentItem = authenticatedActions.authAction.apply { implicit request =>
 
     val idRequest = identityRequestParser(request)
     val userId = request.user.getId()
@@ -43,4 +46,15 @@ class SaveContentController @Inject() ( api: IdApiClient,
     }
   }
 
+  def listSavedContentItems = authenticatedActions.authAction.async { implicit request  =>
+
+    val prefsResponse = api.syncedPrefs(request.user.auth)
+
+    savedArticleService.getOrCreateArticlesList(prefsResponse).map {
+      case Right(prefs) =>
+        NoCache(Ok(views.html.profile.savedContent(page, prefs.articles.reverse)))
+      case Left(errors) =>
+        NoCache(Ok(views.html.profile.savedContent(page, List.empty)))
+    }
+  }
 }

@@ -1,7 +1,7 @@
 .brand-bar {
     background-color: colour(guardian-brand);
     line-height: 0;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding-left: $gs-gutter * .25;
     padding-right: $gs-gutter * .25;
 
@@ -18,9 +18,6 @@
 // to context matching).
 
 .brand-bar__item {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     @include fs-bodyHeading(1);
     float: left;
@@ -101,7 +98,7 @@
 }
 
 .brand-bar__item--right {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     float: left;
 
     @include mq(tablet) {

@@ -7,6 +7,7 @@ define([
     'common/utils/mediator',
     'common/utils/url',
     'common/modules/article/rich-links',
+    'common/modules/article/membership-events',
     'common/modules/article/open-module',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
@@ -23,6 +24,7 @@ define([
     mediator,
     urlutils,
     richLinks,
+    membershipEvents,
     openModule,
     truncate,
     twitter,
@@ -92,6 +94,7 @@ define([
             modules.initCmpParam();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
+            membershipEvents.upgradeEvents();
             openModule.init();
 
             mediator.emit('page:article:ready');
