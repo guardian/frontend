@@ -180,7 +180,7 @@
 
 .share-modal__close {
     border: 1px solid colour(neutral-2);
-    @include border-radius(50%);
+    @include circular;
     width: 40px;
     height: 40px;
     padding: 0;
@@ -230,7 +230,7 @@
     }
 
     .block-share__item {
-        @include transition(opacity .15s linear);
+        transition: opacity .15s linear;
     }
 
     .block-share__item--facebook {

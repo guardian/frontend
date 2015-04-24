@@ -20,7 +20,7 @@ define([
         this.userData = null;
         this.pageId = config.page.pageId;
         this.$saver = bonzo(this.saveLinkHolder);
-        this.savedArticlesUrl = config.page.idUrl + '/saved-articles';
+        this.savedArticlesUrl = config.page.idUrl + '/prefs/saved-content';
         this.shortUrl = config.page.shortUrl.replace('http://gu.com', '');   //  Keep the fitst trailing slash
     }
 

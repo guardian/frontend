@@ -15,6 +15,7 @@ define([
     'facia/modules/ui/container-toggle',
     'facia/modules/ui/container-show-more',
     'facia/modules/ui/lazy-load-containers',
+    'facia/modules/ui/slideshow/controller',
     'facia/modules/ui/snaps',
     'facia/modules/onwards/weather'
 ], function (
@@ -32,6 +33,7 @@ define([
     ContainerToggle,
     containerShowMore,
     lazyLoadContainers,
+    slideshow,
     snaps,
     weather
 ) {
@@ -73,6 +75,14 @@ define([
                         weather.init();
                     });
                 }
+            },
+
+            startSlideshow: function () {
+                if (!detect.isBreakpoint('mobile')) {
+                    mediator.on('page:front:ready', function () {
+                        slideshow.init();
+                    });
+                }
             }
         },
 
@@ -86,6 +96,7 @@ define([
                 lazyLoadContainers();
                 stocks();
                 modules.showWeather();
+                modules.startSlideshow();
             }
             mediator.emit('page:front:ready');
         };

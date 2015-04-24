@@ -45,6 +45,8 @@ define([
     Layout,
     widgets
 ) {
+    modalDialog = modalDialog.default;
+
     return function() {
 
         var model = vars.model = {

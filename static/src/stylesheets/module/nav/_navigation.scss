@@ -69,8 +69,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     &:before {
         background: $c-navigation-background-side-bar;
         border-bottom: 1px solid $c-global-navigation-border;
-        -moz-background-clip: padding-box;
-        -webkit-background-clip: padding-box;
         background-clip: padding-box;
 
         .l-header--is-slim & {
@@ -689,8 +687,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     line-height: $navigation-height;
     padding: 0 $gs-gutter / 2;
     background: $c-navigation-toggle-background;
-    -moz-background-clip: padding-box;
-    -webkit-background-clip: padding-box;
     background-clip: padding-box;
     text-align: left;
     // TODO: Why is this needed?
@@ -837,13 +833,13 @@ $burger-width: 16px;
             height: 0;
 
             &:before {
-                @include transform(rotate(45deg));
+                transform: rotate(45deg);
 
                 top: 4px;
             }
 
             &:after {
-                @include transform(rotate(-45deg) translate(3px, -3px)); // We need to move line to the center
+                transform: rotate(-45deg) translate(3px, -3px); // We need to move line to the center
 
                 top: 8px;
             }

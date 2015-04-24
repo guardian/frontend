@@ -1,10 +1,10 @@
-@include keyframes(spinner) {
+@keyframes spinner {
     from {
-        @include rotate(0deg);
+        transform: rotate(0deg);
     }
 
     to {
-        @include rotate(360deg);
+        transform: rotate(360deg);
     }
 }
 
@@ -14,7 +14,7 @@
 
 .show-more__error-message {
     @include fs-textSans(3);
-    @include transition(opacity 1.5s);
+    transition: opacity 1.5s;
     color: colour(status-negative);
     display: inline-block;
     padding-top: $gs-baseline / 2;

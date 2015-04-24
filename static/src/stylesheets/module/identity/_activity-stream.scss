@@ -165,7 +165,7 @@
 }
 .activity-stream__witness-content:hover {
     background: colour(neutral-6);
-    @include transition(.3s all);
+    transition: .3s all;
 }
 .activity-stream__witness-text {
     display: block;

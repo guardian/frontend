@@ -233,7 +233,7 @@
         height: 0;
         position: relative;
         overflow: hidden;
-        @include transition(height 1s);
+        transition: height 1s;
     }
     .ad-exp--expand .facia-container__inner {
         height: 100%;
@@ -249,7 +249,7 @@
         position: absolute;
         top: 0;
         right: 0;
-        @include border-radius(100px);
+        border-radius: 100px;
         border: 1px solid #ffffff;
         background-color: #000000;
         margin: 5px;
@@ -257,8 +257,8 @@
         z-index: 3;
         height: 32px;
         width: 32px;
-        @include transform(rotate(45deg));
-        @include transition(all 1s ease);
+        transform: rotate(45deg);
+        transition: all 1s ease;
 
         @include mq(tablet) {
             right: $gs-gutter;
@@ -269,7 +269,7 @@
             outline-style: none;
         }
         &.button-spin {
-            @include transform(rotate(360deg));
+            transform: rotate(360deg);
         }
     }
 
@@ -305,16 +305,16 @@
         margin-left: $gs-gutter*-1.5;
         text-align: center;
         @include fs-textSans(1);
-        @include border-radius($gs-gutter $gs-gutter 0 0);
+        border-radius: $gs-gutter $gs-gutter 0 0;
 
         .inline-arrow-down {
-            @include transition(all 1s ease);
+            transition: all 1s ease;
             display: block;
             margin: -2px auto 2px;
         }
 
         &.chevron-down .inline-arrow-down {
-            @include transform(rotate(180deg));
+            transform: rotate(180deg);
         }
 
     }

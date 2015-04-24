@@ -43,3 +43,4 @@ GET         /form/embed/:formReference              @controllers.FormstackContro
 
 GET         /et/subscribe/:subDefId                 @controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)
 GET         /prefs/save-content                     @controllers.SaveContentController.saveContentItem
+GET         /prefs/saved-content                    @controllers.SaveContentController.listSavedContentItems

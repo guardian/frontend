@@ -74,7 +74,7 @@ $block-padding-right: $gs-gutter;
     top: 0;
 }
 
-@include keyframes(live-pulse) {
+@keyframes live-pulse {
     0% {opacity: 1;}
     10% {opacity: .25;}
     40% {opacity: 1;}
@@ -92,7 +92,7 @@ $block-padding-right: $gs-gutter;
 .live-pulse-icon:before {
     display: inline-block;
     position: relative;
-    @include border-radius(50%);
+    @include circular;
     $size: .75em;
     background-color: #ffffff;
     width: $size;
@@ -138,7 +138,7 @@ $block-padding-right: $gs-gutter;
         height: $size;
         margin-bottom: -1px;
         margin-right: 3px;
-        @include border-radius(50%);
+        @include circular;
         animation: live-pulse 2s infinite;
     }
 
@@ -227,7 +227,7 @@ $block-padding-right: $gs-gutter;
     }
 }
 
-@include keyframes(new-block-animation) {
+@keyframes new-block-animation {
     0% { opacity: 0; border-top-color: colour(live-accent); }
     100% { opacity: 1; border-top-color: colour(neutral-3); }
 }
@@ -578,7 +578,7 @@ $timeline-width: 15px;
 
 .blog__timeline-container {
     @include mq(desktop) {
-        @include transform(translateZ(0)); //To force on GPU
+        transform: translateZ(0); //To force on GPU
         width: $right-column;
         top: $gs-baseline;
         padding-top: $gs-baseline;
@@ -635,7 +635,7 @@ $timeline-width: 15px;
             left: ($timeline-width/2)*-1;
             width: $timeline-width;
             height: $timeline-width;
-            @include border-radius(50%);
+            @include circular;
             background-color: colour(neutral-3);
         }
 

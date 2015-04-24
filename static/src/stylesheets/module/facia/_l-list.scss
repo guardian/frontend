@@ -4,7 +4,7 @@
     @include mq(tablet) {
         .has-flex-wrap & {
             display: flex;
-            @include flex-wrap(wrap);
+            flex-wrap: wrap;
         }
     }
 }
@@ -13,7 +13,7 @@
     float: left;
 
     .has-flex-wrap & {
-        @include flex-grow(0);
+        flex-grow: 0;
         flex-basis: 100%;
     }
 }
