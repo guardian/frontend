@@ -6,6 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/variant-test',
     'common/modules/experiments/tests/liveblog-front-updates',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/identity-social-oauth',
@@ -29,6 +30,7 @@ define([
     mediator,
     store,
     mvtCookie,
+    VariantTest,
     LiveblogFrontUpdates,
     HighCommercialComponent,
     IdentitySocialOAuth,
@@ -48,6 +50,7 @@ define([
 
     var ab,
         TESTS = _.flatten([
+            new VariantTest(),
             new LiveblogFrontUpdates(),
             new HighCommercialComponent(),
             new IdentitySocialOAuth(),
