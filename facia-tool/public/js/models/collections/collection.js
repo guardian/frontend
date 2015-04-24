@@ -203,7 +203,7 @@ define([
                     }
                 }
             })
-            .done(function () {
+            .then(function () {
                 that.processDraft(true);
             });
         } else {
