@@ -44,11 +44,13 @@ define([
                     $els = {};
 
                     function stickyNav() {
-                        $els.header        = $('#header');
-                        $els.bannerDesktop = $('.top-banner-ad-container--above-nav');
-                        $els.bannerMobile  = $('.top-banner-ad-container--mobile');
-                        $els.main          = $('#maincontent');
-                        $els.navHeader     = $('.js-navigation-header');
+                        fastdom.read(function () {
+                            $els.header        = $('#header');
+                            $els.bannerDesktop = $('.top-banner-ad-container--above-nav');
+                            $els.bannerMobile  = $('.top-banner-ad-container--mobile');
+                            $els.main          = $('#maincontent');
+                            $els.navHeader     = $('.js-navigation-header');
+                        });
 
                         fastdom.write(function () {
                             if (detect.getBreakpoint() === 'mobile') {
@@ -85,7 +87,7 @@ define([
 
                         if (detect.getBreakpoint() === 'mobile') {
                             fastdom.write(function () {
-                                if (window.scrollY > stickyTresholds.mobile) {
+                                if ($(window).scrollTop() > stickyTresholds.mobile) {
                                     $els.bannerMobile.css({
                                         position: 'absolute',
                                         top:      stickyTresholds.mobile + headerHeight
@@ -106,11 +108,17 @@ define([
                                 }
                             });
                         } else {
+                            var scrollY;
+
+                            fastdom.read(function () {
+                                scrollY = $(window).scrollTop();
+                            });
+
                             fastdom.write(function () {
                                 bannerHeight = $els.bannerDesktop.dim().height;
 
                                 // Add is collapsed, header is slim
-                                if (window.scrollY > stickyTresholds.desktop.nobanner) {
+                                if (scrollY > stickyTresholds.desktop.nobanner) {
                                     // Add is not sticky anymore
                                     $els.bannerDesktop.css({
                                         position: 'absolute',
@@ -120,11 +128,11 @@ define([
 
                                     // Sync header movement with banner disapearing
                                     $els.header.css({
-                                        top: Math.round(bannerHeight - (window.scrollY - stickyTresholds.desktop.nobanner))
+                                        top: Math.round(bannerHeight - (scrollY - stickyTresholds.desktop.nobanner))
                                     });
 
                                     // Banner is not visible anymore so stick header to the top of the viewport
-                                    if (window.scrollY > (stickyTresholds.desktop.nobanner + bannerHeight)) {
+                                    if (scrollY > (stickyTresholds.desktop.nobanner + bannerHeight)) {
                                         $els.header.css({
                                             top: 0
                                         });
@@ -146,7 +154,7 @@ define([
                                     });
 
                                     // Make sure header is slim when needed
-                                    (window.scrollY > stickyTresholds.desktop.slimnav) ? $els.header.addClass('is-slim') : $els.header.removeClass('is-slim');
+                                    (scrollY > stickyTresholds.desktop.slimnav) ? $els.header.addClass('is-slim') : $els.header.removeClass('is-slim');
                                 }
                             });
                         }
