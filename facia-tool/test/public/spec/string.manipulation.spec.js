@@ -1,9 +1,11 @@
-define([
-    'utils/parse-query-params'
-], function (params) {
+import params from 'utils/parse-query-params';
+import urlQuery from 'utils/url-query';
+import ammend from 'utils/ammended-query-str';
+
+fdescribe('utils/parse-query-params', function () {
+    var value = params('');
     describe('URL Parameters', function () {
         it('parses an empty string', function () {
-            var value = params('');
             expect(value).toEqual({});
         });
 
@@ -47,5 +49,19 @@ define([
                 string: ['array']
             });
         });
+    });
+});
+
+describe('utils/url-query', function () {
+    it('extract the search query', function () {
+        expect(urlQuery(null)).toBe('');
+        expect(urlQuery('')).toBe('');
+        expect(urlQuery('#with-hash')).toBe('');
+        expect(urlQuery('some_location')).toBe('');
+        expect(urlQuery('some_location#with-hash')).toBe('');
+        expect(urlQuery('some_location?fruit=banana')).toBe('fruit=banana');
+        expect(urlQuery('some_location?fruit=banana&color=yellow')).toBe('fruit=banana&color=yellow');
+        expect(urlQuery('some_location?fruit=banana&color=yellow')).toBe('fruit=banana&color=yellow');
+        expect(urlQuery('some_location?fruit=banana#peeled')).toBe('fruit=banana');
     });
 });
