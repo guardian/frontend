@@ -49,14 +49,6 @@
 
 .top-banner-ad-container--mobile {
     background-color: #f0f0f0;
-    transition: 0.2s transform cubic-bezier(.3,.73,.3,.74);
-
-    /*&.top-banner-ad-container--sticky {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1001;
-    }*/
 }
 .top-banner-ad-container--desktop {
     background-color: colour(neutral-8);
