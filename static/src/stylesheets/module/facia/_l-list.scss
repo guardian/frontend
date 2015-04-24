@@ -3,8 +3,8 @@
 
     @include mq(tablet) {
         .has-flex-wrap & {
-            @include flex-display;
-            @include flex-wrap(wrap);
+            display: flex;
+            flex-wrap: wrap;
         }
     }
 }
@@ -13,8 +13,8 @@
     float: left;
 
     .has-flex-wrap & {
-        @include flex-grow(0);
-        @include flex-basis(100%);
+        flex-grow: 0;
+        flex-basis: 100%;
     }
 }
 
@@ -28,7 +28,7 @@
                     float: left;
 
                     .has-flex & {
-                        @include flex($span);
+                        flex: $span 1 auto;
                     }
                 }
             }
@@ -55,7 +55,7 @@
                 }
 
                 .has-flex-wrap & {
-                    @include flex-basis(100% / $column);
+                    flex-basis: (100% / $column);
                 }
             }
         }

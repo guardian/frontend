@@ -45,7 +45,7 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
                 setItem: sinon.stub().throws()
             });
             expect(storage.local.isAvailable()).toBeFalsy();
-            expect(storage.local.isStorageAvailable()).toBeFalsy();
+            expect(storage.local.isStorageAvailable(true)).toBeFalsy();
         });
 
         it('should save and retrieve data', function() {

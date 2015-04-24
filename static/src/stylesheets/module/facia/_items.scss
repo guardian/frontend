@@ -29,7 +29,7 @@
 
     @include mq(tablet) {
         .has-flex & {
-            @include flex-display;
+            display: flex;
         }
     }
 
@@ -52,10 +52,6 @@
     }
 }
 .fc-slice__item--no-mpu {
-    -webkit-box-flex: 0 !important;
-    -moz-box-flex: 0 !important;
-    -webkit-flex: 0 !important;
-    -ms-flex: 0 !important;
     flex: 0 !important;
 }
 
@@ -275,7 +271,7 @@
 
         .has-flex-wrap & {
             .fc-item__container {
-                @include flex-direction(row);
+                flex-direction: row;
             }
         }
 
