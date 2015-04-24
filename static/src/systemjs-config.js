@@ -56,7 +56,6 @@ System.config({
     "stripe": "vendor/stripe/stripe.min",
     "svg": "common/utils/svg",
     "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
-    "systemjs/systemjs": "github:systemjs/systemjs@0.16.7",
     "text": "github:systemjs/plugin-text@0.0.2",
     "videojs": "github:guardian/video.js@4.11.1.1",
     "videojsads": "github:guardian/videojs-contrib-ads@0.4.1",
