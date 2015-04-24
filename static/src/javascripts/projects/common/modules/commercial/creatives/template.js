@@ -34,7 +34,7 @@ define([
     };
 
     Template.prototype.create = function () {
-        require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+        require(['common/views/commercial/creatives/' + this.params.creative + '.html!text'], function (creativeTpl) {
             var creativeHtml = template(creativeTpl, this.params);
 
             $.create(creativeHtml)

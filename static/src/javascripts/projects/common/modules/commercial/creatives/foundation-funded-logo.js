@@ -28,7 +28,7 @@ define([
     Template.prototype.create = function () {
         var templateName = 'logo-foundation-funded' + (this.params.hasPartners ? '-partners' : '');
 
-        require(['text!common/views/commercial/creatives/' + templateName + '.html'], function (creativeTpl) {
+        require(['common/views/commercial/creatives/' + templateName + '.html!text'], function (creativeTpl) {
             var creativeHtml = template(creativeTpl, this.params);
 
             $.create(creativeHtml)
