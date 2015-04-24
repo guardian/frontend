@@ -51,6 +51,11 @@ define([
         Group
     ) {
         alert = alert.default;
+        fullTrim = fullTrim.default;
+        isGuardianUrl = isGuardianUrl.default;
+        urlHost = urlHost.default;
+        sanitizeHtml = sanitizeHtml.default;
+        urlAbsPath = urlAbsPath.default;
 
         var capiProps = [
                 'webUrl',

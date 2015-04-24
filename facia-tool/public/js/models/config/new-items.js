@@ -9,6 +9,8 @@ define([
     urlAbsPath,
     findFirstById
 ) {
+    urlAbsPath = urlAbsPath.default;
+
     return {
         newItemsConstructor: function(id) {
             return [findFirstById(vars.model.collections, urlAbsPath(id))];

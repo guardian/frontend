@@ -27,6 +27,10 @@ define([
     urlAbsPath,
     identity
 ) {
+    fullTrim = fullTrim.default;
+    sanitizeApiQuery = sanitizeApiQuery.default;
+    urlAbsPath = urlAbsPath.default;
+
     var checkCount = 0;
 
     function Collection(opts) {

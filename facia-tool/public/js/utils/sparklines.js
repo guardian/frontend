@@ -21,6 +21,9 @@ define([
     parseQueryParams,
     urlAbsPath
 ) {
+    parseQueryParams = parseQueryParams.default;
+    urlAbsPath = urlAbsPath.default;
+
     var subscribedFronts = [],
         pollingId;
 
@@ -290,7 +293,7 @@ define([
 
     function isEnabled () {
         var disabledFromSwitch = vars.model.switches()['facia-tool-sparklines'] === false,
-            enabledFromParam = parseQueryParams(window.location.search).sparklines === 'please';
+            enabledFromParam = parseQueryParams().sparklines === 'please';
 
         return !disabledFromSwitch || enabledFromParam;
     }

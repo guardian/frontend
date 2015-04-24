@@ -7,6 +7,8 @@ define([
     deepGet,
     parseQueryParams
 ) {
+    parseQueryParams = parseQueryParams.default;
+
     function getMediaItem(dataTransfer) {
         var mediaItem = dataTransfer.getData('application/vnd.mediaservice.crops+json');
 

@@ -5,13 +5,15 @@ define([
     _,
     parseQueryParams
 ) {
+    parseQueryParams = parseQueryParams.default;
+
     function get () {
         var columns = [{
                 'type': 'latest'
             }, {
                 'type': 'front'
             }],
-            queryParams = parseQueryParams(window.location.search),
+            queryParams = parseQueryParams(),
             configFromURL = queryParams.layout;
 
         if (queryParams.treats === 'please') {
