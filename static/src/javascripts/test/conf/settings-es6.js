@@ -19,7 +19,7 @@ module.exports = function(config) {
         files: [
             { pattern: 'javascripts/projects/**/*.js', included: false, served: true },
             { pattern: 'javascripts/es6/**/*.js', included: false, served: true },
-            { pattern: 'javascripts/test/setup.js', included: true },
+            { pattern: 'javascripts/test/setup.js', included: true }
         ],
 
         // list of files to exclude
