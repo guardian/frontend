@@ -224,6 +224,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 .local-navigation__action,
 .top-navigation__action {
     color: $c-local-navigation-action;
+    z-index: 102;
 }
 .top-navigation__action {
     color: $c-top-navigation-action;
@@ -678,7 +679,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 
 // TODO: Move
 .navigation-toggle {
-    z-index: 2;
+    z-index: 103;
     position: absolute;
     right: 0;
     top: 0;
