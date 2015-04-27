@@ -14,13 +14,14 @@ define([
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/mt-top-below-first-container',
     'common/modules/experiments/tests/mt-depth',
-    'common/modules/experiments/tests/facebook-like-prompt',
     'common/modules/experiments/tests/mt-sticky-bottom',
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/tests/history-without-whitelist',
     'common/modules/experiments/headlines',
     'common/modules/experiments/tests/mt-lz-ads-depth',
-    'common/modules/experiments/tests/facia-slideshow'
+    'common/modules/experiments/tests/mt-sticky-nav-all',
+    'common/modules/experiments/tests/facia-slideshow',
+    'common/modules/experiments/tests/mt-sticky-burger'
 ], function (
     raven,
     _,
@@ -37,14 +38,15 @@ define([
     HeatMap,
     MtTopBelowFirstContainer,
     MtDepth,
-    FacebookLikePrompt,
     MtStickyBottom,
     SaveForLater,
     HistoryWithoutWhitelist,
     Headline,
     MtLzAdsDepth,
-    FaciaSlideshow
-) {
+    MtStickyNavAll,
+    FaciaSlideshow,
+    MtStickyBurger
+    ) {
 
     var ab,
         TESTS = _.flatten([
@@ -56,11 +58,12 @@ define([
             new HeatMap(),
             new MtTopBelowFirstContainer(),
             new MtDepth(),
-            new FacebookLikePrompt(),
             new MtStickyBottom(),
             new SaveForLater(),
             new HistoryWithoutWhitelist(),
             new MtLzAdsDepth(),
+            new MtStickyNavAll(),
+            new MtStickyBurger(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             }),
@@ -128,8 +131,10 @@ define([
     }
 
     function testCanBeRun(test) {
-        var expired = (new Date() - new Date(test.expiry)) > 0;
-        return (test.canRun() && !expired && isTestSwitchedOn(test));
+        var expired = (new Date() - new Date(test.expiry)) > 0,
+            isSensitive = config.page.shouldHideAdverts;
+        return ((isSensitive ? test.showForSensitive : true)
+                && test.canRun() && !expired && isTestSwitchedOn(test));
     }
 
     function getTest(id) {
@@ -298,16 +303,16 @@ define([
 
             var eventTag = event.tag;
             return eventTag && _(getActiveTests())
-                    .filter(function (test) {
-                        var testEvents = test.events;
-                        return testEvents && _.some(testEvents, function (testEvent) {
-                            return startsWith(eventTag, testEvent);
-                        });
-                    })
-                    .map(function (test) {
-                        return test.id;
-                    })
-                    .valueOf();
+                .filter(function (test) {
+                    var testEvents = test.events;
+                    return testEvents && _.some(testEvents, function (testEvent) {
+                        return startsWith(eventTag, testEvent);
+                    });
+                })
+                .map(function (test) {
+                    return test.id;
+                })
+                .valueOf();
         },
 
         getAbLoggableObject: function () {

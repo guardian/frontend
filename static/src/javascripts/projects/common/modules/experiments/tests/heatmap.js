@@ -17,6 +17,7 @@ define([
         this.audienceCriteria = '1% looking at the US front';
         this.dataLinkNames = '';
         this.idealOutcome = '';
+        this.showForSensitive = false;
 
         this.canRun = function () {
             var isUsNetworkFront = (config.page.edition === 'US') && config.page.pageId === 'us',

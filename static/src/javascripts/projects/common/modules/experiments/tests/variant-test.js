@@ -12,6 +12,7 @@ define(function () {
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
         this.idealOutcome = 'Traffic distribution is equal across variants';
+        this.showForSensitive = false;
 
         this.canRun = function () {
             return true;
