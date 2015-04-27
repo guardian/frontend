@@ -1,5 +1,5 @@
 // We use system.normalize to convert RequireJS module IDs to SystemJS module
-// IDs. This is mainly necessary because the plugin format is reverted in
+// IDs. This is mainly necessary because the plugin format is reversed in
 // SystemJS (suffix rather than prefix).
 
 // Used in JavaScriptLaterSteps.scala.html and bundle.js
