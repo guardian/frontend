@@ -27,18 +27,18 @@ var bundleConfigs = [
     ['es6/bootstraps/crosswords - core', 'es6/bootstraps/crosswords.js'],
     ['bootstraps/app - core', 'bootstraps/app.js'],
     ['bootstraps/commercial - core', 'bootstraps/commercial.js'],
-    ['bootstraps/sudoku - core', 'bootstraps/sudoku.js'],
-    ['bootstraps/image-content - core', 'bootstraps/image-content.js'],
+    ['bootstraps/sudoku - core - bootstraps/app', 'bootstraps/sudoku.js'],
+    ['bootstraps/image-content - core - bootstraps/app', 'bootstraps/image-content.js'],
     ['bootstraps/facia - core - bootstraps/app', 'bootstraps/facia.js'],
-    ['bootstraps/football - core', 'bootstraps/football.js'],
-    ['bootstraps/preferences - core', 'bootstraps/preferences.js'],
-    ['bootstraps/membership - core', 'bootstraps/membership.js'],
+    ['bootstraps/football - core - bootstraps/app', 'bootstraps/football.js'],
+    ['bootstraps/preferences - core - bootstraps/app', 'bootstraps/preferences.js'],
+    ['bootstraps/membership - core - bootstraps/app', 'bootstraps/membership.js'],
     ['bootstraps/ophan - core', 'bootstraps/ophan.js'],
     ['bootstraps/admin - core', 'bootstraps/admin.js'],
     ['bootstraps/video-player - core', 'bootstraps/video-player.js'],
     ['bootstraps/video-embed - core', 'bootstraps/video-embed.js'],
-    ['bootstraps/dev - core', 'bootstraps/dev.js'],
-    ['bootstraps/creatives - core', 'bootstraps/creatives.js']
+    ['bootstraps/dev - core - bootstraps/app', 'bootstraps/dev.js'],
+    ['bootstraps/creatives - core - bootstraps/app', 'bootstraps/creatives.js']
 ];
 
 var getHash = function (outputSource) {
