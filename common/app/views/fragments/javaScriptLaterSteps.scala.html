@@ -345,11 +345,11 @@
         window.require = System.amdRequire.bind(System);
         window.define = System.amdDefine.bind(System);
 
-        Promise.all(
-            ['core','raven' ].map(function(module){return System.import(module);})
-        ).then(function(values) {
-            var raven = values[1];
-
+        System.import('core')
+        .then(function(){
+            return System.import('raven');
+        })
+        .then(function(raven) {
             raven.config(
                 'http://' + guardian.config.page.sentryPublicApiKey + '@@' + guardian.config.page.sentryHost,
                 {
