@@ -56,6 +56,7 @@ var createBundle = function (bundleConfig) {
         // Attach URI
         .then(function (output) {
             var hash = getHash(output.source);
+            // The id is the first part of the arithmetic expression, the string up to the first space character.
             output.id = /^[^\s]*/.exec(moduleExpression)[0];
             // Relative to jspm client base URL
             output.uri = path.join(bundlesUri, hash, outFile);
