@@ -529,9 +529,9 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 11)
   )
 
-  val ABMtStickyNavAll = Switch(
+  val ABMtStNav = Switch(
     "A/B Tests",
-    "ab-mt-sticky-nav-all",
+    "ab-mt-st-nav",
     "Testing sticky nav with sticky banner and nav going to slim version",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
   )

@@ -14,7 +14,7 @@ define([
     mediator
 ) {
     return function () {
-        this.id = 'MtStickyNavAll';
+        this.id = 'MtStNav';
         this.start = '2015-04-26';
         this.expiry = '2015-05-26';
         this.author = 'Steve Vadocz';
