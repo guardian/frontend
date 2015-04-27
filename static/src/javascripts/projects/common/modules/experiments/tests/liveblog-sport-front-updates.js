@@ -1,11 +1,4 @@
-define([
-    'common/utils/config',
-    'common/utils/detect'
-], function (
-    config,
-    detect
-) {
-
+define([], function () {
     return function () {
         this.id = 'LiveblogSportFrontUpdates';
         this.start = '2015-04-27';
