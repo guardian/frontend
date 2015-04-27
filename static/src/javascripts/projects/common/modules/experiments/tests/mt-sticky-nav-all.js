@@ -58,7 +58,7 @@ define([
                                     position:  'fixed',
                                     top:       $els.navHeader.dim().height,
                                     width:     '100%',
-                                    'z-index': '1000'
+                                    'z-index': '10000'
                                 });
                                 $els.main.css('margin-top', $els.bannerMobile.dim().height);
                             } else {
@@ -69,7 +69,7 @@ define([
                                         position:  'fixed',
                                         top:       0,
                                         width:     '100%',
-                                        'z-index': '1000'
+                                        'z-index': '10000'
                                     });
                                     $els.header.addClass('is-slim');
                                 }
@@ -102,13 +102,13 @@ define([
                                         position:  'fixed',
                                         top:       headerHeight,
                                         width:     '100%',
-                                        'z-index': '1000'
+                                        'z-index': '10000'
                                     });
                                     $els.header.css({
                                         position:  'fixed',
                                         top:       0,
                                         width:     '100%',
-                                        'z-index': '1001'
+                                        'z-index': '10001'
                                     });
                                 }
                             });
@@ -143,13 +143,13 @@ define([
                                         position:  'fixed',
                                         top:       0,
                                         width:     '100%',
-                                        'z-index': '1000'
+                                        'z-index': '10000'
                                     });
                                     $els.header.css({
                                         position:  'fixed',
                                         top:       bannerHeight,
                                         width:     '100%',
-                                        'z-index': '1000'
+                                        'z-index': '10000'
                                     });
 
                                     // Make sure header is slim when needed
