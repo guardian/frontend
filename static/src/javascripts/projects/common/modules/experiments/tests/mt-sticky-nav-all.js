@@ -20,7 +20,7 @@ define([
         this.author = 'Steve Vadocz';
         this.description = 'Top navigation and top ad slot are sticky with navigation going to slim mode';
         this.audience = 0.02;
-        this.audienceOffset = 0.3;
+        this.audienceOffset = 0.35;
         this.successMeasure = '';
         this.audienceCriteria = '1% of US edition';
         this.dataLinkNames = '';
