@@ -2,6 +2,7 @@ package controllers.admin
 
 import common.{Edition, ExecutionContexts, Logging}
 import conf.Configuration.environment
+import conf.LiveContentApi.getResponse
 import conf.{Configuration, LiveContentApi}
 import controllers.AuthLogging
 import dfp.{DfpDataHydrator, LineItemReport}
@@ -9,8 +10,7 @@ import model.{Content, NoCache, Page}
 import ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, JsValue, Json}
 import play.api.mvc.Controller
-import tools.Store
-import LiveContentApi.getResponse
+import tools._
 
 object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
   def renderCommercial = AuthActions.AuthActionTest { implicit request =>
@@ -108,5 +108,11 @@ object CommercialController extends Controller with Logging with AuthLogging wit
     NoCache(Ok(views.html.commercial.adTests(
       environment.stage, report.map(_.timestamp), sortedGroups
     )))
+  }
+
+  def renderCommercialRadiator() = AuthActions.AuthActionTest.async { implicit request =>
+    for (adResponseConfidenceGraph <- CloudWatch.eventualAdResponseConfidenceGraph) yield {
+      Ok(views.html.commercial.commercialRadiator("PROD", adResponseConfidenceGraph))
+    }
   }
 }
