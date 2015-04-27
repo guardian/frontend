@@ -85,7 +85,7 @@ define([
                 var isSport = _.contains(['sport', 'football'], config.page.section);
 
                 if (config.switches.liveblogFrontUpdates && !isSport ||
-                    config.switches.abLiveblogSportFrontUpdates && isSport) {
+                    config.switches.abLiveblogSportFrontUpdates && isSport && ab.getTestVariant('LiveblogSportFrontUpdates') === 'updates') {
                     mediator.on('page:front:ready', function () {
                         liveblogUpdates.show();
                     });
