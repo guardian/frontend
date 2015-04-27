@@ -9,7 +9,7 @@ define([
     mediator,
     bonzo
 ) {
-    var timeAdjustmentMs = config.page.renderTime ? Math.max(0, new Date() - new Date(config.page.renderTime)) : 0;
+    var timeAdjustmentMs = config.page && config.page.renderTime ? Math.max(0, new Date() - new Date(config.page.renderTime)) : 0;
 
     function adjustedNow() {
         return new Date(new Date().getTime() - timeAdjustmentMs);
