@@ -6,9 +6,9 @@ define([
     'test/fixtures/articles',
     'test/fixtures/some-collections',
     'utils/layout-from-url',
-    'text!views/collections.scala.html',
-    'text!views/templates/vertical_layout.scala.html',
-    'text!widgets/collection.html',
+    'views/collections.scala.html!text',
+    'views/templates/vertical_layout.scala.html!text',
+    'widgets/collection.html!text',
     'utils/mediator'
 ], function(
     _,

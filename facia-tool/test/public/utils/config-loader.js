@@ -4,7 +4,7 @@ define([
     'test/fixtures/one-front-config',
     'mock/switches',
     'utils/mediator',
-    'text!views/config.scala.html'
+    'views/config.scala.html!text'
 ], function (
     _,
     ConfigEditor,
