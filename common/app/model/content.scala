@@ -57,7 +57,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   override lazy val membershipAccess: Option[String] = fields.get("membershipAccess")
   override lazy val requiresMembershipAccess: Boolean = {
-    conf.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && section == "membership"
+    conf.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
   }
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
