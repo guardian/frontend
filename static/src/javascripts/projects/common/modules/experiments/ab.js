@@ -6,20 +6,22 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/liveblog-blocks-on-fronts',
+    'common/modules/experiments/tests/variant-test',
+    'common/modules/experiments/tests/liveblog-front-updates',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/identity-social-oauth',
-    'common/modules/experiments/tests/mt-master',
+    'common/modules/experiments/tests/mt-main',
     'common/modules/experiments/tests/mt-top-below-nav',
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/mt-top-below-first-container',
-    'common/modules/experiments/tests/mt-sticky-nav',
-    'common/modules/experiments/tests/across-the-country',
-    'common/modules/experiments/tests/adblock-message',
+    'common/modules/experiments/tests/mt-depth',
+    'common/modules/experiments/tests/facebook-like-prompt',
     'common/modules/experiments/tests/mt-sticky-bottom',
     'common/modules/experiments/tests/save-for-later',
+    'common/modules/experiments/tests/history-without-whitelist',
+    'common/modules/experiments/headlines',
+    'common/modules/experiments/tests/mt-lz-ads-depth',
     'common/modules/experiments/tests/mt-sticky-nav-all',
-    'common/modules/experiments/headlines'
+    'common/modules/experiments/tests/facia-slideshow'
 ], function (
     raven,
     _,
@@ -28,40 +30,44 @@ define([
     mediator,
     store,
     mvtCookie,
-    LiveblogBlocksOnFronts,
+    VariantTest,
+    LiveblogFrontUpdates,
     HighCommercialComponent,
-    IdentitySocialOAuth,
-    MtMaster,
+    MtMain,
     MtTopBelowNav,
     HeatMap,
     MtTopBelowFirstContainer,
-    MtStickyNav,
-    AcrossTheCountry,
-    AdblockMessage,
+    MtDepth,
+    FacebookLikePrompt,
     MtStickyBottom,
     SaveForLater,
+    HistoryWithoutWhitelist,
+    Headline,
+    MtLzAdsDepth,
     MtStickyNavAll,
-    Headline
-) {
+    FaciaSlideshow
+    ) {
 
     var ab,
         TESTS = _.flatten([
-            new LiveblogBlocksOnFronts(),
+            new VariantTest(),
+            new LiveblogFrontUpdates(),
             new HighCommercialComponent(),
-            new IdentitySocialOAuth(),
-            new MtMaster(),
+            new MtMain(),
             new MtTopBelowNav(),
             new HeatMap(),
             new MtTopBelowFirstContainer(),
-            new MtStickyNav(),
-            new AcrossTheCountry(),
-            new AdblockMessage(),
+            new MtDepth(),
+            new FacebookLikePrompt(),
             new MtStickyBottom(),
             new SaveForLater(),
+            new HistoryWithoutWhitelist(),
+            new MtLzAdsDepth(),
             new MtStickyNavAll(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
-            })
+            }),
+            new FaciaSlideshow()
         ]),
         participationsKey = 'gu.ab.participations';
 
@@ -295,16 +301,16 @@ define([
 
             var eventTag = event.tag;
             return eventTag && _(getActiveTests())
-                    .filter(function (test) {
-                        var testEvents = test.events;
-                        return testEvents && _.some(testEvents, function (testEvent) {
-                            return startsWith(eventTag, testEvent);
-                        });
-                    })
-                    .map(function (test) {
-                        return test.id;
-                    })
-                    .valueOf();
+                .filter(function (test) {
+                    var testEvents = test.events;
+                    return testEvents && _.some(testEvents, function (testEvent) {
+                        return startsWith(eventTag, testEvent);
+                    });
+                })
+                .map(function (test) {
+                    return test.id;
+                })
+                .valueOf();
         },
 
         getAbLoggableObject: function () {

@@ -74,7 +74,7 @@ $block-padding-right: $gs-gutter;
     top: 0;
 }
 
-@include keyframes(live-pulse) {
+@keyframes live-pulse {
     0% {opacity: 1;}
     10% {opacity: .25;}
     40% {opacity: 1;}
@@ -92,7 +92,7 @@ $block-padding-right: $gs-gutter;
 .live-pulse-icon:before {
     display: inline-block;
     position: relative;
-    @include border-radius(50%);
+    @include circular;
     $size: .75em;
     background-color: #ffffff;
     width: $size;
@@ -100,7 +100,7 @@ $block-padding-right: $gs-gutter;
     content: '';
     margin-right: 3px;
     vertical-align: initial;
-    @include animation(live-pulse 1s infinite);
+    animation: live-pulse 1s infinite;
 }
 
 /* Timestamps
@@ -138,8 +138,8 @@ $block-padding-right: $gs-gutter;
         height: $size;
         margin-bottom: -1px;
         margin-right: 3px;
-        @include border-radius(50%);
-        @include animation(live-pulse 2s infinite);
+        @include circular;
+        animation: live-pulse 2s infinite;
     }
 
     .block-time__absolute {
@@ -223,11 +223,11 @@ $block-padding-right: $gs-gutter;
 
 .autoupdate--has-animation {
     .autoupdate--highlight {
-        @include animation(new-block-animation 5s ease-out);
+        animation: new-block-animation 5s ease-out;
     }
 }
 
-@include keyframes(new-block-animation) {
+@keyframes new-block-animation {
     0% { opacity: 0; border-top-color: colour(live-accent); }
     100% { opacity: 1; border-top-color: colour(neutral-3); }
 }
@@ -270,6 +270,25 @@ $block-padding-right: $gs-gutter;
     }
 
     .block-elements {
+
+        /* Bylines
+           ========================================================= */
+        .liveblog-block-byline {
+            border-bottom: 1px dotted colour(neutral-4);
+            padding-bottom: $gs-baseline * .5;
+        }
+        .liveblog-block-byline__img {
+            display: inline;
+            border-radius: 50%;
+            max-width: 36px;
+            vertical-align: middle;
+            margin-right: $gs-gutter * .2;
+        }
+        .liveblog-block-byline__name {
+            @include fs-bodyCopy(2);
+            display: inline;
+            color: colour(neutral-1);
+        }
 
         /* Quotes
            ========================================================= */
@@ -559,7 +578,7 @@ $timeline-width: 15px;
 
 .blog__timeline-container {
     @include mq(desktop) {
-        @include transform(translateZ(0)); //To force on GPU
+        transform: translateZ(0); //To force on GPU
         width: $right-column;
         top: $gs-baseline;
         padding-top: $gs-baseline;
@@ -616,7 +635,7 @@ $timeline-width: 15px;
             left: ($timeline-width/2)*-1;
             width: $timeline-width;
             height: $timeline-width;
-            @include border-radius(50%);
+            @include circular;
             background-color: colour(neutral-3);
         }
 

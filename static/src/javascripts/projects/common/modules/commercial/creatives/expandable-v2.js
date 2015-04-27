@@ -33,11 +33,11 @@ define([
         this.isClosed     = true;
 
         if (detect.isBreakpoint({min: 'tablet'})) {
-            this.closedHeight = '250';
-            this.openedHeight = '500';
+            this.closedHeight = 250;
+            this.openedHeight = 500;
         } else {
-            this.closedHeight = '150';
-            this.openedHeight = '300';
+            this.closedHeight = 150;
+            this.openedHeight = 300;
         }
     };
 
@@ -101,7 +101,7 @@ define([
                     $('.ad-exp__open-chevron').toggleClass('chevron-down');
                     this.$ad.css('height', this.openedHeight);
                     this.isClosed = false;
-                });
+                }.bind(this));
                 return true;
             }
         }.bind(this));

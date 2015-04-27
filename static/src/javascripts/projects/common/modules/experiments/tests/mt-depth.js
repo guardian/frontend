@@ -14,20 +14,23 @@ define([
     mediator
 ) {
     return function () {
-        this.id = 'MtMaster';
-        this.start = '2015-03-12';
-        this.expiry = '2015-05-12';
+        this.id = 'MtDepth';
+        this.start = '2015-04-17';
+        this.expiry = '2015-05-06';
         this.author = 'Zofia Korcz';
-        this.description = 'Sticky mpu everywhere where possible instead of the standard RH mpu';
-        this.audience = 0.02;
-        this.audienceOffset = 0;
+        this.description = 'Top navigation and top ad slot are sticky with different variants of depth';
+        this.audience = 0.01;
+        this.audienceOffset = 0.3;
         this.successMeasure = '';
-        this.audienceCriteria = '1% of US and UK edition';
+        this.audienceCriteria = '1% of US edition';
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return config.page.edition === 'UK' || config.page.edition === 'US';
+            var isEditionUs = config.page.edition === 'US',
+                isFixedSuported = $('html').hasClass('has-fixed');
+
+            return isEditionUs && isFixedSuported;
         };
 
         function updatePosition(config) {
@@ -126,48 +129,61 @@ define([
             });
         }
 
-        /**
-         * nothing happens in here, we just use this to bucket users
-         */
+        function runStickyNavigation(depth) {
+            fastdom.read(function () {
+                var stickyConfig = {
+                    $stickyNavigation: $('.sticky-nav-mt-test .navigation'),
+                    $stickyTopAd: $('.sticky-nav-mt-test .top-banner-ad-container'),
+                    $header: $('.sticky-nav-mt-test .l-header__inner'),
+                    $bannnerMobile: $('.top-banner-ad-container--mobile'),
+                    $contentBelowMobile: $('#maincontent'),
+                    scrollThreshold: depth
+                };
+
+                fastdom.write(function () {
+                    $('.sticky-nav-mt-test .l-header-main').css('overflow', 'hidden');
+                    stickyConfig.headerHeight = stickyConfig.$header.dim().height;
+                });
+                stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
+                stickyConfig.belowMobileMargin = stickyConfig.stickyNavigationHeight + stickyConfig.$bannnerMobile.dim().height;
+
+                if (detect.getBreakpoint() === 'mobile') {
+                    updatePositionMobile(stickyConfig);
+
+                    mediator.on('window:scroll', _.throttle(function () {
+                        updatePositionMobile(stickyConfig);
+                    }, 10));
+                } else {
+                    mediator.on('window:scroll', _.throttle(function () {
+                        //height of topAd needs to be recalculated because we don't know when we will get respond from DFP
+                        stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
+                        updatePosition(stickyConfig);
+                    }, 10));
+                }
+            });
+        }
+
         this.variants = [
             {
-                id: 'variant',
+                id: 'A',
                 test: function () {
-                    fastdom.read(function () {
-                        var stickyConfig = {
-                            $stickyNavigation: $('.sticky-nav-mt-test .navigation'),
-                            $stickyTopAd: $('.sticky-nav-mt-test .top-banner-ad-container'),
-                            $header: $('.sticky-nav-mt-test .l-header__inner'),
-                            $bannnerMobile: $('.top-banner-ad-container--mobile'),
-                            $contentBelowMobile: $('#maincontent'),
-                            scrollThreshold: config.page.contentType === 'Video' || config.page.contentType === 'Gallery' ? 280 : 480
-                        };
-
-                        fastdom.write(function () {
-                            $('.sticky-nav-mt-test .l-header-main').css('overflow', 'hidden');
-                            stickyConfig.headerHeight = stickyConfig.$header.dim().height;
-                        });
-                        stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
-                        stickyConfig.belowMobileMargin = stickyConfig.stickyNavigationHeight + stickyConfig.$bannnerMobile.dim().height;
-
-                        if (detect.getBreakpoint() === 'mobile') {
-                            updatePositionMobile(stickyConfig);
-
-                            mediator.on('window:scroll', _.throttle(function () {
-                                updatePositionMobile(stickyConfig);
-                            }, 10));
-                        } else {
-                            mediator.on('window:scroll', _.throttle(function () {
-                                //height of topAd needs to be recalculated because we don't know when we will get respond from DFP
-                                stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
-                                updatePosition(stickyConfig);
-                            }, 10));
-                        }
-                    });
+                    runStickyNavigation(400);
                 }
             },
             {
-                id: 'control',
+                id: 'B',
+                test: function () {
+                    runStickyNavigation(300);
+                }
+            },
+            {
+                id: 'C',
+                test: function () {
+                    runStickyNavigation(200);
+                }
+            },
+            {
+                id: 'D',
                 test: function () { }
             }
         ];

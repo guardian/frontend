@@ -23,6 +23,9 @@ import scala.collection.JavaConversions._
 import scala.language.postfixOps
 import scala.util.Try
 
+/**
+ * a combination of CAPI content and things from facia tool, in one place
+ */
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData with ShareLinks {
 
   lazy val delegate: ApiContent = apiContent.delegate
@@ -175,6 +178,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("webPublicationDate", Json.toJson(webPublicationDate)),
       ("author", JsString(contributors.map(_.name).mkString(","))),
       ("authorIds", JsString(contributors.map(_.id).mkString(","))),
+      ("hasShowcaseMainPicture", JsBoolean(hasShowcaseMainPicture)),
       ("tones", JsString(tones.map(_.name).mkString(","))),
       ("toneIds", JsString(tones.map(_.id).mkString(","))),
       ("blogs", JsString(blogs.map { _.name }.mkString(","))),
@@ -260,6 +264,24 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     width <- apiContent.metaData.flatMap(_.imageCutoutSrcWidth).flatMap(s => Try(s.toInt).toOption)
     height <- apiContent.metaData.flatMap(_.imageCutoutSrcHeight).flatMap(s => Try(s.toInt).toOption)
   } yield FaciaImageElement(src, width, height)
+
+  override lazy val imageSlideshowReplace: Boolean = {
+    apiContent.metaData.flatMap(_.json.get("imageSlideshowReplace").flatMap(_.asOpt[Boolean])).getOrElse(false)
+  }
+
+  override lazy val slideshow: Iterable[FaciaImageElement] =
+    (for {
+      metaData <- apiContent.metaData
+      slideshowImagesList <- metaData.json.get("slideshow")
+      maybeImageElements = for {
+        slideshowImage <- slideshowImagesList.asInstanceOf[JsArray].value
+        maybeImageElement = for {
+          src <- slideshowImage.asInstanceOf[JsObject].\("src").asOpt[String]
+          width <- slideshowImage.asInstanceOf[JsObject].\("width").asOpt[String].flatMap(s => Try(s.toInt).toOption)
+          height <- slideshowImage.asInstanceOf[JsObject].\("height").asOpt[String].flatMap(s => Try(s.toInt).toOption)
+        } yield FaciaImageElement(src, width, height)
+      } yield maybeImageElement
+    } yield maybeImageElements).getOrElse(Nil).flatten
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 
@@ -572,7 +594,7 @@ abstract class Media(content: ApiContentWithMeta) extends Content(content) {
     "og:type" -> "video",
     "og:type" -> "video",
     "og:video:type" -> "text/html",
-    "og:video:url" -> webUrl,
+    "og:video" -> webUrl,
     "video:tag" -> keywords.map(_.name).mkString(",")
   )
 }
@@ -580,6 +602,8 @@ abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 class Audio(content: ApiContentWithMeta) extends Media(content) {
 
   override lazy val contentType = GuardianContentTypes.Audio
+
+  override def schemaType = Some("https://schema.org/AudioObject")
 
   override lazy val metaData: Map[String, JsValue] =
     super.metaData ++ Map("contentType" -> JsString(contentType))
@@ -601,6 +625,8 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
   override lazy val contentType = GuardianContentTypes.Video
 
   lazy val source: Option[String] = videos.find(_.isMain).flatMap(_.source)
+
+  override def schemaType = Some("http://schema.org/VideoObject")
 
   override lazy val metaData: Map[String, JsValue] =
     super.metaData ++ Map(

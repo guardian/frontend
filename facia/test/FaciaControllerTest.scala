@@ -149,4 +149,13 @@ import services.ConfigAgent
     val redirectToUk = FaciaController.renderFront("")(control)
     header("Location", redirectToUk).head should endWith ("/uk")
   }
+
+  it should "send international traffic ot the UK version of editionalised sections" in {
+
+    Switches.InternationalEditionSwitch.switchOn()
+
+    val international = FakeRequest("GET", "/commentisfree").withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
+    val redirectToInternational = FaciaController.editionRedirect("commentisfree")(international)
+    header("Location", redirectToInternational).head should endWith ("/uk/commentisfree")
+  }
 }

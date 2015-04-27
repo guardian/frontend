@@ -30,8 +30,13 @@
                     <span class="content__head__illustration hide-on-mobile"><i class="i i-illustration-letters"></i></span>
                 }
 
-                @content.starRating.map { s =>
-                    @fragments.items.elements.starRating(s)
+                @content.starRating.map { rating =>
+                    <span class="u-h" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                        <meta itemprop="worstRating" content="1" />
+                        <span itemprop="ratingValue">@rating</span> /
+                        <span itemprop="bestRating">5</span> stars
+                    </span>
+                    @fragments.items.elements.starRating(rating)
                 }
 
                 @if(showBadge) {

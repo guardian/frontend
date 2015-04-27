@@ -33,7 +33,7 @@
     .tonal__standfirst {
         .content__standfirst {
             @include mq(tablet, desktop) {
-                @include box-sizing(border-box);
+                box-sizing: border-box;
                 padding-right: gs-span(3);
             }
         }

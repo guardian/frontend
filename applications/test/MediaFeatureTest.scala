@@ -57,14 +57,14 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       goTo("/uk-news/video/2014/aug/06/qatar-airlines-flight-escorted-raf-fighter-jet-bomb-hoax-video") { browser =>
         import browser._
 
-        val media = findFirst("figure[itemtype='http://schema.org/VideoObject']")
+        val media = findFirst("[itemtype='http://schema.org/VideoObject']")
 
         And("It should have the associated meta data")
 
         media.findFirst("[itemprop=duration]").getAttribute("content") should be("PT66S")
         media.findFirst("[itemprop=width]").getAttribute("content") should be("480")
         media.findFirst("[itemprop=height]").getAttribute("content") should be("360")
-        media.findFirst("[itemprop=headline]").getAttribute("content") should be("Qatar Airways flight escorted by RAF jet after bomb hoax - video")
+        media.findFirst("[itemprop=headline]").getText should be("Qatar Airways flight escorted by RAF jet after bomb hoax - video")
       }
     }
 

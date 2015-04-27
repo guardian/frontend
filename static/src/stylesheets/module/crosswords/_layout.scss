@@ -55,7 +55,7 @@
         padding-left: $gs-gutter;
         display: table;
         table-layout: fixed;
-        @include box-sizing(border-box);
+        box-sizing: border-box;
     }
 }
 

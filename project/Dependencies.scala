@@ -41,7 +41,7 @@ object Dependencies {
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.1.11"
   val playJsonVariants = "org.julienrf" %% "play-json-variants" % "0.2"
   val postgres = "postgresql" % "postgresql" % "8.4-703.jdbc4" from "https://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
-  val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.0"
+  val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.1"
   val rome = "rome" % "rome" % "1.0"
   val romeModules = "org.rometools" % "rome-modules" % "1.0"
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.11.5" % "test"
