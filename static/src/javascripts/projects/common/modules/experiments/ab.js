@@ -20,6 +20,7 @@ define([
     'common/modules/experiments/tests/history-without-whitelist',
     'common/modules/experiments/headlines',
     'common/modules/experiments/tests/mt-lz-ads-depth',
+    'common/modules/experiments/tests/mt-sticky-nav-all',
     'common/modules/experiments/tests/facia-slideshow'
 ], function (
     raven,
@@ -43,8 +44,9 @@ define([
     HistoryWithoutWhitelist,
     Headline,
     MtLzAdsDepth,
+    MtStickyNavAll,
     FaciaSlideshow
-) {
+    ) {
 
     var ab,
         TESTS = _.flatten([
@@ -61,6 +63,7 @@ define([
             new SaveForLater(),
             new HistoryWithoutWhitelist(),
             new MtLzAdsDepth(),
+            new MtStickyNavAll(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             }),
@@ -298,16 +301,16 @@ define([
 
             var eventTag = event.tag;
             return eventTag && _(getActiveTests())
-                    .filter(function (test) {
-                        var testEvents = test.events;
-                        return testEvents && _.some(testEvents, function (testEvent) {
-                            return startsWith(eventTag, testEvent);
-                        });
-                    })
-                    .map(function (test) {
-                        return test.id;
-                    })
-                    .valueOf();
+                .filter(function (test) {
+                    var testEvents = test.events;
+                    return testEvents && _.some(testEvents, function (testEvent) {
+                        return startsWith(eventTag, testEvent);
+                    });
+                })
+                .map(function (test) {
+                    return test.id;
+                })
+                .valueOf();
         },
 
         getAbLoggableObject: function () {
