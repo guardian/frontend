@@ -26,6 +26,10 @@ $c-guardian-services-action: #ffffff;
             background: colour(guardian-brand);
         }
     }
+
+    &.l-header--is-slim-ab {
+        background: colour(guardian-brand);
+    }
 }
 
 .logo-wrapper {

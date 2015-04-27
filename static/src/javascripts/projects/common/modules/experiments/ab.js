@@ -20,7 +20,8 @@ define([
     'common/modules/experiments/headlines',
     'common/modules/experiments/tests/mt-lz-ads-depth',
     'common/modules/experiments/tests/mt-sticky-nav-all',
-    'common/modules/experiments/tests/facia-slideshow'
+    'common/modules/experiments/tests/facia-slideshow',
+    'common/modules/experiments/tests/mt-sticky-burger'
 ], function (
     raven,
     _,
@@ -43,7 +44,8 @@ define([
     Headline,
     MtLzAdsDepth,
     MtStickyNavAll,
-    FaciaSlideshow
+    FaciaSlideshow,
+    MtStickyBurger
     ) {
 
     var ab,
@@ -61,6 +63,7 @@ define([
             new HistoryWithoutWhitelist(),
             new MtLzAdsDepth(),
             new MtStickyNavAll(),
+            new MtStickyBurger(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             }),
