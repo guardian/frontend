@@ -44,18 +44,12 @@ define([
             return config.direction;
         }
 
-        function showNavigationMobile(scrollY, config) {
-            if (scrollDirection(scrollY, config) === 'up') {
-                config.$stickyNavigation.show();
-            } else {
-                config.$stickyNavigation.hide();
-            }
-        }
-
-        function showNavigation(scrollY, config) {
+        function showNavigation(scrollY, config, isDesktop) {
             if (scrollDirection(scrollY, config) === 'up') {
                 config.$navigationScroll.css('display', 'block');
-                config.$navigationGreySection.css('border-top', '36px solid #00456e');
+                if (isDesktop) {
+                    config.$navigationGreySection.css('border-top', '36px solid #00456e');
+                }
             } else {
                 config.$navigationScroll.css('display', 'none');
             }
@@ -100,7 +94,7 @@ define([
                         config.$bannerMobile.css('margin-top', config.stickyNavigationHeight + config.stickyTopAdHeight);
 
                         //if we are scrolling up show full navigation
-                        showNavigation(window.scrollY, config);
+                        showNavigation(window.scrollY, config, true);
                     }
                 } else {
                     //after config.scrollThreshold px of scrolling 'release' topAd
@@ -124,7 +118,7 @@ define([
                     }
 
                     //if we are scrolling up show full navigation
-                    showNavigation(window.scrollY, config);
+                    showNavigation(window.scrollY, config, true);
                 }
             });
         }
@@ -134,10 +128,11 @@ define([
                 //header, navigation and banner are sticky from the beginning
                 if (window.scrollY < config.scrollThreshold) {
                     config.$header.css({
-                        position:  'fixed',
-                        top:       0,
-                        width:     '100%',
-                        'z-index': '1001'
+                        position: 'fixed',
+                        top: config.stickyTopAdHeight,
+                        width: '100%',
+                        'z-index': '1001',
+                        'margin-top': 0
                     });
                     config.$bannerMobile.css({
                         position:  'fixed',
@@ -146,13 +141,15 @@ define([
                         'z-index': '1000'
                     });
                     config.$contentBelowMobile.css('margin-top', config.headerHeight + config.$bannerMobile.dim().height);
+
+                    config.$navigationScroll.css('display', 'block');
                 } else {
                     //after config.scrollThreshold px of scrolling 'release' banner and navigation
                     config.$bannerMobile.css({
                         position:  'absolute',
                         top:       config.scrollThreshold
                     });
-                    showNavigationMobile(window.scrollY, config);
+                    showNavigation(window.scrollY, config, false);
                 }
             });
         }
@@ -180,24 +177,18 @@ define([
                                 direction: ''
                             };
 
-                        fastdom.write(function () {
-                            $('.sticky-nav-mt-test .l-header-main').css('overflow', 'hidden');
-                            stickyConfig.headerHeight = stickyConfig.$header.dim().height;
-                        });
                         stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
-                        stickyConfig.headerHeight = stickyConfig.$header.dim().height;
 
                         if (detect.getBreakpoint() === 'mobile') {
-                            //burger icon is located on the right side of logo
                             fastdom.write(function () {
-                                stickyConfig.$burgerIcon.css({
-                                    'float': 'right',
-                                    'margin': '8px 0 0 0',
-                                    'padding': '0 1px',
-                                    'position': 'static'
-                                }).insertBefore(stickyConfig.$logoWrapper);
-                                stickyConfig.$logoWrapper.css('margin', '12px 0 4px 0');
-                                stickyConfig.$contentBelowMobile.css('margin-top', config.headerHeight + config.$bannerMobile.dim().height);
+                                //header and navigation are slim
+                                stickyConfig.$header.addClass('l-header--is-slim l-header--is-slim-ab');
+
+                                //burger icon is located on the right side of logo
+                                stickyConfig.$burgerIcon.insertAfter(stickyConfig.$logoWrapper);
+                                stickyConfig.$navigationScroll.css('display', 'block');
+                                $('.sticky-nav-mt-test .l-header-main').css('overflow', 'hidden');
+                                stickyConfig.headerHeight = stickyConfig.$header.dim().height;
                             });
                             updatePositionMobile(stickyConfig);
 
