@@ -14,6 +14,7 @@ define([
         CARD_LAST4 = '.js-mem-card-last4',
         CARD_TYPE = '.js-mem-card-type',
         PACKAGE_COST = '.js-mem-package-cost',
+        PACKAGE_CURRENT_RENEWAL_DATE = '.js-mem-current-renewal-date',
         PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end',
         PACKAGE_CURRENT_PERIOD_START = '.js-mem-current-period-start',
         PACKAGE_INTERVAL = '.js-mem-plan-interval',
@@ -109,6 +110,7 @@ define([
         $(PACKAGE_INTERVAL).text(intervalText);
         $(PACKAGE_CURRENT_PERIOD_START).text(formatDate(userDetails.subscription.start));
         $(PACKAGE_CURRENT_PERIOD_END).text(formatDate(userDetails.subscription.end));
+        $(PACKAGE_CURRENT_RENEWAL_DATE).text(formatDate(userDetails.subscription.renewalDate));
 
         // display membership number
         if (userDetails.regNumber) {
