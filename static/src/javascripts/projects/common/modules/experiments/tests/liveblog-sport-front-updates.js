@@ -23,7 +23,7 @@ define([], function () {
             },
             {
                 id: 'updates',
-                test: function() {}
+                test: function () {}
             }
         ];
     };

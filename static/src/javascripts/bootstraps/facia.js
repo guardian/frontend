@@ -82,7 +82,7 @@ define([
             },
 
             showLiveblogUpdates: function () {
-                var isSport = _.contains(['sport', 'football'], page.section);
+                var isSport = _.contains(['sport', 'football'], config.page.section);
 
                 if (config.switches.liveblogFrontUpdates && !isSport ||
                     config.switches.abLiveblogSportFrontUpdates && isSport) {

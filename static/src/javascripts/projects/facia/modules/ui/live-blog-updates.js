@@ -33,7 +33,6 @@ define([
         refreshSecs = 30,
         refreshDecay = 1,
         refreshMaxTimes = 3,
-        messageAnimateDistance = 200,
 
         selector = '.js-liveblog-blocks',
         blocksClassName = 'fc-item__liveblog-blocks',
@@ -62,10 +61,6 @@ define([
 
     function translateVertical(offset) {
         return 'translate3d(0, -' + offset + 'px, 0)';
-    }
-
-    function translateHorizontal(offset) {
-        return 'translate3d(-' + offset + 'px, 0, 0)';
     }
 
     function translateNone() {
@@ -191,6 +186,6 @@ define([
     }
 
     return {
-        show:  show,
+        show:  show
     };
 });
