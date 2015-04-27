@@ -571,7 +571,7 @@ object Switches {
 
   val ABLiveblogFrontUpdates = Switch("A/B Tests", "ab-liveblog-front-updates",
     "Switch for the latest liveblog updates on fronts A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
+    safeState = On, sellByDate = new LocalDate(2015, 5, 21)
   )
 
   val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",

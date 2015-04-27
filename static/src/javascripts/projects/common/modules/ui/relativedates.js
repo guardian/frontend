@@ -9,10 +9,10 @@ define([
     mediator,
     bonzo
 ) {
-    var timeCalibration = config.page.renderTime ? Math.max(0, new Date() - new Date(config.page.renderTime)) : 0 
+    var timeAdjustmentMs = config.page.renderTime ? Math.max(0, new Date() - new Date(config.page.renderTime)) : 0;
 
-    function now() {
-        return new Date(new Date().getTime() - timeCalibration);
+    function adjustedNow() {
+        return new Date(new Date().getTime() - timeAdjustmentMs);
     }
 
     function dayOfWeek(day) {
@@ -28,24 +28,24 @@ define([
     }
 
     function isToday(date) {
-        var today = now();
+        var today = adjustedNow();
         return (date.toDateString() === today.toDateString());
     }
 
     function isWithin24Hours(date) {
-        var today = now();
+        var today = adjustedNow();
         return (date.valueOf() > today.valueOf() - (24 * 60 * 60 * 1000));
     }
 
     function isYesterday(relative) {
-        var today = now(),
-            yesterday = now();
+        var today = adjustedNow(),
+            yesterday = adjustedNow();
         yesterday.setDate(today.getDate() - 1);
         return (relative.toDateString() === yesterday.toDateString());
     }
 
     function isWithinPastWeek(date) {
-        var weekAgo = now().valueOf() - (7 * 24 * 60 * 60 * 1000);
+        var weekAgo = adjustedNow().valueOf() - (7 * 24 * 60 * 60 * 1000);
         return date.valueOf() >= weekAgo;
     }
 
@@ -97,7 +97,7 @@ define([
 
         var minutes, hours, days, delta,
             then = new Date(Number(epoch)),
-            now = now(),
+            now = adjustedNow(),
             format = opts.format || 'short',
             extendedFormatting = (opts.format === 'short' || opts.format === 'med');
 
