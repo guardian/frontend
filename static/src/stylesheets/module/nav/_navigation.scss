@@ -224,7 +224,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 .local-navigation__action,
 .top-navigation__action {
     color: $c-local-navigation-action;
-    z-index: 102;
+    z-index: 3; /* ensure it is higher than any overlapping cutout contributor image */
 }
 .top-navigation__action {
     color: $c-top-navigation-action;
@@ -679,7 +679,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 
 // TODO: Move
 .navigation-toggle {
-    z-index: 103;
+    z-index: 4; /* ensure it is higher than .top-navigation__action */
     position: absolute;
     right: 0;
     top: 0;
