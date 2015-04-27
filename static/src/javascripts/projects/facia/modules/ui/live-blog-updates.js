@@ -25,7 +25,7 @@ define([
     blocksTemplate,
     blockTemplate
 ) {
-    var forgetAfterHours = 24,
+    var forgetAfterHours = 48,
         numDisplayedBlocks = 4,
         blockHeightPx = 40,
 
