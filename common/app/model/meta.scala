@@ -44,6 +44,7 @@ trait MetaData extends Tags {
   lazy val isInappropriateForSponsorship: Boolean = false
 
   lazy val membershipAccess: Option[String] = None
+  lazy val requiresMembershipAccess: Boolean = false
 
   def isSurging: Seq[Int] = Seq(0)
 

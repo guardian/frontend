@@ -322,7 +322,7 @@
 
                 });
 
-                @for(membershipAccess <- item.membershipAccess if conf.Switches.MembersAreaSwitch.isSwitchedOn) {
+                @for(membershipAccess <- item.membershipAccess if item.requiresMembershipAccess) {
                     /**
                      * Membership access
                      * Items with either of the following fields require Membership access

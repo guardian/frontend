@@ -28,7 +28,7 @@
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin(edition)),
             ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty),
-            ("has-membership-access-requirement", MembersAreaSwitch.isSwitchedOn && metaData.membershipAccess.nonEmpty),
+            ("has-membership-access-requirement", metaData.requiresMembershipAccess),
             ("childrens-books-site", metaData.section == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
             ("is-immersive", metaData.isImmersive)))"
