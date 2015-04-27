@@ -1,5 +1,6 @@
 define([
     'common/utils/$',
+    'qwery',
     'common/modules/identity/forms',
     'common/modules/identity/formstack', // oldskool inside
     'common/modules/identity/formstack-iframe', // oldskool outside
@@ -8,12 +9,14 @@ define([
     'common/modules/identity/validation-email',
     'common/modules/identity/api',
     'common/modules/identity/account-profile',
+    'common/modules/identity/saved-for-later',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/discussion/user-avatars',
     'common/utils/mediator',
     'common/modules/ui/tabs'
 ], function (
     $,
+    qwery,
     Identity,
     Formstack,
     FormstackIframe,
@@ -22,6 +25,7 @@ define([
     ValidationEmail,
     Id,
     AccountProfile,
+    SavedForLater,
     UserAdTargeting,
     UserAvatars,
     mediator,
@@ -51,7 +55,7 @@ define([
 
                     });
 
-                    // Load old js if necessary
+                    // Load old js if necessary                                                                 +-
                     $('.js-formstack-iframe').each(function (el) {
                         new FormstackIframe(el, config).init();
                     });
@@ -107,9 +111,17 @@ define([
                 mediator.on('page:identity:ready', function () {
                     accountProfile.init();
                 });
+            },
+
+            savedForLater: function () {
+                var savedForLater = new SavedForLater();
+                mediator.on('page:identity:ready', function () {
+                    savedForLater.init();
+                });
             }
         },
         ready = function (config) {
+
             modules.idInit(config);
             modules.initFormstack();
             modules.forgottenEmail();
@@ -121,6 +133,7 @@ define([
             modules.validationEmail();
             modules.tabs();
             modules.accountProfile();
+            modules.savedForLater();
 
             mediator.emit('page:identity:ready', config);
         };
