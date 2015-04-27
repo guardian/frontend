@@ -24,13 +24,12 @@ var prefixPath = 'static/hash';
 var bundlesUri = 'bundles';
 var bundleConfigs = [
     ['core', 'core.js'],
-    // TODO: Bundle crossword thumbnails?
     ['es6/bootstraps/crosswords - core', 'es6/bootstraps/crosswords.js'],
     ['bootstraps/app - core', 'bootstraps/app.js'],
     ['bootstraps/commercial - core', 'bootstraps/commercial.js'],
     ['bootstraps/sudoku - core', 'bootstraps/sudoku.js'],
     ['bootstraps/image-content - core', 'bootstraps/image-content.js'],
-    ['bootstraps/facia - core', 'bootstraps/facia.js'],
+    ['bootstraps/facia - core - bootstraps/app', 'bootstraps/facia.js'],
     ['bootstraps/football - core', 'bootstraps/football.js'],
     ['bootstraps/preferences - core', 'bootstraps/preferences.js'],
     ['bootstraps/membership - core', 'bootstraps/membership.js'],
@@ -51,11 +50,13 @@ var getHash = function (outputSource) {
 var createBundle = function (bundleConfig) {
     var moduleExpression = bundleConfig[0];
     var outFile = bundleConfig[1];
-    return builder.build(moduleExpression, null, { sourceMaps: true })
+    return builder.build(moduleExpression, null, {
+            minify: true,
+            sourceMaps: true })
         // Attach URI
         .then(function (output) {
             var hash = getHash(output.source);
-            output.id = moduleExpression.replace(' - core', '');
+            output.id = /^[^\s]*/.exec(moduleExpression)[0];
             // Relative to jspm client base URL
             output.uri = path.join(bundlesUri, hash, outFile);
             return output;
