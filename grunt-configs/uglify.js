@@ -36,7 +36,7 @@ module.exports = function(grunt, options) {
             }],
             options:   {
                 compress:{
-                    evaluate: false
+                    evaluate: false // Set to false retain constant expressions, used to avoid writing HTML like </script>.
                 }
             }
         }
