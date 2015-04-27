@@ -23,7 +23,7 @@ var jspmBaseUrl = 'static/src';
 var prefixPath = 'static/hash';
 var bundlesUri = 'bundles';
 var bundleConfigs = [
-    ['core', 'core.js'],
+    ['core + system-script', 'core.js'],
     ['es6/bootstraps/crosswords - core', 'es6/bootstraps/crosswords.js'],
     ['bootstraps/app - core', 'bootstraps/app.js'],
     ['bootstraps/commercial - core', 'bootstraps/commercial.js'],
