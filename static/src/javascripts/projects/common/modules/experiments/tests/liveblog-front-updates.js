@@ -20,6 +20,7 @@ define([
         this.audienceCriteria = 'Front visitors';
         this.dataLinkNames = '';
         this.idealOutcome = 'Higher engagement, measured as increased onward journeys to ANY content on the affected front, or increased dewll time on that front';
+        this.showForSensitive = false;
 
         this.canRun = function () {
             return true;

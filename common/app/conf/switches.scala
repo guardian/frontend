@@ -143,7 +143,7 @@ object Switches {
 
   val RichLinkSwitch = Switch("Performance", "rich-links",
     "If this switch is turned off then rich links will not be shown. Turn off to help handle exceptional load.",
-     safeState = On, sellByDate = never
+    safeState = On, sellByDate = never
   )
 
   val InlineCriticalCss = Switch("Performance", "inline-critical-css",
@@ -519,11 +519,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
-  val ABIdentitySocialOAuth = Switch("A/B Tests", "ab-id-social-oauth",
-    "Switch to direct users to OAuth social sign-in app.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 25)
-  )
-
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
@@ -532,6 +527,13 @@ object Switches {
   val ABMtMain = Switch("A/B Tests", "ab-mt-main",
     "Switch for the moat main test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 11)
+  )
+
+  val ABMtStNav = Switch(
+    "A/B Tests",
+    "ab-mt-st-nav",
+    "Testing sticky nav with sticky banner and nav going to slim version",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
   )
 
   val ABMtTopBelowNav = Switch("A/B Tests", "ab-mt-top-below-nav",
@@ -549,6 +551,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
   )
 
+  val ABMtStickyBurger = Switch("A/B Tests", "ab-mt-sticky-burger",
+    "Sticky top banner with navigation - variant 1. with the burger icon.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
+  )
+
   val ABMtStickyBtm = Switch("A/B Tests", "ab-mt-sticky-btm",
     "Top ad slot is sticky at the bottom of page.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
@@ -557,11 +564,6 @@ object Switches {
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
     "Switch for the UK Network Front heatmap test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
-  )
-
-  val ABFacebookLikePrompt = Switch("A/B Tests", "ab-facebook-like-prompt",
-    "Switch for the Facebook Like Prompt A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 17)
   )
 
   val ABVariantTest = Switch("A/B Tests", "ab-variant-test",
@@ -630,7 +632,7 @@ object Switches {
 
   val MissingVideoEndcodingsJobSwitch = Switch("Feature", "check-for-missing-video-encodings",
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
-     safeState = Off, sellByDate = never
+    safeState = Off, sellByDate = never
   )
 
   val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",

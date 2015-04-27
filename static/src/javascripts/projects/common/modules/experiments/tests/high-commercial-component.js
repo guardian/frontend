@@ -13,6 +13,7 @@ define(function () {
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
         this.idealOutcome = '';
+        this.showForSensitive = false;
 
         this.canRun = function () {
             return true;
