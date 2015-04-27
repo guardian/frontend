@@ -15,6 +15,7 @@ define([
         this.audienceCriteria = 'All users not on mobile';
         this.dataLinkNames = '';
         this.idealOutcome = 'Pages per visit improves';
+        this.showForSensitive = false;
 
         this.canRun = function () {
             return detect.getBreakpoint() !== 'mobile';

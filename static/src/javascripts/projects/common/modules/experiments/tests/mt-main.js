@@ -27,6 +27,7 @@ define([
         this.audienceCriteria = '1% of US and UK edition';
         this.dataLinkNames = '';
         this.idealOutcome = '';
+        this.showForSensitive = false;
 
         this.canRun = function () {
             var isIE = detect.getUserAgent.browser === 'MSIE' || detect.getUserAgent === 'IE 11',

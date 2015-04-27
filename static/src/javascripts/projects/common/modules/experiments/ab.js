@@ -132,7 +132,9 @@ define([
 
     function testCanBeRun(test) {
         var expired = (new Date() - new Date(test.expiry)) > 0;
-        return (test.canRun() && !expired && isTestSwitchedOn(test));
+        var isSensitive = config.page.shouldHideAdverts;
+        return ((isSensitive ? test.showForSensitive : true)
+                && test.canRun() && !expired && isTestSwitchedOn(test));
     }
 
     function getTest(id) {
