@@ -17,6 +17,9 @@ define([
         PACKAGE_CURRENT_RENEWAL_DATE = '.js-mem-current-renewal-date',
         PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end',
         PACKAGE_CURRENT_PERIOD_START = '.js-mem-current-period-start',
+        PACKAGE_NEXT_PAYMENT_CONTAINER = 'js-mem-next-payment-container',
+        PACKAGE_NEXT_PAYMENT_DATE = '.js-mem-next-payment-date',
+        PACKAGE_NEXT_PAYMENT_PRICE = '.js-mem-next-payment-price',
         PACKAGE_INTERVAL = '.js-mem-plan-interval',
         DETAILS_MEMBERSHIP_TIER_ICON_CURRENT = '.js-mem-icon-current',
         DETAILS_JOIN_DATE = '.js-mem-join-date',
@@ -111,6 +114,13 @@ define([
         $(PACKAGE_CURRENT_PERIOD_START).text(formatDate(userDetails.subscription.start));
         $(PACKAGE_CURRENT_PERIOD_END).text(formatDate(userDetails.subscription.end));
         $(PACKAGE_CURRENT_RENEWAL_DATE).text(formatDate(userDetails.subscription.renewalDate));
+
+        $(PACKAGE_NEXT_PAYMENT_DATE).text(formatDate(userDetails.subscription.nextPaymentDate));
+        $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatAmount(userDetails.subscription.nextPaymentPrice));
+
+        if(userDetails.subscription.nextPaymentDate === userDetails.subscription.renewalDate) {
+            $('.js-mem-next-payment-container').addClass(IS_HIDDEN_CLASSNAME);
+        }
 
         // display membership number
         if (userDetails.regNumber) {
