@@ -51,7 +51,7 @@ define([
 
     function init(force) {
         // This is called on page load, do as little as possible
-        if (force || ab.getTestVariant('FaciaSlideshow') === 'slideshow') {
+        if (force || ab.getTestVariant('FaciaSlideshow') !== 'disabled') {
             setTimeout(actualInit, state.interval);
         }
     }
