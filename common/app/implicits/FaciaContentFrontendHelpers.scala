@@ -1,7 +1,7 @@
 package implicits
 
 import com.gu.contentapi.client.model.Element
-import com.gu.facia.api.models.FaciaContent
+import com.gu.facia.api.models.{Replace, FaciaImage, FaciaContent}
 import com.gu.facia.api.utils.FaciaContentUtils
 import implicits.FaciaContentImplicits._
 import com.gu.facia.api.utils.FaciaContentUtils.fold
@@ -14,8 +14,10 @@ object FaciaContentFrontendHelpers {
 
   implicit class FaciaContentFrontendHelper(faciaContent: FaciaContent) {
 
-    def imageReplaceElement = for (image <- faciaContent.image)
-      yield ImageOverride.createElementWithOneAsset(image.imageSrc, image.imageSrcWidth, image.imageSrcHeight)
+    def imageReplaceElement = faciaContent.image match {
+      case Some(FaciaImage(Replace, src, Some(width), Some(height))) => Option(ImageOverride.createElementWithOneAsset(src, width, height))
+      case _ => None
+    }
 
     def elementsWithImageOverride: List[Element] = imageReplaceElement ++: faciaContent.elements
 
