@@ -21,7 +21,6 @@ object Metric extends Logging {
 
     ("ads-blocked", CountMetric("ads-blocked")),
     ("ad-render", CountMetric("first-ad-rendered")),
-    ("ad-render-article", CountMetric("first-ad-rendered-article")),
     ("ad-wrapper", CountMetric("dfp-served-ad")),
 
     // error pages

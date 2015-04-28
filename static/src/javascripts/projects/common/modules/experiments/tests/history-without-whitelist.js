@@ -12,6 +12,7 @@ define([], function () {
         this.audienceCriteria = 'All visitors';
         this.dataLinkNames = '';
         this.idealOutcome = 'No negative impact on engagement with the personalised history tags';
+        this.showForSensitive = false;
 
         this.canRun = function () {
             return true;

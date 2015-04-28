@@ -20,7 +20,7 @@ define([
                 dirs = path.split("/"),
                 fileName = dirs.pop();
 
-            text.get(req.toUrl(dirs.join("/") + "/" + imageType + "/" + fileName + ".svg"), function (svg) {
+            text.get(req.toUrl(dirs.join("/") + "/" + (imageType ? imageType + "/" : "") + fileName + ".svg"), function (svg) {
 
                 svg = "<span class=\"" + prefix + fileName + " " + (imageType !== "" ? prefix + imageType : "") + "\">" + svg + "</span>";
 

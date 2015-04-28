@@ -384,7 +384,7 @@ define([
                         });
                     };
 
-                slideshowController.init(true);
+                slideshowController.init();
 
                 nextImage()
                 .then(function () {
@@ -439,7 +439,7 @@ define([
                         });
                     };
 
-                slideshowController.init(true);
+                slideshowController.init();
 
                 nextImage(qwery('.test-image-1', container[0])[0])
                 .then(function () {

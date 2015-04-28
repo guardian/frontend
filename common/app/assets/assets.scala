@@ -130,21 +130,21 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
   object js {
 
-     def jspmFile(section: String): Option[String] = {
-       section match {
-         case "crosswords" => Some("bundles/app.js")
-         case _ => None
-       }
-     }
+     private def inlineJs(path: String): String = IOUtils.toString(AssetFinder(path))
 
-    lazy val curl: String =
-      RelativePathEscaper.escapeLeadingDotPaths(
-        IOUtils.toString(AssetFinder(s"assets/curl-domReady.js"))
-      )
+     val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
+
+     val es6ModuleLoader: String = inlineJs("assets/es6-module-loader.src.js")
+
+     val systemJs: String = inlineJs("assets/system.src.js")
+
+     val systemJsAppConfig: String = inlineJs("assets/systemjs-config.js")
+
+     val systemJsNormalize: String = inlineJs("assets/systemjs-normalize.js")
+
+     val systemJsBundleConfig: String = inlineJs("assets/systemjs-bundle-config.js")
   }
-
 }
-
 
 object AssetFinder {
   def apply(assetPath: String): URL = {

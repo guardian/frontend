@@ -45,7 +45,7 @@
       "videojs": "bower_components/videojs/dist/video-js/video.js",
       "videojs-contrib-ads": "bower_components/videojs-contrib-ads/src/videojs.ads.js",
       "videojs-ima": "bower_components/videojs-ima/src/videojs.ima.js",
-      "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js"
+      "videojs-playlist-audio": { "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js": "javascripts/videojs.playlist.js"}
     }
   }
 }

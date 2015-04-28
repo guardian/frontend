@@ -11,7 +11,7 @@ class FrontendSavedArticles(version: String, articles: List[SavedArticle]) exten
 
   val fmt = ISODateTimeFormat.dateTimeNoMillis()
 
-  def this() = this(ISODateTimeFormat.dateTimeNoMillis().print(new DateTime()), List[SavedArticle]())
+  def this() = this(ISODateTimeFormat.dateTimeNoMillis().print(new DateTime()), List.empty)
   def contains(shortUrl: String) : Boolean = articles.exists( sa => sa.shortUrl == shortUrl)
 
   def addArticle(id: String, shortUrl: String) : SavedArticles = {

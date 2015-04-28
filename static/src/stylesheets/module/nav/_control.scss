@@ -63,3 +63,18 @@ $control-size: 36px;
         }
     }
 }
+
+/**
+ *  Slim modification
+ *
+ *  Used for slim header ^l_header
+ */
+.is-slim {
+    .control__info {
+        display: none;
+    }
+
+    .control__icon-wrapper {
+        display: block;
+    }
+}

@@ -143,7 +143,7 @@ object Switches {
 
   val RichLinkSwitch = Switch("Performance", "rich-links",
     "If this switch is turned off then rich links will not be shown. Turn off to help handle exceptional load.",
-     safeState = On, sellByDate = never
+    safeState = On, sellByDate = never
   )
 
   val InlineCriticalCss = Switch("Performance", "inline-critical-css",
@@ -398,7 +398,7 @@ object Switches {
 
   val ImgixSwitch = Switch("Feature", "imgix",
     "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 29)
   )
 
   val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
@@ -455,7 +455,7 @@ object Switches {
 
   val FacebookAppLinksSwitch = Switch("Feature", "facebook-applinks",
     "If this switch is on then shared links on the facebook mobile app will be opened in the native app instead of the mobile browser",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 7)
   )
 
   val IdentityFormstackSwitch = Switch("Feature", "id-formstack",
@@ -510,19 +510,14 @@ object Switches {
     "If switched on, any user registrations from a known tor esit node will be logged",
     safeState = On, sellByDate = never)
 
+  val LiveblogFrontUpdates = Switch("Feature", "liveblog-front-updates",
+    "Switch for the latest liveblog updates on fronts",
+    safeState = Off, sellByDate = never
+  )
+
   // A/B Tests
   val ABMtLzAdsDepth = Switch("A/B Tests", "ab-mt-lz-ads-depth", "Depth for lazy loaded ads.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
-  val ABIdentitySocialOAuth = Switch("A/B Tests", "ab-id-social-oauth",
-    "Switch to direct users to OAuth social sign-in app.",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 25)
-  )
-
-  val ABAcrossTheCountry = Switch("A/B Tests", "ab-across-the-country",
-    "Tests container placement on the US front",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 26)
   )
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -533,6 +528,13 @@ object Switches {
   val ABMtMain = Switch("A/B Tests", "ab-mt-main",
     "Switch for the moat main test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 11)
+  )
+
+  val ABMtStNav = Switch(
+    "A/B Tests",
+    "ab-mt-st-nav",
+    "Testing sticky nav with sticky banner and nav going to slim version",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
   )
 
   val ABMtTopBelowNav = Switch("A/B Tests", "ab-mt-top-below-nav",
@@ -550,6 +552,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
   )
 
+  val ABMtStickyBurger = Switch("A/B Tests", "ab-mt-sticky-burger",
+    "Sticky top banner with navigation - variant 1. with the burger icon.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
+  )
+
   val ABMtStickyBtm = Switch("A/B Tests", "ab-mt-sticky-btm",
     "Top ad slot is sticky at the bottom of page.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
@@ -560,19 +567,14 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
-  val ABFacebookLikePrompt = Switch("A/B Tests", "ab-facebook-like-prompt",
-    "Switch for the Facebook Like Prompt A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 17)
-  )
-
   val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
     "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
     safeState = Off, sellByDate = never
   )
 
-  val ABLiveblogFrontUpdates = Switch("A/B Tests", "ab-liveblog-front-updates",
-    "Switch for the latest liveblog updates on fronts A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
+  val ABLiveblogSportFrontUpdates = Switch("A/B Tests", "ab-liveblog-sport-front-updates",
+    "Switch for the latest liveblog updates on sport & football fronts A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 27)
   )
 
   val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",
@@ -626,7 +628,7 @@ object Switches {
 
   val MissingVideoEndcodingsJobSwitch = Switch("Feature", "check-for-missing-video-encodings",
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
-     safeState = Off, sellByDate = never
+    safeState = Off, sellByDate = never
   )
 
   val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
@@ -684,6 +686,11 @@ object Switches {
   val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",
     "If this switch is on, facia-tool will directly archive to DynamoDB. When this is about to expire, please check the DB size.",
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
+  )
+
+  val FaciaPressOnDemand = Switch("Facia", "facia-press-on-demand",
+    "If this is switched on, you can force facia to press on demand (Leave off)",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 30)
   )
 
   // Server-side A/B Tests

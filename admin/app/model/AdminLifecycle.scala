@@ -68,10 +68,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
       MatchDayRecorder.record()
     }
 
-    Jobs.schedule("AdImpressionCountJob", "0 * * * * ?") {
-      AdImpressionCounter.count()
-    }
-
     if (environment.isProd) {
       val londonTime = TimeZone.getTimeZone("Europe/London")
       Jobs.schedule("AdsStatusEmailJob", "0 44 8 ? * MON-FRI", londonTime) {
@@ -108,7 +104,6 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("FrontPressJobHighFrequency")
     Jobs.deschedule("FrontPressJobStandardFrequency")
     Jobs.deschedule("FrontPressJobLowFrequency")
-    Jobs.deschedule("AdImpressionCountJob")
     Jobs.deschedule("AdsStatusEmailJob")
     Jobs.deschedule("ExpiringAdFeaturesEmailJob")
     Jobs.deschedule("VideoEncodingsJob")
