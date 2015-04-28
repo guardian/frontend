@@ -18,7 +18,7 @@ import views.support.CamelCase
 // }
 
 object ActiveTests extends Tests {
-  val tests = List()
+  val tests: Seq[TestDefinition] = List()
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
