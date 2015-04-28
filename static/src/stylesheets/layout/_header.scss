@@ -107,6 +107,10 @@ $c-guardian-services-action: #ffffff;
         color: #aad8f1; // To match custom colour of 'the' in logotype. Shouldn't be used elsewhere
         font-weight: bold;
         white-space: nowrap;
+
+        .l-header--is-slim-ab & {
+            display: none !important;
+        }
     }
 
     .no-svg & {
