@@ -119,7 +119,7 @@ define([
         $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatAmount(userDetails.subscription.nextPaymentPrice));
 
         if(userDetails.subscription.nextPaymentDate === userDetails.subscription.renewalDate) {
-            $('.js-mem-next-payment-container').addClass(IS_HIDDEN_CLASSNAME);
+            $(PACKAGE_NEXT_PAYMENT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
         }
 
         // display membership number
