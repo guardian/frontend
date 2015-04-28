@@ -7,19 +7,8 @@ define([
     deepGet,
     parseQueryParams
 ) {
-    function getItem(dataTransfer, sourceGroup) {
-        var id = dataTransfer.getData('Text'),
-            mediaItem = dataTransfer.getData('application/vnd.mediaservice.crops+json'),
-            sourceItem = dataTransfer.getData('sourceItem'),
-            knownQueryParams = parseQueryParams(id, {
-                namespace: 'gu-',
-                excludeNamespace: false,
-                stripNamespace: true
-            }),
-            unknownQueryParams = parseQueryParams(id, {
-                namespace: 'gu-',
-                excludeNamespace: true
-            });
+    function getMediaItem(dataTransfer) {
+        var mediaItem = dataTransfer.getData('application/vnd.mediaservice.crops+json');
 
         if (mediaItem) {
             try {
@@ -42,7 +31,25 @@ define([
                 throw new Error('Sorry, a suitable crop size does not exist for this image');
             }
 
-        } else if (!id) {
+        }
+        return mediaItem;
+    }
+
+    function getItem(dataTransfer, sourceGroup) {
+        var id = dataTransfer.getData('Text'),
+            mediaItem = getMediaItem(dataTransfer),
+            sourceItem = dataTransfer.getData('sourceItem'),
+            knownQueryParams = parseQueryParams(id, {
+                namespace: 'gu-',
+                excludeNamespace: false,
+                stripNamespace: true
+            }),
+            unknownQueryParams = parseQueryParams(id, {
+                namespace: 'gu-',
+                excludeNamespace: true
+            });
+
+        if (!mediaItem && !id) {
             throw new Error('Sorry, you can\'t add that to a front');
         }
 
@@ -71,5 +78,8 @@ define([
         };
     }
 
-    return getItem;
+    return {
+        getMediaItem: getMediaItem,
+        getItem: getItem
+    };
 });
