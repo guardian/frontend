@@ -82,7 +82,6 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
   def deleteSavedContentItem =
     authenticatedActions.authAction.async { implicit request =>
-      println("delete article")
       val idRequest = identityRequestParser(request)
       val boundForm = savedArticlesForm.bindFromRequest
 
