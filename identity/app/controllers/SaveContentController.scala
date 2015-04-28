@@ -47,11 +47,11 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
     (idRequest.returnUrl, idRequest.shortUrl) match {
       case (Some(returnUrl), Some(shortUrl)) => {
-        savedArticleService.getOrCreatedArticlesList(request.user.auth).map {
+        savedArticleService.getOrCreateArticlesList(request.user.auth).map {
           case Right(prefs) =>
             if (!prefs.contains(shortUrl)) {
               val savedArticles = prefs.addArticle(new URL(returnUrl).getPath.drop(1), shortUrl)
-              api.saveArticle(request.user.auth, savedArticles)
+              api.updateSavedArticles(request.user.auth, savedArticles)
             }
           case Left(errors) => logger.error(errors.toString)
         }
@@ -67,16 +67,16 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
     val idRequest = identityRequestParser(request)
 
-    savedArticleService.getOrCreatedArticlesList(request.user.auth).map {
+    savedArticleService.getOrCreateArticlesList(request.user.auth).map {
       case Right(prefs) =>
-        val form = savedArticeForm.fill(SavedArticleData(prefs.articles.map(_.shortUrl)))
-        NoCache(Ok(views.html.profile.savedContent(page, form, prefs.articles, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content/delete"))))
+        val form = savedArticlesForm.fill(SavedArticleData(prefs.articles.map(_.shortUrl)))
+        NoCache(Ok(views.html.profile.savedContent(page, form, prefs.articles, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
       case Left(errors) =>
-        val formWithErrors = errors.foldLeft(savedArticeForm) {
+        val formWithErrors = errors.foldLeft(savedArticlesForm) {
           case (formWithErrors, Error(message, decription, _, context)) =>
             formWithErrors.withError(context.getOrElse(""), message)
         }
-        NoCache(Ok(views.html.profile.savedContent(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content/delete"))))
+        NoCache(Ok(views.html.profile.savedContent(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
     }
   }
 
@@ -84,10 +84,10 @@ class SaveContentController @Inject() ( api: IdApiClient,
     authenticatedActions.authAction.async { implicit request =>
       println("delete article")
       val idRequest = identityRequestParser(request)
-      val boundForm = savedArticeForm.bindFromRequest
+      val boundForm = savedArticlesForm.bindFromRequest
 
       def buildFormFromErrors(errors: List[Error]) : Form[SavedArticleData] = {
-        val formWithErrors = errors.foldLeft(savedArticeForm) {
+        val formWithErrors = errors.foldLeft(savedArticlesForm) {
           case (formWithErrors, Error(message, decription, _, context)) =>
             formWithErrors.withError(context.getOrElse(""), message)
         }
@@ -96,41 +96,45 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
       def onError(formWithErrors: Form[SavedArticleData]): Future[Result] = {
           logger.trace("Form error deleting saved content")
-          savedArticleService.getOrCreatedArticlesList(request.user.auth).map {
+          savedArticleService.getOrCreateArticlesList(request.user.auth).map {
             case Right(prefs) =>
-              val form = savedArticeForm.fill(SavedArticleData(prefs.articles.map(_.shortUrl)))
-              NoCache(Ok(views.html.profile.savedContent(page, formWithErrors, prefs.articles, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content/delete"))))
+              val form = savedArticlesForm.fill(SavedArticleData(prefs.articles.map(_.shortUrl)))
+              NoCache(Ok(views.html.profile.savedContent(page, formWithErrors, prefs.articles, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
             case Left(errors) =>
               val formWithApiErrors = buildFormFromErrors(errors)
-              NoCache(Ok(views.html.profile.savedContent(page, formWithApiErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content/delete"))))
+              NoCache(Ok(views.html.profile.savedContent(page, formWithApiErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
           }
       }
 
       def onSuccess(data: SavedArticleData): Future[Result] = {
            logger.trace("Got FormData")
 
-          val response: Future[Result] = savedArticleService.getOrCreatedArticlesList(request.user.auth).flatMap {
+          val response: Future[Result] = savedArticleService.getOrCreateArticlesList(request.user.auth).flatMap {
             case Right(prefs) =>
-              val form = savedArticeForm.fill(SavedArticleData(prefs.articles.map(_.shortUrl)))
+              val form = savedArticlesForm.fill(SavedArticleData(prefs.articles.map(_.shortUrl)))
 
-              val res = data.deleteArticle.map {
+              val updatedArticlesViow = data.deleteArticle.map {
                 shortUrlOfDeletedArticle =>
                   val updatedArticles = prefs.removeArticle(shortUrlOfDeletedArticle)
-                  val result = api.saveArticle(request.user.auth, updatedArticles).map {
+                  val updatedResult = api.updateSavedArticles(request.user.auth, updatedArticles).map {
                     case Right(updatedArticles) =>
-                      NoCache(Ok(views.html.profile.savedContent(page, form, updatedArticles.articles, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content/delete"))))
+                      NoCache(Ok(views.html.profile.savedContent(page, form, updatedArticles.articles, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
                     case Left(errors) =>
                       val formWithApiErrors = buildFormFromErrors(errors)
-                      NoCache(Ok(views.html.profile.savedContent(page, formWithApiErrors, prefs.articles, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content/delete"))))
+                      NoCache(Ok(views.html.profile.savedContent(page, formWithApiErrors, prefs.articles, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
                   }
-                  result
+                  updatedResult
               }
-              res.get
+              updatedArticlesViow.getOrElse(
+                Future.successful(
+                  NoCache(Ok(views.html.profile.savedContent(page, form, List.empty, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
+                )
+              )
 
             case Left(errors) =>
               val formWithErrors = buildFormFromErrors(errors)
               Future.successful(
-                NoCache(Ok(views.html.profile.savedContent(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content/delete"))))
+                NoCache(Ok(views.html.profile.savedContent(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
               )
           }
           response
@@ -141,7 +145,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
 }
 case class SavedArticleData(shortUrls: List[String], deleteArticle: Option[String] = None)
 object SavedArticleData {
-  val savedArticeForm = Form (
+  val savedArticlesForm = Form (
        Forms.mapping(
          "article" -> Forms.list(Forms.text),
          "deleteArticle" -> Forms.optional(Forms.text)

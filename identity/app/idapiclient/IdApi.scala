@@ -40,7 +40,7 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
   def unauth(auth: Auth, trackingData: TrackingData): Future[Response[CookiesResponse]] =
     post("unauth", Some(auth), Some(trackingData)) map extract[CookiesResponse](jsonField("cookies"))
 
-  def syncedPrefs(auth: Auth): Future[Response[SavedArticles]] = {
+  def savedArticles(auth: Auth): Future[Response[SavedArticles]] = {
     val apiPath = urlJoin("syncedPrefs", "me", "savedArticles")
     val params = buildParams(Some(auth))
     val headers = buildHeaders(Some(auth))
@@ -49,7 +49,7 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     response map extractSavedArticles
   }
 
-  def saveArticle(auth: Auth, savedArticles: SavedArticles): Future[Response[SavedArticles]] = {
+  def updateSavedArticles(auth: Auth, savedArticles: SavedArticles): Future[Response[SavedArticles]] = {
     val apiPath = urlJoin("syncedPrefs", "me", "savedArticles")
     val updatedSavedArticles = write(savedArticles)
     val params = buildParams(Some(auth))
@@ -57,7 +57,6 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
 
     val response = http.POST(apiUrl(apiPath), Some(updatedSavedArticles), params, headers)
     response map extractSavedArticles }
-
 
   // USERS
 

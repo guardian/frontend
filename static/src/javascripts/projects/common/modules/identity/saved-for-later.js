@@ -37,7 +37,7 @@ define([
                 notFound  = {message:'Not found', description:'Resource not found'},
                 shortUrl = element.getAttribute('shortUrl');
 
-            identity.getUsersSavedDocuments().then(
+            identity.getSavedArticles().then(
                 function success(resp) {
                     if (resp.status === 'error') {
                         if (resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
