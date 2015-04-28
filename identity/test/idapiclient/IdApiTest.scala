@@ -444,7 +444,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "accesses the reset password endpoint" in {
         api.sendPasswordResetEmail(testEmail, trackingParameters)
-        verify(http).GET(*-Matchers.eq("http://example.com/pwd-reset/send-password-reset-email"), Matchers.anyObject(), Matchers.anyObject())
+        verify(http).GET(Matchers.eq("http://example.com/pwd-reset/send-password-reset-email"), Matchers.anyObject(), Matchers.anyObject())
       }
 
       "adds the email address and type parameters" in {
