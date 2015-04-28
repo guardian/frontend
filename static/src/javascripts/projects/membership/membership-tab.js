@@ -118,7 +118,7 @@ define([
         $(PACKAGE_NEXT_PAYMENT_DATE).text(formatDate(userDetails.subscription.nextPaymentDate));
         $(PACKAGE_NEXT_PAYMENT_PRICE).text(formatAmount(userDetails.subscription.nextPaymentPrice));
 
-        if(userDetails.subscription.nextPaymentDate === userDetails.subscription.renewalDate) {
+        if (userDetails.subscription.nextPaymentDate === userDetails.subscription.renewalDate) {
             $(PACKAGE_NEXT_PAYMENT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
         }
 
