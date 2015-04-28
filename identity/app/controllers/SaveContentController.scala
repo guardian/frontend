@@ -95,7 +95,6 @@ class SaveContentController @Inject() ( api: IdApiClient,
       }
 
       def onError(formWithErrors: Form[SavedArticleData]): Future[Result] = {
-          logger.trace("Form error deleting saved content")
           savedArticleService.getOrCreateArticlesList(request.user.auth).map {
             case Right(prefs) =>
               val form = savedArticlesForm.fill(SavedArticleData(prefs.articles.map(_.shortUrl)))
@@ -107,8 +106,6 @@ class SaveContentController @Inject() ( api: IdApiClient,
       }
 
       def onSuccess(data: SavedArticleData): Future[Result] = {
-           logger.trace("Got FormData")
-
           val response: Future[Result] = savedArticleService.getOrCreateArticlesList(request.user.auth).flatMap {
             case Right(prefs) =>
               val form = savedArticlesForm.fill(SavedArticleData(prefs.articles.map(_.shortUrl)))

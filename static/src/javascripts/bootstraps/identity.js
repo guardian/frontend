@@ -55,7 +55,7 @@ define([
 
                     });
 
-                    // Load old js if necessary                                                                 +-
+                    // Load old js if necessary
                     $('.js-formstack-iframe').each(function (el) {
                         new FormstackIframe(el, config).init();
                     });
@@ -121,7 +121,6 @@ define([
             }
         },
         ready = function (config) {
-
             modules.idInit(config);
             modules.initFormstack();
             modules.forgottenEmail();
