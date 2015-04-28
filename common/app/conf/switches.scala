@@ -327,6 +327,9 @@ object Switches {
     "If this switch is on, ads will be refreshed after they display.",
     safeState = On, sellByDate = new LocalDate(2015, 5, 6))
 
+  val LazyLoadAds = Switch("Feature", "lz-ads",
+    "If switched on then all ads are lazy loaded",
+    safeState = Off, sellByDate = never)
 
   // Monitoring
 
