@@ -86,10 +86,10 @@ define([
                     isNetFront = _.contains(['uk', 'us', 'au'], pageId),
                     isSport = _.contains(['sport', 'football'], config.page.section);
 
-                if (config.switches.liveblogOtherFrontUpdates && !isSport && !isNetFront ||
-                    config.switches.liveblogUkFrontUpdates && pageId === 'uk' ||
-                    config.switches.liveblogUsFrontUpdates && pageId === 'us' ||
-                    config.switches.liveblogAuFrontUpdates && pageId === 'au' ||
+                if (config.switches.liveblogFrontUpdatesOther && !isSport && !isNetFront ||
+                    config.switches.liveblogFrontUpdatesUk && pageId === 'uk' ||
+                    config.switches.liveblogFrontUpdatesUs && pageId === 'us' ||
+                    config.switches.liveblogFrontUpdatesAu && pageId === 'au' ||
                     config.switches.abLiveblogSportFrontUpdates && isSport && ab.getTestVariant('LiveblogSportFrontUpdates') === 'updates') {
                     mediator.on('page:front:ready', function () {
                         liveblogUpdates.show();
