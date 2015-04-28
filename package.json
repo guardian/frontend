@@ -36,7 +36,8 @@
     "handlebars": "2.0.0",
     "jit-grunt": "0.8.0",
     "jsonfile": "2.0.0",
-    "jspm": "0.14.0",
+    "jspm": "0.15.0",
+    "jspm-bower-endpoint": "^0.3.2",
     "karma": "0.12.31",
     "karma-chrome-launcher": "0.1.7",
     "karma-coffee-preprocessor": "0.2.1",
@@ -44,7 +45,9 @@
     "karma-firefox-launcher": "0.1.4",
     "karma-html2js-preprocessor": "0.1.0",
     "karma-jasmine": "0.3.5",
+    "karma-jspm": "rich-nguyen/karma-jspm.git#1.1.5",
     "karma-phantomjs-launcher": "0.1.4",
+    "karma-phantomjs-shim": "^1.0.0",
     "karma-requirejs": "0.2.2",
     "karma-script-launcher": "0.1.0",
     "load-grunt-config": "0.13.2",
@@ -64,19 +67,37 @@
       "baseURL": "static/src",
       "lib": "static/src"
     },
-    "configFile": "static/src/jspm-config.js",
+    "configFile": "static/src/systemjs-config.js",
     "dependencies": {
       "EventEmitter": "github:Wolfy87/EventEmitter@~4.2.6",
+      "Promise": "github:guardian/native-promise-only@0.7.6-e",
       "bean": "npm:bean@^1.0.15",
       "bonzo": "npm:bonzo@^1.4.0",
       "classnames": "npm:classnames@^1.2.0",
       "domready": "npm:domready@^1.0.7",
+      "enhancer": "github:guardian/enhancer@0.1.1",
+      "fastclick": "npm:fastclick@1.0.6",
+      "fastdom": "github:wilsonpage/fastdom@^0.8.6",
+      "fence": "github:guardian/fence@~0.2.11",
       "jsx": "github:floatdrop/plugin-jsx@^1.1.0",
       "lodash": "npm:lodash@~2.4.1",
       "qwery": "npm:qwery@^4.0.0",
       "raven": "github:getsentry/raven-js@~1.1.16",
       "react": "npm:react@~0.12",
-      "reqwest": "github:ded/reqwest@1.1.5"
+      "reqwest": "github:ded/reqwest@1.1.5",
+      "socketio": "bower:socket.io-client@~1.1.0",
+      "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
+      "text": "github:systemjs/plugin-text@^0.0.2",
+      "videojs": "github:guardian/video.js@4.11.1.1",
+      "videojsads": "github:guardian/videojs-contrib-ads@0.4.1",
+      "videojsembed": "github:guardian/videojs-embed@~0.3.1",
+      "videojsima": "github:guardian/videojs-ima@0.1.2",
+      "videojspersistvolume": "bower:videojs-persistvolume@~0.1.0",
+      "videojsplaylist": "github:tim-peterson/videojs-playlist@master"
+    },
+    "devDependencies": {
+      "babel": "npm:babel@^4.7.16",
+      "babel-runtime": "npm:babel-runtime@^4.7.16"
     }
   }
 }

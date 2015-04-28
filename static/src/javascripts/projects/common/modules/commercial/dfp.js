@@ -421,10 +421,11 @@ define([
                             // new way of passing data from DFP
                             if ($breakoutEl.attr('type') === 'application/json') {
                                 creativeConfig = JSON.parse(breakoutContent);
-                                require('bootstraps/creatives')
-                                    .next(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
+                                require(['bootstraps/creatives'], function () {
+                                    require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
                                         new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
                                     });
+                                });
                             } else {
                                 // evil, but we own the returning js snippet
                                 eval(breakoutContent);

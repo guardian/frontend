@@ -1,5 +1,11 @@
 System.config({
   "baseURL": "/assets",
+  "transpiler": "babel",
+  "babelOptions": {
+    "optional": [
+      "runtime"
+    ]
+  },
   "paths": {
     "*": "js/*.js",
     "facia-tool/*": "js/*.js",
@@ -12,6 +18,8 @@ System.config({
   "map": {
     "EventEmitter": "npm:wolfy87-eventemitter@4.2.11",
     "Promise": "npm:native-promise-only@0.7.8-a",
+    "babel": "npm:babel@4.7.16",
+    "babel-runtime": "npm:babel-runtime@4.7.16",
     "css": "github:systemjs/plugin-css@0.1.9",
     "es5-shim": "github:es-shims/es5-shim@4.1.1",
     "font-awesome": "npm:font-awesome@4.3.0",
@@ -78,6 +86,9 @@ System.config({
     },
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"
+    },
+    "npm:babel-runtime@4.7.16": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:buffer@3.1.2": {
       "base64-js": "npm:base64-js@0.0.8",

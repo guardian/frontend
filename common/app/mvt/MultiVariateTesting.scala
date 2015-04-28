@@ -17,8 +17,15 @@ import views.support.CamelCase
 //    val tests = List(ExampleTest)
 // }
 
+object JspmTest extends TestDefinition(
+  List(Variant0),
+  "jspm-test",
+  "Tests our new JSPM jsavscript configuration",
+  new LocalDate(2015, 5, 30)
+)
+
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List()
+  val tests: Seq[TestDefinition] = List(JspmTest)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
