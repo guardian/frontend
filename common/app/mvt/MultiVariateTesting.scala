@@ -7,6 +7,16 @@ import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
 
+// To add a test, do the following:
+// 1. Create an object that extends TestDefinition
+// 2. Add the object to ActiveTests.tests
+//
+// object ExampleTest extends TestDefinition(...)
+//
+// object ActiveTests extends Tests {
+//    val tests = List(ExampleTest)
+// }
+
 object JspmTest extends TestDefinition(
   List(Variant0),
   "jspm-test",
@@ -14,15 +24,8 @@ object JspmTest extends TestDefinition(
   new LocalDate(2015, 5, 30)
 )
 
-object ChimneyTest extends TestDefinition(
-  List(Variant9, Variant8),
-  "chimney-test",
-  "an example test that adds a chimney to the home icon",
-  new LocalDate(2015, 4, 30)
-)
-
 object ActiveTests extends Tests {
-  val tests = List(ChimneyTest, JspmTest)
+  val tests: Seq[TestDefinition] = List(JspmTest)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
