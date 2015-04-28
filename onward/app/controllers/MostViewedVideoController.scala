@@ -10,7 +10,7 @@ object MostViewedVideoController extends Controller with Logging with ExecutionC
   def renderMostViewed() = Action { implicit request =>
 
     val size = request.getQueryString("size").getOrElse("6").toInt
-    val videos = MostViewedVideoAgent.mostViewedVideo()..take(size)
+    val videos = MostViewedVideoAgent.mostViewedVideo().take(size)
 
     Cached(900) {
       JsonComponent(
