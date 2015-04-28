@@ -51,6 +51,7 @@ define([
         Group
     ) {
         alert = alert.default;
+        deepGet = deepGet.default;
         fullTrim = fullTrim.default;
         isGuardianUrl = isGuardianUrl.default;
         urlHost = urlHost.default;

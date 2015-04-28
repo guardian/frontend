@@ -25,6 +25,8 @@ define([
 ) {
     alert = alert.default;
     removeById = removeById.default;
+    cleanClone = cleanClone.default;
+    deepGet = deepGet.default;
 
     var maxChars = vars.CONST.restrictedHeadlineLength || 90,
         restrictHeadlinesOn = vars.CONST.restrictHeadlinesOn || [],
