@@ -6,8 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/variant-test',
-    'common/modules/experiments/tests/liveblog-front-updates',
+    'common/modules/experiments/tests/liveblog-sport-front-updates',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/mt-main',
     'common/modules/experiments/tests/mt-top-below-nav',
@@ -30,8 +29,7 @@ define([
     mediator,
     store,
     mvtCookie,
-    VariantTest,
-    LiveblogFrontUpdates,
+    LiveblogSportFrontUpdates,
     HighCommercialComponent,
     MtMain,
     MtTopBelowNav,
@@ -50,8 +48,7 @@ define([
 
     var ab,
         TESTS = _.flatten([
-            new VariantTest(),
-            new LiveblogFrontUpdates(),
+            new LiveblogSportFrontUpdates(),
             new HighCommercialComponent(),
             new MtMain(),
             new MtTopBelowNav(),
@@ -131,8 +128,10 @@ define([
     }
 
     function testCanBeRun(test) {
-        var expired = (new Date() - new Date(test.expiry)) > 0;
-        return (test.canRun() && !expired && isTestSwitchedOn(test));
+        var expired = (new Date() - new Date(test.expiry)) > 0,
+            isSensitive = config.page.shouldHideAdverts;
+        return ((isSensitive ? test.showForSensitive : true)
+                && test.canRun() && !expired && isTestSwitchedOn(test));
     }
 
     function getTest(id) {

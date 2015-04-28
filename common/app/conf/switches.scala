@@ -402,7 +402,7 @@ object Switches {
 
   val ImgixSwitch = Switch("Feature", "imgix",
     "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 29)
   )
 
   val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
@@ -514,6 +514,11 @@ object Switches {
     "If switched on, any user registrations from a known tor esit node will be logged",
     safeState = On, sellByDate = never)
 
+  val LiveblogFrontUpdates = Switch("Feature", "liveblog-front-updates",
+    "Switch for the latest liveblog updates on fronts",
+    safeState = Off, sellByDate = never
+  )
+
   // A/B Tests
   val ABMtLzAdsDepth = Switch("A/B Tests", "ab-mt-lz-ads-depth", "Depth for lazy loaded ads.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
@@ -566,19 +571,14 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
-  val ABVariantTest = Switch("A/B Tests", "ab-variant-test",
-    "Switch for the Variant Test A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 1)
-  )
-
   val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
     "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
     safeState = Off, sellByDate = never
   )
 
-  val ABLiveblogFrontUpdates = Switch("A/B Tests", "ab-liveblog-front-updates",
-    "Switch for the latest liveblog updates on fronts A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
+  val ABLiveblogSportFrontUpdates = Switch("A/B Tests", "ab-liveblog-sport-front-updates",
+    "Switch for the latest liveblog updates on sport & football fronts A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 27)
   )
 
   val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",
