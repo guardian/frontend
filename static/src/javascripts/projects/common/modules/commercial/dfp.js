@@ -111,9 +111,6 @@ define([
 
         recordFirstAdRendered = _.once(function () {
             beacon.beaconCounts('ad-render');
-            if (config.page.contentType === 'Article') {
-                beacon.beaconCounts('ad-render-article');
-            }
         }),
 
         /**
