@@ -1,7 +1,7 @@
 package implicits
 
 import com.gu.contentapi.client.model.{Element, Tag, Content}
-import com.gu.facia.api.models.{ImageReplace, ImageCutout, FaciaContent}
+import com.gu.facia.api.models.FaciaContent
 import com.gu.facia.api.utils.{MediaType, ItemKicker, FaciaContentUtils, CardStyle}
 import org.joda.time.DateTime
 
@@ -71,8 +71,6 @@ object FaciaContentImplicits {
 
     def showMainVideo: Boolean = FaciaContentUtils.showMainVideo(fc)
 
-    def imageHide: Boolean = FaciaContentUtils.imageHide(fc)
-
     def sectionName: Option[String] = FaciaContentUtils.sectionName(fc)
 
     def maybeSection: Option[String] = FaciaContentUtils.maybeSection(fc)
@@ -97,8 +95,6 @@ object FaciaContentImplicits {
     def isCartoon = FaciaContentUtils.isCartoon(fc)
     def isCrossword = FaciaContentUtils.isCrossword(fc)
 
-    def imageCutout: Option[ImageCutout] = FaciaContentUtils.imageCutout(fc)
-
     def supporting: List[FaciaContent] = FaciaContentUtils.supporting(fc)
 
     def starRating: Option[Int] = FaciaContentUtils.starRating(fc)
@@ -111,11 +107,13 @@ object FaciaContentImplicits {
 
     def linkText = FaciaContentUtils.linkText(fc)
 
-    def imageReplace: Option[ImageReplace] = FaciaContentUtils.imageReplace(fc)
-
     def elements: List[Element] = FaciaContentUtils.elements(fc)
     def cardStyle: CardStyle = FaciaContentUtils.cardStyle(fc)
 
     def isClosedForComments = FaciaContentUtils.isClosedForComments(fc)
+    def image = FaciaContentUtils.image(fc)
+
+    def properties = FaciaContentUtils.properties(fc)
+    def imageHide = FaciaContentUtils.properties(fc).exists(_.imageHide)
   }
 }
