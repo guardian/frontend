@@ -9,11 +9,16 @@ trait CorsErrorHandler extends GlobalSettings with Results with common.Execution
   private val defaultVaryFields = varyFields.mkString(",")
 
   override def onError(request: RequestHeader, ex: Throwable) = {
-    val headers = request.headers
-    val vary = headers.get("Vary").fold(defaultVaryFields)(v => (v :: varyFields).mkString(","))
+    // Overriding onError in Dev can hide helpful Exception messages.
+    if (play.Play.isDev) {
+      super.onError(request, ex)
+    } else {
+      val headers = request.headers
+      val vary = headers.get("Vary").fold(defaultVaryFields)(v => (v :: varyFields).mkString(","))
 
-    Future.successful{
-      Cors(InternalServerError.withHeaders("Vary" -> vary))(request)
+      Future.successful {
+        Cors(InternalServerError.withHeaders("Vary" -> vary))(request)
+      }
     }
   }
 

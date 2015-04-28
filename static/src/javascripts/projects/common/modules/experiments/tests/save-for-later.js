@@ -26,6 +26,7 @@ define([
         this.audienceCriteria = 'Interal only - we opt in';
         this.dataLinkNames = '';
         this.idealOutcome = '';
+        this.showForSensitive = false;
 
         this.canRun = function () {
             return !/Network Front|Section/.test(config.page.contentType);

@@ -102,8 +102,20 @@
         fill: colour(neutral-4);
     }
 
+    .fc-item__meta {
+        color: mix(#ffffff, colour(story-package), 80%);
+
+        .inline-icon {
+            fill: mix(#ffffff, colour(story-package), 80%);
+        }
+    }
+
     .live-pulse-icon:before {
         background-color: colour(live-support-1);
+    }
+
+    .fc-item__liveblog-block {
+        background-color: darken(colour(story-package), 5%);
     }
 
     // These need to exist for all kickers because of tone on tone action

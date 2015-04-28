@@ -48,6 +48,10 @@ $c-navigation-expandable-background: colour(neutral-1);
 /* Styles common to all states
    ========================================================================== */
 
+.navigation-container {
+    background: colour(guardian-brand);
+}
+
 .navigation {
     position: relative;
     overflow: hidden;
@@ -73,6 +77,10 @@ $c-navigation-expandable-background: colour(neutral-1);
 
         .l-header--is-slim & {
             display: none;
+        }
+
+        .l-header--is-slim-ab & {
+            display: block;
         }
     }
 
@@ -132,7 +140,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     margin: 0;
     padding: 0;
 }
-
 
 /* Signposting
    ========================================================================== */
@@ -316,10 +323,6 @@ $c-navigation-expandable-background: colour(neutral-1);
            (min-resolution: 1.3dppx) {
         background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNSAxOCI+PHBhdGggZD0ibTggMC0xIDAtNyA3IDAgMTAgMSAxIDQgMCAwLTcgNSAwIDAgNyA0IDAgMS0xIDAtMTB6IiBmaWxsPSIjZmZmIiAvPjwvc3ZnPg==');
     }
-}
-
-.top-navigation__icon--home--has-chimney {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAASCAQAAAAul0yEAAAAPklEQVR4AdXJwQqAMADD0H56/jxSxhji3FHw9dBDUlaMqJi1cTViscu48Mx3nHIxM+7RjO+IR5/lzP0kc8hckqrLSprJGHUAAAAASUVORK5CYII=');
 }
 
 /* Global navigation

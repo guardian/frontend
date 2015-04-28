@@ -17,6 +17,7 @@ define([
         this.audienceCriteria = '1% of US edition';
         this.dataLinkNames = '';
         this.idealOutcome = '';
+        this.showForSensitive = false;
 
         this.canRun = function () {
             return config.page.edition === 'US';
