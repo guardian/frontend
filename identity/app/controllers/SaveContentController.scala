@@ -121,11 +121,12 @@ class SaveContentController @Inject() ( api: IdApiClient,
                   }
                   updatedResult
               }
-              updatedArticlesViow.getOrElse(
+              updatedArticlesViow.getOrElse {
+                val formWithError = form.withError("Error", "There was a problem with your request")
                 Future.successful(
                   NoCache(Ok(views.html.profile.savedContent(page, form, List.empty, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
                 )
-              )
+              }
 
             case Left(errors) =>
               val formWithErrors = buildFormFromErrors(errors)
