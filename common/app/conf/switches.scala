@@ -402,7 +402,7 @@ object Switches {
 
   val ImgixSwitch = Switch("Feature", "imgix",
     "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 29)
   )
 
   val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
