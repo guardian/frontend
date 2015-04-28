@@ -44,7 +44,6 @@ module.exports = function(grunt, options) {
 
         jspmBundleStatic: {
             command:
-                // TODO: Move bundle script
                 'node ./bundle',
             options: {
                 execOptions: {
