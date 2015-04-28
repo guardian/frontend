@@ -93,7 +93,7 @@ define([
             },
 
             startSlideshow: function () {
-                if (!detect.isBreakpoint({ min: 'tablet' })) {
+                if (detect.isBreakpoint({ min: 'tablet' }) && ab.getTestVariant('FaciaSlideshow') !== 'disabled') {
                     mediator.on('page:front:ready', function () {
                         slideshow.init();
                     });

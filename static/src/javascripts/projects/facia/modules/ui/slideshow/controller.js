@@ -1,6 +1,5 @@
 define([
     'Promise',
-    'common/modules/experiments/ab',
     'common/utils/$',
     'common/utils/mediator',
     'bonzo',
@@ -8,7 +7,6 @@ define([
     'facia/modules/ui/slideshow/dom'
 ], function (
     Promise,
-    ab,
     $,
     mediator,
     bonzo,
@@ -49,11 +47,9 @@ define([
         });
     }
 
-    function init(force) {
+    function init() {
         // This is called on page load, do as little as possible
-        if (force || ab.getTestVariant('FaciaSlideshow') !== 'disabled') {
-            setTimeout(actualInit, state.interval);
-        }
+        setTimeout(actualInit, state.interval);
     }
 
     function destroy() {
