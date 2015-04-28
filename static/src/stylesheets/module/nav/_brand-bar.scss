@@ -316,3 +316,94 @@
     font-size: 12px;
     text-decoration: none;
 }
+
+/**
+ *  Slim modification
+ *
+ *  Used for slim header ^l_header
+ */
+.is-slim {
+    .brand-bar__item {
+        margin-right: $gs-baseline * .25;
+        margin-left: $gs-baseline * .25;
+
+        &:first-child {
+            margin-left: $gs-gutter / 2;
+        }
+    }
+
+    .brand-bar__item--right {
+        @include mq(tablet) {
+            float: left;
+        }
+    }
+
+    .brand-bar__item--subscribe {
+        display: none;
+    }
+
+    .brand-bar__item--edition {
+        display: none;
+    }
+
+    .brand-bar__item--right--uk-edition,
+    .brand-bar__item--right--us-edition {
+        .brand-bar__item--jobs { 
+            display: none;
+        }
+    }
+
+    .brand-bar__item--right--uk-edition {
+        .brand-bar__item--soulmates {
+            display: none;
+        }
+    }
+
+    .brand-bar__item--right--us-edition,
+    .brand-bar__item--right--au-edition {
+        .brand-bar__item--more {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item--right--uk-edition,
+    .brand-bar__item--right--us-edition {
+        .brand-bar__popup--jobs {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item--right--uk-edition {
+        .brand-bar__popup--edition {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item--right--uk-edition {
+        .brand-bar__popup--soulmates {
+            @include mq(desktop) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item--right--uk-edition {
+        .brand-bar__popup--membership {
+            @include mq(desktop) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item__badge {
+        @include mq(tablet) {
+            display: none;
+        }
+    }
+}

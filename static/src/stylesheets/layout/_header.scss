@@ -7,7 +7,6 @@ $c-guardian-services-action: #ffffff;
 
 .l-header {
     position: relative;
-    background: colour(guardian-brand);
 
     @include mq(wide) {
         .has-page-skin & .gs-container {
@@ -26,6 +25,10 @@ $c-guardian-services-action: #ffffff;
         @include mq(tablet) {
             background: colour(guardian-brand);
         }
+    }
+
+    &.l-header--is-slim-ab {
+        background: colour(guardian-brand);
     }
 }
 
@@ -104,6 +107,10 @@ $c-guardian-services-action: #ffffff;
         color: #aad8f1; // To match custom colour of 'the' in logotype. Shouldn't be used elsewhere
         font-weight: bold;
         white-space: nowrap;
+
+        .l-header--is-slim-ab & {
+            display: none !important;
+        }
     }
 
     .no-svg & {
@@ -153,6 +160,89 @@ $c-guardian-services-action: #ffffff;
     z-index: 2;
 
     .l-header--is-slim & {
+        float: right;
+    }
+}
+
+// Header is in slim mode
+.is-slim {
+    background: darken(colour(guardian-brand), 2%);
+
+    .l-header__inner {
+        @include mq(tablet) {
+            background: colour(guardian-brand);
+        }
+    }
+
+    .l-header-pre {
+        float: left;
+    }
+
+    .l-header-main {
+        float: right;
+    }
+
+    // Main logo in the slim mode
+    .logo-wrapper {
+        margin-top: $gs-baseline * .75;
+        margin-bottom: 0;
+        float: left;
+
+        @include mq(mobileLandscape) {
+            // Reset to previous value, as the breakpoint overriding this
+            // does not apply for interactives.
+            margin-right: $gs-gutter/2;
+        }
+
+        @include mq($until: tablet) {
+            margin-top: $gs-baseline * .83;
+
+            svg {
+                // Height / width
+                $height-to-width-ratio: 30 / 160;
+                // Magic number to fit the logo to 320px+ screens
+                $width: 134px;
+                width: $width;
+                height: $width * $height-to-width-ratio;
+            }
+        }
+
+        @include mq(tablet) {
+            svg {
+                width: 160px;
+                height: 30px;
+            }
+        }
+
+        .no-svg & {
+            .inline-logo {
+                width: 160px;
+                height: 30px;
+            }
+        }
+
+        .logo__tagline {
+            display: none !important;
+        }
+    }
+
+    .inline-logo {
+        display: block;
+    }
+
+    .no-svg & {
+        .inline-logo {
+            width: 160px;
+            height: 30px;
+
+            @include mq(tablet) {
+                width: 320px;
+                height: 60px;
+            }
+        }
+    }
+
+    .l-header-main {
         float: right;
     }
 }
