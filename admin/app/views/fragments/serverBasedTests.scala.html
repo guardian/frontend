@@ -19,6 +19,9 @@
                             <td colspan="3">@{test.variants.map(_.name).sorted.mkString(", ")}</td>
                         </tr>
                     }
+                    @if(tests.isEmpty) {
+                        <tr><td colspan="7">There are currently no server side tests</td></tr>
+                    }
                 </tbody>
             </table>
         </div>
