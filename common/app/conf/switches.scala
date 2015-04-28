@@ -510,8 +510,23 @@ object Switches {
     "If switched on, any user registrations from a known tor esit node will be logged",
     safeState = On, sellByDate = never)
 
-  val LiveblogFrontUpdates = Switch("Feature", "liveblog-front-updates",
-    "Switch for the latest liveblog updates on fronts",
+  val LiveblogUkFrontUpdates = Switch("Feature", "liveblog-uk-front-updates",
+    "Switch for the latest liveblog updates on the UK network front",
+    safeState = Off, sellByDate = never
+  )
+
+  val LiveblogUsFrontUpdates = Switch("Feature", "liveblog-us-front-updates",
+    "Switch for the latest liveblog updates on the US network front",
+    safeState = Off, sellByDate = never
+  )
+
+  val LiveblogAuFrontUpdates = Switch("Feature", "liveblog-au-front-updates",
+    "Switch for the latest liveblog updates on the AU network front",
+    safeState = Off, sellByDate = never
+  )
+
+  val LiveblogOtherFrontUpdates = Switch("Feature", "liveblog-other-front-updates",
+    "Switch for the latest liveblog updates on non-network fronts",
     safeState = Off, sellByDate = never
   )
 

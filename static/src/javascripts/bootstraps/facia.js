@@ -82,9 +82,14 @@ define([
             },
 
             showLiveblogUpdates: function () {
-                var isSport = _.contains(['sport', 'football'], config.page.section);
+                var pageId = config.page.pageId,
+                    isNetFront = _.contains(['uk', 'us', 'au'], pageId),
+                    isSport = _.contains(['sport', 'football'], config.page.section);
 
-                if (config.switches.liveblogFrontUpdates && !isSport ||
+                if (config.switches.liveblogOtherFrontUpdates && !isSport && !isNetFront ||
+                    config.switches.liveblogUkFrontUpdates && pageId === 'uk' ||
+                    config.switches.liveblogUsFrontUpdates && pageId === 'us' ||
+                    config.switches.liveblogAuFrontUpdates && pageId === 'au' ||
                     config.switches.abLiveblogSportFrontUpdates && isSport && ab.getTestVariant('LiveblogSportFrontUpdates') === 'updates') {
                     mediator.on('page:front:ready', function () {
                         liveblogUpdates.show();
