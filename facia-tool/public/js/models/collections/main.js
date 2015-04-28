@@ -48,6 +48,7 @@ define([
     modalDialog = modalDialog.default;
     ammendedQueryStr = ammendedQueryStr.default;
     parseQueryParams = parseQueryParams.default;
+    mediator = mediator.default;
 
     return function() {
 

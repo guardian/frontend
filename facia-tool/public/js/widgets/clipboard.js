@@ -25,6 +25,8 @@ define([
     mediator,
     updateScrollables
 ) {
+    mediator = mediator.default;
+
     var updateClipboardScrollable = function (what) {
         var onClipboard = true;
         if (what && what.targetGroup) {

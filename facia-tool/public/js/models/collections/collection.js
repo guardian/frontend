@@ -34,6 +34,7 @@ define([
     modalDialog = modalDialog.default;
     asObservableProps = asObservableProps.default;
     populateObservables = populateObservables.default;
+    mediator = mediator.default;
 
     function Collection(opts) {
 

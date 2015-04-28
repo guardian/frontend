@@ -32,6 +32,7 @@ define([
     urlAbsPath = urlAbsPath.default;
     asObservableProps = asObservableProps.default;
     populateObservables = populateObservables.default;
+    mediator = mediator.default;
 
     var checkCount = 0;
 

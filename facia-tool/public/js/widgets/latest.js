@@ -11,6 +11,7 @@ define([
     mediator,
     updateScrollables
 ) {
+    mediator = mediator.default;
 
     function Latest (params, element) {
         var self = this;

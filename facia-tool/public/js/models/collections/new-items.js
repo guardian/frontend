@@ -27,6 +27,7 @@ define([
     removeById = removeById.default;
     cleanClone = cleanClone.default;
     deepGet = deepGet.default;
+    mediator = mediator.default;
 
     var maxChars = vars.CONST.restrictedHeadlineLength || 90,
         restrictHeadlinesOn = vars.CONST.restrictHeadlinesOn || [],
