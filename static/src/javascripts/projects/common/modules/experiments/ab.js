@@ -6,7 +6,6 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/variant-test',
     'common/modules/experiments/tests/liveblog-sport-front-updates',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/mt-main',
@@ -30,7 +29,6 @@ define([
     mediator,
     store,
     mvtCookie,
-    VariantTest,
     LiveblogSportFrontUpdates,
     HighCommercialComponent,
     MtMain,
@@ -50,7 +48,6 @@ define([
 
     var ab,
         TESTS = _.flatten([
-            new VariantTest(),
             new LiveblogSportFrontUpdates(),
             new HighCommercialComponent(),
             new MtMain(),

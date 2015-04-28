@@ -571,11 +571,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
   )
 
-  val ABVariantTest = Switch("A/B Tests", "ab-variant-test",
-    "Switch for the Variant Test A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 1)
-  )
-
   val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
     "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
     safeState = Off, sellByDate = never
