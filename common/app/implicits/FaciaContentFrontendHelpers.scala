@@ -14,8 +14,8 @@ object FaciaContentFrontendHelpers {
 
   implicit class FaciaContentFrontendHelper(faciaContent: FaciaContent) {
 
-    def imageReplaceElement = for (imageReplace <- faciaContent.imageReplace)
-      yield ImageOverride.createElementWithOneAsset(imageReplace.imageSrc, imageReplace.imageSrcWidth, imageReplace.imageSrcHeight)
+    def imageReplaceElement = for (image <- faciaContent.image)
+      yield ImageOverride.createElementWithOneAsset(image.imageSrc, image.imageSrcWidth, image.imageSrcHeight)
 
     def elementsWithImageOverride: List[Element] = imageReplaceElement ++: faciaContent.elements
 

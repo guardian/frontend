@@ -6,7 +6,7 @@
 @import model.Tag
 @import views.support.RenderClasses
 @import views.support.CardStyleForFrontend
-@import com.gu.facia.api.utils.{Feature, Default, Comment}
+@import com.gu.facia.api.utils.{Feature, DefaultCardstyle, Comment}
 
 @kicker = {
     @if(content.isAnalysis) {
@@ -28,7 +28,7 @@
     ))">
 
     <div class="rich-link__container">
-        @if(content.isGallery || content.isVideo || CardStyleForFrontend(content) == Feature || CardStyleForFrontend(content) == Default) {
+        @if(content.isGallery || content.isVideo || CardStyleForFrontend(content) == Feature || CardStyleForFrontend(content) == DefaultCardstyle) {
             @content.trailPicture.map { trailPictureContainer =>
                 @ImgSrc.findSrc(trailPictureContainer, Item460).map { imgSrc =>
 

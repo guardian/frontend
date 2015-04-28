@@ -1,15 +1,15 @@
 package layout
 
-import com.gu.facia.api.models.{LatestSnap, FaciaContent}
-import com.gu.facia.api.utils.{Default, CardStyle, ResolvedMetaData, ContentProperties}
-import model.{ApiContentWithMeta, Content}
-import org.joda.time.DateTime
-import org.scalatest.{Matchers, FlatSpec}
-import services.FaciaContentConvert
-import slices._
 import com.gu.contentapi.client.model.{Content => ApiContent}
+import com.gu.facia.api.models.{FaciaContent, LatestSnap}
+import com.gu.facia.api.utils._
 import contentapi.FixtureTemplates.emptyApiContent
 import implicits.FaciaContentImplicits._
+import model.{ApiContentWithMeta, Content}
+import org.joda.time.DateTime
+import org.scalatest.{FlatSpec, Matchers}
+import services.FaciaContentConvert
+import slices._
 
 class FrontTest extends FlatSpec with Matchers {
   def trailWithUrl(theUrl: String): FaciaContent = FaciaContentConvert.frontentContentToFaciaContent(new Content(ApiContentWithMeta(
@@ -39,7 +39,7 @@ class FrontTest extends FlatSpec with Matchers {
 
     LatestSnap(
       id = theUrl,
-      cardStyle = Default,
+      cardStyle = DefaultCardstyle,
       snapUri = None,
       snapCss = None,
       latestContent = Option(content),
@@ -50,8 +50,7 @@ class FrontTest extends FlatSpec with Matchers {
       image = None,
       properties = ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default),
       byline = None,
-      kicker = None,
-      imageCutout = None)}
+      kicker = None)}
 
 
 

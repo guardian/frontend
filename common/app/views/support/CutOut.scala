@@ -1,8 +1,7 @@
 package views.support
 
-import com.gu.facia.api.models.{ImageCutout, FaciaContent}
+import com.gu.facia.api.models.{FaciaContent, FaciaImage}
 import common.Logging
-import model.{Tag, FaciaImageElement}
 import implicits.FaciaContentImplicits._
 
 import scala.util.{Failure, Success, Try}
@@ -12,17 +11,15 @@ object CutOut extends Logging {
      Otherwise, it is probably coming from Content API Content type via tags (This gives no src and width)
    */
   def fromTrail(faciaContent: FaciaContent): Option[CutOut] = {
-    faciaContent.imageCutout match {
-        case Some(ImageCutout(imageCutoutSrc, Some(imageCutoutSrcWidth), Some(imageCutoutSrcHeight))) =>
-          Try((imageCutoutSrcWidth.toInt, imageCutoutSrcHeight.toInt)) match {
-            case Success((width, height)) => Option(CutOut(imageCutoutSrc, Orientation.fromDimensions(width, height)))
-            case Failure(t) =>
-              log.warn(s"Could not convert width and height to INT: $t")
-              None
-          }
-        case Some(ImageCutout(imageCutoutSrc, _, _)) => Option(CutOut(imageCutoutSrc, Landscape))
-        case _ => None
-      }
+    faciaContent.image match {
+      case Some(FaciaImage(com.gu.facia.api.models.Cutout, src, Some(width), Some(height))) =>
+        Try((width.toInt, height.toInt)) match {
+          case Success((w, h)) => Option(CutOut(src, Orientation.fromDimensions(w, h)))
+          case Failure(t) =>
+            log.warn(s"Could not convert width and height to INT: $t")
+            None}
+      case Some(FaciaImage(com.gu.facia.api.models.Cutout, src, _, _)) => Option(CutOut(src, Landscape))
+      case _ => None}
   }
 }
 

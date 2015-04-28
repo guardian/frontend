@@ -18,11 +18,10 @@ object FaciaContentConvert {
       href = frontendContent.delegate.safeFields.get("href"),
       trailText = frontendContent.trailText,
       group = frontendContent.group.getOrElse("0"),
-      imageReplace = ImageReplace.fromTrailMeta(trailMetaData),
+      image = FaciaImage.getFaciaImage(Option(frontendContent.delegate), trailMetaData, resolvedMetaData),
       ContentProperties.fromResolvedMetaData(resolvedMetaData),
       frontendContent.byline,
       kicker = ItemKicker.fromContentAndTrail(Option(contentApiContent), trailMetaData, resolvedMetaData, maybeCollectionConfig),
-      imageCutout = ImageCutout.fromContentAndTrailMeta(contentApiContent, trailMetaData, resolvedMetaData),
       embedType = frontendContent.snapType,
       embedUri = frontendContent.snapUri,
       embedCss = frontendContent.snapCss)

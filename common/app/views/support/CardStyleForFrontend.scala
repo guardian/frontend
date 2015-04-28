@@ -43,7 +43,7 @@ object CardStyleForFrontend {
     } else if (trail.isFeature) {
       Feature
     } else {
-      Default
+      DefaultCardstyle
     }
   }
 }
