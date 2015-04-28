@@ -33,10 +33,14 @@ trait Articles {
       }
     }
 
-    def removeArticle(shortUrl: String) : SavedArticles
-        = SavedArticles(savedArticles.version, savedArticles.articles.filterNot{ article => article.shortUrl == shortUrl })
+    def removeArticle(shortUrlToRemove: String) : SavedArticles = {
+      val articles = shortUrlToRemove match {
+        case "all" => List.empty
+        case _ => savedArticles.articles.filterNot( article => article.shortUrl == shortUrlToRemove )
+      }
 
-
+      SavedArticles(savedArticles.version, articles)
+    }
   }
 }
 

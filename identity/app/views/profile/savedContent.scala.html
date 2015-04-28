@@ -42,6 +42,21 @@
             <div class="saved-contents">
                 @savedArticle(articles)
             </div>
+            <fieldset class="fieldset">
+                <ul class="u-unstyled">
+
+                    <li class="form-field">
+                        <label class="label">Your saved articles</label>
+                        <div class="form-field__note">
+                            Delete individual articles with the button above, or click below to remove them all
+                        </div>
+                    </li>
+
+                    <li>
+                        <button type="submit" class="submit-input" name="deleteArticle" value="all" data-link-name="Saved deletre all">Delete All</button>
+                    </li>
+                </ul>
+            </fieldset>
         </form>
     </div>
 }
