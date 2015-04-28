@@ -96,7 +96,7 @@ object FapiJsonFormats {
         case JsSuccess(JsString("Review"), _) => JsSuccess(Review)
         case JsSuccess(JsString("Letters"), _) => JsSuccess(Letters)
         case JsSuccess(JsString("ExternalLink"), _) => JsSuccess(ExternalLink)
-        case JsSuccess(JsString("Default"), _) => JsSuccess(Default)
+        case JsSuccess(JsString("DefaultCardstyle"), _) => JsSuccess(DefaultCardstyle)
         case _ => JsError("Could not convert ItemKicker")
       }
     }
@@ -113,12 +113,26 @@ object FapiJsonFormats {
       case Review => JsObject(Seq("type" -> JsString("Review")))
       case Letters => JsObject(Seq("type" -> JsString("Letters")))
       case ExternalLink => JsObject(Seq("type" -> JsString("ExternalLink")))
-      case Default => JsObject(Seq("type" -> JsString("Default")))
+      case DefaultCardstyle => JsObject(Seq("type" -> JsString("DefaultCardstyle")))
     }
   }
 
-  implicit val imageCutoutFormat = Json.format[ImageCutout]
-  implicit val imageFormat = Json.format[ImageReplace]
+  implicit object ImageTypeFormat extends Format[ImageType] {
+    def reads(json: JsValue) = {
+      (json \ "type").transform[JsString](Reads.JsStringReads) match {
+        case JsSuccess(JsString("Cutout"), _) => JsSuccess(Cutout)
+        case JsSuccess(JsString("Replace"), _) => JsSuccess(Replace)
+        case _ => JsError("Could not convert ItemKicker")
+      }
+    }
+
+    def writes(cardStyle: ImageType) = cardStyle match {
+      case Cutout => JsObject(Seq("type" -> JsString("Cutout")))
+      case Replace => JsObject(Seq("type" -> JsString("Replace")))
+    }
+  }
+
+  implicit val faciaImageFormat = Json.format[FaciaImage]
   implicit val contentPropertiesFormat = Json.format[ContentProperties]
 
   implicit object faciaContentFormat extends Format[FaciaContent] {
