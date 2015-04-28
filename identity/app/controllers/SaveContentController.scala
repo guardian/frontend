@@ -70,13 +70,13 @@ class SaveContentController @Inject() ( api: IdApiClient,
     savedArticleService.getOrCreateArticlesList(request.user.auth).map {
       case Right(prefs) =>
         val form = savedArticlesForm.fill(SavedArticleData(prefs.articles.map(_.shortUrl)))
-        NoCache(Ok(views.html.profile.savedContent(page, form, prefs.articles, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
+        NoCache(Ok(views.html.profile.savedContent(page, form, prefs.articles, formActionUrl(idUrlBuilder, idRequest, "/saved-content"))))
       case Left(errors) =>
         val formWithErrors = errors.foldLeft(savedArticlesForm) {
           case (formWithErrors, Error(message, decription, _, context)) =>
             formWithErrors.withError(context.getOrElse(""), message)
         }
-        NoCache(Ok(views.html.profile.savedContent(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
+        NoCache(Ok(views.html.profile.savedContent(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-content"))))
     }
   }
 
@@ -97,10 +97,10 @@ class SaveContentController @Inject() ( api: IdApiClient,
           savedArticleService.getOrCreateArticlesList(request.user.auth).map {
             case Right(prefs) =>
               val form = savedArticlesForm.fill(SavedArticleData(prefs.articles.map(_.shortUrl)))
-              NoCache(Ok(views.html.profile.savedContent(page, formWithErrors, prefs.articles, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
+              NoCache(Ok(views.html.profile.savedContent(page, formWithErrors, prefs.articles, formActionUrl(idUrlBuilder, idRequest, "/saved-content"))))
             case Left(errors) =>
               val formWithApiErrors = buildFormFromErrors(errors)
-              NoCache(Ok(views.html.profile.savedContent(page, formWithApiErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
+              NoCache(Ok(views.html.profile.savedContent(page, formWithApiErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-content"))))
           }
       }
 
@@ -114,24 +114,24 @@ class SaveContentController @Inject() ( api: IdApiClient,
                   val updatedArticles = prefs.removeArticle(shortUrlOfDeletedArticle)
                   val updatedResult = api.updateSavedArticles(request.user.auth, updatedArticles).map {
                     case Right(updatedArticles) =>
-                      NoCache(Ok(views.html.profile.savedContent(page, form, updatedArticles.articles, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
+                      NoCache(Ok(views.html.profile.savedContent(page, form, updatedArticles.articles, formActionUrl(idUrlBuilder, idRequest, "/saved-content"))))
                     case Left(errors) =>
                       val formWithApiErrors = buildFormFromErrors(errors)
-                      NoCache(Ok(views.html.profile.savedContent(page, formWithApiErrors, prefs.articles, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
+                      NoCache(Ok(views.html.profile.savedContent(page, formWithApiErrors, prefs.articles, formActionUrl(idUrlBuilder, idRequest, "/saved-content"))))
                   }
                   updatedResult
               }
               updatedArticlesViow.getOrElse {
                 val formWithError = form.withError("Error", "There was a problem with your request")
                 Future.successful(
-                  NoCache(Ok(views.html.profile.savedContent(page, form, List.empty, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
+                  NoCache(Ok(views.html.profile.savedContent(page, form, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-content"))))
                 )
               }
 
             case Left(errors) =>
               val formWithErrors = buildFormFromErrors(errors)
               Future.successful(
-                NoCache(Ok(views.html.profile.savedContent(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/prefs/saved-content"))))
+                NoCache(Ok(views.html.profile.savedContent(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-content"))))
               )
           }
           response
