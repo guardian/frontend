@@ -337,6 +337,7 @@
             @Html(Static.js.systemJsBundleConfig)
         }
 
+        System.baseURL = '@{Configuration.assets.path}';
         System.paths['ophan/ng']  = '@{Configuration.javascript.config("ophanJsUrl")}.js';
         System.paths['googletag'] = '@{Configuration.javascript.config("googletagJsUrl")}';
 
