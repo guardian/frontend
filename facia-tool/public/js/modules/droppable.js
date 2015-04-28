@@ -50,7 +50,7 @@ define([
             }
 
             try {
-                source = draggableElement(event.dataTransfer, sourceGroup);
+                source = draggableElement.getItem(event.dataTransfer, sourceGroup);
             } catch (ex) {
                 targetGroup.unsetAsTarget();
                 alert(ex.message);
