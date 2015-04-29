@@ -45,7 +45,7 @@ define([
                         var popup = qwery('.popup--profile')[0];
                         bonzo(popup).append(bonzo.create(
                             '<li class="popup__item">' +
-                            '<a href="' + config.page.idUrl + '/prefs/saved-content" class="brand-bar__item--action" data-link-name="Saved for Later">Saved for later</a>' +
+                            '<a href="' + config.page.idUrl + '/saved-content" class="brand-bar__item--action" data-link-name="Saved for Later">Saved for later</a>' +
                             '</li>'
                         ));
                     });
