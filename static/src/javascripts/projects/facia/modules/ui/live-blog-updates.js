@@ -46,14 +46,29 @@ define([
         elementsById = {};
 
     function blockRelativeTime(block) {
-        return relativeDates.makeRelativeDate(new Date((block || {}).publishedDateTime || null));
+        var pubDate = (block || {}).publishedDateTime,
+            relDate = pubDate ? relativeDates.makeRelativeDate(new Date(pubDate)) : false;
+
+        return relDate || '';
     }
 
     function renderBlock(articleId, block, index) {
+        var relTime = blockRelativeTime(block);
+
+        if (relTime.match(/yesterday/i)) {
+            relTime = relTime.toLowerCase();
+        } else if (relTime && block.isNew) {
+            relTime = 'updated ' + relTime + ' ago';
+        } else if (relTime) {
+            relTime = relTime + ' ago';
+        } else {
+            relTime = 'updated just now';
+        }
+
         return template(blockTemplate, {
             classes: block.isNew ? newBlockClassName : oldBlockClassName,
             href: '/' + articleId + '#' + block.id,
-            relativeTime: blockRelativeTime(block),
+            relativeTime: relTime,
             text: _.compact([block.title, block.body.slice(0, 200)]).join('. '),
             index: index + 1
         });
