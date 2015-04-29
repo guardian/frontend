@@ -43,7 +43,8 @@ module.exports = function(grunt, options) {
         },
 
         jspmBundleStatic: {
-            command: './node_modules/.bin/jspm bundle-sfx es6/bootstraps/app static/target/bundles/app.js',
+            command:
+                'node ./bundle',
             options: {
                 execOptions: {
                     cwd: '.'

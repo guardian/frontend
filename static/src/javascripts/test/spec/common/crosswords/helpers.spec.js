@@ -1,10 +1,6 @@
-define([
-    'common/utils/_',
-    'common/modules/crosswords/helpers'
-], function (
-    _,
-    helpers
-) {
+import _ from 'common/utils/_';
+import helpers from 'es6/projects/common/modules/crosswords/helpers';
+
     var entryFixture = {
         position: {
             x: 2,
@@ -130,4 +126,4 @@ define([
             });
         });
     });
-});
+

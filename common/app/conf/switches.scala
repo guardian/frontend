@@ -117,13 +117,13 @@ object Switches {
   val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
     "If this switch is switched on then the preview server requires login",
     safeState = On,
-    sellByDate = new LocalDate(2015, 4, 30)
+    sellByDate = new LocalDate(2015, 5, 31)
   )
 
   val PreviewAuthByCookie = Switch("Performance", "preview-auth-by-cookie",
     "If this switch is switched on then preview auth will be lengthened by a cookie",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 4, 30)
+    sellByDate = new LocalDate(2015, 5, 31)
   )
 
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
@@ -327,10 +327,9 @@ object Switches {
     "If this switch is on, ads will be refreshed after they display.",
     safeState = On, sellByDate = new LocalDate(2015, 5, 6))
 
-  val AdImpressionCountingSwitch = Switch("Commercial", "ad-impression-counting",
-    "If this switch is on, ad impression counts will be kept in Cloudwatch.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
-
+  val LazyLoadAds = Switch("Feature", "lz-ads",
+    "If switched on then all ads are lazy loaded",
+    safeState = Off, sellByDate = never)
 
   // Monitoring
 
@@ -459,7 +458,7 @@ object Switches {
 
   val FacebookAppLinksSwitch = Switch("Feature", "facebook-applinks",
     "If this switch is on then shared links on the facebook mobile app will be opened in the native app instead of the mobile browser",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 7)
   )
 
   val IdentityFormstackSwitch = Switch("Feature", "id-formstack",
@@ -514,8 +513,23 @@ object Switches {
     "If switched on, any user registrations from a known tor esit node will be logged",
     safeState = On, sellByDate = never)
 
-  val LiveblogFrontUpdates = Switch("Feature", "liveblog-front-updates",
-    "Switch for the latest liveblog updates on fronts",
+  val LiveblogFrontUpdatesUk = Switch("Feature", "liveblog-front-updates-uk",
+    "Switch for the latest liveblog updates on the UK network front",
+    safeState = Off, sellByDate = never
+  )
+
+  val LiveblogFrontUpdatesUs = Switch("Feature", "liveblog-front-updates-us",
+    "Switch for the latest liveblog updates on the US network front",
+    safeState = Off, sellByDate = never
+  )
+
+  val LiveblogFrontUpdatesAu = Switch("Feature", "liveblog-front-updates-au",
+    "Switch for the latest liveblog updates on the AU network front",
+    safeState = Off, sellByDate = never
+  )
+
+  val LiveblogFrontUpdatesOther = Switch("Feature", "liveblog-front-updates-other",
+    "Switch for the latest liveblog updates on non-network fronts",
     safeState = Off, sellByDate = never
   )
 
@@ -684,7 +698,7 @@ object Switches {
 
   val IphoneConfidence = Switch("Performance", "iphone-confidence",
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
+    safeState = Off, sellByDate = never
   )
 
   val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",

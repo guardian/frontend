@@ -82,9 +82,14 @@ define([
             },
 
             showLiveblogUpdates: function () {
-                var isSport = _.contains(['sport', 'football'], config.page.section);
+                var pageId = config.page.pageId,
+                    isNetFront = _.contains(['uk', 'us', 'au'], pageId),
+                    isSport = _.contains(['sport', 'football'], config.page.section);
 
-                if (config.switches.liveblogFrontUpdates && !isSport ||
+                if (config.switches.liveblogFrontUpdatesOther && !isSport && !isNetFront ||
+                    config.switches.liveblogFrontUpdatesUk && pageId === 'uk' ||
+                    config.switches.liveblogFrontUpdatesUs && pageId === 'us' ||
+                    config.switches.liveblogFrontUpdatesAu && pageId === 'au' ||
                     config.switches.abLiveblogSportFrontUpdates && isSport && ab.getTestVariant('LiveblogSportFrontUpdates') === 'updates') {
                     mediator.on('page:front:ready', function () {
                         liveblogUpdates.show();
@@ -93,7 +98,7 @@ define([
             },
 
             startSlideshow: function () {
-                if (!detect.isBreakpoint('mobile')) {
+                if (detect.isBreakpoint({ min: 'tablet' }) && ab.getTestVariant('FaciaSlideshow') !== 'disabled') {
                     mediator.on('page:front:ready', function () {
                         slideshow.init();
                     });

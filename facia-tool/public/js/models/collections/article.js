@@ -6,6 +6,7 @@ define([
     'utils/alert',
     'utils/as-observable-props',
     'utils/deep-get',
+    'utils/draggable-element',
     'utils/full-trim',
     'utils/human-time',
     'utils/identity',
@@ -31,6 +32,7 @@ define([
         alert,
         asObservableProps,
         deepGet,
+        draggableElement,
         fullTrim,
         humanTime,
         identity,
@@ -106,6 +108,7 @@ define([
                 {
                     key: 'imageSrc',
                     editable: true,
+                    dropImage: true,
                     omitForSupporting: true,
                     'if': 'imageReplace',
                     label: 'replacement image URL',
@@ -140,6 +143,7 @@ define([
                 {
                     key: 'imageCutoutSrc',
                     editable: true,
+                    dropImage: true,
                     omitForSupporting: true,
                     'if': 'imageCutoutReplace',
                     label: 'replacement cutout image URL',
@@ -293,6 +297,7 @@ define([
                     key: 'imageSlideshowReplace',
                     editable: true,
                     label: 'slideshow',
+                    singleton: 'images',
                     type: 'boolean'
                 });
 
@@ -300,6 +305,7 @@ define([
                     metaFields.push({
                         key: 'slideshowImageSrc_' + i,
                         editable: true,
+                        dropImage: true,
                         omitForSupporting: true,
                         'if': 'imageSlideshowReplace',
                         label: 'slideshow image ' + (i + 1) + ' URL',
@@ -602,7 +608,25 @@ define([
                         meta(value === field() ? undefined : value.replace(rxScriptStriper, ''));
                     },
                     owner: self
-                })
+                }),
+
+                dropImage: ko.observable(!!opts.dropImage),
+
+                underDrag: ko.observable(false),
+
+                dropInEditor: function (element) {
+                    try {
+                        var source = draggableElement.getMediaItem(element);
+                        if (source && source.file) {
+                            source = source.file;
+                        } else {
+                            source = element.getData('Url');
+                        }
+                        meta(source);
+                    } catch (ex) {
+                        alert(ex.message);
+                    }
+                }
             };
         };
 
@@ -965,6 +989,32 @@ define([
                         mediator.emit('ui:open', formFields[nextIndex].meta, self, self.front);
                     }
                 });
+            }
+        };
+
+        ko.bindingHandlers.dropImage = {
+            init: function(el, valueAccessor, allBindings, viewModel, bindingContext) {
+                var isDropEnabled = ko.unwrap(valueAccessor());
+
+                if (isDropEnabled) {
+                    el.addEventListener('drop', function (evt) {
+                        evt.preventDefault();
+                        evt.stopPropagation();
+                        bindingContext.$data.dropInEditor(evt.dataTransfer);
+                        bindingContext.$data.underDrag(false);
+                        resize(el);
+                    });
+                    el.addEventListener('dragover', function (evt) {
+                        evt.preventDefault();
+                        evt.stopPropagation();
+                        bindingContext.$data.underDrag(true);
+                    });
+                    el.addEventListener('dragleave', function (evt) {
+                        evt.preventDefault();
+                        evt.stopPropagation();
+                        bindingContext.$data.underDrag(false);
+                    });
+                }
             }
         };
 

@@ -21,7 +21,7 @@ trait Articles {
     def contains(shortUrl: String) : Boolean = savedArticles.articles.exists( sa => sa.shortUrl == shortUrl)
 
     def addArticle(id: String, shortUrl: String): SavedArticles = {
-      var date = new DateTime()
+      val date = new DateTime()
       val newArticle = SavedArticle(id, shortUrl, date, false)
       val timeStamp = fmt.print(date)
 

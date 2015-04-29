@@ -1,4 +1,4 @@
-require([
+define([
     // 3rd party libs
     'raven',
     'picturefill',
