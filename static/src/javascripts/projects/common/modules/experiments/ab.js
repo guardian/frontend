@@ -63,7 +63,7 @@ define([
             new MtLzAdsDepth(),
             new MtStickyNavAll(),
             new MtStickyBurger(),
-            new DeferSpacefinder()
+            new DeferSpacefinder(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             }),
