@@ -1,6 +1,7 @@
 package model.commercial.books
 
 import common.ExecutionContexts
+import conf.Switches.LookUpBooksInBookshopCatalogue
 import model.commercial._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -8,7 +9,6 @@ import play.api.libs.json.{JsPath, Reads}
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
-
 
 case class Book(title: String,
                 author: Option[String],
@@ -58,9 +58,17 @@ object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
   def getSpecificBook(isbn: String) = available find (_.isbn == isbn)
 
   def getSpecificBooks(isbns: Seq[String]): Future[Seq[Book]] = {
-    Future.sequence {
+
+    def lookUpInAllBooks: Future[Seq[Book]] = Future.sequence {
       isbns map (BookFinder.findByIsbn(_))
     } map (_.flatten.sortBy(book => isbns.indexOf(book.isbn)))
+
+    def lookUpInBestsellers: Future[Seq[Book]] = Future.successful {
+      available filter (isbns contains _.isbn)
+    }
+
+    if (LookUpBooksInBookshopCatalogue.isSwitchedOn) lookUpInAllBooks
+    else lookUpInBestsellers
   }
 
   def bestsellersTargetedAt(segment: Segment): Seq[Book] = {
