@@ -229,12 +229,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
     "when recieving a valid response" - {
       "accesses the synced prefs endpoint with the users id" in {
-          api.syncedPrefs(Anonymous)
+          api.savedArticles(Anonymous)
           verify(http).GET("http://example.com/syncedPrefs/me/savedArticles", Iterable.empty, clientAuthHeaders)
         }
 
        "returns the synced Prefs Ofbject " in {
-         api.syncedPrefs(Anonymous) map {
+         api.savedArticles(Anonymous) map {
             case Left(result) => fail("Got Right (%s), instead of expect Right".format(result.toString) )
             case Right(prefs) => {
               prefs.version should be ("10010871")
@@ -252,12 +252,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
     "when provididinmg authentication to the request" - {
       "adds the url paremeters" in  {
-        api.syncedPrefs(ParamAuth)
+        api.savedArticles(ParamAuth)
         verify(http).GET(Matchers.any[String], argThat(new ParamsMatcher(Iterable("testParam" -> "value"))), Matchers.argThat(new ParamsMatcher(clientAuthHeaders)))
       }
 
       "adds the headers" in {
-        api.syncedPrefs(HeaderAuth)
+        api.savedArticles(HeaderAuth)
         verify(http).GET(Matchers.any[String], Matchers.eq(Nil), argThat(new ParamsMatcher(Iterable("testHeader" -> "value") ++ clientAuthHeaders)))
       }
     }
@@ -267,7 +267,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         .thenReturn(toFuture(Left(errors)))
 
       "returns the errors" in {
-        api.syncedPrefs(Anonymous).map {
+        api.savedArticles(Anonymous).map {
           case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
           case Left(responseErrors) => {
             responseErrors should equal(errors)
@@ -372,22 +372,22 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validResponse)))
 
       "accesses the savedArticles endpoing" in {
-        api.saveArticle( "123", Anonymous, savedArticles)
+        api.updateSavedArticles(Anonymous, savedArticles)
         verify(http).POST(Matchers.eq("http://example.com/syncedPrefs/me/savedArticles"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "passes the updated articles list as json to the endpoint" in  {
-        api.saveArticle( "123", Anonymous, savedArticles)
+        api.updateSavedArticles(Anonymous, savedArticles)
         verify(http).POST(Matchers.any[String], Matchers.eq(Option(requestJson)), Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "adds the client access token parameter to the request" in {
-        api.saveArticle( "123", Anonymous, savedArticles)
+        api.updateSavedArticles(Anonymous, savedArticles)
         verify(http).POST(Matchers.any[String], Matchers.eq(Option(requestJson)), Matchers.any[Parameters], argThat(new ParamsIncludes(clientAuthHeaders)))
       }
 
       "adds the headers to the request" in {
-        api.saveArticle( "123", HeaderAuth, savedArticles)
+        api.updateSavedArticles(HeaderAuth, savedArticles)
         verify(http).POST(Matchers.any[String], Matchers.eq(Option(requestJson)), Matchers.any[Parameters], argThat(new ParamsMatcher(Iterable("testHeader" -> "value") ++ clientAuthHeaders)))
       }
     }
@@ -395,7 +395,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
     "when recieving an error response" - {
       when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Left(errors)))
       "returns the errors" in {
-        api.saveArticle("123", Anonymous, savedArticles) map {
+        api.updateSavedArticles(Anonymous, savedArticles) map {
           case Right(ok) => fail("Got right(%s) instead of expected left".format(ok.toString))
           case Left(responseErrors) => {
             responseErrors should equal(errors)

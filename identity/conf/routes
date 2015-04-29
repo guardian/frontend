@@ -42,5 +42,6 @@ GET         /form/:formReference                    @controllers.FormstackContro
 GET         /form/embed/:formReference              @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = true)
 
 GET         /et/subscribe/:subDefId                 @controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)
-GET         /prefs/save-content                     @controllers.SaveContentController.saveContentItem
-GET         /prefs/saved-content                    @controllers.SaveContentController.listSavedContentItems
+GET         /save-content                           @controllers.SaveContentController.saveContentItem
+GET         /saved-content                          @controllers.SaveContentController.listSavedContentItems
+POST        /saved-content                          @controllers.SaveContentController.deleteSavedContentItem
