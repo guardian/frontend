@@ -253,7 +253,6 @@ define([
 
                 if (config.switches.ophan) {
                     require(['ophan/ng'], function (ophan) {
-                        ophan.record({ab: ab.getParticipations()});
 
                         if (config.switches.scrollDepth) {
                             mediator.on('scrolldepth:data', ophan.record);
