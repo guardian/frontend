@@ -4,8 +4,6 @@ define([
     'bonzo',
     'bean',
     'common/utils/_',
-    'common/utils/config',
-    'common/utils/mediator',
     'common/modules/identity/api'
 ], function (
     $,
@@ -13,8 +11,6 @@ define([
     bonzo,
     bean,
     _,
-    config,
-    mediator,
     identity
 
 ) {
@@ -23,31 +19,43 @@ define([
         this.init = function () {
             var self = this;
 
-            $('.js-saved-content').each(function (element) {
+            this.savedArticles = $('.js-saved-content');
+
+            this.savedArticles.each(function (element) {
                 bean.on(element, 'click', '.js-saved-content__button', function (event) {
                     event.preventDefault();
                     self.fetchArticlesAndRemove(element);
                 });
             });
+
+            var form = $('.js-saved-content-form')[0];
+            console.log("++ Hita 3");
+            bean.on(form,' click', '.js-saved-content__button-delete-all', function(event){
+                event.preventDefault();
+                self.fetchArticlesAndRemoveAll();
+            });
+        };
+
+        this.fetchArticlesAndRemoveAll = function() {
+            var self = this,
+                data;
+
+            identity.getSavedArticles().then(
+                function success(resp) {
+                    data = self.getArticleDataFromResponse(resp)
+                    self.deleteAllArticles(data.version);
+                }
+            );
         };
 
         this.fetchArticlesAndRemove = function (element) {
             var self = this,
                 data,
-                notFound  = {message:'Not found', description:'Resource not found'},
                 shortUrl = element.getAttribute('shortUrl');
 
             identity.getSavedArticles().then(
                 function success(resp) {
-                    if (resp.status === 'error') {
-                        if (resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
-                            //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
-                            var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
-                            data = {version: date, articles:[]};
-                        }
-                    } else {
-                        data = resp.savedArticles;
-                    }
+                    data = self.getArticleDataFromResponse(resp);
                     self.deleteArticle(data, shortUrl, element);
                 }
             );
@@ -66,6 +74,37 @@ define([
                 }
             );
         };
+
+        this.deleteAllArticles = function (version) {
+
+            var self = this;
+
+            identity.saveToArticles({version: version, articles:[]}).then(
+                function success(resp) {
+                    if (resp.status !== 'error') {
+                        self.savedArticles.each(function(element) {
+                            element.remove();
+                        });
+                    }
+                }
+            );
+        };
+
+        this.getArticleDataFromResponse = function(resp) {
+
+            var notFound  = {message:'Not found', description:'Resource not found'};
+
+            if (resp.status === 'error') {
+                if (resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
+                    //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
+                    var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
+                    return {version: date, articles:[]};
+                }
+            } else {
+                return resp.savedArticles;
+            }
+
+        }
     }
 
     return SavedForLater;
