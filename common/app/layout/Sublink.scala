@@ -5,7 +5,7 @@ import com.gu.facia.api.utils.{MediaType, CardStyle, ItemKicker}
 import common.{Edition, InternationalEdition, LinkTo}
 import implicits.FaciaContentImplicits._
 import implicits.FaciaContentFrontendHelpers._
-import model.{Tag, FaciaDisplayElement, InlineImage, InlineVideo}
+import model._
 import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html

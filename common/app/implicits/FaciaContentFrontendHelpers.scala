@@ -1,7 +1,7 @@
 package implicits
 
 import com.gu.contentapi.client.model.Element
-import com.gu.facia.api.models.{Replace, FaciaImage, FaciaContent}
+import com.gu.facia.api.models.{ImageSlideshow, Replace, FaciaImage, FaciaContent}
 import com.gu.facia.api.utils.FaciaContentUtils
 import implicits.FaciaContentImplicits._
 import com.gu.facia.api.utils.FaciaContentUtils.fold
@@ -9,6 +9,8 @@ import dfp.DfpAgent
 import model._
 import implicits.Dates._
 import org.scala_tools.time.Imports._
+
+import scala.util.Try
 
 object FaciaContentFrontendHelpers {
 
@@ -72,5 +74,16 @@ object FaciaContentFrontendHelpers {
       supportingCuratedContent => SupportedUrl(supportingCuratedContent.content),
       linkSnap => linkSnap.id,
       latestSnap => latestSnap.latestContent.map(SupportedUrl(_)).getOrElse(latestSnap.id))
+
+    def slideshow: Option[List[FaciaImageElement]] = faciaContent.image match {
+      case Some(ImageSlideshow(assets)) =>
+        Option {
+          assets.flatMap(asset =>
+            Try(FaciaImageElement(asset.imageSrc, asset.imageSrcWidth.toInt, asset.imageSrcHeight.toInt)).toOption)
+        }
+      case _ => None}
+
+    def trailSlideshow(aspectWidth: Int, aspectHeight: Int): Option[List[FaciaImageElement]] =
+      slideshow.map(_.filter(image => IsRatio(aspectWidth, aspectHeight, image.width, image.height)))
   }
 }
