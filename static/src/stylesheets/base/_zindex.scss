@@ -23,13 +23,16 @@
  * 	  Child__2 { z-index: 102; }
  *
  * For more information about the stacking context fo to https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context
+ * 
  */
 
-$zindex-alpha: 0;    // 0 to 99 - for less important things
-$zindex-beta: 100;   // 100 to 199 - importance is higher
-$zindex-gamma: 200;  // 200 to 299 - importance is higher - you will most definitely never need this
+$zindex-alpha: 0;      // 0 to 99 - for less important things
+$zindex-beta: 100;     // 100 to 199 - importance is higher
+$zindex-gamma: 200;    // 200 to 299 - importance is higher - you will most definitely never need this
  
 // Open space for other possible additions
 
-$zindex-zeta: 800;   // 800 to 899 - Ads
-$zindex-omega: 1000; // 1000+ - the highest importance (sticky navigation, breaking news...)
+$zindex-ads: 800;      // 800 to 899 - Ads
+$zindex-sticky: 1000;  // Sticky nav, sticky ads
+$zindex-overlay: 1050;
+$zindex-popover: 1060; // Breaking news
