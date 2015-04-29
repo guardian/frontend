@@ -150,7 +150,12 @@ $fc-item-gutter: $gs-gutter / 4;
     .u-faux-block-link & abbr[title],
     .u-faux-block-link__promote {
         &.fc-item__link {
-            z-index: 0;
+            @include mq($until: tablet) {
+                z-index: 1;
+            }
+            @include mq(tablet) {
+                z-index: 0;
+            }
         }
 
         @include mq($until: desktop) {
