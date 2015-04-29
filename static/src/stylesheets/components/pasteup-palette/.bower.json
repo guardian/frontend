@@ -1,7 +1,7 @@
 {
   "name": "pasteup-palette",
   "description": "Palette component in the Pasteup collection",
-  "version": "3.3.3",
+  "version": "3.4.2",
   "main": [
     "src/_palette.scss"
   ],
@@ -13,13 +13,14 @@
   "dependencies": {
     "guss-colours": "~3.0.0"
   },
-  "_release": "3.3.3",
+  "_release": "3.4.2",
   "_resolution": {
     "type": "version",
-    "tag": "3.3.3",
-    "commit": "916064c9a9f2ed682223ec72be8b59863383a596"
+    "tag": "3.4.2",
+    "commit": "5a117e1676a06952154bbe5306ad64baef629fd0"
   },
   "_source": "git://github.com/guardian/pasteup-palette.git",
-  "_target": "~3.3.0",
-  "_originalSource": "pasteup-palette"
+  "_target": "~3.4.2",
+  "_originalSource": "pasteup-palette",
+  "_direct": true
 }

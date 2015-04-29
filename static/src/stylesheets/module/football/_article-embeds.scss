@@ -1,7 +1,7 @@
 // this is here as we override styles from module/external/_from-content-api
 .from-content-api {
     .element-table {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         margin-top: $gs-baseline * 2;
         margin-bottom: $gs-baseline;
 

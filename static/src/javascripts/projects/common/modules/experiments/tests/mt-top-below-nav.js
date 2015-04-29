@@ -11,12 +11,13 @@ define([
         this.expiry = '2015-05-17';
         this.author = 'Zofia Korcz';
         this.description = 'Top above nav ad placed below nav';
-        this.audience = 0.01;
+        this.audience = 0.02;
         this.audienceOffset = 0.1;
         this.successMeasure = '';
         this.audienceCriteria = '1% of US edition';
         this.dataLinkNames = '';
         this.idealOutcome = '';
+        this.showForSensitive = false;
 
         this.canRun = function () {
             return config.page.edition === 'US';
@@ -28,6 +29,10 @@ define([
                 test: function () {
                     $('.top-banner-ad-container--above-nav').appendTo('.top-banner-below-nav-mt-test');
                 }
+            },
+            {
+                id: 'control',
+                test: function () { }
             }
         ];
     };

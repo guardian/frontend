@@ -20,7 +20,7 @@ module.exports = function(grunt, options) {
 
         abTestInfo: {
             command: 'node tools/ab-test-info/ab-test-info.js ' +
-                     'static/src/javascripts/modules/experiments/tests ' +
+                     'static/src/javascripts/projects/common/modules/experiments/tests ' +
                      'static/abtests.json'
         },
 
@@ -43,12 +43,17 @@ module.exports = function(grunt, options) {
         },
 
         jspmBundleStatic: {
-            command: './node_modules/.bin/jspm bundle-sfx es6/bootstraps/app static/target/bundles/app.js',
+            command:
+                'node ./bundle',
             options: {
                 execOptions: {
                     cwd: '.'
                 }
             }
+        },
+
+        updateCanIUse: {
+          command: 'npm update caniuse-db'
         }
     };
 };

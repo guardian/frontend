@@ -23,6 +23,9 @@ import scala.collection.JavaConversions._
 import scala.language.postfixOps
 import scala.util.Try
 
+/**
+ * a combination of CAPI content and things from facia tool, in one place
+ */
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData with ShareLinks {
 
   lazy val delegate: ApiContent = apiContent.delegate
@@ -175,6 +178,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("webPublicationDate", Json.toJson(webPublicationDate)),
       ("author", JsString(contributors.map(_.name).mkString(","))),
       ("authorIds", JsString(contributors.map(_.id).mkString(","))),
+      ("hasShowcaseMainPicture", JsBoolean(hasShowcaseMainPicture)),
       ("tones", JsString(tones.map(_.name).mkString(","))),
       ("toneIds", JsString(tones.map(_.id).mkString(","))),
       ("blogs", JsString(blogs.map { _.name }.mkString(","))),
@@ -209,7 +213,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:app:url:googleplay" -> webUrl.replace("http", "guardian")
-  )
+  ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   override def elements: Seq[Element] = delegate.elements
     .map(imageElement ++: _)
@@ -228,6 +232,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val showKickerCustom: Boolean = apiContent.metaData.flatMap(_.showKickerCustom).getOrElse(false)
   override lazy val customKicker: Option[String] = apiContent.metaData.flatMap(_.customKicker).filter(_.nonEmpty)
   override lazy val showBoostedHeadline: Boolean = apiContent.metaData.flatMap(_.showBoostedHeadline).getOrElse(false)
+
+  lazy val contributorTwitterHandle: Option[String] = contributors.headOption.flatMap(_.twitterHandle)
 
   override lazy val showQuotedHeadline: Boolean =
     apiContent.metaData.flatMap(_.showQuotedHeadline).getOrElse(metaDataDefault("showQuotedHeadline"))
@@ -258,6 +264,24 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     width <- apiContent.metaData.flatMap(_.imageCutoutSrcWidth).flatMap(s => Try(s.toInt).toOption)
     height <- apiContent.metaData.flatMap(_.imageCutoutSrcHeight).flatMap(s => Try(s.toInt).toOption)
   } yield FaciaImageElement(src, width, height)
+
+  override lazy val imageSlideshowReplace: Boolean = {
+    apiContent.metaData.flatMap(_.json.get("imageSlideshowReplace").flatMap(_.asOpt[Boolean])).getOrElse(false)
+  }
+
+  override lazy val slideshow: Iterable[FaciaImageElement] =
+    (for {
+      metaData <- apiContent.metaData
+      slideshowImagesList <- metaData.json.get("slideshow")
+      maybeImageElements = for {
+        slideshowImage <- slideshowImagesList.asInstanceOf[JsArray].value
+        maybeImageElement = for {
+          src <- slideshowImage.asInstanceOf[JsObject].\("src").asOpt[String]
+          width <- slideshowImage.asInstanceOf[JsObject].\("width").asOpt[String].flatMap(s => Try(s.toInt).toOption)
+          height <- slideshowImage.asInstanceOf[JsObject].\("height").asOpt[String].flatMap(s => Try(s.toInt).toOption)
+        } yield FaciaImageElement(src, width, height)
+      } yield maybeImageElement
+    } yield maybeImageElements).getOrElse(Nil).flatten
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 
@@ -557,9 +581,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   override def metaData: Map[String, JsValue] = super.metaData ++ cricketMetaData
   override lazy val lightboxImages = mainFiltered
 
-  lazy val latestUpdateText = LiveBlogParser.parse(body) collectFirst {
-    case Block(_, _, _, _, BlockToText(text), _) if !text.trim.nonEmpty => text
-  }
+  lazy val blocks = LiveBlogParser.parse(body)
 }
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {
@@ -572,7 +594,7 @@ abstract class Media(content: ApiContentWithMeta) extends Content(content) {
     "og:type" -> "video",
     "og:type" -> "video",
     "og:video:type" -> "text/html",
-    "og:video:url" -> webUrl,
+    "og:video" -> webUrl,
     "video:tag" -> keywords.map(_.name).mkString(",")
   )
 }
@@ -580,6 +602,8 @@ abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 class Audio(content: ApiContentWithMeta) extends Media(content) {
 
   override lazy val contentType = GuardianContentTypes.Audio
+
+  override def schemaType = Some("https://schema.org/AudioObject")
 
   override lazy val metaData: Map[String, JsValue] =
     super.metaData ++ Map("contentType" -> JsString(contentType))
@@ -601,6 +625,8 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
   override lazy val contentType = GuardianContentTypes.Video
 
   lazy val source: Option[String] = videos.find(_.isMain).flatMap(_.source)
+
+  override def schemaType = Some("http://schema.org/VideoObject")
 
   override lazy val metaData: Map[String, JsValue] =
     super.metaData ++ Map(
@@ -721,7 +747,7 @@ trait Lightboxable extends Content {
           "credit" -> JsString(img.credit.getOrElse("")),
           "displayCredit" -> JsBoolean(img.displayCredit),
           "src" -> JsString(ImgSrc.findSrc(imgContainer, Item700).getOrElse("")),
-          "srcsets" -> JsString(ImgSrc.srcset(imgContainer, GalleryMedia.Lightbox)),
+          "srcsets" -> JsString(ImgSrc.normalSrcset(imgContainer, GalleryMedia.Lightbox)),
           "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
           "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
           "role" -> JsString(img.role.toString)
@@ -746,6 +772,10 @@ class Interactive(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val metaData: Map[String, JsValue] = super.metaData + ("contentType" -> JsString(contentType))
   override lazy val isImmersive: Boolean = displayHint.contains("immersive")
+  override def cards: List[(String, String)] = super.cards ++ List(
+    "twitter:title" -> linkText,
+    "twitter:card" -> "summary_large_image"
+  )
 }
 
 object Interactive {

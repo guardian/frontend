@@ -1191,6 +1191,13 @@ select {
     width: 15px;
 }
 
+.editor .underDrag {
+    background-color: #999999;
+}
+.editor .underDrag.active {
+    background-color: #999999;
+}
+
 .element {
     display: inline-block;
     margin: 0 0 3px 0;
@@ -1976,6 +1983,16 @@ hr {
     margin: 0;
     color: #ddd;
     background-color: #ddd;
+}
+
+.major-alert {
+    color: #d50000;
+}
+.minor-alert {
+    color: #304ffe;
+}
+.small-text {
+    font-size: 85%;
 }
 
 .buttons button {

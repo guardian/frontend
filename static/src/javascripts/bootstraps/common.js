@@ -6,7 +6,6 @@ define([
     'enhancer',
     'fastclick',
     'qwery',
-
     'common/utils/$',
     'common/utils/config',
     'common/utils/cookies',
@@ -16,7 +15,6 @@ define([
     'common/utils/template',
     'common/utils/url',
     'common/utils/robust',
-
     'common/modules/analytics/clickstream',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
@@ -54,6 +52,8 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
+    'text!common/views/international-message.html',
+    'text!common/views/international-control-message.html',
     'bootstraps/identity'
 ], function (
     bean,
@@ -61,7 +61,6 @@ define([
     enhancer,
     FastClick,
     qwery,
-
     $,
     config,
     cookies,
@@ -71,7 +70,6 @@ define([
     template,
     url,
     robust,
-
     Clickstream,
     Foresee,
     liveStats,
@@ -109,11 +107,11 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
+    internationalMessage,
+    internationalControlMessage,
     identity
 ) {
-
     var modules = {
-
             loadFonts: function () {
                 fonts.load();
             },
@@ -188,7 +186,7 @@ define([
 
             initPopular: function () {
                 if (!config.page.isFront) {
-                    if (window.location.hash) {
+                    if (!config.switches.lazyLoadOnwards || window.location.hash) {
                         modules.transcludePopular();
                     } else {
                         var onwardEl = qwery('.js-popular-trails')[0];
@@ -254,8 +252,7 @@ define([
                 omniture.go();
 
                 if (config.switches.ophan) {
-                    require('ophan/ng', function (ophan) {
-                        ophan.record({ab: ab.getParticipations()});
+                    require(['ophan/ng'], function (ophan) {
 
                         if (config.switches.scrollDepth) {
                             mediator.on('scrolldepth:data', ophan.record);
@@ -438,8 +435,35 @@ define([
                 window.guardian.api = {
                     logCss: logCss
                 };
-            }
+            },
 
+            runCustomAbTests: function () {
+                var stickyTest = ab.getTest('MtStickyBtm'),
+                    mainTest = ab.getTest('MtMain');
+
+                if (mainTest && ab.isParticipating(mainTest) && ab.getTestVariant('MtMain') === 'A'
+                    && ab.testCanBeRun('MtMain')) {
+                    mainTest.fireMainTest();
+                }
+                if (stickyTest && ab.isParticipating(stickyTest) && ab.getTestVariant('MtStickyBtm') === 'A'
+                    && ab.testCanBeRun('MtStickyBtm')) {
+                    stickyTest.fireStickyBottom();
+                }
+            },
+
+            internationalSignposting: function () {
+                if ('internationalEdition' in config.page) {
+                    if (config.page.internationalEdition === 'international' && config.page.pageId === 'international') {
+                        new Message('international-with-survey', {
+                            pinOnHide: true
+                        }).show(template(internationalMessage, {}));
+                    } else if (config.page.internationalEdition === 'control' && config.page.pageId === 'uk') {
+                        new Message('international', {
+                            pinOnHide: true
+                        }).show(template(internationalControlMessage, {}));
+                    }
+                }
+            }
         },
 
         ready = function () {
@@ -483,6 +507,8 @@ define([
             robust('c-simple-metrics',  modules.initSimpleMetrics);
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
+            robust('c-run-custom-ab',   modules.runCustomAbTests);
+            robust('c-international-signposting', modules.internationalSignposting);
         };
 
     return {

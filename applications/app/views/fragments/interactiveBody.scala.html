@@ -26,7 +26,7 @@
                 ),
                 "content", "content--interactive", "tonal", s"tonal--${articleToneClass(interactive)}"
             )"
-            itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
+            itemscope itemtype="@interactive.schemaType" role="main">
 
             @fragments.headDefault(interactive, showBadge = true)
 
@@ -40,6 +40,12 @@
                 <div class="gs-container" data-test-id="interactive-content-body">
                     <div class="content__main-column content__main-column--interactive">
                         @bodyRaw(interactive)
+                    </div>
+                </div>
+
+                <div class="gs-container u-cf">
+                    <div class="content__main-column content__meta-footer">
+                    @fragments.contentMeta(interactive, showBadge = false)
                     </div>
                 </div>
             </div>

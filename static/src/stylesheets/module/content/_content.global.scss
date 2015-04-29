@@ -10,7 +10,7 @@
     }
     &:after {
         margin-top: $gs-baseline / 3;
-        @include transform(rotate(180deg));
+        transform: rotate(180deg);
     }
 }
 
@@ -19,7 +19,6 @@
 }
 
 .tonal--tone-media .tonal__main--tone-media,
-.tonal--tone-podcast .tonal__main--tone-podcast,
 .tonal--tone-special-report .content__main-column--media {
     .sharecount__heading .i {
         @include icon(share-android--white);

@@ -1,0 +1,6 @@
+@(env: String, confidenceGraph: tools.AwsLineChart)
+
+@admin_main("Commercial Radiator", env, isAuthed = true, hasCharts = true) {
+    <h3>Commercial Radiator</h3>
+    @fragments.lineChart(confidenceGraph)
+}

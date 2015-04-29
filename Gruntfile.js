@@ -52,6 +52,7 @@ module.exports = function (grunt) {
     grunt.registerTask('validate:js', function(app) {
         var target = (app) ? ':' + app : '';
         grunt.task.run(['jshint' + target, 'jscs' + target]);
+        grunt.task.run(['eslint']); // ES6 modules
     });
     grunt.registerTask('validate', function(app) {
         grunt.task.run(['validate:css', 'validate:sass', 'validate:js:' + (app || '')]);
@@ -71,7 +72,7 @@ module.exports = function (grunt) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }
 
-        grunt.task.run(['px_to_rem']);
+        grunt.task.run(['px_to_rem', 'shell:updateCanIUse', 'autoprefixer']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
@@ -83,6 +84,10 @@ module.exports = function (grunt) {
 
         if (!options.isDev) {
             grunt.task.run('shell:jspmBundleStatic');
+        }
+
+        if (options.isDev) {
+            grunt.task.run('replace:jspmSourceMaps');
         }
 
         grunt.task.run(['concurrent:requireJS', 'copy:javascript']);
@@ -98,7 +103,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
-    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap', 'compile:inlineSvgs']);
+    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap', 'compile:inlineSvgs', 'uglify:conf']);
     grunt.registerTask('compile', [
         'concurrent:compile',
         'compile:fonts',

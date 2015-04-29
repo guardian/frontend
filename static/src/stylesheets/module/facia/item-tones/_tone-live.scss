@@ -70,7 +70,7 @@
         color: colour(live-default);
     }
 
-    @include sublink-style(editorial, feature, live, media, podcast, review) {
+    @include sublink-style(editorial, feature, live, media, review) {
         .fc-sublink__kicker {
             color: #ffffff;
         }
@@ -79,4 +79,50 @@
 
 .tone-live--most-popular .fc-item__kicker {
     color: colour(live-accent);
+}
+
+.fc-item__liveblog-blocks {
+    height: 78px; // 2 * block height - 2px margin
+    overflow: hidden;
+    margin-right: -1 * $gs-gutter / 4;
+    margin-bottom: $gs-baseline / 2;
+}
+
+.fc-item__liveblog-blocks__inner,
+.fc-item__liveblog-message__inner {
+    transition: transform .5s ease-in-out;
+}
+
+.fc-item__liveblog-block {
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    @include fs-headline(1);
+    line-height: 1rem;
+    color: #ffffff;
+    height: $gs-baseline * 3 + 2;
+    margin-bottom: $gs-baseline / 6;
+    margin-top: 0;
+    padding: $gs-baseline/3 $gs-gutter/4 0;
+    background-color: darken(colour(live-default), 10%);
+}
+
+.fc-item__liveblog-block__time {
+    font-weight: bold;
+    @include ellipsis();
+}
+
+.fc-item__liveblog-block--old .fc-item__liveblog-block__time {
+    color: mix(#ffffff, colour(live-default), 70%);
+}
+
+.fc-item__liveblog-block__text {
+    color: #ffffff;
+    @include ellipsis();
+}
+
+.fc-item__liveblog-message__inner {
+    @include fs-headline(1);
+    color: #ffffff;
+    font-weight: bold;
 }

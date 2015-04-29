@@ -32,7 +32,7 @@
     border-top: 1px solid colour(neutral-5);
     color: colour(neutral-2-contrasted);
     text-align: right;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     font-family: $f-sans-serif-text;
     @include font-size(12, 20);
 
@@ -54,6 +54,7 @@
     background-color: colour(neutral-8);
     border-bottom: 2px solid colour(neutral-4);
     display: none;
+    overflow: hidden;
 
     &.top-banner-ad-container--below-nav {
         border-bottom-width: 1px;
@@ -81,9 +82,8 @@
         }
     }
     iframe {
-        -webkit-transform: translateZ(0);
         transform: translateZ(0);
-        @include transition(height 1s cubic-bezier(0, 0, 0, .985));
+        transition: height 1s cubic-bezier(0, 0, 0, .985);
     }
 }
 .top-banner-ad-container--above-nav {
@@ -211,11 +211,11 @@
         height: auto;
         margin: 0 $gs-gutter/2;
         width: gs-span(4.5);
-        
+
         .content-footer & {
             width: 300px;
         }
-        
+
         .linkslist-container & {
             position: absolute;
             top: 0;
@@ -268,7 +268,7 @@
 }
 .ad-slot--sponsored {
     min-height: 250px;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     background-color: colour(neutral-8);
     overflow: hidden;
     border-top: 1px solid colour(neutral-5);
@@ -385,7 +385,7 @@
     }
 }
 .ad-slot--im {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     max-width: 50%;
     float: left;
 
@@ -433,9 +433,15 @@
     min-height: 135px;
     border-top: 1px dotted colour(neutral-5);
 
-    @include mq(tablet) {
-        float: right;
+    @include mq(desktop) {
+        position: absolute;
+        top: $gs-baseline / 2;
+        right: -1 * (gs-span(4) + $gs-gutter / 2);
         border-top-width: 0;
+    }
+
+    @include mq(wide) {
+        right: -1 * (gs-span(5) + $gs-gutter);
     }
 }
 .ad-slot--paid-for-badge--front {
@@ -576,9 +582,8 @@
     .ad--responsive {
         @include mq(tablet) {
             height: 108px;
-            -webkit-transform: translateZ(0);
             transform: translateZ(0);
-            @include transition(height 1s cubic-bezier(0, 0, 0, .985));
+            transition: height 1s cubic-bezier(0, 0, 0, .985);
 
             &.ad--responsive--open {
                 height: 250px;

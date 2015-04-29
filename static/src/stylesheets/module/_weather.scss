@@ -152,7 +152,7 @@ $weather-large-size: 60px;
         }
 
         .is-expanded & {
-            @include transform(rotate(180deg));
+            transform: rotate(180deg);
         }
     }
 }
@@ -196,7 +196,7 @@ $weather-large-size: 60px;
         display: inline-block;
         padding-right: $gs-gutter;
         @include fs-headline(2);
-        @include box-sizing(border-box);
+        box-sizing: border-box;
     }
 
     .search-tool__btn {

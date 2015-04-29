@@ -2,57 +2,73 @@ define([
     'raven',
     'common/utils/_',
     'common/utils/config',
+    'common/utils/cookies',
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/liveblog-sport-front-updates',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/identity-social-oauth',
-    'common/modules/experiments/tests/krux-audience-science',
-    'common/modules/experiments/tests/mt-master',
-    'common/modules/experiments/tests/register-popup',
+    'common/modules/experiments/tests/mt-main',
     'common/modules/experiments/tests/mt-top-below-nav',
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/mt-top-below-first-container',
-    'common/modules/experiments/tests/mt-sticky-nav',
-    'common/modules/experiments/tests/across-the-country',
-    'common/modules/experiments/tests/defer-spacefinder',
-    'common/modules/experiments/tests/adblock-message'
+    'common/modules/experiments/tests/mt-depth',
+    'common/modules/experiments/tests/mt-sticky-bottom',
+    'common/modules/experiments/tests/save-for-later',
+    'common/modules/experiments/tests/history-without-whitelist',
+    'common/modules/experiments/headlines',
+    'common/modules/experiments/tests/mt-lz-ads-depth',
+    'common/modules/experiments/tests/mt-sticky-nav-all',
+    'common/modules/experiments/tests/facia-slideshow',
+    'common/modules/experiments/tests/mt-sticky-burger',
+    'common/modules/experiments/tests/defer-spacefinder'
 ], function (
     raven,
     _,
     config,
+    cookies,
     mediator,
     store,
     mvtCookie,
+    LiveblogSportFrontUpdates,
     HighCommercialComponent,
-    IdentitySocialOAuth,
-    KruxAudienceScience,
-    MtMaster,
-    RegisterPopup,
+    MtMain,
     MtTopBelowNav,
     HeatMap,
     MtTopBelowFirstContainer,
-    MtStickyNav,
-    AcrossTheCountry,
-    DeferSpacefinder,
-    AdblockMessage
-) {
+    MtDepth,
+    MtStickyBottom,
+    SaveForLater,
+    HistoryWithoutWhitelist,
+    Headline,
+    MtLzAdsDepth,
+    MtStickyNavAll,
+    FaciaSlideshow,
+    MtStickyBurger,
+    DeferSpacefinder
+    ) {
 
     var ab,
-        TESTS = [
+        TESTS = _.flatten([
+            new LiveblogSportFrontUpdates(),
             new HighCommercialComponent(),
-            new IdentitySocialOAuth(),
-            new KruxAudienceScience(),
-            new MtMaster(),
-            new RegisterPopup(),
+            new MtMain(),
             new MtTopBelowNav(),
             new HeatMap(),
             new MtTopBelowFirstContainer(),
-            new MtStickyNav(),
-            new AcrossTheCountry(),
-            new DeferSpacefinder(),
-            new AdblockMessage()
-        ],
+            new MtDepth(),
+            new MtStickyBottom(),
+            new SaveForLater(),
+            new HistoryWithoutWhitelist(),
+            new MtLzAdsDepth(),
+            new MtStickyNavAll(),
+            new MtStickyBurger(),
+            new DeferSpacefinder()
+            _.map(_.range(1, 10), function (n) {
+                return new Headline(n);
+            }),
+            new FaciaSlideshow()
+        ]),
         participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
@@ -115,8 +131,10 @@ define([
     }
 
     function testCanBeRun(test) {
-        var expired = (new Date() - new Date(test.expiry)) > 0;
-        return (test.canRun() && !expired && isTestSwitchedOn(test));
+        var expired = (new Date() - new Date(test.expiry)) > 0,
+            isSensitive = config.page.shouldHideAdverts;
+        return ((isSensitive ? test.showForSensitive : true)
+                && test.canRun() && !expired && isTestSwitchedOn(test));
     }
 
     function getTest(id) {
@@ -128,13 +146,25 @@ define([
 
     function makeOmnitureTag() {
         var participations = getParticipations(),
-            tag = [];
+            tag = [], editionFromCookie;
 
         _.forEach(_.keys(participations), function (k) {
             if (testCanBeRun(getTest(k))) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
             }
         });
+
+        if (config.tests.internationalEditionVariant) {
+            tag.push(['AB', 'InternationalEditionTest', config.tests.internationalEditionVariant].join(' | '));
+
+            // don't use the edition of the page - we specifically want the cookie version
+            // this allows us to figure out who has "opted out" and "opted into" the test
+            editionFromCookie = cookies.get('GU_EDITION');
+
+            if (editionFromCookie) {
+                tag.push(['AB', 'InternationalEditionPreference', editionFromCookie].join(' | '));
+            }
+        }
 
         return tag.join(',');
     }
@@ -168,7 +198,7 @@ define([
         var variantIds, testVariantId,
             smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset,
             largestTestId  = smallestTestId + mvtCookie.getMvtNumValues() * test.audience,
-            // Get this browser's mvt test id.
+        // Get this browser's mvt test id.
             mvtCookieId = mvtCookie.getMvtValue();
 
         if (smallestTestId <= mvtCookieId && largestTestId > mvtCookieId) {
@@ -231,15 +261,17 @@ define([
         },
 
         segmentUser: function () {
-            mvtCookie.generateMvtCookie();
-
-            var tokens, test, variant,
+            var tokens,
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
-                tokens = window.location.hash.replace('#ab-', '').split('=');
-                test = tokens[0];
-                variant = tokens[1];
-                ab.forceSegment(test, variant);
+                tokens = window.location.hash.replace('#ab-', '').split(',');
+                tokens.forEach(function (token) {
+                    var abParam, test, variant;
+                    abParam = token.split('=');
+                    test = abParam[0];
+                    variant = abParam[1];
+                    ab.forceSegment(test, variant);
+                });
             } else {
                 ab.segment();
             }
@@ -288,7 +320,6 @@ define([
 
             try {
                 _.forEach(getActiveTests(), function (test) {
-
                     if (isParticipating(test) && testCanBeRun(test)) {
                         var variant = getTestVariant(test.id);
                         if (variant && variant !== 'notintest') {
@@ -306,6 +337,8 @@ define([
         },
 
         getParticipations: getParticipations,
+        isParticipating: isParticipating,
+        getTest: getTest,
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,

@@ -7,6 +7,7 @@ define([
     'common/utils/mediator',
     'common/utils/url',
     'common/modules/article/rich-links',
+    'common/modules/article/membership-events',
     'common/modules/article/open-module',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
@@ -23,6 +24,7 @@ define([
     mediator,
     urlutils,
     richLinks,
+    membershipEvents,
     openModule,
     truncate,
     twitter,
@@ -73,7 +75,7 @@ define([
             initRightHandComponent: function () {
                 var mainColumn = qwery('.js-content-main-column');
                 // only render when we have >1000px or more (enough space for ad + most popular)
-                if (mainColumn[0] && mainColumn[0].offsetHeight > 1000 && !detect.isBreakpoint('mobile')) {
+                if (mainColumn[0] && mainColumn[0].offsetHeight > 1000 && detect.isBreakpoint({ min: 'desktop' })) {
                     geoMostPopular.render();
                 }
             },
@@ -92,6 +94,7 @@ define([
             modules.initCmpParam();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
+            membershipEvents.upgradeEvents();
             openModule.init();
 
             mediator.emit('page:article:ready');

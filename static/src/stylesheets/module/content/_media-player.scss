@@ -27,7 +27,7 @@ $ima-controls-height: 70px;
     audio {
         width: 100%;
         height: 40px;
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         border-left: $gs-gutter/2 solid transparent;
         border-right: $gs-gutter/2 solid transparent;
     }
@@ -77,7 +77,7 @@ $ima-controls-height: 70px;
     left: 0;
     width: 100%;
     height: 100%;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     text-align: center;
 
     .vjs-has-started & {
@@ -95,7 +95,7 @@ $ima-controls-height: 70px;
         display: inline-block;
         vertical-align: middle;
         position: relative;
-        @include border-radius(50%);
+        @include circular;
         @include video-play-button-size($vjs-small-button-size);
         @include mq(mobileLandscape) {
             @include video-play-button-size($vjs-large-button-size);
@@ -128,7 +128,7 @@ $ima-controls-height: 70px;
             margin-left: -.9em; /* [1] */
 
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
-                @include border-radius(.2em);
+                border-radius: .2em;
             }
 
             .gu-media-wrapper:hover &,
@@ -149,7 +149,7 @@ $ima-controls-height: 70px;
 }
 
 .vjs-fullscreen-clickbox {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
     top: 0;
@@ -201,7 +201,7 @@ $ima-controls-height: 70px;
     @include fs-textSans(1);
     font-weight: bold;
     height: $vjs-control-height;
-    @include transition(bottom .8s);
+    transition: bottom .8s;
     transition-delay: 1s;
 }
 
@@ -218,7 +218,7 @@ $ima-controls-height: 70px;
     .vjs-paused.vjs-has-started &,
     &:hover {
         bottom: 0;
-        @include transition(bottom 0s);
+        transition: bottom 0s;
         transition-delay: 0s;
     }
 
@@ -267,16 +267,8 @@ $ima-controls-height: 70px;
         @include icon(play-32--tone-media);
     }
 
-    .gu-media-wrapper--podcast .vjs-paused & {
-        @include icon(play-32--tone-podcast);
-    }
-
     .vjs-playing & {
         @include icon(pause-32--tone-media);
-    }
-
-    .gu-media-wrapper--podcast .vjs-playing & {
-        @include icon(pause-32--tone-podcast);
     }
 }
 #ima-play-pause-div {
@@ -376,10 +368,6 @@ $ima-controls-height: 70px;
 .vjs-play-progress {
     background-color: colour(media-default);
     z-index: 2;
-
-    .gu-media-wrapper--podcast & {
-        background-color: colour(podcast-default);
-    }
 }
 
 
@@ -417,10 +405,6 @@ $ima-controls-height: 70px;
 
 .vjs-volume-level {
     background-color: colour(media-default);
-
-    .gu-media-wrapper--podcast & {
-        background-color: colour(podcast-default);
-    }
 }
 
 .vjs-volume-handle {
@@ -428,10 +412,6 @@ $ima-controls-height: 70px;
     background-color: colour(media-default);
     height: 11px;
     width: 2px;
-
-    .gu-media-wrapper--podcast & {
-        background-color: colour(podcast-default);
-    }
 }
 
 .vjs-mute-control,
@@ -465,20 +445,6 @@ $ima-controls-height: 70px;
     }
     &.vjs-vol-3:hover > div {
         @include icon(volume-high--tone-media);
-    }
-
-    .gu-media-wrapper--podcast & {
-        &:hover > div {
-            @include icon(volume-low--tone-podcast);
-        }
-
-        &.vjs-vol-0:hover > div {
-            @include icon(volume-mute--tone-podcast);
-        }
-
-        &.vjs-vol-3:hover > div {
-            @include icon(volume-high--tone-podcast);
-        }
     }
 }
 #ima-mute-div {
@@ -522,7 +488,7 @@ $ima-controls-height: 70px;
         width: 100%;
         margin: auto;
         padding: $gs-baseline*1.5 $gs-gutter*3;
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         @include fs-headline(2);
         line-height: 1em;
         text-align: left;
@@ -557,7 +523,7 @@ $ima-controls-height: 70px;
     text-indent: -9999px;
     background: transparent;
     border: 1px solid rgba(#ffffff, .3);
-    @include border-radius(50%);
+    @include circular;
 
     &:hover {
         border-color: #ffffff;
@@ -594,17 +560,12 @@ $ima-controls-height: 70px;
         color: colour(media-default);
         @include fs-headline(3);
         padding: 0 $gs-gutter/2 $gs-baseline*2;
-
-        .gu-media-wrapper--podcast & {
-            color: colour(podcast-default);
-        }
     }
 }
 
 .vjs-overlay--small-title {
     text-align: left;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include ellipsis();
     @include fs-headline(2);
     position: absolute;
     $height: get-line-height(headline, 2);
@@ -612,13 +573,13 @@ $ima-controls-height: 70px;
     padding: $gs-baseline/2;
     top: ($height + $gs-baseline) * -1;
     left: 0;
-    @include transition(top .8s);
+    transition: top .8s;
     transition-delay: .2s;
 
     .gu-media-wrapper:hover &,
     .vjs-paused & {
         top: 0;
-        @include transition(top 0s);
+        transition: top 0s;
         transition-delay: 0s;
     }
 }
@@ -648,7 +609,7 @@ $ima-controls-height: 70px;
 /* VJS: EMBED OVERLAY
    ========================================================================== */
 .vjs-embedoverlay {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     position: absolute;
     top: 0;
     width: 100%;
@@ -667,7 +628,7 @@ $ima-controls-height: 70px;
 }
 
 .vjs-embedoverlay-input {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     width: 100%;
     height: gs-height(1) + $gs-baseline;
     color: colour(neutral-1);
@@ -735,7 +696,7 @@ $ima-controls-height: 70px;
     padding: $gs-baseline/2 $gs-gutter/2;
     @include fs-textSans(3);
     font-weight: bold;
-    @include transition(top .8s);
+    transition: top .8s;
     transition-delay: 1s;
     left: 0;
     top: $gs-baseline*-4;
@@ -745,7 +706,7 @@ $ima-controls-height: 70px;
     .vjs-paused &,
     &:hover {
         top: 0;
-        @include transition(top 0s);
+        transition: top 0s;
         transition-delay: 0s;
     }
 
@@ -761,9 +722,7 @@ $ima-controls-height: 70px;
         color: #ffffff;
         display: inline-block;
         max-width: 90%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        @include ellipsis();
         &:hover {
             color: colour(media-default);
         }
@@ -843,7 +802,7 @@ $ima-controls-height: 70px;
     left: 0;
     right: 0;
     margin: auto;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     background-color: rgba(25, 25, 25, .8);
     color: colour(neutral-7);
     top: $gs-baseline*4;
@@ -1027,7 +986,7 @@ $ima-controls-height: 70px;
     .vjs-mousemoved &,
     &:hover {
         bottom: 0;
-        @include transition(bottom 0s);
+        transition: bottom 0s;
         transition-delay: 0s;
     }
 }

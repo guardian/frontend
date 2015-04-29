@@ -60,7 +60,7 @@ Full item with 75% width media.
             min-height: gs-height(5) + $gs-baseline * 3;
 
             .has-flex-wrap & {
-                @include flex-direction(row);
+                flex-direction: row;
             }
         }
 
@@ -73,7 +73,7 @@ Full item with 75% width media.
             }
 
             .has-flex-wrap & {
-                @include flex-basis(auto);
+                flex-basis: auto;
             }
         }
 
@@ -100,5 +100,9 @@ Full item with 75% width media.
 
     .fc-item__avatar__media {
         right: -5%;
+    }
+
+    .fc-item__liveblog-blocks {
+        height: 158px; // 4 * block height - 2px margin
     }
 }

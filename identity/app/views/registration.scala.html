@@ -6,8 +6,10 @@
 @import views.html.fragments.registrationFooter
 @import views.html.fragments.socialSignin
 @import views.html.fragments.identityPageHeader
+@import views.SocialErrorMapper
+@import views.SocialSigninRoute.Register
 
-@identityMain(page, conf.Switches.all){
+@main(page, projectName = Option("identity")){
 }{
 <div class="identity-wrapper monocolumn-wrapper">
     @identityPageHeader("Create your Guardian account") {
@@ -26,7 +28,7 @@
                 <h2 class="form__heading">Use your social account</h2>
             </div>
             <div class="fieldset__fields">
-                @socialSignin("Register", page, idRequest, idUrlBuilder)
+                @socialSignin(SocialErrorMapper.route(registrationErrorOpt, views.SocialSigninRoutes(Register)), idRequest, idUrlBuilder)
             </div>
         </fieldset>
 

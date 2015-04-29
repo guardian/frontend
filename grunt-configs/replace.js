@@ -7,6 +7,14 @@ module.exports = function(grunt, options) {
                 from: '../../src/stylesheets/',
                 to: './'
             }]
+        },
+        jspmSourceMaps: {
+            src: [options.staticTargetDir + 'bundles/*.js.map'],
+            overwrite: true,
+            replacements: [{
+                from: '../../src/',
+                to: '../'
+            }]
         }
     };
 };

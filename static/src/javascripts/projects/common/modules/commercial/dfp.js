@@ -16,7 +16,8 @@ define([
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'common/modules/analytics/beacon'
 ], function (
     bean,
     bonzo,
@@ -34,7 +35,8 @@ define([
     StickyMpu,
     buildPageTargeting,
     geoMostPopular,
-    ab
+    ab,
+    beacon
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -76,10 +78,7 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                var mtMasterTest = ab.getParticipations().MtMaster;
-
-                if (ab.testCanBeRun('MtMaster') &&
-                    mtMasterTest && mtMasterTest.variant === 'variant') {
+                if (isMainTest() && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         new StickyMpu($adSlot).create();
                     }
@@ -104,12 +103,23 @@ define([
             }
         },
 
+        isMainTest = function () {
+            var MtMainTest = ab.getParticipations().MtMain;
+
+            return ab.testCanBeRun('MtMain') && MtMainTest && MtMainTest.variant === 'A';
+        },
+
+        recordFirstAdRendered = _.once(function () {
+            beacon.beaconCounts('ad-render');
+        }),
+
         /**
          * Initial commands
          */
         setListeners = function () {
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
+                recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
             }));
@@ -157,6 +167,12 @@ define([
             googletag.display(_.keys(slots).shift());
             displayed = true;
         },
+        displayLazyAds = function () {
+            googletag.pubads().collapseEmptyDivs();
+            googletag.enableServices();
+            mediator.on('window:scroll', _.throttle(lazyLoad, 10));
+            lazyLoad();
+        },
         windowResize = _.debounce(
             function () {
                 // refresh on resize
@@ -165,6 +181,22 @@ define([
         ),
         postDisplay = function () {
             mediator.on('window:resize', windowResize);
+        },
+
+        lzAdsTestVariants = {
+            'A': 1 / 4,
+            'B': 1 / 2,
+            'C': 3 / 4,
+            'D': 1
+        },
+
+        isLzAdsTest = function () {
+            var test = ab.getParticipations().MtLzAdsDepth;
+            return test && ab.testCanBeRun('MtLzAdsDepth') && _.contains(_.keys(lzAdsTestVariants), test.variant);
+        },
+
+        isLzAdsSwitchOn = function () {
+            return config.switches.lzAds;
         },
 
         /**
@@ -190,12 +222,37 @@ define([
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
-            window.googletag.cmd.push(displayAds);
+
+            // We want to run lazy load if user is in the depth test, main test user group or if there is a switch on
+            (isLzAdsTest() || isMainTest() || isLzAdsSwitchOn()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
             return dfp;
+        },
+        lazyLoad = function () {
+            if (slots.length === 0) {
+                mediator.off('window:scroll');
+            } else {
+                fastdom.read(function () {
+                    var scrollTop    = bonzo(document.body).scrollTop(),
+                        scrollBottom = scrollTop + bonzo.viewport().height,
 
+                        // For depth test we want depth based on variant but for main test we want default depth
+                        // TODO: this will be removed after tests will finish
+                        depth        = (isLzAdsTest()) ? lzAdsTestVariants[ab.getParticipations().MtLzAdsDepth.variant] : 0.5;
+
+                    _(slots).keys().forEach(function (slot) {
+                        // if the position of the ad is above the viewport - offset (half screen size)
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth) {
+                            googletag.display(slot);
+
+                            slots = _(slots).omit(slot).value();
+                            displayed = true;
+                        }
+                    });
+                });
+            }
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),
@@ -205,7 +262,11 @@ define([
                         slot: defineSlot($adSlot)
                     };
                     googletag.display(slotId);
-                    refreshSlot($adSlot);
+
+                    if (config.switches.refreshAdsAfterDisplay) {
+                        refreshSlot($adSlot);
+                    }
+
                 };
             if (displayed && !slots[slotId]) { // dynamically add ad slot
                 // this is horrible, but if we do this before the initial ads have loaded things go awry
@@ -361,10 +422,11 @@ define([
                             // new way of passing data from DFP
                             if ($breakoutEl.attr('type') === 'application/json') {
                                 creativeConfig = JSON.parse(breakoutContent);
-                                require('bootstraps/creatives')
-                                    .next(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
+                                require(['bootstraps/creatives'], function () {
+                                    require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
                                         new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
                                     });
+                                });
                             } else {
                                 // evil, but we own the returning js snippet
                                 eval(breakoutContent);

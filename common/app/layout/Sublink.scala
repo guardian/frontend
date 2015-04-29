@@ -1,7 +1,7 @@
 package layout
 
 import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
-import common.{Edition, LinkTo}
+import common.{InternationalEdition, Edition, LinkTo}
 import model._
 import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
@@ -42,7 +42,7 @@ case class EditionalisedLink(
     LinkTo(baseUrl)(requestHeader)
 
   def hrefWithRel(implicit requestHeader: RequestHeader): String =
-    processUrl(baseUrl, Edition(requestHeader)) match {
+    processUrl(baseUrl, Edition(requestHeader), InternationalEdition.isInternationalEdition(requestHeader)) match {
       case ProcessedUrl(url, true) => s"""href="${handleQueryStrings(url)}" rel="nofollow""""
       case ProcessedUrl(url, false) => s"""href="${handleQueryStrings(url)}""""
     }
@@ -275,6 +275,7 @@ case class ContentCard(
   def hasImage = displayElement match {
     case Some(InlineVideo(_, _, _, Some(_))) => true
     case Some(InlineImage(_)) => true
+    case Some(InlineSlideshow(_)) => true
     case _ => false
   }
 

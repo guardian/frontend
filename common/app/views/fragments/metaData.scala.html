@@ -26,11 +26,6 @@
 <link rel="dns-prefetch" href="//oas.theguardian.com" />
 <link rel="dns-prefetch" href="@Configuration.debug.beaconUrl" />
 
-@Static.js.jspmFile(item.section).map { file =>
-    <link rel="subresource" href="@Static(file)" />
-}
-
-
 @* Additional meta data that does not impact rendering speed (and can live at the end of the <head>) *@
 
 @if(Play.isDev){
@@ -120,8 +115,8 @@
     <meta property="al:ios:app_store_id" content="@Configuration.ios.ukAppId">
     <meta property="al:ios:app_name" content="The Guardian">
     <meta property="al:android:url" content="theguardian://applinks">
-    <meta property="al:android:app_name" content="The Guardian">
     <meta property="al:android:package" content="com.guardian">
+    <meta property="al:android:app_name" content="The Guardian">
 }
 
 <script data-schema="organization" type="application/ld+json">

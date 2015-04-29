@@ -17,7 +17,8 @@ define([
         types: dynamicContainers.concat(fixedContainers).concat([
             {name: 'nav/list'},
             {name: 'nav/media-list'},
-            {name: 'news/most-popular'}
+            {name: 'news/most-popular'},
+            {name: 'breaking-news/not-for-other-fronts', groups: ['minor', 'major']}
         ]),
 
         typesDynamic: dynamicContainers,
@@ -55,6 +56,8 @@ define([
         searchPageSize:        50,
 
         capiBatchSize:         10,
+
+        maxSlideshowImages:    5,
 
         collectionsPollMs:     10000,
         latestArticlesPollMs:  30000,

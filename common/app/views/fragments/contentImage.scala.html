@@ -1,4 +1,4 @@
-@(imageContainer: model.ImageContainer, image: model.ImageAsset, widthsByBreakpoint: layout.WidthsByBreakpoint, figureClasses: String)
+@(imageContainer: model.ImageContainer, image: model.ImageAsset, widthsByBreakpoint: layout.WidthsByBreakpoint, figureClasses: String)(implicit request: RequestHeader)
 
 @import views.support.ImgSrc
 
@@ -11,7 +11,7 @@
          src="@ImgSrc.getFallbackUrl(imageContainer)"
          alt="@image.altText.getOrElse("")"
          class="gu-image"
-         itemprop="contentURL">
+         itemprop="contentUrl">
 
     @image.caption.map { caption =>
         <figcaption itemprop="description" class="caption caption--img">

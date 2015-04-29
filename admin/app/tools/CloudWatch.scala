@@ -1,5 +1,6 @@
 package tools
 
+import awswrappers.cloudwatch._
 import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
 import com.amazonaws.services.cloudwatch.model._
 import common.{ExecutionContexts, Logging}
@@ -10,8 +11,6 @@ import org.joda.time.DateTime
 import services.AwsEndpoints
 
 import scala.collection.JavaConversions._
-import awswrappers.cloudwatch._
-
 import scala.concurrent.Future
 
 case class MaximumMetric(metric: GetMetricStatisticsResult) {
@@ -19,7 +18,7 @@ case class MaximumMetric(metric: GetMetricStatisticsResult) {
 }
 
 object CloudWatch extends Logging with ExecutionContexts {
-  def shutdown() {
+  def shutdown(): Unit = {
     euWestClient.shutdown()
     defaultClient.shutdown()
   }
@@ -50,7 +49,6 @@ object CloudWatch extends Logging with ExecutionContexts {
     LoadBalancer("frontend-sport"),
     LoadBalancer("frontend-commercial"),
     LoadBalancer("frontend-onward"),
-    LoadBalancer("frontend-r2football"),
     LoadBalancer("frontend-diagnostics"),
     LoadBalancer("frontend-archive"),
     LoadBalancer("frontend-rss")
@@ -235,6 +233,17 @@ object CloudWatch extends Logging with ExecutionContexts {
       .withDimensions(stage)))
   } yield new AwsLineChart("ophan-percent-conversion", Seq("Time", "%"), ChartFormat.SingleLineBlue, metric)
 
+  def user50x = for {
+    metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusHours(2).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(60)
+      .withStatistics("Sum")
+      .withNamespace("Diagnostics")
+      .withMetricName("kpis-user-50x")
+      .withDimensions(stage)))
+  } yield new AwsLineChart("User 50x", Seq("Time", "50x/min"), ChartFormat.SingleLineRed, metric)
+
   def ratioConfidence = for {
     metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusWeeks(2).toDate)
@@ -251,5 +260,59 @@ object CloudWatch extends Logging with ExecutionContexts {
       .withNamespace("AbTests")
       .withDimensions(stageFilter)
     ))
+  }
+
+  def eventualAdResponseConfidenceGraph: Future[AwsLineChart] = {
+
+    def getMetric(metricName: String): Future[GetMetricStatisticsResult] = {
+      val now = DateTime.now()
+      withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+        .withNamespace("Diagnostics")
+        .withMetricName(metricName)
+        .withStartTime(now.minusWeeks(2).toDate)
+        .withEndTime(now.toDate)
+        .withPeriod(900)
+        .withStatistics("Sum")
+        .withDimensions(new Dimension().withName("Stage").withValue("prod"))))
+    }
+
+    def compare(pvCount: GetMetricStatisticsResult,
+                pvWithAdCount: GetMetricStatisticsResult): GetMetricStatisticsResult = {
+
+      val pvWithAdCountMap = pvWithAdCount.getDatapoints.map { point =>
+        point.getTimestamp -> point.getSum.toDouble
+      }.toMap
+
+      val confidenceValues = pvCount.getDatapoints.foldLeft(List.empty[Datapoint]) {
+        case (soFar, pvCountValue) =>
+          val confidenceValue = pvWithAdCountMap.get(pvCountValue.getTimestamp).map {
+            pvWithAdCountValue => pvWithAdCountValue * 100 / pvCountValue.getSum.toDouble
+          }.getOrElse(0d)
+          soFar :+ new Datapoint().withTimestamp(pvCountValue.getTimestamp).withSum(confidenceValue)
+      }
+
+      new GetMetricStatisticsResult().withDatapoints(confidenceValues)
+    }
+
+    for {
+      pageViewCount <- getMetric("kpis-page-views")
+      pageViewWithAdCount <- getMetric("first-ad-rendered")
+    } yield {
+      val confidenceMetric = compare(pageViewCount, pageViewWithAdCount)
+      val averageMetric = {
+        val dataPoints = confidenceMetric.getDatapoints
+        val average = dataPoints.map(_.getSum.toDouble).sum / dataPoints.length
+        val averageDataPoints = dataPoints map { point =>
+          new Datapoint().withTimestamp(point.getTimestamp).withSum(average)
+        }
+        new GetMetricStatisticsResult().withDatapoints(averageDataPoints)
+      }
+      new AwsLineChart(
+        name = "Ad Response Confidence",
+        labels = Seq("Time", "%", "avg."),
+        ChartFormat(Colour.`tone-comment-2`, Colour.success),
+        charts = confidenceMetric, averageMetric
+      )
+    }
   }
 }

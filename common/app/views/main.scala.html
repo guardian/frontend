@@ -4,25 +4,25 @@
 @import common.{Edition, Navigation}
 @import views.support.RenderClasses
 
-@* Identity pages use identityMain.scala.html, most of which is shared fragments,
-   be sure to apply any necessary changes to non-shared code there too. *@
-
 <!DOCTYPE html>
-<html id="js-context" class="js-off is-not-modern id--signed-out" lang="en-GB" data-page-path="@request.path">
+<html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
-@defining((
+@defining(
     metaData match {
         case c: model.Content if c.shouldHideAdverts => { false }
+        case p: model.Page if p.section == "identity" => { false }
         case _ => { true }
     },
-    Edition(request),
-    Edition(request).id == "UK" && (
-        (AppleAdNetworkFrontSwitch.isSwitchedOn && metaData.id == "uk") ||
-        (AppleAdCultureFrontSwitch.isSwitchedOn && metaData.id == "uk/culture")
-    )
-)) { case (showAdverts, edition, adBelowNav) =>
+    Edition(request)
+) { case (showAdverts, edition) =>
+    @defining(
+        showAdverts &&
+            ((AppleAdUkNetworkFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk") ||
+                (AppleAdAuNetworkFrontSwitch.isSwitchedOn && edition.id == "AU" && metaData.id == "au") ||
+                (AppleAdTechFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk/technology"))
+    ) { adBelowNav =>
     <body
         id="top"
         class="@RenderClasses(Map(
@@ -45,7 +45,7 @@
             @fragments.header(metaData)
         </div>
 
-        @if(showAdverts && adBelowNav) {
+        @if(adBelowNav) {
             @fragments.commercial.topBannerBelowNav()
         }
 
@@ -75,4 +75,5 @@
 
     </body>
     </html>
+}
 }

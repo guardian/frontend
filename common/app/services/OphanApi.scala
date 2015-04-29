@@ -25,7 +25,7 @@ object OphanApi extends ExecutionContexts with Logging with implicits.WSRequests
         } mkString "&"
         val url = s"$host/$path?$queryString&api-key=$key"
         log.info(s"Making request to Ophan API: $url")
-        WS.url(url) withRequestTimeout ophanApi.timeout getOKResponse() map (_.json)
+        WS.url(url).withRequestTimeout(10000).getOKResponse().map(_.json)
       }
 
     maybeJson getOrElse {

@@ -1,6 +1,6 @@
 package model
 
-import conf.Switches
+import conf.{Switches,Configuration}
 
 object FaciaDisplayElement {
   def fromTrail(trail: Trail): Option[FaciaDisplayElement] = {
@@ -14,6 +14,8 @@ object FaciaDisplayElement {
         ))
       case (content: Content, _) if content.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
         Some(CrosswordSvg(content.id))
+      case (content: Content, _) if content.imageSlideshowReplace && Switches.SlideshowImages.isSwitchedOn =>
+        Some(InlineSlideshow.fromTrail(trail))
       case _ => InlineImage.fromTrail(trail)
     }
   }
@@ -43,5 +45,12 @@ case class InlineImage(imageContainer: ImageContainer) extends FaciaDisplayEleme
 case class CrosswordSvg(id: String) extends FaciaDisplayElement {
   def persistenceId = id.stripPrefix("crosswords/")
 
-  def imageUrl = s"/$id.svg"
+  def imageUrl = s"${Configuration.ajax.url}/$id.svg"
 }
+
+object InlineSlideshow {
+  def fromTrail(trail: Trail): InlineSlideshow =
+    InlineSlideshow(trail.trailSlideshow(5, 3))
+}
+
+case class InlineSlideshow(images: Iterable[FaciaImageElement]) extends FaciaDisplayElement

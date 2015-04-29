@@ -1,14 +1,10 @@
-define([
-    'modules/modal-dialog'
-], function (
-    modalDialog
-) {
-    return function (message) {
-        modalDialog.confirm({
-            name: 'text_alert',
-            data: {
-                message: message
-            }
-        });
-    };
-});
+import modalDialog from 'modules/modal-dialog';
+
+export default function (message) {
+    modalDialog.confirm({
+        name: 'text_alert',
+        data: {
+            message: message
+        }
+    });
+}

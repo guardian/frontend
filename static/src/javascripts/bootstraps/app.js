@@ -43,7 +43,7 @@ define([
 
             // Front
             if (config.page.isFront) {
-                require('bootstraps/facia', function (facia) {
+                require(['bootstraps/facia'], function (facia) {
                     bootstrapContext('facia', facia);
                 });
             }
@@ -101,7 +101,7 @@ define([
 
             if (config.page.isPreview) {
                 // lazy load this only if on the preview server
-                require('bootstraps/preview', function (preview) {
+                require(['bootstraps/preview'], function (preview) {
                     bootstrapContext('preview', preview);
                 });
             }

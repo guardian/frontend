@@ -1,12 +1,22 @@
 define([
     'bonzo',
     'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/$',
+    'common/utils/mediator',
+    'common/modules/experiments/ab'
 ], function (
     bonzo,
     _,
-    mediator
+    $,
+    mediator,
+    ab
 ) {
+
+    function isMainTest() {
+        var MtMainTest = ab.getParticipations().MtMain;
+
+        return ab.testCanBeRun('MtMain') && MtMainTest && MtMainTest.variant === 'A';
+    }
 
     /**
      * @todo: check if browser natively supports "position: sticky"
@@ -26,12 +36,14 @@ define([
     };
 
     Sticky.prototype.updatePosition = function () {
-        var fixedTop, css;
+        var fixedTop, css, stickyHeaderHeight;
+
+        stickyHeaderHeight = isMainTest() ? $('.navigation').dim().height : 0;
 
         // have we scrolled past the element
-        if (window.scrollY >= this.$parent.offset().top - this.opts.top) {
+        if (window.scrollY >= this.$parent.offset().top - this.opts.top - stickyHeaderHeight) {
             // make sure the element stays within its parent
-            fixedTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height);
+            fixedTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height) + stickyHeaderHeight;
 
             css = {
                 position: 'fixed',

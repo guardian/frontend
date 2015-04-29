@@ -16,10 +16,8 @@ $control-size: 36px;
     margin-left: $gs-gutter/2;
     max-width: 140px;
     vertical-align: top;
-    white-space: nowrap;
-    overflow: hidden;
+    @include ellipsis();
     float: left;
-    text-overflow: ellipsis;
     text-align: left;
 
     @include mq($from: 540px) {
@@ -63,5 +61,20 @@ $control-size: 36px;
         .l-header--is-slim & {
             display: block;
         }
+    }
+}
+
+/**
+ *  Slim modification
+ *
+ *  Used for slim header ^l_header
+ */
+.is-slim {
+    .control__info {
+        display: none;
+    }
+
+    .control__icon-wrapper {
+        display: block;
     }
 }

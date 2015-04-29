@@ -1,7 +1,7 @@
 .brand-bar {
     background-color: colour(guardian-brand);
     line-height: 0;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding-left: $gs-gutter * .25;
     padding-right: $gs-gutter * .25;
 
@@ -18,9 +18,6 @@
 // to context matching).
 
 .brand-bar__item {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     @include fs-bodyHeading(1);
     float: left;
@@ -101,7 +98,7 @@
 }
 
 .brand-bar__item--right {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     float: left;
 
     @include mq(tablet) {
@@ -279,6 +276,133 @@
 
         // Unset breakpoint
         .l-header--is-slim & {
+            display: none;
+        }
+    }
+}
+
+// see .brand-bar__item--action above. This should be removed when we remove the 'beta' bit for International, as it's
+// ugly.
+.brand-bar__item--action-beta {
+    &:focus,
+    &:active {
+        &,
+        .control__info {
+            text-decoration: none;
+
+            .brand-bar__edition-name {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &:hover {
+        &,
+        .control__info {
+            text-decoration: none;
+
+            .brand-bar__edition-name {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.brand-bar__beta {
+    position: relative;
+    top: -6px;
+    font-weight: bold;
+    color: colour(news-main-2);
+    font-size: 12px;
+    text-decoration: none;
+}
+
+/**
+ *  Slim modification
+ *
+ *  Used for slim header ^l_header
+ */
+.is-slim {
+    .brand-bar__item {
+        margin-right: $gs-baseline * .25;
+        margin-left: $gs-baseline * .25;
+
+        &:first-child {
+            margin-left: $gs-gutter / 2;
+        }
+    }
+
+    .brand-bar__item--right {
+        @include mq(tablet) {
+            float: left;
+        }
+    }
+
+    .brand-bar__item--subscribe {
+        display: none;
+    }
+
+    .brand-bar__item--edition {
+        display: none;
+    }
+
+    .brand-bar__item--right--uk-edition,
+    .brand-bar__item--right--us-edition {
+        .brand-bar__item--jobs { 
+            display: none;
+        }
+    }
+
+    .brand-bar__item--right--uk-edition {
+        .brand-bar__item--soulmates {
+            display: none;
+        }
+    }
+
+    .brand-bar__item--right--us-edition,
+    .brand-bar__item--right--au-edition {
+        .brand-bar__item--more {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item--right--uk-edition,
+    .brand-bar__item--right--us-edition {
+        .brand-bar__popup--jobs {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item--right--uk-edition {
+        .brand-bar__popup--edition {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item--right--uk-edition {
+        .brand-bar__popup--soulmates {
+            @include mq(desktop) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item--right--uk-edition {
+        .brand-bar__popup--membership {
+            @include mq(desktop) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item__badge {
+        @include mq(tablet) {
             display: none;
         }
     }

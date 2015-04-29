@@ -31,6 +31,8 @@ define([
     Article,
     contentApi
 ) {
+    modalDialog = modalDialog.default;
+
     function Collection(opts) {
 
         if (!opts || !opts.id) { return; }
@@ -183,14 +185,25 @@ define([
             addedInDraft = this.front.confirmSendingAlert() ? this.addedInDraft() : [];
 
         if (addedInDraft.length) {
+            var isMajorAlert = !!_.find(addedInDraft, function (article) {
+                    return article.group.index === 1;
+                });
+
             modalDialog.confirm({
                 name: 'confirm_breaking_changes',
                 data: {
-                    articles: this.addedInDraft(),
-                    target: this.configMeta.displayName()
+                    articles: addedInDraft,
+                    target: this.configMeta.displayName(),
+                    targetGroup: isMajorAlert ? 'APP & WEB' : 'WEB',
+                    targetGroupClass: isMajorAlert ? 'major-alert' : 'minor-alert',
+                    alertAlreadySent: function (article) {
+                        return _.find(that.history(), function (previously) {
+                            return previously.id() === article.id();
+                        });
+                    }
                 }
             })
-            .done(function () {
+            .then(function () {
                 that.processDraft(true);
             });
         } else {

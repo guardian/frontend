@@ -122,7 +122,7 @@ $pagination-icon-spacing: 10px;
     text-align: center;
 }
 
-.pagination__action__icon {
+.pagination__icon {
     display: inline-block;
     margin-top: 1px;
     height: $text-size;
@@ -137,9 +137,9 @@ $pagination-icon-spacing: 10px;
     }
 }
 
-.pagination__action__icon--next {
+.pagination__icon--next {
     svg {
-        @include rotate(180deg);
+        transform: rotate(180deg);
     }
 }
 

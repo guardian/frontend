@@ -9,6 +9,7 @@
 @import 'item-layouts/fc-item--half';
 @import 'item-layouts/fc-item--three-quarters';
 @import 'item-layouts/fc-item--three-quarters-right';
+@import 'item-layouts/fc-item--three-quarters-tall';
 @import 'item-layouts/fc-item--list';
 @import 'item-layouts/fc-item--list-compact';
 @import 'item-layouts/fc-item--list-compact--media';
@@ -28,7 +29,7 @@
 
     @include mq(tablet) {
         .has-flex & {
-            @include flex-display;
+            display: flex;
         }
     }
 
@@ -51,10 +52,6 @@
     }
 }
 .fc-slice__item--no-mpu {
-    -webkit-box-flex: 0 !important;
-    -moz-box-flex: 0 !important;
-    -webkit-flex: 0 !important;
-    -ms-flex: 0 !important;
     flex: 0 !important;
 }
 
@@ -219,6 +216,12 @@
     }
 }
 
+.fc-item--three-quarters-tall-tablet {
+    @include mq(tablet) {
+        @include fc-item--three-quarters-tall;
+    }
+}
+
 .fc-item--full-media-50-tablet {
     @include mq(tablet) {
         @include fc-item--full-media-50;
@@ -268,7 +271,7 @@
 
         .has-flex-wrap & {
             .fc-item__container {
-                @include flex-direction(row);
+                flex-direction: row;
             }
         }
 

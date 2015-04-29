@@ -124,7 +124,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object ophanApi {
     lazy val key = configuration.getStringProperty("ophan.api.key")
     lazy val host = configuration.getStringProperty("ophan.api.host")
-    lazy val timeout = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
   object ophan {
@@ -142,6 +141,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object frontend {
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
+    lazy val webEngineersEmail = configuration.getStringProperty("email.web.engineers")
   }
 
   object site {
@@ -331,6 +331,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object facia {
+    lazy val spreadsheetKey = configuration.getStringProperty("ab_headlines.spreadsheet_key")
+
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
     lazy val collectionCap: Int = 35
   }

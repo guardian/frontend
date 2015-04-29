@@ -1,6 +1,6 @@
 /*global FB:false*/
 /* jscs:disable disallowDanglingUnderscores */
-define([''], function () {
+define(function () {
 
     var instance = null,
         scriptId = 'facebook-jssdk';
@@ -102,7 +102,7 @@ define([''], function () {
     };
 
     FacebookAuthorizer.prototype._loadFacebookScript = function () {
-        require(['js!facebook!exports=FB'], this._handleScriptLoaded.bind(this));
+        require(['js!facebook'], this._handleScriptLoaded.bind(this));
     };
 
     FacebookAuthorizer.prototype._handleScriptLoaded = function () {
