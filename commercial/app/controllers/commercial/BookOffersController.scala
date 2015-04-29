@@ -1,16 +1,15 @@
 package controllers.commercial
 
 import common.ExecutionContexts
-import model.commercial.{FeedMissingConfigurationException, FeedSwitchOffException}
 import model.commercial.books.BestsellersAgent._
-import model.commercial.books.{BestsellersAgent, BookFinder}
+import model.commercial.books.{BestsellersAgent, BookFinder, CacheNotConfiguredException}
+import model.commercial.{FeedMissingConfigurationException, FeedSwitchOffException}
 import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
-import model.commercial.books.CacheNotConfiguredException
 
 object BookOffersController
   extends Controller
@@ -51,19 +50,24 @@ object BookOffersController
     }
   }
 
-  def renderBooks = Action { implicit request =>
-      (BestsellersAgent.getSpecificBooks(specificIds) ++ BestsellersAgent.bestsellersTargetedAt(segment))
-        .distinctBy(_.isbn).take(5) match {
+  def renderBooks = MemcachedAction { implicit request =>
+    BestsellersAgent.getSpecificBooks(specificIds) map { specificBooks =>
+
+      val books = specificBooks ++ BestsellersAgent.bestsellersTargetedAt(segment)
+
+      books.distinctBy(_.isbn).take(5) match {
         case Nil => NoCache(jsonFormat.nilResult)
-        case books => Cached(componentMaxAge) {
+        case someBooks => Cached(componentMaxAge) {
           val clickMacro = request.getParameter("clickMacro")
           val omnitureId = request.getParameter("omnitureId")
           request.getParameter("layout") match {
-            case Some("prominent") => jsonFormat.result(views.html.books.booksProminent(books, omnitureId, clickMacro))
-            case _ => jsonFormat.result(views.html.books.booksStandard(books, omnitureId, clickMacro))
+            case Some("prominent") =>
+              jsonFormat.result(views.html.books.booksProminent(someBooks, omnitureId, clickMacro))
+            case _ =>
+              jsonFormat.result(views.html.books.booksStandard(someBooks, omnitureId, clickMacro))
           }
+        }
       }
     }
   }
-
 }

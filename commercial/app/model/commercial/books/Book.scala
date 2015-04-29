@@ -56,7 +56,12 @@ object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
   private lazy val feeds = Seq(MagentoBestsellersFeed)
 
   def getSpecificBook(isbn: String) = available find (_.isbn == isbn)
-  def getSpecificBooks(specifics: Seq[String]) = available filter (specifics contains _.isbn)
+
+  def getSpecificBooks(isbns: Seq[String]): Future[Seq[Book]] = {
+    Future.sequence {
+      isbns map (BookFinder.findByIsbn(_))
+    } map (_.flatten.sortBy(book => isbns.indexOf(book.isbn)))
+  }
 
   def bestsellersTargetedAt(segment: Segment): Seq[Book] = {
     val targetedBestsellers = available filter { book =>
