@@ -17,32 +17,29 @@ define([
     function SavedForLater() {
 
         this.init = function () {
-            var self = this;
+            var self = this,
+            form = $('.js-saved-content-form')[0];
+            bean.on(form, 'click', '.js-saved-content__button-delete-all', function (event) {
+                event.preventDefault();
+                self.fetchArticlesAndRemoveAll();
+            });
 
             this.savedArticles = $('.js-saved-content');
-
             this.savedArticles.each(function (element) {
                 bean.on(element, 'click', '.js-saved-content__button', function (event) {
                     event.preventDefault();
                     self.fetchArticlesAndRemove(element);
                 });
             });
-
-            var form = $('.js-saved-content-form')[0];
-            console.log("++ Hita 3");
-            bean.on(form,' click', '.js-saved-content__button-delete-all', function(event){
-                event.preventDefault();
-                self.fetchArticlesAndRemoveAll();
-            });
         };
 
-        this.fetchArticlesAndRemoveAll = function() {
+        this.fetchArticlesAndRemoveAll = function () {
             var self = this,
                 data;
 
             identity.getSavedArticles().then(
                 function success(resp) {
-                    data = self.getArticleDataFromResponse(resp)
+                    data = self.getArticleDataFromResponse(resp);
                     self.deleteAllArticles(data.version);
                 }
             );
@@ -82,7 +79,7 @@ define([
             identity.saveToArticles({version: version, articles:[]}).then(
                 function success(resp) {
                     if (resp.status !== 'error') {
-                        self.savedArticles.each(function(element) {
+                        self.savedArticles.each(function (element) {
                             element.remove();
                         });
                     }
@@ -90,21 +87,19 @@ define([
             );
         };
 
-        this.getArticleDataFromResponse = function(resp) {
+        this.getArticleDataFromResponse = function (resp) {
 
-            var notFound  = {message:'Not found', description:'Resource not found'};
+            var notFound  = {message:'Not found', description:'Resource not found'},
+                date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
 
             if (resp.status === 'error') {
                 if (resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
-                    //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
-                    var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
                     return {version: date, articles:[]};
                 }
             } else {
                 return resp.savedArticles;
             }
-
-        }
+        };
     }
 
     return SavedForLater;
