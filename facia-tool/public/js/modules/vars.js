@@ -57,6 +57,8 @@ define([
 
         capiBatchSize:         10,
 
+        maxSlideshowImages:    5,
+
         collectionsPollMs:     10000,
         latestArticlesPollMs:  30000,
         configSettingsPollMs:  30000,

@@ -1,6 +1,12 @@
 .site-message {
+    @include fs-headline(1);
     background: colour(news-default);
     display: block;
+    color: #ffffff;
+
+    @include mq(desktop) {
+        @include fs-headline(2, true);
+    }
 }
 
 .site-message--banner {
@@ -46,22 +52,28 @@
 }
 
 .site-message__copy {
+    padding-top: $gs-baseline;
+    padding-bottom: $gs-baseline;
+
     @include mq(tablet) {
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
+    }
+
+    @include mq(desktop) {
+        padding: 0;
         display: table-cell;
         vertical-align: middle;
     }
 }
 
 .site-message__message {
-    @include fs-headline(1);
-    color: #ffffff;
-    margin-bottom: 0;
-    padding-top: $gs-baseline;
-    margin-right: $gs-gutter/2;
-    margin-left: $gs-gutter/2;
+    // Magic number based on a minimum viewport of 320px, padding, and
+    // showing the close button
+    max-width: 269px;
 
     a {
-        color: #ffffff;
+        color: inherit;
         text-decoration: underline;
     }
 
@@ -72,16 +84,14 @@
     @include mq(tablet) {
         display: table-cell;
         vertical-align: middle;
-        padding-top: 0;
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter;
-        max-width: gs-span(4) + $gs-gutter;
+        max-width: none;
     }
 
     @include mq(desktop) {
-        @include fs-headline(2, true);
+        padding-left: $gs-gutter;
         padding-right: $gs-gutter/2;
         max-width: gs-span(7) - $gs-gutter*2;
+        margin-bottom: 0;
     }
 
     @include mq(leftCol) {
@@ -119,7 +129,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     @include fs-textSans(2);
     color: #ffffff;
     border: 1px solid rgba(#ffffff, .3);
-    @include border-radius(50%);
+    @include circular;
 
     @include mq(tablet) {
         float: right;
@@ -167,7 +177,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     @include fs-textSans(2);
     background: transparent;
     border: 1px solid rgba(#ffffff, .3);
-    @include border-radius(50%);
+    @include circular;
     color: #ffffff;
 
     &:hover,
@@ -178,9 +188,8 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
     @include mq($until: tablet) {
         position: absolute;
-        right: 0;
         right: $gs-gutter;
-        bottom: $gs-baseline;
+        top: $gs-baseline;
     }
 }
 
@@ -225,8 +234,8 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         width: $gs-gutter;
         height: $gs-gutter;
         background-color: colour(neutral-1);
-        @include border-radius(50%);
-        @include box-shadow(0px 1px 0px colour(neutral-3));
+        @include circular;
+        box-shadow: 0px 1px 0px colour(neutral-3);
 
         &:before {
             display: block;
@@ -283,7 +292,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         @include font(arial, bold, 14px);
         text-transform: uppercase;
         border: 1px solid #333333;
-        @include box-shadow(0 0 0 1px #ffffff);
+        box-shadow: 0 0 0 1px #ffffff;
     }
 
     .app__screenshots {

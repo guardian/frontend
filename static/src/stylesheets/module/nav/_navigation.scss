@@ -48,6 +48,10 @@ $c-navigation-expandable-background: colour(neutral-1);
 /* Styles common to all states
    ========================================================================== */
 
+.navigation-container {
+    background: colour(guardian-brand);
+}
+
 .navigation {
     position: relative;
     overflow: hidden;
@@ -69,12 +73,14 @@ $c-navigation-expandable-background: colour(neutral-1);
     &:before {
         background: $c-navigation-background-side-bar;
         border-bottom: 1px solid $c-global-navigation-border;
-        -moz-background-clip: padding-box;
-        -webkit-background-clip: padding-box;
         background-clip: padding-box;
 
         .l-header--is-slim & {
             display: none;
+        }
+
+        .l-header--is-slim-ab & {
+            display: block;
         }
     }
 
@@ -135,7 +141,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     padding: 0;
 }
 
-
 /* Signposting
    ========================================================================== */
 
@@ -143,7 +148,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     position: relative;
     background: $c-signposting-background;
     border-right: 1px solid $c-global-navigation-border;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding-right: $navigation-h-space-between-items;
 
     @include mq(mobileLandscape) {
@@ -226,6 +231,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 .local-navigation__action,
 .top-navigation__action {
     color: $c-local-navigation-action;
+    z-index: 3; /* ensure it is higher than any overlapping cutout contributor image */
 }
 .top-navigation__action {
     color: $c-top-navigation-action;
@@ -305,7 +311,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 .top-navigation__icon {
     display: inline-block;
     background-repeat: no-repeat;
-    @include background-size(cover);
+    background-size: cover;
 }
 .top-navigation__icon--home {
     width: 15px;
@@ -317,10 +323,6 @@ $c-navigation-expandable-background: colour(neutral-1);
            (min-resolution: 1.3dppx) {
         background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNSAxOCI+PHBhdGggZD0ibTggMC0xIDAtNyA3IDAgMTAgMSAxIDQgMCAwLTcgNSAwIDAgNyA0IDAgMS0xIDAtMTB6IiBmaWxsPSIjZmZmIiAvPjwvc3ZnPg==');
     }
-}
-
-.top-navigation__icon--home--has-chimney {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAASCAQAAAAul0yEAAAAPklEQVR4AdXJwQqAMADD0H56/jxSxhji3FHw9dBDUlaMqJi1cTViscu48Mx3nHIxM+7RjO+IR5/lzP0kc8hckqrLSprJGHUAAAAASUVORK5CYII=');
 }
 
 /* Global navigation
@@ -346,7 +348,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     overflow: hidden;
     position: relative;
     // draws border without adding height
-    @include box-shadow(inset 0 1px $c-global-navigation-border);
+    box-shadow: inset 0 1px $c-global-navigation-border;
     background: $c-local-navigation-background;
     min-height: $navigation-height;
 
@@ -378,7 +380,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         padding-right: $gs-gutter;
     }
     @include mq(tablet) {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         position: absolute;
         top: 0;
         bottom: 0;
@@ -399,7 +401,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 }
 .global-navigation__children {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     min-height: $navigation-height;
     padding-top: $gs-baseline/4;
     overflow: hidden;
@@ -505,7 +507,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         overflow: hidden;
 
         @include mq(navigationBreakOnTwoLevels) {
-            @include box-sizing(border-box);
+            box-sizing: border-box;
             position: absolute;
             top: 0;
             left: 0;
@@ -568,7 +570,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         float: left;
         width: 50%;
         padding-right: 0;
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
 
@@ -680,17 +682,15 @@ $c-navigation-expandable-background: colour(neutral-1);
 
 // TODO: Move
 .navigation-toggle {
-    z-index: 2;
+    z-index: 4; /* ensure it is higher than .top-navigation__action */
     position: absolute;
     right: 0;
     top: 0;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     @include fs-header(1);
     line-height: $navigation-height;
     padding: 0 $gs-gutter / 2;
     background: $c-navigation-toggle-background;
-    -moz-background-clip: padding-box;
-    -webkit-background-clip: padding-box;
     background-clip: padding-box;
     text-align: left;
     // TODO: Why is this needed?
@@ -837,13 +837,13 @@ $burger-width: 16px;
             height: 0;
 
             &:before {
-                @include transform(rotate(45deg));
+                transform: rotate(45deg);
 
                 top: 4px;
             }
 
             &:after {
-                @include transform(rotate(-45deg) translate(3px, -3px)); // We need to move line to the center
+                transform: rotate(-45deg) translate(3px, -3px); // We need to move line to the center
 
                 top: 8px;
             }

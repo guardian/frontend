@@ -53,7 +53,7 @@ $football-crest--large: 60px;
 .team__crest__img {
     height: $football-crest--small;
     width: $football-crest--small;
-    @include background-size(contain);
+    background-size: contain;
     background-position: 100% 0;
     display: inline-block;
     background-repeat: no-repeat;
@@ -68,7 +68,7 @@ $football-crest--large: 60px;
 }
 
 .team__name {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding-right: $gs-gutter*2;
     display: block;
     @include ellipsis();
@@ -109,11 +109,11 @@ $football-crest--large: 60px;
 }
 
 .status__time {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     display: inline-block;
     height: $football-crest--small;
     width: $football-crest--small;
-    @include border-radius(24px);
+    border-radius: 24px;
     border: 2px dotted colour(neutral-2);
     @include fs-textSans(2);
     line-height: $football-crest--small - 3; // account for the border
@@ -197,7 +197,7 @@ $football-crest--large: 60px;
         white-space: nowrap;
     }
     .match-summary__team {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         display: inline-block;
         width: 50%;
         vertical-align: top;
@@ -244,7 +244,7 @@ $football-crest--large: 60px;
     .team__crest__img {
         height: $football-crest--large;
         width: $football-crest--large;
-        @include background-size(contain);
+        background-size: contain;
     }
 
     .team__info {

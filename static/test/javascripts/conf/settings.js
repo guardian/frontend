@@ -12,15 +12,13 @@ module.exports = function(config) {
             { pattern: 'static/test/javascripts/components/**/!(*.spec.js)', included: false },
             { pattern: 'static/test/javascripts/fixtures/**/*', included: false },
             { pattern: 'static/test/javascripts/helpers/**/*.js', included: false },
-            { pattern: 'static/test/javascripts/spies/**/*.js', included: false },
-            { pattern: 'static/src/javascripts/**/*.js', included: false },
+            { pattern: 'static/src/javascripts/{projects,components,vendor,bootstraps}/**/*.js', included: false },
             { pattern: 'static/src/javascripts/**/views/**/*.html', included: false },
             { pattern: 'static/public/javascripts/**/*.js', included: false },
             { pattern: 'common/conf/assets/inline-svgs/**/*.svg', included: false }
         ],
 
-        // FIXME: Temporarily exclude jspm app tests. How to run with SystemJS?
-        exclude: ['static/test/javascripts/spec/common/crosswords/*.spec.js'],
+        exclude: [],
 
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
         reporters: ['progress'],

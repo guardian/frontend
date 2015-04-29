@@ -74,11 +74,11 @@
 }
 
 .rich-link__image-container {
-    @include transition(background-color .25s ease);
+    transition: background-color .25s ease;
     background-color: rgba(0, 0, 0, .1);
 
     .responsive-img {
-        @include transition(opacity .25s ease);
+        transition: opacity .25s ease;
     }
 }
 
@@ -105,7 +105,7 @@
 
 .rich-link .rich-link__header {
     padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     min-height: $gs-baseline * 3;
 }
 

@@ -63,7 +63,8 @@ define([
                 isTweakpoint: false,
                 width: 1300
             }
-        ];
+        ],
+        detect;
 
     /**
      *     Util: returns a function that:
@@ -281,7 +282,7 @@ define([
     }
 
     function getBreakpoint(includeTweakpoint) {
-        var viewportWidth = getViewport().width,
+        var viewportWidth = detect.getViewport().width,
             index,
             breakpoint = _.last(takeWhile(breakpoints, function (bp) {
                 return bp.width <= viewportWidth;
@@ -411,7 +412,7 @@ define([
         return displayed === 'none' ? true : false;
     }
 
-    return {
+    detect = {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
         getFontFormatSupport: getFontFormatSupport,
@@ -436,5 +437,5 @@ define([
         isModernBrowser: isModernBrowser,
         adblockInUse: adblockInUse
     };
-
+    return detect;
 });

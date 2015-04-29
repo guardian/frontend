@@ -24,6 +24,8 @@ function (
     isGuardianUrl,
     snap
 ){
+    modalDialog = modalDialog.default;
+
     function validateItem (item) {
         var defer = $.Deferred(),
             snapId = snap.validateId(item.id()),

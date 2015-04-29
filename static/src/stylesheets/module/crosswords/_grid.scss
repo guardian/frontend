@@ -36,7 +36,7 @@
     -webkit-font-smoothing: subpixel-antialiased;
     fill: #3f4ac3; // biro blue
 
-    @include transition(opacity .15s ease-in);
+    transition: opacity .15s ease-in;
 }
 
 .crossword__cell-text--error {

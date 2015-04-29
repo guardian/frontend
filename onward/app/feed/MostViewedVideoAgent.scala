@@ -20,14 +20,18 @@ object MostViewedVideoAgent extends Logging with ExecutionContexts {
   def refresh() = {
     log.info("Refreshing most viewed video.")
 
-    val ophanResponse = services.OphanApi.getMostViewedVideos(hours = 3, count = 12)
+    val ophanResponse = services.OphanApi.getMostViewedVideos(hours = 3, count = 20)
 
     ophanResponse.map { result =>
 
-      val mostViewed: Iterable[Future[Option[Content]]] = for {
+      val paths: Seq[String] = for {
         videoResult <- result.asOpt[JsArray].map(_.value).getOrElse(Nil)
         path <- videoResult.validate[QueryResult].asOpt.map(_.paths).getOrElse(Nil) if path.contains("/video/")
       } yield {
+        path
+      }
+
+      val mostViewed: Iterable[Future[Option[Content]]] = paths.distinct.map { path =>
         getResponse(LiveContentApi.item(path, Edition.defaultEdition)).map(_.content.map(Content(_)))
       }
 
@@ -35,7 +39,7 @@ object MostViewedVideoAgent extends Logging with ExecutionContexts {
         val videos = contentSeq.toSeq.collect {
           case Some(video: Video) => video
         }
-        agent alter videos
+        if(videos.nonEmpty) agent.alter(videos)
       }
     }
   }

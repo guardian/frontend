@@ -50,7 +50,7 @@
     }
 
     .table__caption--bottom {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         background: colour(neutral-8);
         border-width: 0;
         bottom: 0;

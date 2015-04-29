@@ -1191,6 +1191,13 @@ select {
     width: 15px;
 }
 
+.editor .underDrag {
+    background-color: #999999;
+}
+.editor .underDrag.active {
+    background-color: #999999;
+}
+
 .element {
     display: inline-block;
     margin: 0 0 3px 0;

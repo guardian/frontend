@@ -31,6 +31,8 @@ define([
     Article,
     contentApi
 ) {
+    modalDialog = modalDialog.default;
+
     function Collection(opts) {
 
         if (!opts || !opts.id) { return; }
@@ -201,7 +203,7 @@ define([
                     }
                 }
             })
-            .done(function () {
+            .then(function () {
                 that.processDraft(true);
             });
         } else {
