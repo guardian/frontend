@@ -112,11 +112,6 @@
     @include ellipsis();
 }
 
-.fc-item__liveblog-block--new .fc-item__liveblog-block__time:before {
-    content: 'Updated';
-    margin-right: $gs-gutter / 5;
-}
-
 .fc-item__liveblog-block--old .fc-item__liveblog-block__time {
     color: mix(#ffffff, colour(live-default), 70%);
 }
