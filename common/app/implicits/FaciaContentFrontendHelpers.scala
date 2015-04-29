@@ -15,7 +15,7 @@ object FaciaContentFrontendHelpers {
   implicit class FaciaContentFrontendHelper(faciaContent: FaciaContent) {
 
     def imageReplaceElement = faciaContent.image match {
-      case Some(FaciaImage(Replace, src, Some(width), Some(height))) => Option(ImageOverride.createElementWithOneAsset(src, width, height))
+      case Some(Replace(src, width, height)) => Option(ImageOverride.createElementWithOneAsset(src, width, height))
       case _ => None
     }
 
