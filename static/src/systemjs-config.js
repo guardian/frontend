@@ -54,7 +54,7 @@ System.config({
     "reqwest": "github:ded/reqwest@1.1.5",
     "socketio": "bower:socket.io-client@1.1.0",
     "stripe": "vendor/stripe/stripe.min",
-    "svg": "common/utils/svg",
+    "svg": "es6/projects/common/utils/svg",
     "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
     "text": "github:systemjs/plugin-text@0.0.2",
     "videojs": "github:guardian/video.js@4.11.1.1",
