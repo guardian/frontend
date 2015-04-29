@@ -1,6 +1,6 @@
 package views.support
 
-import com.gu.facia.api.models.{FaciaContent, FaciaImage}
+import com.gu.facia.api.models.{FaciaContent, Cutout}
 import common.Logging
 import implicits.FaciaContentImplicits._
 
@@ -12,13 +12,13 @@ object CutOut extends Logging {
    */
   def fromTrail(faciaContent: FaciaContent): Option[CutOut] = {
     faciaContent.image match {
-      case Some(FaciaImage(com.gu.facia.api.models.Cutout, src, Some(width), Some(height))) =>
+      case Some(Cutout(src, Some(width), Some(height))) =>
         Try((width.toInt, height.toInt)) match {
           case Success((w, h)) => Option(CutOut(src, Orientation.fromDimensions(w, h)))
           case Failure(t) =>
             log.warn(s"Could not convert width and height to INT: $t")
             None}
-      case Some(FaciaImage(com.gu.facia.api.models.Cutout, src, _, _)) => Option(CutOut(src, Landscape))
+      case Some(Cutout(src, _, _)) => Option(CutOut(src, Landscape))
       case _ => None}
   }
 }
