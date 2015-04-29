@@ -117,22 +117,28 @@ object FapiJsonFormats {
     }
   }
 
-  implicit object ImageTypeFormat extends Format[ImageType] {
+  implicit val cutoutFormat = Json.format[Cutout]
+  implicit val replaceFormat = Json.format[Replace]
+  implicit val slideshowFormat = Json.format[ImageSlideshow]
+
+  implicit object faciaImageFormat extends Format[FaciaImage] {
     def reads(json: JsValue) = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
-        case JsSuccess(JsString("Cutout"), _) => JsSuccess(Cutout)
-        case JsSuccess(JsString("Replace"), _) => JsSuccess(Replace)
+        case JsSuccess(JsString("Cutout"), _) => (json \ "item").validate[Cutout](cutoutFormat)
+        case JsSuccess(JsString("Replace"), _) => (json \ "item").validate[Replace](replaceFormat)
+        case JsSuccess(JsString("ImageSlideshow"), _) => (json \ "item").validate[ImageSlideshow](slideshowFormat)
         case _ => JsError("Could not convert ItemKicker")
       }
     }
 
-    def writes(cardStyle: ImageType) = cardStyle match {
-      case Cutout => JsObject(Seq("type" -> JsString("Cutout")))
-      case Replace => JsObject(Seq("type" -> JsString("Replace")))
+    def writes(faciaImage: FaciaImage) = faciaImage match {
+      case cutout: Cutout => JsObject(Seq("type" -> JsString("Cutout"), "item" -> Json.toJson(cutout)(cutoutFormat)))
+      case replace: Replace => JsObject(Seq("type" -> JsString("Replace"), "item" -> Json.toJson(replace)(replaceFormat)))
+      case imageSlideshow: ImageSlideshow => JsObject(Seq("type" -> JsString("ImageSlideshow"), "item" -> Json.toJson(imageSlideshow)(slideshowFormat)))
     }
   }
 
-  implicit val faciaImageFormat = Json.format[FaciaImage]
+
   implicit val contentPropertiesFormat = Json.format[ContentProperties]
 
   implicit object faciaContentFormat extends Format[FaciaContent] {
