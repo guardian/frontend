@@ -1,34 +1,35 @@
 /**
- * This will stop the z-index chaos in the entire universe once for all.
- *
+ * This will stop the z-index chaos.
  *
  * How to:
  *
  * 1. Choose the importance of the parent. 
- * Example: Using $beta
+ * Example: Using $zindex-beta
  *
- *    Parent { z-index: $beta; }
+ *    Parent { z-index: $zindex-beta; }
  * 
  * 2. Parent is probably creating z-index context thus inside parent you should increment importance
- *    by incrementing the base. 
+ *    by incrementing the base (do you really need to?)
  * Example:
  *
- * 	  Child__1 { z-index: $beta + 1; }
- * 	  Child__2 { z-index: $beta + 2; }
+ * 	  Child__1 { z-index: $zindex-beta + 1; }
+ * 	  Child__2 { z-index: $zindex-beta + 2; }
  *
  * 3. This will produce
  * Example:
  *
  * 	  Parent   { z-index: 100; }
  * 	  Child__1 { z-index: 101; }
- * 	  Child__2 { z-index: 102; } 
+ * 	  Child__2 { z-index: 102; }
+ *
+ * For more information about the stacking context fo to https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context
  */
 
-$alpha: 0;    // 0 to 99 - for less important things
-$beta: 100;   // 100 to 199 - importance is higher
-$gamma: 200;  // 200 to 299 - importance is higher
+$zindex-alpha: 0;    // 0 to 99 - for less important things
+$zindex-beta: 100;   // 100 to 199 - importance is higher
+$zindex-gamma: 200;  // 200 to 299 - importance is higher - you will most definitely never need this
  
 // Open space for other possible additions
 
-$zeta: 800;   // 800 to 899 - Ads
-$omega: 1000; // 1000+ - the highest importance (sticky navigation, breaking news...)
+$zindex-zeta: 800;   // 800 to 899 - Ads
+$zindex-omega: 1000; // 1000+ - the highest importance (sticky navigation, breaking news...)
