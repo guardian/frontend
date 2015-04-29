@@ -20,7 +20,8 @@ System.config({
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js",
     "bower:*": "jspm_packages/bower/*.js",
-    "facebook": "//connect.facebook.net/en_US/all.js"
+    "facebook": "//connect.facebook.net/en_US/all.js",
+    "interactive/*": "//*"
   },
   "shim": {
     "omniture": {
@@ -39,7 +40,7 @@ System.config({
     "bonzo": "npm:bonzo@1.4.0",
     "classnames": "npm:classnames@1.2.0",
     "domready": "npm:domready@1.0.7",
-    "enhancer": "github:guardian/enhancer@0.1.1",
+    "enhancer": "github:guardian/enhancer@0.1.2",
     "fastclick": "npm:fastclick@1.0.6",
     "fastdom": "github:wilsonpage/fastdom@0.8.6",
     "fence": "github:guardian/fence@0.2.11",
