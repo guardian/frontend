@@ -12,11 +12,6 @@ define([
         }
     };
 
-    //1. the test spec depends on injector, so the normalise method is overriden.
-    //2. the injector class is constructed, and contains a list of remappings,
-    //     eg. 'common/utils/config' -> 'injector/common/utils/config'
-    //3. the injector class registers 'injector/common/utils/config' with System.
-
     var inject = new Injector();
     
     inject.mock(
