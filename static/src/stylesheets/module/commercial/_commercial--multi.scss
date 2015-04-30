@@ -84,7 +84,6 @@ Multi component (AKA Frankenponent)
 
     @include guss-row('.lineitems');
     .lineitems {
-        margin: $gs-gutter/2;
         width: auto;
     }
     
