@@ -155,28 +155,30 @@ define([
 
         // get all immediate children
         return getReady().then(function () {
-            fastdom.read(function () {
-                bodyBottom = qwery(bodySelector)[0].offsetHeight;
-                paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
+            return new Promise(function (resolve) {
+                fastdom.read(function () {
+                    bodyBottom = qwery(bodySelector)[0].offsetHeight;
+                    paraElems = _(qwery(bodySelector + ' > p')).map(_mapElementToDimensions);
 
-                if (debug) { // reset any previous debug messages
-                    fastdom.write(function () {
-                        bonzo(paraElems.pluck('element').valueOf())
-                            .attr('data-spacefinder-msg', '')
-                            .removeClass('spacefinder--valid')
-                            .removeClass('spacefinder--error');
-                    });
-                }
+                    if (debug) { // reset any previous debug messages
+                        fastdom.write(function () {
+                            bonzo(paraElems.pluck('element').valueOf())
+                                .attr('data-spacefinder-msg', '')
+                                .removeClass('spacefinder--valid')
+                                .removeClass('spacefinder--error');
+                        });
+                    }
 
-                slots = _enforceRules(paraElems, rules, bodyBottom, debug);
+                    slots = _enforceRules(paraElems, rules, bodyBottom, debug);
 
-                if (debug) {
-                    fastdom.write(function () {
-                        bonzo(_.pluck(slots, 'element')).addClass('spacefinder--valid');
-                    });
-                }
+                    if (debug) {
+                        fastdom.write(function () {
+                            bonzo(_.pluck(slots, 'element')).addClass('spacefinder--valid');
+                        });
+                    }
 
-                return Promise.resolve(slots.length ? slots[0].element : undefined);
+                    resolve(slots.length ? slots[0].element : undefined);
+                });
             });
         });
     }
