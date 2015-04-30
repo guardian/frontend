@@ -12,5 +12,5 @@ object SupportedUrl {
 
   def apply(s: ApiSection): String = s"/${s.id}"
 
-  def fromFaciaContent(fc: FaciaContent): String = fc.href.getOrElse(fc.id)
+  def fromFaciaContent(fc: FaciaContent): String = s"/${fc.href.getOrElse(fc.id)}"
 }

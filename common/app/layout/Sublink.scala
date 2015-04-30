@@ -15,7 +15,8 @@ import views.support._
 import scala.Function.const
 
 object EditionalisedLink {
-  def fromFaciaContent(faciaContent: FaciaContent) = EditionalisedLink(faciaContent.href.getOrElse(faciaContent.id))
+  def fromFaciaContent(faciaContent: FaciaContent) =
+    EditionalisedLink(SupportedUrl.fromFaciaContent(faciaContent))
 }
 
 case class EditionalisedLink(
