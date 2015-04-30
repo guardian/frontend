@@ -1,44 +1,46 @@
-define(function(
-) {
-    var systemNormalize = System.normalize,
-        mockedObjects = {};
+var systemNormalize = System.normalize,
+    mockedObjects = {};
 
-    System.normalize = function (name, parentName) {
+System.normalize = function (name, parentName) {
 
-        var newName = name;
+    var newName = name;
 
-        if (name in mockedObjects) {
-            newName = mockedObjects[name].mockId;
-            console.log('normalizing to ' + mockedObjects[name].mockId);
-        }
+    if (name in mockedObjects) {
+        newName = mockedObjects[name].mockId;
+    }
 
-        return systemNormalize.call(this, newName, parentName);    
-    };    
+    return systemNormalize.call(this, newName, parentName);    
+};    
 
-    var Injector = function() {
-        // Reset the mockedObjects map.
-        for (var moduleName in mockedObjects) {
-            console.log('deleting object' + mockedObjects[moduleName].mockId);
-            System.delete(mockedObjects[moduleName].mockId);
-        }        
-        mockedObjects = {};
+var Injector = function() {
+    // Reset the mockedObjects map.
+    for (var moduleName in mockedObjects) {
+        System.delete(mockedObjects[moduleName].mockId);        
+    }
+    mockedObjects = {};
+};
+
+Injector.prototype.mock = function(module, mock) {
+    var dependency = {
+        mock: mock,
+        mockId: 'injector/' + module
     };
+    mockedObjects[module] = dependency;
 
-    Injector.prototype.mock = function(module, mock) {
-        var dependency = {
-            mock: mock,
-            mockId: 'injector/' + module 
-        };
-        mockedObjects[module] = dependency;
+    System.set(dependency.mockId, System.newModule(dependency.mock));
+    return this;
+};
 
-        System.amdDefine(dependency.mockId, dependency.mock);
+Injector.prototype.store = function(module) {
+    if (module in mockedObjects) {
+        return mockedObjects[module].mock;
+    }
+    return null;
+};
 
-        console.log('mocked module: ' + module);
-    };
+Injector.prototype.test = function(module, callback) {
+    System.delete(module);
+    return System.import(module).then(callback);
+};
 
-    Injector.prototype.test = function(module, callback) {
-        return System.import(module).then(callback);
-    };
-
-    return Injector;
-});
+export default Injector;
