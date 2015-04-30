@@ -123,23 +123,28 @@ object TrailsToRss extends implicits.Collections {
     writer.toString
   }
 
-  def fromPressedPage(pressedPage: PressedPage)(implicit request: RequestHeader): String  = {
+  def fromPressedPage(pressedPage: PressedPage)(implicit request: RequestHeader) = {
     val faciaContentList: List[FaciaContent] =
       pressedPage.collections
         .filterNot(_.config.excludeFromRss)
         .flatMap(_.all)
         .filter{
-          case _: LinkSnap => false
-          case _ => true}
+        case _: LinkSnap => false
+        case _ => true}
         .distinctBy(_.id)
-    val feedTitle = pressedPage.webTitle
+
+    fromFaciaContent(pressedPage.title, faciaContentList, pressedPage.url, pressedPage.description)
+  }
+
+  def fromFaciaContent(title: Option[String], faciaContentList: Seq[FaciaContent], url: String, description: Option[String] = None)(implicit request: RequestHeader): String  = {
+    val feedTitle = title.getOrElse("The Guardian")
 
     // Feed
     val feed = new SyndFeedImpl
     feed.setFeedType("rss_2.0")
     feed.setTitle(feedTitle)
-    feed.setDescription(pressedPage.description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"))
-    feed.setLink("http://www.theguardian.com" + pressedPage.url)
+    feed.setDescription(description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"))
+    feed.setLink("http://www.theguardian.com" + url)
     feed.setLanguage("en-gb")
     feed.setCopyright(s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}")
     feed.setImage(image)
