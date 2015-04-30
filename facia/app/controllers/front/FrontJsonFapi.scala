@@ -46,10 +46,10 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
   def getAsJsValue(path: String): Future[JsValue] = {
     val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
 
-    response.map { r =>
+    response.flatMap { r =>
       r.status match {
-        case 200 => Json.parse(r.body)
-        case _   => JsObject(Nil)
+        case 200 => Future.successful(Json.parse(r.body))
+        case _   => Future.failed(new RuntimeException(s"Could not get new format for $path"))
       }
     }
   }
