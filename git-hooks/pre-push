@@ -4,27 +4,36 @@
 
 branch=$(git symbolic-ref --short HEAD)
 
+function conditionallyGrunt {
+
+    # check that remote branch exists
+    git branch -r | if grep -q "origin/$branch"
+    then
+
+        # if remote branch exists, run grunt task if relevant
+        git diff "origin/$branch" --cached --name-only | if grep $1
+        then
+            grunt $2
+        fi
+
+    # if remote branch doesn't exist, run grunt task
+    else
+        grunt $2
+    fi
+}
+
 # Validate CSS
 CSS_SRC_PATTERN="\.scss"
-git diff "origin/$branch" --cached --name-only | if grep "$CSS_SRC_PATTERN"
-then
-    grunt validate:css validate:sass
-fi
+conditionallyGrunt "$CSS_SRC_PATTERN" "validate:css validate:sass"
 cssValidateResult=$?
 
 # Validate JS
 JS_SRC_PATTERN="\.js$"
-git diff "origin/$branch" --cached --name-only | if grep "$JS_SRC_PATTERN"
-then
-    grunt validate:js
-fi
+conditionallyGrunt "$JS_SRC_PATTERN" "validate:js"
 jsValidateResult=$?
 
 # Test JS
-git diff "origin/$branch" --cached --name-only | if grep "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN"
-then
-    grunt test:unit
-fi
+conditionallyGrunt "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN" "test:unit"
 jsTestResult=$?
 
 
