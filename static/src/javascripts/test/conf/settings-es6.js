@@ -18,6 +18,7 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             { pattern: 'javascripts/test/setup.js', included: true },
+            { pattern: 'systemjs-normalize.js', included: true },
             { pattern: 'javascripts/projects/**/*.js', included: false},
             { pattern: 'javascripts/es6/**/*.js', included: false},
             { pattern: 'javascripts/vendor/**/*.js', included: false},
