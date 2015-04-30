@@ -55,7 +55,7 @@ System.config({
     "react": "npm:react@0.12.2",
     "reqwest": "github:ded/reqwest@1.1.5",
     "socketio": "bower:socket.io-client@1.1.0",
-    "squire": "npm:squire@1.1.8",
+    "squire": "bower:squire@0.2.0",
     "stripe": "vendor/stripe/stripe.min",
     "svg": "es6/projects/common/utils/svg",
     "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
