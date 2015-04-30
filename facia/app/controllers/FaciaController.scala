@@ -115,12 +115,17 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       case p if p.startsWith("breaking-news") => 10
       case _ => 60}
 
+    lazy val newFormat = frontJsonFapi.getAsJsValue(path).map { json =>
+      Cached(cacheTime)(Cors(JsonComponent(FapiFrontJsonLite.get(json))))}
+    lazy val oldFormat = frontJson.getAsJsValue(path).map { json =>
+      Cached(cacheTime)(Cors(JsonComponent(FrontJsonLite.get(json))))}
+
     if (Switches.FapiClientFormat.isSwitchedOn) {
-      frontJsonFapi.getAsJsValue(path).map { json =>
-        Cached(cacheTime)(Cors(JsonComponent(FapiFrontJsonLite.get(json))))}}
+      newFormat.fallbackTo(oldFormat)}
     else {
-      frontJson.getAsJsValue(path).map { json =>
-        Cached(cacheTime)(Cors(JsonComponent(FrontJsonLite.get(json))))}}}
+      oldFormat}
+}
+
 
 
   private[controllers] def renderFrontPressResultFallback(path: String)(implicit request : RequestHeader) = {
