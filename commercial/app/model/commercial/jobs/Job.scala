@@ -32,15 +32,15 @@ case class Job(id: Int,
 object Job {
 
   def apply(xml: Node): Job = Job(
-    (xml \ "JobID").text.toInt,
-    (xml \ "JobTitle").text,
-    unescapeHtml((xml \ "ShortJobDescription").text),
-    OptString((xml \ "LocationDescription").text),
-    (xml \ "RecruiterName").text,
-    OptString((xml \ "RecruiterPageUrl").text),
-    (xml \ "RecruiterLogoURL").text,
-    (xml \ "Sectors" \ "Sector") map (_.text.toInt),
-    (xml \ "SalaryDescription").text
+    id = (xml \ "JobID").text.toInt,
+    title = (xml \ "JobTitle").text,
+    shortDescription = unescapeHtml((xml \ "ShortJobDescription").text),
+    locationDescription = OptString((xml \ "LocationDescription").text),
+    recruiterName = (xml \ "RecruiterName").text,
+    recruiterPageUrl = OptString((xml \ "RecruiterPageUrl").text),
+    recruiterLogoUrl = (xml \ "RecruiterLogoURL").text,
+    sectorIds = (xml \ "Sectors" \ "Sector") map (_.text.toInt),
+    salaryDescription = (xml \ "SalaryDescription").text
   )
 }
 

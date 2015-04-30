@@ -25,11 +25,11 @@ object JobsFeed extends ExecutionContexts with Logging {
     urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
   }
 
-  def parse(xml: Elem): Seq[Job] = {
-    (xml \\ "Job").filterNot { job =>
-      (job \ "RecruiterLogoURL").isEmpty
-    }.map(Job(_))
-  }
+  def parse(xml: Elem): Seq[Job] = for {
+    jobXml <- xml \\ "Job"
+    if (jobXml \ "RecruiterLogoURL").nonEmpty
+    if (jobXml \ "RecruiterName").text != "THE GUARDIAN MASTERCLASSES"
+  } yield Job(jobXml)
 
   def loadAds(): Future[Seq[Job]] = {
     maybeUrl map { url =>
