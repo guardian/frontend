@@ -212,21 +212,43 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
+    lazy val oldFormat = renderShowMoreFallback(path, collectionId)
+    if (Switches.FapiClientFormat.isSwitchedOn) {
+      lazy val newFormat = frontJsonFapi.get(path).flatMap {
+        case Some(pressedPage) =>
+          val maybeResponse =
+            for {
+              (container, index) <- pressedPage.front.containers.zipWithIndex.find(_._1.dataId == collectionId)
+              containerLayout <- container.containerLayout
+            } yield
+            Future.successful{Cached(pressedPage) {
+              JsonComponent(views.html.fragments.containers.facia_cards.showMore(containerLayout.remainingCards, index))}}
+
+          maybeResponse getOrElse Future.successful(Cached(60)(NotFound))
+        case None => renderShowMoreFallback(path, collectionId)}
+      newFormat.fallbackTo(oldFormat)
+    }
+    else {
+      oldFormat}}
+
+
+
+  def renderShowMoreFallback(path: String, collectionId: String): Future[Result] = {
     for {
-      maybePressedPage <- frontJsonFapi.get(path)
+      maybeFaciaPage <- frontJson.get(path)
     } yield {
       val maybeResponse = for {
-        pressedPage <- maybePressedPage
-        (container, index) <- pressedPage.front.containers.zipWithIndex.find(_._1.dataId == collectionId)
+        faciaPage <- maybeFaciaPage
+        (container, index) <- faciaPage.front.containers.zipWithIndex.find(_._1.dataId == collectionId)
         containerLayout <- container.containerLayout
       } yield {
-        Cached(pressedPage) {
-          JsonComponent(views.html.fragments.containers.facia_cards.showMore(
-            containerLayout.remainingCards,
-            index
-          ))
+          Cached(faciaPage) {
+            JsonComponent(views.html.fragments.containers.facia_cards.showMore(
+              containerLayout.remainingCards,
+              index
+            ))
+          }
         }
-      }
       maybeResponse getOrElse Cached(60)(NotFound)
     }
   }
