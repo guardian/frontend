@@ -1,27 +1,44 @@
-define([
-    'Promise',
-    'squire'
-], function(
-    Promise,
-    Squire
+define(function(
 ) {
+    var systemNormalize = System.normalize,
+        mockedObjects = {};
 
-    var r = Squire.prototype.require;
+    System.normalize = function (name, parentName) {
 
-    Squire.prototype.require = function (deps, cb, eb) {
+        var newName = name;
 
-        return new Promise(function (resolve, reject) {
-            r.call(this, deps, function () {
-                cb.apply(this, arguments);
-                resolve();
-            }, function () {
-                eb.apply(this, arguments);
-                reject();
-            });
-        }.bind(this));
+        if (name in mockedObjects) {
+            newName = mockedObjects[name].mockId;
+            console.log('normalizing to ' + mockedObjects[name].mockId);
+        }
 
+        return systemNormalize.call(this, newName, parentName);    
+    };    
+
+    var Injector = function() {
+        // Reset the mockedObjects map.
+        for (var moduleName in mockedObjects) {
+            console.log('deleting object' + mockedObjects[moduleName].mockId);
+            System.delete(mockedObjects[moduleName].mockId);
+        }        
+        mockedObjects = {};
     };
 
-    return Squire;
+    Injector.prototype.mock = function(module, mock) {
+        var dependency = {
+            mock: mock,
+            mockId: 'injector/' + module 
+        };
+        mockedObjects[module] = dependency;
 
+        System.amdDefine(dependency.mockId, dependency.mock);
+
+        console.log('mocked module: ' + module);
+    };
+
+    Injector.prototype.test = function(module, callback) {
+        return System.import(module).then(callback);
+    };
+
+    return Injector;
 });
