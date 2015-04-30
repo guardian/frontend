@@ -312,15 +312,15 @@ object Switches {
 
   val AppleAdUkNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-uk-network-front",
     "If this switch is on, Apple ads will appear below nav on the UK network front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
   val AppleAdAuNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-au-network-front",
     "If this switch is on, Apple ads will appear below nav on the AU network front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
   val AppleAdTechFrontSwitch = Switch("Commercial", "apple-ads-on-tech-front",
     "If this switch is on, Apple ads will appear below nav on the tech section front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
   val RefreshAdsAfterDisplaySwitch = Switch("Commercial", "refresh-ads-after-display",
     "If this switch is on, ads will be refreshed after they display.",
