@@ -4,6 +4,7 @@
 
 branch=$(git symbolic-ref --short HEAD)
 
+
 function conditionallyGrunt {
 
     # check that remote branch exists
@@ -13,14 +14,19 @@ function conditionallyGrunt {
         # if remote branch exists, run grunt task if relevant
         git diff "origin/$branch" --cached --name-only | if grep $1
         then
+            echo Running grunt $2 before pushing...
+            echo
             grunt $2
         fi
 
     # if remote branch doesn't exist, run grunt task
     else
+        echo Running grunt $2 before pushing to a new branch...
+        echo
         grunt $2
     fi
 }
+
 
 # Validate CSS
 CSS_SRC_PATTERN="\.scss"
