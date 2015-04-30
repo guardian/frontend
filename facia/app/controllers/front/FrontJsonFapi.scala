@@ -3,7 +3,7 @@ package controllers.front
 import common.{ExecutionContexts, Logging, S3Metrics}
 import conf.Configuration
 import model.PressedPage
-import play.api.libs.json.{JsError, JsSuccess, Json}
+import play.api.libs.json._
 import services.SecureS3Request
 
 import scala.concurrent.Future
@@ -39,6 +39,17 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
         case responseCode =>
           log.warn(s"Got $responseCode trying to load path: $path")
           None
+      }
+    }
+  }
+
+  def getAsJsValue(path: String): Future[JsValue] = {
+    val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
+
+    response.map { r =>
+      r.status match {
+        case 200 => Json.parse(r.body)
+        case _   => JsObject(Nil)
       }
     }
   }
