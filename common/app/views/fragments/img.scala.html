@@ -68,7 +68,7 @@
         @if(img.caption.nonEmpty || (img.displayCredit && img.credit.nonEmpty)) {
             <figcaption class="caption caption--main caption--img" itemprop="description">
                 @img.caption.map(Html(_))
-                @if(img.displayCredit && !img.credit.exists(img.caption.getOrElse("").endsWith)) { @img.credit.map(Html(_)) }
+                @if(img.displayCredit && !img.creditEndsWithCaption) { @img.credit.map(Html(_)) }
             </figcaption>
         }
     }
