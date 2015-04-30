@@ -188,7 +188,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderFrontPress(path: String) = MemcachedAction { implicit request => renderFrontPressResult(path) }
 
   def renderContainer(id: String) = MemcachedAction { implicit request =>
-      log.info(s"Serving collection ID: $id")
+    log.info(s"Serving collection ID: $id")
+    lazy val oldFormat = renderContainerFallback(id)
+    if (Switches.FapiClientFormat.isSwitchedOn) {
+    lazy val newFormat =
       getPressedCollection(id).map { collectionOption =>
         collectionOption.map { collection =>
           Cached(60) {
@@ -209,6 +212,35 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           }
         }.getOrElse(ServiceUnavailable)
       }
+      newFormat.fallbackTo(oldFormat)
+    }
+    else {
+      oldFormat
+    }
+  }
+
+  def renderContainerFallback(id: String)(implicit request: RequestHeader) = {
+   log.info(s"Serving collection ID: $id")
+    getPressedCollectionFallback(id).map { collectionOption =>
+      collectionOption.map { collection =>
+        Cached(60) {
+          val config = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
+
+          val containerDefinition = FaciaContainer(
+            1,
+            Container.fromConfig(config),
+            CollectionConfigWithId(id, config),
+            CollectionEssentials.fromCollection(collection)
+          )
+
+          val html = container(containerDefinition, FaciaPage.defaultFaciaPage.frontProperties)
+          if (request.isJson)
+            JsonCollection(html, collection)
+          else
+            NotFound
+        }
+      }.getOrElse(ServiceUnavailable)
+    }
   }
 
   def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
@@ -273,6 +305,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     def apply(html: Html, collection: PressedCollection)(implicit request: RequestHeader) = JsonComponent(
       "html" -> html
     )
+
+    def apply(html: Html, collection: Collection)(implicit request: RequestHeader) = JsonComponent(
+      "html" -> html
+    )
   }
 
   private object JsonFront{
@@ -289,17 +325,46 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       })
     }.getOrElse(Future.successful(None))
 
+  private def getPressedCollectionFallback(collectionId: String): Future[Option[Collection]] =
+    ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
+      frontJson.get(path).map(_.flatMap{ faciaPage =>
+        faciaPage.collections.find{ case (c, col) => c.id == collectionId}.map(_._2)
+      })
+    }.getOrElse(Future.successful(None))
+
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
-      log.info(s"Serving collection ID: $id")
-      getPressedCollection(id).map { collectionOption =>
+    log.info(s"Serving collection ID: $id")
+    lazy val oldFormat = renderCollectionRssFallback(id)
+    if (Switches.FapiClientFormat.isSwitchedOn) {
+      lazy val newFormat =
+        getPressedCollection(id).map { collectionOption =>
           collectionOption.map { collection =>
-              Cached(60) {
-                val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
-                  Ok("Gone").as("text/xml; charset=utf8")
-              }
+            Cached(60) {
+              val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
+              val displayName = config.displayName.map(t => s"$t | The Guardian")
+              Ok(TrailsToRss.fromFaciaContent(displayName, collection.all, "", None)).as("text/xml; charset=utf8")
+            }
           }.getOrElse(ServiceUnavailable)
-      }
+        }
+      newFormat.fallbackTo(oldFormat)
+    }
+    else {
+      oldFormat
+    }
+  }
+
+  /* Google news hits this endpoint */
+  def renderCollectionRssFallback(id: String)(implicit request: RequestHeader) = {
+    log.info(s"Serving collection ID: $id")
+    getPressedCollectionFallback(id).map { collectionOption =>
+      collectionOption.map { collection =>
+        Cached(60) {
+          val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
+          Ok(TrailsToRss(config.displayName, collection.items)).as("text/xml; charset=utf8")
+        }
+      }.getOrElse(ServiceUnavailable)
+    }
   }
 
   def renderAgentContents = Action {
