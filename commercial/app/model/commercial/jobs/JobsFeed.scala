@@ -9,9 +9,9 @@ import org.joda.time._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.xml.{XML, Elem}
+import scala.xml.{Elem, XML}
 
-object JobsApi extends ExecutionContexts with Logging {
+object JobsFeed extends ExecutionContexts with Logging {
 
   // url changes daily so cannot be val
   def maybeUrl = {
@@ -37,7 +37,7 @@ object JobsApi extends ExecutionContexts with Logging {
           (job \ "RecruiterName").text,
           OptString((job \ "RecruiterPageUrl").text),
           (job \ "RecruiterLogoURL").text,
-          ((job \ "Sectors" \ "Sector") map (_.text.toInt)).toSeq,
+          (job \ "Sectors" \ "Sector") map (_.text.toInt),
           (job \ "SalaryDescription").text
         )
     }
