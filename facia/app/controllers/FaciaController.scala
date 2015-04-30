@@ -233,7 +233,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
 
 
-  def renderShowMoreFallback(path: String, collectionId: String): Future[Result] = {
+  def renderShowMoreFallback(path: String, collectionId: String)(implicit request : RequestHeader): Future[Result] = {
     for {
       maybeFaciaPage <- frontJson.get(path)
     } yield {
