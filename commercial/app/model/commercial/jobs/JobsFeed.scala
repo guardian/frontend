@@ -3,8 +3,7 @@ package model.commercial.jobs
 import common.{ExecutionContexts, Logging}
 import conf.CommercialConfiguration
 import conf.Switches.JobFeedSwitch
-import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest, OptString}
-import org.apache.commons.lang.StringEscapeUtils.unescapeHtml
+import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest}
 import org.joda.time._
 
 import scala.concurrent.Future
@@ -27,20 +26,9 @@ object JobsFeed extends ExecutionContexts with Logging {
   }
 
   def parse(xml: Elem): Seq[Job] = {
-    (xml \\ "Job").filterNot(job => (job \ "RecruiterLogoURL").isEmpty).map {
-      job =>
-        Job(
-          (job \ "JobID").text.toInt,
-          (job \ "JobTitle").text,
-          unescapeHtml((job \ "ShortJobDescription").text),
-          OptString((job \ "LocationDescription").text),
-          (job \ "RecruiterName").text,
-          OptString((job \ "RecruiterPageUrl").text),
-          (job \ "RecruiterLogoURL").text,
-          (job \ "Sectors" \ "Sector") map (_.text.toInt),
-          (job \ "SalaryDescription").text
-        )
-    }
+    (xml \\ "Job").filterNot { job =>
+      (job \ "RecruiterLogoURL").isEmpty
+    }.map(Job(_))
   }
 
   def loadAds(): Future[Seq[Job]] = {

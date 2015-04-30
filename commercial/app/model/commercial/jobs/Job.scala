@@ -2,9 +2,11 @@ package model.commercial.jobs
 
 import common.{AkkaAgent, ExecutionContexts}
 import model.commercial._
+import org.apache.commons.lang.StringEscapeUtils._
 import org.apache.commons.lang.StringUtils
+
 import scala.concurrent.Future
-import scala.concurrent.duration._
+import scala.xml.Node
 
 case class Job(id: Int,
                title: String,
@@ -25,6 +27,21 @@ case class Job(id: Int,
     Industries.sectorIdIndustryMap.filter { case (sectorId, name) => sectorIds.contains(sectorId)}.values.toSeq
 
   val mainIndustry: Option[String] = industries.headOption
+}
+
+object Job {
+
+  def apply(xml: Node): Job = Job(
+    (xml \ "JobID").text.toInt,
+    (xml \ "JobTitle").text,
+    unescapeHtml((xml \ "ShortJobDescription").text),
+    OptString((xml \ "LocationDescription").text),
+    (xml \ "RecruiterName").text,
+    OptString((xml \ "RecruiterPageUrl").text),
+    (xml \ "RecruiterLogoURL").text,
+    (xml \ "Sectors" \ "Sector") map (_.text.toInt),
+    (xml \ "SalaryDescription").text
+  )
 }
 
 object Industries extends ExecutionContexts {
