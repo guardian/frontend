@@ -13,9 +13,10 @@
          class="gu-image"
          itemprop="contentUrl">
 
-    @image.caption.map { caption =>
-        <figcaption itemprop="description" class="caption caption--img">
-            @Html(caption) @if(image.displayCredit && !image.credit.exists(caption.endsWith)) { @image.credit.map(Html(_)) }
+    @if(image.caption.nonEmpty || (image.displayCredit && image.credit.nonEmpty)) {
+        <figcaption class="caption caption--img" itemprop="description">
+            @image.caption.map(Html(_))
+            @if(image.displayCredit && !image.credit.exists(image.caption.getOrElse("").endsWith)) { @image.credit.map(Html(_)) }
         </figcaption>
     }
 
