@@ -2,7 +2,7 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'qwery', 
+    'qwery',
     'common/utils/$',
     'helpers/fixtures',
     'helpers/injector'

@@ -17,9 +17,13 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            { pattern: 'javascripts/projects/**/*.js', included: false, served: true },
-            { pattern: 'javascripts/es6/**/*.js', included: false, served: true },
-            { pattern: 'javascripts/test/setup.js', included: true }
+            { pattern: 'javascripts/test/setup.js', included: true },
+            { pattern: 'javascripts/projects/**/*.js', included: false},
+            { pattern: 'javascripts/es6/**/*.js', included: false},
+            { pattern: 'javascripts/vendor/**/*.js', included: false},
+            { pattern: 'javascripts/**/views/**/*.html', included: false },
+            { pattern: 'javascripts/test/fixtures/**/*', included: false },
+            { pattern: 'javascripts/test/helpers/**/*.js', included: false }
         ],
 
         // list of files to exclude
