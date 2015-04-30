@@ -372,11 +372,6 @@ object Switches {
     safeState = Off, new LocalDate(2015, 5, 23)
   )
 
-  val SendExpiringSwitchesEmail = Switch("Monitoring", "expiring-switches-email",
-    "Send an email when switches are expiring soon",
-    safeState = Off, new LocalDate(2015, 5, 6)
-  )
-
 
   // Features
   val ABTestHeadlines = Switch(
