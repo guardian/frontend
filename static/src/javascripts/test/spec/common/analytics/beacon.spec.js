@@ -1,50 +1,47 @@
-define([
-    'bonzo',
-    'helpers/injector'
-], function (
-    bonzo,
-    Injector
-) {
+import bonzo from 'bonzo';
+import Injector from 'helpers/injector';
 
-    var config = {
-        page: {
-            beaconUrl: '//beacon.guim.co.uk'
-        }
-    };
+describe('Beacon', function () {
 
-    var inject = new Injector();
-    
-    inject.mock(
-        'common/utils/config', config
-    );
+    var beacon,
+        inject = new Injector(),
+        config = {
+            page: {
+                beaconUrl: '//beacon.guim.co.uk'
+            }
+        };    
 
-    return inject.test('common/modules/analytics/beacon', function (beacon) {
-
-        describe('Beacon', function () {
-
-            it('should exist', function () {
-                expect(beacon).toBeDefined();
-            });
-
-            it('should create correct img element when fired', function () {
-                var img = beacon.fire('/pv.gif');
-
-                expect(img.nodeName.toLowerCase()).toBe('img');
-                expect(bonzo(img).attr('src')).toBe('//beacon.guim.co.uk/pv.gif');
-            });
-
-            it('should create correct img element when counting', function () {
-                var img = beacon.counts('blocked-ads');
-
-                expect(bonzo(img).attr('src')).toBe('//beacon.guim.co.uk/counts.gif?c=blocked-ads');
-            });
-
-            it('should create correct img element when counting more than one', function () {
-                var img = beacon.counts(['blocked-ads', 'localStorage-supported']);
-
-                expect(bonzo(img).attr('src'))
-                    .toBe('//beacon.guim.co.uk/counts.gif?c=blocked-ads&c=localStorage-supported');
-            });
+    beforeEach(function(done) {
+        inject.mock(
+            'common/utils/config', config
+        );
+        inject.test('common/modules/analytics/beacon', function (beaconDependency) {
+            beacon = beaconDependency;   
+            done();
         });
+    });
+
+    it('should exist', function () {
+        expect(beacon).toBeDefined();
+    });
+
+    it('should create correct img element when fired', function () {
+        var img = beacon.fire('/pv.gif');
+
+        expect(img.nodeName.toLowerCase()).toBe('img');
+        expect(bonzo(img).attr('src')).toBe('//beacon.guim.co.uk/pv.gif');
+    });
+
+    it('should create correct img element when counting', function () {
+        var img = beacon.counts('blocked-ads');
+
+        expect(bonzo(img).attr('src')).toBe('//beacon.guim.co.uk/counts.gif?c=blocked-ads');
+    });
+
+    it('should create correct img element when counting more than one', function () {
+        var img = beacon.counts(['blocked-ads', 'localStorage-supported']);
+
+        expect(bonzo(img).attr('src'))
+            .toBe('//beacon.guim.co.uk/counts.gif?c=blocked-ads&c=localStorage-supported');
     });
 });
