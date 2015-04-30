@@ -35,6 +35,8 @@ define([
     asObservableProps = asObservableProps.default;
     populateObservables = populateObservables.default;
     mediator = mediator.default;
+    humanTime = humanTime.default;
+    fetchVisibleStories = fetchVisibleStories.default;
 
     function Collection(opts) {
 

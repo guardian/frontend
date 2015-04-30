@@ -26,6 +26,7 @@ define([
     lastModified = lastModified.default;
     presser = presser.default;
     mediator = mediator.default;
+    humanTime = humanTime.default;
 
     function Front (params) {
         var frontId, listeners = mediator.scope();

@@ -1,48 +1,33 @@
-define([
-    'modules/vars',
-    'knockout',
-    'underscore',
-    'models/collections/article',
-    'models/group',
-    'modules/cache',
-    'modules/content-api',
-    'modules/copied-article',
-    'utils/global-listeners',
-    'utils/local-storage',
-    'utils/mediator',
-    'utils/update-scrollables'
-], function (
-    vars,
-    ko,
-    _,
-    Article,
-    Group,
-    cache,
-    contentApi,
-    copiedArticle,
-    globalListeners,
-    storage,
-    mediator,
-    updateScrollables
-) {
-    mediator = mediator.default;
+import vars from 'modules/vars';
+import ko from 'knockout';
+import _ from 'underscore';
+import BaseWidget from 'widgets/base-widget';
+import Article from 'models/collections/article';
+import Group from 'models/group';
+import contentApi from 'modules/content-api';
+import copiedArticle from 'modules/copied-article';
+import * as globalListeners from 'utils/global-listeners';
+import * as storage from 'utils/local-storage';
+import mediator from 'utils/mediator';
+import updateScrollables from 'utils/update-scrollables';
 
-    var updateClipboardScrollable = function (what) {
-        var onClipboard = true;
-        if (what && what.targetGroup) {
-            onClipboard = what.targetGroup.parentType === 'Clipboard';
-        }
-        if (onClipboard) {
-            _.defer(updateScrollables);
-        }
-    };
+var updateClipboardScrollable = function (what) {
+    var onClipboard = true;
+    if (what && what.targetGroup) {
+        onClipboard = what.targetGroup.parentType === 'Clipboard';
+    }
+    if (onClipboard) {
+        _.defer(updateScrollables);
+    }
+};
 
-    mediator.on('collection:updates', updateClipboardScrollable);
-    mediator.on('ui:close', updateClipboardScrollable);
-    mediator.on('ui:omit', updateClipboardScrollable);
-    mediator.on('ui:resize', updateClipboardScrollable);
+mediator.on('collection:updates', updateClipboardScrollable);
+mediator.on('ui:close', updateClipboardScrollable);
+mediator.on('ui:omit', updateClipboardScrollable);
+mediator.on('ui:resize', updateClipboardScrollable);
 
-    function Clipboard (params) {
+class Clipboard extends BaseWidget {
+    constructor(params) {
         var listeners = mediator.scope();
 
         this.storage = storage.bind('gu.front-tools.clipboard.' + vars.identity.email);
@@ -69,37 +54,37 @@ define([
         mediator.emit('clipboard:loaded', this);
     }
 
-    Clipboard.prototype.getCopiedArticle = function () {
+    getCopiedArticle() {
         var inMemory = this.hasCopiedArticle() && copiedArticle.peek();
 
         return inMemory ? inMemory.displayName : null;
-    };
+    }
 
-    Clipboard.prototype.elementHasFocus = function (meta) {
+    elementHasFocus(meta) {
         return meta === this.uiOpenElement();
-    };
+    }
 
-    Clipboard.prototype.onUIOpen = function (element, article, front) {
+    onUIOpen(element, article, front) {
         if (!front) {
             this.uiOpenElement(element);
         }
         updateClipboardScrollable(article ? {
             targetGroup: article.group
         } : null);
-    };
+    }
 
-    Clipboard.prototype.onCopiedChange = function (hasArticle) {
+    onCopiedChange(hasArticle) {
         this.hasCopiedArticle(hasArticle);
         if (!hasArticle) {
             this.dropdownOpen(false);
         }
-    };
+    }
 
-    Clipboard.prototype.flushCopiedArticles = function () {
+    flushCopiedArticles() {
         copiedArticle.flush();
-    };
+    }
 
-    Clipboard.prototype.onGlobalPaste = function (evt) {
+    onGlobalPaste(evt) {
         var activeElement = ((document.activeElement || {}).tagName || '').toLowerCase(),
             clipboard = evt.originalEvent.clipboardData.getData('Text');
 
@@ -112,9 +97,9 @@ define([
                 id: clipboard
             }
         }, this.group, false);
-    };
+    }
 
-    Clipboard.prototype.getItemsFromStorage = function () {
+    getItemsFromStorage() {
         var group = this.group,
             items = _.map(this.storage.getItem() || [], function (item) {
                 return new Article(_.extend(item, {
@@ -127,26 +112,27 @@ define([
             }));
         }
         return items;
-    };
+    }
 
-    Clipboard.prototype.saveInStorage = function () {
+    saveInStorage() {
         var allItems = _.map(this.group.items(), function (item) {
             return item.get();
         });
         this.storage.setItem(allItems);
-    };
+    }
 
-    Clipboard.prototype.pollArticlesChange = function (callback) {
+    pollArticlesChange(callback) {
         // Because I want to save intermediate states, in case the browser crashes
         // before the user clicks on 'save article', save regularly the current state
         this.pollID = setInterval(callback, vars.CONST.detectPendingChangesInClipboard);
-    };
+    }
 
-    Clipboard.prototype.dispose = function () {
+    dispose() {
         globalListeners.off('paste', null, this);
         clearInterval(this.pollID);
         this.listeners.dispose();
-    };
+        super.dispose();
+    }
+}
 
-    return Clipboard;
-});
+export default Clipboard;

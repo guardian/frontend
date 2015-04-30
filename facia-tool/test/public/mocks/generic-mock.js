@@ -12,7 +12,7 @@ class Mock extends EventEmitter {
             type: type,
             urlParams: urlParams,
             response: function (req) {
-                this.responseText = me.handle(req, me.defaultResponse);
+                this.responseText = me.handle(req, me.defaultResponse, this);
             },
             onAfterComplete: function () {
                 me.emit('complete');

@@ -10,6 +10,7 @@ import urlHost from 'utils/url-host';
 import sanitizeQuery from 'utils/sanitize-api-query';
 import sanitizeHtml from 'utils/sanitize-html';
 import * as snap from 'utils/snap';
+import humanTime from 'utils/human-time';
 
 describe('utils/parse-query-params', function () {
     var value = params('');
@@ -171,5 +172,46 @@ describe('utils/url-abs-path', function () {
         expect(urlAbsPath('/banana#handle')).toBe('banana');
         expect(urlAbsPath('https://anotherurl.com/banana#handle')).toBe('banana');
         expect(urlAbsPath('https://anotherurl.com/banana/for/free?q=hello')).toBe('banana/for/free');
+    });
+});
+
+describe('utils/human-time', function () {
+    it('converts to a readable time', function () {
+        expect(humanTime()).toBeUndefined();
+
+        var justnow = new Date();
+        justnow.setSeconds(0);
+        expect(humanTime(justnow)).toBe('just now');
+
+        var minutes = new Date();
+        minutes.setMinutes(minutes.getMinutes() - 3);
+        expect(humanTime(minutes)).toBe('3 mins ago');
+
+        var hours = new Date();
+        hours.setHours(hours.getHours() - 4);
+        expect(humanTime(hours)).toBe('4 hours ago');
+
+        var days = new Date();
+        days.setDate(days.getDate() - 5);
+        expect(humanTime(days)).toBe('5 days ago');
+
+        var months = new Date();
+        months.setMonth(months.getMonth() - 1);
+        expect(humanTime(months)).toBe('1 month ago');
+
+        var years = new Date();
+        years.setFullYear(years.getFullYear() - 1);
+        expect(humanTime(years)).toBe('1 year ago');
+
+        // test the rounding
+        var hoursRound = new Date();
+        hoursRound.setHours(hoursRound.getHours() - 1);
+        hoursRound.setMinutes(hoursRound.getMinutes() - 45);
+        expect(humanTime(hoursRound)).toBe('2 hours ago');
+
+        // future
+        var future = new Date();
+        future.setSeconds(future.getSeconds() + 90);
+        expect(humanTime(future)).toBe('in 2 mins');
     });
 });

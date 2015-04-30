@@ -28,6 +28,7 @@ define([
     asObservableProps = asObservableProps.default;
     findFirstById = findFirstById.default;
     populateObservables = populateObservables.default;
+    validateImageSrc = validateImageSrc.default;
 
     function Front(opts) {
         var self = this;
@@ -109,15 +110,14 @@ define([
             if (src === this.props.imageUrl()) { return; }
 
             validateImageSrc(src, {minWidth: 120})
-            .done(function(img) {
+            .then(function(img) {
                 self.props.imageUrl(img.src);
                 self.props.imageWidth(img.width);
                 self.props.imageHeight(img.height);
                 self.saveProps();
-            })
-            .fail(function(err) {
+            }, function(err) {
                 self.provisionalImageUrl(undefined);
-                window.alert('Sorry! ' + err);
+                window.alert('Sorry! ' + err.message);
             });
         }, this);
 
