@@ -55,6 +55,51 @@ trait FrontJsonLite extends ExecutionContexts{
 
 object FrontJsonLite extends FrontJsonLite
 
+trait FapiFrontJsonLite extends ExecutionContexts{
+  def get(json: JsValue): JsObject = {
+    Json.obj(
+      "webTitle" -> (json \ "seoData" \ "webTitle"),
+      "collections" -> getCollections(json)
+    )
+  }
+
+  private def getCollections(json: JsValue): Seq[JsValue] = {
+    (json \ "collections").asOpt[Seq[JsObject]].getOrElse(Nil).map(getCollection)
+  }
+
+  private def getCollection(json: JsValue): JsValue = {
+    Json.obj(
+      "displayName" -> (json \ "displayName"),
+      "href" -> (json \ "href"),
+      "id" -> (json \ "id"),
+      "content" -> getContent(json)
+    )
+  }
+
+  private def getContent(json: JsValue): Seq[JsValue] = {
+    val curated = (json \ "curated").asOpt[Seq[JsObject]].getOrElse(Nil)
+    val editorsPicks = (json \ "editorsPicks").asOpt[Seq[JsObject]].getOrElse(Nil)
+    val results = (json \ "results").asOpt[Seq[JsObject]].getOrElse(Nil)
+
+    (curated ++ editorsPicks ++ results)
+      .filterNot{ j =>
+      (j \ "LinkSnap").asOpt[String].isDefined
+    }
+      .map{ j =>
+      Json.obj(
+        "headline" -> ((j \ "headline").asOpt[JsString].getOrElse(j \ "fields" \ "headline"): JsValue),
+        "trailText" -> ((j \ "trailText").asOpt[JsString].getOrElse(j \ "fields" \ "trailText"): JsValue),
+        "thumbnail" -> (j \ "content" \ "fields" \ "thumbnail"),
+        "shortUrl" -> (j \ "content" \ "fields" \ "shortUrl"),
+        "id" -> (j \ "content" \ "id"),
+        "group" -> (j \ "group")
+      )
+    }
+  }
+}
+
+object FapiFrontJsonLite extends FapiFrontJsonLite
+
 
 trait FrontJson extends ExecutionContexts with Logging {
 
