@@ -41,6 +41,7 @@ define([
     'common/modules/onward/related',
     'common/modules/onward/tonal',
     'common/modules/social/share-count',
+    'common/modules/ui/accessibility-prefs',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/fonts',
@@ -96,6 +97,7 @@ define([
     Related,
     TonalComponent,
     shareCount,
+    accessilbilityPrefs,
     Dropdowns,
     fauxBlockLink,
     fonts,
@@ -435,6 +437,10 @@ define([
                 techFeedback.init();
             },
 
+            initAccessibilityPrefs: function () {
+                accessilbilityPrefs.init();
+            },
+
             initPublicApi: function () {
                 // BE CAREFUL what you expose here...
                 window.guardian.api = {
@@ -513,6 +519,7 @@ define([
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
             robust('c-run-custom-ab',   modules.runCustomAbTests);
+            robust('c-accessibility-prefs',       modules.initAccessibilityPrefs);
             robust('c-international-signposting', modules.internationalSignposting);
         };
 
