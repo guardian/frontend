@@ -41,7 +41,7 @@ define([
         this.variants = [
             {
                 id: 'A',
-                test: function () { 
+                test: function () {
                     stickyNav.stickyNavBurger();
                 }
             },
