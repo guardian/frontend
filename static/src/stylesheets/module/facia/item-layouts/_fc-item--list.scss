@@ -37,8 +37,4 @@ x x x x x x x x x x x x x x x x x x x x x x x x
         margin: 0;
         @include fs-header(1);
     }
-
-    .fc-item__liveblog-blocks {
-        height: 38px; // 1 * block height - 2px margin
-    }
 }
