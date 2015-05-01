@@ -6,7 +6,7 @@ describe('Last Modified', function () {
         this.mock = new Mock();
     });
     afterEach(function () {
-        this.mock.destroy();
+        this.mock.dispose();
     });
 
     it('fetches the last time', function (done) {

@@ -25,7 +25,7 @@ describe('Content API', function () {
     });
 
     afterEach(function () {
-        this.mock.destroy();
+        this.mock.dispose();
         vars.CONST.capiBatchSize = default_capiBatchSize;
     });
 

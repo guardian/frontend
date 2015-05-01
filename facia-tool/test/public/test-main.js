@@ -40,11 +40,15 @@ System.amdRequire([
         .value();
 
     System.amdRequire([
-        'mock/logger'
+        'mock/logger',
+        'Promise'
     ], function (
-        onceMock
+        onceMock,
+        Promise
     ) {
-        System.amdRequire(tests, function () {
+        Promise.all(_.map(tests, function (test) {
+            return System.import(test);
+        })).then(function () {
             window.__karma__.start();
         });
     });

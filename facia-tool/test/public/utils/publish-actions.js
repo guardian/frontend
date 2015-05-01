@@ -1,9 +1,10 @@
-define(function () {
-    return function (action) {
-        var deferred = $.Deferred();
+import Promise from 'Promise';
+import mockjax from 'test/utils/mockjax';
 
+export default function(action) {
+    return new Promise(function (resolve) {
         var publishedCollection;
-        var publishInterceptor = $.mockjax({
+        var publishInterceptor = mockjax({
             url: /collection\/publish\/(.+)/,
             urlParams: ['collection'],
             type: 'post',
@@ -12,13 +13,11 @@ define(function () {
                 publishedCollection = request.urlParams.collection;
             },
             onAfterComplete: function () {
-                $.mockjax.clear(publishInterceptor);
-                deferred.resolve(publishedCollection);
+                mockjax.clear(publishInterceptor);
+                resolve(publishedCollection);
             }
         });
         action();
         jasmine.clock().tick(100);
-
-        return deferred.promise();
-    };
-});
+    });
+}

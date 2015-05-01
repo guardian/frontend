@@ -23,7 +23,7 @@ describe('Sparklines', function () {
         vars.model.switches(switches);
     });
     afterEach(function () {
-        this.mockHistogram.destroy();
+        this.mockHistogram.dispose();
         vars.CONST.sparksBatchQueue = originalsparksBatchQueue;
         vars.CONST.sparksRefreshMs = originalsparksRefreshMs;
         var switches = vars.model.switches();

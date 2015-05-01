@@ -4,23 +4,34 @@ import EventEmitter from 'EventEmitter';
 
 class Mock extends EventEmitter {
 
-    constructor(path, urlParams=[], type='get') {
+    constructor(path, urlParams, type) {
+        // TODO I'd like to use default parameters, but this bug
+        // https://github.com/babel/babel/issues/1405
+        // makes the tests fail on phantom 1.9
+        if (!urlParams) {
+            urlParams = [];
+        }
+        if (!type) {
+            type = 'get';
+        }
         let me = this;
+        let lastRequest;
         this.defaultResponse = {};
         this.mockID = mockjax({
             url: path,
             type: type,
             urlParams: urlParams,
             response: function (req) {
+                lastRequest = req;
                 this.responseText = me.handle(req, me.defaultResponse, this);
             },
             onAfterComplete: function () {
-                me.emit('complete');
+                me.emit('complete', lastRequest);
             }
         });
     }
 
-    destroy() {
+    dispose() {
         mockjax.clear(this.mockID);
     }
 

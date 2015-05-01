@@ -1,11 +1,10 @@
-define([
-    'mock/config'
-], function (
-    mockConfig
-) {
-    return function (action) {
+import mockjax from 'test/utils/mockjax';
+import Promise from 'Promise';
+
+export default function(mockConfig, action) {
+    return new Promise(function (resolve) {
         var lastRequest, desiredAnswer;
-        var interceptFront = $.mockjax({
+        var interceptFront = mockjax({
             url: '/config/fronts',
             type: 'post',
             response: function (request) {
@@ -17,10 +16,10 @@ define([
                 clearRequest();
                 // Every such action is also triggering an update of the config
                 jasmine.clock().tick(100);
-                deferred.resolve(lastRequest);
+                resolve(lastRequest);
             }
         });
-        var interceptEdit = $.mockjax({
+        var interceptEdit = mockjax({
             url: /config\/fronts\/(.+)/,
             urlParams: ['front'],
             type: 'post',
@@ -34,22 +33,19 @@ define([
                 clearRequest();
                 // Every such action is also triggering an update of the config
                 jasmine.clock().tick(100);
-                deferred.resolve(lastRequest);
+                resolve(lastRequest);
             }
         });
 
         function clearRequest () {
-            $.mockjax.clear(interceptFront);
-            $.mockjax.clear(interceptEdit);
+            mockjax.clear(interceptFront);
+            mockjax.clear(interceptEdit);
         }
 
-        var deferred = new $.Deferred();
         desiredAnswer = action();
         mockConfig.update(desiredAnswer);
 
         // This action triggers a network request, advance time
         jasmine.clock().tick(100);
-
-        return deferred.promise();
-    };
-});
+    });
+}

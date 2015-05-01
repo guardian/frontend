@@ -28,7 +28,7 @@ describe('Fetch visible stories', function () {
         this.mock = new Mock();
     });
     afterEach(function () {
-        this.mock.destroy();
+        this.mock.dispose();
     });
 
     it('fails when there are no stories', function (done) {

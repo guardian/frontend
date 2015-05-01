@@ -32,7 +32,7 @@ describe('Presser', function () {
         mockjax.clear(mockPress);
         jasmine.clock().uninstall();
         mediator.off('presser:lastupdate', events);
-        this.mockLastModified.destroy();
+        this.mockLastModified.dispose();
         events = null;
     });
 

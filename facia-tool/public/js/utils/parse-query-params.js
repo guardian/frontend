@@ -12,7 +12,13 @@ import urlQuery from 'utils/url-query';
  * @param {boolean}  opts.multipleValues   whether a key can appear multiple times, all values are array
  */
 
-export default function(url=window.location.search, opts={}) {
+export default function(url, opts={}) {
+    // TODO I'd like to use default parameters, but this bug
+    // https://github.com/babel/babel/issues/1405
+    // makes the tests fail on phantom 1.9
+    if (!url) {
+        url = window.location.search;
+    }
     var nsIndex = opts.excludeNamespace ? -1 : 0,
         nsStrip = opts.namespace && opts.stripNamespace && !opts.excludeNamespace,
         nsLength = opts.namespace ? ('' + opts.namespace).length : 0,

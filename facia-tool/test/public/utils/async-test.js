@@ -1,46 +1,46 @@
-define([
-    'underscore',
-    'test/utils/collections-loader',
-    'test/utils/config-loader',
-    'knockout',
-    'modules/list-manager',
-    'utils/mediator'
-], function(
-    _,
-    collectionsLoader,
-    configLoader,
-    ko,
-    listManager,
-    mediator
-){
-    var loaders = {
-        'collections': collectionsLoader,
-        'config': configLoader
-    };
+import collectionsLoader from 'test/utils/collections-loader';
+import configLoader from 'test/utils/config-loader';
+import ko from 'knockout';
+import listManager from 'modules/list-manager';
+import mediator from 'utils/mediator';
 
-    return function sandbox (what) {
-        var running;
+var loaders = {
+    'collections': collectionsLoader,
+    'config': configLoader
+};
 
-        afterAll(function () {
-            ko.cleanNode(window.document.body);
-            running.unload();
-            mediator.removeAllListeners();
-            listManager.reset();
-        });
+var yeld = setTimeout;
 
-        return function (description, test) {
-            it(description, function (done) {
-                // Prevent pressing on fronts, it messes up with other tests
-                mediator.removeEvent('presser:detectfailures');
+export default function sandbox(what) {
+    var running, testMethod;
 
-                if (!running) {
-                    running = loaders[what]();
-                }
+    afterAll(function () {
+        ko.cleanNode(window.document.body);
+        running.unload();
+        mediator.removeAllListeners();
+        listManager.reset();
+    });
 
-                running.loader.then(function () {
-                    test(done);
-                });
+    testMethod = function (description, test) {
+        it(description, function (done) {
+            // Prevent pressing on fronts, it messes up with other tests
+            mediator.removeEvent('presser:detectfailures');
+
+            if (!running) {
+                running = loaders[what]();
+            }
+
+            running.loader.then(() => {
+                yeld(() => {
+                    test.call(this, done);
+                }, 10);
             });
-        };
+        });
     };
-});
+
+    testMethod.context = function () {
+        return running;
+    };
+
+    return testMethod;
+}
