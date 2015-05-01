@@ -335,16 +335,16 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
     log.info(s"Serving collection ID: $id")
     lazy val oldFormat = renderCollectionRssFallback(id)
-      lazy val newFormat =
-        getPressedCollection(id).map { collectionOption =>
-          collectionOption.map { collection =>
+    lazy val newFormat =
+      getPressedCollection(id).flatMap {
+        case Some(collection) =>
+          Future.successful{
             Cached(60) {
               val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
               val displayName = config.displayName.map(t => s"$t | The Guardian")
-              Ok(TrailsToRss.fromFaciaContent(displayName, collection.all, "", None)).as("text/xml; charset=utf8")
-            }
-          }.getOrElse(ServiceUnavailable)
-        }
+              Ok(TrailsToRss.fromFaciaContent(displayName, collection.all, "", None)).as("text/xml; charset=utf8")}}
+
+        case None => renderCollectionRssFallback(id)}
 
     if (Switches.FapiClientFormat.isSwitchedOn) {
       newFormat.fallbackTo(oldFormat)
@@ -362,7 +362,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
           Ok(TrailsToRss(config.displayName, collection.items)).as("text/xml; charset=utf8")
         }
-      }.getOrElse(ServiceUnavailable)
+      }.getOrElse(NotFound(s"Could not find $id"))
     }
   }
 
