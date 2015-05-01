@@ -31,6 +31,10 @@ Multi component (AKA Frankenponent)
 .commercial--multi {
     background-color: transparent;
 
+    .commercial__body & {
+        background-color: transparent;
+    }
+
     .commercial--travel,
     .commercial--masterclasses {
         .lineitem__image-right {
@@ -77,6 +81,13 @@ Multi component (AKA Frankenponent)
             padding-right: 5%;
         }
     }
+
+    @include guss-row('.lineitems');
+    .lineitems {
+        width: auto;
+    }
+    
+
 }
 
 .commercial--multi__header {
