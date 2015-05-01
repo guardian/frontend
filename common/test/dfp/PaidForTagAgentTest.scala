@@ -169,12 +169,12 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     ) should be(false)
   }
 
-  it should "be true if series tag exists" in {
+  it should "be false if series tag does not exist but keyword tag has same name" in {
     val tags = Seq(
       toKeyword("culture/article"),
       toSeries("best-awards/best-awards")
     )
-    TestPaidForTagAgent.isAdvertisementFeature(tags, maybeSectionId = None) should be(true)
+    TestPaidForTagAgent.isAdvertisementFeature(tags, maybeSectionId = None) should be(false)
   }
 
   it should "be true for an advertisement feature container" in {
@@ -317,10 +317,14 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     TestPaidForTagAgent.isAdvertisementFeature(tags, maybeSectionId = Some("culture")) should be(false)
   }
 
-  it should "be true if series is ad-feature sponsored" in {
-    val tags = Seq(toKeyword("global-development/global-development"),
-      toKeyword("culture/film"), toSeries("media-network/series/agencies"))
-    TestPaidForTagAgent.isAdvertisementFeature(tags, maybeSectionId = Some("culture")) should be(true)
+  it should "be false if series is not ad-feature sponsored but keyword has same name" in {
+    val tags = Seq(
+      toKeyword("global-development/global-development"),
+      toKeyword("culture/film"),
+      toSeries("media-network/series/agencies")
+    )
+    TestPaidForTagAgent.isAdvertisementFeature(tags, maybeSectionId = Some("culture")) should be(
+      false)
   }
 
   "isSponsored" should "be true for a sponsored article" in {
