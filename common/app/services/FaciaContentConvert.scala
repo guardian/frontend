@@ -13,7 +13,7 @@ object FaciaContentConvert {
     CuratedContent(
       content = frontendContent.apiContent.delegate,
       supportingContent = frontendContent.apiContent.supporting.map(FaciaContentConvert.frontentContentToFaciaContent(_, maybeCollectionConfig)),
-      cardStyle = com.gu.facia.api.utils.CardStyle(frontendContent.delegate, TrailMetaData.empty),
+      cardStyle = com.gu.facia.api.utils.CardStyle(frontendContent.delegate, trailMetaData),
       headline = frontendContent.headline,
       href = frontendContent.delegate.safeFields.get("href"),
       trailText = frontendContent.trailText,
