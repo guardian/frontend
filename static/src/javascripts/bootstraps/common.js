@@ -220,8 +220,13 @@ define([
 
             showTabs: function () {
                 var tabs = new Tabs();
-                mediator.on('modules:popular:loaded', function (el) {
-                    tabs.init(el);
+                [
+                    'modules:popular:loaded',
+                    'modules:geomostpopular:ready'
+                ].forEach(function (event) {
+                    mediator.on(event, function (el) {
+                        tabs.init(el);
+                    });
                 });
             },
 
