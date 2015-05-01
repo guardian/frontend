@@ -4,14 +4,16 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/modules/navigation/sticky-nav'
 ], function (
     fastdom,
     $,
     _,
     config,
     detect,
-    mediator
+    mediator,
+    stickyNav
 ) {
     return function () {
         this.id = 'MtStickyBurger';
@@ -39,7 +41,9 @@ define([
         this.variants = [
             {
                 id: 'A',
-                test: function () { }
+                test: function () { 
+                    stickyNav.stickyNavBurger();
+                }
             },
             {
                 id: 'B',

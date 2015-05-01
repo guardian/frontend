@@ -1,19 +1,17 @@
 define([
-    'bean',
-    'qwery',
     'fastdom',
-    'common/modules/experiments/ab',
-    'common/utils/mediator',
+    'common/utils/$',
+    'common/utils/_',
+    'common/utils/config',
     'common/utils/detect',
-    'common/utils/$'
+    'common/utils/mediator'
 ], function (
-    bean,
-    qwery,
     fastdom,
-    ab,
-    mediator,
+    $,
+    _,
+    config,
     detect,
-    $
+    mediator
 ) {
     // Sticky navigation test with very slim nav and burger all sections icon
     function scrollDirection(scrollY, config) {
