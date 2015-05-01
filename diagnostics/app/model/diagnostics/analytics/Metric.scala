@@ -47,6 +47,7 @@ object Metric extends Logging {
 
     //counts http proxy errors when submitting comments
     ("comment-http-proxy-error", CountMetric("comment-http-proxy-error")),
+    ("comment-error", CountMetric("comment-error")),
     ("comment-post-success", CountMetric("comment-post-success"))
   ) ++ iPhoneMetrics
 

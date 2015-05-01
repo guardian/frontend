@@ -253,7 +253,9 @@ CommentBox.prototype.postComment = function(e) {
 CommentBox.prototype.error = function(type, message) {
 
     if (type === 'HTTP_0') {
-        beacon.counts('comment-http-proxy-error');
+        beacon.counts('comment-http-proxy-error', 'comment-error');
+    } else {
+        beacon.counts('comment-error');
     }
 
     message = message || this.errorMessages[type];
