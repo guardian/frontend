@@ -17,7 +17,6 @@ import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
 import slices.Container
 import views.html.fragments.containers.facia_cards.container
-import implicits.FaciaContentImplicits._
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -124,7 +123,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       newFormat.fallbackTo(oldFormat)}
     else {
       oldFormat}
-}
+  }
 
 
 
@@ -190,7 +189,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderContainer(id: String) = MemcachedAction { implicit request =>
     log.info(s"Serving collection ID: $id")
     lazy val oldFormat = renderContainerFallback(id)
-    if (Switches.FapiClientFormat.isSwitchedOn) {
     lazy val newFormat =
       getPressedCollection(id).map { collectionOption =>
         collectionOption.map { collection =>
@@ -212,9 +210,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           }
         }.getOrElse(ServiceUnavailable)
       }
+
+    if (Switches.FapiClientFormat.isSwitchedOn) {
       newFormat.fallbackTo(oldFormat)
-    }
-    else {
+    } else {
       oldFormat
     }
   }
@@ -336,7 +335,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
     log.info(s"Serving collection ID: $id")
     lazy val oldFormat = renderCollectionRssFallback(id)
-    if (Switches.FapiClientFormat.isSwitchedOn) {
       lazy val newFormat =
         getPressedCollection(id).map { collectionOption =>
           collectionOption.map { collection =>
@@ -347,9 +345,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             }
           }.getOrElse(ServiceUnavailable)
         }
+
+    if (Switches.FapiClientFormat.isSwitchedOn) {
       newFormat.fallbackTo(oldFormat)
-    }
-    else {
+    } else {
       oldFormat
     }
   }
