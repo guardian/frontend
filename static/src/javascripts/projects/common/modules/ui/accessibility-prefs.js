@@ -19,8 +19,8 @@ define([
     }
 
     function init() {
-        _.forEach(['sepia', 'grayscale', 'invert', 'contrast', 'saturate', 'opacity'], function(filter){
-            if(userPrefs.isOn(filter)) {
+        _.forEach(['sepia', 'grayscale', 'invert', 'contrast', 'saturate', 'opacity'], function (filter) {
+            if (userPrefs.isOn(filter)) {
                 set(filter);
             }
         });
