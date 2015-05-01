@@ -274,6 +274,7 @@ CommentBox.prototype.error = function(type, message) {
  * @param {Object} resp
  */
 CommentBox.prototype.postCommentSuccess = function(comment, resp) {
+    beacon.counts('comment-post-success');
     comment.id = parseInt(resp.message, 10);
     this.getElem('body').value = '';
     this.resetPreviewComment();
