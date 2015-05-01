@@ -85,6 +85,7 @@
     height: 38px; // 1 * block height - 2px margin
     overflow: hidden;
     margin-top: -1 * $gs-baseline / 2;
+    margin-bottom: $gs-baseline / 2;
 }
 
 .fc-item__liveblog-blocks__inner {
