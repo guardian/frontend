@@ -312,19 +312,15 @@ object Switches {
 
   val AppleAdUkNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-uk-network-front",
     "If this switch is on, Apple ads will appear below nav on the UK network front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
   val AppleAdAuNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-au-network-front",
     "If this switch is on, Apple ads will appear below nav on the AU network front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
   val AppleAdTechFrontSwitch = Switch("Commercial", "apple-ads-on-tech-front",
     "If this switch is on, Apple ads will appear below nav on the tech section front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
-
-  val RefreshAdsAfterDisplaySwitch = Switch("Commercial", "refresh-ads-after-display",
-    "If this switch is on, ads will be refreshed after they display.",
-    safeState = On, sellByDate = new LocalDate(2015, 5, 6))
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
   val LazyLoadAds = Switch("Feature", "lz-ads",
     "If switched on then all ads are lazy loaded",
@@ -370,11 +366,6 @@ object Switches {
   val FeedbackLink = Switch("Monitoring", "tech-feedback",
     "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
     safeState = Off, new LocalDate(2015, 5, 23)
-  )
-
-  val SendExpiringSwitchesEmail = Switch("Monitoring", "expiring-switches-email",
-    "Send an email when switches are expiring soon",
-    safeState = Off, new LocalDate(2015, 5, 6)
   )
 
 

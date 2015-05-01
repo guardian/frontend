@@ -262,11 +262,6 @@ define([
                         slot: defineSlot($adSlot)
                     };
                     googletag.display(slotId);
-
-                    if (config.switches.refreshAdsAfterDisplay) {
-                        refreshSlot($adSlot);
-                    }
-
                 };
             if (displayed && !slots[slotId]) { // dynamically add ad slot
                 // this is horrible, but if we do this before the initial ads have loaded things go awry
