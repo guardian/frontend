@@ -4,7 +4,6 @@ module.exports = function(config) {
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: './../../../',
 
-
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: ['jspm', 'jasmine', 'phantomjs-shim'],
@@ -17,8 +16,9 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            { pattern: 'javascripts/test/setup.js', included: true },
             { pattern: 'systemjs-normalize.js', included: true },
+            { pattern: 'javascripts/test/setup.js', included: true },
+            { pattern: 'jspm_packages/**/*.js', included: false },
             { pattern: 'javascripts/projects/**/*.js', included: false},
             { pattern: 'javascripts/es6/**/*.js', included: false},
             { pattern: 'javascripts/vendor/**/*.js', included: false},
@@ -63,11 +63,6 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'],
-
-
-        // Continuous Integration mode
-        // if true, Karma captures browsers, runs the tests and exits
-        singleRun: true
+        browsers: ['PhantomJS']
     });
 };

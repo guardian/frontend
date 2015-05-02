@@ -98,7 +98,9 @@
     },
     "devDependencies": {
       "babel": "npm:babel@^4.7.16",
-      "babel-runtime": "npm:babel-runtime@^4.7.16"
+      "babel-runtime": "npm:babel-runtime@^4.7.16",
+      "jasmine-sinon": "bower:jasmine-sinon@0.4.0",
+      "sinonjs": "bower:sinonjs@1.10.2"
     }
   }
 }
