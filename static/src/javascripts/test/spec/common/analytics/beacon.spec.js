@@ -12,9 +12,8 @@ describe('Beacon', function () {
         };    
 
     beforeEach(function(done) {
-        inject.mock(
-            'common/utils/config', config
-        );
+        inject.mock('common/utils/config', config);
+        
         inject.test('common/modules/analytics/beacon', function (beaconDependency) {
             beacon = beaconDependency;   
             done();
