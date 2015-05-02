@@ -34,6 +34,7 @@
     "grunt-text-replace": "0.3.12",
     "grunt-webfontjson": "0.0.4",
     "handlebars": "2.0.0",
+    "jasmine-core": "^2.3.0",
     "jit-grunt": "0.8.0",
     "jsonfile": "2.0.0",
     "jspm": "0.15.0",
