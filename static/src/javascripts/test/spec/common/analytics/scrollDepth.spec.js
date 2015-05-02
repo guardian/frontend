@@ -1,37 +1,21 @@
-define([
-    'common/utils/mediator',
-    'common/modules/analytics/scrollDepth'
-], function(mediator, ScrollDepth) {
+import mediator from 'common/utils/mediator';
+import ScrollDepth from 'common/modules/analytics/scrollDepth';
 
-    var sd;
+describe('Scroll depth', function() {
 
-    beforeEach(function() {
-        document.body.style.height = '10000px';
-        dataCallback = sinon.spy();
-
-        mediator.on('scrolldepth:data', dataCallback);
-
-        sd = new ScrollDepth();
+    beforeEach(function(){
+        document.body.style.height = '100px';
+        var sd = new ScrollDepth();
     });
 
-    afterEach(function() {
-        delete sd;
-    });
+    it('should log page depth on scroll.', function(done) {
 
-    xdescribe('Scroll depth', function() {
-
-        it('should log page depth on scroll.', function() {
-            window.scrollTo(0, 4000);
-            mediator.emit('window:scroll');
-
-            waitsFor(function () {
-                return dataCallback.called === true;
-            }, 'scroll data callback to have been called', 4000);
-
-            runs(function(){
-                expect(dataCallback.args[0][0].page.depth).toEqual(100);
-            });
+        mediator.on('scrolldepth:data', function (data){
+            expect(data.page.depth).toEqual(100);            
+            done();
         });
-    });
 
+        window.scrollTo(0, 50);
+        mediator.emit('window:scroll');
+    });
 });
