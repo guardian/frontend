@@ -9,7 +9,7 @@ module.exports = function(config) {
         frameworks: ['jspm', 'jasmine', 'phantomjs-shim'],
 
         jspm: {
-            moduleIDs: ['test/spec/common/**/*.spec.js'],
+            moduleIDs: ['test/spec/**/*.spec.js'],
             modulePath: 'javascripts',
             config: 'systemjs-config.js'
         },
