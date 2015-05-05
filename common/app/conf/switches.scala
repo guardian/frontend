@@ -562,7 +562,7 @@ object Switches {
 
   val ABMtDepth = Switch("A/B Tests", "ab-mt-depth",
     "Top navigation and top ad slot are sticky with different variants of depth.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 6)
   )
 
   val ABMtStickyBurger = Switch("A/B Tests", "ab-mt-sticky-burger",
