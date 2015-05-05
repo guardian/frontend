@@ -36,7 +36,7 @@ define([
             {
                 id: 'A',
                 test: function () {
-                    stickyNav.stickyNavBurger();
+                    stickyNav.stickyNavBurger(300);
                 }
             }
         ];
