@@ -1,46 +1,35 @@
-var systemNormalize = System.normalize,
-    mockedObjects = {};
+"format es6";
 
-System.normalize = function (name, parentName) {
+export default class Injector {
+   constructor() {
+        this.loader = System.clone();
 
-    var newName = name;
-
-    if (name in mockedObjects) {
-        newName = mockedObjects[name].mockId;
+        this.loader.paths = System.paths;
+        this.loader.map = System.map;
+        this.loader.normalize = System.normalize;
+        this.loader.transpiler = System.transpiler;
     }
 
-    return systemNormalize.call(this, newName, parentName);    
-};    
+    mock(mocks) {
 
-var Injector = function() {
-    // Reset the mockedObjects map.
-    for (var moduleName in mockedObjects) {
-        System.delete(mockedObjects[moduleName].mockId);        
+        // Support alternative syntax
+        if (typeof mocks === 'string') {
+            mocks = { [mocks]: arguments[1] }
+        }
+        Object.keys(mocks).forEach(moduleId => {
+            var mock = mocks[moduleId];
+            var mappedModuleId = System.map[moduleId] || moduleId;
+            this.loader.set(mappedModuleId, this.loader.newModule(mock));
+        });
+        return this;
     }
-    mockedObjects = {};
-};
 
-Injector.prototype.mock = function(module, mock) {
-    var dependency = {
-        mock: mock,
-        mockId: 'injector/' + module
-    };
-    mockedObjects[module] = dependency;
-
-    System.set(dependency.mockId, System.newModule(dependency.mock));
-    return this;
-};
-
-Injector.prototype.store = function(module) {
-    if (module in mockedObjects) {
-        return mockedObjects[module].mock;
+    test(dependencies, callback) {
+        // Support alternative syntax
+        if (typeof dependencies === 'string') {
+            dependencies = [dependencies];
+        }
+        return Promise.all(dependencies.map(dep => this.loader.import(dep)))
+            .then(args => callback(...args))
     }
-    return null;
-};
-
-Injector.prototype.test = function(module, callback) {
-    System.delete(module);
-    return System.import(module).then(callback);
-};
-
-export default Injector;
+}
