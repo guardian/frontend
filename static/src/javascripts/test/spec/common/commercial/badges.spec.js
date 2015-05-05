@@ -1,9 +1,9 @@
-import fastdom from 'fastdom'
-import qwery from 'qwery'
-import $ from 'common/utils/$'
-import template from 'common/utils/template'
-import fixtures from 'helpers/fixtures'
-import Injector from 'helpers/injector'
+import fastdom from 'fastdom';
+import qwery from 'qwery';
+import $ from 'common/utils/$';
+import template from 'common/utils/template';
+import fixtures from 'helpers/fixtures';
+import Injector from 'helpers/injector';
 
 new Injector()
     .test(['common/modules/commercial/badges', 'common/utils/config'], function (badges, config) {

@@ -1,41 +1,36 @@
-define([
-    'common/modules/identity/api',
-    "common/modules/identity/autosignin",
-    "common/modules/identity/facebook-authorizer"
-], function(
-    Id,
-    AutoSignin,
-    FacebookAuthorizer
-) {
-    describe('On Intitalisation', function() {
-        var config = {
-                'page' : {
-                    'idApiUrl' : "https://idapi.theguardian.com"
-                }
-            },
-            spy;
+import Id from 'common/modules/identity/api';
+import AutoSignin from 'common/modules/identity/autosignin';
+import FacebookAuthorizer from 'common/modules/identity/facebook-authorizer';
 
-        beforeEach(function() {
-            Id.init(config);
-            sinon.stub(Id, "shouldAutoSigninInUser");
-            spy = sinon.stub(FacebookAuthorizer.prototype, "getLoginStatus");
-        });
+describe('On Intitalisation', function() {
+    var config = {
+            'page' : {
+                'idApiUrl' : "https://idapi.theguardian.com"
+            }
+        },
+        spy;
 
-        afterEach(function() {
-            Id.shouldAutoSigninInUser.restore();
-            spy.restore();
-        });
+    beforeEach(function() {
+        Id.init(config);
+        sinon.stub(Id, "shouldAutoSigninInUser");
+        spy = sinon.stub(FacebookAuthorizer.prototype, "getLoginStatus");
+    });
 
-        it("does not get the users facebook status when they are not eligible for autosignin", function() {
-            Id.shouldAutoSigninInUser.returns(false);
-            new AutoSignin(config).init();
-            expect(spy.callCount).toEqual(0);
-        });
+    afterEach(function() {
+        Id.shouldAutoSigninInUser.restore();
+        spy.restore();
+    });
 
-        it("gets the users facebook logged in status when eligible for signing on", function() {
-            Id.shouldAutoSigninInUser.returns(true);
-            new AutoSignin(config).init();
-            expect(spy.callCount).toEqual(1);
-        });
+    it("does not get the users facebook status when they are not eligible for autosignin", function() {
+        Id.shouldAutoSigninInUser.returns(false);
+        new AutoSignin(config).init();
+        expect(spy.callCount).toEqual(0);
+    });
+
+    it("gets the users facebook logged in status when eligible for signing on", function() {
+        Id.shouldAutoSigninInUser.returns(true);
+        new AutoSignin(config).init();
+        expect(spy.callCount).toEqual(1);
     });
 });
+

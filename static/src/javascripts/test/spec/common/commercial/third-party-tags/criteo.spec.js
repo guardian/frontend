@@ -11,6 +11,8 @@ new Injector()
             }));
         }
 
+        var requireStub;
+
         describe('Criteo', function () {
 
             beforeEach(function () {

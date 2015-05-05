@@ -1,28 +1,24 @@
-define([
-    'Promise',
-    'common/utils/robust'
-], function(
-    Promise,
-    robust
-) {
-    describe('Robust', function() {
-        it('should complete successfully', function (success) {
-            robust('test', function () { success() });
-        });
+import Promise from 'Promise';
+import robust from 'common/utils/robust';
 
-        it('should log and swallow exceptions', function (success) {
+describe('Robust', function() {
+    it('should complete successfully', function (success) {
+        robust('test', function () { success() });
+    });
 
-            var reporter = function (ex, options) {
-                expect(ex.message).toBe('fail');
-                expect(options.tags.module).toBe('test');
-                success();
-            };
+    it('should log and swallow exceptions', function (success) {
 
-            robust('test',
-                function () { throw new Error('fail'); },
-                reporter
-            );
-        });
+        var reporter = function (ex, options) {
+            expect(ex.message).toBe('fail');
+            expect(options.tags.module).toBe('test');
+            success();
+        };
+
+        robust('test',
+            function () { throw new Error('fail'); },
+            reporter
+        );
     });
 });
+
 

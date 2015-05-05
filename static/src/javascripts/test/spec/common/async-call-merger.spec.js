@@ -1,48 +1,50 @@
-define(['common/modules/asyncCallMerger'], function(asyncCallMerger) {
-    describe("AsyncCallMerger", function() {
-        var targetCallCount;
-        var targetFn;
-        var targetFnWithMerging;
+import asyncCallMerger from 'common/modules/asyncCallMerger';
 
-        beforeEach(function() {
-            targetFn = sinon.spy();
-            targetFnWithMerging  = asyncCallMerger.mergeCalls(targetFn);
-        });
+describe("AsyncCallMerger", function() {
+    var targetCallCount;
+    var targetFn;
+    var targetFnWithMerging;
 
-        it("should only call target once", function() {
-            targetFnWithMerging(function () {});
-            targetFnWithMerging(function () {});
+    beforeEach(function() {
+        targetFn = sinon.spy();
+        targetFnWithMerging  = asyncCallMerger.mergeCalls(targetFn);
+    });
 
-            expect(targetFn.callCount).toEqual(1)
-        });
+    it("should only call target once", function() {
+        targetFnWithMerging(function () {});
+        targetFnWithMerging(function () {});
 
-        it("should call both callbacks with result of target callback", function() {
-            var callback1 = sinon.spy();
-            targetFnWithMerging(callback1);
+        expect(targetFn.callCount).toEqual(1)
+    });
 
-            var callback2 = sinon.spy();
-            targetFnWithMerging(callback2);
+    it("should call both callbacks with result of target callback", function() {
+        var callback1 = sinon.spy();
+        targetFnWithMerging(callback1);
 
-            //call callback passed to target fn
-            targetFn.getCall(0).args[0]("target result")
+        var callback2 = sinon.spy();
+        targetFnWithMerging(callback2);
 
-            expect(callback1.getCall(0).args).toEqual(["target result"])
-            expect(callback2.getCall(0).args).toEqual(["target result"])
-        });
+        //call callback passed to target fn
+        targetFn.getCall(0).args[0]("target result")
 
-        it("should call both callbacks with result of target callback when merged function is called after call to target has completed", function() {
-            var callback1 = sinon.spy();
-            targetFnWithMerging(callback1);
+        expect(callback1.getCall(0).args).toEqual(["target result"])
+        expect(callback2.getCall(0).args).toEqual(["target result"])
+    });
 
-            //call callback passed to target fn
-            targetFn.getCall(0).args[0]("target result")
+    it("should call both callbacks with result of target callback when merged function is called after call to target has completed", function() {
+        var callback1 = sinon.spy();
+        targetFnWithMerging(callback1);
 
-            var callback2 = sinon.spy();
-            targetFnWithMerging(callback2);
+        //call callback passed to target fn
+        targetFn.getCall(0).args[0]("target result")
 
-            expect(callback1.getCall(0).args).toEqual(["target result"])
-            expect(callback2.getCall(0).args).toEqual(["target result"])
-        });
+        var callback2 = sinon.spy();
+        targetFnWithMerging(callback2);
+
+        expect(callback1.getCall(0).args).toEqual(["target result"])
+        expect(callback2.getCall(0).args).toEqual(["target result"])
     });
 });
+
+
 

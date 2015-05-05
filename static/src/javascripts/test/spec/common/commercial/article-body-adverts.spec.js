@@ -1,9 +1,9 @@
-import fastdom from 'fastdom'
-import qwery from 'qwery'
-import Promise from 'Promise'
-import $ from 'common/utils/$'
-import fixtures from 'helpers/fixtures'
-import Injector from 'helpers/injector'
+import fastdom from 'fastdom';
+import qwery from 'qwery';
+import Promise from 'Promise';
+import $ from 'common/utils/$';
+import fixtures from 'helpers/fixtures';
+import Injector from 'helpers/injector';
 
 new Injector()
     .test(['common/modules/commercial/article-body-adverts',
