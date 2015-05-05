@@ -87,7 +87,6 @@
       "react": "npm:react@~0.12",
       "reqwest": "github:ded/reqwest@1.1.5",
       "socketio": "bower:socket.io-client@~1.1.0",
-      "squire": "bower:squire@0.2.0",
       "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
       "text": "github:systemjs/plugin-text@^0.0.2",
       "videojs": "github:guardian/video.js@4.11.1.1",
