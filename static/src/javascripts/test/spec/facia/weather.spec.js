@@ -1,5 +1,5 @@
 define([
-    'bean',
+    '../../../bower_components/bean/bean',
     'bonzo',
     'common/utils/$',
     'common/utils/ajax',

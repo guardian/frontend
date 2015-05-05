@@ -2,7 +2,7 @@ define([
     'facia/modules/ui/container-toggle',
     'common/utils/$',
     'common/utils/mediator',
-    'bonzo',
+    '../../../bower_components/bonzo/bonzo',
     'bean',
     'fastdom',
     'common/modules/user-prefs',

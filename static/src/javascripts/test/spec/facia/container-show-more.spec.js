@@ -1,5 +1,5 @@
 define([
-    'bonzo',
+    '../../../bower_components/bonzo/bonzo',
     'qwery',
     'common/utils/_',
     'facia/modules/ui/container-show-more'

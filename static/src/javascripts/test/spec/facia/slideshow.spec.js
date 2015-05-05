@@ -1,6 +1,6 @@
 define([
     'Promise',
-    'bonzo',
+    '../../../bower_components/bonzo/bonzo',
     'qwery',
     'fastdom',
     'common/utils/mediator',
