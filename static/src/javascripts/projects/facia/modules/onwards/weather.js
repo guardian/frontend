@@ -197,7 +197,7 @@ define([
         },
 
         attachToDOM: function (tmpl, city) {
-            $holder = $('.js-container--first .js-container__header');
+            $holder = $('#headlines .js-container__header');
             $('.js-weather', $holder).remove();
             $holder.append(tmpl.replace(new RegExp('{{city}}', 'g'), city));
         },
