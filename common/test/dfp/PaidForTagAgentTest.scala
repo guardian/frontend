@@ -70,7 +70,11 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
         targetedName = "sixnations",
         paidForType = Sponsored,
         tagType = Keyword
-      )
+      ),
+      paidForTag("sustainable-business/series/food",
+        Sponsored,
+        Series,
+        toLineItem(sponsor = Some("spon")))
     )
 
     val advertisementFeatureSponsorships: Seq[PaidForTag] = Seq(
@@ -390,6 +394,12 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
       maybeSectionId = None,
       maybeEdition = Some(Us)
     ) should be(false)
+  }
+
+  it should "be false if there is a sponsored series and an unsponsored keyword with the same suffix, " +
+    "and the page has the keyword but not the series" in {
+    val tags = Seq(toKeyword("environment/food"))
+    TestPaidForTagAgent.isSponsored(tags, maybeSectionId = None) should be(false)
   }
 
   it should "be true for a sponsored container" in {
