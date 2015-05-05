@@ -135,7 +135,9 @@ define([
         });
     }
 
-    function stickyNavBurger() {
+    function stickyNavBurger(stickTill) {
+        var stickTill = stickTill || 480;
+
         fastdom.read(function () {
             var stickyConfig = {
                     $stickyNavigation: $('.sticky-nav-mt-test .navigation'),
@@ -147,7 +149,7 @@ define([
                     $logoWrapper: $('.js-navigation-header .logo-wrapper'),
                     $navigationScroll: $('.js-navigation-header .navigation__scroll'),
                     $navigationGreySection: $('.js-navigation-header .navigation__container--first'),
-                    scrollThreshold: config.page.contentType === 'Video' || config.page.contentType === 'Gallery' ? 280 : 480,
+                    scrollThreshold: config.page.contentType === 'Video' || config.page.contentType === 'Gallery' ? 280 : stickTill,
                     prevScroll: 0,
                     direction: ''
                 };
@@ -185,12 +187,16 @@ define([
         'mobile': 480,
         'desktop': {
             'slimnav': 100,
-            'nobanner': 400
+            'nobanner': 480
         }
     },
     $els = {};
 
-    function stickyNavAll() {
+    function stickyNavAll(stickTill) {
+        var stickTill = stickTill || stickyTresholds.desktop.nobanner;
+
+        stickyTresholds.desktop.nobanner = stickTill;
+
         fastdom.read(function () {
             $els.header        = $('#header');
             $els.bannerDesktop = $('.top-banner-ad-container--above-nav');

@@ -36,7 +36,7 @@ define([
             {
                 id: 'A',
                 test: function () {
-                    stickyNav.stickyNavAll();
+                    stickyNav.stickyNavAll(300);
                 }
             }
         ];
