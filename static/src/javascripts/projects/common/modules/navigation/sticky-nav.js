@@ -136,7 +136,7 @@ define([
     }
 
     function stickyNavBurger(stickTill) {
-        var stickTill = stickTill || 480;
+        stickTill = stickTill || 480;
 
         fastdom.read(function () {
             var stickyConfig = {
@@ -193,7 +193,7 @@ define([
     $els = {};
 
     function stickyNavAll(stickTill) {
-        var stickTill = stickTill || stickyTresholds.desktop.nobanner;
+        stickTill = stickTill || stickyTresholds.desktop.nobanner;
 
         stickyTresholds.desktop.nobanner = stickTill;
 
