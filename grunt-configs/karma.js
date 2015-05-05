@@ -11,8 +11,8 @@ module.exports = function(grunt, options) {
         'facia-tool': {
             configFile: 'facia-tool/test/public/conf/karma.conf.js'
         },
-        es6: {
-            configFile: 'static/src/javascripts/test/conf/settings-es6.js'
+        'project': {
+            configFile: 'static/src/javascripts/test/conf/settings.js'
         }
     };
 };
