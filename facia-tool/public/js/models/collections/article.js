@@ -299,22 +299,20 @@ define([
                     label: 'slideshow',
                     singleton: 'images',
                     type: 'boolean'
-                });
-
-                for (var i = 0; i < vars.CONST.maxSlideshowImages; i += 1) {
-                    metaFields.push({
-                        key: 'slideshowImageSrc_' + i,
+                }, {
+                    key: 'slideshow',
+                    editable: true,
+                    omitForSupporting: true,
+                    'if': 'imageSlideshowReplace',
+                    type: 'list',
+                    length: vars.CONST.maxSlideshowImages,
+                    item: {
+                        type: 'image',
                         editable: true,
                         dropImage: true,
-                        omitForSupporting: true,
-                        'if': 'imageSlideshowReplace',
-                        label: 'slideshow image ' + (i + 1) + ' URL',
                         validator: {
-                            fn: 'validateImage',
+                            fn: 'validateListImage',
                             params: {
-                                src: 'slideshowImageSrc_' + i,
-                                width: 'slideshowImageSrcWidth_' + i,
-                                height: 'slideshowImageSrcHeight_' + i,
                                 options: {
                                     maxWidth: 1000,
                                     minWidth: 400,
@@ -322,20 +320,9 @@ define([
                                     heightAspectRatio: 3
                                 }
                             }
-                        },
-                        type: 'text'
-                    }, {
-                        key: 'slideshowImageSrcWidth_' + i,
-                        'if': 'imageSlideshowReplace',
-                        label: 'slideshow image ' + i + ' width',
-                        type: 'text'
-                    }, {
-                        key: 'slideshowImageSrcHeight_' + i,
-                        'if': 'imageSlideshowReplace',
-                        label: 'slideshow image ' + i + ' height',
-                        type: 'text'
-                    });
-                }
+                        }
+                    }
+                });
             };
 
 
@@ -365,9 +352,6 @@ define([
             this.meta = asObservableProps(_.pluck(metaFields, 'key'));
 
             populateObservables(this.meta, opts.meta);
-            if (slideshowEnabled) {
-                populateSlideshow(this.meta, opts.meta ? opts.meta.slideshow : null);
-            }
 
             this.metaDefaults = {};
 
@@ -476,8 +460,8 @@ define([
                     return meta.imageSrc();
                 } else if (meta.imageCutoutReplace()) {
                     return meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail();
-                } else if (meta.imageSlideshowReplace && meta.imageSlideshowReplace() && meta.slideshowImageSrc_0()) {
-                    return meta.slideshowImageSrc_0();
+                } else if (meta.imageSlideshowReplace && meta.imageSlideshowReplace() && meta.slideshow() && meta.slideshow()[0]) {
+                    return meta.slideshow()[0].src;
                 } else {
                     return fields.thumbnail();
                 }
@@ -529,21 +513,44 @@ define([
             }
         };
 
-        Article.prototype.metaEditor = function(opts, index, all) {
+        Article.prototype.metaEditor = function(opts, index, all, defaults) {
             var self = this,
                 key,
                 meta,
-                field;
+                field,
+                items = [];
 
             if (!opts.editable) { return; }
             if (this.slimEditor && opts.slimEditable !== true) { return; }
+            if (!defaults) { defaults = {}; }
 
             key = opts.key;
-            meta = self.meta[key] || function() {};
-            field = self.fields[key] || function() {};
+            meta = self.meta[key] || ko.observable(defaults.meta);
+            field = self.fields[key] || ko.observable(defaults.field);
 
             if (opts.validator && _.isFunction(self[opts.validator.fn])) {
-                meta.subscribe(function() { self[opts.validator.fn](opts.validator.params); });
+                meta.subscribe(function() {
+                    self[opts.validator.fn](opts.validator.params, meta);
+                });
+            }
+
+            if (opts.type === 'list') {
+                items = _.chain(opts.length)
+                .times(function (i) {
+                    return this.metaEditor(opts.item, null, all, {
+                        meta: (self.meta[key]() || [])[i]
+                    });
+                }, this)
+                .filter(function (editor) { return !!editor; })
+                .map(function (editor) {
+                    editor.meta.subscribe(function () {
+                        meta(_.map(items, function (item) {
+                            return item.meta();
+                        }));
+                    });
+                    return editor;
+                })
+                .value();
             }
 
             return {
@@ -556,6 +563,8 @@ define([
                 meta: meta,
 
                 field: field,
+
+                items: items,
 
                 revert: function() { meta(undefined); },
 
@@ -626,6 +635,10 @@ define([
                     } catch (ex) {
                         alert(ex.message);
                     }
+                },
+
+                clear: function () {
+                    undefineObservables(meta);
                 }
             };
         };
@@ -685,7 +698,7 @@ define([
 
         Article.prototype.getMeta = function() {
             var self = this,
-                cleanMeta, slideshow = [];
+                cleanMeta;
 
             cleanMeta = _.chain(self.meta)
                 .pairs()
@@ -705,6 +718,10 @@ define([
                         return item.get();
                     }) : p[1]];
                 })
+                // clean sparse arrays
+                .map(function (p) {
+                    return [p[0], _.isArray(p[1]) ? _.filter(p[1], function (item) { return !!item; }) : p[1]];
+                })
                 // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
                 // return as obj, or as undefined if empty (this omits it from any subsequent JSON.stringify result)
@@ -714,22 +731,6 @@ define([
                     return obj;
                 }, {})
                 .value();
-
-            for (var i = 0; i < vars.CONST.maxSlideshowImages; i += 1) {
-                if (cleanMeta['slideshowImageSrc_' + i]) {
-                    slideshow.push({
-                        src: cleanMeta['slideshowImageSrc_' + i],
-                        width: cleanMeta['slideshowImageSrcWidth_' + i],
-                        height: cleanMeta['slideshowImageSrcHeight_' + i]
-                    });
-                    delete cleanMeta['slideshowImageSrc_' + i];
-                    delete cleanMeta['slideshowImageSrcWidth_' + i];
-                    delete cleanMeta['slideshowImageSrcHeight_' + i];
-                }
-            }
-            if (slideshow.length) {
-                cleanMeta.slideshow = slideshow;
-            }
 
             if (this.group && this.group.parentType === 'Collection') {
                 cleanMeta.group = this.group.index + '';
@@ -900,7 +901,7 @@ define([
             var imageSrc = this.meta[params.src],
                 imageSrcWidth = this.meta[params.width],
                 imageSrcHeight = this.meta[params.height],
-                opts = params.height;
+                opts = params.options;
 
             if (imageSrc()) {
                 validateImageSrc(imageSrc(), opts)
@@ -915,6 +916,26 @@ define([
                     });
             } else {
                 undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
+            }
+        };
+
+        Article.prototype.validateListImage = function (params, meta) {
+            var image = meta();
+
+            if (image && image.src) {
+                // This image is already validated
+                return;
+            } else if (image) {
+                validateImageSrc(image, params.options)
+                    .done(function(img) {
+                        meta(img);
+                    })
+                    .fail(function(err) {
+                        undefineObservables(meta);
+                        alert(err);
+                    });
+            } else {
+                undefineObservables(meta);
             }
         };
 
@@ -934,19 +955,6 @@ define([
             return contentApiArticle.fields.membershipAccess === 'members-only' ||
                 contentApiArticle.fields.membershipAccess === 'paid-members-only' ||
                 !!_.find(contentApiArticle.tags, {id: 'news/series/looking-back'});
-        }
-
-        function populateSlideshow (meta, slideshow) {
-            if (!slideshow) {
-                return;
-            }
-            for (var i = 0; i < vars.CONST.maxSlideshowImages; i += 1) {
-                if (slideshow[i]) {
-                    meta['slideshowImageSrc_' + i](slideshow[i].src);
-                    meta['slideshowImageSrcWidth_' + i](slideshow[i].width);
-                    meta['slideshowImageSrcHeight_' + i](slideshow[i].height);
-                }
-            }
         }
 
         function undefineObservables() {

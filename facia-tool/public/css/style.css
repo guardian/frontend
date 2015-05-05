@@ -1191,6 +1191,31 @@ select {
     width: 15px;
 }
 
+.editor--list {
+    display: table;
+}
+
+.editor--image {
+    background-color: #CCC;
+    width: 83px;
+    height: 50px;
+    display: inline-block;
+    margin-right: 4px;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position-x: right;
+}
+
+.editor--image.underDrag {
+    background-color: #999999;
+}
+
+.editor--image__remove {
+    background-color: #DDD;
+    color: #999;
+    padding: 1px;
+}
+
 .editor .underDrag {
     background-color: #999999;
 }

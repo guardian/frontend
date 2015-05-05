@@ -65,6 +65,31 @@
                     <span class="editor--boolean__state"><span data-bind="visible: meta">&#10004;</span></span>
                 </span>
             <!-- /ko -->
+
+            <!-- ko if: type === 'list' -->
+                <div class="editor--list" data-bind="template: {name: 'template_editor', foreach: items}"></div>
+            <!-- /ko -->
+
+            <!-- ko if: type === 'image' -->
+                <span class="editor--image" data-bind="
+                    css: {
+                        'underDrag': underDrag
+                    },
+                    dropImage: dropImage,
+                    style: {
+                        backgroundImage: meta() ? 'url(' + meta().src + ')' : ''
+                    }
+                ">
+                    <!-- ko if: meta -->
+                        <a class="editor--image__remove" data-bind="click: clear">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    <!-- /ko -->
+                    <!-- ko ifnot: meta -->
+                        <p>drag an image</p>
+                    <!-- /ko -->
+                </span>
+            <!-- /ko -->
         <!-- /ko -->
     </script>
 
