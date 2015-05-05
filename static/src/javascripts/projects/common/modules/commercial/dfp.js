@@ -244,15 +244,15 @@ define([
                         scrollBottom = scrollTop + bonzo.viewport().height,
                         depth;
 
-                        // For depth test we want depth based on variant but for main test we want default depth
-                        // TODO: this will be removed after tests will finish
-                        if (isLzAdsTest()) {
-                            depth = lzAdsTestVariants[ab.getParticipations().MtLzAdsDepth.variant];
-                        } else if (isDeferSpaceFinderTest()) {
-                            depth = 100;
-                        } else {
-                            depth = 0.5;
-                        }
+                    // For depth test we want depth based on variant but for main test we want default depth
+                    // TODO: this will be removed after tests will finish
+                    if (isLzAdsTest()) {
+                        depth = lzAdsTestVariants[ab.getParticipations().MtLzAdsDepth.variant];
+                    } else if (isDeferSpaceFinderTest()) {
+                        depth = 100;
+                    } else {
+                        depth = 0.5;
+                    }
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
