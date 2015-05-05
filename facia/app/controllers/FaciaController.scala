@@ -176,6 +176,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       }
 
       futureResult onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
+      futureResult.fallbackTo(renderFrontPressResultFallback(path))
 
       futureResult
     } else {
