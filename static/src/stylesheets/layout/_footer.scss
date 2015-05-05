@@ -53,7 +53,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
 .site-message--footer {
     position: relative;
-    z-index: $zindex-alpha + 1;
+    z-index: 1;
     background-color: $c-primary-footer-background-side-bar;
     border-bottom: 1px solid #ffffff;
 

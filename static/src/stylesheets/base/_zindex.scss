@@ -1,38 +1,9 @@
 /**
- * This shall stop the z-index chaos.
- *
- * How to:
- *
- * 1. Choose the importance of the parent. 
- * Example: Using $zindex-beta
- *
- *    Parent { z-index: $zindex-beta; }
- * 
- * 2. Parent is probably creating z-index context thus inside parent you should increment importance
- *    by incrementing the base (do you really need to?)
- * Example:
- *
- * 	  Child__1 { z-index: $zindex-beta + 1; }
- * 	  Child__2 { z-index: $zindex-beta + 2; }
- *
- * 3. This will produce
- * Example:
- *
- * 	  Parent   { z-index: 100; }
- * 	  Child__1 { z-index: 101; }
- * 	  Child__2 { z-index: 102; }
- *
- * For more information about the stacking context fo to https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context
- * 
+ * This shall stop the z-index chaos
  */
-
-$zindex-alpha: 0;      // 0 to 99 - for less important things
-$zindex-beta: 100;     // 100 to 199 - importance is higher
-$zindex-gamma: 200;    // 200 to 299 - importance is higher - you will most definitely never need this
- 
-// Open space for other possible additions
 
 $zindex-ads: 800;      // 800 to 899 - Ads
 $zindex-sticky: 1000;  // Sticky nav, sticky ads
-$zindex-overlay: 1050;
+$zindex-modal: 1040;   // Search modal
+$zindex-overlay: 1050; // Lightbox
 $zindex-popover: 1060; // Breaking news

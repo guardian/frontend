@@ -35,7 +35,7 @@ clickable areas within it as directly nesting a tags breaks things.
 .u-faux-block-link abbr[title],
 .u-faux-block-link__promote {
     position: relative;
-    z-index: $zindex-alpha + 1;
+    z-index: 1;
 }
 .u-faux-block-link__overlay {
     top: 0;
@@ -50,7 +50,7 @@ clickable areas within it as directly nesting a tags breaks things.
 // Increased specificity so it trumps ".block-link a"
 a.u-faux-block-link__overlay {
     position: absolute;
-    z-index: $zindex-alpha;
+    z-index: 0;
     // this line is needed as all elements have a solid black
     // background in high contrast mode
     opacity: 0;
