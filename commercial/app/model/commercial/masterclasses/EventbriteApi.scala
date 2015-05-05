@@ -1,16 +1,15 @@
 package model.commercial.masterclasses
 
-import common.ExecutionContexts
+import common.{ExecutionContexts, Logging}
 import conf.Switches.MasterclassFeedSwitch
 import conf.{CommercialConfiguration, Configuration}
-import model.commercial.jobs.JobsApi._
 import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest}
 import play.api.libs.json.JsValue
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-object EventbriteApi extends ExecutionContexts {
+object EventbriteApi extends ExecutionContexts with Logging {
 
   lazy val organiserId = "684756979"
   lazy val apiKeyOption = CommercialConfiguration.getProperty("masterclasses.api.key")

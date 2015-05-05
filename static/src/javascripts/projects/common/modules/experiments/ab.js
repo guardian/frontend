@@ -21,6 +21,8 @@ define([
     'common/modules/experiments/tests/mt-sticky-nav-all',
     'common/modules/experiments/tests/facia-slideshow',
     'common/modules/experiments/tests/mt-sticky-burger',
+    'common/modules/experiments/tests/mt-sticky-all-ux',
+    'common/modules/experiments/tests/mt-sticky-burger-ux',
     'common/modules/experiments/tests/defer-spacefinder'
 ], function (
     raven,
@@ -45,6 +47,8 @@ define([
     MtStickyNavAll,
     FaciaSlideshow,
     MtStickyBurger,
+    MtStickyAllUx,
+    MtStickyBurgerUx,
     DeferSpacefinder
     ) {
 
@@ -63,6 +67,8 @@ define([
             new MtLzAdsDepth(),
             new MtStickyNavAll(),
             new MtStickyBurger(),
+            new MtStickyAllUx(),
+            new MtStickyBurgerUx(),
             new DeferSpacefinder(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);

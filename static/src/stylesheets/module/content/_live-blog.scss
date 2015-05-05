@@ -274,6 +274,7 @@ $block-padding-right: $gs-gutter;
         /* Bylines
            ========================================================= */
         .liveblog-block-byline {
+            margin-bottom: $gs-baseline * .5;
             border-bottom: 1px dotted colour(neutral-4);
             padding-bottom: $gs-baseline * .5;
         }
