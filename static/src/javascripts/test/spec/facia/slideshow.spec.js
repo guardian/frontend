@@ -20,7 +20,7 @@ var mockDOM = {
 },
 originalSetTimeout = setTimeout;
 function imagePath (name) {
-    return 'base/static/test/javascripts/fixtures/slideshow/' + name;
+    return '/base/javascripts/test/fixtures/slideshow/' + name;
 }
 function opacity (element) {
     return parseInt(element.css('opacity'), 10);
@@ -37,9 +37,9 @@ describe('Slideshow component', function () {
         it('generate a list of images', function (done) {
             var testDOM = bonzo.create([
                 '<div class="TEST_CONTAINER_SLIDESHOW_INITIALIZE">',
-                    '<img class="test-image-1" src="base/static/test/javascripts/fixtures/slideshow/one.svg">',
-                    '<img class="test-image-2 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/two.svg">',
-                    '<img class="test-image-3 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/three.svg">',
+                    '<img class="test-image-1" src="/base/javascripts/test/fixtures/slideshow/one.svg">',
+                    '<img class="test-image-2 js-lazy-loaded-slideshow" data-srcset="/base/javascripts/test/fixtures/slideshow/two.svg">',
+                    '<img class="test-image-3 js-lazy-loaded-slideshow" data-srcset="/base/javascripts/test/fixtures/slideshow/three.svg">',
                 '</div>'
             ].join(''));
 
@@ -65,7 +65,7 @@ describe('Slideshow component', function () {
         beforeEach(function () {
             var testDOM = bonzo.create([
                 '<div class="TEST_CONTAINER_SLIDESHOW_LOADER">',
-                    '<img class="test-image-1" data-srcset="base/static/test/javascripts/fixtures/slideshow/one.svg">',
+                    '<img class="test-image-1" data-srcset="/base/javascripts/test/fixtures/slideshow/one.svg">',
                     '<img class="test-image-2" data-srcset="this_image_doesnt_exists.png">',
                 '</div>'
             ].join(''));
@@ -284,9 +284,9 @@ describe('Slideshow component', function () {
 
             var testDOM = bonzo.create([
                 '<div class="TEST_CONTAINER_SLIDESHOW_TRANSITION">',
-                    '<img class="test-image-1" src="base/static/test/javascripts/fixtures/slideshow/one.svg">',
-                    '<img class="test-image-2" src="base/static/test/javascripts/fixtures/slideshow/two.svg">',
-                    '<img class="test-image-3" src="base/static/test/javascripts/fixtures/slideshow/three.svg">',
+                    '<img class="test-image-1" src="/base/javascripts/test/fixtures/slideshow/one.svg">',
+                    '<img class="test-image-2" src="/base/javascripts/test/fixtures/slideshow/two.svg">',
+                    '<img class="test-image-3" src="/base/javascripts/test/fixtures/slideshow/three.svg">',
                 '</div>'
             ].join(''));
 
@@ -355,9 +355,9 @@ describe('Slideshow component', function () {
         it('auto plays inline images', function (done) {
             var testDOM = bonzo.create([
                 '<div class="TEST_CONTAINER_SLIDESHOW_PLAY_INLINE js-slideshow">',
-                    '<img class="test-image-1" src="base/static/test/javascripts/fixtures/slideshow/one.svg">',
-                    '<img class="test-image-2 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/two.svg">',
-                    '<img class="test-image-3 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/three.svg">',
+                    '<img class="test-image-1" src="/base/javascripts/test/fixtures/slideshow/one.svg">',
+                    '<img class="test-image-2 js-lazy-loaded-slideshow" data-srcset="/base/javascripts/test/fixtures/slideshow/two.svg">',
+                    '<img class="test-image-3 js-lazy-loaded-slideshow" data-srcset="/base/javascripts/test/fixtures/slideshow/three.svg">',
                 '</div>'
             ].join('')),
                 container = bonzo(testDOM).appendTo(document.body),
@@ -405,9 +405,9 @@ describe('Slideshow component', function () {
         it('auto plays lazy loaded images', function (done) {
             var testDOM = bonzo.create([
                 '<div class="TEST_CONTAINER_SLIDESHOW_PLAY_LAZY js-slideshow">',
-                    '<img class="test-image-1 js-lazy-loaded-image" data-srcset="base/static/test/javascripts/fixtures/slideshow/one.svg">',
-                    '<img class="test-image-2 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/two.svg">',
-                    '<img class="test-image-3 js-lazy-loaded-slideshow" data-srcset="base/static/test/javascripts/fixtures/slideshow/three.svg">',
+                    '<img class="test-image-1 js-lazy-loaded-image" data-srcset="/base/javascripts/test/fixtures/slideshow/one.svg">',
+                    '<img class="test-image-2 js-lazy-loaded-slideshow" data-srcset="/base/javascripts/test/fixtures/slideshow/two.svg">',
+                    '<img class="test-image-3 js-lazy-loaded-slideshow" data-srcset="/base/javascripts/test/fixtures/slideshow/three.svg">',
                 '</div>'
             ].join('')),
                 container = bonzo(testDOM).appendTo(document.body),

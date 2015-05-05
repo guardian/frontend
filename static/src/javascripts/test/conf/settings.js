@@ -24,8 +24,7 @@ module.exports = function(config) {
             { pattern: 'javascripts/vendor/**/*.js', included: false},
             { pattern: 'inline-svgs/**/*.svg', included: false },
             { pattern: 'javascripts/**/views/**/*.html', included: false },
-            { pattern: 'javascripts/test/fixtures/**/*', included: false },
-            { pattern: 'javascripts/test/helpers/**/*.js', included: false }
+            { pattern: 'javascripts/test/**/*', included: false }
         ],
 
         // list of files to exclude
