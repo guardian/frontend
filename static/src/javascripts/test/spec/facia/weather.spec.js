@@ -12,7 +12,7 @@ new Injector()
 
             beforeEach(function () {
                 container = bonzo.create(
-                    '<div class="js-container--first"><div class="js-container__header"></div></div>'
+                    '<div id="headlines"><div class="js-container__header"></div></div>'
                 )[0];
 
                 $('body').append(container);
