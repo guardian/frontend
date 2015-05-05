@@ -1,16 +1,9 @@
-define([
-    'common/modules/commercial/user-ad-targeting'
-], function(
-    userAdTargeting
-) {
+import userAdTargeting from 'common/modules/commercial/user-ad-targeting';
 
-    describe('User Ad Targeting', function() {
+describe('User Ad Targeting', function() {
 
-        it('should exist', function() {
-            expect(userAdTargeting).toBeDefined();
-        });
-
+    it('should exist', function() {
+        expect(userAdTargeting).toBeDefined();
     });
 
 });
-

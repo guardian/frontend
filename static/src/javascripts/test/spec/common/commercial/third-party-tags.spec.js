@@ -1,46 +1,39 @@
-define([
-    'helpers/injector'
-], function (
-    Injector
-) {
+import Injector from 'helpers/injector';
 
-    return new Injector()
-        .store('common/utils/config')
-        .require(['common/modules/commercial/third-party-tags', 'mocks'], function (tagsContainer, mocks) {
+new Injector()
+    .test(['common/modules/commercial/third-party-tags', 'common/utils/config'], function (tagsContainer, config) {
 
-            function extractParam(img, paramName) {
-                var paramValue = new RegExp(paramName + '=([^&]*)').exec(img.src);
-                return paramValue && paramValue[1];
-            }
+        function extractParam(img, paramName) {
+            var paramValue = new RegExp(paramName + '=([^&]*)').exec(img.src);
+            return paramValue && paramValue[1];
+        }
 
-            describe('Tags Container', function () {
+        describe('Tags Container', function () {
 
-                beforeEach(function () {
-                    mocks.store['common/utils/config'].page = {
-                        contentType: 'Article',
-                        section: 'article',
-                        edition: 'uk'
-                    };
-                });
+            beforeEach(function () {
+                config.page = {
+                    contentType: 'Article',
+                    section: 'article',
+                    edition: 'uk'
+                };
+            });
 
-                it('should exist', function () {
-                    expect(tagsContainer).toBeDefined();
-                });
+            it('should exist', function () {
+                expect(tagsContainer).toBeDefined();
+            });
 
-                it('should not run if "Identity" content type', function () {
-                    mocks.store['common/utils/config'].page.contentType = 'Identity';
+            it('should not run if "Identity" content type', function () {
+                config.page.contentType = 'Identity';
 
-                    expect(tagsContainer.init()).toBe(false);
-                });
+                expect(tagsContainer.init()).toBe(false);
+            });
 
-                it('should not run if "identity" section', function () {
-                    mocks.store['common/utils/config'].page.section = 'identity';
+            it('should not run if "identity" section', function () {
+                config.page.section = 'identity';
 
-                    expect(tagsContainer.init()).toBe(false);
-                });
-
+                expect(tagsContainer.init()).toBe(false);
             });
 
         });
 
-});
+    });

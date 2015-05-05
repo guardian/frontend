@@ -1,16 +1,9 @@
-define([
-    'common/modules/commercial/third-party-tags/outbrain'
-], function(
-    outbrain
-) {
+import outbrain from 'common/modules/commercial/third-party-tags/outbrain'
 
-    describe('Outbrain', function() {
+describe('Outbrain', function() {
 
-        it('should exist', function() {
-            expect(outbrain).toBeDefined();
-        });
-
+    it('should exist', function() {
+        expect(outbrain).toBeDefined();
     });
 
 });
-

@@ -1,16 +1,9 @@
-define([
-    'common/modules/commercial/creatives/template'
-], function(
-    Template
-) {
+import Template from 'common/modules/commercial/creatives/template'
 
-    describe('Template', function() {
+describe('Template', function() {
 
-        it('should exist', function() {
-            expect(Template).toBeDefined();
-        });
-
+    it('should exist', function() {
+        expect(Template).toBeDefined();
     });
 
 });
-

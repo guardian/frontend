@@ -1,16 +1,9 @@
-define([
-    'common/modules/commercial/ads/sticky-mpu'
-], function(
-    StickyMpu
-) {
+import StickyMpu from 'common/modules/commercial/ads/sticky-mpu';
 
-    describe('Sticky MPU', function() {
+describe('Sticky MPU', function() {
 
-        it('should exist', function() {
-            expect(StickyMpu).toBeDefined();
-        });
-
+    it('should exist', function() {
+        expect(StickyMpu).toBeDefined();
     });
 
 });
-

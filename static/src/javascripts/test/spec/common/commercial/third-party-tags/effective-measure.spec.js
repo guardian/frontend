@@ -1,16 +1,9 @@
-define([
-    'common/modules/commercial/third-party-tags/effective-measure'
-], function(
-    effectiveMeasure
-) {
+import effectiveMeasure from 'common/modules/commercial/third-party-tags/effective-measure'
 
-    describe('Effective Measure', function() {
+describe('Effective Measure', function() {
 
-        it('should exist', function() {
-            expect(effectiveMeasure).toBeDefined();
-        });
-
+    it('should exist', function() {
+        expect(effectiveMeasure).toBeDefined();
     });
 
 });
-
