@@ -347,6 +347,10 @@
                                 requiresPaidTier = (membershipAccess.indexOf("paid-members-only") !== -1),
                                 membershipAuthUrl = membershipUrl + '/choose-tier?membershipAccess=' + membershipAccess;
 
+                            function redirect() {
+                                window.location.href = membershipAuthUrl;
+                            }
+
                             ajax({
                                 url: membershipUrl + "/user/me",
                                 type: 'json',
@@ -360,13 +364,13 @@
                                 if (canViewContent) {
                                     $('body').removeClass('has-membership-access-requirement');
                                 } else {
-                                    window.location.href = membershipAuthUrl;
+                                    redirect()
                                 }
                             }).fail(function() {
                                 /**
                                  * If the request fails assume non-member
                                  */
-                                window.location.href = membershipAuthUrl;
+                                redirect()
                             });
 
                         });
