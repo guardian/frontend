@@ -609,6 +609,12 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
   )
 
+  val ABMtStBurgerNtUxSwitch = Switch("A/B Tests",
+    "ab-mt-st-burger-nt-ux",
+    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
+  )
+
   val ABHeadlineSwitches = (1 to 10) map { n =>
     Switch(
       "A/B Tests",

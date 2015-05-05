@@ -320,8 +320,39 @@ define([
         });
     }
 
+    function stickyNavBurgerNoThr() {
+        fastdom.read(function () {
+            var stickyConfig = {
+                $stickyNavigation: $('.sticky-nav-mt-test .navigation'),
+                $stickyTopAd: $('.sticky-nav-mt-test .top-banner-ad-container'),
+                $header: $('#header'),
+                $burgerIcon: $('.js-navigation-header .js-navigation-toggle'),
+                $bannerMobile: $('.top-banner-ad-container--mobile'),
+                $contentBelowMobile: $('#maincontent'),
+                $logoWrapper: $('.js-navigation-header .logo-wrapper'),
+                $navigationScroll: $('.js-navigation-header .navigation__scroll'),
+                $navigationGreySection: $('.js-navigation-header .navigation__container--first'),
+                scrollThreshold: config.page.contentType === 'Video' || config.page.contentType === 'Gallery' ? 280 : stickTill,
+                prevScroll: 0,
+                direction: ''
+            };
+
+            stickyConfig.stickyNavigationHeight = stickyConfig.$stickyNavigation.dim().height;
+
+            console.log('stickyNavBurgerNoThr');
+            if (detect.getBreakpoint() === 'desktop') {
+                mediator.on('window:scroll', _.throttle(function () {
+                    //height of topAd needs to be recalculated because we don't know when we will get respond from DFP
+                    stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
+                    updatePosition(stickyConfig);
+                }, 10));
+            }
+        });
+    }
+
     return {
         stickyNavBurger: stickyNavBurger,
-        stickyNavAll: stickyNavAll
+        stickyNavAll: stickyNavAll,
+        stickyNavBurgerNoThr: stickyNavBurgerNoThr
     };
 });
