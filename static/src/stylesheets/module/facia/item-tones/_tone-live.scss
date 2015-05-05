@@ -82,9 +82,9 @@
 }
 
 .fc-item__liveblog-blocks {
-    height: 78px; // 2 * block height - 2px margin
+    height: 38px; // 1 * block height - 2px margin
     overflow: hidden;
-    margin-right: -1 * $gs-gutter / 4;
+    margin-top: -1 * $gs-baseline / 2;
     margin-bottom: $gs-baseline / 2;
 }
 
