@@ -195,6 +195,10 @@ define([
             return test && ab.testCanBeRun('MtLzAdsDepth') && _.contains(_.keys(lzAdsTestVariants), test.variant);
         },
 
+        isLzAdsSwitchOn = function () {
+            return config.switches.lzAds;
+        },
+
         /**
          * Public functions
          */
@@ -219,8 +223,8 @@ define([
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
 
-            // We want to run lazy load if user is in the depth test or main test user group
-            (isLzAdsTest() || isMainTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            // We want to run lazy load if user is in the depth test, main test user group or if there is a switch on
+            (isLzAdsTest() || isMainTest() || isLzAdsSwitchOn()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
@@ -258,11 +262,6 @@ define([
                         slot: defineSlot($adSlot)
                     };
                     googletag.display(slotId);
-
-                    if (config.switches.refreshAdsAfterDisplay) {
-                        refreshSlot($adSlot);
-                    }
-
                 };
             if (displayed && !slots[slotId]) { // dynamically add ad slot
                 // this is horrible, but if we do this before the initial ads have loaded things go awry

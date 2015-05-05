@@ -2,7 +2,6 @@ package conf
 
 import common._
 import conf.Configuration.environment
-import org.joda.time
 import org.joda.time._
 import play.api.Play.current
 import play.api.libs.ws.WS
@@ -117,13 +116,13 @@ object Switches {
   val EnableOauthOnPreview = Switch("Performance", "enable-oauth-on-preview",
     "If this switch is switched on then the preview server requires login",
     safeState = On,
-    sellByDate = new LocalDate(2015, 4, 30)
+    sellByDate = new LocalDate(2015, 5, 31)
   )
 
   val PreviewAuthByCookie = Switch("Performance", "preview-auth-by-cookie",
     "If this switch is switched on then preview auth will be lengthened by a cookie",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 4, 30)
+    sellByDate = new LocalDate(2015, 5, 31)
   )
 
   val AutoRefreshSwitch = Switch("Performance", "auto-refresh",
@@ -313,19 +312,23 @@ object Switches {
 
   val AppleAdUkNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-uk-network-front",
     "If this switch is on, Apple ads will appear below nav on the UK network front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
   val AppleAdAuNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-au-network-front",
     "If this switch is on, Apple ads will appear below nav on the AU network front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
   val AppleAdTechFrontSwitch = Switch("Commercial", "apple-ads-on-tech-front",
     "If this switch is on, Apple ads will appear below nav on the tech section front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
-  val RefreshAdsAfterDisplaySwitch = Switch("Commercial", "refresh-ads-after-display",
-    "If this switch is on, ads will be refreshed after they display.",
-    safeState = On, sellByDate = new LocalDate(2015, 5, 6))
+  val LazyLoadAds = Switch("Feature", "lz-ads",
+    "If switched on then all ads are lazy loaded",
+    safeState = Off, sellByDate = never)
+
+  val LookUpBooksInBookshopCatalogue = Switch("Commercial", "look-up-books-in-catalogue",
+    "Looks up books in bookshop catalogue, rather than in bestsellers list.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 13))
 
 
   // Monitoring
@@ -363,11 +366,6 @@ object Switches {
   val FeedbackLink = Switch("Monitoring", "tech-feedback",
     "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
     safeState = Off, new LocalDate(2015, 5, 23)
-  )
-
-  val SendExpiringSwitchesEmail = Switch("Monitoring", "expiring-switches-email",
-    "Send an email when switches are expiring soon",
-    safeState = Off, new LocalDate(2015, 5, 6)
   )
 
 
@@ -564,7 +562,7 @@ object Switches {
 
   val ABMtDepth = Switch("A/B Tests", "ab-mt-depth",
     "Top navigation and top ad slot are sticky with different variants of depth.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 6)
   )
 
   val ABMtStickyBurger = Switch("A/B Tests", "ab-mt-sticky-burger",
@@ -595,6 +593,20 @@ object Switches {
   val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",
     "Switch for removing the whitelist from the user history tags",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
+  )
+
+  val ABMtStAllUxSwitch = Switch(
+    "A/B Tests",
+    "ab-mt-st-all-ux",
+    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
+  )
+
+  val ABMtStBurgerUxSwitch = Switch(
+    "A/B Tests",
+    "ab-mt-st-burger-ux",
+    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>
@@ -646,11 +658,6 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
-    "If this is switched on then lazy load the most-popular container on content pages",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
-  )
-
   val SlideshowImages = Switch("Feature", "slideshow-images",
     "If switched on, slideshows will be displayed on the fronts",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
@@ -695,7 +702,7 @@ object Switches {
 
   val IphoneConfidence = Switch("Performance", "iphone-confidence",
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
-    safeState = Off, sellByDate = new LocalDate(2015, 4, 30)
+    safeState = Off, sellByDate = never
   )
 
   val FaciaDynamoArchive = Switch("Facia", "facia-tool-dynamo-archive",

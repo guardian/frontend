@@ -228,7 +228,7 @@ define([
         return request;
     };
 
-    Id.getUsersSavedDocuments = function () {
+    Id.getSavedArticles = function () {
 
         var endpoint = '/syncedPrefs/me/savedArticles',
             request = ajax({

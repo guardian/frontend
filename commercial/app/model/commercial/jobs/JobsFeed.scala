@@ -3,15 +3,14 @@ package model.commercial.jobs
 import common.{ExecutionContexts, Logging}
 import conf.CommercialConfiguration
 import conf.Switches.JobFeedSwitch
-import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest, OptString}
-import org.apache.commons.lang.StringEscapeUtils.unescapeHtml
+import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest}
 import org.joda.time._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.xml.{XML, Elem}
+import scala.xml.{Elem, XML}
 
-object JobsApi extends ExecutionContexts with Logging {
+object JobsFeed extends ExecutionContexts with Logging {
 
   // url changes daily so cannot be val
   def maybeUrl = {
@@ -26,22 +25,11 @@ object JobsApi extends ExecutionContexts with Logging {
     urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
   }
 
-  def parse(xml: Elem): Seq[Job] = {
-    (xml \\ "Job").filterNot(job => (job \ "RecruiterLogoURL").isEmpty).map {
-      job =>
-        Job(
-          (job \ "JobID").text.toInt,
-          (job \ "JobTitle").text,
-          unescapeHtml((job \ "ShortJobDescription").text),
-          OptString((job \ "LocationDescription").text),
-          (job \ "RecruiterName").text,
-          OptString((job \ "RecruiterPageUrl").text),
-          (job \ "RecruiterLogoURL").text,
-          ((job \ "Sectors" \ "Sector") map (_.text.toInt)).toSeq,
-          (job \ "SalaryDescription").text
-        )
-    }
-  }
+  def parse(xml: Elem): Seq[Job] = for {
+    jobXml <- xml \\ "Job"
+    if (jobXml \ "RecruiterLogoURL").nonEmpty
+    if (jobXml \ "RecruiterName").text != "THE GUARDIAN MASTERCLASSES"
+  } yield Job(jobXml)
 
   def loadAds(): Future[Seq[Job]] = {
     maybeUrl map { url =>

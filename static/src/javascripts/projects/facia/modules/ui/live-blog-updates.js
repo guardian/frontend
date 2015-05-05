@@ -9,7 +9,6 @@ define([
     'common/utils/template',
     'common/utils/mediator',
     'common/utils/detect',
-    'text!facia/views/liveblog-blocks.html',
     'text!facia/views/liveblog-block.html'
 ], function (
     bonzo,
@@ -22,11 +21,9 @@ define([
     template,
     mediator,
     detect,
-    blocksTemplate,
     blockTemplate
 ) {
-    var forgetAfterHours = 48,
-        numDisplayedBlocks = 4,
+    var numDisplayedBlocks = 4,
         blockHeightPx = 40,
 
         animateDelayMs = 1000,
@@ -39,21 +36,36 @@ define([
         newBlockClassName = 'fc-item__liveblog-block--new',
         oldBlockClassName = 'fc-item__liveblog-block--old',
         articleIdAttribute = 'data-article-id',
-        storageKey = 'gu.liveblog.block-dates',
+        sessionStorageKey = 'gu.liveblog.block-dates',
         prefixedTransforms = ['-webkit-transform', '-ms-transform', 'transform'],
 
         veiwportHeightPx = detect.getViewport().height,
         elementsById = {};
 
     function blockRelativeTime(block) {
-        return relativeDates.makeRelativeDate(new Date((block || {}).publishedDateTime || null));
+        var pubDate = (block || {}).publishedDateTime,
+            relDate = pubDate ? relativeDates.makeRelativeDate(new Date(pubDate)) : false;
+
+        return relDate || '';
     }
 
     function renderBlock(articleId, block, index) {
+        var relTime = blockRelativeTime(block);
+
+        if (relTime.match(/yesterday/i)) {
+            relTime = relTime.toLowerCase();
+        } else if (relTime && block.isNew) {
+            relTime = 'updated ' + relTime + ' ago';
+        } else if (relTime) {
+            relTime = relTime + ' ago';
+        } else {
+            relTime = 'updated just now';
+        }
+
         return template(blockTemplate, {
             classes: block.isNew ? newBlockClassName : oldBlockClassName,
             href: '/' + articleId + '#' + block.id,
-            relativeTime: blockRelativeTime(block),
+            relativeTime: relTime,
             text: _.compact([block.title, block.body.slice(0, 200)]).join('. '),
             index: index + 1
         });
@@ -137,12 +149,6 @@ define([
         });
     }
 
-    function pruneOldBlockDates(obj) {
-        return _.omit(obj, function (date) {
-            return !date || (new Date() - new Date(date)) / 3600000 > forgetAfterHours; // hours old
-        });
-    }
-
     function show() {
         var oldBlockDates;
 
@@ -156,7 +162,7 @@ define([
         });
 
         if (!_.isEmpty(elementsById)) {
-            oldBlockDates = storage.session.get(storageKey) || {};
+            oldBlockDates = storage.session.get(sessionStorageKey) || {};
 
             _.forEach(elementsById, function (elements, articleId) {
                 ajax({
@@ -170,7 +176,7 @@ define([
                     if (blocks && blocks.length) {
                         showBlocks(articleId, elements, blocks, oldBlockDates[articleId]);
                         oldBlockDates[articleId] = blocks[0].publishedDateTime;
-                        storage.session.set(storageKey, pruneOldBlockDates(oldBlockDates));
+                        storage.session.set(sessionStorageKey, oldBlockDates);
                     }
                 });
             });

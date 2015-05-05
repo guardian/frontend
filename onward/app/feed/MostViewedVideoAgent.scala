@@ -39,7 +39,7 @@ object MostViewedVideoAgent extends Logging with ExecutionContexts {
         val videos = contentSeq.toSeq.collect {
           case Some(video: Video) => video
         }
-        agent alter videos
+        if(videos.nonEmpty) agent.alter(videos)
       }
     }
   }

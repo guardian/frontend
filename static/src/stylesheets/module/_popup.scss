@@ -217,7 +217,7 @@ $control-offset: 36 + $gs-gutter/2;
    ========================================================================== */
 
 .popup--search {
-    z-index: 10;
+    z-index: 300;
     padding: 0;
     right: 0;
     padding-top: 5px; // manual amount, determined by google, not guss-grid-system
