@@ -342,8 +342,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           Future.successful{
             Cached(60) {
               val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
-              val displayName = config.displayName.map(t => s"$t | The Guardian")
-              Ok(TrailsToRss.fromFaciaContent(displayName, collection.all, "", None)).as("text/xml; charset=utf8")}}
+              val webTitle = config.displayName.getOrElse("The Guardian")
+              Ok(TrailsToRss.fromFaciaContent(webTitle, collection.all, "", None)).as("text/xml; charset=utf8")}}
 
         case None => renderCollectionRssFallback(id)}
 

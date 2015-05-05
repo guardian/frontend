@@ -133,11 +133,11 @@ object TrailsToRss extends implicits.Collections {
         case _ => true}
         .distinctBy(_.id)
 
-    fromFaciaContent(pressedPage.title, faciaContentList, pressedPage.url, pressedPage.description)
+    fromFaciaContent(pressedPage.webTitle, faciaContentList, pressedPage.url, pressedPage.description)
   }
 
-  def fromFaciaContent(title: Option[String], faciaContentList: Seq[FaciaContent], url: String, description: Option[String] = None)(implicit request: RequestHeader): String  = {
-    val feedTitle = title.getOrElse("The Guardian")
+  def fromFaciaContent(webTitle: String, faciaContentList: Seq[FaciaContent], url: String, description: Option[String] = None)(implicit request: RequestHeader): String  = {
+    val feedTitle = s"$webTitle | The Guardian"
 
     // Feed
     val feed = new SyndFeedImpl
