@@ -622,7 +622,14 @@ object Switches {
 
   val ABMtStBurgerNtUxSwitch = Switch("A/B Tests",
     "ab-mt-st-burger-nt-ux",
-    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold.",
+    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold A.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
+  )
+
+  val ABMtStAllNtUxSwitch = Switch(
+    "A/B Tests",
+    "ab-mt-st-all-nt-ux",
+    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold B.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
   )
 

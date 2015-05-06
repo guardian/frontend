@@ -436,7 +436,7 @@ define([
     }
 
     StickySlow.prototype.updatePosition = function () {
-        var bannerHeight,
+        var bannerHeight = this.$els.bannerDesktop.dim().height,
             scrollY;
 
         fastdom.read(function () {
@@ -444,7 +444,7 @@ define([
         });
 
         fastdom.write(function () {
-            if (scrollY >= this.headerBigHeight + this.$els.bannerDesktop.dim().height) {
+            if (scrollY >= this.headerBigHeight + bannerHeight) {
                 this.$els.header.css({
                     position:  'fixed',
                     top:       0,
@@ -454,7 +454,7 @@ define([
                     'transform': 'translateY(-100%)'
                 });
 
-                this.$els.main.css('margin-top', this.headerBigHeight + this.$els.bannerDesktop.dim().height);
+                this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
                 this.$els.header.addClass('is-slim');
                 this.$els.header.css('transform', 'translateY(0%)');
             } else if (scrollY >= this.headerBigHeight) {
@@ -466,7 +466,7 @@ define([
                 });
                 this.$els.header.css({
                     position:  'static',
-                    'margin-top': this.$els.bannerDesktop.dim().height,
+                    'margin-top': bannerHeight,
                     'transform': 'translateY(-500%)'
                 });
                 this.$els.header.removeClass('is-slim');
@@ -483,16 +483,13 @@ define([
                 this.$els.header.css({
                     position:  'static',
                     width:     '100%',
-                    'margin-top': this.$els.bannerDesktop.dim().height,
+                    'margin-top': bannerHeight,
                     'transform': 'translateY(0%)'
                 });
             }
 
         }.bind(this));
     }
-
-    var stickySlow = new StickySlow();
-    stickySlow.init();
 
     return {
         stickyNavBurger: stickyNavBurger,
