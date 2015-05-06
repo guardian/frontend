@@ -5,7 +5,7 @@ module.exports = function(grunt, options) {
             singleRun: options.singleRun,
             browserDisconnectTimeout: 10000,
             browserDisconnectTolerance: 3,
-            browserNoActivityTimeout: 15000,
+            browserNoActivityTimeout: 60000,
             reportSlowerThan: 1000
         },
         'facia-tool': {
