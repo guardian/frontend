@@ -77,3 +77,35 @@ object SoulmatesYoungAgent extends SoulmatesAgent {
 object SoulmatesMatureAgent extends SoulmatesAgent {
   protected def membersLoaded = MatureSoulmatesFeed.loadAds()
 }
+
+object SoulmatesWestMidlandsAgent extends SoulmatesAgent {
+  protected def membersLoaded = WestMidlandsSoulmatesFeed.loadAds()
+}
+
+object SoulmatesEastMidlandsAgent extends SoulmatesAgent {
+  protected def membersLoaded = EastMidlandsSoulmatesFeed.loadAds()
+}
+
+object SoulmatesYorkshireAgent extends SoulmatesAgent {
+  protected def membersLoaded = YorkshireSoulmatesFeed.loadAds()
+}
+
+object SoulmatesNorthEastAgent extends SoulmatesAgent {
+  protected def membersLoaded = NortheastSoulmatesFeed.loadAds()
+}
+
+object SoulmatesEastAgent extends SoulmatesAgent {
+  protected def membersLoaded = EastSoulmatesFeed.loadAds()
+}
+
+object SoulmatesSouthAgent extends SoulmatesAgent {
+  protected def membersLoaded = SouthSoulmatesFeed.loadAds()
+}
+
+object SoulmatesSouthWestAgent extends SoulmatesAgent {
+  protected def membersLoaded = SouthwestSoulmatesFeed.loadAds()
+}
+
+object SoulmatesWalesAgent extends SoulmatesAgent {
+  protected def membersLoaded = WalesSoulmatesFeed.loadAds()
+}
