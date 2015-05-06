@@ -23,7 +23,7 @@ define([
         this.audience = 0.0;
         this.audienceOffset = 0;
         this.successMeasure = '';
-        this.audienceCriteria = 'Interal only - we opt in';
+        this.audienceCriteria = 'Internal only - we opt in';
         this.dataLinkNames = '';
         this.idealOutcome = '';
         this.showForSensitive = false;
