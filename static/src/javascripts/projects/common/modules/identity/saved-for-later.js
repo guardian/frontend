@@ -19,7 +19,7 @@ define([
         this.init = function () {
             var self = this,
             form = $('.js-saved-content-form')[0];
-            if(form) {
+            if (form) {
                 bean.on(form, 'click', '.js-saved-content__button-delete-all', function (event) {
                     event.preventDefault();
                     self.fetchArticlesAndRemoveAll();
