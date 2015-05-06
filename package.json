@@ -73,6 +73,8 @@
     "dependencies": {
       "EventEmitter": "github:Wolfy87/EventEmitter@~4.2.6",
       "Promise": "github:guardian/native-promise-only@0.7.6-e",
+      "babel": "npm:babel@^4.7.16",
+      "babel-runtime": "npm:babel-runtime@^4.7.16",
       "bean": "npm:bean@^1.0.15",
       "bonzo": "npm:bonzo@^1.4.0",
       "classnames": "npm:classnames@^1.2.0",
@@ -81,12 +83,14 @@
       "fastclick": "npm:fastclick@1.0.6",
       "fastdom": "github:wilsonpage/fastdom@^0.8.6",
       "fence": "github:guardian/fence@~0.2.11",
+      "jasmine-sinon": "bower:jasmine-sinon@0.4.0",
       "jsx": "github:floatdrop/plugin-jsx@^1.1.0",
       "lodash": "npm:lodash@~2.4.1",
       "qwery": "npm:qwery@^4.0.0",
       "raven": "github:getsentry/raven-js@~1.1.16",
       "react": "npm:react@~0.12",
       "reqwest": "github:ded/reqwest@1.1.5",
+      "sinonjs": "bower:sinonjs@1.10.2",
       "socketio": "bower:socket.io-client@~1.1.0",
       "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
       "text": "github:systemjs/plugin-text@^0.0.2",
@@ -99,9 +103,7 @@
     },
     "devDependencies": {
       "babel": "npm:babel@^4.7.16",
-      "babel-runtime": "npm:babel-runtime@^4.7.16",
-      "jasmine-sinon": "bower:jasmine-sinon@0.4.0",
-      "sinonjs": "bower:sinonjs@1.10.2"
+      "babel-runtime": "npm:babel-runtime@^4.7.16"
     }
   }
 }
