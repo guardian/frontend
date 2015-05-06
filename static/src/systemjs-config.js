@@ -13,6 +13,8 @@ System.config({
     "membership/*": "javascripts/projects/membership/*.js",
     "bundles/*": "bundles/*.js",
     "test/*": "javascripts/test/*.js",
+    "helpers/*": "javascripts/test/helpers/*.js",
+    "fixtures/*": "javascripts/test/fixtures/*.js",
     "es6/*": "javascripts/es6/*.js",
     "bootstraps/*": "javascripts/bootstraps/*.js",
     "vendor/*": "javascripts/vendor/*.js",
@@ -44,6 +46,7 @@ System.config({
     "fastclick": "npm:fastclick@1.0.6",
     "fastdom": "github:wilsonpage/fastdom@0.8.6",
     "fence": "github:guardian/fence@0.2.11",
+    "jasmine-sinon": "bower:jasmine-sinon@0.4.0",
     "jsx": "github:floatdrop/plugin-jsx@1.1.0",
     "lodash": "npm:lodash@2.4.1",
     "omniture": "vendor/omniture",
@@ -52,7 +55,9 @@ System.config({
     "raven": "github:getsentry/raven-js@1.1.18",
     "react": "npm:react@0.12.2",
     "reqwest": "github:ded/reqwest@1.1.5",
+    "sinonjs": "bower:sinonjs@1.10.2",
     "socketio": "bower:socket.io-client@1.1.0",
+    "squire": "bower:squire@0.2.0",
     "stripe": "vendor/stripe/stripe.min",
     "svg": "es6/projects/common/utils/svg",
     "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
@@ -63,6 +68,10 @@ System.config({
     "videojsima": "github:guardian/videojs-ima@0.1.2",
     "videojspersistvolume": "bower:videojs-persistvolume@0.1.2",
     "videojsplaylist": "github:tim-peterson/videojs-playlist@master",
+    "bower:jasmine-sinon@0.4.0": {
+      "jasmine": "bower:jasmine@2.0.4",
+      "sinonjs": "bower:sinonjs@1.10.2"
+    },
     "bower:video.js@4.12.5": {
       "css": "github:systemjs/plugin-css@0.1.9"
     },
@@ -76,13 +85,13 @@ System.config({
       "assert": "npm:assert@1.3.0"
     },
     "github:jspm/nodelibs-buffer@0.1.0": {
-      "buffer": "npm:buffer@3.1.2"
+      "buffer": "npm:buffer@3.2.1"
     },
     "github:jspm/nodelibs-constants@0.1.0": {
       "constants-browserify": "npm:constants-browserify@0.0.1"
     },
     "github:jspm/nodelibs-crypto@0.1.0": {
-      "crypto-browserify": "npm:crypto-browserify@3.9.13"
+      "crypto-browserify": "npm:crypto-browserify@3.9.14"
     },
     "github:jspm/nodelibs-events@0.1.0": {
       "events-browserify": "npm:events-browserify@0.0.1"
@@ -133,10 +142,7 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:asn1.js-rfc3280@1.0.0": {
-      "asn1.js": "npm:asn1.js@1.0.3"
-    },
-    "npm:asn1.js@1.0.3": {
+    "npm:asn1.js@1.0.4": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
       "bn.js": "npm:bn.js@1.3.0",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -170,12 +176,6 @@ System.config({
       "stream": "github:jspm/nodelibs-stream@0.1.0",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
-    "npm:browserify-rsa@1.1.1": {
-      "bn.js": "npm:bn.js@1.3.0",
-      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
-      "constants": "github:jspm/nodelibs-constants@0.1.0",
-      "crypto": "github:jspm/nodelibs-crypto@0.1.0"
-    },
     "npm:browserify-rsa@2.0.0": {
       "bn.js": "npm:bn.js@1.3.0",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -183,17 +183,20 @@ System.config({
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
       "randombytes": "npm:randombytes@2.0.1"
     },
-    "npm:browserify-sign@2.8.0": {
+    "npm:browserify-sign@3.0.1": {
       "bn.js": "npm:bn.js@1.3.0",
-      "browserify-rsa": "npm:browserify-rsa@1.1.1",
+      "browserify-rsa": "npm:browserify-rsa@2.0.0",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "create-hash": "npm:create-hash@1.1.1",
+      "create-hmac": "npm:create-hmac@1.1.3",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
       "elliptic": "npm:elliptic@1.0.1",
       "inherits": "npm:inherits@2.0.1",
-      "parse-asn1": "npm:parse-asn1@2.0.0",
-      "stream": "github:jspm/nodelibs-stream@0.1.0"
+      "parse-asn1": "npm:parse-asn1@3.0.0",
+      "stream": "github:jspm/nodelibs-stream@0.1.0",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
-    "npm:buffer@3.1.2": {
+    "npm:buffer@3.2.1": {
       "base64-js": "npm:base64-js@0.0.8",
       "ieee754": "npm:ieee754@1.1.4",
       "is-array": "npm:is-array@1.0.1"
@@ -274,15 +277,15 @@ System.config({
       "inherits": "npm:inherits@2.0.1",
       "stream": "github:jspm/nodelibs-stream@0.1.0"
     },
-    "npm:crypto-browserify@3.9.13": {
+    "npm:crypto-browserify@3.9.14": {
       "browserify-aes": "npm:browserify-aes@1.0.0",
-      "browserify-sign": "npm:browserify-sign@2.8.0",
+      "browserify-sign": "npm:browserify-sign@3.0.1",
       "create-ecdh": "npm:create-ecdh@2.0.0",
       "create-hash": "npm:create-hash@1.1.1",
       "create-hmac": "npm:create-hmac@1.1.3",
       "diffie-hellman": "npm:diffie-hellman@3.0.1",
       "inherits": "npm:inherits@2.0.1",
-      "pbkdf2-compat": "npm:pbkdf2-compat@3.0.2",
+      "pbkdf2": "npm:pbkdf2@3.0.4",
       "public-encrypt": "npm:public-encrypt@2.0.0",
       "randombytes": "npm:randombytes@2.0.1"
     },
@@ -344,13 +347,6 @@ System.config({
     "npm:https-browserify@0.0.0": {
       "http": "github:jspm/nodelibs-http@1.7.1"
     },
-    "npm:iconv-lite@0.4.7": {
-      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.1",
-      "stream": "github:jspm/nodelibs-stream@0.1.0",
-      "string_decoder": "github:jspm/nodelibs-string_decoder@0.1.0",
-      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
-    },
     "npm:iconv-lite@0.4.8": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1",
@@ -405,15 +401,8 @@ System.config({
     "npm:os-browserify@0.1.2": {
       "os": "github:jspm/nodelibs-os@0.1.0"
     },
-    "npm:parse-asn1@2.0.0": {
-      "asn1.js": "npm:asn1.js@1.0.3",
-      "asn1.js-rfc3280": "npm:asn1.js-rfc3280@1.0.0",
-      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
-      "pemstrip": "npm:pemstrip@0.0.1",
-      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
-    },
     "npm:parse-asn1@3.0.0": {
-      "asn1.js": "npm:asn1.js@1.0.3",
+      "asn1.js": "npm:asn1.js@1.0.4",
       "browserify-aes": "npm:browserify-aes@1.0.0",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "create-hash": "npm:create-hash@1.1.1",
@@ -424,6 +413,15 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:pbkdf2-compat@3.0.2": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "child_process": "github:jspm/nodelibs-child_process@0.1.0",
+      "create-hmac": "npm:create-hmac@1.1.3",
+      "crypto": "github:jspm/nodelibs-crypto@0.1.0",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.1",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
+    },
+    "npm:pbkdf2@3.0.4": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "child_process": "github:jspm/nodelibs-child_process@0.1.0",
       "create-hmac": "npm:create-hmac@1.1.3",
@@ -491,12 +489,6 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:sha.js@2.3.6": {
-      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
-      "fs": "github:jspm/nodelibs-fs@0.1.2",
-      "inherits": "npm:inherits@2.0.1",
-      "process": "github:jspm/nodelibs-process@0.1.1"
-    },
     "npm:sha.js@2.4.0": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "fs": "github:jspm/nodelibs-fs@0.1.2",
@@ -526,10 +518,6 @@ System.config({
     },
     "npm:string_decoder@0.10.31": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
-    },
-    "npm:through@2.3.6": {
-      "process": "github:jspm/nodelibs-process@0.1.1",
-      "stream": "github:jspm/nodelibs-stream@0.1.0"
     },
     "npm:through@2.3.7": {
       "process": "github:jspm/nodelibs-process@0.1.1",

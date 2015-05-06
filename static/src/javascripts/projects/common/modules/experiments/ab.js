@@ -22,7 +22,8 @@ define([
     'common/modules/experiments/tests/facia-slideshow',
     'common/modules/experiments/tests/mt-sticky-burger',
     'common/modules/experiments/tests/mt-sticky-all-ux',
-    'common/modules/experiments/tests/mt-sticky-burger-ux'
+    'common/modules/experiments/tests/mt-sticky-burger-ux',
+    'common/modules/experiments/tests/mt-sticky-burger-nt-ux'
 ], function (
     raven,
     _,
@@ -47,7 +48,8 @@ define([
     FaciaSlideshow,
     MtStickyBurger,
     MtStickyAllUx,
-    MtStickyBurgerUx
+    MtStickyBurgerUx,
+    MtStickyBurgerNtUx
     ) {
 
     var ab,
@@ -67,6 +69,7 @@ define([
             new MtStickyBurger(),
             new MtStickyAllUx(),
             new MtStickyBurgerUx(),
+            new MtStickyBurgerNtUx(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             }),

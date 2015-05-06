@@ -56,13 +56,17 @@ trait PaidForTagAgent {
                                  capiTags: Seq[Tag],
                                  maybeSectionId: Option[String],
                                  maybeEdition: Option[Edition]): Option[CapiTagAndDfpTag] = {
+
+    val seriesDfpTags = dfpTags filter (_.tagType == Series)
+    val keywordDfpTags = dfpTags filter (_.tagType == Keyword)
+
     for (capiTag <- capiTags.filter(_.isSeries)) {
-      for (dfpTag <- findWinningDfpTag(dfpTags, capiTag.id, maybeSectionId, maybeEdition)) {
+      for (dfpTag <- findWinningDfpTag(seriesDfpTags, capiTag.id, maybeSectionId, maybeEdition)) {
         return Some(CapiTagAndDfpTag(capiTag, dfpTag))
       }
     }
     for (capiTag <- capiTags.filter(_.isKeyword)) {
-      for (dfpTag <- findWinningDfpTag(dfpTags, capiTag.id, maybeSectionId, maybeEdition)) {
+      for (dfpTag <- findWinningDfpTag(keywordDfpTags, capiTag.id, maybeSectionId, maybeEdition)) {
         return Some(CapiTagAndDfpTag(capiTag, dfpTag))
       }
     }
