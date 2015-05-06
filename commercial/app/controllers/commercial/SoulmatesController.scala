@@ -31,13 +31,21 @@ object SoulmatesController extends Controller with implicits.Requests {
   def renderSoulmates(subgroup: String): Action[AnyContent] = {
     subgroup match {
       case "mixed" => renderMixedSoulmates()
+      case "men" => renderSoulmates(SoulmatesMenAgent.sample(6))
+      case "women" => renderSoulmates(SoulmatesWomenAgent.sample(6))
       case "brighton" => renderShuffledSoulmates(SoulmatesBrightonAgent.members)
       case "northwest" => renderShuffledSoulmates(SoulmatesNorthwestAgent.members)
       case "scotland" => renderShuffledSoulmates(SoulmatesScotlandAgent.members)
       case "young" => renderShuffledSoulmates(SoulmatesYoungAgent.members)
       case "mature" => renderShuffledSoulmates(SoulmatesMatureAgent.members)
-      case "men" => renderSoulmates(SoulmatesMenAgent.sample(6))
-      case "women" => renderSoulmates(SoulmatesWomenAgent.sample(6))
+      case "westmidlands" => renderShuffledSoulmates(SoulmatesWestMidlandsAgent.members)
+      case "eastmidlands" => renderShuffledSoulmates(SoulmatesEastMidlandsAgent.members)
+      case "yorkshire" => renderShuffledSoulmates(SoulmatesYorkshireAgent.members)
+      case "northeast" => renderShuffledSoulmates(SoulmatesNorthEastAgent.members)
+      case "east" => renderShuffledSoulmates(SoulmatesEastAgent.members)
+      case "south" => renderShuffledSoulmates(SoulmatesSouthAgent.members)
+      case "southwest" => renderShuffledSoulmates(SoulmatesSouthWestAgent.members)
+      case "wales" => renderShuffledSoulmates(SoulmatesWalesAgent.members)
       case _ => renderSoulmates(Nil)
     }
   }
