@@ -7,4 +7,3 @@ changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
 echo $changed_files | grep 'package.json' --quiet && npm prune && npm install
 echo $changed_files | grep 'static/src/systemjs-config.js' --quiet && grunt jspmInstall
-grunt hookmeup # make sure these hooks are updated too
