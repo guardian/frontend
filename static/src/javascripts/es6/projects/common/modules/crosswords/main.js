@@ -37,6 +37,7 @@ class Crossword extends React.Component {
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onClickHiddenInput = this.onClickHiddenInput.bind(this);
         this.focusClue = this.focusClue.bind(this);
+        this.insertCharacter = this.insertCharacter.bind(this);
 
         loadFont();
 
@@ -60,6 +61,15 @@ class Crossword extends React.Component {
         this.forceUpdate();
     }
 
+    insertCharacter (character) {
+        const cell = this.state.cellInFocus;
+        if (/[A-Z]/.test(character)) {
+            this.setCellValue(cell.x, cell.y, character);
+            this.save();
+            this.focusNext();
+        }
+    }
+
     onKeyDown (event) {
         const cell = this.state.cellInFocus;
 
@@ -71,24 +81,24 @@ class Crossword extends React.Component {
                 this.focusNextClue();
             }
         } else if (!event.metaKey && !event.ctrlKey && !event.altKey) {
-            event.preventDefault();
             if (event.keyCode === keycodes.backspace) {
+                event.preventDefault();
                 this.setCellValue(cell.x, cell.y, null);
                 this.save();
                 this.focusPrevious();
             } else if (event.keyCode === keycodes.left) {
+                event.preventDefault();
                 this.moveFocus(-1, 0);
             } else if (event.keyCode === keycodes.up) {
+                event.preventDefault();
                 this.moveFocus(0, -1);
             } else if (event.keyCode === keycodes.right) {
+                event.preventDefault();
                 this.moveFocus(1, 0);
             } else if (event.keyCode === keycodes.down) {
+                event.preventDefault();
                 this.moveFocus(0, 1);
-            } else if (event.keyCode >= keycodes.a && event.keyCode <= keycodes.z) {
-                this.setCellValue(cell.x, cell.y, String.fromCharCode(event.keyCode));
-                this.save();
-                this.focusNext();
-            }
+            };
         }
     }
 
@@ -376,8 +386,9 @@ class Crossword extends React.Component {
                         focussedCell={this.state.cellInFocus}
                         ref='grid' />
                     <HiddenInput
-                        onKeyDown={this.onKeyDown}
+                        onChange={this.insertCharacter}
                         onClick={this.onClickHiddenInput}
+                        onKeyDown={this.onKeyDown}
                         value={this.hiddenInputValue()}
                         ref='hiddenInputComponent' />
                 </div>
