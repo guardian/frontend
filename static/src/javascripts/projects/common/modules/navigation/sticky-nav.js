@@ -331,6 +331,8 @@ define([
             this.$els.bannerDesktop = $('.top-banner-ad-container--above-nav');
             this.$els.main          = $('#maincontent');
             this.$els.navHeader     = $('.js-navigation-header');
+            this.$els.sticky        = $('.sticky-nav-mt-test');
+            this.headerBigHeight    = this.$els.navHeader.dim().height;
         }.bind(this));
 
         mediator.on('window:scroll', _.throttle(function () {
@@ -339,100 +341,58 @@ define([
     }
 
     StickySlow.prototype.updatePosition = function () {
-        var headerHeight  = this.$els.navHeader.dim().height,
-            bannerHeight,
+        var bannerHeight,
             scrollY;
 
         fastdom.read(function () {
             scrollY = $(window).scrollTop();
         });
 
-        /*if (detect.getBreakpoint() === 'mobile') {
-            fastdom.write(function () {
-                if (scrollY > stickyTresholds.mobile) {
-                    $els.bannerMobile.css({
-                        position: 'absolute',
-                        top:      stickyTresholds.mobile + headerHeight
-                    });
-                } else {
-                    $els.bannerMobile.css({
-                        position:  'fixed',
-                        top:       headerHeight,
-                        width:     '100%',
-                        'z-index': '10000'
-                    });
-                    $els.header.css({
-                        position:  'fixed',
-                        top:       0,
-                        width:     '100%',
-                        'z-index': '10001'
-                    });
-                }
-            });
-        } else {
-            fastdom.write(function () {
-                bannerHeight = $els.bannerDesktop.dim().height;
-
-                // Add is collapsed, header is slim
-                if (scrollY > stickyTresholds.desktop.nobanner) {
-                    // Add is not sticky anymore
-                    $els.bannerDesktop.css({
-                        position: 'absolute',
-                        width: '100%',
-                        top: stickyTresholds.desktop.nobanner
-                    });
-
-                    // Sync header movement with banner disapearing
-                    $els.header.css({
-                        top: Math.round(bannerHeight - (scrollY - stickyTresholds.desktop.nobanner))
-                    });
-
-                    // Banner is not visible anymore so stick header to the top of the viewport
-                    if (scrollY > (stickyTresholds.desktop.nobanner + bannerHeight)) {
-                        $els.header.css({
-                            top: 0
-                        });
-                    }
-                // Top ad and header are visible in full height
-                } else {
-                    // Make sure that banner and header are sticky
-                    $els.bannerDesktop.css({
-                        position:  'fixed',
-                        top:       0,
-                        width:     '100%',
-                        'z-index': '10000'
-                    });
-                    $els.header.css({
-                        position:  'fixed',
-                        top:       bannerHeight,
-                        width:     '100%',
-                        'z-index': '10000'
-                    });
-
-                    // Make sure header is slim when needed
-                    (scrollY > stickyTresholds.desktop.slimnav) ? $els.header.addClass('is-slim') : $els.header.removeClass('is-slim');
-                }
-            });
-        }*/
-
         fastdom.write(function () {
-            // Make sure that we show slim nav when page loaded with anchor
-            this.$els.bannerDesktop.css({
-                position:  'fixed',
-                top:       0,
-                width:     '100%',
-                'z-index': '10000'
-            });
-            this.$els.header.css('margin-top', this.$els.bannerDesktop.dim().height);
+            if (scrollY >= this.headerBigHeight + this.$els.bannerDesktop.dim().height) {
+                this.$els.header.css({
+                    position:  'fixed',
+                    top:       0,
+                    width:     '100%',
+                    'z-index': '10000',
+                    'margin-top': 0,
+                    'transform': 'translateY(-100%)'
+                });
 
-            if (scrollY > headerHeight) {
+                this.$els.main.css('margin-top', this.headerBigHeight + this.$els.bannerDesktop.dim().height);
+                this.$els.header.addClass('is-slim');
+                this.$els.header.css('transform', 'translateY(0%)');
+            } else if (scrollY >= this.headerBigHeight) {
                 // Add is not sticky anymore
                 this.$els.bannerDesktop.css({
                     position: 'absolute',
                     width: '100%',
-                    top: headerHeight
+                    top: this.headerBigHeight
+                });
+                this.$els.header.css({
+                    position:  'static',
+                    'margin-top': this.$els.bannerDesktop.dim().height,
+                    'transform': 'translateY(-500%)'
+                });
+                this.$els.header.removeClass('is-slim');
+                this.$els.main.css('margin-top', 0);
+            } else {
+                // Make sure that we show slim nav when page loaded with anchor
+                this.$els.bannerDesktop.css({
+                    position:  'fixed',
+                    top:       0,
+                    width:     '100%',
+                    'z-index': '10000'
+                });
+                this.$els.header.removeClass('is-slim');
+                this.$els.header.css({
+                    position:  'static',
+                    width:     '100%',
+                    'margin-top': this.$els.bannerDesktop.dim().height,
+                    'transform': 'translateY(0%)'
                 });
             }
+
         }.bind(this));
     }
 
@@ -441,6 +401,7 @@ define([
 
     return {
         stickyNavBurger: stickyNavBurger,
-        stickyNavAll: stickyNavAll
+        stickyNavAll: stickyNavAll,
+        stickySlow: new StickySlow()
     };
 });
