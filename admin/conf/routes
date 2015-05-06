@@ -63,6 +63,8 @@ GET         /admin/commercial/fluid250                                          
 GET         /analytics/commercial/adtests                                                           controllers.admin.CommercialController.renderAdTests()
 GET         /admin/commercial/dfp/flush/view                                                        controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET         /admin/commercial/dfp/flush                                                             controllers.admin.commercial.DfpDataController.flushCache()
+GET         /admin/commercial/radiator                                                              controllers.admin.CommercialController.renderCommercialRadiator()
+
 
 # Metrics
 GET         /metrics/loadbalancers                                                                  controllers.admin.MetricsController.renderLoadBalancers()

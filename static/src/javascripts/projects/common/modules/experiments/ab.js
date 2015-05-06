@@ -6,20 +6,24 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/liveblog-blocks-on-fronts',
+    'common/modules/experiments/tests/liveblog-sport-front-updates',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/identity-social-oauth',
-    'common/modules/experiments/tests/mt-master',
+    'common/modules/experiments/tests/mt-main',
     'common/modules/experiments/tests/mt-top-below-nav',
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/mt-top-below-first-container',
     'common/modules/experiments/tests/mt-depth',
-    'common/modules/experiments/tests/across-the-country',
-    'common/modules/experiments/tests/adblock-message',
     'common/modules/experiments/tests/mt-sticky-bottom',
     'common/modules/experiments/tests/save-for-later',
+    'common/modules/experiments/tests/history-without-whitelist',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/lazy-load-ads'
+    'common/modules/experiments/tests/mt-lz-ads-depth',
+    'common/modules/experiments/tests/mt-sticky-nav-all',
+    'common/modules/experiments/tests/facia-slideshow',
+    'common/modules/experiments/tests/mt-sticky-burger',
+    'common/modules/experiments/tests/mt-sticky-all-ux',
+    'common/modules/experiments/tests/mt-sticky-burger-ux',
+    'common/modules/experiments/tests/mt-sticky-burger-nt-ux'
 ], function (
     raven,
     _,
@@ -28,40 +32,48 @@ define([
     mediator,
     store,
     mvtCookie,
-    LiveblogBlocksOnFronts,
+    LiveblogSportFrontUpdates,
     HighCommercialComponent,
-    IdentitySocialOAuth,
-    MtMaster,
+    MtMain,
     MtTopBelowNav,
     HeatMap,
     MtTopBelowFirstContainer,
     MtDepth,
-    AcrossTheCountry,
-    AdblockMessage,
     MtStickyBottom,
     SaveForLater,
+    HistoryWithoutWhitelist,
     Headline,
-    LazyLoadAds
-) {
+    MtLzAdsDepth,
+    MtStickyNavAll,
+    FaciaSlideshow,
+    MtStickyBurger,
+    MtStickyAllUx,
+    MtStickyBurgerUx,
+    MtStickyBurgerNtUx
+    ) {
 
     var ab,
         TESTS = _.flatten([
-            new LiveblogBlocksOnFronts(),
+            new LiveblogSportFrontUpdates(),
             new HighCommercialComponent(),
-            new IdentitySocialOAuth(),
-            new MtMaster(),
+            new MtMain(),
             new MtTopBelowNav(),
             new HeatMap(),
             new MtTopBelowFirstContainer(),
             new MtDepth(),
-            new AcrossTheCountry(),
-            new AdblockMessage(),
             new MtStickyBottom(),
             new SaveForLater(),
-            new LazyLoadAds(),
+            new HistoryWithoutWhitelist(),
+            new MtLzAdsDepth(),
+            new MtStickyNavAll(),
+            new MtStickyBurger(),
+            new MtStickyAllUx(),
+            new MtStickyBurgerUx(),
+            new MtStickyBurgerNtUx(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
-            })
+            }),
+            new FaciaSlideshow()
         ]),
         participationsKey = 'gu.ab.participations';
 
@@ -125,8 +137,10 @@ define([
     }
 
     function testCanBeRun(test) {
-        var expired = (new Date() - new Date(test.expiry)) > 0;
-        return (test.canRun() && !expired && isTestSwitchedOn(test));
+        var expired = (new Date() - new Date(test.expiry)) > 0,
+            isSensitive = config.page.shouldHideAdverts;
+        return ((isSensitive ? test.showForSensitive : true)
+                && test.canRun() && !expired && isTestSwitchedOn(test));
     }
 
     function getTest(id) {
@@ -295,16 +309,16 @@ define([
 
             var eventTag = event.tag;
             return eventTag && _(getActiveTests())
-                    .filter(function (test) {
-                        var testEvents = test.events;
-                        return testEvents && _.some(testEvents, function (testEvent) {
-                            return startsWith(eventTag, testEvent);
-                        });
-                    })
-                    .map(function (test) {
-                        return test.id;
-                    })
-                    .valueOf();
+                .filter(function (test) {
+                    var testEvents = test.events;
+                    return testEvents && _.some(testEvents, function (testEvent) {
+                        return startsWith(eventTag, testEvent);
+                    });
+                })
+                .map(function (test) {
+                    return test.id;
+                })
+                .valueOf();
         },
 
         getAbLoggableObject: function () {

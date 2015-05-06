@@ -23,6 +23,9 @@ import scala.collection.JavaConversions._
 import scala.language.postfixOps
 import scala.util.Try
 
+/**
+ * a combination of CAPI content and things from facia tool, in one place
+ */
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData with ShareLinks {
 
   lazy val delegate: ApiContent = apiContent.delegate
@@ -52,6 +55,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val productionOffice: Option[String] = delegate.safeFields.get("productionOffice")
   lazy val displayHint: String = fields.getOrElse("displayHint", "")
   lazy val isSyndicatable: Boolean = delegate.rights.exists(_.syndicatable == true)
+
+  override lazy val membershipAccess: Option[String] = fields.get("membershipAccess")
+  override lazy val requiresMembershipAccess: Boolean = {
+    conf.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
+  }
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
   lazy val hasSingleContributor: Boolean = {
@@ -176,6 +184,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("webPublicationDate", Json.toJson(webPublicationDate)),
       ("author", JsString(contributors.map(_.name).mkString(","))),
       ("authorIds", JsString(contributors.map(_.id).mkString(","))),
+      ("hasShowcaseMainPicture", JsBoolean(hasShowcaseMainPicture)),
       ("tones", JsString(tones.map(_.name).mkString(","))),
       ("toneIds", JsString(tones.map(_.id).mkString(","))),
       ("blogs", JsString(blogs.map { _.name }.mkString(","))),
@@ -261,6 +270,24 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     width <- apiContent.metaData.flatMap(_.imageCutoutSrcWidth).flatMap(s => Try(s.toInt).toOption)
     height <- apiContent.metaData.flatMap(_.imageCutoutSrcHeight).flatMap(s => Try(s.toInt).toOption)
   } yield FaciaImageElement(src, width, height)
+
+  override lazy val imageSlideshowReplace: Boolean = {
+    apiContent.metaData.flatMap(_.json.get("imageSlideshowReplace").flatMap(_.asOpt[Boolean])).getOrElse(false)
+  }
+
+  override lazy val slideshow: Iterable[FaciaImageElement] =
+    (for {
+      metaData <- apiContent.metaData
+      slideshowImagesList <- metaData.json.get("slideshow")
+      maybeImageElements = for {
+        slideshowImage <- slideshowImagesList.asInstanceOf[JsArray].value
+        maybeImageElement = for {
+          src <- slideshowImage.asInstanceOf[JsObject].\("src").asOpt[String]
+          width <- slideshowImage.asInstanceOf[JsObject].\("width").asOpt[String].flatMap(s => Try(s.toInt).toOption)
+          height <- slideshowImage.asInstanceOf[JsObject].\("height").asOpt[String].flatMap(s => Try(s.toInt).toOption)
+        } yield FaciaImageElement(src, width, height)
+      } yield maybeImageElement
+    } yield maybeImageElements).getOrElse(Nil).flatten
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 

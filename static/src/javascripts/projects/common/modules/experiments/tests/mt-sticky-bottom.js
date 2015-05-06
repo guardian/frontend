@@ -25,9 +25,14 @@ define([
         this.audienceCriteria = '1% of US edition';
         this.dataLinkNames = '';
         this.idealOutcome = '';
+        this.showForSensitive = false;
 
         this.canRun = function () {
-            return config.page.edition === 'US' && config.page.isFront && detect.getBreakpoint() !== 'mobile';
+            var isIE = detect.getUserAgent.browser === 'MSIE' || detect.getUserAgent === 'IE 11',
+                isUS = config.page.edition === 'US',
+                isMobile = detect.getBreakpoint() === 'mobile';
+
+            return !isIE && isUS && !isMobile;
         };
 
         function updatePosition(stickyConfig, containerNo) {

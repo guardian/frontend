@@ -29,8 +29,8 @@
 .treats__treat {
     @include fs-textSans(1);
     @include button-height($base-size * 4);
-    @include border-radius(50%);
-    @include box-sizing(border-box);
+    @include circular;
+    box-sizing: border-box;
     display: inline-block;
     vertical-align: top;
     width: auto;
@@ -80,8 +80,7 @@
     margin-bottom: $gs-baseline * 2/3;
 }
 
-.treats__crossword-link,
-.treats__register-to-vote {
+.treats__crossword-link {
     &:hover,
     &:focus,
     &:active {
@@ -89,49 +88,5 @@
             color: colour(neutral-1);
             border-color: darken(colour(neutral-3), 10%);
         }
-    }
-}
-
-.treats__register-to-vote {
-    display: block;
-    width: gs-span(2);
-    padding-top: $gs-baseline / 4;
-    border-top: 1px solid colour(neutral-5);
-    border-bottom: 1px solid colour(neutral-5);
-
-    @include mq(wide) {
-        width: gs-span(3);
-    }
-
-    .treats__treat {
-        margin: $gs-baseline/2 0 $gs-baseline*2;
-    }
-
-    &:hover {
-        text-decoration: none;
-    }
-}
-
-.treats__register-to-vote__logo {
-    height: 40px;
-    padding-top: 3px;
-    padding-right: $gs-gutter / 2;
-
-    @include mq(wide) {
-        float: left;
-    }
-}
-
-.treats__register-to-vote__title {
-    color: colour(neutral-2);
-    @include fs-header(1);
-
-    @include mq(wide) {
-        @include fs-header(3);
-    }
-
-    strong {
-        display: block;
-        color: colour(neutral-1);
     }
 }

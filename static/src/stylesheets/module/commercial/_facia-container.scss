@@ -64,7 +64,7 @@
         padding-right: $gs-gutter;
     }
     @include mq(leftCol) {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         height: 100%;
     }
 }
@@ -166,8 +166,8 @@
     padding-top: $gs-baseline/2;
 }
 .commercial__search__input {
-    @include box-sizing(border-box);
-    @include border-radius(18px);
+    box-sizing: border-box;
+    border-radius: 18px;
     @include fs-textSans(2);
     background-color: rgba(#ffffff, .9);
     border: 0;
@@ -183,7 +183,7 @@
     }
     &:focus {
         background-color: #ffffff;
-        @include box-shadow(0 0 0 2px rgba(#000000, .3), inset 0 1px 2px 0 rgba(#000000, .3))
+        box-shadow: 0 0 0 2px rgba(#000000, .3), inset 0 1px 2px 0 rgba(#000000, .3);
     }
 }
 .commercial__search__submit {
@@ -267,7 +267,7 @@
             margin-right: auto;
         }
         .commercial__header__inner {
-            @include box-sizing(content-box);
+            box-sizing: content-box;
             margin: 0;
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
@@ -307,7 +307,7 @@
             min-width: auto;
         }
         .commercial__desc {
-            margin-top: $gs-baseline*-1.333;
+            margin-top: $gs-baseline*-.5;
         }
         .commercial__body {
             margin-left: 0;

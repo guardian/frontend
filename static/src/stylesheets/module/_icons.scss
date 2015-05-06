@@ -6,7 +6,7 @@ blockquote.quoted:before {
     background-repeat: no-repeat;
 }
 .svg .i {
-    @include background-size(contain);
+    background-size: contain;
 }
 .i-date {
     @if ($svg-support) {
@@ -40,8 +40,8 @@ blockquote.quoted {
     &:before {
         content: '';
         float: left;
-        @include transform(scale(.8));
-        @include transform-origin(0);
+        transform: scale(.8);
+        transform-origin: 0;
         @include icon(quote-grey);
     }
 
@@ -70,7 +70,7 @@ blockquote.quoted {
             vertical-align: -10%;
             display: inline-block;
             background-repeat: no-repeat;
-            @include background-size(contain);
+            background-size: contain;
         }
     }
     .pseudo-icon--audio--white {

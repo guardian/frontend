@@ -1,38 +1,31 @@
-define([
-    'jquery',
-    'knockout',
-    'underscore'
-], function (
-    $,
-    ko,
-    _
-) {
-    function ModalDialog () {
+import Promise from 'Promise';
+import ko from 'knockout';
+import _ from 'underscore';
+
+class ModalDialog {
+    constructor() {
         this.isOpen = ko.observable(false);
 
         this.templateName = ko.observable();
         this.templateData = ko.observable();
     }
 
-    ModalDialog.prototype.confirm = function(config) {
-        var deferred = new $.Deferred();
+    confirm(config) {
+        return new Promise((resolve, reject) => {
+            this.templateData(_.extend(config.data, {
+                ok: () => {
+                    this.isOpen(false);
+                    resolve();
+                },
+                cancel: () => {
+                    this.isOpen(false);
+                    reject();
+                }
+            }));
+            this.templateName(config.name);
+            this.isOpen(true);
+        });
+    }
+}
 
-        var dialog = this;
-        this.templateData(_.extend(config.data, {
-            ok: function () {
-                dialog.isOpen(false);
-                deferred.resolve();
-            },
-            cancel: function () {
-                dialog.isOpen(false);
-                deferred.reject();
-            }
-        }));
-        this.templateName(config.name);
-        this.isOpen(true);
-
-        return deferred.promise();
-    };
-
-    return new ModalDialog();
-});
+export default new ModalDialog();

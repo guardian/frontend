@@ -14,6 +14,8 @@ object FaciaDisplayElement {
         ))
       case (content: Content, _) if content.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
         Some(CrosswordSvg(content.id))
+      case (content: Content, _) if content.imageSlideshowReplace && Switches.SlideshowImages.isSwitchedOn =>
+        Some(InlineSlideshow.fromTrail(trail))
       case _ => InlineImage.fromTrail(trail)
     }
   }
@@ -45,3 +47,10 @@ case class CrosswordSvg(id: String) extends FaciaDisplayElement {
 
   def imageUrl = s"${Configuration.ajax.url}/$id.svg"
 }
+
+object InlineSlideshow {
+  def fromTrail(trail: Trail): InlineSlideshow =
+    InlineSlideshow(trail.trailSlideshow(5, 3))
+}
+
+case class InlineSlideshow(images: Iterable[FaciaImageElement]) extends FaciaDisplayElement

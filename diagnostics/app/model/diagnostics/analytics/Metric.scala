@@ -21,6 +21,7 @@ object Metric extends Logging {
 
     ("ads-blocked", CountMetric("ads-blocked")),
     ("ad-render", CountMetric("first-ad-rendered")),
+    ("ad-wrapper", CountMetric("dfp-served-ad")),
 
     // error pages
     ("50x", CountMetric("kpis-user-50x")),             // beacon on the 50x page that tells us that real users are getting 500 errors
@@ -39,8 +40,15 @@ object Metric extends Logging {
 
     ("ipad-old-start", CountMetric(s"ipad-old-start")),
     ("ipad-old-after-5", CountMetric(s"ipad-old-after-5")),
+    ("ipad-2orMini-start", CountMetric(s"ipad-2orMini-start")),
+    ("ipad-2orMini-after-5", CountMetric(s"ipad-2orMini-after-5")),
 
-    ("tech-feedback", CountMetric("tech-feedback"))
+    ("tech-feedback", CountMetric("tech-feedback")),
+
+    //counts http proxy errors when submitting comments
+    ("comment-http-proxy-error", CountMetric("comment-http-proxy-error")),
+    ("comment-error", CountMetric("comment-error")),
+    ("comment-post-success", CountMetric("comment-post-success"))
   ) ++ iPhoneMetrics
 
   lazy val techFeedback = Switches.FeedbackLink // remove tech-feedback metric when this switch is removed.

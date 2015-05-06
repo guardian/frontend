@@ -1,10 +1,14 @@
 define([
     'qwery',
+    'common/utils/$',
     'common/utils/_',
+    'common/utils/config',
     'common/modules/ui/sticky'
 ], function (
     qwery,
+    $,
     _,
+    config,
     Sticky
 ) {
 
@@ -22,7 +26,7 @@ define([
         if (this.$adSlot.data('name') !== 'right') {
             return;
         }
-        articleBodyOffset = qwery('.content__article-body')[0].offsetTop;
+        articleBodyOffset = config.page.hasShowcaseMainPicture ? $('.media-primary').dim().height : qwery('.content__article-body')[0].offsetTop;
         this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
         new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
     };

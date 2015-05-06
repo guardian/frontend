@@ -43,6 +43,9 @@ trait MetaData extends Tags {
   def hasPageSkin(edition: Edition) = false
   lazy val isInappropriateForSponsorship: Boolean = false
 
+  lazy val membershipAccess: Option[String] = None
+  lazy val requiresMembershipAccess: Boolean = false
+
   def isSurging: Seq[Int] = Seq(0)
 
   def metaData: Map[String, JsValue] = Map(
@@ -130,22 +133,33 @@ class TagCombiner(
   Some(GuardianContentTypes.TagIndex)
 )
 
+object IsRatio {
 
+  val AspectRatioThreshold = 0.01
+
+  def apply(aspectWidth: Int, aspectHeight: Int, width: Int, height: Int): Boolean = {
+    aspectHeight.toDouble * width != 0 &&
+      Math.abs((aspectWidth.toDouble * height) / (aspectHeight.toDouble * width) - 1) <= AspectRatioThreshold
+  }
+
+}
+
+/**
+ * ways to access/filter the elements that make up an entity on a facia page
+ *
+ * designed to add some structure to the data that comes from CAPI
+ */
 trait Elements {
 
   private val trailPicMinDesiredSize = 460
 
-  val AspectRatioThreshold = 0.01
-
   // Find a main picture crop which matches this aspect ratio.
   def trailPictureAll(aspectWidth: Int, aspectHeight: Int): List[ImageContainer] = {
-    val desiredAspectRatio = aspectWidth.toDouble / aspectHeight
 
     (thumbnail.find(_.imageCrops.exists(_.width >= trailPicMinDesiredSize)) ++ mainPicture ++ thumbnail)
       .map { image =>
       image.imageCrops.filter { crop =>
-        aspectHeight.toDouble * crop.width != 0 &&
-          Math.abs((aspectWidth.toDouble * crop.height) / (aspectHeight.toDouble * crop.width) - 1 ) <= AspectRatioThreshold
+        IsRatio(aspectWidth, aspectHeight, crop.width, crop.height)
       } match {
         case Nil => None
         case crops => Option(ImageContainer(crops, image.delegate, image.index))

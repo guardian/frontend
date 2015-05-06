@@ -115,10 +115,14 @@ sudo npm -g install grunt-cli
 Ubuntu/Mac:
 ```
 sudo npm -g install jspm
-jspm endpoint config github
+jspm registry config github
 ```
 
-It'll ask for a GitHub access token. Go to GitHub Settings -> Applications and [generate new token](https://github.com/settings/tokens/new). Default scopes are fine.
+It'll ask for a GitHub access token. Go to GitHub Settings -> Applications and [generate new token](https://github.com/settings/tokens/new). Ensure only the public_repo scope is checked.
+Now create a registry instance.
+```
+jspm registry create bower jspm-bower-endpoint
+```
 
 #### Ruby >= v1.9.x (use `ruby -v` to check if you have it installed)
 
@@ -219,14 +223,8 @@ git clone git@github.com:guardian/frontend.git
 Install to your IDE from http://editorconfig.org/#download
 
 ###intelliJ metadata
-To create project files for use in IntelliJ, run the `gen-idea` task from the
-root SBT project.
-```
-cd frontend
-./sbt
-gen-idea
-```
-See https://github.com/mpeltonen/sbt-idea for more info.
+To create project files for use in IntelliJ, you need to make sure you install the Scala plugin from Preferences->Plugins.  It supports SBT and Play.
+Then load IntelliJ, then click Import project and import the directory as an SBT project.  Default settings are fine, except you need to make sure you choose JDK 1.8 otherwise it won't import correctly.
 
 Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other things to do.
 

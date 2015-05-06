@@ -23,6 +23,8 @@ define([
     mediator,
     removeById
 ) {
+    alert = alert.default;
+
     var maxChars = vars.CONST.restrictedHeadlineLength || 90,
         restrictHeadlinesOn = vars.CONST.restrictHeadlinesOn || [],
         restrictedLiveMode = vars.CONST.restrictedLiveMode || [];

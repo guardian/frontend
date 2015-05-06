@@ -72,7 +72,7 @@ module.exports = function (grunt) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }
 
-        grunt.task.run(['px_to_rem']);
+        grunt.task.run(['px_to_rem', 'shell:updateCanIUse', 'autoprefixer']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
@@ -103,7 +103,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
-    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap', 'compile:inlineSvgs']);
+    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap', 'compile:inlineSvgs', 'uglify:conf']);
     grunt.registerTask('compile', [
         'concurrent:compile',
         'compile:fonts',

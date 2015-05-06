@@ -7,7 +7,7 @@ $fc-item-gutter: $gs-gutter / 4;
 @mixin fc-item--horizontal($media-width, $media-align: right) {
 
     .fc-item__image-container {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         padding-left: $gs-gutter * .25;
     }
 
@@ -17,37 +17,37 @@ $fc-item-gutter: $gs-gutter / 4;
         position: relative;
 
         > * {
-            @include box-sizing(border-box);
+            box-sizing: border-box;
             padding-right: $gs-gutter * .75;
         }
     }
 
     .has-flex-wrap & {
         .fc-item__container {
-            @include flex-wrap(wrap);
+            flex-wrap: wrap;
             @if $media-align == right {
-                @include flex-direction(row-reverse);
+                flex-direction: row-reverse;
             } @else {
-                @include flex-direction(row);
+                flex-direction: row;
             }
         }
 
         .fc-item__media-wrapper {
-            @include flex-basis($media-width);
+            flex-basis: $media-width;
         }
 
         .fc-item__video-fallback {
-            @include flex-basis($media-width);
+            flex-basis: $media-width;
         }
 
         .fc-item__content {
-            @include flex-basis(100% - $media-width);
+            flex-basis: (100% - $media-width);
             // DAMN YOU IE10/11 FLEXWRAP BOX SIZING BUG
-            max-width: 100% - $media-width;
+            max-width: (100% - $media-width);
         }
 
         .fc-item__footer--horizontal {
-            @include flex-basis(100%);
+            flex-basis: 100%;
         }
     }
 
@@ -76,23 +76,11 @@ $fc-item-gutter: $gs-gutter / 4;
 
     @include mq(tablet) {
         .has-flex & {
-            @include flex(1);
-            // see: http://stackoverflow.com/questions/7813783/firefox-and-flexbox-when-using-white-space-nowrap-on-child-element-the-flexib
-            // width:0 fixes child elements with white-space:nowrap below flex
-            width: 0;
-        }
-
-        // Temporary fix for the above! - for video most popular
-        .has-flex .most-viewed--media & {
-            width: 50%;
-
-            @include mq($until: desktop) {
-                width: 33.3%;
-            }
+            flex: 1 1 auto;
         }
 
         .has-flex-wrap & {
-            @include flex-display;
+            display: flex;
         }
 
         .has-no-flex-wrap & {
@@ -104,13 +92,16 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__container {
     display: block;
     width: 100%;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 
     @include mq(tablet) {
         .has-flex-wrap & {
-            @include flex-direction(column);
-            @include flex-display;
-            @include flex(1);
+            flex-direction: column;
+            display: flex;
+            flex: 1 1 auto;
+            // see: http://stackoverflow.com/a/9737602/802472
+            // width:0 fixes child elements with white-space:nowrap below flex
+            width: 0;
         }
     }
 }
@@ -140,7 +131,7 @@ $fc-item-gutter: $gs-gutter / 4;
     @include mq($until: tablet) {
         padding-left: $gs-gutter * .5;
         padding-right: $gs-gutter * .5;
-        @include box-sizing(border-box);
+        box-sizing: border-box;
     }
 
     @include mq(tablet) {
@@ -232,13 +223,13 @@ $fc-item-gutter: $gs-gutter / 4;
 // Wraps all media elements
 .fc-item__media-wrapper,
 .item__media-wrapper {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     position: relative;
 }
 
 // Wraps all non-media content
 .fc-item__content {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 }
 
 .fc-item__content,
@@ -338,6 +329,51 @@ $fc-item-gutter: $gs-gutter / 4;
     .fc-item--has-boosted-title & {
         display: none !important;
     }
+}
+
+// Liveblog blocks
+@function liveblog-blocks-height($blocks) {
+    $block-height: 40px;
+    @return $block-height * $blocks - 2px;
+}
+
+.fc-item__liveblog-blocks {
+    height: liveblog-blocks-height(1);
+    overflow: hidden;
+    margin-top: -1 * $gs-baseline / 2;
+    margin-bottom: $gs-baseline / 2;
+}
+
+.fc-item__liveblog-blocks__inner {
+    transition: transform .5s ease-in-out;
+}
+
+.fc-item__liveblog-block {
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    @include fs-headline(1);
+    line-height: 1rem;
+    color: #ffffff;
+    height: liveblog-blocks-height(1);
+    margin-bottom: $gs-baseline / 6;
+    margin-top: 0;
+    padding: $gs-baseline/3 $gs-gutter/4 0;
+    background-color: darken(colour(live-default), 10%);
+}
+
+.fc-item__liveblog-block__time {
+    font-weight: bold;
+    @include ellipsis();
+}
+
+.fc-item__liveblog-block--old .fc-item__liveblog-block__time {
+    color: mix(#ffffff, colour(live-default), 70%);
+}
+
+.fc-item__liveblog-block__text {
+    color: #ffffff;
+    @include ellipsis();
 }
 
 .fc-item__meta {

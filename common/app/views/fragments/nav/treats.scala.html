@@ -3,7 +3,7 @@
 @import common.LinkTo
 @import common.ExternalLinks.internalPath
 @import crosswords.{CrosswordGrid, CrosswordPreview, TodaysCrosswordGrid}
-@import views.support.{Treat, CrosswordTreat, RegisterToVoteTreat, NormalTreat, RegisterCountdown}
+@import views.support.{Treat, CrosswordTreat, SnappableTreat, NormalTreat}
 
 @if(containerDefinition.collectionEssentials.treats.nonEmpty) {
     <ul class="treats__container">
@@ -11,32 +11,15 @@
         @defining(LinkTo(treat).getOrElse("")) { link =>
             <li class="treats__list-item">
                 @Treat.fromUrl(link) match {
-                    case RegisterToVoteTreat => {
-                        <a class="treats__register-to-vote" data-link-name="treat | @{index + 1}" href="@link">
-                            <img class="treats__register-to-vote__logo" src="http://i.guim.co.uk/static/w-90/h--/q-95/sys-images/Guardian/Pix/pictures/2015/4/2/1427982061285/election2015logo160x160opt.png" />
-                            <h2 class="treats__register-to-vote__title">
-                                <strong>Register to vote</strong>
-                                @RegisterCountdown.daysLeft match {
-                                    case 0 => {
-                                        Last day&#8230;
-                                    }
-                                    case 1 => {
-                                        Only @RegisterCountdown.daysLeft day left&#8230;
-                                    }
-                                    case _ => {
-                                        Only @RegisterCountdown.daysLeft days left&#8230;
-                                    }
-                                }
-                            </h2>
-                            <span class="treats__treat">Find out how <span class="hide-until-wide">to register</span></span>
-                        </a>
-                    }
-
                     case CrosswordTreat => {
                         <a class="treats__crossword-link" data-link-name="treat | @{index + 1}" href="@link">
                             @CrosswordPreview.fromCrosswordGrid(TodaysCrosswordGrid.get.getOrElse(CrosswordGrid.DefaultTreat))
                             <span class="treats__treat">@treat.headline</span>
                         </a>
+                    }
+
+                    case SnappableTreat => {
+                        <a href="@link" data-link-name="treat | @{index + 1} | @treat.headline" class="treats__treat facia-snap js-snap js-snappable" data-snap-type="json.html" data-snap-uri="http://interactive.guim.co.uk/thrashers/election-treat/source.json">@treat.headline</a>
                     }
 
                     case NormalTreat => {
@@ -47,5 +30,4 @@
         }
     }
     </ul>
-
 }

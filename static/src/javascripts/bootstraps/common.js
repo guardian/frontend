@@ -52,8 +52,6 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
-    'text!common/views/international-message.html',
-    'text!common/views/international-control-message.html',
     'bootstraps/identity'
 ], function (
     bean,
@@ -107,8 +105,6 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
-    internationalMessage,
-    internationalControlMessage,
     identity
 ) {
     var modules = {
@@ -186,7 +182,7 @@ define([
 
             initPopular: function () {
                 if (!config.page.isFront) {
-                    if (!config.switches.lazyLoadOnwards || window.location.hash) {
+                    if (window.location.hash) {
                         modules.transcludePopular();
                     } else {
                         var onwardEl = qwery('.js-popular-trails')[0];
@@ -220,8 +216,13 @@ define([
 
             showTabs: function () {
                 var tabs = new Tabs();
-                mediator.on('modules:popular:loaded', function (el) {
-                    tabs.init(el);
+                [
+                    'modules:popular:loaded',
+                    'modules:geomostpopular:ready'
+                ].forEach(function (event) {
+                    mediator.on(event, function (el) {
+                        tabs.init(el);
+                    });
                 });
             },
 
@@ -252,8 +253,7 @@ define([
                 omniture.go();
 
                 if (config.switches.ophan) {
-                    require('ophan/ng', function (ophan) {
-                        ophan.record({ab: ab.getParticipations()});
+                    require(['ophan/ng'], function (ophan) {
 
                         if (config.switches.scrollDepth) {
                             mediator.on('scrolldepth:data', ophan.record);
@@ -440,31 +440,15 @@ define([
 
             runCustomAbTests: function () {
                 var stickyTest = ab.getTest('MtStickyBtm'),
-                    masterTest = ab.getTest('MtMaster');
+                    mainTest = ab.getTest('MtMain');
 
-                if (masterTest && ab.isParticipating(masterTest) && ab.getTestVariant('MtMaster') === 'variant'
-                    && ab.testCanBeRun('MtMaster')) {
-                    masterTest.fireMasterTest();
+                if (mainTest && ab.isParticipating(mainTest) && ab.getTestVariant('MtMain') === 'A'
+                    && ab.testCanBeRun('MtMain')) {
+                    mainTest.fireMainTest();
                 }
                 if (stickyTest && ab.isParticipating(stickyTest) && ab.getTestVariant('MtStickyBtm') === 'A'
                     && ab.testCanBeRun('MtStickyBtm')) {
                     stickyTest.fireStickyBottom();
-                }
-            },
-
-            internationalSignposting: function () {
-                var message;
-
-                if ('internationalEdition' in config.page) {
-                    message = new Message('international', {
-                        pinOnHide: true
-                    });
-
-                    if (config.page.internationalEdition === 'international' && config.page.pageId === 'international') {
-                        message.show(template(internationalMessage, {}));
-                    } else if (config.page.internationalEdition === 'control' && config.page.pageId === 'uk') {
-                        message.show(template(internationalControlMessage, {}));
-                    }
                 }
             }
         },
@@ -511,7 +495,6 @@ define([
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
             robust('c-run-custom-ab',   modules.runCustomAbTests);
-            robust('c-international-signposting', modules.internationalSignposting);
         };
 
     return {

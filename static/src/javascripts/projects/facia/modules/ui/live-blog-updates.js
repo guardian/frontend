@@ -9,7 +9,6 @@ define([
     'common/utils/template',
     'common/utils/mediator',
     'common/utils/detect',
-    'text!facia/views/liveblog-blocks.html',
     'text!facia/views/liveblog-block.html'
 ], function (
     bonzo,
@@ -22,40 +21,51 @@ define([
     template,
     mediator,
     detect,
-    blocksTemplate,
     blockTemplate
 ) {
-    var forgetAfterHours = 24,
-        numDisplayedBlocks = 4,
+    var numDisplayedBlocks = 4,
         blockHeightPx = 40,
 
         animateDelayMs = 1000,
         refreshSecs = 30,
         refreshDecay = 1,
         refreshMaxTimes = 3,
-        messageAnimateDistance = 200,
 
         selector = '.js-liveblog-blocks',
         blocksClassName = 'fc-item__liveblog-blocks',
-        messageClassName = 'fc-item__liveblog-message',
         newBlockClassName = 'fc-item__liveblog-block--new',
         oldBlockClassName = 'fc-item__liveblog-block--old',
         articleIdAttribute = 'data-article-id',
-        storageKey = 'gu.liveblog.block-dates',
+        sessionStorageKey = 'gu.liveblog.block-dates',
         prefixedTransforms = ['-webkit-transform', '-ms-transform', 'transform'],
 
         veiwportHeightPx = detect.getViewport().height,
         elementsById = {};
 
     function blockRelativeTime(block) {
-        return relativeDates.makeRelativeDate(new Date((block || {}).publishedDateTime || null));
+        var pubDate = (block || {}).publishedDateTime,
+            relDate = pubDate ? relativeDates.makeRelativeDate(new Date(pubDate)) : false;
+
+        return relDate || '';
     }
 
     function renderBlock(articleId, block, index) {
+        var relTime = blockRelativeTime(block);
+
+        if (relTime.match(/yesterday/i)) {
+            relTime = relTime.toLowerCase();
+        } else if (relTime && block.isNew) {
+            relTime = 'updated ' + relTime + ' ago';
+        } else if (relTime) {
+            relTime = relTime + ' ago';
+        } else {
+            relTime = 'updated just now';
+        }
+
         return template(blockTemplate, {
             classes: block.isNew ? newBlockClassName : oldBlockClassName,
             href: '/' + articleId + '#' + block.id,
-            relativeTime: blockRelativeTime(block),
+            relativeTime: relTime,
             text: _.compact([block.title, block.body.slice(0, 200)]).join('. '),
             index: index + 1
         });
@@ -63,10 +73,6 @@ define([
 
     function translateVertical(offset) {
         return 'translate3d(0, -' + offset + 'px, 0)';
-    }
-
-    function translateHorizontal(offset) {
-        return 'translate3d(-' + offset + 'px, 0, 0)';
     }
 
     function translateNone() {
@@ -118,26 +124,6 @@ define([
         });
     }
 
-    function showMessage(articleId, targets, blocks, oldBlockDate) {
-        var fakeUpdate = _.isUndefined(oldBlockDate);
-
-        fastdom.write(function () {
-            _.forEach(targets, function (element) {
-                var hasUpdate = fakeUpdate || _.some(blocks, function (block) { return block.publishedDateTime > oldBlockDate; }),
-                    el;
-
-                if (hasUpdate) {
-                    el = bonzo.create('<div class="fc-item__liveblog-message__inner" ' +
-                            'style="' + translateCss(translateHorizontal, messageAnimateDistance) + '">' +
-                            'Updated ' + blockRelativeTime(blocks[0]) + ' ago' +
-                        '</div>');
-                    bonzo(element).addClass(messageClassName).append(el);
-                    animateBlocks(el[0]);
-                }
-            });
-        });
-    }
-
     function animateBlocks(el) {
         if (!maybeAnimateBlocks(el)) {
             mediator.on('window:scroll', _.debounce(function () {
@@ -163,13 +149,7 @@ define([
         });
     }
 
-    function pruneOldBlockDates(obj) {
-        return _.omit(obj, function (date) {
-            return !date || (new Date() - new Date(date)) / 3600000 > forgetAfterHours; // hours old
-        });
-    }
-
-    function showUpdates(callback, doPoll) {
+    function show() {
         var oldBlockDates;
 
         $(selector).each(function (element) {
@@ -182,7 +162,7 @@ define([
         });
 
         if (!_.isEmpty(elementsById)) {
-            oldBlockDates = storage.session.get(storageKey) || {};
+            oldBlockDates = storage.session.get(sessionStorageKey) || {};
 
             _.forEach(elementsById, function (elements, articleId) {
                 ajax({
@@ -194,17 +174,17 @@ define([
                     var blocks = response && sanitizeBlocks(response.blocks);
 
                     if (blocks && blocks.length) {
-                        callback(articleId, elements, blocks, oldBlockDates[articleId]);
+                        showBlocks(articleId, elements, blocks, oldBlockDates[articleId]);
                         oldBlockDates[articleId] = blocks[0].publishedDateTime;
-                        storage.session.set(storageKey, pruneOldBlockDates(oldBlockDates));
+                        storage.session.set(sessionStorageKey, oldBlockDates);
                     }
                 });
             });
 
-            if (doPoll && refreshMaxTimes) {
+            if (refreshMaxTimes) {
                 refreshMaxTimes -= 1;
                 setTimeout(function () {
-                    showUpdates(callback);
+                    show();
                 }, refreshSecs * 1000);
                 refreshSecs = refreshSecs * refreshDecay;
             }
@@ -212,7 +192,6 @@ define([
     }
 
     return {
-        showBlocks:  showUpdates.bind(null, showBlocks, true),
-        showMessage: showUpdates.bind(null, showMessage)
+        show:  show
     };
 });

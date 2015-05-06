@@ -3,6 +3,7 @@ module.exports = function(grunt, options) {
         js: [
             options.staticTargetDir + 'javascripts',
             options.staticHashDir + 'javascripts',
+            options.staticHashDir + 'bundles',
             options.requirejsDir
         ],
         css: [
@@ -21,8 +22,11 @@ module.exports = function(grunt, options) {
             options.staticTargetDir + 'fonts',
             options.staticHashDir + 'fonts'
         ],
+        assets: [
+            'common/conf/assets',
+            options.staticHashDir + 'assets'
+        ],
         // Clean any pre-commit hooks in .git/hooks directory
-        hooks: ['.git/hooks'],
-        assets: ['common/conf/assets']
+        hooks: ['.git/hooks']
     };
 };

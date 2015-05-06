@@ -244,9 +244,14 @@
                 Apple seems to purposefully make this a difficult thing to do.
             *@
             var isOlderIpad = !isIphone && window.devicePixelRatio === 1 && /.*iPad; CPU OS ([345])_\d+.*/.test(navigator.userAgent);
+            var isIpad2orMini = !isIphone && window.devicePixelRatio === 1 && /.*iPad; CPU OS ([678])_\d+.*/.test(navigator.userAgent);
 
             if ( isOlderIpad ) {
                 logDevice ( 'old', 'ipad' );
+            }
+
+            if ( isIpad2orMini ) {
+                logDevice ( '2orMini', 'ipad' );
             }
 
             if ( isIphone6 ) {

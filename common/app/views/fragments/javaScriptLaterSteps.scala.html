@@ -3,69 +3,19 @@
 @import conf.Static
 @import conf.Configuration
 
-@* Scripts that should be executed after CSS is loaded *@
+@modernBrowser()
 
-@defining(Static.js.jspmFile(item.section)) { jspmFile =>
-    @if(jspmFile.nonEmpty && play.Play.isDev()) {
-        <script src="/assets/jspm_packages/system.js"></script>
-        <!-- Due to Babel conflcting with curl, we have to manually load.
-        As per https://github.com/systemjs/systemjs/issues/378#issuecomment-83982349 -->
-        <script src="/assets/jspm_packages/babel.js"></script>
-        <script src="/assets/jspm-config.js"></script>
-        <script>
-            System.import('es6/bootstraps/app')
-                .catch(function (error) {
-                    // Throw error outside of promise
-                    setTimeout(function () {
-                        throw error;
-                    });
-                });
-        </script>
-    }
+@if(mvt.JspmTest.isParticipating || item.section == "crosswords") {
+    @bootSystemJs()
+} else {
+    @bootCurl()
+}
 
+@modernBrowser() = {
     <script>
-
-        var curl = {
-            baseUrl: '@{Configuration.assets.path}javascripts',
-            apiName: 'require',
-            paths: {
-                @curlPaths.map { case (module, path) =>
-                    '@module': '@Static(path)',
-                }
-                core:                       '@Static("javascripts/core.js")',
-                facebook:                   '//connect.facebook.net/en_US/all.js',
-                foresee:                    'vendor/foresee/20141107/foresee-trigger.js',
-                googletag:                  '@{Configuration.javascript.config("googletagJsUrl")}',
-                'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
-                stripe:                     '@Static("javascripts/vendor/stripe/stripe.min.js")',
-                text:                       'text', // noop
-                inlineSvg:                  'inlineSvg', // noop
-                zxcvbn:                     '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
-                'bootstraps/app':           '@Static("javascripts/bootstraps/app.js")',
-                'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
-                'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
-                'bootstraps/dev':           '@Static("javascripts/bootstraps/dev.js")',
-                'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
-                'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
-                'bootstraps/football':      '@Static("javascripts/bootstraps/football.js")',
-                'bootstraps/image-content': '@Static("javascripts/bootstraps/image-content.js")',
-                'bootstraps/membership':    '@Static("javascripts/bootstraps/membership.js")',
-                'bootstraps/sudoku':        '@Static("javascripts/bootstraps/sudoku.js")',
-                'bootstraps/video-player':  '@Static("javascripts/bootstraps/video-player.js")'
-            }
-        };
-
         (function(isModern) {
 
             if (!isModern) { return false; }
-
-            @if(! play.Play.isDev()) {
-                @jspmFile.map { file =>
-                    var script = document.createElement('script');
-                    script.src = '@Static(file)';
-                    document.head.appendChild(script);
-                }
-            }
 
             @* Duplicated in /static/src/javascripts/projects/common/utils/detect.js *@
             // Determine what type of font-hinting we want.
@@ -248,7 +198,41 @@
 
         })(guardian.isModernBrowser);
 
-        @* inline curl *@
+    </script>
+}
+
+@bootCurl() = {
+    <script>
+        var curl = {
+            baseUrl: '@{Configuration.assets.path}javascripts',
+            apiName: 'require',
+            paths: {
+                @curlPaths.map { case (module, path) =>
+                    '@module': '@Static(path)',
+                }
+                core:                       '@Static("javascripts/core.js")',
+                facebook:                   '//connect.facebook.net/en_US/all.js',
+                foresee:                    'vendor/foresee/20141107/foresee-trigger.js',
+                googletag:                  '@{Configuration.javascript.config("googletagJsUrl")}',
+                'ophan/ng':                 '@{Configuration.javascript.config("ophanJsUrl")}',
+                stripe:                     '@Static("javascripts/vendor/stripe/stripe.min.js")',
+                text:                       'text', // noop
+                inlineSvg:                  'inlineSvg', // noop
+                zxcvbn:                     '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
+                'bootstraps/app':           '@Static("javascripts/bootstraps/app.js")',
+                'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
+                'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
+                'bootstraps/dev':           '@Static("javascripts/bootstraps/dev.js")',
+                'bootstraps/preferences':   '@Static("javascripts/bootstraps/preferences.js")',
+                'bootstraps/facia':         '@Static("javascripts/bootstraps/facia.js")',
+                'bootstraps/football':      '@Static("javascripts/bootstraps/football.js")',
+                'bootstraps/image-content': '@Static("javascripts/bootstraps/image-content.js")',
+                'bootstraps/membership':    '@Static("javascripts/bootstraps/membership.js")',
+                'bootstraps/sudoku':        '@Static("javascripts/bootstraps/sudoku.js")',
+                'bootstraps/video-player':  '@Static("javascripts/bootstraps/video-player.js")'
+            }
+        };
+
         @Html(Static.js.curl)
 
         require([
@@ -272,7 +256,8 @@
                         tags: {
                             edition:        guardian.config.page.edition,
                             contentType:    guardian.config.page.contentType,
-                            revisionNumber: guardian.config.page.revisionNumber
+                            revisionNumber: guardian.config.page.revisionNumber,
+                            loaderType:     'Curl'
                         },
                         dataCallback: function(data) {
                             if (data.culprit) {
@@ -337,7 +322,185 @@
 
                 });
 
+                @membershipAccess()
+
+            });
+    </script>
+}
+
+@bootSystemJs() = {
+
+    <script>
+        @Html(Static.js.es6ModuleLoader)
+        @Html(Static.js.systemJs)
+        @Html(Static.js.systemJsAppConfig)
+
+        @if(!play.Play.isDev()) {
+            @Html(Static.js.systemJsBundleConfig)
+        }
+
+        System.baseURL = '@{Configuration.assets.path}';
+        System.paths['ophan/ng']  = '@{Configuration.javascript.config("ophanJsUrl")}.js';
+        System.paths['googletag'] = '@{Configuration.javascript.config("googletagJsUrl")}';
+
+        @Html(Static.js.systemJsNormalize)
+
+        window.require = System.amdRequire.bind(System);
+        window.define = System.amdDefine.bind(System);
+
+        System.import('core')
+        .then(function(){
+            return System.import('raven');
+        })
+        .then(function(raven) {
+            raven.config(
+                'http://' + guardian.config.page.sentryPublicApiKey + '@@' + guardian.config.page.sentryHost,
+                {
+                    whitelistUrls: [
+                        /localhost/, @* will not actually log errors, but `shouldSendCallback` will be called *@
+                        /assets\.guim\.co\.uk/,
+                        /ophan\.co\.uk/
+                    ],
+                    tags: {
+                        edition:        guardian.config.page.edition,
+                        contentType:    guardian.config.page.contentType,
+                        revisionNumber: guardian.config.page.revisionNumber,
+                        loaderType:     'SystemJs'
+                    },
+                    dataCallback: function(data) {
+                        if (data.culprit) {
+                            data.culprit = data.culprit.replace(/\/[a-z\d]{32}(\/[^\/]+)$/, '$1');
+                        }
+                        data.tags.origin = (/j.ophan.co.uk/.test(data.culprit)) ? 'ophan' : 'app';
+                        return data;
+                    },
+                    shouldSendCallback: function(data) {
+                        @if(play.Play.isDev()) {
+                            console.error(data);
+                        }
+
+                        return @conf.Switches.DiagnosticsLogging.isSwitchedOn &&
+                            Math.random() < 0.2 &&
+                            @{!play.Play.isDev()}; @* don't actually notify sentry in dev mode*@
+                    }
+                }
+            ).install();
+
+            Promise.all([
+                'common/utils/config',
+                'common/modules/experiments/ab',
+                'common/modules/ui/images',
+                'common/modules/ui/lazy-load-images'].map(function(module){
+                return System.import(module);
+            })).then(function(values) {
+                var config = values[0];
+                var ab = values[1];
+                var images = values[2];
+                var lazyLoadImages = values[3];
+
+                ab.segmentUser();
+                ab.run();
+                if(guardian.config.page.isFront) {
+                    if(!document.addEventListener) { // IE8 and below
+                        window.onload = images.upgradePictures;
+                    }
+                }
+                lazyLoadImages.init();
+                images.upgradePictures();
+                images.listen();
+
+                if (config.switches.commercial) {
+                    System.import('bootstraps/commercial').then(raven.wrap(
+                        { tags: { feature: 'commercial' } },
+                        function (commercial) {
+                            commercial.init();
+                        }
+                    ));
+                }
+
+                if (guardian.isModernBrowser) {
+                    @if(play.Play.isDev()) {
+                        System.import('bootstraps/dev').then(function (devmode) { devmode.init(); });
+                    }
+
+                    System.import('bootstraps/app').then(function(app) {
+                        app.go();
+                    });
+                }
+
+                @if(item.section == "crosswords") {
+                    System.import('es6/bootstraps/crosswords').then(function (crosswords) {
+                        crosswords.default.init();
+                    });
+
+                    System.import('es6/projects/common/modules/crosswords/thumbnails').then(function (crosswordThumbnails) {
+                        crosswordThumbnails.default.init();
+                    });
+                }
             });
 
+            @membershipAccess()
+
+        });
     </script>
+}
+
+@membershipAccess() = {
+    @for(membershipAccess <- item.membershipAccess if item.requiresMembershipAccess) {
+
+        /**
+         * Membership access
+         * Items with either of the following fields require Membership access
+         * - membershipAccess=members-only
+         * - membershipAccess=paid-members-only
+         */
+        (function(isModern) {
+
+            /**
+             * Authenticating requires CORS and withCredentials
+             * If we don't cut the mustard then pass through.
+             */
+            if(!isModern) { return; }
+
+
+            require([
+                'common/utils/$',
+                'common/utils/ajax'
+            ], function($, ajax) {
+
+                var membershipUrl = "@Configuration.id.membershipUrl",
+                    membershipAccess = "@membershipAccess",
+                    requiresPaidTier = (membershipAccess.indexOf("paid-members-only") !== -1),
+                    membershipAuthUrl = membershipUrl + '/choose-tier?membershipAccess=' + membershipAccess;
+
+                function redirect() {
+                    window.location.href = membershipAuthUrl;
+                }
+
+                ajax({
+                    url: membershipUrl + "/user/me",
+                    type: 'json',
+                    crossOrigin: true,
+                    withCredentials: true
+                }).then(function (resp) {
+                    /**
+                     * Check the users access matches the content
+                     */
+                    var canViewContent = (requiresPaidTier) ? !!resp.tier && resp.isPaidTier : !!resp.tier;
+                    if (canViewContent) {
+                        $('body').removeClass('has-membership-access-requirement');
+                    } else {
+                        redirect()
+                    }
+                }).fail(function() {
+                    /**
+                     * If the request fails assume non-member
+                     */
+                    redirect()
+                });
+
+            });
+        }(guardian.isModernBrowser));
+
+    }
 }

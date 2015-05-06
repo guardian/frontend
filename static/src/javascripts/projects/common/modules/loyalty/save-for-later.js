@@ -20,7 +20,7 @@ define([
         this.userData = null;
         this.pageId = config.page.pageId;
         this.$saver = bonzo(this.saveLinkHolder);
-        this.savedArticlesUrl = config.page.idUrl + '/saved-articles';
+        this.savedArticlesUrl = config.page.idUrl + '/saved-content';
         this.shortUrl = config.page.shortUrl.replace('http://gu.com', '');   //  Keep the fitst trailing slash
     }
 
@@ -28,7 +28,7 @@ define([
         if (identity.isUserLoggedIn()) {
             this.getSavedArticles();
         } else {
-            var url = config.page.idUrl + '/prefs/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
+            var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
                 '&shortUrl=' + this.shortUrl;
             this.$saver.html(
                 '<a href="' + url + ' "data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>'
@@ -39,7 +39,7 @@ define([
     SaveForLater.prototype.getSavedArticles = function () {
         var self = this,
             notFound  = {message:'Not found', description:'Resource not found'};
-        identity.getUsersSavedDocuments().then(
+        identity.getSavedArticles().then(
             function success(resp) {
                 if (resp.status === 'error') {
                     if (resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {

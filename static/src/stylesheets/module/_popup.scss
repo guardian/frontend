@@ -12,14 +12,14 @@ $c-popup-bg: colour(neutral-8);
 $control-offset: 36 + $gs-gutter/2;
 
 .popup {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     position: absolute;
     left: 0;
     background: $c-popup-bg;
     margin: 0;
     padding: 0;
     list-style: none;
-    @include box-shadow(0 rem(1px 1px) 0 rgba(0, 0, 0, .25));
+    box-shadow: 0 rem(1px 1px) 0 rgba(0, 0, 0, .25);
     min-width: gs-span(2);
     top: $popup-top - 2;
 
@@ -217,7 +217,7 @@ $control-offset: 36 + $gs-gutter/2;
    ========================================================================== */
 
 .popup--search {
-    z-index: 10;
+    z-index: 300;
     padding: 0;
     right: 0;
     padding-top: 5px; // manual amount, determined by google, not guss-grid-system
@@ -250,5 +250,31 @@ $control-offset: 36 + $gs-gutter/2;
     // account for google search sizes.
     .search-box {
         margin-bottom: -1px;
+    }
+}
+
+/*
+ *  Slim modification
+ *
+ *  Used for slim header ^l_header
+ */
+.is-slim {
+    .popup {
+        .brand-bar__item--has-control & {
+            left: 0;
+        }
+    }
+
+    .popup__toggle {
+        &.is-active,
+        .is-active > & {
+            &:before {
+                margin-left: 0 - $popup-anchor-arrow-size;
+            }
+        }
+
+        &:after {
+            display: none;
+        }
     }
 }
