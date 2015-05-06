@@ -1,7 +1,7 @@
 module.exports = function(grunt, options) {
     return {
         options: {
-            reporters: options.isDev ? ['dots'] : ['progress'],
+            reporters: options.isDev ? ['spec'] : ['progress'],
             singleRun: options.singleRun,
             browserDisconnectTimeout: 10000,
             browserDisconnectTolerance: 3,
