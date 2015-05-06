@@ -401,7 +401,7 @@ object Switches {
 
   val BecomeAMemberSwitch = Switch("Feature", "become-a-member",
     "If this switch is on the “Become a Member” button will be visible.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 15)
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch("Feature", "html-5-media-compatibility-check",
