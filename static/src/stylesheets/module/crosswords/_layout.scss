@@ -32,8 +32,10 @@
 
 .crossword__grid-wrapper {
     position: relative;
-    height: auto;
+    height: 0;
+    padding-bottom: 100%;
     font-size: 0;
+    background-color: #F7F7F7;
 
     @include mq(tablet) {
         float: left;
