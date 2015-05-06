@@ -6,7 +6,7 @@ define(function () {
         this.expiry = '2015-05-15';
         this.author = 'Zofia Korcz';
         this.description = 'Defer execution of spacefinder until images and richlinks have been loaded.';
-        this.audience = 1;
+        this.audience = 0.02;
         this.audienceOffset = 0;
         this.successMeasure = '';
         this.audienceCriteria = 'All users';
@@ -22,7 +22,11 @@ define(function () {
          */
         this.variants = [
             {
-                id: 'variant',
+                id: 'A',
+                test: function () { }
+            },
+            {
+                id: 'B',
                 test: function () { }
             }
         ];

@@ -139,7 +139,7 @@ define([
 
     function getReady() {
         var group = ab.getParticipations().DeferSpacefinder,
-            eligible = group && group.variant === 'variant';
+            eligible = group && group.variant === 'A';
 
         if (ab.testCanBeRun('DeferSpacefinder') && eligible) {
             return Promise.all([onImagesLoaded(), onRichLinksUpgraded()]);

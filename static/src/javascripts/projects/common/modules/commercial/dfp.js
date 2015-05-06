@@ -200,8 +200,10 @@ define([
         },
 
         isDeferSpaceFinderTest = function () {
-            var test = ab.getParticipations().DeferSpacefinder;
-            return test && ab.testCanBeRun('DeferSpacefinder');
+            var test = ab.getParticipations().DeferSpacefinder,
+                eligible = test && test.variant === 'A';
+
+            return ab.testCanBeRun('DeferSpacefinder') && eligible;
         },
 
         /**
