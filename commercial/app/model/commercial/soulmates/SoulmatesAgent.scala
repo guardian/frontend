@@ -15,7 +15,15 @@ object SoulmatesAggregatingAgent {
     SoulmatesNorthwestAgent,
     SoulmatesScotlandAgent,
     SoulmatesMatureAgent,
-    SoulmatesYoungAgent
+    SoulmatesYoungAgent,
+    SoulmatesWestMidlandsAgent,
+    SoulmatesEastMidlandsAgent,
+    SoulmatesYorkshireAgent,
+    SoulmatesNorthEastAgent,
+    SoulmatesEastAgent,
+    SoulmatesSouthAgent,
+    SoulmatesSouthWestAgent,
+    SoulmatesWalesAgent
   )
 
   def refresh() {
