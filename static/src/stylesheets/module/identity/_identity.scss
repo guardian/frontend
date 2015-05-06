@@ -404,6 +404,19 @@
     }
 }
 
+.saved-content__standfirst {
+    @include fs-bodyCopy(1);
+
+    @include mq(desktop) {
+        @include box-sizing(border-box);
+        @include fs-headline(2, true);
+        float: left;
+        padding-right: $gs-gutter;
+        width: gs-span(8);
+    }
+
+}
+
 .saved-content__read {
     @include fs-bodyCopy(1);
 

@@ -45,3 +45,4 @@ GET         /et/subscribe/:subDefId                 @controllers.ExactTargetCont
 GET         /save-content                           @controllers.SaveContentController.saveContentItem
 GET         /saved-content                          @controllers.SaveContentController.listSavedContentItems
 POST        /saved-content                          @controllers.SaveContentController.deleteSavedContentItem
+GET         /saved-for-later/:pageNum               @controllers.SaveContentController.savedContentPage(pageNum: Int)

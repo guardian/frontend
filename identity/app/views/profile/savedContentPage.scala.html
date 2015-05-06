@@ -1,0 +1,63 @@
+@import com.gu.identity.model.SavedArticle
+@import model.Content
+
+@(page: model.MetaData, savedArticleForm: Form[SavedArticleData], articles: List[Content], formActionUrl: String )(implicit request: RequestHeader)
+
+@import implicits.Articles._
+
+@savedArticle(articles: List[Content]) = {
+    @articles.zipWithRowInfo.map { case (article, row) =>
+          <div class="@RenderClasses(Map(
+                "u-cf" -> true,
+                "saved-content" -> true,
+                "js-saved-content" -> true,
+                "saved-content-first" -> row.isFirst))" shortUrl="@article.shortUrl">
+
+            <input type="hidden" name="article[@row.rowNum]" value="@article.shortUrl"/>
+                 <div class="saved-content__name"><a href="@article.webUrl">@article.webTitle</a></div>
+                 <div class="saved-content__standfirst">@article.trailText</div>
+             <!--    <div class="saved-content__read">not read</div> -->
+            <div class="saved-content__meta u-cf">
+                <button class="saved-content__button js-saved-content__button"
+                data-link-name="Delete"
+                name="deleteArticle"
+                type="submit"
+                value="@article.shortUrl">
+                Delete
+                </button>
+               <!-- <div class="saved-content__saved-at">Summat else</div> -->
+            </div>
+        </div>
+    }
+}
+
+@main(page, projectName = Option("identity")) {
+}{
+    <div class="identity-wrapper monocolumn-wrapper">
+        <h1 class="identity-title">Saved Articles</h1>
+        @if(savedArticleForm.globalError.isDefined) {
+            <div class="form__error">@savedArticleForm.globalErrors.map(_.message).mkString(", ")</div>
+        }
+        <!-- Open form here and handle errors here -->
+        <form class="form js-saved-content-form" novalidate action="@formActionUrl" role="main" method="post">
+            <div class="saved-contents js-saved-contents">
+                @savedArticle(articles)
+            </div>
+            <fieldset class="fieldset">
+                <ul class="u-unstyled">
+
+                    <li class="form-field">
+                        <label class="label">Your saved articles</label>
+                        <div class="form-field__note">
+                            Delete individual articles with the button above, or click below to remove them all
+                        </div>
+                    </li>
+
+                    <li>
+                        <button type="submit" class="submit-input js-saved-content__button-delete-all" name="deleteArticle" value="all" data-link-name="Saved deletre all">Delete All</button>
+                    </li>
+                </ul>
+            </fieldset>
+        </form>
+    </div>
+}
