@@ -70,7 +70,11 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
         targetedName = "sixnations",
         paidForType = Sponsored,
         tagType = Keyword
-      )
+      ),
+      paidForTag("sustainable-business/series/food",
+        Sponsored,
+        Series,
+        toLineItem(sponsor = Some("spon")))
     )
 
     val advertisementFeatureSponsorships: Seq[PaidForTag] = Seq(
@@ -169,12 +173,12 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     ) should be(false)
   }
 
-  it should "be true if series tag exists" in {
+  it should "be false if series tag does not exist but an unsponsored keyword tag has same name" in {
     val tags = Seq(
       toKeyword("culture/article"),
       toSeries("best-awards/best-awards")
     )
-    TestPaidForTagAgent.isAdvertisementFeature(tags, maybeSectionId = None) should be(true)
+    TestPaidForTagAgent.isAdvertisementFeature(tags, maybeSectionId = None) should be(false)
   }
 
   it should "be true for an advertisement feature container" in {
@@ -317,10 +321,14 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     TestPaidForTagAgent.isAdvertisementFeature(tags, maybeSectionId = Some("culture")) should be(false)
   }
 
-  it should "be true if series is ad-feature sponsored" in {
-    val tags = Seq(toKeyword("global-development/global-development"),
-      toKeyword("culture/film"), toSeries("media-network/series/agencies"))
-    TestPaidForTagAgent.isAdvertisementFeature(tags, maybeSectionId = Some("culture")) should be(true)
+  it should "be false if series is not ad-feature sponsored but an unsponsored keyword has same name" in {
+    val tags = Seq(
+      toKeyword("global-development/global-development"),
+      toKeyword("culture/film"),
+      toSeries("media-network/series/agencies")
+    )
+    TestPaidForTagAgent.isAdvertisementFeature(tags, maybeSectionId = Some("culture")) should be(
+      false)
   }
 
   "isSponsored" should "be true for a sponsored article" in {
@@ -386,6 +394,12 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
       maybeSectionId = None,
       maybeEdition = Some(Us)
     ) should be(false)
+  }
+
+  it should "be false if there is a sponsored series and an unsponsored keyword with the same suffix, " +
+    "and the page has the keyword but not the series" in {
+    val tags = Seq(toKeyword("environment/food"))
+    TestPaidForTagAgent.isSponsored(tags, maybeSectionId = None) should be(false)
   }
 
   it should "be true for a sponsored container" in {
