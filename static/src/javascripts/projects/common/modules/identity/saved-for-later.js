@@ -19,10 +19,12 @@ define([
         this.init = function () {
             var self = this,
             form = $('.js-saved-content-form')[0];
-            bean.on(form, 'click', '.js-saved-content__button-delete-all', function (event) {
-                event.preventDefault();
-                self.fetchArticlesAndRemoveAll();
-            });
+            if(form) {
+                bean.on(form, 'click', '.js-saved-content__button-delete-all', function (event) {
+                    event.preventDefault();
+                    self.fetchArticlesAndRemoveAll();
+                });
+            }
 
             this.savedArticles = $('.js-saved-content');
             this.savedArticles.each(function (element) {
