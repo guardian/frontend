@@ -416,7 +416,7 @@ define([
     }
 
     // Navigation slowly dissapearing
-    function StickySlow () {
+    function StickySlow() {
         this.$els = {};
     }
 
@@ -433,7 +433,7 @@ define([
         mediator.on('window:scroll', _.throttle(function () {
             this.updatePosition();
         }.bind(this), 10));
-    }
+    };
 
     StickySlow.prototype.updatePosition = function () {
         var bannerHeight = this.$els.bannerDesktop.dim().height,
@@ -489,7 +489,7 @@ define([
             }
 
         }.bind(this));
-    }
+    };
 
     return {
         stickyNavBurger: stickyNavBurger,
