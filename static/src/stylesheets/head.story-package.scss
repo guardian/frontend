@@ -10,7 +10,7 @@
             color: $colour;
         }
     }
-    
+
     .tone-#{$tone}--sublink {
         .fc-sublink__kicker {
             color: $colour;
@@ -182,5 +182,15 @@
                 }
             }
         }
+    }
+
+    .js-on &.fc-container--has-election-snap {
+        .fc-item--full-media-50-tablet {
+            display: none;
+        }
+    }
+
+    .js-off & .election-snap {
+        display: none;
     }
 }

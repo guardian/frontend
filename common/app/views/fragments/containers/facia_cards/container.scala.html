@@ -29,14 +29,10 @@
              data-component="@componentName"
              aria-expanded="true">
 
-             @containerDefinition.container match {
-                 case Dynamic(DynamicPackage) => {
-                     <style scoped>
-                        @Html(conf.Static.css.head(Some("story-package")))
-                     </style>
-                 }
-                 
-                 case _ => {}
+             @if(containerDefinition.isStoryPackage){
+                 <style scoped>
+                    @Html(conf.Static.css.head(Some("story-package")))
+                 </style>
              }
 
         <div class="fc-container__inner">
