@@ -20,7 +20,9 @@ define([
     'common/modules/experiments/tests/mt-lz-ads-depth',
     'common/modules/experiments/tests/mt-sticky-nav-all',
     'common/modules/experiments/tests/facia-slideshow',
-    'common/modules/experiments/tests/mt-sticky-burger'
+    'common/modules/experiments/tests/mt-sticky-burger',
+    'common/modules/experiments/tests/mt-sticky-all-ux',
+    'common/modules/experiments/tests/mt-sticky-burger-ux'
 ], function (
     raven,
     _,
@@ -43,7 +45,9 @@ define([
     MtLzAdsDepth,
     MtStickyNavAll,
     FaciaSlideshow,
-    MtStickyBurger
+    MtStickyBurger,
+    MtStickyAllUx,
+    MtStickyBurgerUx
     ) {
 
     var ab,
@@ -61,6 +65,8 @@ define([
             new MtLzAdsDepth(),
             new MtStickyNavAll(),
             new MtStickyBurger(),
+            new MtStickyAllUx(),
+            new MtStickyBurgerUx(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             }),

@@ -1,8 +1,0 @@
-{
-  "bitwise": true,
-  "curly": true,
-  "immed": true,
-  "trailing": true,
-  "loopfunc": true,
-  "quotmark": "single"
-}

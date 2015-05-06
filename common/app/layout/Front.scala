@@ -284,6 +284,11 @@ case class FaciaContainer(
   def addShowMoreClasses = useShowMore && containerLayout.exists(_.hasShowMore)
 
   def shouldLazyLoad = Switches.LazyLoadContainersSwitch.isSwitchedOn && index > 8
+
+  def isStoryPackage = container match {
+    case Dynamic(DynamicPackage) => true
+    case _ => false
+  }
 }
 
 object Front extends implicits.Collections {

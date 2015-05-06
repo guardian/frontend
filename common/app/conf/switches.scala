@@ -2,7 +2,6 @@ package conf
 
 import common._
 import conf.Configuration.environment
-import org.joda.time
 import org.joda.time._
 import play.api.Play.current
 import play.api.libs.ws.WS
@@ -313,23 +312,24 @@ object Switches {
 
   val AppleAdUkNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-uk-network-front",
     "If this switch is on, Apple ads will appear below nav on the UK network front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
   val AppleAdAuNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-au-network-front",
     "If this switch is on, Apple ads will appear below nav on the AU network front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
   val AppleAdTechFrontSwitch = Switch("Commercial", "apple-ads-on-tech-front",
     "If this switch is on, Apple ads will appear below nav on the tech section front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6))
-
-  val RefreshAdsAfterDisplaySwitch = Switch("Commercial", "refresh-ads-after-display",
-    "If this switch is on, ads will be refreshed after they display.",
-    safeState = On, sellByDate = new LocalDate(2015, 5, 6))
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
   val LazyLoadAds = Switch("Feature", "lz-ads",
     "If switched on then all ads are lazy loaded",
     safeState = Off, sellByDate = never)
+
+  val LookUpBooksInBookshopCatalogue = Switch("Commercial", "look-up-books-in-catalogue",
+    "Looks up books in bookshop catalogue, rather than in bestsellers list.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 13))
+
 
   // Monitoring
 
@@ -366,11 +366,6 @@ object Switches {
   val FeedbackLink = Switch("Monitoring", "tech-feedback",
     "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
     safeState = Off, new LocalDate(2015, 5, 23)
-  )
-
-  val SendExpiringSwitchesEmail = Switch("Monitoring", "expiring-switches-email",
-    "Send an email when switches are expiring soon",
-    safeState = Off, new LocalDate(2015, 5, 6)
   )
 
 
@@ -533,6 +528,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val ElectionSnap = Switch("Feature", "election-snap",
+    "ONLY TOUCH THIS IF YOU KNOW WHAT IT DOES AND IMPLICATIONS: Switch to render a placeholder for the election snap.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
+  )
+
   // A/B Tests
   val ABMtLzAdsDepth = Switch("A/B Tests", "ab-mt-lz-ads-depth", "Depth for lazy loaded ads.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
@@ -567,7 +567,7 @@ object Switches {
 
   val ABMtDepth = Switch("A/B Tests", "ab-mt-depth",
     "Top navigation and top ad slot are sticky with different variants of depth.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 6)
   )
 
   val ABMtStickyBurger = Switch("A/B Tests", "ab-mt-sticky-burger",
@@ -598,6 +598,20 @@ object Switches {
   val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",
     "Switch for removing the whitelist from the user history tags",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
+  )
+
+  val ABMtStAllUxSwitch = Switch(
+    "A/B Tests",
+    "ab-mt-st-all-ux",
+    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
+  )
+
+  val ABMtStBurgerUxSwitch = Switch(
+    "A/B Tests",
+    "ab-mt-st-burger-ux",
+    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>
@@ -647,11 +661,6 @@ object Switches {
   val MissingVideoEndcodingsJobSwitch = Switch("Feature", "check-for-missing-video-encodings",
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
     safeState = Off, sellByDate = never
-  )
-
-  val LazyLoadOnwards = Switch("Feature", "lazy-load-onwards",
-    "If this is switched on then lazy load the most-popular container on content pages",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
   )
 
   val SlideshowImages = Switch("Feature", "slideshow-images",

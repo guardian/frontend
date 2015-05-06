@@ -3,6 +3,7 @@ package slices
 import com.gu.facia.api.models.CollectionConfig
 import common.Logging
 import model.facia.PressedCollection
+import conf.Switches.ElectionSnap
 
 object Container extends Logging {
   /** This is THE top level resolver for containers */
@@ -34,8 +35,10 @@ object Container extends Logging {
     case _ => true
   }
 
+  private def hasElectionSnap:Option[String] = if(ElectionSnap.isSwitchedOn) Some("fc-container--has-election-snap") else None
+
   def customClasses(container: Container) = container match {
-    case Dynamic(DynamicPackage) => Set("fc-container--story-package")
+    case Dynamic(DynamicPackage) => List(Some("fc-container--story-package"), hasElectionSnap).flatten.toSet
     case Fixed(fixedContainer) => fixedContainer.customCssClasses
     case _ => Nil
   }

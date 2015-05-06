@@ -4,6 +4,7 @@ define([
     'bonzo',
     'common/utils/config',
     'common/utils/mediator',
+    'common/modules/analytics/beacon',
     'common/modules/discussion/api',
     'common/modules/identity/api',
     'common/modules/component',
@@ -15,6 +16,7 @@ define([
     bonzo,
     config,
     mediator,
+    beacon,
     DiscussionApi,
     IdentityApi,
     Component,
@@ -249,6 +251,13 @@ CommentBox.prototype.postComment = function(e) {
  * @param {string} message Overrides the default message
  */
 CommentBox.prototype.error = function(type, message) {
+
+    if (type === 'HTTP_0') {
+        beacon.counts('comment-http-proxy-error', 'comment-error');
+    } else {
+        beacon.counts('comment-error');
+    }
+
     message = message || this.errorMessages[type];
 
     this.setState('invalid');
@@ -267,6 +276,7 @@ CommentBox.prototype.error = function(type, message) {
  * @param {Object} resp
  */
 CommentBox.prototype.postCommentSuccess = function(comment, resp) {
+    beacon.counts('comment-post-success');
     comment.id = parseInt(resp.message, 10);
     this.getElem('body').value = '';
     this.resetPreviewComment();

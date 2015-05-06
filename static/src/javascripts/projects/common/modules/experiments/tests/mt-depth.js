@@ -16,7 +16,7 @@ define([
     return function () {
         this.id = 'MtDepth';
         this.start = '2015-04-17';
-        this.expiry = '2015-05-06';
+        this.expiry = '2015-06-06';
         this.author = 'Zofia Korcz';
         this.description = 'Top navigation and top ad slot are sticky with different variants of depth';
         this.audience = 0.01;

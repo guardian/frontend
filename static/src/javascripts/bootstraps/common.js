@@ -186,7 +186,7 @@ define([
 
             initPopular: function () {
                 if (!config.page.isFront) {
-                    if (!config.switches.lazyLoadOnwards || window.location.hash) {
+                    if (window.location.hash) {
                         modules.transcludePopular();
                     } else {
                         var onwardEl = qwery('.js-popular-trails')[0];
@@ -220,8 +220,13 @@ define([
 
             showTabs: function () {
                 var tabs = new Tabs();
-                mediator.on('modules:popular:loaded', function (el) {
-                    tabs.init(el);
+                [
+                    'modules:popular:loaded',
+                    'modules:geomostpopular:ready'
+                ].forEach(function (event) {
+                    mediator.on(event, function (el) {
+                        tabs.init(el);
+                    });
                 });
             },
 
