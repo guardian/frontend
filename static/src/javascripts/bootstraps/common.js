@@ -52,8 +52,6 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
-    'text!common/views/international-message.html',
-    'text!common/views/international-control-message.html',
     'bootstraps/identity'
 ], function (
     bean,
@@ -107,8 +105,6 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
-    internationalMessage,
-    internationalControlMessage,
     identity
 ) {
     var modules = {
@@ -454,20 +450,6 @@ define([
                     && ab.testCanBeRun('MtStickyBtm')) {
                     stickyTest.fireStickyBottom();
                 }
-            },
-
-            internationalSignposting: function () {
-                if ('internationalEdition' in config.page) {
-                    if (config.page.internationalEdition === 'international' && config.page.pageId === 'international') {
-                        new Message('international-with-survey', {
-                            pinOnHide: true
-                        }).show(template(internationalMessage, {}));
-                    } else if (config.page.internationalEdition === 'control' && config.page.pageId === 'uk') {
-                        new Message('international', {
-                            pinOnHide: true
-                        }).show(template(internationalControlMessage, {}));
-                    }
-                }
             }
         },
 
@@ -513,7 +495,6 @@ define([
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
             robust('c-run-custom-ab',   modules.runCustomAbTests);
-            robust('c-international-signposting', modules.internationalSignposting);
         };
 
     return {
