@@ -54,7 +54,7 @@
     }
 
     &:hover {
-        // stops controls icons staying hightlighted
+        // stops controls icons staying highlighted
         // after closing a popup on mobile
         @include mq(tablet) {
             .control__icon-wrapper {
