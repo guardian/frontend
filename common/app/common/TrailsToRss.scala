@@ -175,18 +175,18 @@ object TrailsToRss extends implicits.Collections {
 
       val images: Seq[ImageAsset] = (faciaContent.bodyImages ++ faciaContent.mainPicture ++ faciaContent.thumbnail).map{ i =>
         i.imageCrops.filter(c => (c.width == 140 && c.height == 84) || (c.width == 460 && c.height == 276))
-      }.flatten.toSeq.distinctBy(_.url)
+      }.flatten.distinctBy(_.url)
 
       val modules: Seq[MediaEntryModuleImpl] = images.filter(_.url.nonEmpty).map { i =>
         // create image
         val image = new MediaContent(new UrlReference(i.url.get))
         image.setHeight(i.height)
         image.setWidth(i.width)
-        i.mimeType.map(image.setType)
+        i.mimeType.foreach(image.setType)
         // create image's metadata
         val imageMetadata = new Metadata()
-        i.caption.map({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
-        i.credit.map{ creditName =>
+        i.caption.foreach({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
+        i.credit.foreach { creditName =>
           val credit = new Credit(null, null, creditName)
           imageMetadata.setCredits(Seq(credit).toArray)
         }
