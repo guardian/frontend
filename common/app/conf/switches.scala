@@ -332,10 +332,6 @@ object Switches {
     "If switched on then all ads are lazy loaded",
     safeState = Off, sellByDate = never)
 
-  val LookUpBooksInBookshopCatalogue = Switch("Commercial", "look-up-books-in-catalogue",
-    "Looks up books in bookshop catalogue, rather than in bestsellers list.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 13))
-
 
   // Monitoring
 
