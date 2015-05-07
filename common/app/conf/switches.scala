@@ -286,6 +286,12 @@ object Switches {
     "If this switch is on, commercial components will be fed by job feed.",
     safeState = Off, sellByDate = never)
 
+  val MembersAreaSwitch = Switch("Commercial", "gu-members-area",
+    "If this switch is on, content flagged with membershipAccess will be protected",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 8, 30)
+  )
+
   val MasterclassFeedSwitch = Switch("Commercial", "gu-masterclasses",
     "If this switch is on, commercial components will be fed by masterclass feed.",
     safeState = Off, sellByDate = never)
@@ -325,10 +331,6 @@ object Switches {
   val LazyLoadAds = Switch("Feature", "lz-ads",
     "If switched on then all ads are lazy loaded",
     safeState = Off, sellByDate = never)
-
-  val LookUpBooksInBookshopCatalogue = Switch("Commercial", "look-up-books-in-catalogue",
-    "Looks up books in bookshop catalogue, rather than in bestsellers list.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 13))
 
 
   // Monitoring
@@ -453,7 +455,7 @@ object Switches {
 
   val FacebookAppLinksSwitch = Switch("Feature", "facebook-applinks",
     "If this switch is on then shared links on the facebook mobile app will be opened in the native app instead of the mobile browser",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 7)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 13)
   )
 
   val IdentityFormstackSwitch = Switch("Feature", "id-formstack",
@@ -526,6 +528,11 @@ object Switches {
   val LiveblogFrontUpdatesOther = Switch("Feature", "liveblog-front-updates-other",
     "Switch for the latest liveblog updates on non-network fronts",
     safeState = Off, sellByDate = never
+  )
+
+  val ElectionSnap = Switch("Feature", "election-snap",
+    "ONLY TOUCH THIS IF YOU KNOW WHAT IT DOES AND IMPLICATIONS: Switch to render a placeholder for the election snap.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   // A/B Tests
@@ -606,6 +613,19 @@ object Switches {
     "A/B Tests",
     "ab-mt-st-burger-ux",
     "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
+  )
+
+  val ABMtStBurgerNtUxSwitch = Switch("A/B Tests",
+    "ab-mt-st-burger-nt-ux",
+    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold A.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
+  )
+
+  val ABMtStAllNtUxSwitch = Switch(
+    "A/B Tests",
+    "ab-mt-st-all-nt-ux",
+    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold B.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
   )
 

@@ -17,28 +17,26 @@ var builder = new jspm.Builder();
 var crypto = require('crypto');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
-
-// TODO: Read from package.json
 var jspmBaseUrl = 'static/src';
 var prefixPath = 'static/hash';
 var bundlesUri = 'bundles';
 var bundleConfigs = [
-    ['core + system-script', 'core.js'],
-    ['es6/bootstraps/crosswords - core', 'es6/bootstraps/crosswords.js'],
-    ['bootstraps/app - core', 'bootstraps/app.js'],
-    ['bootstraps/commercial - core', 'bootstraps/commercial.js'],
-    ['bootstraps/sudoku - core - bootstraps/app', 'bootstraps/sudoku.js'],
-    ['bootstraps/image-content - core - bootstraps/app', 'bootstraps/image-content.js'],
-    ['bootstraps/facia - core - bootstraps/app', 'bootstraps/facia.js'],
-    ['bootstraps/football - core - bootstraps/app', 'bootstraps/football.js'],
-    ['bootstraps/preferences - core - bootstraps/app', 'bootstraps/preferences.js'],
-    ['bootstraps/membership - core - bootstraps/app', 'bootstraps/membership.js'],
-    ['bootstraps/ophan - core', 'bootstraps/ophan.js'],
-    ['bootstraps/admin - core', 'bootstraps/admin.js'],
-    ['bootstraps/video-player - core', 'bootstraps/video-player.js'],
-    ['bootstraps/video-embed - core', 'bootstraps/video-embed.js'],
-    ['bootstraps/dev - core - bootstraps/app', 'bootstraps/dev.js'],
-    ['bootstraps/creatives - core - bootstraps/app', 'bootstraps/creatives.js']
+    ['core + system-script', 'core'],
+    ['es6/bootstraps/crosswords - core', 'crosswords'],
+    ['bootstraps/app - core', 'app'],
+    ['bootstraps/commercial - core', 'commercial'],
+    ['bootstraps/sudoku - core - bootstraps/app', 'sudoku'],
+    ['bootstraps/image-content - core - bootstraps/app', 'image-content'],
+    ['bootstraps/facia - core - bootstraps/app', 'facia'],
+    ['bootstraps/football - core - bootstraps/app', 'football'],
+    ['bootstraps/preferences - core - bootstraps/app', 'preferences'],
+    ['bootstraps/membership - core - bootstraps/app', 'membership'],
+    ['bootstraps/ophan - core', 'ophan'],
+    ['bootstraps/admin - core', 'admin'],
+    ['bootstraps/video-player - core', 'video-player'],
+    ['bootstraps/video-embed - core', 'video-embed'],
+    ['bootstraps/dev - core - bootstraps/app', 'dev'],
+    ['bootstraps/creatives - core - bootstraps/app', 'creatives']
 ];
 
 var getHash = function (outputSource) {
@@ -49,7 +47,7 @@ var getHash = function (outputSource) {
 
 var createBundle = function (bundleConfig) {
     var moduleExpression = bundleConfig[0];
-    var outFile = bundleConfig[1];
+    var outName = bundleConfig[1];
     return builder.build(moduleExpression, null, {
             minify: true,
             sourceMaps: true })
@@ -59,7 +57,7 @@ var createBundle = function (bundleConfig) {
             // The id is the first part of the arithmetic expression, the string up to the first space character.
             output.id = /^[^\s]*/.exec(moduleExpression)[0];
             // Relative to jspm client base URL
-            output.uri = path.join(bundlesUri, hash, outFile);
+            output.uri = path.join(bundlesUri, outName, hash, outName + '.js');
             return output;
         });
 };
