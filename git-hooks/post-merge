@@ -6,4 +6,5 @@
 changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
 echo $changed_files | grep 'package.json' --quiet && npm prune && npm install
-echo $changed_files | grep 'static/src/systemjs-config.js' --quiet && grunt jspmInstall
+echo $changed_files | grep 'static/src/systemjs-config.js' --quiet && grunt shell:jspmInstallStatic
+echo $changed_files | grep 'facia-tool/public/js/jspm-config.js' --quiet && grunt shell:jspmInstallFaciaTool
