@@ -30,13 +30,13 @@ object ArticleController extends Controller with RendersItemResponse with Loggin
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path:  ArticleWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(_))
+
+  private def renderLatestFrom(model: ArticleWithStoryPackage, lastUpdateBlockId: String)(implicit request: RequestHeader) = {
       val html = withJsoup(BodyCleaner(model.article, model.article.body)) {
         new HtmlCleaner {
           def clean(d: Document): Document = {
-            val blocksToKeeping)(implicit request: RequestHeader): Future[Result] = mapModel(path)(render(_))
-
-            private def renderLatestFrom(mod = d.getElementsByTag("div") takeWhile {
+            val blocksToKeep = d.getElementsByTag("div") takeWhile {
               _.attr("id") != lastUpdateBlockId
             }
             val blocksToDrop = d.getElementsByTag("div") drop blocksToKeep.size

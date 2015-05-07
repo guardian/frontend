@@ -4,6 +4,7 @@
 @(page: model.MetaData, savedArticleForm: Form[SavedArticleData], articles: List[Content], formActionUrl: String )(implicit request: RequestHeader)
 
 @import implicits.Articles._
+@import views.support.ImgSrc
 
 @savedArticle(articles: List[Content]) = {
     @articles.zipWithRowInfo.map { case (article, row) =>
@@ -14,9 +15,18 @@
                 "saved-content-first" -> row.isFirst))" shortUrl="@article.shortUrl">
 
             <input type="hidden" name="article[@row.rowNum]" value="@article.shortUrl"/>
-                 <div class="saved-content__name"><a href="@article.webUrl">@article.webTitle</a></div>
-                 <div class="saved-content__standfirst">@article.trailText</div>
+              <div class="saved-content__img media__img">
+                  @article.trailPicture.map { image =>
+                      <img class="responsiveimg" src="@Item120.bestFor(image)" alt="" />
+                  }
+              </div>
+
+              <div class=="saved-content__meta">
+                 <a class="saved-content__title" href="@article.webUrl">@article.webTitle</a>
+                   <div class="saved-content__standfirst">@article.trailText</div>
+               </div>
              <!--    <div class="saved-content__read">not read</div> -->
+
             <div class="saved-content__meta u-cf">
                 <button class="saved-content__button js-saved-content__button"
                 data-link-name="Delete"
@@ -47,7 +57,7 @@
                 <ul class="u-unstyled">
 
                     <li class="form-field">
-                        <label class="label">Your saved articles</label>
+                        <label class="label">You have @articles.length saved articles</label>
                         <div class="form-field__note">
                             Delete individual articles with the button above, or click below to remove them all
                         </div>

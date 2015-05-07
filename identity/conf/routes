@@ -43,6 +43,6 @@ GET         /form/embed/:formReference              @controllers.FormstackContro
 
 GET         /et/subscribe/:subDefId                 @controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)
 GET         /save-content                           @controllers.SaveContentController.saveContentItem
-GET         /saved-content                          @controllers.SaveContentController.listSavedContentItems
+GET         /saved-content                          @controllers.SaveContentController.listSavedContent
 POST        /saved-content                          @controllers.SaveContentController.deleteSavedContentItem
 GET         /saved-for-later/:pageNum               @controllers.SaveContentController.savedContentPage(pageNum: Int)

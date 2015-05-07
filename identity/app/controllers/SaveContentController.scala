@@ -4,6 +4,7 @@ import java.net.URL
 
 import conf.LiveContentApi
 import common._
+import implicits.Dates
 import model.Content
 
 import actions.AuthenticatedActions
@@ -12,6 +13,7 @@ import client.Error
 import com.google.inject.Inject
 import com.gu.identity.model.SavedArticle
 import common.ExecutionContexts
+import org.joda.time.DateTime
 
 import scala.util.{Failure, Success}
 
@@ -31,6 +33,7 @@ import utils.SafeLogging
 import scala.concurrent.Future
 import implicits.Articles._
 import LiveContentApi.getResponse
+import implicits.Dates
 
 class SaveContentController @Inject() ( api: IdApiClient,
                                         identityRequestParser: IdRequestParser,
@@ -42,6 +45,8 @@ class SaveContentController @Inject() ( api: IdApiClient,
   extends Controller with ExecutionContexts with SafeLogging {
 
   import SavedArticleData._
+
+  implicit val dateOrdering: Ordering[DateTime] = Ordering[Long] on { _.getMillis }
 
   val page = IdentityPage("/saved-content", "Saved content", "saved-content")
 
@@ -71,7 +76,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
   }
 
 
-  def listSavedContentItems = authenticatedActions.authAction.async { implicit request  =>
+  def listSavedContent = authenticatedActions.authAction.async { implicit request  =>
 
     val idRequest = identityRequestParser(request)
 
@@ -98,14 +103,14 @@ class SaveContentController @Inject() ( api: IdApiClient,
         val savedApiContentItems: Iterable[Future[Option[Content]]] = prefs.articles.slice(0,5).map {
           article =>
             println("Article Id: %s".format(article.id))
-            getResponse(LiveContentApi.item(article.id, Edition.defaultEdition).showFields("all")).map(_.content.map(Content(_)))
+            getResponse(LiveContentApi.item(article.id, Edition.defaultEdition).showFields("all").showElements("all")).map(_.content.map(Content(_)))
         }
 
         Future.sequence(savedApiContentItems).map { savedContentSeq =>
           val contentList = savedContentSeq.toList.collect {
             case Some(content) => content
           }
-          NoCache(Ok(views.html.profile.savedContentPage(page, form, contentList, formActionUrl(idUrlBuilder, idRequest, "/saved-content-page"))))
+          NoCache(Ok(views.html.profile.savedContentPage(page, form, contentList.sortBy( _.webPublicationDate ), formActionUrl(idUrlBuilder, idRequest, "/saved-content-page"))))
         }
 
       case Left(errors) =>
