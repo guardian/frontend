@@ -1,0 +1,13 @@
+@(content: model.Content, position: String = "bottom")(implicit request: RequestHeader)
+
+<ul class="syndication--@position u-unstyled">
+    <li class="syndication__item">
+        <a class="syndication__action"
+        data-component="meta-syndication"
+        href="http://TODO:URL?type=@{if(content.isBlog){"blog"}else{"article"}}&url=@content.webUrl&icc=@content.internalContentCode"
+        target="_blank"
+        title="Reprint this content">
+            <span class="syndication__link button button--tertiary button--small">Reprint this content</span>
+        </a>
+    </li>
+</ul>

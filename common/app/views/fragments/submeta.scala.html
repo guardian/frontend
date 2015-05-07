@@ -19,10 +19,18 @@
             @fragments.keywordList(content.keywords, tone = content.tagTone)
         </div>
     }
-    @if(content.showBottomSocialButtons) {
-        <hr/>
-        <div data-component="share">
-            @fragments.social(content)
-        </div>
-    }
+    <div>
+        @if(content.showBottomSocialButtons) {
+            <hr/>
+            <div class="submeta__share" data-component="share">
+                @fragments.social(content)
+            </div>
+        }
+        @if(content.isSyndicatable) {
+            <div class="submeta__syndication">
+                @fragments.syndication(content)
+            </div>
+        }
+    </div>
+
 </div>
