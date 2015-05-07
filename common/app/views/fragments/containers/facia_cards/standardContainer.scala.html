@@ -21,9 +21,18 @@
         @* Custom markup for the election night snap, will be removed afterwards. *@
         @if(containerDefinition.isStoryPackage & ElectionSnap.isSwitchedOn) {
             <div id="election-snap" class="election-snap">
-
-
-
+                <style>
+                    #election-snap {border-top: 1px solid #333; padding-top: 6px; background-color: #dcdcdc; height: 220px;}
+                    #election-snap .snap {visibility: hidden;}
+                    .js-on .fc-container--story-package.fc-container--has-election-snap .fc-item--full-media-50-tablet{display:none}
+                </style>
+                <div class="snap">
+                    <div class="snap__left-pane">
+                        <h2>Live results</h2>
+                        <div id="seatstack"></div>
+                    </div>
+                    <div class="snap__right-pane" id="analysis"></div>
+                </div>
             </div>
         }
 
