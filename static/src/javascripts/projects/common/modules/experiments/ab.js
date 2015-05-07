@@ -8,7 +8,6 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/liveblog-sport-front-updates',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/mt-main',
     'common/modules/experiments/tests/mt-top-below-nav',
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/mt-top-below-first-container',
@@ -35,7 +34,6 @@ define([
     mvtCookie,
     LiveblogSportFrontUpdates,
     HighCommercialComponent,
-    MtMain,
     MtTopBelowNav,
     HeatMap,
     MtTopBelowFirstContainer,
@@ -58,7 +56,6 @@ define([
         TESTS = _.flatten([
             new LiveblogSportFrontUpdates(),
             new HighCommercialComponent(),
-            new MtMain(),
             new MtTopBelowNav(),
             new HeatMap(),
             new MtTopBelowFirstContainer(),
