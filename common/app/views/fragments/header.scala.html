@@ -15,7 +15,7 @@
         <div class="gs-container l-header__inner">
             <div class="l-header-pre u-cf">
                 <div class="brand-bar">
-                    @if(BecomeAMemberSwitch.isSwitchedOn) {
+                    @if(BecomeAMemberSwitch.isSwitchedOn && Edition(request) == Uk) {
                         <div class="brand-bar__item brand-bar__item--profile
                                     brand-bar__item--has-control brand-bar__item--register
                                     popup-container has-popup js-profile-register">
