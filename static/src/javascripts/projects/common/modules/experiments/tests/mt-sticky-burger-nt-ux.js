@@ -17,7 +17,7 @@ define([
     return function () {
         this.id = 'MtStBurgerNtUx';
         this.start = '2015-05-05';
-        this.expiry = '2015-05-10';
+        this.expiry = '2015-05-15';
         this.author = 'Zofia Korcz';
         this.description = 'Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold';
         this.audience = 0.0;
