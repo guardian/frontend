@@ -12,7 +12,7 @@
     "qwery": "3.4.2",
     "react": "0.11.2",
     "reqwest": "1.1.5",
-    "enhancer": "0.1.3",
+    "enhancer": "0.1.4",
     "videojs": "guardian/video.js#158221b5d997a184972fbf038c9eebdb676d30c8",
     "videojs-contrib-ads": "videojs/videojs-contrib-ads#f44387a4d2fd939f9a665762917e2fa6fc8838d7",
     "videojs-persistvolume": "~0.1.0",
