@@ -415,9 +415,86 @@ define([
         });
     }
 
+    // Navigation slowly dissapearing
+    function StickySlow() {
+        this.$els = {};
+    }
+
+    StickySlow.prototype.init = function () {
+        fastdom.read(function () {
+            this.$els.header        = $('#header');
+            this.$els.bannerDesktop = $('.top-banner-ad-container--above-nav');
+            this.$els.main          = $('#maincontent');
+            this.$els.navHeader     = $('.js-navigation-header');
+            this.$els.sticky        = $('.sticky-nav-mt-test');
+            this.headerBigHeight    = this.$els.navHeader.dim().height;
+        }.bind(this));
+
+        mediator.on('window:scroll', _.throttle(function () {
+            this.updatePosition();
+        }.bind(this), 10));
+    };
+
+    StickySlow.prototype.updatePosition = function () {
+        var bannerHeight = this.$els.bannerDesktop.dim().height,
+            scrollY;
+
+        fastdom.read(function () {
+            scrollY = $(window).scrollTop();
+        });
+
+        fastdom.write(function () {
+            if (scrollY >= this.headerBigHeight + bannerHeight) {
+                this.$els.header.css({
+                    position:  'fixed',
+                    top:       0,
+                    width:     '100%',
+                    'z-index': '10000',
+                    'margin-top': 0,
+                    'transform': 'translateY(-100%)'
+                });
+
+                this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
+                this.$els.header.addClass('is-slim');
+                this.$els.header.css('transform', 'translateY(0%)');
+            } else if (scrollY >= this.headerBigHeight) {
+                // Add is not sticky anymore
+                this.$els.bannerDesktop.css({
+                    position: 'absolute',
+                    width: '100%',
+                    top: this.headerBigHeight
+                });
+                this.$els.header.css({
+                    position:  'static',
+                    'margin-top': bannerHeight,
+                    'transform': 'translateY(-500%)'
+                });
+                this.$els.header.removeClass('is-slim');
+                this.$els.main.css('margin-top', 0);
+            } else {
+                // Make sure that we show slim nav when page loaded with anchor
+                this.$els.bannerDesktop.css({
+                    position:  'fixed',
+                    top:       0,
+                    width:     '100%',
+                    'z-index': '10000'
+                });
+                this.$els.header.removeClass('is-slim');
+                this.$els.header.css({
+                    position:  'static',
+                    width:     '100%',
+                    'margin-top': bannerHeight,
+                    'transform': 'translateY(0%)'
+                });
+            }
+
+        }.bind(this));
+    };
+
     return {
         stickyNavBurger: stickyNavBurger,
         stickyNavAll: stickyNavAll,
-        stickyNavBurgerNoThr: stickyNavBurgerNoThr
+        stickyNavBurgerNoThr: stickyNavBurgerNoThr,
+        stickySlow: new StickySlow()
     };
 });
