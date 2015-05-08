@@ -40,6 +40,10 @@ $control-size: 36px;
     }
 }
 
+.control__info--supporting {
+    margin-left: $gs-gutter/4;
+}
+
 
 /* Control icon
    ========================================================================== */
@@ -61,6 +65,24 @@ $control-size: 36px;
         .l-header--is-slim & {
             display: block;
         }
+    }
+}
+
+.control__icon-wrapper--text {
+    line-height: $control-size;
+    border-color: transparent;
+    @include circular;
+
+    @include mq(mobile) {
+        display: none;
+    }
+
+    @include mq(tablet) {
+        display: inline-block;
+    }
+
+    &:hover {
+        color: #ffffff;
     }
 }
 

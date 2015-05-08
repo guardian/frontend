@@ -54,11 +54,14 @@
     }
 
     &:hover {
-        // stops controls icons staying hightlighted
+        // stops controls icons staying highlighted
         // after closing a popup on mobile
         @include mq(tablet) {
             .control__icon-wrapper {
                 border-color: #ffffff;
+            }
+            .control__icon-wrapper--text {
+                border-color: rgba(#ffffff, .3);
             }
         }
     }
@@ -264,12 +267,12 @@
 }
 
 .brand-bar__item__badge {
-    background: colour(news-accent);
-    // Same as header background
-    color: colour(guardian-brand);
-    padding: 1px $gs-gutter/5;
-    margin-left: $gs-gutter/5;
+    background-color: rgba(colour(news-accent), .4);
+    color: #ffffff;
+    margin-left: -4px;
     display: none;
+    float: left;
+    z-index: -1;
 
     @include mq(tablet) {
         display: inline-block;

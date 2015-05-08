@@ -17,7 +17,7 @@ define([
     return function () {
         this.id = 'MtStBurgerUx';
         this.start = '2015-05-01';
-        this.expiry = '2015-05-10';
+        this.expiry = '2015-05-15';
         this.author = 'Steve Vadocz';
         this.description = 'Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing';
         this.audience = 0.0;
@@ -36,7 +36,7 @@ define([
             {
                 id: 'A',
                 test: function () {
-                    stickyNav.stickyNavBurger();
+                    stickyNav.stickyNavBurger(300);
                 }
             }
         ];
