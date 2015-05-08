@@ -24,7 +24,7 @@ define([
         this.author = 'Zofia Korcz';
         this.description = 'Sticky navigation behind the ad with burger version - with sticky MPU and lazy loading';
         this.audience = 0.02;
-        this.audienceOffset = 0.8;
+        this.audienceOffset = 0.6;
         this.successMeasure = '';
         this.audienceCriteria = '1% of US and UK edition';
         this.dataLinkNames = '';
