@@ -244,7 +244,8 @@ define([
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
-                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth) {
+                        // Make sure page skin is loaded first
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth || slot === 'dfp-ad--pageskin-inread') {
                             googletag.display(slot);
 
                             slots = _(slots).omit(slot).value();
