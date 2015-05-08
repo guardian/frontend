@@ -27,7 +27,7 @@ object FaciaContentImplicits {
 
     def standfirst: Option[String] = FaciaContentUtils.standfirst(fc)
 
-    def body(): Option[String] = FaciaContentUtils.body(fc)
+    def body: Option[String] = FaciaContentUtils.body(fc)
 
     def webUrl: Option[String] = FaciaContentUtils.webUrl(fc)
 
@@ -93,6 +93,7 @@ object FaciaContentImplicits {
     def isGallery = FaciaContentUtils.isGallery(fc)
     def isAudio = FaciaContentUtils.isAudio(fc)
     def isCartoon = FaciaContentUtils.isCartoon(fc)
+    def isArticle = FaciaContentUtils.isArticle(fc)
     def isCrossword = FaciaContentUtils.isCrossword(fc)
 
     def supporting: List[FaciaContent] = FaciaContentUtils.supporting(fc)
