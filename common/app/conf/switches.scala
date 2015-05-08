@@ -599,7 +599,7 @@ object Switches {
 
   val ABDeferSpacefinder = Switch("A/B Tests", "ab-defer-spacefinder",
     "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
   )
 
   val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",
