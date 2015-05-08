@@ -48,7 +48,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
   implicit val dateOrdering: Ordering[DateTime] = Ordering[Long] on { _.getMillis }
 
-  val page = IdentityPage("/saved-content", "Saved content", "saved-content")
+  val page = IdentityPage("/saved-for-later", "Saved for later", "saved-for-later")
 
   protected def formActionUrl(idUrlBuilder: IdentityUrlBuilder, idRequest: IdentityRequest, path: String): String = idUrlBuilder.buildUrl(path, idRequest)
 
@@ -89,7 +89,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
           case (formWithErrors, Error(message, decription, _, context)) =>
             formWithErrors.withError(context.getOrElse(""), message)
         }
-        Future.successful(NoCache(Ok(views.html.profile.savedContentPage(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later")))))
+        Future.successful(NoCache(Ok(views.html.profile.savedForLater(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later")))))
     }
   }
 
@@ -114,7 +114,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
               fillFormWithApiDataAndGetResult(idRequest, formWithErrors, savedArticles)
             case Left(errors) =>
               val formWithApiErrors = buildFormFromErrors(errors)
-              Future.successful(NoCache(Ok(views.html.profile.savedContent(page, formWithApiErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later")))))
+              Future.successful(NoCache(Ok(views.html.profile.savedForLater(page, formWithApiErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later")))))
           }
       }
 
@@ -132,7 +132,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
                     case Left(errors) =>
                       val formWithApiErrors = buildFormFromErrors(errors)
-                      Future.successful(NoCache(Ok(views.html.profile.savedContent(page, formWithApiErrors, savedArticles.articles, formActionUrl(idUrlBuilder, idRequest, "/saved-content")))))
+                      fillFormWithApiDataAndGetResult(idRequest, formWithApiErrors, savedArticles)
                   }
                   updatedResult
               }
@@ -140,14 +140,14 @@ class SaveContentController @Inject() ( api: IdApiClient,
               updatedArticlesViow.getOrElse {
                 val formWithError = form.withError("Error", "There was a problem with your request")
                 Future.successful(
-                  NoCache(Ok(views.html.profile.savedContent(page, form, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"))))
+                  NoCache(Ok(views.html.profile.savedForLater(page, form, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"))))
                 )
               }
 
             case Left(errors) =>
               val formWithErrors = buildFormFromErrors(errors)
               Future.successful(
-                NoCache(Ok(views.html.profile.savedContent(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"))))
+                NoCache(Ok(views.html.profile.savedForLater(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"))))
               )
           }
           response
@@ -162,11 +162,11 @@ class SaveContentController @Inject() ( api: IdApiClient,
         getResponse(LiveContentApi.item(article.id, Edition.defaultEdition).showFields("all").showElements("all")).map(_.content.map(Content(_)))
     }
 
-    Future.sequence(savedApiContentItems).map { savedContentSeq =>
-      val contentList = savedContentSeq.toList.collect {
+    Future.sequence(savedApiContentItems).map { savedForLaterSeq =>
+      val contentList = savedForLaterSeq.toList.collect {
         case Some(content) => content
       }
-      NoCache(Ok(views.html.profile.savedContentPage(page, form, contentList, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"))))
+      NoCache(Ok(views.html.profile.savedForLater(page, form, contentList, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"))))
     }
   }
 }

@@ -8,36 +8,36 @@
 
 @savedArticle(articles: List[Content]) = {
     @articles.zipWithRowInfo.map { case (article, row) =>
-          <div class="@RenderClasses(Map(
-                "u-cf" -> true,
-                "saved-content" -> true,
-                "js-saved-content" -> true,
-                "saved-content-first" -> row.isFirst))" shortUrl="@article.shortUrlPath">
+    <div class="@RenderClasses(Map(
+        "u-cf" -> true,
+        "saved-content" -> true,
+        "js-saved-content" -> true,
+        "saved-content-first" -> row.isFirst))" shortUrl="@article.shortUrlPath">
 
-            <input type="hidden" name="article[@row.rowNum]" value="@article.shortUrlPath"/>
-              <div class="saved-content__img media__img">
-                  @article.trailPicture.map { image =>
-                      <img class="responsiveimg" src="@Item120.bestFor(image)" alt="" />
-                  }
-              </div>
-
-              <div class=="saved-content__meta">
-                 <a class="saved-content__title" href="@article.webUrl">@article.webTitle</a>
-                   <div class="saved-content__standfirst">@article.trailText</div>
-               </div>
-             <!--    <div class="saved-content__read">not read</div> -->
-
-            <div class="saved-content__meta u-cf">
-                <button class="saved-content__button js-saved-content__button"
-                data-link-name="Delete"
-                name="deleteArticle"
-                type="submit"
-                value="@article.shortUrlPath">
-                Delete
-                </button>
-               <!-- <div class="saved-content__saved-at">Summat else</div> -->
-            </div>
+        <input type="hidden" name="article[@row.rowNum]" value="@article.shortUrlPath"/>
+        <div class="saved-content__img media__img">
+        @article.trailPicture.map { image =>
+            <img class="responsiveimg" src="@Item120.bestFor(image)" alt="" />
+        }
         </div>
+
+        <div class=="saved-content__meta">
+            <a class="saved-content__title" href="@article.webUrl">@article.webTitle</a>
+            <div class="saved-content__standfirst">@article.trailText</div>
+        </div>
+            <!--    <div class="saved-content__read">not read</div> -->
+
+        <div class="saved-content__meta u-cf">
+            <button class="saved-content__button js-saved-content__button"
+            data-link-name="Delete"
+            name="deleteArticle"
+            type="submit"
+            value="@article.shortUrlPath">
+        Delete
+    </button>
+            <!-- <div class="saved-content__saved-at">Summat else</div> -->
+    </div>
+    </div>
     }
 }
 
@@ -48,10 +48,10 @@
         @if(savedArticleForm.globalError.isDefined) {
             <div class="form__error">@savedArticleForm.globalErrors.map(_.message).mkString(", ")</div>
         }
-        <!-- Open form here and handle errors here -->
+            <!-- Open form here and handle errors here -->
         <form class="form js-saved-content-form" novalidate action="@formActionUrl" role="main" method="post">
             <div class="saved-contents js-saved-contents">
-                @savedArticle(articles)
+            @savedArticle(articles)
             </div>
             <fieldset class="fieldset">
                 <ul class="u-unstyled">
