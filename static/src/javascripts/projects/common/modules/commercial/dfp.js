@@ -125,7 +125,7 @@ define([
             }));
         },
         setPageTargeting = function () {
-            _.forOwn(buildPageTargeting(), function (value, key) {
+            _.forOwn(buildPageTargeting, function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
