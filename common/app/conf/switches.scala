@@ -597,6 +597,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 27)
   )
 
+  val ABDeferSpacefinder = Switch("A/B Tests", "ab-defer-spacefinder",
+    "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
+  )
+
   val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",
     "Switch for removing the whitelist from the user history tags",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 21)

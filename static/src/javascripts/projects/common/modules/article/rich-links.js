@@ -7,6 +7,7 @@ define([
     'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/mediator',
     'common/utils/template',
     'common/modules/article/spacefinder',
     'common/modules/ui/images',
@@ -20,6 +21,7 @@ define([
     ajax,
     config,
     detect,
+    mediator,
     template,
     spacefinder,
     imagesModule,
@@ -41,6 +43,7 @@ define([
                             .addClass('element-rich-link--upgraded');
                         imagesModule.upgradePictures(el);
                         $('.submeta-container--break').removeClass('submeta-container--break');
+                        mediator.emit('rich-link:loaded', el);
                     });
                 }
             });
@@ -53,6 +56,7 @@ define([
         return {
             minAbove: 200,
             minBelow: 250,
+            clearContentMeta: 50,
             selectors: {
                 ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 200},
                 ' > *:not(p):not(h2):not(blockquote)': {minAbove: 35, minBelow: 300},
@@ -100,6 +104,7 @@ define([
     return {
         upgradeRichLink: upgradeRichLink,
         upgradeRichLinks: upgradeRichLinks,
-        insertTagRichLink: insertTagRichLink
+        insertTagRichLink: insertTagRichLink,
+        getSpacefinderRules: getSpacefinderRules
     };
 });
