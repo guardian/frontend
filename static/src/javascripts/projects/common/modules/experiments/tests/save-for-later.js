@@ -37,10 +37,10 @@ define([
                 id: 'variant',
                 test: function () {
                     mediator.on('module:identity:api:loaded', function () {
-                       if (!/Network Front|Section/.test(config.page.contentType)) {
-                           var saveForLater = new SaveForLater();
-                           saveForLater.init();
-                       }
+                        if (!/Network Front|Section/.test(config.page.contentType)) {
+                            var saveForLater = new SaveForLater();
+                            saveForLater.init();
+                        }
                     });
 
                     mediator.on('modules:profilenav:loaded', function () {
