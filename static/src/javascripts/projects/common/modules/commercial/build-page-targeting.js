@@ -1,4 +1,5 @@
 define([
+    'Promise',
     'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
@@ -9,6 +10,7 @@ define([
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab'
 ], function (
+    Promise,
     _,
     config,
     cookies,
