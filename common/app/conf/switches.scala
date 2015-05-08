@@ -546,8 +546,8 @@ object Switches {
   )
 
   val ABMtMain = Switch("A/B Tests", "ab-mt-main",
-    "Switch for the moat main test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 11)
+    "Sticky navigation behind the ad with burger version - with sticky MPU and lazy loading.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
   )
 
   val ABMtStNav = Switch(
