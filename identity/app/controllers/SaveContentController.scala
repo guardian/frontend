@@ -159,7 +159,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
   private def fillFormWithApiDataAndGetResult(idRequest: IdentityRequest, form: Form[SavedArticleData], updatedArticles: SavedArticles)(implicit request: RequestHeader): Future[Result] = {
     val savedApiContentItems: Iterable[Future[Option[Content]]] = updatedArticles.newestFirst.map {
       article =>
-        getResponse(LiveContentApi.item(article.id, Edition.defaultEdition).showFields("all").showElements("all")).map(_.content.map(Content(_)))
+        getResponse(LiveContentApi.item(article.id, Edition.defaultEdition).showFields("webTitle,webUrl,trailText,shortUrl").showElements("all")).map(_.content.map(Content(_)))
     }
 
     Future.sequence(savedApiContentItems).map { savedForLaterSeq =>
