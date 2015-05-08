@@ -286,6 +286,12 @@ object Switches {
     "If this switch is on, commercial components will be fed by job feed.",
     safeState = Off, sellByDate = never)
 
+  val MembersAreaSwitch = Switch("Commercial", "gu-members-area",
+    "If this switch is on, content flagged with membershipAccess will be protected",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 8, 30)
+  )
+
   val MasterclassFeedSwitch = Switch("Commercial", "gu-masterclasses",
     "If this switch is on, commercial components will be fed by masterclass feed.",
     safeState = Off, sellByDate = never)
@@ -528,6 +534,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val ElectionSnap = Switch("Feature", "election-snap",
+    "ONLY TOUCH THIS IF YOU KNOW WHAT IT DOES AND IMPLICATIONS: Switch to render a placeholder for the election snap.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
+  )
+
   // A/B Tests
   val ABMtLzAdsDepth = Switch("A/B Tests", "ab-mt-lz-ads-depth", "Depth for lazy loaded ads.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
@@ -562,7 +573,7 @@ object Switches {
 
   val ABMtDepth = Switch("A/B Tests", "ab-mt-depth",
     "Top navigation and top ad slot are sticky with different variants of depth.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 6)
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 6)
   )
 
   val ABMtStickyBurger = Switch("A/B Tests", "ab-mt-sticky-burger",
@@ -611,6 +622,12 @@ object Switches {
     "A/B Tests",
     "ab-mt-st-burger-ux",
     "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
+  )
+
+  val ABMtStBurgerNtUxSwitch = Switch("A/B Tests",
+    "ab-mt-st-burger-nt-ux",
+    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
   )
 

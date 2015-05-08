@@ -23,6 +23,7 @@ define([
     'common/modules/experiments/tests/mt-sticky-burger',
     'common/modules/experiments/tests/mt-sticky-all-ux',
     'common/modules/experiments/tests/mt-sticky-burger-ux',
+    'common/modules/experiments/tests/mt-sticky-burger-nt-ux',
     'common/modules/experiments/tests/defer-spacefinder'
 ], function (
     raven,
@@ -49,6 +50,7 @@ define([
     MtStickyBurger,
     MtStickyAllUx,
     MtStickyBurgerUx,
+    MtStickyBurgerNtUx,
     DeferSpacefinder
     ) {
 
@@ -69,6 +71,7 @@ define([
             new MtStickyBurger(),
             new MtStickyAllUx(),
             new MtStickyBurgerUx(),
+            new MtStickyBurgerNtUx(),
             new DeferSpacefinder(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);

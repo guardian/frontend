@@ -55,6 +55,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val productionOffice: Option[String] = delegate.safeFields.get("productionOffice")
   lazy val displayHint: String = fields.getOrElse("displayHint", "")
 
+  override lazy val membershipAccess: Option[String] = fields.get("membershipAccess")
+  override lazy val requiresMembershipAccess: Boolean = {
+    conf.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
+  }
+
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
   lazy val hasSingleContributor: Boolean = {
     (contributors.headOption, byline) match {

@@ -135,7 +135,9 @@ define([
         });
     }
 
-    function stickyNavBurger() {
+    function stickyNavBurger(stickTill) {
+        stickTill = stickTill || 480;
+
         fastdom.read(function () {
             var stickyConfig = {
                     $stickyNavigation: $('.sticky-nav-mt-test .navigation'),
@@ -147,7 +149,7 @@ define([
                     $logoWrapper: $('.js-navigation-header .logo-wrapper'),
                     $navigationScroll: $('.js-navigation-header .navigation__scroll'),
                     $navigationGreySection: $('.js-navigation-header .navigation__container--first'),
-                    scrollThreshold: config.page.contentType === 'Video' || config.page.contentType === 'Gallery' ? 280 : 480,
+                    scrollThreshold: config.page.contentType === 'Video' || config.page.contentType === 'Gallery' ? 280 : stickTill,
                     prevScroll: 0,
                     direction: ''
                 };
@@ -185,12 +187,16 @@ define([
         'mobile': 480,
         'desktop': {
             'slimnav': 100,
-            'nobanner': 400
+            'nobanner': 480
         }
     },
     $els = {};
 
-    function stickyNavAll() {
+    function stickyNavAll(stickTill) {
+        stickTill = stickTill || stickyTresholds.desktop.nobanner;
+
+        stickyTresholds.desktop.nobanner = stickTill;
+
         fastdom.read(function () {
             $els.header        = $('#header');
             $els.bannerDesktop = $('.top-banner-ad-container--above-nav');
@@ -314,8 +320,104 @@ define([
         });
     }
 
+    function updatePositionNoThr(config) {
+        fastdom.write(function () {
+            if (window.scrollY < config.scrollThreshold) {
+                //topAd is sticky from the beginning
+                config.$stickyTopAd.css({
+                    position: 'fixed',
+                    top: 0,
+                    width: '100%',
+                    'z-index': '1001'
+                });
+
+                //navigation is not sticky yet, header is not slim
+                config.$header.css({
+                    position: null,
+                    top: null,
+                    'z-index': null,
+                    'margin-top': config.stickyTopAdHeight
+                }).removeClass('l-header--is-slim l-header--is-slim-ab');
+                config.$bannerMobile.css('margin-top', null);
+
+                //burger icon is below the header
+                config.$burgerIcon.insertAfter(config.$navigationScroll);
+
+                config.$stickyNavigation.css('display', 'block');
+
+                //while scrolling header is sticky and slim
+                if (window.scrollY > 0) {
+                    //burger icon is located on the right side of logo
+                    config.$burgerIcon.insertAfter(config.$logoWrapper);
+                    config.$header.css({
+                        position: 'fixed',
+                        top: config.stickyTopAdHeight,
+                        width: '100%',
+                        'z-index': '1001',
+                        'margin-top': 0
+                    }).addClass('l-header--is-slim l-header--is-slim-ab');
+
+                    //if we are scrolling up show full navigation
+                    showNavigation(window.scrollY, config, true);
+                    config.$bannerMobile.css('margin-top', config.$navigationHeader.dim().height + config.stickyTopAdHeight);
+                }
+            } else {
+                //after config.scrollThreshold px of scrolling 'release' topAd
+                config.$stickyTopAd.css({
+                    position: 'absolute',
+                    top: config.scrollThreshold
+                });
+
+                //move navigation toward top
+                config.$header.css({
+                    position: 'fixed',
+                    top: config.stickyTopAdHeight - (window.scrollY - config.scrollThreshold)
+                });
+
+                //from now on, navigation stays on top
+                if (window.scrollY > (config.scrollThreshold + config.stickyTopAdHeight)) {
+                    config.$header.css({
+                        position: 'fixed',
+                        top: 0
+                    });
+                }
+
+                //if we are scrolling up show full navigation
+                showNavigation(window.scrollY, config, true);
+            }
+        });
+    }
+
+    function stickyNavBurgerNoThr() {
+        fastdom.read(function () {
+            var stickyConfig = {
+                $navigationHeader: $('.js-navigation-header .l-header__inner'),
+                $stickyNavigation: $('.sticky-nav-mt-test .navigation'),
+                $stickyTopAd: $('.sticky-nav-mt-test .top-banner-ad-container'),
+                $header: $('#header'),
+                $burgerIcon: $('.js-navigation-header .js-navigation-toggle'),
+                $bannerMobile: $('.top-banner-ad-container--mobile'),
+                $logoWrapper: $('.js-navigation-header .logo-wrapper'),
+                $navigationScroll: $('.js-navigation-header .navigation__scroll'),
+                $navigationGreySection: $('.js-navigation-header .navigation__container--first'),
+                scrollThreshold: 10,
+                prevScroll: 0,
+                direction: ''
+            };
+
+            if (detect.getBreakpoint() === 'desktop' || detect.getBreakpoint() === 'wide') {
+                mediator.on('window:scroll', _.throttle(function () {
+                    //height of topAd needs to be recalculated because we don't know when we will get respond from DFP
+                    stickyConfig.stickyTopAdHeight = stickyConfig.$stickyTopAd.dim().height;
+                    updatePositionNoThr(stickyConfig);
+                }, 10));
+            }
+        });
+    }
+
     return {
         stickyNavBurger: stickyNavBurger,
-        stickyNavAll: stickyNavAll
+        stickyNavAll: stickyNavAll,
+        stickyNavBurgerNoThr: stickyNavBurgerNoThr
     };
 });
