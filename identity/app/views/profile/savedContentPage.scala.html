@@ -12,9 +12,9 @@
                 "u-cf" -> true,
                 "saved-content" -> true,
                 "js-saved-content" -> true,
-                "saved-content-first" -> row.isFirst))" shortUrl="@article.shortUrl">
+                "saved-content-first" -> row.isFirst))" shortUrl="@article.shortUrlPath">
 
-            <input type="hidden" name="article[@row.rowNum]" value="@article.shortUrl"/>
+            <input type="hidden" name="article[@row.rowNum]" value="@article.shortUrlPath"/>
               <div class="saved-content__img media__img">
                   @article.trailPicture.map { image =>
                       <img class="responsiveimg" src="@Item120.bestFor(image)" alt="" />
@@ -32,7 +32,7 @@
                 data-link-name="Delete"
                 name="deleteArticle"
                 type="submit"
-                value="@article.shortUrl">
+                value="@article.shortUrlPath">
                 Delete
                 </button>
                <!-- <div class="saved-content__saved-at">Summat else</div> -->
