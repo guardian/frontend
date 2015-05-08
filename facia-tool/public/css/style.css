@@ -1204,16 +1204,27 @@ select {
     background-size: auto 100%;
     background-repeat: no-repeat;
     background-position-x: right;
+    text-decoration: none;
+    color: #999;
 }
-
+a.editor--image {
+    cursor: default;
+}
+.editor--image:hover {
+    color: #999;
+}
+.editor--image.allow-default-click {
+    cursor: pointer;
+}
 .editor--image.underDrag {
     background-color: #999999;
 }
-
 .editor--image__remove {
     background-color: #DDD;
-    color: #999;
     padding: 1px;
+}
+.editor--image i {
+    font-size: 12px;
 }
 
 .editor .underDrag {

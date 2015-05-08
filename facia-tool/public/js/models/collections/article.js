@@ -295,6 +295,7 @@ define([
 
                 metaFields.push({
                     key: 'imageSlideshowReplace',
+                    omitForSupporting: true,
                     editable: true,
                     label: 'slideshow',
                     singleton: 'images',
@@ -624,14 +625,20 @@ define([
                 underDrag: ko.observable(false),
 
                 dropInEditor: function (element) {
+                    var sourceMeta = element.getData('sourceMeta');
+                    if (sourceMeta) {
+                        try {
+                            sourceMeta = JSON.parse(sourceMeta);
+                            meta(sourceMeta);
+                            return;
+                        } catch (ex) {}
+                    }
+
                     try {
-                        var source = draggableElement.getMediaItem(element);
-                        if (source && source.file) {
-                            source = source.file;
-                        } else {
-                            source = element.getData('Url');
-                        }
-                        meta(source);
+                        meta({
+                            media: draggableElement.getMediaItem(element),
+                            origin: element.getData('Url')
+                        });
                     } catch (ex) {
                         alert(ex.message);
                     }
@@ -839,7 +846,7 @@ define([
             });
         };
 
-        Article.prototype.open = function() {
+        Article.prototype.open = function(article, evt) {
             if (this.uneditable) { return; }
 
             this.meta.supporting && this.meta.supporting.items().forEach(function(sublink) { sublink.close(); });
@@ -861,6 +868,10 @@ define([
                 );
             } else {
                 mediator.emit('ui:open', null, null, this.front);
+            }
+
+            if ($(evt.target).hasClass('allow-default-click')) {
+                return true;
             }
         };
 
@@ -926,9 +937,12 @@ define([
                 // This image is already validated
                 return;
             } else if (image) {
-                validateImageSrc(image, params.options)
+                var src = image.media ? image.media.file || image.origin : image.origin;
+                validateImageSrc(src, params.options)
                     .done(function(img) {
-                        meta(img);
+                        meta(_.extend({
+                            origin: image.origin,
+                        }, img));
                     })
                     .fail(function(err) {
                         undefineObservables(meta);
@@ -1021,6 +1035,9 @@ define([
                         evt.preventDefault();
                         evt.stopPropagation();
                         bindingContext.$data.underDrag(false);
+                    });
+                    el.addEventListener('dragstart', function (evt) {
+                        evt.dataTransfer.setData('sourceMeta', JSON.stringify(bindingContext.$data.meta()));
                     });
                 }
             }

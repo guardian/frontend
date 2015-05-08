@@ -71,24 +71,28 @@
             <!-- /ko -->
 
             <!-- ko if: type === 'image' -->
-                <span class="editor--image" data-bind="
+                <a class="editor--image" data-bind="
+                    attr: {
+                        'href': meta() ? meta().origin || meta().src : ''
+                    },
                     css: {
-                        'underDrag': underDrag
+                        'underDrag': underDrag,
+                        'allow-default-click': meta() && meta().src
                     },
                     dropImage: dropImage,
                     style: {
                         backgroundImage: meta() ? 'url(' + meta().src + ')' : ''
                     }
-                ">
+                " target="_blank">
                     <!-- ko if: meta -->
-                        <a class="editor--image__remove" data-bind="click: clear">
+                        <span class="editor--image__remove" data-bind="click: clear">
                             <i class="fa fa-remove"></i>
-                        </a>
+                        </span>
                     <!-- /ko -->
                     <!-- ko ifnot: meta -->
                         <p>drag an image</p>
                     <!-- /ko -->
-                </span>
+                </a>
             <!-- /ko -->
         <!-- /ko -->
     </script>
