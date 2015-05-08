@@ -29,7 +29,7 @@ define([
         this.showForSensitive = false;
 
         this.canRun = function () {
-            return !/Network Front|Section/.test(config.page.contentType);
+            return true;
         };
 
         this.variants = [
@@ -37,15 +37,17 @@ define([
                 id: 'variant',
                 test: function () {
                     mediator.on('module:identity:api:loaded', function () {
-                        var saveForLater = new SaveForLater();
-                        saveForLater.init();
+                       if (!/Network Front|Section/.test(config.page.contentType)) {
+                           var saveForLater = new SaveForLater();
+                           saveForLater.init();
+                       }
                     });
 
                     mediator.on('modules:profilenav:loaded', function () {
                         var popup = qwery('.popup--profile')[0];
                         bonzo(popup).append(bonzo.create(
                             '<li class="popup__item">' +
-                            '<a href="' + config.page.idUrl + '/saved-content" class="brand-bar__item--action" data-link-name="Saved for Later">Saved for later</a>' +
+                            '<a href="' + config.page.idUrl + '/save-for-later" class="brand-bar__item--action" data-link-name="Saved for Later">Saved for later</a>' +
                             '</li>'
                         ));
                     });
