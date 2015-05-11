@@ -8,7 +8,6 @@ import _ from 'common/utils/_';
 
 import Clues from './clues';
 import Controls from './controls';
-import FocussedClue from './focussed-clue';
 import HiddenInput from './hidden-input';
 import Grid from './grid';
 import helpers from './helpers';
@@ -372,9 +371,6 @@ class Crossword extends React.Component {
 
         return (
             <div className={`crossword__container crossword__container--${this.props.data.crosswordType}`}>
-                <FocussedClue
-                    focussedClue={focussed ? focussed : null}
-                    focusClue={this.focusClue} />
                 <div className='crossword__grid-wrapper'>
                     <Grid
                         rows={this.rows}

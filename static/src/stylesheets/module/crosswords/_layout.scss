@@ -4,12 +4,6 @@
             padding-left: $size;
         }
 
-        .crossword__focussed-clue-wrapper {
-            @include mq(tablet) {
-                margin-left: 0 - $size;
-            }
-        }
-
         .crossword__grid-wrapper {
             @include mq(tablet) {
                 margin-left: 0 - $size;
@@ -29,14 +23,6 @@
 
 .crossword__container {
     position: relative;
-}
-
-.crossword__focussed-clue-wrapper {
-    padding-bottom: $gs-baseline;
-
-    @include mq($until: tablet) {
-        display: none;
-    }
 }
 
 .crossword__controls {
