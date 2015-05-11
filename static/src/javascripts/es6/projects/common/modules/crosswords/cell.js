@@ -21,27 +21,33 @@ export default class extends React.Component {
         const top = helpers.gridSize(this.props.y);
         const left = helpers.gridSize(this.props.x);
 
+        // the cell number
         if (this.props.number !== undefined) {
             innerNodes.push(
-                React.DOM.text({
-                    x: left + 1,
-                    y: top + constants.numberSize,
-                    key: 'number',
-                    className: 'crossword__cell-number'
-                }, this.props.number)
+                <text
+                    x={left + 1}
+                    y={top + constants.numberSize}
+                    key='number'
+                    className='crossword__cell-number'>
+                    {this.props.number}
+                </text>
             );
         }
 
+        // character the user has entered
         if (this.props.value !== undefined) {
-            innerNodes.push(React.DOM.text({
-                x: left + constants.cellSize / 2,
-                y: top + (constants.cellSize + constants.entrySize) / 2,
-                key: 'entry',
-                className: classNames({
-                    'crossword__cell-text': true,
-                    'crossword__cell-text--error': this.props.isError
-                })
-            }, this.props.value));
+            innerNodes.push(
+                <text
+                    x={left + constants.cellSize / 2}
+                    y={top + constants.cellSize / 2}
+                    key='entry'
+                    className={classNames({
+                        'crossword__cell-text': true,
+                        'crossword__cell-text--error': this.props.isError
+                    })}>
+                    {this.props.value}
+                </text>
+            )
         }
 
         return (
