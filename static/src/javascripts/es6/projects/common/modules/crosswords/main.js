@@ -60,7 +60,7 @@ class Crossword extends React.Component {
         // focus the first clue if we're above mobile
         if (detect.isBreakpoint({ min: 'tablet' })) {
             const firstClue = _.reduceRight(_.sortBy(this.props.data.entries, 'direction'), function(prev, current) {
-                return (helpers.isAcross(current) && (prev.number < current.number ? prev : current))
+                return (helpers.isAcross(current) && (prev.number < current.number ? prev : current));
             });
             this.focusClue(
                 firstClue.position.x,
@@ -115,7 +115,7 @@ class Crossword extends React.Component {
             } else if (event.keyCode === keycodes.down) {
                 event.preventDefault();
                 this.moveFocus(0, 1);
-            };
+            }
         }
     }
 
@@ -125,9 +125,11 @@ class Crossword extends React.Component {
 
     goToReturnPosition () {
         if (detect.isBreakpoint({ max: 'tablet' })) {
-            this.returnPosition && scroller.scrollTo(this.returnPosition, 250, 'easeOutQuad');
+            if (this.returnPosition) {
+                scroller.scrollTo(this.returnPosition, 250, 'easeOutQuad');
+            }
             this.returnPosition = null;
-        };
+        }
     }
 
     indexOfClueInFocus () {
@@ -437,7 +439,7 @@ class Crossword extends React.Component {
             </div>
         );
     }
-};
+}
 
 export default function () {
     $('.js-crossword').each(function (element) {

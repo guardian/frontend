@@ -36,7 +36,7 @@ export default class extends React.Component {
                     Check all
                 </button>
             );
-        };
+        }
 
         // HIGHLIGHTED CLUE CONTROLS
         if (hasFocus && hasSolutions) {
@@ -58,4 +58,4 @@ export default class extends React.Component {
 
         return <div className='crossword__controls'>{controls}</div>;
     }
-};
+}

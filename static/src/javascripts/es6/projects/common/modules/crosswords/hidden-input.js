@@ -12,14 +12,14 @@ export default class extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.state = {
             value: this.props.value
-        }
+        };
     }
 
     componentDidUpdate () {
         if (detect.isBreakpoint({ max: 'tablet' })) {
             const offsets = bonzo(this.refs.input.getDOMNode()).offset();
             scroller.scrollTo(offsets.top - (offsets.height * 1.5), 250, 'easeOutQuad');
-        };
+        }
     }
 
     handleChange () {
@@ -46,5 +46,5 @@ export default class extends React.Component {
             </div>
         );
     }
-};
+}
 

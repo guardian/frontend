@@ -28,7 +28,7 @@ define([
         window.setTimeout(function () {
             window.clearInterval(interval);
             fastdom.write(function () {
-                 $body.scrollTop(scrollEnd);
+                $body.scrollTop(scrollEnd);
             });
         }, duration);
 

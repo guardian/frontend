@@ -7,7 +7,7 @@ import constants from './constants';
 export default class extends React.Component {
 
     constructor (props) {
-        super (props);
+        super(props);
         this.onClick = this.onClick.bind(this);
     }
 
@@ -47,7 +47,7 @@ export default class extends React.Component {
                     })}>
                     {this.props.value}
                 </text>
-            )
+            );
         }
 
         return (
@@ -68,4 +68,4 @@ export default class extends React.Component {
             </g>
         );
     }
-};
+}

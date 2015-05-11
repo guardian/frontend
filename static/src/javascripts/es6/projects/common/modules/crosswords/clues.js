@@ -9,7 +9,7 @@ import _ from 'common/utils/_';
 class Clue extends React.Component {
 
     constructor (props) {
-        super (props);
+        super(props);
         this.onClick = this.onClick.bind(this);
     }
 
@@ -28,11 +28,11 @@ class Clue extends React.Component {
                 })}
                 onClick={this.onClick}
                 value={parseInt(this.props.number, 10)}
-                dangerouslySetInnerHTML={{__html:this.props.clue}}
+                dangerouslySetInnerHTML={{__html: this.props.clue}}
             />
         );
     }
-};
+}
 
 export default class extends React.Component {
 
@@ -72,5 +72,5 @@ export default class extends React.Component {
             </div>
         );
     }
-};
+}
 
