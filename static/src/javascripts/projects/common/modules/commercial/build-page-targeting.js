@@ -67,10 +67,12 @@ define([
         },
         ophanViewId = function() {
             return new Promise(function(resolve) {
+                // If ophan is available return viewId
                 if (config.switches.ophan) {
                     require(['ophan/ng'], function (ophan) {
                         return resolve(ophan.viewId);
                     });
+                // else return nothing
                 } else {
                     return resolve();
                 }
@@ -103,11 +105,9 @@ define([
                     // round video duration up to nearest 30 multiple
                     vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
                 }, audienceScienceGateway.getSegments(), criteo.getSegments());
-            console.log('Hello, Zofia ' + pageTargets);
 
             // filter out empty values
             return _.pick(pageTargets, function (target) {
-                console.log("Pciking stuff out of " + target);
                 if (_.isArray(target)) {
                     return target.length > 0;
                 } else {
