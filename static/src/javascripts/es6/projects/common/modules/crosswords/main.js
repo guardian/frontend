@@ -5,6 +5,7 @@ import React from 'react';
 
 import $ from 'common/utils/$';
 import _ from 'common/utils/_';
+import detect from 'common/utils/detect';
 
 import Clues from './clues';
 import Controls from './controls';
@@ -50,6 +51,20 @@ class Crossword extends React.Component {
             cellInFocus: null,
             directionOfEntry: null
         };
+    }
+
+    componentDidMount () {
+        // focus the first clue if we're above mobile
+        if (detect.isBreakpoint({ min: 'tablet' })) {
+            const firstClue = _.reduceRight(_.sortBy(this.props.data.entries, 'direction'), function(prev, current) {
+                return (helpers.isAcross(current) && (prev.number < current.number ? prev : current))
+            });
+            this.focusClue(
+                firstClue.position.x,
+                firstClue.position.y,
+                firstClue.direction
+            );
+        }
     }
 
     setCellValue (x, y, value) {
