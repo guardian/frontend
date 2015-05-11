@@ -1,5 +1,6 @@
 import React from 'react';
 import bonzo from 'bonzo';
+import fastdom from 'fastdom';
 
 import scroller from 'common/utils/scroller';
 import detect from 'common/utils/detect';
@@ -17,8 +18,10 @@ export default class extends React.Component {
 
     componentDidUpdate () {
         if (detect.isBreakpoint({ max: 'tablet' })) {
-            const offsets = bonzo(this.refs.input.getDOMNode()).offset();
-            scroller.scrollTo(offsets.top - (offsets.height * 1.5), 250, 'easeOutQuad');
+            fastdom.read(function () {
+                const offsets = bonzo(this.refs.input.getDOMNode()).offset();
+                scroller.scrollTo(offsets.top - (offsets.height * 1.5), 250, 'easeOutQuad');
+            }.bind(this));
         }
     }
 
