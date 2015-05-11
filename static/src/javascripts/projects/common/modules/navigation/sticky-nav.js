@@ -422,15 +422,16 @@ define([
 
     StickySlow.prototype.init = function () {
         fastdom.read(function () {
-            this.$els.header           = $('#header');
-            this.$els.bannerDesktop    = $('.top-banner-ad-container--above-nav');
-            this.$els.main             = $('#maincontent');
-            this.$els.navHeader        = $('.js-navigation-header');
-            this.$els.sticky           = $('.sticky-nav-mt-test');
-            this.$els.burgerIcon       = $('.js-navigation-toggle', this.$els.navHeader);
-            this.$els.logoWrapper      = $('.logo-wrapper', this.$els.navHeader);
-            this.$els.navigationScroll = $('.navigation__scroll', this.$els.navHeader);
-            this.headerBigHeight       = this.$els.navHeader.dim().height;
+            this.$els.header            = $('#header');
+            this.$els.bannerDesktop     = $('.top-banner-ad-container--above-nav');
+            this.$els.main              = $('#maincontent');
+            this.$els.navHeader         = $('.js-navigation-header');
+            this.$els.sticky            = $('.sticky-nav-mt-test');
+            this.$els.burgerIcon        = $('.js-navigation-toggle', this.$els.navHeader);
+            this.$els.logoWrapper       = $('.logo-wrapper', this.$els.navHeader);
+            this.$els.navigationScroll  = $('.navigation__scroll', this.$els.navHeader);
+            this.$els.$navigationScroll = $('.js-navigation-header .navigation__scroll');
+            this.headerBigHeight        = this.$els.navHeader.dim().height;
         }.bind(this));
 
         mediator.on('window:scroll', _.throttle(function () {
@@ -459,7 +460,7 @@ define([
 
                 this.$els.header.addClass('is-slim');
                 this.$els.header.css('transform', 'translateY(0%)');
-
+                showNavigation(scrollY, this.$els, true);
             } else if (scrollY >= this.headerBigHeight) {
                 // Add is not sticky anymore
                 this.$els.bannerDesktop.css({
@@ -469,8 +470,9 @@ define([
                 });
 
                 //header is slim from now on
-                this.$els.burgerIcon.insertAfter(this.$els.logoWrapper);
+                //this.$els.burgerIcon.insertAfter(this.$els.logoWrapper);
                 this.$els.header.addClass('l-header--is-slim l-header--is-slim-ab');
+                this.$els.burgerIcon.hide();
 
                 this.$els.header.css({
                     position:  'static',
@@ -489,7 +491,8 @@ define([
                 });
                 //header is not slim yet
                 this.$els.header.removeClass('l-header--is-slim l-header--is-slim-ab');
-                this.$els.burgerIcon.insertAfter(this.$els.navigationScroll);
+                //this.$els.burgerIcon.insertAfter(this.$els.navigationScroll);
+                this.$els.burgerIcon.show();
 
                 this.$els.header.removeClass('is-slim');
                 this.$els.header.css({
