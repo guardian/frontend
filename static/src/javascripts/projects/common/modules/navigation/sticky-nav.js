@@ -457,7 +457,7 @@ define([
                     'transform': 'translateY(-100%)'
                 });
 
-                this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
+                //this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
                 this.$els.header.addClass('is-slim');
                 this.$els.header.css('transform', 'translateY(0%)');
 
@@ -479,7 +479,7 @@ define([
                     'transform': 'translateY(-500%)'
                 });
                 this.$els.header.removeClass('is-slim');
-                this.$els.main.css('margin-top', 0);
+                this.$els.main.css('margin-top', this.headerBigHeight - this.$els.header.dim().height);
             } else {
                 // Make sure that we show slim nav when page loaded with anchor
                 this.$els.bannerDesktop.css({
@@ -499,6 +499,8 @@ define([
                     'margin-top': bannerHeight,
                     'transform': 'translateY(0%)'
                 });
+
+                this.$els.main.css('margin-top', 0);
             }
 
         }.bind(this));
