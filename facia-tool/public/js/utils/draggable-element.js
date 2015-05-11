@@ -25,6 +25,10 @@ define([
                     .sortBy(function(asset) { return deepGet(asset, '.dimensions.width') * -1; })
                     .first()
                     .value();
+
+                if (mediaItem) {
+                    mediaItem.origin = dataTransfer.getData('application/vnd.mediaservice.kahuna.uri');
+                }
             }
 
             if (!mediaItem) {
