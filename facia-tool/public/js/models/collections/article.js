@@ -937,11 +937,13 @@ define([
                 // This image is already validated
                 return;
             } else if (image) {
-                var src = image.media ? image.media.file || image.origin : image.origin;
+                var originUrl = image.origin,
+                    src = image.media ? image.media.file || originUrl : originUrl,
+                    origin = image.media ? image.media.origin || originUrl : originUrl;
                 validateImageSrc(src, params.options)
                     .done(function(img) {
                         meta(_.extend({
-                            origin: image.origin,
+                            origin: origin,
                         }, img));
                     })
                     .fail(function(err) {

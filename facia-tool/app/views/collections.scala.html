@@ -81,7 +81,7 @@
                     },
                     dropImage: dropImage,
                     style: {
-                        backgroundImage: meta() ? 'url(' + meta().src + ')' : ''
+                        backgroundImage: meta() && meta().src ? 'url(' + meta().src + ')' : ''
                     }
                 " target="_blank">
                     <!-- ko if: meta -->
