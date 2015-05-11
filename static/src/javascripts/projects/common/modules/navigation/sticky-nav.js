@@ -457,7 +457,6 @@ define([
                     'transform': 'translateY(-100%)'
                 });
 
-                //this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
                 this.$els.header.addClass('is-slim');
                 this.$els.header.css('transform', 'translateY(0%)');
 
