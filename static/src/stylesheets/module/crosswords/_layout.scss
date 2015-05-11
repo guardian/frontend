@@ -1,4 +1,10 @@
-@each $xword, $size in $xword-native-sizes {
+@function xword-grid-dimensions($cells) {
+    @return $cells * ($xword-cell-width + $xword-border-width) + $xword-border-width;
+}
+
+@each $xword, $cells in $xword-grid-sizes {
+    $size: xword-grid-dimensions($cells);
+
     .crossword__container--#{$xword} {
         @include mq(tablet) {
             padding-left: $size;
@@ -16,6 +22,11 @@
                 margin-left: 0 - $size;
                 width: $size;
             }
+        }
+
+        .crossword__hidden-input-wrapper {
+            width: percentage(1 / $cells);
+            height: percentage(1 / $cells);
         }
     }
 }

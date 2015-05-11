@@ -7,11 +7,7 @@ $xword-highlight: lighten(colour(crosswordAccent2), 30%);
 $xword-focussed: lighten(colour(crosswordAccent2), 10%);
 $xword-ink: #3f4ac3; // biro blue
 
-@function xword-grid-size($cells) {
-    @return $cells * ($xword-cell-width + $xword-border-width) + $xword-border-width;
-}
-
-$xword-native-sizes: (
-    quick: xword-grid-size(13),
-    cryptic: xword-grid-size(15)
+$xword-grid-sizes: (
+    quick: 13,
+    cryptic: 15
 );
