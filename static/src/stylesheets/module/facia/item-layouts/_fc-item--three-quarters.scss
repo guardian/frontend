@@ -43,10 +43,8 @@ Three quarter item. Looks like a wide standard, a bit like this:
     }
 
     .fc-item__liveblog-blocks {
-        @include mq(tablet) {
-            padding-right: 0;
-            height: 78px; // 2 * block height - 2px margin
-        }
+        padding-right: 0;
+        height: liveblog-blocks-height(2);
     }
 
     &.fc-item--has-no-image {

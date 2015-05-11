@@ -167,6 +167,7 @@ $c-guardian-services-action: #ffffff;
 // Header is in slim mode
 .is-slim {
     background: darken(colour(guardian-brand), 2%);
+    transition: transform .3s;
 
     .l-header__inner {
         @include mq(tablet) {
@@ -246,4 +247,3 @@ $c-guardian-services-action: #ffffff;
         float: right;
     }
 }
-

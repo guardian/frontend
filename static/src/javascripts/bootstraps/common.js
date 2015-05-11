@@ -459,7 +459,7 @@ define([
             internationalSignposting: function () {
                 if ('internationalEdition' in config.page) {
                     if (config.page.internationalEdition === 'international' && config.page.pageId === 'international') {
-                        new Message('international-with-survey', {
+                        new Message('international-with-survey-new', {
                             pinOnHide: true
                         }).show(template(internationalMessage, {}));
                     } else if (config.page.internationalEdition === 'control' && config.page.pageId === 'uk') {
