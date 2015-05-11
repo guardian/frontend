@@ -1,9 +1,11 @@
 define([
     'common/utils/easing',
-    'bonzo'
+    'bonzo',
+    'fastdom'
 ], function (
     easing,
-    bonzo
+    bonzo,
+    fastdom
 ) {
 
     // utility module for auto scrolling with easing
@@ -18,12 +20,16 @@ define([
             scrollDist = scrollEnd - scrollFrom,
             ease = easing.create(easeFn || 'easeOutQuad', duration),
             scrollFn = function () {
-                $body.scrollTop(scrollFrom + (ease() * scrollDist));
+                fastdom.write(function () {
+                    $body.scrollTop(scrollFrom + (ease() * scrollDist));
+                });
             },
             interval = window.setInterval(scrollFn, 15);
         window.setTimeout(function () {
             window.clearInterval(interval);
-            $body.scrollTop(scrollEnd);
+            fastdom.write(function () {
+                 $body.scrollTop(scrollEnd);
+            });
         }, duration);
 
     }
