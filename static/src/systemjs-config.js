@@ -140,6 +140,11 @@ System.config({
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
+    "npm:buffer@3.2.2": {
+      "base64-js": "npm:base64-js@0.0.8",
+      "ieee754": "npm:ieee754@1.1.5",
+      "is-array": "npm:is-array@1.0.1"
+    },
     "npm:classnames@1.2.0": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
     },
