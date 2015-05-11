@@ -15,6 +15,7 @@ class Clue extends React.Component {
 
     onClick (event) {
         event.preventDefault();
+        this.props.setReturnPosition();
         this.props.focusClue();
     }
 
@@ -47,6 +48,9 @@ export default class extends React.Component {
                     isSelected={clue.isSelected}
                     focusClue={() => {
                         this.props.focusClue(clue.entry.position.x, clue.entry.position.y, direction);
+                    }}
+                    setReturnPosition={() => {
+                        this.props.setReturnPosition(window.scrollY);
                     }}
                 />
             );

@@ -6,6 +6,7 @@ import React from 'react';
 import $ from 'common/utils/$';
 import _ from 'common/utils/_';
 import detect from 'common/utils/detect';
+import scroller from 'common/utils/scroller';
 
 import Clues from './clues';
 import Controls from './controls';
@@ -38,6 +39,8 @@ class Crossword extends React.Component {
         this.onClickHiddenInput = this.onClickHiddenInput.bind(this);
         this.focusClue = this.focusClue.bind(this);
         this.insertCharacter = this.insertCharacter.bind(this);
+        this.setReturnPosition = this.setReturnPosition.bind(this);
+        this.goToReturnPosition = this.goToReturnPosition.bind(this);
 
         loadFont();
 
@@ -114,6 +117,17 @@ class Crossword extends React.Component {
                 this.moveFocus(0, 1);
             };
         }
+    }
+
+    setReturnPosition (position) {
+        this.returnPosition = position;
+    }
+
+    goToReturnPosition () {
+        if (detect.isBreakpoint({ max: 'tablet' })) {
+            this.returnPosition && scroller.scrollTo(this.returnPosition, 250, 'easeOutQuad');
+            this.returnPosition = null;
+        };
     }
 
     indexOfClueInFocus () {
@@ -395,13 +409,16 @@ class Crossword extends React.Component {
                         onSelect={this.onSelect}
                         isHighlighted={isHighlighted}
                         focussedCell={this.state.cellInFocus}
-                        ref='grid' />
+                        ref='grid'
+                    />
                     <HiddenInput
                         onChange={this.insertCharacter}
                         onClick={this.onClickHiddenInput}
                         onKeyDown={this.onKeyDown}
+                        onBlur={this.goToReturnPosition}
                         value={this.hiddenInputValue()}
-                        ref='hiddenInputComponent' />
+                        ref='hiddenInputComponent'
+                    />
                 </div>
                 <Controls
                     hasSolutions={this.hasSolutions()}
@@ -410,10 +427,13 @@ class Crossword extends React.Component {
                     onSolution={this.onSolution}
                     onCheck={this.onCheck}
                     onCheckAll={this.onCheckAll}
-                    onClearAll={this.onClearAll} />
+                    onClearAll={this.onClearAll}
+                />
                 <Clues
                     clues={this.cluesData()}
-                    focusClue={this.focusClue} />
+                    focusClue={this.focusClue}
+                    setReturnPosition={this.setReturnPosition}
+                />
             </div>
         );
     }
