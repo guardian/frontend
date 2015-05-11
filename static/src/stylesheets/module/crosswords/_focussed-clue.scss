@@ -8,10 +8,6 @@
 .crossword__focussed-clue--direction {
     @include fs-bodyHeading(2);
     color: colour(crosswordAccent2);
-}
-
-.crossword__focussed-clue--direction,
-.crossword__contextual-clue--direction {
     -webkit-font-smoothing: subpixel-antialiased;
 
     &:before {
@@ -26,48 +22,20 @@
     }
 }
 
-.crossword__focussed-clue,
-.crossword__contextual-clue {
+.crossword__focussed-clue {
     @include fs-bodyCopy(1);
 }
 
-.crossword__focussed-clue--direction-across,
-.crossword__contextual-clue--direction-across {
+.crossword__focussed-clue--direction-across {
     &:before {
         border-width: 5px 0 5px 9px;
         border-left-color: colour(crosswordAccent2);
     }
 }
 
-.crossword__focussed-clue--direction-down,
-.crossword__contextual-clue--direction-down {
+.crossword__focussed-clue--direction-down {
     &:before {
         border-width: 9px 5px 0;
         border-top-color: colour(crosswordAccent2);
-    }
-}
-
-.crossword__contextual-clue {
-    color: colour(neutral-2);
-    border-top: 1px dotted colour(neutral-2);
-    margin-top: $gs-baseline;
-    margin-bottom: $gs-baseline;
-    text-align: left;
-}
-
-.crossword__contextual-clue--direction {
-    @include fs-bodyHeading(1);
-    color: colour(neutral-2);
-}
-
-.crossword__contextual-clue--direction-across {
-    &:before {
-        border-left-color: colour(neutral-2);
-    }
-}
-
-.crossword__contextual-clue--direction-down {
-    &:before {
-        border-top-color: colour(neutral-2);
     }
 }

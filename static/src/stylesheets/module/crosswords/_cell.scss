@@ -1,0 +1,39 @@
+.crossword__cell {
+    cursor: pointer;
+    fill: #ffffff;
+}
+
+.crossword__cell--highlighted {
+    &,
+    .crossword__grid--focussed & {
+        fill: $xword-highlight;
+    }
+}
+
+.crossword__cell--focussed {
+    &,
+    .crossword__grid--focussed & {
+        fill: $xword-focussed;
+    }
+}
+
+.crossword__cell-number {
+    font-family: $f-sans-serif-text;
+    font-size: 10px;
+}
+
+.crossword__cell-text {
+    display: inline-block;
+    font-size: 24px;
+    font-family: 'Reenie Beanie', sans-serif;
+    text-anchor: middle;
+    opacity: 1;
+    -webkit-font-smoothing: subpixel-antialiased;
+    fill: #3f4ac3; // biro blue
+    transition: opacity .15s ease-in;
+}
+
+.crossword__cell-text--error {
+    fill: darken(colour(error), 20%);
+    opacity: 0;
+}

@@ -1,0 +1,18 @@
+.crossword__hidden-input-wrapper {
+    position: absolute;
+}
+
+.crossword__hidden-input {
+    border: 0;
+    padding: 0;
+    width: 31px;
+    height: 31px;
+    line-height: 31px;
+    text-align: center;
+    color: transparent;
+    background-color: transparent;
+    font-size: 16px; // stop zooming on focus
+    font-family: $f-serif-text;
+    font-weight: 800;
+    text-anchor: middle;
+}
