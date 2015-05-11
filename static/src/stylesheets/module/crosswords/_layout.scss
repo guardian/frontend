@@ -39,6 +39,8 @@
 
     @include mq(tablet) {
         float: left;
+        height: auto;
+        padding-bottom: 0;
     }
 }
 
