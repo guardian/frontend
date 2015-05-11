@@ -65,8 +65,8 @@ define([
 
             return abParams;
         },
-        ophanViewId = function() {
-            return new Promise(function(resolve) {
+        ophanViewId = function () {
+            return new Promise(function (resolve) {
                 // If ophan is available return viewId
                 if (config.switches.ophan) {
                     require(['ophan/ng'], function (ophan) {
