@@ -204,6 +204,11 @@ $fc-item-gutter: $gs-gutter / 4;
 
         .star__item {
             vertical-align: bottom;
+
+            svg {
+                height: 0.875em;
+                width: 0.875em;
+            }
         }
     }
 
