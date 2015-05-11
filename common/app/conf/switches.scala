@@ -546,8 +546,8 @@ object Switches {
   )
 
   val ABMtMain = Switch("A/B Tests", "ab-mt-main",
-    "Switch for the moat main test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 11)
+    "Sticky navigation behind the ad with burger version - with sticky MPU and lazy loading.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
   )
 
   val ABMtStNav = Switch(
@@ -597,6 +597,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 27)
   )
 
+  val ABDeferSpacefinder = Switch("A/B Tests", "ab-defer-spacefinder",
+    "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
+  )
+
   val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",
     "Switch for removing the whitelist from the user history tags",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
@@ -606,27 +611,27 @@ object Switches {
     "A/B Tests",
     "ab-mt-st-all-ux",
     "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   val ABMtStBurgerUxSwitch = Switch(
     "A/B Tests",
     "ab-mt-st-burger-ux",
     "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   val ABMtStBurgerNtUxSwitch = Switch("A/B Tests",
     "ab-mt-st-burger-nt-ux",
     "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold A.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   val ABMtStAllNtUxSwitch = Switch(
     "A/B Tests",
     "ab-mt-st-all-nt-ux",
     "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold B.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 10)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>
