@@ -1,22 +1,32 @@
 define([
-    'qwery',
-    'bonzo',
     'bean',
+    'bonzo',
+    'qwery',
+
     'common/utils/_',
     'common/utils/config',
     'common/utils/mediator',
+
     'common/modules/identity/api'
 ], function (
-    qwery,
-    bonzo,
     bean,
-    _,
+    bonzo,
+    qwery,
+
+     _,
     config,
     mediator,
+
     identity
+
 ) {
+    var $ = function $(selector, context) {
+        return bonzo(qwery(selector, context));
+    };
+
     function SaveForLater() {
         this.saveLinkHolder = qwery('.meta__save-for-later')[0];
+        this.saveForLaterProfileLink = null;
         this.userData = null;
         this.pageId = config.page.pageId;
         this.$saver = bonzo(this.saveLinkHolder);
@@ -25,6 +35,8 @@ define([
     }
 
     SaveForLater.prototype.init = function () {
+        console.log("++ Save FOR THIS init");
+
         if (identity.isUserLoggedIn()) {
             this.getSavedArticles();
         } else {
@@ -45,7 +57,7 @@ define([
                     if (resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
                         //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
                         var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
-                        self.userData = {version: date, articles:[]};
+                        self.userData = {version: date, articles: []};
                     }
                 } else {
                     self.userData = resp.savedArticles;
@@ -57,8 +69,20 @@ define([
                     self.$saver.html('<a class="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>');
                     bean.on(self.saveLinkHolder, 'click', '.meta__save-for-later--link', self.saveArticle.bind(self));
                 }
+
+                console.log("++ got TtHE data");
+                self.updateNumArticles();
             }
+
         );
+    };
+
+    SaveForLater.prototype.updateNumArticles = function() {
+        var self = this,
+            saveForLaterProfileLink = $('.brand-bar__item--saved-for-later');
+        console.log("++ got the link: Initxs" + saveForLaterProfileLink);
+        saveForLaterProfileLink.text("Saved articles(" + self.userData.articles.length + ")");
+        console.log("++ set text");
     };
 
     SaveForLater.prototype.hasUserSavedArticle = function (articles, shortUrl) {
@@ -81,7 +105,9 @@ define([
                     self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Error saving</a>');
                 } else {
                     bean.off(qwery('.meta__save-for-later--link', self.saveLinkHolder)[0], 'click', self.saveArticle);
+                   // self.$savedcount.text('Saved for later(twat)');
                     self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
+                    self.updateNumArticles();
                 }
             }
         );
