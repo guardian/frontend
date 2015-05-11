@@ -42,8 +42,6 @@ class EmailVerificationController @Inject()( api: IdApiClient,
           val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
           val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
 
-          printf(verifiedReturnUrl)
-
           Ok(views.html.emailVerified(validationState, page, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))
       }
   }

@@ -81,7 +81,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     def onSuccess(form: (String, String, String, String, String, Boolean, Boolean)): Future[Result] = form match {
       case (firstName, secondName, email, username, password, gnmMarketing, thirdPartyMarketing) =>
         val user = userCreationService.createUser(firstName, secondName, email, username, password, gnmMarketing, thirdPartyMarketing, idRequest.clientIp)
-        val registeredUser: Future[Response[User]] = api.register(user, trackingData)
+        val registeredUser: Future[Response[User]] = api.register(user, trackingData, verifiedReturnUrlAsOpt)
 
         val result: Future[Result] = registeredUser flatMap {
           case Left(errors) =>
