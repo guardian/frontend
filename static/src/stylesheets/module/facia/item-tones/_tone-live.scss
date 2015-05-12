@@ -62,6 +62,12 @@
     .fc-sublink__title:before {
         border-color: mix($c-headline, colour(live-default), 20%);
     }
+
+    .fc-item__meta {
+        .inline-icon {
+            fill: colour(live-mute);
+        }
+    }
 }
 
 .tone-live--sublink {
