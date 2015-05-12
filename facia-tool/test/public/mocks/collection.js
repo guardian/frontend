@@ -1,27 +1,13 @@
-define([
-    'underscore',
-    'utils/mediator'
-], function (
-    _,
-    mediator
-) {
-    var all = {};
+import Mock from 'mock/generic-mock';
 
-    $.mockjax({
-        url: /collection\/(.+)/,
-        urlParams: ['collection'],
-        type: 'get',
-        response: function (req) {
-            this.responseText = all[req.urlParams.collection];
-        },
-        onAfterComplete: function () {
-            mediator.emit('mock:collection');
-        }
-    });
+class Collection extends Mock {
+    constructor() {
+        super(/collection\/(.+)/, ['collection']);
+    }
 
-    return {
-        set: function (collections) {
-            all = _.extend(all, collections);
-        }
-    };
-});
+    handle(req, data) {
+        return data[req.urlParams.collection];
+    }
+}
+
+export default Collection;

@@ -1,23 +1,16 @@
-define([
-    'underscore',
-    'jquery',
-    'modules/vars'
-], function(
-    _,
-    $,
-    vars
-) {
+import _ from 'underscore';
+import Promise from 'Promise';
+import vars from 'modules/vars';
 
-    /**
-     * Asserts if the given image URL is on The Guardian domain, is proper size and aspect ratio.
-     * Expected libs in context: jQuery (as $), underscore (as _)
-     * @param src image source
-     * @param criteria. validation criteria object. defines: maxWidth, minWidth, widthAspectRatio, heightAspectRatio
-     * @returns jQuery.Deferred object: rejects with (error) OR resolves with (width, height)
-     */
-    var validateImageSrc = function(src, criteria) {
-        var defer = $.Deferred(),
-            img,
+/**
+ * Asserts if the given image URL is on The Guardian domain, is proper size and aspect ratio.
+ * @param src image source
+ * @param criteria. validation criteria object. defines: maxWidth, minWidth, widthAspectRatio, heightAspectRatio
+ * @returns Promise object: rejects with (error) OR resolves with (width, height, src)
+ */
+function validateImageSrc(src, criteria) {
+    return new Promise(function (resolve, reject) {
+        var img,
             defaultCriteria = {
                 maxWidth: undefined,
                 minWidth: undefined,
@@ -27,19 +20,15 @@ define([
         criteria = _.extend(defaultCriteria, criteria);
 
         if (!src) {
-            setTimeout(function () {
-                defer.reject();
-            });
+            reject(new Error('Missing image'));
 
-        } else if (!src.match(new RegExp('^http://.*\\.' + vars.CONST.imageCdnDomain + '/'))) {
-            setTimeout(function () {
-                defer.reject('Images must come from *.' + vars.CONST.imageCdnDomain);
-            });
+        } else if (!src.match(new RegExp('^http://.*' + vars.CONST.imageCdnDomain.replace('.', '\\.') + '/'))) {
+            reject(new Error('Images must come from *' + vars.CONST.imageCdnDomain));
 
         } else {
             img = new Image();
             img.onerror = function() {
-                defer.reject('That image could not be found');
+                reject(new Error('That image could not be found'));
             };
             img.onload = function() {
                 var width = this.width || 1,
@@ -54,10 +43,10 @@ define([
                             : false;
 
                 if (err) {
-                    defer.reject(err);
+                    reject(new Error(err));
                 } else {
                     // Get the src again from the img, this makes sure that the URL is encoded properly
-                    defer.resolve({
+                    resolve({
                         width: width,
                         height: height,
                         src: img.src
@@ -66,9 +55,7 @@ define([
             };
             img.src = src;
         }
+    });
+}
 
-        return defer.promise();
-    };
-
-    return validateImageSrc;
-});
+export default validateImageSrc;

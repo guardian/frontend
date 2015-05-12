@@ -32,9 +32,9 @@
 
                                 @* The following is a fallback for when JavaScript is not enabled *@
                                 <div class="crossword__grid-wrapper">
-                                    @svg
+                                    <noscript>@svg</noscript>
                                 </div>
-
+                                <noscript>
                                 <div class="crossword__clues">
                                     <div class="crossword__clues--across">
                                         <h3 class="crossword__clues-header">Across</h3>
@@ -43,9 +43,10 @@
 
                                     <div class="crossword__clues--down">
                                         <h3 class="crossword__clues-header">Down</h3>
-                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Down))
+                                        <noscript>@crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Down))
                                     </div>
                                 </div>
+                                </noscript>
                             </div>
                         </div>
                     </div>
