@@ -64,57 +64,43 @@ define([
             });
 
             return abParams;
-        },
-        ophanViewId = function () {
-            return new Promise(function (resolve) {
-                // If ophan is available return viewId
-                if (config.switches.ophan) {
-                    require(['ophan/ng'], function (ophan) {
-                        return resolve(ophan.viewId);
-                    });
-                // else return nothing
-                } else {
-                    return resolve();
-                }
-            });
         };
 
-    return Promise.all([ophanViewId()]).then(function (viewId) {
-        return (function (opts) {
-            var win         = (opts || {}).window || window,
-                page        = config.page,
-                contentType = formatTarget(page.contentType),
-                pageTargets = _.merge({
-                    url:     win.location.pathname,
-                    edition: page.edition && page.edition.toLowerCase(),
-                    se:      getSeries(page),
-                    ct:      contentType,
-                    p:       'ng',
-                    k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
-                    x:       krux.getSegments(),
-                    su:      page.isSurging,
-                    o:       viewId,
-                    bp:      detect.getBreakpoint(),
-                    at:      cookies.get('adtest'),
-                    gdncrm:  userAdTargeting.getUserSegments(),
-                    ab:      abParam(),
-                    co:      parseIds(page.authorIds),
-                    bl:      parseIds(page.blogIds),
-                    ms:      formatTarget(page.source),
-                    tn:      _.uniq(_.compact([page.sponsorshipType].concat(parseIds(page.tones)))),
-                    // round video duration up to nearest 30 multiple
-                    vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
-                }, audienceScienceGateway.getSegments(), criteo.getSegments());
+    return function (opts) {
+        var win         = (opts || {}).window || window,
+            viewId      = (opts || {}).viewId
+            page        = config.page,
+            contentType = formatTarget(page.contentType),
+            pageTargets = _.merge({
+                url:     win.location.pathname,
+                edition: page.edition && page.edition.toLowerCase(),
+                se:      getSeries(page),
+                ct:      contentType,
+                p:       'ng',
+                k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
+                x:       krux.getSegments(),
+                su:      page.isSurging,
+                o:       viewId,
+                bp:      detect.getBreakpoint(),
+                at:      cookies.get('adtest'),
+                gdncrm:  userAdTargeting.getUserSegments(),
+                ab:      abParam(),
+                co:      parseIds(page.authorIds),
+                bl:      parseIds(page.blogIds),
+                ms:      formatTarget(page.source),
+                tn:      _.uniq(_.compact([page.sponsorshipType].concat(parseIds(page.tones)))),
+                // round video duration up to nearest 30 multiple
+                vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
+            }, audienceScienceGateway.getSegments(), criteo.getSegments());
 
-            // filter out empty values
-            return _.pick(pageTargets, function (target) {
-                if (_.isArray(target)) {
-                    return target.length > 0;
-                } else {
-                    return target;
-                }
-            });
-        }());
-    });
-
+        // filter out empty values
+        return _.pick(pageTargets, function (target) {
+            if (_.isArray(target)) {
+                return target.length > 0;
+            } else {
+                return target;
+            }
+        });
+    }
 });
+

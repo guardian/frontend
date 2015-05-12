@@ -5,6 +5,7 @@ define([
     'fastdom',
     'qwery',
     'raven',
+    'ophan/ng',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/_',
@@ -24,6 +25,7 @@ define([
     fastdom,
     qwery,
     raven,
+    ophan,
     $,
     $css,
     _,
@@ -125,7 +127,7 @@ define([
             }));
         },
         setPageTargeting = function () {
-            _.forOwn(buildPageTargeting, function (value, key) {
+            _.forOwn(buildPageTargeting({viewId: ophan.viewId}), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
@@ -203,7 +205,6 @@ define([
          * Public functions
          */
         init = function (options) {
-
             var opts = _.defaults(options || {}, {
                 resizeTimeout: 2000
             });
