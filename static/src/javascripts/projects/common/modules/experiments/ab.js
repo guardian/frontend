@@ -19,12 +19,12 @@ define([
     'common/modules/experiments/headlines',
     'common/modules/experiments/tests/mt-lz-ads-depth',
     'common/modules/experiments/tests/mt-sticky-nav-all',
-    'common/modules/experiments/tests/facia-slideshow',
     'common/modules/experiments/tests/mt-sticky-burger',
     'common/modules/experiments/tests/mt-sticky-all-ux',
     'common/modules/experiments/tests/mt-sticky-all-nt-ux',
     'common/modules/experiments/tests/mt-sticky-burger-ux',
-    'common/modules/experiments/tests/mt-sticky-burger-nt-ux'
+    'common/modules/experiments/tests/mt-sticky-burger-nt-ux',
+    'common/modules/experiments/tests/defer-spacefinder'
 ], function (
     raven,
     _,
@@ -46,12 +46,12 @@ define([
     Headline,
     MtLzAdsDepth,
     MtStickyNavAll,
-    FaciaSlideshow,
     MtStickyBurger,
     MtStickyAllUx,
     MtStickyAllNtUx,
     MtStickyBurgerUx,
-    MtStickyBurgerNtUx
+    MtStickyBurgerNtUx,
+    DeferSpacefinder
     ) {
 
     var ab,
@@ -73,10 +73,10 @@ define([
             new MtStickyAllNtUx(),
             new MtStickyBurgerUx(),
             new MtStickyBurgerNtUx(),
+            new DeferSpacefinder(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
-            }),
-            new FaciaSlideshow()
+            })
         ]),
         participationsKey = 'gu.ab.participations';
 

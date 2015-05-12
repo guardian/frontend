@@ -1,8 +1,8 @@
 {
     "packages":{
-        "training":{
+        "training-preview":{
             "type":"autoscaling",
-            "apps":[ "frontend::training" ],
+            "apps":[ "frontend::training-preview" ],
             "data":{
                 "secondsToWait":1200,
                 "port":18080,
@@ -36,10 +36,10 @@
             "depends" : ["abTestsFileUpload", "staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["training.deploy"]
+            "actionsBeforeApp": ["training-preview.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["training.uploadArtifacts"]
+            "actionsBeforeApp": ["training-preview.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

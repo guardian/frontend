@@ -209,6 +209,13 @@ define([
             return config.switches.lzAds;
         },
 
+        isDeferSpaceFinderTest = function () {
+            var test = ab.getParticipations().DeferSpacefinder,
+                eligible = test && test.variant === 'A';
+
+            return ab.testCanBeRun('DeferSpacefinder') && eligible;
+        },
+
         /**
          * Public functions
          */
@@ -233,7 +240,7 @@ define([
             window.googletag.cmd.push(defineSlots);
 
             // We want to run lazy load if user is in the depth test, main test user group or if there is a switch on
-            (isLzAdsTest() || isMainTest() || isLzAdsSwitchOn()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            (isLzAdsTest() || isMainTest() || isLzAdsSwitchOn() || isDeferSpaceFinderTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
@@ -246,14 +253,22 @@ define([
                 fastdom.read(function () {
                     var scrollTop    = bonzo(document.body).scrollTop(),
                         scrollBottom = scrollTop + bonzo.viewport().height,
+                        depth;
 
-                        // For depth test we want depth based on variant but for main test we want default depth
-                        // TODO: this will be removed after tests will finish
-                        depth        = (isLzAdsTest()) ? lzAdsTestVariants[ab.getParticipations().MtLzAdsDepth.variant] : 0.5;
+                    // For depth test we want depth based on variant but for main test we want default depth
+                    // TODO: this will be removed after tests will finish
+                    if (isLzAdsTest()) {
+                        depth = lzAdsTestVariants[ab.getParticipations().MtLzAdsDepth.variant];
+                    } else if (isDeferSpaceFinderTest()) {
+                        depth = 100;
+                    } else {
+                        depth = 0.5;
+                    }
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
-                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth) {
+                        // Make sure page skin is loaded first
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth || slot === 'dfp-ad--pageskin-inread') {
                             googletag.display(slot);
 
                             slots = _(slots).omit(slot).value();

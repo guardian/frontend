@@ -1,11 +1,9 @@
-$xword-native-sizes: (
-    quick: 417px,
-    cryptic: 466px
-); // calcuated in the JS, keep this aligned with it.
-
+@import 'vars';
 
 @import 'layout';
-@import 'grid';
+
+@import 'cell';
 @import 'clues';
-@import 'focussed-clue';
 @import 'controls';
+@import 'grid';
+@import 'hidden-input';

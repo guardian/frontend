@@ -1,12 +1,12 @@
 <configuration>
 
-    <contextName>frontend-training</contextName>
+    <contextName>frontend-training-preview</contextName>
 
     <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/frontend-training.log</file>
+        <file>logs/frontend-training-preview.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/frontend-training.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>logs/frontend-training-preview.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
 

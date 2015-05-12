@@ -1,32 +1,15 @@
-define([
-    'underscore',
-    'utils/mediator'
-], function (
-    _,
-    mediator
-) {
-    var lastModified = {};
+import Mock from 'mock/generic-mock';
 
-    $.mockjax({
-        url: /\/front\/lastmodified\/(.+)/,
-        urlParams: ['front'],
-        response: function (req) {
-            var response = lastModified[req.urlParams.front];
-            if (!response) {
-                response = {
-                    status: 'fail'
-                };
-            }
-            this.responseText = response;
-        },
-        onAfterComplete: function () {
-            mediator.emit('mock:lastmodified');
-        }
-    });
+class LastModified extends Mock {
+    constructor() {
+        super(/\/front\/lastmodified\/(.+)/, ['front']);
+    }
 
-    return {
-        set: function (response) {
-            lastModified = _.extend(lastModified, response);
-        }
-    };
-});
+    handle(req, data) {
+        return data[req.urlParams.front] || {
+            status: 'fail'
+        };
+    }
+}
+
+export default LastModified;

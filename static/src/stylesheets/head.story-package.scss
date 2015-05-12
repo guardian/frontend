@@ -122,13 +122,13 @@
     @include kicker-override(analysis, colour(analysis-accent));
     @include kicker-override(comment, colour(comment-accent));
     @include kicker-override(dead, colour(live-support-1));
-    @include kicker-override(editorial, colour(news-support-1));
+    @include kicker-override(editorial, colour(news-accent));
     @include kicker-override(external, colour(maps-support-1));
     @include kicker-override(feature, colour(feature-mute));
     @include kicker-override(letters, colour(comment-accent));
     @include kicker-override(live, colour(live-support-1));
     @include kicker-override(media, colour(media-default));
-    @include kicker-override(news, colour(news-support-1));
+    @include kicker-override(news, colour(news-accent));
     @include kicker-override(review, colour(review-accent));
 
     // Item Level

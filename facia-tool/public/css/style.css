@@ -1191,6 +1191,42 @@ select {
     width: 15px;
 }
 
+.editor--list {
+    display: table;
+}
+
+.editor--image {
+    background-color: #CCC;
+    width: 83px;
+    height: 50px;
+    display: inline-block;
+    margin-right: 4px;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position-x: right;
+    text-decoration: none;
+    color: #999;
+}
+a.editor--image {
+    cursor: default;
+}
+.editor--image:hover {
+    color: #999;
+}
+.editor--image.allow-default-click {
+    cursor: pointer;
+}
+.editor--image.underDrag {
+    background-color: #999999;
+}
+.editor--image__remove {
+    background-color: #DDD;
+    padding: 1px;
+}
+.editor--image i {
+    font-size: 12px;
+}
+
 .editor .underDrag {
     background-color: #999999;
 }
