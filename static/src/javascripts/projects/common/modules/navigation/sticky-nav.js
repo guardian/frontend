@@ -75,7 +75,7 @@ define([
                     config.$bannerMobile.css('margin-top', config.stickyNavigationHeight + config.stickyTopAdHeight);
 
                     //if we are scrolling up show full navigation
-                    showNavigation(window.scrollY, config, true, false);
+                    showNavigation(window.scrollY, config, true);
                 }
             } else {
                 //after config.scrollThreshold px of scrolling 'release' topAd
@@ -99,7 +99,7 @@ define([
                 }
 
                 //if we are scrolling up show full navigation
-                showNavigation(window.scrollY, config, true, false);
+                showNavigation(window.scrollY, config, true);
             }
         });
     }
@@ -358,7 +358,7 @@ define([
                     }).addClass('l-header--is-slim l-header--is-slim-ab');
 
                     //if we are scrolling up show full navigation
-                    showNavigation(window.scrollY, config, true, false);
+                    showNavigation(window.scrollY, config, true);
                     config.$bannerMobile.css('margin-top', config.$navigationHeader.dim().height + config.stickyTopAdHeight);
                 }
             } else {
@@ -383,7 +383,7 @@ define([
                 }
 
                 //if we are scrolling up show full navigation
-                showNavigation(window.scrollY, config, true, false);
+                showNavigation(window.scrollY, config, true);
             }
         });
     }
