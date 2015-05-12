@@ -113,7 +113,7 @@ module.exports = function (grunt) {
         'compile:conf'
     ]);
 
-    grunt.registerTask('install', ['install:jspm', 'install:npm']);
+    grunt.registerTask('install', ['install:npm', 'install:jspm']);
     grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool']);
     grunt.registerTask('install:npm', ['shell:npmInstall']);
 
