@@ -51,6 +51,17 @@ define([
         Group
     ) {
         alert = alert.default;
+        deepGet = deepGet.default;
+        fullTrim = fullTrim.default;
+        isGuardianUrl = isGuardianUrl.default;
+        urlHost = urlHost.default;
+        sanitizeHtml = sanitizeHtml.default;
+        urlAbsPath = urlAbsPath.default;
+        asObservableProps = asObservableProps.default;
+        populateObservables = populateObservables.default;
+        mediator = mediator.default;
+        humanTime = humanTime.default;
+        validateImageSrc = validateImageSrc.default;
 
         var capiProps = [
                 'webUrl',
@@ -916,14 +927,13 @@ define([
 
             if (imageSrc()) {
                 validateImageSrc(imageSrc(), opts)
-                    .done(function(img) {
+                    .then(function(img) {
                         imageSrc(img.src);
                         imageSrcWidth(img.width);
                         imageSrcHeight(img.height);
-                    })
-                    .fail(function(err) {
+                    }, function(err) {
                         undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
-                        alert(err);
+                        alert(err.message);
                     });
             } else {
                 undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);

@@ -79,7 +79,7 @@ define([
         apiSearchBase:         '/api/proxy',
         apiSearchParams:       'show-elements=video&show-tags=all&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail,liveBloggingNow,membershipAccess',
 
-        imageCdnDomain:        'guim.co.uk',
+        imageCdnDomain:        '.guim.co.uk',
         previewBase:           'http://preview.gutools.co.uk',
 
         latestSnapPrefix:      'Latest from ',
