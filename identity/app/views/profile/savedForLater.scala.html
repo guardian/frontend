@@ -5,6 +5,7 @@
 
 @import implicits.Articles._
 @import views.support.ImgSrc
+@import layout.ContentWidths.BodyMedia
 
 @savedArticle(articles: List[Content]) = {
     @articles.zipWithRowInfo.map { case (article, row) =>
@@ -16,9 +17,26 @@
 
         <input type="hidden" name="article[@row.rowNum]" value="@article.shortUrlPath"/>
         <div class="saved-content__img media__img">
+
+        <!--
         @article.trailPicture.map { image =>
             <img class="responsiveimg" src="@Item120.bestFor(image)" alt="" />
         }
+        @fragments.img(article.trailPicture(5,3), false, false, false, Some(article.url), false)
+        -->
+
+        @article.trailPicture.map { picture  =>
+
+
+
+            <img src="@ImgSrc.getFallbackUrl(picture)"
+            srcset="@ImgSrc.srcset(picture, BodyMedia.Thumbnail)"
+            sizes="@BodyMedia.Thumbnail.sizes"
+            class="maxed responsive-img"
+            itemprop="contentUrl representativeOfPage"
+            alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
+        }
+
         </div>
 
         <div class=="saved-content__meta">
@@ -57,9 +75,9 @@
                 <ul class="u-unstyled">
 
                     <li class="form-field">
-                        <label class="label">You have @articles.length saved articles</label>
-                        <div class="form-field__note">
-                            Delete individual articles with the button above, or click below to remove them all
+                        <label class="label"> Delete individual articles with the button above, or click below to remove them all</label>
+                        <div class="form-field__note js-saved-content__num-articles">
+                            you have @articles.length saved articles
                         </div>
                     </li>
 
