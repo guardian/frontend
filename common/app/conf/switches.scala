@@ -191,6 +191,13 @@ object Switches {
   )
 
   // Commercial
+  val OphanViewIdSwitch = Switch("Commercial",
+    "ophan-view-id",
+    "Depeneding on ophan to pass view ID to the gdf targeting",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 5, 31)
+  )
+
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
