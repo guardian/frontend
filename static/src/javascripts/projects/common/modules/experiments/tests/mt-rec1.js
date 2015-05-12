@@ -18,13 +18,13 @@ define([
     geoMostPopular
 ) {
     return function () {
-        this.id = 'MtMain';
-        this.start = '2015-03-12';
+        this.id = 'MtRec1';
+        this.start = '2015-05-12';
         this.expiry = '2015-05-25';
         this.author = 'Zofia Korcz';
-        this.description = 'Sticky navigation behind the ad with burger version - with sticky MPU and lazy loading';
+        this.description = 'Viewability results - Recommendation option 1';
         this.audience = 0.02;
-        this.audienceOffset = 0.6;
+        this.audienceOffset = 0.55;
         this.successMeasure = '';
         this.audienceCriteria = '1% of US and UK edition';
         this.dataLinkNames = '';
@@ -39,7 +39,7 @@ define([
             return !isIE && (isUK || isUS);
         };
 
-        this.fireMainTest = function () {
+        this.fireRec1Test = function () {
             var $secondaryColumn = $('.js-secondary-column');
 
             geoMostPopular.whenRendered.then(function () {
