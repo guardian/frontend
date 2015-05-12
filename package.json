@@ -53,7 +53,7 @@
     "karma-script-launcher": "0.1.0",
     "karma-spec-reporter": "0.0.19",
     "load-grunt-config": "0.13.2",
-    "megalog": "0.0.2",
+    "megalog": "^0.0.2",
     "mkdirp": "0.5.0",
     "moment": "2.8.3",
     "phantom": "0.6.5",
