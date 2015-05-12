@@ -21,6 +21,10 @@
         }
     }
 
+    .inline-quote {
+        fill: colour(editorial-accent);
+    }
+
     .fc-item__container:before,
     .rich-link__container:before {
         background-color: colour(editorial-accent);
