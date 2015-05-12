@@ -332,13 +332,13 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__title--quoted {
-    svg {
-        width: 1.2em;
-        height: .75em;
-    }
-
     .inline-quote {
         fill: colour(neutral-2);
+
+        svg {
+            width: 1.2em;
+            height: .75em;
+        }
     }
 }
 
