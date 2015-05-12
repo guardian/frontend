@@ -74,10 +74,10 @@ define([
         );
     };
 
-    SaveForLater.prototype.updateNumArticles = function() {
+    SaveForLater.prototype.updateNumArticles = function () {
         var self = this,
             saveForLaterProfileLink = $('.brand-bar__item--saved-for-later');
-        saveForLaterProfileLink.text("Saved articles(" + self.userData.articles.length + ")");
+        saveForLaterProfileLink.text('Saved articles(' + self.userData.articles.length + ')');
     };
 
     SaveForLater.prototype.hasUserSavedArticle = function (articles, shortUrl) {
