@@ -16,6 +16,9 @@ define([
         root: (document.location.protocol === 'https:')
                 ? config.page.secureDiscussionApiRoot
                 : config.page.discussionApiRoot,
+        proxy: (document.location.protocol === 'https:')
+            ? config.page.secureDiscussionApiRootProxy
+            : config.page.discussionApiRootProxy,
         clientHeader: config.page.discussionApiClientHeader
     };
 
@@ -31,11 +34,15 @@ define([
             data.GU_U = cookies.get('GU_U');
         }
 
+        var useProxy = vars.model.switches()['discussionUseApiProxy'];
+
+        console.log("useProxy?" + ((useProxy) ? Api.proxy : Api.root) + endpoint);
+
         var request = ajax({
-            url: Api.root + endpoint,
+            url: ((useProxy) ? Api.proxy : Api.root) + endpoint,
             type: (method === 'get') ? 'jsonp' : 'json',
             method: method,
-            crossOrigin: true,
+            crossOrigin: (useProxy) ? false : true,
             data: data,
             headers: {
                 'D2-X-UID': 'zHoBy6HNKsk',

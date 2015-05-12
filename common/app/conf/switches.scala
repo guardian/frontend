@@ -535,6 +535,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
+  val DiscussionApiProxySwitch = Switch("Feature", "discussion-use-api-proxy",
+    "When switched ON all discussion traffic will be relayed via theguardian.com/discussion/proxy",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 11)
+  )
+
   // A/B Tests
   val ABMtLzAdsDepth = Switch("A/B Tests", "ab-mt-lz-ads-depth", "Depth for lazy loaded ads.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
