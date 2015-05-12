@@ -1,32 +1,18 @@
-define([
-    'underscore',
-    'utils/mediator'
-], function (
-    _,
-    mediator
-) {
-    var stories = {};
+import Mock from 'mock/generic-mock';
 
-    $.mockjax({
-        url: /\/stories-visible\/(.+)/,
-        urlParams: ['collection'],
-        response: function (req) {
-            var response = stories[req.urlParams.collection];
-            if (!response) {
-                response = {
-                    status: 'fail'
-                };
-            }
-            this.responseText = response;
-        },
-        onAfterComplete: function () {
-            mediator.emit('mock:stories-visible');
-        }
-    });
+class StoriesVisible extends Mock {
+    constructor() {
+        super(/\/stories-visible\/(.+)/, ['collection']);
+    }
 
-    return {
-        set: function (response) {
-            stories = _.extend(stories, response);
+    handle(req, data, xhr) {
+        var response = data[req.urlParams.collection];
+        if (!response) {
+            xhr.status = 500;
+            xhr.statusText = 'FAIL';
         }
-    };
-});
+        return response;
+    }
+}
+
+export default StoriesVisible;

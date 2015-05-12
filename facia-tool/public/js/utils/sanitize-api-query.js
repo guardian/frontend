@@ -1,28 +1,20 @@
-define([
-    'underscore',
-    'utils/parse-query-params',
-    'utils/identity'
-], function(
-    _,
-    parseQueryParams,
-    identity
-) {
-    return function (url) {
-        var bits = (url + '').split('?');
+import _ from 'underscore';
+import parseQueryParams from 'utils/parse-query-params';
 
-        if (bits.length <= 1) {
-            return url;
+export default function(url) {
+    var bits = (url + '').split('?');
 
-        } else {
-            return _.initial(bits).concat(
-                _.map(
-                    parseQueryParams(url, {
-                        predicateKey: function(key) { return key !== 'api-key'; },
-                        predicateVal: identity
-                    }),
-                    function(val, key) { return key + '=' + val; }
-                ).join('&')
-            ).join('?');
-        }
-    };
-});
+    if (bits.length <= 1) {
+        return url;
+    }
+
+    var params = _.map(
+        parseQueryParams(url, {
+            predicateKey: function(key) { return key !== 'api-key'; },
+            predicateVal: function(val) { return val; }
+        }),
+        function(val, key) { return key + '=' + val; }
+    ).join('&');
+
+    return bits[0] + (params ? '?' + params : '');
+}

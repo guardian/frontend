@@ -546,8 +546,8 @@ object Switches {
   )
 
   val ABMtMain = Switch("A/B Tests", "ab-mt-main",
-    "Switch for the moat main test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 11)
+    "Sticky navigation behind the ad with burger version - with sticky MPU and lazy loading.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
   )
 
   val ABMtStNav = Switch(
@@ -643,11 +643,6 @@ object Switches {
       sellByDate = new LocalDate(2015, 6, 10)
     )
   }
-
-  val ABFaciaSlideshow = Switch("A/B Tests", "ab-facia-slideshow",
-    "Switch for the facia slideshow A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
-  )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
