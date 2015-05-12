@@ -4,14 +4,18 @@ define([
     'common/utils/detect',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/loyalty/save-for-later'
+    'common/utils/template',
+    'common/modules/loyalty/save-for-later',
+    'text!common/views/identity/saved-for-later-profile-link.html'
 ], function (
     bonzo,
     qwery,
     detect,
     config,
     mediator,
-    SaveForLater
+    template,
+    SaveForLater,
+    profileLinkTmp
 ) {
 
     return function () {
@@ -47,9 +51,7 @@ define([
                         console.log("++ Adding save to later to popup");
                         var popup = qwery('.popup--profile')[0];
                         bonzo(popup).append(bonzo.create(
-                            '<li class="popup__item">' +
-                            '<a href="' + config.page.idUrl + '/save-for-later" class="brand-bar__item--action brand-bar__item--saved-for-later" data-link-name="Saved for Later">Saved for later</a>' +
-                            '</li>'
+                            template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), { idUrl: config.page.idUrl })
                         ));
                     });
 
