@@ -1,23 +1,16 @@
-define([
-    'jquery',
-    'modules/authed-ajax',
-    'modules/vars',
-    'utils/human-time'
-], function (
-    $,
-    authedAjax,
-    vars,
-    humanTime
-) {
-    function getFrontAgeAlertMs(front) {
-        return vars.CONST.frontAgeAlertMs[
-            vars.CONST.highFrequencyPaths.indexOf(front) > -1 ? 'front' : vars.priority || 'editorial'
-        ] || 600000;
-    }
+import Promise from 'Promise';
+import authedAjax from 'modules/authed-ajax';
+import vars from 'modules/vars';
+import humanTime from 'utils/human-time';
 
-    function fetch(front) {
-        var deferred = new $.Deferred();
+function getFrontAgeAlertMs(front) {
+    return vars.CONST.frontAgeAlertMs[
+        vars.CONST.highFrequencyPaths.indexOf(front) > -1 ? 'front' : vars.priority || 'editorial'
+    ] || 600000;
+}
 
+export default function(front) {
+    return new Promise(function (resolve) {
         authedAjax.request({
             url: '/front/lastmodified/' + front
         })
@@ -25,18 +18,14 @@ define([
             if (resp.status === 200 && resp.responseText) {
                 var date = new Date(resp.responseText);
 
-                deferred.resolve({
+                resolve({
                     date: date,
                     human: humanTime(date),
                     stale: new Date() - date > getFrontAgeAlertMs(front)
                 });
             } else {
-                deferred.resolve({});
+                resolve({});
             }
         });
-
-        return deferred.promise();
-    }
-
-    return fetch;
-});
+    });
+}
