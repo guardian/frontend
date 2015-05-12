@@ -126,7 +126,7 @@ define([
         },
         setPageTargeting = function () {
             if (config.switches.ophan && config.switches.ophanViewId) {
-                require(['ophan/ng'], function(ophan) {
+                require(['ophan/ng'], function (ophan) {
                     setTargets({viewId: ophan.viewId});
                 });
             } else {

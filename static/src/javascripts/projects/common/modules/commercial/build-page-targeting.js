@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
@@ -10,7 +9,6 @@ define([
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab'
 ], function (
-    Promise,
     _,
     config,
     cookies,
@@ -68,7 +66,7 @@ define([
 
     return function (opts) {
         var win         = (opts || {}).window || window,
-            viewId      = (opts || {}).viewId
+            viewId      = (opts || {}).viewId,
             page        = config.page,
             contentType = formatTarget(page.contentType),
             pageTargets = _.merge({
@@ -101,6 +99,5 @@ define([
                 return target;
             }
         });
-    }
+    };
 });
-
