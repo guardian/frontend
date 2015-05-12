@@ -42,6 +42,7 @@ export default class Clues extends React.Component {
             .filter((clue) => clue.entry.direction === direction)
             .map((clue) =>
                 <Clue
+                    key={clue.entry.clue}
                     number={clue.entry.number + '.'}
                     clue={clue.entry.clue}
                     hasAnswered={clue.hasAnswered}
