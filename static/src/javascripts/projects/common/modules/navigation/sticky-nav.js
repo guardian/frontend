@@ -548,7 +548,6 @@ define([
                 });
 
                 //header is slim from now on
-                //this.$els.burgerIcon.insertAfter(this.$els.logoWrapper);
                 this.$els.header.addClass('l-header--is-slim l-header--is-slim-ab');
                 this.$els.burgerIcon.hide();
 
@@ -569,7 +568,6 @@ define([
                 });
                 //header is not slim yet
                 this.$els.header.removeClass('l-header--is-slim l-header--is-slim-ab');
-                //this.$els.burgerIcon.insertAfter(this.$els.navigationScroll);
                 this.$els.burgerIcon.show();
 
                 this.$els.header.removeClass('is-slim');
