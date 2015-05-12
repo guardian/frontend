@@ -742,6 +742,12 @@ define([
                 })
                 // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
+                // recurse convert numbers to strings:
+                .map(function(p){ return [p[0], _.isArray(p[1]) ? _.map(p[1], function (nested) {
+                    return _.isObject(nested) ? _.mapObject(nested, function (val) {
+                        return _.isNumber(val) ? '' + val : val;
+                    }) : nested; }) : p[1]];
+                })
                 // return as obj, or as undefined if empty (this omits it from any subsequent JSON.stringify result)
                 .reduce(function(obj, p) {
                     obj = obj || {};
@@ -951,12 +957,11 @@ define([
                     src = image.media ? image.media.file || originUrl : originUrl,
                     origin = image.media ? image.media.origin || originUrl : originUrl;
                 validateImageSrc(src, params.options)
-                    .done(function(img) {
+                    .then(function(img) {
                         meta(_.extend({
                             origin: origin,
                         }, img));
-                    })
-                    .fail(function(err) {
+                    }, function(err) {
                         undefineObservables(meta);
                         alert(err);
                     });
