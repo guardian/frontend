@@ -23,6 +23,11 @@ define([
     sparklines,
     updateScrollables
 ) {
+    lastModified = lastModified.default;
+    presser = presser.default;
+    mediator = mediator.default;
+    humanTime = humanTime.default;
+
     function Front (params) {
         var frontId, listeners = mediator.scope();
 
@@ -70,12 +75,12 @@ define([
 
         this.pressLiveFront = function () {
             if (this.front()) {
-                presser.pressLive(this.front());
+                presser('live', this.front());
             }
         };
         this.pressDraftFront = function () {
             if (this.front()) {
-                presser.pressDraft(this.front());
+                presser('draft', this.front());
             }
         };
 
@@ -199,7 +204,7 @@ define([
         var model = this;
 
         if (model.front()) {
-            lastModified(model.front()).done(function (last) {
+            lastModified(model.front()).then(function (last) {
                 model.frontAge(last.human);
                 if (pageConfig.env !== 'dev') {
                     model.alertFrontIsStale(opts.alertIfStale && last.stale);
