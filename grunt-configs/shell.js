@@ -38,10 +38,10 @@ module.exports = function(grunt, options) {
         },
 
         jspmInstallStatic: {
-            command: 'jspm install && jspm clean',
+            command: './jspm install && ./jspm clean',
             options: {
                 execOptions: {
-                    cwd: './node_modules/.bin/'
+                    cwd: './node_modules/.bin'
                 }
             }
         },
