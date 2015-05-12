@@ -5,7 +5,7 @@ import fastdom from 'fastdom';
 import scroller from 'common/utils/scroller';
 import detect from 'common/utils/detect';
 
-export default class extends React.Component {
+export default class HiddenInput extends React.Component {
 
     constructor (props) {
         super(props);

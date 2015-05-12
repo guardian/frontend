@@ -34,7 +34,7 @@ class Clue extends React.Component {
     }
 }
 
-export default class extends React.Component {
+export default class Clues extends React.Component {
 
     render () {
         const headerClass = 'crossword__clues-header';

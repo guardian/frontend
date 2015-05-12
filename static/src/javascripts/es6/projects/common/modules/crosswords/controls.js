@@ -5,7 +5,7 @@ const buttonClassName = 'button button--small';
 const buttonCurrentClassName = 'button--crossword--current';
 const buttonGenericClassName = 'button--secondary';
 
-export default class extends React.Component {
+export default class Controls extends React.Component {
 
     render () {
         const hasSolutions = this.props.hasSolutions;

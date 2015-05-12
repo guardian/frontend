@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import helpers from './helpers';
 import constants from './constants';
 
-export default class extends React.Component {
+export default class Cell extends React.Component {
 
     constructor (props) {
         super(props);

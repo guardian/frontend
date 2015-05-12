@@ -11,7 +11,7 @@ import helpers from './helpers';
 
 import Cell from './cell';
 
-export default class extends React.Component {
+export default class Grid extends React.Component {
 
     handleSelect (x, y) {
         this.props.onSelect(x, y);
