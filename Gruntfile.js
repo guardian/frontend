@@ -42,7 +42,7 @@ module.exports = function (grunt) {
     }
 
     // Default task
-    grunt.registerTask('default', ['clean', 'validate', 'prepare', 'compile', 'test', 'analyse']);
+    grunt.registerTask('default', ['install', 'clean', 'validate', 'compile', 'test', 'analyse']);
 
     /**
      * Validate tasks
@@ -112,9 +112,10 @@ module.exports = function (grunt) {
         'compile:conf'
     ]);
 
-    grunt.registerTask('prepare', ['jspmInstall']);
+    grunt.registerTask('install', ['install:jspm', 'install:npm']);
+    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool']);
+    grunt.registerTask('install:npm', ['shell:npmInstall']);
 
-    grunt.registerTask('jspmInstall', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool']);
 
     /**
      * compile:js:<requiretask> tasks. Generate one for each require task
