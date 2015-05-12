@@ -84,7 +84,6 @@ define([
                     '</ul>'
             );
         }
-        console.log("++ profile loaded");
 
         this.emitLoadedEvent(user);
     };

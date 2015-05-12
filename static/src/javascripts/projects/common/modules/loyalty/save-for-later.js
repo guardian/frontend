@@ -35,7 +35,6 @@ define([
     }
 
     SaveForLater.prototype.init = function () {
-        console.log("++ Save FOR THIS init");
 
         if (identity.isUserLoggedIn()) {
             this.getSavedArticles();
@@ -69,8 +68,6 @@ define([
                     self.$saver.html('<a class="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>');
                     bean.on(self.saveLinkHolder, 'click', '.meta__save-for-later--link', self.saveArticle.bind(self));
                 }
-
-                console.log("++ got TtHE data");
                 self.updateNumArticles();
             }
 
@@ -80,9 +77,7 @@ define([
     SaveForLater.prototype.updateNumArticles = function() {
         var self = this,
             saveForLaterProfileLink = $('.brand-bar__item--saved-for-later');
-        console.log("++ got the link: Initxs" + saveForLaterProfileLink);
         saveForLaterProfileLink.text("Saved articles(" + self.userData.articles.length + ")");
-        console.log("++ set text");
     };
 
     SaveForLater.prototype.hasUserSavedArticle = function (articles, shortUrl) {

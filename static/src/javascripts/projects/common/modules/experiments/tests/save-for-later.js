@@ -48,7 +48,6 @@ define([
                     });
 
                     mediator.on('modules:profilenav:loaded', function () {
-                        console.log("++ Adding save to later to popup");
                         var popup = qwery('.popup--profile')[0];
                         bonzo(popup).append(bonzo.create(
                             template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), { idUrl: config.page.idUrl })
