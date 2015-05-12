@@ -17,13 +17,12 @@ export default class Cell extends React.Component {
     }
 
     render () {
-        const innerNodes = [];
         const top = helpers.gridSize(this.props.y);
         const left = helpers.gridSize(this.props.x);
 
-        // the cell number
+        let cellNumber = null;
         if (this.props.number !== undefined) {
-            innerNodes.push(
+            cellNumber = (
                 <text
                     x={left + 1}
                     y={top + constants.numberSize}
@@ -34,9 +33,9 @@ export default class Cell extends React.Component {
             );
         }
 
-        // character the user has entered
+        let cellValue = null;
         if (this.props.value !== undefined) {
-            innerNodes.push(
+            cellValue = (
                 <text
                     x={left + constants.cellSize / 2}
                     y={top + constants.cellSize / 2}
@@ -64,7 +63,8 @@ export default class Cell extends React.Component {
                         'crossword__cell--intersecting': this.props.intersectsFocussedEntry
                     })}>
                 </rect>
-                {innerNodes}
+                {cellNumber}
+                {cellValue}
             </g>
         );
     }
