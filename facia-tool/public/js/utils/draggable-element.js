@@ -27,16 +27,6 @@ function getMediaItem(dataTransfer) {
         }
 
         if (!mediaItem) {
-            throw new Error('Sorry, that image could not be understood.');
-        } else {
-            mediaItem = _.chain(mediaItem.assets)
-                .filter(function(asset) { return deepGet(asset, '.dimensions.width') <= 1000; })
-                .sortBy(function(asset) { return deepGet(asset, '.dimensions.width') * -1; })
-                .first()
-                .value();
-        }
-
-        if (!mediaItem) {
             throw new Error('Sorry, a suitable crop size does not exist for this image');
         }
 
