@@ -25,14 +25,22 @@ define([
         return config.direction;
     }
 
-    function showNavigation(scrollY, config, isDesktop) {
+    function showNavigation(scrollY, config, isDesktop, isMtMain) {
         if (scrollDirection(scrollY, config) === 'up') {
             config.$navigationScroll.css('display', 'block');
             if (isDesktop) {
                 config.$navigationGreySection.css('border-top', '36px solid #00456e');
+                if (isMtMain) {
+                    config.burgerIcon.show();
+                    config.header.removeClass('l-header--is-slim l-header--is-slim-ab');
+                }
             }
         } else {
             config.$navigationScroll.css('display', 'none');
+            if (isDesktop && isMtMain) {
+                config.burgerIcon.hide();
+                config.header.addClass('l-header--is-slim l-header--is-slim-ab');
+            }
         }
     }
 
@@ -75,7 +83,7 @@ define([
                     config.$bannerMobile.css('margin-top', config.stickyNavigationHeight + config.stickyTopAdHeight);
 
                     //if we are scrolling up show full navigation
-                    showNavigation(window.scrollY, config, true);
+                    showNavigation(window.scrollY, config, true, false);
                 }
             } else {
                 //after config.scrollThreshold px of scrolling 'release' topAd
@@ -99,7 +107,7 @@ define([
                 }
 
                 //if we are scrolling up show full navigation
-                showNavigation(window.scrollY, config, true);
+                showNavigation(window.scrollY, config, true, false);
             }
         });
     }
@@ -358,7 +366,7 @@ define([
                     }).addClass('l-header--is-slim l-header--is-slim-ab');
 
                     //if we are scrolling up show full navigation
-                    showNavigation(window.scrollY, config, true);
+                    showNavigation(window.scrollY, config, true, false);
                     config.$bannerMobile.css('margin-top', config.$navigationHeader.dim().height + config.stickyTopAdHeight);
                 }
             } else {
@@ -383,7 +391,7 @@ define([
                 }
 
                 //if we are scrolling up show full navigation
-                showNavigation(window.scrollY, config, true);
+                showNavigation(window.scrollY, config, true, false);
             }
         });
     }
@@ -422,16 +430,17 @@ define([
 
     StickySlow.prototype.init = function () {
         fastdom.read(function () {
-            this.$els.header            = $('#header');
-            this.$els.bannerDesktop     = $('.top-banner-ad-container--above-nav');
-            this.$els.main              = $('#maincontent');
-            this.$els.navHeader         = $('.js-navigation-header');
-            this.$els.sticky            = $('.sticky-nav-mt-test');
-            this.$els.burgerIcon        = $('.js-navigation-toggle', this.$els.navHeader);
-            this.$els.logoWrapper       = $('.logo-wrapper', this.$els.navHeader);
-            this.$els.navigationScroll  = $('.navigation__scroll', this.$els.navHeader);
-            this.$els.$navigationScroll = $('.js-navigation-header .navigation__scroll');
-            this.headerBigHeight        = this.$els.navHeader.dim().height;
+            this.$els.header                 = $('#header');
+            this.$els.bannerDesktop          = $('.top-banner-ad-container--above-nav');
+            this.$els.main                   = $('#maincontent');
+            this.$els.navHeader              = $('.js-navigation-header');
+            this.$els.sticky                 = $('.sticky-nav-mt-test');
+            this.$els.burgerIcon             = $('.js-navigation-toggle', this.$els.navHeader);
+            this.$els.logoWrapper            = $('.logo-wrapper', this.$els.navHeader);
+            this.$els.navigationScroll       = $('.navigation__scroll', this.$els.navHeader);
+            this.$els.$navigationScroll      = $('.navigation__scroll', this.$els.navHeader);
+            this.$els.$navigationGreySection = $('.navigation__container--first', this.$els.navHeader);
+            this.headerBigHeight             = this.$els.navHeader.dim().height;
         }.bind(this));
 
         mediator.on('window:scroll', _.throttle(function () {
@@ -460,7 +469,7 @@ define([
 
                 this.$els.header.addClass('is-slim');
                 this.$els.header.css('transform', 'translateY(0%)');
-                showNavigation(scrollY, this.$els, true);
+                showNavigation(scrollY, this.$els, true, true);
             } else if (scrollY >= this.headerBigHeight) {
                 // Add is not sticky anymore
                 this.$els.bannerDesktop.css({
