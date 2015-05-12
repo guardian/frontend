@@ -35,7 +35,6 @@ define([
     }
 
     SaveForLater.prototype.init = function () {
-
         if (identity.isUserLoggedIn()) {
             this.getSavedArticles();
         } else {
@@ -70,7 +69,6 @@ define([
                 }
                 self.updateNumArticles();
             }
-
         );
     };
 
