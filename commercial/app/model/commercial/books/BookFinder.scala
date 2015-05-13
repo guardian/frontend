@@ -27,7 +27,13 @@ object BookFinder extends ExecutionContexts with Logging {
       Future.successful {
         bookData match {
           case JsNull => None
-          case _ => Some(bookData.as[Book])
+          case _ =>
+            bookData.validate[Book] fold(
+              invalid => {
+                log.error(Json.stringify(JsError.toFlatJson(invalid)))
+                None
+              },
+              book => Some(book))
         }
       }
     }
