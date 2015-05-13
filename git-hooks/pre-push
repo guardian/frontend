@@ -5,7 +5,7 @@
 branch=$(git symbolic-ref --short HEAD)
 
 
-function conditionallyGrunt {
+conditionallyGrunt() {
 
     # check that remote branch exists
     git branch -r | if grep -q "origin/$branch$"
