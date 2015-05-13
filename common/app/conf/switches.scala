@@ -538,10 +538,6 @@ object Switches {
   )
 
   // A/B Tests
-  val ABMtLzAdsDepth = Switch("A/B Tests", "ab-mt-lz-ads-depth", "Depth for lazy loaded ads.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
