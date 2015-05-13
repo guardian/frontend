@@ -2,6 +2,8 @@
 #
 # Pre-push hooks
 
+exit 0
+
 branch=$(git symbolic-ref --short HEAD)
 
 

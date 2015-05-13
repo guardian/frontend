@@ -189,13 +189,13 @@ describe('Get user data', function () {
     });
 
     it('shouldRefreshCookies should return false for a user who has not refreshed within 30 days', function () {
-        var time = (new Date().getDate() - 31).getTime()
-        expect(Id.shouldRefreshCookie(null)).toBe(false);
+        var today = new Date().getTime()
+        expect(Id.shouldRefreshCookie(today  - 1000 * 86400 * 30, new Date().getTime())).toBe(false);
     });
 
     it('shouldRefreshCookies should return false for a user who has refreshed within 30 days', function () {
-        var time = (new Date().getDate() - 1).getTime()
-        expect(Id.shouldRefreshCookie(null)).toBe(false);
+        var today = new Date().getTime()
+        expect(Id.shouldRefreshCookie(today  - 1000 * 86400 * 5, new Date().getTime())).toBe(false);
     });
 
 });
