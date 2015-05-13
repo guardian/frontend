@@ -1,6 +1,7 @@
 package controllers
 
 import conf.Configuration
+import play.api.libs.json.Json
 import play.api.libs.ws.WS
 import play.api.mvc.Action
 
@@ -10,8 +11,8 @@ object DiscussionProxyController extends DiscussionController {
 
     log.info(s"### RELAY!!")
 
-    val headers = request.headers.toSimpleMap.toSeq
-    val payload = request.body.asJson.get
+    val headers = (request.headers.toSimpleMap ++ Map("X-Forwarded-For" -> request.remoteAddress)).toSeq
+    val payload = request.body.asJson.getOrElse(Json.parse("{}"))
     val timeout = Configuration.discussion.apiTimeout.toInt
     val apiRoot = request.isSecure match {
       case true => Configuration.discussion.secureApiRoot

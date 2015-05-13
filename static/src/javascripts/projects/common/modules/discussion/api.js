@@ -34,21 +34,18 @@ define([
             data.GU_U = cookies.get('GU_U');
         }
 
-        var useProxy = vars.model.switches()['discussionUseApiProxy'];
-
-        console.log("useProxy?" + ((useProxy) ? Api.proxy : Api.root) + endpoint);
-
-        var request = ajax({
-            url: ((useProxy) ? Api.proxy : Api.root) + endpoint,
-            type: (method === 'get') ? 'jsonp' : 'json',
-            method: method,
-            crossOrigin: (useProxy) ? false : true,
-            data: data,
-            headers: {
-                'D2-X-UID': 'zHoBy6HNKsk',
-                'GU-Client': Api.clientHeader
-            }
-        });
+        var useProxy = config.page.switches.discussionUseApiProxy,
+            request = ajax({
+                url: ((useProxy) ? Api.proxy : Api.root) + endpoint,
+                type: (method === 'get') ? 'jsonp' : 'json',
+                method: method,
+                crossOrigin: (useProxy) ? false : true,
+                data: data,
+                headers: {
+                    'D2-X-UID': 'zHoBy6HNKsk',
+                    'GU-Client': Api.clientHeader
+                }
+            });
 
         return request;
     };
