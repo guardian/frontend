@@ -524,11 +524,6 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ElectionSnap = Switch("Feature", "election-snap",
-    "ONLY TOUCH THIS IF YOU KNOW WHAT IT DOES AND IMPLICATIONS: Switch to render a placeholder for the election snap.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
   // A/B Tests
   val ABMtLzAdsDepth = Switch("A/B Tests", "ab-mt-lz-ads-depth", "Depth for lazy loaded ads.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
