@@ -5,8 +5,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/navigation/sticky-nav',
-    'common/modules/onward/geo-most-popular'
+    'common/modules/navigation/sticky-nav'
 ], function (
     fastdom,
     $,
@@ -14,8 +13,7 @@ define([
     config,
     detect,
     mediator,
-    stickyNav,
-    geoMostPopular
+    stickyNav
 ) {
     return function () {
         this.id = 'MtRec1';
