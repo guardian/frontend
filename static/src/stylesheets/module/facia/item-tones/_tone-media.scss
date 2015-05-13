@@ -24,6 +24,10 @@
         fill: colour(media-default);
     }
 
+    .inline-quote {
+        fill: colour(neutral-3);
+    }
+
     .fc-item__container:before,
     .rich-link__container:before {
         background-color: colour(media-default);
