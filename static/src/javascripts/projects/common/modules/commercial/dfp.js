@@ -193,18 +193,6 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
-        lzAdsTestVariants = {
-            'A': 1 / 4,
-            'B': 1 / 2,
-            'C': 3 / 4,
-            'D': 1
-        },
-
-        isLzAdsTest = function () {
-            var test = ab.getParticipations().MtLzAdsDepth;
-            return test && ab.testCanBeRun('MtLzAdsDepth') && _.contains(_.keys(lzAdsTestVariants), test.variant);
-        },
-
         isLzAdsSwitchOn = function () {
             return config.switches.lzAds;
         },
@@ -240,7 +228,7 @@ define([
             window.googletag.cmd.push(defineSlots);
 
             // We want to run lazy load if user is in the depth test, main test user group or if there is a switch on
-            (isLzAdsTest() || isMtRec1Test() || isLzAdsSwitchOn() || isDeferSpaceFinderTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            (isMtRec1Test() || isLzAdsSwitchOn() || isDeferSpaceFinderTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
@@ -255,11 +243,7 @@ define([
                         scrollBottom = scrollTop + bonzo.viewport().height,
                         depth;
 
-                    // For depth test we want depth based on variant but for main test we want default depth
-                    // TODO: this will be removed after tests will finish
-                    if (isLzAdsTest()) {
-                        depth = lzAdsTestVariants[ab.getParticipations().MtLzAdsDepth.variant];
-                    } else if (isDeferSpaceFinderTest()) {
+                    if (isDeferSpaceFinderTest()) {
                         depth = 100;
                     } else {
                         depth = 0.5;
