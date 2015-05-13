@@ -5,9 +5,8 @@
 GET           /_healthcheck              controllers.HealthCheck.healthcheck()
 
 # authentication endpoints
-GET           /login                     controllers.OAuthLoginController.login
-POST          /login                     controllers.OAuthLoginController.loginAction
-GET           /oauth2callback            controllers.OAuthLoginController.oauth2Callback
+GET           /authError                 controllers.OAuthLoginController.authError(message:String)
+GET           /oauthCallback            controllers.OAuthLoginController.oauthCallback
 GET           /logout                    controllers.OAuthLoginController.logout
 
 # static files

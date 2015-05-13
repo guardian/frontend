@@ -15,7 +15,7 @@ object ExpiringActions extends implicits.Dates with implicits.Requests with Exec
   object AuthActions extends Actions {
     override def authConfig: GoogleAuthConfig = conf.GoogleAuth.getConfigOrDie
 
-    val loginTarget: Call = routes.OAuthLoginController.login()
+    val loginTarget: Call = routes.OAuthLoginController.oauthCallback()
 
     override def sendForAuth[A](request:RequestHeader): Result =
       if (request.isXmlHttpRequest)

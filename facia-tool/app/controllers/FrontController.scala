@@ -6,8 +6,8 @@ import services.PressAndNotify
 import util.Requests._
 import play.api.libs.json.Json
 import config.UpdateManager
-import com.gu.googleauth.UserIdentity
-import auth.ExpiringActions
+import com.gu.pandomainauth.model.User
+
 
 object CreateFront {
   implicit val jsonFormat = Json.format[CreateFront].filter(_.id.matches("""^[a-z0-9\/\-+]*$"""))
@@ -29,11 +29,11 @@ case class CreateFront(
   initialCollection: CollectionConfigJson
 )
 
-object FrontController extends Controller {
-  def create = ExpiringActions.ExpiringAuthAction { request =>
+object FrontController extends Controller with PanDomainAuthActions {
+  def create = AuthAction { request =>
     request.body.read[CreateFront] match {
       case Some(createFrontRequest) =>
-        val identity = UserIdentity.fromRequest(request).get
+        val identity = request.user
         val newCollectionId = UpdateManager.createFront(createFrontRequest, identity)
         PressAndNotify(Set(newCollectionId))
         Ok
@@ -42,10 +42,10 @@ object FrontController extends Controller {
     }
   }
 
-  def update(frontId: String) = ExpiringActions.ExpiringAuthAction { request =>
+  def update(frontId: String) = AuthAction { request =>
     request.body.read[FrontJson] match {
       case Some(front) =>
-        val identity = UserIdentity.fromRequest(request).get
+        val identity = request.user
         UpdateManager.updateFront(frontId, front, identity)
         Ok
 
