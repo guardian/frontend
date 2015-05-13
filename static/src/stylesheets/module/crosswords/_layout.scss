@@ -1,4 +1,10 @@
-@each $xword, $size in $xword-native-sizes {
+@function xword-grid-dimensions($cells) {
+    @return $cells * ($xword-cell-width + $xword-border-width) + $xword-border-width;
+}
+
+@each $xword, $cells in $xword-grid-sizes {
+    $size: xword-grid-dimensions($cells);
+
     .crossword__container--#{$xword} {
         @include mq(tablet) {
             padding-left: $size;
@@ -12,11 +18,15 @@
         }
 
         .crossword__controls {
-            width: $size;
-
             @include mq(tablet) {
                 margin-left: 0 - $size;
+                width: $size;
             }
+        }
+
+        .crossword__hidden-input-wrapper {
+            width: percentage(1 / $cells);
+            height: percentage(1 / $cells);
         }
     }
 }
@@ -24,20 +34,6 @@
 
 .crossword__container {
     position: relative;
-}
-
-.crossword__focussed-clue-wrapper {
-    display: none;
-}
-
-.crossword__grid-wrapper {
-    position: relative;
-    height: auto;
-    font-size: 0;
-
-    @include mq(tablet) {
-        float: left;
-    }
 }
 
 .crossword__controls {
