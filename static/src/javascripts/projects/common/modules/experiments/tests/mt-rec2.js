@@ -36,17 +36,15 @@ define([
             return !isIE && isUS;
         };
 
-        this.fireRec1Test = function () {
-            stickyNav.stickySlow.init(2);
-        };
-
         /**
          * nothing happens in here, we just use this to bucket users
          */
         this.variants = [
             {
                 id: 'A',
-                test: function () { }
+                test: function () { 
+                    stickyNav.StickySlowBurger.init();
+                }
             },
             {
                 id: 'B',
