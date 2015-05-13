@@ -47,8 +47,6 @@ object BookFinder extends ExecutionContexts with Logging {
           cache.add(isbn, JsNull)
           None
         }
-      } recover {
-        case NonFatal(e) => None
       }
     }
 
