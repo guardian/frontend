@@ -243,10 +243,6 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val AmaaSwitch = Switch("Commercial", "amaa",
-    "AMAA tracking",
-    safeState = Off, sellByDate = never)
-
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
     safeState = Off, sellByDate = never
@@ -261,10 +257,6 @@ object Switches {
     "If this switch is on, Criteo segments will be used to target ads.",
     safeState = Off, sellByDate = never
   )
-
-  val EffectiveMeasureSwitch = Switch("Commercial", "effective-measure",
-    "Enable the Effective Measure audience segment tracking.",
-    safeState = Off, sellByDate = never)
 
   val ImrWorldwideSwitch = Switch("Commercial", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
