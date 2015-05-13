@@ -370,8 +370,8 @@ class Crossword extends React.Component {
                 cell.value = '';
             });
         });
-
         this.forceUpdate();
+        this.save();
     }
 
     hiddenInputValue () {
