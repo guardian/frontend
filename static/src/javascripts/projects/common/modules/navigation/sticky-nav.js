@@ -420,7 +420,9 @@ define([
         this.$els = {};
     }
 
-    StickySlow.prototype.init = function () {
+    StickySlow.prototype.init = function (version) {
+        this.ver = version;
+
         var breakpoint = detect.getBreakpoint();
         fastdom.read(function () {
             this.$els.header                 = $('#header');
