@@ -31,10 +31,9 @@ define([
 
         this.canRun = function () {
             var isIE = detect.getUserAgent.browser === 'MSIE' || detect.getUserAgent === 'IE 11',
-                isUK = config.page.edition === 'UK',
                 isUS = config.page.edition === 'US';
 
-            return !isIE && (isUK || isUS);
+            return !isIE && isUS;
         };
 
         this.fireRec1Test = function () {
