@@ -1,4 +1,5 @@
 import Injector from 'helpers/injector';
+import ophan from 'ophan/ng';
 
 describe('Build Page Targeting', function () {
 
@@ -84,7 +85,7 @@ describe('Build Page Targeting', function () {
     });
 
     it('should build correct page targeting', function () {
-        var pageTargeting = buildPageTargeting();
+        var pageTargeting = buildPageTargeting(ophan);
 
         expect(pageTargeting.edition).toBe('us');
         expect(pageTargeting.ct).toBe('video');
@@ -94,6 +95,7 @@ describe('Build Page Targeting', function () {
         expect(pageTargeting.at).toBe('ng101');
         expect(pageTargeting.gdncrm).toEqual(['seg1', 'seg2']);
         expect(pageTargeting.co).toEqual(['gabrielle-chan']);
+        expect(pageTargeting.o).toEqual('123456');
         expect(pageTargeting.bl).toEqual(['blog']);
         expect(pageTargeting.ms).toBe('itn');
         expect(pageTargeting.tn).toEqual(['advertisement-features', 'news']);
