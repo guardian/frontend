@@ -78,7 +78,7 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                if (isMainTest() && $adSlot.hasClass('ad-slot--right')) {
+                if (isMtRec1Test() && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         new StickyMpu($adSlot).create();
                     }
@@ -103,10 +103,10 @@ define([
             }
         },
 
-        isMainTest = function () {
-            var MtMainTest = ab.getParticipations().MtMain;
+        isMtRec1Test = function () {
+            var MtRec1Test = ab.getParticipations().MtRec1;
 
-            return ab.testCanBeRun('MtMain') && MtMainTest && MtMainTest.variant === 'A';
+            return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A';
         },
 
         recordFirstAdRendered = _.once(function () {
@@ -125,7 +125,17 @@ define([
             }));
         },
         setPageTargeting = function () {
-            _.forOwn(buildPageTargeting(), function (value, key) {
+            if (config.switches.ophan && config.switches.ophanViewId) {
+                require(['ophan/ng'], function (ophan) {
+                    setTargets({viewId: ophan.viewId});
+                });
+            } else {
+                setTargets();
+            }
+        },
+
+        setTargets =  function (opts) {
+            _.forOwn(buildPageTargeting(opts), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
@@ -210,7 +220,6 @@ define([
          * Public functions
          */
         init = function (options) {
-
             var opts = _.defaults(options || {}, {
                 resizeTimeout: 2000
             });
@@ -231,7 +240,7 @@ define([
             window.googletag.cmd.push(defineSlots);
 
             // We want to run lazy load if user is in the depth test, main test user group or if there is a switch on
-            (isLzAdsTest() || isMainTest() || isLzAdsSwitchOn() || isDeferSpaceFinderTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            (isLzAdsTest() || isMtRec1Test() || isLzAdsSwitchOn() || isDeferSpaceFinderTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 

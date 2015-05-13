@@ -191,6 +191,13 @@ object Switches {
   )
 
   // Commercial
+  val OphanViewIdSwitch = Switch("Commercial",
+    "ophan-view-id",
+    "Depeneding on ophan to pass view ID to the gdf targeting",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 5, 31)
+  )
+
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
@@ -453,11 +460,6 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val FacebookAppLinksSwitch = Switch("Feature", "facebook-applinks",
-    "If this switch is on then shared links on the facebook mobile app will be opened in the native app instead of the mobile browser",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 13)
-  )
-
   val IdentityFormstackSwitch = Switch("Feature", "id-formstack",
     "If this switch is on, formstack forms will be available",
     safeState = Off, sellByDate = never
@@ -545,8 +547,8 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ABMtMain = Switch("A/B Tests", "ab-mt-main",
-    "Sticky navigation behind the ad with burger version - with sticky MPU and lazy loading.",
+  val ABMtRec1 = Switch("A/B Tests", "ab-mt-rec1",
+    "Viewability results - Recommendation option 1",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
   )
 

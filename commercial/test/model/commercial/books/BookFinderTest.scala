@@ -60,12 +60,52 @@ class BookFinderTest extends FlatSpec with Matchers with ScalaFutures {
       ".net/media/catalog/product/cache/0/image/17f82f742ffe127f42dca9de82fb58b1/c/a" +
       "/cameron_s_coup.jpg\"],\"product_url\":\"http://bookshop.theguardian.com/index" +
       ".php/cameron-s-coup.html\",\"regular_price_with_tax\":\"9.9900\"," +
-      "\"regular_price_without_tax\":\"9.9900\",\"final_price_with_tax\":7.992," +
+      "\"regular_price_without_tax\":\"9.9900\",\"final_price_with_tax\":\"7.992\"," +
       "\"final_price_without_tax\":7.992}")
+
+  private val book2 = Book(
+    title = "Keeping an Eye Open",
+    author = Some("Julian Barnes"),
+    isbn = "9780224102018",
+    price = Some(16.99),
+    offerPrice = Some(12.74),
+    jacketUrl = Some("http://d935jy3y59lth.cloudfront.net/media/catalog/product/cache/0/image/17f82f742ffe127f42dca9de82fb58b1/media2/4dbb699a196cbbbe5edf8e89b73025e1.jpg"),
+    buyUrl = Some("http://bookshop.theguardian.com/index.php/catalog/product/view/id/283525/s/keeping-an-eye-open/"),
+    position = Some(49),
+    category = Some("Arts, Crafts & Photography")
+  )
+
+  private val book2Json = Json.parse(
+    "{\"sku\":\"9780224102018\",\"isbn\":\"9780224102018\",\"name\":\"Keeping an Eye Open\"," +
+      "\"author_firstname\":\"Julian\",\"author_lastname\":\"Barnes\",\"bestseller_rank\":\"142" +
+      ".0000\",\"guardian_bestseller_rank\":\"49.0000\",\"categories\":[{\"name\":\"Arts, Crafts " +
+      "& Photography\",\"bic\":\"A, AB, ABA, ABC, ABG, ABK, ABN, ABV, AC, ACB, ACC, ACG, ACK, " +
+      "ACN, ACQ, ACV, ACX, AF, AFC, AFF, AFH, AFJ, AFK, AFP\"},{\"name\":\"History of Art\"," +
+      "\"bic\":\"AC,ACB,ACC,ACG,ACK,ACKD,ACKM,ACKM1,ACKM2,ACN,ACND,ACND1,ACND2,ACNH,ACQ,ACQB," +
+      "ACQD,ACQH,ACQH1,ACQH2,ACV,ACVB,ACVC,ACVF,ACVG,ACVJ,ACVK,ACVM,ACVR,ACVS,ACVY,ACX,ACXA," +
+      "ACXA1,ACXA2,ACXA3,ACXA4,ACXA5,ACXG,ACXG2,ACXG4,ACXG6,ACXJ,ACXR2,ACXR4,ACXR6,AFZS4," +
+      "AFZS6\"},{\"name\":\"Reference\",\"bic\":\"CF,DB,DN,DS,CG,CJ,CD,CTB,CTK,E,GB,VSC,VSK,VSW," +
+      "KNT,GRB,VFS,GT,GZ,VSG,BGH,BGHAA,BGL,C,CF,CFA,CFB,CFD,CFDC,CFDM,CFF,CFFB,CFFG,CFFJ,CFFM," +
+      "CFG,CFGB,CFGD,CFGF,CFGH,CFGJ,CFGL,CFH,CFK,CFKM,CFL,CFLA,CFP,CFPH,CFT,CFX,CFZ,CG,CGD,CGDX," +
+      "CGF,CGL,CGU,CGV,CGW,CGWJ,CGWT,CJ,\"},{\"name\":\"Language & Literature\",\"bic\":\"CF,DNF," +
+      "DS,CG,CJ,CD,CTB,CTK,E,GBCQ,CF,CFA,CFB,CFD,CFDC,CFDM,CFF,CFFB,CFFG,CFFJ,CFFM,CFG,CFGB,CFGD," +
+      "CFGF,CFGH,CFGJ,CFGL,CFH,CFK,CFKM,CFL,CFLA,CFP,CFPH,CFT,CFX,CFZ,CG,CGD,CGDX,CGF,CGL,CGV," +
+      "CGW,CGWT,CJ,CJA,CJB,CJBG,CJBR,CJBT,CJBV,CJBX,CJBZ,CJC,CJCK,CJCK1,CJCL,C\"}," +
+      "{\"name\":\"Guardian and Observer book reviews\",\"bic\":null},{\"name\":\"Independents\"," +
+      "\"bic\":null},{\"name\":\"May book reviews\",\"bic\":null},{\"name\":\"The weekend's " +
+      "reviews\",\"bic\":null},{\"name\":\"The weekend's reviews\",\"bic\":null}]," +
+      "\"images\":[\"http://d935jy3y59lth.cloudfront" +
+      ".net/media/catalog/product/cache/0/image/17f82f742ffe127f42dca9de82fb58b1/media2" +
+      "/4dbb699a196cbbbe5edf8e89b73025e1.jpg\"],\"product_url\":\"http://bookshop.theguardian" +
+      ".com/index.php/catalog/product/view/id/283525/s/keeping-an-eye-open/\"," +
+      "\"regular_price_with_tax\":\"16.9900\",\"regular_price_without_tax\":\"16.9900\"," +
+      "\"final_price_with_tax\":\"12.7400\",\"final_price_without_tax\":\"12.7400\"}"
+  )
 
   private def populatedCache: BookDataCache = {
     TestCache(mutable.Map(
       "9781783350438" -> bookJson,
+      "9780224102018" -> book2Json,
       "12345" -> JsNull
     ))
   }
@@ -77,14 +117,17 @@ class BookFinderTest extends FlatSpec with Matchers with ScalaFutures {
   private def testLookup(isbn: String): Future[Option[JsValue]] = {
     isbn match {
       case "9781783350438" => Future.successful(Some(bookJson))
+      case "9780224102018" => Future.successful(Some(book2Json))
       case "12345" => Future.successful(None)
       case _ => Future.failed(new RuntimeException)
     }
   }
 
   "findByIsbn" should "give some book when it's in cache" in {
-    val result = BookFinder.findByIsbn("9781783350438", populatedCache, testLookup)
-    result.futureValue should be(Some(book))
+    def bookFromIsbn(isbn: String): Future[Option[Book]] =
+      BookFinder.findByIsbn(isbn, populatedCache, testLookup)
+    bookFromIsbn("9781783350438").futureValue should be(Some(book))
+    bookFromIsbn("9780224102018").futureValue should be(Some(book2))
   }
 
   it should "give none when it's stored as not-found in cache" in {
