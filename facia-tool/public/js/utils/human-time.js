@@ -1,37 +1,33 @@
-define([
-    'underscore'
-], function (
-    _
-) {
-    return function(date) {
-        var periods = [
-                { secs: 30758400, unit: 'year'},
-                { secs: 2563200, unit: 'month'},
-                { secs: 86400, unit: 'day'},
-                { secs: 3600, unit: 'hour'},
-                { secs: 60, unit: 'min'}
-            ],
-            period,
-            elapsed,
-            abs,
-            units,
-            str;
+import _ from 'underscore';
 
-        if (!date) { return; }
+export default function(date) {
+    var periods = [
+            { secs: 30758400, unit: 'year'},
+            { secs: 2563200, unit: 'month'},
+            { secs: 86400, unit: 'day'},
+            { secs: 3600, unit: 'hour'},
+            { secs: 60, unit: 'min'}
+        ],
+        period,
+        elapsed,
+        abs,
+        units,
+        str;
 
-        elapsed = (new Date() - new Date(date))/1000;
+    if (!date) { return; }
 
-        abs = Math.abs(elapsed);
+    elapsed = (new Date() - new Date(date))/1000;
 
-        period = _.find(periods, function(period) { return abs >= period.secs; });
+    abs = Math.abs(elapsed);
 
-        units = period ? Math.round(abs/period.secs) : null;
+    period = _.find(periods, function(period) { return abs >= period.secs; });
 
-        if (period) {
-            str = units + ' ' + period.unit + (units !== 1 ? 's' : '');
-            return elapsed < abs ? 'in ' + str : str + ' ago';
-        } else {
-            return 'just now';
-        }
-    };
-});
+    units = period ? Math.round(abs/period.secs) : null;
+
+    if (period) {
+        str = units + ' ' + period.unit + (units !== 1 ? 's' : '');
+        return elapsed < abs ? 'in ' + str : str + ' ago';
+    } else {
+        return 'just now';
+    }
+}

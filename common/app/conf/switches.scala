@@ -644,11 +644,6 @@ object Switches {
     )
   }
 
-  val ABFaciaSlideshow = Switch("A/B Tests", "ab-facia-slideshow",
-    "Switch for the facia slideshow A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
-  )
-
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
     safeState = Off, sellByDate = never)
