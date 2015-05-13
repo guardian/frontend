@@ -525,10 +525,6 @@ object Switches {
   )
 
   // A/B Tests
-  val ABMtLzAdsDepth = Switch("A/B Tests", "ab-mt-lz-ads-depth", "Depth for lazy loaded ads.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
@@ -537,38 +533,6 @@ object Switches {
   val ABMtRec1 = Switch("A/B Tests", "ab-mt-rec1",
     "Viewability results - Recommendation option 1",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
-  )
-
-  val ABMtStNav = Switch(
-    "A/B Tests",
-    "ab-mt-st-nav",
-    "Testing sticky nav with sticky banner and nav going to slim version",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
-  )
-
-  val ABMtTopBelowNav = Switch("A/B Tests", "ab-mt-top-below-nav",
-    "Top above nav ad placed below nav.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 17)
-  )
-
-  val ABMtTopBelowFirstContainer = Switch("A/B Tests", "ab-mt-top-below-first-container",
-    "Top above nav ad placed below first container.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 18)
-  )
-
-  val ABMtDepth = Switch("A/B Tests", "ab-mt-depth",
-    "Top navigation and top ad slot are sticky with different variants of depth.",
-    safeState = Off, sellByDate = new LocalDate(2015, 6, 6)
-  )
-
-  val ABMtStickyBurger = Switch("A/B Tests", "ab-mt-sticky-burger",
-    "Sticky top banner with navigation - variant 1. with the burger icon.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
-  )
-
-  val ABMtStickyBtm = Switch("A/B Tests", "ab-mt-sticky-btm",
-    "Top ad slot is sticky at the bottom of page.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
   )
 
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
@@ -594,33 +558,6 @@ object Switches {
   val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",
     "Switch for removing the whitelist from the user history tags",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
-  )
-
-  val ABMtStAllUxSwitch = Switch(
-    "A/B Tests",
-    "ab-mt-st-all-ux",
-    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
-  val ABMtStBurgerUxSwitch = Switch(
-    "A/B Tests",
-    "ab-mt-st-burger-ux",
-    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
-  val ABMtStBurgerNtUxSwitch = Switch("A/B Tests",
-    "ab-mt-st-burger-nt-ux",
-    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold A.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
-  val ABMtStAllNtUxSwitch = Switch(
-    "A/B Tests",
-    "ab-mt-st-all-nt-ux",
-    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold B.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>
