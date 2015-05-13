@@ -184,4 +184,18 @@ describe('Get user data', function () {
         expect(Id.shouldAutoSigninInUser()).toBe(false);
     });
 
+    it('shouldRefreshCookies should return true for a user who has never refreshed cookies', function () {
+        expect(Id.shouldRefreshCookie(null)).toBe(true);
+    });
+
+    it('shouldRefreshCookies should return false for a user who has not refreshed within 30 days', function () {
+        var time = (new Date().getDate() - 31).getTime()
+        expect(Id.shouldRefreshCookie(null)).toBe(false);
+    });
+
+    it('shouldRefreshCookies should return false for a user who has refreshed within 30 days', function () {
+        var time = (new Date().getDate() - 1).getTime()
+        expect(Id.shouldRefreshCookie(null)).toBe(false);
+    });
+
 });
