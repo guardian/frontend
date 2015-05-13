@@ -499,7 +499,7 @@ object Switches {
 
   val QuizScoresService = Switch("Feature", "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 16))
+    safeState = Off, sellByDate = new LocalDate(2015, 8, 16))
 
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
     "If switched on, any user registrations from a known tor esit node will be logged",
