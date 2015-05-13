@@ -40,17 +40,6 @@ define([
         };
 
         this.fireRec1Test = function () {
-            var $secondaryColumn = $('.js-secondary-column');
-
-            geoMostPopular.whenRendered.then(function () {
-                fastdom.write(function () {
-                    var $rightMostPopular = $('.js-right-most-popular');
-                    $('.js-mpu-ad-slot', $secondaryColumn).insertAfter($rightMostPopular);
-                    $rightMostPopular.css('margin-top', '0');
-                    $('.component--rhc .open-cta', $secondaryColumn).css('margin-top', '0');
-                });
-            });
-
             stickyNav.stickySlow.init();
         };
 
