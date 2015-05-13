@@ -680,6 +680,15 @@
     box-sizing: border-box;
 }
 
+.meta__social--sticky {
+    position: fixed;
+    bottom: 0;
+    border: 0;
+    z-index: 999;
+    background: rgba(254, 254, 254, .6);
+    width: 100%;
+}
+
 .meta__twitter,
 .meta__email {
     margin: (-$gs-baseline*2/3) ($gs-gutter/4) (-$gs-baseline/6) 0;

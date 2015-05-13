@@ -14,6 +14,7 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
     'common/modules/ui/rhc',
+    'common/modules/ui/sticky-social',
     'common/modules/ui/selection-sharing'
 ], function (
     fence,
@@ -31,6 +32,7 @@ define([
     geoMostPopular,
     OpenCta,
     rhc,
+    stickySocial,
     selectionSharing
 ) {
 
@@ -96,6 +98,7 @@ define([
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
             openModule.init();
+            stickySocial.init();
 
             mediator.emit('page:article:ready');
         };
