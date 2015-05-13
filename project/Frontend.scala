@@ -180,7 +180,7 @@ object Frontend extends Build with Prototypes {
     routesImport += "scala.language.reflectiveCalls"
   )
 
-  val training = application("training").dependsOn(withTests(common), standalone).settings(
+  val trainingPreview = application("training-preview").dependsOn(withTests(common), standalone).settings(
     routesImport += "scala.language.reflectiveCalls"
   )
 
@@ -218,7 +218,7 @@ object Frontend extends Build with Prototypes {
     onward,
     archive,
     preview,
-    training,
+    trainingPreview,
     rss,
     weather
   )

@@ -5,7 +5,6 @@ define([
     'utils/array',
     'utils/internal-content-code',
     'utils/parse-query-params',
-    'utils/query-params',
     'utils/url-abs-path',
     'models/collections/article',
     'modules/auto-complete',
@@ -19,7 +18,6 @@ define([
     array,
     internalContentCode,
     parseQueryParams,
-    queryParams,
     urlAbsPath,
     Article,
     autoComplete,
@@ -27,6 +25,9 @@ define([
     contentApi,
     ko
 ) {
+    parseQueryParams = parseQueryParams.default;
+    internalContentCode = internalContentCode.default;
+    urlAbsPath = urlAbsPath.default;
 
     return function(options) {
 
@@ -42,7 +43,7 @@ define([
         this.articles = ko.observableArray();
         this.message = ko.observable();
 
-        this.term = ko.observable(queryParams().q || '');
+        this.term = ko.observable(parseQueryParams().q || '');
         this.term.subscribe(function() { self.search(); });
         this.isTermAnItem = function() { return (self.term() || '').match(/\//); };
 

@@ -453,11 +453,6 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val FacebookAppLinksSwitch = Switch("Feature", "facebook-applinks",
-    "If this switch is on then shared links on the facebook mobile app will be opened in the native app instead of the mobile browser",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 13)
-  )
-
   val IdentityFormstackSwitch = Switch("Feature", "id-formstack",
     "If this switch is on, formstack forms will be available",
     safeState = Off, sellByDate = never
@@ -643,11 +638,6 @@ object Switches {
       sellByDate = new LocalDate(2015, 6, 10)
     )
   }
-
-  val ABFaciaSlideshow = Switch("A/B Tests", "ab-facia-slideshow",
-    "Switch for the facia slideshow A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
-  )
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
