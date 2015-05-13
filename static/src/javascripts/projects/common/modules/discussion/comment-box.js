@@ -254,21 +254,22 @@ CommentBox.prototype.error = function(type, message) {
 
     if (type === 'HTTP_0') {
         beacon.counts('comment-http-proxy-error', 'comment-error');
+        bean.off(this.getElem('submit'), 'click');
+        bean.fire(this.getElem('submit'), 'click');
     } else {
         beacon.counts('comment-error');
-    }
+        message = message || this.errorMessages[type];
 
-    message = message || this.errorMessages[type];
-
-    this.setState('invalid');
-    var error = bonzo.create(
-        '<div class="d-discussion__error '+ this.getClass('error', true) +'">'+
+        this.setState('invalid');
+        var error = bonzo.create(
+            '<div class="d-discussion__error '+ this.getClass('error', true) +'">'+
             '<i class="i i-alert"></i>'+
             '<span class="d-discussion__error-text">'+ message +'</span>'+
-        '</div>'
-    )[0];
-    this.getElem('messages').appendChild(error);
-    this.errors.push(type);
+            '</div>'
+        )[0];
+        this.getElem('messages').appendChild(error);
+        this.errors.push(type);
+    }
 };
 
 /**
