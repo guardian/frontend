@@ -86,7 +86,7 @@ object MagentoService extends Logging {
   private final val circuitBreaker = new CircuitBreaker(
     scheduler = Akka.system.scheduler,
     maxFailures = 10,
-    callTimeout = 2.seconds,
+    callTimeout = 5.seconds,
     resetTimeout = 1.minute
   )
 
