@@ -540,8 +540,8 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ABMtMain = Switch("A/B Tests", "ab-mt-main",
-    "Sticky navigation behind the ad with burger version - with sticky MPU and lazy loading.",
+  val ABMtRec1 = Switch("A/B Tests", "ab-mt-rec1",
+    "Viewability results - Recommendation option 1",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
   )
 

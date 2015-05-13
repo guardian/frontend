@@ -444,11 +444,11 @@ define([
 
             runCustomAbTests: function () {
                 var stickyTest = ab.getTest('MtStickyBtm'),
-                    mainTest = ab.getTest('MtMain');
+                    rec1Test = ab.getTest('MtRec1');
 
-                if (mainTest && ab.isParticipating(mainTest) && ab.getTestVariant('MtMain') === 'A'
-                    && ab.testCanBeRun('MtMain')) {
-                    mainTest.fireMainTest();
+                if (rec1Test && ab.isParticipating(rec1Test) && ab.getTestVariant('MtRec1') === 'A'
+                    && ab.testCanBeRun('MtRec1')) {
+                    rec1Test.fireRec1Test();
                 }
                 if (stickyTest && ab.isParticipating(stickyTest) && ab.getTestVariant('MtStickyBtm') === 'A'
                     && ab.testCanBeRun('MtStickyBtm')) {
