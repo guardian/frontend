@@ -40,8 +40,6 @@ define([
     }
 
     function determineStickiness() {
-        console.log(11111111);
-
         if (failed) {
             return;
 
