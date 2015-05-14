@@ -32,7 +32,7 @@ define([
         this.canRun = function () {
             var isIE = detect.getUserAgent.browser === 'MSIE' || detect.getUserAgent === 'IE 11';
 
-            return !isIE && _.contains(['UK','US'], config.page.edition);
+            return !isIE && _.contains(['UK', 'US'], config.page.edition);
         };
 
         this.fireRec1Test = function () {
