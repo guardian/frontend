@@ -82,10 +82,10 @@ define([
 
                 var updateState = function (options) {
                     if (options.pushEnabled) {
-                        pushButton.textContent = 'Disable Push Messages';
+                        pushButton.textContent = 'Disable';
                         isPushEnabled = true;
                     } else {
-                        pushButton.textContent = 'Enable Push Messages';
+                        pushButton.textContent = 'Enable';
                         isPushEnabled = false;
                     }
                 };
