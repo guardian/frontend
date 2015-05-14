@@ -31,10 +31,10 @@ define([
                 failed = true;
 
             } else if (topEl.getBoundingClientRect().top + deadzone < 0) {
-                setTimeout(reveal);
+                reveal();
 
             } else {
-                setTimeout(unreveal);
+                unreveal();
             }
         });
     }
@@ -50,7 +50,7 @@ define([
                 if (bottomEl) {
                     fastdom.write(function () {
                         bottomEl.addClass(stickyClassName);
-                        setTimeout(makeRevealable);
+                        makeRevealable();
                     });
                 } else {
                     failed = true;
