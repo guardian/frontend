@@ -5,7 +5,9 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/mediator',
+    'common/utils/template',
     'common/modules/identity/api',
+    'common/views/svgs',
     'text!common/views/loyalty/save-for-later.html'
 ], function (
     qwery,
@@ -14,7 +16,9 @@ define([
     _,
     config,
     mediator,
+    template,
     identity,
+    svgs,
     saveForLaterTmpl
 ) {
     function SaveForLater() {
@@ -26,6 +30,8 @@ define([
         this.shortUrl = config.page.shortUrl.replace('http://gu.com', '');   //  Keep the fitst trailing slash
     }
 
+    var bookmarkSvg = svgs('bookmark');
+
     SaveForLater.prototype.init = function () {
         if (identity.isUserLoggedIn()) {
             this.getSavedArticles();
@@ -33,7 +39,11 @@ define([
             var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
                 '&shortUrl=' + this.shortUrl;
             this.$saver.html(
-                saveForLaterTmpl.replace(new RegExp('{{url}}', 'g'), url));
+                template(saveForLaterTmpl, {
+                    url: url,
+                    icon: bookmarkSvg
+                })
+            );
         }
     };
 
