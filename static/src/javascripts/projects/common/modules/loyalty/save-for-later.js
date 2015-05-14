@@ -1,22 +1,32 @@
 define([
-    'qwery',
-    'bonzo',
     'bean',
+    'bonzo',
+    'qwery',
+
     'common/utils/_',
     'common/utils/config',
     'common/utils/mediator',
+
     'common/modules/identity/api'
 ], function (
-    qwery,
-    bonzo,
     bean,
-    _,
+    bonzo,
+    qwery,
+
+     _,
     config,
     mediator,
+
     identity
+
 ) {
+    var $ = function $(selector, context) {
+        return bonzo(qwery(selector, context));
+    };
+
     function SaveForLater() {
         this.saveLinkHolder = qwery('.meta__save-for-later')[0];
+        this.saveForLaterProfileLink = null;
         this.userData = null;
         this.pageId = config.page.pageId;
         this.$saver = bonzo(this.saveLinkHolder);
@@ -57,8 +67,15 @@ define([
                     self.$saver.html('<a class="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>');
                     bean.on(self.saveLinkHolder, 'click', '.meta__save-for-later--link', self.saveArticle.bind(self));
                 }
+                self.updateNumArticles();
             }
         );
+    };
+
+    SaveForLater.prototype.updateNumArticles = function () {
+        var self = this,
+            saveForLaterProfileLink = $('.brand-bar__item--saved-for-later');
+        saveForLaterProfileLink.text('Saved articles(' + self.userData.articles.length + ')');
     };
 
     SaveForLater.prototype.hasUserSavedArticle = function (articles, shortUrl) {
@@ -82,6 +99,7 @@ define([
                 } else {
                     bean.off(qwery('.meta__save-for-later--link', self.saveLinkHolder)[0], 'click', self.saveArticle);
                     self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
+                    self.updateNumArticles();
                 }
             }
         );
