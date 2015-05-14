@@ -532,7 +532,7 @@ object Switches {
   // A/B Tests
   val ABStickyShares = Switch("A/B Tests", "ab-sticky-shares",
     "Switch sticky share buttons on articles",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 28)
+    safeState = On, sellByDate = new LocalDate(2015, 5, 28)
   )
 
   val ABMtLzAdsDepth = Switch("A/B Tests", "ab-mt-lz-ads-depth", "Depth for lazy loaded ads.",

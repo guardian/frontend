@@ -1,8 +1,10 @@
 define([
+    'fastdom',
     'common/utils/$',
     'common/utils/_',
     'common/utils/mediator'
 ], function (
+    fastdom,
     $,
     _,
     mediator
@@ -13,35 +15,52 @@ define([
         stickyClassName = 'meta__social--sticky',
         stickyRevealClassName = 'meta__social--sticky--reveal',
         stickyRevealableClassName = 'meta__social--sticky--revealable',
+
         deadzone = 100,
+
         topEl,
         bottomEl,
         revealed = false,
         failed = false;
 
-    function getTopPosition() {
-        topEl = topEl || $(selectorTopEl)[0];
-        return topEl ? topEl.getBoundingClientRect().top + deadzone : 0;
+    function setStickiness() {
+        fastdom.read(function () {
+            topEl = topEl || $(selectorTopEl)[0];
+
+            if (!topEl) {
+                failed = true;
+
+            } else if (topEl.getBoundingClientRect().top + deadzone < 0) {
+                setTimeout(reveal);
+
+            } else {
+                setTimeout(unreveal);
+            }
+        });
     }
 
-    function setBottomPosition() {
+    function determineStickiness() {
+        console.log(11111111);
+
         if (failed) {
             return;
 
         } else if (!bottomEl) {
-            bottomEl = $(selectorBottomEl);
-            if (bottomEl) {
-                bottomEl.addClass(stickyClassName);
-                setTimeout(makeRevealable);
-            } else {
-                failed = true;
-            }
+            fastdom.read(function () {
+                bottomEl = $(selectorBottomEl);
 
-        } else if (getTopPosition() < 0) {
-            setTimeout(reveal);
+                if (bottomEl) {
+                    fastdom.write(function () {
+                        bottomEl.addClass(stickyClassName);
+                        setTimeout(makeRevealable);
+                    });
+                } else {
+                    failed = true;
+                }
+            });
 
         } else {
-            setTimeout(unreveal);
+            setStickiness();
         }
     }
 
@@ -51,20 +70,21 @@ define([
 
     function reveal() {
         if (!revealed) {
-            bottomEl.addClass(stickyRevealClassName);
             revealed = true;
+            fastdom.write(function () { bottomEl.addClass(stickyRevealClassName); });
         }
     }
 
     function unreveal() {
         if (revealed) {
-            bottomEl.removeClass(stickyRevealClassName);
             revealed = false;
+            fastdom.write(function () { bottomEl.removeClass(stickyRevealClassName); });
         }
     }
 
     function init() {
-        mediator.on('window:scroll', _.throttle(setBottomPosition, 10));
+        determineStickiness();
+        mediator.on('window:scroll', _.throttle(determineStickiness, 10));
     }
 
     return {
