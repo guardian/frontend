@@ -36,7 +36,7 @@ define([
             return !isIE && isUS;
         };
 
-        this.fireRec1Test = function () {
+        this.fireRecTest = function () {
             stickyNav.stickySlow.init();
         };
 
