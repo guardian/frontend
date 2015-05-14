@@ -604,11 +604,6 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val SlideshowImages = Switch("Feature", "slideshow-images",
-    "If switched on, slideshows will be displayed on the fronts",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
