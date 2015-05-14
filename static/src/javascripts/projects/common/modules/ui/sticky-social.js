@@ -12,46 +12,51 @@ define([
     mediator
     ) {
 
-    var socialPos,
-        vPosNow = window.scrollY,
-        vPosCache,
-        winHeight,
-        socialsContainer;
+    var selectorTopEl = '.meta__social',
+        selectorBottomEl = '.social--bottom',
+        stickyClassName = 'meta__social--sticky',
+        stickyRevealClassName = 'meta__social--sticky--reveal',
+        deadzone = 50,
 
-    //function getWindowHeight() {
-    //    return window.innerHeight || document.documentElement.clientHeight;
-    //}
+        topEl,
+        bottomEl,
+        revealed = false;
 
-    function getPosition() {
-        socialPos = socialsContainer[0].getBoundingClientRect().top;
+    function reveal() {
+        if (!revealed) {
+            bottomEl.addClass(stickyRevealClassName);
+            revealed = true;
+        }
     }
 
-    function setPosition() {
-        var winBottom;
+    function unreveal() {
+        if (revealed) {
+            bottomEl.removeClass(stickyRevealClassName);
+            revealed = false;
+        }
+    }
 
-        vPosNow = window.scrollY;
+    function getTopPosition() {
+        return topEl.getBoundingClientRect().top;
+    }
 
-        if (vPosCache !== vPosNow) {
-            vPosCache = vPosNow;
-            winBottom = winHeight + vPosNow;
-
-            if (vPosNow < socialPos) {
-                socialsContainer.removeClass('meta__social--sticky');
-            } else {
-                socialsContainer.addClass('meta__social--sticky');
-            }
+    function setBottomPosition() {
+        if (getTopPosition() + deadzone > 0) {
+            setTimeout(unreveal);
+        } else {
+            setTimeout(reveal);
         }
     }
 
     function init() {
         var breakpoint = detect.getBreakpoint(true);
 
-        if (true || breakpoint === 'mobile') {
-            socialsContainer = $('.meta__social');
+        topEl = $(selectorTopEl)[0];
+        bottomEl = $(selectorBottomEl);
 
-            getPosition();
-            setPosition();
-            mediator.on('window:scroll', _.throttle(setPosition, 10));
+        if (topEl && bottomEl /* && breakpoint === 'mobile' */) {
+            bottomEl.addClass(stickyClassName);
+            mediator.on('window:scroll', _.throttle(setBottomPosition, 10));
         }
     }
 

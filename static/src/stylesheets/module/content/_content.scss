@@ -682,11 +682,15 @@
 
 .meta__social--sticky {
     position: fixed;
-    bottom: 0;
+    bottom: 4px;
     border: 0;
     z-index: 999;
-    background: rgba(254, 254, 254, .6);
-    width: 100%;
+    transition: transform 100ms linear;
+    transform: translate3d(0, 40px, 0);
+}
+
+.meta__social--sticky--reveal {
+    transform: translate3d(0, 0, 0);
 }
 
 .meta__twitter,
