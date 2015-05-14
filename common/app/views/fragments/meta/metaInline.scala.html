@@ -1,28 +1,15 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
 @import common.{LinkTo, Localisation}
-@import conf.Switches.ElectionLiveBadgeSwitch
-
-@defining(
-    ElectionLiveBadgeSwitch.isSwitchedOn &&
-    content.tags.exists(_.id == "politics/general-election-2015") &&
-    !(content.isSponsored(Some(Edition(request))) ||
-        content.isAdvertisementFeature ||
-        content.isFoundationSupported)
-) { electionBadgingEnabled =>
 
     <div class="content__labels">
 
-        @if(electionBadgingEnabled) {
-            @fragments.meta.pseudoBadge()
-        }
-
-    <div class="content__section-label@if(electionBadgingEnabled) { content__section-label--election}">
-        <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@content.sectionLabelLink}">@Html(Localisation(content.sectionLabelName))</a>
-    </div>
+        <div class="content__section-label">
+            <a class="content__section-label__link" data-link-name="article section" href="@LinkTo {/@content.sectionLabelLink}">@Html(Localisation(content.sectionLabelName))</a>
+        </div>
 
         @content.blogOrSeriesTag.map { series =>
-        <div class="content__series-label @if(electionBadgingEnabled) { content__series-label--election}">
+        <div class="content__series-label">
             <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
         </div>
         }.getOrElse {
@@ -33,4 +20,3 @@
             }
         }
     </div>
-}
