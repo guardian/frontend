@@ -237,7 +237,8 @@ object FaciaCard {
       MediaType.fromTrail(trail),
       DisplaySettings.fromTrail(trail),
       trail.isLive,
-      None
+      None,
+      content.map(_.shortUrlPath)
     )
   }
 }
@@ -263,7 +264,8 @@ case class ContentCard(
   mediaType: Option[MediaType],
   displaySettings: DisplaySettings,
   isLive: Boolean,
-  timeStampDisplay: Option[FaciaCardTimestamp]
+  timeStampDisplay: Option[FaciaCardTimestamp],
+  shortUrl: Option[String]
 ) extends FaciaCard {
   def setKicker(kicker: Option[ItemKicker]) = copy(header = header.copy(kicker = kicker))
 

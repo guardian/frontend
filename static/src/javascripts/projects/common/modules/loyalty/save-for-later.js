@@ -36,6 +36,7 @@ define([
         }
     };
 
+    //*
     SaveForLater.prototype.getSavedArticles = function () {
         var self = this,
             notFound  = {message:'Not found', description:'Resource not found'};
@@ -61,12 +62,14 @@ define([
         );
     };
 
+    //*
     SaveForLater.prototype.hasUserSavedArticle = function (articles, shortUrl) {
         return _.some(articles, function (article) {
             return article.shortUrl.indexOf(shortUrl) > -1;
         });
     };
 
+    //*
     SaveForLater.prototype.saveArticle = function () {
         var self = this,
             //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs

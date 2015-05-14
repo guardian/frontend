@@ -14,6 +14,7 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
     val ip = clientIp(request)
     val skipConfirmation = request.getQueryString("skipConfirmation").map(_ == "true")
     val shortUrl = request.getQueryString("shortUrl")
+    val articleId = request.getQueryString("articleId")
     IdentityRequest(
       TrackingData(
         returnUrl,
@@ -26,7 +27,8 @@ class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Re
       returnUrl,
       ip,
       skipConfirmation,
-      shortUrl
+      shortUrl,
+      articleId
     )
   }
 }
@@ -48,4 +50,4 @@ class TorNodeLoggingIdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifi
   }
 }
 
-case class IdentityRequest(trackingData: TrackingData, returnUrl: Option[String], clientIp: Option[String], skipConfirmation: Option[Boolean], shortUrl: Option[String] = None)
+case class IdentityRequest(trackingData: TrackingData, returnUrl: Option[String], clientIp: Option[String], skipConfirmation: Option[Boolean], shortUrl: Option[String] = None, articleId: Option[String] = None)

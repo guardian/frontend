@@ -34,7 +34,9 @@ data-link-name="@item.cardStyle.toneString | @{index + 1}"
     }
 data-item-visibility="@visibilityDataAttribute"
 data-test-id="facia-card"
-    @item.snapStuff.map(_.dataAttributes)>
+    @item.snapStuff.map(_.dataAttributes)
+
+@item.shortUrl.map{ shortUrl => data-loyalty-short-url="@shortUrl"}>
 
     <div class="fc-item__container">
         @if(item.snapStuff.map(_.snapType) == Some(LatestSnap)) {

@@ -6,6 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/loyalty/save-for-later',
+    'common/modules/loyalty/save-content-for-later',
     'text!common/views/identity/saved-for-later-profile-link.html'
 ], function (
     bonzo,
@@ -15,6 +16,7 @@ define([
     mediator,
     template,
     SaveForLater,
+    SaveContentFront,
     profileLinkTmp
 ) {
 
@@ -43,6 +45,11 @@ define([
                     mediator.on('module:identity:api:loaded', function () {
                         if (!/Network Front|Section/.test(config.page.contentType)) {
                             var saveForLater = new SaveForLater();
+                            saveForLater.init();
+                        }
+                        else {
+                            console.log("++ Ab");
+                            var saveForLater = new SaveContentFront();
                             saveForLater.init();
                         }
                     });
