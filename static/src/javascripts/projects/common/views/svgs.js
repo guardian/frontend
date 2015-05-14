@@ -17,7 +17,7 @@ define([
     'inlineSvg!svgs/icon/close-central',
     'inlineSvg!svgs/icon/arrow-white-right',
     'inlineSvg!svgs/icon/arrow-right',
-    'inlineSvg!svgs/icon/bookmark',
+    'inlineSvg!svgs/icon/bookmark'
 ], function (
     _,
     commentCount16icon,
