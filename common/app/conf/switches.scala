@@ -609,6 +609,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
+  val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block",
+    "Switch for the Adblock Message A/B test.",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 28)
+  )
+
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
