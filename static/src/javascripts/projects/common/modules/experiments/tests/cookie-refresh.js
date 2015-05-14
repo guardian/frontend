@@ -36,7 +36,7 @@ define([
 
         this.variants = [
             {
-                id: 'variant',
+                id: 'refresh',
                 test: function () {
                     var identity = new Identity();
                     identity.refreshCookie();
