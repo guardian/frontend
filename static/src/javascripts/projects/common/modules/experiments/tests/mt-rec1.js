@@ -30,10 +30,9 @@ define([
         this.showForSensitive = false;
 
         this.canRun = function () {
-            var isIE = detect.getUserAgent.browser === 'MSIE' || detect.getUserAgent === 'IE 11',
-                isUS = config.page.edition === 'US';
+            var isIE = detect.getUserAgent.browser === 'MSIE' || detect.getUserAgent === 'IE 11';
 
-            return !isIE && isUS;
+            return !isIE && _.contains(['UK', 'US'], config.page.edition);
         };
 
         this.fireRecTest = function () {
