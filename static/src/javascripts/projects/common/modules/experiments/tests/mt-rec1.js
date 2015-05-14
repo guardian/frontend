@@ -16,23 +16,27 @@ define([
     stickyNav
 ) {
     return function () {
-        this.id = 'MtStickyBurger';
-        this.start = '2015-04-21';
-        this.expiry = '2015-05-21';
+        this.id = 'MtRec1';
+        this.start = '2015-05-12';
+        this.expiry = '2015-05-25';
         this.author = 'Zofia Korcz';
-        this.description = 'Sticky top banner with navigation - variant 1. with the burger icon';
+        this.description = 'Viewability results - Recommendation option 1';
         this.audience = 0.02;
-        this.audienceOffset = 0.03;
+        this.audienceOffset = 0.55;
         this.successMeasure = '';
-        this.audienceCriteria = '1% of US edition';
+        this.audienceCriteria = '1% of US and UK edition';
         this.dataLinkNames = '';
         this.idealOutcome = '';
+        this.showForSensitive = false;
 
         this.canRun = function () {
-            var isIE = detect.getUserAgent.browser === 'MSIE' || detect.getUserAgent === 'IE 11',
-                isUS = config.page.edition === 'US';
+            var isIE = detect.getUserAgent.browser === 'MSIE' || detect.getUserAgent === 'IE 11';
 
-            return !isIE && isUS;
+            return !isIE && _.contains(['UK', 'US'], config.page.edition);
+        };
+
+        this.fireRec1Test = function () {
+            stickyNav.stickySlow.init();
         };
 
         /**
@@ -41,9 +45,7 @@ define([
         this.variants = [
             {
                 id: 'A',
-                test: function () {
-                    stickyNav.stickyNavBurger();
-                }
+                test: function () { }
             },
             {
                 id: 'B',

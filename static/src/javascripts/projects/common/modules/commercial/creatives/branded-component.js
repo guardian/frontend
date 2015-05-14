@@ -25,13 +25,15 @@ define([
                 template: brandedComponentJobsTpl,
                 config:   {
                     imgUrl: config.images.commercial.brandedComponentJobs,
-                    marque36icon: svgs('marque36icon', ['creative__marque'])
+                    marque36icon: svgs('marque36icon', ['creative__marque']),
+                    arrowRight: svgs('arrowRight', ['i-right'])
                 }
             },
             membership: {
                 template: brandedComponentMembershipTpl,
                 config:   {
-                    marque36icon: svgs('marque36icon', ['creative__marque'])
+                    marque36icon: svgs('marque36icon', ['creative__marque']),
+                    arrowRight: svgs('arrowRight', ['i-right'])
                 }
             },
             soulmates: {

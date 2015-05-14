@@ -222,6 +222,48 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
+.fc-item--video .fc-item__title,
+.rich-link--video .rich-link__title,
+.fc-sublink--video .fc-sublink__link {
+    .inline-video-icon {
+        fill: colour(media-default);
+
+        svg {
+            height: .75em;
+            width: 1.1em;
+            margin-right: .3em;
+        }
+    }
+}
+
+.fc-item--gallery .fc-item__title,
+.rich-link--gallery .rich-link__title,
+.fc-sublink--gallery .fc-sublink__link {
+    .inline-camera {
+        fill: colour(media-default);
+
+        svg {
+            height: .72em;
+            width: 1.2em;
+            margin-right: .1em;
+        }
+    }
+}
+
+.fc-item--audio .fc-item__title,
+.rich-link--audio .rich-link__title,
+.fc-sublink--audio .fc-sublink__link {
+    .inline-volume-high {
+        fill: colour(media-default);
+
+        svg {
+            height: .72em;
+            width: 1.2em;
+            margin-right: .1em;
+        }
+    }
+}
+
 /* Item elements
    ==========================================================================
 */
@@ -283,6 +325,27 @@ $fc-item-gutter: $gs-gutter / 4;
     padding-top: $gs-baseline / 4;
     padding-bottom: 0;
     word-wrap: break-word;
+
+    .inline-external-link {
+        fill: colour(external-main-1);
+
+        svg {
+            width: 1.2em;
+            height: .75em;
+            margin-right: .2em;
+        }
+    }
+}
+
+.fc-item__title--quoted {
+    .inline-quote {
+        fill: colour(neutral-2);
+
+        svg {
+            width: 1.2em;
+            height: .75em;
+        }
+    }
 }
 
 .fc-item__kicker,
@@ -404,6 +467,27 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__timestamp {
     margin-right: 1em;
+    padding-left: 0;
+
+    .inline-icon {
+        margin: 0;
+        top: 1px;
+        position: relative;
+        height: 11px;
+        width: 11px;
+        margin-right: 2px;
+        fill: colour(neutral-3);
+    }
+}
+
+.fc-trail__count .inline-icon {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 3px;
+    float: left;
+    margin-right: 1px;
+    fill: colour(neutral-3);
 }
 
 .fc-trail__count--inline-template {

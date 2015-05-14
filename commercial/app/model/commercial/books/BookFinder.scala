@@ -27,7 +27,13 @@ object BookFinder extends ExecutionContexts with Logging {
       Future.successful {
         bookData match {
           case JsNull => None
-          case _ => Some(bookData.as[Book])
+          case _ =>
+            bookData.validate[Book] fold(
+              invalid => {
+                log.error(Json.stringify(JsError.toFlatJson(invalid)))
+                None
+              },
+              book => Some(book))
         }
       }
     }
@@ -41,8 +47,6 @@ object BookFinder extends ExecutionContexts with Logging {
           cache.add(isbn, JsNull)
           None
         }
-      } recover {
-        case NonFatal(e) => None
       }
     }
 
@@ -82,7 +86,7 @@ object MagentoService extends Logging {
   private final val circuitBreaker = new CircuitBreaker(
     scheduler = Akka.system.scheduler,
     maxFailures = 10,
-    callTimeout = 2.seconds,
+    callTimeout = 5.seconds,
     resetTimeout = 1.minute
   )
 

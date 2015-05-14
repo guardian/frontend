@@ -34,12 +34,17 @@ object Book {
     }
   }
 
+  private def stringOrDoubleAsDouble(value: String): Reads[Option[Double]] = {
+    val path = JsPath \ value
+    path.readNullable[Double] orElse path.readNullable[String].map(_.map(_.toDouble))
+  }
+
   implicit val bookReads: Reads[Book] = (
     (JsPath \ "name").read[String] and
       authorReads and
       (JsPath \ "isbn").read[String] and
-      (JsPath \ "regular_price_with_tax").readNullable[String].map(_.map(_.toDouble)) and
-      (JsPath \ "final_price_with_tax").readNullable[Double] and
+      stringOrDoubleAsDouble("regular_price_with_tax") and
+      stringOrDoubleAsDouble("final_price_with_tax") and
       (JsPath \ "description").readNullable[String] and
       (JsPath \ "images")(0).readNullable[String] and
       (JsPath \ "product_url").readNullable[String] and
