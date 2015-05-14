@@ -22,8 +22,8 @@ GET        /embed/video/*path                                                   
 
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.userPrefs()
-GET        /service-worker.js                                                   controllers.Assets.at(path="/public", file="20150514/service-worker.js")
-GET        /manifest.json                                                       controllers.Assets.at(path="/public", file="20150514/manifest.json")
+GET        /service-worker.js                                                   controllers.Assets.at(path="/public/20150514", file="service-worker.js")
+GET        /manifest.json                                                       controllers.Assets.at(path="/public/20150514", file="manifest.json")
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                    controllers.LatestIndexController.latest(path)
