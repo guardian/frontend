@@ -36,6 +36,7 @@ define([
         };
 
         this.fireRecTest = function () {
+            console.log('fire rec2');
             stickyNav.stickySlow.init(2);
         };
 
