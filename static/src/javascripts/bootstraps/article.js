@@ -6,6 +6,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/url',
+    'common/modules/experiments/ab',
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
@@ -24,6 +25,7 @@ define([
     detect,
     mediator,
     urlutils,
+    ab,
     richLinks,
     membershipEvents,
     openModule,
@@ -84,6 +86,12 @@ define([
 
             initSelectionSharing: function () {
                 selectionSharing.init();
+            },
+
+            initStickyShares: function () {
+                if (config.switches.abStickyShares && ab.getTestVariant('StickyShares') === 'sticky') {
+                    stickySocial.init();
+                }
             }
         },
 
@@ -94,11 +102,11 @@ define([
             modules.initRightHandComponent();
             modules.initSelectionSharing();
             modules.initCmpParam();
+            modules.initStickyShares();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
             openModule.init();
-            stickySocial.init();
 
             mediator.emit('page:article:ready');
         };
