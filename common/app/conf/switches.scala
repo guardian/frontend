@@ -581,6 +581,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val ABIdentityCookieRefresh = Switch("A/B Tests", "ab-cookie-refresh",
+    "It this switch is turned on, users cookies will be refreshed. Turn off if the identity API barfs" ,
+    safeState = Off, sellByDate = never
+  )
+
   val ABLiveblogSportFrontUpdates = Switch("A/B Tests", "ab-liveblog-sport-front-updates",
     "Switch for the latest liveblog updates on sport & football fronts A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 27)
