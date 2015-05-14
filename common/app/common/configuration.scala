@@ -349,6 +349,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       assert(size <= 100, "Best to keep this less then 50 because of pageSize on search queries")
       size
     }
+
+    lazy val pandomainHost = configuration.getStringProperty("faciatool.pandomain.host")
+    lazy val pandomainDomain = configuration.getStringProperty("faciatool.pandomain.domain")
+
     lazy val configBeforePressTimeout: Int = 1000
 
     val oauthCredentials: Option[OAuthCredentials] =
@@ -464,4 +468,3 @@ object ManifestData {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
   lazy val revision = ManifestFile.asKeyValuePairs.getOrElse("Revision", "DEV").dequote.trim
 }
-

@@ -9,6 +9,7 @@ import model.Cached
 import akka.actor.ActorSystem
 import util.ContentUpgrade.rewriteBody
 import play.api.Logger
+import auth.PanDomainAuthActions
 
 object FaciaContentApiProxy extends Controller with Logging with ExecutionContexts with Strings with PanDomainAuthActions with implicits.WSRequests {
 

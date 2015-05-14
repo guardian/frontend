@@ -7,7 +7,7 @@ import util.Requests._
 import play.api.libs.json.Json
 import config.UpdateManager
 import com.gu.pandomainauth.model.User
-
+import auth.PanDomainAuthActions
 
 object CreateFront {
   implicit val jsonFormat = Json.format[CreateFront].filter(_.id.matches("""^[a-z0-9\/\-+]*$"""))

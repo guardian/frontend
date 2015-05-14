@@ -8,7 +8,7 @@ import play.api.libs.json.Json
 import conf.Configuration
 import org.joda.time.{Duration, DateTime}
 import play.Play
-
+import auth.PanDomainAuthActions
 
 object OAuthLoginController extends Controller with PanDomainAuthActions {
 

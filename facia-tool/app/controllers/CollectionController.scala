@@ -6,6 +6,7 @@ import util.Requests._
 import play.api.mvc.Controller
 import config.UpdateManager
 import play.api.libs.json.Json
+import auth.PanDomainAuthActions
 
 object CollectionRequest {
   implicit val jsonFormat = Json.format[CollectionRequest]

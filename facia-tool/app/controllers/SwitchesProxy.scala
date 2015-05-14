@@ -6,6 +6,7 @@ import model.Cached
 import conf.Switches
 import play.api.libs.json.Json
 import akka.actor.ActorSystem
+import auth.PanDomainAuthActions
 
 object SwitchesProxy extends Controller with ExecutionContexts with PanDomainAuthActions {
 

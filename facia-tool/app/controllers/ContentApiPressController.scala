@@ -9,7 +9,7 @@ import services.ContentApiRefresh
 import akka.actor.ActorSystem
 
 import scala.util.{Failure, Success}
-import auth.ExpiringActions
+import auth.PanDomainAuthActions
 
 /** Utility endpoint for forcing updates to Content API.
   *

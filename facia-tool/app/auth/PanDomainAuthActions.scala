@@ -1,6 +1,7 @@
-package controllers
+package auth
 
 import com.amazonaws.auth.BasicAWSCredentials
+import conf.Configuration
 import com.gu.pandomainauth.action.AuthActions
 import com.gu.pandomainauth.model.AuthenticatedUser
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -17,7 +18,7 @@ trait PanDomainAuthActions extends AuthActions with Results {
       (authedUser.multiFactor || (config.getString("no2faUser").map(user => user.length > 0 && user == authedUser.user.email).getOrElse(false)))
   }
 
-  override def authCallbackUrl: String = config.getString("host").get + "/oauthCallback"
+  override def authCallbackUrl: String = Configuration.faciatool.pandomainHost.get + "/oauthCallback"
 
   override def showUnauthedMessage(message: String)(implicit request: RequestHeader): Result = {
     Logger.info(message)
@@ -38,7 +39,7 @@ trait PanDomainAuthActions extends AuthActions with Results {
     }
   }
 
-  override lazy val domain: String = config.getString("pandomain.domain").get
+  override lazy val domain: String = Configuration.faciatool.pandomainDomain.get
   override lazy val system: String = "fronts"
 
   override lazy val awsCredentials =

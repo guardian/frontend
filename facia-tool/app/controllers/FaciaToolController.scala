@@ -12,6 +12,7 @@ import tools.FaciaApiIO
 import akka.actor.ActorSystem
 import scala.concurrent.Future
 import play.api.Logger
+import auth.PanDomainAuthActions
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts with PanDomainAuthActions {
 
