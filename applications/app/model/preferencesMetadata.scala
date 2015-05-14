@@ -7,5 +7,5 @@ class PreferencesMetaData extends MetaData {
 
   override def analyticsName: String = "Preferences"
 
-  override def webTitle: String = "preferences"
+  override def webTitle: String = "Preferences"
 }
