@@ -49,7 +49,7 @@ define([
         bottomEl.addClass(stickyRevealableClassName);
     }
 
-    function reveal() {        
+    function reveal() {
         if (!revealed) {
             bottomEl.addClass(stickyRevealClassName);
             revealed = true;

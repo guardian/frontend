@@ -682,13 +682,13 @@
 
 .meta__social--sticky {
     position: fixed;
-    bottom: 4px;
+    bottom: $gs-baseline;
     border: 0;
-    z-index: 999;
-    transform: translate3d(0, 40px, 0);
+    z-index: 1;
+    transform: translate3d(0, $gs-baseline * 4, 0);
 
     @include mq(leftCol, $until: wide) {
-        margin-left: -160px;
+        margin-left: $gs-gutter * -8;
  
         .social__item--gplus {
             display: none;
@@ -696,7 +696,7 @@
     }
  
     @include mq(wide) {
-        margin-left: -240px;
+        margin-left: $gs-gutter * -12;
     }
 }
 
