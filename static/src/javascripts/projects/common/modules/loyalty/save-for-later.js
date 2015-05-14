@@ -5,7 +5,8 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'text!common/views/loyalty/save-for-later.html'
 ], function (
     qwery,
     bonzo,
@@ -13,7 +14,8 @@ define([
     _,
     config,
     mediator,
-    identity
+    identity,
+    saveForLaterTmpl
 ) {
     function SaveForLater() {
         this.saveLinkHolder = qwery('.meta__save-for-later')[0];
@@ -31,8 +33,7 @@ define([
             var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
                 '&shortUrl=' + this.shortUrl;
             this.$saver.html(
-                '<a href="' + url + ' "data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>'
-            );
+                saveForLaterTmpl.replace(new RegExp('{{url}}', 'g'), url));
         }
     };
 
