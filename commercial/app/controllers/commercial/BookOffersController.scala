@@ -1,7 +1,6 @@
 package controllers.commercial
 
-import common.ExecutionContexts
-import model.commercial.books.BestsellersAgent._
+import common.{ExecutionContexts, Logging}
 import model.commercial.books.{BestsellersAgent, Book, BookFinder, CacheNotConfiguredException}
 import model.commercial.{FeedMissingConfigurationException, FeedSwitchOffException}
 import model.{Cached, NoCache}
@@ -14,6 +13,7 @@ import scala.util.control.NonFatal
 object BookOffersController
   extends Controller
   with ExecutionContexts
+  with Logging
   with implicits.Collections
   with implicits.Requests {
 
