@@ -30,7 +30,7 @@ define([
         this.$els = {};
     }
 
-    StickySlow.prototype.init = function () {
+    StickySlow.prototype.init = function (variant) {
         var breakpoint = detect.getBreakpoint();
         fastdom.read(function () {
             this.$els.header                 = $('#header');
@@ -49,13 +49,15 @@ define([
             this.thresholdMobile             = 400;
         }.bind(this));
 
+        var desktopCallback = (variant === 2) ? 'updatePositionVariantB' : 'updatePosition';
+
         if (breakpoint === 'mobile') {
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePositionMobile(breakpoint);
             }.bind(this), 10));
         } else {
             mediator.on('window:scroll', _.throttle(function () {
-                this.updatePosition(breakpoint);
+                this[desktopCallback](breakpoint);
             }.bind(this), 10));
         }
     };
@@ -195,31 +197,7 @@ define([
         }.bind(this));
     };
 
-    // Navigation slowly dissapearing
-    function StickySlowBurger() {
-        this.$els = {};
-    }
-
-    StickySlowBurger.prototype.init = function () {
-        fastdom.read(function () {
-            this.$els.header        = $('#header');
-            this.$els.bannerDesktop = $('.top-banner-ad-container--above-nav');
-            this.$els.main          = $('#maincontent');
-            this.$els.navHeader     = $('.js-navigation-header');
-            this.$els.sticky        = $('.sticky-nav-mt-test');
-            this.headerBigHeight    = this.$els.navHeader.dim().height;
-            this.$els.navigation    = $('.navigation', this.$els.navHeader);
-            this.$els.navigationScroll = $('.navigation__scroll', this.$els.navHeader);
-            this.$els.burgerIcon    = $('.js-navigation-toggle', this.$els.navHeader);
-            this.$els.logoWrapper   = $('.logo-wrapper', this.$els.navHeader);
-        }.bind(this));
-
-        mediator.on('window:scroll', _.throttle(function () {
-            this.updatePosition();
-        }.bind(this), 10));
-    };
-
-    StickySlowBurger.prototype.updatePosition = function () {
+    StickySlow.prototype.updatePositionVariantB = function () {
         var bannerHeight = this.$els.bannerDesktop.dim().height,
             scrollY;
 
@@ -278,7 +256,6 @@ define([
     };
 
     return {
-        stickySlow: new StickySlow(),
-        StickySlowBurger: new StickySlowBurger()
+        stickySlow: new StickySlow()
     };
 });

@@ -43,7 +43,7 @@ define([
             {
                 id: 'A',
                 test: function () { 
-                    stickyNav.StickySlowBurger.init();
+                    stickyNav.stickySlow.init(2);
                 }
             },
             {
