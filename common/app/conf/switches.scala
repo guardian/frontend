@@ -204,7 +204,7 @@ object Switches {
   )
 
   val CommercialSwitch = Switch("Commercial", "commercial",
-    "Kill switch for all commercial JS.",
+    "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
     safeState = On, sellByDate = never
   )
 
