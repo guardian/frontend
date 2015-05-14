@@ -81,7 +81,6 @@ define([
     }
 
     function init() {
-        determineStickiness();
         mediator.on('window:scroll', _.throttle(determineStickiness, 10));
     }
 
