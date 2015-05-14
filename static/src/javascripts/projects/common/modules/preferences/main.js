@@ -73,7 +73,104 @@ define([
                     });
 
                 React.renderComponent(React.createElement(SummaryTagsSettings), placeholder);
+            },
+
+            initialiseNotificationPreferences = function () {
+                var isPushEnabled = false;
+
+                var pushButton = document.querySelector('.js-push-button');
+
+                var updateState = function (options) {
+                    if (options.pushEnabled) {
+                        pushButton.textContent = 'Disable Push Messages';
+                        isPushEnabled = true;
+                    } else {
+                        pushButton.textContent = 'Enable Push Messages';
+                        isPushEnabled = false;
+                    }
+                };
+
+                var initialiseState = function () {
+                    return navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
+                        // Do we already have a push message subscription?
+                        return serviceWorkerRegistration.pushManager.getSubscription()
+                            .then(function (subscription) {
+                                pushButton.disabled = false;
+
+                                if (subscription) {
+                                    updateState({ pushEnabled: true });
+
+                                    // Keep server in sync
+                                    return sendSubscription(subscription);
+                                }
+                            });
+                    });
+                };
+
+                var subscribe = function () {
+                    // Disable the button so it can't be changed while
+                    // we process the permission request
+                    pushButton.disabled = true;
+
+                    return navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
+                        return serviceWorkerRegistration.pushManager.subscribe()
+                            .then(function (subscription) {
+                                updateState({ pushEnabled: true });
+                                pushButton.disabled = false;
+
+                                return sendSubscription(subscription);
+                            });
+                    });
+                };
+
+                var unsubscribe = function () {
+                    // Disable the button so it can't be changed while
+                    // we process the permission request
+                    pushButton.disabled = true;
+
+                    return navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
+                        return serviceWorkerRegistration.pushManager.getSubscription()
+                            .then(function (subscription) {
+                                if (!subscription) {
+                                    // No subscription? Reset UI
+                                    pushButton.disabled = false;
+                                    updateState({ pushEnabled: false });
+                                } else {
+                                    return subscription.unsubscribe()
+                                        .then(function () {
+                                            pushButton.disabled = false;
+                                            updateState({ pushEnabled: false });
+
+                                            return sendSubscription(subscription, { delete: true });
+                                        });
+                                }
+                            });
+                    });
+                };
+
+                var sendSubscription = function (subscription, options) {
+                    options = options || {};
+                    // TODO: var url
+                    // TODO: fetch?
+                    return fetch('http://localhost:9001/web/subscription', {
+                        method: options.delete ? 'DELETE' : 'POST',
+                        body: { subId: subscription.subscriptionId, endpoint: subscription.endpoint }
+                    })
+                };
+
+                pushButton.addEventListener('click', function () {
+                    if (isPushEnabled) {
+                        unsubscribe();
+                    } else {
+                        subscribe();
+                    }
+                });
+
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(initialiseState);
             };
+
+        initialiseNotificationPreferences();
 
         if (placeholder) {
             initialiseSummaryTagsSettings();

@@ -1,0 +1,12 @@
+{
+    "name": "The Guardian",
+    "short_name": "The Guardian",
+    "icons": [{
+        "src": "images/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    }],
+    "display": "browser",
+    "gcm_sender_id": "982729077884",
+    "gcm_user_visible_only": true
+}
