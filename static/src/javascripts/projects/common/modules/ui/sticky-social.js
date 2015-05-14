@@ -1,14 +1,10 @@
 define([
-    'bean',
     'common/utils/$',
     'common/utils/_',
-    'common/utils/detect',
     'common/utils/mediator'
 ], function (
-    bean,
     $,
     _,
-    detect,
     mediator
     ) {
 
@@ -16,13 +12,44 @@ define([
         selectorBottomEl = '.social--bottom',
         stickyClassName = 'meta__social--sticky',
         stickyRevealClassName = 'meta__social--sticky--reveal',
-        deadzone = 50,
-
+        stickyRevealableClassName = 'meta__social--sticky--revealable',
+        deadzone = 100,
         topEl,
         bottomEl,
-        revealed = false;
+        revealed = false,
+        failed = false;
 
-    function reveal() {
+    function getTopPosition() {
+        topEl = topEl || $(selectorTopEl)[0];
+        return topEl ? topEl.getBoundingClientRect().top + deadzone : 0;
+    }
+
+    function setBottomPosition() {
+        if (failed) {
+            return;
+
+        } else if (!bottomEl) {
+            bottomEl = $(selectorBottomEl);
+            if (bottomEl) {
+                bottomEl.addClass(stickyClassName);
+                setTimeout(makeRevealable);
+            } else {
+                failed = true;
+            }
+
+        } else if (getTopPosition() < 0) {
+            setTimeout(reveal);
+
+        } else {
+            setTimeout(unreveal);
+        }
+    }
+
+    function makeRevealable() {
+        bottomEl.addClass(stickyRevealableClassName);
+    }
+
+    function reveal() {        
         if (!revealed) {
             bottomEl.addClass(stickyRevealClassName);
             revealed = true;
@@ -36,28 +63,8 @@ define([
         }
     }
 
-    function getTopPosition() {
-        return topEl.getBoundingClientRect().top;
-    }
-
-    function setBottomPosition() {
-        if (getTopPosition() + deadzone > 0) {
-            setTimeout(unreveal);
-        } else {
-            setTimeout(reveal);
-        }
-    }
-
     function init() {
-        var breakpoint = detect.getBreakpoint(true);
-
-        topEl = $(selectorTopEl)[0];
-        bottomEl = $(selectorBottomEl);
-
-        if (topEl && bottomEl /* && breakpoint === 'mobile' */) {
-            bottomEl.addClass(stickyClassName);
-            mediator.on('window:scroll', _.throttle(setBottomPosition, 10));
-        }
+        mediator.on('window:scroll', _.throttle(setBottomPosition, 10));
     }
 
     return {

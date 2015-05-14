@@ -685,8 +685,23 @@
     bottom: 4px;
     border: 0;
     z-index: 999;
-    transition: transform 100ms linear;
     transform: translate3d(0, 40px, 0);
+
+    @include mq(leftCol, $until: wide) {
+        margin-left: -160px;
+ 
+        .social__item--gplus {
+            display: none;
+        }
+    }
+ 
+    @include mq(wide) {
+        margin-left: -240px;
+    }
+}
+
+.meta__social--sticky--revealable {
+    transition: transform 100ms linear;
 }
 
 .meta__social--sticky--reveal {
