@@ -591,7 +591,7 @@ define([
         this.$els = {};
     }
 
-    StickySlow.prototype.init = function () {
+    StickySlowBurger.prototype.init = function () {
         fastdom.read(function () {
             this.$els.header        = $('#header');
             this.$els.bannerDesktop = $('.top-banner-ad-container--above-nav');
@@ -599,6 +599,10 @@ define([
             this.$els.navHeader     = $('.js-navigation-header');
             this.$els.sticky        = $('.sticky-nav-mt-test');
             this.headerBigHeight    = this.$els.navHeader.dim().height;
+            this.$els.navigation    = $('.navigation', this.$els.navHeader);
+            this.$els.navigationScroll = $('.navigation__scroll', this.$els.navHeader);
+            this.$els.burgerIcon    = $('.js-navigation-toggle', this.$els.navHeader);
+            this.$els.logoWrapper   = $('.logo-wrapper', this.$els.navHeader);
         }.bind(this));
 
         mediator.on('window:scroll', _.throttle(function () {
@@ -606,7 +610,7 @@ define([
         }.bind(this), 10));
     };
 
-    StickySlow.prototype.updatePosition = function () {
+    StickySlowBurger.prototype.updatePosition = function () {
         var bannerHeight = this.$els.bannerDesktop.dim().height,
             scrollY;
 
@@ -621,12 +625,12 @@ define([
                     top:       0,
                     width:     '100%',
                     'z-index': '10000',
-                    'margin-top': 0,
-                    'transform': 'translateY(-100%)'
+                    'margin-top': 0
                 });
 
                 this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
-                this.$els.header.addClass('is-slim');
+                this.$els.header.addClass('l-header--is-slim l-header--is-slim-ab');
+                //this.$els.navigation.hide();
                 this.$els.header.css('transform', 'translateY(0%)');
             } else if (scrollY >= this.headerBigHeight) {
                 // Add is not sticky anymore
@@ -640,7 +644,8 @@ define([
                     'margin-top': bannerHeight,
                     'transform': 'translateY(-500%)'
                 });
-                this.$els.header.removeClass('is-slim');
+                this.$els.header.removeClass('l-header--is-slim l-header--is-slim-ab');
+                this.$els.burgerIcon.insertAfter(this.$els.logoWrapper);
                 this.$els.main.css('margin-top', 0);
             } else {
                 // Make sure that we show slim nav when page loaded with anchor
@@ -650,13 +655,14 @@ define([
                     width:     '100%',
                     'z-index': '10000'
                 });
-                this.$els.header.removeClass('is-slim');
+                this.$els.header.removeClass('l-header--is-slim l-header--is-slim-ab');
                 this.$els.header.css({
                     position:  'static',
                     width:     '100%',
                     'margin-top': bannerHeight,
                     'transform': 'translateY(0%)'
                 });
+                this.$els.burgerIcon.insertAfter(this.$els.navigationScroll);
             }
 
         }.bind(this));
