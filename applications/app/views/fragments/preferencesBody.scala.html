@@ -2,12 +2,23 @@
 
 @import conf.Switches._
 
-<button class="js-push-button" disabled>
-    Enable Push Messages
-</button>
+<div class="l-side-margins" data-link-name="preferences">
+    <div class="fc-container">
+        <div class="fc-container__inner">
+            <div class="fc-container__header">
+                <div class="fc-container__header__title">
+                    <span tabindex="0">notifications</span>
+                </div>
+            </div>
 
-@if(HistoryTags.isSwitchedOn) {
-    <div class="l-side-margins" data-link-name="preferences">
+            <div class="fc-container__body">
+                <button class="js-push-button" disabled>
+                    Enable Push Messages
+                </button>
+            </div>
+        </div>
+    </div>
+    @if(HistoryTags.isSwitchedOn) {
         <div class="fc-container">
             <div class="fc-container__inner">
                 <div class="fc-container__header">
@@ -21,5 +32,5 @@
                 </div>
             </div>
         </div>
-    </div>
-}
+    }
+</div>
