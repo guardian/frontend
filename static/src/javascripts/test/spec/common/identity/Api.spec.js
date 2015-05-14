@@ -184,18 +184,16 @@ describe('Get user data', function () {
         expect(Id.shouldAutoSigninInUser()).toBe(false);
     });
 
-    it('shouldRefreshCookies should return true for a user who has never refreshed cookies', function () {
+    it('should return true for a user who has never refreshed cookies', function () {
         expect(Id.shouldRefreshCookie(null)).toBe(true);
     });
 
-    it('shouldRefreshCookies should return false for a user who has not refreshed within 30 days', function () {
-        var today = new Date().getTime()
-        expect(Id.shouldRefreshCookie(today  - 1000 * 86400 * 30, new Date().getTime())).toBe(false);
+    it('should return false for a user who has not refreshed within 30 days', function () {
+        expect(Id.shouldRefreshCookie(new Date().getTime() - 1000 * 86400 * 31, new Date().getTime())).toBe(true);
     });
 
-    it('shouldRefreshCookies should return false for a user who has refreshed within 30 days', function () {
-        var today = new Date().getTime()
-        expect(Id.shouldRefreshCookie(today  - 1000 * 86400 * 5, new Date().getTime())).toBe(false);
+    it('should return false for a user who has refreshed within 30 days', function () {
+        expect(Id.shouldRefreshCookie(new Date().getTime()  - 1000 * 86400 * 5, new Date().getTime())).toBe(false);
     });
 
 });
