@@ -4,7 +4,7 @@ set -o nounset
 set -o errexit
 
 
-./grunt-tc clean validate prepare test:unit compile
+./grunt-tc install clean validate test:unit compile
 ./sbt-tc "project root" test
 
 echo "Tested everything."

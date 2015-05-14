@@ -191,6 +191,13 @@ object Switches {
   )
 
   // Commercial
+  val OphanViewIdSwitch = Switch("Commercial",
+    "ophan-view-id",
+    "Depeneding on ophan to pass view ID to the gdf targeting",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 5, 31)
+  )
+
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
@@ -243,10 +250,6 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val AmaaSwitch = Switch("Commercial", "amaa",
-    "AMAA tracking",
-    safeState = Off, sellByDate = never)
-
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
     safeState = Off, sellByDate = never
@@ -261,10 +264,6 @@ object Switches {
     "If this switch is on, Criteo segments will be used to target ads.",
     safeState = Off, sellByDate = never
   )
-
-  val EffectiveMeasureSwitch = Switch("Commercial", "effective-measure",
-    "Enable the Effective Measure audience segment tracking.",
-    safeState = Off, sellByDate = never)
 
   val ImrWorldwideSwitch = Switch("Commercial", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
@@ -453,11 +452,6 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val FacebookAppLinksSwitch = Switch("Feature", "facebook-applinks",
-    "If this switch is on then shared links on the facebook mobile app will be opened in the native app instead of the mobile browser",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 13)
-  )
-
   val IdentityFormstackSwitch = Switch("Feature", "id-formstack",
     "If this switch is on, formstack forms will be available",
     safeState = Off, sellByDate = never
@@ -504,7 +498,7 @@ object Switches {
 
   val QuizScoresService = Switch("Feature", "quiz-scores-service",
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 16))
+    safeState = Off, sellByDate = new LocalDate(2015, 8, 16))
 
   val IdentityLogRegistrationsFromTor = Switch("Feature", "id-log-tor-registrations",
     "If switched on, any user registrations from a known tor esit node will be logged",
@@ -530,56 +524,15 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ElectionSnap = Switch("Feature", "election-snap",
-    "ONLY TOUCH THIS IF YOU KNOW WHAT IT DOES AND IMPLICATIONS: Switch to render a placeholder for the election snap.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
   // A/B Tests
-  val ABMtLzAdsDepth = Switch("A/B Tests", "ab-mt-lz-ads-depth", "Depth for lazy loaded ads.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
   )
 
-  val ABMtMain = Switch("A/B Tests", "ab-mt-main",
-    "Sticky navigation behind the ad with burger version - with sticky MPU and lazy loading.",
+  val ABMtRec1 = Switch("A/B Tests", "ab-mt-rec1",
+    "Viewability results - Recommendation option 1",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
-  )
-
-  val ABMtStNav = Switch(
-    "A/B Tests",
-    "ab-mt-st-nav",
-    "Testing sticky nav with sticky banner and nav going to slim version",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
-  )
-
-  val ABMtTopBelowNav = Switch("A/B Tests", "ab-mt-top-below-nav",
-    "Top above nav ad placed below nav.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 17)
-  )
-
-  val ABMtTopBelowFirstContainer = Switch("A/B Tests", "ab-mt-top-below-first-container",
-    "Top above nav ad placed below first container.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 18)
-  )
-
-  val ABMtDepth = Switch("A/B Tests", "ab-mt-depth",
-    "Top navigation and top ad slot are sticky with different variants of depth.",
-    safeState = Off, sellByDate = new LocalDate(2015, 6, 6)
-  )
-
-  val ABMtStickyBurger = Switch("A/B Tests", "ab-mt-sticky-burger",
-    "Sticky top banner with navigation - variant 1. with the burger icon.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
-  )
-
-  val ABMtStickyBtm = Switch("A/B Tests", "ab-mt-sticky-btm",
-    "Top ad slot is sticky at the bottom of page.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 26)
   )
 
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
@@ -605,33 +558,6 @@ object Switches {
   val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",
     "Switch for removing the whitelist from the user history tags",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
-  )
-
-  val ABMtStAllUxSwitch = Switch(
-    "A/B Tests",
-    "ab-mt-st-all-ux",
-    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
-  val ABMtStBurgerUxSwitch = Switch(
-    "A/B Tests",
-    "ab-mt-st-burger-ux",
-    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
-  val ABMtStBurgerNtUxSwitch = Switch("A/B Tests",
-    "ab-mt-st-burger-nt-ux",
-    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold A.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
-  val ABMtStAllNtUxSwitch = Switch(
-    "A/B Tests",
-    "ab-mt-st-all-nt-ux",
-    "Top navigation and top ad slot are sticky with navigation going to slim mode for UX testing - variant with no threshold B.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>

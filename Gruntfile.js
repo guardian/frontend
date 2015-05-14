@@ -1,4 +1,5 @@
 /* global module: false, process: false */
+var megalog = require('megalog');
 
 module.exports = function (grunt) {
 
@@ -42,7 +43,7 @@ module.exports = function (grunt) {
     }
 
     // Default task
-    grunt.registerTask('default', ['clean', 'validate', 'prepare', 'compile', 'test', 'analyse']);
+    grunt.registerTask('default', ['install', 'clean', 'validate', 'compile', 'test', 'analyse']);
 
     /**
      * Validate tasks
@@ -112,9 +113,17 @@ module.exports = function (grunt) {
         'compile:conf'
     ]);
 
-    grunt.registerTask('prepare', ['jspmInstall']);
+    grunt.registerTask('install', ['install:npm', 'install:jspm']);
+    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool']);
+    grunt.registerTask('install:npm', ['shell:npmInstall']);
 
-    grunt.registerTask('jspmInstall', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool']);
+    grunt.registerTask('prepare', function() {
+        megalog.error('`grunt prepare` has been removed.\n\nUse `grunt install` instead… ');
+    });
+
+    grunt.registerTask('jspmInstall', function() {
+        megalog.error('`grunt jspmInstall` has been removed.\n\nUse `grunt install:jspm` instead… ');
+    });
 
     /**
      * compile:js:<requiretask> tasks. Generate one for each require task

@@ -328,7 +328,7 @@
     @include mq(desktop) {
         box-sizing: border-box;
         @include fs-headline(3, true);
-        float: right;
+        float: left;
         padding-right: $gs-gutter;
         width: gs-span(4);
     }
@@ -370,7 +370,7 @@
     padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
 
     @include mq(desktop) {
-        float: left;
+        float: right;
     }
 
     .email-subscription--subscribed & {

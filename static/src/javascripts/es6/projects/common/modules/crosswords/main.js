@@ -336,7 +336,6 @@ class Crossword extends React.Component {
                     cell.value = '';
                 });
                 this.forceUpdate();
-                this.save();
             }, 150);
         }
     }
@@ -348,13 +347,13 @@ class Crossword extends React.Component {
 
     onCheck () {
         this.check(this.clueInFocus());
+        this.save();
     }
 
     onSolution () {
         _.forEach(this.props.data.entries, (entry) => {
             this.cheat(entry);
         });
-
         this.save();
     }
 
@@ -362,6 +361,7 @@ class Crossword extends React.Component {
         _.forEach(this.props.data.entries, (entry) => {
             this.check(entry);
         });
+        this.save();
     }
 
     onClearAll () {
@@ -370,8 +370,8 @@ class Crossword extends React.Component {
                 cell.value = '';
             });
         });
-
         this.forceUpdate();
+        this.save();
     }
 
     hiddenInputValue () {

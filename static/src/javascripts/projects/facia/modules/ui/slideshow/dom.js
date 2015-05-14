@@ -102,8 +102,8 @@ define([
         transition: transition,
         remove: remove,
         equal: equal,
-        duration: 500,
-        loadTime: 100
+        duration: 1000,
+        loadTime: 200
     };
     return domObject;
 });
