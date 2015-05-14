@@ -17,7 +17,7 @@ define([
 ) {
 
     return function () {
-        this.id = 'IdentityCookieRefresh';
+        this.id = 'CookieRefresh';
         this.start = '2015-05-14';
         this.expiry = '2015-06-14';
         this.author = 'Mark Butler';
