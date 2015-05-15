@@ -352,6 +352,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     lazy val pandomainHost = configuration.getStringProperty("faciatool.pandomain.host")
     lazy val pandomainDomain = configuration.getStringProperty("faciatool.pandomain.domain")
+    lazy val pandomainSecret = configuration.getStringProperty("pandomain.aws.secret")
+    lazy val pandomainKey = configuration.getStringProperty("pandomain.aws.key")
 
     lazy val configBeforePressTimeout: Int = 1000
 

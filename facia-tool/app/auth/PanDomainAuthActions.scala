@@ -43,7 +43,6 @@ trait PanDomainAuthActions extends AuthActions with Results {
   override lazy val system: String = "fronts"
 
   override lazy val awsCredentials =
-    for (key <- config.getString("pandomain.aws.key"); secret <- config.getString("pandomain.aws.secret"))
+    for (key <- Configuration.faciatool.pandomainKey; secret <- Configuration.faciatool.pandomainSecret)
       yield { new BasicAWSCredentials(key, secret) }
-
 }
