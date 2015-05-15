@@ -151,10 +151,18 @@ define([
                 var sendSubscription = function (subscription, options) {
                     options = options || {};
                     // TODO: var url
-                    // TODO: fetch?
-                    return fetch('http://localhost:9001/web/subscription', {
+
+                    var mobileNotificationsWebHost = 'http://localhost:9000';
+                    return fetch(mobileNotificationsWebHost + '/web/subscription', {
                         method: options.delete ? 'DELETE' : 'POST',
-                        body: { subId: subscription.subscriptionId, endpoint: subscription.endpoint }
+                        headers: new Headers({ 'Content-Type': 'application/json' }),
+                        // TODO: Support deprecated subscriptionId (now part of endpoint)
+                        body: JSON.stringify({
+                            subId: subscription.subscriptionId,
+                            endpoint: subscription.endpoint.replace('/' + subscription.subscriptionId, '')
+                            // TODO: edition based notifications
+                            //edition: config.page.edition
+                        })
                     })
                 };
 
