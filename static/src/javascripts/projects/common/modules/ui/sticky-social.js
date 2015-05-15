@@ -50,7 +50,7 @@ define([
                 if (bottomEl) {
                     fastdom.write(function () {
                         bottomEl.addClass(stickyClassName);
-                        makeRevealable();
+                        setTimeout(makeRevealable);
                     });
                 } else {
                     failed = true;
