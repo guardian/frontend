@@ -80,7 +80,8 @@ define([
             '300,250': function (event, $adSlot) {
                 if (isMtRecTest() && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
-                        new StickyMpu($adSlot).create();
+                        // Hardcoded for sticky nav test. It will need some on time checking if this will go to PROD
+                        new StickyMpu($adSlot, {top: 58}).create();
                     }
                 }
             },
