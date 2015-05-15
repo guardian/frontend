@@ -17,7 +17,7 @@ export default class HiddenInput extends React.Component {
     }
 
     componentDidUpdate () {
-        if (detect.isBreakpoint({ max: 'tablet' })) {
+        if (detect.isBreakpoint({ max: 'mobile' })) {
             fastdom.read(function () {
                 const offsets = bonzo(this.refs.input.getDOMNode()).offset();
                 scroller.scrollTo(offsets.top - (offsets.height * 1.5), 250, 'easeOutQuad');

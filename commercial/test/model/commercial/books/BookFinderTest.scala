@@ -1,7 +1,7 @@
 package model.commercial.books
 
 import org.scalatest.concurrent._
-import org.scalatest.time.{Millis, Span, Seconds}
+import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json.{JsNull, JsValue, Json}
 
@@ -154,10 +154,12 @@ class BookFinderTest extends FlatSpec with Matchers with ScalaFutures {
     cache.get("12345").futureValue should be(Some(JsNull))
   }
 
-  it should "give none, and not update cache, when lookup fails" in {
+  it should "fail, and not update cache, when lookup fails" in {
     val cache = emptyCache
     val result = BookFinder.findByIsbn("98765", cache, testLookup)
-    result.futureValue should be(None)
-    cache.get("98765").futureValue should be(None)
+
+    whenReady(result.failed) { e =>
+      cache.get("98765").futureValue should be(None)
+    }
   }
 }
