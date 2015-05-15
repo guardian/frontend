@@ -27,7 +27,7 @@ define([
         this.successMeasure = '';
         this.audienceCriteria = '1% of users.';
         this.dataLinkNames = '';
-        this.idealOutcome = '1% of users have their session extended if their session is over one month old.';
+        this.idealOutcome = '1% of users have their signed in session extended. If they are signed-in and their session is over one month old.';
         this.showForSensitive = false;
 
         this.canRun = function () {
