@@ -38,7 +38,7 @@ define([
             {
                 id: 'refresh',
                 test: function () {
-                    Id.init()
+                    Id.init();
                     Id.refreshCookie();
                 }
             }

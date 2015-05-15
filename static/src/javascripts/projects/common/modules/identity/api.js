@@ -195,11 +195,11 @@ define([
                 storage.local.set(Id.lastRefreshKey, currentTime);
             }
         }
-    }
+    };
 
     Id.shouldRefreshCookie = function (lastRefresh, currentTime) {
         return (!lastRefresh) || (currentTime > (parseInt(lastRefresh, 10) + (1000 * 86400 * 30)));
-    }
+    };
 
     /**
      * Returns true if a there is no signed in user and the user has not signed in the last 24 hours
