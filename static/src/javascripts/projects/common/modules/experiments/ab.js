@@ -6,6 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/sticky-shares',
     'common/modules/experiments/tests/liveblog-sport-front-updates',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/mt-rec1',
@@ -22,6 +23,7 @@ define([
     mediator,
     store,
     mvtCookie,
+    StickyShares,
     LiveblogSportFrontUpdates,
     HighCommercialComponent,
     MtRec1,
@@ -34,6 +36,7 @@ define([
 
     var ab,
         TESTS = _.flatten([
+            new StickyShares(),
             new LiveblogSportFrontUpdates(),
             new HighCommercialComponent(),
             new MtRec1(),
