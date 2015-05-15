@@ -63,7 +63,7 @@ define([
     }
 
     function makeRevealable() {
-        fastdom.write(function () { bottomEl.addClass(stickyRevealableClassName) });
+        fastdom.write(function () { bottomEl.addClass(stickyRevealableClassName); });
     }
 
     function reveal() {
