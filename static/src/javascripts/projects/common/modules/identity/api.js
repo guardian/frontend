@@ -189,8 +189,8 @@ define([
     Id.refreshCookie = function () {
         var lastRefresh = storage.local.get(Id.lastRefresh);
         var currentTime = new Date().getTime();
-        if (this.shouldRefreshCookie(lastRefresh, currentTime)) {
-            this.getUserFromApiWithRefreshedCookie();
+        if (Id.isUserLoggedIn() && Id.shouldRefreshCookie(lastRefresh, currentTime)) {
+            Id.getUserFromApiWithRefreshedCookie();
             storage.local.set(Id.lastRefresh, currentTime);
         }
     }

@@ -13,7 +13,7 @@ define([
     config,
     mediator,
     template,
-    Identity
+    Id
 ) {
 
     return function () {
@@ -38,8 +38,8 @@ define([
             {
                 id: 'refresh',
                 test: function () {
-                    var identity = new Identity();
-                    identity.refreshCookie();
+                    Id.init()
+                    Id.refreshCookie();
                 }
             }
         ];
