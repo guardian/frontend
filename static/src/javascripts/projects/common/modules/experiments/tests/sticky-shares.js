@@ -10,7 +10,7 @@ define([
         this.expiry = '2015-05-28';
         this.author = 'Stephan Fowler';
         this.description = 'Checking sticking the share buttons to the bottom of articles';
-        this.audience = 0.2;
+        this.audience = 0;
         this.audienceOffset = 0.25;
         this.successMeasure = '';
         this.audienceCriteria = 'Article visitors';
