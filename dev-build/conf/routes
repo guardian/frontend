@@ -311,7 +311,7 @@ GET         /container/*id.json                                                 
 GET         /$path<international>                                                                                    controllers.FaciaController.renderFront(path)
 GET         /preferences                                                                                             controllers.PreferencesController.userPrefs()
 GET         /service-worker.js                                                                                       dev.DevAssetsController.serviceWorker()
-GET         /manifest.json                                                                                           dev.DevAssetsController.manifest()
+GET         /manifest.json                                                                                           controllers.PreferencesController.manifest()
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                     controllers.IndexController.renderTrailsJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                          controllers.IndexController.renderTrails(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                                            controllers.IndexController.renderJson(path)

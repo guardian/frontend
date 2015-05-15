@@ -34,7 +34,6 @@ object DevAssetsController extends Controller with ExecutionContexts {
 
   def humans(): Action[AnyContent] = controllers.Assets.at(path = "/public", file = "humans.txt")
   def serviceWorker(): Action[AnyContent] = controllers.Assets.at(path = "/public/20150514", file = "service-worker.js")
-  def manifest(): Action[AnyContent] = controllers.Assets.at(path = "/public/20150514", file = "manifest.json")
 
   def surveys(file: String): Action[AnyContent] =
     controllers.Assets.at(path = "/public/surveys", file, aggressiveCaching = false)
