@@ -684,7 +684,7 @@
     position: fixed;
     bottom: $gs-baseline;
     border: 0;
-    z-index: 1;
+    z-index: 4;
     transform: translate3d(0, $gs-baseline * 4, 0);
 
     @include mq(leftCol, $until: wide) {
