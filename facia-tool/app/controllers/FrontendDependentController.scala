@@ -25,7 +25,7 @@ case class Defaults(
   lowFrequency: Int,
   highFrequency: Int,
   standardFrequency: Int,
-  sentryPublicDSN: String,
+  sentryPublicDSN: Option[String],
   fixedContainers: Seq[ContainerJsonConfig],
   dynamicContainers: Seq[ContainerJsonConfig]
 )
@@ -55,7 +55,7 @@ object FrontendDependentController extends Controller {
         Configuration.faciatool.adminPressJobLowPushRateInMinutes,
         Configuration.faciatool.adminPressJobHighPushRateInMinutes,
         Configuration.faciatool.adminPressJobStandardPushRateInMinutes,
-        "https://4527e03d554a4962ae99a7481e9278ff@app.getsentry.com/35467",
+        Configuration.faciatool.sentryPublicDSN,
         FixedContainers.all.keys.toSeq.map(id => ContainerJsonConfig(id, None)),
         DynamicContainers.all.keys.toSeq.map(id =>
           if (id == "dynamic/package") {
