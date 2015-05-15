@@ -23,37 +23,19 @@ define([
         this.idealOutcome = 'Users will disable adblock on theguardian site';
 
         this.canRun = function () {
-            return detect.getBreakpoint() !== 'mobile' && detect.adblockInUse()
+            console.log(detect.adblockInUse);
+            return detect.getBreakpoint() !== 'mobile' && detect.adblockInUse;
         };
 
         this.variants = [
             {
-                id: 'A',
+                id: 'Variant',
                 test: function () {
-                    var adblockLink = 'https://membership.theguardian.com/about/supporter';
+                    var adblockLink = 'https://membership.theguardian.com/about/supporter?INTCMP=adb-mv';
 
                     new Message('adblock', {
                         pinOnHide: false,
-                        siteMessageLinkName: 'adblock message',
-                        siteMessageCloseBtn: 'hide'
-                    }).show(template(
-                            doNotUseAdblockTemplate,
-                            {
-                                adblockLink: adblockLink,
-                                messageText: 'If you\'re reading the Guardian without ads, why not join the Guardian instead?',
-                                linkText: 'Become a supporter today'
-                            }
-                        ));
-                }
-            },
-            {
-                id: 'B',
-                test: function () {
-                    var adblockLink = 'https://membership.theguardian.com/about/supporter';
-
-                    new Message('adblock', {
-                        pinOnHide: false,
-                        siteMessageLinkName: 'adblock message',
+                        siteMessageLinkName: 'adblock message Variant',
                         siteMessageCloseBtn: 'hide'
                     }).show(template(
                             doNotUseAdblockTemplate,
@@ -64,6 +46,10 @@ define([
                             }
                         ));
                 }
+            },
+            {
+                id: 'Control',
+                test: function () {}
             }
         ];
     };

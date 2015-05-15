@@ -249,6 +249,26 @@ define([
                 new Clickstream({filter: ['a', 'button']});
             },
 
+            showAdblockMessage: function () {
+                //TODO add config.switch
+                if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse) {
+                    var adblockLink = 'https://membership.theguardian.com/about/supporter?INTCMP=adb-mv';
+
+                    new Message('adblock', {
+                        pinOnHide: false,
+                        siteMessageLinkName: 'adblock message Variant',
+                        siteMessageCloseBtn: 'hide'
+                    }).show(template(
+                            doNotUseAdblockTemplate,
+                            {
+                                adblockLink: adblockLink,
+                                messageText: 'We notice you\'ve got an ad-blocker switched on. Perhaps you\'d like to support the Guardian another way?',
+                                linkText: 'Become a supporter today'
+                            }
+                        ));
+                }
+            },
+
             logLiveStats: function () {
                 liveStats.log();
             },
@@ -443,16 +463,11 @@ define([
             },
 
             runCustomAbTests: function () {
-                var stickyTest = ab.getTest('MtStickyBtm'),
-                    rec1Test = ab.getTest('MtRec1');
+                var rec1Test = ab.getTest('MtRec1');
 
                 if (rec1Test && ab.isParticipating(rec1Test) && ab.getTestVariant('MtRec1') === 'A'
                     && ab.testCanBeRun('MtRec1')) {
                     rec1Test.fireRec1Test();
-                }
-                if (stickyTest && ab.isParticipating(stickyTest) && ab.getTestVariant('MtStickyBtm') === 'A'
-                    && ab.testCanBeRun('MtStickyBtm')) {
-                    stickyTest.fireStickyBottom();
                 }
             },
 
@@ -500,6 +515,7 @@ define([
             robust('c-comments',        modules.repositionComments);
             robust('c-tag-links',       modules.showMoreTagsLink);
             robust('c-smart-banner',    modules.showSmartBanner);
+            robust('c-adblock',         modules.showAdblockMessage);
             robust('c-log-stats',       modules.logLiveStats);
             robust('c-analytics',       modules.loadAnalytics);
             robust('c-cookies',         modules.cleanupCookies);
