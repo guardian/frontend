@@ -30,7 +30,7 @@ object PreferencesController extends Controller with ExecutionContexts with Logg
       name="The Guardian",
       icons=List(icon),
       display="browser",
-      gcm_sender_id="982729077884",
+      gcm_sender_id="162380663509",
       gcm_user_visible_only=true)).toString())
   } }
 }
