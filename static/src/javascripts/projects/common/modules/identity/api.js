@@ -28,7 +28,7 @@ define([
     Id.cookieName = 'GU_U';
     Id.signOutCookieName = 'GU_SO';
     Id.fbCheckKey = 'gu.id.nextFbCheck';
-    Id.lastRefresh = 'identity.lastRefresh';
+    Id.lastRefreshKey = 'identity.lastRefresh';
     Id.idApiRoot = null;
     Id.idUrl = null;
 
@@ -187,11 +187,13 @@ define([
     };
 
     Id.refreshCookie = function () {
-        var lastRefresh = storage.local.get(Id.lastRefresh);
-        var currentTime = new Date().getTime();
-        if (Id.isUserLoggedIn() && Id.shouldRefreshCookie(lastRefresh, currentTime)) {
-            Id.getUserFromApiWithRefreshedCookie();
-            storage.local.set(Id.lastRefresh, currentTime);
+        if (Id.isUserLoggedIn()) {
+            var lastRefresh = storage.local.get(Id.lastRefreshKey);
+            var currentTime = new Date().getTime();
+            if (Id.shouldRefreshCookie(lastRefresh, currentTime)) {
+                Id.getUserFromApiWithRefreshedCookie();
+                storage.local.set(Id.lastRefreshKey, currentTime);
+            }
         }
     }
 
