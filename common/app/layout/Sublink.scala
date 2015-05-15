@@ -1,7 +1,7 @@
 package layout
 
 import com.gu.facia.api.models._
-import com.gu.facia.api.utils.{MediaType, CardStyle, ItemKicker}
+import com.gu.facia.api.utils.{ExternalLink, MediaType, CardStyle, ItemKicker}
 import common.{Edition, InternationalEdition, LinkTo}
 import implicits.FaciaContentImplicits._
 import implicits.FaciaContentFrontendHelpers._
@@ -129,7 +129,7 @@ object FaciaCardHeader {
 
   def fromTrailAndKicker(faciaContent: FaciaContent, itemKicker: Option[ItemKicker], config: Option[CollectionConfig]) = FaciaCardHeader(
     faciaContent.showQuotedHeadline,
-    faciaContent.cardStyle.toneString.equals("external"),
+    faciaContent.cardStyle == ExternalLink,
     faciaContent.isVideo,
     faciaContent.isGallery,
     faciaContent.isAudio,
