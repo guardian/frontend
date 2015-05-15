@@ -449,12 +449,10 @@ define([
 
                 if (rec1Test && ab.isParticipating(rec1Test) && ab.getTestVariant('MtRec1') === 'A'
                     && ab.testCanBeRun('MtRec1')) {
-                    console.log('run rec1');
                     rec1Test.fireRecTest();
                 }
                 if (rec2Test && ab.isParticipating(rec2Test) && ab.getTestVariant('MtRec2') === 'A'
                     && ab.testCanBeRun('MtRec2')) {
-                    console.log('run rec2');
                     rec2Test.fireRecTest();
                 }
                 if (stickyTest && ab.isParticipating(stickyTest) && ab.getTestVariant('MtStickyBtm') === 'A'

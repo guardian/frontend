@@ -31,7 +31,8 @@ define([
     }
 
     StickySlow.prototype.init = function (variant) {
-        var breakpoint = detect.getBreakpoint();
+        var breakpoint = detect.getBreakpoint(),
+            desktopCallback = (variant === 2) ? 'updatePositionVariantB' : 'updatePosition';
         fastdom.read(function () {
             this.$els.header                 = $('#header');
             this.$els.bannerDesktop          = $('.top-banner-ad-container--above-nav');
@@ -48,8 +49,6 @@ define([
             this.headerBigHeight             = this.$els.navHeader.dim().height;
             this.thresholdMobile             = 400;
         }.bind(this));
-
-        var desktopCallback = (variant === 2) ? 'updatePositionVariantB' : 'updatePosition';
 
         if (breakpoint === 'mobile') {
             mediator.on('window:scroll', _.throttle(function () {

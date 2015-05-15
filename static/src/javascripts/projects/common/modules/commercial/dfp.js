@@ -105,9 +105,8 @@ define([
         },
 
         isMtRecTest = function () {
-            var tests = ['MtRec1', 'MtRec2'];
-            var MtRec1Test = ab.getParticipations().MtRec1;
-            var MtRec2Test = ab.getParticipations().MtRec2;
+            var MtRec1Test = ab.getParticipations().MtRec1,
+                MtRec2Test = ab.getParticipations().MtRec2;
 
             return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A' ||
                 ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
@@ -215,8 +214,6 @@ define([
             var opts = _.defaults(options || {}, {
                 resizeTimeout: 2000
             });
-
-            console.log('dfp');
 
             resizeTimeout = opts.resizeTimeout;
 
