@@ -47,11 +47,8 @@ define([
                             var saveForLater = new SaveForLater();
                             saveForLater.init();
                         }
-                        else {
-                            console.log("++ Ab");
-                            var saveForLater = new SaveContentFront();
-                            saveForLater.init();
-                        }
+                        var saveForLater = new SaveContentFront();
+                        saveForLater.init();
                     });
 
                     mediator.on('modules:profilenav:loaded', function () {
