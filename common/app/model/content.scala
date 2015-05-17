@@ -3,13 +3,13 @@ package model
 import java.net.URL
 
 import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
-import com.gu.facia.api.utils.{CardStyle, ResolvedMetaData}
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.util.liveblogs.{Block, BlockToText, Parser => LiveBlogParser}
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
 import conf.Switches.FacebookShareUseTrailPicFirstSwitch
 import dfp.DfpAgent
+import fronts.MetadataDefaults
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -165,7 +165,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   override lazy val trailText: Option[String] = apiContent.metaData.flatMap(_.trailText).orElse(fields.get("trailText"))
   override lazy val byline: Option[String] = apiContent.metaData.flatMap(_.byline).orElse(fields.get("byline"))
-  override val showByline = resolvedMetaData.showByline
+  override val showByline = apiContent.metaData.flatMap(_.showByline).getOrElse(metaDataDefault("showByline"))
 
   override def isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
@@ -225,11 +225,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
     .getOrElse(Nil)
 
-  private lazy val resolvedMetaData: ResolvedMetaData = {
-    val trailMetaData = apiContent.metaData.getOrElse(TrailMetaData.empty)
-    val cardStyle = CardStyle(delegate, trailMetaData)
-    ResolvedMetaData.fromContentAndTrailMetaData(delegate, trailMetaData, cardStyle)
-  }
+  private lazy val metaDataDefaults = MetadataDefaults(this)
+  private def metaDataDefault(key: String) = metaDataDefaults.getOrElse(key, false)
 
   // Inherited from FaciaFields
   override lazy val group: Option[String] = apiContent.metaData.flatMap(_.group)
@@ -243,11 +240,13 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   lazy val contributorTwitterHandle: Option[String] = contributors.headOption.flatMap(_.twitterHandle)
 
-  override lazy val showQuotedHeadline: Boolean = resolvedMetaData.showQuotedHeadline
+  override lazy val showQuotedHeadline: Boolean =
+    apiContent.metaData.flatMap(_.showQuotedHeadline).getOrElse(metaDataDefault("showQuotedHeadline"))
 
   override lazy val imageReplace: Boolean = apiContent.metaData.flatMap(_.imageReplace).getOrElse(false)
 
-  override lazy val showKickerTag: Boolean = resolvedMetaData.showKickerTag
+  override lazy val showKickerTag: Boolean =
+    apiContent.metaData.flatMap(_.showKickerTag).getOrElse(metaDataDefault("showKickerTag"))
 
   override lazy val showKickerSection: Boolean = apiContent.metaData.flatMap(_.showKickerSection).getOrElse(false)
   override lazy val imageSrc: Option[String] = apiContent.metaData.flatMap(_.imageSrc)
@@ -259,9 +258,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     height <- imageSrcHeight
   } yield ImageOverride.createElementWithOneAsset(src, width, height) else None
 
-  override lazy val showMainVideo: Boolean = resolvedMetaData.showMainVideo
+  override lazy val showMainVideo: Boolean =
+    apiContent.metaData.flatMap(_.showMainVideo).getOrElse(metaDataDefault("showMainVideo"))
 
-  override lazy val imageCutoutReplace: Boolean = resolvedMetaData.imageCutoutReplace
+  override lazy val imageCutoutReplace: Boolean =
+    apiContent.metaData.flatMap(_.imageCutoutReplace).getOrElse(metaDataDefault("imageCutoutReplace"))
 
   override lazy val customImageCutout: Option[FaciaImageElement] = for {
     src <- apiContent.metaData.flatMap(_.imageCutoutSrc)

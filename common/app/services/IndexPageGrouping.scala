@@ -1,6 +1,5 @@
 package services
 
-import com.gu.facia.api.models.FaciaContent
 import common.JodaTime._
 import common.Maps.RichMapSeq
 import implicits.Collections

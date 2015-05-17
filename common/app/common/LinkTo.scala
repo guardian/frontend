@@ -1,6 +1,5 @@
 package common
 
-import com.gu.facia.api.models.FaciaContent
 import layout.ContentCard
 import play.twirl.api.Html
 import play.api.mvc.{Result, AnyContent, Request, RequestHeader}
@@ -10,7 +9,6 @@ import org.jsoup.Jsoup
 import scala.collection.JavaConversions._
 import conf.Configuration.environment
 import dev.HttpSwitch
-import implicits.FaciaContentImplicits._
 
 /*
  * Builds absolute links to the core site (www.theguardian.com)
@@ -53,8 +51,6 @@ trait LinkTo extends Logging {
     case snap: Snap => snap.snapHref.filter(_.nonEmpty).map(apply(_))
     case t: Trail => Option(apply(t.url))
   }
-
-  def apply(faciaContent: FaciaContent)(implicit request: RequestHeader): Option[String] = faciaContent.href
 
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
     faciaCard.url.get(request)

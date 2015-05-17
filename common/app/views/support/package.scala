@@ -1,6 +1,5 @@
 package views.support
 
-import com.gu.facia.api.models.{LinkSnap, FaciaContent}
 import common._
 import model._
 
@@ -17,7 +16,6 @@ import play.api.mvc.Result
 import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
-import implicits.FaciaContentImplicits._
 
 /**
  * Encapsulates previous and next urls
@@ -190,9 +188,12 @@ object RenderClasses {
 }
 
 object SnapData {
-  def apply(faciaContent: FaciaContent): String = generateDataAttributes(faciaContent).mkString(" ")
+  def apply(trail: Trail): String = generateDataAttributes(trail).mkString(" ")
 
-  private def generateDataAttributes(faciaContent: FaciaContent): Iterable[String] =
-    faciaContent.embedType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
-    faciaContent.embedUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
+  private def generateDataAttributes(trail: Trail): Iterable[String] = trail match {
+    case content: Content =>
+        content.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
+        content.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
+    case _  => Nil
+  }
 }

@@ -1,11 +1,7 @@
 package layout
 
-import com.gu.facia.api.models.FaciaContent
-import implicits.Collections
-import implicits.FaciaContentImplicits._
 import implicits.Collections
 import model.Trail
-
 
 object TagHistogram extends Collections {
   def fromTrails(trails: Seq[Trail]): TagHistogram = TagHistogram(trails.foldLeft(Map.empty[String, Int]) {
@@ -15,14 +11,6 @@ object TagHistogram extends Collections {
           hist + (tagId -> (hist.getOrElse(tagId, 0) + 1))
       }
   }, trails.length)
-
-  def fromFaciaContent(faciaContentList: Seq[FaciaContent]): TagHistogram = TagHistogram(faciaContentList.foldLeft(Map.empty[String, Int]) {
-    case (histogram, faciaContent) =>
-      faciaContent.tags.map(_.id).toSet.foldLeft(histogram) {
-        case (hist, tagId) =>
-          hist + (tagId -> (hist.getOrElse(tagId, 0) + 1))
-      }
-  }, faciaContentList.length)
 }
 
 case class TagHistogram(frequencyById: Map[String, Int], numberOfItems: Int) {

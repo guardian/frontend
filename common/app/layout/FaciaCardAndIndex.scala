@@ -1,14 +1,15 @@
 package layout
 
-import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import model.Trail
 
 object FaciaCardAndIndex {
   /** If creating a Card off the cuff (i.e., outside of the normal Facia front construction code */
-  def fromTrail(faciaContent: FaciaContent, itemClasses: ItemClasses, index: Int) = FaciaCardAndIndex(
+  def fromTrail(trail: Trail, itemClasses: ItemClasses, index: Int) = FaciaCardAndIndex(
     index,
     FaciaCard.fromTrail(
-      faciaContent,
-      CollectionConfig.empty,
+      trail,
+      CollectionConfig.emptyConfig,
       itemClasses,
       showSeriesAndBlogKickers = false
     ),

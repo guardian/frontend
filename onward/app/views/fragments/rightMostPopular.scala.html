@@ -1,14 +1,7 @@
 @(popular: Option[model.MostPopular])(implicit request: RequestHeader)
-
-@import views.support._
-@import views.support.`package`.Seq2zipWithRowInfo
-@import implicits.FaciaContentImplicits._
-@import implicits.FaciaContentFrontendHelpers._
-@import common.LinkTo
 @import views.support.ImgSrc
 @import implicits.Requests._
 @import conf.Switches.ImgixSwitch
-
 @popular.map { pop =>
     <div class="js-right-most-popular right-most-popular right-most-popular--image component--rhc hide-on-childrens-books-site" data-component="right-most-popular" data-importance="-1">
         <h3 class="content__meta-heading">Most popular</h3>
