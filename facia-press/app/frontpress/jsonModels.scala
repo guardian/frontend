@@ -1,6 +1,7 @@
 package frontpress
 
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import com.gu.facia.client.models.CollectionConfigJson
+import com.gu.facia.api.models.CollectionConfig
 import com.gu.contentapi.client.model.Asset
 import model._
 import org.joda.time.DateTime
@@ -163,6 +164,29 @@ object CollectionJson {
   implicit val jsonFormat = Json.format[CollectionJson]
 
   def fromCollection(config: CollectionConfig, collection: Collection) =
+    CollectionJson(
+      apiQuery       = config.apiQuery,
+      displayName    = config.displayName.orElse(collection.displayName),
+      curated        = collection.curated.map(TrailJson.fromContent),
+      editorsPicks   = collection.editorsPicks.map(TrailJson.fromContent),
+      mostViewed     = collection.mostViewed.map(TrailJson.fromContent),
+      results        = collection.results.map(TrailJson.fromContent),
+      treats         = collection.treats.map(TrailJson.fromContent),
+      lastUpdated    = collection.lastUpdated,
+      updatedBy      = collection.updatedBy,
+      updatedEmail   = collection.updatedEmail,
+      groups         = config.groups.map(_.groups),
+      href           = collection.href.orElse(config.href),
+      `type`         = Option(config.collectionType),
+      showTags       = config.showTags,
+      showSections   = config.showSections,
+      hideKickers    = config.hideKickers,
+      showDateHeader = config.showDateHeader,
+      showLatestUpdate = config.showLatestUpdate,
+      excludeFromRss = config.excludeFromRss
+    )
+
+  def fromCollection(config: CollectionConfigJson, collection: Collection) =
     CollectionJson(
       apiQuery       = config.apiQuery,
       displayName    = config.displayName.orElse(collection.displayName),
