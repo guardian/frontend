@@ -1,10 +1,9 @@
 package services
 
-import com.gu.facia.api.models.CollectionConfig
 import common.FaciaToolMetrics.{ContentApiPutFailure, ContentApiPutSuccess}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
-import com.gu.facia.client.models.{TrailMetaData, Trail}
+import com.gu.facia.client.models.{CollectionConfigJson, TrailMetaData, Trail}
 import model.Snap
 import org.joda.time.DateTime
 import play.Play
@@ -46,7 +45,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     .filter(_.startsWith("https://") || Play.isDev)
     .map(_ + s"/collections/$id")
 
-  def writeToContentapi(id: String, config: CollectionConfig): Future[WSResponse] = {
+  def writeToContentapi(id: String, config: CollectionConfigJson): Future[WSResponse] = {
     import play.api.Play.current
     (for {
       username      <- Configuration.contentApi.write.username
@@ -75,13 +74,13 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     }) getOrElse Future.failed(new RuntimeException(s"Missing config properties for Content API write"))
   }
 
-  def generateContentApiPut(id: String, config: CollectionConfig): Future[ContentApiPut] = {
+  def generateContentApiPut(id: String, config: CollectionConfigJson): Future[ContentApiPut] = {
     FaciaApiIO.getCollectionJson(id) map { maybeCollectionJson =>
 
     ContentApiPut(
-      config.collectionType, //TODO: Content API Default collection type WAS news, now fixed/small/slow-VI !
+      config.`type`.getOrElse(defaultCollectionType),
       config.displayName.orElse(maybeCollectionJson.flatMap(_.displayName)).getOrElse(defaultTitle),
-      config.groups.map(_.groups).getOrElse(Nil),
+      config.groups.getOrElse(Nil),
       ConfigAgent.editorsPicksForCollection(id),
       maybeCollectionJson map { collectionJson => generateItems(collectionJson.live) } getOrElse Nil,
       config.apiQuery,

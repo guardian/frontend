@@ -1,13 +1,13 @@
 package layout
 
-import com.gu.facia.api.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import services.CollectionConfigWithId
 
 object ContainerDisplayConfig {
   val empty = ContainerDisplayConfig(
     CollectionConfigWithId(
       "",
-      CollectionConfig.empty
+      CollectionConfig.emptyConfig
     ),
     false
   )

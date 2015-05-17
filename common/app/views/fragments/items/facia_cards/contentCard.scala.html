@@ -8,9 +8,8 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
-@import layout.{FrontendLatestSnap, FaciaWidths}
 @import views.support.ImgSrc
-@import layout.WidthsByBreakpoint
+@import layout.{LatestSnap, FaciaWidths}
 @import Function.const
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
@@ -38,7 +37,7 @@ data-test-id="facia-card"
     @item.snapStuff.map(_.dataAttributes)>
 
     <div class="fc-item__container">
-        @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap)) {
+        @if(item.snapStuff.map(_.snapType) == Some(LatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
         }
 
@@ -130,7 +129,7 @@ data-test-id="facia-card"
         }
 
     <div class="fc-item__content">
-        @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap)) {
+        @if(item.snapStuff.map(_.snapType) == Some(LatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap"))
         }
         <div class="@RenderClasses(Map(

@@ -1,8 +1,7 @@
 package layout
 
 import cards._
-import com.gu.facia.api.models.FaciaContent
-import implicits.FaciaContentImplicits._
+import model.Trail
 
 object InclusiveRange {
   def unit(n: Int) = InclusiveRange(n, n)
@@ -30,7 +29,7 @@ object Sublinks {
     case ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall => fromZero(3)
   }
 
-  def takeSublinks(supporting: Seq[FaciaContent], itemClasses: ItemClasses) = {
+  def takeSublinks(supporting: Seq[Trail], itemClasses: ItemClasses) = {
     val InclusiveRange(min, max) = fromItemClasses(itemClasses)
 
     val numberSupporting = supporting.length
@@ -42,6 +41,6 @@ object Sublinks {
     }
   }
 
-  def numberOfSublinks(faciaContent: FaciaContent, itemClasses: ItemClasses) =
-    takeSublinks(faciaContent.supporting, itemClasses).length
+  def numberOfSublinks(trail: Trail, itemClasses: ItemClasses) =
+    takeSublinks(trail.supporting, itemClasses).length
 }

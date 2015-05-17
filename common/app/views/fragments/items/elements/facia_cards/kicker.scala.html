@@ -1,7 +1,7 @@
 @(header: layout.FaciaCardHeader, classes: Seq[String])(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import com.gu.facia.api.utils._
+@import views.support._
 
 @header.kicker.map {
     case BreakingNewsKicker => {

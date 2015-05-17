@@ -1,7 +1,6 @@
 package controllers
 
 import common.ExecutionContexts
-import frontpress.LiveFapiFrontPress
 import conf.Configuration
 import frontpress.FrontPress
 import model.NoCache
@@ -21,26 +20,10 @@ object Application extends Controller with ExecutionContexts {
     NoCache(Ok(ConfigAgent.contentsAsJsonString).withHeaders("Content-Type" -> "application/json"))
   }
 
-  def generateFrontJson() = Action.async { request =>
-    LiveFapiFrontPress.generateFrontJsonFromFapiClient()
-      .map(Json.prettyPrint)
-      .map(Ok.apply(_))
-      .map(NoCache.apply)
-      .fold(
-        apiError => InternalServerError(apiError.message),
-        successJson => successJson
-      )}
-
   def generateLivePressedFor(path: String) = Action.async { request =>
-    LiveFapiFrontPress.getPressedFrontForPath(path)
-      .map(Json.toJson(_))
-      .map(Json.prettyPrint)
+    FrontPress.pressLiveByPathId(path).map(Json.stringify(_))
       .map(Ok.apply(_))
-      .map(NoCache.apply)
-      .fold(
-        apiError => InternalServerError(apiError.message),
-        successJson => successJson.withHeaders("Content-Type" -> "application/json")
-      )}
+      .map(NoCache.apply)}
 
   private def handlePressRequest(path: String, liveOrDraft: String)(f: (String) => Future[_]): Future[Result] =
     if (FaciaPressOnDemand.isSwitchedOn) {

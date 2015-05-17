@@ -1,11 +1,11 @@
 package controllers
 
-import com.gu.facia.api.models.CollectionConfig
+import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
 import layout.{CollectionEssentials, FaciaContainer}
 import play.api.mvc.{ Controller, Action, RequestHeader }
 import common._
 import model._
-import services.{FaciaContentConvert, CollectionConfigWithId}
+import services.CollectionConfigWithId
 import slices.{Fixed, FixedContainers}
 import scala.concurrent.Future
 import implicits.Requests
@@ -76,14 +76,14 @@ object MediaInSectionController extends Controller with Logging with Paging with
     val displayName = Some(s"more $sectionName $pluralMediaType")
     val componentId = Some("more-media-in-section")
 
-    implicit val config = CollectionConfig.empty.copy(href = Some(tagCombinedHref), displayName = displayName)
+    implicit val config = CollectionConfig.withDefaults(href = Some(tagCombinedHref), displayName = displayName)
 
     val response = () => views.html.fragments.containers.facia_cards.container(
       FaciaContainer(
         1,
         Fixed(FixedContainers.fixedMediumFastXI),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(trails map FaciaContentConvert.frontentContentToFaciaContent take 7, Nil, displayName, None, None, None),
+        CollectionEssentials(trails take 7, Nil, displayName, None, None, None),
         componentId
       ).withTimeStamps,
       FrontProperties.empty

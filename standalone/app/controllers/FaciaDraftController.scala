@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.ItemResponse
-import controllers.front.{FrontJsonFapiLive, FrontJsonFapi, FrontJson}
+import controllers.front.FrontJson
 import play.api.mvc.{RequestHeader, Result}
 import services.ConfigAgent
 
@@ -13,19 +13,18 @@ object FrontJsonDraft extends FrontJson {
 
 object FaciaDraftController extends FaciaController with RendersItemResponse {
   val frontJson: FrontJson = FrontJsonDraft
-  val frontJsonFapi: FrontJsonFapi = FrontJsonFapiLive
+
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     log.info(s"Serving Path: $path")
 
     if (!ConfigAgent.getPathIds.contains(path))
-    controllers.IndexController.renderItem(path)
+      controllers.IndexController.renderItem(path)
     else
-    renderFrontPressResult(path)
+      renderFrontPressResult(path)
   }
 
   override def canRender(path: String): Boolean = ConfigAgent.getPathIds.contains(path)
 
   override def canRender(item: ItemResponse): Boolean = controllers.IndexController.canRender(item)
-
 }

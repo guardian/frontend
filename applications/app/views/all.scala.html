@@ -1,10 +1,9 @@
 @(index: services.IndexPage, nav: PreviousAndNext)(implicit request: RequestHeader)
 
-@import com.gu.facia.api.models.CollectionConfig
+@import com.gu.facia.client.models.CollectionConfigJson
 @import views.support.PreviousAndNext
 @import layout.{ContainerLayout, ContainerDisplayConfig}
 @import model.Collection
-@import services.FaciaContentConvert
 
 @main(index.page, projectName = Option("facia")){  }{
 <div class="l-side-margins">
@@ -14,13 +13,13 @@
             ContainerLayout.singletonFromContainerDefinition(
                 slices.TagContainers.allTagPage,
                 ContainerDisplayConfig.empty,
-                index.trails.map(FaciaContentConvert.frontentContentToFaciaContent)
+                index.trails
             ),
             0,
             index.date,
             index.page,
             nav
-        )(request, CollectionConfig.empty)
+        )(request, CollectionConfigJson.emptyConfig)
     </div>
 </div>
 }

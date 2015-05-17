@@ -1,15 +1,14 @@
 package test
 
-import com.gu.facia.api.models.{Group, FaciaContent, CollectionConfig}
+import com.gu.facia.client.models.CollectionConfigJson
 import common.{AkkaAgent, Edition}
 import common.editions.{Au, Us, Uk}
 import controllers.front.Front
 import model._
-import model.PressedPage
-import model.facia.PressedCollection
+import model.FaciaPage
 import org.joda.time.DateTime
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import services.{FaciaContentConvert, CollectionConfigWithId}
+import services.CollectionConfigWithId
 
 object TestContent {
 
@@ -41,14 +40,14 @@ case class TestTrail(u: String) extends Content(TestContent.apiContentWithMeta) 
   override lazy val isLive: Boolean = true
 }
 
-class TestPageFront(val id: String, edition: Edition, faciaPage: PressedPage) {
+class TestPageFront(val id: String, edition: Edition, faciaPage: FaciaPage) {
   val query = null
   def close() = {}
-  def apply(): Option[PressedPage] = Some(faciaPage)
+  def apply(): Option[FaciaPage] = Some(faciaPage)
 }
 
 trait ModelHelper {
-  val emptyConfig = CollectionConfig.empty
+  val emptyConfig = CollectionConfigJson.emptyConfig
 
   def trailWithUrl(url: String): Content = TestTrail(url)
   def trailsWithUrl(url: Seq[String]): Seq[Trail] = url map trailWithUrl
@@ -93,177 +92,72 @@ trait FaciaTestData extends ModelHelper {
     )
 
 
-  val ukFrontTrails: Seq[FaciaContent]= ukFrontTrailIds map trailWithUrl map FaciaContentConvert.frontentContentToFaciaContent
-  val usFrontTrails: Seq[FaciaContent]= usFrontTrailIds map trailWithUrl map FaciaContentConvert.frontentContentToFaciaContent
-  val auFrontTrails: Seq[FaciaContent]= auFrontTrailIds map trailWithUrl map FaciaContentConvert.frontentContentToFaciaContent
+  val ukFrontTrails: Seq[Content]= ukFrontTrailIds map trailWithUrl
+  val usFrontTrails: Seq[Content]= usFrontTrailIds map trailWithUrl
+  val auFrontTrails: Seq[Content]= auFrontTrailIds map trailWithUrl
 
-  val cultureFrontTrails: Seq[FaciaContent] = cultureTrailIds map trailWithUrl map FaciaContentConvert.frontentContentToFaciaContent
+  val cultureFrontTrails: Seq[Content] = cultureTrailIds map trailWithUrl
 
-  val ukFaciaPage: PressedPage = PressedPage(
+  val ukFaciaPage: FaciaPage = FaciaPage(
     id = "uk",
     SeoData.fromPath("uk"),
     FrontProperties.empty,
     collections = List(
-      PressedCollection(
-        id = "uk/news/regular-stories",
-        displayName = "",
-        curated = ukFrontTrails.toList,
-        backfill = Nil,
-        treats = Nil,
-        lastUpdated = None,
-        updatedBy = None,
-        updatedEmail = None,
-        href = None,
-        apiQuery = None,
-        collectionType = "",
-        groups = None,
-        uneditable = false,
-        showTags = false,
-        showSections = false,
-        hideKickers = false,
-        showDateHeader = false,
-        showLatestUpdate = false,
-        config = CollectionConfig.empty)
+      (CollectionConfigWithId("uk/news/regular-stories", emptyConfig),
+      Collection(ukFrontTrails))
       )
     )
 
-  val usFaciaPage: PressedPage = PressedPage(
+  val usFaciaPage: FaciaPage = FaciaPage(
     id = "us",
     SeoData.fromPath("us"),
     FrontProperties.empty,
     collections = List(
-      PressedCollection(
-        id = "us/news/regular-stories",
-        displayName = "",
-        curated = usFrontTrails.toList,
-        backfill = Nil,
-        treats = Nil,
-        lastUpdated = None,
-        updatedBy = None,
-        updatedEmail = None,
-        href = None,
-        apiQuery = None,
-        collectionType = "",
-        groups = None,
-        uneditable = false,
-        showTags = false,
-        showSections = false,
-        hideKickers = false,
-        showDateHeader = false,
-        showLatestUpdate = false,
-        config = CollectionConfig.empty)
+      (CollectionConfigWithId("us/news/regular-stories", emptyConfig),
+      Collection(usFrontTrails))
     )
   )
 
-  val auFaciaPage: PressedPage = PressedPage(
+  val auFaciaPage: FaciaPage = FaciaPage(
     id = "us",
     SeoData.fromPath("us"),
     FrontProperties.empty,
     collections = List(
-      PressedCollection(
-        id = "au/news/regular-stories",
-        displayName = "",
-        curated = auFrontTrails.toList,
-        backfill = Nil,
-        treats = Nil,
-        lastUpdated = None,
-        updatedBy = None,
-        updatedEmail = None,
-        href = None,
-        apiQuery = None,
-        collectionType = "",
-        groups = None,
-        uneditable = false,
-        showTags = false,
-        showSections = false,
-        hideKickers = false,
-        showDateHeader = false,
-        showLatestUpdate = false,
-        config = CollectionConfig.empty)
+      (CollectionConfigWithId("au/news/regular-stories", emptyConfig),
+      Collection(auFrontTrails))
     )
   )
 
-  val ukCultureFaciaPage: PressedPage = PressedPage(
+  val ukCultureFaciaPage: FaciaPage = FaciaPage(
     id = "uk/culture",
     SeoData.fromPath("uk/culture"),
     FrontProperties.empty,
     collections = List(
-      PressedCollection(
-        id = "uk/culture/regular-stories",
-        displayName = "",
-        curated = cultureFrontTrails.toList,
-        backfill = Nil,
-        treats = Nil,
-        lastUpdated = None,
-        updatedBy = None,
-        updatedEmail = None,
-        href = None,
-        apiQuery = None,
-        collectionType = "",
-        groups = None,
-        uneditable = false,
-        showTags = false,
-        showSections = false,
-        hideKickers = false,
-        showDateHeader = false,
-        showLatestUpdate = false,
-        config = CollectionConfig.empty)
+      (CollectionConfigWithId("uk/culture/regular-stories", emptyConfig),
+        Collection(cultureFrontTrails)
+      )
     )
   )
 
-  val usCultureFaciaPage: PressedPage = PressedPage(
+  val usCultureFaciaPage: FaciaPage = FaciaPage(
     id = "us/culture",
     SeoData.fromPath("us/culture"),
     FrontProperties.empty,
     collections = List(
-      PressedCollection(
-        id = "au/culture/regular-stories",
-        displayName = "",
-        curated = cultureFrontTrails.toList,
-        backfill = Nil,
-        treats = Nil,
-        lastUpdated = None,
-        updatedBy = None,
-        updatedEmail = None,
-        href = None,
-        apiQuery = None,
-        collectionType = "",
-        groups = None,
-        uneditable = false,
-        showTags = false,
-        showSections = false,
-        hideKickers = false,
-        showDateHeader = false,
-        showLatestUpdate = false,
-        config = CollectionConfig.empty)
+      (CollectionConfigWithId("au/culture/regular-stories", emptyConfig),
+      Collection(cultureFrontTrails)
+     )
     )
   )
 
-  val auCultureFaciaPage: PressedPage = PressedPage(
+  val auCultureFaciaPage: FaciaPage = FaciaPage(
     id = "au/culture",
     SeoData.fromPath("au/culture"),
     FrontProperties.empty,
     collections = List(
-      PressedCollection(
-        id = "au/culture/regular-stories",
-        displayName = "",
-        curated = cultureFrontTrails.toList,
-        backfill = Nil,
-        treats = Nil,
-        lastUpdated = None,
-        updatedBy = None,
-        updatedEmail = None,
-        href = None,
-        apiQuery = None,
-        collectionType = "",
-        groups = None,
-        uneditable = false,
-        showTags = false,
-        showSections = false,
-        hideKickers = false,
-        showDateHeader = false,
-        showLatestUpdate = false,
-        config = CollectionConfig.empty)
+      (CollectionConfigWithId("au/culture/regular-stories", emptyConfig),
+      Collection(cultureFrontTrails)
+      )
     )
   )
 
