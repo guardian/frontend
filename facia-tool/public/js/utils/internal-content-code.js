@@ -1,4 +1,4 @@
-import vars from 'modules/vars';
+import * as vars from 'modules/vars';
 
 export default function(content) {
     if (content && content.fields && content.fields.internalContentCode) {
