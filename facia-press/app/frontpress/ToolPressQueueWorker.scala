@@ -35,15 +35,25 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
 
     log.info(s"Processing job from tool to update $path on $pressType")
 
-    val pressFuture =
-      if (Switches.FapiClientFormat.isSwitchedOn) {
+    if (Switches.FaciaPressNewFormat.isSwitchedOff && Switches.FaciaPressOldFormat.isSwitchedOff){
+      throw new RuntimeException("Both pressing switches are off")
+    }
+
+    lazy val fapiFormat =
+      if (Switches.FaciaPressNewFormat.isSwitchedOn) {
         pressType match {
           case Draft => DraftFapiFrontPress.pressByPathId(path)
           case Live => LiveFapiFrontPress.pressByPathId(path)}}
-      else {
+      else { Future.successful(Unit) }
+
+    lazy val oldFormat =
+      if (Switches.FaciaPressOldFormat.isSwitchedOn) {
         pressType match {
-          case Draft => FrontPress.pressDraftByPathId(path)
-          case Live => FrontPress.pressLiveByPathId(path)}}
+          case Draft => DraftFapiFrontPress.pressByPathId(path)
+          case Live => LiveFapiFrontPress.pressByPathId(path)}}
+      else { Future.successful(Unit) }
+
+    val pressFuture = oldFormat.flatMap(_ => fapiFormat)
 
     pressFuture onComplete {
       case Success(_) =>
