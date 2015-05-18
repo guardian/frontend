@@ -307,6 +307,10 @@ object Switches {
     "If this switch is on, Apple ads will appear below nav on the UK network front.",
     safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
+  val AppleAdUsNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-us-network-front",
+    "If this switch is on, Apple ads will appear below nav on the US network front.",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
+
   val AppleAdAuNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-au-network-front",
     "If this switch is on, Apple ads will appear below nav on the AU network front.",
     safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
