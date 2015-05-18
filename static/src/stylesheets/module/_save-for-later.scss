@@ -14,7 +14,6 @@
     font-size: get-font-size(textSans, 1);
     width: gs-span(2) - $gs-gutter;
     @include button-height(32px);
-
     @include button-colour(
         $fill-colour: colour(neutral-6),
         $border-color: colour(neutral-6),
@@ -26,6 +25,16 @@
     @include save-for-later-state(save, colour(neutral-2));
     @include save-for-later-state(saved, colour(news-accent));
     @include save-for-later-state(remove, colour(live-accent));
+
+    &.save-for-later--save {
+        @include button-colour(
+            $fill-colour: transparent,
+            $border-color: colour(neutral-6),
+            $text-colour: colour(neutral-1),
+            $hover-colour: colour(neutral-8),
+            $hover-border: colour(neutral-8)
+        );
+    }
 
     &:hover {
         background-color: colour(neutral-5);
