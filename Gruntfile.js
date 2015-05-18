@@ -84,7 +84,7 @@ module.exports = function (grunt) {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
         if (!options.isDev) {
-            grunt.task.run('shell:jspmBundleStatic');
+            // grunt.task.run('shell:jspmBundleStatic');
         }
 
         if (options.isDev) {
