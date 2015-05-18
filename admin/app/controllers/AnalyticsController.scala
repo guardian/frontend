@@ -9,6 +9,6 @@ object AnalyticsController extends Controller with Logging with AuthLogging with
   def abtests() = AuthActions.AuthActionTest.async { request =>
     for {
       abCharts <- model.abtests.AbTests.getAbCharts()
-    } yield NoCache(Ok(views.html.abtests("PROD", abCharts.filter(_.hasData))))
+    } yield NoCache(Ok(views.html.abtests("PROD")))
   }
 }
