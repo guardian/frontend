@@ -42,7 +42,7 @@ define([
                 template(saveForLaterTmpl, {
                     url: url,
                     icon: bookmarkSvg,
-                    state: "save"
+                    state: 'save'
                 })
             );
         }
