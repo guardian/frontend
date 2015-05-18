@@ -6,7 +6,9 @@ import common.editions.Uk
 import conf.Configuration
 import model._
 import org.scalatest.{FlatSpec, Matchers}
+import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
+import test.TestRequest
 
 import scala.xml.XML
 
@@ -48,7 +50,7 @@ class TemplatesTest extends FlatSpec with Matchers {
   }
 
   "PictureCleaner" should "correctly format inline pictures" in {
-
+    implicit val request: RequestHeader = TestRequest()
     val body = XML.loadString(withJsoup(bodyTextWithInlineElements)(PictureCleaner(testContent)).body.trim)
 
     val figures = (body \\ "figure").toList
@@ -56,12 +58,10 @@ class TemplatesTest extends FlatSpec with Matchers {
     val inlineImg = figures(0)
     (inlineImg \ "@class").text should include("img--inline")
     (inlineImg \ "img" \ "@class").text should be("gu-image")
-    (inlineImg \ "img" \ "@width").text should be("140")
-    
+
     val landscapeImg = figures(3)
     (landscapeImg \ "@class").text should include("img--landscape")
     (landscapeImg \ "img" \ "@class").text should be("gu-image")
-    (landscapeImg \ "img" \ "@width").text should be("500")
 
     val portaitImg = figures(4)
     (portaitImg \ "@class").text should include("img--portrait")
@@ -69,14 +69,14 @@ class TemplatesTest extends FlatSpec with Matchers {
     (portaitImg \ "img" \ "@height").length should be (0) // we remove the height attribute
 
     (body \\ "figure").foreach { fig =>
-      (fig \ "@itemprop").text should be("associatedMedia")
+      (fig \ "@itemprop").text should be("associatedMedia image")
       (fig \ "@itemscope").text should be("")
       (fig \ "@itemtype").text should be("http://schema.org/ImageObject")
     }
 
     (body \\ "figcaption").foreach { fig =>
       (fig \ "@itemprop").text should be("description")
-      (fig).text should include("Image caption")
+      (fig).text should include("test caption")
     }
   }
 
@@ -215,11 +215,11 @@ class TemplatesTest extends FlatSpec with Matchers {
   }
 
   val testImages: List[ApiElement] = List(
-    ApiElement("gu-image-1", "body", "image", Some(0), List(asset("caption", 140, 100))),
-    ApiElement("gu-image-2", "body", "image", Some(0), List(asset("caption", 250, 100))),
-    ApiElement("gu-image-3", "body", "image", Some(0), List(asset("caption", 600, 100))),
-    ApiElement("gu-image-4", "body", "image", Some(0), List(asset("caption", 500, 100))),
-    ApiElement("gu-image-5", "body", "image", Some(0), List(asset("caption", 500, 700)))
+    ApiElement("gu-image-1", "body", "image", Some(0), List(asset("test caption", 140, 100))),
+    ApiElement("gu-image-2", "body", "image", Some(0), List(asset("test caption", 250, 100))),
+    ApiElement("gu-image-3", "body", "image", Some(0), List(asset("test caption", 600, 100))),
+    ApiElement("gu-image-4", "body", "image", Some(0), List(asset("test caption", 500, 100))),
+    ApiElement("gu-image-5", "body", "image", Some(0), List(asset("test caption", 500, 700)))
   )
 
   val testContent = new Article(ApiContentWithMeta(ApiContent(

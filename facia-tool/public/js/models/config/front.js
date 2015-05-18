@@ -25,6 +25,11 @@ define([
     findFirstById,
     validateImageSrc
 ) {
+    asObservableProps = asObservableProps.default;
+    findFirstById = findFirstById.default;
+    populateObservables = populateObservables.default;
+    validateImageSrc = validateImageSrc.default;
+
     function Front(opts) {
         var self = this;
 
@@ -43,7 +48,8 @@ define([
             'imageHeight',
             'isImageDisplayed',
             'isHidden',
-            'priority']);
+            'priority',
+            'canonical']);
 
         populateObservables(this.props, opts);
 
@@ -104,15 +110,14 @@ define([
             if (src === this.props.imageUrl()) { return; }
 
             validateImageSrc(src, {minWidth: 120})
-            .done(function(width, height) {
-                self.props.imageUrl(src);
-                self.props.imageWidth(width);
-                self.props.imageHeight(height);
+            .then(function(img) {
+                self.props.imageUrl(img.src);
+                self.props.imageWidth(img.width);
+                self.props.imageHeight(img.height);
                 self.saveProps();
-            })
-            .fail(function(err) {
+            }, function(err) {
                 self.provisionalImageUrl(undefined);
-                window.alert('Sorry! ' + err);
+                window.alert('Sorry! ' + err.message);
             });
         }, this);
 
@@ -216,6 +221,9 @@ define([
         collection.state.isOpen(false);
         collection.parents.remove(this);
         this.collections.items.remove(collection);
+        if (this.props.canonical() === collection.id) {
+            this.props.canonical(null);
+        }
         this.saveProps();
     };
 

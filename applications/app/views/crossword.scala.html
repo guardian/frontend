@@ -28,19 +28,25 @@
                         <div class="js-crossword"
                              data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
 
-                            @* The following is a fallback for when JavaScript is not enabled *@
-                            <div style="@crosswordPage.fallbackDimensions.styleString">
-                                @svg
-                            </div>
+                            <div class="crossword__container crossword__container--@crosswordPage.crossword.crosswordType.toString.toLowerCase()">
 
-                            <div class="crossword__clues">
-                                <h3 class="crossword__clues-header">Across</h3>
+                                @* The following is a fallback for when JavaScript is not enabled *@
+                                <div class="crossword__grid-wrapper">
+                                    <noscript>@svg</noscript>
+                                </div>
+                                <noscript>
+                                <div class="crossword__clues">
+                                    <div class="crossword__clues--across">
+                                        <h3 class="crossword__clues-header">Across</h3>
+                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Across))
+                                    </div>
 
-                                @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Across))
-
-                                <h3 class="crossword__clues-header">Down</h3>
-
-                                @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Down))
+                                    <div class="crossword__clues--down">
+                                        <h3 class="crossword__clues-header">Down</h3>
+                                        <noscript>@crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Down))
+                                    </div>
+                                </div>
+                                </noscript>
                             </div>
                         </div>
                     </div>

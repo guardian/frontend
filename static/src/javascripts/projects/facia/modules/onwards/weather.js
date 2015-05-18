@@ -23,6 +23,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
+    'common/modules/analytics/omniture',
     'common/modules/user-prefs',
     'facia/modules/onwards/search-tool'
 ], function (
@@ -36,6 +37,7 @@ define([
     detect,
     mediator,
     template,
+    omniture,
     userPrefs,
     SearchTool
     ) {
@@ -54,7 +56,7 @@ define([
         },
 
         isNetworkFront: function () {
-            return _.contains(['uk', 'us', 'au'], config.page.pageId);
+            return _.contains(['uk', 'us', 'au', 'international'], config.page.pageId);
         },
 
         /**
@@ -99,7 +101,7 @@ define([
                 return this.getWeatherData(config.page.weatherapiurl + '.json')
                     .then(function (response) {
                         this.fetchWeatherData(response);
-                        this.track(response.city);
+                        omniture.trackLinkImmediate(true, 'o', 'weather location set by fastly');
                     }.bind(this))
                     .fail(function (err, msg) {
                         raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
@@ -128,12 +130,6 @@ define([
         clearLocation: function () {
             userPrefs.remove(prefName);
             searchTool.setInputValue();
-        },
-
-        track: function (city) {
-            s.prop26 = city;
-            s.linkTrackVars = 'prop26';
-            s.tl(true, 'o', 'weather location set by fastly');
         },
 
         fetchForecastData: function (location) {
@@ -201,7 +197,7 @@ define([
         },
 
         attachToDOM: function (tmpl, city) {
-            $holder = $('.js-container--first .js-container__header');
+            $holder = $('#headlines .js-container__header');
             $('.js-weather', $holder).remove();
             $holder.append(tmpl.replace(new RegExp('{{city}}', 'g'), city));
         },

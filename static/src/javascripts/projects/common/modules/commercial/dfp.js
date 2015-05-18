@@ -2,17 +2,9 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'qwery',
     'raven',
-    'lodash/functions/debounce',
-    'lodash/arrays/flatten',
-    'lodash/arrays/uniq',
-    'lodash/collections/forEach',
-    'lodash/collections/map',
-    'lodash/functions/once',
-    'lodash/objects/defaults',
-    'lodash/objects/forOwn',
-    'lodash/objects/keys',
     'common/utils/$',
     'common/utils/$css',
     'common/utils/_',
@@ -23,21 +15,15 @@ define([
     'common/utils/user-timing',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
-    'common/modules/onward/geo-most-popular'
+    'common/modules/onward/geo-most-popular',
+    'common/modules/experiments/ab',
+    'common/modules/analytics/beacon'
 ], function (
     bean,
     bonzo,
+    fastdom,
     qwery,
     raven,
-    debounce,
-    flatten,
-    uniq,
-    forEach,
-    map,
-    once,
-    defaults,
-    forOwn,
-    keys,
     $,
     $css,
     _,
@@ -48,9 +34,10 @@ define([
     userTiming,
     StickyMpu,
     buildPageTargeting,
-    geoMostPopular
+    geoMostPopular,
+    ab,
+    beacon
 ) {
-
     /**
      * Right, so an explanation as to how this works...
      *
@@ -90,6 +77,14 @@ define([
             '300,251': function (event, $adSlot) {
                 new StickyMpu($adSlot).create();
             },
+            '300,250': function (event, $adSlot) {
+                if (isMtRecTest() && $adSlot.hasClass('ad-slot--right')) {
+                    if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
+                        // Hardcoded for sticky nav test. It will need some on time checking if this will go to PROD
+                        new StickyMpu($adSlot, {top: 58}).create();
+                    }
+                }
+            },
             '1,1': function (event, $adSlot) {
                 if (!event.slot.getOutOfPage()) {
                     $adSlot.addClass('u-h');
@@ -102,10 +97,24 @@ define([
             '300,1050': function () {
                 // remove geo most popular
                 geoMostPopular.whenRendered.then(function (geoMostPopular) {
-                    bonzo(geoMostPopular.elem).remove();
+                    fastdom.write(function () {
+                        bonzo(geoMostPopular.elem).remove();
+                    });
                 });
             }
         },
+
+        isMtRecTest = function () {
+            var MtRec1Test = ab.getParticipations().MtRec1,
+                MtRec2Test = ab.getParticipations().MtRec2;
+
+            return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A' ||
+                ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
+        },
+
+        recordFirstAdRendered = _.once(function () {
+            beacon.beaconCounts('ad-render');
+        }),
 
         /**
          * Initial commands
@@ -113,12 +122,23 @@ define([
         setListeners = function () {
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
                 rendered = true;
+                recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
             }));
         },
         setPageTargeting = function () {
-            forOwn(buildPageTargeting(), function (value, key) {
+            if (config.switches.ophan && config.switches.ophanViewId) {
+                require(['ophan/ng'], function (ophan) {
+                    setTargets({viewId: ophan.viewId});
+                });
+            } else {
+                setTargets();
+            }
+        },
+
+        setTargets =  function (opts) {
+            _.forOwn(buildPageTargeting(opts), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
@@ -134,7 +154,9 @@ define([
                 // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
                     if ($css($adSlot, 'display') === 'none') {
-                        $adSlot.remove();
+                        fastdom.write(function () {
+                            $adSlot.remove();
+                        });
                         return false;
                     } else {
                         return true;
@@ -155,10 +177,16 @@ define([
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
-            googletag.display(keys(slots).shift());
+            googletag.display(_.keys(slots).shift());
             displayed = true;
         },
-        windowResize = debounce(
+        displayLazyAds = function () {
+            googletag.pubads().collapseEmptyDivs();
+            googletag.enableServices();
+            mediator.on('window:scroll', _.throttle(lazyLoad, 10));
+            lazyLoad();
+        },
+        windowResize = _.debounce(
             function () {
                 // refresh on resize
                 hasBreakpointChanged(refresh);
@@ -168,12 +196,22 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
+        isLzAdsSwitchOn = function () {
+            return config.switches.lzAds;
+        },
+
+        isDeferSpaceFinderTest = function () {
+            var test = ab.getParticipations().DeferSpacefinder,
+                eligible = test && test.variant === 'A';
+
+            return ab.testCanBeRun('DeferSpacefinder') && eligible;
+        },
+
         /**
          * Public functions
          */
         init = function (options) {
-
-            var opts = defaults(options || {}, {
+            var opts = _.defaults(options || {}, {
                 resizeTimeout: 2000
             });
 
@@ -191,12 +229,41 @@ define([
             window.googletag.cmd.push(setListeners);
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
-            window.googletag.cmd.push(displayAds);
+
+            // We want to run lazy load if user is in the main test or if there is a switch on
+            (isMtRecTest() || isLzAdsSwitchOn() || isDeferSpaceFinderTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
             return dfp;
+        },
+        lazyLoad = function () {
+            if (slots.length === 0) {
+                mediator.off('window:scroll');
+            } else {
+                fastdom.read(function () {
+                    var scrollTop    = bonzo(document.body).scrollTop(),
+                        scrollBottom = scrollTop + bonzo.viewport().height,
+                        depth;
 
+                    if (isDeferSpaceFinderTest()) {
+                        depth = 100;
+                    } else {
+                        depth = 0.5;
+                    }
+
+                    _(slots).keys().forEach(function (slot) {
+                        // if the position of the ad is above the viewport - offset (half screen size)
+                        // Make sure page skin is loaded first
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth || slot === 'dfp-ad--pageskin-inread') {
+                            googletag.display(slot);
+
+                            slots = _(slots).omit(slot).value();
+                            displayed = true;
+                        }
+                    });
+                });
+            }
         },
         addSlot = function ($adSlot) {
             var slotId = $adSlot.attr('id'),
@@ -206,7 +273,6 @@ define([
                         slot: defineSlot($adSlot)
                     };
                     googletag.display(slotId);
-                    refreshSlot($adSlot);
                 };
             if (displayed && !slots[slotId]) { // dynamically add ad slot
                 // this is horrible, but if we do this before the initial ads have loaded things go awry
@@ -241,8 +307,8 @@ define([
                 id             = $adSlot.attr('id'),
                 sizeMapping    = defineSlotSizes($adSlot),
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-                size           = uniq(
-                    flatten(sizeMapping, true, function (map) {
+                size           = _.uniq(
+                    _.flatten(sizeMapping, true, function (map) {
                         return map[1];
                     }),
                     function (size) {
@@ -280,7 +346,9 @@ define([
         parseAd = function (event) {
             var size,
                 slotId = event.slot.getSlotId().getDomId(),
-                $slot = $('#' + slotId);
+                $slot = $('#' + slotId),
+                $placeholder,
+                $adSlotContent;
 
             allAdsRendered(slotId);
 
@@ -288,8 +356,12 @@ define([
                 removeLabel($slot);
             } else {
                 // remove any placeholder ad content
-                $('.ad-slot__content--placeholder', $slot).remove();
-                $('#' + slotId + ' div').addClass('ad-slot__content');
+                $placeholder = $('.ad-slot__content--placeholder', $slot);
+                $adSlotContent = $('#' + slotId + ' div');
+                fastdom.write(function () {
+                    $placeholder.remove();
+                    $adSlotContent.addClass('ad-slot__content');
+                });
                 checkForBreakout($slot);
                 addLabel($slot);
                 size = event.size.join(',');
@@ -297,14 +369,20 @@ define([
                 callbacks[size] && callbacks[size](event, $slot);
 
                 if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
-                    $slot.parent().css('display', 'flex');
+                    fastdom.write(function () {
+                        $slot.parent().css('display', 'flex');
+                    });
                 } else if (!($slot.hasClass('ad-slot--top-above-nav') && size === '1,1')) {
-                    $slot.parent().css('display', 'block');
+                    fastdom.write(function () {
+                        $slot.parent().css('display', 'block');
+                    });
                 }
 
                 if (($slot.hasClass('ad-slot--top-banner-ad') && size === '88,70')
                 || ($slot.hasClass('ad-slot--commercial-component') && size === '88,88')) {
-                    $slot.addClass('ad-slot__fluid250');
+                    fastdom.write(function () {
+                        $slot.addClass('ad-slot__fluid250');
+                    });
                 }
             }
         },
@@ -318,12 +396,16 @@ define([
             }
         },
         addLabel = function ($slot) {
-            if (shouldRenderLabel($slot)) {
-                $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
-            }
+            fastdom.write(function () {
+                if (shouldRenderLabel($slot)) {
+                    $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
+                }
+            });
         },
         removeLabel = function ($slot) {
-            $('.ad-slot__label', $slot).remove();
+            fastdom.write(function () {
+                $('.ad-slot__label', $slot).remove();
+            });
         },
         shouldRenderLabel = function ($slot) {
             return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
@@ -336,7 +418,7 @@ define([
                 $iFrameParent      = $iFrame.parent();
 
             if (iFrameBody) {
-                forEach(breakoutClasses, function (breakoutClass) {
+                _.forEach(breakoutClasses, function (breakoutClass) {
                     $('.' + breakoutClass, iFrameBody).each(function (breakoutEl) {
                         var creativeConfig,
                             $breakoutEl     = bonzo(breakoutEl),
@@ -346,22 +428,27 @@ define([
                             // new way of passing data from DFP
                             if ($breakoutEl.attr('type') === 'application/json') {
                                 creativeConfig = JSON.parse(breakoutContent);
-                                require('bootstraps/creatives')
-                                    .next(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
+                                require(['bootstraps/creatives'], function () {
+                                    require(['common/modules/commercial/creatives/' + creativeConfig.name], function (Creative) {
                                         new Creative($slot, creativeConfig.params, creativeConfig.opts).create();
                                     });
+                                });
                             } else {
                                 // evil, but we own the returning js snippet
                                 eval(breakoutContent);
                             }
 
                         } else {
-                            $iFrameParent.append(breakoutContent);
-                            $breakoutEl.remove();
+                            fastdom.write(function () {
+                                $iFrameParent.append(breakoutContent);
+                                $breakoutEl.remove();
+                            });
 
                             $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
                                 window.setTimeout(function () {
-                                    bonzo(responsiveAd).addClass('ad--responsive--open');
+                                    fastdom.write(function () {
+                                        bonzo(responsiveAd).addClass('ad--responsive--open');
+                                    });
                                 }, 50);
                             });
                         }
@@ -370,7 +457,9 @@ define([
                 });
             }
             if (shouldRemoveIFrame) {
-                $iFrame.hide();
+                fastdom.write(function () {
+                    $iFrame.hide();
+                });
             }
         },
         /**
@@ -446,8 +535,8 @@ define([
          * Multiple sizes - `data-mobile="300,50|320,50"`
          */
         createSizeMapping = function (attr) {
-            return map(attr.split('|'), function (size) {
-                return map(size.split(','), Number);
+            return _.map(attr.split('|'), function (size) {
+                return _.map(size.split(','), Number);
             });
         },
         /**
@@ -463,7 +552,7 @@ define([
         defineSlotSizes = function (slot) {
             var mapping = googletag.sizeMapping();
 
-            forEach(detect.breakpoints, function (breakpointInfo) {
+            _.forEach(detect.breakpoints, function (breakpointInfo) {
                 // turn breakpoint name into attribute style (lowercase, hyphenated)
                 var attr  = slot.data(breakpointNameToAttribute(breakpointInfo.name));
                 if (attr) {
@@ -474,7 +563,7 @@ define([
             return mapping.build();
         },
         parseKeywords = function (keywords) {
-            return map((keywords || '').split(','), function (keyword) {
+            return _.map((keywords || '').split(','), function (keyword) {
                 return keyword.split('/').pop();
             });
         },

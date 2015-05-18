@@ -27,6 +27,13 @@ define([
     urlAbsPath,
     identity
 ) {
+    fullTrim = fullTrim.default;
+    sanitizeApiQuery = sanitizeApiQuery.default;
+    urlAbsPath = urlAbsPath.default;
+    asObservableProps = asObservableProps.default;
+    populateObservables = populateObservables.default;
+    mediator = mediator.default;
+
     var checkCount = 0;
 
     function Collection(opts) {
@@ -50,16 +57,9 @@ define([
             'showDateHeader',
             'showLatestUpdate',
             'excludeFromRss',
-            'apiQuery',
-            'importance']);
+            'apiQuery']);
 
         populateObservables(this.meta, opts);
-
-        this.props = {
-            optionsImportance: [
-                'critical', 'important'
-            ]
-        };
 
         this.state = asObservableProps([
             'isOpen',

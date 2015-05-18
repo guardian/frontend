@@ -23,7 +23,7 @@ GET        /commercial/jobs.json                                                
 GET        /commercial/masterclasses.json                                                      controllers.commercial.MasterClasses.renderMasterclasses
 
 # Soulmates
-GET        /commercial/soulmates/mixed.json                                                    controllers.commercial.SoulmateAds.renderSoulmates
+GET        /commercial/soulmates/$subgroup<\w+>.json                                           controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
 
 # Money offers
 GET        /commercial/money/bestbuys.json                                                     controllers.commercial.MoneyOffers.renderBestBuys
@@ -58,8 +58,8 @@ GET        /:mediaType/section/:sectionId/*seriesId.json                        
 GET        /:mediaType/section/:sectionId.json                                                 controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
 GET        /video/most-viewed.json                                                             controllers.MostViewedVideoController.renderMostViewed()
 GET        /audio/most-viewed.json                                                             controllers.MostViewedAudioController.renderMostViewed()
-GET        /embed/card/*path.json                                                              controllers.FlyerController.render(path)
-GET        /embed/card/*path                                                                   controllers.FlyerController.renderHtml(path)
+GET        /embed/card/*path.json                                                              controllers.RichLinkController.render(path)
+GET        /embed/card/*path                                                                   controllers.RichLinkController.renderHtml(path)
 
 # Sport
 GET        /sport/cricket/match/:matchId                                                       controllers.CricketMatchController.renderMatchId(matchId)
@@ -168,7 +168,10 @@ GET        /weatherapi/city.json                                                
 GET        /weatherapi/locations                                                               controllers.LocationsController.findCity(query: String)
 
 # Articles
-GET        /*path.json                                                                         controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
+GET        /*path.json                                                                         controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
+
+# Don't forward requests for favicon.ico to the Content API
+GET        /favicon.ico                                                                        controllers.FaviconController.favicon
 
 # Any "item" from the Content API
 GET        /*path                                                                              controllers.ItemController.render(path)

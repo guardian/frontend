@@ -26,7 +26,6 @@
 <link rel="dns-prefetch" href="//oas.theguardian.com" />
 <link rel="dns-prefetch" href="@Configuration.debug.beaconUrl" />
 
-
 @* Additional meta data that does not impact rendering speed (and can live at the end of the <head>) *@
 
 @if(Play.isDev){
@@ -107,3 +106,21 @@
 @if(play.Play.isDev()) {
     @Configuration.javascript.pageData.get("guardian.page.iphoneDebugger").map{ scriptUrl => <script src="@scriptUrl"></script> }
 }
+
+<meta name="google-site-verification" content="LR-FN6c2gIEUoo3k049w1nxyHykmac5ZE3SaUOiKc30" />
+
+<script data-schema="organization" type="application/ld+json">
+    {
+        "@@context" : "http://schema.org",
+        "@@type" : "Organization",
+        "name" : "The Guardian",
+        "url" : "http://www.theguardian.com/",
+        "logo" : "@Static("images/favicons/152x152.png")",
+        "sameAs" : [
+            "https://www.facebook.com/theguardian",
+            "https://twitter.com/guardian",
+            "https://plus.google.com/+theGuardian",
+            "https://www.youtube.com/user/TheGuardian"
+        ]
+    }
+</script>

@@ -1,14 +1,12 @@
 define([
-    'lodash/collections/reduce',
-    'lodash/objects/has'
+    'common/utils/_'
 ], function (
-    reduce,
-    has
+    _
 ) {
 
     return function (object, property, defaultValue) {
-        var value = reduce(property.split('.'), function (object, property) {
-            return has(object, property) ? object[property] : undefined;
+        var value = _.reduce(property.split('.'), function (object, property) {
+            return _.has(object, property) ? object[property] : undefined;
         }, object);
 
         return value !== undefined ? value : (defaultValue !== undefined) ? defaultValue : false;

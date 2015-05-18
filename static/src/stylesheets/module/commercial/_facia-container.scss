@@ -5,11 +5,19 @@
     background-color: colour(neutral-6);
 
     .button--tertiary {
-        .i-arrow-black-right {
+
+        .i-arrow-black {
+            path { fill: #000000; }
+        }
+        .i-arrow-black-right,
+        .i-arrow-black {
             opacity: .3;
         }
-        &:hover .i-arrow-black-right {
-            opacity: 1;
+        &:hover {
+            .i-arrow-black-right,
+            .i-arrow-black {
+                opacity: 1;
+            }
         }
     }
 }
@@ -56,7 +64,7 @@
         padding-right: $gs-gutter;
     }
     @include mq(leftCol) {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         height: 100%;
     }
 }
@@ -94,7 +102,7 @@
             display: none;
         }
     }
-    
+
     .inline-marque-54 {
         display: none;
 
@@ -102,7 +110,7 @@
             display: block;
         }
     }
-    
+
     .inline-commercial-brand {
         @include mq($until: leftCol) {
             opacity: .8;
@@ -158,8 +166,8 @@
     padding-top: $gs-baseline/2;
 }
 .commercial__search__input {
-    @include box-sizing(border-box);
-    @include border-radius(18px);
+    box-sizing: border-box;
+    border-radius: 18px;
     @include fs-textSans(2);
     background-color: rgba(#ffffff, .9);
     border: 0;
@@ -175,7 +183,7 @@
     }
     &:focus {
         background-color: #ffffff;
-        @include box-shadow(0 0 0 2px rgba(#000000, .3), inset 0 1px 2px 0 rgba(#000000, .3))
+        box-shadow: 0 0 0 2px rgba(#000000, .3), inset 0 1px 2px 0 rgba(#000000, .3);
     }
 }
 .commercial__search__submit {
@@ -184,6 +192,10 @@
     width: $gs-baseline*3;
     height: $gs-baseline*3;
     padding: $gs-baseline*.75 $gs-baseline;
+
+    path {
+        fill: colour(neutral-3);
+    }
 
     &:hover,
     &:focus,
@@ -255,7 +267,7 @@
             margin-right: auto;
         }
         .commercial__header__inner {
-            @include box-sizing(content-box);
+            box-sizing: content-box;
             margin: 0;
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
@@ -295,7 +307,7 @@
             min-width: auto;
         }
         .commercial__desc {
-            margin-top: $gs-baseline*-1.333;
+            margin-top: $gs-baseline*-.5;
         }
         .commercial__body {
             margin-left: 0;

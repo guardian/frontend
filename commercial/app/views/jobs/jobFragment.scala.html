@@ -1,6 +1,6 @@
 @(job: model.commercial.jobs.Job, clickMacro: Option[String])(implicit request: RequestHeader)
 @defining("http://jobs.theguardian.com", "1_0", "2014-08-14") { case (jobsHost, version, date) =>
-    <li class="lineitem lineitem--multi">
+    <li class="lineitem lineitem--multi lineitems__item">
         <div class="commercial--jobs commercial--tone-jobs">
             <div class="commercial--multi__header">
                 <h4 class="commercial__title">
@@ -21,7 +21,7 @@
                 <a class="lineitem__cta button button--primary button--small"
                 href="@clickMacro@job.recruiterPageUrl"
                 data-link-name="merchandising-hybrid-jobs-v@{version}_apply-now">
-                    Apply now <i class="i i-arrow-white-right i-right"></i>
+                    Apply now @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
                 </a>
             </div>
         </div>

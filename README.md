@@ -115,10 +115,14 @@ sudo npm -g install grunt-cli
 Ubuntu/Mac:
 ```
 sudo npm -g install jspm
-jspm endpoint config github
+jspm registry config github
 ```
 
-It'll ask for a GitHub access token. Go to GitHub Settings -> Applications and [generate new token](https://github.com/settings/tokens/new). Default scopes are fine.
+It'll ask for a GitHub access token. Go to GitHub Settings -> Applications and [generate new token](https://github.com/settings/tokens/new). Ensure only the public_repo scope is checked.
+Now create a registry instance.
+```
+jspm registry create bower jspm-bower-endpoint
+```
 
 #### Ruby >= v1.9.x (use `ruby -v` to check if you have it installed)
 
@@ -173,11 +177,14 @@ npm install
 Install additional dependencies:
 ```
 bundle
+grunt install
 ```
+
+npm, bundle, and jspm are also run by `install-dependencies.sh`.
 
 After this, you can compile the assets:
 ```
-grunt prepare compile
+grunt compile
 ```
 
 ### Run the app
@@ -216,14 +223,8 @@ git clone git@github.com:guardian/frontend.git
 Install to your IDE from http://editorconfig.org/#download
 
 ###intelliJ metadata
-To create project files for use in IntelliJ, run the `gen-idea` task from the
-root SBT project.
-```
-cd frontend
-./sbt
-gen-idea
-```
-See https://github.com/mpeltonen/sbt-idea for more info.
+To create project files for use in IntelliJ, you need to make sure you install the Scala plugin from Preferences->Plugins.  It supports SBT and Play.
+Then load IntelliJ, then click Import project and import the directory as an SBT project.  Default settings are fine, except you need to make sure you choose JDK 1.8 otherwise it won't import correctly.
 
 Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other things to do.
 
@@ -321,7 +322,7 @@ and [Vagrant](http://docs.vagrantup.com/v2/installation/index.html) installed
 
 There is a `grunt watch` task available to build and watch for development
 changes, but `grunt-watch` is pretty inefficient to compile our Sass into CSS
-so @mattosborn created a script called [grunt-csdevmode][grunt-csdevmode].
+so @mattosborn created a script called [grunt-csdevmode](https://github.com/mattosborn/grunt-csdevmode).
 
 `grunt csdevmode` also pushes stylesheets to all connected browsers:
 no need to reload a page to preview your changes, just like with Livereload.
@@ -338,7 +339,7 @@ grunt csdevmode
 Play Framework will recompile code changes on refresh.
 
 Further information on using the Play console is available
-[here][play2-console].
+[here](https://github.com/playframework/Play20/wiki/PlayConsole).
 
 ###Endpoints
 
@@ -355,7 +356,7 @@ typically include:
 
 ###Deploying
 
-Deployment uses the [Magenta][magenta] library.
+Deployment uses the [Magenta](https://github.com/guardian/deploy) library.
 
 
 ###Debugging
@@ -375,7 +376,7 @@ Start a new Debug session, and your breakpoints should be active.
 
 Additional Documentation
 ------------------------
-If you're new, you'll want to see what [libraries we use](docs/libraries.md) in frontned.
+If you're new, you'll want to see what [libraries we use](docs/libraries.md) in frontend.
 
 Further documentation notes and useful items can be found in [docs](docs).
 

@@ -28,6 +28,8 @@
         <div class="meta__social" data-component="share">
             @fragments.social(content, "top")
         </div>
+        <div class="meta__save-for-later" data-link-name="meta-save-for-later" data-component="meta-save-for-later">
+        </div>
         <div class="meta__numbers modern-visible">
             <div class="u-h meta__number js-sharecount">
             </div>
@@ -37,7 +39,7 @@
     </div>
 }
 
-<div class="content__meta-container js-football-meta u-cf
+<div class="content__meta-container js-content-meta js-football-meta u-cf
     @if(content.byline.isEmpty){ content__meta-container--no-byline}
     @if(content.isLiveBlog) { content__meta-container--liveblog}
     @if(content.hasShowcaseMainPicture){ content__meta-container--showcase}

@@ -1,43 +1,56 @@
 define([
     'raven',
-    'lodash/collections/filter',
-    'lodash/collections/forEach',
-    'lodash/collections/map',
-    'lodash/collections/some',
-    'lodash/objects/assign',
-    'lodash/objects/keys',
     'common/utils/_',
     'common/utils/config',
+    'common/utils/cookies',
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/sticky-shares',
+    'common/modules/experiments/tests/liveblog-sport-front-updates',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/krux-audience-science',
-    'common/modules/experiments/tests/identity-benefits'
+    'common/modules/experiments/tests/mt-rec1',
+    'common/modules/experiments/tests/mt-rec2',
+    'common/modules/experiments/tests/heatmap',
+    'common/modules/experiments/tests/save-for-later',
+    'common/modules/experiments/tests/history-without-whitelist',
+    'common/modules/experiments/headlines',
+    'common/modules/experiments/tests/defer-spacefinder'
 ], function (
     raven,
-    filter,
-    forEach,
-    map,
-    some,
-    assign,
-    keys,
     _,
     config,
+    cookies,
     mediator,
     store,
     mvtCookie,
+    StickyShares,
+    LiveblogSportFrontUpdates,
     HighCommercialComponent,
-    KruxAudienceScience,
-    IdentityBenefits
-) {
+    MtRec1,
+    MtRec2,
+    HeatMap,
+    SaveForLater,
+    HistoryWithoutWhitelist,
+    Headline,
+    DeferSpacefinder
+    ) {
 
     var ab,
-        TESTS = [
+        TESTS = _.flatten([
+            new StickyShares(),
+            new LiveblogSportFrontUpdates(),
             new HighCommercialComponent(),
-            new KruxAudienceScience(),
-            new IdentityBenefits()
-        ],
+            new MtRec1(),
+            new MtRec2(),
+            new HeatMap(),
+            new SaveForLater(),
+            new HistoryWithoutWhitelist(),
+            new DeferSpacefinder(),
+            _.map(_.range(1, 10), function (n) {
+                return new Headline(n);
+            })
+        ]),
         participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
@@ -67,11 +80,11 @@ define([
         // Removes any tests from localstorage that have been
         // renamed/deleted from the backend
         var participations = getParticipations();
-        forEach(keys(participations), function (k) {
+        _.forEach(_.keys(participations), function (k) {
             if (typeof (config.switches['ab' + k]) === 'undefined') {
                 removeParticipation({ id: k });
             } else {
-                var testExists = some(TESTS, function (element) {
+                var testExists = _.some(TESTS, function (element) {
                     return element.id === k;
                 });
 
@@ -83,7 +96,7 @@ define([
     }
 
     function getActiveTests() {
-        return filter(TESTS, function (test) {
+        return _.filter(TESTS, function (test) {
             var expired = (new Date() - new Date(test.expiry)) > 0;
             if (expired) {
                 removeParticipation(test);
@@ -94,18 +107,20 @@ define([
     }
 
     function getExpiredTests() {
-        return filter(TESTS, function (test) {
+        return _.filter(TESTS, function (test) {
             return (new Date() - new Date(test.expiry)) > 0;
         });
     }
 
     function testCanBeRun(test) {
-        var expired = (new Date() - new Date(test.expiry)) > 0;
-        return (test.canRun() && !expired && isTestSwitchedOn(test));
+        var expired = (new Date() - new Date(test.expiry)) > 0,
+            isSensitive = config.page.shouldHideAdverts;
+        return ((isSensitive ? test.showForSensitive : true)
+                && test.canRun() && !expired && isTestSwitchedOn(test));
     }
 
     function getTest(id) {
-        var test = filter(TESTS, function (test) {
+        var test = _.filter(TESTS, function (test) {
             return (test.id === id);
         });
         return (test) ? test[0] : '';
@@ -113,13 +128,25 @@ define([
 
     function makeOmnitureTag() {
         var participations = getParticipations(),
-            tag = [];
+            tag = [], editionFromCookie;
 
-        forEach(keys(participations), function (k) {
+        _.forEach(_.keys(participations), function (k) {
             if (testCanBeRun(getTest(k))) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
             }
         });
+
+        if (config.tests.internationalEditionVariant) {
+            tag.push(['AB', 'InternationalEditionTest', config.tests.internationalEditionVariant].join(' | '));
+
+            // don't use the edition of the page - we specifically want the cookie version
+            // this allows us to figure out who has "opted out" and "opted into" the test
+            editionFromCookie = cookies.get('GU_EDITION');
+
+            if (editionFromCookie) {
+                tag.push(['AB', 'InternationalEditionPreference', editionFromCookie].join(' | '));
+            }
+        }
 
         return tag.join(',');
     }
@@ -129,7 +156,7 @@ define([
         if (isParticipating(test) && testCanBeRun(test)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
-            some(test.variants, function (variant) {
+            _.some(test.variants, function (variant) {
                 if (variant.id === variantId) {
                     variant.test();
                     return true;
@@ -153,12 +180,12 @@ define([
         var variantIds, testVariantId,
             smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset,
             largestTestId  = smallestTestId + mvtCookie.getMvtNumValues() * test.audience,
-            // Get this browser's mvt test id.
+        // Get this browser's mvt test id.
             mvtCookieId = mvtCookie.getMvtValue();
 
         if (smallestTestId <= mvtCookieId && largestTestId > mvtCookieId) {
             // This mvt test id is in the test range, so allocate it to a test variant.
-            variantIds = map(test.variants, function (variant) {
+            variantIds = _.map(test.variants, function (variant) {
                 return variant.id;
             });
             testVariantId = mvtCookieId % variantIds.length;
@@ -199,7 +226,7 @@ define([
         },
 
         segment: function () {
-            forEach(getActiveTests(), function (test) {
+            _.forEach(getActiveTests(), function (test) {
                 allocateUserToTest(test);
             });
         },
@@ -216,15 +243,17 @@ define([
         },
 
         segmentUser: function () {
-            mvtCookie.generateMvtCookie();
-
-            var tokens, test, variant,
+            var tokens,
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
-                tokens = window.location.hash.replace('#ab-', '').split('=');
-                test = tokens[0];
-                variant = tokens[1];
-                ab.forceSegment(test, variant);
+                tokens = window.location.hash.replace('#ab-', '').split(',');
+                tokens.forEach(function (token) {
+                    var abParam, test, variant;
+                    abParam = token.split('=');
+                    test = abParam[0];
+                    variant = abParam[1];
+                    ab.forceSegment(test, variant);
+                });
             } else {
                 ab.segment();
             }
@@ -233,16 +262,16 @@ define([
         },
 
         run: function () {
-            forEach(getActiveTests(), function (test) {
+            _.forEach(getActiveTests(), function (test) {
                 run(test);
             });
         },
 
         isEventApplicableToAnActiveTest: function (event) {
-            var participations = keys(getParticipations());
-            return some(participations, function (id) {
+            var participations = _.keys(getParticipations());
+            return _.some(participations, function (id) {
                 var listOfEventStrings = getTest(id).events;
-                return some(listOfEventStrings, function (ev) {
+                return _.some(listOfEventStrings, function (ev) {
                     return event.indexOf(ev) === 0;
                 });
             });
@@ -258,7 +287,7 @@ define([
             return eventTag && _(getActiveTests())
                 .filter(function (test) {
                     var testEvents = test.events;
-                    return testEvents && some(testEvents, function (testEvent) {
+                    return testEvents && _.some(testEvents, function (testEvent) {
                         return startsWith(eventTag, testEvent);
                     });
                 })
@@ -272,8 +301,7 @@ define([
             var abLogObject = {};
 
             try {
-                forEach(getActiveTests(), function (test) {
-
+                _.forEach(getActiveTests(), function (test) {
                     if (isParticipating(test) && testCanBeRun(test)) {
                         var variant = getTestVariant(test.id);
                         if (variant && variant !== 'notintest') {
@@ -291,11 +319,29 @@ define([
         },
 
         getParticipations: getParticipations,
+        isParticipating: isParticipating,
+        getTest: getTest,
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
         getTestVariant: getTestVariant,
         setTestVariant: setTestVariant,
+
+        /**
+         * check if a test can be run (i.e. is not expired and switched on)
+         *
+         * @param  {string|Object} test   id or test object
+         * @return {Boolean}
+         */
+        testCanBeRun: function (test) {
+            if (typeof test === 'string') {
+                return testCanBeRun(_.find(TESTS, function (t) {
+                    return t.id === test;
+                }));
+            }
+
+            return test.id && test.expiry && testCanBeRun(test);
+        },
 
         // testing
         reset: function () {

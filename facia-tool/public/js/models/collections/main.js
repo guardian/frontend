@@ -45,6 +45,11 @@ define([
     Layout,
     widgets
 ) {
+    modalDialog = modalDialog.default;
+    ammendedQueryStr = ammendedQueryStr.default;
+    parseQueryParams = parseQueryParams.default;
+    mediator = mediator.default;
+
     return function() {
 
         var model = vars.model = {
@@ -113,7 +118,7 @@ define([
 
                 vars.state.config = config;
 
-                var frontInURL = parseQueryParams(window.location.search).front;
+                var frontInURL = parseQueryParams().front;
                 fronts = frontInURL === 'testcard' ? ['testcard'] :
                     _.chain(config.fronts)
                     .map(function(front, path) {
@@ -140,7 +145,7 @@ define([
                 mediator.on('layout:change', function () {
                     if (!wasPopstate) {
                         var serializedLayout = layoutFromUrl.serialize(model.layout.serializable());
-                        if (serializedLayout !== parseQueryParams(window.location.search).layout) {
+                        if (serializedLayout !== parseQueryParams().layout) {
                             history.pushState({}, '', window.location.pathname + '?' + ammendedQueryStr('layout', serializedLayout));
                         }
                     }

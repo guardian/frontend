@@ -1,17 +1,21 @@
 define([
     'qwery',
-    'lodash/objects/defaults',
+    'common/utils/$',
+    'common/utils/_',
+    'common/utils/config',
     'common/modules/ui/sticky'
 ], function (
     qwery,
-    defaults,
+    $,
+    _,
+    config,
     Sticky
 ) {
 
     var mpuHeight = 275,
         StickyMpu = function ($adSlot, options) {
             this.$adSlot = $adSlot;
-            this.opts    = defaults(options || {}, {
+            this.opts    = _.defaults(options || {}, {
                 top: 0
             });
         };
@@ -22,7 +26,7 @@ define([
         if (this.$adSlot.data('name') !== 'right') {
             return;
         }
-        articleBodyOffset = qwery('.content__article-body')[0].offsetTop;
+        articleBodyOffset = config.page.hasShowcaseMainPicture ? $('.media-primary').dim().height : qwery('.content__article-body')[0].offsetTop;
         this.$adSlot.parent().css('height', (articleBodyOffset + mpuHeight) + 'px');
         new Sticky(this.$adSlot[0], { top: this.opts.top }).init();
     };

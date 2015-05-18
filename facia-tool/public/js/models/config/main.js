@@ -8,7 +8,6 @@ define([
     'modules/droppable',
     'utils/fetch-settings',
     'utils/update-scrollables',
-    'utils/clean-clone',
     'utils/clone-with-key',
     'utils/find-first-by-id',
     'utils/logger',
@@ -28,7 +27,6 @@ define([
     droppable,
     fetchSettings,
     updateScrollables,
-    cleanClone,
     cloneWithKey,
     findFirstById,
     logger,
@@ -39,6 +37,9 @@ define([
     newItems,
     persistence
 ) {
+    findFirstById = findFirstById.default;
+    cloneWithKey = cloneWithKey.default;
+
     return function() {
         var model = vars.model = {};
 

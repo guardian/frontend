@@ -10,7 +10,7 @@
     }
     &:after {
         margin-top: $gs-baseline / 3;
-        @include transform(rotate(180deg));
+        transform: rotate(180deg);
     }
 }
 
@@ -19,7 +19,6 @@
 }
 
 .tonal--tone-media .tonal__main--tone-media,
-.tonal--tone-podcast .tonal__main--tone-podcast,
 .tonal--tone-special-report .content__main-column--media {
     .sharecount__heading .i {
         @include icon(share-android--white);
@@ -61,13 +60,19 @@
         margin: 0;
         position: relative;
         padding-left: 18px;
-        @include mq(leftCol) {
-            padding-left: 15px;
-        }
-        .i {
+
+        .i, .inline-icon {
             position: absolute;
             left: 0;
         }
+
+        @include mq(leftCol) {
+            padding-left: $gs-gutter * .75;
+        }
+    }
+
+    .inline-icon {
+        margin: 2px 0 0 -2px;
     }
 
     .commentcount2__value,
@@ -100,14 +105,6 @@
             opacity: .35;
         }
     }
-    .commentcount2__heading {
-        @include mq(leftCol) {
-            padding-left: 17px;
-        }
-        .i {
-            top: -1px;
-        }
-    }
 }
 
 .meta__number {
@@ -123,6 +120,13 @@
     &:last-child {
         padding-right: 0;
     }
+}
+
+.meta__save-for-later {
+    padding-top: $gs-baseline / 6;
+    padding-bottom: $gs-baseline;
+    margin-bottom: 0;
+    border-top: 1px dotted colour(neutral-5);
 }
 
 .meta__number:not(.u-h) + .meta__number {

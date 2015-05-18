@@ -30,7 +30,7 @@ case class CurrentAccount(provider: String,
                           access: Map[String, Boolean])
 
 
-trait CurrentAccountsApi extends MoneySupermarketApi[CurrentAccount] {
+trait CurrentAccountsFeed extends MoneySupermarketFeed[CurrentAccount] {
 
   override def cleanResponseBody(body: String) = body.replace("&", "&amp;")
 
@@ -68,29 +68,29 @@ trait CurrentAccountsApi extends MoneySupermarketApi[CurrentAccount] {
   }
 }
 
-package currentAccountsApi {
+package currentAccountsFeed {
 
-  object Rewards extends CurrentAccountsApi {
+  object Rewards extends CurrentAccountsFeed {
     protected val adTypeName = "Current Accounts - Rewards"
     protected lazy val path = "currentaccounts/rewards"
   }
-  object HighInterest extends CurrentAccountsApi {
+  object HighInterest extends CurrentAccountsFeed {
     protected val adTypeName = "Current Accounts - High Interest"
     protected lazy val path = "currentaccounts/high-interest"
   }
-  object BestOverdraft extends CurrentAccountsApi {
+  object BestOverdraft extends CurrentAccountsFeed {
     protected val adTypeName = "Current Accounts - Best Overdraft"
     protected lazy val path = "currentaccounts/best-overdraft"
   }
-  object WithBenefits extends CurrentAccountsApi {
+  object WithBenefits extends CurrentAccountsFeed {
     protected val adTypeName = "Current Accounts - With Benefits"
     protected lazy val path = "currentaccounts/with-benefits"
   }
-  object BasicAccounts extends CurrentAccountsApi {
+  object BasicAccounts extends CurrentAccountsFeed {
     protected val adTypeName = "Current Accounts - Basic Accounts"
     protected lazy val path = "currentaccounts/basic-accounts"
   }
-  object StandardAccounts extends CurrentAccountsApi {
+  object StandardAccounts extends CurrentAccountsFeed {
     protected val adTypeName = "Current Accounts - Standard Accounts"
     protected lazy val path = "currentaccounts/standard-accounts"
   }
@@ -101,22 +101,22 @@ package currentAccountsApi {
 package currentAccountsAgent {
 
   object Rewards extends MoneyAgent[CurrentAccount] {
-    protected def loadProducts() = currentAccountsApi.Rewards.loadAds()
+    protected def loadProducts() = currentAccountsFeed.Rewards.loadAds()
   }
   object HighInterest extends MoneyAgent[CurrentAccount] {
-    protected def loadProducts() = currentAccountsApi.HighInterest.loadAds()
+    protected def loadProducts() = currentAccountsFeed.HighInterest.loadAds()
   }
   object BestOverdraft extends MoneyAgent[CurrentAccount] {
-    protected def loadProducts() = currentAccountsApi.BestOverdraft.loadAds()
+    protected def loadProducts() = currentAccountsFeed.BestOverdraft.loadAds()
   }
   object WithBenefits extends MoneyAgent[CurrentAccount] {
-    protected def loadProducts() = currentAccountsApi.WithBenefits.loadAds()
+    protected def loadProducts() = currentAccountsFeed.WithBenefits.loadAds()
   }
   object BasicAccounts extends MoneyAgent[CurrentAccount] {
-    protected def loadProducts() = currentAccountsApi.BasicAccounts.loadAds()
+    protected def loadProducts() = currentAccountsFeed.BasicAccounts.loadAds()
   }
   object StandardAccounts extends MoneyAgent[CurrentAccount] {
-    protected def loadProducts() = currentAccountsApi.StandardAccounts.loadAds()
+    protected def loadProducts() = currentAccountsFeed.StandardAccounts.loadAds()
   }
 
 }

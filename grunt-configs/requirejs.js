@@ -14,42 +14,38 @@ module.exports = function(grunt, options) {
                 fastclick:            'components/fastclick/fastclick',
                 fastdom:              'components/fastdom/index',
                 fence:                'components/fence/fence',
-                imager:               'components/imager.js/container',
-                lodash:               'components/lodash-amd',
+                lodash:               'components/lodash',
                 picturefill:          'projects/common/utils/picturefill',
                 Promise:              'components/native-promise-only/npo.src',
                 qwery:                'components/qwery/qwery',
                 raven:                'components/raven-js/raven',
                 react:                'components/react/react',
                 reqwest:              'components/reqwest/reqwest',
-                omniture:             '../../public/javascripts/vendor/omniture',
+                omniture:             'vendor/omniture',
                 socketio:             'components/socket.io-client/socket.io',
-                stripe:               '../../public/javascripts/vendor/stripe/stripe.min',
+                stripe:               'vendor/stripe/stripe.min',
                 svgs:                 '../../../common/conf/assets/inline-svgs',
                 videojs:              'components/videojs/video',
                 videojsads:           'components/videojs-contrib-ads/videojs.ads',
                 videojsembed:         'components/videojs-embed/videojs.embed',
                 videojsima:           'components/videojs-ima/videojs.ima',
                 videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
-                videojsplaylist:      'components/videojs-playlist-audio/videojs.playlist',
+                videojsplaylist:      'components/videojs-playlist-audio',
                 // plugins
                 text:                 'components/requirejs-text/text',
-                inlineSvg:            'components/requirejs-inline-svg/inlineSvg'
+                inlineSvg:            'projects/common/utils/inlineSvg',
+                'ophan/ng':           'empty:'
             },
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
             preserveLicenseComments: false,
-            fileExclusionRegExp: /^bower_components$/
+            fileExclusionRegExp: /^bower_components|es6|test$/i
         },
         common: {
             options: {
                 dir: options.requirejsDir,
                 keepBuildDir: false,
                 shim: {
-                    imager: {
-                        deps: ['components/imager.js/imager'],
-                        exports: 'Imager'
-                    },
                     omniture: {
                         exports: 's'
                     }
@@ -78,18 +74,6 @@ module.exports = function(grunt, options) {
                             'inlineSvg'
                         ]
                     }
-                ]
-            }
-        },
-        crosswords: {
-            options: {
-                name: 'bootstraps/crosswords',
-                out: options.staticTargetDir + 'javascripts/bootstraps/crosswords.js',
-                exclude: [
-                    'core',
-                    'bootstraps/app',
-                    'text',
-                    'inlineSvg'
                 ]
             }
         },
@@ -160,7 +144,7 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    '../../public/javascripts/vendor/stripe/stripe.min',
+                    'vendor/stripe/stripe.min',
                     'text',
                     'inlineSvg'
                 ]
@@ -177,10 +161,6 @@ module.exports = function(grunt, options) {
                 name: 'bootstraps/admin',
                 out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
                 shim: {
-                    imager: {
-                        deps: ['components/imager.js/imager'],
-                        exports: 'Imager'
-                    },
                     omniture: {
                         exports: 's'
                     }
@@ -227,10 +207,6 @@ module.exports = function(grunt, options) {
                     },
                     videojsembed: {
                         deps: ['videojs']
-                    },
-                    imager: {
-                        deps: ['components/imager.js/imager'],
-                        exports: 'Imager'
                     },
                     omniture: {
                         exports: 's'

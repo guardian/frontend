@@ -48,8 +48,8 @@ define([
 
                 e.preventDefault();
                 fastdom.write(function () {
-                    target.toggleClass('navigation--expanded navigation--collapsed');
-                    mediator.emit(target.hasClass('navigation--expanded') ? 'modules:nav:open' : 'modules:nav:close');
+                    target.toggleClass('navigation-container--expanded navigation-container--collapsed');
+                    mediator.emit(target.hasClass('navigation-container--expanded') ? 'modules:nav:open' : 'modules:nav:close');
                 });
             });
         }

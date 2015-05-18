@@ -1,7 +1,7 @@
 .brand-bar {
     background-color: colour(guardian-brand);
     line-height: 0;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding-left: $gs-gutter * .25;
     padding-right: $gs-gutter * .25;
 
@@ -11,10 +11,13 @@
     }
 }
 
+// Items
+
+// We alter the brand bar items and popups based on two contexts: the edition
+// and whether the header is in slim mode. Beware of increased specifcity (due
+// to context matching).
+
 .brand-bar__item {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     @include fs-bodyHeading(1);
     float: left;
@@ -22,8 +25,13 @@
     height: $headerHeight;
     padding-top: $gs-baseline /3;
     padding-bottom: $gs-baseline /3;
-    margin-right: $gs-baseline * .25;
-    margin-left: $gs-baseline * .25;
+
+    &,
+    // Override breakpoint
+    .l-header--is-slim & {
+        margin-right: $gs-baseline * .25;
+        margin-left: $gs-baseline * .25;
+    }
 
     @include mq(mobileLandscape) {
         padding-top: $gs-baseline/2;
@@ -46,11 +54,14 @@
     }
 
     &:hover {
-        // stops controls icons staying hightlighted
+        // stops controls icons staying highlighted
         // after closing a popup on mobile
         @include mq(tablet) {
             .control__icon-wrapper {
                 border-color: #ffffff;
+            }
+            .control__icon-wrapper--text {
+                border-color: rgba(#ffffff, .3);
             }
         }
     }
@@ -62,6 +73,8 @@
     cursor: pointer;
     color: $c-guardian-services-action;
     display: inline-block;
+    // For badges
+    vertical-align: middle;
     text-decoration: none;
     line-height: $headerHeight;
 }
@@ -88,13 +101,21 @@
 }
 
 .brand-bar__item--right {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     float: left;
 
     @include mq(tablet) {
         float: right;
+
+        .l-header--is-slim & {
+            // Unset override
+            float: left;
+        }
     }
 }
+
+// Context overrides: hide brand bar items: slim header, edition, and various
+// breakpoints
 
 .brand-bar__item--search {
     padding-left: 0;
@@ -104,10 +125,288 @@
     }
 }
 
+.brand-bar__item--subscribe {
+    // Desktop only
+    @include mq($until: desktop) {
+        display: none;
+    }
+
+    .l-header--is-slim & {
+        display: none;
+    }
+}
+
+.brand-bar__item--edition {
+    .l-header--is-slim & {
+        display: none;
+    }
+}
+
+.brand-bar__item--jobs {
+    .brand-bar__item--right--uk-edition &,
+    .brand-bar__item--right--us-edition & {
+        .l-header--is-slim & {
+            display: none;
+        }
+    }
+}
+
+.brand-bar__item--soulmates {
+    // Desktop only
+    @include mq($until: desktop) {
+        display: none;
+    }
+
+    .brand-bar__item--right--uk-edition & {
+        .l-header--is-slim & {
+            display: none;
+        }
+    }
+}
+
 .brand-bar__item--edition {
     cursor: pointer;
 }
 
-.brand-bar__item--subscribe .control__icon-wrapper {
-    border: 0;
+.brand-bar__item--subscribe {
+    .control__icon-wrapper {
+        border: 0;
+    }
+}
+
+.brand-bar__item--jobs,
+.brand-bar__item--edition {
+    // Hide on mobile
+    @include mq($until: tablet) {
+        display: none;
+    }
+}
+
+.brand-bar__item--more {
+    .brand-bar__item--right--us-edition &,
+    .brand-bar__item--right--au-edition & {
+        // Mobile only
+        @include mq(tablet) {
+            display: none;
+
+            .l-header--is-slim & {
+                display: block;
+            }
+        }
+    }
+}
+
+.brand-bar__item--masterclasses {
+    .brand-bar__item--right--au-edition & {
+        // Hide on mobile
+        @include mq($until: tablet) {
+            display: none;
+        }
+    }
+}
+
+// Popups
+
+// Mobile only
+.brand-bar__popup--jobs {
+    .brand-bar__item--right--uk-edition &,
+    .brand-bar__item--right--us-edition & {
+        @include mq(tablet) {
+            display: none;
+
+            .l-header--is-slim & {
+                display: block;
+            }
+        }
+    }
+}
+
+.brand-bar__popup--edition {
+    .brand-bar__item--right--uk-edition & {
+        // Mobile only
+        @include mq(tablet) {
+            display: none;
+
+            .l-header--is-slim & {
+                display: block;
+            }
+        }
+    }
+}
+
+.brand-bar__popup--soulmates {
+    .brand-bar__item--right--uk-edition & {
+        // Hide on desktop
+        @include mq(desktop) {
+            display: none;
+
+            .l-header--is-slim & {
+                display: block;
+            }
+        }
+    }
+}
+
+.brand-bar__popup--membership {
+    .brand-bar__item--right--uk-edition & {
+        // Hide on desktop
+        @include mq(desktop) {
+            display: none;
+
+            .l-header--is-slim & {
+                display: block;
+            }
+        }
+    }
+}
+
+.brand-bar__item--register {
+    @include mq($until: mobileLandscape) {
+        display: none;
+    }
+}
+
+.brand-bar__item__badge {
+    background-color: rgba(colour(news-accent), .4);
+    color: #ffffff;
+    margin-left: -4px;
+    display: none;
+    float: left;
+    z-index: -1;
+
+    @include mq(tablet) {
+        display: inline-block;
+
+        // Unset breakpoint
+        .l-header--is-slim & {
+            display: none;
+        }
+    }
+}
+
+// see .brand-bar__item--action above. This should be removed when we remove the 'beta' bit for International, as it's
+// ugly.
+.brand-bar__item--action-beta {
+    &:focus,
+    &:active {
+        &,
+        .control__info {
+            text-decoration: none;
+
+            .brand-bar__edition-name {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &:hover {
+        &,
+        .control__info {
+            text-decoration: none;
+
+            .brand-bar__edition-name {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.brand-bar__beta {
+    position: relative;
+    top: -6px;
+    font-weight: bold;
+    color: colour(news-main-2);
+    font-size: 12px;
+    text-decoration: none;
+}
+
+/**
+ *  Slim modification
+ *
+ *  Used for slim header ^l_header
+ */
+.is-slim {
+    .brand-bar__item {
+        margin-right: $gs-baseline * .25;
+        margin-left: $gs-baseline * .25;
+
+        &:first-child {
+            margin-left: $gs-gutter / 2;
+        }
+    }
+
+    .brand-bar__item--right {
+        @include mq(tablet) {
+            float: left;
+        }
+    }
+
+    .brand-bar__item--subscribe {
+        display: none;
+    }
+
+    .brand-bar__item--edition {
+        display: none;
+    }
+
+    .brand-bar__item--right--uk-edition,
+    .brand-bar__item--right--us-edition {
+        .brand-bar__item--jobs { 
+            display: none;
+        }
+    }
+
+    .brand-bar__item--right--uk-edition {
+        .brand-bar__item--soulmates {
+            display: none;
+        }
+    }
+
+    .brand-bar__item--right--us-edition,
+    .brand-bar__item--right--au-edition {
+        .brand-bar__item--more {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item--right--uk-edition,
+    .brand-bar__item--right--us-edition {
+        .brand-bar__popup--jobs {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item--right--uk-edition {
+        .brand-bar__popup--edition {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item--right--uk-edition {
+        .brand-bar__popup--soulmates {
+            @include mq(desktop) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item--right--uk-edition {
+        .brand-bar__popup--membership {
+            @include mq(desktop) {
+                display: block;
+            }
+        }
+    }
+
+    .brand-bar__item__badge {
+        @include mq(tablet) {
+            display: none;
+        }
+    }
 }

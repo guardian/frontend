@@ -16,18 +16,12 @@ $control-size: 36px;
     margin-left: $gs-gutter/2;
     max-width: 140px;
     vertical-align: top;
-    white-space: nowrap;
-    overflow: hidden;
+    @include ellipsis();
     float: left;
-    text-overflow: ellipsis;
     text-align: left;
 
     @include mq($from: 540px) {
         max-width: 200px;
-    }
-
-    @include mq(tablet) {
-        display: block;
     }
 
     .brand-bar__item--right & {
@@ -36,11 +30,18 @@ $control-size: 36px;
         }
     }
 
-    .brand-bar__item--profile & {
-        @include mq(mobileLandscape) {
-            display: block;
-        }
+    // TODO: @extend .hide-on-mobile;
+    @include mq(tablet) {
+        display: block;
     }
+
+    .l-header--is-slim & {
+        display: none;
+    }
+}
+
+.control__info--supporting {
+    margin-left: $gs-gutter/4;
 }
 
 
@@ -60,5 +61,42 @@ $control-size: 36px;
         @include mq(tablet) {
             display: none;
         }
+
+        .l-header--is-slim & {
+            display: block;
+        }
+    }
+}
+
+.control__icon-wrapper--text {
+    line-height: $control-size;
+    border-color: transparent;
+    @include circular;
+
+    @include mq(mobile) {
+        display: none;
+    }
+
+    @include mq(tablet) {
+        display: inline-block;
+    }
+
+    &:hover {
+        color: #ffffff;
+    }
+}
+
+/**
+ *  Slim modification
+ *
+ *  Used for slim header ^l_header
+ */
+.is-slim {
+    .control__info {
+        display: none;
+    }
+
+    .control__icon-wrapper {
+        display: block;
     }
 }

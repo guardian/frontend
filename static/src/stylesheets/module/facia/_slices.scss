@@ -16,7 +16,7 @@ Hence why a greater depth of selector specificity is needed.
 */
 .fc-slice--hl4-h {
     .has-flex & {
-        @include flex-direction(row-reverse);
+        flex-direction: row-reverse;
 
         .fc-slice__item:before {
             display: none;
@@ -108,7 +108,7 @@ Hence why a greater depth of selector specificity is needed.
 
 .fc-slice--h14-q-q {
     .has-flex & {
-        @include flex-direction(row-reverse);
+        flex-direction: row-reverse;
 
         .fc-slice__item:before {
             display: none;
@@ -142,11 +142,11 @@ Hence why a greater depth of selector specificity is needed.
             }
 
             &:first-child {
-                @include flex(1);
+                flex: 1 1 auto;
                 width: 50%;
 
                 .fc-slice__item {
-                    @include flex-basis(100%);
+                    flex-basis: 100%;
                 }
                 .fc-slice__item:nth-child(5) {
                     padding-bottom: $gs-baseline;
@@ -181,7 +181,7 @@ Hence why a greater depth of selector specificity is needed.
             width: 25% !important;
 
             &:last-child {
-                @include flex(2);
+                flex: 2 1 auto;
                 width: 50% !important;
             }
         }
@@ -201,6 +201,10 @@ Hence why a greater depth of selector specificity is needed.
         .fc-slice__popular-mpu {
             position: absolute;
             width: 320px;
+
+            .ad-slot {
+                min-height: 274px;
+            }
         }
     }
 

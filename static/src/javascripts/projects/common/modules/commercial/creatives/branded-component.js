@@ -7,7 +7,7 @@ define([
     'text!common/views/commercial/creatives/branded-component-jobs.html',
     'text!common/views/commercial/creatives/branded-component-membership.html',
     'text!common/views/commercial/creatives/branded-component-soulmates.html',
-    'lodash/objects/defaults'
+    'common/utils/_'
 ], function (
     qwery,
     $,
@@ -17,7 +17,7 @@ define([
     brandedComponentJobsTpl,
     brandedComponentMembershipTpl,
     brandedComponentSoulmatesTpl,
-    defaults
+    _
 ) {
 
     var templates = {
@@ -25,13 +25,15 @@ define([
                 template: brandedComponentJobsTpl,
                 config:   {
                     imgUrl: config.images.commercial.brandedComponentJobs,
-                    marque36icon: svgs('marque36icon', ['creative__marque'])
+                    marque36icon: svgs('marque36icon', ['creative__marque']),
+                    arrowRight: svgs('arrowRight', ['i-right'])
                 }
             },
             membership: {
                 template: brandedComponentMembershipTpl,
                 config:   {
-                    marque36icon: svgs('marque36icon', ['creative__marque'])
+                    marque36icon: svgs('marque36icon', ['creative__marque']),
+                    arrowRight: svgs('arrowRight', ['i-right'])
                 }
             },
             soulmates: {
@@ -49,7 +51,7 @@ define([
         BrandedComponent = function ($adSlot, params, options) {
             this.$adSlot = $adSlot;
             this.params  = params;
-            this.opts = defaults(options || {}, {
+            this.opts = _.defaults(options || {}, {
                 force: false
             });
         };

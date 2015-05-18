@@ -1,7 +1,6 @@
-require([
+define([
     // 3rd party libs
     'raven',
-    'lodash/main',
     'picturefill',
 
     // utilities
@@ -28,6 +27,7 @@ require([
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/lazyload',
+    'common/modules/ui/lazy-load-images',
     'common/modules/ui/images',
     'common/modules/ui/tabs',
     'common/modules/user-prefs',

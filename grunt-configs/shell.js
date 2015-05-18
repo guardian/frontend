@@ -20,17 +20,44 @@ module.exports = function(grunt, options) {
 
         abTestInfo: {
             command: 'node tools/ab-test-info/ab-test-info.js ' +
-                     'static/src/javascripts/modules/experiments/tests ' +
+                     'static/src/javascripts/projects/common/modules/experiments/tests ' +
                      'static/abtests.json'
         },
 
-        jspmFaciaTool: {
+        npmInstall: {
+            command: 'npm prune && npm install'
+        },
+
+        jspmInstallFaciaTool: {
             command: 'node ../../node_modules/jspm/jspm.js install',
             options: {
                 execOptions: {
                     cwd: 'facia-tool/public'
                 }
             }
+        },
+
+        jspmInstallStatic: {
+            command: './jspm install && ./jspm clean',
+            options: {
+                execOptions: {
+                    cwd: './node_modules/.bin'
+                }
+            }
+        },
+
+        jspmBundleStatic: {
+            command:
+                'node ./bundle',
+            options: {
+                execOptions: {
+                    cwd: '.'
+                }
+            }
+        },
+
+        updateCanIUse: {
+          command: 'npm update caniuse-db'
         }
     };
 };

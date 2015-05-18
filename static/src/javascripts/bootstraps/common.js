@@ -6,7 +6,6 @@ define([
     'enhancer',
     'fastclick',
     'qwery',
-
     'common/utils/$',
     'common/utils/config',
     'common/utils/cookies',
@@ -16,10 +15,10 @@ define([
     'common/utils/template',
     'common/utils/url',
     'common/utils/robust',
-
     'common/modules/analytics/clickstream',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
+    'common/modules/analytics/media-listener',
     'common/modules/analytics/omniture',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
@@ -27,7 +26,6 @@ define([
     'common/modules/analytics/simple-metrics',
     'common/modules/analytics/tech-feedback',
     'common/modules/commercial/user-ad-targeting',
-    'common/modules/crosswords/thumbnails',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
     'common/modules/experiments/ab',
@@ -43,6 +41,7 @@ define([
     'common/modules/onward/related',
     'common/modules/onward/tonal',
     'common/modules/social/share-count',
+    'common/modules/ui/accessibility-prefs',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/fonts',
@@ -54,6 +53,8 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
+    'text!common/views/international-message.html',
+    'text!common/views/international-control-message.html',
     'bootstraps/identity'
 ], function (
     bean,
@@ -61,7 +62,6 @@ define([
     enhancer,
     FastClick,
     qwery,
-
     $,
     config,
     cookies,
@@ -71,18 +71,17 @@ define([
     template,
     url,
     robust,
-
     Clickstream,
     Foresee,
     liveStats,
-    Omniture,
+    mediaListener,
+    omniture,
     register,
     ScrollDepth,
     logCss,
     simpleMetrics,
     techFeedback,
     userAdTargeting,
-    crosswordThumbnails,
     CommentCount,
     DiscussionLoader,
     ab,
@@ -98,6 +97,7 @@ define([
     Related,
     TonalComponent,
     shareCount,
+    accessilbilityPrefs,
     Dropdowns,
     fauxBlockLink,
     fonts,
@@ -109,11 +109,11 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
+    internationalMessage,
+    internationalControlMessage,
     identity
 ) {
-
     var modules = {
-
             loadFonts: function () {
                 fonts.load();
             },
@@ -222,25 +222,26 @@ define([
 
             showTabs: function () {
                 var tabs = new Tabs();
-                mediator.on('modules:popular:loaded', function (el) {
-                    tabs.init(el);
+                [
+                    'modules:popular:loaded',
+                    'modules:geomostpopular:ready'
+                ].forEach(function (event) {
+                    mediator.on(event, function (el) {
+                        tabs.init(el);
+                    });
                 });
             },
 
             showToggles: function () {
                 var toggles = new Toggles();
                 toggles.init(document);
-                mediator.on('page:common:ready', function () {
-                    toggles.reset();
-                    Dropdowns.init();
-                });
+                toggles.reset();
+                Dropdowns.init();
             },
 
             showRelativeDates: function () {
                 var dates = RelativeDates;
-                mediator.on('page:common:ready', function () {
-                    dates.init();
-                });
+                dates.init();
                 mediator.on('fragment:ready:dates', function (el) {
                     dates.init(el);
                 });
@@ -255,11 +256,10 @@ define([
             },
 
             loadAnalytics: function () {
-                new Omniture(window.s).go();
+                omniture.go();
 
                 if (config.switches.ophan) {
-                    require('ophan/ng', function (ophan) {
-                        ophan.record({ab: ab.getParticipations()});
+                    require(['ophan/ng'], function (ophan) {
 
                         if (config.switches.scrollDepth) {
                             mediator.on('scrolldepth:data', ophan.record);
@@ -277,15 +277,13 @@ define([
             },
 
             updateHistory: function () {
-                mediator.on('page:common:ready', function () {
-                    if (config.page.contentType !== 'Network Front') {
-                        history.logSummary(config.page);
-                    }
+                if (config.page.contentType !== 'Network Front') {
+                    history.logSummary(config.page);
+                }
 
-                    if (config.page.contentType === 'Video') {
-                        history.logHistory(config.page);
-                    }
-                });
+                if (config.page.contentType === 'Video') {
+                    history.logHistory(config.page);
+                }
             },
 
             showHistoryInMegaNav: function () {
@@ -298,9 +296,7 @@ define([
 
             initAutoSignin: function () {
                 if (config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
-                    mediator.on('page:common:ready', function () {
-                        new AutoSignin().init();
-                    });
+                    new AutoSignin().init();
                 }
             },
 
@@ -316,6 +312,10 @@ define([
                 }
             },
 
+            mediaEventListeners: function () {
+                mediaListener.init();
+            },
+
             checkIframe: function () {
                 if (window.self !== window.top) {
                     $('html').addClass('iframed');
@@ -329,13 +329,11 @@ define([
             },
 
             augmentInteractive: function () {
-                mediator.on('page:common:ready', function () {
-                    if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
-                        $('figure.interactive').each(function (el) {
-                            enhancer.render(el, document, config, mediator);
-                        });
-                    }
-                });
+                if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
+                    $('figure.interactive').each(function (el) {
+                        enhancer.render(el, document, config, mediator);
+                    });
+                }
             },
 
             startRegister: function () {
@@ -345,11 +343,9 @@ define([
             },
 
             repositionComments: function () {
-                mediator.on('page:common:ready', function () {
-                    if (!id.isUserLoggedIn()) {
-                        $('.js-comments').appendTo(qwery('.js-repositioned-comments'));
-                    }
-                });
+                if (!id.isUserLoggedIn()) {
+                    $('.js-comments').appendTo(qwery('.js-repositioned-comments'));
+                }
             },
 
             showMoreTagsLink: function () {
@@ -362,15 +358,13 @@ define([
 
             initDiscussion: function () {
                 if (config.switches.discussion) {
-                    mediator.on('page:common:ready', function () {
-                        CommentCount.init();
-                        if (config.page.commentable) {
-                            var el = qwery('.discussion')[0];
-                            if (el) {
-                                new DiscussionLoader().attachTo(el);
-                            }
+                    CommentCount.init();
+                    if (config.page.commentable) {
+                        var el = qwery('.discussion')[0];
+                        if (el) {
+                            new DiscussionLoader().attachTo(el);
                         }
-                    });
+                    }
                 }
             },
 
@@ -425,26 +419,26 @@ define([
 
             loadBreakingNews: function () {
                 if (config.switches.breakingNews) {
-                    mediator.on('page:common:ready', breakingNews);
+                    breakingNews();
                 }
             },
 
             runCssLogging: function () {
                 if (config.switches.cssLogging) {
-                    mediator.on('page:common:ready', logCss);
+                    logCss();
                 }
             },
 
             initSimpleMetrics: function () {
-                mediator.on('page:common:ready', function () {
-                    simpleMetrics.init();
-                });
+                simpleMetrics.init();
             },
 
             initTechFeedback: function () {
-                mediator.on('page:common:ready', function () {
-                    techFeedback.init();
-                });
+                techFeedback.init();
+            },
+
+            initAccessibilityPrefs: function () {
+                accessilbilityPrefs.init();
             },
 
             initPublicApi: function () {
@@ -452,8 +446,40 @@ define([
                 window.guardian.api = {
                     logCss: logCss
                 };
-            }
+            },
 
+            runCustomAbTests: function () {
+                var stickyTest = ab.getTest('MtStickyBtm'),
+                    rec1Test = ab.getTest('MtRec1'),
+                    rec2Test = ab.getTest('MtRec2');
+
+                if (rec1Test && ab.isParticipating(rec1Test) && ab.getTestVariant('MtRec1') === 'A'
+                    && ab.testCanBeRun('MtRec1')) {
+                    rec1Test.fireRecTest();
+                }
+                if (rec2Test && ab.isParticipating(rec2Test) && ab.getTestVariant('MtRec2') === 'A'
+                    && ab.testCanBeRun('MtRec2')) {
+                    rec2Test.fireRecTest();
+                }
+                if (stickyTest && ab.isParticipating(stickyTest) && ab.getTestVariant('MtStickyBtm') === 'A'
+                    && ab.testCanBeRun('MtStickyBtm')) {
+                    stickyTest.fireStickyBottom();
+                }
+            },
+
+            internationalSignposting: function () {
+                if ('internationalEdition' in config.page) {
+                    if (config.page.internationalEdition === 'international' && config.page.pageId === 'international') {
+                        new Message('international-with-survey-new', {
+                            pinOnHide: true
+                        }).show(template(internationalMessage, {}));
+                    } else if (config.page.internationalEdition === 'control' && config.page.pageId === 'uk') {
+                        new Message('international', {
+                            pinOnHide: true
+                        }).show(template(internationalControlMessage, {}));
+                    }
+                }
+            }
         },
 
         ready = function () {
@@ -477,27 +503,29 @@ define([
             robust('c-dates',           modules.showRelativeDates);
             robust('c-clickstream',     modules.initClickstream);
             robust('c-history',         modules.updateHistory);
-            robust('c-sign-in', modules.initAutoSignin);
-            robust('c-interactive', modules.augmentInteractive);
-            robust('c-history-nav', modules.showHistoryInMegaNav);
-            robust('c-forsee', modules.runForseeSurvey);
-            robust('c-start-register', modules.startRegister);
-            robust('c-comments', modules.repositionComments);
-            robust('c-tag-links', modules.showMoreTagsLink);
-            robust('c-smart-banner', modules.showSmartBanner);
-            robust('c-log-stats', modules.logLiveStats);
+            robust('c-sign-in',         modules.initAutoSignin);
+            robust('c-interactive',     modules.augmentInteractive);
+            robust('c-history-nav',     modules.showHistoryInMegaNav);
+            robust('c-forsee',          modules.runForseeSurvey);
+            robust('c-start-register',  modules.startRegister);
+            robust('c-comments',        modules.repositionComments);
+            robust('c-tag-links',       modules.showMoreTagsLink);
+            robust('c-smart-banner',    modules.showSmartBanner);
+            robust('c-log-stats',       modules.logLiveStats);
             robust('c-analytics',       modules.loadAnalytics);
-            robust('c-cookies', modules.cleanupCookies);
-            robust('c-popular', modules.initPopular);
-            robust('c-related', modules.initRelated);
-            robust('c-onward', modules.initOnwardContent);
-            robust('c-overlay', modules.initOpenOverlayOnClick);
-            robust('c-css-logging', modules.runCssLogging);
-            robust('c-public-api', modules.initPublicApi);
-            robust('c-simple-metrics', modules.initSimpleMetrics);
-            robust('c-crosswords', crosswordThumbnails.init);
-            robust('c-tech-feedback', modules.initTechFeedback);
-            robust('c-ready',           function () { mediator.emit('page:common:ready'); });
+            robust('c-cookies',         modules.cleanupCookies);
+            robust('c-popular',         modules.initPopular);
+            robust('c-related',         modules.initRelated);
+            robust('c-onward',          modules.initOnwardContent);
+            robust('c-overlay',         modules.initOpenOverlayOnClick);
+            robust('c-css-logging',     modules.runCssLogging);
+            robust('c-public-api',      modules.initPublicApi);
+            robust('c-simple-metrics',  modules.initSimpleMetrics);
+            robust('c-tech-feedback',   modules.initTechFeedback);
+            robust('c-media-listeners', modules.mediaEventListeners);
+            robust('c-run-custom-ab',   modules.runCustomAbTests);
+            robust('c-accessibility-prefs',       modules.initAccessibilityPrefs);
+            robust('c-international-signposting', modules.internationalSignposting);
         };
 
     return {

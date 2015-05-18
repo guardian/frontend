@@ -120,13 +120,26 @@ $pagination-icon-spacing: 10px;
 .pagination__action--static {
     margin: 0;
     text-align: center;
+}
 
-    .i {
+.pagination__icon {
+    display: inline-block;
+    margin-top: 1px;
+    height: $text-size;
+    margin: 0;
+    line-height: $text-size;
+    vertical-align: middle;
+    fill: colour(neutral-2);
+
+    svg {
         width: 6px;
-        height: $text-size;
-        margin: 0;
-        line-height: $text-size;
-        vertical-align: middle;
+        height: 12px;
+    }
+}
+
+.pagination__icon--next {
+    svg {
+        transform: rotate(180deg);
     }
 }
 

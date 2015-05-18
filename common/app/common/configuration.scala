@@ -124,7 +124,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object ophanApi {
     lazy val key = configuration.getStringProperty("ophan.api.key")
     lazy val host = configuration.getStringProperty("ophan.api.host")
-    lazy val timeout = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
   object ophan {
@@ -142,6 +141,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object frontend {
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
+    lazy val webEngineersEmail = configuration.getStringProperty("email.web.engineers")
   }
 
   object site {
@@ -268,6 +268,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v1.json"
     lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v1.json"
+    lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
 
@@ -303,9 +304,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     // But does not change across environments
     // See https://issues.scala-lang.org/browse/SI-6723 for why we don't always use ->
     lazy val config: Map[String, String] = Map(
-      "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
+      "googleSearchUrl" -> "//www.google.co.uk/cse/cse.js",
       "idWebAppUrl" -> id.webappUrl,
       "idApiUrl" -> id.apiRoot,
+      "idOAuthUrl" -> id.oauthUrl,
       "discussionApiRoot" -> discussion.apiRoot,
       ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
@@ -329,6 +331,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object facia {
+    lazy val spreadsheetKey = configuration.getStringProperty("ab_headlines.spreadsheet_key")
+
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
     lazy val collectionCap: Int = 35
   }

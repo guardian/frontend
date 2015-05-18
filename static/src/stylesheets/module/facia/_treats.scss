@@ -29,17 +29,15 @@
 .treats__treat {
     @include fs-textSans(1);
     @include button-height($base-size * 4);
-    @include border-radius(50%);
-    @include box-sizing(border-box);
+    @include circular;
+    box-sizing: border-box;
     display: inline-block;
     vertical-align: top;
     width: auto;
     font-weight: 700;
     border-width: 1px;
     border-style: solid;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @include ellipsis();
     text-decoration: none;
     max-width: gs-span(4);
     line-height: $gs-baseline * 2 - 2px;

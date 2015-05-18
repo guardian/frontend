@@ -1,0 +1,18 @@
+.crossword__grid-wrapper {
+    position: relative;
+    height: 0;
+    padding-bottom: 100%;
+    font-size: 0;
+    background-color: #f7f7f7;
+
+    @include mq(tablet) {
+        float: left;
+        height: auto;
+        padding-bottom: 0;
+    }
+}
+
+.crossword__grid {
+    width: 100%;
+    height: auto;
+}

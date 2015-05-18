@@ -1,10 +1,10 @@
 /* global guardian */
 define([
-    'lodash/objects/values',
+    'common/utils/_',
     'common/utils/config',
     'qwery'
 ], function (
-    values,
+    _,
     config,
     qwery
 ) {
@@ -72,7 +72,7 @@ define([
                 s.prop41 = 'PrerollMilestone';
             }
             s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44,prop9';
-            s.linkTrackEvents = values(events).join(',');
+            s.linkTrackEvents = _.values(events).join(',');
             s.events = event;
             s.tl(true, 'o', eventName || event);
             s.prop41 = s.eVar44 = s.prop44 = s.eVar43 = s.prop43 = undefined;
@@ -86,7 +86,7 @@ define([
             s.loadModule('Media');
             s.Media.autoTrack = false;
             s.Media.trackWhilePlaying = false;
-            s.Media.trackVars = 'events,eVar7,eVar43,eVar44,prop44,eVar47,eVar61';
+            s.Media.trackVars = 'events,eVar7,eVar43,eVar44,prop44,eVar47,eVar61,channel';
             s.Media.trackEvents = 'event17,event18,event19,event20,event21,event22,event23,event57,event59,event64,event96,event97,event98';
             s.Media.segmentByMilestones = false;
             s.Media.trackUsingContextData = false;

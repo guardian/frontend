@@ -16,6 +16,7 @@
     ))"
          data-title="@Html(Localisation(containerDefinition.displayName getOrElse ""))"
          data-id="@containerDefinition.dataId">
+
         @for(sliceWithCards <- containerLayout.slices) {
             @slice(sliceWithCards, containerDefinition.index)
         }

@@ -86,9 +86,7 @@ category: Common
     max-width: 100%;
     width: auto;
     height: 32px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @include ellipsis();
 
     &,
     &:hover,
@@ -200,7 +198,7 @@ category: Common
     padding-top: $gs-baseline / 3;
     opacity: 0;
     visibility: hidden;
-    @include transition(opacity .15s ease);
+    transition: opacity .15s ease;
 
     .social__item {
         padding: 0 $gs-gutter / 10;
@@ -223,7 +221,7 @@ category: Common
     width: 100%;
     opacity: 0;
     z-index: 10;
-    @include transition(bottom .4s ease);
+    transition: bottom .4s ease;
 }
 
 .social-fixed__item {

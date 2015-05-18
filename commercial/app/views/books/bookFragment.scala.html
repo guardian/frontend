@@ -1,7 +1,7 @@
 @(book: model.commercial.books.Book, clickMacro: Option[String])(implicit request: RequestHeader)
 
 @defining(("2_0", "2014-10-14")) { case (version, date) =>
-    <li class="lineitem lineitem--multi" itemscope itemtype="http://schema.org/Book">
+    <li class="lineitem lineitem--multi lineitems__item" itemscope itemtype="http://schema.org/Book">
         <div class="commercial--books commercial--tone-books">
             <div class="commercial--multi__header">
                 <h4 class="commercial__title">
@@ -39,7 +39,7 @@
                     </div>
                 </a>
                 <a class="lineitem__cta button button--primary button--small" href="@clickMacro@book.buyUrl" data-link-name="merchandising-hybrid-book-v@{version}_@{date}-buy-now-link">
-                    Buy now<i class="i i-arrow-white-right i-right"></i>
+                    Buy now@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
                 </a>
             </div>
         </div>

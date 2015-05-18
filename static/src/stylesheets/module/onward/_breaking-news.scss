@@ -1,4 +1,5 @@
 $breaking-news-icon-width: 36px;
+$breaking-news-close-icon-width: 32px;
 
 .breaking-news {
     z-index: 16777271;
@@ -7,8 +8,8 @@ $breaking-news-icon-width: 36px;
     right: 0;
     bottom: 0;
     opacity: 1;
-    @include transform(translateY(0));
-    @include box-shadow(0 -1px 2px fade-out(#000000, .8));
+    transform: translateY(0);
+    box-shadow: 0 -1px 2px fade-out(#000000, .8);
 
     a,
     .button {
@@ -17,6 +18,9 @@ $breaking-news-icon-width: 36px;
     }
 
     .button {
+        padding: 0;
+        width: $breaking-news-close-icon-width;
+        height: $breaking-news-close-icon-width;
         border-color: #ffffff;
 
         @include mq(tablet) {
@@ -30,19 +34,19 @@ $breaking-news-icon-width: 36px;
 }
 
 .breaking-news--fade-in {
-    @include transition(all .5s ease);
+    transition: all .5s ease;
 }
 
 .breaking-news--hidden {
     opacity: 0;
-    @include transform(translateY(100%));
+    transform: translateY(100%);
 }
 
 .breaking-news__item {
     display: block;
     padding: 0 0 $gs-baseline;
     background: fade-out(colour(live-default), 1 - .95);
-    @include transition(background-color .25s ease);
+    transition: background-color .25s ease;
 
     &:hover {
         background-color: darken(colour(live-default), 2%);
@@ -54,7 +58,7 @@ $breaking-news-icon-width: 36px;
 }
 
 .breaking-news__item-content {
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding: ($gs-baseline * .5) 0 $gs-baseline ($gs-gutter + $breaking-news-icon-width);
     @include gs-container;
 
@@ -115,8 +119,8 @@ $breaking-news-icon-width: 36px;
     background-color: colour(multimedia-support-4);
     opacity: 1;
     z-index: 1;
-    @include box-shadow(none);
-    @include transition(none);
+    box-shadow: none;
+    transition: none;
 
     .breaking-news__items {
         visibility: hidden;

@@ -5,14 +5,17 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/article/flyers',
+    'common/utils/url',
+    'common/modules/experiments/ab',
+    'common/modules/article/rich-links',
+    'common/modules/article/membership-events',
     'common/modules/article/open-module',
-    'common/modules/article/static-social',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
     'common/modules/ui/rhc',
+    'common/modules/ui/sticky-social',
     'common/modules/ui/selection-sharing'
 ], function (
     fence,
@@ -21,14 +24,17 @@ define([
     config,
     detect,
     mediator,
-    flyers,
+    urlutils,
+    ab,
+    richLinks,
+    membershipEvents,
     openModule,
-    staticSocial,
     truncate,
     twitter,
     geoMostPopular,
     OpenCta,
     rhc,
+    stickySocial,
     selectionSharing
 ) {
 
@@ -53,6 +59,16 @@ define([
                 });
             },
 
+            initCmpParam: function () {
+                var allvars = urlutils.getUrlVars();
+
+                if (allvars.CMP) {
+                    $('.element-pass-cmp').each(function (el) {
+                        el.src = el.src + '?CMP=' + allvars.CMP;
+                    });
+                }
+            },
+
             initTruncateAndTwitter: function () {
                 // Ensure that truncation occurs before the tweet upgrading.
                 truncate();
@@ -60,20 +76,22 @@ define([
                 twitter.enhanceTweets();
             },
 
-            initStaticSocial: function () {
-                staticSocial();
-            },
-
             initRightHandComponent: function () {
                 var mainColumn = qwery('.js-content-main-column');
                 // only render when we have >1000px or more (enough space for ad + most popular)
-                if (mainColumn[0] && mainColumn[0].offsetHeight > 1000 && !detect.isBreakpoint('mobile')) {
+                if (mainColumn[0] && mainColumn[0].offsetHeight > 1000 && detect.isBreakpoint({ min: 'desktop' })) {
                     geoMostPopular.render();
                 }
             },
 
             initSelectionSharing: function () {
                 selectionSharing.init();
+            },
+
+            initStickyShares: function () {
+                if (config.switches.abStickyShares && ab.getTestVariant('StickyShares') === 'sticky') {
+                    stickySocial.init();
+                }
             }
         },
 
@@ -83,9 +101,11 @@ define([
             modules.initTruncateAndTwitter();
             modules.initRightHandComponent();
             modules.initSelectionSharing();
-            modules.initStaticSocial();
-            flyers.upgradeFlyers();
-            flyers.insertTagFlyer();
+            modules.initCmpParam();
+            modules.initStickyShares();
+            richLinks.upgradeRichLinks();
+            richLinks.insertTagRichLink();
+            membershipEvents.upgradeEvents();
             openModule.init();
 
             mediator.emit('page:article:ready');

@@ -3,6 +3,7 @@ set -e
 
 readonly SYSTEM=$(uname -s)
 EXTRA_STEPS=()
+BASEDIR=$(dirname $0)
 
 linux() {
   [[ $SYSTEM == 'Linux' ]]
@@ -100,7 +101,10 @@ install_grunt() {
 install_jspm() {
   if ! installed jspm; then
     sudo npm -g install jspm
+    jspm registry config github
+    jspm registry create bower jspm-bower-endpoint
   fi
+  jspm install
 }
 
 install_ruby() {
@@ -133,9 +137,8 @@ install_libpng() {
   fi
 }
 
-install_packages() {
-  npm install
-  bundle
+install_dependencies() {
+  $BASEDIR/install-dependencies.sh
 }
 
 compile() {
@@ -165,7 +168,7 @@ main() {
   install_ruby
   install_bundler
   install_libpng
-  install_packages
+  install_dependencies
   compile
   report
 }

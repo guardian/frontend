@@ -15,9 +15,9 @@ case class Mortgage(lender: String,
                     detailsUrl: String)
 
 
-object MortgagesApi extends ExecutionContexts with Logging {
+object MortgagesFeed extends ExecutionContexts with Logging {
 
-  private lazy val url = CommercialConfiguration.getProperty("lc.mortgages.api.url")
+  private lazy val maybeUrl = CommercialConfiguration.getProperty("lc.mortgages.api.url")
 
   def parse(xml: Elem): Seq[Mortgage] = {
     xml \ "RefProducts" map {
@@ -33,17 +33,22 @@ object MortgagesApi extends ExecutionContexts with Logging {
   }
 
   def loadAds(): Future[Seq[Mortgage]] = {
-    val request = FeedRequest(
-      feedName = "Mortgages",
-      switch = LCMortgageFeedSwitch,
-      url = url
-    )
-    FeedReader.readSeqFromXml[Mortgage](request)(parse)
+    maybeUrl map { url =>
+      val request = FeedRequest(
+        feedName = "Mortgages",
+        switch = LCMortgageFeedSwitch,
+        url
+      )
+      FeedReader.readSeqFromXml[Mortgage](request)(parse)
+    } getOrElse {
+      log.warn("Missing URL for Mortgages feed")
+      Future.failed(FeedMissingConfigurationException("Mortgages"))
+    }
   }
 
 }
 
 
 object MortgagesAgent extends MoneyAgent[Mortgage] {
-  protected def loadProducts() = MortgagesApi.loadAds()
+  protected def loadProducts() = MortgagesFeed.loadAds()
 }

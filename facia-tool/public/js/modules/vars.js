@@ -17,7 +17,8 @@ define([
         types: dynamicContainers.concat(fixedContainers).concat([
             {name: 'nav/list'},
             {name: 'nav/media-list'},
-            {name: 'news/most-popular'}
+            {name: 'news/most-popular'},
+            {name: 'breaking-news/not-for-other-fronts', groups: ['minor', 'major']}
         ]),
 
         typesDynamic: dynamicContainers,
@@ -56,6 +57,8 @@ define([
 
         capiBatchSize:         10,
 
+        maxSlideshowImages:    5,
+
         collectionsPollMs:     10000,
         latestArticlesPollMs:  30000,
         configSettingsPollMs:  30000,
@@ -74,9 +77,9 @@ define([
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
-        apiSearchParams:       'show-elements=video&show-tags=all&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail,liveBloggingNow',
+        apiSearchParams:       'show-elements=video&show-tags=all&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail,liveBloggingNow,membershipAccess',
 
-        imageCdnDomain:        'guim.co.uk',
+        imageCdnDomain:        '.guim.co.uk',
         previewBase:           'http://preview.gutools.co.uk',
 
         latestSnapPrefix:      'Latest from ',

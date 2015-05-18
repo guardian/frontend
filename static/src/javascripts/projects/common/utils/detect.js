@@ -8,10 +8,12 @@
 
 define([
     'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/utils/$'
 ], function (
     _,
-    mediator
+    mediator,
+    $
 ) {
 
     var supportsPushState,
@@ -61,7 +63,8 @@ define([
                 isTweakpoint: false,
                 width: 1300
             }
-        ];
+        ],
+        detect;
 
     /**
      *     Util: returns a function that:
@@ -279,7 +282,7 @@ define([
     }
 
     function getBreakpoint(includeTweakpoint) {
-        var viewportWidth = getViewport().width,
+        var viewportWidth = detect.getViewport().width,
             index,
             breakpoint = _.last(takeWhile(breakpoints, function (bp) {
                 return bp.width <= viewportWidth;
@@ -399,7 +402,17 @@ define([
         return window.guardian.isModernBrowser;
     }
 
-    return {
+    function adblockInUse() {
+        var displayed = '';
+
+        $.create('<div class="ad_unit"></div>').appendTo(document.body);
+        displayed = $('.ad_unit').css('display');
+        $('.ad_unit').remove();
+
+        return displayed === 'none' ? true : false;
+    }
+
+    detect = {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
         getFontFormatSupport: getFontFormatSupport,
@@ -421,7 +434,8 @@ define([
         getPageSpeed: getPageSpeed,
         breakpoints: breakpoints,
         fontHinting: fontHinting(),
-        isModernBrowser: isModernBrowser
+        isModernBrowser: isModernBrowser,
+        adblockInUse: adblockInUse
     };
-
+    return detect;
 });

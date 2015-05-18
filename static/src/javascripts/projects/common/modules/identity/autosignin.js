@@ -3,6 +3,7 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/time',
+    'common/modules/analytics/omniture',
     'common/modules/identity/api',
     'common/modules/identity/facebook-authorizer',
     'common/modules/navigation/profile',
@@ -14,6 +15,7 @@ function (
     ajax,
     config,
     time,
+    omniture,
     id,
     FacebookAuthorizer,
     Profile,
@@ -72,8 +74,9 @@ function (
                         profile.init();
                         new Toggles().init();
 
-                        s.eVar36 = 'facebook auto';
-                        s.linkTrackVars = 'eVar36';
+                        omniture.populateEventProperties('Social signin auto');
+                        s.eVar13 = 'facebook auto';
+                        s.linkTrackVars += ',eVar13';
                         s.tl(this, 'o', 'Social signin auto');
                     }
                 }
@@ -81,9 +84,9 @@ function (
         };
 
         this.welcome = function (name) {
-            var msg = '<p class="site-message__message">' +
+            var msg = '<p class="site-message__message" data-test-id="facebook-auto-sign-in-banner">' +
                           'Welcome ' + name + ', you’re signed into the Guardian using Facebook, or ' +
-                          '<a href="' + config.page.idUrl + '/signout"/>sign out</a>.' +
+                          '<a data-link-name="fb auto : sign out" href="' + config.page.idUrl + '/signout"/>sign out</a>.' +
                       '</p>';
             new Message('fbauto', { important: true }).show(msg);
         };

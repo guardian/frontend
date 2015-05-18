@@ -6,6 +6,7 @@ define([
     'utils/alert',
     'utils/as-observable-props',
     'utils/deep-get',
+    'utils/draggable-element',
     'utils/full-trim',
     'utils/human-time',
     'utils/identity',
@@ -31,6 +32,7 @@ define([
         alert,
         asObservableProps,
         deepGet,
+        draggableElement,
         fullTrim,
         humanTime,
         identity,
@@ -48,6 +50,19 @@ define([
         contentApi,
         Group
     ) {
+        alert = alert.default;
+        deepGet = deepGet.default;
+        fullTrim = fullTrim.default;
+        isGuardianUrl = isGuardianUrl.default;
+        urlHost = urlHost.default;
+        sanitizeHtml = sanitizeHtml.default;
+        urlAbsPath = urlAbsPath.default;
+        asObservableProps = asObservableProps.default;
+        populateObservables = populateObservables.default;
+        mediator = mediator.default;
+        humanTime = humanTime.default;
+        validateImageSrc = validateImageSrc.default;
+
         var capiProps = [
                 'webUrl',
                 'webPublicationDate',
@@ -104,10 +119,24 @@ define([
                 {
                     key: 'imageSrc',
                     editable: true,
+                    dropImage: true,
                     omitForSupporting: true,
                     'if': 'imageReplace',
                     label: 'replacement image URL',
-                    validator: 'validateImageMain',
+                    validator: {
+                        fn: 'validateImage',
+                        params: {
+                            src: 'imageSrc',
+                            width: 'imageSrcWidth',
+                            height: 'imageSrcHeight',
+                            options: {
+                                maxWidth: 1000,
+                                minWidth: 400,
+                                widthAspectRatio: 5,
+                                heightAspectRatio: 3
+                            }
+                        }
+                    },
                     type: 'text'
                 },
                 {
@@ -125,10 +154,22 @@ define([
                 {
                     key: 'imageCutoutSrc',
                     editable: true,
+                    dropImage: true,
                     omitForSupporting: true,
                     'if': 'imageCutoutReplace',
                     label: 'replacement cutout image URL',
-                    validator: 'validateImageCutout',
+                    validator: {
+                        fn: 'validateImage',
+                        params: {
+                            src: 'imageCutoutSrc',
+                            width: 'imageCutoutSrcWidth',
+                            height: 'imageCutoutSrcHeight',
+                            options: {
+                                maxWidth: 1000,
+                                minWidth: 400
+                            }
+                        }
+                    },
                     type: 'text'
                 },
                 {
@@ -251,6 +292,38 @@ define([
                     key: 'snapCss',
                     label: 'snap class',
                     type: 'text'
+                },
+                {
+                    key: 'imageSlideshowReplace',
+                    omitForSupporting: true,
+                    editable: true,
+                    label: 'slideshow',
+                    singleton: 'images',
+                    type: 'boolean'
+                },
+                {
+                    key: 'slideshow',
+                    editable: true,
+                    omitForSupporting: true,
+                    'if': 'imageSlideshowReplace',
+                    type: 'list',
+                    length: vars.CONST.maxSlideshowImages,
+                    item: {
+                        type: 'image',
+                        editable: true,
+                        dropImage: true,
+                        validator: {
+                            fn: 'validateListImage',
+                            params: {
+                                options: {
+                                    maxWidth: 1000,
+                                    minWidth: 400,
+                                    widthAspectRatio: 5,
+                                    heightAspectRatio: 3
+                                }
+                            }
+                        }
+                    }
                 }
             ],
 
@@ -268,6 +341,7 @@ define([
             this.front = opts.group ? opts.group.front : null;
 
             this.props = asObservableProps(capiProps);
+            this.props.webPublicationDate.extend({ notify: 'always' });
 
             this.fields = asObservableProps(capiFields);
 
@@ -297,7 +371,8 @@ define([
                 'hasMainVideo',
                 'imageCutoutSrcFromCapi',
                 'ophanUrl',
-                'sparkUrl']);
+                'sparkUrl',
+                'premium']);
 
             this.state.enableContentOverrides(this.meta.snapType() !== 'latest');
             this.state.inDynamicCollection(deepGet(opts, '.group.parent.isDynamic'));
@@ -333,9 +408,18 @@ define([
             }, this);
 
             this.viewUrl = ko.pureComputed(function() {
-                return this.fields.isLive() === 'false' ?
-                    vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl()) :
-                    this.meta.href() || this.props.webUrl();
+                var url;
+                if (this.fields.isLive() === 'false') {
+                    url = vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl());
+                } else {
+                    url = this.meta.href() || this.props.webUrl();
+
+                    if (url && !/^https?:\/\//.test(url)) {
+                        url = 'http://' + vars.CONST.mainDomain + url;
+                    }
+                }
+
+                return url;
             }, this);
 
             // Populate supporting
@@ -372,6 +456,8 @@ define([
                     return meta.imageSrc();
                 } else if (meta.imageCutoutReplace()) {
                     return meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail();
+                } else if (meta.imageSlideshowReplace && meta.imageSlideshowReplace() && meta.slideshow() && meta.slideshow()[0]) {
+                    return meta.slideshow()[0].src;
                 } else {
                     return fields.thumbnail();
                 }
@@ -423,21 +509,44 @@ define([
             }
         };
 
-        Article.prototype.metaEditor = function(opts, index, all) {
+        Article.prototype.metaEditor = function(opts, index, all, defaults) {
             var self = this,
                 key,
                 meta,
-                field;
+                field,
+                items = [];
 
             if (!opts.editable) { return; }
             if (this.slimEditor && opts.slimEditable !== true) { return; }
+            if (!defaults) { defaults = {}; }
 
             key = opts.key;
-            meta = self.meta[key] || function() {};
-            field = self.fields[key] || function() {};
+            meta = self.meta[key] || ko.observable(defaults.meta);
+            field = self.fields[key] || ko.observable(defaults.field);
 
-            if (opts.validator && _.isFunction(self[opts.validator])) {
-                meta.subscribe(function() { self[opts.validator](); });
+            if (opts.validator && _.isFunction(self[opts.validator.fn])) {
+                meta.subscribe(function() {
+                    self[opts.validator.fn](opts.validator.params, meta);
+                });
+            }
+
+            if (opts.type === 'list') {
+                items = _.chain(opts.length)
+                .times(function (i) {
+                    return this.metaEditor(opts.item, null, all, {
+                        meta: (self.meta[key]() || [])[i]
+                    });
+                }, this)
+                .filter(function (editor) { return !!editor; })
+                .map(function (editor) {
+                    editor.meta.subscribe(function () {
+                        meta(_.map(items, function (item) {
+                            return item.meta();
+                        }));
+                    });
+                    return editor;
+                })
+                .value();
             }
 
             return {
@@ -450,6 +559,8 @@ define([
                 meta: meta,
 
                 field: field,
+
+                items: items,
 
                 revert: function() { meta(undefined); },
 
@@ -502,34 +613,36 @@ define([
                         meta(value === field() ? undefined : value.replace(rxScriptStriper, ''));
                     },
                     owner: self
-                })
+                }),
+
+                dropImage: ko.observable(!!opts.dropImage),
+
+                underDrag: ko.observable(false),
+
+                dropInEditor: function (element) {
+                    var sourceMeta = element.getData('sourceMeta');
+                    if (sourceMeta) {
+                        try {
+                            sourceMeta = JSON.parse(sourceMeta);
+                            meta(sourceMeta);
+                            return;
+                        } catch (ex) {}
+                    }
+
+                    try {
+                        meta({
+                            media: draggableElement.getMediaItem(element),
+                            origin: element.getData('Url')
+                        });
+                    } catch (ex) {
+                        alert(ex.message);
+                    }
+                },
+
+                clear: function () {
+                    undefineObservables(meta);
+                }
             };
-        };
-
-        Article.prototype.validateImageMain = function() {
-            validateImage(
-                this.meta.imageSrc,
-                this.meta.imageSrcWidth,
-                this.meta.imageSrcHeight,
-                {
-                    maxWidth: 1000,
-                    minWidth: 400,
-                    widthAspectRatio: 5,
-                    heightAspectRatio: 3
-                }
-            );
-        };
-
-        Article.prototype.validateImageCutout = function() {
-            validateImage(
-                this.meta.imageCutoutSrc,
-                this.meta.imageCutoutSrcWidth,
-                this.meta.imageCutoutSrcHeight,
-                {
-                    maxWidth: 1000,
-                    minWidth: 400
-                }
-            );
         };
 
         Article.prototype.addCapiData = function(opts) {
@@ -557,6 +670,7 @@ define([
                 this.state.hasMainVideo(getMainMediaType(opts) === 'video');
                 this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
                 this.state.ophanUrl(vars.CONST.ophanBase + '?path=/' + urlAbsPath(opts.webUrl));
+                this.state.premium(isPremium(opts));
 
                 this.metaDefaults = _.extend(deepGet(opts, '.frontsMeta.defaults') || {}, this.collectionMetaDefaults);
 
@@ -606,8 +720,18 @@ define([
                         return item.get();
                     }) : p[1]];
                 })
+                // clean sparse arrays
+                .map(function (p) {
+                    return [p[0], _.isArray(p[1]) ? _.filter(p[1], function (item) { return !!item; }) : p[1]];
+                })
                 // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
+                // recurse convert numbers to strings:
+                .map(function(p){ return [p[0], _.isArray(p[1]) ? _.map(p[1], function (nested) {
+                    return _.isObject(nested) ? _.mapObject(nested, function (val) {
+                        return _.isNumber(val) ? '' + val : val;
+                    }) : nested; }) : p[1]];
+                })
                 // return as obj, or as undefined if empty (this omits it from any subsequent JSON.stringify result)
                 .reduce(function(obj, p) {
                     obj = obj || {};
@@ -723,7 +847,7 @@ define([
             });
         };
 
-        Article.prototype.open = function() {
+        Article.prototype.open = function(article, evt) {
             if (this.uneditable) { return; }
 
             this.meta.supporting && this.meta.supporting.items().forEach(function(sublink) { sublink.close(); });
@@ -745,6 +869,10 @@ define([
                 );
             } else {
                 mediator.emit('ui:open', null, null, this.front);
+            }
+
+            if ($(evt.target).hasClass('allow-default-click')) {
+                return true;
             }
         };
 
@@ -781,6 +909,51 @@ define([
             });
         };
 
+        Article.prototype.validateImage = function (params) {
+            var imageSrc = this.meta[params.src],
+                imageSrcWidth = this.meta[params.width],
+                imageSrcHeight = this.meta[params.height],
+                opts = params.options;
+
+            if (imageSrc()) {
+                validateImageSrc(imageSrc(), opts)
+                    .then(function(img) {
+                        imageSrc(img.src);
+                        imageSrcWidth(img.width);
+                        imageSrcHeight(img.height);
+                    }, function(err) {
+                        undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
+                        alert(err.message);
+                    });
+            } else {
+                undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
+            }
+        };
+
+        Article.prototype.validateListImage = function (params, meta) {
+            var image = meta();
+
+            if (image && image.src) {
+                // This image is already validated
+                return;
+            } else if (image) {
+                var originUrl = image.origin,
+                    src = image.media ? image.media.file || originUrl : originUrl,
+                    origin = image.media ? image.media.origin || originUrl : originUrl;
+                validateImageSrc(src, params.options)
+                    .then(function(img) {
+                        meta(_.extend({
+                            origin: origin,
+                        }, img));
+                    }, function(err) {
+                        undefineObservables(meta);
+                        alert(err);
+                    });
+            } else {
+                undefineObservables(meta);
+            }
+        };
+
         function getMainMediaType(contentApiArticle) {
             return _.chain(contentApiArticle.elements).where({relation: 'main'}).pluck('type').first().value();
         }
@@ -793,20 +966,10 @@ define([
             return _.chain(contentApiArticle.tags).where({type: 'contributor'}).pluck('bylineLargeImageUrl').first().value();
         }
 
-        function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
-            if (imageSrc()) {
-                validateImageSrc(imageSrc(), opts)
-                    .done(function(width, height) {
-                        imageSrcWidth(width);
-                        imageSrcHeight(height);
-                    })
-                    .fail(function(err) {
-                        undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
-                        alert(err);
-                    });
-            } else {
-                undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
-            }
+        function isPremium(contentApiArticle) {
+            return contentApiArticle.fields.membershipAccess === 'members-only' ||
+                contentApiArticle.fields.membershipAccess === 'paid-members-only' ||
+                !!_.find(contentApiArticle.tags, {id: 'news/series/looking-back'});
         }
 
         function undefineObservables() {
@@ -825,8 +988,9 @@ define([
 
         ko.bindingHandlers.autoResize = {
             init: function(el) {
-                resize(el);
-                $(el).keydown(function() { resize(el); });
+                var resizeCallback = function () { resize(el); };
+                resizeCallback();
+                $(el).keydown(resizeCallback).on('paste', resizeCallback);
             }
         };
 
@@ -848,6 +1012,35 @@ define([
                         mediator.emit('ui:open', formFields[nextIndex].meta, self, self.front);
                     }
                 });
+            }
+        };
+
+        ko.bindingHandlers.dropImage = {
+            init: function(el, valueAccessor, allBindings, viewModel, bindingContext) {
+                var isDropEnabled = ko.unwrap(valueAccessor());
+
+                if (isDropEnabled) {
+                    el.addEventListener('drop', function (evt) {
+                        evt.preventDefault();
+                        evt.stopPropagation();
+                        bindingContext.$data.dropInEditor(evt.dataTransfer);
+                        bindingContext.$data.underDrag(false);
+                        resize(el);
+                    });
+                    el.addEventListener('dragover', function (evt) {
+                        evt.preventDefault();
+                        evt.stopPropagation();
+                        bindingContext.$data.underDrag(true);
+                    });
+                    el.addEventListener('dragleave', function (evt) {
+                        evt.preventDefault();
+                        evt.stopPropagation();
+                        bindingContext.$data.underDrag(false);
+                    });
+                    el.addEventListener('dragstart', function (evt) {
+                        evt.dataTransfer.setData('sourceMeta', JSON.stringify(bindingContext.$data.meta()));
+                    });
+                }
             }
         };
 

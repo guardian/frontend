@@ -20,8 +20,9 @@
         max-width: gs-span(10);
     }
 }
+
 .identity-wrapper--stretched {
-    max-width: none;
+    max-width: gs-span(16);
 }
 
 .identity-wrapper--with-membership {
@@ -58,7 +59,7 @@
 
 .identity-section {
     border-top: 1px solid colour(neutral-7);
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     margin: (($gs-baseline/3)*5) 0;
     padding-top: (($gs-baseline/3)*5) - 1;
 
@@ -111,7 +112,7 @@
     }
 
     .social-signin__item {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         display: inline-block;
         margin-bottom: ($gs-baseline/3)*2;
 
@@ -243,9 +244,7 @@
     display: block;
     margin-bottom: $gs-baseline/3;
     max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include ellipsis();
     word-break: break-all;
 }
 
@@ -327,7 +326,7 @@
     margin-bottom: $gs-baseline;
 
     @include mq(desktop) {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         @include fs-headline(3, true);
         float: left;
         padding-right: $gs-gutter;
@@ -380,57 +379,57 @@
 }
 
 
-/* Benefits AB test
+
+/* Saved-content
    ========================================================================== */
+.saved-contents {
+    margin-top: $gs-baseline*2;
+}
 
-.identity-wrapper--leftcol {
-    padding-bottom: 0;
+.saved-content {
+    border-top: 1px solid colour(neutral-5);
+    margin-bottom: $gs-baseline*2;
+    padding-top: $gs-baseline/3;
+    display: block;
 
-    @include mq(leftCol) {
-        display: table-cell;
-        vertical-align: top;
+    .saved-content-item__img {
+        width: $gs-column-width*2;
+        height: $gs-baseline*6;
+        padding-top: 3px;
+        margin-right: $gs-gutter/2;
+
+        img {
+            width: 100%;
+        }
+    }
+
+}
+
+.saved-content__meta {
+    display: block;
+    float: right;
+}
+
+.saved-content__title {
+    @include fs-headline(3);
+    margin-bottom: $gs-baseline;
+    @include mq(desktop) {
+        width: gs-span(6);
     }
 }
 
-.identity-wrapper--benefits {
-    padding-top: 0;
-    padding-bottom: $gs-baseline*4;
-
-    @include mq(leftCol) {
-        padding-top: $gs-baseline*4;
-        max-width: 266px; /* Magic number because there's an existing
-                             width problem the with social signin buttons */
-    }
-
-    @include mq(wide) {
-        max-width: 426px;
-    }
+.saved-content__standfirst {
+    @include fs-bodyCopy(1);
 }
 
-.identity-benefits {
-    background: colour(neutral-6);
-    border-top: 1px solid colour(news-accent);
-    position: relative;
+.saved-content__button {
+    @include fs-textSans(2);
 
-    @include mq(wide) {
-        margin-left: $gs-gutter*4;
-    }
-
-    .inline-icon {
-        position: absolute;
-        top: $gs-baseline/4;
-        right: $gs-baseline/2;
-    }
+    background: colour(guardian-brand);
+    border: 0;
+    color: #ffffff;
+    cursor: pointer;
+    float: left;
+    padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
 }
 
-.identity-benefits__header {
-    border-bottom: 1px solid colour(neutral-5);
-    color: guss-colour(guardian-brand, $pasteup-palette);
-    @include fs-header(5);
-    margin-bottom: 4px;
-    padding: $gs-baseline/2 $gs-gutter/2 ($gs-baseline*2.5) - 2;
-}
-
-.identity-benefits__item {
-    padding: 0 $gs-gutter/2 $gs-baseline;
-}

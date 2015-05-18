@@ -23,6 +23,11 @@ define([
     sparklines,
     updateScrollables
 ) {
+    lastModified = lastModified.default;
+    presser = presser.default;
+    mediator = mediator.default;
+    humanTime = humanTime.default;
+
     function Front (params) {
         var frontId, listeners = mediator.scope();
 
@@ -37,6 +42,7 @@ define([
         this.mode = ko.observable(params.mode || 'draft');
         this.flattenGroups = ko.observable(params.mode === 'treats');
         this.maxArticlesInHistory = this.confirmSendingAlert() ? 20 : 5;
+        this.controlsVisible = ko.observable(false);
 
         this.front.subscribe(this.onFrontChange.bind(this));
         this.mode.subscribe(this.onModeChange.bind(this));
@@ -69,14 +75,19 @@ define([
 
         this.pressLiveFront = function () {
             if (this.front()) {
-                presser.pressLive(this.front());
+                presser('live', this.front());
             }
         };
         this.pressDraftFront = function () {
             if (this.front()) {
-                presser.pressDraft(this.front());
+                presser('draft', this.front());
             }
         };
+
+        this.isControlsVisible = ko.observable(sparklines.isEnabled());
+        this.controlsText = ko.pureComputed(function () {
+            return 'Sparklines: ' + this.sparklinesOptions().hours + 'h';
+        }, this);
 
         this.ophanPerformances = ko.pureComputed(function () {
             return vars.CONST.ophanFrontBase + encodeURIComponent('/' + this.front());
@@ -139,6 +150,17 @@ define([
         this.refreshRelativeTimes(vars.CONST.pubTimeRefreshMs || 60000);
 
         this.load(frontId);
+
+        this.sparklinesOptions = ko.observable({
+            hours: 1,
+            interval: 10
+        });
+        this.setSparklines = function (hours, interval) {
+            this.sparklinesOptions({
+                hours: hours,
+                interval: interval
+            });
+        };
         sparklines.subscribe(this);
         mediator.emit('front:loaded', this);
     }
@@ -182,7 +204,7 @@ define([
         var model = this;
 
         if (model.front()) {
-            lastModified(model.front()).done(function (last) {
+            lastModified(model.front()).then(function (last) {
                 model.frontAge(last.human);
                 if (pageConfig.env !== 'dev') {
                     model.alertFrontIsStale(opts.alertIfStale && last.stale);
@@ -293,7 +315,7 @@ define([
             // return 'Sorry, you can only add links to treats.';
             return false;
         }
-        if (this.confirmSendingAlert() && item.group && (item.group.items().length !== 1 || item.group.items()[0] !== item)) {
+        if (this.confirmSendingAlert() && !isOnlyArticle(item, this)) {
             return 'You can only have one article in this collection.';
         }
     };
@@ -309,6 +331,20 @@ define([
         sparklines.unsubscribe(this);
         mediator.emit('front:disposed', this);
     };
+
+    function isOnlyArticle (item, front) {
+        var only = true,
+            containingCollection = _.find(front.collections(), function (collection) {
+                return _.find(collection.groups, function (group) {
+                    return group === item.group;
+                });
+            });
+
+        containingCollection.eachArticle(function (article) {
+            only = only && article.id() === item.id();
+        });
+        return only;
+    }
 
     return Front;
 });

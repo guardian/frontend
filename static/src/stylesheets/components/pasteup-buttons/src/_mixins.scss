@@ -15,6 +15,12 @@ $base-size: $gs-baseline / 2;
         height: $button-size;
         margin: -1px (-$button-size / 3) 0;
     }
+
+    svg {
+        width: $button-size;
+        height: $button-size;
+    }
+
     .i-left {
         margin-left: -($button-size / 3);
         margin-right: 0;

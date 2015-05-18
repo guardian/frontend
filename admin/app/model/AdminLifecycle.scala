@@ -1,7 +1,8 @@
 package model
 
-import commercial.TravelOffersCacheJob
-import common.{Logging, AkkaAsync, Jobs}
+import java.util.TimeZone
+
+import common.{AkkaAsync, Jobs, Logging}
 import conf.Configuration
 import conf.Configuration.environment
 import football.feed.MatchDayRecorder
@@ -68,12 +69,17 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     }
 
     if (environment.isProd) {
-      Jobs.schedule("AdsStatusEmailJob", "0 44 8 ? * MON-FRI") {
+      val londonTime = TimeZone.getTimeZone("Europe/London")
+      Jobs.schedule("AdsStatusEmailJob", "0 44 8 ? * MON-FRI", londonTime) {
         AdsStatusEmailJob.run()
       }
-      Jobs.schedule("ExpiringAdFeaturesEmailJob", "0 47 8 ? * MON-FRI") {
+      Jobs.schedule("ExpiringAdFeaturesEmailJob", "0 47 8 ? * MON-FRI", londonTime) {
         log.info(s"Starting ExpiringAdFeaturesEmailJob")
         ExpiringAdFeaturesEmailJob.run()
+      }
+      Jobs.schedule("ExpiringSwitchesEmailJob", "0 48 8 ? * MON-FRI", londonTime) {
+        log.info(s"Starting ExpiringSwitchesEmailJob")
+        ExpiringSwitchesEmailJob.run()
       }
     }
 
@@ -101,6 +107,7 @@ trait AdminLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("AdsStatusEmailJob")
     Jobs.deschedule("ExpiringAdFeaturesEmailJob")
     Jobs.deschedule("VideoEncodingsJob")
+    Jobs.deschedule("ExpiringSwitchesEmailJob")
   }
 
   override def onStart(app: play.api.Application) {

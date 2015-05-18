@@ -3,6 +3,7 @@ module.exports = function(config) {
     basePath: '../../..',
     frameworks: ['jasmine'],
     files: [
+        {pattern: 'public/jspm_packages/github/es-shims/es5-shim@4.1.1/es5-shim.min.js', included: true},
         {pattern: 'public/jspm_packages/!(system).js', included: false},
         {pattern: 'public/jspm_packages/system.js', included: true},
         {pattern: 'public/jspm_packages/**/*', included: false},
@@ -16,7 +17,7 @@ module.exports = function(config) {
         {pattern: 'test/public/mocks/*.js', included: false},
         {pattern: 'test/public/spec/**/*', included: false},
         {pattern: 'test/public/utils/**/*.js', included: false},
-        {pattern: 'test/public/fixtures/*.js', included: false},
+        {pattern: 'test/public/fixtures/*', included: false},
         {pattern: 'test/public/test-main.js', included: true}
     ],
 

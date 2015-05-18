@@ -1,6 +1,6 @@
 @(travelOffer: model.commercial.travel.TravelOffer, clickMacro: Option[String])(implicit request: RequestHeader)
 
-<li class="lineitem lineitem--multi">
+<li class="lineitem lineitem--multi lineitems__item">
     <div class="commercial--travel commercial--tone-travel">
         <div class="commercial--multi__header">
             <h4 class="commercial__title">
@@ -23,7 +23,7 @@
                 </div>
             </a>
             <a class="lineitem__cta button button--primary button--small" href="@clickMacro@travelOffer.offerUrl">
-                Book now<i class="i i-arrow-white-right i-right"></i>
+                Book now@fragments.inlineSvg("arrow-right", "icon", List("i-right"))
             </a>
         </div>
     </div>

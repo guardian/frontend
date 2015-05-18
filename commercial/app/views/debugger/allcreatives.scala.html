@@ -1,6 +1,6 @@
 @(page: model.MetaData)(implicit request: RequestHeader)
 
-@import play.api.libs.json.{JsBoolean, JsString, JsObject, Json}
+@import play.api.libs.json.{JsObject, Json}
 
 @main(page){ }{
 
@@ -429,6 +429,71 @@
             }).create();
         });
     });
+    </script>
+
+    <div class="fc-container__inner">
+        <h2 class="test-page-head">
+            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030887">
+                Merchandising: commercial component (soulmates) + feed
+            </a>
+        </h2>
+        <form class="js-soulmates-feed">
+            <label>Feed selection:
+                <select>
+                    <option value="brighton" selected>Brighton</option>
+                    <option value="east">East of England</option>
+                    <option value="eastmidlands">East Midlands</option>
+                    <option value="mature">Mature</option>
+                    <option value="men">Men</option>
+                    <option value="northeast">North East</option>
+                    <option value="northwest">North West</option>
+                    <option value="scotland">Scotland</option>
+                    <option value="south">South</option>
+                    <option value="southwest">South West</option>
+                    <option value="wales">Wales</option>
+                    <option value="westmidlands">West Midlands</option>
+                    <option value="women">Women</option>
+                    <option value="yorkshire">Yorkshire</option>
+                    <option value="young">Young</option>
+                </select>
+            </label>
+        </form>
+    </div>
+    <div class="fc-container fc-container--commercial">
+        <div class="js-merchandising-soulmates-feed ad-slot ad-slot--dfp ad-slot--merchandising ad-slot--commercial-component"></div>
+    </div>
+    <script>
+    loadCommercial(function () {
+        require([
+            'bean',
+            'qwery',
+            'common/utils/$',
+            'common/modules/commercial/creatives/commercial-component'
+        ])
+            .then(function(
+                bean,
+                qwery,
+                $,
+                CommercialComponent
+            ) {
+                var $soulmatesFeed = $('.js-merchandising-soulmates-feed');
+
+                bean.on(qwery('.js-soulmates-feed select')[0], 'change', function (event) {
+                    var commercialComponent = new CommercialComponent($soulmatesFeed[0], {
+                        type: 'soulmatesGroup',
+                        omnitureId: '[%OmnitureID%]',
+                        clickMacro: '%%CLICK_URL_ESC%%',
+                        soulmatesFeedName: $(event.srcElement).val()
+                    });
+                    commercialComponent.postLoadEvents.soulmatesGroup = function () {
+                        $soulmatesFeed.removeClass('lazyloaded');
+                    };
+
+                    commercialComponent.create();
+                });
+                bean.fire(qwery('.js-soulmates-feed select')[0], 'change');
+            });
+        });
     </script>
 
     <div class="fc-container__inner">

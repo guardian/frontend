@@ -11,9 +11,7 @@ define([
     'bootstraps/liveblog',
     'bootstraps/media',
     'bootstraps/profile',
-    'bootstraps/section',
-    'bootstraps/sport',
-    'bootstraps/tag'
+    'bootstraps/sport'
 ], function (
     qwery,
     raven,
@@ -27,9 +25,7 @@ define([
     liveBlog,
     media,
     profile,
-    section,
-    sport,
-    tag
+    sport
 ) {
 
     var bootstrapContext = function (featureName, boostrap) {
@@ -47,14 +43,8 @@ define([
 
             // Front
             if (config.page.isFront) {
-                require('bootstraps/facia', function (facia) {
+                require(['bootstraps/facia'], function (facia) {
                     bootstrapContext('facia', facia);
-                });
-            }
-
-            if (config.page.section === 'crosswords') {
-                require(['bootstraps/crosswords'], function (crosswords) {
-                    bootstrapContext('crosswords', crosswords);
                 });
             }
 
@@ -95,14 +85,6 @@ define([
                 });
             }
 
-            if (config.page.contentType === 'Tag') {
-                bootstrapContext('tag', tag);
-            }
-
-            if (config.page.contentType === 'Section' && !config.page.isFront) {
-                bootstrapContext('section', section);
-            }
-
             if (config.page.section === 'football') {
                 require(['bootstraps/football'], function (football) {
                     bootstrapContext('footbal', football);
@@ -119,7 +101,7 @@ define([
 
             if (config.page.isPreview) {
                 // lazy load this only if on the preview server
-                require('bootstraps/preview', function (preview) {
+                require(['bootstraps/preview'], function (preview) {
                     bootstrapContext('preview', preview);
                 });
             }

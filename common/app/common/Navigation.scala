@@ -2,8 +2,6 @@ package common
 
 import model.{Content, MetaData}
 import play.api.mvc.RequestHeader
-import conf.Switches._
-import dev.HttpSwitch
 
 case class SectionLink(zone: String, title: String, breadcrumbTitle: String, href: String) {
   def currentFor(page: MetaData): Boolean = page.url == href ||
@@ -41,7 +39,6 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
 }
 
 trait Navigation {
-
   //News
   val home = SectionLink("news", "home", "Home", "/")
   val news = SectionLink("news", "news", "News", "/")
@@ -70,8 +67,13 @@ trait Navigation {
   val video = SectionLink("video", "video", "Video", "/video")
   val guardianProfessional = SectionLink("guardian-professional", "professional networks", "Guardian Professional", "/guardian-professional")
   val observer = SectionLink("observer", "the observer", "The Observer", "/observer")
-
   val health = SectionLink("society", "health", "Health", "/society/health")
+  val scotland = SectionLink("scotland", "scotland", "Scotland", "/uk/scotland")
+  val wales = SectionLink("wales", "wales", "Wales", "/uk/wales")
+  val northernIreland = SectionLink("northernireland", "northern ireland", "Northern Ireland", "/uk/northernireland")
+
+  // Columnists
+  val columnists = SectionLink("columnists", "columnists", "Columnists", "/index/contributors")
 
   //Sport
   val sport = SectionLink("sport", "sport", "Sport", "/sport")
@@ -137,11 +139,17 @@ trait Navigation {
   val economics = SectionLink("business", "economics", "Economics", "/business/economics")
   val markets = SectionLink("business", "markets", "Markets", "/business/stock-markets")
   val useconomy = SectionLink("business", "US economy", "US economy", "/business/useconomy")
+  val ussustainablebusiness = SectionLink("business", "sustainable business", "Sustainable business", "/us/sustainable-business")
+  val ussmallbusiness = SectionLink("business", "small business", "small business", "/business/series/us-small-business")
   val recession = SectionLink("business", "recession", "Recession", "/business/recession")
   val investing = SectionLink("business", "investing", "Investing", "/business/investing")
   val banking = SectionLink("business", "banking", "Banking", "/business/banking")
   val marketforceslive = SectionLink("business", "market forces live", "Market Forces live", "/business/marketforceslive")
   val businessblog = SectionLink("business", "business blog", "Business blog", "/business/blog")
+  val retail = SectionLink("business", "retail", "Retail", "/business/retail")
+  val eurozone = SectionLink("business", "eurozone", "Eurozone", "/business/eurozone")
+  val diversityequality = SectionLink("business", "diversity & equality in business", "Diversity & equality in business", "/business/diversity-and-equality")
+
 
   //Money
   val money = SectionLink("money", "money", "Money", "/money")
@@ -151,7 +159,7 @@ trait Navigation {
   val savings = SectionLink("money", "savings", "Savings", "/money/savings")
   val borrowing = SectionLink("money", "borrowing", "Borrowing", "/money/debt")
   val insurance = SectionLink("money", "insurance", "Insurance", "/money/insurance")
-  val careers = SectionLink("money", "careers", "Careers", "/money/work-and-careers")
+  val workAndCareers = SectionLink("money", "careers", "Careers", "/money/work-and-careers")
   val consumeraffairs = SectionLink("money", "consumer affairs", "Consumer affairs", "/money/consumer-affairs")
 
   //Life and style
@@ -187,6 +195,7 @@ trait Navigation {
   val food = SectionLink("environment", "food", "Food", "/environment/food")
   val cities = SectionLink("environment", "cities", "Cities", "/cities")
   val globalDevelopment = SectionLink("environment", "development", "Development", "/global-development")
+  val pollution = SectionLink("environment", "pollution", "Pollution", "/environment/pollution")
 
   //Games
   val crosswords = SectionLink("crosswords", "crosswords", "Crosswords", "/crosswords")
@@ -197,8 +206,11 @@ trait Navigation {
   val obituaries = SectionLink("todayspaper", "obituaries", "Obituaries", "/tone/obituaries")
   val g2 = SectionLink("todayspaper", "g2", "G2", "/theguardian/g2")
   val weekend = SectionLink("todayspaper", "weekend", "Weekend", "/theguardian/weekend")
-  val theguide = SectionLink("todayspaper", "the guide", "The Guide", "/theguardian/theguide")
+  val theGuide = SectionLink("todayspaper", "the guide", "The Guide", "/theguardian/theguide")
   val saturdayreview = SectionLink("todayspaper", "saturday review", "Saturday Review", "/theguardian/guardianreview")
+
+  // Membership
+  val membership = SectionLink("membership", "membership", "Membership", "/membership")
 
   val footballNav = Seq(
     SectionLink("football", "live scores", "Live scores", "/football/live"),
@@ -249,17 +261,37 @@ object Navigation {
   def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] =
     topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
-  def rotatedLocalNav(topSection: NavItem, metaData: MetaData)(implicit request: RequestHeader): Seq[SectionLink] =
-    topSection.searchForCurrentSublink(metaData) match {
-      case Some(currentSection) =>
-        val navSlices = topSection.links.span(_.href != currentSection.href)
-        navSlices._2.drop(1) ++ navSlices._1
-      case None =>
-        topSection.links
-    }
+  def rotatedLocalNav(topSection: Option[NavItem], metaData: MetaData)(implicit request: RequestHeader): Seq[SectionLink] =
+    sectionSpecificSublinks.get(metaData.section)
+      .orElse(topSection.map{ section =>
+        section.searchForCurrentSublink(metaData) match {
+          case Some(currentSection) =>
+            val navSlices = section.links.span(_.href != currentSection.href)
+            navSlices._2.drop(1) ++ navSlices._1
+          case None =>
+            section.links
+    }}).getOrElse(Nil)
 
   def isEditionFront(topSection: NavItem): Boolean = ("/" :: Edition.editionFronts).contains(topSection.name.href)
 
-  def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] =
-    Navigation.topLevelItem(navigation, metaData).map(_.links).getOrElse(List())
+  // second level nav for sections that do not appear in the top level nav
+  private val sectionSpecificSublinks: Map[String, Seq[SectionLink]] = Map(
+    "careers" -> Seq(
+      SectionLink("careers", "careers", "careers", "/careers"),
+      SectionLink("careers", "interviews", "interviews", "/careers/interview-help"),
+      SectionLink("careers", "CVs", "CVs", "/careers/cv"),
+      SectionLink("careers", "graduate", "graduate", "/careers/graduate-jobs"),
+      SectionLink("careers", "Q&As", "Q&As", "/careers/live-q-a"),
+      SectionLink("careers", "sectors", "sectors", "/careers/sectors-industry-roles"),
+      SectionLink("careers", "newsletter", "newsletter", "https://register.theguardian.com/careers"),
+      SectionLink("careers", "courses", "courses", "http://jobs.theguardian.com/courses"),
+      SectionLink("careers", "jobs", "jobs", "http://jobs.theguardian.com"),
+      SectionLink("careers", "top employers UK", "top employers UK", "/careers/britains-top-employers")
+    )
+  ).withDefault( _ => Nil)
+
+  def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] = sectionSpecificSublinks.get(metaData.section)
+    .orElse(Navigation.topLevelItem(navigation, metaData).map(_.links).filter(_.nonEmpty))
+    .getOrElse(Nil)
+
 }

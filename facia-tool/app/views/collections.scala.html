@@ -18,12 +18,7 @@
     }"></div>
 
     <div class="modalDialog" data-bind="fadeVisible: modalDialog.isOpen">
-        <!-- ko if: modalDialog.templateName() && modalDialog.isOpen() -->
-            <div class="modalDialog-content" data-bind="template: {
-                name: modalDialog.templateName,
-                data: modalDialog.templateData
-            }"></div>
-        <!-- /ko -->
+        <modal-dialog params="modal: modalDialog"></modal-dialog>
     </div>
 
     @templates.vertical_layout()
@@ -41,7 +36,11 @@
                             placeholder: field() || (label + '...'),
                             title: label
                         },
+                        css: {
+                            'underDrag': underDrag
+                        },
                         autoResize: true,
+                        dropImage: dropImage,
                         tabbableFormField: true,
                         textInput: overrideOrVal"></textarea>
 
@@ -65,6 +64,35 @@
                         text: label"></a>
                     <span class="editor--boolean__state"><span data-bind="visible: meta">&#10004;</span></span>
                 </span>
+            <!-- /ko -->
+
+            <!-- ko if: type === 'list' -->
+                <div class="editor--list" data-bind="template: {name: 'template_editor', foreach: items}"></div>
+            <!-- /ko -->
+
+            <!-- ko if: type === 'image' -->
+                <a class="editor--image" data-bind="
+                    attr: {
+                        'href': meta() ? meta().origin || meta().src : ''
+                    },
+                    css: {
+                        'underDrag': underDrag,
+                        'allow-default-click': meta() && meta().src
+                    },
+                    dropImage: dropImage,
+                    style: {
+                        backgroundImage: meta() && meta().src ? 'url(' + meta().src + ')' : ''
+                    }
+                " target="_blank">
+                    <!-- ko if: meta -->
+                        <span class="editor--image__remove" data-bind="click: clear">
+                            <i class="fa fa-remove"></i>
+                        </span>
+                    <!-- /ko -->
+                    <!-- ko ifnot: meta -->
+                        <p>drag an image</p>
+                    <!-- /ko -->
+                </a>
             <!-- /ko -->
         <!-- /ko -->
     </script>
@@ -112,11 +140,14 @@
 
             <!-- ko if: state.imageCutoutSrcFromCapi() && !meta.imageCutoutReplace() -->
                 <a class="thumb--cutout" data-bind="
-                    style { backgroundImage: 'url(' + state.imageCutoutSrcFromCapi() + ')' }"></a>
+                    style: { backgroundImage: 'url(' + state.imageCutoutSrcFromCapi() + ')' }"></a>
             <!-- /ko -->
 
             <!-- ko if: state.hasMainVideo -->
                 <div class="has-playable"><i class="fa fa-play"></i></div>
+            <!-- /ko -->
+            <!-- ko if: meta.imageSlideshowReplace -->
+                <div class="has-playable"><i class="fa fa-picture-o"></i></div>
             <!-- /ko -->
 
             <div data-bind="if: state.isOpen">
@@ -200,6 +231,10 @@
                                 <span class="time__front" data-bind="text: frontPublicationTime"></span>
                             </span>
 
+                            <!-- ko if: state.premium -->
+                                <span class="label label--premium">premium</span>
+                            <!-- /ko -->
+
                             <!-- ko if: fields.isLive() === 'false' -->
                                 <span class="label" data-bind="
                                     css: {
@@ -241,54 +276,6 @@
             </div>
         </div>
 
-    </script>
-
-    <script type="text/html" id="confirm_breaking_changes">
-        <div class="modalDialog-message">
-            <h3>Confirm alert before sending</h3>
-            <ul data-bind="foreach: articles">
-                <li data-bind="html: headline"></li>
-            </ul>
-            <h4>Target</h4>
-            <span class="target" data-bind="text: target"></span>
-        </div>
-        <hr>
-        <div class="buttons modalDialog-confirm">
-            <button data-bind="click: cancel">Cancel</button>
-            <button class="draw-attention" data-bind="click: ok">
-                <i class="fa fa-rss"></i>Send alert
-            </button>
-        </div>
-    </script>
-
-    <script type="text/html" id="text_alert">
-        <div class="modalDialog-message">
-            <h3><i class="fa fa-exclamation-circle"></i>Error:</h3>
-            <span data-bind="text: message"></span>
-        </div>
-        <hr>
-        <div class="buttons modalDialog-alert">
-            <button class="button-action" data-bind="click: ok">Ok</button>
-        </div>
-    </script>
-
-    <script type="text/html" id="select_snap_type">
-        <div class="modalDialog-message">
-            <h3>Link type</h3>
-            <p>Click on <span class="button-description" data-bind="text: prefix"></span> to create the item</p>
-            <ul>
-                <li>{
-                    <span data-bind="text: prefix"></span>
-                    <span data-bind="text: resultsTitle"></span>
-                }</li>
-            </ul>
-            <p>or click <span class="button-description">Link</span> to just create a link</p>
-        </div>
-        <hr>
-        <div class="buttons modalDialog-confirm">
-            <button class="button-action" data-bind="click: cancel">Link</button>
-            <button class="draw-attention" data-bind="click: ok, text: prefix"></button>
-        </div>
     </script>
 
 </div>

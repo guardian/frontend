@@ -6,7 +6,7 @@ blockquote.quoted:before {
     background-repeat: no-repeat;
 }
 .svg .i {
-    @include background-size(contain);
+    background-size: contain;
 }
 .i-date {
     @if ($svg-support) {
@@ -33,13 +33,22 @@ blockquote.quoted:before {
 }
 
 // Quotes
-.from-content-api blockquote.quoted:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    @include transform(scale(.8));
-    @include transform-origin(0);
-    @include icon(quote-grey);
+blockquote.quoted {
+    // Clearfix
+    overflow: hidden;
+
+    &:before {
+        content: '';
+        float: left;
+        transform: scale(.8);
+        transform-origin: 0;
+        @include icon(quote-grey);
+    }
+
+    & > .quoted__contents {
+        // Do not allow text to wrap around blockquote icon
+        overflow: hidden;
+    }
 }
 
 .item--dark .i-comment-light-grey {
@@ -61,7 +70,7 @@ blockquote.quoted:before {
             vertical-align: -10%;
             display: inline-block;
             background-repeat: no-repeat;
-            @include background-size(contain);
+            background-size: contain;
         }
     }
     .pseudo-icon--audio--white {

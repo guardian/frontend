@@ -1,14 +1,15 @@
 @(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
 
+@import ab_headlines.ABTestHeadlines.headlinesJsonString
 @import model.InlineImage
-@import model.{InlineVideo, VideoPlayer, CrosswordSvg}
+@import model.{InlineVideo, InlineSlideshow, VideoPlayer, CrosswordSvg, LiveBlog}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
 @import views.support.ImgSrc
-@import layout.{LatestSnap, WidthsByBreakpoint}
+@import layout.{LatestSnap, FaciaWidths}
 @import Function.const
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!isList){js-snappable}"
@@ -22,6 +23,11 @@
             data-discussion-hide-label="true"
         }
     }
+
+    @for(id <- item.id; headlines <- headlinesJsonString(id)) {
+        data-headline-variants="@headlines"
+    }
+
 data-link-name="@item.cardStyle.toneString | @{index + 1}"
     @item.id.map { id =>
     data-id="@id"
@@ -90,6 +96,35 @@ data-test-id="facia-card"
                 )
             }
 
+            case Some(InlineSlideshow(imageElements)) => {
+                <div class="fc-item__media-wrapper">
+                    <div class="fc-item__image-container u-responsive-ratio js-slideshow">
+                            @imageElements.headOption.map { imageElement =>
+
+                                @lazyImage(
+                                    Seq("responsive-img"),
+                                    ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
+                                    item.mediaWidthsByBreakpoint.sizes,
+                                    None,
+                                    containerIndex == 0 && index < 4,
+                                    false
+                                )
+                                @imageElements.tail.map { imageElement =>
+
+                                    @lazyImage(
+                                        Seq("responsive-img"),
+                                        ImgSrc.srcset(imageElement.url, item.mediaWidthsByBreakpoint),
+                                        item.mediaWidthsByBreakpoint.sizes,
+                                        None,
+                                        false,
+                                        true
+                                    )
+                                }
+                            }
+                    </div>
+                </div>
+            }
+
             case _ => { }
         }
 
@@ -112,8 +147,16 @@ data-test-id="facia-card"
             }
         </div>
 
-        @item.trailText.filter(const(item.showStandfirst)).map { text =>
-            <div class="fc-item__standfirst">@Html(text)</div>
+        @if(item.isLive) {
+            <div class="js-liveblog-blocks" data-article-id="@item.id">
+                @item.trailText.filter(const(item.showStandfirst)).map { text =>
+                    <div class="fc-item__standfirst">@Html(text)</div>
+                }
+            </div>
+        } else {
+            @item.trailText.filter(const(item.showStandfirst)).map { text =>
+                <div class="fc-item__standfirst">@Html(text)</div>
+            }
         }
 
         @if(item.sublinks.nonEmpty) {
@@ -128,10 +171,13 @@ data-test-id="facia-card"
         @if(item.cardTypes.showCutOut) {
             @item.cutOut.map { case cutOut @ CutOut(imageUrl, _) =>
             <div class="fc-item__avatar">
-                <img class="fc-item__avatar__media @cutOut.cssClass"
-                     srcset="@ImgSrc.srcsetForCutout(imageUrl)"
-                     sizes="@WidthsByBreakpoint.cutOutFromItemClasses(item.cardTypes).sizesString"
-                >
+                @lazyImage(
+                    Seq("fc-item__avatar__media", cutOut.cssClass),
+                    ImgSrc.srcset(imageUrl, FaciaWidths.cutOutFromItemClasses(item.cardTypes)),
+                    FaciaWidths.cutOutFromItemClasses(item.cardTypes).sizes,
+                    None,
+                    false
+                )
             </div>
             }
         }
@@ -140,6 +186,6 @@ data-test-id="facia-card"
             <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
         }
 
-    <a @Html(item.url.hrefWithRel) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.headline)</a>
+    <a @Html(item.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.headline)</a>
     </div>
 </div>

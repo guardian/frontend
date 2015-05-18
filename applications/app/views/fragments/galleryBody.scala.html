@@ -1,5 +1,7 @@
 @(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
 @import views.support.TrailCssClasses.articleToneClass
+@import layout.ContentWidths.GalleryMedia
+@import views.support.ImgSrc
 
 <div class="l-side-margins l-side-margins--media">
 
@@ -7,7 +9,7 @@
             Map("content--advertisement-feature" -> gallery.isAdvertisementFeature),
             "content", "content--media", "content--gallery", "tonal", s"tonal--${articleToneClass(gallery)}"
         )"
-        itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
+        itemscope itemtype="@gallery.schemaType" role="main">
 
         @fragments.headTonal(gallery)
 
@@ -17,7 +19,7 @@
                     @fragments.contentMeta(gallery)
                     <ul class="gallery2">
                         @gallery.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                            @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum)
+                            @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.imageContainer(row.rowNum - 1))
                         }
                     </ul>
                     @fragments.submeta(gallery)
@@ -42,38 +44,29 @@
     @fragments.contentFooter(gallery, related, "media")
 </div>
 
-@galleryItem(adSlots: Seq[String], adInterval: Int, image: model.ImageAsset, rowNum: Int) = {
+@galleryItem(adSlots: Seq[String], adInterval: Int, image: model.ImageAsset, rowNum: Int, imageElement: model.ImageElement) = {
 
     <li id="img-@rowNum" class="gallery2__item js-gallery-item" data-link-name="Gallery item | @rowNum">
         <figure itemscope itemtype="http://schema.org/ImageObject">
 
-            @ImgSrc.imager(gallery.imageContainer(rowNum - 1), GalleryUpgradedImage).map { imgSrc =>
+            <a class="gallery2__img-container js-gallerythumbs @if(image.width >= image.height) {gallery2__img-container--landscape} else {gallery2__img-container--portrait}"
+                href="@LinkTo{@gallery.url#img-@rowNum}"
 
-                @GalleryInitialImage.bestFor(gallery.imageContainer(rowNum - 1)).map { url =>
+                data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
-                    <a class="gallery2__img-container js-gallerythumbs js-delayed-image-upgrade @if(image.width >= image.height) {gallery2__img-container--landscape} else {gallery2__img-container--portrait}"
-                        href="@LinkTo{@gallery.url#img-@rowNum}"
-                        data-src="@imgSrc"
-                        data-link-name="Launch Gallery Lightbox" data-is-ajax>
+                <img class="gallery2__img js-gallery-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                    srcset="@ImgSrc.srcset(imageElement, GalleryMedia.Inline)"
+                    sizes="@GalleryMedia.Inline.sizes"
+                    src="@ImgSrc.getFallbackUrl(imageElement)"
+                    alt="@image.altText.getOrElse("")"
+                    itemprop="contentUrl"
+                    nopin="nopin" />
 
-                        <img class="gallery2__img js-gallery-img gallery2__img-initial @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
-                            src="@url"
-                            alt="@image.altText.getOrElse("")"
-                            itemprop="contentUrl"
-                            nopin="nopin" />
-
-                        <img class="gallery2__img js-gallery-img responsive-img u-h @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
-                            alt="@image.altText.getOrElse("")"
-                            itemprop="contentUrl" />
-
-                        <span class="rounded-icon gallery2__fullscreen">
-                            <i class="i i-expand-white"></i>
-                            <i class="i i-expand-black"></i>
-                        </span>
-
-                    </a>
-                }
-            }
+                <span class="rounded-icon gallery2__fullscreen">
+                    <i class="i i-expand-white"></i>
+                    <i class="i i-expand-black"></i>
+                </span>
+            </a>
 
             <div class="gallery2__figcaption">
                 @image.caption.map { caption =>

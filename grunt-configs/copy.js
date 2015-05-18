@@ -10,7 +10,7 @@ module.exports = function(grunt, options) {
                 },
                 {
                     expand: true,
-                    cwd: 'static/public/javascripts/vendor',
+                    cwd: 'static/src/javascripts/vendor',
                     src: [
                         'formstack-interactive/0.1/boot.js',
                         'vast-client.js',
@@ -20,9 +20,9 @@ module.exports = function(grunt, options) {
                 },
                 {
                     expand: true,
-                    cwd: 'static/public/javascripts/vendor',
+                    cwd: 'static/src/javascripts/vendor',
                     src: [
-                        'foresee*/**'
+                        '**/*'
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
                 },
@@ -50,10 +50,6 @@ module.exports = function(grunt, options) {
                 dest: options.staticTargetDir + 'stylesheets'
             }]
         },
-        pxCss: {
-            src: [options.staticTargetDir + 'stylesheets/global.css'],
-            dest: options.staticTargetDir + 'stylesheets/global.px.css'
-        },
         images: {
             files: [{
                 expand: true,
@@ -79,12 +75,14 @@ module.exports = function(grunt, options) {
             }]
         },
         headJs: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/components/curl',
-                src: ['curl-domReady.js'],
-                dest: 'common/conf/assets'
-            }]
+            files: [
+                {
+                    expand: true,
+                    cwd: 'static/src/javascripts/components/curl',
+                    src: ['curl-domReady.js'],
+                    dest: 'common/conf/assets'
+                }
+            ]
         },
         // assets.map must go where Play can find it from resources at runtime.
         // Everything else goes into frontend-static bundling.

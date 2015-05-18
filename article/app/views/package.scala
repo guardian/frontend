@@ -14,16 +14,20 @@ object BodyCleaner {
         BlockNumberCleaner,
         TweetCleaner,
         WitnessCleaner,
-        new TagLinker(article),
+        TagLinker(article),
         TableEmbedComplimentaryToP,
         R2VideoCleaner(article),
         VideoEmbedCleaner(article),
         PictureCleaner(article),
         LiveBlogDateFormatter(article.isLiveBlog),
+        BloggerBylineImage(article),
         LiveBlogShareButtons(article),
         DropCaps(article.isComment || article.isFeature),
         FigCaptionCleaner,
-        RichLinkCleaner
+        RichLinkCleaner,
+        MembershipEventCleaner,
+        BlockquoteCleaner,
+        CmpParamCleaner
       )
   }
 }

@@ -1,10 +1,12 @@
 define([
+    'fastdom',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
     'common/modules/article/spacefinder'
 ], function (
+    fastdom,
     $,
     ajax,
     config,
@@ -16,6 +18,7 @@ define([
         return {
             minAbove: 200,
             minBelow: 250,
+            clearContentMeta: 50,
             selectors: {
                 ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 200},
                 ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 300},
@@ -28,21 +31,24 @@ define([
     return {
         init: function () {
             if (config.page.openModule) {
-                var space = spacefinder.getParaWithSpace(getSpacefinderRules());
-                if (space) {
-                    ajax({
-                        url: config.page.openModule,
-                        crossOrigin: true,
-                        method: 'get'
-                    }).then(function (resp) {
-                        if (resp.html) {
-                            $.create(resp.html)
-                                .addClass('element--supporting')
-                                .insertBefore(space);
-                            $('.submeta-container--break').removeClass('submeta-container--break');
-                        }
-                    });
-                }
+                spacefinder.getParaWithSpace(getSpacefinderRules()).then(function (space) {
+                    if (space) {
+                        ajax({
+                            url: config.page.openModule,
+                            crossOrigin: true,
+                            method: 'get'
+                        }).then(function (resp) {
+                            if (resp.html) {
+                                fastdom.write(function () {
+                                    $.create(resp.html)
+                                        .addClass('element--supporting')
+                                        .insertBefore(space);
+                                    $('.submeta-container--break').removeClass('submeta-container--break');
+                                });
+                            }
+                        });
+                    }
+                });
             }
         }
     };

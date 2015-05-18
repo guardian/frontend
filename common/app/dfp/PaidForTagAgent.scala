@@ -56,13 +56,17 @@ trait PaidForTagAgent {
                                  capiTags: Seq[Tag],
                                  maybeSectionId: Option[String],
                                  maybeEdition: Option[Edition]): Option[CapiTagAndDfpTag] = {
+
+    val seriesDfpTags = dfpTags filter (_.tagType == Series)
+    val keywordDfpTags = dfpTags filter (_.tagType == Keyword)
+
     for (capiTag <- capiTags.filter(_.isSeries)) {
-      for (dfpTag <- findWinningDfpTag(dfpTags, capiTag.id, maybeSectionId, maybeEdition)) {
+      for (dfpTag <- findWinningDfpTag(seriesDfpTags, capiTag.id, maybeSectionId, maybeEdition)) {
         return Some(CapiTagAndDfpTag(capiTag, dfpTag))
       }
     }
     for (capiTag <- capiTags.filter(_.isKeyword)) {
-      for (dfpTag <- findWinningDfpTag(dfpTags, capiTag.id, maybeSectionId, maybeEdition)) {
+      for (dfpTag <- findWinningDfpTag(keywordDfpTags, capiTag.id, maybeSectionId, maybeEdition)) {
         return Some(CapiTagAndDfpTag(capiTag, dfpTag))
       }
     }
@@ -180,9 +184,14 @@ trait PaidForTagAgent {
     lazy val isExpiredLegacyAdFeature =
       lineItems.isEmpty && hasAdFeatureTone && pageId != "tone/advertisement-features"
 
-    lazy val isExpiredAdFeature = lineItems.nonEmpty && (lineItems forall { lineItem =>
-      lineItem.endTime exists (_.isBeforeNow)
-    })
+    lazy val isExpiredAdFeature = {
+      def hasExpiredStatus(lineItem: GuLineItem): Boolean = {
+        lineItem.status != "READY" && lineItem.status != "DELIVERING"
+      }
+      lineItems.nonEmpty && (lineItems forall { lineItem =>
+          hasExpiredStatus(lineItem) || lineItem.endTime.exists(_.isBeforeNow)
+      })
+    }
 
     !isPreview && (isExpiredLegacyAdFeature || isExpiredAdFeature)
   }

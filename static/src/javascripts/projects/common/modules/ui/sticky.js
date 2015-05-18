@@ -1,14 +1,22 @@
 define([
     'bonzo',
-    'lodash/functions/throttle',
-    'lodash/objects/defaults',
-    'common/utils/mediator'
+    'common/utils/_',
+    'common/utils/$',
+    'common/utils/mediator',
+    'common/modules/experiments/ab'
 ], function (
     bonzo,
-    throttle,
-    defaults,
-    mediator
+    _,
+    $,
+    mediator,
+    ab
 ) {
+
+    function isMtRec1Test() {
+        var MtRec1Test = ab.getParticipations().MtRec1;
+
+        return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A';
+    }
 
     /**
      * @todo: check if browser natively supports "position: sticky"
@@ -16,24 +24,26 @@ define([
     var Sticky = function (element, options) {
         this.$element = bonzo(element);
         this.$parent  = this.$element.parent();
-        this.opts     = defaults(options || {}, {
+        this.opts     = _.defaults(options || {}, {
             top: 0
         });
     };
 
     Sticky.prototype.init = function () {
-        mediator.on('window:scroll', throttle(this.updatePosition.bind(this), 10));
+        mediator.on('window:scroll', _.throttle(this.updatePosition.bind(this), 10));
         // kick off an initial position update
         this.updatePosition();
     };
 
     Sticky.prototype.updatePosition = function () {
-        var fixedTop, css;
+        var fixedTop, css, stickyHeaderHeight;
+
+        stickyHeaderHeight = isMtRec1Test() ? $('.navigation').dim().height : 0;
 
         // have we scrolled past the element
-        if (window.scrollY >= this.$parent.offset().top - this.opts.top) {
+        if (window.scrollY >= this.$parent.offset().top - this.opts.top - stickyHeaderHeight) {
             // make sure the element stays within its parent
-            fixedTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height);
+            fixedTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height) + stickyHeaderHeight;
 
             css = {
                 position: 'fixed',

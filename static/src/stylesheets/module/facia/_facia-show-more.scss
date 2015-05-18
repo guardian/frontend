@@ -1,20 +1,20 @@
-@include keyframes(spinner) {
+@keyframes spinner {
     from {
-        @include rotate(0deg);
+        transform: rotate(0deg);
     }
 
     to {
-        @include rotate(360deg);
+        transform: rotate(360deg);
     }
 }
 
-.collection__show-more--loading i {
-    @include animation(spinner linear 1.5s infinite);
+.collection__show-more--loading svg {
+    animation: spinner linear 1.5s infinite;
 }
 
 .show-more__error-message {
     @include fs-textSans(3);
-    @include transition(opacity 1.5s);
+    transition: opacity 1.5s;
     color: colour(status-negative);
     display: inline-block;
     padding-top: $gs-baseline / 2;
@@ -42,5 +42,21 @@
 
     .fc-show-more--hidden & {
         margin-top: 0;
+    }
+
+    .inline-minus {
+        fill: colour(neutral-2);
+    }
+
+    .fc-show-more--visible & {
+        .inline-plus {
+            display: none;
+        }
+    }
+
+    .fc-show-more--hidden & {
+        .inline-minus {
+            display: none;
+        }
     }
 }

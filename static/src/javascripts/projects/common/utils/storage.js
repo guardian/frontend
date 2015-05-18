@@ -3,23 +3,27 @@
  Description: Wrapper around localStorage functionality
  */
 define([
-    'lodash/functions/once'
+    'common/utils/_'
 ], function (
-    once
-    ) {
+    _
+) {
 
     var w = window,
         Storage = function (type) {
             this.type = type;
-        };
+        },
+        isAvailable;
 
     Storage.prototype.setWindow = function (window) {
         w = window;
     };
 
-    Storage.prototype.isStorageAvailable = once(function () {
-        return this.isAvailable();
-    });
+    Storage.prototype.isStorageAvailable = function (refresh) {
+        if (_.isUndefined(isAvailable) || refresh) {
+            isAvailable = this.isAvailable();
+        }
+        return isAvailable;
+    };
 
     Storage.prototype.isAvailable = function (data) {
         var testKey = 'local-storage-module-test',

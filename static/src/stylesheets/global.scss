@@ -32,7 +32,6 @@
 @import 'module/_dropdown';
 @import 'module/charts/_doughnuts';
 
-@import 'module/_popup';
 @import 'module/_search';
 @import 'module/_search-tool';
 
@@ -54,7 +53,7 @@
 @import 'module/content/_gallery-lightbox';
 @import 'module/content/_block-level-sharing';
 
-@import 'module/_crosswords';
+@import 'module/crosswords/_main';
 @import 'module/_weather';
 @import 'module/_sudoku';
 
@@ -63,7 +62,8 @@
 @import 'module/_clamp';
 @import 'module/_submeta';
 
-@import 'module/_flyers';
+@import 'module/_rich-links';
+@import 'module/_membership-events';
 
 /* ==========================================================================
    External modules
@@ -96,13 +96,7 @@
 
 @import 'module/facia/_facia-show-more';
 @import 'module/facia/_pagination';
-
-@import 'module/facia/snaps/_football';
 @import 'module/facia/_tag-meta';
-
-// card additions
-@import 'module/facia/_icons';
-
 @import 'module/facia/_l-list';
 @import 'module/facia/_container';
 @import 'module/facia/_containers';
@@ -141,4 +135,3 @@
 @import 'module/_release-message';
 @import 'module/_tag-list';
 @import 'module/_childrens-books-site';
-@import 'module/business/_stocks';

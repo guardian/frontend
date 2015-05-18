@@ -3,6 +3,6 @@ define([
     'videojsads',
     'videojsima',
     'videojspersistvolume',
-    'videojsplaylist',
+    'videojsplaylist/javascripts/videojs.playlist',
     'videojsembed'
 ], function () {});

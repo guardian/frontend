@@ -4,19 +4,14 @@
  Common functions to simplify access to page data
  */
 define([
-    'lodash/collections/contains',
-    'lodash/objects/assign',
     'common/utils/_',
     'common/utils/pad',
     'common/utils/url'
 ], function (
-    contains,
-    extend,
     _,
     pad,
     urlUtils
 ) {
-
     var config         = guardian.config,
         adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
 
@@ -24,7 +19,7 @@ define([
         config.page.adUnit = ['/', config.page.dfpAccountId, '/', adUnitOverride].join('');
     }
 
-    return extend({
+    return _.extend({
         hasTone: function (name) {
             return (this.page.tones || '').indexOf(name) > -1;
         },
@@ -62,8 +57,6 @@ define([
             return s ? s[0] : null;
         },
 
-        isMedia: contains(['Video', 'Audio'], config.page.contentType)
-
+        isMedia: _.contains(['Video', 'Audio'], config.page.contentType)
     }, config);
-
 });

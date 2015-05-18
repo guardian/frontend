@@ -4,9 +4,9 @@
 @import views.html.fragments.form.{inputField, checkbox}
 @import views.html.fragments.socialSignin
 @import views.html.fragments.identityPageHeader
-@import views.html.fragments.identityBenefits
+@import views.SocialSigninRoute.Signin
 
-@identityMain(page, conf.Switches.all){
+@main(page, projectName = Option("identity")){
 }{
 <div class="identity-wrapper monocolumn-wrapper">
     @identityPageHeader("Sign in to the Guardian") {
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="fieldset__fields">
-                @socialSignin("Sign in", page, idRequest, idUrlBuilder)
+                @socialSignin(views.SocialSigninRoutes(Signin), idRequest, idUrlBuilder)
             </div>
         </fieldset>
 
@@ -61,5 +61,4 @@
     </form>
 </div>
 
-@identityBenefits()
 }

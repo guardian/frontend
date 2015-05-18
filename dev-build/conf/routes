@@ -16,6 +16,7 @@ GET         /js.gif                                                             
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
 GET         /counts.gif                                                                                              controllers.DiagnosticsController.analyticsCounts()
 POST        /tech-feedback                                                                                           controllers.DiagnosticsController.techFeedback()
+GET         /tech-feedback                                                                                           controllers.DiagnosticsController.techFeedback()
 POST        /css                                                                                                     controllers.DiagnosticsController.css
 OPTIONS     /css                                                                                                     controllers.DiagnosticsController.cssOptions
 POST        /accept-beacon                                                                                           controllers.DiagnosticsController.acceptBeacon
@@ -25,6 +26,9 @@ OPTIONS     /accept-beacon                                                      
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: CrosswordType, id: Int)
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
+
+# Business data
+GET        /business-data/stocks.json                 controllers.StocksController.stocks
 
 #Weather - OLD
 GET         /weather/city/:id.json                                                                                   controllers.WeatherController.forCity(id)
@@ -103,8 +107,8 @@ GET         /podcast/most-viewed.json                                           
 GET         /gallery/most-viewed.json                                                                                controllers.MostViewedGalleryController.renderMostViewed()
 GET         /video/end-slate/series/*seriesId.json                                                                   controllers.VideoEndSlateController.renderSeries(seriesId)
 GET         /video/end-slate/section/*sectionId.json                                                                 controllers.VideoEndSlateController.renderSection(sectionId)
-GET         /embed/card/*path.json                                                                                   controllers.FlyerController.render(path)
-GET         /embed/card/*path                                                                                        controllers.FlyerController.renderHtml(path)
+GET         /embed/card/*path.json                                                                                   controllers.RichLinkController.render(path)
+GET         /embed/card/*path                                                                                        controllers.RichLinkController.renderHtml(path)
 
 # Sport
 GET         /sport/cricket/match/:matchId.json                                                                       controllers.CricketMatchController.renderMatchIdJson(matchId)
@@ -199,7 +203,8 @@ GET         /metrics/afg                                                        
 GET         /radiator                                                                                                controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                        controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                                   controllers.admin.RadiatorController.commitDetail(hash)
-GET         /troubleshoot/football                                                                                   controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
+GET         /troubleshoot/football                                                                                   controllers.admin.SportTroubleshooterController.renderFootballTroubleshooter()
+GET         /troubleshoot/cricket                                                                                    controllers.admin.SportTroubleshooterController.renderCricketTroubleshooter()
 GET         /troubleshoot/pages                                                                                      controllers.admin.TroubleshooterController.index()
 GET         /troubleshoot/test                                                                                       controllers.admin.TroubleshooterController.test(id, testPath)
 GET         /redirects                                                                                               controllers.admin.RedirectController.redirect()
@@ -252,7 +257,7 @@ GET         /commercial/jobs.json                                               
 
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.renderMasterclasses
 
-GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.renderSoulmates
+GET         /commercial/soulmates/$subgroup<\w+>.json                                                                controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
 
 GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffersController.renderBook
 GET         /commercial/books/books.json                                                                             controllers.commercial.BookOffersController.renderBooks
@@ -276,6 +281,8 @@ GET         /admin/commercial/fluid250                                          
 GET         /commercial/multi.json                                                                                   controllers.commercial.Multi.renderMulti
 GET         /admin/commercial/dfp/flush/view                                                                         controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET         /admin/commercial/dfp/flush                                                                              controllers.admin.commercial.DfpDataController.flushCache()
+GET         /admin/commercial/radiator                                                                               controllers.admin.CommercialController.renderCommercialRadiator()
+
 
 # dev-build only
 GET         /commercial/magento/token                                                                                controllers.commercial.magento.AccessTokenGenerator.generate
@@ -295,12 +302,13 @@ GET        /$path<.+>/all                                                       
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
-GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>           controllers.FaciaController.renderFrontPressSpecial(path)
+GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>  controllers.FaciaController.renderFrontPressSpecial(path)
 GET         /$path<(uk|au|us)(/(culture|sport|commentisfree|business|money|travel|rss))?>                            controllers.FaciaController.renderFrontPress(path)
 GET         /*path/lite.json                                                                                         controllers.FaciaController.renderFrontJsonLite(path)
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 
 # Applications
+GET         /$path<international>                                                                                    controllers.FaciaController.renderFront(path)
 GET         /preferences                                                                                             controllers.PreferencesController.userPrefs()
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                     controllers.IndexController.renderTrailsJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                          controllers.IndexController.renderTrails(path)
@@ -329,5 +337,5 @@ GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json   
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                                             controllers.InteractiveController.renderInteractive(path)
 
 # Articles
-GET         /*path.json                                                                                              controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
-GET         /*path                                                                                                   controllers.ArticleController.renderArticle(path)
+GET         /*path.json                                                                                              controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])
+GET         /*path                                                                                                   controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])

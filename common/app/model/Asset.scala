@@ -1,9 +1,7 @@
 package model
 
 import com.gu.contentapi.client.model.Asset
-import org.apache.commons.math3.fraction.Fraction
-import views.support.{Naked, ImgSrc}
-import scala.util.matching.Regex
+import views.support.{Orientation, Naked, ImgSrc}
 
 case class ImageAsset(delegate: Asset, index: Int) {
   private lazy val fields: Map[String, String] = delegate.typeData
@@ -21,14 +19,21 @@ case class ImageAsset(delegate: Asset, index: Int) {
   lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(1)
   lazy val ratio: Int = width/height
   lazy val role: Option[String] = fields.get("role")
+  lazy val orientation: Orientation = Orientation.fromDimensions(width, height)
 
   lazy val caption: Option[String] = fields.get("caption")
   lazy val altText: Option[String] = fields.get("altText")
+  lazy val mediaId: Option[String] = fields.get("mediaId")
 
   lazy val source: Option[String] = fields.get("source")
   lazy val photographer: Option[String] = fields.get("photographer")
   lazy val credit: Option[String] = fields.get("credit")
   lazy val displayCredit: Boolean = fields.get("displayCredit").exists(_=="true")
+
+  lazy val creditEndsWithCaption = (for {
+    credit <- credit
+    caption <- caption
+  } yield caption.endsWith(credit)).getOrElse(false)
 }
 
 case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]) {

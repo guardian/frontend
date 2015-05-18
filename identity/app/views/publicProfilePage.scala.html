@@ -6,7 +6,7 @@
 )(implicit request: RequestHeader)
 @import views.html.fragments.registrationFooter
 
-@identityMain(page, Switches.all){
+@main(page, projectName = Option("identity")){
 }{
 <div class="identity-wrapper monocolumn-wrapper identity-wrapper--stretched">
     <div class="identity-header">
@@ -14,12 +14,6 @@
             <div class="identity-title identity-title--public-profile">
                 <div class="user-profile__avatar user-avatar" data-userid="@user.id"></div>
                 <h1 class="user-profile__name">@user.publicFields.displayName</h1>
-                @user.publicFields.webPage.filter(_!="").map { webPage =>
-                    <a href="@webPage" class="user-profile__web-page" data-link-name="Visit user webpage">
-                        <i class="i i-profile-small"></i>
-                        @webPage
-                    </a>
-                }
                 @user.dates.accountCreatedDate.map { accountCreatedDate =>
                     <p class="user-profile__last-seen">
                         <i class="i i-clock-light-grey"></i>

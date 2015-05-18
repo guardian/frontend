@@ -2,8 +2,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'lodash/collections/forEach',
-    'lodash/functions/debounce',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -12,8 +11,7 @@ define([
     bean,
     bonzo,
     qwery,
-    forEach,
-    debounce,
+    _,
     $,
     config,
     mediator,
@@ -38,8 +36,8 @@ define([
 
             setHeight();
             mediator.addListeners({
-                'window:resize': debounce(setHeight, 200),
-                'window:orientationchange': debounce(setHeight, 200),
+                'window:resize': _.debounce(setHeight, 200),
+                'window:orientationchange': _.debounce(setHeight, 200),
                 'ui:images:vh': setHeight
             });
         },
@@ -50,21 +48,14 @@ define([
             mostViewed.manipulationType = 'html';
             mostViewed.endpoint = '/gallery/most-viewed.json';
             mostViewed.ready = function () {
-                mediator.emit('ui:images:upgradePicture', container);
+                mediator.emit('module:gallery-most-popular:loaded', container);
             };
             mostViewed.fetch(container, 'html');
         },
         ready = function () {
             verticallyResponsiveImages();
-            $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
 
-            forEach(qwery('.js-gallery-img.responsive-img'), function (responsiveImage) {
-                bean.one(responsiveImage, 'load', function (e) {
-                    bonzo(e.currentTarget).removeClass('u-h').previous().hide();
-                });
-            });
-
-            mediator.emit('ui:images:upgrade', $('.gallery2')[0]);
+            mediator.emit('ui:images:upgradePictures');
 
             mediator.emit('page:gallery:ready');
             transcludeMostPopular();
