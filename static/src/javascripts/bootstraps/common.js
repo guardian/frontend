@@ -15,6 +15,7 @@ define([
     'common/utils/template',
     'common/utils/url',
     'common/utils/robust',
+    'common/utils/storage',
     'common/modules/analytics/clickstream',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
@@ -54,6 +55,7 @@ define([
     'common/modules/onward/breaking-news',
     'text!common/views/international-message.html',
     'text!common/views/international-control-message.html',
+    'text!common/views/donot-use-adblock.html',
     'bootstraps/identity'
 ], function (
     bean,
@@ -70,6 +72,7 @@ define([
     template,
     url,
     robust,
+    storage,
     Clickstream,
     Foresee,
     liveStats,
@@ -109,6 +112,7 @@ define([
     breakingNews,
     internationalMessage,
     internationalControlMessage,
+    doNotUseAdblockTemplate,
     identity
 ) {
     var modules = {
@@ -250,13 +254,13 @@ define([
             },
 
             showAdblockMessage: function () {
-                //TODO add config.switch
-                if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse) {
-                    var adblockLink = 'https://membership.theguardian.com/about/supporter?INTCMP=adb-mv';
+                var alreadyVisted = storage.local.get('alreadyVisited') || 0,
+                    adblockLink = 'https://membership.theguardian.com/about/supporter?INTCMP=adb-mv';
 
+                if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted) {
                     new Message('adblock', {
                         pinOnHide: false,
-                        siteMessageLinkName: 'adblock message Variant',
+                        siteMessageLinkName: 'adblock message variant',
                         siteMessageCloseBtn: 'hide'
                     }).show(template(
                             doNotUseAdblockTemplate,
@@ -267,6 +271,8 @@ define([
                             }
                         ));
                 }
+
+                storage.local.set('alreadyVisited', alreadyVisted + 1);
             },
 
             logLiveStats: function () {

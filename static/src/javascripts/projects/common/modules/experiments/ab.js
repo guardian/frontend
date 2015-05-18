@@ -13,8 +13,7 @@ define([
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/tests/history-without-whitelist',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/defer-spacefinder',
-    'common/modules/experiments/tests/adblock-message'
+    'common/modules/experiments/tests/defer-spacefinder'
 ], function (
     raven,
     _,
@@ -30,8 +29,7 @@ define([
     SaveForLater,
     HistoryWithoutWhitelist,
     Headline,
-    DeferSpacefinder,
-    AdblockMessage
+    DeferSpacefinder
     ) {
 
     var ab,
@@ -43,7 +41,6 @@ define([
             new SaveForLater(),
             new HistoryWithoutWhitelist(),
             new DeferSpacefinder(),
-            new AdblockMessage(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             })

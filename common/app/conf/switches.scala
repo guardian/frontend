@@ -327,10 +327,13 @@ object Switches {
     "If this switch is on, Apple ads will appear below nav on the tech section front.",
     safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
-  val LazyLoadAds = Switch("Feature", "lz-ads",
+  val LazyLoadAds = Switch("Commercial", "lz-ads",
     "If switched on then all ads are lazy loaded",
     safeState = Off, sellByDate = never)
 
+  val AdBlockMessage = Switch("Commercial", "adblock",
+    "Switch for the Adblock Message.",
+    safeState = Off, sellByDate = never)
 
   // Monitoring
 
@@ -607,11 +610,6 @@ object Switches {
   val SlideshowImages = Switch("Feature", "slideshow-images",
     "If switched on, slideshows will be displayed on the fronts",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
-  val ABAdBlockMessage = Switch("A/B Tests", "ab-ad-block",
-    "Switch for the Adblock Message A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 28)
   )
 
   // Facia
