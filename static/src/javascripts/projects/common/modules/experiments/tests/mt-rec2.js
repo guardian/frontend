@@ -22,7 +22,7 @@ define([
         this.author = 'Steve Vadocz';
         this.description = 'Viewability results - Recommendation option 2';
         this.audience = 0.02;
-        this.audienceOffset = 0.25;
+        this.audienceOffset = 0.3;
         this.successMeasure = '';
         this.audienceCriteria = '1% of US and UK edition';
         this.dataLinkNames = '';
