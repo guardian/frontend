@@ -24,18 +24,19 @@ self.addEventListener('push', function (event) {
             .then(function (x) { return x.json(); })
             .then(function (data) {
                 // Warning: mutation!
-                notificationData = data;
+                notificationData = {
+                    title: data.message,
+                    url: data.link,
+                    body: '',
+                    tag: 'breaking-news',
+                    // TODO:
+                    icon: '/images/icon-192x192.png'
+                };
 
-                var title = notificationData.message;
-                // TODO:
-                var icon = '/images/icon-192x192.png';
-                var tag = 'breaking-news';
-                var body = '';
-
-                return self.registration.showNotification(title, {
-                    body: body,
-                    icon: icon,
-                    tag: tag
+                return self.registration.showNotification(notificationData.title, {
+                    body: notificationData.body,
+                    icon: notificationData.icon,
+                    tag: notificationData.tag
                 });
             })
     );
