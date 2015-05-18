@@ -1,5 +1,7 @@
 package model.meta
 
+import conf.Static
+
 class LinkedData(
                        val `@type`: String,
                        val `@context`: String = "http://schema.org")
@@ -17,7 +19,7 @@ object LinkedData {
 case class Guardian(
                      name: String = "The Guardian",
                      url: String = "http://www.theguardian.com/",
-                     logo: String = "http://assets.guim.co.uk/images/favicons/451963ac2e23633472bf48e2856d3f04/152x152.png",
+                     logo: String = Static("images/favicons/152x152.png").path,
                      sameAs: List[String] = List(
                        "https://www.facebook.com/theguardian",
                        "https://twitter.com/guardian",
