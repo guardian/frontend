@@ -67,7 +67,7 @@ object Uk extends Edition(
   )
 
   val environmentLocalNav = Seq(
-    climatechange,
+    climateChange,
     wildlife,
     energy,
     pollution

@@ -45,6 +45,13 @@ object Us extends Edition(
     globalDevelopment
   )
 
+  val environmentLocalNav = Seq(
+    climateChange,
+    wildlife,
+    energy,
+    pollution
+  )
+
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
@@ -59,7 +66,7 @@ object Us extends Edition(
       NavItem(fashion),
       NavItem(business, businessLocalNav),
       NavItem(travel, Seq(usaTravel, europetravel, uktravel)),
-      NavItem(environment, Seq(globalDevelopment, cities)),
+      NavItem(environment, environmentLocalNav),
       NavItem(science),
       NavItem(media),
       NavItem(crosswords),
@@ -80,7 +87,7 @@ object Us extends Edition(
     NavItem(fashion),
     NavItem(business, Seq(markets, companies)),
     NavItem(travel, Seq(usaTravel, europetravel, uktravel)),
-    NavItem(environment, Seq(globalDevelopment, cities)),
+    NavItem(environment, environmentLocalNav),
     NavItem(science)
   )
 }
