@@ -1,3 +1,4 @@
+@()
 // TODO: Lint
 
 /*eslint quotes: [2, "single"], curly: [2, "multi-line"], strict: 0*/
@@ -19,10 +20,8 @@ var findInArray = function (array, fn) {
 var notificationData;
 
 self.addEventListener('push', function (event) {
-    // TODO: var url
-    var mobileNotificationsWebHost = 'http://localhost:9000';
     event.waitUntil(
-        fetch(mobileNotificationsWebHost + '/messages/web/latest')
+        fetch('@{JavaScript(Configuration.pushNotifications.host + "/messages/web/latest")}')
             .then(function (x) { return x.json(); })
             .then(function (data) {
                 // Warning: mutation!
@@ -31,8 +30,7 @@ self.addEventListener('push', function (event) {
                     url: data.link,
                     body: '',
                     tag: 'breaking-news',
-                    // TODO:
-                    icon: '/images/icon-192x192.png'
+                    icon: '@{JavaScript(Static("images/favicons/152x152.png").path)}'
                 };
 
                 return self.registration.showNotification(notificationData.title, {
@@ -62,3 +60,4 @@ self.addEventListener('notificationclick', function (event) {
             })
     );
 });
+
