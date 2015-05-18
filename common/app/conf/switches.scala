@@ -553,11 +553,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
   )
 
-  val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",
-    "Switch for removing the whitelist from the user history tags",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
-  )
-
   val ABHeadlineSwitches = (1 to 10) map { n =>
     Switch(
       "A/B Tests",
