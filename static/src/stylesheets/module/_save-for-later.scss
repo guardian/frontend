@@ -12,7 +12,8 @@
 
 .button.save-for-later__button {
     font-size: get-font-size(textSans, 1);
-    border: green !important;
+    width: gs-span(2) - $gs-gutter;
+    @include button-height(32px);
 
     @include button-colour(
         $fill-colour: colour(neutral-6),
