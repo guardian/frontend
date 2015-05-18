@@ -84,7 +84,7 @@ module.exports = function (grunt) {
         grunt.task.run(['clean:js', 'compile:inlineSvgs']);
 
         if (!options.isDev) {
-            // grunt.task.run('shell:jspmBundleStatic');
+            grunt.task.run('shell:jspmBundleStatic');
         }
 
         if (options.isDev) {
@@ -106,7 +106,9 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap', 'compile:inlineSvgs', 'uglify:conf']);
     grunt.registerTask('compile', [
-        'concurrent:compile',
+        // 'concurrent:compile',
+        'compile:css',
+        'compile:js',
         'compile:fonts',
         'compile:flash',
         'asset_hash',
