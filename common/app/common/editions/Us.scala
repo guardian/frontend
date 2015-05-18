@@ -33,11 +33,23 @@ object Us extends Edition(
     ussmallbusiness
   )
 
+  val worldLocalNav = Seq(
+    uk,
+    europeNews,
+    americas,
+    asia,
+    middleEast,
+    africa,
+    australia,
+    cities,
+    globalDevelopment
+  )
+
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
       NavItem(us),
-      NavItem(world, Seq(uk, europeNews, americas, asia, middleEast, africa, australia)),
+      NavItem(world, worldLocalNav),
       NavItem(opinion),
       NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl)),
       NavItem(soccer, footballNav),
@@ -58,7 +70,7 @@ object Us extends Edition(
   override def briefNav: Seq[NavItem] = Seq(
     NavItem(home),
     NavItem(us),
-    NavItem(world, Seq(uk, europeNews, americas, asia, middleEast, africa, australia)),
+    NavItem(world, worldLocalNav),
     NavItem(opinion),
     NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl)),
     NavItem(soccer, footballNav),
