@@ -1,10 +1,12 @@
 define([
     'react',
     'common/utils/_',
+    'common/utils/config',
     'common/modules/onward/history'
 ], function (
     React,
     _,
+    config,
     history
 ) {
     return function () {
@@ -152,7 +154,11 @@ define([
                     options = options || {};
                     // TODO: var url
 
-                    var mobileNotificationsWebHost = 'http://localhost:9000';
+                    var mobileNotificationsWebHost = config.page.pushNotificationsHost;
+
+                    if (!mobileNotificationsWebHost) {
+                        throw new Error("No notifications host found");
+                    }
 
                     /*global fetch, Headers*/
                     return fetch(mobileNotificationsWebHost + '/web/subscription', {
