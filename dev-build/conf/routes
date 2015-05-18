@@ -310,15 +310,14 @@ GET         /container/*id.json                                                 
 # Applications
 GET         /$path<international>                                                                                    controllers.FaciaController.renderFront(path)
 GET         /preferences                                                                                             controllers.PreferencesController.userPrefs()
-GET         /service-worker.js                                                                                       dev.DevAssetsController.serviceWorker()
-GET         /manifest.json                                                                                           controllers.PreferencesController.manifest()
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                     controllers.IndexController.renderTrailsJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                          controllers.IndexController.renderTrails(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                                            controllers.IndexController.renderJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                                 controllers.IndexController.render(path)
 GET         /$leftSide<[^+]+>+*rightSide                                                                             controllers.IndexController.renderCombiner(leftSide, rightSide)
 GET         /embed/video/*path                                                                                       controllers.EmbedController.render(path)
-
+GET         /service-worker.js                                                                                       controllers.WebAppController.serviceWorker()
+GET         /manifest.json                                                                                           controllers.WebAppController.manifest()
 
 # Editionalised pages
 GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)
