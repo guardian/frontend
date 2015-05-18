@@ -34,19 +34,12 @@ object FrontPressCron extends JsonQueueWorker[SNSNotification] {
       log.info(s"Cron pressing path $path")
       val stopWatch = new StopWatch
 
-      if (Switches.FaciaPressNewFormat.isSwitchedOff && Switches.FaciaPressOldFormat.isSwitchedOff){
-        throw new RuntimeException("Both pressing switches are off")
-      }
-
       lazy val fapiFormat =
         if (Switches.FaciaPressNewFormat.isSwitchedOn) {
             LiveFapiFrontPress.pressByPathId(path)}
         else { Future.successful(Unit) }
 
-      lazy val oldFormat =
-        if (Switches.FaciaPressOldFormat.isSwitchedOn) {
-          FrontPress.pressLiveByPathId(path)}
-        else { Future.successful(Unit) }
+      lazy val oldFormat = FrontPress.pressLiveByPathId(path)
 
       val pressFuture = oldFormat.flatMap(_ => fapiFormat)
 
