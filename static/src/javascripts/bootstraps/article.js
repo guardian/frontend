@@ -6,6 +6,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/url',
+    'common/modules/experiments/ab',
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
@@ -14,6 +15,7 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
     'common/modules/ui/rhc',
+    'common/modules/ui/sticky-social',
     'common/modules/ui/selection-sharing'
 ], function (
     fence,
@@ -23,6 +25,7 @@ define([
     detect,
     mediator,
     urlutils,
+    ab,
     richLinks,
     membershipEvents,
     openModule,
@@ -31,6 +34,7 @@ define([
     geoMostPopular,
     OpenCta,
     rhc,
+    stickySocial,
     selectionSharing
 ) {
 
@@ -82,6 +86,12 @@ define([
 
             initSelectionSharing: function () {
                 selectionSharing.init();
+            },
+
+            initStickyShares: function () {
+                if (config.switches.abStickyShares && ab.getTestVariant('StickyShares') === 'sticky') {
+                    stickySocial.init();
+                }
             }
         },
 
@@ -92,6 +102,7 @@ define([
             modules.initRightHandComponent();
             modules.initSelectionSharing();
             modules.initCmpParam();
+            modules.initStickyShares();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();

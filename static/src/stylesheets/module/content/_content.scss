@@ -680,6 +680,34 @@
     box-sizing: border-box;
 }
 
+.meta__social--sticky {
+    position: fixed;
+    bottom: $gs-baseline;
+    border: 0;
+    z-index: 4;
+    transform: translate3d(0, $gs-baseline * 4, 0);
+
+    @include mq(leftCol, $until: wide) {
+        margin-left: $gs-gutter * -8;
+ 
+        .social__item--gplus {
+            display: none;
+        }
+    }
+ 
+    @include mq(wide) {
+        margin-left: $gs-gutter * -12;
+    }
+}
+
+.meta__social--sticky--revealable {
+    transition: transform 100ms linear;
+}
+
+.meta__social--sticky--reveal {
+    transform: translate3d(0, 0, 0);
+}
+
 .meta__twitter,
 .meta__email {
     margin: (-$gs-baseline*2/3) ($gs-gutter/4) (-$gs-baseline/6) 0;

@@ -137,11 +137,22 @@ define([
         });
     }
 
-    function getReady() {
+    function isDeferSpacefinder() {
         var group = ab.getParticipations().DeferSpacefinder,
             eligible = group && group.variant === 'A';
 
-        if (ab.testCanBeRun('DeferSpacefinder') && eligible) {
+        return ab.testCanBeRun('DeferSpacefinder') && eligible;
+    }
+
+    function isMtRec1() {
+        var group = ab.getParticipations().MtRec1,
+            eligible = group && group.variant === 'A';
+
+        return ab.testCanBeRun('MtRec1') && eligible;
+    }
+
+    function getReady() {
+        if (isDeferSpacefinder() || isMtRec1()) {
             return Promise.all([onImagesLoaded(), onRichLinksUpgraded()]);
         }
 
