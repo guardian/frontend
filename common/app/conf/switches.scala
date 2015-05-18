@@ -670,6 +670,11 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 6, 30)
   )
 
+  val FaciaServerNewFormat = Switch("Facia", "facia-new-format",
+    "If this is switched on, facia will serve off the new JSON format (It will fallback to old if it doesn't exist)",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 30)
+  )
+
   // Server-side A/B Tests
   val ServerSideTests = {
     // It's for the side effect. Blame agents.
