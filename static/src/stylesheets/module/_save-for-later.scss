@@ -1,0 +1,13 @@
+.save-for-later__button {
+    color: colour(neutral-1);
+    @include fs-textSans(1);
+
+    .inline-icon {
+        fill: colour(neutral-1);
+        margin-left: 0;
+
+        svg {
+            width: 18px;
+        }
+    }
+}
