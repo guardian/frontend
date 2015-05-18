@@ -25,7 +25,7 @@ self.addEventListener('push', function (event) {
         fetch(mobileNotificationsWebHost + '/messages/web/latest')
             .then(function (x) { return x.json(); })
             .then(function (data) {
-                // Warning: mutation!
+                // Warning: reassign!
                 notificationData = {
                     title: data.message,
                     url: data.link,
