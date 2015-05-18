@@ -252,12 +252,14 @@ describe('DFP', function () {
                 $frame[0].onload = function () {
                     this.contentDocument.body.innerHTML = html;
                 };
-                $frame.appendTo(qwery('#' + id)[0]);
+                var container = $.create('<div></div>');
+                $frame.appendTo(container);
+                container.appendTo(qwery('#' + id)[0]);
             };
 
         it('should insert html', function (done) {
-            var html = '<div class="dfp-iframe-content">Some content</div>',
-                $slot = $('#' + slotId).attr('data-label', false);
+            var html = '<div class="dfp-iframe-content">Some content</div>';
+            $('#' + slotId).attr('data-label', false);
             createTestIframe(slotId, '<div class="breakout__html">' + html + '</div>');
             dfp.init();
 
@@ -266,7 +268,7 @@ describe('DFP', function () {
                 window.googletag.pubads().listener(makeFakeEvent(slotId));
 
                 fastdom.defer(function () {
-                    expect($('iframe', '#' + slotId).css('display')).toBe('none');
+                    expect($('iframe', '#' + slotId).parent().parent().css('display')).toBe('none');
                     done();
                 });
             });
