@@ -26,6 +26,13 @@ object Us extends Edition(
     classicalMusic
   )
 
+  val businessLocalNav: Seq[SectionLink] = Seq(
+    economics,
+    ussustainablebusiness,
+    diversityequality,
+    ussmallbusiness
+  )
+
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
@@ -38,7 +45,7 @@ object Us extends Edition(
       NavItem(arts, cultureLocalNav),
       NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
       NavItem(fashion),
-      NavItem(business, Seq(markets, companies)),
+      NavItem(business, businessLocalNav),
       NavItem(travel, Seq(usaTravel, europetravel, uktravel)),
       NavItem(environment, Seq(globalDevelopment, cities)),
       NavItem(science),

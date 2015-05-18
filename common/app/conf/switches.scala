@@ -204,7 +204,7 @@ object Switches {
   )
 
   val CommercialSwitch = Switch("Commercial", "commercial",
-    "Kill switch for all commercial JS.",
+    "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
     safeState = On, sellByDate = never
   )
 
@@ -231,18 +231,6 @@ object Switches {
   val SponsoredSwitch = Switch("Commercial", "sponsored",
     "Show sponsored badges, logos, etc.",
     safeState = On, sellByDate = never
-  )
-
-  val LiveBlogContributorImagesSwitch = Switch("Feature", "liveblog-contributor-image",
-    "Show contributor byline images in live blog blocks",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 28)
-  )
-
-  val ElectionLiveBadgeSwitch = Switch("Feature", "election-2015-badging",
-    "Display Election Live 2015 Badge",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 5, 28)
   )
 
   val LiveblogAdvertsSwitch = Switch("Commercial", "liveblog-adverts",
@@ -525,6 +513,11 @@ object Switches {
   )
 
   // A/B Tests
+  val ABStickyShares = Switch("A/B Tests", "ab-sticky-shares",
+    "Switch sticky share buttons on articles",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 28)
+  )
+
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
@@ -532,6 +525,11 @@ object Switches {
 
   val ABMtRec1 = Switch("A/B Tests", "ab-mt-rec1",
     "Viewability results - Recommendation option 1",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
+  )
+
+  val ABMtRec2 = Switch("A/B Tests", "ab-mt-rec2",
+    "Viewability results - Recommendation option 2",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
   )
 
