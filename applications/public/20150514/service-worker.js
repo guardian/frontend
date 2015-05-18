@@ -49,7 +49,7 @@ self.addEventListener('notificationclick', function (event) {
     // See: http://crbug.com/463146
     event.notification.close();
 
-    var url = notificationData.link;
+    var url = notificationData.url;
 
     // Focus if already open
     event.waitUntil(
