@@ -1,3 +1,5 @@
+// TODO: Lint
+
 /*eslint quotes: [2, "single"], curly: [2, "multi-line"], strict: 0*/
 /*eslint-env browser*/
 /*global self*/
