@@ -16,13 +16,13 @@ define([
     stickyNav
 ) {
     return function () {
-        this.id = 'MtRec1';
+        this.id = 'MtRec2';
         this.start = '2015-05-12';
         this.expiry = '2015-05-25';
-        this.author = 'Zofia Korcz';
-        this.description = 'Viewability results - Recommendation option 1';
+        this.author = 'Steve Vadocz';
+        this.description = 'Viewability results - Recommendation option 2';
         this.audience = 0.02;
-        this.audienceOffset = 0.55;
+        this.audienceOffset = 0.25;
         this.successMeasure = '';
         this.audienceCriteria = '1% of US and UK edition';
         this.dataLinkNames = '';
@@ -36,7 +36,7 @@ define([
         };
 
         this.fireRecTest = function () {
-            stickyNav.stickySlow.init();
+            stickyNav.stickySlow.init(2);
         };
 
         /**
