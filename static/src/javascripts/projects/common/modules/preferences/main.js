@@ -91,20 +91,21 @@ define([
                 };
 
                 var initialiseState = function () {
-                    return navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
-                        // Do we already have a push message subscription?
-                        return serviceWorkerRegistration.pushManager.getSubscription()
-                            .then(function (subscription) {
-                                pushButton.disabled = false;
+                    return navigator.serviceWorker.ready
+                        .then(function (serviceWorkerRegistration) {
+                            // Do we already have a push message subscription?
+                            return serviceWorkerRegistration.pushManager.getSubscription()
+                                .then(function (subscription) {
+                                    pushButton.disabled = false;
 
-                                if (subscription) {
-                                    updateState({ pushEnabled: true });
+                                    if (subscription) {
+                                        updateState({ pushEnabled: true });
 
-                                    // Keep server in sync
-                                    return sendSubscription(subscription);
-                                }
-                            });
-                    });
+                                        // Keep server in sync
+                                        return sendSubscription(subscription);
+                                    }
+                                });
+                        });
                 };
 
                 var subscribe = function () {
