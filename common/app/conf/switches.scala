@@ -654,11 +654,6 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
   )
 
-  val FaciaPressOldFormat = Switch("Facia", "facia-tool-old-press-format",
-    "If this switch is on, facia-press will press in the old JSON format",
-    safeState = On, sellByDate = new LocalDate(2015, 8, 31)
-  )
-
   val FaciaPressOnDemand = Switch("Facia", "facia-press-on-demand",
     "If this is switched on, you can force facia to press on demand (Leave off)",
     safeState = Off, sellByDate = new LocalDate(2015, 6, 30)
