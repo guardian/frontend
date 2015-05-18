@@ -119,7 +119,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     lazy val oldFormat = frontJson.getAsJsValue(path).map { json =>
       Cached(cacheTime)(Cors(JsonComponent(FrontJsonLite.get(json))))}
 
-    if (Switches.FapiClientFormat.isSwitchedOn) {
+    if (Switches.FaciaServerNewFormat.isSwitchedOn) {
       newFormat.fallbackTo(oldFormat)}
     else {
       oldFormat}
@@ -157,7 +157,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   private[controllers] def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
-    if (Switches.FapiClientFormat.isSwitchedOn) {
+    if (Switches.FaciaServerNewFormat.isSwitchedOn) {
       val futureResult = frontJsonFapi.get(path).flatMap {
         case Some(faciaPage) =>
           Future.successful(
@@ -212,7 +212,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         }.getOrElse(ServiceUnavailable)
       }
 
-    if (Switches.FapiClientFormat.isSwitchedOn) {
+    if (Switches.FaciaServerNewFormat.isSwitchedOn) {
       newFormat.fallbackTo(oldFormat)
     } else {
       oldFormat
@@ -245,7 +245,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
     lazy val oldFormat = renderShowMoreFallback(path, collectionId)
-    if (Switches.FapiClientFormat.isSwitchedOn) {
+    if (Switches.FaciaServerNewFormat.isSwitchedOn) {
       lazy val newFormat = frontJsonFapi.get(path).flatMap {
         case Some(pressedPage) =>
           val maybeResponse =
@@ -347,7 +347,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
         case None => renderCollectionRssFallback(id)}
 
-    if (Switches.FapiClientFormat.isSwitchedOn) {
+    if (Switches.FaciaServerNewFormat.isSwitchedOn) {
       newFormat.fallbackTo(oldFormat)
     } else {
       oldFormat
