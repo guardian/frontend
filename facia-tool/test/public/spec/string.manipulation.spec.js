@@ -1,4 +1,4 @@
-import vars from 'modules/vars';
+import {CONST} from 'modules/vars';
 import params from 'utils/parse-query-params';
 import urlQuery from 'utils/url-query';
 import ammend from 'utils/ammended-query-str';
@@ -109,17 +109,17 @@ describe('utils/internal-content-code', function () {
             fields: {
                 internalContentCode: 'banana'
             }
-        })).toBe(vars.CONST.internalContentPrefix + 'banana');
+        })).toBe(CONST.internalContentPrefix + 'banana');
     });
 });
 
 describe('utils/is-guardian-url', function () {
     it('matches guardian domain', function () {
-        expect(isGuardian('http://' + vars.CONST.mainDomain)).toBe(true);
-        expect(isGuardian('https://' + vars.CONST.mainDomain)).toBe(true);
+        expect(isGuardian('http://' + CONST.mainDomain)).toBe(true);
+        expect(isGuardian('https://' + CONST.mainDomain)).toBe(true);
         expect(isGuardian('http://guaridian.it')).toBe(false);
-        expect(isGuardian('https://' + vars.CONST.mainDomain + '/')).toBe(true);
-        expect(isGuardian('https://' + vars.CONST.mainDomain + '/uk?search=fruit#hash')).toBe(true);
+        expect(isGuardian('https://' + CONST.mainDomain + '/')).toBe(true);
+        expect(isGuardian('https://' + CONST.mainDomain + '/uk?search=fruit#hash')).toBe(true);
     });
 });
 
