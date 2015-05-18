@@ -87,7 +87,7 @@ trait MetaData extends Tags {
 
   def linkedData: List[LinkedData] = List(
     Guardian(),
-    WebPage(webUrl, PotentialAction(target = webUrl.replace("://", "/")))
+    WebPage(webUrl, PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
   )
 
   def cacheSeconds = 60
