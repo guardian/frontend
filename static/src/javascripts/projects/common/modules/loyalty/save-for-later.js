@@ -41,7 +41,8 @@ define([
             this.$saver.html(
                 template(saveForLaterTmpl, {
                     url: url,
-                    icon: bookmarkSvg
+                    icon: bookmarkSvg,
+                    state: "save"
                 })
             );
         }

@@ -1,13 +1,46 @@
-.save-for-later__button {
-    color: colour(neutral-1);
-    @include fs-textSans(1);
+@mixin save-for-later-state($state, $c-accent) {
+    &.save-for-later--#{$state} {
+        .save-for-later__label--#{$state} {
+            display: inline;
+        }
+
+        &.button .inline-icon {
+            fill: $c-accent;
+        }
+    }
+}
+
+.button.save-for-later__button {
+    font-size: get-font-size(textSans, 1);
+    border: green !important;
+
+    @include button-colour(
+        $fill-colour: colour(neutral-6),
+        $border-color: colour(neutral-6),
+        $text-colour: colour(neutral-1),
+        $hover-colour: colour(neutral-5),
+        $hover-border: colour(neutral-5)
+    );
+
+    @include save-for-later-state(save, colour(neutral-2));
+    @include save-for-later-state(saved, colour(news-accent));
+    @include save-for-later-state(remove, colour(live-accent));
+
+    &:hover {
+        background-color: colour(neutral-5);
+    }
 
     .inline-icon {
         fill: colour(neutral-1);
         margin-left: 0;
+        margin: 0 4px 0 0;
 
         svg {
             width: 18px;
         }
     }
+}
+
+.save-for-later__label {
+    display: none;
 }
