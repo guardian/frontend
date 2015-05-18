@@ -153,6 +153,8 @@ define([
                     // TODO: var url
 
                     var mobileNotificationsWebHost = 'http://localhost:9000';
+
+                    /*global fetch, Headers*/
                     return fetch(mobileNotificationsWebHost + '/web/subscription', {
                         method: options.delete ? 'DELETE' : 'POST',
                         headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -163,7 +165,7 @@ define([
                             // TODO: edition based notifications
                             //edition: config.page.edition
                         })
-                    })
+                    });
                 };
 
                 pushButton.addEventListener('click', function () {
