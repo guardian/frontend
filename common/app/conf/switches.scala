@@ -233,12 +233,6 @@ object Switches {
     safeState = On, sellByDate = never
   )
 
-  val ElectionLiveBadgeSwitch = Switch("Feature", "election-2015-badging",
-    "Display Election Live 2015 Badge",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 5, 28)
-  )
-
   val LiveblogAdvertsSwitch = Switch("Commercial", "liveblog-adverts",
     "Show inline adverts on liveblogs",
     safeState = Off, sellByDate = never

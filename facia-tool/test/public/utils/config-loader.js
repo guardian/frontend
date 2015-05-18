@@ -1,29 +1,24 @@
-import _ from 'underscore';
+import testConfig from 'test-config';
 import Promise from 'Promise';
 import ConfigEditor from 'models/config/main';
 import MockConfig from 'mock/config';
-import fixConfig from 'test/fixtures/one-front-config';
 import MockSwitches from 'mock/switches';
-import fixSwitches from 'test/fixtures/default-switches';
 import MockCollection from 'mock/collection';
+import MockDefaults from 'mock/defaults';
 import templateConfig from 'views/config.scala.html!text';
+import Bootstrap from 'modules/bootstrap';
 
 export default function () {
-    var mockConfig, mockSwitches, mockCollection;
+    var mockConfig, mockSwitches, mockCollection, mockDefaults;
 
     var loader = new Promise (function (resolve) {
         mockConfig = new MockConfig();
-        mockConfig.set(fixConfig);
+        mockConfig.set(testConfig.config);
         mockSwitches = new MockSwitches();
-        mockSwitches.set(fixSwitches);
+        mockSwitches.set(testConfig.switches);
         mockCollection = new MockCollection();
-
-        // The configuration tool is ready when config and switches are loaded
-        var loaded = _.after(2, _.once(function () {
-            resolve();
-        }));
-        mockConfig.once('complete', loaded);
-        mockSwitches.once('complete', loaded);
+        mockDefaults = new MockDefaults();
+        mockDefaults.set(testConfig.defaults);
 
         document.body.innerHTML += templateConfig
             .replace('@{priority}', 'test')
@@ -31,10 +26,16 @@ export default function () {
             .replace(/\@[^\n]+\n/g, '');
 
         // Mock the time
+        var originalSetTimeout = window.setTimeout;
         jasmine.clock().install();
-        new ConfigEditor().init();
+        new ConfigEditor().init(new Bootstrap(), testConfig);
         // There's a network request in the init to get the config, advance time
         jasmine.clock().tick(100);
+
+        // Wait for knockout to handle bindings
+        originalSetTimeout(function () {
+            resolve();
+        }, 50);
     });
 
     function unload () {
@@ -44,6 +45,7 @@ export default function () {
         mockConfig.dispose();
         mockSwitches.dispose();
         mockCollection.dispose();
+        mockDefaults.dispose();
     }
 
     return {
