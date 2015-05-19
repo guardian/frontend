@@ -81,7 +81,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val hasTonalHeaderIllustration: Boolean = isLetters
 
   lazy val showBylinePic: Boolean = cardStyle == Comment &&
-    contentType != GuardianContentTypes.ImageContent &&
     hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
 
   private def largestImageUrl(i: ImageContainer) = i.largestImage.flatMap(_.url)
