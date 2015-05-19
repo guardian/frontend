@@ -187,7 +187,9 @@ define([
                     .then(initialiseState);
             };
 
-        initialiseNotificationPreferences();
+        if (config.switches.notifications) {
+            initialiseNotificationPreferences();
+        }
 
         if (placeholder) {
             initialiseSummaryTagsSettings();

@@ -365,6 +365,11 @@ object Switches {
 
 
   // Features
+  val NotificationsSwitch = Switch("Feature", "notifications",
+    "Notifications",
+    safeState = Off, sellByDate = new LocalDate(2015, 7, 15)
+  )
+
   val ABTestHeadlines = Switch(
     "Feature",
     "a-b-test-headlines",

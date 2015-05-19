@@ -16,7 +16,7 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="HandheldFriendly" content="True" />
 
-@if(request.path == "/preferences") {
+@if(conf.Switches.NotificationsSwitch.isSwitchedOn && request.path == "/preferences") {
     <link rel="manifest" href="/2015-05-19-manifest.json">
 }
 
