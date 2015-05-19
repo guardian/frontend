@@ -3,7 +3,7 @@ package model
 import java.net.URL
 
 import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
-import com.gu.facia.api.utils.{Editorial, Comment, CardStyle, ResolvedMetaData}
+import com.gu.facia.api.utils._
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.util.liveblogs.{Block, BlockToText, Parser => LiveBlogParser}
 import common.{LinkCounts, LinkTo, Reference}
@@ -79,9 +79,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   lazy val hasTonalHeaderIllustration: Boolean = isLetters
-
-  lazy val showBylinePic: Boolean = cardStyle == Comment &&
-    hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
+  
+  lazy val showCircularBylinePicAtSide: Boolean =
+    cardStyle == Feature && hasLargeContributorImage && contributors.length == 1
 
   private def largestImageUrl(i: ImageContainer) = i.largestImage.flatMap(_.url)
 
