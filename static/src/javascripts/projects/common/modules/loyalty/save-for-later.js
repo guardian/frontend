@@ -30,7 +30,7 @@ define([
         this.shortUrl = config.page.shortUrl.replace('http://gu.com', '');   //  Keep the fitst trailing slash
     }
 
-    var bookmarkSvg = svgs('bookmark');
+    var bookmarkSvg = svgs('bookmark', ['i-left']);
 
     SaveForLater.prototype.init = function () {
         if (identity.isUserLoggedIn()) {
@@ -41,7 +41,8 @@ define([
             this.$saver.html(
                 template(saveForLaterTmpl, {
                     url: url,
-                    icon: bookmarkSvg
+                    icon: bookmarkSvg,
+                    state: 'save'
                 })
             );
         }
