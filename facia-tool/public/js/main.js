@@ -2,8 +2,9 @@
 import Raven from 'raven-js';
 import Bootstrap from 'modules/bootstrap';
 import 'font-awesome/css/font-awesome.min.css!';
-import {init, update, differs} from 'modules/vars';
+import {init, update, differs, CONST} from 'modules/vars';
 import logger from 'utils/logger';
+import {reEstablishSession} from 'panda-session';
 
 function terminate (error) {
     if (error) {
@@ -51,6 +52,7 @@ export default function load (ModuleClass) {
         module = new ModuleClass();
         module.init(bootstrap, res);
         bootstrap.every(updateModuleConfig);
+        reEstablishSession(CONST.reauthPath, CONST.reauthInterval);
     }
 
     bootstrap = new Bootstrap()
