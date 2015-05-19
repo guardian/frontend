@@ -1,5 +1,6 @@
 package services
 
+import com.gu.facia.api.models.CollectionConfig
 import com.gu.facia.client.models.{Trail, _}
 import com.gu.contentapi.client.model.{Content => ApiContent}
 import common._
@@ -66,7 +67,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     def empty: CollectionMeta = CollectionMeta(None, None, None, None, None)
   }
 
-  def getCollection(id: String, config: CollectionConfigJson, edition: Edition): Future[Collection] = {
+  def getCollection(id: String, config: CollectionConfig, edition: Edition): Future[Collection] = {
     val collection: Future[Option[com.gu.facia.client.models.CollectionJson]] =
       FrontsApi.amazonClient.collection(id)
         .recover { case t: Throwable =>

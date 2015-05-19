@@ -8,7 +8,7 @@ import org.json4s.JValue
 import org.json4s.JsonAST._
 import org.json4s.native.JsonMethods
 import Json4s._
-import views.support.CardStyle
+import views.support.CardStyleForFrontend
 
 /** Helper for Facia tool - passes over the JSON that is proxied, adding in defaults */
 object ContentUpgrade {
@@ -47,7 +47,7 @@ object ContentUpgrade {
         val frontendContent = Content(content)
 
         val metaDataDefaults = MetadataDefaults(frontendContent)
-        val cardStyle = CardStyle(frontendContent)
+        val cardStyle = CardStyleForFrontend(frontendContent)
 
         import org.json4s.JsonDSL._
 

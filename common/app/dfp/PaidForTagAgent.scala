@@ -1,8 +1,7 @@
 package dfp
 
 import java.net.URLDecoder
-
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import com.gu.facia.api.models.CollectionConfig
 import common.Edition
 import model.Tag
 import model.`package`.frontKeywordIds
