@@ -11,7 +11,7 @@ define([
     'common/utils/template',
     'common/modules/article/spacefinder',
     'common/modules/ui/images',
-    'text!common/views/content/richLinkTag.html'
+    'common/views/content/richLinkTag.html!text'
 ], function (
     fastdom,
     qwery,

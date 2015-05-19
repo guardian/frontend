@@ -10,7 +10,7 @@
     System.normalize = function (name, parentName) {
         var requireToSystemPluginMap = {
             // Bundled
-            'text': 'text',
+            // 'text': 'text',
             // 'inlineSvg': 'svg',
             // Runtime
             'js': 'system-script'

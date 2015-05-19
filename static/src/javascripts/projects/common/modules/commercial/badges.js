@@ -9,7 +9,7 @@ define([
     'common/utils/template',
     'common/modules/commercial/create-ad-slot',
     'common/modules/commercial/dfp',
-    'text!common/views/commercial/badge.html'
+    'common/views/commercial/badge.html!text'
 ], function (
     bonzo,
     fastdom,

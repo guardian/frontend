@@ -18,7 +18,7 @@ define([
     'common/modules/video/fullscreener',
     'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
-    'text!common/views/ui/loading.html'
+    'common/views/ui/loading.html!text'
 ], function (
     bean,
     bonzo,

@@ -5,7 +5,7 @@ import $ from 'common/utils/$';
 import userPrefs from 'common/modules/user-prefs';
 import fixtures from 'helpers/fixtures';
 import Injector from 'helpers/injector';
-import sliceAdvertsHtml from 'text!fixtures/commercial/slice-adverts.html';
+import sliceAdvertsHtml from 'fixtures/commercial/slice-adverts.html!text';
 
 describe('Slice Adverts', function () {
 

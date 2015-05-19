@@ -8,7 +8,7 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'common/views/svgs',
-    'text!common/views/loyalty/save-for-later.html'
+    'common/views/loyalty/save-for-later.html!text'
 ], function (
     qwery,
     bonzo,

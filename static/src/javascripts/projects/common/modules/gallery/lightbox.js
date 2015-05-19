@@ -14,12 +14,12 @@ define([
     'common/modules/component',
     'common/modules/ui/blockSharing',
     'common/modules/ui/images',
-    'text!common/views/content/block-sharing.html',
-    'text!common/views/content/button.html',
-    'text!common/views/content/endslate.html',
-    'text!common/views/content/loader.html',
-    'text!common/views/content/share-button.html',
-    'text!common/views/content/share-button-mobile.html'
+    'common/views/content/block-sharing.html!text',
+    'common/views/content/button.html!text',
+    'common/views/content/endslate.html!text',
+    'common/views/content/loader.html!text',
+    'common/views/content/share-button.html!text',
+    'common/views/content/share-button-mobile.html!text'
 ], function (
     bean,
     bonzo,

@@ -9,8 +9,8 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/discussion/comment-count.html',
-    'text!common/views/discussion/comment-count--content.html'
+    'common/views/discussion/comment-count.html!text',
+    'common/views/discussion/comment-count--content.html!text'
 ], function (
     bonzo,
     fastdom,

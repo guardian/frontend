@@ -10,7 +10,7 @@ define([
     'common/utils/template',
     'common/modules/analytics/omnitureMedia',
     'common/modules/onward/history',
-    'text!common/views/ui/video-ads-skip-overlay.html'
+    'common/views/ui/video-ads-skip-overlay.html!text'
 ], function (
     bean,
     qwery,
