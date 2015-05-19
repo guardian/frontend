@@ -5,7 +5,7 @@ import play.api.libs.json.{JsString, JsValue}
 import play.api.mvc._
 import conf.Configuration
 
-object TestPage extends model.MetaData  {
+class TestPage(specifiedKeywords : List[String] = Nil) extends model.MetaData  {
 
   override lazy val id: String = "1234567"
   override lazy val description: Option[String] = None
@@ -21,9 +21,15 @@ object TestPage extends model.MetaData  {
   lazy val faciaPageMetaData: Map[String, JsValue] = newMetaData
 
   lazy val newMetaData: Map[String, JsValue] = Map(
-    "keywords" -> JsString(webTitle.capitalize),
+    "keywords" -> JsString(capitalisedKeywords),
+    "keywordIds" -> JsString(lowerCaseKeywords),
     "contentType" -> JsString(contentType)
   )
+
+  lazy val allTheKeywords = webTitle :: specifiedKeywords
+
+  def capitalisedKeywords = (allTheKeywords).map(_.capitalize).mkString(",")
+  def lowerCaseKeywords = (allTheKeywords).map(_.toLowerCase).mkString(",")
 
   val isNetworkFront: Boolean = false
 
@@ -32,9 +38,9 @@ object TestPage extends model.MetaData  {
 }
 
 object CreativeTestPage extends Controller {
-  def allComponents() = Action{ implicit request =>
+  def allComponents(keyword : List[String]) = Action{ implicit request =>
     if(Configuration.environment.stage == "dev" || Configuration.environment.stage == "code") {
-      Ok(views.html.debugger.allcreatives(TestPage))
+      Ok(views.html.debugger.allcreatives(new TestPage(keyword)))
     } else {
       NotFound
     }

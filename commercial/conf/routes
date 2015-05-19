@@ -4,7 +4,7 @@
 
 # For dev machines
 GET        /assets/*path                                             dev.DevAssetsController.at(path)
-GET        /commercial/test-page                                     controllers.commercial.CreativeTestPage.allComponents
+GET        /commercial/test-page                                     controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 GET        /_healthcheck                                             conf.HealthCheck.healthcheck()
 
 
@@ -13,7 +13,6 @@ GET        /commercial/travel/offers.json                            controllers
 
 # Jobs
 GET        /commercial/jobs.json                                     controllers.commercial.JobAds.renderJobs
-GET        /commercial/jobs.html                                     controllers.commercial.JobAds.renderJobsHtml
 
 # Masterclasses
 GET        /commercial/masterclasses.json                            controllers.commercial.MasterClasses.renderMasterclasses

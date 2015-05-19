@@ -23,20 +23,4 @@ object JobAds extends Controller with implicits.Requests {
       }
     }
   }
-
-  def renderJobsHtml = MemcachedAction { implicit request =>
-    Future.successful {
-      (JobsAgent.specificJobs(specificIds) ++ JobsAgent.jobsTargetedAt(segment)).distinct match {
-        case Nil => NoCache(jsonFormat.nilResult)
-        case jobs => Cached(componentMaxAge) {
-          val clickMacro = request.getParameter("clickMacro")
-          val omnitureId = request.getParameter("omnitureId")
-
-          htmlFormat.result(views.html.jobs.jobs(jobs.take(2), omnitureId, clickMacro))
-        }
-      }
-    }
-  }
-
-
 }
