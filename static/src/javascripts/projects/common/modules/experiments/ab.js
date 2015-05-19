@@ -13,6 +13,7 @@ define([
     'common/modules/experiments/tests/mt-rec2',
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/save-for-later',
+    'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/tests/history-without-whitelist',
     'common/modules/experiments/headlines',
     'common/modules/experiments/tests/defer-spacefinder'
@@ -31,6 +32,7 @@ define([
     MtRec2,
     HeatMap,
     SaveForLater,
+    CookieRefresh,
     HistoryWithoutWhitelist,
     Headline,
     DeferSpacefinder
@@ -45,6 +47,7 @@ define([
             new MtRec2(),
             new HeatMap(),
             new SaveForLater(),
+            new CookieRefresh(),
             new HistoryWithoutWhitelist(),
             new DeferSpacefinder(),
             _.map(_.range(1, 10), function (n) {
