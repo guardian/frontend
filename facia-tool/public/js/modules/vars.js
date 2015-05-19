@@ -1,5 +1,5 @@
 import CONST from 'constants/defaults';
-import isEqual from 'underscore';
+import _ from 'underscore';
 
 export const priority = (function (pathname) {
     let priority = pathname.match(/^\/?([^\/]+)/);
@@ -17,7 +17,7 @@ export function setModel (currentModel) {
 
 let currentRes;
 export function differs (res) {
-    return isEqual(res, currentRes);
+    return !_.isEqual(res, currentRes);
 }
 
 export let state = {
