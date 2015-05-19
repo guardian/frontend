@@ -9,7 +9,7 @@ define([
 ) {
     function load() {
         if (config.switches.krux) {
-            return require(['//cdn.krxd.net/controltag?confid=JVZiE3vn!js']);
+            return require(['//cdn.krxd.net/controltag?confid=JVZiE3vn!system-script']);
         }
     }
 

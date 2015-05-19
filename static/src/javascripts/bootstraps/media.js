@@ -240,7 +240,7 @@ define([
                                 events.bindPrerollEvents(player);
                                 player.adSkipCountdown(15);
 
-                                require(['//imasdk.googleapis.com/js/sdkloader/ima3!js'])
+                                require(['//imasdk.googleapis.com/js/sdkloader/ima3!system-script'])
                                     .then(function () {
                                         player.ima({
                                             id: mediaId,
