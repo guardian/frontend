@@ -10,7 +10,7 @@ define([
     mediator
     ) {
 
-    var selectorTopEl = '.meta__social',
+    var selectorTopEl = '.social--top',
         selectorBottomEl = '.social--bottom',
         stickyClassName = 'meta__social--sticky',
         stickyRevealClassName = 'meta__social--sticky--reveal',
@@ -22,6 +22,16 @@ define([
         bottomEl,
         revealed = false,
         failed = false;
+
+    function getTopEl() {
+        topEl = topEl || $(selectorTopEl);
+        return topEl;
+    }
+
+    function getBottomEl() {
+        bottomEl = bottomEl || $(selectorBottomEl);
+        return bottomEl;
+    }
 
     function setStickiness() {
         fastdom.read(function () {
@@ -81,6 +91,27 @@ define([
     }
 
     function init() {
+        var socials = ['facebook', 'twitter'],
+            referrer = ((window.location.hash + '').match(/referrer=([^&]+)/) || [])[1] || document.referrer,
+            socialReferrer = referrer ? socials.filter(function (social) {
+                return referrer.indexOf(social) > -1;
+            })[0] : null;
+
+        if (socialReferrer) {
+            fastdom.read(function () {
+                [selectorTopEl, selectorBottomEl].forEach(function (selector) {
+                    var container = $(selector);
+
+                    if (container) {
+                        fastdom.write(function () {
+                            container.addClass('social--referred');
+                            $('.social__item--' + socialReferrer, container).addClass('social__item--referred');
+                        });
+                    }
+                });
+            });
+        }
+
         mediator.on('window:scroll', _.throttle(determineStickiness, 10));
     }
 

@@ -92,21 +92,6 @@ define([
                 if (config.switches.abStickyShares && ab.getTestVariant('StickyShares') === 'sticky') {
                     stickySocial.init();
                 }
-            },
-
-            initRefererrShares: function () {
-                var socials = ['facebook', 'twitter'],
-                    referrer = ((window.location.hash + '').match(/referrer=([^&]+)/) || [])[1] || document.referrer,
-                    socialReferrer = socials.filter(function(social) {
-                        return referrer && referrer.indexOf(social) > -1;
-                    })[0],
-                    container;
-
-                if (socialReferrer) {
-                    container = $('.social--bottom');
-                    container.addClass('social--bottom--referrer');
-                    $('.social__item--' + socialReferrer, container).addClass('social__item--referrer');
-                }
             }
         },
 
@@ -118,7 +103,6 @@ define([
             modules.initSelectionSharing();
             modules.initCmpParam();
             modules.initStickyShares();
-            modules.initRefererrShares();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
