@@ -1,6 +1,6 @@
 package slices
 
-import model.Content
+import com.gu.facia.api.models.CuratedContent
 
 sealed trait MobileShowMore
 
@@ -16,9 +16,9 @@ object ContainerDefinition {
     Set.empty
   )
 
-  def fromContainer(container: Container, items: Seq[Content]) = container match {
+  def fromContainer(container: Container, items: Seq[CuratedContent]) = container match {
     case Dynamic(dynamicContainer) =>
-      dynamicContainer.containerDefinitionFor(items.map(Story.fromContent))
+      dynamicContainer.containerDefinitionFor(items.map(Story.fromCuratedContent))
 
     case Fixed(containerDefinition) => Some(containerDefinition)
 

@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import sinon from 'sinon';
-import vars from 'modules/vars';
+import {CONST} from 'modules/vars';
 import capi from 'modules/content-api';
 import Mock from 'mock/search';
 
@@ -20,13 +20,13 @@ describe('Content API', function () {
 
     beforeEach(function () {
         this.mock = new Mock();
-        default_capiBatchSize = vars.CONST.capiBatchSize;
-        vars.CONST.capiBatchSize = 3;
+        default_capiBatchSize = CONST.capiBatchSize;
+        CONST.capiBatchSize = 3;
     });
 
     afterEach(function () {
         this.mock.dispose();
-        vars.CONST.capiBatchSize = default_capiBatchSize;
+        CONST.capiBatchSize = default_capiBatchSize;
     });
 
     it('decorateItems empty', function (done) {

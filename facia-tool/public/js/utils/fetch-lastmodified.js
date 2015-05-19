@@ -1,6 +1,6 @@
 import Promise from 'Promise';
 import authedAjax from 'modules/authed-ajax';
-import vars from 'modules/vars';
+import * as vars from 'modules/vars';
 import humanTime from 'utils/human-time';
 
 function getFrontAgeAlertMs(front) {

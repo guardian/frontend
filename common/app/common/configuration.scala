@@ -373,6 +373,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         .getOrElse(60)
 
     lazy val faciaToolUpdatesStream: Option[String] = configuration.getStringProperty("faciatool.updates.stream")
+
+    lazy val sentryPublicDSN = configuration.getStringProperty("faciatool.sentryPublicDSN")
   }
 
   object pa {

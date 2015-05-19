@@ -913,10 +913,14 @@ define([
             var imageSrc = this.meta[params.src],
                 imageSrcWidth = this.meta[params.width],
                 imageSrcHeight = this.meta[params.height],
+                image = imageSrc(),
+                src,
                 opts = params.options;
 
-            if (imageSrc()) {
-                validateImageSrc(imageSrc(), opts)
+
+            if (image) {
+                src = typeof image === 'string' ? image : (image.media ? image.media.file || image.origin : image.origin);
+                validateImageSrc(src, opts)
                     .then(function(img) {
                         imageSrc(img.src);
                         imageSrcWidth(img.width);
