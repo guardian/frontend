@@ -61,8 +61,9 @@ export default {
 
     frontendApiBase:       '/frontend',
 
-    reauthPath:            '/oauthCallback',
-    reauthInterval:        60000 * 1, // 20 minutes
+    reauthPath:            '/login/status',
+    reauthInterval:        60000 * 20, // 20 minutes
+    reauthTimeout:         60000,
 
     imageCdnDomain:        '.guim.co.uk',
     previewBase:           'http://preview.gutools.co.uk',
