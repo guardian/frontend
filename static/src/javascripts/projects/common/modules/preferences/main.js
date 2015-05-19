@@ -183,7 +183,7 @@ define([
                     }
                 });
 
-                navigator.serviceWorker.register('/service-worker.js')
+                navigator.serviceWorker.register('/2015-05-19-service-worker.js')
                     .then(initialiseState);
             };
 

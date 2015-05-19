@@ -308,8 +308,8 @@ GET         /*path/lite.json                                                    
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 
 # Applications
-GET         /service-worker.js                                                                                       controllers.WebAppController.serviceWorker()
-GET         /manifest.json                                                                                           controllers.WebAppController.manifest()
+GET         /2015-05-19-service-worker.js                                                                            controllers.WebAppController.serviceWorker()
+GET         /2015-05-19-manifest.json                                                                                controllers.WebAppController.manifest()
 GET         /$path<international>                                                                                    controllers.FaciaController.renderFront(path)
 GET         /preferences                                                                                             controllers.PreferencesController.userPrefs()
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                     controllers.IndexController.renderTrailsJson(path)
