@@ -27,4 +27,9 @@ object OAuthLoginController extends Controller with PanDomainAuthActions {
   def user() = AuthAction { implicit request =>
     Ok(request.user.toJson).as(JSON)
   }
+
+  def status = AuthAction { request =>
+    val user = request.user
+    Ok(views.html.auth.status(user.toJson))
+  }
 }

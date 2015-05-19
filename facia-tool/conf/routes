@@ -6,8 +6,9 @@ GET           /_healthcheck              controllers.HealthCheck.healthcheck()
 
 # authentication endpoints
 GET           /authError                 controllers.OAuthLoginController.authError(message:String)
-GET           /oauthCallback            controllers.OAuthLoginController.oauthCallback
+GET           /oauthCallback             controllers.OAuthLoginController.oauthCallback
 GET           /logout                    controllers.OAuthLoginController.logout
+GET           /login/status              controllers.OAuthLoginController.status
 
 # static files
 GET           /assets/*file              controllers.UncachedAssets.at(file)
