@@ -11,7 +11,7 @@
         var requireToSystemPluginMap = {
             // Bundled
             'text': 'text',
-            'inlineSvg': 'svg',
+            // 'inlineSvg': 'svg',
             // Runtime
             'js': 'system-script'
         };
