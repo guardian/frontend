@@ -25,20 +25,6 @@ module.exports = function(grunt, options) {
                         '**/*'
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
-                },
-                {
-                    expand: true,
-                    cwd: options.requirejsDir,
-                    src: [
-                        'core.js',
-                        'core.js.map',
-                        'bootstraps/app.js',
-                        'bootstraps/app.js.map',
-                        'bootstraps/commercial.js',
-                        'bootstraps/commercial.js.map',
-                        'components/curl/curl-domReady.js'
-                    ],
-                    dest: options.staticTargetDir + 'javascripts'
                 }
             ]
         },
