@@ -3,7 +3,7 @@ package model
 import java.net.URL
 
 import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
-import com.gu.facia.api.utils.{CardStyle, ResolvedMetaData}
+import com.gu.facia.api.utils.{Editorial, Comment, CardStyle, ResolvedMetaData}
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.util.liveblogs.{Block, BlockToText, Parser => LiveBlogParser}
 import common.{LinkCounts, LinkTo, Reference}
@@ -60,25 +60,29 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     conf.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
   }
 
-  lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
+  lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").contains("true")
   lazy val hasSingleContributor: Boolean = {
     (contributors.headOption, byline) match {
       case (Some(t), Some(b)) => contributors.length == 1 && t.name == b
       case _ => false
     }
   }
+
   lazy val hasTonalHeaderByline: Boolean = {
-    visualTone == Tags.VisualTone.Comment && hasSingleContributor && contentType != GuardianContentTypes.ImageContent
+    (cardStyle == Comment || cardStyle == Editorial) &&
+      hasSingleContributor &&
+      contentType != GuardianContentTypes.ImageContent
   }
+
   lazy val hasBeenModified: Boolean = {
     new Duration(webPublicationDate, lastModified).isLongerThan(Duration.standardSeconds(60))
   }
+
   lazy val hasTonalHeaderIllustration: Boolean = isLetters
-  lazy val showBylinePic: Boolean = {
-    visualTone != Tags.VisualTone.News && visualTone != Tags.VisualTone.Live &&
-      contentType != GuardianContentTypes.ImageContent &&
-      hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
-  }
+
+  lazy val showBylinePic: Boolean = cardStyle == Comment &&
+    contentType != GuardianContentTypes.ImageContent &&
+    hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
 
   private def largestImageUrl(i: ImageContainer) = i.largestImage.flatMap(_.url)
 

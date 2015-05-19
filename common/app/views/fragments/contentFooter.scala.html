@@ -1,5 +1,7 @@
 @(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
 
+@import model.Article
+
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
 
     @fragments.discussionFooter(content.isCommentable, content.isClosedForComments, content.shortUrlId)
@@ -14,13 +16,13 @@
         }
 
         @fragments.storyPackagePlaceholder(content, related)
-        @fragments.onwardPlaceholder(content.visualTone)
+        @fragments.onwardPlaceholder()
 
         @if(content.isCommentable) {
             <div class="js-repositioned-comments content__repositioned-comments"></div>
         }
 
-        @fragments.mostPopularPlaceholder(content.section, content.visualTone)
+        @fragments.mostPopularPlaceholder(content.section)
 
         @content match {
             case article: Article if !article.isLiveBlog && !article.shouldHideAdverts => {
