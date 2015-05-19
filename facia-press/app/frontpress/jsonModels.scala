@@ -87,7 +87,11 @@ object ItemMeta {
     ("showQuotedHeadline", content.apiContent.metaData.flatMap(_.showQuotedHeadline).map(JsBoolean)),
     ("showMainVideo", content.apiContent.metaData.flatMap(_.showMainVideo).map(JsBoolean)),
     ("imageSlideshowReplace", content.apiContent.metaData.flatMap(_.json.get("imageSlideshowReplace"))),
-    ("slideshow", content.apiContent.metaData.flatMap(_.json.get("slideshow")))
+    ("slideshow", content.apiContent.metaData.flatMap(_.json.get("slideshow"))),
+    ("imageReplace", content.apiContent.metaData.flatMap(_.json.get("imageReplace"))),
+    ("imageSrc", content.apiContent.metaData.flatMap(_.imageSrc).map(JsString)),
+    ("imageSrcWidth", content.apiContent.metaData.flatMap(_.imageSrcWidth).map(JsString)),
+    ("imageSrcHeight", content.apiContent.metaData.flatMap(_.imageSrcHeight).map(JsString))
   )
 }
 
@@ -113,7 +117,11 @@ case class ItemMeta(
   showKickerSection: Option[JsValue],
   showMainVideo: Option[JsValue],
   imageSlideshowReplace: Option[Boolean],
-  slideshow: Option[JsValue]
+  slideshow: Option[JsValue],
+  imageReplace: Option[Boolean],
+  imageSrc:       Option[JsValue],
+  imageSrcWidth:  Option[JsValue],
+  imageSrcHeight: Option[JsValue]
 )
 
 object TrailJson {
