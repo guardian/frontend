@@ -1,13 +1,19 @@
 package controllers
 
-import model.{Cached, PreferencesMetaData}
+import model.{NotificationPreferencesMetaData, PreferencesMetaData, Cached}
 import play.api.mvc.{Action, Controller}
 
 object PreferencesController extends Controller with common.ExecutionContexts {
 
-  def userPrefs() = Action { implicit request =>
+  def indexPrefs() = Action { implicit request =>
     Cached(300) {
-      Ok(views.html.preferencesPage(new PreferencesMetaData()))
+      Ok(views.html.preferences.index(new PreferencesMetaData()))
+    }
+  }
+
+  def notificationPrefs() = Action { implicit request =>
+    Cached(300) {
+      Ok(views.html.preferences.notifications(new NotificationPreferencesMetaData()))
     }
   }
 }

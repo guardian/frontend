@@ -187,13 +187,15 @@ define([
                     .then(initialiseState);
             };
 
-        if (config.switches.notifications) {
-            initialiseNotificationPreferences();
+        switch (config.page.pageId) {
+            case 'preferences/notifications':
+                initialiseNotificationPreferences();
+                break;
+            case 'preferences':
+                if (placeholder) {
+                    initialiseSummaryTagsSettings();
+                }
+                break;
         }
-
-        if (placeholder) {
-            initialiseSummaryTagsSettings();
-        }
-
     };
 });

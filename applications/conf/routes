@@ -21,7 +21,8 @@ GET        /index/contributors/*contributor                                     
 GET        /embed/video/*path                                                   controllers.EmbedController.render(path)
 
 # Preferences
-GET        /preferences                                                         controllers.PreferencesController.userPrefs()
+GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
+GET        /preferences/notifications                                           controllers.PreferencesController.notificationPrefs()
 
 # Web App paths
 GET        /2015-05-19-service-worker.js                                        controllers.WebAppController.serviceWorker()
