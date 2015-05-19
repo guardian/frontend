@@ -18,10 +18,10 @@ class NavigationTest extends FlatSpec with Matchers with OptionValues {
       _.links.filter(_.title == "cities")
     }.isEmpty shouldEqual false
   }
-  "US brief nav 'world'" should "not contain 'cities'" in {
+  "US brief nav 'world'" should "contain 'cities'" in {
     Us.briefNav.filter(_.name.title == "world").flatMap {
       _.links.filter(_.title == "cities")
-    }.isEmpty shouldEqual true
+    }.isEmpty shouldEqual false
   }
   "AU brief nav 'world'" should "not contain 'cities'" in {
     Au.briefNav.filter(_.name.title == "world").flatMap {

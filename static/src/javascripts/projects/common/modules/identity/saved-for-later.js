@@ -19,10 +19,12 @@ define([
         this.init = function () {
             var self = this,
             form = $('.js-saved-content-form')[0];
-            bean.on(form, 'click', '.js-saved-content__button-delete-all', function (event) {
-                event.preventDefault();
-                self.fetchArticlesAndRemoveAll();
-            });
+            if (form) {
+                bean.on(form, 'click', '.js-saved-content__button-delete-all', function (event) {
+                    event.preventDefault();
+                    self.fetchArticlesAndRemoveAll();
+                });
+            }
 
             this.savedArticles = $('.js-saved-content');
             this.savedArticles.each(function (element) {
@@ -59,6 +61,9 @@ define([
         };
 
         this.deleteArticle = function (data, shortUrl, element) {
+
+            var self = this;
+
             data.articles = _.filter(data.articles, function (article) {
                 return article.shortUrl !== shortUrl;
             });
@@ -67,6 +72,7 @@ define([
                 function success(resp) {
                     if (resp.status !== 'error') {
                         element.remove();
+                        self.updateNumArticles(data.articles.length);
                     }
                 }
             );
@@ -82,6 +88,7 @@ define([
                         self.savedArticles.each(function (element) {
                             element.remove();
                         });
+                        self.updateNumArticles(0);
                     }
                 }
             );
@@ -99,6 +106,10 @@ define([
             } else {
                 return resp.savedArticles;
             }
+        };
+
+        this.updateNumArticles = function (numArticles) {
+            bonzo(qwery('.js-saved-content__num-articles')[0]).html('You have ' + numArticles + ' saved articles.');
         };
     }
 

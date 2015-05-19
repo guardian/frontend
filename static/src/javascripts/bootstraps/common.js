@@ -41,6 +41,7 @@ define([
     'common/modules/onward/related',
     'common/modules/onward/tonal',
     'common/modules/social/share-count',
+    'common/modules/ui/accessibility-prefs',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/fonts',
@@ -96,6 +97,7 @@ define([
     Related,
     TonalComponent,
     shareCount,
+    accessilbilityPrefs,
     Dropdowns,
     fauxBlockLink,
     fonts,
@@ -435,6 +437,10 @@ define([
                 techFeedback.init();
             },
 
+            initAccessibilityPrefs: function () {
+                accessilbilityPrefs.init();
+            },
+
             initPublicApi: function () {
                 // BE CAREFUL what you expose here...
                 window.guardian.api = {
@@ -444,11 +450,16 @@ define([
 
             runCustomAbTests: function () {
                 var stickyTest = ab.getTest('MtStickyBtm'),
-                    mainTest = ab.getTest('MtMain');
+                    rec1Test = ab.getTest('MtRec1'),
+                    rec2Test = ab.getTest('MtRec2');
 
-                if (mainTest && ab.isParticipating(mainTest) && ab.getTestVariant('MtMain') === 'A'
-                    && ab.testCanBeRun('MtMain')) {
-                    mainTest.fireMainTest();
+                if (rec1Test && ab.isParticipating(rec1Test) && ab.getTestVariant('MtRec1') === 'A'
+                    && ab.testCanBeRun('MtRec1')) {
+                    rec1Test.fireRecTest();
+                }
+                if (rec2Test && ab.isParticipating(rec2Test) && ab.getTestVariant('MtRec2') === 'A'
+                    && ab.testCanBeRun('MtRec2')) {
+                    rec2Test.fireRecTest();
                 }
                 if (stickyTest && ab.isParticipating(stickyTest) && ab.getTestVariant('MtStickyBtm') === 'A'
                     && ab.testCanBeRun('MtStickyBtm')) {
@@ -459,7 +470,7 @@ define([
             internationalSignposting: function () {
                 if ('internationalEdition' in config.page) {
                     if (config.page.internationalEdition === 'international' && config.page.pageId === 'international') {
-                        new Message('international-with-survey', {
+                        new Message('international-with-survey-new', {
                             pinOnHide: true
                         }).show(template(internationalMessage, {}));
                     } else if (config.page.internationalEdition === 'control' && config.page.pageId === 'uk') {
@@ -513,6 +524,7 @@ define([
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
             robust('c-run-custom-ab',   modules.runCustomAbTests);
+            robust('c-accessibility-prefs',       modules.initAccessibilityPrefs);
             robust('c-international-signposting', modules.internationalSignposting);
         };
 

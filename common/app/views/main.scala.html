@@ -1,7 +1,7 @@
 @(metaData: model.MetaData, projectName: Option[String] = None, curlPaths: Map[String, String] = Map())(head: Html)(body: Html)(implicit request: RequestHeader)
 
-@import conf.Switches._
 @import common.{Edition, Navigation}
+@import conf.Switches._
 @import views.support.RenderClasses
 
 <!DOCTYPE html>
@@ -21,13 +21,15 @@
         showAdverts &&
             ((AppleAdUkNetworkFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk") ||
                 (AppleAdAuNetworkFrontSwitch.isSwitchedOn && edition.id == "AU" && metaData.id == "au") ||
-                (AppleAdTechFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk/technology"))
+                (AppleAdTechFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk/technology") ||
+                (AppleAdUsNetworkFrontSwitch.isSwitchedOn && edition.id == "US" && metaData.id == "us"))
     ) { adBelowNav =>
     <body
         id="top"
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin(edition)),
             ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty),
+            ("has-membership-access-requirement", metaData.requiresMembershipAccess),
             ("childrens-books-site", metaData.section == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
             ("is-immersive", metaData.isImmersive)))"
@@ -48,8 +50,6 @@
         @if(adBelowNav) {
             @fragments.commercial.topBannerBelowNav()
         }
-
-        <div class="top-banner-below-nav-mt-test"></div>
 
         @if(showAdverts) {
             @fragments.commercial.topBannerMobile()

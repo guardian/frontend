@@ -1,6 +1,6 @@
 @(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity])
 
-@admin_main("fronts", env, Some(priority), isAuthed = true, identity) {
+@admin_main("fronts", env, Some(priority), isAuthed = true, identity, model=Option("collections")) {
 
 <div style="display: none;" data-bind="visible: true">
 
@@ -64,6 +64,35 @@
                         text: label"></a>
                     <span class="editor--boolean__state"><span data-bind="visible: meta">&#10004;</span></span>
                 </span>
+            <!-- /ko -->
+
+            <!-- ko if: type === 'list' -->
+                <div class="editor--list" data-bind="template: {name: 'template_editor', foreach: items}"></div>
+            <!-- /ko -->
+
+            <!-- ko if: type === 'image' -->
+                <a class="editor--image" data-bind="
+                    attr: {
+                        'href': meta() ? meta().origin || meta().src : ''
+                    },
+                    css: {
+                        'underDrag': underDrag,
+                        'allow-default-click': meta() && meta().src
+                    },
+                    dropImage: dropImage,
+                    style: {
+                        backgroundImage: meta() && meta().src ? 'url(' + meta().src + ')' : ''
+                    }
+                " target="_blank">
+                    <!-- ko if: meta -->
+                        <span class="editor--image__remove" data-bind="click: clear">
+                            <i class="fa fa-remove"></i>
+                        </span>
+                    <!-- /ko -->
+                    <!-- ko ifnot: meta -->
+                        <p>drag an image</p>
+                    <!-- /ko -->
+                </a>
             <!-- /ko -->
         <!-- /ko -->
     </script>
@@ -250,10 +279,4 @@
     </script>
 
 </div>
-
-<script>
-    System.import('facia-tool/main').then(function (main) {
-        main.load('collections');
-    });
-</script>
 }

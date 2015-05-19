@@ -160,6 +160,17 @@ $header-image-size-desktop: 100px;
 
         &:hover {
             color: colour(news-accent);
+
+            & .inline-icon {
+                fill: colour(news-accent);
+            }
+        }
+
+        .inline-icon {
+            fill: colour(news-main-1);
+            position: relative;
+            height: .7em;
+            width: 1em;
         }
     }
 }

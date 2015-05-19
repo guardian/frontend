@@ -5,7 +5,10 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/identity/api'
+    'common/utils/template',
+    'common/modules/identity/api',
+    'common/views/svgs',
+    'text!common/views/loyalty/save-for-later.html'
 ], function (
     qwery,
     bonzo,
@@ -13,16 +16,21 @@ define([
     _,
     config,
     mediator,
-    identity
+    template,
+    identity,
+    svgs,
+    saveForLaterTmpl
 ) {
     function SaveForLater() {
         this.saveLinkHolder = qwery('.meta__save-for-later')[0];
         this.userData = null;
         this.pageId = config.page.pageId;
         this.$saver = bonzo(this.saveLinkHolder);
-        this.savedArticlesUrl = config.page.idUrl + '/saved-content';
+        this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
         this.shortUrl = config.page.shortUrl.replace('http://gu.com', '');   //  Keep the fitst trailing slash
     }
+
+    var bookmarkSvg = svgs('bookmark', ['i-left']);
 
     SaveForLater.prototype.init = function () {
         if (identity.isUserLoggedIn()) {
@@ -31,7 +39,11 @@ define([
             var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
                 '&shortUrl=' + this.shortUrl;
             this.$saver.html(
-                '<a href="' + url + ' "data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>'
+                template(saveForLaterTmpl, {
+                    url: url,
+                    icon: bookmarkSvg,
+                    state: 'save'
+                })
             );
         }
     };

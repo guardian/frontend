@@ -1,11 +1,13 @@
-define(['utils/url-abs-path'], function(urlAbsPath) {
-    return {
-        generateId: function () {
-            return 'snap/' + new Date().getTime();
-        },
+import urlAbsPath from 'utils/url-abs-path';
 
-        validateId: function (id) {
-            return [].concat(urlAbsPath(id || '').match(/^snap\/\d+$/))[0] || undefined;
-        }
-    };
-});
+function generateId() {
+    return 'snap/' + new Date().getTime();
+}
+function validateId(id) {
+    return [].concat(urlAbsPath(id || '').match(/^snap\/\d+$/))[0] || undefined;
+}
+
+export {
+    generateId,
+    validateId
+};

@@ -66,6 +66,8 @@
 @import 'module/_rich-links';
 @import 'module/_membership-events';
 
+@import 'module/_save-for-later';
+
 /* ==========================================================================
    External modules
    ========================================================================== */
@@ -97,12 +99,7 @@
 
 @import 'module/facia/_facia-show-more';
 @import 'module/facia/_pagination';
-
 @import 'module/facia/_tag-meta';
-
-// card additions
-@import 'module/facia/_icons';
-
 @import 'module/facia/_l-list';
 @import 'module/facia/_container';
 @import 'module/facia/_containers';
