@@ -2,7 +2,7 @@ import _ from 'underscore';
 import sinon from 'sinon';
 import mockjax from 'test/utils/mockjax';
 import MockLastModified from 'mock/lastmodified';
-import vars from 'modules/vars';
+import {CONST} from 'modules/vars';
 import mediator from 'utils/mediator';
 import presser from 'utils/presser';
 
@@ -41,7 +41,7 @@ describe('Presser', function () {
         jasmine.clock().tick(100);
         expect(ajax.getCall(0).args).toEqual(['draft', 'front/name']);
 
-        jasmine.clock().tick(vars.CONST.detectPressFailureMs + 10);
+        jasmine.clock().tick(CONST.detectPressFailureMs + 10);
         expect(events.called).toBe(false);
     });
 
@@ -61,8 +61,8 @@ describe('Presser', function () {
         this.mockLastModified.set({
             'cool/front': now.toISOString()
         });
-        currentTime += vars.CONST.detectPressFailureMs + 10;
-        jasmine.clock().tick(vars.CONST.detectPressFailureMs + 10);
+        currentTime += CONST.detectPressFailureMs + 10;
+        jasmine.clock().tick(CONST.detectPressFailureMs + 10);
         _.now = originalNow;
         expect(events.getCall(0).args).toEqual(['cool/front', now]);
     });

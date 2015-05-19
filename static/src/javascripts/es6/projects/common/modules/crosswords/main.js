@@ -124,7 +124,7 @@ class Crossword extends React.Component {
     }
 
     goToReturnPosition () {
-        if (detect.isBreakpoint({ max: 'tablet' })) {
+        if (detect.isBreakpoint({ max: 'mobile' })) {
             if (this.returnPosition) {
                 scroller.scrollTo(this.returnPosition, 250, 'easeOutQuad');
             }

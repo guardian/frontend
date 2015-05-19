@@ -78,7 +78,7 @@ define([
                 k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
                 x:       krux.getSegments(),
                 su:      page.isSurging,
-                o:       viewId,
+                pv:      viewId,
                 bp:      detect.getBreakpoint(),
                 at:      cookies.get('adtest'),
                 gdncrm:  userAdTargeting.getUserSegments(),

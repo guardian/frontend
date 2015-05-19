@@ -122,6 +122,13 @@
     }
 }
 
+.meta__save-for-later {
+    padding-top: $gs-baseline / 6;
+    padding-bottom: $gs-baseline;
+    margin-bottom: 0;
+    border-top: 1px dotted colour(neutral-5);
+}
+
 .meta__number:not(.u-h) + .meta__number {
     border-left: 1px solid colour(neutral-7);
     padding-left: $gs-gutter / 2;

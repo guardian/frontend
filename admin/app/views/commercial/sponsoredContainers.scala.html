@@ -1,11 +1,12 @@
 @(env: String, page: model.MetaData, trails: Seq[model.Content])(implicit request: RequestHeader)
 
 @import layout.CollectionEssentials
-@import com.gu.facia.client.models.CollectionConfigJson
+@import com.gu.facia.api.models.CollectionConfig
 @import layout.FaciaContainer
 @import services.CollectionConfigWithId
 @import slices.Fixed
 @import slices.FixedContainers.fixedMediumSlowVI
+@import services.FaciaContentConvert
 
 @main(page, projectName = Option("facia")) { } {
 
@@ -15,8 +16,8 @@
             @fragments.containers.facia_cards.container(FaciaContainer(
                 0,
                 Fixed(fixedMediumSlowVI),
-                CollectionConfigWithId("front", CollectionConfigJson.withDefaults(displayName = Some("Front"))),
-                CollectionEssentials.fromTrails(trails)
+                CollectionConfigWithId("front", CollectionConfig.empty.copy(displayName = Some("Front"))),
+                CollectionEssentials.fromFaciaContent(trails.map(FaciaContentConvert.frontentContentToFaciaContent))
             ))(request)
 
             @Seq(
@@ -39,11 +40,11 @@
                 @fragments.containers.facia_cards.container(FaciaContainer(
                     1,
                     Fixed(fixedMediumSlowVI),
-                    CollectionConfigWithId("type", CollectionConfigJson.withDefaults(
+                    CollectionConfigWithId("type", CollectionConfig.empty.copy(
                         displayName = Some(c("title")),
                         apiQuery = Some(c("keyword"))
                     )),
-                    CollectionEssentials.fromTrails(trails)
+                    CollectionEssentials.fromFaciaContent(trails.map(FaciaContentConvert.frontentContentToFaciaContent))
                 ))(request)
             }
         </div>

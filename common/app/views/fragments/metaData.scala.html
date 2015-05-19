@@ -3,6 +3,7 @@
 @import common.AnalyticsHost
 @import common._
 @import conf._
+@import model.meta.LinkedData
 @import play.api.Play
 @import play.api.Play.current
 @import views.support._
@@ -58,6 +59,7 @@
 <meta name="apple-mobile-web-app-title" content="Guardian" />
 <meta name="application-name" content="The Guardian" />
 <meta name="msapplication-TileColor" content="#005689" />
+<meta name="theme-color" content="#005689">
 <meta name="msapplication-TileImage" content="@Static("images/favicons/windows_tile_144_b.png")" />
 
 @* https://support.google.com/plus/answer/1713826 *@
@@ -110,17 +112,5 @@
 <meta name="google-site-verification" content="LR-FN6c2gIEUoo3k049w1nxyHykmac5ZE3SaUOiKc30" />
 
 <script data-schema="organization" type="application/ld+json">
-    {
-        "@@context" : "http://schema.org",
-        "@@type" : "Organization",
-        "name" : "The Guardian",
-        "url" : "http://www.theguardian.com/",
-        "logo" : "@Static("images/favicons/152x152.png")",
-        "sameAs" : [
-            "https://www.facebook.com/theguardian",
-            "https://twitter.com/guardian",
-            "https://plus.google.com/+theGuardian",
-            "https://www.youtube.com/user/TheGuardian"
-        ]
-    }
+@Html(LinkedData.toJson(item.linkedData))
 </script>

@@ -65,7 +65,7 @@
 
 @caption(picture: model.ImageContainer) = {
     @ImgSrc.getFallbackAsset(picture).map { img =>
-        @if(img.caption.nonEmpty || (img.displayCredit && img.credit.nonEmpty)) {
+        @if(img.showCaption) {
             <figcaption class="caption caption--main caption--img" itemprop="description">
                 @img.caption.map(Html(_))
                 @if(img.displayCredit && !img.creditEndsWithCaption) { @img.credit.map(Html(_)) }

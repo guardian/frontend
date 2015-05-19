@@ -1,4 +1,4 @@
-import vars from 'modules/vars';
+import * as vars from 'modules/vars';
 import ko from 'knockout';
 import _ from 'underscore';
 import $ from 'jquery';

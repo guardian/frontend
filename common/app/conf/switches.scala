@@ -204,7 +204,7 @@ object Switches {
   )
 
   val CommercialSwitch = Switch("Commercial", "commercial",
-    "Kill switch for all commercial JS.",
+    "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
     safeState = On, sellByDate = never
   )
 
@@ -231,18 +231,6 @@ object Switches {
   val SponsoredSwitch = Switch("Commercial", "sponsored",
     "Show sponsored badges, logos, etc.",
     safeState = On, sellByDate = never
-  )
-
-  val LiveBlogContributorImagesSwitch = Switch("Feature", "liveblog-contributor-image",
-    "Show contributor byline images in live blog blocks",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 28)
-  )
-
-  val ElectionLiveBadgeSwitch = Switch("Feature", "election-2015-badging",
-    "Display Election Live 2015 Badge",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 5, 28)
   )
 
   val LiveblogAdvertsSwitch = Switch("Commercial", "liveblog-adverts",
@@ -317,6 +305,10 @@ object Switches {
 
   val AppleAdUkNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-uk-network-front",
     "If this switch is on, Apple ads will appear below nav on the UK network front.",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
+
+  val AppleAdUsNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-us-network-front",
+    "If this switch is on, Apple ads will appear below nav on the US network front.",
     safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
   val AppleAdAuNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-au-network-front",
@@ -528,6 +520,11 @@ object Switches {
   )
 
   // A/B Tests
+  val ABStickyShares = Switch("A/B Tests", "ab-sticky-shares",
+    "Switch sticky share buttons on articles",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 28)
+  )
+
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
@@ -535,6 +532,11 @@ object Switches {
 
   val ABMtRec1 = Switch("A/B Tests", "ab-mt-rec1",
     "Viewability results - Recommendation option 1",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
+  )
+
+  val ABMtRec2 = Switch("A/B Tests", "ab-mt-rec2",
+    "Viewability results - Recommendation option 2",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
   )
 
@@ -607,11 +609,6 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val SlideshowImages = Switch("Feature", "slideshow-images",
-    "If switched on, slideshows will be displayed on the fronts",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 15)
-  )
-
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
@@ -659,13 +656,22 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
   )
 
+  val FaciaPressNewFormat = Switch("Facia", "facia-press-fapi-client-format",
+    "If this switch is on, facia-press will press in the new fapi-client JSON format",
+    safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
+  )
+
   val FaciaPressOnDemand = Switch("Facia", "facia-press-on-demand",
     "If this is switched on, you can force facia to press on demand (Leave off)",
     safeState = Off, sellByDate = new LocalDate(2015, 6, 30)
   )
 
-  // Server-side A/B Tests
+  val FaciaServerNewFormat = Switch("Facia", "facia-new-format",
+    "If this is switched on, facia will serve off the new JSON format (It will fallback to old if it doesn't exist)",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 30)
+  )
 
+  // Server-side A/B Tests
   val ServerSideTests = {
     // It's for the side effect. Blame agents.
     val tests = mvt.ActiveTests.tests

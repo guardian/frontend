@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import Promise from 'Promise';
-import vars from 'modules/vars';
+import {CONST} from 'modules/vars';
 
 /**
  * Asserts if the given image URL is on The Guardian domain, is proper size and aspect ratio.
@@ -22,8 +22,8 @@ function validateImageSrc(src, criteria) {
         if (!src) {
             reject(new Error('Missing image'));
 
-        } else if (!src.match(new RegExp('^http://.*' + vars.CONST.imageCdnDomain.replace('.', '\\.') + '/'))) {
-            reject(new Error('Images must come from *' + vars.CONST.imageCdnDomain));
+        } else if (!src.match(new RegExp('^http://.*' + CONST.imageCdnDomain.replace('.', '\\.') + '/'))) {
+            reject(new Error('Images must come from *' + CONST.imageCdnDomain));
 
         } else {
             img = new Image();
