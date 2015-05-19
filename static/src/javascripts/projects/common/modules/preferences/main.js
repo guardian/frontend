@@ -158,7 +158,7 @@ define([
                     var mobileNotificationsWebHost = config.page.pushNotificationsHost;
 
                     if (!mobileNotificationsWebHost) {
-                        throw new Error("No notifications host found");
+                        throw new Error('No notifications host found');
                     }
 
                     /*global fetch, Headers*/
