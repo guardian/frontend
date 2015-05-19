@@ -2,13 +2,16 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET           /_healthcheck              controllers.HealthCheck.healthcheck()
+GET           /_healthcheck              controllers.StatusController.healthStatus
 
 # authentication endpoints
 GET           /authError                 controllers.OAuthLoginController.authError(message:String)
 GET           /oauthCallback             controllers.OAuthLoginController.oauthCallback
 GET           /logout                    controllers.OAuthLoginController.logout
 GET           /login/status              controllers.OAuthLoginController.status
+
+# healthcheck
+GET          /status                     controllers.StatusController.healthStatus
 
 # static files
 GET           /assets/*file              controllers.UncachedAssets.at(file)
