@@ -8,13 +8,6 @@
 (function () {
     var systemNormalize = System.normalize;
     System.normalize = function (name, parentName) {
-        var requireToSystemPluginMap = {
-            // Bundled
-            // 'text': 'text',
-            // 'inlineSvg': 'svg',
-            // Runtime
-            'js': 'system-script'
-        };
         var transformers = [
             function map(name) {
                 // TODO: Source this from npm and use the module ID
@@ -22,20 +15,6 @@
                 // the package.json’s main property.
                 if (name === 'socketio') {
                     return 'socketio/socket.io';
-                } else {
-                    return name;
-                }
-            },
-            function reversePluginFormat(name) {
-                var destructuredName = /(.+)!(.+)/.exec(name);
-
-                if (destructuredName) {
-                    var pluginName = destructuredName[1];
-                    var moduleId = destructuredName[2];
-                    var newPluginName = requireToSystemPluginMap[pluginName];
-                    var reversedName = moduleId + '!' + newPluginName;
-
-                    return newPluginName ? reversedName : name;
                 } else {
                     return name;
                 }
