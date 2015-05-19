@@ -257,3 +257,34 @@ category: Common
     font-weight: 700;
     padding: ($gs-baseline/3*2) ($gs-gutter/10) 0 ($gs-gutter/2);
 }
+
+.social--bottom--referrer {
+    .social__item {
+        display: none;
+    }
+
+    .social__item--referrer {
+        display: list-item;
+    }
+
+    .social__item--referrer .social-icon:after {
+        margin-right: 12px;
+        margin-left: -6px;
+        font-size: 15px;
+        .svg & i {
+            width: none;
+        }
+    }
+
+    .svg & .social__item--referrer .social-icon i {
+        width: 33px;
+    }
+
+    .social__item--referrer.social__item--facebook .social-icon:after {
+        content: 'share on Facebook';
+    }
+
+    .social__item--referrer.social__item--twitter .social-icon:after {
+        content: 'share on Twitter';
+    }
+}
