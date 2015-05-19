@@ -18,10 +18,14 @@ import play.api.test.Helpers._
     script.size() should be(1)
 
     val data: JsValue = Json.parse(script.first().html())
-    (data \ "name").as[String] should be("The Guardian")
-    (data \ "logo").as[String] should include("152x152.png")
+    val organisation = data.asInstanceOf[JsArray](0)
+    val appIndexer = data.asInstanceOf[JsArray](1)
+    (organisation \ "name").as[String] should be("The Guardian")
+    (organisation \ "logo").as[String] should include("152x152.png")
 
-    val socialNetworks = (data \ "sameAs").as[List[String]]
+    (appIndexer \ "potentialAction" \ "target").as[String] should include(articleUrl)
+
+    val socialNetworks = (organisation \ "sameAs").as[List[String]]
 
     socialNetworks.size should be(4)
   }
