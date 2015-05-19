@@ -95,35 +95,6 @@ object ItemMeta {
   )
 }
 
-case class ItemMeta(
-  headline:      Option[JsValue],
-  trailText:     Option[JsValue],
-  byline:        Option[JsValue],
-  showByline:    Option[Boolean],
-  group:         Option[JsValue],
-  isBoosted:     Option[Boolean],
-  imageHide:     Option[Boolean],
-  imageCutoutReplace:   Option[Boolean],
-  imageCutoutSrc:       Option[JsValue],
-  imageCutoutSrcWidth:  Option[JsValue],
-  imageCutoutSrcHeight: Option[JsValue],
-  isBreaking:    Option[Boolean],
-  supporting:    Option[Seq[JsValue]],
-  href:          Option[JsValue],
-  snapType:      Option[JsValue],
-  snapCss:       Option[JsValue],
-  snapUri:       Option[JsValue],
-  showKickerTag: Option[JsValue],
-  showKickerSection: Option[JsValue],
-  showMainVideo: Option[JsValue],
-  imageSlideshowReplace: Option[Boolean],
-  slideshow: Option[JsValue],
-  imageReplace: Option[Boolean],
-  imageSrc:       Option[JsValue],
-  imageSrcWidth:  Option[JsValue],
-  imageSrcHeight: Option[JsValue]
-)
-
 object TrailJson {
   implicit val jsonFormat = Json.format[TrailJson]
 
