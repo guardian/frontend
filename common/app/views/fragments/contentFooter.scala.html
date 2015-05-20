@@ -7,7 +7,7 @@
     @* majority of footer components we don't want to appear on advertisement feature articles *@
     @if(!content.isAdvertisementFeature) {
 
-        @if(!content.shouldHideAdverts && !mvt.comHRTest.isParticipating) {
+        @if(!content.shouldHideAdverts && !mvt.ComHRTest.isParticipating) {
             <div class="fc-container fc-container--commercial-high">
                 @fragments.commercial.commercialComponentHigh()
             </div>
@@ -20,7 +20,7 @@
             <div class="js-repositioned-comments content__repositioned-comments"></div>
         }
 
-        @if(!content.shouldHideAdverts && mvt.comHRTest.isParticipating) {
+        @if(!content.shouldHideAdverts && mvt.ComHRTest.isParticipating) {
             <div class="fc-container fc-container--commercial-high">
                 @fragments.commercial.commercialComponentHigh()
             </div>
