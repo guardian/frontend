@@ -5,12 +5,11 @@ import common.{FaciaToolMetrics, ExecutionContexts}
 import model.Cached
 import conf.Switches
 import play.api.libs.json.Json
-import akka.actor.ActorSystem
-import auth.PanDomainAuthActions
+import auth.ExpiringActions
 
-object SwitchesProxy extends Controller with PanDomainAuthActions {
+object SwitchesProxy extends Controller with ExecutionContexts {
 
-  def getSwitches() = AuthAction { request =>
+  def getSwitches() = ExpiringActions.ExpiringAuthAction { request =>
     FaciaToolMetrics.ProxyCount.increment()
     val r = Switches.all.map {switch =>
       switch.name -> switch.isSwitchedOn

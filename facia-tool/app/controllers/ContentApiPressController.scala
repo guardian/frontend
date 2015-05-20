@@ -6,10 +6,9 @@ import conf.Configuration
 import play.api.libs.Comet
 import play.api.mvc.Controller
 import services.ContentApiRefresh
-import akka.actor.ActorSystem
 
 import scala.util.{Failure, Success}
-import auth.PanDomainAuthActions
+import auth.ExpiringActions
 
 /** Utility endpoint for forcing updates to Content API.
   *
@@ -18,15 +17,12 @@ import auth.PanDomainAuthActions
   * Or we might want to keep it, just in case, as it allows us to quickly ensure Content API is up to date with Facia
   * Tool.
   */
-object ContentApiPressController extends Controller with ExecutionContexts with PanDomainAuthActions {
-
-  override lazy val actorSystem = ActorSystem()
-
-  def publishAll() = AuthAction { request =>
+object ContentApiPressController extends Controller with ExecutionContexts {
+  def publishAll() = ExpiringActions.ExpiringAuthAction { request =>
     Ok(views.html.publish_all(Configuration.environment.stage, UserIdentity.fromRequest(request)))
   }
 
-  def publishAllStream() = AuthAction { request =>
+  def publishAllStream() = ExpiringActions.ExpiringAuthAction { request =>
     Ok.chunked((ContentApiRefresh.refresh() map {
       case (collectionId, Success(_)) => s"Successfully published $collectionId"
       case (collectionId, Failure(error)) => s"Failed to publish $collectionId: ${error.getMessage}"

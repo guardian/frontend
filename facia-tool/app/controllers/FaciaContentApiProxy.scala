@@ -6,17 +6,14 @@ import implicits.Strings
 import play.api.mvc._
 import play.api.libs.ws.WS
 import model.Cached
-import akka.actor.ActorSystem
+import auth.ExpiringActions
 import util.ContentUpgrade.rewriteBody
-import play.api.Logger
-import auth.PanDomainAuthActions
 
-object FaciaContentApiProxy extends Controller with Logging with ExecutionContexts with Strings with PanDomainAuthActions with implicits.WSRequests {
+object FaciaContentApiProxy extends Controller with Logging with AuthLogging with ExecutionContexts with Strings with implicits.WSRequests{
 
-  override lazy val actorSystem = ActorSystem()
   import play.api.Play.current
 
-  def capi(path: String) = AuthAction.async { request =>
+  def capi(path: String) = ExpiringActions.ExpiringAuthAction.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
     val queryString = request.queryString.filter(_._2.exists(_.nonEmpty)).map { p =>
        "%s=%s".format(p._1, p._2.head.urlEncoded)
@@ -26,7 +23,7 @@ object FaciaContentApiProxy extends Controller with Logging with ExecutionContex
 
     val url = s"$contentApiHost/$path?$queryString${Configuration.contentApi.key.map(key => s"&api-key=$key").getOrElse("")}"
 
-    Logger.info("Proxying tag API query to: %s".format(url, request))
+    log("Proxying tag API query to: %s" format url, request)
 
     WS.url(url).withPreviewAuth.get().map { response =>
       Cached(60) {
@@ -35,7 +32,7 @@ object FaciaContentApiProxy extends Controller with Logging with ExecutionContex
     }
   }
 
-  def http(url: String) = AuthAction.async { request =>
+  def http(url: String) = ExpiringActions.ExpiringAuthAction.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
 
     WS.url(url).withPreviewAuth.get().map { response =>
@@ -45,9 +42,9 @@ object FaciaContentApiProxy extends Controller with Logging with ExecutionContex
     }
   }
 
-  def json(url: String) = AuthAction.async { request =>
+  def json(url: String) = ExpiringActions.ExpiringAuthAction.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
-    Logger.info("Proxying json request to: %s".format(url, request))
+    log("Proxying json request to: %s" format url, request)
 
     WS.url(url).withPreviewAuth.get().map { response =>
       Cached(60) {
@@ -56,7 +53,7 @@ object FaciaContentApiProxy extends Controller with Logging with ExecutionContex
     }
   }
 
-  def ophan(path: String) = AuthAction.async { request =>
+  def ophan(path: String) = ExpiringActions.ExpiringAuthAction.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
     val paths = request.queryString.get("path").map(_.mkString("path=", "&path=", "")).getOrElse("")
     val queryString = request.queryString.filterNot(_._1 == "path").filter(_._2.exists(_.nonEmpty)).map { p =>
@@ -67,7 +64,7 @@ object FaciaContentApiProxy extends Controller with Logging with ExecutionContex
 
     val url = s"$ophanApiHost/$path?$queryString&$paths&ophanKey"
 
-    Logger.info("Proxying ophan request to: %s".format(url, request))
+    log("Proxying ophan request to: %s" format url, request)
 
     WS.url(url).withPreviewAuth.get().map { response =>
       Cached(60) {
