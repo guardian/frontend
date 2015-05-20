@@ -5,11 +5,11 @@ define([
 ) {
 
     return function () {
-        this.id = 'StickyShares';
+        this.id = 'ShareButtons';
         this.start = '2015-05-15';
         this.expiry = '2015-05-28';
         this.author = 'Stephan Fowler';
-        this.description = 'Checking sticking the share buttons to the bottom of articles';
+        this.description = 'Combinations of referrer-based size, visibility, and stickiness for share buttons';
         this.audience = 0.02;
         this.audienceOffset = 0.25;
         this.successMeasure = '';
@@ -18,7 +18,7 @@ define([
         this.idealOutcome = 'More sharing of articles';
 
         this.canRun = function () {
-            return config.page.contentType === 'Article';
+            return true;
         };
 
         this.variants = [
@@ -28,6 +28,22 @@ define([
             },
             {
                 id: 'sticky',
+                test: function () {}
+            },
+            {
+                id: 'referrer',
+                test: function () {}
+            },
+            {
+                id: 'sticky-referrer',
+                test: function () {}
+            },
+            {
+                id: 'referrer-only',
+                test: function () {}
+            },
+            {
+                id: 'sticky-referrer-only',
                 test: function () {}
             }
         ];

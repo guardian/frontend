@@ -517,8 +517,8 @@ object Switches {
   )
 
   // A/B Tests
-  val ABStickyShares = Switch("A/B Tests", "ab-sticky-shares",
-    "Switch sticky share buttons on articles",
+  val ABShareButtons = Switch("A/B Tests", "ab-share-buttons",
+    "Switch for test of combinations of referrer-based size, visibility, and stickiness for article share buttons",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 28)
   )
 

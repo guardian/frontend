@@ -2,12 +2,14 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/modules/experiments/ab'
 ], function (
     fastdom,
     $,
     _,
-    mediator
+    mediator,
+    ab
     ) {
 
     var selectorTopEl = '.social--top',
@@ -75,26 +77,41 @@ define([
     }
 
     function init() {
-        var socials = ['facebook', 'twitter'],
+        var testVariant = ab.getTestVariant('ShareButtons'),
+            referrer,
+            socialReferrer;
+
+        if (testVariant.indexOf('referrer') > -1) {
             referrer = ((window.location.hash + '').match(/referrer=([^&]+)/) || [])[1] || document.referrer,
-            socialReferrer = referrer ? socials.filter(function (social) {
+
+            socialReferrer = referrer ? [
+                'facebook',
+                'twitter'
+            ].filter(function (social) {
                 return referrer.indexOf(social) > -1;
             })[0] : null;
 
-        if (socialReferrer) {
-            fastdom.read(function () {
-                [topEl(), bottomEl()].forEach(function (el) {
-                    if (el) {
-                        fastdom.write(function () {
-                            $(el).addClass('social--referred');
-                            moveToFirstPosition($('.social__item--' + socialReferrer, el).addClass('social__item--referred'));
-                        });
-                    }
+            if (socialReferrer) {
+                fastdom.read(function () {
+                    [topEl(), bottomEl()].forEach(function (el) {
+                        if (el) {
+                            fastdom.write(function () {
+                                $(el).addClass(
+                                    'social--referred' +
+                                    (testVariant.indexOf('only') > -1 ? ' social--referred--only' : '')
+                                );
+
+                                moveToFirstPosition($('.social__item--' + socialReferrer, el).addClass('social__item--referred'));
+                            });
+                        }
+                    });
                 });
-            });
+            }
         }
 
-        mediator.on('window:scroll', _.throttle(determineStickiness, 10));
+        if (testVariant.indexOf('sticky') > -1) {
+            mediator.on('window:scroll', _.throttle(determineStickiness, 10));
+        }
     }
 
     return {

@@ -259,7 +259,7 @@ category: Common
 }
 
 .social--referred {
-    &.social--bottom .social__item {
+    &.social--bottom.social--referred--only .social__item {
         display: none;
     }
 
@@ -269,7 +269,6 @@ category: Common
         margin-right: $gs-baseline / 3;
     }
 }
-
 
 .social__item--referred {
     .social-icon:after {
