@@ -18,21 +18,16 @@ define([
 
         deadzone = 100,
 
-        topEl,
-        bottomEl,
-        revealed = false,
-        failed = false;
+        topEl = _.memoize(function () { return $(selectorTopEl)[0]; }),
+        bottomEl = _.memoize(function () { return $(selectorBottomEl)[0]; }),
+
+        inited = false,
+        revealed = false;
 
     function setStickiness() {
         fastdom.read(function () {
-            topEl = topEl || $(selectorTopEl)[0];
-
-            if (!topEl) {
-                failed = true;
-
-            } else if (topEl.getBoundingClientRect().top + deadzone < 0) {
+            if (topEl().getBoundingClientRect().top + deadzone < 0) {
                 reveal();
-
             } else {
                 unreveal();
             }
@@ -40,44 +35,43 @@ define([
     }
 
     function determineStickiness() {
-        if (failed) {
+        if (inited) {
+            setStickiness();
+
+        } else if (!topEl() || !bottomEl()) {
             return;
 
-        } else if (!bottomEl) {
-            fastdom.read(function () {
-                bottomEl = $(selectorBottomEl);
-
-                if (bottomEl) {
-                    fastdom.write(function () {
-                        bottomEl.addClass(stickyClassName);
-                        setTimeout(makeRevealable);
-                    });
-                } else {
-                    failed = true;
-                }
-            });
-
         } else {
-            setStickiness();
+            fastdom.read(function () {
+                fastdom.write(function () {
+                    $(bottomEl()).addClass(stickyClassName);
+                    setTimeout(makeRevealable);
+                    inited = true;
+                });
+            });
         }
     }
 
     function makeRevealable() {
-        fastdom.write(function () { bottomEl.addClass(stickyRevealableClassName); });
+        fastdom.write(function () { $(bottomEl()).addClass(stickyRevealableClassName); });
     }
 
     function reveal() {
         if (!revealed) {
             revealed = true;
-            fastdom.write(function () { bottomEl.addClass(stickyRevealClassName); });
+            fastdom.write(function () { $(bottomEl()).addClass(stickyRevealClassName); });
         }
     }
 
     function unreveal() {
         if (revealed) {
             revealed = false;
-            fastdom.write(function () { bottomEl.removeClass(stickyRevealClassName); });
+            fastdom.write(function () { $(bottomEl()).removeClass(stickyRevealClassName); });
         }
+    }
+
+    function moveToFirstPosition($el) {
+        $el.parent().prepend($el.detach());
     }
 
     function init() {
@@ -89,13 +83,11 @@ define([
 
         if (socialReferrer) {
             fastdom.read(function () {
-                [selectorTopEl, selectorBottomEl].forEach(function (selector) {
-                    var container = $(selector);
-
-                    if (container) {
+                [topEl(), bottomEl()].forEach(function (el) {
+                    if (el) {
                         fastdom.write(function () {
-                            container.addClass('social--referred');
-                            $('.social__item--' + socialReferrer, container).addClass('social__item--referred');
+                            $(el).addClass('social--referred');
+                            moveToFirstPosition($('.social__item--' + socialReferrer, el).addClass('social__item--referred'));
                         });
                     }
                 });
