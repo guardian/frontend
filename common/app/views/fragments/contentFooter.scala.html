@@ -1,5 +1,7 @@
 @(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
 
+@import conf.Switches._
+
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
 
     @fragments.discussionFooter(content.isCommentable, content.isClosedForComments, content.shortUrlId)
@@ -7,33 +9,55 @@
     @* majority of footer components we don't want to appear on advertisement feature articles *@
     @if(!content.isAdvertisementFeature) {
 
-        @if(!content.shouldHideAdverts && !mvt.ComHRTest.isParticipating) {
+        @if(!content.shouldHideAdverts && (!mvt.CMHRTest.isParticipating || !mvt.CMOutbrainTest.isParticipating)) {
             <div class="fc-container fc-container--commercial-high">
                 @fragments.commercial.commercialComponentHigh()
             </div>
         }
 
         @fragments.storyPackagePlaceholder(content, related)
+        @if(Switches.RelatedContentSwitch.isSwitchedOn && mvt.CMOutbrainTest.isParticipating) {
+            @content match {
+                case article: Article if !article.isLiveBlog && !article.shouldHideAdverts => {
+                    <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
+                    @fragments.outbrainPlaceholder()
+                    </div>
+                }
+                case _ => { }
+            }
+        }
         @fragments.onwardPlaceholder(content.visualTone)
+        @if(!Switches.RelatedContentSwitch.isSwitchedOn && mvt.CMOutbrainTest.isParticipating) {
+            @content match {
+                case article: Article if !article.isLiveBlog && !article.shouldHideAdverts => {
+                    <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
+                    @fragments.outbrainPlaceholder()
+                    </div>
+                }
+                case _ => { }
+            }
+        }
 
         @if(content.isCommentable) {
             <div class="js-repositioned-comments content__repositioned-comments"></div>
         }
 
-        @if(!content.shouldHideAdverts && mvt.ComHRTest.isParticipating) {
+        @if(!content.shouldHideAdverts && (!mvt.CMHRTest.isParticipating || !mvt.CMOutbrainTest.isParticipating)) {
             <div class="fc-container fc-container--commercial-high">
                 @fragments.commercial.commercialComponentHigh()
             </div>
         }
         @fragments.mostPopularPlaceholder(content.section, content.visualTone)
 
-        @content match {
-            case article: Article if !article.isLiveBlog && !article.shouldHideAdverts => {
-                <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
+        @if(!mvt.CMOutbrainTest.isParticipating) {
+            @content match {
+                case article: Article if !article.isLiveBlog && !article.shouldHideAdverts => {
+                    <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
                     @fragments.outbrainPlaceholder()
-                </div>
+                    </div>
+                }
+                case _ => {}
             }
-            case _ => { }
         }
 
         @if(!content.shouldHideAdverts) {

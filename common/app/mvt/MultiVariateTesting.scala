@@ -24,14 +24,14 @@ object JspmTest extends TestDefinition(
   new LocalDate(2015, 5, 30)
 )
 
-object ComHRTest extends TestDefinition(
+object CMHRTest extends TestDefinition(
   List(Variant1, Variant2, Variant3),
   "com-hr-test",
   "Test moving commercial high relevance component above most popular",
   new LocalDate(2015, 5, 30)
 )
 
-object ComOutbrainTest extends TestDefinition(
+object CMOutbrainTest extends TestDefinition(
   List(Variant4, Variant5, Variant6),
   "com-outbrain-test",
   "Test moving outbrain component to the second position below the article",
@@ -39,7 +39,7 @@ object ComOutbrainTest extends TestDefinition(
 )
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest, ComHRTest, ComOutbrainTest)
+  val tests: Seq[TestDefinition] = List(JspmTest, CMHRTest, CMOutbrainTest)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
