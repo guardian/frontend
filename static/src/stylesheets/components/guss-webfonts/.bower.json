@@ -1,7 +1,7 @@
 {
   "name": "guss-webfonts",
   "description": "Guardian web fonts, for your prototyping needs",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "main": [
     "src/_webfonts.scss"
   ],
@@ -10,11 +10,11 @@
     "type": "git",
     "url": "http://github.com/guardian/guss-webfonts.git"
   },
-  "_release": "4.0.0",
+  "_release": "4.0.1",
   "_resolution": {
     "type": "version",
-    "tag": "4.0.0",
-    "commit": "451e6199b7a3b784dd03f6a5fe1e6b6c6e55ffd9"
+    "tag": "4.0.1",
+    "commit": "953ee3b0da505acbafcd16177b4a799b511c6607"
   },
   "_source": "git://github.com/guardian/guss-webfonts.git",
   "_target": "~4.0.0",
