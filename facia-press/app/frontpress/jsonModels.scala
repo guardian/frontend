@@ -1,6 +1,7 @@
 package frontpress
 
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import com.gu.facia.client.models.CollectionConfigJson
+import com.gu.facia.api.models.CollectionConfig
 import com.gu.contentapi.client.model.Asset
 import model._
 import org.joda.time.DateTime
@@ -86,34 +87,13 @@ object ItemMeta {
     ("showQuotedHeadline", content.apiContent.metaData.flatMap(_.showQuotedHeadline).map(JsBoolean)),
     ("showMainVideo", content.apiContent.metaData.flatMap(_.showMainVideo).map(JsBoolean)),
     ("imageSlideshowReplace", content.apiContent.metaData.flatMap(_.json.get("imageSlideshowReplace"))),
-    ("slideshow", content.apiContent.metaData.flatMap(_.json.get("slideshow")))
+    ("slideshow", content.apiContent.metaData.flatMap(_.json.get("slideshow"))),
+    ("imageReplace", content.apiContent.metaData.flatMap(_.json.get("imageReplace"))),
+    ("imageSrc", content.apiContent.metaData.flatMap(_.imageSrc).map(JsString)),
+    ("imageSrcWidth", content.apiContent.metaData.flatMap(_.imageSrcWidth).map(JsString)),
+    ("imageSrcHeight", content.apiContent.metaData.flatMap(_.imageSrcHeight).map(JsString))
   )
 }
-
-case class ItemMeta(
-  headline:      Option[JsValue],
-  trailText:     Option[JsValue],
-  byline:        Option[JsValue],
-  showByline:    Option[Boolean],
-  group:         Option[JsValue],
-  isBoosted:     Option[Boolean],
-  imageHide:     Option[Boolean],
-  imageCutoutReplace:   Option[Boolean],
-  imageCutoutSrc:       Option[JsValue],
-  imageCutoutSrcWidth:  Option[JsValue],
-  imageCutoutSrcHeight: Option[JsValue],
-  isBreaking:    Option[Boolean],
-  supporting:    Option[Seq[JsValue]],
-  href:          Option[JsValue],
-  snapType:      Option[JsValue],
-  snapCss:       Option[JsValue],
-  snapUri:       Option[JsValue],
-  showKickerTag: Option[JsValue],
-  showKickerSection: Option[JsValue],
-  showMainVideo: Option[JsValue],
-  imageSlideshowReplace: Option[Boolean],
-  slideshow: Option[JsValue]
-)
 
 object TrailJson {
   implicit val jsonFormat = Json.format[TrailJson]
@@ -163,6 +143,29 @@ object CollectionJson {
   implicit val jsonFormat = Json.format[CollectionJson]
 
   def fromCollection(config: CollectionConfig, collection: Collection) =
+    CollectionJson(
+      apiQuery       = config.apiQuery,
+      displayName    = config.displayName.orElse(collection.displayName),
+      curated        = collection.curated.map(TrailJson.fromContent),
+      editorsPicks   = collection.editorsPicks.map(TrailJson.fromContent),
+      mostViewed     = collection.mostViewed.map(TrailJson.fromContent),
+      results        = collection.results.map(TrailJson.fromContent),
+      treats         = collection.treats.map(TrailJson.fromContent),
+      lastUpdated    = collection.lastUpdated,
+      updatedBy      = collection.updatedBy,
+      updatedEmail   = collection.updatedEmail,
+      groups         = config.groups.map(_.groups),
+      href           = collection.href.orElse(config.href),
+      `type`         = Option(config.collectionType),
+      showTags       = config.showTags,
+      showSections   = config.showSections,
+      hideKickers    = config.hideKickers,
+      showDateHeader = config.showDateHeader,
+      showLatestUpdate = config.showLatestUpdate,
+      excludeFromRss = config.excludeFromRss
+    )
+
+  def fromCollection(config: CollectionConfigJson, collection: Collection) =
     CollectionJson(
       apiQuery       = config.apiQuery,
       displayName    = config.displayName.orElse(collection.displayName),
