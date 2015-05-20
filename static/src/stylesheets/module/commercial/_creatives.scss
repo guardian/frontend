@@ -32,7 +32,7 @@
         &.creative--scrollable-mpu-image-parallax {
             background-attachment: scroll;
             background-repeat: repeat-y;
-            height: 31.25rem;
+            height: 500px;
         }
     }
     .creative--scrollable-mpu-static-image {
@@ -471,7 +471,7 @@
     .ad-scrolling-bg {
         position: absolute;
         top: 0;
-        height: 31.25rem;
+        height: 500px;
         width: 100%;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -488,7 +488,7 @@
                 background-position: 0 -250px;
             }
             &.ad-scrolling-text-animate {
-                animation: textanimation 1.4s ease 0.4s;
+                animation: textanimation 1.4s ease .4s;
                 animation-fill-mode: forwards;
             }
         }
@@ -631,7 +631,15 @@
 }
 
 @keyframes textanimation {
-    0%   {background-position: 0 -250px;}
-    75%  {background-position: 0 0;}
-    100% {background-position: 0 0;}
+    0% { 
+        background-position: 0 -250px; 
+    }
+
+    75% { 
+        background-position: 0 0; 
+    }
+
+    100% { 
+        background-position: 0 0; 
+    }
 }
