@@ -66,7 +66,7 @@ export default {
 
     latestSnapPrefix:      'Latest from ',
 
-    ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
+    ophanBase:             'http://dashboard.ophan.co.uk/summary',
     ophanFrontBase:        'http://dashboard.ophan.co.uk/info?path=',
 
     internalContentPrefix: 'internal-code/content/',
