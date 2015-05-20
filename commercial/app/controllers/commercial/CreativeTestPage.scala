@@ -28,8 +28,8 @@ class TestPage(specifiedKeywords : List[String] = Nil) extends model.MetaData  {
 
   lazy val allTheKeywords = webTitle :: specifiedKeywords
 
-  def capitalisedKeywords = (allTheKeywords).map(_.capitalize).mkString(",")
-  def lowerCaseKeywords = (allTheKeywords).map(_.toLowerCase).mkString(",")
+  lazy val capitalisedKeywords = (allTheKeywords).map(_.capitalize).mkString(",")
+  lazy val lowerCaseKeywords = (allTheKeywords).map(_.toLowerCase).mkString(",")
 
   val isNetworkFront: Boolean = false
 
