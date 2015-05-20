@@ -1,11 +1,11 @@
 package layout
 
-import com.gu.facia.api.models.{LatestSnap, CollectionConfig, CuratedContent, FaciaContent}
+import com.gu.facia.api.models.{CollectionConfig, CuratedContent, FaciaContent}
 import conf.Switches
 import dfp.{DfpAgent, SponsorshipTag}
-import implicits.FaciaContentImplicits._
 import implicits.FaciaContentFrontendHelpers._
-import model.{PressedPage, _}
+import implicits.FaciaContentImplicits._
+import model.PressedPage
 import model.facia.PressedCollection
 import org.joda.time.DateTime
 import services.{CollectionConfigWithId, FaciaContentConvert}
@@ -392,7 +392,7 @@ object Front extends implicits.Collections {
     import scalaz.syntax.traverse._
 
     Front(
-      pressedPage.collections.zipWithIndex.toList.mapAccumL(
+      pressedPage.collections.zipWithIndex.mapAccumL(
         (Set.empty[TrailUrl], initialContext)
       ) { case ((seenTrails, context), (pressedCollection, index)) =>
         val container = Container.fromPressedCollection(pressedCollection)
