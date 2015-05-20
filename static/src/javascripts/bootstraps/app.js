@@ -106,8 +106,7 @@ define([
                 });
             }
 
-            // TODO: prefs "section"?
-            if (config.page.pageId === 'preferences' || config.page.pageId === 'preferences/notifications') {
+            if (config.page.isPreferencesPage) {
                 require(['bootstraps/preferences'], function (preferences) {
                     bootstrapContext('preferences', preferences);
                 });
