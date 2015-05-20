@@ -51,9 +51,9 @@ define([
                     $('.ad-scrolling-bg', $(this.$adSlot)).addClass('ad-scrolling-bg-parallax').css('background-position', '50%' + this.scrollAmountP);
                     // layer 2 animation
                     if (this.params.layerTwoParallax === 'enabled' && Fluid250.isModernBrowser && !Fluid250.isIE9OrLess) {
-                        $('.fluid250_layer2', $(this.$adSlot)).addClass('ad-scrolling-text-hide');
+                        $('.hide-until-tablet .fluid250_layer2', $(this.$adSlot)).addClass('ad-scrolling-text-hide');
                         if (inViewB) {
-                            $('.fluid250_layer2', $(this.$adSlot)).addClass('ad-scrolling-text-animate');
+                            $('.hide-until-tablet .fluid250_layer2', $(this.$adSlot)).addClass('ad-scrolling-text-animate');
                         }
                     }
                 }.bind(this));
