@@ -55,7 +55,7 @@ System.config({
     "raven": "github:getsentry/raven-js@1.1.18",
     "react": "npm:react@0.13.2",
     "reqwest": "github:ded/reqwest@1.1.5",
-    "sinonjs": "github:cjohansen/Sinon.JS@1.10.2",
+    "sinonjs": "bower:sinonjs@1.10.2",
     "socketio": "github:Automattic/socket.io-client@1.1.0",
     "squire": "npm:squirejs@0.2.0",
     "stripe": "vendor/stripe/stripe.min",
