@@ -272,17 +272,7 @@ object Switches {
     sellByDate = never,
     availableToJavaScript = false
   )
-
-  // Commercial
-  val OphanViewIdSwitch = Switch(
-    "Commercial",
-    "ophan-view-id",
-    "Depeneding on ophan to pass view ID to the gdf targeting",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 5, 31),
-    availableToJavaScript = true
-  )
-
+  
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",
@@ -965,14 +955,6 @@ object Switches {
     availableToJavaScript = false
   )
 
-  val ABHistoryWithoutWhitelist = Switch(
-    "A/B Tests",
-    "ab-history-without-whitelist",
-    "Switch for removing the whitelist from the user history tags",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 21),
-    availableToJavaScript = false
-  )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>
     Switch(
