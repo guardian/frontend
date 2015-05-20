@@ -17,6 +17,7 @@ trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
   val description: String
   val safeState: SwitchState
   val sellByDate: LocalDate
+  val availableToJavaScript: Boolean
 
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
@@ -53,13 +54,15 @@ case class Switch(
   availableToJavaScript: Boolean
 ) extends SwitchTrait
 
-case class TimerSwitch(group: String,
-                       name: String,
-                       description: String,
-                       safeState: SwitchState,
-                       sellByDate: LocalDate,
-                       activePeriods: Seq[Interval]
-                        ) extends SwitchTrait with Logging {
+case class TimerSwitch(
+  group: String,
+  name: String,
+  description: String,
+  safeState: SwitchState,
+  sellByDate: LocalDate,
+  activePeriods: Seq[Interval],
+  availableToJavaScript: Boolean
+) extends SwitchTrait with Logging {
 
   def isSwitchedOnAndActive: Boolean = {
     val active = activePeriods.exists(_.containsNow())

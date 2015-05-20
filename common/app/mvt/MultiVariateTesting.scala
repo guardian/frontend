@@ -45,7 +45,9 @@ case class TestDefinition (
     name,
     description,
     conf.Off,
-    sellByDate)
+    sellByDate,
+    availableToJavaScript = false
+  )
 
   def isParticipating(implicit request: RequestHeader): Boolean = {
     ActiveTests.getParticipatingTest(request).contains(this)
