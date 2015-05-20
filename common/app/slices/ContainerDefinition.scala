@@ -18,7 +18,7 @@ object ContainerDefinition {
 
   def fromContainer(container: Container, items: Seq[FaciaContent]) = container match {
     case Dynamic(dynamicContainer) =>
-      dynamicContainer.containerDefinitionFor(items.map(Story.fromCuratedContent))
+      dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
 
     case Fixed(containerDefinition) => Some(containerDefinition)
 

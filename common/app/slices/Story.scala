@@ -30,7 +30,7 @@ object Story {
     )
   }
 
-  def fromCuratedContent(faciaContent: FaciaContent): Story = {
+  def fromFaciaContent(faciaContent: FaciaContent): Story = {
     Story(
       /** Stories that are not assigned to a group are treated as standard (0) items */
       Try(faciaContent.group.toInt).getOrElse(0),
