@@ -39,7 +39,7 @@ define([
                 break;
             case 'parallax':
                 fastdom.read(function () {
-                    this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3);
+                    this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3) - 20;
                     if (this.scrollAmount > 0) {
                         this.scrollAmountP = -Math.abs(this.scrollAmount) + '%';
                     } else {
