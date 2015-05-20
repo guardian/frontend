@@ -61,8 +61,6 @@ define([
                 }
             });
 
-            console.log(abParams);
-
             return abParams;
         };
 

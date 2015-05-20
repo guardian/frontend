@@ -8,7 +8,7 @@
     @if(!content.isAdvertisementFeature) {
 
         @if(!content.shouldHideAdverts && !mvt.comHRTest.isParticipating) {
-            <div class="fc-container fc-container--commercial-high" style="background-color: green;">
+            <div class="fc-container fc-container--commercial-high">
                 @fragments.commercial.commercialComponentHigh()
             </div>
         }
@@ -21,7 +21,7 @@
         }
 
         @if(!content.shouldHideAdverts && mvt.comHRTest.isParticipating) {
-            <div class="fc-container fc-container--commercial-high" style="background-color: red;">
+            <div class="fc-container fc-container--commercial-high">
                 @fragments.commercial.commercialComponentHigh()
             </div>
         }
