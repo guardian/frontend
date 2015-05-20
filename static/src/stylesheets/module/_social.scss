@@ -284,17 +284,14 @@ category: Common
 
     .social__item--referred.social__item--facebook .social-icon:after {
         content: 'share on Facebook';
-
-        @include mq(leftCol, $until: wide) {
-            & {
-                content: 'share';
-            }
-        }
     }
 
     .social__item--referred.social__item--twitter .social-icon:after {
         content: 'share on Twitter';
+    }
 
+    .social__item--referred.social__item--facebook .social-icon:after,
+    .social__item--referred.social__item--twitter .social-icon:after {
         @include mq(leftCol, $until: wide) {
             & {
                 content: 'share';

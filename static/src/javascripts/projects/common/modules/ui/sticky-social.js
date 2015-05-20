@@ -23,16 +23,6 @@ define([
         revealed = false,
         failed = false;
 
-    function getTopEl() {
-        topEl = topEl || $(selectorTopEl);
-        return topEl;
-    }
-
-    function getBottomEl() {
-        bottomEl = bottomEl || $(selectorBottomEl);
-        return bottomEl;
-    }
-
     function setStickiness() {
         fastdom.read(function () {
             topEl = topEl || $(selectorTopEl)[0];
