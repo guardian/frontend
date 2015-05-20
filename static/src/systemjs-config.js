@@ -47,7 +47,7 @@ System.config({
     "fastclick": "npm:fastclick@1.0.6",
     "fastdom": "github:wilsonpage/fastdom@0.8.6",
     "fence": "github:guardian/fence@0.2.11",
-    "jasmine-sinon": "bower:jasmine-sinon@0.4.0",
+    "jasmine-sinon": "npm:jasmine-sinon@0.4.0",
     "lodash": "npm:lodash@2.4.1",
     "omniture": "vendor/omniture",
     "picturefill": "common/utils/picturefill",
@@ -55,9 +55,9 @@ System.config({
     "raven": "github:getsentry/raven-js@1.1.18",
     "react": "npm:react@0.13.2",
     "reqwest": "github:ded/reqwest@1.1.5",
-    "sinonjs": "bower:sinonjs@1.10.2",
+    "sinonjs": "github:cjohansen/Sinon.JS@1.10.2",
     "socketio": "bower:socket.io-client@1.1.0",
-    "squire": "bower:squire@0.2.0",
+    "squire": "npm:squirejs@0.2.0",
     "stripe": "vendor/stripe/stripe.min",
     "svg": "es6/projects/common/utils/svg",
     "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
@@ -68,10 +68,6 @@ System.config({
     "videojsima": "github:guardian/videojs-ima@0.1.2",
     "videojspersistvolume": "bower:videojs-persistvolume@0.1.2",
     "videojsplaylist": "github:tim-peterson/videojs-playlist@master",
-    "bower:jasmine-sinon@0.4.0": {
-      "jasmine": "bower:jasmine@2.0.4",
-      "sinonjs": "bower:sinonjs@1.10.2"
-    },
     "bower:video.js@4.12.5": {
       "css": "github:systemjs/plugin-css@0.1.9"
     },
@@ -182,11 +178,18 @@ System.config({
     "npm:events-browserify@0.0.1": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
+    "npm:formatio@1.1.1": {
+      "process": "github:jspm/nodelibs-process@0.1.1",
+      "samsam": "npm:samsam@1.1.2"
+    },
     "npm:https-browserify@0.0.0": {
       "http": "github:jspm/nodelibs-http@1.7.1"
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:jasmine-sinon@0.4.0": {
+      "sinon": "npm:sinon@1.14.1"
     },
     "npm:jstransform@10.1.0": {
       "base62": "npm:base62@0.1.1",
@@ -227,6 +230,12 @@ System.config({
       "stream-browserify": "npm:stream-browserify@1.0.0",
       "string_decoder": "npm:string_decoder@0.10.31",
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:sinon@1.14.1": {
+      "formatio": "npm:formatio@1.1.1",
+      "lolex": "npm:lolex@1.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.1",
+      "util": "npm:util@0.10.3"
     },
     "npm:source-map@0.1.31": {
       "amdefine": "npm:amdefine@0.1.0",
