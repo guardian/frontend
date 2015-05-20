@@ -71,7 +71,7 @@ define([
             parentType: 'Front',
             items:
                _.chain(opts.collections)
-                .map(function(id) {return findFirstById(vars.model.collections, id); })
+                .map(function(id) { return vars.model.collectionsMap[id]; })
                 .filter(function(collection) { return !!collection; })
                 .map(function(collection) {
                     collection.parents.push(self);

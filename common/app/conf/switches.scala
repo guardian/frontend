@@ -307,6 +307,10 @@ object Switches {
     "If this switch is on, Apple ads will appear below nav on the UK network front.",
     safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
+  val AppleAdUsNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-us-network-front",
+    "If this switch is on, Apple ads will appear below nav on the US network front.",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
+
   val AppleAdAuNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-au-network-front",
     "If this switch is on, Apple ads will appear below nav on the AU network front.",
     safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
@@ -543,6 +547,11 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
+  val ABIdentityCookieRefresh = Switch("A/B Tests", "ab-cookie-refresh",
+    "It this switch is turned on, users cookies will be refreshed. Turn off if the identity API barfs" ,
+    safeState = Off, sellByDate = never
+  )
+
   val ABLiveblogSportFrontUpdates = Switch("A/B Tests", "ab-liveblog-sport-front-updates",
     "Switch for the latest liveblog updates on sport & football fronts A/B test.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 27)
@@ -649,13 +658,22 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
   )
 
+  val FaciaPressNewFormat = Switch("Facia", "facia-press-fapi-client-format",
+    "If this switch is on, facia-press will press in the new fapi-client JSON format",
+    safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
+  )
+
   val FaciaPressOnDemand = Switch("Facia", "facia-press-on-demand",
     "If this is switched on, you can force facia to press on demand (Leave off)",
     safeState = Off, sellByDate = new LocalDate(2015, 6, 30)
   )
 
-  // Server-side A/B Tests
+  val FaciaServerNewFormat = Switch("Facia", "facia-new-format",
+    "If this is switched on, facia will serve off the new JSON format (It will fallback to old if it doesn't exist)",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 30)
+  )
 
+  // Server-side A/B Tests
   val ServerSideTests = {
     // It's for the side effect. Blame agents.
     val tests = mvt.ActiveTests.tests

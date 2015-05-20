@@ -1,7 +1,8 @@
 package slices
 
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import com.gu.facia.api.models.CollectionConfig
 import common.Logging
+import model.facia.PressedCollection
 
 object Container extends Logging {
   /** This is THE top level resolver for containers */
@@ -23,7 +24,10 @@ object Container extends Logging {
   })
 
   def fromConfig(collectionConfig: CollectionConfig) =
-    collectionConfig.collectionType.map(resolve).getOrElse(default)
+    resolve(collectionConfig.collectionType)
+
+  def fromPressedCollection(pressedCollection: PressedCollection): Container =
+    resolve(pressedCollection.collectionType)
 
   def showToggle(container: Container) = container match {
     case NavList | NavMediaList => false

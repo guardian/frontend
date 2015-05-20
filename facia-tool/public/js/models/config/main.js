@@ -22,6 +22,7 @@ export default function() {
 
     model.navSections = [];
 
+    model.collectionsMap = {};
     model.collections = ko.observableArray();
 
     model.fronts = ko.observableArray();
@@ -68,15 +69,21 @@ export default function() {
     };
 
     this.refreshConfig = function (config) {
-        model.collections(
-           _.chain(config.collections)
-            .map(function(obj, cid) { return new Collection(cloneWithKey(obj, cid)); })
+        model.collectionsMap = {};
+        var sortedCollections = _.chain(config.collections)
+            .map(function(obj, cid) {
+                var collection = new Collection(cloneWithKey(obj, cid));
+                model.collectionsMap[cid] = collection;
+                return collection;
+            })
             .sortBy(function(collection) { return collection.meta.displayName(); })
-            .value()
-        );
+            .value();
+
+        model.collections(sortedCollections);
 
         model.fronts(
            _.chain(_.keys(config.fronts))
+            .filter(function(id) { return vars.priority === config.fronts[id].priority; })
             .sortBy(function(id) { return id; })
             .without(model.pinnedFront() ? model.pinnedFront().id() : undefined)
             .unshift(model.pinnedFront() ? model.pinnedFront().id() : undefined)

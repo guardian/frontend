@@ -235,7 +235,7 @@ trait UpdateActions extends Logging with ExecutionContexts {
 
   def removeGroupIfNoLongerGrouped(collectionId: String, collectionJson: CollectionJson): CollectionJson = {
     ConfigAgent.getConfig(collectionId).flatMap(_.groups) match {
-      case Some(groups) if groups.nonEmpty => collectionJson
+      case Some(groups) if groups.groups.nonEmpty => collectionJson
       case _ => collectionJson.copy(
         live = collectionJson.live.map(removeGroupsFromTrail),
         draft = collectionJson.draft.map(_.map(removeGroupsFromTrail)))

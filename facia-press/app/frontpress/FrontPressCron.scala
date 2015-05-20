@@ -5,7 +5,7 @@ import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import common.FaciaPressMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
 import common.SQSQueues._
 import common.{SNSNotification, StopWatch, JsonMessageQueue, Edition}
-import conf.Configuration
+import conf.{Switches, Configuration}
 import conf.Switches.FrontPressJobSwitch
 import metrics.AllFrontsPressLatencyMetric
 
@@ -33,7 +33,15 @@ object FrontPressCron extends JsonQueueWorker[SNSNotification] {
     if (FrontPressJobSwitch.isSwitchedOn) {
       log.info(s"Cron pressing path $path")
       val stopWatch = new StopWatch
-      val pressFuture = FrontPress.pressLiveByPathId(path)
+
+      lazy val fapiFormat =
+        if (Switches.FaciaPressNewFormat.isSwitchedOn) {
+            LiveFapiFrontPress.pressByPathId(path)}
+        else { Future.successful(Unit) }
+
+      lazy val oldFormat = FrontPress.pressLiveByPathId(path)
+
+      val pressFuture = oldFormat.flatMap(_ => fapiFormat)
 
       pressFuture onComplete {
         case Success(_) =>
