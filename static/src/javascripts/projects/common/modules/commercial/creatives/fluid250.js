@@ -1,8 +1,10 @@
 define([
     'bean',
     'bonzo',
+    'fastdom',
     'common/utils/_',
     'common/utils/$',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
@@ -10,8 +12,10 @@ define([
 ], function (
     bean,
     bonzo,
+    fastdom,
     _,
     $,
+    detect,
     mediator,
     storage,
     template,
@@ -22,11 +26,48 @@ define([
         this.params = params;
     };
 
-    Fluid250.prototype.create = function () {
+    Fluid250.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
+    Fluid250.isModernBrowser = detect.isModernBrowser();
+
+    Fluid250.isIE9OrLess = detect.getUserAgent.browser === 'MSIE' && (detect.getUserAgent.version === '9' || detect.getUserAgent.version === '8');
+
+    Fluid250.prototype.updateBgPosition = function () {
+        var inViewB;
+        switch (this.params.backgroundImagePType) {
+            case 'fixed':
+                break;
+            case 'parallax':
+                fastdom.read(function () {
+                    this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3);
+                    if (this.scrollAmount > 0) {
+                        this.scrollAmountP = -Math.abs(this.scrollAmount) + '%';
+                    } else {
+                        this.scrollAmountP = Math.abs(this.scrollAmount) + '%';
+                    }
+                    inViewB = (window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top;
+                }.bind(this));
+                fastdom.write(function () {
+                    $('.ad-scrolling-bg', $(this.$adSlot)).addClass('ad-scrolling-bg-parallax').css('background-position', '50%' + this.scrollAmountP);
+                    // layer 2 animation
+                    if (this.params.layerTwoParallax === 'enabled' && Fluid250.isModernBrowser && !Fluid250.isIE9OrLess) {
+                        $('.fluid250_layer2', $(this.$adSlot)).addClass('ad-scrolling-text-hide');
+                        if (inViewB) {
+                            $('.fluid250_layer2', $(this.$adSlot)).addClass('ad-scrolling-text-animate');
+                        }
+                    }
+                }.bind(this));
+                break;
+        }
+    };
+
+    Fluid250.prototype.create = function () {
         var templateOptions = {
                 showLabel: (this.params.showAdLabel === 'hide') ?
-                'creative__label--hidden' : ''
+                'creative__label--hidden' : '',
+
+                layerTwoBGProperties: (this.params.layerTwoParallax === '' || this.params.layerTwoParallax === 'disabled' || (!Fluid250.isModernBrowser && this.params.layerTwoParallax === 'enabled')) ?
+                ' background-position: ' + this.params.layerTwoBGPosition + ';' : ''
             },
             leftPosition = (this.params.videoPositionH === 'left' ?
                 ' left: ' + this.params.videoHorizSpace + 'px;' : ''
@@ -37,12 +78,23 @@ define([
             videoDesktop = {
                 video: (this.params.videoURL !== '') ?
                     '<iframe width="409px" height="230px" src="' + this.params.videoURL + '?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="fluid250_video fluid250_video--desktop fluid250_video--vert-pos-' + this.params.videoPositionV + ' fluid250_video--horiz-pos-' + this.params.videoPositionH + '" style="' + leftPosition + rightPosition + '"></iframe>' : ''
+            },
+            scrollingbg = {
+                scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
+                    '<div class="ad-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: 50% 0; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
             };
 
-        $.create(template(fluid250Tpl, _.merge(this.params, templateOptions, videoDesktop))).appendTo(this.$adSlot);
+        $.create(template(fluid250Tpl, _.merge(this.params, templateOptions, videoDesktop, scrollingbg))).appendTo(this.$adSlot);
 
         if (this.params.trackingPixel) {
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+        }
+        if (Fluid250.hasScrollEnabled) {
+            // update bg position
+            this.updateBgPosition();
+            mediator.on('window:scroll', this.updateBgPosition.bind(this));
+            // to be safe, also update on window resize
+            mediator.on('window:resize', this.updateBgPosition.bind(this));
         }
     };
 

@@ -17,11 +17,23 @@
         width: 300px;
         position: absolute;
         top: 0;
+        left: 0;
         box-sizing: border-box;
     }
     .creative--scrollable-mpu-image {
         border: 1px solid colour(neutral-5);
         background: none 0 0 repeat;
+
+        &.creative--scrollable-mpu-image-fixed {
+            background-attachment: fixed;
+            background-repeat: repeat;
+            background-position: 0 0;
+        }
+        &.creative--scrollable-mpu-image-parallax {
+            background-attachment: scroll;
+            background-repeat: repeat-y;
+            height: 31.25rem;
+        }
     }
     .creative--scrollable-mpu-static-image {
         z-index: 1;
@@ -438,12 +450,6 @@
     .creative--fluid250__label {
         width: 100%;
         display: block;
-        text-align: left;
-
-        .fc-container__inner {
-            padding-top: 0;
-            border-top: 0;
-        }
 
         &.creative__label--hidden {
             display: none;
@@ -455,6 +461,49 @@
         padding-top: 0;
         padding-bottom: $gs-baseline*1.5;
     }
+}
+
+.creative--fluid250-bg-container {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0 !important;
+
+    .ad-scrolling-bg {
+        position: absolute;
+        top: 0;
+        height: 31.25rem;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .ad-scrolling-bg-parallax {
+        background-attachment: scroll;
+    }
+
+    .fluid250_layer {
+
+        .is-modern & {
+            &.ad-scrolling-text-hide {
+                background-position: 0 -250px;
+            }
+            &.ad-scrolling-text-animate {
+                animation: textanimation 1.4s ease 0.4s;
+                animation-fill-mode: forwards;
+            }
+        }
+    }
+
+    .ad-slot__label {
+        position: relative;
+        text-align: left;
+    }
+
+    .fc-container__inner {
+        padding-top: 0;
+        border-top: 0;
+    }
+
 }
 
 .ad-slot--merchandising-high {
@@ -579,4 +628,10 @@
         display: block;
         clear: left;
     }
+}
+
+@keyframes textanimation {
+    0%   {background-position: 0 -250px;}
+    75%  {background-position: 0 0;}
+    100% {background-position: 0 0;}
 }
