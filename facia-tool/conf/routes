@@ -5,10 +5,10 @@
 GET           /_healthcheck              controllers.StatusController.healthStatus
 
 # authentication endpoints
-GET           /authError                 controllers.OAuthLoginController.authError(message:String)
-GET           /oauthCallback             controllers.OAuthLoginController.oauthCallback
-GET           /logout                    controllers.OAuthLoginController.logout
-GET           /login/status              controllers.OAuthLoginController.status
+GET           /authError                 controllers.PandaAuthController.authError(message:String)
+GET           /oauthCallback             controllers.PandaAuthController.oauthCallback
+GET           /logout                    controllers.PandaAuthController.logout
+GET           /login/status              controllers.PandaAuthController.status
 
 # healthcheck
 GET          /status                     controllers.StatusController.healthStatus

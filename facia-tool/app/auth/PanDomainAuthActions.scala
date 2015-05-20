@@ -14,8 +14,9 @@ trait PanDomainAuthActions extends AuthActions with Results {
   lazy val config = play.api.Play.configuration
 
   override def validateUser(authedUser: AuthenticatedUser): Boolean = {
-    (authedUser.user.emailDomain == "guardian.co.uk") &&
-      (authedUser.multiFactor || (config.getString("no2faUser").map(user => user.length > 0 && user == authedUser.user.email).getOrElse(false)))
+    (authedUser.user.emailDomain == "guardian.co.uk" ||
+      authedUser.user.emailDomain == "guardian.com") &&
+      (authedUser.multiFactor || (config.getString("no2faUser").exists(user => user.length > 0 && user == authedUser.user.email)))
   }
 
   override def authCallbackUrl: String = Configuration.faciatool.pandomainHost.get + "/oauthCallback"

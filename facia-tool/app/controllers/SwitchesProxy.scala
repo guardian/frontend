@@ -8,9 +8,7 @@ import play.api.libs.json.Json
 import akka.actor.ActorSystem
 import auth.PanDomainAuthActions
 
-object SwitchesProxy extends Controller with ExecutionContexts with PanDomainAuthActions {
-
-  override lazy val actorSystem = ActorSystem()
+object SwitchesProxy extends Controller with PanDomainAuthActions {
 
   def getSwitches() = AuthAction { request =>
     FaciaToolMetrics.ProxyCount.increment()

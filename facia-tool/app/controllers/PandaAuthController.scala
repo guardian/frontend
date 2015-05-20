@@ -10,7 +10,7 @@ import org.joda.time.{Duration, DateTime}
 import play.Play
 import auth.PanDomainAuthActions
 
-object OAuthLoginController extends Controller with PanDomainAuthActions {
+object PandaAuthController extends Controller with PanDomainAuthActions {
 
   def oauthCallback = Action.async { implicit request =>
     processGoogleCallback()
