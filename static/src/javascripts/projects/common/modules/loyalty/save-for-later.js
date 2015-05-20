@@ -22,7 +22,7 @@ define([
     saveForLaterTmpl
 ) {
     function SaveForLater() {
-        this.saveLinkHolder = qwery('.meta__save-for-later')[0];
+        this.saveLinkHolder = qwery('.js-save-for-later')[0];
         this.userData = null;
         this.pageId = config.page.pageId;
         this.$saver = bonzo(this.saveLinkHolder);

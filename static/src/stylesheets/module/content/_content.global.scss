@@ -42,12 +42,6 @@
     height: $gs-baseline * 3;
     padding: $gs-baseline / 2 0;
 
-    @include mq(mobile, mobileLandscape) {
-        position: absolute;
-        right: 0;
-        bottom: -2px;
-        border: 0;
-    }
     @include mq(tablet, leftCol) {
         position: absolute;
         right: 0;

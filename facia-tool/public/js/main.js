@@ -4,6 +4,7 @@ import Bootstrap from 'modules/bootstrap';
 import 'font-awesome/css/font-awesome.min.css!';
 import {init, update, differs} from 'modules/vars';
 import logger from 'utils/logger';
+import oauthSession from 'utils/oauth-session';
 
 function terminate (error) {
     if (error) {
@@ -50,7 +51,9 @@ export default function load (ModuleClass) {
 
         module = new ModuleClass();
         module.init(bootstrap, res);
+        update(res);
         bootstrap.every(updateModuleConfig);
+        oauthSession();
     }
 
     bootstrap = new Bootstrap()

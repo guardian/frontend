@@ -67,4 +67,3 @@ object StoriesVisibleController extends Controller {
     }
   }
 }
-

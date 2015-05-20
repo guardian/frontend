@@ -403,13 +403,18 @@ define([
     }
 
     function adblockInUse() {
-        var displayed = '';
+        var displayed = '',
+            isAdblock = false;
 
         $.create('<div class="ad_unit"></div>').appendTo(document.body);
         displayed = $('.ad_unit').css('display');
         $('.ad_unit').remove();
 
-        return displayed === 'none' ? true : false;
+        if (displayed === 'none') {
+            isAdblock = true;
+        }
+
+        return isAdblock;
     }
 
     detect = {
@@ -435,7 +440,7 @@ define([
         breakpoints: breakpoints,
         fontHinting: fontHinting(),
         isModernBrowser: isModernBrowser,
-        adblockInUse: adblockInUse
+        adblockInUse: adblockInUse()
     };
     return detect;
 });
