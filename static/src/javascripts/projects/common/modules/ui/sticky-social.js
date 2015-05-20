@@ -96,10 +96,9 @@ define([
                     [topEl(), bottomEl()].forEach(function (el) {
                         if (el) {
                             fastdom.write(function () {
-                                $(el).addClass(
-                                    'social--referred' +
-                                    (testVariant.indexOf('only') > -1 ? ' social--referred--only' : '')
-                                );
+                                if (testVariant.indexOf('only') > -1) {
+                                    $(el).addClass('social--referred--only');
+                                }
 
                                 moveToFirstPosition($('.social__item--' + socialReferrer, el).addClass('social__item--referred'));
                             });

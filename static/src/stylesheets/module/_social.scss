@@ -258,19 +258,20 @@ category: Common
     padding: ($gs-baseline/3*2) ($gs-gutter/10) 0 ($gs-gutter/2);
 }
 
-.social--referred {
-    &.social--bottom.social--referred--only .social__item {
+.social--referred--only {
+    &.social--bottom .social__item {
         display: none;
     }
 
     &.social--top .social__item--referred,
     &.social--bottom .social__item--referred {
         display: list-item;
-        margin-right: $gs-baseline / 3;
     }
 }
 
 .social__item--referred {
+    margin-right: $gs-baseline / 3;
+
     .social-icon:after {
         @include fs-textSans(1);
         margin-right: $gs-baseline;

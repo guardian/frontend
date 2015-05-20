@@ -39,10 +39,6 @@ define([
                 test: function () {}
             },
             {
-                id: 'referrer-only',
-                test: function () {}
-            },
-            {
                 id: 'sticky-referrer-only',
                 test: function () {}
             }
