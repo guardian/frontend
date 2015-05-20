@@ -17,7 +17,7 @@ trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
   val description: String
   val safeState: SwitchState
   val sellByDate: LocalDate
-  val availableToJavaScript: Boolean
+  val exposeClientSide: Boolean
 
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
@@ -51,7 +51,7 @@ case class Switch(
   description: String,
   safeState: SwitchState,
   sellByDate: LocalDate,
-  availableToJavaScript: Boolean
+  exposeClientSide: Boolean
 ) extends SwitchTrait
 
 case class TimerSwitch(
@@ -61,7 +61,7 @@ case class TimerSwitch(
   safeState: SwitchState,
   sellByDate: LocalDate,
   activePeriods: Seq[Interval],
-  availableToJavaScript: Boolean
+  exposeClientSide: Boolean
 ) extends SwitchTrait with Logging {
 
   def isSwitchedOnAndActive: Boolean = {
@@ -88,7 +88,7 @@ object Switches {
     "If this switch is on, containers past the 8th will be lazily loaded on mobile and tablet",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val TagPageSizeSwitch = Switch(
@@ -97,7 +97,7 @@ object Switches {
     "If this switch is on then we will request more items for larger tag pages",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val CircuitBreakerSwitch = Switch(
@@ -106,7 +106,7 @@ object Switches {
     "If this switch is switched on then the Content API circuit breaker will be operational",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val MemcachedSwitch = Switch(
@@ -115,7 +115,7 @@ object Switches {
     "If this switch is switched on then the MemcacheAction will be operational",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val MemcachedFallbackSwitch = Switch(
@@ -124,7 +124,7 @@ object Switches {
     "If this switch is switched on then the MemcachedFallback will be operational",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val IncludeBuildNumberInMemcachedKey = Switch(
@@ -133,7 +133,7 @@ object Switches {
     "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val EnableOauthOnPreview = Switch(
@@ -142,7 +142,7 @@ object Switches {
     "If this switch is switched on then the preview server requires login",
     safeState = On,
     sellByDate = new LocalDate(2015, 5, 31),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val PreviewAuthByCookie = Switch(
@@ -151,7 +151,7 @@ object Switches {
     "If this switch is switched on then preview auth will be lengthened by a cookie",
     safeState = Off,
     sellByDate = new LocalDate(2015, 5, 31),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val AutoRefreshSwitch = Switch(
@@ -160,7 +160,7 @@ object Switches {
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val DoubleCacheTimesSwitch = Switch(
@@ -169,7 +169,7 @@ object Switches {
     "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val RelatedContentSwitch = Switch(
@@ -178,7 +178,7 @@ object Switches {
     "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val RichLinkSwitch = Switch(
@@ -187,7 +187,7 @@ object Switches {
     "If this switch is turned off then rich links will not be shown. Turn off to help handle exceptional load.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val InlineCriticalCss = Switch(
@@ -196,7 +196,7 @@ object Switches {
     "If this switch is on critical CSS will be inlined into the head of the document.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val AsyncCss = Switch(
@@ -206,7 +206,7 @@ object Switches {
       "has loaded using javascript. Disabling it will use standard link elements.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val ShowAllArticleEmbedsSwitch = Switch(
@@ -215,7 +215,7 @@ object Switches {
     "If switched on then all embeds will be shown inside article bodies",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val ExternalVideoEmbeds = Switch(
@@ -224,7 +224,7 @@ object Switches {
     "If switched on then we will accept and display external video views",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val DiscussionSwitch = Switch(
@@ -233,7 +233,7 @@ object Switches {
     "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val DiscussionPageSizeSwitch = Switch(
@@ -242,7 +242,7 @@ object Switches {
     "If this is switched on then users will have the option to change their discussion page size",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val OpenCtaSwitch = Switch(
@@ -252,7 +252,7 @@ object Switches {
       "is blowing up.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val ImageServerSwitch = Switch(
@@ -261,7 +261,7 @@ object Switches {
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val PngResizingSwitch = Switch(
@@ -270,7 +270,7 @@ object Switches {
     "If this switch is on png images will be resized via the png-resizing server",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
   
   val DfpCachingSwitch = Switch(
@@ -279,7 +279,7 @@ object Switches {
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val CommercialSwitch = Switch(
@@ -288,7 +288,7 @@ object Switches {
     "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val StandardAdvertsSwitch = Switch(
@@ -297,7 +297,7 @@ object Switches {
     "Display 'standard' adverts, e.g. top banner ads, inline ads, MPUs, etc.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val CommercialComponentsSwitch = Switch(
@@ -306,7 +306,7 @@ object Switches {
     "Display commercial components, e.g. jobs, soulmates.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val VideoAdvertsSwitch = Switch(
@@ -315,7 +315,7 @@ object Switches {
     "Show adverts on videos.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val VpaidAdvertsSwitch = Switch(
@@ -324,7 +324,7 @@ object Switches {
     "Turns on support for vpaid-format adverts on videos.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val SponsoredSwitch = Switch(
@@ -333,7 +333,7 @@ object Switches {
     "Show sponsored badges, logos, etc.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val LiveblogAdvertsSwitch = Switch(
@@ -342,7 +342,7 @@ object Switches {
     "Show inline adverts on liveblogs",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val AudienceScienceSwitch = Switch(
@@ -351,7 +351,7 @@ object Switches {
     "If this switch is on, Audience Science segments will be used to target ads.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val AudienceScienceGatewaySwitch = Switch(
@@ -360,7 +360,7 @@ object Switches {
     "If this switch is on, Audience Science Gateway segments will be used to target ads.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val CriteoSwitch = Switch(
@@ -369,7 +369,7 @@ object Switches {
     "If this switch is on, Criteo segments will be used to target ads.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val ImrWorldwideSwitch = Switch(
@@ -378,7 +378,7 @@ object Switches {
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val KruxSwitch = Switch(
@@ -387,7 +387,7 @@ object Switches {
     "Enable Krux Control Tag",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val RemarketingSwitch = Switch(
@@ -396,7 +396,7 @@ object Switches {
     "Enable Remarketing tracking",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val TravelOffersFeedSwitch = Switch(
@@ -405,7 +405,7 @@ object Switches {
     "If this switch is on, commercial components will be fed by travel offer feed.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val JobFeedSwitch = Switch(
@@ -414,7 +414,7 @@ object Switches {
     "If this switch is on, commercial components will be fed by job feed.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val MembersAreaSwitch = Switch(
@@ -423,7 +423,7 @@ object Switches {
     "If this switch is on, content flagged with membershipAccess will be protected",
     safeState = On,
     sellByDate = new LocalDate(2015, 8, 30),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val MasterclassFeedSwitch = Switch(
@@ -432,7 +432,7 @@ object Switches {
     "If this switch is on, commercial components will be fed by masterclass feed.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val SoulmatesFeedSwitch = Switch(
@@ -441,7 +441,7 @@ object Switches {
     "If this switch is on, commercial components will be fed by soulmates feed.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val MoneysupermarketFeedsSwitch = Switch(
@@ -450,7 +450,7 @@ object Switches {
     "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val LCMortgageFeedSwitch = Switch(
@@ -459,7 +459,7 @@ object Switches {
     "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val GuBookshopFeedsSwitch = Switch(
@@ -468,7 +468,7 @@ object Switches {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val BookLookupSwitch = Switch(
@@ -477,7 +477,7 @@ object Switches {
     "If this switch is on, book data will be looked up using a third-party service.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val AppleAdUkNetworkFrontSwitch = Switch(
@@ -486,7 +486,7 @@ object Switches {
     "If this switch is on, Apple ads will appear below nav on the UK network front.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 3),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val AppleAdUsNetworkFrontSwitch = Switch(
@@ -495,7 +495,7 @@ object Switches {
     "If this switch is on, Apple ads will appear below nav on the US network front.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 3),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val AppleAdAuNetworkFrontSwitch = Switch(
@@ -504,7 +504,7 @@ object Switches {
     "If this switch is on, Apple ads will appear below nav on the AU network front.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 3),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val AppleAdTechFrontSwitch = Switch(
@@ -513,7 +513,7 @@ object Switches {
     "If this switch is on, Apple ads will appear below nav on the tech section front.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 3),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val LazyLoadAds = Switch(
@@ -522,7 +522,7 @@ object Switches {
     "If switched on then all ads are lazy loaded",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val AdBlockMessage = Switch(
@@ -531,7 +531,7 @@ object Switches {
     "Switch for the Adblock Message.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   // Monitoring
@@ -542,7 +542,7 @@ object Switches {
     "Enables the new Ophan tracking javascript",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val DiagnosticsLogging = Switch(
@@ -551,7 +551,7 @@ object Switches {
     "If this switch is on, then js error reports and requests sent to the Diagnostics servers will be logged.",
     safeState = On,
     never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val MetricsSwitch = Switch(
@@ -560,7 +560,7 @@ object Switches {
     "If this switch is on, then metrics will be pushed to cloudwatch on DEV and CODE",
     safeState = Off,
     never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val ScrollDepthSwitch = Switch(
@@ -569,7 +569,7 @@ object Switches {
     "Enables tracking and measurement of scroll depth",
     safeState = Off,
     never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val CssLogging = Switch(
@@ -578,7 +578,7 @@ object Switches {
     "If this is on, then a subset of clients will post css selector information for diagnostics.",
     safeState = Off,
     never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val ThirdPartyEmbedTracking = Switch(
@@ -587,7 +587,7 @@ object Switches {
     "Enables tracking on our off-site third party embedded content. Such as: videos on embed.theguardian.com.",
     safeState = Off,
     never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val FeedbackLink = Switch(
@@ -596,7 +596,7 @@ object Switches {
     "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
     safeState = Off,
     new LocalDate(2015, 5, 23),
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
 
@@ -607,7 +607,7 @@ object Switches {
     "A/B test headlines",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 1),
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val InternationalEditionSwitch = Switch(
@@ -616,7 +616,7 @@ object Switches {
     "International edition A/B test on",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 1),
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val FixturesAndResultsContainerSwitch = Switch(
@@ -625,7 +625,7 @@ object Switches {
     "Fixtures and results container on football tag pages",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val ImgixSwitch = Switch(
@@ -634,7 +634,7 @@ object Switches {
     "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
     safeState = Off,
     sellByDate = new LocalDate(2015, 5, 29),
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val BecomeAMemberSwitch = Switch(
@@ -643,7 +643,7 @@ object Switches {
     "If this switch is on the “Become a Member” button will be visible.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 15),
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch(
@@ -652,7 +652,7 @@ object Switches {
     "If switched on then will will infer the video player tech priority based on the video source codec",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val OutbrainSwitch = Switch(
@@ -661,7 +661,7 @@ object Switches {
     "Enable the Outbrain content recommendation widget.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val ForeseeSwitch = Switch(
@@ -670,7 +670,7 @@ object Switches {
     "Enable Foresee surveys for a sample of our audience",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val GeoMostPopular = Switch(
@@ -679,7 +679,7 @@ object Switches {
     "If this is switched on users then 'most popular' will be upgraded to geo targeted",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val FontSwitch = Switch(
@@ -688,7 +688,7 @@ object Switches {
     "If this is switched on then the custom Guardian web font will load.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val SearchSwitch = Switch(
@@ -697,7 +697,7 @@ object Switches {
     "If this switch is turned on then Google search is added to the sections nav.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val IdentityProfileNavigationSwitch = Switch(
@@ -706,7 +706,7 @@ object Switches {
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val IdentitySocialOAuthSwitch = Switch(
@@ -715,7 +715,7 @@ object Switches {
     "If this switch is on then social sign-in attempts will be directed to Identity OAuth app, rather than the Webapp.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val FacebookAutoSigninSwitch = Switch(
@@ -725,7 +725,7 @@ object Switches {
       "recently signed out are automatically signed in.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val FacebookShareUseTrailPicFirstSwitch = Switch(
@@ -735,7 +735,7 @@ object Switches {
       "image when switched OFF.",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val IdentityFormstackSwitch = Switch(
@@ -744,7 +744,7 @@ object Switches {
     "If this switch is on, formstack forms will be available",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val IdentityAvatarUploadSwitch = Switch(
@@ -753,7 +753,7 @@ object Switches {
     "If this switch is on, users can upload avatars on their profile page",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val EnhanceTweetsSwitch = Switch(
@@ -762,7 +762,7 @@ object Switches {
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val EnhancedMediaPlayerSwitch = Switch(
@@ -771,7 +771,7 @@ object Switches {
     "If this is switched on then videos are enhanced using our JavaScript player",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val MediaPlayerSupportedBrowsers = Switch(
@@ -780,7 +780,7 @@ object Switches {
     "If this is switched on then a message will be displayed to UAs not supported by our media player",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val BreakingNewsSwitch = Switch(
@@ -789,7 +789,7 @@ object Switches {
     "If this is switched on then the breaking news feed is requested and articles are displayed",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val WeatherSwitch = Switch(
@@ -798,7 +798,7 @@ object Switches {
     "If this is switched on then the weather component is displayed",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val HistoryTags = Switch(
@@ -807,7 +807,7 @@ object Switches {
     "If this is switched on then personalised history tags are shown in the meganav",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val IdentityBlockSpamEmails = Switch(
@@ -816,7 +816,7 @@ object Switches {
     "If switched on, any new registrations with emails from ae blacklisted domin will be blocked",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val QuizScoresService = Switch(
@@ -825,7 +825,7 @@ object Switches {
     "If switched on, the diagnostics server will provide a service to store quiz results in memcached",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 16),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val IdentityLogRegistrationsFromTor = Switch(
@@ -834,7 +834,7 @@ object Switches {
     "If switched on, any user registrations from a known tor exit node will be logged",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val LiveblogFrontUpdatesUk = Switch(
@@ -843,7 +843,7 @@ object Switches {
     "Switch for the latest liveblog updates on the UK network front",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val LiveblogFrontUpdatesUs = Switch(
@@ -852,7 +852,7 @@ object Switches {
     "Switch for the latest liveblog updates on the US network front",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val LiveblogFrontUpdatesAu = Switch(
@@ -861,7 +861,7 @@ object Switches {
     "Switch for the latest liveblog updates on the AU network front",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val LiveblogFrontUpdatesOther = Switch(
@@ -870,7 +870,7 @@ object Switches {
     "Switch for the latest liveblog updates on non-network fronts",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   // A/B Tests
@@ -880,7 +880,7 @@ object Switches {
     "Switch sticky share buttons on articles",
     safeState = Off,
     sellByDate = new LocalDate(2015, 5, 28),
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val ABHighCommercialComponent = Switch(
@@ -889,7 +889,7 @@ object Switches {
     "Switch for the High Commercial Component A/B test.",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val ABMtRec1 = Switch(
@@ -898,7 +898,7 @@ object Switches {
     "Viewability results - Recommendation option 1",
     safeState = Off,
     sellByDate = new LocalDate(2015, 5, 25),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val ABMtRec2 = Switch(
@@ -907,7 +907,7 @@ object Switches {
     "Viewability results - Recommendation option 2",
     safeState = Off,
     sellByDate = new LocalDate(2015, 5, 25),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val ABHeatmap = Switch(
@@ -916,7 +916,7 @@ object Switches {
     "Switch for the UK Network Front heatmap test.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 5, 24),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val ABSaveForLaterSwitch = Switch(
@@ -925,7 +925,7 @@ object Switches {
     "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val ABIdentityCookieRefresh = Switch(
@@ -934,7 +934,7 @@ object Switches {
     "It this switch is turned on, users cookies will be refreshed. Turn off if the identity API barfs" ,
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val ABLiveblogSportFrontUpdates = Switch(
@@ -943,7 +943,7 @@ object Switches {
     "Switch for the latest liveblog updates on sport & football fronts A/B test.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 5, 27),
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val ABDeferSpacefinder = Switch(
@@ -952,7 +952,7 @@ object Switches {
     "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 5, 25),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
 
@@ -963,7 +963,7 @@ object Switches {
       s"Switch for headline $n",
       safeState = On,
       sellByDate = new LocalDate(2015, 6, 10),
-      availableToJavaScript = true
+      exposeClientSide = true
     )
   }
 
@@ -973,7 +973,7 @@ object Switches {
     "If switched on then football matchday feeds will be recorded every minute",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val CrosswordSvgThumbnailsSwitch = Switch(
@@ -982,7 +982,7 @@ object Switches {
     "If switched on, crossword thumbnails will be accurate SVGs",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val SudokuSwitch = Switch(
@@ -991,7 +991,7 @@ object Switches {
     "If switched on, sudokus will be available",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val CricketScoresSwitch = Switch(
@@ -1000,7 +1000,7 @@ object Switches {
     "If switched on, cricket score and scorecard link will be displayed",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val StocksWidgetSwitch = Switch(
@@ -1009,7 +1009,7 @@ object Switches {
     "If switched on, a stocks widget will be displayed on the business front",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val DiscussionAllPageSizeSwitch = Switch(
@@ -1018,7 +1018,7 @@ object Switches {
     "If this is switched on then users will have the option to load all comments",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = true
+    exposeClientSide = true
   )
 
   val MissingVideoEndcodingsJobSwitch = Switch(
@@ -1027,7 +1027,7 @@ object Switches {
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   // Facia
@@ -1038,7 +1038,7 @@ object Switches {
     "If this is switched on then the fronts tool is disabled",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val ToolSparklines = Switch(
@@ -1047,7 +1047,7 @@ object Switches {
     "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val ContentApiPutSwitch = Switch(
@@ -1056,7 +1056,7 @@ object Switches {
     "If this switch is on facia tool will PUT all collection changes to content api",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val FaciaToolPressSwitch = Switch(
@@ -1065,7 +1065,7 @@ object Switches {
     "If this switch is on facia tool will press fronts on each change",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val FaciaToolDraftContent = Switch(
@@ -1074,7 +1074,7 @@ object Switches {
     "If this switch is on facia tool will offer draft content to editors, and press draft fronts from draft content",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val FaciaToolCachedContentApiSwitch = Switch(
@@ -1083,7 +1083,7 @@ object Switches {
     "If this switch is on facia tool will cache responses from the content API and use them on failure",
     safeState = On,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val FrontPressJobSwitch = Switch(
@@ -1092,7 +1092,7 @@ object Switches {
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val IphoneConfidence = Switch(
@@ -1101,7 +1101,7 @@ object Switches {
     "If this switch is on then some beacons will be dropped to gauge iPhone confidence",
     safeState = Off,
     sellByDate = never,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val FaciaDynamoArchive = Switch(
@@ -1111,7 +1111,7 @@ object Switches {
       "check the DB size.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 31),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val FaciaPressNewFormat = Switch(
@@ -1120,7 +1120,7 @@ object Switches {
     "If this switch is on, facia-press will press in the new fapi-client JSON format",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 31),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val FaciaPressOnDemand = Switch(
@@ -1129,7 +1129,7 @@ object Switches {
     "If this is switched on, you can force facia to press on demand (Leave off)",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 30),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   val FaciaServerNewFormat = Switch(
@@ -1138,7 +1138,7 @@ object Switches {
     "If this is switched on, facia will serve off the new JSON format (It will fallback to old if it doesn't exist)",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 30),
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   // Server-side A/B Tests
@@ -1152,7 +1152,7 @@ object Switches {
       "Enables the server side testing system",
       safeState = Off,
       sellByDate = never,
-      availableToJavaScript = false
+      exposeClientSide = false
     )
   }
 

@@ -46,7 +46,7 @@ case class TestDefinition (
     description,
     conf.Off,
     sellByDate,
-    availableToJavaScript = false
+    exposeClientSide = false
   )
 
   def isParticipating(implicit request: RequestHeader): Boolean = {
