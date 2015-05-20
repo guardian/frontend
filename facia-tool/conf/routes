@@ -2,16 +2,13 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET           /_healthcheck              controllers.StatusController.healthStatus
+GET           /_healthcheck              controllers.HealthCheck.healthcheck()
 
 # authentication endpoints
-GET           /authError                 controllers.PandaAuthController.authError(message:String)
-GET           /oauthCallback             controllers.PandaAuthController.oauthCallback
-GET           /logout                    controllers.PandaAuthController.logout
-GET           /login/status              controllers.PandaAuthController.status
-
-# healthcheck
-GET          /status                     controllers.StatusController.healthStatus
+GET           /login                     controllers.OAuthLoginController.login
+POST          /login                     controllers.OAuthLoginController.loginAction
+GET           /oauth2callback            controllers.OAuthLoginController.oauth2Callback
+GET           /logout                    controllers.OAuthLoginController.logout
 
 # static files
 GET           /assets/*file              controllers.UncachedAssets.at(file)
@@ -69,7 +66,7 @@ POST          /config/collections/*collectionId    controllers.CollectionControl
 
 
 # Depend on frontend project
-GET           /frontend/config                  controllers.FrontendDependentController.configuration()
+GET           /frontend/config                  controllers.FrontendDependentController.config()
 
 # Stories visible
 POST          /stories-visible/*containerType   controllers.StoriesVisibleController.storiesVisible(containerType)
