@@ -5,8 +5,8 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/loyalty/save-for-later',
-    'common/modules/loyalty/save-content-for-later',
+    'common/modules/loyalty/save-article-for-later',
+    'common/modules/loyalty/save-articles-for-later',
     'text!common/views/identity/saved-for-later-profile-link.html'
 ], function (
     bonzo,
@@ -15,8 +15,8 @@ define([
     config,
     mediator,
     template,
-    SaveForLater,
-    SaveContentFront,
+    SaveArticle,
+    SaveArticles,
     profileLinkTmp
 ) {
 
@@ -35,6 +35,7 @@ define([
         this.showForSensitive = false;
 
         this.canRun = function () {
+            console.log("Can run");
             return true;
         };
 
@@ -44,11 +45,15 @@ define([
                 test: function () {
                     mediator.on('module:identity:api:loaded', function () {
                         if (!/Network Front|Section/.test(config.page.contentType)) {
-                            var saveForLater = new SaveForLater();
-                            saveForLater.init();
+                            console.log("+++ Run!");
+                            var saveArticle = new SaveArticle();
+                            console.log("++ New!");
+
+                            saveArticle.init();
+                            console.log("++ Init!");
                         }
-                        var saveForLater = new SaveContentFront();
-                        saveForLater.init();
+                        //var saveArticles = new SaveArticles();
+                        //saveArticles.init();
                     });
 
                     mediator.on('modules:profilenav:loaded', function () {
