@@ -39,12 +39,8 @@ define([
                 break;
             case 'parallax':
                 fastdom.read(function () {
-                    this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3) - 20;
-                    if (this.scrollAmount > 0) {
-                        this.scrollAmountP = -Math.abs(this.scrollAmount) + '%';
-                    } else {
-                        this.scrollAmountP = Math.abs(this.scrollAmount) + '%';
-                    }
+                    this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
+                    this.scrollAmountP = this.scrollAmount + '%';
                     inViewB = (window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top;
                 }.bind(this));
                 fastdom.write(function () {
