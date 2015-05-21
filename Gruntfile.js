@@ -43,7 +43,14 @@ module.exports = function (grunt) {
     }
 
     // Default task
-    grunt.registerTask('default', ['install', 'clean', 'validate', 'compile', 'test', 'analyse']);
+    grunt.registerTask('default', function () {
+        if (options.isDev) {
+            megalog.info('Running a full compile first.', {heading:'Preparing for dev'})
+            grunt.task.run(['compile', 'browserSync:dev', 'shell:watchSass']);
+        } else {
+            grunt.task.run(['install', 'clean', 'validate', 'compile', 'test', 'analyse']);
+        }
+    });
 
     /**
      * Validate tasks
