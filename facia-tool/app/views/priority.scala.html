@@ -1,6 +1,6 @@
-@(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity])
+@(env: String, priority: String, identity: Option[com.gu.pandomainauth.model.User])
 
-@admin_main("Fronts Editor", env, Some(priority), isAuthed = true, identity=identity) {
+@admin_main("Fronts Editor", env, Some(priority), identity=identity) {
 
 <div class="front-priorities">
     <div class="front-priorities--priority">
