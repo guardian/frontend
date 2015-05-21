@@ -1,4 +1,6 @@
-@(trails: Seq[Trail], numItemsVisible: Int = 5)(implicit request: RequestHeader)
+@(trails: Seq[com.gu.facia.api.models.FaciaContent], numItemsVisible: Int = 5)(implicit request: RequestHeader)
+
+@import views.support.Seq2zipWithRowInfo
 
 <ul class="u-unstyled">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>

@@ -1,10 +1,9 @@
+import testConfig from 'test-config';
 import _ from 'underscore';
 import Promise from 'Promise';
 import CollectionsEditor from 'models/collections/main';
 import MockConfig from 'mock/config';
-import fixConfig from 'test/fixtures/one-front-config';
 import MockSwitches from 'mock/switches';
-import fixSwitches from 'test/fixtures/default-switches';
 import MockCollections from 'mock/collection';
 import fixCollections from 'test/fixtures/some-collections';
 import MockSearch from 'mock/search';
@@ -34,9 +33,9 @@ export default function() {
         };
 
         mockConfig = new MockConfig();
-        mockConfig.set(fixConfig);
+        mockConfig.set(testConfig.config);
         mockSwitches = new MockSwitches();
-        mockSwitches.set(fixSwitches);
+        mockSwitches.set(testConfig.switches);
         mockCollections = new MockCollections();
         mockCollections.set(fixCollections);
         mockSearch = new MockSearch();
@@ -55,7 +54,7 @@ export default function() {
         });
 
 
-        new CollectionsEditor().init();
+        new CollectionsEditor().init({}, testConfig);
 
         // Number 2 is because we wait for two search, latest and the only
         // article in the collection.

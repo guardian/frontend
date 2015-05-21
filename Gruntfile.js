@@ -106,7 +106,8 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap', 'compile:inlineSvgs', 'uglify:conf']);
     grunt.registerTask('compile', [
-        'concurrent:compile',
+        'compile:css',
+        'compile:js',
         'compile:fonts',
         'compile:flash',
         'asset_hash',

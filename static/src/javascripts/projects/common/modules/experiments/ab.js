@@ -6,24 +6,14 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/liveblog-sport-front-updates',
+    'common/modules/experiments/tests/share-buttons',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/mt-rec1',
-    'common/modules/experiments/tests/mt-top-below-nav',
+    'common/modules/experiments/tests/mt-rec2',
     'common/modules/experiments/tests/heatmap',
-    'common/modules/experiments/tests/mt-top-below-first-container',
-    'common/modules/experiments/tests/mt-depth',
-    'common/modules/experiments/tests/mt-sticky-bottom',
     'common/modules/experiments/tests/save-for-later',
-    'common/modules/experiments/tests/history-without-whitelist',
+    'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/mt-lz-ads-depth',
-    'common/modules/experiments/tests/mt-sticky-nav-all',
-    'common/modules/experiments/tests/mt-sticky-burger',
-    'common/modules/experiments/tests/mt-sticky-all-ux',
-    'common/modules/experiments/tests/mt-sticky-all-nt-ux',
-    'common/modules/experiments/tests/mt-sticky-burger-ux',
-    'common/modules/experiments/tests/mt-sticky-burger-nt-ux',
     'common/modules/experiments/tests/defer-spacefinder'
 ], function (
     raven,
@@ -33,46 +23,26 @@ define([
     mediator,
     store,
     mvtCookie,
-    LiveblogSportFrontUpdates,
+    ShareButtons,
     HighCommercialComponent,
     MtRec1,
-    MtTopBelowNav,
+    MtRec2,
     HeatMap,
-    MtTopBelowFirstContainer,
-    MtDepth,
-    MtStickyBottom,
     SaveForLater,
-    HistoryWithoutWhitelist,
+    CookieRefresh,
     Headline,
-    MtLzAdsDepth,
-    MtStickyNavAll,
-    MtStickyBurger,
-    MtStickyAllUx,
-    MtStickyAllNtUx,
-    MtStickyBurgerUx,
-    MtStickyBurgerNtUx,
     DeferSpacefinder
     ) {
 
     var ab,
         TESTS = _.flatten([
-            new LiveblogSportFrontUpdates(),
+            new ShareButtons(),
             new HighCommercialComponent(),
             new MtRec1(),
-            new MtTopBelowNav(),
+            new MtRec2(),
             new HeatMap(),
-            new MtTopBelowFirstContainer(),
-            new MtDepth(),
-            new MtStickyBottom(),
             new SaveForLater(),
-            new HistoryWithoutWhitelist(),
-            new MtLzAdsDepth(),
-            new MtStickyNavAll(),
-            new MtStickyBurger(),
-            new MtStickyAllUx(),
-            new MtStickyAllNtUx(),
-            new MtStickyBurgerUx(),
-            new MtStickyBurgerNtUx(),
+            new CookieRefresh(),
             new DeferSpacefinder(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
@@ -160,6 +130,12 @@ define([
         _.forEach(_.keys(participations), function (k) {
             if (testCanBeRun(getTest(k))) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
+            }
+        });
+
+        _.forEach(_.keys(config.tests), function (k) {
+            if (k.toLowerCase().match(/^cm/)) {
+                tag.push(['AB', k, 'variant'].join(' | '));
             }
         });
 

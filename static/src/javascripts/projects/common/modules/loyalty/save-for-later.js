@@ -10,13 +10,12 @@ define([
     'common/utils/template',
 
     'common/modules/identity/api',
+    'common/views/svgs',
+    'text!common/views/loyalty/save-for-later.html',
 
     'text!common/views/loyalty/save-for-later-front-link--signed-out.html',
     'text!common/views/loyalty/save-for-later-front-link--signed-in.html'
-
-    ],
-
-    function(
+], function (
     qwery,
     bonzo,
     bean,
@@ -27,9 +26,11 @@ define([
     mediator,
     template,
     identity,
+    svgs,
+    saveForLaterTmpl,
 
-    signedOutLinkTemplate,
-    signedInLinkTemplate
+    signedOutLinkTmpl,
+    signedInLinkTmpl
 
     ) {
     function SaveForLater() {
@@ -46,10 +47,12 @@ define([
         this.elements = [];
         this.attributeName = 'data-loyalty-short-url';
         this.templates = {
-            signedIn: signedInLinkTemplate,
-            signedOut: signedOutLinkTemplate
+            signedIn: signedInLinkTmpl,
+            signedOut: signedOutLinkTmpl
         };
     }
+
+    var bookmarkSvg = svgs('bookmark', ['i-left']);
 
     SaveForLater.prototype.init = function () {
         console.log("Init");
@@ -64,6 +67,8 @@ define([
                 this.renderSaveThisArticleLink('Save for later', url);
             }
             this.renderLinksInContainers(false);
+            this.$saver.html(
+            );
         }
     };
 
@@ -71,10 +76,14 @@ define([
     SaveForLater.prototype.renderSaveThisArticleLink = function (linkText, url) {
 
          var self = this,
-             $saver = bonzo(qwery(self.classes['saveThisArticle'])[0]),
-             linkHtml = url ? '<a href="' + url + '" "data-link-name="meta-save-for-later" data-component=meta-save-for-later">' + linkText + '</a>' :
-             '<a  class="meta__save-for-later--link data-link-name="meta-save-for-later" data-component="meta-save-for-later">' + linkText + '</a>';
-         $saver.html(linkHtml);
+             $saver = bonzo(qwery(self.classes['saveThisArticle'])[0]);
+
+         $saver.html(template(saveForLaterTmpl, {
+                 url: url,
+                 icon: bookmarkSvg,
+                 state: 'save'
+             })
+         );
     };
 
     SaveForLater.prototype.getElementsIndexedById = function (context) {

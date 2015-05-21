@@ -78,9 +78,10 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                if (isMtRec1Test() && $adSlot.hasClass('ad-slot--right')) {
+                if (isMtRecTest() && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
-                        new StickyMpu($adSlot).create();
+                        // Hardcoded for sticky nav test. It will need some on time checking if this will go to PROD
+                        new StickyMpu($adSlot, {top: 58}).create();
                     }
                 }
             },
@@ -103,10 +104,12 @@ define([
             }
         },
 
-        isMtRec1Test = function () {
-            var MtRec1Test = ab.getParticipations().MtRec1;
+        isMtRecTest = function () {
+            var MtRec1Test = ab.getParticipations().MtRec1,
+                MtRec2Test = ab.getParticipations().MtRec2;
 
-            return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A';
+            return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A' ||
+                ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
         },
 
         recordFirstAdRendered = _.once(function () {
@@ -125,17 +128,7 @@ define([
             }));
         },
         setPageTargeting = function () {
-            if (config.switches.ophan && config.switches.ophanViewId) {
-                require(['ophan/ng'], function (ophan) {
-                    setTargets({viewId: ophan.viewId});
-                });
-            } else {
-                setTargets();
-            }
-        },
-
-        setTargets =  function (opts) {
-            _.forOwn(buildPageTargeting(opts), function (value, key) {
+            _.forOwn(buildPageTargeting(), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
@@ -193,18 +186,6 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
-        lzAdsTestVariants = {
-            'A': 1 / 4,
-            'B': 1 / 2,
-            'C': 3 / 4,
-            'D': 1
-        },
-
-        isLzAdsTest = function () {
-            var test = ab.getParticipations().MtLzAdsDepth;
-            return test && ab.testCanBeRun('MtLzAdsDepth') && _.contains(_.keys(lzAdsTestVariants), test.variant);
-        },
-
         isLzAdsSwitchOn = function () {
             return config.switches.lzAds;
         },
@@ -239,8 +220,8 @@ define([
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
 
-            // We want to run lazy load if user is in the depth test, main test user group or if there is a switch on
-            (isLzAdsTest() || isMtRec1Test() || isLzAdsSwitchOn() || isDeferSpaceFinderTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            // We want to run lazy load if user is in the main test or if there is a switch on
+            (isMtRecTest() || isLzAdsSwitchOn() || isDeferSpaceFinderTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
@@ -255,11 +236,7 @@ define([
                         scrollBottom = scrollTop + bonzo.viewport().height,
                         depth;
 
-                    // For depth test we want depth based on variant but for main test we want default depth
-                    // TODO: this will be removed after tests will finish
-                    if (isLzAdsTest()) {
-                        depth = lzAdsTestVariants[ab.getParticipations().MtLzAdsDepth.variant];
-                    } else if (isDeferSpaceFinderTest()) {
+                    if (isDeferSpaceFinderTest()) {
                         depth = 100;
                     } else {
                         depth = 0.5;

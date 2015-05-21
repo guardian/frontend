@@ -55,9 +55,14 @@ define([
                 abParticipations = ab.getParticipations();
 
             _.forIn(abParticipations, function (n, key) {
-                if (key.indexOf('Mt') > -1 && n.variant &&
-                    n.variant !== 'notintest') {
+                if (n.variant && n.variant !== 'notintest') {
                     abParams.push(key + '-' + n.variant.substring(0, 1));
+                }
+            });
+
+            _.forIn(_.keys(config.tests), function (n) {
+                if (n.toLowerCase().match(/^cm/)) {
+                    abParams.push(n);
                 }
             });
 
@@ -66,7 +71,6 @@ define([
 
     return function (opts) {
         var win         = (opts || {}).window || window,
-            viewId      = (opts || {}).viewId,
             page        = config.page,
             contentType = formatTarget(page.contentType),
             pageTargets = _.merge({
@@ -78,7 +82,6 @@ define([
                 k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
                 x:       krux.getSegments(),
                 su:      page.isSurging,
-                o:       viewId,
                 bp:      detect.getBreakpoint(),
                 at:      cookies.get('adtest'),
                 gdncrm:  userAdTargeting.getUserSegments(),

@@ -18,7 +18,7 @@ define([
     return function () {
         this.id = 'MtRec1';
         this.start = '2015-05-12';
-        this.expiry = '2015-05-25';
+        this.expiry = '2015-06-02';
         this.author = 'Zofia Korcz';
         this.description = 'Viewability results - Recommendation option 1';
         this.audience = 0.02;
@@ -30,13 +30,12 @@ define([
         this.showForSensitive = false;
 
         this.canRun = function () {
-            var isIE = detect.getUserAgent.browser === 'MSIE' || detect.getUserAgent === 'IE 11',
-                isUS = config.page.edition === 'US';
+            var isIE = detect.getUserAgent.browser === 'MSIE' || detect.getUserAgent === 'IE 11';
 
-            return !isIE && isUS;
+            return !isIE && _.contains(['UK', 'US'], config.page.edition);
         };
 
-        this.fireRec1Test = function () {
+        this.fireRecTest = function () {
             stickyNav.stickySlow.init();
         };
 

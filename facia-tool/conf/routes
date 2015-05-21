@@ -65,6 +65,9 @@ POST          /config/collections                  controllers.CollectionControl
 POST          /config/collections/*collectionId    controllers.CollectionController.update(collectionId)
 
 
+# Depend on frontend project
+GET           /frontend/config                  controllers.FrontendDependentController.config()
+
 # Stories visible
 POST          /stories-visible/*containerType   controllers.StoriesVisibleController.storiesVisible(containerType)
 

@@ -292,26 +292,16 @@ define([
                     key: 'snapCss',
                     label: 'snap class',
                     type: 'text'
-                }
-            ],
-
-            rxScriptStriper = new RegExp(/<script.*/gi),
-
-            slideshowMetaFieldsAdded = false,
-            addSlideshowMetaFields = function () {
-                if (slideshowMetaFieldsAdded) {
-                    return;
-                }
-                slideshowMetaFieldsAdded = true;
-
-                metaFields.push({
+                },
+                {
                     key: 'imageSlideshowReplace',
                     omitForSupporting: true,
                     editable: true,
                     label: 'slideshow',
                     singleton: 'images',
                     type: 'boolean'
-                }, {
+                },
+                {
                     key: 'slideshow',
                     editable: true,
                     omitForSupporting: true,
@@ -334,18 +324,12 @@ define([
                             }
                         }
                     }
-                });
-            };
+                }
+            ],
 
+            rxScriptStriper = new RegExp(/<script.*/gi);
 
         function Article(opts, withCapiData) {
-            // Once the switch is remove this should be moved outside of the constructor
-            // For the moment it can only be here because the model is not ready yet
-            // when this file is required. It's a sad story.
-            var slideshowEnabled = vars.model.switches()['slideshow-images'];
-            if (slideshowEnabled) {
-                addSlideshowMetaFields();
-            }
             var self = this;
 
             opts = opts || {};
@@ -929,10 +913,14 @@ define([
             var imageSrc = this.meta[params.src],
                 imageSrcWidth = this.meta[params.width],
                 imageSrcHeight = this.meta[params.height],
+                image = imageSrc(),
+                src,
                 opts = params.options;
 
-            if (imageSrc()) {
-                validateImageSrc(imageSrc(), opts)
+
+            if (image) {
+                src = typeof image === 'string' ? image : (image.media ? image.media.file || image.origin : image.origin);
+                validateImageSrc(src, opts)
                     .then(function(img) {
                         imageSrc(img.src);
                         imageSrcWidth(img.width);
