@@ -2,15 +2,17 @@ package integration
 
 import java.net.URL
 import java.util.concurrent.TimeUnit
-import scala.concurrent.Await
-import scala.concurrent.duration._
-import scala.concurrent.ExecutionContext.Implicits.global
+
 import akka.agent.Agent
-import org.openqa.selenium.{WebDriver, WebElement, By}
-import org.openqa.selenium.remote.{RemoteWebDriver, DesiredCapabilities}
+import org.openqa.selenium.remote.{DesiredCapabilities, RemoteWebDriver}
+import org.openqa.selenium.{By, WebDriver, WebElement}
 import org.scalatest._
 import org.scalatestplus.play.BrowserFactory.UninitializedDriver
+
 import scala.collection.JavaConversions._
+import scala.concurrent.Await
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
 
 trait SingleWebDriver extends SuiteMixin { this: Suite =>
 
@@ -72,7 +74,6 @@ trait SharedWebDriver extends SuiteMixin { this: Suite =>
 }
 
 class IntegratedTestsSuite extends Suites (
-  new AdsTest,
   new MostPopularTest,
   new SslCertTest,
   new ShowMoreTest,
