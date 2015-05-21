@@ -61,8 +61,7 @@ module.exports = function(grunt, options) {
         },
 
         watchSass: {
-
-            command: './node_modules/grunt-sass/node_modules/.bin/node-sass -w ./static/src/stylesheets -o ./static/hash/stylesheets',
+            command: './node_modules/grunt-sass/node_modules/.bin/node-sass -w ./static/src/stylesheets -o ./static/hash/stylesheets --source-map',
             options: {
                 execOptions: {
                     cwd: './'
