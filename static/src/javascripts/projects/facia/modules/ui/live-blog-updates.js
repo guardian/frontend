@@ -24,12 +24,12 @@ define([
     blockTemplate
 ) {
     var numDisplayedBlocks = 4,
-        blockHeightPx = 40,
+        blockHeightPx = 55,
 
         animateDelayMs = 1000,
         refreshSecs = 30,
         refreshDecay = 1,
-        refreshMaxTimes = 3,
+        refreshMaxTimes = 5,
 
         selector = '.js-liveblog-blocks',
         blocksClassName = 'fc-item__liveblog-blocks',

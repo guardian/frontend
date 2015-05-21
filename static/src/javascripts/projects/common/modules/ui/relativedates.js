@@ -28,19 +28,24 @@ define([
     }
 
     function isToday(date) {
-        var today = adjustedNow();
-        return (date.toDateString() === today.toDateString());
+        var now = adjustedNow();
+        return date.toDateString() === now.toDateString();
     }
 
     function isWithin24Hours(date) {
-        var today = adjustedNow();
-        return (date.valueOf() > today.valueOf() - (24 * 60 * 60 * 1000));
+        var now = adjustedNow();
+        return date.valueOf() > now.valueOf() - (24 * 60 * 60 * 1000);
+    }
+
+    function isWithinSeconds(date, secs) {
+        var now = adjustedNow();
+        return date.valueOf() > now.valueOf() - ((secs | 1) * 1000);
     }
 
     function isYesterday(relative) {
-        var today = adjustedNow(),
+        var now = adjustedNow(),
             yesterday = adjustedNow();
-        yesterday.setDate(today.getDate() - 1);
+        yesterday.setDate(now.getDate() - 1);
         return (relative.toDateString() === yesterday.toDateString());
     }
 

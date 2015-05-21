@@ -148,16 +148,12 @@ data-test-id="facia-card"
             }
         </div>
 
+        @item.trailText.filter(const(item.showStandfirst)).map { text =>
+            <div class="fc-item__standfirst">@Html(text)</div>
+        }
+
         @if(item.isLive) {
-            <div class="js-liveblog-blocks" data-article-id="@item.id">
-                @item.trailText.filter(const(item.showStandfirst)).map { text =>
-                    <div class="fc-item__standfirst">@Html(text)</div>
-                }
-            </div>
-        } else {
-            @item.trailText.filter(const(item.showStandfirst)).map { text =>
-                <div class="fc-item__standfirst">@Html(text)</div>
-            }
+            <div class="js-liveblog-blocks" data-article-id="@item.id"></div>
         }
 
         @if(item.sublinks.nonEmpty) {
