@@ -48,6 +48,8 @@ You need A Mac or Linux PC (ubuntu).
 2. Run ```./setup.sh``` to install dependencies and compile assets
 3. All being well, you should be able to [run the app](#run-the-app)
 
+Before checking out the repository you may need to add an SSH key to your GitHub account, information on how to do so is here - https://help.github.com/articles/generating-ssh-keys/
+
 ### Manual
 Install each of the things listed:
 
