@@ -60,7 +60,7 @@ define([
                 }
             });
 
-            _.forIn(_.keys(config.tests), function (n, key) {
+            _.forIn(_.keys(config.tests), function (n) {
                 if (n.match(/^cm/)) {
                     abParams.push(n);
                 }
