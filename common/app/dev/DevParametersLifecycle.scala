@@ -28,7 +28,9 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     "INTCMP", // Internal campaign parameter for Omniture js
 
     "oauth_token", // for generating Magento tokens for bookshop service
-    "oauth_verifier" // for generating Magento tokens for bookshop service
+    "oauth_verifier", // for generating Magento tokens for bookshop service
+
+    "rel" // browser-sync uses to ensure fresh copies of assets
   )
 
   val commercialParams = Seq(
