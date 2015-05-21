@@ -136,6 +136,12 @@ define([
             }
         });
 
+        _.forEach(_.keys(config.tests), function (k) {
+            if (k.toLowerCase().match(/^cm/)) {
+                tag.push(['AB', k, 'variant'].join(' | '));
+            }
+        });
+
         if (config.tests.internationalEditionVariant) {
             tag.push(['AB', 'InternationalEditionTest', config.tests.internationalEditionVariant].join(' | '));
 
