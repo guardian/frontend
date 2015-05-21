@@ -6,7 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/sticky-shares',
+    'common/modules/experiments/tests/share-buttons',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/mt-rec1',
     'common/modules/experiments/tests/mt-rec2',
@@ -23,7 +23,7 @@ define([
     mediator,
     store,
     mvtCookie,
-    StickyShares,
+    ShareButtons,
     HighCommercialComponent,
     MtRec1,
     MtRec2,
@@ -36,7 +36,7 @@ define([
 
     var ab,
         TESTS = _.flatten([
-            new StickyShares(),
+            new ShareButtons(),
             new HighCommercialComponent(),
             new MtRec1(),
             new MtRec2(),
@@ -130,6 +130,12 @@ define([
         _.forEach(_.keys(participations), function (k) {
             if (testCanBeRun(getTest(k))) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
+            }
+        });
+
+        _.forEach(_.keys(config.tests), function (k) {
+            if (k.toLowerCase().match(/^cm/)) {
+                tag.push(['AB', k, 'variant'].join(' | '));
             }
         });
 
