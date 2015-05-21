@@ -6,7 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/sticky-shares',
+    'common/modules/experiments/tests/share-buttons',
     'common/modules/experiments/tests/liveblog-sport-front-updates',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/mt-rec1',
@@ -24,7 +24,7 @@ define([
     mediator,
     store,
     mvtCookie,
-    StickyShares,
+    ShareButtons,
     LiveblogSportFrontUpdates,
     HighCommercialComponent,
     MtRec1,
@@ -38,7 +38,7 @@ define([
 
     var ab,
         TESTS = _.flatten([
-            new StickyShares(),
+            new ShareButtons(),
             new LiveblogSportFrontUpdates(),
             new HighCommercialComponent(),
             new MtRec1(),
@@ -136,10 +136,11 @@ define([
             }
         });
 
-        _.forEach(_.keys(config.tests), function(k) {
-            tag.push(['AB', k, 'variant'].join(' | '));
+        _.forEach(_.keys(config.tests), function (k) {
+            if (k.toLowerCase().match(/^cm/)) {
+                tag.push(['AB', k, 'variant'].join(' | '));
+            }
         });
-
 
         if (config.tests.internationalEditionVariant) {
             tag.push(['AB', 'InternationalEditionTest', config.tests.internationalEditionVariant].join(' | '));
