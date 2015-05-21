@@ -1,6 +1,7 @@
 package model.meta
 
 import conf.Static
+import org.joda.time.DateTime
 
 class LinkedData(
                        val `@type`: String,
@@ -13,7 +14,7 @@ object LinkedData {
 
   implicit val formats = DefaultFormats + FieldSerializer[LinkedData]()
 
-  def toJson(list: List[LinkedData]) = write(list)
+  def toJson(list: LinkedData) = write(list)
 }
 
 case class Guardian(
@@ -38,3 +39,15 @@ case class PotentialAction(
                             `@type`: String = "ViewAction",
                             target: String
                             )
+
+case class ItemList(
+                    url: String,
+                    itemListElement: Seq[ListItem]
+                    ) extends LinkedData("ItemList")
+
+case class ListItem(
+                     `@type`: String = "ListItem",
+                     position: Int,
+                     url: Option[String] = None,// either/or url and item, but needs some care serialising
+                     item: Option[ItemList] = None
+                     )
