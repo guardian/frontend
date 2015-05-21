@@ -8,7 +8,7 @@ define([], function () {
         this.description = 'Combinations of referrer-based size, visibility, and stickiness for share buttons';
         this.audience = 0.1;
         this.audienceOffset = 0.4;
-        this.successMeasure = '';
+        this.successMeasure = 'Sharing rate per article';
         this.audienceCriteria = 'Article visitors';
         this.dataLinkNames = '';
         this.idealOutcome = 'More sharing of articles';

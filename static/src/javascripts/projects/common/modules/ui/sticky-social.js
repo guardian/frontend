@@ -44,12 +44,10 @@ define([
             return;
 
         } else {
-            fastdom.read(function () {
-                fastdom.write(function () {
-                    $(bottomEl()).addClass(stickyClassName);
-                    setTimeout(makeRevealable);
-                    inited = true;
-                });
+            fastdom.write(function () {
+                $(bottomEl()).addClass(stickyClassName);
+                setTimeout(makeRevealable);
+                inited = true;
             });
         }
     }
@@ -97,7 +95,7 @@ define([
                         if (el) {
                             fastdom.write(function () {
                                 if (testVariant.indexOf('only') > -1) {
-                                    $(el).addClass('social--referred--only');
+                                    $(el).addClass('social--referred-only');
                                 }
 
                                 moveToFirstPosition($('.social__item--' + socialReferrer, el).addClass('social__item--referred'));
