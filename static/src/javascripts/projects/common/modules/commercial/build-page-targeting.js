@@ -61,7 +61,7 @@ define([
             });
 
             _.forIn(_.keys(config.tests), function (n) {
-                if (n.match(/^cm/)) {
+                if (n.toLowerCase().match(/^cm/)) {
                     abParams.push(n);
                 }
             });

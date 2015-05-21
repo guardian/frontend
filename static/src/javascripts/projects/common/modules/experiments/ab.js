@@ -137,7 +137,7 @@ define([
         });
 
         _.forEach(_.keys(config.tests), function (k) {
-            if (k.match(/^cm/)) {
+            if (k.toLowerCase().match(/^cm/)) {
                 tag.push(['AB', k, 'variant'].join(' | '));
             }
         });
