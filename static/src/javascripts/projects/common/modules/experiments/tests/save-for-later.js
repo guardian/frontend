@@ -5,8 +5,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/loyalty/save-article-for-later',
-    'common/modules/loyalty/save-articles-for-later',
+    'common/modules/loyalty/save-for-later',
     'text!common/views/identity/saved-for-later-profile-link.html'
 ], function (
     bonzo,
@@ -15,8 +14,7 @@ define([
     config,
     mediator,
     template,
-    SaveArticle,
-    SaveArticles,
+    SaveForLater,
     profileLinkTmp
 ) {
 
@@ -45,13 +43,11 @@ define([
                 test: function () {
                     mediator.on('module:identity:api:loaded', function () {
                         console.log("+++ Run!");
-                        var saveArticle = new SaveArticle();
+                        var saveArticle = new SaveForLater();
                         console.log("++ New!");
 
                         saveArticle.init();
                         console.log("++ Init!");
-                        //var saveArticles = new SaveArticles();
-                        //saveArticles.init();
                     });
 
                     mediator.on('modules:profilenav:loaded', function () {
