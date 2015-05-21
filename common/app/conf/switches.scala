@@ -520,12 +520,12 @@ object Switches {
 
   val ABMtRec1 = Switch("A/B Tests", "ab-mt-rec1",
     "Viewability results - Recommendation option 1",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 2)
   )
 
   val ABMtRec2 = Switch("A/B Tests", "ab-mt-rec2",
     "Viewability results - Recommendation option 2",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 2)
   )
 
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
@@ -550,7 +550,7 @@ object Switches {
 
   val ABDeferSpacefinder = Switch("A/B Tests", "ab-defer-spacefinder",
     "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 2)
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>
