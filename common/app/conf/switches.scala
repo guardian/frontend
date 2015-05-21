@@ -543,11 +543,6 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ABLiveblogSportFrontUpdates = Switch("A/B Tests", "ab-liveblog-sport-front-updates",
-    "Switch for the latest liveblog updates on sport & football fronts A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 27)
-  )
-
   val ABDeferSpacefinder = Switch("A/B Tests", "ab-defer-spacefinder",
     "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
     safeState = Off, sellByDate = new LocalDate(2015, 6, 2)
