@@ -137,8 +137,7 @@ define([
         });
 
         _.forEach(_.keys(config.tests), function (k) {
-            if (k.match(/^CM\s/)) {
-                console.log(k);
+            if (k.match(/^cm/)) {
                 tag.push(['AB', k, 'variant'].join(' | '));
             }
         });

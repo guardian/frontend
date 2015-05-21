@@ -61,12 +61,12 @@ define([
             });
 
             _.forIn(_.keys(config.tests), function (n, key) {
-                console.log(key.match(/^CM\s/));
-                if (key.match(/^CM\s/)) {
-                    console.log(n, key);
-                    abParams.push(key + '-' + n);
+                if (n.match(/^cm/)) {
+                    abParams.push(n);
                 }
             });
+
+            console.log(abParams);
 
             return abParams;
         };
