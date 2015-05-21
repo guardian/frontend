@@ -44,14 +44,12 @@ define([
                 id: 'variant',
                 test: function () {
                     mediator.on('module:identity:api:loaded', function () {
-                        if (!/Network Front|Section/.test(config.page.contentType)) {
-                            console.log("+++ Run!");
-                            var saveArticle = new SaveArticle();
-                            console.log("++ New!");
+                        console.log("+++ Run!");
+                        var saveArticle = new SaveArticle();
+                        console.log("++ New!");
 
-                            saveArticle.init();
-                            console.log("++ Init!");
-                        }
+                        saveArticle.init();
+                        console.log("++ Init!");
                         //var saveArticles = new SaveArticles();
                         //saveArticles.init();
                     });
