@@ -197,10 +197,12 @@ define([
 
         this.s.prop60    = detect.isFireFoxOSApp() ? 'firefoxosapp' : null;
 
-        this.s.prop19     = platform;
+        this.s.prop19    = platform;
 
         this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
         this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
+
+        this.s.prop40    = detect.adblockInUse;
 
         this.s.prop47    = config.page.edition || '';
 
@@ -295,6 +297,11 @@ define([
 
         if (this.isEmbed) {
             this.s.eVar11 = this.s.prop11 = 'Embedded';
+
+            // Get iframe's parent url: http://www.nczonline.net/blog/2013/04/16/getting-the-url-of-an-iframes-parent
+            if (!!window.parent && window.parent !== window) {
+                this.s.referrer = document.referrer;
+            }
         }
     };
 

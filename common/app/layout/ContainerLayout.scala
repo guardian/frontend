@@ -1,16 +1,16 @@
 package layout
 
-import model.{Content, Trail}
+import com.gu.facia.api.models.FaciaContent
 import slices._
-import scalaz.syntax.traverse._
 import scalaz.std.list._
+import scalaz.syntax.traverse._
 
-case class IndexedTrail(trail: Trail, index: Int)
+case class IndexedTrail(faciaContent: FaciaContent, index: Int)
 
 object ContainerLayout extends implicits.Collections {
   def apply(
       sliceDefinitions: Seq[Slice],
-      items: Seq[Trail],
+      items: Seq[FaciaContent],
       initialContext: ContainerLayoutContext,
       config: ContainerDisplayConfig,
       mobileShowMore: MobileShowMore
@@ -50,7 +50,7 @@ object ContainerLayout extends implicits.Collections {
   def singletonFromContainerDefinition(
     containerDefinition: ContainerDefinition,
     config: ContainerDisplayConfig,
-    items: Seq[Trail]
+    items: Seq[FaciaContent]
   ) = fromContainerDefinition(
     containerDefinition,
     ContainerLayoutContext.empty,
@@ -62,7 +62,7 @@ object ContainerLayout extends implicits.Collections {
       containerDefinition: ContainerDefinition,
       containerLayoutContext: ContainerLayoutContext,
       config: ContainerDisplayConfig,
-      items: Seq[Trail]
+      items: Seq[FaciaContent]
   ) = apply(
       containerDefinition.slices,
       items,
@@ -75,9 +75,9 @@ object ContainerLayout extends implicits.Collections {
       container: Container,
       containerLayoutContext: ContainerLayoutContext,
       config: ContainerDisplayConfig,
-      items: Seq[Trail]
+      items: Seq[FaciaContent]
   ) =
-    ContainerDefinition.fromContainer(container, items collect { case c: Content => c }) map {
+    ContainerDefinition.fromContainer(container, items) map {
       case definition: ContainerDefinition =>
         fromContainerDefinition(definition, containerLayoutContext, config, items)
     }

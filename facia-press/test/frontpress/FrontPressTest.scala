@@ -1,6 +1,6 @@
 package frontpress
 
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import com.gu.facia.api.models.CollectionConfig
 import model._
 import org.scalatest.{DoNotDiscover, TryValues, Matchers, FlatSpec}
 import com.gu.contentapi.client.model.{Content => ApiContent}
@@ -25,7 +25,7 @@ import test.ConfiguredTestSuite
     None
   )
 
-  val configWithBackFill = CollectionConfigWithId("NoId", CollectionConfig.emptyConfig.copy(apiQuery = Some("")))
+  val configWithBackFill = CollectionConfigWithId("NoId", CollectionConfig.empty.copy(apiQuery = Some("")))
 
   val emptyCollection = Collection(
     Nil
@@ -54,7 +54,7 @@ import test.ConfiguredTestSuite
 
   it should "not return an error if there are no back fills" in {
     FrontPress.generateJson("", seoDataFixture, frontPropertiesFixture, List(
-      CollectionConfigWithId("NoId", CollectionConfig.emptyConfig) -> emptyCollection
+      CollectionConfigWithId("NoId", CollectionConfig.empty) -> emptyCollection
     )) should be a 'success
   }
 

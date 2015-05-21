@@ -78,9 +78,10 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                if (isMainTest() && $adSlot.hasClass('ad-slot--right')) {
+                if (isMtRecTest() && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
-                        new StickyMpu($adSlot).create();
+                        // Hardcoded for sticky nav test. It will need some on time checking if this will go to PROD
+                        new StickyMpu($adSlot, {top: 58}).create();
                     }
                 }
             },
@@ -103,10 +104,12 @@ define([
             }
         },
 
-        isMainTest = function () {
-            var MtMainTest = ab.getParticipations().MtMain;
+        isMtRecTest = function () {
+            var MtRec1Test = ab.getParticipations().MtRec1,
+                MtRec2Test = ab.getParticipations().MtRec2;
 
-            return ab.testCanBeRun('MtMain') && MtMainTest && MtMainTest.variant === 'A';
+            return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A' ||
+                ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
         },
 
         recordFirstAdRendered = _.once(function () {
@@ -183,27 +186,21 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
-        lzAdsTestVariants = {
-            'A': 1 / 4,
-            'B': 1 / 2,
-            'C': 3 / 4,
-            'D': 1
-        },
-
-        isLzAdsTest = function () {
-            var test = ab.getParticipations().MtLzAdsDepth;
-            return test && ab.testCanBeRun('MtLzAdsDepth') && _.contains(_.keys(lzAdsTestVariants), test.variant);
-        },
-
         isLzAdsSwitchOn = function () {
             return config.switches.lzAds;
+        },
+
+        isDeferSpaceFinderTest = function () {
+            var test = ab.getParticipations().DeferSpacefinder,
+                eligible = test && test.variant === 'A';
+
+            return ab.testCanBeRun('DeferSpacefinder') && eligible;
         },
 
         /**
          * Public functions
          */
         init = function (options) {
-
             var opts = _.defaults(options || {}, {
                 resizeTimeout: 2000
             });
@@ -223,8 +220,8 @@ define([
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
 
-            // We want to run lazy load if user is in the depth test, main test user group or if there is a switch on
-            (isLzAdsTest() || isMainTest() || isLzAdsSwitchOn()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            // We want to run lazy load if user is in the main test or if there is a switch on
+            (isMtRecTest() || isLzAdsSwitchOn() || isDeferSpaceFinderTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
@@ -237,14 +234,18 @@ define([
                 fastdom.read(function () {
                     var scrollTop    = bonzo(document.body).scrollTop(),
                         scrollBottom = scrollTop + bonzo.viewport().height,
+                        depth;
 
-                        // For depth test we want depth based on variant but for main test we want default depth
-                        // TODO: this will be removed after tests will finish
-                        depth        = (isLzAdsTest()) ? lzAdsTestVariants[ab.getParticipations().MtLzAdsDepth.variant] : 0.5;
+                    if (isDeferSpaceFinderTest()) {
+                        depth = 100;
+                    } else {
+                        depth = 0.5;
+                    }
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
-                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth) {
+                        // Make sure page skin is loaded first
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth || slot === 'dfp-ad--pageskin-inread') {
                             googletag.display(slot);
 
                             slots = _(slots).omit(slot).value();

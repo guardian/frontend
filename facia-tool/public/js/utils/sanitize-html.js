@@ -1,17 +1,11 @@
-define([
-    'underscore'
-], function(
-    _
-) {
-    var rx = new RegExp(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi),
-        el = document.createElement('div');
+var rx = new RegExp(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi),
+    el = document.createElement('div');
 
-    return function(s) {
-        if (_.isString(s)) {
-            el.innerHTML = s;
-            return el.innerHTML.replace(rx, '');
-        } else {
-            return s;
-        }
-    };
-});
+export default function(s) {
+    if (typeof s === 'string') {
+        el.innerHTML = s;
+        return el.innerHTML.replace(rx, '');
+    } else {
+        return s;
+    }
+}

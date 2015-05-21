@@ -3,7 +3,6 @@
 @import common.Localisation
 @import views.html.fragments.containers.facia_cards.{containerHeader, slice, showMore, showMoreButton}
 @import views.support.RenderClasses
-@import conf.Switches.ElectionSnap
 
 @containerHeader(containerDefinition, frontProperties)
 
@@ -17,15 +16,6 @@
     ))"
          data-title="@Html(Localisation(containerDefinition.displayName getOrElse ""))"
          data-id="@containerDefinition.dataId">
-
-        @* Custom markup for the election night snap, will be removed afterwards. *@
-        @if(containerDefinition.isStoryPackage & ElectionSnap.isSwitchedOn) {
-            <div id="election-snap" class="election-snap">
-
-
-
-            </div>
-        }
 
         @for(sliceWithCards <- containerLayout.slices) {
             @slice(sliceWithCards, containerDefinition.index)

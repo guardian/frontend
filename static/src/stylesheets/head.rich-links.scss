@@ -7,6 +7,7 @@
 @import 'base/_normalize';
 @import 'base/_base';
 @import 'base/_type';
+@import 'base/_zindex';
 @import '_extends-only';
 @import 'base/_links';
 @import 'base/_helpers';
@@ -22,7 +23,6 @@
 @import 'icons/video-icons-svg';
 @import 'module/facia/_sublinks';
 @import 'module/facia/tones';
-@import 'module/facia/_icons';
 @import 'module/facia/_item';
 @import 'module/facia/_items';
 @import 'module/_rich-links';

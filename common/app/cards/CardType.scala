@@ -6,9 +6,9 @@ sealed trait CardType {
   case class VideoPlayerMode(show: Boolean, showEndSlate: Boolean)
 
   def videoPlayer = this match {
-    case Half | ThreeQuarters | ThreeQuartersRight | FullMedia50 | FullMedia75 | FullMedia100 =>
+    case FullMedia50 | FullMedia75 | FullMedia100 =>
       VideoPlayerMode(show = true, showEndSlate = true)
-    case Third | Standard =>
+    case ThreeQuarters | ThreeQuartersRight | Half | Third | Standard =>
       VideoPlayerMode(show = true, showEndSlate = false)
     case _ =>
       VideoPlayerMode(show = false, showEndSlate = false)

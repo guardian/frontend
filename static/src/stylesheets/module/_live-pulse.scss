@@ -1,0 +1,28 @@
+@keyframes live-pulse {
+    0% {opacity: 1;}
+    10% {opacity: .25;}
+    40% {opacity: 1;}
+    100% {opacity: 1;}
+}
+
+.blog__live {
+    font-weight: bold;
+
+    &.live-pulse-icon:before {
+        margin-bottom: -1px;
+    }
+}
+
+.live-pulse-icon:before {
+    display: inline-block;
+    position: relative;
+    @include circular;
+    $size: .75em;
+    background-color: #ffffff;
+    width: $size;
+    height: $size;
+    content: '';
+    margin-right: 3px;
+    vertical-align: initial;
+    animation: live-pulse 1s infinite;
+}

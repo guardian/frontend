@@ -177,14 +177,14 @@ npm install
 Install additional dependencies:
 ```
 bundle
-./node_modules/.bin/jspm install
+grunt install
 ```
 
 npm, bundle, and jspm are also run by `install-dependencies.sh`.
 
 After this, you can compile the assets:
 ```
-grunt prepare compile
+grunt compile
 ```
 
 ### Run the app

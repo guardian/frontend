@@ -62,8 +62,6 @@ object FeedReader extends Logging {
     request.switch.onInitialized flatMap { switch =>
       if (switch.isSwitchedOn) readUrl(request.url)
       else Future.failed(FeedSwitchOffException(request.feedName))
-    } recoverWith {
-      case NonFatal(e) => Future.failed(FeedSwitchOffException(request.feedName))
     }
   }
 
