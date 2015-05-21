@@ -1,8 +1,9 @@
 package slices
 
-import com.gu.facia.api.models.CuratedContent
+import com.gu.facia.api.models.FaciaContent
 import common.Maps._
 import play.api.libs.json.Json
+import implicits.FaciaContentImplicits._
 
 import scala.util.Try
 
@@ -29,11 +30,11 @@ object Story {
     )
   }
 
-  def fromCuratedContent(curatedContent: CuratedContent): Story = {
+  def fromFaciaContent(faciaContent: FaciaContent): Story = {
     Story(
       /** Stories that are not assigned to a group are treated as standard (0) items */
-      Try(curatedContent.group.toInt).getOrElse(0),
-      curatedContent.properties.isBoosted
+      Try(faciaContent.group.toInt).getOrElse(0),
+      faciaContent.properties.exists(_.isBoosted)
     )
   }
 }
