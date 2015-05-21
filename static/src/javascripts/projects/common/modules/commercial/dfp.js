@@ -128,17 +128,7 @@ define([
             }));
         },
         setPageTargeting = function () {
-            if (config.switches.ophan && config.switches.ophanViewId) {
-                require(['ophan/ng'], function (ophan) {
-                    setTargets({viewId: ophan.viewId});
-                });
-            } else {
-                setTargets();
-            }
-        },
-
-        setTargets =  function (opts) {
-            _.forOwn(buildPageTargeting(opts), function (value, key) {
+            _.forOwn(buildPageTargeting(), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
@@ -458,7 +448,9 @@ define([
             }
             if (shouldRemoveIFrame) {
                 fastdom.write(function () {
-                    $iFrame.hide();
+                    // if you don't hide the grandparent element, a malevolent little white square appears on Android
+                    // phones, which causes the font of the paragraph it's disturbing to become all weird looking.
+                    $iFrame.parent().parent().hide();
                 });
             }
         },

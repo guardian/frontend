@@ -191,13 +191,6 @@ object Switches {
   )
 
   // Commercial
-  val OphanViewIdSwitch = Switch("Commercial",
-    "ophan-view-id",
-    "Depeneding on ophan to pass view ID to the gdf targeting",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 5, 31)
-  )
-
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
@@ -319,10 +312,13 @@ object Switches {
     "If this switch is on, Apple ads will appear below nav on the tech section front.",
     safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
 
-  val LazyLoadAds = Switch("Feature", "lz-ads",
+  val LazyLoadAds = Switch("Commercial", "lz-ads",
     "If switched on then all ads are lazy loaded",
     safeState = Off, sellByDate = never)
 
+  val AdBlockMessage = Switch("Commercial", "adblock",
+    "Switch for the Adblock Message.",
+    safeState = Off, sellByDate = never)
 
   // Monitoring
 
@@ -560,11 +556,6 @@ object Switches {
   val ABDeferSpacefinder = Switch("A/B Tests", "ab-defer-spacefinder",
     "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
-  )
-
-  val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",
-    "Switch for removing the whitelist from the user history tags",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>
