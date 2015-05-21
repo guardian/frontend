@@ -4,6 +4,7 @@ define([
     'bean',
     'fastdom',
     'common/utils/_',
+    'common/utils/detect',
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/template',
@@ -21,6 +22,7 @@ define([
     bean,
     fastdom,
     _,
+    detect,
     config,
     mediator,
     template,
@@ -31,12 +33,16 @@ define([
 
     ) {
     function SaveArticle() {
-        this.saveLinkHolder = qwery('.meta__save-for-later')[0];
+        console.log("++ New");
+        this.classes = {
+             saveThisArticle: '.meta__save-for-later'
+        };
+        this.isContent = !/Network Front|Section/.test(config.page.contentType);
+        console.log("+++ New " + this.isContent);
         this.userData = null;
-        this.pageId = config.page.pageId;
-        this.$saver = bonzo(this.saveLinkHolder);
+        console.log("++ New 1" );
         this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
-        this.shortUrl = config.page.shortUrl.replace('http://gu.com', '');   //  Keep the fitst trailing slash
+        console.log("++ New 2 ");
         this.elements = [];
         this.attributeName = 'data-loyalty-short-url';
         this.templates = {
@@ -46,18 +52,29 @@ define([
     }
 
     SaveArticle.prototype.init = function () {
+        console.log("Init");
         var userLoggedIn = identity.isUserLoggedIn();
         if (userLoggedIn) {
-            console.log("++ Signed In");
+            console.log("++ Signed In " + this.isContent);
             this.getSavedArticles();
         } else {
-            var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
-                '&shortUrl=' + this.shortUrl;
-            this.$saver.html(
-                '<a href="' + url + ' "data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>'
-            );
+            if (this.isContent) {
+                var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
+                    '&shortUrl=' + config.page.shortUrl.replace('http://gu.com', '');
+                this.renderSaveThisArticleLink('Save for later', url);
+            }
             this.renderLinksInContainers(false);
         }
+    };
+
+
+    SaveArticle.prototype.renderSaveThisArticleLink = function (linkText, url) {
+
+         var self = this,
+             $saver = bonzo(qwery(self.classes['saveThisArticle'])[0]),
+             linkHtml = url ? '<a href="' + url + '" "data-link-name="meta-save-for-later" data-component=meta-save-for-later">' + linkText + '</a>' :
+             '<a  class="meta__save-for-later--link data-link-name="meta-save-for-later" data-component="meta-save-for-later">' + linkText + '</a>';
+         $saver.html(linkHtml);
     };
 
     SaveArticle.prototype.getElementsIndexedById = function (context) {
@@ -88,7 +105,7 @@ define([
                 }
 
                 self.renderLinksInContainers(true);
-                if ( self.saveLinkHolder ) {f
+                if ( self.isContent ) {
                     self.configureSaveThisArticle();
                 }
             }
@@ -99,10 +116,11 @@ define([
 
         var self = this;
 
-        if( !self.saveLinkHolder ) {
-            console.log("Render fron pages");
+        if( !self.isContent ) {
+            console.log("Render front pages");
             self.renderContainerLinks(signedIn, document.body)
         }
+
 
         mediator.on('modules:onward:loaded', function() {
             console.log("+++ Got Onwards");
@@ -117,20 +135,31 @@ define([
 
     SaveArticle.prototype.configureSaveThisArticle = function () {
 
-        var hello = "hello";
+        console.log("Conf");
+        console.log("Conf " + this.classes['saveThisArticle']);
+
+        var saveLinkHolder = qwery(this.classes['saveThisArticle'])[0],
+            shortUrl = config.page.shortUrl.replace('http://gu.com', ''),
+            hello = "hello";
+
         console.log("+++  Hello");
-        if (this.hasUserSavedArticle(this.userData.articles, this.shortUrl)) {
+
+
+        if (this.hasUserSavedArticle(this.userData.articles, shortUrl)) {
             console.log("++ Saaved");
-            this.$saver.html('<a href="' + this.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
+            this.renderSaveThisArticleLink('Saved Articles', this.savedArticlesUrl);
+            //this.$saver.html('<a href="' + this.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
         } else {
             console.log("++ Not Saaved");
-            this.$saver.html('<a class="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>');
-            bean.one(this.saveLinkHolder, 'click', '.meta__save-for-later--link',
+            this.renderSaveThisArticleLink('Save for later');
+
+            //this.$saver.html('<a class="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>');
+            bean.one(saveLinkHolder, 'click', '.meta__save-for-later--link',
                 this.saveThisArticle.bind(this,
                     this.onSaveThisArticle.bind(this, hello),
                     this.onSaveThisArticleError.bind(this, "goodbye"),
                     this.userData,
-                    this.pageId, this.shortUrl));
+                    config.page.pageId, shortUrl));
         }
     };
 
@@ -241,12 +270,12 @@ define([
 
     SaveArticle.prototype.onSaveThisArticle = function (message) {
         console.log("++++++++++++++ Sucees " + message);
-        this.$saver.html('<a href="' + this.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
+        this.renderSaveThisArticleLink('Saved Articles', this.savedArticlesUrl);
     };
 
     SaveArticle.prototype.onSaveThisArticleError = function(message) {
         console.log("++++++++++++++ Error " + message);
-        this.$saver.html('<a href="' + this.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Error saving</a>');
+        this.renderSaveThisArticleLink('Error Saving', this.savedArticlesUrl);
     };
 
     //--- Handle saving an article on a front of container
@@ -316,6 +345,7 @@ define([
             return article.shortUrl.indexOf(shortUrl) > -1;
         });
     };
+
 
     return SaveArticle;
 });
