@@ -18,7 +18,7 @@ define([
     return function () {
         this.id = 'MtRec2';
         this.start = '2015-05-12';
-        this.expiry = '2015-05-25';
+        this.expiry = '2015-06-02';
         this.author = 'Steve Vadocz';
         this.description = 'Viewability results - Recommendation option 2';
         this.audience = 0.02;
