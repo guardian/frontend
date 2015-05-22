@@ -555,7 +555,7 @@ object Switches {
 
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
     "Switch for the UK Network Front heatmap test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 29)
   )
 
   val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
