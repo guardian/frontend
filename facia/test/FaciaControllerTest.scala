@@ -31,11 +31,6 @@ import services.ConfigAgent
     Switches.InternationalEditionSwitch.switchOff()
   }
 
-  "FaciaController" should "200 when content type is front" in {
-    val result = FaciaController.renderFront("uk")(TestRequest())
-    status(result) should be(200)
-  }
-
   it should "serve an X-Accel-Redirect for something it doesn't know about" in {
     val result = FaciaController.renderFront("film")(TestRequest()) //Film is actually a facia front ON PROD
     status(result) should be(200)
@@ -70,6 +65,7 @@ import services.ConfigAgent
     val fakeRequest = FakeRequest("GET", "/music")
 
     val result = FaciaController.renderFront("music")(fakeRequest)
+    status(result) should be(200)
     header("X-Accel-Redirect", result) should be (None)
   }
 
