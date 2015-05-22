@@ -106,7 +106,7 @@ define([
                 });
             }
 
-            if (config.page.pageId === 'preferences') {
+            if (config.page.isPreferencesPage) {
                 require(['bootstraps/preferences'], function (preferences) {
                     bootstrapContext('preferences', preferences);
                 });

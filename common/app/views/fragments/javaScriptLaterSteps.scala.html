@@ -276,7 +276,7 @@
             images.upgradePictures();
             images.listen();
 
-            if (config.switches.commercial) {
+            if (config.switches.commercial && !config.page.isPreferencesPage) {
                 System.import('bootstraps/commercial').then(raven.wrap(
                     { tags: { feature: 'commercial' } },
                     function (commercial) {

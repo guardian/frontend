@@ -18,13 +18,21 @@ object NoCacheFilter extends Filter with ExecutionContexts {
 }
 
 object FilterExemptions {
+
+  // just a marker to remind us to delete heineken-men-of-the-world
+  private lazy val remember = Switches.RugbyQuizSwitch.isSwitchedOn
+
   lazy val loginExemption: FilterExemption = FilterExemption("/login")
   lazy val exemptions: Seq[FilterExemption] = List(
     FilterExemption("/oauth2callback"),
     FilterExemption("/assets"),
     FilterExemption("/favicon.ico"),
     FilterExemption("/_healthcheck"),
-    FilterExemption("/world/2012/sep/11/barcelona-march-catalan-independence")
+    // the healthcheck url
+    FilterExemption("/world/2012/sep/11/barcelona-march-catalan-independence"),
+
+    // delete me
+    FilterExemption("/sport/2015/may/22/heineken-men-of-the-world")
   )
 }
 

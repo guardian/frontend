@@ -83,6 +83,12 @@ object Switches {
     sellByDate = never
   )
 
+  val RugbyQuizSwitch = Switch("Demo", "rugby-quiz",
+    "Just a marker switch to remind us to delete the rugby quiz",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 5, 31)
+  )
+
   val TagPageSizeSwitch = Switch("Performance", "tag-page-size",
     "If this switch is on then we will request more items for larger tag pages",
     safeState = Off,
@@ -390,6 +396,11 @@ object Switches {
     "Fixtures and results container on football tag pages",
     safeState = On,
     sellByDate = never
+  )
+
+  val NotificationsSwitch = Switch("Feature", "notifications",
+    "Notifications",
+    safeState = Off, sellByDate = new LocalDate(2015, 7, 15)
   )
 
   val ImgixSwitch = Switch("Feature", "imgix",
