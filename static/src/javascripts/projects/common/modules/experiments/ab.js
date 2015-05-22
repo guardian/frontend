@@ -6,15 +6,13 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/sticky-shares',
-    'common/modules/experiments/tests/liveblog-sport-front-updates',
+    'common/modules/experiments/tests/share-buttons',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/mt-rec1',
     'common/modules/experiments/tests/mt-rec2',
     'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
-    'common/modules/experiments/tests/history-without-whitelist',
     'common/modules/experiments/headlines',
     'common/modules/experiments/tests/defer-spacefinder'
 ], function (
@@ -25,30 +23,26 @@ define([
     mediator,
     store,
     mvtCookie,
-    StickyShares,
-    LiveblogSportFrontUpdates,
+    ShareButtons,
     HighCommercialComponent,
     MtRec1,
     MtRec2,
     HeatMap,
     SaveForLater,
     CookieRefresh,
-    HistoryWithoutWhitelist,
     Headline,
     DeferSpacefinder
     ) {
 
     var ab,
         TESTS = _.flatten([
-            new StickyShares(),
-            new LiveblogSportFrontUpdates(),
+            new ShareButtons(),
             new HighCommercialComponent(),
             new MtRec1(),
             new MtRec2(),
             new HeatMap(),
             new SaveForLater(),
             new CookieRefresh(),
-            new HistoryWithoutWhitelist(),
             new DeferSpacefinder(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
@@ -136,6 +130,12 @@ define([
         _.forEach(_.keys(participations), function (k) {
             if (testCanBeRun(getTest(k))) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
+            }
+        });
+
+        _.forEach(_.keys(config.tests), function (k) {
+            if (k.toLowerCase().match(/^cm/)) {
+                tag.push(['AB', k, 'variant'].join(' | '));
             }
         });
 
