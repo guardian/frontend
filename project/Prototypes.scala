@@ -1,12 +1,12 @@
 package com.gu
 
+import com.gu.Dependencies._
 import com.gu.versioninfo.VersionInfo
-import sbt._
-import sbt.Keys._
-import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.typesafe.sbt.SbtNativePackager._
+import com.typesafe.sbt.web.SbtWeb.autoImport._
 import play.twirl.sbt.Import._
-import Dependencies._
+import sbt.Keys._
+import sbt._
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -27,9 +27,21 @@ trait Prototypes {
     }
   )
 
+  val commercialIntegrationTests = config("commercial-integration") extend Test
+
+  def commercialTestFilter(name: String): Boolean = name startsWith "integration.commercial"
+  def allTestFilter(name: String): Boolean = !commercialTestFilter(name)
+
   val frontendIntegrationTestsSettings = Seq (
     concurrentRestrictions in ThisProject := List(Tags.limit(Tags.Test, 1)),
-    testOptions in Test += Tests.Argument("-oDF"),
+    testOptions in Test ++= Seq(
+      Tests.Argument("-oDF"),
+      Tests.Filter(allTestFilter)
+    ),
+    testOptions in commercialIntegrationTests := Seq(
+      Tests.Argument("-oDF"),
+      Tests.Filter(commercialTestFilter)
+    ),
     resolvers ++= Seq(Resolver.typesafeRepo("releases")),
     libraryDependencies ++= Seq(
       scalaTestPlus,
