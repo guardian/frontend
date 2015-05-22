@@ -10,7 +10,7 @@ define([
 
     var netId = '1476',
         cookieName = 'cto2_guardian',
-        criteoUrl = '//rtax.criteo.com/delivery/rta/rta.js',
+        criteoUrl = 'http://rtax.criteo.com/delivery/rta/rta.js',
         varName = 'crtg_content';
 
     function getSegments() {
@@ -26,7 +26,7 @@ define([
                 rnd: Math.floor(Math.random() * 99999999999),
                 varName: varName
             });
-            return require(['js!' + criteoUrl + '?' + query + '!exports=' + varName]);
+            System.import(criteoUrl + '?' + query + '!system-script');
         }
     }
 

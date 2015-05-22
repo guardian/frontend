@@ -10,7 +10,7 @@ define([
     urlUtils
 ) {
 
-    var gatewayUrl = '//pq-direct.revsci.net/pql',
+    var gatewayUrl = 'http://pq-direct.revsci.net/pql',
         storageKey = 'gu.ads.audsci-gateway',
         sectionPlacements = {
             sport:        ['FKSWod', '2xivTZ', 'MTLELH'],
@@ -32,9 +32,9 @@ define([
                         placementIdList: placements.join(','),
                         cb: new Date().getTime()
                     }),
-                    url = [gatewayUrl, '?', query].join('');
+                    url = gatewayUrl + '?' + query;
 
-                return require(['js!' + url + '!exports=asiPlacements'], function (asiPlacements) {
+                System.import(url + '!system-script').then(function () {
                     var segments = storage.local.get(storageKey) || {};
                     // override the global value with our previously stored one
                     window.asiPlacements = segments[section];
