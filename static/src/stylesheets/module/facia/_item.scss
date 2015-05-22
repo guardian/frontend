@@ -433,10 +433,10 @@ $fc-item-gutter: $gs-gutter / 4;
     overflow: hidden;
     @include fs-textSans(1);
     line-height: 1rem;
-    color: #ffffff;
+    color: mix(#ffffff, colour(live-default), 80%);
     max-height: liveblog-blocks-height(1);
     padding: $gs-baseline/4 $gs-gutter/4;
-    border-top: 1px solid mix(#ffffff, colour(live-default), 60%);
+    border-top: 1px solid mix(#ffffff, colour(live-default), 50%);
     background-color: #cc2b12;
 }
 
