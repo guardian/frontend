@@ -54,7 +54,9 @@ define([
                         console.log("Mate popup ink")
                         var popup = qwery('.popup--profile')[0];
                         bonzo(popup).append(bonzo.create(
-                            template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), { idUrl: config.page.idUrl })
+                            template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
+                                idUrl: config.page.idUrl
+                            })
                         ));
                     });
 

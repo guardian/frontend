@@ -87,6 +87,7 @@ define([
             );
         }
 
+        console.log("++ Profile loaded");
         this.emitLoadedEvent(user);
     };
 
