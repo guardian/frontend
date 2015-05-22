@@ -27,7 +27,7 @@
 }
 
 .commentcount2,
-.save-for-later-link{
+.save-for-later-link {
     display: block;
     .i {
         vertical-align: bottom;
@@ -139,7 +139,7 @@
         left: ($social-width * 6);
         border-top: 0;
     }
-    
+
     @include mq(tablet, leftCol) {
         left: ($social-width * 5);
     }

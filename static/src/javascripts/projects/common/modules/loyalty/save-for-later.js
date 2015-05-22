@@ -43,22 +43,32 @@ define([
     function SaveForLater() {
         console.log("++ New");
         this.classes = {
-             saveThisArticle: '.js-save-for-later'
+             saveThisArticle: '.js-save-for-later',
+             saveThisArticleButton: '.save-for-later__button',
+             onwardContainer: '.js-onward',
+             relatedContainer: '.js-related',
+             itemMeta: '.js-item__meta',
+             itemSaveLink: '.save-for-later-link',
+             itemSaveLinkHeading: '.save-for-later-link__heading',
+             profileDropdownLink: '.brand-bar__item--saved-for-later'
         };
-        this.isContent = !/Network Front|Section/.test(config.page.contentType);
-        console.log("+++ New " + this.isContent);
-        this.userData = null;
-        console.log("++ New 1" );
-        this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
-        console.log("++ New 2 ");
-        this.elements = [];
-        this.attributeName = 'data-loyalty-short-url';
+        this.attributes = {
+            containerItemShortUrl :'data-loyalty-short-url',
+            containerItemDataId :'data-id'
+        };
         this.templates = {
             signedIn: signedInLinkTmpl,
             signedOut: signedOutLinkTmpl,
             signedOutThisArticle: saveForLaterOutTmpl,
             signedInThisArticle: saveForLaterInTmpl
         };
+
+        this.isContent = !/Network Front|Section/.test(config.page.contentType);
+        console.log("+++ New " + this.isContent);
+        this.userData = null;
+        console.log("++ New 1" );
+        this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
+        console.log("++ New 2 ");
     }
 
     var bookmarkSvg = svgs('bookmark', ['i-left']);
@@ -101,10 +111,10 @@ define([
 
     SaveForLater.prototype.getElementsIndexedById = function (context) {
         var self = this,
-            elements = qwery('[' + self.attributeName + ']', context);
+            elements = qwery('[' + self.attributes['containerItemShortUrl'] + ']', context);
 
         return _.forEach(elements, function(el){
-            return bonzo(el).attr(self.attributeName)
+            return bonzo(el).attr(self.attributes['containerItemShortUrl'])
         });
     };
 
@@ -144,42 +154,41 @@ define([
             self.renderContainerLinks(signedIn, document.body)
         }
 
+        mediator.on('modules:tonal:loaded', function() {
+            console.log("+++ Got Tonal");
+            self.renderContainerLinks(signedIn, self.classes['onwardContainer']);
+        });
+
         mediator.on('modules:onward:loaded', function() {
             console.log("+++ Got Onwards");
-            self.renderContainerLinks(signedIn, '.js-onward');
+            self.renderContainerLinks(signedIn, self.classes['onwardContainer']);
         });
 
         mediator.on('modules:related:loaded', function() {
             console.log("+++ Got related");
-            self.renderContainerLinks(signedIn,'.js-related');
+            self.renderContainerLinks(signedIn, self.classes['relatedContainer']);
         });
     };
 
     SaveForLater.prototype.configureSaveThisArticle = function () {
 
-        console.log("Conf");
+        console.log(" ++ Conf");
         console.log("Conf " + this.classes['saveThisArticle']);
 
         var saveLinkHolder = qwery(this.classes['saveThisArticle'])[0],
-            shortUrl = config.page.shortUrl.replace('http://gu.com', ''),
-            hello = "hello";
-
-        console.log("+++  Hello");
-
+            shortUrl = config.page.shortUrl.replace('http://gu.com', '');
 
         if (this.hasUserSavedArticle(this.userData.articles, shortUrl)) {
             console.log("++ Saaved");
             this.renderSaveThisArticleLink(false, this.savedArticlesUrl, 'saved');
-            //this.$saver.html('<a href="' + this.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
         } else {
             console.log("++ Not Saaved");
             this.renderSaveThisArticleLink(true, '', 'save');
 
-            //this.$saver.html('<a class="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>');
-            bean.one(saveLinkHolder, 'click', '.save-for-later__button',
-                this.saveThisArticle.bind(this,
-                    this.onSaveThisArticle.bind(this, hello),
-                    this.onSaveThisArticleError.bind(this, "goodbye"),
+            bean.one(saveLinkHolder, 'click', this.classes['saveThisArticleButton'],
+                this.saveArticle.bind(this,
+                    this.onSaveThisArticle.bind(this),
+                    this.onSaveThisArticleError.bind(this),
                     this.userData,
                     config.page.pageId, shortUrl));
         }
@@ -197,8 +206,8 @@ define([
             _.forEach(elements, function (node) {
                 console.log("Element: ");
                 var $node = bonzo(node),
-                    id = $node.attr('data-id'),
-                    shortUrl = $node.attr('data-loyalty-short-url'),
+                    id = $node.attr(self.attributes['containerItemDataId']),
+                    shortUrl = $node.attr(self.attributes['containerItemShortUrl']),
                     isSavedAlready = signedIn ? self.hasUserSavedArticle(self.userData.articles, shortUrl) : false,
                     saveUrl = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
                         '&shortUrl=' + shortUrl + '&articleId=' + id,
@@ -216,7 +225,7 @@ define([
                 console.log("++ Template pop");
 
 
-                meta = qwery('.js-item__meta', node);
+                meta = qwery(self.classes['itemMeta'], node);
                 console.log("++ Meta");
 
 
@@ -227,7 +236,7 @@ define([
                 fastdom.write(function () {
                     $container.append(html);
                     if (signedIn) {
-                        var saveLink = $('.save-for-later-link', node)[0];
+                        var saveLink = $(self.classes['itemSaveLink'], node)[0];
                         if (isSavedAlready) {
                             self.createDeleteArticleHandler(saveLink,id, shortUrl);
                         } else {
@@ -244,7 +253,7 @@ define([
         //--- Get articles
     // -------------------------Save Article
 
-    SaveForLater.prototype.saveThisArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl) {
+    SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl) {
         var self = this,
             date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
             newArticle = {id: pageId, shortUrl: shortUrl, date: date, read: false  };
@@ -291,14 +300,13 @@ define([
 
     //If this is an article Page, configure the save article link
 
-
-    SaveForLater.prototype.onSaveThisArticle = function (message) {
-        console.log("++++++++++++++ Sucees " + message);
+    SaveForLater.prototype.onSaveThisArticle = function () {
+        console.log("++++++++++++++ Sucees " );
         this.renderSaveThisArticleLink(false, this.savedArticlesUrl, 'saved');
     };
 
-    SaveForLater.prototype.onSaveThisArticleError = function(message) {
-        console.log("++++++++++++++ Error " + message);
+    SaveForLater.prototype.onSaveThisArticleError = function() {
+        console.log("++++++++++++++ Error " );
         this.renderSaveThisArticleLink(true, '', 'save');
     };
 
@@ -306,28 +314,28 @@ define([
     SaveForLater.prototype.onSaveArticle = function (saveLink, id, shortUrl) {
         var self = this;
         console.log("On Save article: " + id );
-        bonzo(qwery('.save-for-later-link__heading', saveLink)[0]).html('Saved');
+        bonzo(qwery(self.classes['itemSaveLinkHeading'], saveLink)[0]).html('Saved');
         self.createDeleteArticleHandler(saveLink, id, shortUrl);
     };
 
     SaveForLater.prototype.onSaveArticleError = function (saveLink, id, shortUrl) {
         var self = this;
         console.log("On Save article error: " + id );
-        bonzo(qwery('.save-for-later-link__heading', saveLink)[0]).html('Error Saving');
+        bonzo(qwery(self.classes['itemSaveLinkHeading'], saveLink)[0]).html('Error Saving');
         self.createSaveArticleHandler(saveLink, id, shortUrl);
     };
 
     SaveForLater.prototype.onDeleteArticle = function (deleteLink, id, shortUrl) {
         var self = this;
         console.log("Un Save article: " + id );
-        bonzo(qwery('.save-for-later-link__heading', deleteLink)[0]).html('Save');
+        bonzo(qwery(self.classes['itemSaveLinkHeading'], deleteLink)[0]).html('Save');
         self.createDeleteArticleHandler(deleteLink, id, shortUrl);
     };
 
     SaveForLater.prototype.onDeleteArticleError = function (deleteLink, id, shortUrl) {
         var self = this;
         console.log("Error Un Save article: " + id );
-        bonzo(qwery('.save-for-later-link__heading', deleteLink)[0]).html('Error Removing');
+        bonzo(qwery(self.classes['itemSaveLinkHeading'], deleteLink)[0]).html('Error Removing');
         self.createDeleteArticleHandler(deleteLink, id, shortUrl);
     };
 
@@ -337,7 +345,7 @@ define([
 
         console.log("Creating handla for " + id);
         bean.one(saveLink, 'click',
-            self.saveThisArticle.bind(self,
+            self.saveArticle.bind(self,
                 self.onSaveArticle.bind(self, saveLink, id, shortUrl),
                 self.onSaveArticleError.bind(self, saveLink, id, shortUrl),
                 self.userData,
@@ -372,7 +380,7 @@ define([
 
     SaveForLater.prototype.updateArticleCount = function() {
         var self = this,
-            saveForLaterProfileLink = $('.brand-bar__item--saved-for-later');
+            saveForLaterProfileLink = $(self.classes['profileDropdownLink']);
 
         saveForLaterProfileLink.html('Saved (' + self.userData.articles.length + ')')
     };
