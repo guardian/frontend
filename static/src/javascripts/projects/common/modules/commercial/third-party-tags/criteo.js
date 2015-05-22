@@ -26,7 +26,7 @@ define([
                 rnd: Math.floor(Math.random() * 99999999999),
                 varName: varName
             });
-            System.import(criteoUrl + '?' + query + '!system-script');
+            return require([criteoUrl + '?' + query + '!system-script']);
         }
     }
 

@@ -35,7 +35,7 @@ define([
                 cookies.cleanUp(['rsi_segs']);
             };
             // Then load audsci to get latests segments.
-            System.import(revenueScienceUrl + '!system-script').then(function () {
+            return require([revenueScienceUrl + '!system-script'], function () {
                 window.E05516.DM_tag();
             });
         }

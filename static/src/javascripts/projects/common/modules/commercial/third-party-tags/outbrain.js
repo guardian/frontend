@@ -20,7 +20,7 @@ define([
             $('.OUTBRAIN')
                 .first()
                 .attr('data-widget-id', widgetIds[detect.getBreakpoint()]);
-            System.import(outbrainUrl + '!system-script');
+            return require([outbrainUrl + '!system-script']);
         }
     }
 
