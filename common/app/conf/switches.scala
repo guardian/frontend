@@ -392,6 +392,11 @@ object Switches {
     sellByDate = never
   )
 
+  val NotificationsSwitch = Switch("Feature", "notifications",
+    "Notifications",
+    safeState = Off, sellByDate = new LocalDate(2015, 7, 15)
+  )
+
   val ImgixSwitch = Switch("Feature", "imgix",
     "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 29)
