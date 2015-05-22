@@ -25,6 +25,10 @@ module.exports = function(grunt, options) {
                         '**/*'
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
+                },
+                {
+                    src: ['/Users/asanders/Documents/frontend/static/src/jspm_packages/github/cujojs/curl@0.8.12/dist/curl-with-js-and-domReady/curl.js'],
+                    dest: options.staticTargetDir + 'javascripts/curl-domReady.js'
                 }
             ]
         },
