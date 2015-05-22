@@ -11,7 +11,8 @@ define([
 
     'common/modules/identity/api',
     'common/views/svgs',
-    'text!common/views/loyalty/save-for-later.html',
+    'text!common/views/loyalty/save-for-later--signed-out.html',
+    'text!common/views/loyalty/save-for-later--signed-in.html',
 
     'text!common/views/loyalty/save-for-later-front-link--signed-out.html',
     'text!common/views/loyalty/save-for-later-front-link--signed-in.html'
@@ -27,16 +28,22 @@ define([
     template,
     identity,
     svgs,
-    saveForLaterTmpl,
+    saveForLaterOutTmpl,
+    saveForLaterInTmpl,
 
     signedOutLinkTmpl,
     signedInLinkTmpl
 
-    ) {
+) {
+    //This is because of some a/b test wierdness - '$' doesn't work
+    var $ = function(selector, context) {
+        return bonzo(qwery(selector, context));
+    };
+
     function SaveForLater() {
         console.log("++ New");
         this.classes = {
-             saveThisArticle: '.meta__save-for-later'
+             saveThisArticle: '.js-save-for-later'
         };
         this.isContent = !/Network Front|Section/.test(config.page.contentType);
         console.log("+++ New " + this.isContent);
@@ -48,7 +55,9 @@ define([
         this.attributeName = 'data-loyalty-short-url';
         this.templates = {
             signedIn: signedInLinkTmpl,
-            signedOut: signedOutLinkTmpl
+            signedOut: signedOutLinkTmpl,
+            signedOutThisArticle: saveForLaterOutTmpl,
+            signedInThisArticle: saveForLaterInTmpl
         };
     }
 
@@ -64,26 +73,30 @@ define([
             if (this.isContent) {
                 var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
                     '&shortUrl=' + config.page.shortUrl.replace('http://gu.com', '');
-                this.renderSaveThisArticleLink('Save for later', url);
+                this.renderSaveThisArticleLink(false, url, 'save');
             }
             this.renderLinksInContainers(false);
-            this.$saver.html(
-            );
         }
     };
 
 
-    SaveForLater.prototype.renderSaveThisArticleLink = function (linkText, url) {
+    SaveForLater.prototype.renderSaveThisArticleLink = function (deferToClick, url, state) {
 
+         console.log("++ Render");
          var self = this,
-             $saver = bonzo(qwery(self.classes['saveThisArticle'])[0]);
+             $saver = bonzo(qwery(self.classes['saveThisArticle'])[0]),
+             templateName = self.templates[deferToClick ? "signedInThisArticle" : "signedOutThisArticle"];
 
-         $saver.html(template(saveForLaterTmpl, {
+         console.log("++ Q");
+
+         $saver.html(template(templateName, {
                  url: url,
                  icon: bookmarkSvg,
-                 state: 'save'
+                 state: state
              })
          );
+        console.log("++ Done");
+
     };
 
     SaveForLater.prototype.getElementsIndexedById = function (context) {
@@ -117,6 +130,7 @@ define([
                 if ( self.isContent ) {
                     self.configureSaveThisArticle();
                 }
+                self.updateArticleCount();
             }
         );
     };
@@ -129,7 +143,6 @@ define([
             console.log("Render front pages");
             self.renderContainerLinks(signedIn, document.body)
         }
-
 
         mediator.on('modules:onward:loaded', function() {
             console.log("+++ Got Onwards");
@@ -156,14 +169,14 @@ define([
 
         if (this.hasUserSavedArticle(this.userData.articles, shortUrl)) {
             console.log("++ Saaved");
-            this.renderSaveThisArticleLink('Saved Articles', this.savedArticlesUrl);
+            this.renderSaveThisArticleLink(false, this.savedArticlesUrl, 'saved');
             //this.$saver.html('<a href="' + this.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
         } else {
             console.log("++ Not Saaved");
-            this.renderSaveThisArticleLink('Save for later');
+            this.renderSaveThisArticleLink(true, '', 'save');
 
             //this.$saver.html('<a class="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>');
-            bean.one(saveLinkHolder, 'click', '.meta__save-for-later--link',
+            bean.one(saveLinkHolder, 'click', '.save-for-later__button',
                 this.saveThisArticle.bind(this,
                     this.onSaveThisArticle.bind(this, hello),
                     this.onSaveThisArticleError.bind(this, "goodbye"),
@@ -247,6 +260,7 @@ define([
                 }
                 else {
                     console.log("Resp success");
+                    self.updateArticleCount();
                     onArticleSaved();
                 }
             }
@@ -268,6 +282,7 @@ define([
                 }
                 else {
                     console.log("Delete success");
+                    self.updateArticleCount();
                     onArticleDeleted();
                 }
             }
@@ -279,12 +294,12 @@ define([
 
     SaveForLater.prototype.onSaveThisArticle = function (message) {
         console.log("++++++++++++++ Sucees " + message);
-        this.renderSaveThisArticleLink('Saved Articles', this.savedArticlesUrl);
+        this.renderSaveThisArticleLink(false, this.savedArticlesUrl, 'saved');
     };
 
     SaveForLater.prototype.onSaveThisArticleError = function(message) {
         console.log("++++++++++++++ Error " + message);
-        this.renderSaveThisArticleLink('Error Saving', this.savedArticlesUrl);
+        this.renderSaveThisArticleLink(true, '', 'save');
     };
 
     //--- Handle saving an article on a front of container
@@ -353,6 +368,13 @@ define([
         return _.some(articles, function (article) {
             return article.shortUrl.indexOf(shortUrl) > -1;
         });
+    };
+
+    SaveForLater.prototype.updateArticleCount = function() {
+        var self = this,
+            saveForLaterProfileLink = $('.brand-bar__item--saved-for-later');
+
+        saveForLaterProfileLink.html('Saved (' + self.userData.articles.length + ')')
     };
 
     return SaveForLater;

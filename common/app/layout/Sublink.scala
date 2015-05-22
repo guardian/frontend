@@ -213,7 +213,7 @@ object FaciaCard {
       DisplaySettings.fromTrail(faciaContent),
       faciaContent.isLive,
       None,
-      content.map(_.shortUrlPath)
+      faciaContent.shortUrlPath
     )
   }
 }
