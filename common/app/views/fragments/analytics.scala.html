@@ -41,7 +41,7 @@
                 var s = document.createElement('script'),
                         sc = document.getElementsByTagName('script')[0];
 
-                s.src = '@Static("javascripts/bootstraps/ophan.js")';
+                s.src = '@{Configuration.javascript.config("ophanJsUrl")}.js';
                 s.aysnc = true;
                 sc.parentNode.insertBefore(s, sc);
             }
