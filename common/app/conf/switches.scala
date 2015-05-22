@@ -352,11 +352,6 @@ object Switches {
     safeState = Off, never
   )
 
-  val FeedbackLink = Switch("Monitoring", "tech-feedback",
-    "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
-    safeState = Off, new LocalDate(2015, 5, 23)
-  )
-
 
   // Features
   val ABTestHeadlines = Switch(
@@ -513,8 +508,8 @@ object Switches {
   )
 
   // A/B Tests
-  val ABStickyShares = Switch("A/B Tests", "ab-sticky-shares",
-    "Switch sticky share buttons on articles",
+  val ABShareButtons = Switch("A/B Tests", "ab-share-buttons",
+    "Switch for test of combinations of referrer-based size, visibility, and stickiness for article share buttons",
     safeState = Off, sellByDate = new LocalDate(2015, 5, 28)
   )
 
@@ -525,12 +520,12 @@ object Switches {
 
   val ABMtRec1 = Switch("A/B Tests", "ab-mt-rec1",
     "Viewability results - Recommendation option 1",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 2)
   )
 
   val ABMtRec2 = Switch("A/B Tests", "ab-mt-rec2",
     "Viewability results - Recommendation option 2",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 2)
   )
 
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
@@ -548,14 +543,9 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ABLiveblogSportFrontUpdates = Switch("A/B Tests", "ab-liveblog-sport-front-updates",
-    "Switch for the latest liveblog updates on sport & football fronts A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 27)
-  )
-
   val ABDeferSpacefinder = Switch("A/B Tests", "ab-defer-spacefinder",
     "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 2)
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>

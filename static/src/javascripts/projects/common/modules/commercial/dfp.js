@@ -448,9 +448,7 @@ define([
             }
             if (shouldRemoveIFrame) {
                 fastdom.write(function () {
-                    // if you don't hide the grandparent element, a malevolent little white square appears on Android
-                    // phones, which causes the font of the paragraph it's disturbing to become all weird looking.
-                    $iFrame.parent().parent().hide();
+                    $iFrame.hide();
                 });
             }
         },
