@@ -9,16 +9,6 @@
     var systemNormalize = System.normalize;
     System.normalize = function (name, parentName) {
         var transformers = [
-            function map(name) {
-                // TODO: Source this from npm and use the module ID
-                // "socketio", consistent with RequireJS. SystemJS will read
-                // the package.json’s main property.
-                if (name === 'socketio') {
-                    return 'socketio/socket.io';
-                } else {
-                    return name;
-                }
-            },
             function interactives(name) {
                 // Transforms something like:     http://interactive.guim.co.uk/2015/04/climate-letters/assets-1430142775693/js/main.js
                 // into a legal module name: interactive/interactive.guim.co.uk/2015/04/climate-letters/assets-1430142775693/js/main.js
