@@ -24,7 +24,7 @@ define([
     blockTemplate
 ) {
     var numDisplayedBlocks = 4,
-        blockHeightPx = 55,
+        blockHeightPx = 77,
 
         animateDelayMs = 1000,
         refreshSecs = 30,
@@ -54,10 +54,8 @@ define([
 
         if (relTime.match(/yesterday/i)) {
             relTime = relTime.toLowerCase();
-        } else if (relTime && block.isNew) {
-            relTime = 'updated ' + relTime + ' ago';
         } else if (relTime) {
-            relTime = relTime + ' ago';
+            relTime = 'latest update ' + relTime + ' ago';
         } else {
             relTime = 'updated just now';
         }
@@ -66,7 +64,7 @@ define([
             classes: block.isNew ? newBlockClassName : oldBlockClassName,
             href: '/' + articleId + '#' + block.id,
             relativeTime: relTime,
-            text: _.compact([block.title, block.body.slice(0, 200)]).join('. '),
+            text: _.compact([block.title, block.body.slice(0, 500)]).join('. '),
             index: index + 1
         });
     }

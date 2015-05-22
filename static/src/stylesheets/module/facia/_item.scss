@@ -402,56 +402,63 @@ $fc-item-gutter: $gs-gutter / 4;
 
 // Liveblog blocks
 @function liveblog-blocks-height($blocks) {
-    $block-height: 55px;
+    $block-height: 72px;
     @return $block-height * $blocks;
 }
 
 .fc-item__liveblog-blocks {
+    box-sizing: content-box !important;
     height: liveblog-blocks-height(1);
     overflow: hidden;
-    margin-bottom: $gs-baseline / 2;
+    border-bottom: 5px solid transparent;
 }
 
 .fc-item__liveblog-blocks__inner {
     transition: transform .5s ease;
 }
 
+.fc-item__liveblog-blocks__inner--animate {
+    transform: translate3d(0, -60px, 0);
+}
+
 .fc-item__liveblog-block {
     box-sizing: border-box;
     display: block;
-    position: relative;
-    overflow: hidden;
-    @include fs-headline(1);
-    line-height: 1rem;
-    color: #ffffff;
-    height: liveblog-blocks-height(1);
-    border-bottom: $gs-baseline/6 solid colour(live-default);
-    padding: $gs-baseline/4 $gs-gutter/4 0;
-    background-color: darken(colour(live-default), 10%);
-}
-
-.fc-item__liveblog-block:after {
-    content: '...';
-    position: absolute;
-    bottom: 0;
-    right: $gs-gutter/10;
-    font-size: 20px;
-    color: mix(#ffffff, colour(live-default), 70%);
-}
-
-.fc-item__liveblog-block__time {
-    display: inline;
-    font-weight: bold;
-    @include ellipsis();
-}
-
-.fc-item__liveblog-block--old .fc-item__liveblog-block__time {
-    color: mix(#ffffff, colour(live-default), 70%);
+    height: liveblog-blocks-height(1) + $gs-gutter/4;
 }
 
 .fc-item__liveblog-block__text {
-    display: inline;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    @include fs-textSans(1);
+    line-height: 1rem;
     color: #ffffff;
+    max-height: liveblog-blocks-height(1);
+    padding: $gs-baseline/4 $gs-gutter/4;
+    border-top: 1px solid mix(#ffffff, colour(live-default), 60%);
+    background-color: #cc2b12;
+}
+
+.fc-item__liveblog-block__text:after {
+    content: '...';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    @include fs-headline(1);
+    font-size: 32px;
+    line-height: 8px;
+    height: 18px;
+    color: #e8b9b2;
+    padding: 0 4px;
+    background-color: #cc2b12;
+    box-shadow: -5px 0 5px -2px #cc2b12;
+}
+
+.fc-item__liveblog-block__time {
+    @include fs-headline(1);
+    font-weight: bold;
+    @include ellipsis();
 }
 
 .fc-item__meta {
