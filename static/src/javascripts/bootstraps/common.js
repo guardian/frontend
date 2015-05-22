@@ -131,7 +131,7 @@ define([
             },
 
             initFastClick: function () {
-                FastClick.attach(document.body);
+                FastClick(document.body);
             },
 
             initialiseFauxBlockLink: function () {
