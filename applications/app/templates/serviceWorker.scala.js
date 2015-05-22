@@ -1,14 +1,10 @@
 @()
-// TODO: Lint
 
 /*eslint quotes: [2, "single"], curly: [2, "multi-line"], strict: 0*/
 /*eslint-env browser*/
 /*global self*/
-// TODO: eslint-env service-worker
-// https://github.com/eslint/eslint/issues/2557
 /*global clients*/
 
-// TODO: Lodash
 var findInArray = function (array, fn) {
     for (var i = array.length - 1; i >= 0; i--) {
         var value = array[i];
@@ -16,7 +12,7 @@ var findInArray = function (array, fn) {
     }
 };
 
-// TODO: Tidy up
+// Warning: reassignment!
 var notificationData;
 
 self.addEventListener('push', function (event) {
