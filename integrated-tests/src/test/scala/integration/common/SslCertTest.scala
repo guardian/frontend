@@ -1,11 +1,12 @@
-package integration
+package integration.common
 
-import org.scalatest.{DoNotDiscover, FlatSpec}
-import javax.net.ssl._
-import java.security.{cert, SecureRandom}
-import java.net.{ProtocolException, MalformedURLException, URL}
-import org.joda.time.{Days, DateTime}
 import java.io.IOException
+import java.net.{MalformedURLException, ProtocolException, URL}
+import java.security.{SecureRandom, cert}
+import javax.net.ssl._
+
+import org.joda.time.{DateTime, Days}
+import org.scalatest.{DoNotDiscover, FlatSpec}
 import sun.security.x509.X509CertImpl
 
 @DoNotDiscover class SslCertTest extends FlatSpec {
@@ -46,7 +47,7 @@ import sun.security.x509.X509CertImpl
 
         conn.connect()
         val certs = conn.getServerCertificates
-        certs.headOption.map { cert =>
+        certs.headOption.foreach { cert =>
           val x = cert.asInstanceOf[X509CertImpl]
           val expiry = x.getNotAfter.getTime
           val daysleft = Days.daysBetween(new DateTime(), new DateTime(expiry.toLong)).getDays

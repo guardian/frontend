@@ -1,6 +1,6 @@
-package integration
+package integration.driver
 
-import java.io.{FileInputStream, File}
+import java.io.{File, FileInputStream}
 import java.util.Properties
 
 object Config {
@@ -22,7 +22,7 @@ object Config {
     props
   }
 
-  val remoteMode = optionalProperty("tests.mode").exists(_ == "remote")
+  val remoteMode = optionalProperty("tests.mode").contains("remote")
   val baseUrl = optionalProperty("tests.baseUrl").getOrElse("http://www.theguardian.com")
   val profileBaseUrl = optionalProperty("tests.profileBaseUrl").getOrElse("https://profile.theguardian.com")
 

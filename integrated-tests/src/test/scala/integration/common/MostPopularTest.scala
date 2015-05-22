@@ -1,5 +1,6 @@
-package integration
+package integration.common
 
+import integration.SharedWebDriver
 import org.scalatest.tags.Retryable
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 

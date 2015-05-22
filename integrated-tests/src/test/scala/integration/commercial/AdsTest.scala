@@ -1,6 +1,7 @@
-package integration
+package integration.commercial
 
-import Config.baseUrl
+import integration.SharedWebDriver
+import integration.driver.Config.baseUrl
 import org.scalatest.tags.Retryable
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 

@@ -2,27 +2,44 @@ package integration
 
 import java.net.URL
 import java.util.concurrent.TimeUnit
-import scala.concurrent.Await
-import scala.concurrent.duration._
-import scala.concurrent.ExecutionContext.Implicits.global
+
 import akka.agent.Agent
-import org.openqa.selenium.{WebDriver, WebElement, By}
-import org.openqa.selenium.remote.{RemoteWebDriver, DesiredCapabilities}
+import integration.commercial.AdsTest
+import integration.common.{MostPopularTest, SslCertTest}
+import integration.driver.Config
+import integration.facia.ShowMoreTest
+import integration.profile.ProfileCommentsTest
+import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.remote.{DesiredCapabilities, RemoteWebDriver}
+import org.openqa.selenium.{By, WebDriver, WebElement}
 import org.scalatest._
 import org.scalatestplus.play.BrowserFactory.UninitializedDriver
+
 import scala.collection.JavaConversions._
+import scala.concurrent.Await
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
 
-trait SingleWebDriver extends SuiteMixin { this: Suite =>
-
-  private lazy val url: String = s"http://${Config.stack.userName}:${Config.stack.automateKey}@ondemand.saucelabs.com:80/wd/hub"
+trait SingleWebDriver extends SuiteMixin {
+  this: Suite =>
 
   private lazy val webDriver = {
-    val capabilities = DesiredCapabilities.firefox()
 
-    // this makes the test name appear in the Saucelabs UI
-    val buildNumber = System.getProperty("build.number", "")
-    capabilities.setCapability("name", s"Integrated Tests Suite $buildNumber")
-    new RemoteWebDriver(new URL(url), capabilities)
+    def remoteWebDriver = {
+      val capabilities = DesiredCapabilities.firefox()
+
+      // this makes the test name appear in the Saucelabs UI
+      val buildNumber = System.getProperty("build.number", "")
+      capabilities.setCapability("name", s"Integrated Tests Suite $buildNumber")
+      val domain = s"${Config.stack.userName}:${Config.stack.automateKey}@ondemand.saucelabs.com"
+      val url = s"http://$domain:80/wd/hub"
+      new RemoteWebDriver(new URL(url), capabilities)
+    }
+
+    def localWebDriver = new ChromeDriver()
+
+    if (Config.remoteMode) remoteWebDriver
+    else localWebDriver
   }
 
   abstract override def run(testName: Option[String], args: Args): Status = {
@@ -49,9 +66,7 @@ trait SharedWebDriver extends SuiteMixin { this: Suite =>
 
   abstract override def run(testName: Option[String], args: Args): Status = {
     args.configMap.getOptional[WebDriver]("webDriver") match {
-      case Some(driver:WebDriver) => {
-        Await.ready(driverAgent.alter(driver), 1.minute)
-      }
+      case Some(driver: WebDriver) => Await.ready(driverAgent.alter(driver), 1.minute)
       case None => throw new Exception("No shared web driver found")
     }
     super.run(testName, args)
@@ -63,7 +78,7 @@ trait SharedWebDriver extends SuiteMixin { this: Suite =>
   }
 
   protected def implicitlyWait(seconds: Int) = {
-    webDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
+    webDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS)
   }
 
   protected def $(selector: String): List[WebElement] = webDriver.findElements(By.cssSelector(selector)).toList
