@@ -8,7 +8,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
-    'text!common/views/commercial/creatives/fluid250-v3.html'
+    'common/views/commercial/creatives/fluid250-v3.html!text'
 ], function (
     bean,
     bonzo,
