@@ -24,11 +24,11 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
     }
   }
 
-  def get(path: String): Future[Option[PressedPage]] = {
+  def getRaw(path: String): Future[Option[String]] = {
     val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
     response.map { r =>
       r.status match {
-        case 200 => parsePressedJson(r.body)
+        case 200 => Some(r.body)
         case 403 =>
           S3Metrics.S3AuthorizationError.increment()
           log.warn(s"Got 403 trying to load path: $path")
@@ -39,6 +39,14 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
         case responseCode =>
           log.warn(s"Got $responseCode trying to load path: $path")
           None
+      }
+    }
+  }
+
+  def get(path: String): Future[Option[PressedPage]] = {
+    getRaw(path).map {
+      _.flatMap {
+        body => parsePressedJson(body)
       }
     }
   }
