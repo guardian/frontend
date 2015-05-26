@@ -527,6 +527,33 @@ object Switches {
     exposeClientSide = false
   )
 
+  val AppleAdCultureFrontSwitch = Switch(
+    "Commercial",
+    "apple-ads-on-culture-front",
+    "If this switch is on, Apple ads will appear below nav on the culture section front.",
+    safeState = Off,
+    sellByDate = appleSellByDate,
+    exposeClientSide = false
+  )
+
+  val AppleAdFashionFrontSwitch = Switch(
+    "Commercial",
+    "apple-ads-on-fashion-front",
+    "If this switch is on, Apple ads will appear below nav on the fashion section front.",
+    safeState = Off,
+    sellByDate = appleSellByDate,
+    exposeClientSide = false)
+
+  val AppleAdTravelFrontSwitch = Switch(
+    "Commercial",
+    "apple-ads-on-travel-front",
+    "If this switch is on, Apple ads will appear below nav on the travel section front.",
+    safeState = Off,
+    sellByDate = appleSellByDate,
+    exposeClientSide = false
+  )
+
+
   val LazyLoadAds = Switch(
     "Commercial",
     "lz-ads",
