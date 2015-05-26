@@ -981,7 +981,7 @@ object Switches {
     "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 2),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
 
