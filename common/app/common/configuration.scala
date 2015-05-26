@@ -201,12 +201,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
   }
 
-  object static {
-    lazy val path =
-      if (environment.secure) configuration.getMandatoryStringProperty("static.securePath")
-      else configuration.getMandatoryStringProperty("static.path")
-  }
-
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
   }
