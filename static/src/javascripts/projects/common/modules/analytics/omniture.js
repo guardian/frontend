@@ -173,7 +173,7 @@ define([
         this.s.channel   = this.getChannel();
         this.s.prop4     = config.page.keywords || '';
         this.s.prop6     = config.page.author || '';
-        this.s.prop7     = config.page.webPublicationDate || '';
+        this.s.prop7     = config.page.webPublicationDate || '';  //BROKEN
         this.s.prop8     = config.page.pageCode || '';
         this.s.prop9     = config.page.contentType || '';
         this.s.prop10    = config.page.tones || '';
