@@ -78,7 +78,11 @@ define([
         this.getElem('audience').textContent = (this.config.test.audience * 100) + "%";
         this.getElem('audience-offset').textContent = (this.config.test.audienceOffset * 100) + "%";
 
-        this.getElem('tableau').innerHTML = "<a href='TODO:link-to-tableau-here'>view</a>";
+        var tableauUrl = "https://tableau-datascience.gutools.co.uk/#/views/AutomatedMVTDashboard/MainMVTDashboard?id=" + this.config.test.id;
+        this.getElem('tableau').innerHTML = "<a href='" + tableauUrl + "'>view</a>";
+
+        var ophanUrl = "https://dashboard.ophan.co.uk/graph/breakdown?ab=" + this.config.test.id;
+        this.getElem('ophan').innerHTML = "<a href='" + ophanUrl + "'>graph</a>";
 
         var participation = new Participation({ test: this.config.test });
         participation.render(this.getElem('participation'));
