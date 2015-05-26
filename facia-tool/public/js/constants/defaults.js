@@ -61,16 +61,12 @@ export default {
 
     frontendApiBase:       '/frontend',
 
-    reauthPath:            '/login/status',
-    reauthInterval:        60000 * 20, // 20 minutes
-    reauthTimeout:         60000,
-
     imageCdnDomain:        '.guim.co.uk',
     previewBase:           'http://preview.gutools.co.uk',
 
     latestSnapPrefix:      'Latest from ',
 
-    ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
+    ophanBase:             'http://dashboard.ophan.co.uk/summary',
     ophanFrontBase:        'http://dashboard.ophan.co.uk/info?path=',
 
     internalContentPrefix: 'internal-code/content/',

@@ -117,5 +117,6 @@ object FaciaContentImplicits {
     def properties = FaciaContentUtils.properties(fc)
     def imageHide = FaciaContentUtils.properties(fc).exists(_.imageHide)
     def imageSlideshowReplace = FaciaContentUtils.properties(fc).exists(_.imageSlideshowReplace)
+    def group = FaciaContentUtils.group(fc)
   }
 }

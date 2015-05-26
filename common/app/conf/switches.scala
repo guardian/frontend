@@ -91,6 +91,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val RugbyQuizSwitch = Switch(
+    "Demo",
+    "rugby-quiz",
+    "Just a marker switch to remind us to delete the rugby quiz",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 5, 31),
+    exposeClientSide = false
+  )
+  
   val TagPageSizeSwitch = Switch(
     "Performance",
     "tag-page-size",
@@ -480,12 +489,14 @@ object Switches {
     exposeClientSide = false
   )
 
+  private val appleSellByDate = new LocalDate(2015, 7, 15)
+
   val AppleAdUkNetworkFrontSwitch = Switch(
     "Commercial",
     "apple-ads-on-uk-network-front",
     "If this switch is on, Apple ads will appear below nav on the UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 3),
+    sellByDate = appleSellByDate,
     exposeClientSide = false
   )
 
@@ -494,7 +505,7 @@ object Switches {
     "apple-ads-on-us-network-front",
     "If this switch is on, Apple ads will appear below nav on the US network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 3),
+    sellByDate = appleSellByDate,
     exposeClientSide = false
   )
 
@@ -503,7 +514,7 @@ object Switches {
     "apple-ads-on-au-network-front",
     "If this switch is on, Apple ads will appear below nav on the AU network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 3),
+    sellByDate = appleSellByDate,
     exposeClientSide = false
   )
 
@@ -512,7 +523,7 @@ object Switches {
     "apple-ads-on-tech-front",
     "If this switch is on, Apple ads will appear below nav on the tech section front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 3),
+    sellByDate = appleSellByDate,
     exposeClientSide = false
   )
 
@@ -590,15 +601,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val FeedbackLink = Switch(
-    "Monitoring",
-    "tech-feedback",
-    "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
-    safeState = Off,
-    new LocalDate(2015, 5, 23),
-    exposeClientSide = true
-  )
-
 
   // Features
   val ABTestHeadlines = Switch(
@@ -628,8 +630,17 @@ object Switches {
     exposeClientSide = false
   )
 
+  val NotificationsSwitch = Switch(
+    "Feature", 
+    "notifications",
+    "Notifications",
+    safeState = Off, 
+    sellByDate = new LocalDate(2015, 7, 15),
+    exposeClientSide = true
+  )
+
   val ImgixSwitch = Switch(
-    "Feature",
+    "Feature", 
     "imgix",
     "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
     safeState = Off,
@@ -874,10 +885,10 @@ object Switches {
   )
 
   // A/B Tests
-  val ABStickyShares = Switch(
-    "A/B Tests",
-    "ab-sticky-shares",
-    "Switch sticky share buttons on articles",
+  val ABShareButtons = Switch(
+    "A/B Tests", 
+    "ab-share-buttons",
+    "Switch for test of combinations of referrer-based size, visibility, and stickiness for article share buttons",
     safeState = Off,
     sellByDate = new LocalDate(2015, 5, 28),
     exposeClientSide = true
@@ -897,7 +908,7 @@ object Switches {
     "ab-mt-rec1",
     "Viewability results - Recommendation option 1",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 25),
+    sellByDate = new LocalDate(2015, 6, 2),
     exposeClientSide = false
   )
 
@@ -906,7 +917,7 @@ object Switches {
     "ab-mt-rec2",
     "Viewability results - Recommendation option 2",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 25),
+    sellByDate = new LocalDate(2015, 6, 2),
     exposeClientSide = false
   )
 
@@ -915,7 +926,7 @@ object Switches {
     "ab-heatmap",
     "Switch for the UK Network Front heatmap test.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 24),
+    sellByDate = new LocalDate(2015, 5, 29),
     exposeClientSide = false
   )
 
@@ -937,21 +948,12 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABLiveblogSportFrontUpdates = Switch(
-    "A/B Tests",
-    "ab-liveblog-sport-front-updates",
-    "Switch for the latest liveblog updates on sport & football fronts A/B test.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 27),
-    exposeClientSide = true
-  )
-
   val ABDeferSpacefinder = Switch(
     "A/B Tests",
     "ab-defer-spacefinder",
     "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 25),
+    sellByDate = new LocalDate(2015, 6, 2),
     exposeClientSide = false
   )
 
