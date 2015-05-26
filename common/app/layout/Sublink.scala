@@ -73,6 +73,8 @@ case class Byline(
 ) {
   def htmlWithLinks(requestHeader: RequestHeader) =
     ContributorLinks(Html(get), contributorTags)(requestHeader)
+
+  def html = Html(get)
 }
 
 object DisplaySettings {
