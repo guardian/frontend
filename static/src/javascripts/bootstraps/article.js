@@ -6,7 +6,6 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/url',
-    'common/modules/experiments/ab',
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
@@ -25,7 +24,6 @@ define([
     detect,
     mediator,
     urlutils,
-    ab,
     richLinks,
     membershipEvents,
     openModule,
@@ -89,7 +87,7 @@ define([
             },
 
             initStickyShares: function () {
-                if (config.switches.abStickyShares && ab.getTestVariant('StickyShares') === 'sticky') {
+                if (config.switches.abShareButtons) {
                     stickySocial.init();
                 }
             }
