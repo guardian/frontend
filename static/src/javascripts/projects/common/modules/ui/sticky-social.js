@@ -83,11 +83,12 @@ define([
             referrer = ((window.location.hash + '').match(/referrer=([^&]+)/) || [])[1] || document.referrer || '',
 
             socialContext = [
-                {id: 'facebook',  matchReferrer: 'facebook.com', matchUserAgent: 'FBAN/'},
-                {name: 'twitter', matchReferrer: 't.co', matchUserAgent: 'Twitter for iPhone'}
+                {id: 'facebook', matchReferrer: 'facebook.com', matchUserAgent: 'FBAN/'},
+                {id: 'twitter', matchReferrer: 't.co', matchUserAgent: 'Twitter for iPhone'}
             ].filter(function (social) {
                 return referrer.indexOf(social.matchReferrer) > -1 || navigator.userAgent.indexOf(social.matchUserAgent) > -1;
             })[0];
+
 
             if (socialContext) {
                 fastdom.read(function () {
