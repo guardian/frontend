@@ -78,6 +78,8 @@ define([
         this.getElem('audience').textContent = (this.config.test.audience * 100) + "%";
         this.getElem('audience-offset').textContent = (this.config.test.audienceOffset * 100) + "%";
 
+        this.getElem('tableau').innerHTML = "<a href='TODO:link-to-tableau-here'>view</a>";
+
         var participation = new Participation({ test: this.config.test });
         participation.render(this.getElem('participation'));
     };
