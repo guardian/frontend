@@ -936,7 +936,7 @@ object Switches {
     "Viewability results - Recommendation option 1",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 2),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val ABMtRec2 = Switch(
@@ -945,7 +945,7 @@ object Switches {
     "Viewability results - Recommendation option 2",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 2),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val ABHeatmap = Switch(
