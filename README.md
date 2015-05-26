@@ -1,3 +1,8 @@
+We're hiring!
+--------
+Ever thought about joining us?<br/>
+http://developers.theguardian.com/join-the-team.html
+
 Frontend
 ========
 The Guardian website frontend.
