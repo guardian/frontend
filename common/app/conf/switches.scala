@@ -297,7 +297,7 @@ object Switches {
     "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val StandardAdvertsSwitch = Switch(
