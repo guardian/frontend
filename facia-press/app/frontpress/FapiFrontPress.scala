@@ -4,18 +4,23 @@ import com.amazonaws.services.s3.AmazonS3Client
 import com.gu.contentapi.client.GuardianContentClient
 import com.gu.contentapi.client.model._
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
-import com.gu.facia.api.models.{Collection, _}
-import com.gu.facia.api.{ApiError, FAPI, Response}
+import com.gu.facia.api.models.{Collection, CuratedContent, _}
+import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
+import common.Edition
 import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
-import common.{ContentApiMetrics, Edition, ExecutionContexts, Logging}
-import conf.{LiveContentApi, Configuration}
+import common._
+import conf.{Configuration, LiveContentApi}
 import contentapi.{CircuitBreakingContentApiClient, QueryDefaults}
+import implicits.FaciaContentFrontendHelpers._
 import model.facia.PressedCollection
-import model.{PressedPage, FrontProperties, SeoData}
+import model.{FrontProperties, PressedPage, SeoData}
+import org.jsoup.Jsoup
 import play.api.libs.json._
 import services.{ConfigAgent, S3FrontsApi}
+import views.support.Naked
 
+import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
 private case class ContentApiClientWithTarget(override val apiKey: String, override val targetUrl: String) extends GuardianContentClient(apiKey) with CircuitBreakingContentApiClient {
@@ -105,7 +110,12 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
       curatedCollection <- collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
       backfill <- getBackfill(collection)
       treats <- FAPI.getTreatsForCollection(collection, searchApiQuery, itemApiQuery)
-    } yield PressedCollection.fromCollectionWithCuratedAndBackfill(collection, curatedCollection, backfill, treats)
+    } yield
+      PressedCollection.fromCollectionWithCuratedAndBackfill(
+        collection,
+        curatedCollection.map(slimElements).map(slimBody),
+        backfill.map(slimElements).map(slimBody),
+        treats.map(slimElements).map(slimBody))
 
   private def getBackfill(collection: Collection): Response[List[FaciaContent]] =
     collection
@@ -189,5 +199,38 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
 
     contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
   }
+
+  def mapContent(faciaContent: FaciaContent)(f: Content => Content): FaciaContent =
+    faciaContent match {
+      case curatedContent: CuratedContent => curatedContent.copy(content = f(curatedContent.content))
+      case supporting: SupportingCuratedContent => supporting.copy(content = f(supporting.content))
+      case linkSnap: LinkSnap => linkSnap
+      case latestSnap: LatestSnap => latestSnap.copy(latestContent = latestSnap.latestContent.map(f))}
+
+
+  def slimElements(faciaContent: FaciaContent): FaciaContent = {
+    val slimElements: Option[List[Element]] =
+      Option(
+        faciaContent.trailPictureAll(5, 3).map { imageContainer =>
+          imageContainer.delegate.copy(assets =
+            Naked.elementFor(imageContainer).map(_.delegate).toList)} ++
+          faciaContent.mainVideo.map(_.delegate))
+        .filter(_.nonEmpty)
+
+    mapContent(faciaContent)(c => c.copy(elements = slimElements))
+  }
+
+  def slimBody(faciaContent: FaciaContent): FaciaContent = {
+    mapContent(faciaContent){ content =>
+      val newFields = content.fields.map { fieldsMap =>
+        val newBody = fieldsMap.get("body").map {body =>
+          "body" -> HTML.takeFirstNElements(body, 2)
+         }
+        newBody.fold(fieldsMap)(fieldsMap + _)
+      }
+      content.copy(fields = newFields)
+    }
+  }
+
 
 }
