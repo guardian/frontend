@@ -6,6 +6,7 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
+    'common/utils/date-formats',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/pad',
@@ -21,6 +22,7 @@ define([
     _,
     config,
     cookies,
+    dateFormats,
     detect,
     mediator,
     pad,
@@ -173,7 +175,7 @@ define([
         this.s.channel   = this.getChannel();
         this.s.prop4     = config.page.keywords || '';
         this.s.prop6     = config.page.author || '';
-        this.s.prop7     = config.page.webPublicationDate || '';
+        this.s.prop7     = dateFormats.utcDateString(config.page.webPublicationDate) || '';
         this.s.prop8     = config.page.pageCode || '';
         this.s.prop9     = config.page.contentType || '';
         this.s.prop10    = config.page.tones || '';
