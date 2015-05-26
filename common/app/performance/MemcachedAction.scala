@@ -105,7 +105,8 @@ private object CacheKey extends implicits.Requests {
     // The origin is already included in X-Gu-Cache-Key, but this header doesn't appear in CODE.
     val originKey = r.headers.get("Origin").getOrElse("")
     val edition = Edition(r).id
-    sha256Hex(s"${r.host}${r.uri} $edition $upstreamCacheKey $build $version $originKey")
+    val ssl = r.headers.get("X-Forwarded-Proto").getOrElse("")
+    sha256Hex(s"${r.host}${r.uri} $edition $upstreamCacheKey $build $version $originKey $ssl")
   }
 }
 
