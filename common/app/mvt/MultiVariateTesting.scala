@@ -21,7 +21,7 @@ object JspmTest extends TestDefinition(
   List(Variant0),
   "jspm-test",
   "Tests our new JSPM jsavscript configuration",
-  new LocalDate(2015, 5, 30)
+  new LocalDate(2015, 6, 30)
 )
 
 object CMHRTest extends TestDefinition(
