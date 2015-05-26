@@ -65,7 +65,6 @@ import services.ConfigAgent
     val fakeRequest = FakeRequest("GET", "/music")
 
     val result = FaciaController.renderFront("music")(fakeRequest)
-    status(result) should be(200)
     header("X-Accel-Redirect", result) should be (None)
   }
 
