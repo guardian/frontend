@@ -83,6 +83,12 @@ object Switches {
     sellByDate = never
   )
 
+  val RugbyQuizSwitch = Switch("Demo", "rugby-quiz",
+    "Just a marker switch to remind us to delete the rugby quiz",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 5, 31)
+  )
+
   val TagPageSizeSwitch = Switch("Performance", "tag-page-size",
     "If this switch is on then we will request more items for larger tag pages",
     safeState = Off,
@@ -296,21 +302,35 @@ object Switches {
     "If this switch is on, book data will be looked up using a third-party service.",
     safeState = Off, sellByDate = never)
 
+  private val appleSellByDate = new LocalDate(2015, 7, 15)
+
   val AppleAdUkNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-uk-network-front",
     "If this switch is on, Apple ads will appear below nav on the UK network front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
+    safeState = Off, sellByDate = appleSellByDate)
 
   val AppleAdUsNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-us-network-front",
     "If this switch is on, Apple ads will appear below nav on the US network front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
+    safeState = Off, sellByDate = appleSellByDate)
 
   val AppleAdAuNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-au-network-front",
     "If this switch is on, Apple ads will appear below nav on the AU network front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
+    safeState = Off, sellByDate = appleSellByDate)
 
   val AppleAdTechFrontSwitch = Switch("Commercial", "apple-ads-on-tech-front",
     "If this switch is on, Apple ads will appear below nav on the tech section front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
+    safeState = Off, sellByDate = appleSellByDate)
+
+  val AppleAdCultureFrontSwitch = Switch("Commercial", "apple-ads-on-culture-front",
+    "If this switch is on, Apple ads will appear below nav on the culture section front.",
+    safeState = Off, sellByDate = appleSellByDate)
+
+  val AppleAdFashionFrontSwitch = Switch("Commercial", "apple-ads-on-fashion-front",
+    "If this switch is on, Apple ads will appear below nav on the fashion section front.",
+    safeState = Off, sellByDate = appleSellByDate)
+
+  val AppleAdTravelFrontSwitch = Switch("Commercial", "apple-ads-on-travel-front",
+    "If this switch is on, Apple ads will appear below nav on the travel section front.",
+    safeState = Off, sellByDate = appleSellByDate)
 
   val LazyLoadAds = Switch("Commercial", "lz-ads",
     "If switched on then all ads are lazy loaded",
@@ -376,6 +396,11 @@ object Switches {
     "Fixtures and results container on football tag pages",
     safeState = On,
     sellByDate = never
+  )
+
+  val NotificationsSwitch = Switch("Feature", "notifications",
+    "Notifications",
+    safeState = Off, sellByDate = new LocalDate(2015, 7, 15)
   )
 
   val ImgixSwitch = Switch("Feature", "imgix",
@@ -530,7 +555,7 @@ object Switches {
 
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
     "Switch for the UK Network Front heatmap test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 29)
   )
 
   val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
