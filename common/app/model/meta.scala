@@ -3,14 +3,19 @@ package model
 import common.{NavItem, Edition, ManifestData, Pagination}
 import conf.Configuration
 import dfp.DfpAgent
+import model.meta.{PotentialAction, WebPage, LinkedData, Guardian}
 import play.api.libs.json.{JsBoolean, JsValue, JsString}
 
+/**
+ * MetaData represents a page on the site, whether facia or content
+ */
 trait MetaData extends Tags {
   def id: String
   def section: String
   def webTitle: String
   def analyticsName: String
   def url: String  = s"/$id"
+  def webUrl: String = s"${Configuration.site.host}$url"
   def linkText: String = webTitle
   def pagination: Option[Pagination] = None
   def description: Option[String] = None
@@ -67,7 +72,7 @@ trait MetaData extends Tags {
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId,
     "og:type"      -> "website",
-    "og:url"       -> s"${Configuration.site.host}$url"
+    "og:url"       -> webUrl
   )
 
   def openGraphImages: Seq[String] = Seq()
@@ -78,6 +83,11 @@ trait MetaData extends Tags {
     "twitter:app:id:iphone" -> "409128287",
     "twitter:app:name:googleplay" -> "The Guardian",
     "twitter:app:id:googleplay" -> "com.guardian"
+  )
+
+  def linkedData: List[LinkedData] = List(
+    Guardian(),
+    WebPage(webUrl, PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
   )
 
   def cacheSeconds = 60
@@ -91,7 +101,13 @@ trait MetaData extends Tags {
   lazy val isExpiredAdvertisementFeature: Boolean =
     DfpAgent.isExpiredAdvertisementFeature(id, tags, Some(section))
   lazy val sponsorshipTag: Option[Tag] = DfpAgent.sponsorshipTag(tags, Some(section))
+
+  def isPreferencesPage = metaData.get("isPreferencesPage").collect{ case prefs: JsBoolean => prefs.value } getOrElse false
 }
+
+
+
+
 
 class Page(
   val id: String,
@@ -247,6 +263,9 @@ trait Elements {
   }
 }
 
+/**
+ * Tags lets you extract meaning from tags on a page.
+ */
 trait Tags {
   def tags: Seq[Tag] = Nil
   def contributorAvatar: Option[String] = tags.flatMap(_.contributorImagePath).headOption

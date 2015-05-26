@@ -83,6 +83,12 @@ object Switches {
     sellByDate = never
   )
 
+  val RugbyQuizSwitch = Switch("Demo", "rugby-quiz",
+    "Just a marker switch to remind us to delete the rugby quiz",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 5, 31)
+  )
+
   val TagPageSizeSwitch = Switch("Performance", "tag-page-size",
     "If this switch is on then we will request more items for larger tag pages",
     safeState = Off,
@@ -191,20 +197,13 @@ object Switches {
   )
 
   // Commercial
-  val OphanViewIdSwitch = Switch("Commercial",
-    "ophan-view-id",
-    "Depeneding on ophan to pass view ID to the gdf targeting",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 5, 31)
-  )
-
   val DfpCachingSwitch = Switch("Commercial", "dfp-caching",
     "Have Admin will poll DFP to precache adserving data.",
     safeState = On, sellByDate = never
   )
 
   val CommercialSwitch = Switch("Commercial", "commercial",
-    "Kill switch for all commercial JS.",
+    "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
     safeState = On, sellByDate = never
   )
 
@@ -231,18 +230,6 @@ object Switches {
   val SponsoredSwitch = Switch("Commercial", "sponsored",
     "Show sponsored badges, logos, etc.",
     safeState = On, sellByDate = never
-  )
-
-  val LiveBlogContributorImagesSwitch = Switch("Feature", "liveblog-contributor-image",
-    "Show contributor byline images in live blog blocks",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 28)
-  )
-
-  val ElectionLiveBadgeSwitch = Switch("Feature", "election-2015-badging",
-    "Display Election Live 2015 Badge",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 5, 28)
   )
 
   val LiveblogAdvertsSwitch = Switch("Commercial", "liveblog-adverts",
@@ -315,22 +302,43 @@ object Switches {
     "If this switch is on, book data will be looked up using a third-party service.",
     safeState = Off, sellByDate = never)
 
+  private val appleSellByDate = new LocalDate(2015, 7, 15)
+
   val AppleAdUkNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-uk-network-front",
     "If this switch is on, Apple ads will appear below nav on the UK network front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
+    safeState = Off, sellByDate = appleSellByDate)
+
+  val AppleAdUsNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-us-network-front",
+    "If this switch is on, Apple ads will appear below nav on the US network front.",
+    safeState = Off, sellByDate = appleSellByDate)
 
   val AppleAdAuNetworkFrontSwitch = Switch("Commercial", "apple-ads-on-au-network-front",
     "If this switch is on, Apple ads will appear below nav on the AU network front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
+    safeState = Off, sellByDate = appleSellByDate)
 
   val AppleAdTechFrontSwitch = Switch("Commercial", "apple-ads-on-tech-front",
     "If this switch is on, Apple ads will appear below nav on the tech section front.",
-    safeState = Off, sellByDate = new LocalDate(2015, 6, 3))
+    safeState = Off, sellByDate = appleSellByDate)
 
-  val LazyLoadAds = Switch("Feature", "lz-ads",
+  val AppleAdCultureFrontSwitch = Switch("Commercial", "apple-ads-on-culture-front",
+    "If this switch is on, Apple ads will appear below nav on the culture section front.",
+    safeState = Off, sellByDate = appleSellByDate)
+
+  val AppleAdFashionFrontSwitch = Switch("Commercial", "apple-ads-on-fashion-front",
+    "If this switch is on, Apple ads will appear below nav on the fashion section front.",
+    safeState = Off, sellByDate = appleSellByDate)
+
+  val AppleAdTravelFrontSwitch = Switch("Commercial", "apple-ads-on-travel-front",
+    "If this switch is on, Apple ads will appear below nav on the travel section front.",
+    safeState = Off, sellByDate = appleSellByDate)
+
+  val LazyLoadAds = Switch("Commercial", "lz-ads",
     "If switched on then all ads are lazy loaded",
     safeState = Off, sellByDate = never)
 
+  val AdBlockMessage = Switch("Commercial", "adblock",
+    "Switch for the Adblock Message.",
+    safeState = Off, sellByDate = never)
 
   // Monitoring
 
@@ -364,11 +372,6 @@ object Switches {
     safeState = Off, never
   )
 
-  val FeedbackLink = Switch("Monitoring", "tech-feedback",
-    "decide by now if it's worth keeping the link in the footer soliciting clicks for technical problems",
-    safeState = Off, new LocalDate(2015, 5, 23)
-  )
-
 
   // Features
   val ABTestHeadlines = Switch(
@@ -393,6 +396,11 @@ object Switches {
     "Fixtures and results container on football tag pages",
     safeState = On,
     sellByDate = never
+  )
+
+  val NotificationsSwitch = Switch("Feature", "notifications",
+    "Notifications",
+    safeState = Off, sellByDate = new LocalDate(2015, 7, 15)
   )
 
   val ImgixSwitch = Switch("Feature", "imgix",
@@ -525,6 +533,11 @@ object Switches {
   )
 
   // A/B Tests
+  val ABShareButtons = Switch("A/B Tests", "ab-share-buttons",
+    "Switch for test of combinations of referrer-based size, visibility, and stickiness for article share buttons",
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 28)
+  )
+
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
@@ -532,12 +545,17 @@ object Switches {
 
   val ABMtRec1 = Switch("A/B Tests", "ab-mt-rec1",
     "Viewability results - Recommendation option 1",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 2)
+  )
+
+  val ABMtRec2 = Switch("A/B Tests", "ab-mt-rec2",
+    "Viewability results - Recommendation option 2",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 2)
   )
 
   val ABHeatmap = Switch("A/B Tests", "ab-heatmap",
     "Switch for the UK Network Front heatmap test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 24)
+    safeState = Off, sellByDate = new LocalDate(2015, 5, 29)
   )
 
   val ABSaveForLaterSwitch = Switch("A/B Tests", "ab-save-for-later",
@@ -545,19 +563,14 @@ object Switches {
     safeState = Off, sellByDate = never
   )
 
-  val ABLiveblogSportFrontUpdates = Switch("A/B Tests", "ab-liveblog-sport-front-updates",
-    "Switch for the latest liveblog updates on sport & football fronts A/B test.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 27)
+  val ABIdentityCookieRefresh = Switch("A/B Tests", "ab-cookie-refresh",
+    "It this switch is turned on, users cookies will be refreshed. Turn off if the identity API barfs" ,
+    safeState = Off, sellByDate = never
   )
 
   val ABDeferSpacefinder = Switch("A/B Tests", "ab-defer-spacefinder",
     "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 25)
-  )
-
-  val ABHistoryWithoutWhitelist = Switch("A/B Tests", "ab-history-without-whitelist",
-    "Switch for removing the whitelist from the user history tags",
-    safeState = Off, sellByDate = new LocalDate(2015, 5, 21)
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 2)
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>
@@ -651,13 +664,22 @@ object Switches {
     safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
   )
 
+  val FaciaPressNewFormat = Switch("Facia", "facia-press-fapi-client-format",
+    "If this switch is on, facia-press will press in the new fapi-client JSON format",
+    safeState = Off, sellByDate = new LocalDate(2015, 8, 31)
+  )
+
   val FaciaPressOnDemand = Switch("Facia", "facia-press-on-demand",
     "If this is switched on, you can force facia to press on demand (Leave off)",
     safeState = Off, sellByDate = new LocalDate(2015, 6, 30)
   )
 
-  // Server-side A/B Tests
+  val FaciaServerNewFormat = Switch("Facia", "facia-new-format",
+    "If this is switched on, facia will serve off the new JSON format (It will fallback to old if it doesn't exist)",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 30)
+  )
 
+  // Server-side A/B Tests
   val ServerSideTests = {
     // It's for the side effect. Blame agents.
     val tests = mvt.ActiveTests.tests

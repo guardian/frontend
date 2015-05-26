@@ -13,7 +13,7 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
   lazy val section: String = id
 
   lazy val id: String = delegate.id
-  lazy val webUrl: String = delegate.webUrl
+  override lazy val webUrl: String = delegate.webUrl
   lazy val webTitle: String = delegate.webTitle
 
   lazy val keywordIds: Seq[String] = frontKeywordIds(id)

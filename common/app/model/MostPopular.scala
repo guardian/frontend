@@ -1,3 +1,5 @@
 package model
 
-case class MostPopular(heading: String, section: String, trails: Seq[Content])
+import com.gu.facia.api.models.FaciaContent
+
+case class MostPopular(heading: String, section: String, trails: Seq[FaciaContent])

@@ -15,6 +15,7 @@ define([
     'common/utils/template',
     'common/utils/url',
     'common/utils/robust',
+    'common/utils/storage',
     'common/modules/analytics/clickstream',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
@@ -41,6 +42,7 @@ define([
     'common/modules/onward/related',
     'common/modules/onward/tonal',
     'common/modules/social/share-count',
+    'common/modules/ui/accessibility-prefs',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/fonts',
@@ -54,6 +56,7 @@ define([
     'common/modules/onward/breaking-news',
     'text!common/views/international-message.html',
     'text!common/views/international-control-message.html',
+    'text!common/views/donot-use-adblock.html',
     'bootstraps/identity'
 ], function (
     bean,
@@ -70,6 +73,7 @@ define([
     template,
     url,
     robust,
+    storage,
     Clickstream,
     Foresee,
     liveStats,
@@ -96,6 +100,7 @@ define([
     Related,
     TonalComponent,
     shareCount,
+    accessilbilityPrefs,
     Dropdowns,
     fauxBlockLink,
     fonts,
@@ -109,6 +114,7 @@ define([
     breakingNews,
     internationalMessage,
     internationalControlMessage,
+    doNotUseAdblockTemplate,
     identity
 ) {
     var modules = {
@@ -247,6 +253,28 @@ define([
 
             initClickstream: function () {
                 new Clickstream({filter: ['a', 'button']});
+            },
+
+            showAdblockMessage: function () {
+                var alreadyVisted = storage.local.get('alreadyVisited') || 0,
+                    adblockLink = 'https://membership.theguardian.com/about/supporter?INTCMP=adb-mv';
+
+                if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted) {
+                    new Message('adblock', {
+                        pinOnHide: false,
+                        siteMessageLinkName: 'adblock message variant',
+                        siteMessageCloseBtn: 'hide'
+                    }).show(template(
+                            doNotUseAdblockTemplate,
+                            {
+                                adblockLink: adblockLink,
+                                messageText: 'We notice you\'ve got an ad-blocker switched on. Perhaps you\'d like to support the Guardian another way?',
+                                linkText: 'Become a supporter today'
+                            }
+                        ));
+                }
+
+                storage.local.set('alreadyVisited', alreadyVisted + 1);
             },
 
             logLiveStats: function () {
@@ -435,6 +463,10 @@ define([
                 techFeedback.init();
             },
 
+            initAccessibilityPrefs: function () {
+                accessilbilityPrefs.init();
+            },
+
             initPublicApi: function () {
                 // BE CAREFUL what you expose here...
                 window.guardian.api = {
@@ -443,16 +475,16 @@ define([
             },
 
             runCustomAbTests: function () {
-                var stickyTest = ab.getTest('MtStickyBtm'),
-                    rec1Test = ab.getTest('MtRec1');
+                var rec1Test = ab.getTest('MtRec1'),
+                    rec2Test = ab.getTest('MtRec2');
 
                 if (rec1Test && ab.isParticipating(rec1Test) && ab.getTestVariant('MtRec1') === 'A'
                     && ab.testCanBeRun('MtRec1')) {
-                    rec1Test.fireRec1Test();
+                    rec1Test.fireRecTest();
                 }
-                if (stickyTest && ab.isParticipating(stickyTest) && ab.getTestVariant('MtStickyBtm') === 'A'
-                    && ab.testCanBeRun('MtStickyBtm')) {
-                    stickyTest.fireStickyBottom();
+                if (rec2Test && ab.isParticipating(rec2Test) && ab.getTestVariant('MtRec2') === 'A'
+                    && ab.testCanBeRun('MtRec2')) {
+                    rec2Test.fireRecTest();
                 }
             },
 
@@ -500,6 +532,7 @@ define([
             robust('c-comments',        modules.repositionComments);
             robust('c-tag-links',       modules.showMoreTagsLink);
             robust('c-smart-banner',    modules.showSmartBanner);
+            robust('c-adblock',         modules.showAdblockMessage);
             robust('c-log-stats',       modules.logLiveStats);
             robust('c-analytics',       modules.loadAnalytics);
             robust('c-cookies',         modules.cleanupCookies);
@@ -513,6 +546,7 @@ define([
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
             robust('c-run-custom-ab',   modules.runCustomAbTests);
+            robust('c-accessibility-prefs',       modules.initAccessibilityPrefs);
             robust('c-international-signposting', modules.internationalSignposting);
         };
 

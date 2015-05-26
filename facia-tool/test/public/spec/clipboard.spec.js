@@ -3,7 +3,7 @@ import _ from 'underscore';
 import $ from 'jquery';
 import mockjax from 'test/utils/mockjax';
 import cache from 'modules/cache';
-import vars from 'modules/vars';
+import * as vars from 'modules/vars';
 import newItems from 'models/collections/new-items';
 import * as widgets from 'models/widgets';
 import listManager from 'modules/list-manager';
@@ -173,11 +173,11 @@ function setUpTests () {
         }
     });
     if (!vars.model) {
-        vars.model = {
+        vars.setModel({
             switches: ko.observable({
                 'facia-tool-sparklines': false
             })
-        };
+        });
     }
     mockjaxId = mockjax({
         url: '/api/proxy/piuccio*',

@@ -373,6 +373,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         .getOrElse(60)
 
     lazy val faciaToolUpdatesStream: Option[String] = configuration.getStringProperty("faciatool.updates.stream")
+
+    lazy val sentryPublicDSN = configuration.getStringProperty("faciatool.sentryPublicDSN")
   }
 
   object pa {
@@ -455,6 +457,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object pngResizer {
     val cacheTimeInSeconds = configuration.getIntegerProperty("png_resizer.image_cache_time").getOrElse(86400)
     val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
+  }
+
+  object pushNotifications {
+    val host = configuration.getStringProperty("push_notifications.host").getOrElse("//")
   }
 }
 
