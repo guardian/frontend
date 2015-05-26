@@ -26,16 +26,16 @@ object JspmTest extends TestDefinition(
 
 object CMHRTest extends TestDefinition(
   List(Variant1, Variant2, Variant3),
-  "com-hr-test",
+  "cm-hr-test",
   "Test moving commercial high relevance component above most popular",
-  new LocalDate(2015, 5, 30)
+  new LocalDate(2015, 6, 30)
 )
 
 object CMOutbrainTest extends TestDefinition(
   List(Variant4, Variant5, Variant6),
-  "com-outbrain-test",
+  "cm-outbrain-test",
   "Test moving outbrain component to the second position below the article",
-  new LocalDate(2015, 5, 30)
+  new LocalDate(2015, 6, 30)
 )
 
 object ActiveTests extends Tests {
