@@ -6,7 +6,7 @@ import util.Requests._
 import play.api.mvc.Controller
 import config.UpdateManager
 import play.api.libs.json.Json
-import auth.PanDomainAuthActions
+import auth.ExpiringActions
 
 object CollectionRequest {
   implicit val jsonFormat = Json.format[CollectionRequest]
@@ -23,8 +23,8 @@ object CreateCollectionResponse {
 
 case class CreateCollectionResponse(id: String)
 
-object CollectionController extends Controller with PanDomainAuthActions {
-  def create = AuthAction { request =>
+object CollectionController extends Controller {
+  def create = ExpiringActions.ExpiringAuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
         val identity = request.user
@@ -36,7 +36,7 @@ object CollectionController extends Controller with PanDomainAuthActions {
     }
   }
 
-  def update(collectionId: String) = AuthAction { request =>
+  def update(collectionId: String) = ExpiringActions.ExpiringAuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
         val identity = request.user

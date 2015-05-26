@@ -29,7 +29,6 @@ object Frontend extends Build with Prototypes {
       jSoup,
       liftJson,
       playGoogleAuth,
-      panDomainAuth,
       quartzScheduler,
       rome,
       romeModules,

@@ -6,8 +6,8 @@ object Treat {
             CrosswordTreat
         } else if (url.contains("/politics/general-election-2015")) {
             SnappableTreat
-        } else if (url.contains("climate-publishers-network")) {
-            SnappableTreat
+        } else if (url.contains("/climate-publishers-network")) {
+            ClimateTreat
         } else {
             NormalTreat
         }
