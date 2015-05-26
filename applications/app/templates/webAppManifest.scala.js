@@ -7,6 +7,6 @@
         "src": "@{JavaScript(Static("images/favicons/152x152.png").path)}"
     }],
     "display": "browser",
-    "gcm_sender_id":"162380663509",
+    "gcm_sender_id":"713544253918",
     "gcm_user_visible_only":true
 }

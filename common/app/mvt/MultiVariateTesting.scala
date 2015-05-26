@@ -17,8 +17,22 @@ import views.support.CamelCase
 //    val tests = List(ExampleTest)
 // }
 
+object CMHRTest extends TestDefinition(
+  List(Variant1, Variant2, Variant3),
+  "cm-hr-test",
+  "Test moving commercial high relevance component above most popular",
+  new LocalDate(2015, 6, 30)
+)
+
+object CMOutbrainTest extends TestDefinition(
+  List(Variant4, Variant5, Variant6),
+  "cm-outbrain-test",
+  "Test moving outbrain component to the second position below the article",
+  new LocalDate(2015, 6, 30)
+)
+
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List()
+  val tests: Seq[TestDefinition] = List(CMHRTest, CMOutbrainTest)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
@@ -38,7 +52,9 @@ case class TestDefinition (
     name,
     description,
     conf.Off,
-    sellByDate)
+    sellByDate,
+    exposeClientSide = true
+  )
 
   def isParticipating(implicit request: RequestHeader): Boolean = {
     ActiveTests.getParticipatingTest(request).contains(this)
