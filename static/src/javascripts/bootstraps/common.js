@@ -1,5 +1,4 @@
 /* jshint nonew: false */
-/* jshint quotmark: false */
 /* TODO - fix module constructors so we can remove the above jshint override */
 define([
     'bean',
