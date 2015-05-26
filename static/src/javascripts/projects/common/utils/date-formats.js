@@ -1,5 +1,5 @@
 define([], function () {
-    function utcDateString (date) {
+    function utcDateString(date) {
         return new Date(date).toISOString().substr(0, 10).replace(/-/g, '/');
     }
 
