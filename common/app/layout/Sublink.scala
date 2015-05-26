@@ -198,7 +198,7 @@ object FaciaCard {
       faciaContent.headline,
       FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
       getByline(faciaContent).filterNot(Function.const(suppressByline)),
-      FaciaDisplayElement.fromFaciaContent(faciaContent),
+      FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
       CutOut.fromTrail(faciaContent),
       faciaContent.cardStyle,
       cardTypes,
