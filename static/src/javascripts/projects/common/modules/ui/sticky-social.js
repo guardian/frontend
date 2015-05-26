@@ -89,7 +89,6 @@ define([
                 return referrer.indexOf(social.matchReferrer) > -1 || navigator.userAgent.indexOf(social.matchUserAgent) > -1;
             })[0];
 
-
             if (socialContext) {
                 fastdom.read(function () {
                     [topEl(), bottomEl()].forEach(function (el) {
