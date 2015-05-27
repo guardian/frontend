@@ -1,9 +1,9 @@
 define([], function () {
 
     return function () {
-        this.id = 'ShareButtons';
-        this.start = '2015-05-21';
-        this.expiry = '2015-05-28';
+        this.id = 'ShareButtons2';
+        this.start = '2015-05-27';
+        this.expiry = '2015-06-04';
         this.author = 'Stephan Fowler';
         this.description = 'Combinations of referrer-based size, visibility, and stickiness for share buttons';
         this.audience = 0.1;

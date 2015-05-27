@@ -87,7 +87,7 @@ define([
             },
 
             initStickyShares: function () {
-                if (config.switches.abShareButtons) {
+                if (config.switches.abShareButtons2) {
                     stickySocial.init();
                 }
             }

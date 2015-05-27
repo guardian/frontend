@@ -75,7 +75,7 @@ define([
     }
 
     function init() {
-        var testVariant = ab.getTestVariant('ShareButtons'),
+        var testVariant = ab.getTestVariant('ShareButtons2'),
             referrer,
             socialContext;
 
