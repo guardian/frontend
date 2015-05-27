@@ -128,9 +128,13 @@ define([
                     // Disable the button so it can't be changed while
                     // we process the permission request
                     pushButton.disabled = true;
+                    var willRequestNotificationPermission = Notification.permission === 'default';
+
                     return navigator.serviceWorker.ready
                         .then(function (serviceWorkerRegistration) {
-                            $('.js-notifications-preferences-overlay').css('display', 'block');
+                            if (willRequestNotificationPermission) {
+                                $('.js-notifications-preferences-overlay').css('display', 'block');
+                            }
 
                             return serviceWorkerRegistration.pushManager.subscribe()
                                 .then(function (subscription) {
@@ -141,7 +145,11 @@ define([
                                 });
                         })
                         .then(function () {
-                            window.location.href = redirectUrl;
+                            if (redirectUrl) {
+                                window.location.href = redirectUrl;
+                            } else if (willRequestNotificationPermission) {
+                                $('.js-notifications-preferences-overlay').css('display', 'none');
+                            }
                         });
                 };
 
