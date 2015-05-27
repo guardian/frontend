@@ -1,4 +1,12 @@
 # Paths specific to "preview"
+
+# Simply for the Google IO demo, because preview has a valid HTTPS cert and the page has no mixed content.
+GET        /2015-05-19-service-worker.js        controllers.WebAppController.serviceWorker()
+GET        /2015-05-26-manifest.json            controllers.WebAppController.manifest()
+GET        /$path<international>                controllers.FaciaController.renderFront(path)
+GET        /preferences                         controllers.PreferencesController.indexPrefs()
+GET        /preferences/notifications           controllers.PreferencesController.notificationPrefs()
+
 GET     /_healthcheck               controllers.PreviewHealthCheck.healthcheck()
 GET     /responsive-viewer/*path    controllers.ResponsiveViewerController.preview(path)
 
