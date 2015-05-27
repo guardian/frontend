@@ -38,7 +38,7 @@ define([
                 id: 'a',
                 test: function () {
                     if (config.page.contentType === 'LiveBlog') {
-                         fastdom.write(function () {
+                        fastdom.write(function () {
                             $('.js-update-notification').prepend(template(subscribeTemplate, {url: window.location}));
                         });
                     }
