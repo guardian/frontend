@@ -227,6 +227,8 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
     mapContent(faciaContent)(c => c.copy(elements = slimElements))
   }
 
+  //This is used to slim the body key in fields of the CAPI Content type
+  //We only need the first two elements of the body which is used by RSS
   def slimBody(faciaContent: FaciaContent): FaciaContent = {
     mapContent(faciaContent){ content =>
       val newFields = content.fields.map { fieldsMap =>
