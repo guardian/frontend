@@ -18,7 +18,7 @@ import model.{FrontProperties, PressedPage, SeoData}
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import services.{ConfigAgent, S3FrontsApi}
-import views.support.Naked
+import views.support.{Item460, Item140, Naked}
 
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
@@ -212,8 +212,15 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
     val slimElements: Option[List[Element]] =
       Option(
         faciaContent.trailPictureAll(5, 3).map { imageContainer =>
+          val naked = Naked.elementFor(imageContainer)
+
+          //These sizes are used in RSS
+          val size140 = Item140.elementFor(imageContainer)
+          val size460 = Item460.elementFor(imageContainer)
+
           imageContainer.delegate.copy(assets =
-            Naked.elementFor(imageContainer).map(_.delegate).toList)} ++
+            (naked ++ size140 ++ size460).map(_.delegate).toList
+          )} ++
           faciaContent.mainVideo.map(_.delegate))
         .filter(_.nonEmpty)
 
