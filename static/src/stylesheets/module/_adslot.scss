@@ -85,10 +85,6 @@
         transform: translateZ(0);
         transition: height 1s cubic-bezier(0, 0, 0, .985);
     }
-
-    > div {
-        margin: 0 auto;
-    }
 }
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
@@ -204,6 +200,11 @@
         float: right;
         margin-top: $gs-baseline/3;
         margin-left: $gs-gutter;
+    }
+}
+.ad-slot__content {
+    > div {
+        margin: 0 auto;            
     }
 }
 .ad-slot--container-inline {
