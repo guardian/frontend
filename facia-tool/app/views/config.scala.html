@@ -260,7 +260,9 @@
                             valueAllowUnset: true"></select>
 
                         <div class="tools action-buttons">
-                            <span class="tool" data-bind="click: saveProps">Save metadata</span>
+                            <button class="tool" data-bind="
+                                enable: state.isValidMetadata() !== false,
+                                click: saveProps">Save metadata</button>
                         </div>
                     </div>
                 <!-- /ko -->
