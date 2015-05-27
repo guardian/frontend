@@ -36,8 +36,7 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-                       console.log('bot in etst');}
+                test: function () {}
             },
             {
                 id: 'a',
