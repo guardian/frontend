@@ -37,6 +37,19 @@ define([
         return lenientRules;
     }
 
+    function getAdSpace(rules) {
+        return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+            if (typeof nextSpace === 'undefined') {
+                return Promise.resolve(null);
+            }
+
+            adNames.push(['inline2', 'inline']);
+            return insertAdAtP(nextSpace).then(function () {
+                return getAdSpace(rules);
+            });
+        });
+    }
+
     var ads = [],
         adNames = [['inline1', 'inline'], ['inline2', 'inline']],
         insertAdAtP = function (para) {
@@ -45,6 +58,7 @@ define([
                     $ad    = $.create(createAdSlot(adName[0], adName[1]));
 
                 ads.push($ad);
+                console.log('Ad #: ', ads.length);
                 return new Promise(function (resolve) {
                     fastdom.write(function () {
                         $ad.insertBefore(para);
@@ -56,7 +70,7 @@ define([
             }
         },
         init = function () {
-            var rules, lenientRules, inlineMercPromise;
+            var rules, lenientRules, inlineMercPromise, promises = [];
 
             // is the switch off, or not an article, or a live blog
             if (
@@ -82,15 +96,24 @@ define([
 
             return inlineMercPromise.then(function () {
                 return spacefinder.getParaWithSpace(rules).then(function (space) {
+                    console.log("Another space?", space);
                     return insertAdAtP(space);
                 }).then(function () {
-                    if (detect.isBreakpoint({max: 'tablet'})) {
+                    /*if (detect.isBreakpoint({max: 'tablet'})) {
                         return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+                            console.log("Another space?", nextSpace);
                             return insertAdAtP(nextSpace);
-                        });
+                        })
                     } else {
                         return Promise.resolve(null);
-                    }
+                    }*/
+
+                    return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+                        console.log("Space for inline2", nextSpace);
+                        return insertAdAtP(nextSpace);
+                    }).then(function () {
+                        return getAdSpace(rules);
+                    });
                 });
             });
         };
