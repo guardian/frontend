@@ -187,7 +187,7 @@ define([
         cc = checkCount;
 
         apiQuery += apiQuery.indexOf('?') < 0 ? '?' : '&';
-        apiQuery += 'show-editors-picks=true&show-fields=headline';
+        apiQuery += 'show-fields=headline';
 
         contentApi.fetchContent(apiQuery)
         .done(function(results) {
