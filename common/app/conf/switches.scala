@@ -669,7 +669,7 @@ object Switches {
     "Feature",
     "notifications",
     "Notifications",
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
