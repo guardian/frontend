@@ -28,19 +28,20 @@ class Crossword extends React.Component {
         this.rows = dimensions.rows;
         this.clueMap = helpers.buildClueMap(this.props.data.entries);
 
-        this.onCheat = this.onCheat.bind(this);
-        this.onSolution = this.onSolution.bind(this);
-        this.onCheck = this.onCheck.bind(this);
-        this.onCheckAll = this.onCheckAll.bind(this);
-        this.onClearAll = this.onClearAll.bind(this);
-
-        this.onSelect = this.onSelect.bind(this);
-        this.onKeyDown = this.onKeyDown.bind(this);
-        this.onClickHiddenInput = this.onClickHiddenInput.bind(this);
-        this.focusClue = this.focusClue.bind(this);
-        this.insertCharacter = this.insertCharacter.bind(this);
-        this.setReturnPosition = this.setReturnPosition.bind(this);
-        this.goToReturnPosition = this.goToReturnPosition.bind(this);
+        _.bindAll(this,
+            'onCheat',
+            'onSolution',
+            'onCheck',
+            'onCheckAll',
+            'onClearAll',
+            'onSelect',
+            'onKeyDown',
+            'onClickHiddenInput',
+            'focusClue',
+            'insertCharacter',
+            'setReturnPosition',
+            'goToReturnPosition'
+        );
 
         loadFont();
 
@@ -78,6 +79,14 @@ class Crossword extends React.Component {
         this.forceUpdate();
     }
 
+    getCellValue (x, y) {
+        return this.state.grid[x][y].value;
+    }
+
+    cellIsEmpty (x, y) {
+        return !this.getCellValue(x, y);
+    }
+
     insertCharacter (character) {
         const cell = this.state.cellInFocus;
         if (/[A-Z]/.test(character)) {
@@ -100,9 +109,12 @@ class Crossword extends React.Component {
         } else if (!event.metaKey && !event.ctrlKey && !event.altKey) {
             if (event.keyCode === keycodes.backspace) {
                 event.preventDefault();
-                this.setCellValue(cell.x, cell.y, null);
-                this.save();
-                this.focusPrevious();
+                if (this.cellIsEmpty(cell.x, cell.y)) {
+                    this.focusPrevious();
+                } else {
+                    this.setCellValue(cell.x, cell.y, null);
+                    this.save();
+                }
             } else if (event.keyCode === keycodes.left) {
                 event.preventDefault();
                 this.moveFocus(-1, 0);

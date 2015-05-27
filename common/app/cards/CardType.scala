@@ -33,6 +33,11 @@ sealed trait CardType {
     case Fluid | FullMedia100 | FullMedia75 | FullMedia50 | Half | ThreeQuarters | ThreeQuartersRight | Standard => true
     case _ => false
   }
+
+  def canShowSlideshow = this match {
+    case Half | ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall | FullMedia50 | FullMedia75 | FullMedia100 => true
+    case _ => false
+  }
 }
 
 /** This is called ListItem because List is already taken */
