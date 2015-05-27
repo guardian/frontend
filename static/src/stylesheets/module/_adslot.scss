@@ -85,6 +85,10 @@
         transform: translateZ(0);
         transition: height 1s cubic-bezier(0, 0, 0, .985);
     }
+
+    > div {
+        margin: 0 auto;
+    }
 }
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
