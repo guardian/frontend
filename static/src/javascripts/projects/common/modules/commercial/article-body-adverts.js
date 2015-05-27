@@ -39,10 +39,12 @@ define([
 
     function getAdSpace(rules) {
         return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+            // check if spacefinder found another space
             if (typeof nextSpace === 'undefined') {
                 return Promise.resolve(null);
             }
 
+            // if yes add another ad
             adNames.push(['inline2', 'inline']);
             return insertAdAtP(nextSpace).then(function () {
                 return getAdSpace(rules);
@@ -58,7 +60,6 @@ define([
                     $ad    = $.create(createAdSlot(adName[0], adName[1]));
 
                 ads.push($ad);
-                console.log('Ad #: ', ads.length);
                 return new Promise(function (resolve) {
                     fastdom.write(function () {
                         $ad.insertBefore(para);
@@ -96,7 +97,6 @@ define([
 
             return inlineMercPromise.then(function () {
                 return spacefinder.getParaWithSpace(rules).then(function (space) {
-                    console.log("Another space?", space);
                     return insertAdAtP(space);
                 }).then(function () {
                     /*if (detect.isBreakpoint({max: 'tablet'})) {
@@ -109,10 +109,9 @@ define([
                     }*/
 
                     return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
-                        console.log("Space for inline2", nextSpace);
                         return insertAdAtP(nextSpace);
                     }).then(function () {
-                        return getAdSpace(rules);
+                        return getAdSpace(rules);                        
                     });
                 });
             });
