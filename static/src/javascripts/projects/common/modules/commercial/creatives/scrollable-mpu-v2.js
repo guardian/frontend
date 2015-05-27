@@ -31,7 +31,7 @@ define([
     ScrollableMpu.prototype.updateBgPosition = function () {
 
         switch (this.params.backgroundImagePType) {
-            case 'fixed':
+            case 'fixed matching fluid250':
                 fastdom.write(function () {
                     $('.creative--scrollable-mpu-image', $(this.$adSlot)).addClass('creative--scrollable-mpu-image-fixed');
                 }.bind(this));
@@ -46,7 +46,9 @@ define([
                 }.bind(this));
                 break;
             default:
-                $('.creative--scrollable-mpu-image', $(this.$adSlot)).css('background-position', '100%' + (window.pageYOffset - this.$scrollableMpu.offset().top) + 'px');
+                fastdom.write(function () {
+                    $('.creative--scrollable-mpu-image', $(this.$adSlot)).css('background-position', '100%' + (window.pageYOffset - this.$scrollableMpu.offset().top) + 'px');
+                }.bind(this));
         }
     };
 
