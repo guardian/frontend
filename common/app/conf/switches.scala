@@ -669,7 +669,7 @@ object Switches {
     "Feature",
     "notifications",
     "Notifications",
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
@@ -920,8 +920,17 @@ object Switches {
   )
 
   // A/B Tests
+  val ABLiveblogNotifications = Switch(
+    "A/B Tests",
+    "ab-liveblog-notifications",
+    "Liveblog notifications",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 1),
+    exposeClientSide = true
+  )
+
   val ABShareButtons2 = Switch(
-    "A/B Tests", 
+    "A/B Tests",
     "ab-share-buttons-2",
     "Switch for test of combinations of referrer-based size, visibility, and stickiness for article share buttons",
     safeState = Off,
