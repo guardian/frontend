@@ -22,7 +22,7 @@ object ContentLayout {
 
     def tagTone: Option[String] = {
       content match {
-        case l: LiveBlog => Some(l.visualTone)
+        case l: LiveBlog => Some("live")
         case m: Media => Some("media")
         case g: Gallery => Some("media")
         case i: ImageContent => Some("media")
