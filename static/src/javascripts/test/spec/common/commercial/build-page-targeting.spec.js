@@ -2,7 +2,7 @@ import Injector from 'helpers/injector';
 
 describe('Build Page Targeting', function () {
 
-    var buildPageTargeting, config, cookies, detect, userAdTargeting, ab, krux, audienceScienceGateway, criteo,
+    var buildPageTargeting, config, cookies, detect, userAdTargeting, ab, krux, audienceScienceGateway,
         injector = new Injector();
 
     beforeEach(function(done){
@@ -25,7 +25,6 @@ describe('Build Page Targeting', function () {
             ab = arguments[5];
             krux = arguments[6];
             audienceScienceGateway = arguments[7];
-            criteo = arguments[8];
 
             config.page = {
                 edition:     'US',
@@ -67,12 +66,6 @@ describe('Build Page Targeting', function () {
                 return {
                     asg1: 'value-one',
                     asg2: 'value-two'
-                };
-            };
-            criteo.getSegments = function () {
-                return {
-                    c1: 'value-one',
-                    c2: 'value-two'
                 };
             };
             done();
@@ -155,9 +148,6 @@ describe('Build Page Targeting', function () {
             return [];
         };
         audienceScienceGateway.getSegments = function () {
-            return {};
-        };
-        criteo.getSegments = function () {
             return {};
         };
 

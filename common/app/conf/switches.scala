@@ -99,7 +99,7 @@ object Switches {
     sellByDate = new LocalDate(2015, 5, 31),
     exposeClientSide = false
   )
-  
+
   val TagPageSizeSwitch = Switch(
     "Performance",
     "tag-page-size",
@@ -281,7 +281,7 @@ object Switches {
     sellByDate = never,
     exposeClientSide = false
   )
-  
+
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",
@@ -367,15 +367,6 @@ object Switches {
     "Commercial",
     "audience-science-gateway",
     "If this switch is on, Audience Science Gateway segments will be used to target ads.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val CriteoSwitch = Switch(
-    "Commercial",
-    "criteo",
-    "If this switch is on, Criteo segments will be used to target ads.",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -658,16 +649,16 @@ object Switches {
   )
 
   val NotificationsSwitch = Switch(
-    "Feature", 
+    "Feature",
     "notifications",
     "Notifications",
-    safeState = Off, 
+    safeState = Off,
     sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
 
   val ImgixSwitch = Switch(
-    "Feature", 
+    "Feature",
     "imgix",
     "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
     safeState = Off,
@@ -913,7 +904,7 @@ object Switches {
 
   // A/B Tests
   val ABShareButtons = Switch(
-    "A/B Tests", 
+    "A/B Tests",
     "ab-share-buttons",
     "Switch for test of combinations of referrer-based size, visibility, and stickiness for article share buttons",
     safeState = Off,
