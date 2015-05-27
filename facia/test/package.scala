@@ -1,5 +1,6 @@
 package test
 
+import metadata.FaciaMetaDataTest
 import org.fluentlenium.core.domain.FluentWebElement
 import org.scalatest.Suites
 
@@ -18,7 +19,9 @@ class FaciaTestSuite extends Suites (
   new slices.DynamicSlowTest,
   new slices.StoryTest,
   new views.fragments.nav.NavigationTest,
-  new FaciaControllerTest ) with SingleServerSuite {
+  new FaciaControllerTest,
+  new FaciaMetaDataTest
+) with SingleServerSuite {
 
   override lazy val port: Int = conf.HealthCheck.testPort
 }
