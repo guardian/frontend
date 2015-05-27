@@ -108,11 +108,11 @@ trait FrontJson extends ExecutionContexts with Logging {
 
   private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/pressed.json"
 
-  def get(path: String): Future[Option[FaciaPage]] = {
+  def getRaw(path: String): Future[Option[String]] = {
     val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
     response.map { r =>
       r.status match {
-        case 200 => parsePressedJson(r.body)
+        case 200 => Some(r.body)
         case 403 =>
           S3Metrics.S3AuthorizationError.increment()
           log.warn(s"Got 403 trying to load path: $path")
@@ -123,6 +123,14 @@ trait FrontJson extends ExecutionContexts with Logging {
         case responseCode =>
           log.warn(s"Got $responseCode trying to load path: $path")
           None
+      }
+    }
+  }
+
+  def get(path: String): Future[Option[FaciaPage]] = {
+    getRaw(path).map {
+      _.flatMap {
+        body => parsePressedJson(body)
       }
     }
   }

@@ -5,9 +5,10 @@ import conf.Switches
 import implicits.FaciaContentImplicits._
 import implicits.FaciaContentFrontendHelpers._
 import conf.{Switches,Configuration}
+import layout.ItemClasses
 
 object FaciaDisplayElement {
-  def fromFaciaContent(faciaContent: FaciaContent): Option[FaciaDisplayElement] = {
+  def fromFaciaContentAndCardType(faciaContent: FaciaContent, itemClasses: ItemClasses): Option[FaciaDisplayElement] = {
     faciaContent.mainVideo match {
       case Some(videoElement) if faciaContent.showMainVideo =>
         Some(InlineVideo(
@@ -18,7 +19,7 @@ object FaciaDisplayElement {
         ))
       case _ if faciaContent.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
         Some(CrosswordSvg(faciaContent.id))
-      case _ if faciaContent.imageSlideshowReplace =>
+      case _ if faciaContent.imageSlideshowReplace && itemClasses.canShowSlideshow =>
         InlineSlideshow.fromFaciaContent(faciaContent)
       case _ => InlineImage.fromFaciaContent(faciaContent)
     }

@@ -99,7 +99,7 @@ object Switches {
     sellByDate = new LocalDate(2015, 5, 31),
     exposeClientSide = false
   )
-  
+
   val TagPageSizeSwitch = Switch(
     "Performance",
     "tag-page-size",
@@ -281,7 +281,7 @@ object Switches {
     sellByDate = never,
     exposeClientSide = false
   )
-  
+
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",
@@ -628,6 +628,14 @@ object Switches {
     exposeClientSide = true
   )
 
+  val AttachWeatherToTopContainerSwitch = Switch(
+    "Feature",
+    "attach-weather-to-top-container",
+    "Attach weather to top container",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 30),
+    exposeClientSide = true
+  )
 
   // Features
   val ABTestHeadlines = Switch(
@@ -658,16 +666,16 @@ object Switches {
   )
 
   val NotificationsSwitch = Switch(
-    "Feature", 
+    "Feature",
     "notifications",
     "Notifications",
-    safeState = Off, 
+    safeState = Off,
     sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
 
   val ImgixSwitch = Switch(
-    "Feature", 
+    "Feature",
     "imgix",
     "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
     safeState = Off,
