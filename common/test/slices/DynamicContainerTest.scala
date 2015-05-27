@@ -49,7 +49,8 @@ trait DynamicContainerTest extends FlatSpec with Matchers with GeneratorDrivenPr
   }
 
   /** This test should cover all of the above cases for the normal slice for when there is an additional slice above */
-  it should "for any stories, respecting overflow, follow the same rules for the original slice" in {
+  it should "for any stories, respecting overflow, follow the same rules for the original slice, except for " +
+    "that pesky HalfQuarterQl2Ql4B thing" in {
     // You can have more very bigs and huges than these but they overflow into the size below
     val maximumVeryBigs = 2
     val maximumHuges = 1
@@ -67,7 +68,10 @@ trait DynamicContainerTest extends FlatSpec with Matchers with GeneratorDrivenPr
           byGroup.getOrElse(2, Seq.empty).drop(2)
         }).map(_.copy(group = 1))
 
-        slicesFor(stories).value.lift(1).map(Seq(_)) shouldEqual slicesFor(overFlows ++ smallerStories)
+        slicesFor(stories).value.lift(1).map(xs => Seq(xs match {
+          case HalfQuarterQl2Ql4B => HalfQuarterQl2Ql4
+          case other => other
+        })) shouldEqual slicesFor(overFlows ++ smallerStories)
       }
     }
   }

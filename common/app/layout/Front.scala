@@ -1,12 +1,13 @@
 package layout
 
-import com.gu.facia.api.models.{LatestSnap, CollectionConfig, CuratedContent, FaciaContent}
+import com.gu.facia.api.models.{CollectionConfig, CuratedContent, FaciaContent}
 import conf.Switches
 import dfp.{DfpAgent, SponsorshipTag}
-import implicits.FaciaContentImplicits._
 import implicits.FaciaContentFrontendHelpers._
-import model.{PressedPage, _}
+import implicits.FaciaContentImplicits._
+import model.PressedPage
 import model.facia.PressedCollection
+import model.meta.{ListItem, ItemList}
 import org.joda.time.DateTime
 import services.{CollectionConfigWithId, FaciaContentConvert}
 import slices.{MostPopular, _}
@@ -316,7 +317,7 @@ object Front extends implicits.Collections {
           * matter what occurred further up the page.
           */
         dynamicContainer.containerDefinitionFor(
-          faciaContentList.collect({ case content: CuratedContent => content }).map(Story.fromCuratedContent)
+          faciaContentList.collect({ case content: CuratedContent => content }).map(Story.fromFaciaContent)
         ) map { containerDefinition =>
           (seen ++ faciaContentList
             .map(_.url)
@@ -392,7 +393,7 @@ object Front extends implicits.Collections {
     import scalaz.syntax.traverse._
 
     Front(
-      pressedPage.collections.zipWithIndex.toList.mapAccumL(
+      pressedPage.collections.zipWithIndex.mapAccumL(
         (Set.empty[TrailUrl], initialContext)
       ) { case ((seenTrails, context), (pressedCollection, index)) =>
         val container = Container.fromPressedCollection(pressedCollection)
@@ -423,6 +424,25 @@ object Front extends implicits.Collections {
     )
 
   }
+
+  def makeLinkedData(collections: Seq[FaciaContainer]): ItemList = {
+    ItemList(
+      "", // relative iri so just resolves to the base
+      collections.zipWithIndex.map {
+        case (collection, index) =>
+          ListItem(position = index, item = Some(
+            ItemList(
+              "", // don't have a uri for each container
+              collection.items.zipWithIndex.map {
+                case (item, index) =>
+                  ListItem(position = index, url = Some(item.url))
+              }
+            )
+          ))
+      }
+    )
+  }
+
 }
 
 case class Front(

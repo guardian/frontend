@@ -288,7 +288,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         case Path(id) =>
           val search = client.item(id, edition)
             .showElements("all")
-            .showEditorsPicks(true)
             .pageSize(20)
           val newSearch = queryParamsWithEdition.foldLeft(search) {
             case (query, (key, value)) => query.stringParam(key, value)

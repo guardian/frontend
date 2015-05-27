@@ -50,6 +50,7 @@ export default function load (ModuleClass) {
 
         module = new ModuleClass();
         module.init(bootstrap, res);
+        update(res);
         bootstrap.every(updateModuleConfig);
     }
 

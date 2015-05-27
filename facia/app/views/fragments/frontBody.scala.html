@@ -21,7 +21,14 @@
                 }
             role="main">
 
-                @defining(faciaPage.front.containers) { collections =>
+                @defining(layout.Front.fromPressedPage(faciaPage).containers) { collections =>
+
+                    @defining(layout.Front.makeLinkedData(collections)) { linkedData =>
+                        <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+                            @Html(model.meta.LinkedData.toJson(linkedData))
+                        </script>
+                    }
+
                     @collections.map { containerDefinition =>
                         @fragments.containers.facia_cards.container(containerDefinition, faciaPage.frontProperties)
                     }

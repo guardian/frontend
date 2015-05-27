@@ -20,7 +20,7 @@ object CardStyleForFrontend {
   def apply(trail: Trail): CardStyle = {
     if (isExternalLink(trail)) {
       ExternalLink
-    } else if (trail.tags.exists(_.id == "news/series/hsbc-files")) {
+    } else if (trail.tags.exists(_.id == "news/series/hsbc-files") || trail.tags.exists(_.id == "us-news/series/counted-us-police-killings")) {
       SpecialReport
     } else if (trail.isLiveBlog) {
       if (trail.isLive) {

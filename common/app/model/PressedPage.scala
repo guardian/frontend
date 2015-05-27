@@ -78,8 +78,6 @@ case class PressedPage(id: String,
     }
   }
 
-  lazy val front = Front.fromPressedPage(this)
-
   override lazy val description: Option[String] = seoData.description
   override lazy val section: String = seoData.navSection
   lazy val navSection: String = section

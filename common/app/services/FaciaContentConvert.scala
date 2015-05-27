@@ -22,7 +22,7 @@ object FaciaContentConvert {
           href = snap.href,
           trailText = snap.trailText,
           group = snap.group.getOrElse("0"),
-          image = None,
+          image = FaciaImage.getFaciaImage(Option(snap.delegate), trailMetaData, resolvedMetaData),
           isBreaking = snap.isBreaking,
           isBoosted = snap.isBoosted,
           showMainVideo = snap.showMainVideo,

@@ -2,15 +2,17 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/modules/experiments/ab'
 ], function (
     fastdom,
     $,
     _,
-    mediator
+    mediator,
+    ab
     ) {
 
-    var selectorTopEl = '.meta__social',
+    var selectorTopEl = '.social--top',
         selectorBottomEl = '.social--bottom',
         stickyClassName = 'meta__social--sticky',
         stickyRevealClassName = 'meta__social--sticky--reveal',
@@ -18,21 +20,16 @@ define([
 
         deadzone = 100,
 
-        topEl,
-        bottomEl,
-        revealed = false,
-        failed = false;
+        topEl = _.memoize(function () { return $(selectorTopEl)[0]; }),
+        bottomEl = _.memoize(function () { return $(selectorBottomEl)[0]; }),
+
+        inited = false,
+        revealed = false;
 
     function setStickiness() {
         fastdom.read(function () {
-            topEl = topEl || $(selectorTopEl)[0];
-
-            if (!topEl) {
-                failed = true;
-
-            } else if (topEl.getBoundingClientRect().top + deadzone < 0) {
+            if (topEl().getBoundingClientRect().top + deadzone < 0) {
                 reveal();
-
             } else {
                 unreveal();
             }
@@ -40,48 +37,78 @@ define([
     }
 
     function determineStickiness() {
-        if (failed) {
+        if (inited) {
+            setStickiness();
+
+        } else if (!topEl() || !bottomEl()) {
             return;
 
-        } else if (!bottomEl) {
-            fastdom.read(function () {
-                bottomEl = $(selectorBottomEl);
-
-                if (bottomEl) {
-                    fastdom.write(function () {
-                        bottomEl.addClass(stickyClassName);
-                        setTimeout(makeRevealable);
-                    });
-                } else {
-                    failed = true;
-                }
-            });
-
         } else {
-            setStickiness();
+            fastdom.write(function () {
+                $(bottomEl()).addClass(stickyClassName);
+                setTimeout(makeRevealable);
+                inited = true;
+            });
         }
     }
 
     function makeRevealable() {
-        fastdom.write(function () { bottomEl.addClass(stickyRevealableClassName); });
+        fastdom.write(function () { $(bottomEl()).addClass(stickyRevealableClassName); });
     }
 
     function reveal() {
         if (!revealed) {
             revealed = true;
-            fastdom.write(function () { bottomEl.addClass(stickyRevealClassName); });
+            fastdom.write(function () { $(bottomEl()).addClass(stickyRevealClassName); });
         }
     }
 
     function unreveal() {
         if (revealed) {
             revealed = false;
-            fastdom.write(function () { bottomEl.removeClass(stickyRevealClassName); });
+            fastdom.write(function () { $(bottomEl()).removeClass(stickyRevealClassName); });
         }
     }
 
+    function moveToFirstPosition($el) {
+        $el.parent().prepend($el.detach());
+    }
+
     function init() {
-        mediator.on('window:scroll', _.throttle(determineStickiness, 10));
+        var testVariant = ab.getTestVariant('ShareButtons2'),
+            referrer,
+            socialContext;
+
+        if (testVariant.indexOf('referrer') > -1) {
+            referrer = ((window.location.hash + '').match(/referrer=([^&]+)/) || [])[1] || document.referrer || '',
+
+            socialContext = [
+                {id: 'facebook', matchReferrer: 'facebook.com', matchUserAgent: 'FBAN/'},
+                {id: 'twitter', matchReferrer: 't.co', matchUserAgent: 'Twitter for iPhone'}
+            ].filter(function (social) {
+                return referrer.indexOf(social.matchReferrer) > -1 || navigator.userAgent.indexOf(social.matchUserAgent) > -1;
+            })[0];
+
+            if (socialContext) {
+                fastdom.read(function () {
+                    [topEl(), bottomEl()].forEach(function (el) {
+                        if (el) {
+                            fastdom.write(function () {
+                                if (testVariant.indexOf('only') > -1) {
+                                    $(el).addClass('social--referred-only');
+                                }
+
+                                moveToFirstPosition($('.social__item--' + socialContext.id, el).addClass('social__item--referred'));
+                            });
+                        }
+                    });
+                });
+            }
+        }
+
+        if (testVariant.indexOf('sticky') > -1) {
+            mediator.on('window:scroll', _.throttle(determineStickiness, 10));
+        }
     }
 
     return {
