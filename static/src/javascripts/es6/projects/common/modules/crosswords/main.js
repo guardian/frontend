@@ -28,19 +28,20 @@ class Crossword extends React.Component {
         this.rows = dimensions.rows;
         this.clueMap = helpers.buildClueMap(this.props.data.entries);
 
-        this.onCheat = this.onCheat.bind(this);
-        this.onSolution = this.onSolution.bind(this);
-        this.onCheck = this.onCheck.bind(this);
-        this.onCheckAll = this.onCheckAll.bind(this);
-        this.onClearAll = this.onClearAll.bind(this);
-
-        this.onSelect = this.onSelect.bind(this);
-        this.onKeyDown = this.onKeyDown.bind(this);
-        this.onClickHiddenInput = this.onClickHiddenInput.bind(this);
-        this.focusClue = this.focusClue.bind(this);
-        this.insertCharacter = this.insertCharacter.bind(this);
-        this.setReturnPosition = this.setReturnPosition.bind(this);
-        this.goToReturnPosition = this.goToReturnPosition.bind(this);
+        _.bindAll(this,
+            'onCheat',
+            'onSolution',
+            'onCheck',
+            'onCheckAll',
+            'onClearAll',
+            'onSelect',
+            'onKeyDown',
+            'onClickHiddenInput',
+            'focusClue',
+            'insertCharacter',
+            'setReturnPosition',
+            'goToReturnPosition'
+        );
 
         loadFont();
 
