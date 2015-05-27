@@ -920,12 +920,12 @@ object Switches {
   )
 
   // A/B Tests
-  val ABShareButtons = Switch(
-    "A/B Tests",
-    "ab-share-buttons",
+  val ABShareButtons2 = Switch(
+    "A/B Tests", 
+    "ab-share-buttons-2",
     "Switch for test of combinations of referrer-based size, visibility, and stickiness for article share buttons",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 28),
+    sellByDate = new LocalDate(2015, 6, 4),
     exposeClientSide = true
   )
 

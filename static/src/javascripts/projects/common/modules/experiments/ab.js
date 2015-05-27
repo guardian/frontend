@@ -6,7 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/share-buttons',
+    'common/modules/experiments/tests/share-buttons-2',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/mt-rec1',
     'common/modules/experiments/tests/mt-rec2',
@@ -23,7 +23,7 @@ define([
     mediator,
     store,
     mvtCookie,
-    ShareButtons,
+    ShareButtons2,
     HighCommercialComponent,
     MtRec1,
     MtRec2,
@@ -36,7 +36,7 @@ define([
 
     var ab,
         TESTS = _.flatten([
-            new ShareButtons(),
+            new ShareButtons2(),
             new HighCommercialComponent(),
             new MtRec1(),
             new MtRec2(),
