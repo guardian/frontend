@@ -78,6 +78,14 @@ class Crossword extends React.Component {
         this.forceUpdate();
     }
 
+    getCellValue (x, y) {
+        return this.state.grid[x][y].value;
+    }
+
+    cellIsEmpty (x, y) {
+        return !this.getCellValue(x, y);
+    }
+
     insertCharacter (character) {
         const cell = this.state.cellInFocus;
         if (/[A-Z]/.test(character)) {
@@ -100,9 +108,12 @@ class Crossword extends React.Component {
         } else if (!event.metaKey && !event.ctrlKey && !event.altKey) {
             if (event.keyCode === keycodes.backspace) {
                 event.preventDefault();
-                this.setCellValue(cell.x, cell.y, null);
-                this.save();
-                this.focusPrevious();
+                if (this.cellIsEmpty(cell.x, cell.y)) {
+                    this.focusPrevious();
+                } else {
+                    this.setCellValue(cell.x, cell.y, null);
+                    this.save();
+                }
             } else if (event.keyCode === keycodes.left) {
                 event.preventDefault();
                 this.moveFocus(-1, 0);
