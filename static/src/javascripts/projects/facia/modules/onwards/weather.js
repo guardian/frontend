@@ -200,7 +200,7 @@ define([
             $holder = $('#headlines .js-container__header');
 
             if (!!config.switches.attachWeatherToTopContainer) {
-                $holder = $('.js-container__header')[0];
+                $holder = $($('.js-container__header')[0]);
             }
 
             $('.js-weather', $holder).remove();
