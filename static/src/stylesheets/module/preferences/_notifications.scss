@@ -1,0 +1,13 @@
+.notifications-preferences-overlay {
+    display: none;
+
+    // Shown with JS
+    position: fixed;
+    background-color: black;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    color: white;
+}

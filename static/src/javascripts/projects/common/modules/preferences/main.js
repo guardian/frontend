@@ -1,11 +1,13 @@
 define([
     'react',
     'common/utils/_',
+    'common/utils/$',
     'common/utils/config',
     'common/modules/onward/history'
 ], function (
     React,
     _,
+    $,
     config,
     history
 ) {
@@ -126,10 +128,10 @@ define([
                     // Disable the button so it can't be changed while
                     // we process the permission request
                     pushButton.disabled = true;
-
                     return navigator.serviceWorker.ready
                         .then(function (serviceWorkerRegistration) {
-                            // show prompt
+                            $('.js-notifications-preferences-overlay').css('display', 'block');
+
                             return serviceWorkerRegistration.pushManager.subscribe()
                                 .then(function (subscription) {
                                     updateState({ pushEnabled: true });
