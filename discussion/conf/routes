@@ -30,3 +30,5 @@ GET         /discussion/profile/:id/picks.json                                  
 GET         /discussion/profile/:id/witness.json                                controllers.WitnessActivityController.witnessActivity(id: String)
 
 GET         /open/cta/article/*discussionKey.json                               controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
+
+POST        /discussion/proxy/*path                                             controllers.DiscussionProxyController.relay(path)

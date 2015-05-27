@@ -6,6 +6,14 @@ import validCommentText from 'fixtures/discussion/comment-valid';
 import apiPostValidCommentResp from 'fixtures/discussion/api-post-comment-valid';
 import CommentBox from 'common/modules/discussion/comment-box';
 
+var config = {
+    page: {
+        switches: {
+            discussionUseApiProxy: true
+        }
+    }
+};
+
 describe('Comment box', function() {
     var server,
         fixturesId = 'comment-box',
@@ -66,6 +74,9 @@ describe('Comment box', function() {
     beforeEach(function() {
         server = sinon.fakeServer.create();
         fixtures.render(fixture);
+        config.page.switches = {
+            discussionUseApiProxy: true
+        };
         commentBox = new CommentBox({
             discussionId: discussionId,
             maxLength: maxCommentLength,

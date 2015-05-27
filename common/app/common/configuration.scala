@@ -243,6 +243,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object discussion {
     lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
     lazy val secureApiRoot = configuration.getMandatoryStringProperty("discussion.secureApiRoot")
+    lazy val apiRootProxy = configuration.getMandatoryStringProperty("discussion.apiRootProxy")
+    lazy val secureApiRootProxy = configuration.getMandatoryStringProperty("discussion.secureApiRootProxy")
     lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
     lazy val url = configuration.getMandatoryStringProperty("discussion.url")
@@ -310,6 +312,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "idOAuthUrl" -> id.oauthUrl,
       "discussionApiRoot" -> discussion.apiRoot,
       ("secureDiscussionApiRoot", discussion.secureApiRoot),
+      ("discussionApiRootProxy", discussion.apiRootProxy),
+      ("secureDiscussionApiRootProxy", discussion.secureApiRootProxy),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
       ("ophanJsUrl", ophan.jsLocation),
       ("ophanEmbedJsUrl", ophan.embedJsLocation),

@@ -919,6 +919,11 @@ object Switches {
     exposeClientSide = true
   )
 
+  val DiscussionApiProxySwitch = Switch("Feature", "discussion-use-api-proxy",
+    "When switched ON all discussion traffic will be relayed via theguardian.com/discussion/proxy",
+    safeState = Off, sellByDate = new LocalDate(2015, 6, 11)
+  )
+
   // A/B Tests
   val ABShareButtons2 = Switch(
     "A/B Tests", 
