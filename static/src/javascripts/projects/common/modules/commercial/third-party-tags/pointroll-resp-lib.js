@@ -22,12 +22,12 @@ define([
                 var _pr_viewport = null;
 
                 function prInitPubSide() {
-                    _pr_pub_control = new prPubControl();
+                    _pr_pub_control = new PrPubControl();
 
                     window.addEventListener('message', _pr_pub_control.getMessageFromAd, false);
                 }
 
-                function prPubControl() {
+                function PrPubControl() {
                     var _this = this;
                     _this._connections = {};
                     _this._debug_mode = {};
@@ -36,13 +36,13 @@ define([
                         for (var id in _this._connections) {
                             _this.removeAd(id);
                         }
-                    }
+                    };
 
                     window.prGarbageCollect = function () {
                         for (var id in _this._connections) {
                             _this.removeAd(id);
                         }
-                    }
+                    };
 
                     _this.createConnection = function (object) {
                         var _connection_id = object.id;
@@ -62,7 +62,7 @@ define([
 
                             for (var i = 0; i < _site_iframes.length; i++) {
                                 try {
-                                    if (_site_iframes[i].contentWindow.prPlacementId == _connection_id) {
+                                    if (_site_iframes[i].contentWindow.prPlacementId === _connection_id) {
                                         _this.log(_connection_id, 'non-pr iframe found with matching prPlacementId, connection in progress');
 
                                         _connection_iframe = _site_iframes[i];
@@ -73,10 +73,10 @@ define([
                             }
                         }
 
-                        if (_connection_iframe != null) {
+                        if (_connection_iframe !== null) {
                             _this.log(_connection_id, 'connection listeners and callbacks initialized, connection complete');
 
-                            _this._connections[_connection_id] = new prPubConnection(_connection_id, _connection_iframe);
+                            _this._connections[_connection_id] = new PrPubConnection(_connection_id, _connection_iframe);
 
                             for (var key in _this._connections[_connection_id]._iframe.getBoundingClientRect()) {
                                 _iframe_bounding_rect[key] = _this._connections[_connection_id]._iframe.getBoundingClientRect()[key];
@@ -110,7 +110,7 @@ define([
                         } else {
                             _this.error(_connection_id, 'no pr ad found in any iframe');
                         }
-                    }
+                    };
 
                     _this.destroyConnection = function (id) {
                         window.removeEventListener('orientationchange', _this._connections[id].getBrowserSize, false);
@@ -118,13 +118,13 @@ define([
                         window.removeEventListener('scroll', _this._connections[id].windowScrollHandler, false);
 
                         _this._connections[id].removeAllListeners();
-                    }
+                    };
 
                     _this.error = function (id, message) {
                         if (_this._debug_mode[id]) {
                             console.log('prPubConnection error (' + id + ') - ' + message);
                         }
-                    }
+                    };
 
                     _this.getMessageFromAd = function (event) {
                         var _object;
@@ -139,7 +139,7 @@ define([
                             return;
                         }
 
-                        if (_pr_viewport == null) {
+                        if (_pr_viewport === null) {
                             _pr_viewport = {};
                             _pr_viewport.width = {};
                             _pr_viewport.height = {};
@@ -212,7 +212,7 @@ define([
                                     break;
                             }
                         }
-                    }
+                    };
 
                     _this.getViewport = function (dimension) {
                         var _name_upper = dimension;
@@ -223,7 +223,7 @@ define([
                         if (window['inner' + _name_upper] === undefined) {
                             _pr_viewport[_name_lower].target = _document_element;
                             _pr_viewport[_name_lower].prefix = 'client';
-                        } else if (window['inner' + _name_upper] != _document_element['client' + _name_upper]) {
+                        } else if (window['inner' + _name_upper] !== _document_element['client' + _name_upper]) {
                             var _body_element = document.createElement('body');
                             _body_element.id = 'pr-viewport-test-body';
                             _body_element.style.cssText = 'overflow: scroll;';
@@ -236,7 +236,7 @@ define([
                             _body_element.appendChild(_div_element);
                             _document_element.insertBefore(_body_element, _document.head);
 
-                            if (_div_element['offset' + _name_upper] == 7) {
+                            if (_div_element['offset' + _name_upper] === 7) {
                                 _pr_viewport[_name_lower].target = _document_element;
                                 _pr_viewport[_name_lower].prefix = 'client';
                             } else {
@@ -249,17 +249,17 @@ define([
                             _pr_viewport[_name_lower].target = window;
                             _pr_viewport[_name_lower].prefix = 'inner';
                         }
-                    }
+                    };
 
                     _this.log = function (id, message) {
                         if (_this._debug_mode[id]) {
-                            if (typeof message == 'string') {
+                            if (typeof message === 'string') {
                                 console.log('prPubConnection log (' + id + ') - ' + message);
                             } else {
                                 console.log(message);
                             }
                         }
-                    }
+                    };
 
                     _this.removeAd = function (id) {
                         _this.destroyConnection(id);
@@ -270,20 +270,20 @@ define([
 
                         delete _this._connections[id];
                         delete _this._debug_mode[id];
-                    }
+                    };
 
                     _this.setDebugMode = function (id, flag) {
                         _this._debug_mode[id] = flag;
-                    }
+                    };
 
                     _this.warning = function (id, message) {
                         if (_this._debug_mode[id]) {
                             console.log('prPubConnection warning (' + id + ') - ' + message);
                         }
-                    }
+                    };
                 }
 
-                function prPubConnection(id, iframe) {
+                function PrPubConnection(id, iframe) {
                     var _this = this;
                     _this._ad_is_shown = true;
                     _this._ad_has_shown = false;
@@ -324,7 +324,7 @@ define([
                         _element.addEventListener(_type, _this.customEventFunction, false);
 
                         _this._listeners[_target][_type] = 'added';
-                    }
+                    };
 
                     _this.applyCustomStyles = function () {
                         var _targets = _this._ad_styles_applied;
@@ -337,7 +337,7 @@ define([
                                 _target.style[style] = _this._ad_styles_applied[target][style];
                             }
                         }
-                    }
+                    };
 
                     _this.customEventFunction = function (event) {
                         var _custom_event = {};
@@ -423,19 +423,19 @@ define([
                                 _pr_pub_control.log(_this._id, _custom_event);
                             }
                         }
-                    }
+                    };
 
                     _this.getAdSlotSize = function () {
                         var _width = _this._ad_slot_target.offsetWidth;
                         var _height = _this._ad_slot_target.offsetHeight;
 
                         _this.sendMessageToAd({'setAdSlotSize': {'width': _width, 'height': _height}});
-                    }
+                    };
 
                     _this.getAdSlotTarget = function (index) {
                         var _ad_slot;
 
-                        if (index != undefined && index != null && index != '') {
+                        if (index !== undefined && index !== null && index !== '') {
                             _ad_slot = _this._iframe;
 
                             for (var i = 0; i < index; i++) {
@@ -446,7 +446,7 @@ define([
                         }
 
                         return _ad_slot;
-                    }
+                    };
 
                     _this.getBrowserSize = function () {
                         window.setTimeout(function () {
@@ -460,7 +460,7 @@ define([
 
                             _this.sendMessageToAd({'browserSizeUpdated': {'width': _width, 'height': _height}});
                         }, 0);
-                    }
+                    };
 
                     _this.hideAd = function () {
                         window.clearTimeout(_this._tracking_timeout);
@@ -483,12 +483,12 @@ define([
 
                             _this.removeCustomStyles();
                         }
-                    }
+                    };
 
                     _this.incrementTrackingCount = function () {
                         _this._tracking_count += 10;
                         _this._tracking_timeout = window.setTimeout(_this.incrementTrackingCount, 10);
-                    }
+                    };
 
                     _this.overwriteImportantStyles = function (object) {
                         for (var targets in object) {
@@ -504,7 +504,7 @@ define([
                                 _targets[i].style.cssText = _css_text;
                             }
                         }
-                    }
+                    };
 
                     _this.removeAllListeners = function () {
                         for (var target in _this._listeners) {
@@ -525,7 +525,7 @@ define([
                             }
 
                             for (var type in _this._listeners[target]) {
-                                if (_this._listeners[target][type] == 'added') {
+                                if (_this._listeners[target][type] === 'added') {
                                     _element.removeEventListener(type, _this.customEventFunction, false);
                                     _this._listeners[target][type] = 'removed';
                                 }
@@ -544,7 +544,7 @@ define([
                                 _target.style[style] = 'initial';
                             }
                         }
-                    }
+                    };
 
                     _this.removeListener = function (object) {
                         var _target = object.target;
@@ -572,7 +572,7 @@ define([
                         } catch (error) {
                             _pr_pub_control.error(_this._id, 'trying to remove event listener that has not yet been added');
                         }
-                    }
+                    };
 
                     _this.revealAd = function () {
                         if (!_this._ad_is_shown) {
@@ -582,11 +582,11 @@ define([
                         }
 
                         _this.applyCustomStyles();
-                    }
+                    };
 
                     _this.sendMessageToAd = function (message) {
                         _this._iframe.contentWindow.postMessage(JSON.stringify(message), '*');
-                    }
+                    };
 
                     _this.setAdOffset = function (object) {
                         for (var offset in object) {
@@ -594,13 +594,13 @@ define([
                         }
 
                         _this.updateIframeRect();
-                    }
+                    };
 
                     _this.setAdPosition = function (position) {
                         _this._iframe.style.position = position;
 
                         _this.updateIframeRect();
-                    }
+                    };
 
                     _this.setAdSize = function (object) {
                         for (var size in object) {
@@ -611,7 +611,7 @@ define([
                         }
 
                         _this.updateIframeRect();
-                    }
+                    };
 
                     _this.setAdSlotTarget = function (index) {
                         _this._ad_slot_index = parseInt(index);
@@ -620,7 +620,7 @@ define([
                         for (var i = 0; i < _this._ad_slot_index; i++) {
                             _this._ad_slot_target = _this._ad_slot_target.parentNode;
                         }
-                    }
+                    };
 
                     _this.setCustomStyles = function (object) {
                         var _index = _this._ad_slot_index;
@@ -638,7 +638,7 @@ define([
                         } else {
                             _pr_pub_control.warning(_this._id, 'attempting to add custom styles to the ad slot while it is hidden');
                         }
-                    }
+                    };
 
                     _this.setDirectStyles = function (object) {
                         for (var targets in object) {
@@ -651,7 +651,7 @@ define([
                                 }
                             }
                         }
-                    }
+                    };
 
                     _this.updateBodySize = function (event) {
                         var _body_resize_object = {
@@ -659,16 +659,16 @@ define([
                                 'width': document.body.offsetWidth,
                                 'height': document.body.offsetHeight
                             }
-                        }
+                        };
 
                         _this.sendMessageToAd({'updatePubPageInfo': _body_resize_object});
-                    }
+                    };
 
                     _this.updateIframeRect = function () {
                         try {
                             var _iframe_resize_object = {
                                 'iframe': {}
-                            }
+                            };
 
                             for (var param in _this._iframe.getBoundingClientRect()) {
                                 _iframe_resize_object.iframe[param] = _this._iframe.getBoundingClientRect()[param];
@@ -678,7 +678,7 @@ define([
                         } catch (error) {
                             _pr_pub_control.error(_this._id, 'getBoundingClientRect is not supported by this browser');
                         }
-                    }
+                    };
 
                     _this.updateWindowSize = function () {
                         var _window_resize_object = {
@@ -686,10 +686,10 @@ define([
                                 'width': _pr_viewport.width.target[_pr_viewport.width.prefix + 'Width'],
                                 'height': _pr_viewport.height.target[_pr_viewport.height.prefix + 'Height']
                             }
-                        }
+                        };
 
                         _this.sendMessageToAd({'updatePubPageInfo': _window_resize_object});
-                    }
+                    };
 
                     _this.windowScrollHandler = function (event) {
                         var _window_scroll_object = {
@@ -697,10 +697,10 @@ define([
                                 'x': window.scrollX,
                                 'y': window.scrollY
                             }
-                        }
+                        };
 
                         _this.sendMessageToAd({'updatePubPageInfo': _window_scroll_object});
-                    }
+                    };
 
                     _this.wrapElements = function (object) {
                         var _class = object.class || '';
@@ -734,7 +734,7 @@ define([
                         if (_to) {
                             document.querySelectorAll(_to)[0].appendChild(_new_el);
                         }
-                    }
+                    };
                 }
 
                 prInitPubSide();
@@ -750,7 +750,7 @@ define([
                     },
                     warn: function () {
                     }
-                }
+                };
             }
         }
     }
