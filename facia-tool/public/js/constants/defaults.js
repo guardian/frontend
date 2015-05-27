@@ -31,7 +31,12 @@ export default {
 
     detectPendingChangesInClipboard: 4000,
 
-    maxFronts: 500,
+    defaultPriority: 'editorial',
+    maxFronts: {
+        'editorial': 200,
+        'commercial': 350,
+        'training': 50
+    },
 
     filterTypes: {
         section: { display: 'in section:', param: 'section', path: 'sections', placeholder: 'e.g. news' },

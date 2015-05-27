@@ -1441,6 +1441,14 @@ button {
     background: #148ad2;
 }
 
+.tools .tool:first-child:disabled {
+    background: #ccc;
+    cursor: default;
+}
+.tools .tool:first-child:hover:disabled {
+    background: #ccc;
+}
+
 .tools .tool.draft-publish {
     background: #ffc107;
 }

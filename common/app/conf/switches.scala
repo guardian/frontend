@@ -619,6 +619,14 @@ object Switches {
     exposeClientSide = true
   )
 
+  val AttachWeatherToTopContainerSwitch = Switch(
+    "Feature",
+    "attach-weather-to-top-container",
+    "Attach weather to top container",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 30),
+    exposeClientSide = true
+  )
 
   // Features
   val ABTestHeadlines = Switch(
@@ -652,7 +660,7 @@ object Switches {
     "Feature",
     "notifications",
     "Notifications",
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
@@ -903,12 +911,27 @@ object Switches {
   )
 
   // A/B Tests
+<<<<<<< HEAD
   val ABShareButtons = Switch(
     "A/B Tests",
     "ab-share-buttons",
+=======
+  val ABLiveblogNotifications = Switch(
+    "A/B Tests",
+    "ab-liveblog-notifications",
+    "Liveblog notifications",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 1),
+    exposeClientSide = true
+  )
+
+  val ABShareButtons2 = Switch(
+    "A/B Tests",
+    "ab-share-buttons-2",
+>>>>>>> master
     "Switch for test of combinations of referrer-based size, visibility, and stickiness for article share buttons",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 28),
+    sellByDate = new LocalDate(2015, 6, 4),
     exposeClientSide = true
   )
 
