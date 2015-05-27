@@ -16,7 +16,7 @@ object LiveContentApi extends ElasticSearchLiveContentApiClient
 
 object PreviewContentApi extends ElasticSearchPreviewContentApiClient
 
-object Static extends Assets(Configuration.assets.path)
+object Static extends Assets(Configuration.assets.httpPath)
 object StaticSecure extends Assets(Configuration.assets.securePath)
 
 import Responses._

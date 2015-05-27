@@ -10,12 +10,13 @@ import conf.{Configuration, Switches}
 import org.apache.commons.io.IOUtils
 import play.api.Play
 import play.api.Play.current
+import play.api.mvc.RequestHeader
 
 import scala.util.Try
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
-class GuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
+class GuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends implicits.Requests with Logging {
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
 
@@ -200,21 +201,18 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
   }
 
-  object static {
-    lazy val path =
-      if (environment.secure) configuration.getMandatoryStringProperty("static.securePath")
-      else configuration.getMandatoryStringProperty("static.path")
-  }
-
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
   }
 
   object assets {
-    lazy val path =
-      if (environment.secure) configuration.getMandatoryStringProperty("assets.securePath")
-      else configuration.getMandatoryStringProperty("assets.path")
+
+    lazy val httpPath = configuration.getMandatoryStringProperty("assets.path")
     lazy val securePath = configuration.getMandatoryStringProperty("assets.securePath")
+
+    def path(implicit req: RequestHeader) = if (req.isSecure) securePath else httpPath
+
+
   }
 
   object staticSport {
