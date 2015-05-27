@@ -29,7 +29,7 @@ define([
 ) {
     var modules = [
         ['cm-thirdPartyTags', thirdPartyTags],
-        ['cm-articleAsideAdverts', articleAsideAdverts],
+        //['cm-articleAsideAdverts', articleAsideAdverts],
         ['cm-articleBodyAdverts', articleBodyAdverts],
         ['cm-sliceAdverts', sliceAdverts],
         ['cm-frontCommercialComponents', frontCommercialComponents],

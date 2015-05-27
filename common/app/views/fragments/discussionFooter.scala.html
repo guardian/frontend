@@ -89,7 +89,7 @@
         u-cf"
         data-discussion-key="@discussionId" data-discussion-closed="@discussionClosed" data-component="discussion">
 
-            <div class="discussion__top-border gs-container">
+            <div class="discussion__top-border gs-container @if(ABMtRec1.isSwitchedOn || ABMtRec2.isSwitchedOn) {discussion__mtrec-test}">
                 <div class="content__main-column">
 
                     <div class="modern-hidden">
@@ -130,6 +130,12 @@
                         </script>
 
                     </div>
+
+                    @if(ABMtRec1.isSwitchedOn || ABMtRec2.isSwitchedOn) {
+                        <div class="discussion__ad-slot">
+                            <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--dfp ad-slot--right ad-slot--mpu-banner-ad" data-link-name="ad slot right" data-test-id="ad-slot-right" data-name="right" data-mobile="1,1|300,250|300,251|300,600"></div>
+                        </div>
+                    }
 
                 </div>
             </div>
