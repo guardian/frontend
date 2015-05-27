@@ -99,13 +99,6 @@ define([
                 bootstrapContext('profile', profile);
             }
 
-            if (config.page.isPreview) {
-                // lazy load this only if on the preview server
-                require(['bootstraps/preview'], function (preview) {
-                    bootstrapContext('preview', preview);
-                });
-            }
-
             if (config.page.isPreferencesPage) {
                 require(['bootstraps/preferences'], function (preferences) {
                     bootstrapContext('preferences', preferences);
