@@ -4,7 +4,6 @@ define([
     'common/utils/cookies',
     'common/utils/detect',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
-    'common/modules/commercial/third-party-tags/criteo',
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab'
@@ -14,7 +13,6 @@ define([
     cookies,
     detect,
     audienceScienceGateway,
-    criteo,
     krux,
     userAdTargeting,
     ab
@@ -92,7 +90,7 @@ define([
                 tn:      _.uniq(_.compact([page.sponsorshipType].concat(parseIds(page.tones)))),
                 // round video duration up to nearest 30 multiple
                 vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
-            }, audienceScienceGateway.getSegments(), criteo.getSegments());
+            }, audienceScienceGateway.getSegments());
 
         // filter out empty values
         return _.pick(pageTargets, function (target) {

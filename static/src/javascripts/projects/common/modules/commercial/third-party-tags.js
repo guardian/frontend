@@ -6,7 +6,6 @@ define([
     'common/utils/config',
     'common/modules/commercial/third-party-tags/audience-science',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
-    'common/modules/commercial/third-party-tags/criteo',
     'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
     'common/modules/commercial/third-party-tags/krux',
@@ -17,7 +16,6 @@ define([
     config,
     audienceScience,
     audienceScienceGateway,
-    criteo,
     imrWorldwide,
     remarketing,
     krux,
@@ -38,7 +36,6 @@ define([
         }
 
         audienceScience.load();
-        criteo.load();
         imrWorldwide.load();
         remarketing.load();
         outbrain.load();
