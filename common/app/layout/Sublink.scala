@@ -9,7 +9,6 @@ import model._
 import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import views.support.CardStyleForFrontend
 import views.support._
 
 import scala.Function.const
@@ -71,10 +70,16 @@ case class Byline(
   get: String,
   contributorTags: Seq[model.Tag]
 ) {
-  def htmlWithLinks(requestHeader: RequestHeader) =
-    ContributorLinks(Html(get), contributorTags)(requestHeader)
+  private def primaryContributor = {
+    contributorTags.sortBy({ tag =>
+      get.indexOf(tag.webTitle) match {
+        case -1 => Int.MaxValue
+        case n => n
+      }
+    }).headOption
+  }
 
-  def html = Html(get)
+  def shortByline = primaryContributor map { tag => s"${tag.webTitle} and others" } getOrElse get
 }
 
 object DisplaySettings {
@@ -214,7 +219,8 @@ object FaciaCard {
       MediaType.fromFaciaContent(faciaContent),
       DisplaySettings.fromTrail(faciaContent),
       faciaContent.isLive,
-      None
+      None,
+      useShortByline = false
     )
   }
 }
@@ -240,8 +246,11 @@ case class ContentCard(
   mediaType: Option[MediaType],
   displaySettings: DisplaySettings,
   isLive: Boolean,
-  timeStampDisplay: Option[FaciaCardTimestamp]
+  timeStampDisplay: Option[FaciaCardTimestamp],
+  useShortByline: Boolean
 ) extends FaciaCard {
+  def bylineText: Option[String] = if (useShortByline) byline.map(_.shortByline) else byline.map(_.get)
+
   def setKicker(kicker: Option[ItemKicker]) = copy(header = header.copy(kicker = kicker))
 
   def isVideo = displayElement match {
