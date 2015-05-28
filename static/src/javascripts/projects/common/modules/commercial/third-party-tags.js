@@ -4,6 +4,7 @@
 define([
     'Promise',
     'common/utils/config',
+    'common/utils/mediator',
     'common/modules/commercial/third-party-tags/audience-science',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
     'common/modules/commercial/third-party-tags/criteo',
@@ -14,6 +15,7 @@ define([
 ], function (
     Promise,
     config,
+    mediator,
     audienceScience,
     audienceScienceGateway,
     criteo,
