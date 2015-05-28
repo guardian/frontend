@@ -33,6 +33,7 @@ define([
         this.showForSensitive = false;
 
         this.canRun = function () {
+            console.log("Can run");
             return true;
         };
 
@@ -40,10 +41,16 @@ define([
             {
                 id: 'variant',
                 test: function () {
+                    console.log("+++ Test");
+
                     mediator.on('module:identity:api:loaded', function () {
+
                         if (!/Network Front|Section/.test(config.page.contentType)) {
+                            console.log("+++ Content");
                             var saveForLater = new SaveForLater();
+                            console.log("+++ TSL");
                             saveForLater.init();
+                            console.log("+++ After init");
                         }
                     });
 
