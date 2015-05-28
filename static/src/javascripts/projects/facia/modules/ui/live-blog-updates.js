@@ -24,14 +24,14 @@ define([
     blockTemplate
 ) {
     var numDisplayedBlocks = 4,
-        blockHeightPx = 77,
+        blockHeightPx = 75,
 
-        animateDelayMs = 1000,
+        animateDelayMs = 2000,
         refreshSecs = 30,
         refreshDecay = 1,
         refreshMaxTimes = 5,
 
-        selector = '.js-liveblog-blocks',
+        selector = '.js-snappable .js-liveblog-blocks',
         blocksClassName = 'fc-item__liveblog-blocks',
         newBlockClassName = 'fc-item__liveblog-block--new',
         oldBlockClassName = 'fc-item__liveblog-block--old',
@@ -113,7 +113,7 @@ define([
                         '</div>'
                     );
 
-                bonzo(element).empty().addClass(blocksClassName).append(el);
+                bonzo(element).addClass(blocksClassName).append(el);
 
                 if (numNewBlocks) {
                     animateBlocks(el[0]);
