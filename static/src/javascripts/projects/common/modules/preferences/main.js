@@ -189,7 +189,7 @@ define([
                     }
 
                     /*global fetch, Headers*/
-                    return fetch(mobileNotificationsWebHost + '/web/subscription', {
+                    return fetch(mobileNotificationsWebHost + '/?url=http://push-api-web.gutools.co.uk/web/subscription', {
                         method: options.delete ? 'DELETE' : 'POST',
                         headers: new Headers({ 'Content-Type': 'application/json' }),
                         // TODO: Support deprecated subscriptionId (now part of endpoint)
@@ -210,7 +210,7 @@ define([
                     }
                 });
 
-                navigator.serviceWorker.register('/2015-05-19-service-worker.js')
+                navigator.serviceWorker.register('/2015-05-28-service-worker.js')
                     .then(initialiseState);
             };
 
