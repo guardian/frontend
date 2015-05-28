@@ -9,7 +9,8 @@ define([
     'common/modules/commercial/third-party-tags/criteo',
     'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
-    'common/modules/commercial/third-party-tags/krux'
+    'common/modules/commercial/third-party-tags/krux',
+    'common/modules/commercial/third-party-tags/outbrain'
 ], function (
     Promise,
     config,
@@ -18,7 +19,8 @@ define([
     criteo,
     imrWorldwide,
     remarketing,
-    krux
+    krux,
+    outbrain
 ) {
 
     function init() {
@@ -39,7 +41,15 @@ define([
         remarketing.load();
         krux.load();
 
+        mediator.once('modules:commercial:dfp:alladsrendered', function () {
+            loadThirdParties();
+        });
+
         return Promise.resolve(null);
+    }
+
+    function loadThirdParties() {
+        outbrain.load();
     }
 
     return {
