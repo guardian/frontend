@@ -37,8 +37,19 @@ define([
         return lenientRules;
     }
 
-    function getAdSpace(rules) {
-        return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+    function getLongArticleRules() {
+        var newRules = _.cloneDeep(getRules());
+
+        newRules.selectors[' .ad-slot'] = {
+            minAbove: 1000,
+            minBelow: 1000
+        };
+
+        return newRules;
+    }
+
+    function getAdSpace() {
+        return spacefinder.getParaWithSpace(getLongArticleRules()).then(function (nextSpace) {
             // check if spacefinder found another space
             if (typeof nextSpace === 'undefined') {
                 return Promise.resolve(null);
@@ -47,7 +58,7 @@ define([
             // if yes add another ad
             adNames.push(['inline2', 'inline']);
             return insertAdAtP(nextSpace).then(function () {
-                return getAdSpace(rules);
+                return getAdSpace();
             });
         });
     }
@@ -95,23 +106,28 @@ define([
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            return inlineMercPromise.then(function () {
+            /*return inlineMercPromise.then(function () {
                 return spacefinder.getParaWithSpace(rules).then(function (space) {
                     return insertAdAtP(space);
                 }).then(function () {
-                    /*if (detect.isBreakpoint({max: 'tablet'})) {
+                    if (detect.isBreakpoint({max: 'tablet'})) {
                         return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
-                            console.log("Another space?", nextSpace);
                             return insertAdAtP(nextSpace);
                         })
                     } else {
                         return Promise.resolve(null);
-                    }*/
+                    }
+                });
+            });*/
 
+            return inlineMercPromise.then(function () {
+                return spacefinder.getParaWithSpace(rules).then(function (space) {
+                    return insertAdAtP(space);
+                }).then(function () {
                     return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
                         return insertAdAtP(nextSpace);
                     }).then(function () {
-                        return getAdSpace(rules);                        
+                        return getAdSpace();                        
                     });
                 });
             });
