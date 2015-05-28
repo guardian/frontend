@@ -49,14 +49,15 @@ define([
 
         var self = this,
             $saver = bonzo(qwery('.js-save-for-later')[0]),
-            templateName = self.templates[deferToClick ? "signedInThisArticle" : "signedOutThisArticle"];
+            //$saver = bonzo('.js-save-for-later'),
+            templateName = self.templates[deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
 
         $saver.html(template(templateName, {
-                url: url,
-                icon: bookmarkSvg,
-                state: state
-            })
-        );
+            url: url,
+            icon: bookmarkSvg,
+            state: state
+
+        }));
     };
 
     SaveForLater.prototype.getSavedArticles = function () {
