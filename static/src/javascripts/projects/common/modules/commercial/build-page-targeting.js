@@ -67,6 +67,16 @@ define([
             });
 
             return abParams;
+        },
+        adtestGet = function () {
+            if (cookies.get('demoadtest')) {
+                var demoAdtest = cookies.get('demoadtest');
+                cookies.remove('demoadtest');
+                return demoAdtest;
+            } else if (cookies.get('adtest')) {
+                var cookieAdtest = cookies.get('adtest');
+                return cookieAdtest;
+            }
         };
 
     return function (opts) {
@@ -83,7 +93,7 @@ define([
                 x:       krux.getSegments(),
                 su:      page.isSurging,
                 bp:      detect.getBreakpoint(),
-                at:      cookies.get('adtest'),
+                at:      adtestGet(),
                 gdncrm:  userAdTargeting.getUserSegments(),
                 ab:      abParam(),
                 co:      parseIds(page.authorIds),
