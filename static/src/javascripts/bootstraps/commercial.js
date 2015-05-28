@@ -11,6 +11,7 @@ define([
     'common/modules/commercial/front-commercial-components',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
+    'common/modules/commercial/third-party-tags-lazy',
     'common/modules/user-prefs'
 ], function (
     Promise,
@@ -25,16 +26,20 @@ define([
     frontCommercialComponents,
     sliceAdverts,
     thirdPartyTags,
+    thirdPartyTagsLazy,
     userPrefs
 ) {
     var modules = [
-        ['cm-thirdPartyTags', thirdPartyTags],
         ['cm-articleAsideAdverts', articleAsideAdverts],
         ['cm-articleBodyAdverts', articleBodyAdverts],
         ['cm-sliceAdverts', sliceAdverts],
         ['cm-frontCommercialComponents', frontCommercialComponents],
         ['cm-badges', badges]
     ];
+
+    if (!config.switches.thirdpartydefer) {
+       modules.push(['cm-thirdPartyTags', thirdPartyTags]); 
+    }
 
     return {
         init: function () {
