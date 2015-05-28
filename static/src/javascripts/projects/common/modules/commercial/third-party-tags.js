@@ -44,13 +44,13 @@ define([
         krux.load();
 
         mediator.once('modules:commercial:dfp:alladsrendered', function () {
-            loadThirdParties();
+            loadLater();
         });
 
         return Promise.resolve(null);
     }
 
-    function loadThirdParties() {
+    function loadLater() {
         outbrain.load();
     }
 
