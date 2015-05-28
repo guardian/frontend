@@ -7,7 +7,7 @@ import common.editions.EditionalisedSections
 import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.Switches
 import controllers.front._
-import layout.{CollectionEssentials, FaciaContainer}
+import layout.{Front, CollectionEssentials, FaciaContainer}
 import model._
 import model.facia.PressedCollection
 import performance.MemcachedAction
@@ -250,7 +250,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         case Some(pressedPage) =>
           val maybeResponse =
             for {
-              (container, index) <- pressedPage.front.containers.zipWithIndex.find(_._1.dataId == collectionId)
+              (container, index) <- Front.fromPressedPage(pressedPage).containers.zipWithIndex.find(_._1.dataId == collectionId)
               containerLayout <- container.containerLayout
             } yield
             Future.successful{Cached(pressedPage) {
@@ -289,7 +289,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     log.info(s"Serving collection $collectionId on front $frontId")
 
     withPressedPage(frontId) { pressedPage =>
-      pressedPage.front.containers.find(_.dataId == collectionId) match {
+      Front.fromPressedPage(pressedPage).containers.find(_.dataId == collectionId) match {
         case Some(containerDefinition) =>
           Cached(60) {
             JsonComponent(

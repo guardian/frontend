@@ -18,7 +18,7 @@
 <meta name="HandheldFriendly" content="True" />
 
 @if(conf.Switches.NotificationsSwitch.isSwitchedOn && item.isPreferencesPage) {
-    <link rel="manifest" href="/2015-05-26-manifest.json">
+    <link rel="manifest" href="/2015-05-28-manifest.json" crossorigin="use-credentials">
 }
 
 @* http://www.chromium.org/developers/design-documents/dns-prefetching *@
@@ -115,6 +115,8 @@
 
 <meta name="google-site-verification" content="LR-FN6c2gIEUoo3k049w1nxyHykmac5ZE3SaUOiKc30" />
 
-<script data-schema="organization" type="application/ld+json">
-@Html(LinkedData.toJson(item.linkedData))
-</script>
+@item.linkedData.map { linkedData =>
+    <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+        @Html(LinkedData.toJson(linkedData))
+    </script>
+}
