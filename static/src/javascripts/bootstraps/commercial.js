@@ -34,12 +34,10 @@ define([
         ['cm-articleBodyAdverts', articleBodyAdverts],
         ['cm-sliceAdverts', sliceAdverts],
         ['cm-frontCommercialComponents', frontCommercialComponents],
+        ['cm-thirdPartyTags', thirdPartyTags],
+        ['cm-thirdPartyTagsLazy', thirdPartyTagsLazy],
         ['cm-badges', badges]
     ];
-
-    if (!config.switches.thirdpartydefer) {
-       modules.push(['cm-thirdPartyTags', thirdPartyTags]); 
-    }
 
     return {
         init: function () {
