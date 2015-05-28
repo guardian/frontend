@@ -17,16 +17,16 @@ var notificationData;
 
 self.addEventListener('push', function (event) {
     event.waitUntil(
-        fetch('@{JavaScript(Configuration.pushNotifications.host + "/messages/web/latest")}')
+        fetch('@{JavaScript(Configuration.pushNotifications.host + "/?url=http://push-api-web.gutools.co.uk/messages/web/latest")}')
             .then(function (x) { return x.json(); })
             .then(function (data) {
-                // Warning: reassign!
+                // Warning: reassign !
                 notificationData = {
                     title: data.message,
                     url: data.link,
                     body: '',
                     tag: 'breaking-news',
-                    icon: '@{JavaScript(Static("images/favicons/152x152.png").path)}'
+                    icon: '@{JavaScript(Static("images/favicons/notification.png").path)}'
                 };
 
                 return self.registration.showNotification(notificationData.title, {

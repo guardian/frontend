@@ -2,6 +2,7 @@
 
 @import views.html.fragments.items.elements.facia_cards.itemHeader
 @import views.support._
+@import layout.FrontendLatestSnap
 @import implicits.ItemKickerImplicits._
 
 @icon = {
@@ -20,10 +21,10 @@
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
     @header.kicker match {
-        case Some(kicker) => {
+        case Some(kicker) if snapType != Some(FrontendLatestSnap) => {
             @articleLink{<span class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</span> @headline()}
         }
-        case None => {
+        case _ => {
             @articleLink{@headline()}
         }
     }
