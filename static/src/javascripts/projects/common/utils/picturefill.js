@@ -82,7 +82,7 @@ define([
         (function () {
             pf.srcsetSupported = 'srcset' in image;
             pf.sizesSupported = 'sizes' in image;
-            pf.curSrcSupported = "currentSrc" in image;
+            pf.curSrcSupported = 'currentSrc' in image;
         })();
 
         // just a string trim workaround
@@ -361,7 +361,7 @@ define([
                         picImg.src = bestCandidate.url;
                         // currentSrc attribute and property to match
                         // http://picture.responsiveimages.org/#the-img-element
-                        if ( !pf.curSrcSupported ) {
+                        if (!pf.curSrcSupported) {
                             picImg.currentSrc = picImg.src;
                         }
                     });
