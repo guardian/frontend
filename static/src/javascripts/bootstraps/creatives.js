@@ -3,6 +3,7 @@ define([
     'common/modules/commercial/creatives/commercial-component',
     'common/modules/commercial/creatives/expandable',
     'common/modules/commercial/creatives/expandable-v2',
+    'common/modules/commercial/creatives/expandable-v3',
     'common/modules/commercial/creatives/fluid250',
     'common/modules/commercial/creatives/fluid250-v3',
     'common/modules/commercial/creatives/fluid250GoogleAndroid',
