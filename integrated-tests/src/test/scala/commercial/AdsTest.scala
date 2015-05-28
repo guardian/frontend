@@ -6,8 +6,6 @@ import org.openqa.selenium.{By, WebElement}
 import org.scalatest.tags.Retryable
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 
-import scala.util.control.NonFatal
-
 @DoNotDiscover
 @Retryable
 class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
@@ -18,13 +16,7 @@ class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
   }
 
   private def waitForElement(selector: String): Unit = {
-    try {
-      new WebDriverWait(webDriver, 20).until(presenceOfElementLocated(By.cssSelector(selector)))
-    } catch {
-      case NonFatal(e) =>
-        println("======= page source =======")
-        println(webDriver.getPageSource)
-    }
+    new WebDriverWait(webDriver, 20).until(presenceOfElementLocated(By.cssSelector(selector)))
   }
 
   private def waitForAdLoad(domSlotId: String): Unit = waitForElement(s"#$domSlotId > div > iframe")
@@ -43,12 +35,7 @@ class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
 
   private def shouldBeVisible(maybeComponent: => Option[WebElement]): Unit = {
     maybeComponent shouldBe defined
-    val component = maybeComponent.get
-    if (!component.isDisplayed) {
-      println("======= page source =======")
-      println(webDriver.getPageSource)
-    }
-    component.isDisplayed shouldBe true
+    maybeComponent.get.isDisplayed shouldBe true
   }
 
   "Ads" should "display on the sport front" in {
