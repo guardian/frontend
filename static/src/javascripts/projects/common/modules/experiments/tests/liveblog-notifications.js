@@ -43,17 +43,19 @@ define([
             {
                 id: 'a',
                 test: function () {
+                    var enabled = cookies.get('notifications-demo-following');
                     fastdom.write(function () {
                         $('.js-liveblog-body').prepend(template(subscribeTemplate, {
+                            className: enabled ? '' : 'notifications--disabled',
                             url: window.location,
-                            text: cookies.get('following') ? 'Following story' : 'Follow story'
+                            text: enabled ? 'Following story' : 'Follow story',
                             imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'notification-explainer']),
                             imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'notification-explainer']),
                             arrow: svgs('arrowWhiteRight')
                         }));
                     });
                     bean.on(document.body, 'click', '.js-notifications-subscribe-link', function () {
-                        cookies.add('following', 'true', 100);
+                        cookies.add('notifications-demo-following', 'true', 100);
                     });
                 }
             }

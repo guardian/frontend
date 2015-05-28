@@ -74,6 +74,7 @@
 }
 
 .notifications-subscribe-link__message {
+    display: none;
     background-color: colour(live-support-2);
     color: #ffffff;
     text-align: left;
@@ -110,11 +111,16 @@
             $border-color: #ffffff
         );
 
-        &:hover {
+        &:hover,
+        &:active {
             color: colour(live-support-2);
             path {
                 fill: colour(live-support-2);
             }
         }
+    }
+
+    .notifications--disabled & {
+        display: block;
     }
 }
