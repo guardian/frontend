@@ -112,7 +112,8 @@
         );
 
         &:hover,
-        &:active {
+        &:active,
+        &:focus {
             color: colour(live-support-2);
             path {
                 fill: colour(live-support-2);
