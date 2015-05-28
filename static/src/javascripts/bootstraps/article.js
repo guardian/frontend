@@ -6,7 +6,6 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/url',
-    'common/modules/experiments/ab',
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
@@ -25,7 +24,6 @@ define([
     detect,
     mediator,
     urlutils,
-    ab,
     richLinks,
     membershipEvents,
     openModule,
@@ -79,7 +77,7 @@ define([
             initRightHandComponent: function () {
                 var mainColumn = qwery('.js-content-main-column');
                 // only render when we have >1000px or more (enough space for ad + most popular)
-                if (mainColumn[0] && mainColumn[0].offsetHeight > 1000 && detect.isBreakpoint({ min: 'desktop' })) {
+                if (mainColumn[0] && mainColumn[0].offsetHeight > 1150 && detect.isBreakpoint({ min: 'desktop' })) {
                     geoMostPopular.render();
                 }
             },
@@ -89,7 +87,7 @@ define([
             },
 
             initStickyShares: function () {
-                if (config.switches.abStickyShares && ab.getTestVariant('StickyShares') === 'sticky') {
+                if (config.switches.abShareButtons2) {
                     stickySocial.init();
                 }
             }

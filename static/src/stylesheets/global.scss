@@ -16,6 +16,7 @@
    ========================================================================== */
 
 @import 'base/_tables';
+@import 'base/_zindex';
 @import 'components/pasteup-forms/src/_forms';
 @import 'components/pasteup-buttons/src/_buttons';
 
@@ -53,6 +54,7 @@
 @import 'module/content/_gallery-lightbox';
 @import 'module/content/_block-level-sharing';
 
+@import 'module/preferences/_notifications';
 @import 'module/crosswords/_main';
 @import 'module/_weather';
 @import 'module/_sudoku';
@@ -64,6 +66,8 @@
 
 @import 'module/_rich-links';
 @import 'module/_membership-events';
+
+@import 'module/_save-for-later';
 
 /* ==========================================================================
    External modules

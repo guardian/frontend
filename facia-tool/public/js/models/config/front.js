@@ -9,6 +9,7 @@ define([
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/find-first-by-id',
+    'utils/front-count',
     'utils/validate-image-src'
 ], function(
     ko,
@@ -21,12 +22,14 @@ define([
     asObservableProps,
     populateObservables,
     findFirstById,
+    frontCount,
     validateImageSrc
 ) {
     asObservableProps = asObservableProps.default;
     findFirstById = findFirstById.default;
     populateObservables = populateObservables.default;
     validateImageSrc = validateImageSrc.default;
+    frontCount = frontCount.default;
 
     function Front(opts) {
         var self = this;
@@ -58,7 +61,9 @@ define([
 
         this.state = asObservableProps([
             'isOpen',
-            'isOpenProps']);
+            'isOpenProps',
+            'isValidMetadata']);
+        this.state.isValidMetadata(true);
 
         this.state.withinPriority = ko.computed(function() {
             return this.props.priority() === vars.priority || this.state.isOpenProps(); // last clause allows priority change
@@ -66,12 +71,14 @@ define([
 
         this.applyConstraints();
 
+        this.props.priority.subscribe(this.onChangePriority.bind(this));
+
         this.collections = new Group({
             parent: self,
             parentType: 'Front',
             items:
                _.chain(opts.collections)
-                .map(function(id) {return findFirstById(vars.model.collections, id); })
+                .map(function(id) { return vars.model.collectionsMap[id]; })
                 .filter(function(collection) { return !!collection; })
                 .map(function(collection) {
                     collection.parents.push(self);
@@ -229,6 +236,17 @@ define([
         if (this.props.priority() === 'training') {
             this.state.isTypeLocked = true;
             this.props.isHidden(true);
+        }
+    };
+
+    Front.prototype.onChangePriority = function (newPriority) {
+        var num = frontCount(vars.state.config.fronts, newPriority);
+
+        if (num.count >= num.max) {
+            this.state.isValidMetadata(false);
+            window.alert('The maximum number of fronts (' + num.max + ') has been exceeded. Please delete one first, by removing all its collections.');
+        } else {
+            this.state.isValidMetadata(true);
         }
     };
 

@@ -11,17 +11,19 @@ import Front from 'models/config/front';
 import Collection from 'models/config/collection';
 import newItems from 'models/config/new-items';
 import persistence from 'models/config/persistence';
+import frontCount from 'utils/front-count';
 
 export default function() {
     var model = {};
     vars.setModel(model);
 
-    model.title = ko.observable((vars.priority || 'editorial') + ' fronts configuration');
+    model.title = ko.observable((vars.priority || vars.CONST.defaultPriority) + ' fronts configuration');
 
     model.switches = ko.observable();
 
     model.navSections = [];
 
+    model.collectionsMap = {};
     model.collections = ko.observableArray();
 
     model.fronts = ko.observableArray();
@@ -38,15 +40,15 @@ export default function() {
     });
 
     model.createFront = function() {
-        var front;
+        var front, num = frontCount(vars.state.config.fronts, vars.priority);
 
-        if (vars.model.fronts().length <= vars.CONST.maxFronts) {
+        if (num.count < num.max) {
             front = new Front({priority: vars.priority, isHidden: true});
             front.setOpen(true);
             model.pinnedFront(front);
             model.fronts.unshift(front);
         } else {
-            window.alert('The maximum number of fronts (' + vars.CONST.maxFronts + ') has been exceeded. Please delete one first, by removing all its collections.');
+            window.alert('The maximum number of fronts (' + num.max + ') has been exceeded. Please delete one first, by removing all its collections.');
         }
     };
 
@@ -68,15 +70,21 @@ export default function() {
     };
 
     this.refreshConfig = function (config) {
-        model.collections(
-           _.chain(config.collections)
-            .map(function(obj, cid) { return new Collection(cloneWithKey(obj, cid)); })
+        model.collectionsMap = {};
+        var sortedCollections = _.chain(config.collections)
+            .map(function(obj, cid) {
+                var collection = new Collection(cloneWithKey(obj, cid));
+                model.collectionsMap[cid] = collection;
+                return collection;
+            })
             .sortBy(function(collection) { return collection.meta.displayName(); })
-            .value()
-        );
+            .value();
+
+        model.collections(sortedCollections);
 
         model.fronts(
            _.chain(_.keys(config.fronts))
+            .filter(function(id) { return vars.priority === config.fronts[id].priority; })
             .sortBy(function(id) { return id; })
             .without(model.pinnedFront() ? model.pinnedFront().id() : undefined)
             .unshift(model.pinnedFront() ? model.pinnedFront().id() : undefined)

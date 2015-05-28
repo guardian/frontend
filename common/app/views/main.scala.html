@@ -1,11 +1,27 @@
 @(metaData: model.MetaData, projectName: Option[String] = None, curlPaths: Map[String, String] = Map())(head: Html)(body: Html)(implicit request: RequestHeader)
 
-@import conf.Switches._
 @import common.{Edition, Navigation}
+@import conf.Switches._
 @import views.support.RenderClasses
 
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
+
+<!--
+
+##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::
+##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:
+##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::
+##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####
+##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:
+##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:
+ ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::
+
+Ever thought about joining us?
+http://developers.theguardian.com/join-the-team.html
+
+-->
+
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
@@ -21,7 +37,11 @@
         showAdverts &&
             ((AppleAdUkNetworkFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk") ||
                 (AppleAdAuNetworkFrontSwitch.isSwitchedOn && edition.id == "AU" && metaData.id == "au") ||
-                (AppleAdTechFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk/technology"))
+                (AppleAdTechFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk/technology") ||
+                (AppleAdCultureFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "uk/culture") ||
+                (AppleAdFashionFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "fashion") ||
+                (AppleAdTravelFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "travel") ||
+                (AppleAdUsNetworkFrontSwitch.isSwitchedOn && edition.id == "US" && metaData.id == "us"))
     ) { adBelowNav =>
     <body
         id="top"

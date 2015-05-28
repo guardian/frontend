@@ -1,15 +1,16 @@
 package services
 
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
+import com.gu.facia.api.utils.{ReviewKicker, CartoonKicker, TagKicker}
 import common.Edition
 import conf.Switches
 import contentapi.Paths
 import layout.DateHeadline.cardTimestampDisplay
 import layout._
 import model._
+import model.meta.{ListItem, ItemList}
 import org.joda.time.DateTime
 import slices.{ContainerDefinition, Fixed, FixedContainers}
-import views.support.{CartoonKicker, ReviewKicker, TagKicker}
 
 import scala.Function.const
 import scalaz.syntax.traverse._
@@ -58,8 +59,8 @@ object IndexPage {
 
     val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
       case (mpuState, grouping) =>
-        val collection = CollectionEssentials.fromTrails(
-          grouping.items
+        val collection = CollectionEssentials.fromFaciaContent(
+          grouping.items.map(FaciaContentConvert.frontentContentToFaciaContent)
         )
 
         val mpuContainer = (if (isSlow)
@@ -80,7 +81,7 @@ object IndexPage {
         }
 
         val containerConfig = ContainerDisplayConfig(
-          CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.emptyConfig.copy(
+          CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.empty.copy(
             displayName = Some(grouping.dateHeadline.displayString)
           )),
           showSeriesAndBlogKickers = true
@@ -133,7 +134,8 @@ object IndexPage {
       ).transformCards({ card =>
         card.copy(
           timeStampDisplay = Some(timeStampDisplay),
-          byline = if (indexPage.page.isContributorPage) None else card.byline
+          byline = if (indexPage.page.isContributorPage) None else card.byline,
+          useShortByline = true
         ).setKicker(card.header.kicker flatMap {
           case ReviewKicker if isReviewPage => None
           case CartoonKicker if isCartoonPage => None
@@ -143,6 +145,17 @@ object IndexPage {
       })
     }))
   }
+
+  def makeLinkedData(indexPage: IndexPage): ItemList = {
+    ItemList(
+      indexPage.page.url,
+      indexPage.trails.zipWithIndex.map {
+        case (trail, index) =>
+          ListItem(position = index, url = Some(trail.url))
+      }
+    )
+  }
+
 }
 
 case class IndexPage(page: MetaData, trails: Seq[Content],
@@ -180,4 +193,5 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
   }
 
   def allPath = s"/$idWithoutEdition"
+
 }

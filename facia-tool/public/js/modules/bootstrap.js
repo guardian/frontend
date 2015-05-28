@@ -61,7 +61,9 @@ Bootstrap.prototype.get = function() {
 
 Bootstrap.prototype.every = function (callback, fail) {
     this.onPollSuccess.push(callback);
-    this.onPollFail.push(fail);
+    if (fail) {
+        this.onPollFail.push(fail);
+    }
     this.installInterval();
     this.onload(callback);
     return this;

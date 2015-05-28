@@ -1,11 +1,13 @@
 package controllers.front
 
+import com.gu.facia.api.models.{Groups, CollectionConfig}
 import com.gu.facia.client.models.CollectionConfigJson
 import model._
+import model.facia.FapiJsonFormats
 import scala.concurrent.Future
-import play.api.libs.json.{JsObject, JsNull, JsValue, JsString, Json}
+import play.api.libs.json._
 import common.{Logging, S3Metrics, ExecutionContexts}
-import model.FaciaPage
+import model.PressedPage
 import services.{CollectionConfigWithId, SecureS3Request}
 import conf.Configuration
 
@@ -53,6 +55,51 @@ trait FrontJsonLite extends ExecutionContexts{
 
 object FrontJsonLite extends FrontJsonLite
 
+trait FapiFrontJsonLite extends ExecutionContexts{
+  def get(json: JsValue): JsObject = {
+    Json.obj(
+      "webTitle" -> (json \ "seoData" \ "webTitle"),
+      "collections" -> getCollections(json)
+    )
+  }
+
+  private def getCollections(json: JsValue): Seq[JsValue] = {
+    (json \ "collections").asOpt[Seq[JsObject]].getOrElse(Nil).map(getCollection)
+  }
+
+  private def getCollection(json: JsValue): JsValue = {
+    Json.obj(
+      "displayName" -> (json \ "displayName"),
+      "href" -> (json \ "href"),
+      "id" -> (json \ "id"),
+      "content" -> getContent(json)
+    )
+  }
+
+  private def getContent(json: JsValue): Seq[JsValue] = {
+    val curated = (json \ "curated").asOpt[Seq[JsObject]].getOrElse(Nil)
+    val editorsPicks = (json \ "editorsPicks").asOpt[Seq[JsObject]].getOrElse(Nil)
+    val results = (json \ "results").asOpt[Seq[JsObject]].getOrElse(Nil)
+
+    (curated ++ editorsPicks ++ results)
+      .filterNot{ j =>
+      (j \ "LinkSnap").asOpt[String].isDefined
+    }
+      .map{ j =>
+      Json.obj(
+        "headline" -> ((j \ "headline").asOpt[JsString].getOrElse(j \ "fields" \ "headline"): JsValue),
+        "trailText" -> ((j \ "trailText").asOpt[JsString].getOrElse(j \ "fields" \ "trailText"): JsValue),
+        "thumbnail" -> (j \ "content" \ "fields" \ "thumbnail"),
+        "shortUrl" -> (j \ "content" \ "fields" \ "shortUrl"),
+        "id" -> (j \ "content" \ "id"),
+        "group" -> (j \ "group")
+      )
+    }
+  }
+}
+
+object FapiFrontJsonLite extends FapiFrontJsonLite
+
 
 trait FrontJson extends ExecutionContexts with Logging {
 
@@ -61,11 +108,11 @@ trait FrontJson extends ExecutionContexts with Logging {
 
   private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/pressed.json"
 
-  def get(path: String): Future[Option[FaciaPage]] = {
+  def getRaw(path: String): Future[Option[String]] = {
     val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
     response.map { r =>
       r.status match {
-        case 200 => parsePressedJson(r.body)
+        case 200 => Some(r.body)
         case 403 =>
           S3Metrics.S3AuthorizationError.increment()
           log.warn(s"Got 403 trying to load path: $path")
@@ -76,6 +123,14 @@ trait FrontJson extends ExecutionContexts with Logging {
         case responseCode =>
           log.warn(s"Got $responseCode trying to load path: $path")
           None
+      }
+    }
+  }
+
+  def get(path: String): Future[Option[FaciaPage]] = {
+    getRaw(path).map {
+      _.flatMap {
+        body => parsePressedJson(body)
       }
     }
   }
@@ -131,21 +186,21 @@ trait FrontJson extends ExecutionContexts with Logging {
     }
   }
 
-  def parseConfig(id: String, json: JsValue): CollectionConfigJson =
-    CollectionConfigJson(
+  def parseConfig(id: String, json: JsValue): CollectionConfig =
+    CollectionConfig(
       apiQuery        = (json \ "apiQuery").asOpt[String],
       displayName     = (json \ "displayName").asOpt[String],
       href            = (json \ "href").asOpt[String],
-      groups          = (json \ "groups").asOpt[List[String]],
-      `type`          = (json \ "type").asOpt[String],
-      showTags        = (json \ "showTags").asOpt[Boolean],
-      showSections    = (json \ "showSections").asOpt[Boolean],
-      uneditable      = (json \ "uneditable").asOpt[Boolean],
-      hideKickers     = (json \ "hideKickers").asOpt[Boolean],
-      showDateHeader  =  (json \ "showDateHeader").asOpt[Boolean],
-      showLatestUpdate = (json \ "showLatestUpdate").asOpt[Boolean],
-      excludeFromRss  = (json \ "excludeFromRss").asOpt[Boolean],
-      showTimestamps  = (json \ "showTimestamps").asOpt[Boolean]
+      groups          = (json \ "groups").asOpt[List[String]].map(Groups.apply),
+      collectionType  = (json \ "type").asOpt[String].getOrElse(CollectionConfig.DefaultCollectionType),
+      showTags        = (json \ "showTags").asOpt[Boolean].exists(identity),
+      showSections    = (json \ "showSections").asOpt[Boolean].exists(identity),
+      uneditable      = (json \ "uneditable").asOpt[Boolean].exists(identity),
+      hideKickers     = (json \ "hideKickers").asOpt[Boolean].exists(identity),
+      showDateHeader =  (json \ "showDateHeader").asOpt[Boolean].exists(identity),
+      showLatestUpdate = (json \ "showLatestUpdate").asOpt[Boolean].exists(identity),
+      excludeFromRss = (json \ "excludeFromRss").asOpt[Boolean].exists(identity),
+      showTimestamps = (json \ "showTimestamps").asOpt[Boolean].exists(identity)
     )
 
   private def parsePressedJson(j: String): Option[FaciaPage] = {
@@ -154,7 +209,7 @@ trait FrontJson extends ExecutionContexts with Logging {
     Option(
       FaciaPage(
         id,
-        seoData     = parseSeoData(id, (json \ "seoData").asOpt[JsValue].getOrElse(JsNull)),
+        seoData = parseSeoData(id, (json \ "seoData").asOpt[JsValue].getOrElse(JsNull)),
         frontProperties = parseFrontProperties((json \ "frontProperties").asOpt[JsValue].getOrElse(JsNull)),
         collections = parseOutTuple(json)
       )

@@ -31,7 +31,12 @@ export default {
 
     detectPendingChangesInClipboard: 4000,
 
-    maxFronts: 500,
+    defaultPriority: 'editorial',
+    maxFronts: {
+        'editorial': 200,
+        'commercial': 350,
+        'training': 50
+    },
 
     filterTypes: {
         section: { display: 'in section:', param: 'section', path: 'sections', placeholder: 'e.g. news' },
@@ -61,12 +66,16 @@ export default {
 
     frontendApiBase:       '/frontend',
 
+    reauthPath:            '/login/status',
+    reauthInterval:        60000 * 20, // 20 minutes
+    reauthTimeout:         60000,
+
     imageCdnDomain:        '.guim.co.uk',
     previewBase:           'http://preview.gutools.co.uk',
 
     latestSnapPrefix:      'Latest from ',
 
-    ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
+    ophanBase:             'http://dashboard.ophan.co.uk/summary',
     ophanFrontBase:        'http://dashboard.ophan.co.uk/info?path=',
 
     internalContentPrefix: 'internal-code/content/',

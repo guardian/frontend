@@ -1,11 +1,11 @@
 import Promise from 'Promise';
 import authedAjax from 'modules/authed-ajax';
-import * as vars from 'modules/vars';
+import {priority, CONST} from 'modules/vars';
 import humanTime from 'utils/human-time';
 
 function getFrontAgeAlertMs(front) {
-    return vars.CONST.frontAgeAlertMs[
-        vars.CONST.highFrequencyPaths.indexOf(front) > -1 ? 'front' : vars.priority || 'editorial'
+    return CONST.frontAgeAlertMs[
+        CONST.highFrequencyPaths.indexOf(front) > -1 ? 'front' : priority || CONST.defaultPriority
     ] || 600000;
 }
 

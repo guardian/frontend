@@ -1,8 +1,9 @@
 package slices
 
+import com.gu.facia.api.models.FaciaContent
 import common.Maps._
-import model.Content
 import play.api.libs.json.Json
+import implicits.FaciaContentImplicits._
 
 import scala.util.Try
 
@@ -21,11 +22,19 @@ object Story {
     }
   }
 
-  def fromContent(content: Content): Story = {
+  def fromContent(content: model.Content): Story = {
     Story(
       /** Stories that are not assigned to a group are treated as standard (0) items */
       content.group.flatMap(group => Try(group.toInt).toOption).getOrElse(0),
       content.isBoosted
+    )
+  }
+
+  def fromFaciaContent(faciaContent: FaciaContent): Story = {
+    Story(
+      /** Stories that are not assigned to a group are treated as standard (0) items */
+      Try(faciaContent.group.toInt).getOrElse(0),
+      faciaContent.properties.exists(_.isBoosted)
     )
   }
 }
