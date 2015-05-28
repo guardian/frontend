@@ -4,6 +4,7 @@
 @import common.editions._
 @import conf.Configuration
 @import views.support.URLEncode
+@import conf.Switches.TributeSwitch
 
 
 
@@ -88,14 +89,14 @@
                         @if(metaData.hasSlimHeader) {
                             @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
                             <!--[if (gt IE 8)&(IEMobile)]><!-->
-                                @fragments.inlineSvg("guardian-logo-160", "logo")
+                                @if(TributeSwitch.isSwitchedOn){ @fragments.inlineSvg("guardian-tribute-logo-160", "logo") } else { @fragments.inlineSvg("guardian-logo-160", "logo") }
                             <!--<![endif]-->
                             <!--[if (lt IE 9)&(!IEMobile)]>
                               <span class="inline-logo inline-guardian-logo-160"></span>
                             <![endif]-->
                         } else {
                             <!--[if (gt IE 8)&(IEMobile)]><!-->
-                                @fragments.inlineSvg("guardian-logo-320", "logo")
+                                @if(TributeSwitch.isSwitchedOn){ @fragments.inlineSvg("guardian-tribute-logo-320", "logo") } else { @fragments.inlineSvg("guardian-logo-320", "logo") }
                             <!--<![endif]-->
                             <!--[if (lt IE 9)&(!IEMobile)]>
                                 <span class="inline-logo inline-guardian-logo-320"></span>
