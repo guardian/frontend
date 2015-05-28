@@ -107,15 +107,16 @@ define([
 
                                         // Keep server in sync
                                         return sendSubscription(subscription);
-                                    } else {
-                                        // If there is no subscription and there
-                                        // is a redirect URI, automatically
-                                        // subscribe and redirect.
-                                        var match = window.location.hash.match(/^#redirect=(.*?)$/);
-                                        if (match) {
-                                            var redirectUrl = match[1];
-                                            return subscribe({ redirectUrl: redirectUrl });
-                                        }
+                                    }
+                                })
+                                .then(function () {
+                                    // If there is no subscription and there
+                                    // is a redirect URI, automatically
+                                    // subscribe and redirect.
+                                    var match = window.location.hash.match(/^#redirect=(.*?)$/);
+                                    if (match) {
+                                        var redirectUrl = match[1];
+                                        return subscribe({ redirectUrl: redirectUrl });
                                     }
                                 });
                         });
