@@ -16,7 +16,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val contentApiClient = "com.gu" %% "content-api-client" % "5.2"
   val crosswordsApiClient = "com.gu" %% "crosswords-api-client" % "0.5"
-  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "1.39.0"
+  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.0.0"
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.39"
   val faciaScalaClient = "com.gu" %% "facia-json" % "0.39"
