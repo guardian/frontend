@@ -102,30 +102,28 @@ define([
                                 .then(function (subscription) {
                                     pushButton.disabled = false;
 
-                                    if (subscription) {
+                                    var match = window.location.hash.match(/^#redirect=(.*?)$/);
+                                    if (match) {
+                                        var redirectUrl = match[1];
+                                        var redirect = function () {
+                                            window.location.href = redirectUrl;
+                                        };
+                                        if (subscription) {
+                                            redirect();
+                                        } else {
+                                            return subscribe().then(redirect);
+                                        }
+                                    } else if (subscription) {
                                         updateState({ pushEnabled: true });
 
                                         // Keep server in sync
                                         return sendSubscription(subscription);
                                     }
-                                })
-                                .then(function () {
-                                    // If there is no subscription and there
-                                    // is a redirect URI, automatically
-                                    // subscribe and redirect.
-                                    var match = window.location.hash.match(/^#redirect=(.*?)$/);
-                                    if (match) {
-                                        var redirectUrl = match[1];
-                                        return subscribe({ redirectUrl: redirectUrl });
-                                    }
                                 });
                         });
                 };
 
-                var subscribe = function (options) {
-                    options = options || {};
-                    var redirectUrl = options.redirectUrl;
-
+                var subscribe = function () {
                     // Disable the button so it can't be changed while
                     // we process the permission request
                     pushButton.disabled = true;
@@ -146,9 +144,7 @@ define([
                                 });
                         })
                         .then(function () {
-                            if (redirectUrl) {
-                                window.location.href = redirectUrl;
-                            } else if (willRequestNotificationPermission) {
+                            if (willRequestNotificationPermission) {
                                 $('.js-notifications-preferences-overlay').css('display', 'none');
                             }
                         });
