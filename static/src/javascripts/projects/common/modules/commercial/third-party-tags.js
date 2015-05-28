@@ -10,7 +10,8 @@ define([
     'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
     'common/modules/commercial/third-party-tags/krux',
-    'common/modules/commercial/third-party-tags/outbrain'
+    'common/modules/commercial/third-party-tags/outbrain',
+    'common/modules/commercial/third-party-tags/pointroll-resp-lib'
 ], function (
     Promise,
     config,
@@ -20,7 +21,8 @@ define([
     imrWorldwide,
     remarketing,
     krux,
-    outbrain
+    outbrain,
+    pointroll
 ) {
 
     function init() {
@@ -41,6 +43,7 @@ define([
         remarketing.load();
         outbrain.load();
         krux.load();
+        pointroll.load();
 
         return Promise.resolve(null);
     }

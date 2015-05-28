@@ -506,7 +506,7 @@ object Switches {
     "If this switch is on, Apple ads will appear below nav on the US network front.",
     safeState = Off,
     sellByDate = appleSellByDate,
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val AppleAdAuNetworkFrontSwitch = Switch(
