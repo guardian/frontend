@@ -911,11 +911,7 @@ object Switches {
   )
 
   // A/B Tests
-<<<<<<< HEAD
-  val ABShareButtons = Switch(
-    "A/B Tests",
-    "ab-share-buttons",
-=======
+
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
     "ab-liveblog-notifications",
@@ -928,7 +924,6 @@ object Switches {
   val ABShareButtons2 = Switch(
     "A/B Tests",
     "ab-share-buttons-2",
->>>>>>> master
     "Switch for test of combinations of referrer-based size, visibility, and stickiness for article share buttons",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 4),
