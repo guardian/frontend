@@ -25,8 +25,8 @@ GET        /preferences                                                         
 GET        /preferences/notifications                                           controllers.PreferencesController.notificationPrefs()
 
 # Web App paths
-GET        /2015-05-28-service-worker.js                                        controllers.WebAppController.serviceWorker()
-GET        /2015-05-26-manifest.json                                            controllers.WebAppController.manifest()
+GET        /2015-05-28-2-service-worker.js                                        controllers.WebAppController.serviceWorker()
+GET        /2015-05-28-manifest.json                                            controllers.WebAppController.manifest()
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                    controllers.LatestIndexController.latest(path)
