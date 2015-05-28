@@ -71,12 +71,16 @@ case class Byline(
   contributorTags: Seq[model.Tag]
 ) {
   private def primaryContributor = {
-    contributorTags.sortBy({ tag =>
-      get.indexOf(tag.webTitle) match {
-        case -1 => Int.MaxValue
-        case n => n
-      }
-    }).headOption
+    if (contributorTags.length > 2) {
+      contributorTags.sortBy({ tag =>
+        get.indexOf(tag.webTitle) match {
+          case -1 => Int.MaxValue
+          case n => n
+        }
+      }).headOption
+    } else {
+      None
+    }
   }
 
   def shortByline = primaryContributor map { tag => s"${tag.webTitle} and others" } getOrElse get
