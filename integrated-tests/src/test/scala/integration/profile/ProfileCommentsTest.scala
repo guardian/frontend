@@ -1,6 +1,7 @@
-package integration
+package integration.profile
 
-import Config.profileBaseUrl
+import integration.SharedWebDriver
+import integration.driver.Config
 import org.scalatest.tags.Retryable
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 
@@ -8,7 +9,7 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 
   "Profile pages" should "show user comments" in {
     webDriver.get(profileTheguardian("/user/id/4383032"))
-    implicitlyWait(5);
+    implicitlyWait(5)
 
     $("[itemtype='http://schema.org/UserComments']") should not be empty
     $("[itemtype='http://schema.org/Comment']") should not be empty
@@ -28,5 +29,5 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
     $("[itemtype='http://schema.org/Comment']") should not be empty
   }
 
-  protected def profileTheguardian(path: String) = s"$profileBaseUrl$path"
+  protected def profileTheguardian(path: String) = s"${Config.profileBaseUrl}$path"
 }
