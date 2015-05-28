@@ -25,6 +25,10 @@
         }
         role="main">
 
+        @if(index.page.id == "help/accessibility-help") {
+            <div id="js-accessibility-preferences"></div>
+        }
+
         @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
             @containers.map { containerDefinition =>
                 @container(containerDefinition, empty)
