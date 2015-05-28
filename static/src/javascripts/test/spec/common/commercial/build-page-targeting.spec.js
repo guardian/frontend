@@ -14,8 +14,7 @@ describe('Build Page Targeting', function () {
                 'common/modules/commercial/user-ad-targeting',
                 'common/modules/experiments/ab',
                 'common/modules/commercial/third-party-tags/krux',
-                'common/modules/commercial/third-party-tags/audience-science-gateway',
-                'common/modules/commercial/third-party-tags/criteo'],
+                'common/modules/commercial/third-party-tags/audience-science-gateway'],
         function () {
             buildPageTargeting = arguments[0];
             config = arguments[1];
@@ -119,13 +118,6 @@ describe('Build Page Targeting', function () {
 
     it('should set correct ab param', function () {
         expect(buildPageTargeting().ab).toEqual(['MtMaster-v']);
-    });
-
-    it('should set correct criteo params', function () {
-        var pageTargeting = buildPageTargeting();
-
-        expect(pageTargeting.c1).toBe('value-one');
-        expect(pageTargeting.c2).toBe('value-two');
     });
 
     it('should set correct krux params', function () {
