@@ -4,6 +4,7 @@
   "devDependencies": {
     "autoprefixer-core": "^5.1.11",
     "btoa": "1.1.2",
+    "del": "^1.2.0",
     "esprima": "1.2.2",
     "glob": "4.0.6",
     "grunt": "0.4.5",
@@ -70,6 +71,7 @@
     "postcss-pxtorem": "^2.0.1",
     "q": "1.0.1",
     "require-dir": "^0.3.0",
+    "run-sequence": "^1.1.0",
     "svgo": "0.4.5",
     "time-grunt": "1.0.0"
   },

@@ -1,50 +1,79 @@
 var gulp = require('gulp');
-var del = require('del');
 var sass = require('gulp-sass');
 var postcss = require('gulp-postcss');
 var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('autoprefixer-core');
 var pxtorem = require('postcss-pxtorem');
 var filter = require('gulp-filter');
-var filelog = require('gulp-filelog');
+var del = require('del');
+var runSequence = require('run-sequence');
 
 var config = require('./config');
+var dest = config.dir.target + 'stylesheets/';
 
-function compileSass (src) {
-    var prefixFilter = filter(function (file) {
-        return !/webfonts/.test(file.path);
-    });
+gulp.task('clean:stylesheets', function (cb) {
+    del([
+        config.dir.target + 'stylesheets'
+    ], cb);
+});
 
-    var remFilter = filter(function (file) {
-        return !/ie9/.test(file.path);
-    });
-
-    return gulp.src(src)
+gulp.task('stylesheets:modern', function () {
+    return gulp.src([
+            config.dir.src + 'stylesheets/*.scss',
+            '!' + config.dir.src + 'stylesheets/ie9.*.scss',
+            '!' + config.dir.src + 'stylesheets/old-ie.*.scss',
+            '!' + config.dir.src + 'stylesheets/webfonts-*.scss'
+        ])
         .pipe(sourcemaps.init())
-        .pipe(sass({
-            outputStyle: 'expanded',
-            precision: 5
-        }))
-        .pipe(prefixFilter)
+        .pipe(sass(config.presets.sass))
+        .pipe(postcss([
+            autoprefixer(),
+            pxtorem(config.presets.pxtorem)
+        ]))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(dest));
+});
+
+gulp.task('stylesheets:ie9', function () {
+    return gulp.src(config.dir.src + 'stylesheets/ie9.*.scss')
+        .pipe(sourcemaps.init())
+        .pipe(sass(config.presets.sass))
+        .pipe(postcss([
+            autoprefixer(),
+            pxtorem(config.presets.pxtorem)
+        ]))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(dest));
+});
+
+gulp.task('stylesheets:oldIE', function () {
+    return gulp.src(config.dir.src + 'stylesheets/old-ie.*.scss')
+        .pipe(sourcemaps.init())
+        .pipe(sass(config.presets.sass))
         .pipe(postcss([
             autoprefixer()
         ]))
-        .pipe(remFilter)
-        .pipe(postcss([
-            pxtorem({
-                replace: true,
-                root_value: 16,
-                unit_precision: 5
-            })
-        ]))
-        .pipe(remFilter.restore())
-        .pipe(prefixFilter.restore())
-        .pipe(gulp.dest(config.dir.target + 'stylesheets/'))
-        .pipe(sourcemaps.write('.'));
-};
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(dest));
+});
 
-gulp.task('stylesheets', ['images'], function () {
-    return compileSass([
-        config.dir.src + 'stylesheets/*.scss'
-    ])
+gulp.task('stylesheets:fonts', function () {
+    return gulp.src(config.dir.src + 'stylesheets/webfonts-*.scss')
+        .pipe(sourcemaps.init())
+        .pipe(sass(config.presets.sass))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(dest));
+});
+
+gulp.task('stylesheets', ['images'], function (cb) {
+    runSequence(
+        'clean:stylesheets',
+        [
+            'stylesheets:modern',
+            'stylesheets:ie9',
+            'stylesheets:oldIE',
+            'stylesheets:fonts'
+        ],
+        cb
+    );
 });
