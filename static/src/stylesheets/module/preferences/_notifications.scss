@@ -74,6 +74,14 @@
 }
 
 .notifications-subscribe-link__message {
+    position: relative;
+    display: none;
+    background-color: colour(live-support-2);
+    color: #ffffff;
+    text-align: left;
+    padding: $gs-baseline $gs-gutter;
+    margin-top: $gs-baseline;
+
     &:before {
         content: '';
         width: 0;
@@ -86,14 +94,6 @@
         left: 50%;
         margin-left: -8px;
     }
-
-    position: relative;
-    display: none;
-    background-color: colour(live-support-2);
-    color: #ffffff;
-    text-align: left;
-    padding: $gs-baseline $gs-gutter;
-    margin-top: $gs-baseline;
 
     h3 {
         @include fs-header(5);
