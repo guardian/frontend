@@ -9,8 +9,7 @@ define([
     'common/modules/commercial/third-party-tags/criteo',
     'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
-    'common/modules/commercial/third-party-tags/krux',
-    'common/modules/commercial/third-party-tags/outbrain'
+    'common/modules/commercial/third-party-tags/krux'
 ], function (
     Promise,
     config,
@@ -19,8 +18,7 @@ define([
     criteo,
     imrWorldwide,
     remarketing,
-    krux,
-    outbrain
+    krux
 ) {
 
     function init() {
@@ -39,7 +37,6 @@ define([
         criteo.load();
         imrWorldwide.load();
         remarketing.load();
-        outbrain.load();
         krux.load();
 
         return Promise.resolve(null);
