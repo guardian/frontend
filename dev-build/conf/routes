@@ -308,7 +308,7 @@ GET         /*path/lite.json                                                    
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 
 # Applications
-GET         /2015-05-28-service-worker.js                                                                            controllers.WebAppController.serviceWorker()
+GET         /2015-05-28-2-service-worker.js                                                                            controllers.WebAppController.serviceWorker()
 GET         /2015-05-28-manifest.json                                                                                controllers.WebAppController.manifest()
 GET         /$path<international>                                                                                    controllers.FaciaController.renderFront(path)
 GET         /preferences                                                                                             controllers.PreferencesController.indexPrefs()

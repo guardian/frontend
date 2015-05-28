@@ -26,7 +26,7 @@ self.addEventListener('push', function (event) {
                     url: data.link,
                     body: '',
                     tag: 'breaking-news',
-                    icon: '@{JavaScript(Static("images/favicons/152x152.png").path)}'
+                    icon: '@{JavaScript(Static("images/favicons/notification.png").path)}'
                 };
 
                 return self.registration.showNotification(notificationData.title, {

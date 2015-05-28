@@ -1,7 +1,7 @@
 # Paths specific to "preview"
 
 # Simply for the Google IO demo, because preview has a valid HTTPS cert and the page has no mixed content.
-GET        /2015-05-28-service-worker.js        controllers.WebAppController.serviceWorker()
+GET        /2015-05-28-2-service-worker.js        controllers.WebAppController.serviceWorker()
 GET        /2015-05-28-manifest.json            controllers.WebAppController.manifest()
 GET        /preferences                         controllers.PreferencesController.indexPrefs()
 GET        /preferences/notifications           controllers.PreferencesController.notificationPrefs()
