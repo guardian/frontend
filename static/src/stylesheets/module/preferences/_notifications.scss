@@ -37,7 +37,7 @@
 }
 
 .notifications-preferences-overlay__aside {
-    @include fs-data(1);
+    @include fs-textSans(1);
     padding-top: $gs-baseline * 2;
 
     a {
@@ -52,12 +52,69 @@
     margin-bottom: $gs-baseline;
     text-align: center;
 
-    .button {
+    .button--follow {
         margin: -15px auto 0;
         @include button-colour(
             colour(live-main-1),
             #ffffff,
             colour(live-main-2)
         )
+    }
+
+    &.notifications--disabled {
+        border-top: 1px solid colour(neutral-5);
+        .button--follow {
+            @include button-colour(
+                colour(neutral-5),
+                colour(neutral-2),
+                colour(neutral-4)
+            )
+        }
+    }
+}
+
+.notifications-subscribe-link__message {
+    background-color: colour(live-support-2);
+    color: #ffffff;
+    text-align: left;
+    padding: $gs-baseline $gs-gutter;
+
+    h3 {
+        @include fs-header(5);
+    }
+
+    p {
+        @include fs-textSans(1);
+        padding-top: $gs-baseline /2;
+    }
+
+    .inline-notifications-explainer-mobile {
+        display: block;
+
+        svg {
+            width: 100%;
+        }
+    }
+
+    .inline-arrow-white-right svg {
+        margin-right: -6px;
+        margin-top: -1px;
+    }
+
+    .button--enable {
+        margin-top: $gs-baseline / 2;
+        @include button-colour(
+            colour(live-support-2),
+            #ffffff,
+            #ffffff,
+            $border-color: #ffffff
+        );
+
+        &:hover {
+            color: colour(live-support-2);
+            path {
+                fill: colour(live-support-2);
+            }
+        }
     }
 }
