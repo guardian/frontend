@@ -13,9 +13,9 @@ define([
     'common/utils/config'
 ], function (
     config
-) {
+) {q
     function load() {
-        if (config.switches.pointroll) {
+        if (config.switches.apple-ads-on-us-network-front) {
             return require(['js!' + '//speed.pointroll.com/PointRoll/Media/Asset/RespLib/201296/resp.lib.js']);
         }
     }

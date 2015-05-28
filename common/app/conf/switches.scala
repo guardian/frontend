@@ -491,15 +491,6 @@ object Switches {
 
   private val appleSellByDate = new LocalDate(2015, 7, 15)
 
-  val PointrollSwitch = Switch(
-    "Commercial",
-    "pointroll",
-    "Enable 3rd party tag for Apple Campaign USA.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = true
-  )
-
   val AppleAdUkNetworkFrontSwitch = Switch(
     "Commercial",
     "apple-ads-on-uk-network-front",
