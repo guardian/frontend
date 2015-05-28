@@ -101,6 +101,16 @@
     @include mq(wide) {
         max-width: none;
     }
+
+    .site-message--panelMtRec1 & {
+        font-weight: bold;
+        padding-top: 10px;
+    }
+}
+
+.site-message__description {
+    font-size: 14px;
+    font-weight: normal;
 }
 
 .site-message__message--tall {

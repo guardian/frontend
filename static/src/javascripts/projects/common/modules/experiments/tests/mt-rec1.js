@@ -5,7 +5,10 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/navigation/sticky-nav'
+    'common/utils/template',
+    'common/modules/ui/message',
+    'common/modules/navigation/sticky-nav',
+    'text!common/views/invite-to-panel.html'
 ], function (
     fastdom,
     $,
@@ -13,7 +16,10 @@ define([
     config,
     detect,
     mediator,
-    stickyNav
+    template,
+    Message,
+    stickyNav,
+    inviteToPanelTemplate
 ) {
     return function () {
         this.id = 'MtRec1';
@@ -36,7 +42,31 @@ define([
         };
 
         this.fireRecTest = function () {
+            var panelLinks = {
+                mobile: 'https://s.userzoom.com/m/MyBDMTBTMjE1',
+                tablet: 'https://s.userzoom.com/m/MiBDMTBTMjE1',
+                desktop: 'https://s.userzoom.com/m/MSBDMTBTMjE1',
+                wide: 'https://s.userzoom.com/m/MSBDMTBTMjE1'
+            };
+
             stickyNav.stickySlow.init();
+
+            if (!detect.adblockInUse) {
+                new Message('panelMtRec1', {
+                    pinOnHide: false,
+                    siteMessageLinkName: 'panel message mtRec1',
+                    siteMessageCloseBtn: 'hide'
+                }).show(template(
+                        inviteToPanelTemplate,
+                        {
+                            panelLink: panelLinks[detect.getBreakpoint()],
+                            messageTextHeader: 'Tell us about your experience using the Guardian site',
+                            messageText: 'Complete a quick survey (5 mins max) and get involved in the development of the site.',
+                            linkText: 'Open survey'
+                        }
+                    ));
+            }
+
         };
 
         /**
