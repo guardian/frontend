@@ -25,12 +25,6 @@
         }
         role="main">
 
-        @defining(IndexPage.makeLinkedData(index)) { linkedData =>
-            <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
-                @Html(model.meta.LinkedData.toJson(linkedData))
-            </script>
-        }
-
         @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
             @containers.map { containerDefinition =>
                 @container(containerDefinition, empty)
@@ -47,5 +41,12 @@
         <div class="fc-container fc-container--commercial">
             @fragments.commercial.commercialComponent()
         </div>
+
+        @defining(IndexPage.makeLinkedData(index)) { linkedData =>
+            <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+                @Html(model.meta.LinkedData.toJson(linkedData))
+            </script>
+        }
+
     </div>
 </div>

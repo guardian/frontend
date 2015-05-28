@@ -1,11 +1,13 @@
 define([
     'react',
     'common/utils/_',
+    'common/utils/$',
     'common/utils/config',
     'common/modules/onward/history'
 ], function (
     React,
     _,
+    $,
     config,
     history
 ) {
@@ -105,25 +107,50 @@ define([
 
                                         // Keep server in sync
                                         return sendSubscription(subscription);
+                                    } else {
+                                        // If there is no subscription and there
+                                        // is a redirect URI, automatically
+                                        // subscribe and redirect.
+                                        var match = window.location.hash.match(/^#redirect=(.*?)$/);
+                                        if (match) {
+                                            var redirectUrl = match[1];
+                                            return subscribe({ redirectUrl: redirectUrl });
+                                        }
                                     }
                                 });
                         });
                 };
 
-                var subscribe = function () {
+                var subscribe = function (options) {
+                    options = options || {};
+                    var redirectUrl = options.redirectUrl;
+
                     // Disable the button so it can't be changed while
                     // we process the permission request
                     pushButton.disabled = true;
+                    var willRequestNotificationPermission = Notification.permission === 'default';
 
-                    return navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
-                        return serviceWorkerRegistration.pushManager.subscribe()
-                            .then(function (subscription) {
-                                updateState({ pushEnabled: true });
-                                pushButton.disabled = false;
+                    return navigator.serviceWorker.ready
+                        .then(function (serviceWorkerRegistration) {
+                            if (willRequestNotificationPermission) {
+                                $('.js-notifications-preferences-overlay').css('display', 'block');
+                            }
 
-                                return sendSubscription(subscription);
-                            });
-                    });
+                            return serviceWorkerRegistration.pushManager.subscribe()
+                                .then(function (subscription) {
+                                    updateState({ pushEnabled: true });
+                                    pushButton.disabled = false;
+
+                                    return sendSubscription(subscription);
+                                });
+                        })
+                        .then(function () {
+                            if (redirectUrl) {
+                                window.location.href = redirectUrl;
+                            } else if (willRequestNotificationPermission) {
+                                $('.js-notifications-preferences-overlay').css('display', 'none');
+                            }
+                        });
                 };
 
                 var unsubscribe = function () {
@@ -162,7 +189,7 @@ define([
                     }
 
                     /*global fetch, Headers*/
-                    return fetch(mobileNotificationsWebHost + '/web/subscription', {
+                    return fetch(mobileNotificationsWebHost + '/?url=http://push-api-web.gutools.co.uk/web/subscription', {
                         method: options.delete ? 'DELETE' : 'POST',
                         headers: new Headers({ 'Content-Type': 'application/json' }),
                         // TODO: Support deprecated subscriptionId (now part of endpoint)
@@ -183,7 +210,7 @@ define([
                     }
                 });
 
-                navigator.serviceWorker.register('/2015-05-19-service-worker.js')
+                navigator.serviceWorker.register('/2015-05-28-service-worker.js')
                     .then(initialiseState);
             };
 

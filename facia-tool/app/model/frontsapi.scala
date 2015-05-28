@@ -1,7 +1,7 @@
 package frontsapi.model
 
 import com.gu.facia.client.models.{CollectionJson, ConfigJson, Trail, TrailMetaData}
-import com.gu.googleauth.UserIdentity
+import com.gu.pandomainauth.model.User
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import fronts.FrontsApi
@@ -128,30 +128,30 @@ trait UpdateActions extends Logging with ExecutionContexts {
 
   //Archiving
   //Archiving
-  def archivePublishBlock(collectionId: String, collectionJson: CollectionJson, identity: UserIdentity): CollectionJson = {
+  def archivePublishBlock(collectionId: String, collectionJson: CollectionJson, identity: User): CollectionJson = {
     FaciaToolArchive.archive(ArchiveRequest(collectionId, identity.email, Json.toJson(collectionJson), Json.obj("action" -> "publish")))
     archiveBlock(collectionId, collectionJson, "publish", identity)
   }
 
-  def archiveDiscardBlock(collectionId: String, collectionJson: CollectionJson, identity: UserIdentity): CollectionJson = {
+  def archiveDiscardBlock(collectionId: String, collectionJson: CollectionJson, identity: User): CollectionJson = {
     FaciaToolArchive.archive(ArchiveRequest(collectionId, identity.email, Json.toJson(collectionJson), Json.obj("action" -> "discard")))
     archiveBlock(collectionId, collectionJson, "discard", identity)
   }
 
-  def archiveUpdateBlock(collectionId: String, collectionJson: CollectionJson, updateJson: JsValue, identity: UserIdentity): CollectionJson = {
+  def archiveUpdateBlock(collectionId: String, collectionJson: CollectionJson, updateJson: JsValue, identity: User): CollectionJson = {
     FaciaToolArchive.archive(ArchiveRequest(collectionId, identity.email, Json.toJson(collectionJson), Json.obj("action" -> "update", "update" -> updateJson)))
     archiveBlock(collectionId, collectionJson, Json.obj("action" -> "delete", "update" -> updateJson), identity)
   }
 
-  def archiveDeleteBlock(collectionId: String, collectionJson: CollectionJson, updateJson: JsValue, identity: UserIdentity): CollectionJson = {
+  def archiveDeleteBlock(collectionId: String, collectionJson: CollectionJson, updateJson: JsValue, identity: User): CollectionJson = {
     FaciaToolArchive.archive(ArchiveRequest(collectionId, identity.email, Json.toJson(collectionJson), Json.obj("action" -> "delete", "update" -> updateJson)))
     archiveBlock(collectionId, collectionJson, Json.obj("action" -> "update", "update" -> updateJson), identity)
   }
 
-  private def archiveBlock(id: String, collectionJson: CollectionJson, action: String, identity: UserIdentity): CollectionJson =
+  private def archiveBlock(id: String, collectionJson: CollectionJson, action: String, identity: User): CollectionJson =
     archiveBlock(id, collectionJson, Json.obj("action" -> action), identity)
 
-  private def archiveBlock(id: String, collectionJson: CollectionJson, updateJson: JsValue, identity: UserIdentity): CollectionJson =
+  private def archiveBlock(id: String, collectionJson: CollectionJson, updateJson: JsValue, identity: User): CollectionJson =
     Try(FaciaApiIO.archive(id, collectionJson, updateJson, identity)) match {
       case Failure(t: Throwable) => {
         log.warn(t.toString)
@@ -160,12 +160,12 @@ trait UpdateActions extends Logging with ExecutionContexts {
       case Success(_) => collectionJson
     }
 
-  def putMasterConfig(config: ConfigJson, identity: UserIdentity): Option[ConfigJson] = {
+  def putMasterConfig(config: ConfigJson, identity: User): Option[ConfigJson] = {
     FaciaApiIO.archiveMasterConfig(config, identity)
     FaciaApiIO.putMasterConfig(config)
   }
 
-  def updateCollectionList(id: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
+  def updateCollectionList(id: String, update: UpdateList, identity: User): Future[Option[CollectionJson]] = {
     lazy val updateJson = Json.toJson(update)
     FrontsApi.amazonClient.collection(id).map { maybeCollectionJson =>
       maybeCollectionJson
@@ -181,7 +181,7 @@ trait UpdateActions extends Logging with ExecutionContexts {
         .orElse(Option(createCollectionJson(identity, update)))
         .map(putCollectionJson(id, _))}}
 
-  def updateCollectionFilter(id: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
+  def updateCollectionFilter(id: String, update: UpdateList, identity: User): Future[Option[CollectionJson]] = {
     lazy val updateJson = Json.toJson(update)
     FrontsApi.amazonClient.collection(id).map { maybeCollectionJson =>
       maybeCollectionJson
@@ -224,11 +224,11 @@ trait UpdateActions extends Logging with ExecutionContexts {
     splitList._1 ::: (trail +: splitList._2)
   }
 
-  def createCollectionJson(identity: UserIdentity, update: UpdateList): CollectionJson =
+  def createCollectionJson(identity: User, update: UpdateList): CollectionJson =
     if (update.live)
-      CollectionJson(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta)), None, None, DateTime.now, identity.fullName, identity.email, None, None, None)
+      CollectionJson(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta)), None, None, DateTime.now, "${identity.firstName} ${identity.lastName}", identity.email, None, None, None)
     else
-      CollectionJson(Nil, Some(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta))), None, DateTime.now, identity.fullName, identity.email, None, None, None)
+      CollectionJson(Nil, Some(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta))), None, DateTime.now, "${identity.firstName} ${identity.lastName}", identity.email, None, None, None)
 
   def capCollection(collectionJson: CollectionJson): CollectionJson =
     collectionJson.copy(live = collectionJson.live.take(collectionCap), draft = collectionJson.draft.map(_.take(collectionCap)))
@@ -265,20 +265,20 @@ trait UpdateActions extends Logging with ExecutionContexts {
   private def removeGroupsFromTrail(trail: Trail): Trail =
     trail.copy(meta = trail.meta.map(metaData => metaData.copy(json = metaData.json - "group")))
 
-  def createCollectionForTreat(collectionId: String, identity: UserIdentity, update: UpdateList): CollectionJson = {
+  def createCollectionForTreat(collectionId: String, identity: User, update: UpdateList): CollectionJson = {
     val trail = Trail(update.item, DateTime.now.getMillis, update.itemMeta)
     CollectionJson(
       live          = Nil,
       draft         = None,
       treats        = Option(List(trail)),
       lastUpdated   = DateTime.now,
-      updatedBy     = identity.fullName,
+      updatedBy     = "${identity.firstName} ${identity.lastName}",
       updatedEmail  = identity.email,
       displayName   = None,
       href          = None,
       previously    = None)}
 
-  def updateTreats(collectionId: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
+  def updateTreats(collectionId: String, update: UpdateList, identity: User): Future[Option[CollectionJson]] = {
     lazy val updateJson = Json.toJson(update)
     FaciaApiIO.getCollectionJson(collectionId).map{ maybeCollectionJson =>
       maybeCollectionJson
@@ -289,7 +289,7 @@ trait UpdateActions extends Logging with ExecutionContexts {
         .orElse(Option(createCollectionForTreat(collectionId, identity, update)))
         .map(putCollectionJson(collectionId, _))}}
 
-  def removeTreats(collectionId: String, update: UpdateList, identity: UserIdentity): Future[Option[CollectionJson]] = {
+  def removeTreats(collectionId: String, update: UpdateList, identity: User): Future[Option[CollectionJson]] = {
     lazy val updateJson = Json.toJson(update)
     FaciaApiIO.getCollectionJson(collectionId).map{ maybeCollectionJson =>
       maybeCollectionJson
