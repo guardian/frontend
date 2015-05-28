@@ -1,5 +1,6 @@
 @(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
 
+@import model.Article
 @import conf.Switches._
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
@@ -26,7 +27,7 @@
                 case _ => { }
             }
         }
-        @fragments.onwardPlaceholder(content.visualTone)
+        @fragments.onwardPlaceholder()
         @if(!Switches.RelatedContentSwitch.isSwitchedOn && mvt.CMOutbrainTest.isParticipating) {
             @content match {
                 case article: Article if !article.isLiveBlog && !article.shouldHideAdverts => {
@@ -47,7 +48,7 @@
                 @fragments.commercial.commercialComponentHigh()
             </div>
         }
-        @fragments.mostPopularPlaceholder(content.section, content.visualTone)
+        @fragments.mostPopularPlaceholder(content.section)
 
         @if(!mvt.CMOutbrainTest.isParticipating) {
             @content match {

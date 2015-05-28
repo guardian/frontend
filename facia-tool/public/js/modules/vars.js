@@ -3,7 +3,7 @@ import _ from 'underscore';
 
 export const priority = (function (pathname) {
     let priority = pathname.match(/^\/?([^\/]+)/);
-    if (priority && priority[1] !== 'editorial') {
+    if (priority && priority[1] !== CONST.defaultPriority) {
         return priority[1];
     }
 })(window.location.pathname);

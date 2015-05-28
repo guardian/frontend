@@ -99,7 +99,7 @@ object Switches {
     sellByDate = new LocalDate(2015, 5, 31),
     exposeClientSide = false
   )
-  
+
   val TagPageSizeSwitch = Switch(
     "Performance",
     "tag-page-size",
@@ -281,7 +281,7 @@ object Switches {
     sellByDate = never,
     exposeClientSide = false
   )
-  
+
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",
@@ -628,6 +628,14 @@ object Switches {
     exposeClientSide = true
   )
 
+  val AttachWeatherToTopContainerSwitch = Switch(
+    "Feature",
+    "attach-weather-to-top-container",
+    "Attach weather to top container",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 30),
+    exposeClientSide = true
+  )
 
   // Features
   val ABTestHeadlines = Switch(
@@ -658,20 +666,20 @@ object Switches {
   )
 
   val NotificationsSwitch = Switch(
-    "Feature", 
+    "Feature",
     "notifications",
     "Notifications",
-    safeState = Off, 
+    safeState = Off,
     sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
 
   val ImgixSwitch = Switch(
-    "Feature", 
+    "Feature",
     "imgix",
     "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 29),
+    sellByDate = new LocalDate(2015, 7, 31),
     exposeClientSide = true
   )
 
@@ -912,12 +920,21 @@ object Switches {
   )
 
   // A/B Tests
-  val ABShareButtons = Switch(
-    "A/B Tests", 
-    "ab-share-buttons",
+  val ABLiveblogNotifications = Switch(
+    "A/B Tests",
+    "ab-liveblog-notifications",
+    "Liveblog notifications",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 1),
+    exposeClientSide = true
+  )
+
+  val ABShareButtons2 = Switch(
+    "A/B Tests",
+    "ab-share-buttons-2",
     "Switch for test of combinations of referrer-based size, visibility, and stickiness for article share buttons",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 28),
+    sellByDate = new LocalDate(2015, 6, 4),
     exposeClientSide = true
   )
 
@@ -963,7 +980,7 @@ object Switches {
     "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val ABIdentityCookieRefresh = Switch(

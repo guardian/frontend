@@ -5,7 +5,7 @@ import play.api.libs.json.{JsNull, Json, JsString, JsValue}
 import play.api.Play
 import play.api.Play.current
 import model.Cached
-import auth.ExpiringActions
+import auth.PanDomainAuthActions
 import slices.{FixedContainers, DynamicContainers, ContainerJsonConfig}
 import conf.{Configuration, FaciaToolConfiguration}
 import common.Edition
@@ -30,7 +30,7 @@ case class Defaults(
   dynamicContainers: Seq[ContainerJsonConfig]
 )
 
-object FrontendDependentController extends Controller {
+object FrontendDependentController extends Controller with PanDomainAuthActions {
   private val DynamicGroups = Seq(
     "standard",
     "big",
@@ -43,7 +43,7 @@ object FrontendDependentController extends Controller {
     "snap"
   )
 
-  def config() = ExpiringActions.ExpiringAuthAction { request =>
+  def configuration = AuthAction { request =>
     Cached(60) {
       Ok(Json.toJson(Defaults(
         Play.isDev,
