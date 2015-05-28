@@ -17,7 +17,9 @@ define([
     'inlineSvg!svgs/icon/close-central',
     'inlineSvg!svgs/icon/arrow-white-right',
     'inlineSvg!svgs/icon/arrow-right',
-    'inlineSvg!svgs/icon/bookmark'
+    'inlineSvg!svgs/icon/bookmark',
+    'inlineSvg!svgs/notifications-explainer-mobile',
+    'inlineSvg!svgs/notifications-explainer-desktop'
 ], function (
     _,
     commentCount16icon,
@@ -33,7 +35,9 @@ define([
     closeCentralIcon,
     arrowWhiteRight,
     arrowRight,
-    bookmark
+    bookmark,
+    notificationsExplainerMobile,
+    notificationsExplainerDesktop
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -49,7 +53,9 @@ define([
         closeCentralIcon: closeCentralIcon,
         arrowWhiteRight: arrowWhiteRight,
         arrowRight: arrowRight,
-        bookmark: bookmark
+        bookmark: bookmark,
+        notificationsExplainerMobile: notificationsExplainerMobile,
+        notificationsExplainerDesktop: notificationsExplainerDesktop
     };
 
     return function (name, classes, title) {
