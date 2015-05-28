@@ -383,6 +383,7 @@ define([
 
             if (_.every(slots, 'isRendered')) {
                 userTiming.mark('All ads are rendered');
+                mediator.emit('modules:commercial:dfp:alladsrendered');
             }
         },
         addLabel = function ($slot) {

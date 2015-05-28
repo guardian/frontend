@@ -16,7 +16,7 @@ define([
             return false;
         }
 
-        mediator.once('modules:commercial:dfp:rendered', function () {
+        mediator.once('modules:commercial:dfp:alladsrendered', function () {
             loadThirdParties();
         });
     }
