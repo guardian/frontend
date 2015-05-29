@@ -1116,11 +1116,11 @@ object Switches {
     exposeClientSide = false
   )
 
-  val FaciaPressNewFormat = Switch(
+  val FaciaPressOldFormat = Switch(
     "Facia",
     "facia-press-fapi-client-format",
     "If this switch is on, facia-press will press in the new fapi-client JSON format",
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2015, 8, 31),
     exposeClientSide = false
   )
