@@ -41,8 +41,8 @@ define([
         var newRules = _.cloneDeep(getRules());
 
         newRules.selectors[' .ad-slot'] = {
-            minAbove: 1000,
-            minBelow: 1000
+            minAbove: 1300,
+            minBelow: 1300
         };
 
         return newRules;
