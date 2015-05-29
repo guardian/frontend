@@ -403,15 +403,10 @@ define([
 
             adTestCookie: function () {
                 var queryParams = url.getUrlVars();
-                if (queryParams.adtest) {
-                    var first4Char = queryParams.adtest.substring(0, 4);
-                    if (queryParams.adtest === 'clear') {
-                        cookies.remove('adtest');
-                    } else if (first4Char === 'demo') {
-                        cookies.add('demoadtest', encodeURIComponent(queryParams.adtest), 10);
-                    } else {
-                        cookies.add('adtest', encodeURIComponent(queryParams.adtest), 10);
-                    }
+                if (queryParams.adtest === 'clear') {
+                    cookies.remove('adtest');
+                } else if (queryParams.adtest) {
+                    cookies.add('adtest', encodeURIComponent(queryParams.adtest), 10);
                 }
             },
 
