@@ -84,7 +84,7 @@
                         }
                     </a>
                 } else {
-                    <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" data-component="logo">
+                    <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper @if(TributeSwitch.isSwitchedOn) {logo-wrapper--tribute}" data-component="logo">
                         <span class="u-h">The Guardian</span>
                         @if(metaData.hasSlimHeader) {
                             @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
