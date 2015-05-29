@@ -295,7 +295,7 @@ define([
             storage.session.remove(NG_STORAGE_KEY);
         }
 
-        this.s.prop73 = detect.isFacebookApp() ? 'facebook app' : detect.isTwitterApp() ? 'twitter app' : '';
+        this.s.prop73 = detect.isFacebookApp() ? 'facebook app' : detect.isTwitterApp() ? 'twitter app' : null;
 
         this.s.prop75 = config.page.wordCount || 0;
         this.s.eVar75 = config.page.wordCount || 0;
