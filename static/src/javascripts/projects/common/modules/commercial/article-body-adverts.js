@@ -6,7 +6,8 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/modules/article/spacefinder',
-    'common/modules/commercial/create-ad-slot'
+    'common/modules/commercial/create-ad-slot',
+    'common/modules/experiments/ab'
 ], function (
     fastdom,
     Promise,
@@ -15,7 +16,8 @@ define([
     config,
     detect,
     spacefinder,
-    createAdSlot
+    createAdSlot,
+    ab
 ) {
     function getRules() {
         return {
@@ -57,12 +59,17 @@ define([
             }
 
             // if yes add another ad and try another run
-            adNames.push(['inlineExtra' + (ads.length + 2), 'inline']);
-            console.log((ads.length + 2), adNames[adNames.length - 1]);
+            adNames.push(['inline-extra' + ads.length, 'inline']);
             return insertAdAtP(nextSpace).then(function () {
                 return getAdSpace();
             });
         });
+    }
+
+    function isMtRecTest() {
+        var MtRec2Test = ab.getParticipations().MtRec2;
+
+        return ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
     }
 
     var ads = [],
@@ -108,17 +115,33 @@ define([
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            return inlineMercPromise.then(function () {
-                return spacefinder.getParaWithSpace(rules).then(function (space) {
-                    return insertAdAtP(space);
-                }).then(function () {
-                    return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
-                        return insertAdAtP(nextSpace);
+            if (isMtRecTest) {
+                return inlineMercPromise.then(function () {
+                    return spacefinder.getParaWithSpace(rules).then(function (space) {
+                        return insertAdAtP(space);
                     }).then(function () {
-                        return getAdSpace();                        
+                        return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+                            return insertAdAtP(nextSpace);
+                        }).then(function () {
+                            return getAdSpace();                  
+                        });
                     });
                 });
-            });
+            } else {
+                return inlineMercPromise.then(function () {
+                    return spacefinder.getParaWithSpace(rules).then(function (space) {
+                        return insertAdAtP(space);
+                    }).then(function () {
+                        if (detect.isBreakpoint({max: 'tablet'})) {
+                            return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+                                return insertAdAtP(nextSpace);
+                            });
+                        } else {
+                            return Promise.resolve(null);
+                        }
+                    });
+                });
+            }
         };
 
     return {

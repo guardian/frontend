@@ -305,7 +305,7 @@ define([
                         return size[0] + '-' + size[1];
                     }
                 );
-            console.log(adUnit, size, id);
+            
             var slot = (
                     $adSlot.data('out-of-page') ?
                         googletag.defineOutOfPageSlot(adUnit, id) :
