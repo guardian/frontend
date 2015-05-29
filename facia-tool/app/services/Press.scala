@@ -1,7 +1,7 @@
 package services
 
-object PressAndNotify {
-  def apply(ids: Set[String]) = {
+object Press {
+  def fromSetOfIds(ids: Set[String]) = {
     FaciaPress.press(PressCommand(
       ids,
       live = true,
