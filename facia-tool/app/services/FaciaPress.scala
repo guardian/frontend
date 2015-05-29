@@ -11,9 +11,15 @@ import conf.Switches._
 import scala.concurrent.Future
 import scala.util.{Success, Failure}
 
-case class PressCommand(ids: Set[String], live: Boolean = false, draft: Boolean = false) {
+case class PressCommand(
+  ids: Set[String],
+  live: Boolean = false,
+  draft: Boolean = false,
+  forceConfigUpdate: Option[Boolean] = Option(false))
+{
   def withPressLive(b: Boolean = true): PressCommand = this.copy(live = b)
   def withPressDraft(b: Boolean = true): PressCommand = this.copy(draft = b)
+  def withForceConfigUpdate(b: Boolean = true): PressCommand = this.copy(forceConfigUpdate = Option(b))
 }
 
 object PressCommand {
