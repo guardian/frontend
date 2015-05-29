@@ -91,7 +91,7 @@ define([
             }
         },
         init = function () {
-            var rules, lenientRules, inlineMercPromise, promises = [];
+            var rules, lenientRules, inlineMercPromise;
 
             // is the switch off, or not an article, or a live blog
             if (
@@ -123,7 +123,7 @@ define([
                         return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
                             return insertAdAtP(nextSpace);
                         }).then(function () {
-                            return getAdSpace();                  
+                            return getAdSpace();
                         });
                     });
                 });
