@@ -10,7 +10,7 @@ import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
 case class PressCommand(
-  ids: Set[String],
+  collectionIds: Set[String],
   live: Boolean = false,
   draft: Boolean = false,
   forceConfigUpdate: Option[Boolean] = Option(false))
@@ -48,7 +48,7 @@ object FaciaPress extends Logging with ExecutionContexts {
   def press(pressCommand: PressCommand): Future[List[SendMessageResult]] = {
     ConfigAgent.refreshAndReturn() flatMap { _ =>
       val paths: Set[String] = for {
-        id <- pressCommand.ids
+        id <- pressCommand.collectionIds
         path <- ConfigAgent.getConfigsUsingCollectionId(id)
       } yield path
 
