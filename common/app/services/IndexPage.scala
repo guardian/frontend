@@ -134,7 +134,8 @@ object IndexPage {
       ).transformCards({ card =>
         card.copy(
           timeStampDisplay = Some(timeStampDisplay),
-          byline = if (indexPage.page.isContributorPage) None else card.byline
+          byline = if (indexPage.page.isContributorPage) None else card.byline,
+          useShortByline = true
         ).setKicker(card.header.kicker flatMap {
           case ReviewKicker if isReviewPage => None
           case CartoonKicker if isCartoonPage => None

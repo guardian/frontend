@@ -24,7 +24,7 @@
         case Some(kicker) if snapType != Some(FrontendLatestSnap) => {
             @articleLink{<span class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</span> @headline()}
         }
-        case None => {
+        case _ => {
             @articleLink{@headline()}
         }
     }

@@ -40,6 +40,7 @@ object Dependencies {
   val openCsv = "net.sf.opencsv" % "opencsv" % "2.3"
   val paClient = "com.gu" %% "pa-client" % "5.0.1-NG"
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.1.11"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play" % "0.2.6"
   val playJsonVariants = "org.julienrf" %% "play-json-variants" % "0.2"
   val postgres = "postgresql" % "postgresql" % "8.4-703.jdbc4" from "https://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.1"

@@ -13,7 +13,6 @@ define([
     'common/views/svgs',
     'text!common/views/loyalty/save-for-later--signed-out.html',
     'text!common/views/loyalty/save-for-later--signed-in.html',
-
     'text!common/views/loyalty/save-for-later-front-link--signed-out.html',
     'text!common/views/loyalty/save-for-later-front-link--signed-in.html'
 ], function (
@@ -90,24 +89,6 @@ define([
     };
 
 
-    SaveForLater.prototype.renderSaveThisArticleLink = function (deferToClick, url, state) {
-
-         console.log("++ Render");
-         var self = this,
-             $saver = bonzo(qwery(self.classes['saveThisArticle'])[0]),
-             templateName = self.templates[deferToClick ? "signedInThisArticle" : "signedOutThisArticle"];
-
-         console.log("++ Q");
-
-         $saver.html(template(templateName, {
-                 url: url,
-                 icon: bookmarkSvg,
-                 state: state
-             })
-         );
-        console.log("++ Done");
-
-    };
 
     SaveForLater.prototype.getElementsIndexedById = function (context) {
         var self = this,
@@ -118,8 +99,25 @@ define([
         });
     };
 
+    SaveForLater.prototype.renderSaveThisArticleLink = function (deferToClick, url, state) {
+
+        var self = this,
+            $saver = bonzo(qwery('.js-save-for-later')[0]),
+            //$saver = bonzo('.js-save-for-later'),
+            templateName = self.templates[deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
+
+        $saver.html(template(templateName, {
+            url: url,
+            icon: bookmarkSvg,
+            state: state
+
+        }));
+    };
+
     SaveForLater.prototype.getSavedArticles = function () {
         var self = this,
+            saveLinkHolder = qwery('.js-save-for-later')[0],
+            shortUrl = config.page.shortUrl.replace('http://gu.com', ''),
             notFound  = {message:'Not found', description:'Resource not found'};
 
         console.log("+++ Get the Atricles");
@@ -256,12 +254,11 @@ define([
 
         //--- Get articles
     // -------------------------Save Article
-
     SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl) {
-        var self = this,
-            date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
-            newArticle = {id: pageId, shortUrl: shortUrl, date: date, read: false  };
         console.log("++ Click");
+        var self = this,
+        date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
+        newArticle = {id: pageId, shortUrl: shortUrl, date: date, read: false  };
 
         userData.articles.push(newArticle);
 
@@ -303,7 +300,6 @@ define([
     };
 
     //If this is an article Page, configure the save article link
-
     SaveForLater.prototype.onSaveThisArticle = function () {
         console.log("++++++++++++++ Sucees " );
         this.renderSaveThisArticleLink(false, this.savedArticlesUrl, 'saved');
@@ -358,7 +354,6 @@ define([
             )
         );
     };
-
 
     SaveForLater.prototype.createDeleteArticleHandler = function(deleteLink, id, shortUrl) {
         var self = this;
