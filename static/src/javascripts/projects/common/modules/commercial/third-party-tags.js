@@ -6,21 +6,21 @@ define([
     'common/utils/config',
     'common/modules/commercial/third-party-tags/audience-science',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
-    'common/modules/commercial/third-party-tags/criteo',
     'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
     'common/modules/commercial/third-party-tags/krux',
-    'common/modules/commercial/third-party-tags/outbrain'
+    'common/modules/commercial/third-party-tags/outbrain',
+    'common/modules/commercial/third-party-tags/pointroll-resp-lib'
 ], function (
     Promise,
     config,
     audienceScience,
     audienceScienceGateway,
-    criteo,
     imrWorldwide,
     remarketing,
     krux,
-    outbrain
+    outbrain,
+    pointroll
 ) {
 
     function init() {
@@ -36,11 +36,11 @@ define([
         }
 
         audienceScience.load();
-        criteo.load();
         imrWorldwide.load();
         remarketing.load();
         outbrain.load();
         krux.load();
+        pointroll.load();
 
         return Promise.resolve(null);
     }

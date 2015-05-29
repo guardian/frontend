@@ -9,7 +9,6 @@ import play.api.libs.json.Json
 import play.api.mvc.{Cookie, RequestHeader, Action, Controller}
 import scala.concurrent.Future
 import conf.Configuration.environment.projectName
-import conf.Switches.PreviewAuthByCookie
 
 object OAuthLoginController extends Controller with ExecutionContexts with implicits.Requests {
   import play.api.Play.current
@@ -115,14 +114,13 @@ object AuthCookie extends Logging {
   def from(id: UserIdentity): Option[Cookie] = {
     val idWith30DayExpiry = id.copy(exp = (System.currentTimeMillis() / 1000) + oneDayInSeconds )
     Some(Cookie(cookieName,  Crypto.encryptAES(Json.toJson(idWith30DayExpiry).toString), Some(oneDayInSeconds)))
-    .filter(_ => PreviewAuthByCookie.isSwitchedOn)
   }
 
   def toUserIdentity(request: RequestHeader): Option[UserIdentity] = {
     try {
       request.cookies.get(cookieName).flatMap{ cookie =>
         UserIdentity.fromJson(Json.parse(Crypto.decryptAES(cookie.value)))
-      }.filter(_ => PreviewAuthByCookie.isSwitchedOn)
+      }
     } catch { case e: Exception =>
       log.error("Could not parse Auth Cookie", e)
       None

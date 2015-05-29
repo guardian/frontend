@@ -19,9 +19,6 @@ object NoCacheFilter extends Filter with ExecutionContexts {
 
 object FilterExemptions {
 
-  // just a marker to remind us to delete heineken-men-of-the-world
-  private lazy val remember = Switches.RugbyQuizSwitch.isSwitchedOn
-
   lazy val loginExemption: FilterExemption = FilterExemption("/login")
   lazy val exemptions: Seq[FilterExemption] = List(
     FilterExemption("/oauth2callback"),
@@ -30,10 +27,7 @@ object FilterExemptions {
     FilterExemption("/_healthcheck"),
     FilterExemption("/2015-05-28-manifest.json"),
     // the healthcheck url
-    FilterExemption("/world/2012/sep/11/barcelona-march-catalan-independence"),
-
-    // delete me
-    FilterExemption("/sport/2015/may/22/heineken-men-of-the-world")
+    FilterExemption("/world/2012/sep/11/barcelona-march-catalan-independence")
   )
 }
 
@@ -44,7 +38,6 @@ object PreviewAuthFilters {
 
     private def doNotAuthenticate(request: RequestHeader) = Play.isTest ||
       request.path.startsWith(loginUrl.path) ||
-      Switches.EnableOauthOnPreview.isSwitchedOff ||
       exemptions.exists(exemption => request.path.startsWith(exemption.path))
 
     def apply(nextFilter: (RequestHeader) => Future[Result]) (request: RequestHeader): Future[Result] = {

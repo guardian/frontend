@@ -46,6 +46,16 @@ object SeriesController extends Controller with Logging with Paging with Executi
       }
   }
 
+  def seriesContainer(numberOfStories: Int) = numberOfStories match {
+    case 1 => FixedContainers.fixedSmallSlowI
+    case 2 => FixedContainers.fixedSmallSlowII
+    case 3 => FixedContainers.slowSeriesIII
+    case 4 => FixedContainers.fixedSmallSlowIV
+    case 5 => FixedContainers.slowSeriesV
+    case 6 => FixedContainers.fixedMediumSlowVI
+    case _ => FixedContainers.fixedMediumSlowVII
+  }
+
   private def renderSeriesTrails(series: Series)(implicit request: RequestHeader) = {
     val dataId = "series"
     val componentId = Some("series")
@@ -59,7 +69,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
     val response = () => views.html.fragments.containers.facia_cards.container(
       FaciaContainer(
         1,
-        Fixed(FixedContainers.fixedMediumSlowVII),
+        Fixed(seriesContainer(series.trails.length)),
         CollectionConfigWithId(dataId, config),
         CollectionEssentials(series.trails map FaciaContentConvert.frontentContentToFaciaContent take 7, Nil, displayName, None, None, None),
         componentId
