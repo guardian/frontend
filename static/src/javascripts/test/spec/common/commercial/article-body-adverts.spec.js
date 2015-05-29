@@ -50,8 +50,10 @@ describe('Article Body Adverts', function () {
 
             getParaWithSpaceStub = sinon.stub();
             var paras = qwery('p', $fixturesContainer);
-            getParaWithSpaceStub.onFirstCall().returns(Promise.resolve(paras[0]));
-            getParaWithSpaceStub.onSecondCall().returns(Promise.resolve(paras[1]));
+            getParaWithSpaceStub.onCall(0).returns(Promise.resolve(paras[0]));
+            getParaWithSpaceStub.onCall(1).returns(Promise.resolve(paras[1]));
+            getParaWithSpaceStub.onCall(2).returns(Promise.resolve(paras[2]));
+            getParaWithSpaceStub.onCall(3).returns(Promise.resolve(undefined));
             spacefinder.getParaWithSpace = getParaWithSpaceStub;
 
             done();
@@ -73,7 +75,8 @@ describe('Article Body Adverts', function () {
             return false;
         };
 
-        articleBodyAdverts.init().then(function () {
+        articleBodyAdverts.init()
+        .then(function () {
             expect(getParaWithSpaceStub).toHaveBeenCalledWith({
                 minAbove: 700,
                 minBelow: 300,
@@ -81,6 +84,30 @@ describe('Article Body Adverts', function () {
                     ' > h2': {minAbove: 0, minBelow: 250},
                     ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
                     ' .ad-slot': {minAbove: 500, minBelow: 500}
+                }
+            });
+            done();
+        })
+        .then(function () {
+            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                minAbove: 700,
+                minBelow: 300,
+                selectors: {
+                    ' > h2': {minAbove: 0, minBelow: 250},
+                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                    ' .ad-slot': {minAbove: 500, minBelow: 500}
+                }
+            });
+            done();
+        })
+        .then(function () {
+            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                minAbove: 700,
+                minBelow: 300,
+                selectors: {
+                    ' > h2': {minAbove: 0, minBelow: 250},
+                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                    ' .ad-slot': {minAbove: 1300, minBelow: 1300}
                 }
             });
             done();
@@ -104,7 +131,7 @@ describe('Article Body Adverts', function () {
 
     it('should insert an inline ad container to the available slot', function (done) {
         articleBodyAdverts.init().then(function () {
-            expect(getParaWithSpaceStub).toHaveBeenCalledOnce();
+            expect(getParaWithSpaceStub).toHaveBeenCalled();
             expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
             done();
         });

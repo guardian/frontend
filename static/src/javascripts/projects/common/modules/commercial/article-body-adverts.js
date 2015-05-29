@@ -48,6 +48,7 @@ define([
         return newRules;
     }
 
+    // Add new ads while there is still space
     function getAdSpace() {
         return spacefinder.getParaWithSpace(getLongArticleRules()).then(function (nextSpace) {
             // check if spacefinder found another space
@@ -55,7 +56,7 @@ define([
                 return Promise.resolve(null);
             }
 
-            // if yes add another ad
+            // if yes add another ad and try another run
             adNames.push(['inline2', 'inline']);
             return insertAdAtP(nextSpace).then(function () {
                 return getAdSpace();
@@ -105,20 +106,6 @@ define([
             } else {
                 inlineMercPromise = Promise.resolve(null);
             }
-
-            /*return inlineMercPromise.then(function () {
-                return spacefinder.getParaWithSpace(rules).then(function (space) {
-                    return insertAdAtP(space);
-                }).then(function () {
-                    if (detect.isBreakpoint({max: 'tablet'})) {
-                        return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
-                            return insertAdAtP(nextSpace);
-                        })
-                    } else {
-                        return Promise.resolve(null);
-                    }
-                });
-            });*/
 
             return inlineMercPromise.then(function () {
                 return spacefinder.getParaWithSpace(rules).then(function (space) {
