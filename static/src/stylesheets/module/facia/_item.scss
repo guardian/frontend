@@ -402,7 +402,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 // Liveblog blocks
 @function liveblog-blocks-height($blocks) {
-    $block-height: 70px;
+    $block-height: 74px;
     @return $block-height * $blocks;
 }
 
@@ -420,7 +420,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__liveblog-block {
     box-sizing: border-box;
     display: block;
-    height: liveblog-blocks-height(1) + $gs-gutter/4;
+    height: liveblog-blocks-height(1);
 }
 
 .fc-item__liveblog-block:hover {
@@ -433,10 +433,11 @@ $fc-item-gutter: $gs-gutter / 4;
     overflow: hidden;
     @include fs-textSans(1);
     line-height: 1rem;
-    color: mix(#ffffff, colour(live-default), 80%);
+    color: mix(#ffffff, colour(live-default), 92%);
     max-height: liveblog-blocks-height(1);
-    padding: $gs-baseline/4 $gs-gutter/4;
+    padding: $gs-baseline/4 $gs-baseline/2;
     border-top: 1px solid mix(#ffffff, colour(live-default), 50%);
+    border-bottom: 4px solid #cc2b12;
     background-color: colour(live-main-2);
 }
 
@@ -448,9 +449,9 @@ $fc-item-gutter: $gs-gutter / 4;
     @include fs-headline(1);
     font-size: 30px;
     line-height: $gs-baseline/2;
+    color: mix(#ffffff, colour(live-default), 92%);
     height: 18px;
-    color: #e8b9b2;
-    padding-right: 4px;
+    padding-right: 8px;
     background-color: colour(live-main-2);
     box-shadow: -5px 0 5px -2px colour(live-main-2);
 }
