@@ -91,15 +91,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val RugbyQuizSwitch = Switch(
-    "Demo",
-    "rugby-quiz",
-    "Just a marker switch to remind us to delete the rugby quiz",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 31),
-    exposeClientSide = false
-  )
-
   val TagPageSizeSwitch = Switch(
     "Performance",
     "tag-page-size",
@@ -142,24 +133,6 @@ object Switches {
     "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val EnableOauthOnPreview = Switch(
-    "Performance",
-    "enable-oauth-on-preview",
-    "If this switch is switched on then the preview server requires login",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 5, 31),
-    exposeClientSide = false
-  )
-
-  val PreviewAuthByCookie = Switch(
-    "Performance",
-    "preview-auth-by-cookie",
-    "If this switch is switched on then preview auth will be lengthened by a cookie",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 31),
     exposeClientSide = false
   )
 
@@ -643,7 +616,7 @@ object Switches {
     "international-edition",
     "International edition A/B test on",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 1),
+    sellByDate = new LocalDate(2015, 7, 31),
     exposeClientSide = true
   )
 
