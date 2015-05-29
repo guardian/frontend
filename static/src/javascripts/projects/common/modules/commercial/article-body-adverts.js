@@ -114,7 +114,7 @@ define([
             } else {
                 inlineMercPromise = Promise.resolve(null);
             }
-            console.log(isMtRecTest(), config.switches.commercialExtraAds);
+
             if (isMtRecTest() && config.switches.commercialExtraAds) {
                 return inlineMercPromise.then(function () {
                     return spacefinder.getParaWithSpace(rules).then(function (space) {
