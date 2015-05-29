@@ -24,7 +24,7 @@ define([
     blockTemplate
 ) {
     var numDisplayedBlocks = 4,
-        blockHeightPx = 75,
+        blockHeightPx = 74,
 
         animateDelayMs = 2000,
         refreshSecs = 30,
