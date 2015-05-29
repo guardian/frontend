@@ -41,7 +41,6 @@ POST          /press/draft/*path         controllers.FaciaToolController.pressDr
 
 GET           /front/lastmodified/*path  controllers.FaciaToolController.getLastModified(path)
 
-GET           /collection-put/*collectionId controllers.FaciaToolController.generatePutForCollectionId(collectionId)
 GET           /collection/*collectionId     controllers.FaciaToolController.getCollection(collectionId)
 POST          /edits                        controllers.FaciaToolController.collectionEdits
 GET           /collection                   controllers.FaciaToolController.listCollections
