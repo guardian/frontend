@@ -607,7 +607,7 @@ object Switches {
     "a-b-test-headlines",
     "A/B test headlines",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 1),
+    sellByDate = new LocalDate(2015, 8, 17),
     exposeClientSide = true
   )
 
