@@ -8,6 +8,7 @@ import common.{SNSNotification, StopWatch, JsonMessageQueue, Edition}
 import conf.{Switches, Configuration}
 import conf.Switches.FrontPressJobSwitch
 import metrics.AllFrontsPressLatencyMetric
+import play.api.libs.json.JsNull
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
@@ -34,14 +35,14 @@ object FrontPressCron extends JsonQueueWorker[SNSNotification] {
       log.info(s"Cron pressing path $path")
       val stopWatch = new StopWatch
 
-      lazy val fapiFormat =
-        if (Switches.FaciaPressNewFormat.isSwitchedOn) {
-            LiveFapiFrontPress.pressByPathId(path)}
-        else { Future.successful(Unit) }
+      lazy val fapiFormat = LiveFapiFrontPress.pressByPathId(path)
 
-      lazy val oldFormat = FrontPress.pressLiveByPathId(path)
+      lazy val oldFormat =
+        if (Switches.FaciaPressOldFormat.isSwitchedOn) {
+          FrontPress.pressLiveByPathId(path)
+        } else { Future.successful(JsNull) }
 
-      val pressFuture = oldFormat.flatMap(_ => fapiFormat)
+      val pressFuture = fapiFormat.flatMap(_ => oldFormat)
 
       pressFuture onComplete {
         case Success(_) =>
