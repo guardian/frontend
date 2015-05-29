@@ -95,7 +95,8 @@ define([
             dataAttrs,
             $adSlot;
 
-        definition = adSlotDefinitions[slotName];
+        definition = (slotName.match(/^inlineExtra/)) ? adSlotDefinitions['inline1'] : adSlotDefinitions[slotName];
+        
         if (config.page.hasPageSkin && slotName === 'merchandising-high') {
             definition.sizeMappings.wide = '1,1';
         }

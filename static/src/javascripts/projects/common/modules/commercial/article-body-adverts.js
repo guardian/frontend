@@ -57,7 +57,8 @@ define([
             }
 
             // if yes add another ad and try another run
-            adNames.push(['inline2', 'inline']);
+            adNames.push(['inlineExtra' + (ads.length + 2), 'inline']);
+            console.log((ads.length + 2), adNames[adNames.length - 1]);
             return insertAdAtP(nextSpace).then(function () {
                 return getAdSpace();
             });
