@@ -60,7 +60,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         UpdateActions.archivePublishBlock(collectionId, b, identity)
         FaciaPress.press(PressCommand.forOneId(collectionId).withPressDraft().withPressLive())
         FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(PublishUpdate(collectionId), identity.email))}
-    ContentApiPush.notifyContentApi(Set(collectionId))
     NoCache(Ok)}}
 
   def discardCollection(collectionId: String) = AuthAction.async { request =>
@@ -131,7 +130,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
               live = shouldUpdateLive,
               draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || update.update.draft)
             )
-            ContentApiPush.notifyContentApi(collectionIds)
 
             if (updatedCollections.nonEmpty)
               Ok(Json.toJson(updatedCollections)).as("application/json")
@@ -149,7 +147,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
               live = shouldUpdateLive,
               draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || remove.remove.draft)
             )
-            ContentApiPush.notifyContentApi(collectionIds)
             Ok(Json.toJson(updatedCollections)).as("application/json")
           }
         case updateAndRemove: UpdateAndRemove =>
@@ -170,7 +167,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
               live = shouldUpdateLive,
               draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || shouldUpdateDraft)
             )
-            ContentApiPush.notifyContentApi(collectionIds)
             Ok(Json.toJson(updatedCollections)).as("application/json")
           }
         case _ => Future.successful(NotAcceptable)
@@ -189,7 +185,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
   def updateCollection(collectionId: String) = AuthAction { request =>
     FaciaPress.press(PressCommand.forOneId(collectionId).withPressDraft().withPressLive())
-    ContentApiPush.notifyContentApi(Set(collectionId))
     NoCache(Ok)
   }
 
@@ -198,9 +193,4 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     now.map(Ok(_)).getOrElse(NotFound)
   }
 
-  def generatePutForCollectionId(collectionId: String) = AuthAction.async { request =>
-    ConfigAgent.getConfig(collectionId).map { collectionConfig =>
-      ContentApiWrite.generateContentApiPut(collectionId, collectionConfig).map( contentApiWrite => Ok(Json.toJson(contentApiWrite)))
-    }.getOrElse(Future.successful(NotFound(s"Collection ID $collectionId does not exist in ConfigAgent")))
-  }
 }
