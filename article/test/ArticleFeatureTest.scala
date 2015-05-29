@@ -125,7 +125,7 @@ import collection.JavaConversions._
         ImageServerSwitch.switchOn()
 
         Then("I should see the article's image")
-        findFirst("[itemprop='contentUrl representativeOfPage']").getAttribute("src") should
+        findFirst("[itemprop='contentUrl']").getAttribute("src") should
           include("Gunnerside-village-Swaled")
 
         And("I should see the image caption")
