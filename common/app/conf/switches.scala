@@ -980,7 +980,7 @@ object Switches {
     "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val ABIdentityCookieRefresh = Switch(

@@ -125,7 +125,9 @@ define([
         console.log("+++ Get the Atricles");
         identity.getSavedArticles().then(
             function success(resp) {
+                console.log("++ Rsp");
                 if (resp.status === 'error') {
+                    console.log("++ Error");
 
                     if (resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
                         //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
@@ -133,6 +135,7 @@ define([
                         self.userData = {version: date, articles:[]};
                     }
                 } else {
+                    console.log("++ Error");
                     self.userData = resp.savedArticles;
                 }
 
@@ -148,6 +151,7 @@ define([
     SaveForLater.prototype.renderLinksInContainers = function(signedIn) {
 
         var self = this;
+        console.log("++ Render container");
 
         if( !self.isContent ) {
             console.log("Render front pages");
