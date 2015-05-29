@@ -56,7 +56,7 @@ object FaciaPress extends Logging with ExecutionContexts {
 
       lazy val livePress =
         if (pressCommand.live) {
-          val fut = Future.traverse(paths)(path => FaciaPressQueue.enqueue(PressJob(FrontPath(path), Live)))
+          val fut = Future.traverse(paths)(path => FaciaPressQueue.enqueue(PressJob(FrontPath(path), Live, forceConfigUpdate = pressCommand.forceConfigUpdate)))
           fut.onComplete {
             case Failure(error) =>
               EnqueuePressFailure.increment()
@@ -71,7 +71,7 @@ object FaciaPress extends Logging with ExecutionContexts {
 
       lazy val draftPress =
         if (pressCommand.draft) {
-          val fut = Future.traverse(paths)(path => FaciaPressQueue.enqueue(PressJob(FrontPath(path), Draft)))
+          val fut = Future.traverse(paths)(path => FaciaPressQueue.enqueue(PressJob(FrontPath(path), Draft, forceConfigUpdate = pressCommand.forceConfigUpdate)))
           fut.onComplete {
             case Failure(error) =>
               EnqueuePressFailure.increment()
