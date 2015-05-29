@@ -7,21 +7,40 @@ define([
 ) {
     function init(callback) {
         var BinaryToggle = React.createClass({
-            render: function() {
-                return React.DOM.label(null, [
-                    React.DOM.input({
-                        key: this.props.name,
-                        type: 'checkbox',
-                        'data-link-name': this.props.name,
-                        defaultChecked: this.props.enabled,
-                        onChange: this.props.handleChange
-                    })
-                ].concat(this.props.label));
+            render: function () {
+                return React.DOM.div({
+                    className: 'form-field'
+                },
+                    React.DOM.div({
+                        className: 'checkbox'
+                    },
+                        React.DOM.label({
+                            className: 'label'
+                        }, [
+                            React.DOM.input({
+                                key: this.props.name,
+                                type: 'checkbox',
+                                'data-link-name': this.props.name,
+                                defaultChecked: this.props.enabled,
+                                onChange: this.props.handleChange,
+                                // TODO damn me when I decided to implement this page
+                                // global.css includes pasteup-forms 5 which applies ugly styles
+                                // on all inputs. The proper solution is to upgrade pasteup to 6
+                                // but I prefer to leave the pleasure to someone else
+                                // The style object should be removed once we upgrade. Never probably.
+                                style: {
+                                    float: 'none',
+                                    margin: '3px 0.5ex'
+                                }
+                            })
+                        ].concat(this.props.label))
+                    )
+                );
             }
         });
 
         var Accessibility = React.createClass({
-            getInitialState: function() {
+            getInitialState: function () {
                 return {
                     'flashing-images': accessibility.isOn('flashing-images')
                 };
@@ -33,29 +52,29 @@ define([
                     accessibility.saveState(this.state);
                 });
             },
-            render: function() {
-                return React.DOM.div({
-                    'data-link-name': 'accesibility preferences'
-                }, [
-                    React.DOM.h1({
-                        key: 'title',
-                        className: 'fc-item__title'
-                    }, 'Change the way this site looks.'),
-                    React.DOM.p({ key: 'p1' }, 'We aim to make this site accessible to a wide audience and to ensure a great experience for all users by conforming to World Wide Web Consortium accessibility guidelines (W3C\'s WCAG)'),
-                    React.DOM.p({ key: 'p2' }, 'However, if you are having trouble reading this website you can change the way it looks or disable some of its functionalities.'),
-                    React.createElement(BinaryToggle, {
-                        key: 'flashing-images',
-                        name: 'flashing-images',
-                        label: [
-                            React.DOM.strong({
-                                key: 'label'
-                            }, 'Flashing elements.'),
-                            ' Disable any element or image that flashes or animates.'
-                        ],
-                        enabled: this.state['flashing-images'],
-                        handleChange: this.toggle.bind(this, 'flashing-images')
-                    })
-                ]);
+            render: function () {
+                return React.DOM.form({
+                    className: 'form'
+                },
+                    React.DOM.fieldset({
+                        className: 'fieldset'
+                    }, [
+                        React.DOM.p({ key: 'p1' }, 'We aim to make this site accessible to a wide audience and to ensure a great experience for all users by conforming to World Wide Web Consortium accessibility guidelines (W3C\'s WCAG)'),
+                        React.DOM.p({ key: 'p2' }, 'However, if you are having trouble reading this website you can change the way it looks or disable some of its functionalities.'),
+                        React.createElement(BinaryToggle, {
+                            key: 'flashing-images',
+                            name: 'flashing-images',
+                            label: [
+                                React.DOM.strong({
+                                    key: 'label'
+                                }, 'Flashing elements.'),
+                                ' Disable any element or image that flashes or animates.'
+                            ],
+                            enabled: this.state['flashing-images'],
+                            handleChange: this.toggle.bind(this, 'flashing-images')
+                        })
+                    ])
+                );
             }
         });
 
