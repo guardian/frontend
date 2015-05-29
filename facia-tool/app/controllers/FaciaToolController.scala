@@ -178,12 +178,12 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   }
 
   def pressLivePath(path: String) = AuthAction { request =>
-    FaciaPressQueue.enqueue(PressJob(FrontPath(path), Live))
+    FaciaPressQueue.enqueue(PressJob(FrontPath(path), Live, forceConfigUpdate = Option(true)))
     NoCache(Ok)
   }
 
   def pressDraftPath(path: String) = AuthAction { request =>
-    FaciaPressQueue.enqueue(PressJob(FrontPath(path), Draft))
+    FaciaPressQueue.enqueue(PressJob(FrontPath(path), Draft, forceConfigUpdate = Option(true)))
     NoCache(Ok)
   }
 
