@@ -35,7 +35,7 @@ object FrontController extends Controller with PanDomainAuthActions {
       case Some(createFrontRequest) =>
         val identity = request.user
         val newCollectionId = UpdateManager.createFront(createFrontRequest, identity)
-        Press(Set(newCollectionId))
+        Press.fromSetOfIds(Set(newCollectionId))
         Ok
 
       case None => BadRequest
