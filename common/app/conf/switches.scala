@@ -1052,15 +1052,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ContentApiPutSwitch = Switch(
-    "Facia",
-    "facia-tool-contentapi-put",
-    "If this switch is on facia tool will PUT all collection changes to content api",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val FaciaToolPressSwitch = Switch(
     "Facia",
     "facia-tool-press-front",
