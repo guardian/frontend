@@ -66,7 +66,7 @@ define([
 
             return abParams;
         },
-        adtestGet = function () {
+        adtestParams = function () {
             if (cookies.get('adtest')) {
                 var cookieAdtest = cookies.get('adtest');
                 var first4Char = cookieAdtest.substring(0, 4);
@@ -91,7 +91,7 @@ define([
                 x:       krux.getSegments(),
                 su:      page.isSurging,
                 bp:      detect.getBreakpoint(),
-                at:      adtestGet(),
+                at:      adtestParams(),
                 gdncrm:  userAdTargeting.getUserSegments(),
                 ab:      abParam(),
                 co:      parseIds(page.authorIds),
