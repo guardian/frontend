@@ -35,9 +35,7 @@ define([
     stickySocial,
     selectionSharing
 ) {
-
     var modules = {
-
             initOpenCta: function () {
                 if (config.switches.openCta && config.page.commentable) {
                     var openCta = new OpenCta(mediator, {
