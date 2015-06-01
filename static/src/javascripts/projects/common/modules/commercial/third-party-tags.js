@@ -37,21 +37,24 @@ define([
                 break;
         }
 
-        audienceScience.load();
-        imrWorldwide.load();
-        remarketing.load();
-        krux.load();
-        pointroll.load();
-
-        mediator.once('modules:commercial:dfp:alladsrendered', function () {
-            loadLater();
-        });
+        if (config.switch.thirdPartiesLaterSwitch) {
+            mediator.once('modules:commercial:dfp:alladsrendered', function () {
+                loadOther();
+            });
+        } else {
+            pointroll.load();
+            loadOther();
+        }
 
         return Promise.resolve(null);
     }
 
-    function loadLater() {
+    function loadOther() {
         outbrain.load();
+        audienceScience.load();
+        imrWorldwide.load();
+        remarketing.load();
+        krux.load();
     }
 
     return {

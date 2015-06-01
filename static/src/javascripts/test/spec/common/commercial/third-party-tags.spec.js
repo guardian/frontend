@@ -38,5 +38,4 @@ describe('Tags Container', function () {
 
         expect(tagsContainer.init()).toBe(false);
     });
-
 });
