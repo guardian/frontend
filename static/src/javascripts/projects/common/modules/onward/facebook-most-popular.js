@@ -11,11 +11,11 @@ define([
         this.fetch(this.context, 'html');
     }
 
-    FacebookMostPopular.prototype.ready = function () {
-        mediator.emit('page:new-content', this.elem);
-    };
-
     Component.define(FacebookMostPopular);
+
+    FacebookMostPopular.prototype.ready = function (elem) {
+        mediator.emit('page:new-content', elem);
+    };
 
     return FacebookMostPopular;
 });
