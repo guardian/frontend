@@ -42,6 +42,8 @@ object Metric extends Logging {
     ("ipad-old-after-5", CountMetric(s"ipad-old-after-5")),
     ("ipad-2orMini-start", CountMetric(s"ipad-2orMini-start")),
     ("ipad-2orMini-after-5", CountMetric(s"ipad-2orMini-after-5")),
+    ("ipad-3orLater-start", CountMetric(s"ipad-3orLater-start")),
+    ("ipad-3orLater-after-5", CountMetric(s"ipad-3orLater-after-5")),
 
     ("tech-feedback", CountMetric("tech-feedback")),
 
