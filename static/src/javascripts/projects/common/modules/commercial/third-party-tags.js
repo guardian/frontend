@@ -7,22 +7,22 @@ define([
     'common/utils/mediator',
     'common/modules/commercial/third-party-tags/audience-science',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
-    'common/modules/commercial/third-party-tags/criteo',
     'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
     'common/modules/commercial/third-party-tags/krux',
-    'common/modules/commercial/third-party-tags/outbrain'
+    'common/modules/commercial/third-party-tags/outbrain',
+    'common/modules/commercial/third-party-tags/pointroll-resp-lib'
 ], function (
     Promise,
     config,
     mediator,
     audienceScience,
     audienceScienceGateway,
-    criteo,
     imrWorldwide,
     remarketing,
     krux,
-    outbrain
+    outbrain,
+    pointroll
 ) {
 
     function init() {
@@ -38,10 +38,10 @@ define([
         }
 
         audienceScience.load();
-        criteo.load();
         imrWorldwide.load();
         remarketing.load();
         krux.load();
+        pointroll.load();
 
         mediator.once('modules:commercial:dfp:alladsrendered', function () {
             loadLater();
