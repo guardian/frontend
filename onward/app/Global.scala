@@ -3,10 +3,9 @@ import common.{ContentApiMetrics, CloudWatchApplicationMetrics}
 import conf.Filters
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
-import feed.{MostReadLifecycle, OnwardJourneyLifecycle}
+import feed.{MostPopularFacebookAutoRefresh, MostReadLifecycle, OnwardJourneyLifecycle}
 import metrics.FrontendMetric
 import play.api.mvc.WithFilters
-import feed.MostPopularFacebookAutoRefresh.
 
 object Global extends WithFilters(Filters.common: _*)
   with OnwardJourneyLifecycle

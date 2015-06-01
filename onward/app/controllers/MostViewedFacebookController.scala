@@ -2,7 +2,7 @@ package controllers
 
 import com.gu.facia.api.models.CollectionConfig
 import common.`package`._
-import common.{Edition, JsonNotFound}
+import common.{ExecutionContexts, Edition, JsonNotFound}
 import conf.LiveContentApi
 import feed.MostPopularFacebookAutoRefresh
 import layout.{CollectionEssentials, FaciaContainer}
@@ -12,7 +12,7 @@ import services.{FaciaContentConvert, CollectionConfigWithId}
 import slices.Fixed
 import scala.concurrent.Future.{successful => unit}
 
-object MostViewedFacebookController extends Controller {
+object MostViewedFacebookController extends Controller with ExecutionContexts {
   def renderMostViewed = Action.async { implicit request =>
     MostPopularFacebookAutoRefresh.get match {
       case Some(articleIds) if articleIds.nonEmpty =>
