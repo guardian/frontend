@@ -6,6 +6,7 @@ import dfp.DfpAgentLifecycle
 import feed.{MostReadLifecycle, OnwardJourneyLifecycle}
 import metrics.FrontendMetric
 import play.api.mvc.WithFilters
+import feed.MostPopularFacebookAutoRefresh.
 
 object Global extends WithFilters(Filters.common: _*)
   with OnwardJourneyLifecycle
@@ -14,6 +15,7 @@ object Global extends WithFilters(Filters.common: _*)
   with DfpAgentLifecycle
   with MostReadLifecycle
   with StocksDataLifecycle
+  with MostPopularFacebookAutoRefresh.Lifecycle
   with CorsErrorHandler {
   override lazy val applicationName = "frontend-onward"
 

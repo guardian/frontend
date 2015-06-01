@@ -1,5 +1,7 @@
 package common
 
+import play.api.{Application, GlobalSettings}
+
 import scala.concurrent.duration.FiniteDuration
 import akka.agent.Agent
 import akka.actor.Cancellable
@@ -38,4 +40,16 @@ abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDura
   }
 
   final def stop() = subscription foreach { _.cancel() }
+
+  trait Lifecycle extends GlobalSettings {
+    override def onStart(app: Application): Unit = {
+      super.onStart(app)
+      start()
+    }
+
+    override def onStop(app: Application): Unit = {
+      stop()
+      super.onStop(app)
+    }
+  }
 }
