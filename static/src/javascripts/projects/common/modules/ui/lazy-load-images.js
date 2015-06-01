@@ -66,19 +66,12 @@ define([
         lazyLoad();
     }
 
-    function setUpListeners() {
-        _.forEach([
-            'page:new-content'
-        ], function (event) {
-            mediator.on(event, function (context) {
-                attachLazyLoad(qwery('.js-lazy-loaded-image', context));
-            });
-        });
-    }
-
     function init() {
         attachLazyLoad(qwery('.js-lazy-loaded-image'));
-        setUpListeners();
+
+        mediator.on('page:new-content', function (context) {
+            attachLazyLoad(qwery('.js-lazy-loaded-image', context));
+        });
     }
 
     return {
