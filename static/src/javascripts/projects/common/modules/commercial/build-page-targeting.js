@@ -68,8 +68,8 @@ define([
         },
         adtestParams = function () {
             if (cookies.get('adtest')) {
-                var cookieAdtest = cookies.get('adtest');
-                var first4Char = cookieAdtest.substring(0, 4);
+                var cookieAdtest = cookies.get('adtest'),
+                    first4Char = cookieAdtest.substring(0, 4);
                 if (first4Char === 'demo') {
                     cookies.remove('adtest');
                 }
