@@ -12,8 +12,10 @@ GET        /pressed/live/*id      controllers.Application.generateLivePressedFor
 
 #FACIA-TOOL
 # authentication endpoints
-GET           /oauth2callback            controllers.PandaAuthController.oauthCallback
+GET           /authError                 controllers.PandaAuthController.authError(message:String)
+GET           /oauthCallback             controllers.PandaAuthController.oauthCallback
 GET           /logout                    controllers.PandaAuthController.logout
+GET           /login/status              controllers.PandaAuthController.status
 
 # static files
 GET           /humans.txt                controllers.Assets.at(path="/public", file="humans.txt")
