@@ -11,6 +11,7 @@ define([
     'common/modules/article/open-module',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
+    'common/modules/onward/facebook-most-popular',
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
     'common/modules/ui/rhc',
@@ -29,6 +30,7 @@ define([
     openModule,
     truncate,
     twitter,
+    facebookMostPopular,
     geoMostPopular,
     OpenCta,
     rhc,
@@ -88,6 +90,12 @@ define([
                 if (config.switches.abShareButtons2) {
                     stickySocial.init();
                 }
+            },
+
+            initFacebookMostPopular: function () {
+                if (config.switches.facebookMostPopular) {
+                    facebookMostPopular.render();
+                }
             }
         },
 
@@ -99,6 +107,7 @@ define([
             modules.initSelectionSharing();
             modules.initCmpParam();
             modules.initStickyShares();
+            modules.initFacebookMostPopular();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
