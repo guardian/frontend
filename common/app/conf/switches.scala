@@ -683,6 +683,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val GravitySwitch = Switch(
+    "Feature",
+    "gravity",
+    "Enable the Gravity content recommendation widget.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 1),
+    exposeClientSide = true
+  )
+
   val ForeseeSwitch = Switch(
     "Feature",
     "foresee",
