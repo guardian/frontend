@@ -16,7 +16,7 @@ trait Articles {
   implicit class RichSavedArticles(savedArticles: SavedArticles) {
     val fmt = ISODateTimeFormat.dateTimeNoMillis()
     val itemsPerPage = 5
-    lazy val pages = savedArticles.articles.grouped(itemsPerPage).toList
+    val pages = savedArticles.articles.grouped(itemsPerPage).toList
     lazy val numPages = pages.length
 
     lazy val totalSaved = savedArticles.articles.length
