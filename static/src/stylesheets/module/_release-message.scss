@@ -102,9 +102,14 @@
         max-width: none;
     }
 
-    .site-message--panelMtRec1 & {
+    .site-message--panelMtRec1 & ,
+    .site-message--panelMtRec2 & {
         font-weight: bold;
         padding-top: 10px;
+
+        @include mq(mobile) {
+            padding-left: 14px;
+        }
     }
 }
 
@@ -126,6 +131,13 @@
         display: table-cell;
         vertical-align: middle;
         margin-top: 0;
+    }
+
+    .site-message--panelMtRec1 & ,
+    .site-message--panelMtRec2 & {
+        @include mq(mobile) {
+            padding-left: 14px;
+        }
     }
 }
 

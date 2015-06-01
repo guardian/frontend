@@ -41,30 +41,34 @@ define([
             return !isIE && _.contains(['UK', 'US'], config.page.edition);
         };
 
+        this.showMessage = function (id, linkName, panelLinks) {
+            new Message(id, {
+                pinOnHide: false,
+                siteMessageLinkName: linkName,
+                siteMessageCloseBtn: 'hide'
+            }).show(template(
+                    inviteToPanelTemplate,
+                    {
+                        panelLink: panelLinks[detect.getBreakpoint()],
+                        messageTextHeader: 'Tell us about your experience using the Guardian site',
+                        messageText: 'Complete a quick survey (5 mins max) and get involved in the development of the site.',
+                        linkText: 'Open survey'
+                    }
+                ));
+        };
+
         this.fireRecTest = function () {
             var panelLinks = {
                 mobile: 'https://s.userzoom.com/m/MyBDMTBTMjE1',
                 tablet: 'https://s.userzoom.com/m/MiBDMTBTMjE1',
-                desktop: 'https://s.userzoom.com/m/MSBDMTBTMjE1',
-                wide: 'https://s.userzoom.com/m/MSBDMTBTMjE1'
+                desktop: 'https://s.userzoom.com/m/OSBDMTBTMjE4',
+                wide: 'https://s.userzoom.com/m/OSBDMTBTMjE4'
             };
 
             stickyNav.stickySlow.init();
 
             if (!detect.adblockInUse) {
-                new Message('panelMtRec1', {
-                    pinOnHide: false,
-                    siteMessageLinkName: 'panel message mtRec1',
-                    siteMessageCloseBtn: 'hide'
-                }).show(template(
-                        inviteToPanelTemplate,
-                        {
-                            panelLink: panelLinks[detect.getBreakpoint()],
-                            messageTextHeader: 'Tell us about your experience using the Guardian site',
-                            messageText: 'Complete a quick survey (5 mins max) and get involved in the development of the site.',
-                            linkText: 'Open survey'
-                        }
-                    ));
+                this.showMessage('panelMtRec1', 'panel message mtRec1 variant', panelLinks);
             }
 
         };
@@ -79,7 +83,18 @@ define([
             },
             {
                 id: 'B',
-                test: function () { }
+                test: function () {
+                    var panelLinks = {
+                        mobile: 'https://s.userzoom.com/m/MyBDMTBTMjE4',
+                        tablet: 'https://s.userzoom.com/m/MiBDMTBTMjE4',
+                        desktop: 'https://s.userzoom.com/m/MSBDMTBTMjE4',
+                        wide: 'https://s.userzoom.com/m/MSBDMTBTMjE4'
+                    };
+
+                    if (!detect.adblockInUse) {
+                        this.showMessage('panelMtRec1', 'panel message mtRec1 control', panelLinks);
+                    }
+                }.bind(this)
             }
         ];
     };
