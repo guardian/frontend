@@ -49,6 +49,8 @@ define([
         controls.forEach(function (c) {
             if (c === control) {
                 self[bonzo(c).hasClass('is-active') ? 'close' : 'open'](c);
+            } else {
+                self.close(c);
             }
         });
     };
