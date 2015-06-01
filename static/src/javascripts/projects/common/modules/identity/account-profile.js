@@ -9,13 +9,15 @@ define([
     'bean',
     'bonzo',
     'common/utils/url',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/cookies'
 ], function (
     $,
     bean,
     bonzo,
     url,
-    config
+    config,
+    cookies
 ) {
 
     var accountProfile = function () {
@@ -124,21 +126,6 @@ define([
 
     accountProfile.prototype.avatarUploadByApi = function (avatarForm) {
         var self = this;
-
-        function getCookieValue(a) {
-            var d=[],
-            e=document.cookie.split(';');
-            a=RegExp("^\\s*"+a+"=\\s*(.*?)\\s*$");
-            for(var b=0;b<e.length;b++){
-                var f=e[b].match(a);
-                f&&d.push(f[1]);
-            }
-            if(d.length > 0){
-                return d[0];
-            }
-            return null;
-        }
-
         var formData = new FormData(document.querySelector('form.js-avatar-upload-form'));
         var xhr = self.createCORSRequest('POST', self.urls.avatarApiUrl);
 
@@ -163,7 +150,7 @@ define([
             self.prependErrorMessage(self.messages.noServerError, avatarForm);
         };
 
-        xhr.setRequestHeader('Authorization', 'Bearer ' + getCookieValue('GU_U'));
+        xhr.setRequestHeader('Authorization', 'Bearer ' + cookies.get('GU_U'));
         xhr.send(formData);
     };
 
