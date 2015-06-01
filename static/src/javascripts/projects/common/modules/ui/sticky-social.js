@@ -2,12 +2,14 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/_',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/modules/experiments/ab'
 ], function (
     fastdom,
     $,
     _,
+    detect,
     mediator,
     ab
     ) {
@@ -75,21 +77,21 @@ define([
     }
 
     function init() {
-        var testVariant = ab.getTestVariant('ShareButtons'),
+        var testVariant = ab.getTestVariant('ShareButtons2'),
             referrer,
-            socialReferrer;
+            socialContext;
 
         if (testVariant.indexOf('referrer') > -1) {
-            referrer = ((window.location.hash + '').match(/referrer=([^&]+)/) || [])[1] || document.referrer,
+            referrer = ((window.location.hash + '').match(/referrer=([^&]+)/) || [])[1] || document.referrer || '',
 
-            socialReferrer = referrer ? [
-                'facebook',
-                'twitter'
+            socialContext = [
+                {id: 'facebook', matchReferrer: 'facebook.com', isApp: detect.isFacebookApp},
+                {id: 'twitter', matchReferrer: 't.co', isApp: detect.isTwitterApp}
             ].filter(function (social) {
-                return referrer.indexOf(social) > -1;
-            })[0] : null;
+                return referrer.indexOf(social.matchReferrer) > -1 || social.isApp();
+            })[0];
 
-            if (socialReferrer) {
+            if (socialContext) {
                 fastdom.read(function () {
                     [topEl(), bottomEl()].forEach(function (el) {
                         if (el) {
@@ -98,7 +100,7 @@ define([
                                     $(el).addClass('social--referred-only');
                                 }
 
-                                moveToFirstPosition($('.social__item--' + socialReferrer, el).addClass('social__item--referred'));
+                                moveToFirstPosition($('.social__item--' + socialContext.id, el).addClass('social__item--referred'));
                             });
                         }
                     });

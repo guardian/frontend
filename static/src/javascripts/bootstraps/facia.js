@@ -89,8 +89,7 @@ define([
                 if (config.switches.liveblogFrontUpdatesOther && !isSport && !isNetFront ||
                     config.switches.liveblogFrontUpdatesUk && pageId === 'uk' ||
                     config.switches.liveblogFrontUpdatesUs && pageId === 'us' ||
-                    config.switches.liveblogFrontUpdatesAu && pageId === 'au' ||
-                    config.switches.abLiveblogSportFrontUpdates && isSport && ab.getTestVariant('LiveblogSportFrontUpdates') === 'updates') {
+                    config.switches.liveblogFrontUpdatesAu && pageId === 'au') {
                     mediator.on('page:front:ready', function () {
                         liveblogUpdates.show();
                     });

@@ -77,7 +77,7 @@ define([
             initRightHandComponent: function () {
                 var mainColumn = qwery('.js-content-main-column');
                 // only render when we have >1000px or more (enough space for ad + most popular)
-                if (mainColumn[0] && mainColumn[0].offsetHeight > 1000 && detect.isBreakpoint({ min: 'desktop' })) {
+                if (mainColumn[0] && mainColumn[0].offsetHeight > 1150 && detect.isBreakpoint({ min: 'desktop' })) {
                     geoMostPopular.render();
                 }
             },
@@ -87,7 +87,7 @@ define([
             },
 
             initStickyShares: function () {
-                if (config.switches.abShareButtons) {
+                if (config.switches.abShareButtons2) {
                     stickySocial.init();
                 }
             }

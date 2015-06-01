@@ -1,6 +1,6 @@
-@(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity])
+@(env: String, priority: String, identity: Option[com.gu.pandomainauth.model.User])
 
-@admin_main("fronts", env, Some(priority), isAuthed = true, identity, model=Option("collections")) {
+@admin_main("fronts", env, Some(priority), identity, model=Option("collections")) {
 
 <div style="display: none;" data-bind="visible: true">
 

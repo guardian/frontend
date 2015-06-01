@@ -1,7 +1,7 @@
 package tools
 
 import com.gu.facia.client.models.{CollectionJson, ConfigJson}
-import com.gu.googleauth.UserIdentity
+import com.gu.pandomainauth.model.User
 import common.{Logging, ExecutionContexts}
 import fronts.FrontsApi
 import frontsapi.model.CollectionJsonFunctions
@@ -19,9 +19,9 @@ trait FaciaApiRead {
 
 trait FaciaApiWrite {
   def putCollectionJson(id: String, collectionJson: CollectionJson): CollectionJson
-  def publishCollectionJson(id: String, identity: UserIdentity): Future[Option[CollectionJson]]
-  def discardCollectionJson(id: String, identity: UserIdentity): Future[Option[CollectionJson]]
-  def archive(id: String, collectionJson: CollectionJson, update: JsValue, identity: UserIdentity): Unit
+  def publishCollectionJson(id: String, identity: User): Future[Option[CollectionJson]]
+  def discardCollectionJson(id: String, identity: User): Future[Option[CollectionJson]]
+  def archive(id: String, collectionJson: CollectionJson, update: JsValue, identity: User): Unit
 }
 
 object FaciaApiIO extends FaciaApiRead with FaciaApiWrite with ExecutionContexts with Logging {
@@ -35,19 +35,19 @@ object FaciaApiIO extends FaciaApiRead with FaciaApiWrite with ExecutionContexts
     collectionJson
   }
 
-  private def mutateCollectionJson(f: UserIdentity => CollectionJson => Option[CollectionJson])
-                         (id: String, identity: UserIdentity): Future[Option[CollectionJson]] =
+  private def mutateCollectionJson(f: User => CollectionJson => Option[CollectionJson])
+                         (id: String, identity: User): Future[Option[CollectionJson]] =
     getCollectionJson(id)
       .map { maybeCollectionJson =>
       maybeCollectionJson
         .flatMap(f(identity))
         .map(putCollectionJson(id, _))}
 
-  def publishCollectionJson(id: String, identity: UserIdentity) = mutateCollectionJson(FaciaApi.preparePublishCollectionJson)(id, identity)
+  def publishCollectionJson(id: String, identity: User) = mutateCollectionJson(FaciaApi.preparePublishCollectionJson)(id, identity)
 
-  def discardCollectionJson(id: String, identity: UserIdentity) = mutateCollectionJson(FaciaApi.prepareDiscardCollectionJson)(id, identity)
+  def discardCollectionJson(id: String, identity: User) = mutateCollectionJson(FaciaApi.prepareDiscardCollectionJson)(id, identity)
 
-  def archive(id: String, collectionJson: CollectionJson, update: JsValue, identity: UserIdentity): Unit = {
+  def archive(id: String, collectionJson: CollectionJson, update: JsValue, identity: User): Unit = {
     Json.toJson(collectionJson).transform[JsObject](Reads.JsObjectReads) match {
       case JsSuccess(result, _) =>
         S3FrontsApi.archive(id, Json.prettyPrint(result + ("diff", update)), identity)
@@ -56,7 +56,7 @@ object FaciaApiIO extends FaciaApiRead with FaciaApiWrite with ExecutionContexts
   def putMasterConfig(config: ConfigJson): Option[ConfigJson] = {
     Try(S3FrontsApi.putMasterConfig(Json.prettyPrint(Json.toJson(config)))).map(_ => config).toOption
   }
-  def archiveMasterConfig(config: ConfigJson, identity: UserIdentity): Unit = S3FrontsApi.archiveMasterConfig(Json.prettyPrint(Json.toJson(config)), identity)
+  def archiveMasterConfig(config: ConfigJson, identity: User): Unit = S3FrontsApi.archiveMasterConfig(Json.prettyPrint(Json.toJson(config)), identity)
 
 }
 
@@ -66,7 +66,7 @@ object FaciaApiIO extends FaciaApiRead with FaciaApiWrite with ExecutionContexts
 object FaciaApi {
 
   // testable
-  def preparePublishCollectionJson(identity: UserIdentity)(collectionJson: CollectionJson): Option[CollectionJson] =
+  def preparePublishCollectionJson(identity: User)(collectionJson: CollectionJson): Option[CollectionJson] =
     Some(collectionJson)
       .filter(_.draft.isDefined)
       .map(updatePublicationDateForNew)
@@ -74,12 +74,12 @@ object FaciaApi {
       .map(collectionJson => collectionJson.copy(live = collectionJson.draft.get, draft = None))
       .map(updateIdentity(_, identity))
 
-  def prepareDiscardCollectionJson(identity: UserIdentity)(collectionJson: CollectionJson): Option[CollectionJson] =
+  def prepareDiscardCollectionJson(identity: User)(collectionJson: CollectionJson): Option[CollectionJson] =
     Some(collectionJson)
       .map(_.copy(draft = None))
       .map(updateIdentity(_, identity))
 
-  def updateIdentity(collectionJson: CollectionJson, identity: UserIdentity): CollectionJson = collectionJson.copy(lastUpdated = DateTime.now, updatedBy = identity.fullName, updatedEmail = identity.email)
+  def updateIdentity(collectionJson: CollectionJson, identity: User): CollectionJson = collectionJson.copy(lastUpdated = DateTime.now, updatedBy = identity.firstName + " " + identity.lastName, updatedEmail = identity.email)
 
   def updatePublicationDateForNew(collectionJson: CollectionJson): CollectionJson = {
     val liveIds = collectionJson.live.map(_.id).toSet

@@ -7,6 +7,7 @@ import implicits.FaciaContentFrontendHelpers._
 import implicits.FaciaContentImplicits._
 import model.PressedPage
 import model.facia.PressedCollection
+import model.meta.{ListItem, ItemList}
 import org.joda.time.DateTime
 import services.{CollectionConfigWithId, FaciaContentConvert}
 import slices.{MostPopular, _}
@@ -423,6 +424,25 @@ object Front extends implicits.Collections {
     )
 
   }
+
+  def makeLinkedData(collections: Seq[FaciaContainer]): ItemList = {
+    ItemList(
+      "", // relative iri so just resolves to the base
+      collections.zipWithIndex.map {
+        case (collection, index) =>
+          ListItem(position = index, item = Some(
+            ItemList(
+              "", // don't have a uri for each container
+              collection.items.zipWithIndex.map {
+                case (item, index) =>
+                  ListItem(position = index, url = Some(item.url))
+              }
+            )
+          ))
+      }
+    )
+  }
+
 }
 
 case class Front(

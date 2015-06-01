@@ -1,5 +1,6 @@
 package test
 
+import metadata.MetaDataMatcher
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
@@ -11,23 +12,13 @@ import play.api.test.Helpers._
 
   it should "Include organisation metadata" in {
     val result = controllers.ArticleController.renderArticle(articleUrl, None, None)(TestRequest(articleUrl))
-    val body = Jsoup.parseBodyFragment(contentAsString(result))
-    status(result) should be(200)
+    MetaDataMatcher.ensureOrganisation(result)
+  }
 
-    val script = body.getElementsByAttributeValue("data-schema", "organization")
-    script.size() should be(1)
+  it should "Include webpage metadata" in {
+    val result = controllers.ArticleController.renderArticle(articleUrl, None, None)(TestRequest(articleUrl))
+    MetaDataMatcher.ensureWebPage(result, articleUrl)
 
-    val data: JsValue = Json.parse(script.first().html())
-    val organisation = data.asInstanceOf[JsArray](0)
-    val appIndexer = data.asInstanceOf[JsArray](1)
-    (organisation \ "name").as[String] should be("The Guardian")
-    (organisation \ "logo").as[String] should include("152x152.png")
-
-    (appIndexer \ "potentialAction" \ "target").as[String] should include(articleUrl)
-
-    val socialNetworks = (organisation \ "sameAs").as[List[String]]
-
-    socialNetworks.size should be(4)
   }
 
 }

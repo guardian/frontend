@@ -8,6 +8,7 @@ import contentapi.Paths
 import layout.DateHeadline.cardTimestampDisplay
 import layout._
 import model._
+import model.meta.{ListItem, ItemList}
 import org.joda.time.DateTime
 import slices.{ContainerDefinition, Fixed, FixedContainers}
 
@@ -133,7 +134,8 @@ object IndexPage {
       ).transformCards({ card =>
         card.copy(
           timeStampDisplay = Some(timeStampDisplay),
-          byline = if (indexPage.page.isContributorPage) None else card.byline
+          byline = if (indexPage.page.isContributorPage) None else card.byline,
+          useShortByline = true
         ).setKicker(card.header.kicker flatMap {
           case ReviewKicker if isReviewPage => None
           case CartoonKicker if isCartoonPage => None
@@ -143,6 +145,17 @@ object IndexPage {
       })
     }))
   }
+
+  def makeLinkedData(indexPage: IndexPage): ItemList = {
+    ItemList(
+      indexPage.page.url,
+      indexPage.trails.zipWithIndex.map {
+        case (trail, index) =>
+          ListItem(position = index, url = Some(trail.url))
+      }
+    )
+  }
+
 }
 
 case class IndexPage(page: MetaData, trails: Seq[Content],
@@ -180,4 +193,5 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
   }
 
   def allPath = s"/$idWithoutEdition"
+
 }

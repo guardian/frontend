@@ -4,6 +4,7 @@ import common.Edition
 import dfp.DfpAgent
 import implicits.Dates
 import org.scala_tools.time.Imports._
+import views.support.CardStyleForFrontend
 
 /**
  * additional information needed to display something on a facia page from CAPI
@@ -52,6 +53,7 @@ trait Trail extends Elements with Tags with FaciaFields with Dates {
   slideshow
     .filter(image => IsRatio(aspectWidth, aspectHeight, image.width, image.height))
 
+  def cardStyle = CardStyleForFrontend(this)
 }
 
 /**
