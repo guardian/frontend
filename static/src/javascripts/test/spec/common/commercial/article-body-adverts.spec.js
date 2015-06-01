@@ -24,12 +24,26 @@ describe('Article Body Adverts', function () {
             'common/modules/commercial/article-body-adverts',
             'common/utils/config',
             'common/utils/detect',
-            'common/modules/article/spacefinder'], function () {
+            'common/modules/article/spacefinder',
+            'common/modules/experiments/ab'], function () {
 
             articleBodyAdverts = arguments[0];
             config = arguments[1];
             detect = arguments[2];
             spacefinder = arguments[3];
+            ab = arguments[4];
+
+            getParticipationsStub = sinon.stub();
+            getParticipationsStub.returns({
+                'MtRec2': {
+                    'variant': 'A'
+                }
+            });
+            ab.getParticipations = getParticipationsStub;
+
+            testCanBeRunStub = sinon.stub();
+            testCanBeRunStub.returns(true);
+            ab.testCanBeRun = testCanBeRunStub;
 
             $fixturesContainer = fixtures.render(fixturesConfig);
             $style = $.create('<style type="text/css"></style>')
@@ -74,6 +88,24 @@ describe('Article Body Adverts', function () {
         detect.isBreakpoint = function () {
             return false;
         };
+
+        articleBodyAdverts.init()
+        .then(function () {
+            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                minAbove: 700,
+                minBelow: 300,
+                selectors: {
+                    ' > h2': {minAbove: 0, minBelow: 250},
+                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                    ' .ad-slot': {minAbove: 500, minBelow: 500}
+                }
+            });
+            done();
+        });
+    });
+
+    it('should call "getParaWithSpace" with correct arguments multiple times - in test', function (done) {
+        config.switches.commercialExtraAds = true;
 
         articleBodyAdverts.init()
         .then(function () {
