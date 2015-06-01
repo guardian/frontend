@@ -91,15 +91,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val RugbyQuizSwitch = Switch(
-    "Demo",
-    "rugby-quiz",
-    "Just a marker switch to remind us to delete the rugby quiz",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 31),
-    exposeClientSide = false
-  )
-
   val TagPageSizeSwitch = Switch(
     "Performance",
     "tag-page-size",
@@ -136,30 +127,21 @@ object Switches {
     exposeClientSide = false
   )
 
+  val TributeSwitch = Switch(
+    "Feature",
+    "ar-tribute",
+    "If switched on will display the Alana tribute.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 5),
+    exposeClientSide = false
+  )
+
   val IncludeBuildNumberInMemcachedKey = Switch(
     "Performance",
     "memcached-build-number",
     "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val EnableOauthOnPreview = Switch(
-    "Performance",
-    "enable-oauth-on-preview",
-    "If this switch is switched on then the preview server requires login",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 5, 31),
-    exposeClientSide = false
-  )
-
-  val PreviewAuthByCookie = Switch(
-    "Performance",
-    "preview-auth-by-cookie",
-    "If this switch is switched on then preview auth will be lengthened by a cookie",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 31),
     exposeClientSide = false
   )
 
@@ -381,15 +363,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val CriteoSwitch = Switch(
-    "Commercial",
-    "criteo",
-    "If this switch is on, Criteo segments will be used to target ads.",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val ImrWorldwideSwitch = Switch(
     "Commercial",
     "imr-worldwide",
@@ -515,7 +488,7 @@ object Switches {
     "If this switch is on, Apple ads will appear below nav on the US network front.",
     safeState = Off,
     sellByDate = appleSellByDate,
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val AppleAdAuNetworkFrontSwitch = Switch(
@@ -652,7 +625,7 @@ object Switches {
     "a-b-test-headlines",
     "A/B test headlines",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 1),
+    sellByDate = new LocalDate(2015, 8, 17),
     exposeClientSide = true
   )
 
@@ -661,7 +634,7 @@ object Switches {
     "international-edition",
     "International edition A/B test on",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 1),
+    sellByDate = new LocalDate(2015, 7, 31),
     exposeClientSide = true
   )
 
@@ -678,7 +651,7 @@ object Switches {
     "Feature",
     "notifications",
     "Notifications",
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
@@ -688,7 +661,7 @@ object Switches {
     "imgix",
     "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 29),
+    sellByDate = new LocalDate(2015, 7, 31),
     exposeClientSide = true
   )
 
@@ -716,6 +689,15 @@ object Switches {
     "Enable the Outbrain content recommendation widget.",
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val GravitySwitch = Switch(
+    "Feature",
+    "gravity",
+    "Enable the Gravity content recommendation widget.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 1),
     exposeClientSide = true
   )
 
@@ -929,6 +911,7 @@ object Switches {
   )
 
   // A/B Tests
+
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
     "ab-liveblog-notifications",
@@ -974,22 +957,13 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ABHeatmap = Switch(
-    "A/B Tests",
-    "ab-heatmap",
-    "Switch for the UK Network Front heatmap test.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 5, 29),
-    exposeClientSide = false
-  )
-
   val ABSaveForLaterSwitch = Switch(
     "A/B Tests",
     "ab-save-for-later",
     "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val ABIdentityCookieRefresh = Switch(

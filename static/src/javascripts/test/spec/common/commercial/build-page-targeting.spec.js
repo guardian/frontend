@@ -2,7 +2,7 @@ import Injector from 'helpers/injector';
 
 describe('Build Page Targeting', function () {
 
-    var buildPageTargeting, config, cookies, detect, userAdTargeting, ab, krux, audienceScienceGateway, criteo,
+    var buildPageTargeting, config, cookies, detect, userAdTargeting, ab, krux, audienceScienceGateway,
         injector = new Injector();
 
     beforeEach(function(done){
@@ -14,8 +14,7 @@ describe('Build Page Targeting', function () {
                 'common/modules/commercial/user-ad-targeting',
                 'common/modules/experiments/ab',
                 'common/modules/commercial/third-party-tags/krux',
-                'common/modules/commercial/third-party-tags/audience-science-gateway',
-                'common/modules/commercial/third-party-tags/criteo'],
+                'common/modules/commercial/third-party-tags/audience-science-gateway'],
         function () {
             buildPageTargeting = arguments[0];
             config = arguments[1];
@@ -25,7 +24,6 @@ describe('Build Page Targeting', function () {
             ab = arguments[5];
             krux = arguments[6];
             audienceScienceGateway = arguments[7];
-            criteo = arguments[8];
 
             config.page = {
                 edition:     'US',
@@ -67,12 +65,6 @@ describe('Build Page Targeting', function () {
                 return {
                     asg1: 'value-one',
                     asg2: 'value-two'
-                };
-            };
-            criteo.getSegments = function () {
-                return {
-                    c1: 'value-one',
-                    c2: 'value-two'
                 };
             };
             done();
@@ -128,13 +120,6 @@ describe('Build Page Targeting', function () {
         expect(buildPageTargeting().ab).toEqual(['MtMaster-v']);
     });
 
-    it('should set correct criteo params', function () {
-        var pageTargeting = buildPageTargeting();
-
-        expect(pageTargeting.c1).toBe('value-one');
-        expect(pageTargeting.c2).toBe('value-two');
-    });
-
     it('should set correct krux params', function () {
         expect(buildPageTargeting().x).toEqual(['E012712', 'E012390', 'E012478']);
     });
@@ -155,9 +140,6 @@ describe('Build Page Targeting', function () {
             return [];
         };
         audienceScienceGateway.getSegments = function () {
-            return {};
-        };
-        criteo.getSegments = function () {
             return {};
         };
 

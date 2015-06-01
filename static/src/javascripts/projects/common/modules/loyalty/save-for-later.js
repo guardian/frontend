@@ -8,7 +8,8 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'common/views/svgs',
-    'text!common/views/loyalty/save-for-later.html'
+    'text!common/views/loyalty/save-for-later--signed-out.html',
+    'text!common/views/loyalty/save-for-later--signed-in.html'
 ], function (
     qwery,
     bonzo,
@@ -19,15 +20,17 @@ define([
     template,
     identity,
     svgs,
-    saveForLaterTmpl
+    saveForLaterOutTmpl,
+    saveForLaterInTmpl
 ) {
     function SaveForLater() {
         this.saveLinkHolder = qwery('.js-save-for-later')[0];
+        this.templates = {
+            signedOutThisArticle: saveForLaterOutTmpl,
+            signedInThisArticle: saveForLaterInTmpl
+        };
         this.userData = null;
-        this.pageId = config.page.pageId;
-        this.$saver = bonzo(this.saveLinkHolder);
         this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
-        this.shortUrl = config.page.shortUrl.replace('http://gu.com', '');   //  Keep the fitst trailing slash
     }
 
     var bookmarkSvg = svgs('bookmark', ['i-left']);
@@ -38,19 +41,31 @@ define([
         } else {
             var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
                 '&shortUrl=' + this.shortUrl;
-            this.$saver.html(
-                template(saveForLaterTmpl, {
-                    url: url,
-                    icon: bookmarkSvg,
-                    state: 'save'
-                })
-            );
+            this.renderSaveThisArticleLink(false, url, 'save');
         }
+    };
+
+    SaveForLater.prototype.renderSaveThisArticleLink = function (deferToClick, url, state) {
+
+        var self = this,
+            $saver = bonzo(qwery('.js-save-for-later')[0]),
+            //$saver = bonzo('.js-save-for-later'),
+            templateName = self.templates[deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
+
+        $saver.html(template(templateName, {
+            url: url,
+            icon: bookmarkSvg,
+            state: state
+
+        }));
     };
 
     SaveForLater.prototype.getSavedArticles = function () {
         var self = this,
+            saveLinkHolder = qwery('.js-save-for-later')[0],
+            shortUrl = config.page.shortUrl.replace('http://gu.com', ''),
             notFound  = {message:'Not found', description:'Resource not found'};
+
         identity.getSavedArticles().then(
             function success(resp) {
                 if (resp.status === 'error') {
@@ -63,11 +78,13 @@ define([
                     self.userData = resp.savedArticles;
                 }
 
-                if (self.hasUserSavedArticle(self.userData.articles, self.shortUrl)) {
-                    self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
+                if (self.hasUserSavedArticle(self.userData.articles, shortUrl)) {
+                    self.renderSaveThisArticleLink(false, self.savedArticlesUrl, 'saved');
                 } else {
-                    self.$saver.html('<a class="meta__save-for-later--link" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Save for later</a>');
-                    bean.on(self.saveLinkHolder, 'click', '.meta__save-for-later--link', self.saveArticle.bind(self));
+                    self.renderSaveThisArticleLink(true, '', 'save');
+                    bean.one(saveLinkHolder, 'click', '.save-for-later__button',
+                        self.saveArticle.bind(self, config.page.pageId, shortUrl
+                    ));
                 }
             }
         );
@@ -79,21 +96,20 @@ define([
         });
     };
 
-    SaveForLater.prototype.saveArticle = function () {
+    SaveForLater.prototype.saveArticle = function (pageId, shortUrl) {
         var self = this,
             //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
             date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
-            newArticle = {id: self.pageId, shortUrl: self.shortUrl, date: date, read: false  };
+            newArticle = {id: pageId, shortUrl: shortUrl, date: date, read: false  };
 
         self.userData.articles.push(newArticle);
 
         identity.saveToArticles(self.userData).then(
             function success(resp) {
                 if (resp.status === 'error') {
-                    self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Error saving</a>');
+                    self.renderSaveThisArticleLink(true, '', 'save');
                 } else {
-                    bean.off(qwery('.meta__save-for-later--link', self.saveLinkHolder)[0], 'click', self.saveArticle);
-                    self.$saver.html('<a href="' + self.savedArticlesUrl + '" data-link-name="meta-save-for-later" data-component=meta-save-for-later">Saved Articles</a>');
+                    self.renderSaveThisArticleLink(false, self.savedArticlesUrl, 'saved');
                 }
             }
         );
