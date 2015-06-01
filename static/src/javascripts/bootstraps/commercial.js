@@ -52,13 +52,18 @@ define([
                     });
                 });
 
-                Promise.all(modulePromises).then(function () {
-                    robust('cm-dfp', function () {
-                        dfp.init();
+                    Promise.all(modulePromises).then(function () {
+                        if (config.switches.commercial) {
+                            robust('cm-dfp', function () {
+                                dfp.init();
+                            });
+                            // TODO does dfp return a promise?
+                            robust('cm-ready', function () {
+                                mediator.emit('page:commercial:ready');
+                            });
+                        }
                     });
-                    // TODO does dfp return a promise?
-                    robust('cm-ready', function () { mediator.emit('page:commercial:ready'); });
-                });
+
             }
         }
     };
