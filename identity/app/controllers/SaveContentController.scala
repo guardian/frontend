@@ -6,6 +6,7 @@ import conf.LiveContentApi
 import common._
 import implicits.Dates
 import model.Content
+import model._
 
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
@@ -19,12 +20,10 @@ import scala.util.{Failure, Success}
 
 //import controllers.SavedArticleData
 import idapiclient.IdApiClient
-import model.{ IdentityPage, NoCache}
 import play.api.data.{Forms, Form}
 import com.google.inject.Inject
 import common.ExecutionContexts
 import idapiclient.IdApiClient
-import model.{IdentityPage, NoCache}
 import play.api.mvc._
 import play.filters.csrf.CSRFCheck
 import services._
@@ -40,7 +39,8 @@ class SaveContentController @Inject() ( api: IdApiClient,
                                         authenticatedActions: AuthenticatedActions,
                                         returnUrlVerifier: ReturnUrlVerifier,
                                         savedArticleService: PlaySavedArticlesService,
-                                        idUrlBuilder: IdentityUrlBuilder
+                                        idUrlBuilder: IdentityUrlBuilder,
+                                        pageDataBuilder: SaveForLaterDataBuilder
                                         )
   extends Controller with ExecutionContexts with SafeLogging {
 
@@ -214,7 +214,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
         case Some(content) => content
       }
 
-      val formUrl = formActionUrl(idUrlBuilder, idRequest, "/saved-for-later/%d".format(pageNum))
+      val pageDate = pageDataBuilder(updatedArticles, contentList, idRequest, pageNum)
       NoCache(Ok(views.html.profile.savedForLaterPage(page, form, contentList, updatedArticles.totalSaved, pageNum + 1, updatedArticles.numPages, formUrl, prev, next)))
     }
   }

@@ -1,6 +1,7 @@
 @import model.Content
+@import model.SaveForLater.SaveForLaterPageData
 
-@(page: model.MetaData, savedArticleForm: Form[SavedArticleData], articles: List[Content], total: Int, pageNum: Int, totalPages: Int,  formActionUrl: String, prevPage: Option[String], nextPage: Option[String])(implicit request: RequestHeader)
+@(page: model.MetaData, savedArticleForm: Form[SavedArticleData], pageData: SavedForLaterPageData)(implicit request: RequestHeader)
 
 @main(page, projectName = Option("identity")) {
 }{
