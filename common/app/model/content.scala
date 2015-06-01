@@ -79,7 +79,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   lazy val hasTonalHeaderIllustration: Boolean = isLetters
-  
+
   lazy val showCircularBylinePicAtSide: Boolean =
     cardStyle == Feature && hasLargeContributorImage && contributors.length == 1
 
@@ -429,6 +429,8 @@ private object ArticleSchemas {
     // http://schema.org/Review
     if (article.isReview)
       "http://schema.org/Review"
+    else if (article.isLive)
+      "http://schema.org/LiveBlogPosting"
     else
       "http://schema.org/NewsArticle"
   }
