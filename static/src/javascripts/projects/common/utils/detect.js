@@ -138,6 +138,7 @@ define([
     }
 
     function isTwitterApp() {
+        // NB Android app is indistinguishable from Chrome: http://mobiforge.com/research-analysis/webviews-and-user-agent-strings
         return navigator.userAgent.indexOf('Twitter for iPhone') > -1;
     }
 
