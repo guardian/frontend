@@ -109,7 +109,8 @@ class SaveContentController @Inject() ( api: IdApiClient,
           case (formWithErrors, Error(message, decription, _, context)) =>
             formWithErrors.withError(context.getOrElse(""), message)
         }
-        Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, List.empty, 0, 0, 0, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"), None, None))))
+         val formUrl = formActionUrl(idUrlBuilder, idRequest, "/saved-for-later/%d".format(pageNum))
+         Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, List.empty, 0, 0, 0, formUrl, None, None))))
     }
   }
 
@@ -213,7 +214,8 @@ class SaveContentController @Inject() ( api: IdApiClient,
         case Some(content) => content
       }
 
-      NoCache(Ok(views.html.profile.savedForLaterPage(page, form, contentList, updatedArticles.totalSaved, pageNum + 1, updatedArticles.numPages, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"), prev, next)))
+      val formUrl = formActionUrl(idUrlBuilder, idRequest, "/saved-for-later/%d".format(pageNum))
+      NoCache(Ok(views.html.profile.savedForLaterPage(page, form, contentList, updatedArticles.totalSaved, pageNum + 1, updatedArticles.numPages, formUrl, prev, next)))
     }
   }
 }
