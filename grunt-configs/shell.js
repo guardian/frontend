@@ -24,6 +24,10 @@ module.exports = function(grunt, options) {
                      'static/abtests.json'
         },
 
+        npmInstall: {
+            command: 'npm prune && npm install'
+        },
+
         jspmInstallFaciaTool: {
             command: 'node ../../node_modules/jspm/jspm.js install',
             options: {
@@ -34,10 +38,10 @@ module.exports = function(grunt, options) {
         },
 
         jspmInstallStatic: {
-            command: './node_modules/.bin/jspm install',
+            command: './jspm install && ./jspm clean',
             options: {
                 execOptions: {
-                    cwd: '.'
+                    cwd: './node_modules/.bin'
                 }
             }
         },

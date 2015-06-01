@@ -97,7 +97,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
           case Right(usr) =>
             val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
             val authResponse = api.authBrowser(EmailPassword(email, password, idRequest.clientIp), trackingData)
-            val response: Future[Result] = signinService.getCookies(authResponse, rememberMe = false) map {
+            val response: Future[Result] = signinService.getCookies(authResponse, rememberMe = true) map {
               case Left(errors) =>
                 NoCache(SeeOther(routes.RegistrationController.renderRegistrationConfirmation(verifiedReturnUrl).url))
 

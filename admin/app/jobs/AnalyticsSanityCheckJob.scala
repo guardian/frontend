@@ -1,10 +1,12 @@
 package jobs
 
 import common.{ExecutionContexts, Logging}
-import services.{OphanApi, CloudWatch}
-import scala.collection.JavaConversions._
-import scala.concurrent.Future.sequence
 import org.joda.time.DateTime
+import services.{CloudWatch, OphanApi}
+
+import scala.collection.JavaConversions._
+import scala.concurrent.Future
+import scala.concurrent.Future.sequence
 
 object AnalyticsSanityCheckJob extends ExecutionContexts with Logging {
 
@@ -22,19 +24,30 @@ object AnalyticsSanityCheckJob extends ExecutionContexts with Logging {
       if (what > 200) 200.0 else what
     }
 
-    val omniture = sequence(Seq(rawPageViews, analyticsPageViews)).map{
-      case (raw :: analytics:: Nil) => sensible(analytics / raw * 100)
+    def pageViewComparison(eventualAnalytics: Future[Double]) = {
+      sequence(Seq(rawPageViews, eventualAnalytics)).map {
+        case (raw :: analytics :: Nil) => sensible(analytics / raw * 100)
+      }
     }
 
-    val ophan = sequence(Seq(rawPageViews, ophanViews)).map{
-      case (raw :: analytics:: Nil) => sensible(analytics / raw * 100)
+    val omniture = pageViewComparison(analyticsPageViews)
+
+    val ophan = pageViewComparison(ophanViews)
+
+    val eventualAdConfidence = {
+      val pageViewsHavingAnAd = CloudWatch.pageViewsHavingAnAd.map(
+        _.getDatapoints.headOption.map(_.getSum.doubleValue()).getOrElse(0.0)
+      )
+      pageViewComparison(pageViewsHavingAnAd)
     }
 
-    sequence(Seq(omniture, ophan)).foreach{ case (omniture :: ophan :: Nil) =>
+    sequence(Seq(omniture, ophan, eventualAdConfidence)).foreach {
+      case (omniture :: ophan :: adConfidence :: Nil) =>
       model.diagnostics.CloudWatch.put("Analytics", Map(
         "omniture-percent-conversion" -> omniture,
         "ophan-percent-conversion" -> ophan,
-        "omniture-ophan-correlation" -> omniture/ophan * 100
+        "omniture-ophan-correlation" -> omniture / ophan * 100,
+        "ad-confidence" -> adConfidence
       ))
     }
  }

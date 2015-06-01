@@ -2,9 +2,8 @@ package frontpress
 
 import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
-import common.SQSQueues._
 import common._
-import conf.Configuration
+import conf.{Switches, Configuration}
 import metrics._
 import org.joda.time.DateTime
 import services.{Draft, FrontPath, Live, PressJob}
@@ -36,10 +35,19 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
 
     log.info(s"Processing job from tool to update $path on $pressType")
 
-    val pressFuture = pressType match {
-      case Draft => FrontPress.pressDraftByPathId(path)
-      case Live => FrontPress.pressLiveByPathId(path)
-    }
+    lazy val fapiFormat =
+      if (Switches.FaciaPressNewFormat.isSwitchedOn) {
+        pressType match {
+          case Draft => DraftFapiFrontPress.pressByPathId(path)
+          case Live => LiveFapiFrontPress.pressByPathId(path)}}
+      else { Future.successful(Unit) }
+
+    lazy val oldFormat =
+        pressType match {
+          case Draft => FrontPress.pressDraftByPathId(path)
+          case Live => FrontPress.pressLiveByPathId(path)}
+
+    val pressFuture = oldFormat.flatMap(_ => fapiFormat)
 
     pressFuture onComplete {
       case Success(_) =>

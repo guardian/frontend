@@ -15,6 +15,8 @@
     <figure itemprop="associatedMedia image" itemscope itemtype="http://schema.org/ImageObject" data-component="image"
         class="media-primary media-content@if(isShowcase){ media-primary--showcase}">
 
+        <meta itemprop="representativeOfPage" content="true">
+
         @if(isFeature && isShowcase) {
             @lightbox(picture, MainMedia.FeatureShowcase)
             <div class="gs-container">
@@ -58,16 +60,17 @@
         srcset="@ImgSrc.srcset(picture, widths)"
         sizes="@widths.sizes"
         class="maxed responsive-img"
-        itemprop="contentUrl representativeOfPage"
+        itemprop="contentUrl"
         alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
 
 }
 
 @caption(picture: model.ImageContainer) = {
     @ImgSrc.getFallbackAsset(picture).map { img =>
-        @img.caption.map { caption =>
+        @if(img.showCaption) {
             <figcaption class="caption caption--main caption--img" itemprop="description">
-                @Html(caption) @if(img.displayCredit && !img.credit.exists(caption.endsWith)) { @img.credit.map(Html(_)) }
+                @img.caption.map(Html(_))
+                @if(img.displayCredit && !img.creditEndsWithCaption) { @img.credit.map(Html(_)) }
             </figcaption>
         }
     }

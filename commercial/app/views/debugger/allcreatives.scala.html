@@ -1,6 +1,6 @@
 @(page: model.MetaData)(implicit request: RequestHeader)
 
-@import play.api.libs.json.{JsBoolean, JsString, JsObject, Json}
+@import play.api.libs.json.{JsObject, Json}
 
 @main(page){ }{
 
@@ -441,12 +441,20 @@
             <label>Feed selection:
                 <select>
                     <option value="brighton" selected>Brighton</option>
-                    <option value="northwest">Northwest</option>
-                    <option value="scotland">Scotland</option>
-                    <option value="young">Young</option>
+                    <option value="east">East of England</option>
+                    <option value="eastmidlands">East Midlands</option>
                     <option value="mature">Mature</option>
                     <option value="men">Men</option>
+                    <option value="northeast">North East</option>
+                    <option value="northwest">North West</option>
+                    <option value="scotland">Scotland</option>
+                    <option value="south">South</option>
+                    <option value="southwest">South West</option>
+                    <option value="wales">Wales</option>
+                    <option value="westmidlands">West Midlands</option>
                     <option value="women">Women</option>
+                    <option value="yorkshire">Yorkshire</option>
+                    <option value="young">Young</option>
                 </select>
             </label>
         </form>

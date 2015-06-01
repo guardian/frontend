@@ -3,14 +3,19 @@ package model
 import common.{NavItem, Edition, ManifestData, Pagination}
 import conf.Configuration
 import dfp.DfpAgent
+import model.meta.{PotentialAction, WebPage, LinkedData, Guardian}
 import play.api.libs.json.{JsBoolean, JsValue, JsString}
 
+/**
+ * MetaData represents a page on the site, whether facia or content
+ */
 trait MetaData extends Tags {
   def id: String
   def section: String
   def webTitle: String
   def analyticsName: String
   def url: String  = s"/$id"
+  def webUrl: String = s"${Configuration.site.host}$url"
   def linkText: String = webTitle
   def pagination: Option[Pagination] = None
   def description: Option[String] = None
@@ -43,6 +48,9 @@ trait MetaData extends Tags {
   def hasPageSkin(edition: Edition) = false
   lazy val isInappropriateForSponsorship: Boolean = false
 
+  lazy val membershipAccess: Option[String] = None
+  lazy val requiresMembershipAccess: Boolean = false
+
   def isSurging: Seq[Int] = Seq(0)
 
   def metaData: Map[String, JsValue] = Map(
@@ -64,7 +72,7 @@ trait MetaData extends Tags {
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId,
     "og:type"      -> "website",
-    "og:url"       -> s"${Configuration.site.host}$url"
+    "og:url"       -> webUrl
   )
 
   def openGraphImages: Seq[String] = Seq()
@@ -75,6 +83,11 @@ trait MetaData extends Tags {
     "twitter:app:id:iphone" -> "409128287",
     "twitter:app:name:googleplay" -> "The Guardian",
     "twitter:app:id:googleplay" -> "com.guardian"
+  )
+
+  def linkedData: List[LinkedData] = List(
+    Guardian(),
+    WebPage(webUrl, PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
   )
 
   def cacheSeconds = 60
@@ -88,7 +101,13 @@ trait MetaData extends Tags {
   lazy val isExpiredAdvertisementFeature: Boolean =
     DfpAgent.isExpiredAdvertisementFeature(id, tags, Some(section))
   lazy val sponsorshipTag: Option[Tag] = DfpAgent.sponsorshipTag(tags, Some(section))
+
+  def isPreferencesPage = metaData.get("isPreferencesPage").collect{ case prefs: JsBoolean => prefs.value } getOrElse false
 }
+
+
+
+
 
 class Page(
   val id: String,
@@ -244,6 +263,9 @@ trait Elements {
   }
 }
 
+/**
+ * Tags lets you extract meaning from tags on a page.
+ */
 trait Tags {
   def tags: Seq[Tag] = Nil
   def contributorAvatar: Option[String] = tags.flatMap(_.contributorImagePath).headOption
@@ -281,19 +303,7 @@ trait Tags {
   }
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
-  /**
-   * NOTE:
-   *
-   * This is used only for OLD-STYLE containers. It only includes the visual tones those containers care about. For
-   * the new container equivalent, see `views.support.CardStyle`.
-   *
-   * TODO: Once we've deleted all of the old-style containers, remove this.
-   */
-  lazy val visualTone: String =
-    if (isLiveBlog) Tags.VisualTone.Live
-    else if (isComment) Tags.VisualTone.Comment
-    else if (isFeature) Tags.VisualTone.Feature
-    else Tags.VisualTone.News
+  def isNews = !(isLiveBlog || isComment || isFeature)
 
   lazy val isLiveBlog: Boolean = tones.exists(t => Tags.liveMappings.contains(t.id))
   lazy val isComment = tones.exists(t => Tags.commentMappings.contains(t.id))
@@ -340,13 +350,6 @@ object Tags {
   val Poll = "type/poll"
   val Interactive = "type/interactive"
   val Sudoku = "type/sudoku"
-
-  object VisualTone {
-    val Live = "live"
-    val Comment = "comment"
-    val Feature = "feature"
-    val News = "news"
-  }
 
   val liveMappings = Seq(
     "tone/minutebyminute"

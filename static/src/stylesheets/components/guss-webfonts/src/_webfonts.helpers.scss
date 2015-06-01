@@ -106,7 +106,7 @@
     $weight: str-capitalise($weight);
     $font: str-remove-white-space($font-family);
 
-    $filename: $font + '-' + $weight + $style;
+    $filename: '#{$font}-#{$weight}#{$style}';
 
     @return $filename;
 }

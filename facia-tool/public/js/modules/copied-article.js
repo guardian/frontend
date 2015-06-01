@@ -7,6 +7,8 @@ define([
     vars,
     mediator
 ) {
+    mediator = mediator.default;
+
     var storage = window.localStorage,
         storageKeyCopied ='gu.fronts-tool.copied';
 

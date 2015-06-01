@@ -116,6 +116,28 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
     Content(sensitive).shouldHideAdverts should be(true)
   }
 
+  it should "detect if article requires membershipAccess" in {
+
+    conf.Switches.MembersAreaSwitch.switchOn()
+
+    val membershipArticle = ApiContent("membership/2015/jan/01/foo", None, None, Some(new DateTime), "Some article",
+      "http://www.guardian.co.uk/membership/2015/jan/01/foo",
+      "http://content.guardianapis.com/membership/2015/jan/01/foo",
+      tags = List(tag("type/article")),
+      fields = Some(Map("membershipAccess" -> "members-only")),
+      elements = None
+    )
+
+    Content(membershipArticle).requiresMembershipAccess should be(true)
+
+    val noAccess = article.copy(fields = None)
+    Content(noAccess).requiresMembershipAccess should be(false)
+
+    val outsideMembership = article.copy(fields = Some(Map("membershipAccess" -> "members-only")))
+    Content(outsideMembership).requiresMembershipAccess should be(false)
+
+  }
+
   private def tag(id: String = "/id", tagType: String = "keyword", name: String = "", url: String = "") = {
     ApiTag(id = id, `type` = tagType, webTitle = name,
       sectionId = None, sectionName = None, webUrl = url, apiUrl = "apiurl", references = Nil)

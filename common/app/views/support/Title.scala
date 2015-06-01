@@ -16,6 +16,10 @@ object Title {
         page.title.filter(_.nonEmpty).map(Localisation(_)).getOrElse(
           s"${Localisation(page.webTitle)}${pagination(page)}"
         )
+      case pressedPage: PressedPage =>
+        pressedPage.title.filter(_.nonEmpty).map(Localisation(_)).getOrElse(
+          s"${Localisation(page.webTitle)}${pagination(page)}"
+        )
       case c: Content =>
         s"${c.webTitle}${pagination(c)}${getSectionConsideringWebtitle(c.webTitle, Option(c.sectionName))}"
       case t: Tag     =>

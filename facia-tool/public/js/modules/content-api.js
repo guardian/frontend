@@ -25,6 +25,9 @@ function (
     snap
 ){
     modalDialog = modalDialog.default;
+    internalContentCode = internalContentCode.default;
+    isGuardianUrl = isGuardianUrl.default;
+    urlAbsPath = urlAbsPath.default;
 
     function validateItem (item) {
         var defer = $.Deferred(),

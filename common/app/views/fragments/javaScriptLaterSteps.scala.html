@@ -301,7 +301,10 @@
                     images.upgradePictures();
                     images.listen();
 
-                    if (config.switches.commercial) {
+                    // Preference pages are served via HTTPS for service worker support.
+                    // These pages must not have mixed (HTTP/HTTPS) content, so
+                    // we disable ads (until the day comes when all ads are HTTPS).
+                    if (config.switches.commercial && ! config.page.isPreferencesPage) {
                         require(['bootstraps/commercial'], raven.wrap(
                             { tags: { feature: 'commercial' } },
                             function (commercial) {
@@ -322,6 +325,8 @@
 
                 });
 
+                @membershipAccess()
+
             });
     </script>
 }
@@ -337,6 +342,7 @@
             @Html(Static.js.systemJsBundleConfig)
         }
 
+        System.baseURL = '@{Configuration.assets.path}';
         System.paths['ophan/ng']  = '@{Configuration.javascript.config("ophanJsUrl")}.js';
         System.paths['googletag'] = '@{Configuration.javascript.config("googletagJsUrl")}';
 
@@ -435,6 +441,69 @@
                     });
                 }
             });
+
+            @membershipAccess()
+
         });
     </script>
+}
+
+@membershipAccess() = {
+    @for(membershipAccess <- item.membershipAccess if item.requiresMembershipAccess) {
+
+        /**
+         * Membership access
+         * Items with either of the following fields require Membership access
+         * - membershipAccess=members-only
+         * - membershipAccess=paid-members-only
+         */
+        (function(isModern) {
+
+            /**
+             * Authenticating requires CORS and withCredentials
+             * If we don't cut the mustard then pass through.
+             */
+            if(!isModern) { return; }
+
+
+            require([
+                'common/utils/$',
+                'common/utils/ajax'
+            ], function($, ajax) {
+
+                var membershipUrl = "@Configuration.id.membershipUrl",
+                    membershipAccess = "@membershipAccess",
+                    requiresPaidTier = (membershipAccess.indexOf("paid-members-only") !== -1),
+                    membershipAuthUrl = membershipUrl + '/choose-tier?membershipAccess=' + membershipAccess;
+
+                function redirect() {
+                    window.location.href = membershipAuthUrl;
+                }
+
+                ajax({
+                    url: membershipUrl + "/user/me",
+                    type: 'json',
+                    crossOrigin: true,
+                    withCredentials: true
+                }).then(function (resp) {
+                    /**
+                     * Check the users access matches the content
+                     */
+                    var canViewContent = (requiresPaidTier) ? !!resp.tier && resp.isPaidTier : !!resp.tier;
+                    if (canViewContent) {
+                        $('body').removeClass('has-membership-access-requirement');
+                    } else {
+                        redirect()
+                    }
+                }).fail(function() {
+                    /**
+                     * If the request fails assume non-member
+                     */
+                    redirect()
+                });
+
+            });
+        }(guardian.isModernBrowser));
+
+    }
 }

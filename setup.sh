@@ -101,7 +101,10 @@ install_grunt() {
 install_jspm() {
   if ! installed jspm; then
     sudo npm -g install jspm
+    jspm registry config github
+    jspm registry create bower jspm-bower-endpoint
   fi
+  jspm install
 }
 
 install_ruby() {

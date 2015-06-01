@@ -6,21 +6,15 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/liveblog-sport-front-updates',
+    'common/modules/experiments/tests/liveblog-notifications',
+    'common/modules/experiments/tests/share-buttons-2',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/mt-main',
-    'common/modules/experiments/tests/mt-top-below-nav',
-    'common/modules/experiments/tests/heatmap',
-    'common/modules/experiments/tests/mt-top-below-first-container',
-    'common/modules/experiments/tests/mt-depth',
-    'common/modules/experiments/tests/mt-sticky-bottom',
+    'common/modules/experiments/tests/mt-rec1',
+    'common/modules/experiments/tests/mt-rec2',
     'common/modules/experiments/tests/save-for-later',
-    'common/modules/experiments/tests/history-without-whitelist',
+    'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/mt-lz-ads-depth',
-    'common/modules/experiments/tests/mt-sticky-nav-all',
-    'common/modules/experiments/tests/facia-slideshow',
-    'common/modules/experiments/tests/mt-sticky-burger'
+    'common/modules/experiments/tests/defer-spacefinder'
 ], function (
     raven,
     _,
@@ -29,42 +23,30 @@ define([
     mediator,
     store,
     mvtCookie,
-    LiveblogSportFrontUpdates,
+    LiveblogNotifications,
+    ShareButtons2,
     HighCommercialComponent,
-    MtMain,
-    MtTopBelowNav,
-    HeatMap,
-    MtTopBelowFirstContainer,
-    MtDepth,
-    MtStickyBottom,
+    MtRec1,
+    MtRec2,
     SaveForLater,
-    HistoryWithoutWhitelist,
+    CookieRefresh,
     Headline,
-    MtLzAdsDepth,
-    MtStickyNavAll,
-    FaciaSlideshow,
-    MtStickyBurger
+    DeferSpacefinder
     ) {
 
     var ab,
         TESTS = _.flatten([
-            new LiveblogSportFrontUpdates(),
+            new LiveblogNotifications(),
+            new ShareButtons2(),
             new HighCommercialComponent(),
-            new MtMain(),
-            new MtTopBelowNav(),
-            new HeatMap(),
-            new MtTopBelowFirstContainer(),
-            new MtDepth(),
-            new MtStickyBottom(),
+            new MtRec1(),
+            new MtRec2(),
             new SaveForLater(),
-            new HistoryWithoutWhitelist(),
-            new MtLzAdsDepth(),
-            new MtStickyNavAll(),
-            new MtStickyBurger(),
+            new CookieRefresh(),
+            new DeferSpacefinder(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
-            }),
-            new FaciaSlideshow()
+            })
         ]),
         participationsKey = 'gu.ab.participations';
 
@@ -148,6 +130,12 @@ define([
         _.forEach(_.keys(participations), function (k) {
             if (testCanBeRun(getTest(k))) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
+            }
+        });
+
+        _.forEach(_.keys(config.tests), function (k) {
+            if (k.toLowerCase().match(/^cm/)) {
+                tag.push(['AB', k, 'variant'].join(' | '));
             }
         });
 

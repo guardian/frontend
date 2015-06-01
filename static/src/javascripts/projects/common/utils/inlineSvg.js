@@ -12,15 +12,11 @@ define([
 
         load: function (name, req, onLoad, config) {
             var prefix = "inline-",
-                data = name.split("!"),
-
-                path = data[0],
-                imageType = data[1] || "",
-
-                dirs = path.split("/"),
+                dirs = name.split("/"),
+                imageType = dirs[1],
                 fileName = dirs.pop();
 
-            text.get(req.toUrl(dirs.join("/") + "/" + (imageType ? imageType + "/" : "") + fileName + ".svg"), function (svg) {
+            text.get(req.toUrl(dirs.join("/") + "/" + fileName + ".svg"), function (svg) {
 
                 svg = "<span class=\"" + prefix + fileName + " " + (imageType !== "" ? prefix + imageType : "") + "\">" + svg + "</span>";
 

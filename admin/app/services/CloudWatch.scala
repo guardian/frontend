@@ -62,6 +62,8 @@ trait CloudWatch extends Logging with ExecutionContexts {
   def rawPageViews: Future[GetMetricStatisticsResult] = sanityData("kpis-page-views")
 
   def analyticsPageViews: Future[GetMetricStatisticsResult] = sanityData("kpis-analytics-page-views")
+
+  def pageViewsHavingAnAd: Future[GetMetricStatisticsResult] = sanityData("first-ad-rendered")
 }
 
 object CloudWatch extends CloudWatch

@@ -1,4 +1,5 @@
 {
     "preset": "crockford",
-    "disallowQuotedKeysInObjects": null
+    "disallowQuotedKeysInObjects": null,
+    "requireMultipleVarDecl": null
 }

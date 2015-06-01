@@ -1,6 +1,7 @@
 package services
 
 import com.gu.googleauth.UserIdentity
+import com.gu.pandomainauth.model.User
 import conf.Configuration
 import common.Logging
 import com.amazonaws.services.s3.AmazonS3Client
@@ -150,6 +151,12 @@ object S3FrontsApi extends S3 {
   def getDraftPressedKeyForPath(path: String): String =
     s"$location/pressed/draft/$path/pressed.json"
 
+  def getLiveFapiPressedKeyForPath(path: String): String =
+    s"$location/pressed/live/$path/fapi/pressed.json"
+
+  def getDraftFapiPressedKeyForPath(path: String): String =
+    s"$location/pressed/draft/$path/fapi/pressed.json"
+
   def getSchema = get(s"$location/schema.json")
   def getMasterConfig: Option[String] = get(s"$location/config/config.json")
   def getBlock(id: String) = get(s"$location/collection/$id/collection.json")
@@ -158,7 +165,7 @@ object S3FrontsApi extends S3 {
   def putCollectionJson(id: String, json: String) =
     putPublic(s"$location/collection/$id/collection.json", json, "application/json")
 
-  def archive(id: String, json: String, identity: UserIdentity) = {
+  def archive(id: String, json: String, identity: User) = {
     val now = DateTime.now
     putPrivate(s"$location/history/collection/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/$id/${now}.${identity.email}.json", json, "application/json")
   }
@@ -166,7 +173,7 @@ object S3FrontsApi extends S3 {
   def putMasterConfig(json: String) =
     putPublic(s"$location/config/config.json", json, "application/json")
 
-  def archiveMasterConfig(json: String, identity: UserIdentity) = {
+  def archiveMasterConfig(json: String, identity: User) = {
     val now = DateTime.now
     putPublic(s"$location/history/config/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
   }
@@ -190,6 +197,12 @@ object S3FrontsApi extends S3 {
 
   def putDraftPressedJson(path: String, json: String) =
     putPrivateGzipped(getDraftPressedKeyForPath(path), json, "application/json")
+
+  def putLiveFapiPressedJson(path: String, json: String) =
+    putPrivateGzipped(getLiveFapiPressedKeyForPath(path), json, "application/json")
+
+  def putDraftFapiPressedJson(path: String, json: String) =
+    putPrivateGzipped(getDraftFapiPressedKeyForPath(path), json, "application/json")
 
   def getPressedLastModified(path: String): Option[String] =
     getLastModified(getLivePressedKeyForPath(path)).map(_.toString)
@@ -262,5 +275,3 @@ object S3Infosec extends S3 {
   val key = "blocked-email-domains.txt"
   def getBlockedEmailDomains = get(key)
 }
-
-

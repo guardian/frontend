@@ -133,6 +133,15 @@ define([
         return navigator.mozApps && !window.locationbar.visible;
     }
 
+    function isFacebookApp() {
+        return navigator.userAgent.indexOf('FBAN/') > -1;
+    }
+
+    function isTwitterApp() {
+        // NB Android app is indistinguishable from Chrome: http://mobiforge.com/research-analysis/webviews-and-user-agent-strings
+        return navigator.userAgent.indexOf('Twitter for iPhone') > -1;
+    }
+
     getUserAgent = (function () {
         var ua = navigator.userAgent, tem,
             M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -403,13 +412,18 @@ define([
     }
 
     function adblockInUse() {
-        var displayed = '';
+        var displayed = '',
+            isAdblock = false;
 
         $.create('<div class="ad_unit"></div>').appendTo(document.body);
         displayed = $('.ad_unit').css('display');
         $('.ad_unit').remove();
 
-        return displayed === 'none' ? true : false;
+        if (displayed === 'none') {
+            isAdblock = true;
+        }
+
+        return isAdblock;
     }
 
     detect = {
@@ -426,6 +440,8 @@ define([
         isIOS: isIOS,
         isAndroid: isAndroid,
         isFireFoxOSApp: isFireFoxOSApp,
+        isFacebookApp: isFacebookApp,
+        isTwitterApp: isTwitterApp,
         isBreakpoint: isBreakpoint,
         isReload:  isReload,
         initPageVisibility: initPageVisibility,
@@ -435,7 +451,7 @@ define([
         breakpoints: breakpoints,
         fontHinting: fontHinting(),
         isModernBrowser: isModernBrowser,
-        adblockInUse: adblockInUse
+        adblockInUse: adblockInUse()
     };
     return detect;
 });

@@ -1,15 +1,13 @@
-define(function() {
-    var a = document.createElement('a');
+var a = document.createElement('a');
 
-    return function(url) {
-        if(typeof url === 'string') {
-            // If necessary, add a leading slash to stop the browser resolving it against the current path
-            url = url.match(/^\//) || url.match(/^https?:\/\//)? url : '/' + url;
+export default function(url) {
+    if(typeof url === 'string') {
+        // If necessary, add a leading slash to stop the browser resolving it against the current path
+        url = url.match(/^\//) || url.match(/^https?:\/\//)? url : '/' + url;
 
-            a.href = url;
+        a.href = url;
 
-            // Return the abspath without a leading slash, because ContentApi ids are formed like that
-            return a.pathname.replace(/^\//, '');
-        }
-    };
-});
+        // Return the abspath without a leading slash, because ContentApi ids are formed like that
+        return a.pathname.replace(/^\//, '');
+    }
+}

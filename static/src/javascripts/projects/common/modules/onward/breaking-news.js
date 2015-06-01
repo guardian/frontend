@@ -62,7 +62,8 @@ define([
                 var collections = (resp.collections || [])
                     .filter(function (collection) { return _.isArray(collection.content) && collection.content.length; })
                     .map(function (collection) {
-                        collection.href = collection.href.toLowerCase();
+                        // collection.href is string or null
+                        collection.href = (collection.href || '').toLowerCase();
                         return collection;
                     }),
                     treatAsInternationalForAlerts = page.internationalEdition === 'international',

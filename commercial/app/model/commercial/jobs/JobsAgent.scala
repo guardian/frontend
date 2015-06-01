@@ -26,7 +26,7 @@ object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
       job.copy(keywordIdSuffixes = jobKeywordIds map Keyword.getIdSuffix)
     }
 
-    JobsApi.loadAds() map { freshJobs =>
+    JobsFeed.loadAds() map { freshJobs =>
       updateAvailableMerchandise(populateKeywords(freshJobs))
     } recover {
       case e: FeedSwitchOffException =>
@@ -39,7 +39,7 @@ object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
         log.error(e.getMessage)
         Nil
     }
-    for {freshJobs <- JobsApi.loadAds()}
+    for {freshJobs <- JobsFeed.loadAds()}
       updateAvailableMerchandise(populateKeywords(freshJobs))
   }
 

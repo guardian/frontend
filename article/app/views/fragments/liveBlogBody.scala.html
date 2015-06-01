@@ -7,12 +7,15 @@
 @import views.BodyCleaner
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
+@import services.FaciaContentConvert
 
 @defining(model.article) {  article =>
 <div class="l-side-margins">
     <article id="live-blog" data-test-id="live-blog"
         class="content content--liveblog tonal tonal--@articleToneClass(article) blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
         itemscope itemtype="@article.schemaType" role="main">
+
+        <a itemprop="url" href=""/>
 
         <header class="content__head tonal__head tonal__head--@articleToneClass(article)">
             @* UPPER HEADER *@
@@ -69,7 +72,7 @@
                             @fragments.liveFilter(article.isLive)
 
                             <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}" data-test-id="live-blog-blocks"
-                                itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
+                                itemprop="@if(article.isReview) {reviewBody} else {@if(article.isLive) {liveBlogUpdate} else {articleBody}}">
                                 @BodyCleaner(article, article.body)
                             </div>
                         </div>
@@ -91,7 +94,7 @@
                                 @model.related.storyPackage.take(3).zipWithIndex.map { case (trail, index) =>
                                     @item(
                                         FaciaCardAndIndex.fromTrail(
-                                            trail,
+                                            FaciaContentConvert.frontentContentToFaciaContent(trail),
                                             ItemClasses.liveBlogMore,
                                             index
                                         ).transformCard(_.withTimeStamp),

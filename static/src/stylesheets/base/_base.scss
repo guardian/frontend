@@ -13,6 +13,10 @@ html {
 body {
     background-color: #ffffff;
 }
+.is-modern .has-membership-access-requirement {
+    @include u-h;
+}
+
 
 @if $old-ie == false {
     html,

@@ -15,7 +15,11 @@ define([
     'inlineSvg!svgs/logo/logo-guardian',
     'inlineSvg!svgs/commercial/logo-soulmates',
     'inlineSvg!svgs/icon/close-central',
-    'inlineSvg!svgs/icon/arrow-white-right'
+    'inlineSvg!svgs/icon/arrow-white-right',
+    'inlineSvg!svgs/icon/arrow-right',
+    'inlineSvg!svgs/icon/bookmark',
+    'inlineSvg!svgs/notifications-explainer-mobile',
+    'inlineSvg!svgs/notifications-explainer-desktop'
 ], function (
     _,
     commentCount16icon,
@@ -29,7 +33,11 @@ define([
     logoguardian,
     logosoulmates,
     closeCentralIcon,
-    arrowWhiteRight
+    arrowWhiteRight,
+    arrowRight,
+    bookmark,
+    notificationsExplainerMobile,
+    notificationsExplainerDesktop
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -43,7 +51,11 @@ define([
         logoguardian: logoguardian,
         logosoulmates: logosoulmates,
         closeCentralIcon: closeCentralIcon,
-        arrowWhiteRight: arrowWhiteRight
+        arrowWhiteRight: arrowWhiteRight,
+        arrowRight: arrowRight,
+        bookmark: bookmark,
+        notificationsExplainerMobile: notificationsExplainerMobile,
+        notificationsExplainerDesktop: notificationsExplainerDesktop
     };
 
     return function (name, classes, title) {

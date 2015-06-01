@@ -71,6 +71,27 @@ object Fixtures {
       |    <LocationDescription>Rotherham/Sheffield</LocationDescription>
       |    <RecruiterPageUrl>http://jobs.theguardian.com/employer/196646/</RecruiterPageUrl>
       |  </Job>
+      |  <Job>
+      |    <JobID>6061077</JobID>
+      |    <JobTitle>Uncovering the city: Urban writing seminar with Bradley L. Garrett</JobTitle>
+      |    <RecruiterName>THE GUARDIAN MASTERCLASSES</RecruiterName>
+      |    <ShortJobDescription>In this stimulating seminar you’ll learn how to delve beneath the surface of cities  to find stories that readers and editors will love.</ShortJobDescription>
+      |    <Sectors>
+      |      <Sector>101</Sector>
+      |      <Sector>141</Sector>
+      |      <Sector>147</Sector>
+      |      <Sector>235</Sector>
+      |      <Sector>237</Sector>
+      |      <Sector>239</Sector>
+      |      <Sector>240</Sector>
+      |      <Sector>241</Sector>
+      |      <Sector>600114</Sector>
+      |    </Sectors>
+      |    <RecruiterLogoURL>http://jobs.theguardian.com/getasset/?uiAssetID=59188A47-8B25-4F56-9F19-4BB278DB3269</RecruiterLogoURL>
+      |    <SalaryDescription>na</SalaryDescription>
+      |    <LocationDescription>Kings Cross, Central London</LocationDescription>
+      |    <RecruiterPageUrl>http://jobs.theguardian.com/employer/230273/</RecruiterPageUrl>
+      |  </Job>
       |</Jobs></rootnode>
       | """.stripMargin
 

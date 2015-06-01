@@ -5,6 +5,7 @@
 @import views.html.fragments.containers.facia_cards.container
 @import views.html.fragments.pagination
 @import views.support.RenderClasses
+@import services.FaciaContentConvert
 
 <div class="l-side-margins">
     <div class="@RenderClasses(Map(
@@ -36,9 +37,16 @@
             </div>
         }
 
-        @fragments.trendingTopics(index.trails, index.page.id, None)
+        @fragments.trendingTopics(index.trails.map(FaciaContentConvert.frontentContentToFaciaContent), index.page.id, None)
         <div class="fc-container fc-container--commercial">
             @fragments.commercial.commercialComponent()
         </div>
+
+        @defining(IndexPage.makeLinkedData(index)) { linkedData =>
+            <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+                @Html(model.meta.LinkedData.toJson(linkedData))
+            </script>
+        }
+
     </div>
 </div>

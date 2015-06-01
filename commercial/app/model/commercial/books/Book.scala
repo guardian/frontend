@@ -9,7 +9,6 @@ import play.api.libs.json.{JsPath, Reads}
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-
 case class Book(title: String,
                 author: Option[String],
                 isbn: String,
@@ -35,12 +34,17 @@ object Book {
     }
   }
 
+  private def stringOrDoubleAsDouble(value: String): Reads[Option[Double]] = {
+    val path = JsPath \ value
+    path.readNullable[Double] orElse path.readNullable[String].map(_.map(_.toDouble))
+  }
+
   implicit val bookReads: Reads[Book] = (
     (JsPath \ "name").read[String] and
       authorReads and
       (JsPath \ "isbn").read[String] and
-      (JsPath \ "regular_price_with_tax").readNullable[String].map(_.map(_.toDouble)) and
-      (JsPath \ "final_price_with_tax").readNullable[Double] and
+      stringOrDoubleAsDouble("regular_price_with_tax") and
+      stringOrDoubleAsDouble("final_price_with_tax") and
       (JsPath \ "description").readNullable[String] and
       (JsPath \ "images")(0).readNullable[String] and
       (JsPath \ "product_url").readNullable[String] and
@@ -56,7 +60,12 @@ object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
   private lazy val feeds = Seq(MagentoBestsellersFeed)
 
   def getSpecificBook(isbn: String) = available find (_.isbn == isbn)
-  def getSpecificBooks(specifics: Seq[String]) = available filter (specifics contains _.isbn)
+
+  def getSpecificBooks(isbns: Seq[String]): Future[Seq[Book]] = {
+    Future.sequence {
+      isbns map (BookFinder.findByIsbn(_))
+    } map (_.flatten.sortBy(book => isbns.indexOf(book.isbn)))
+  }
 
   def bestsellersTargetedAt(segment: Segment): Seq[Book] = {
     val targetedBestsellers = available filter { book =>

@@ -12,10 +12,10 @@ define([
     ab
 ) {
 
-    function isMainTest() {
-        var MtMainTest = ab.getParticipations().MtMain;
+    function isMtRec1Test() {
+        var MtRec1Test = ab.getParticipations().MtRec1;
 
-        return ab.testCanBeRun('MtMain') && MtMainTest && MtMainTest.variant === 'A';
+        return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A';
     }
 
     /**
@@ -38,7 +38,7 @@ define([
     Sticky.prototype.updatePosition = function () {
         var fixedTop, css, stickyHeaderHeight;
 
-        stickyHeaderHeight = isMainTest() ? $('.navigation').dim().height : 0;
+        stickyHeaderHeight = isMtRec1Test() ? $('.navigation').dim().height : 0;
 
         // have we scrolled past the element
         if (window.scrollY >= this.$parent.offset().top - this.opts.top - stickyHeaderHeight) {

@@ -188,15 +188,6 @@ object EmailSubscriptions {
       "113",
       subscribedTo = subscribedListIds.exists{ x => x == "113" }
     ),
-    EmailSubscription(
-      "Society briefing",
-      "news",
-      "Society",
-      "Have the top news and columnists delivered to your inbox every week. Stay on top of the latest policy announcements, keep ahead of current thinking, and find out what changes to legislation will mean for your job.",
-      "",
-      "208",
-      subscribedTo = subscribedListIds.exists{ x => x == "208" }
-    ),
 
     // Lifestyle
     EmailSubscription(

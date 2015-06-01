@@ -4,6 +4,7 @@
 @import common.editions._
 @import conf.Configuration
 @import views.support.URLEncode
+@import conf.Switches.TributeSwitch
 
 
 
@@ -15,7 +16,7 @@
         <div class="gs-container l-header__inner">
             <div class="l-header-pre u-cf">
                 <div class="brand-bar">
-                    @if(BecomeAMemberSwitch.isSwitchedOn) {
+                    @if(BecomeAMemberSwitch.isSwitchedOn && Edition(request) == Uk) {
                         <div class="brand-bar__item brand-bar__item--profile
                                     brand-bar__item--has-control brand-bar__item--register
                                     popup-container has-popup js-profile-register">
@@ -23,9 +24,9 @@
                                data-link-name="Register link"
                                class="brand-bar__item--action">
                                 @fragments.inlineSvg("profile-add-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                                <span class="control__info js-control-info">become a member</span>
+                                <span class="brand-bar__item__badge control__icon-wrapper control__icon-wrapper--text">free</span>
+                                <span class="control__info js-control-info control__info--supporting">become a member</span>
                             </a>
-                            <span class="brand-bar__item__badge">free</span>
                         </div>
                     }
                     @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
@@ -83,19 +84,19 @@
                         }
                     </a>
                 } else {
-                    <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" data-component="logo">
+                    <a href="@LinkTo{/}" data-link-name="site logo" id="logo" @if(TributeSwitch.isSwitchedOn) { title="Celebrating 20 years of Alan Rusbridger" } class="logo-wrapper @if(TributeSwitch.isSwitchedOn) {logo-wrapper--tribute}" data-component="logo">
                         <span class="u-h">The Guardian</span>
                         @if(metaData.hasSlimHeader) {
                             @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
                             <!--[if (gt IE 8)&(IEMobile)]><!-->
-                                @fragments.inlineSvg("guardian-logo-160", "logo")
+                                @if(TributeSwitch.isSwitchedOn){ @fragments.inlineSvg("guardian-tribute-logo-160", "logo") } else { @fragments.inlineSvg("guardian-logo-160", "logo") }
                             <!--<![endif]-->
                             <!--[if (lt IE 9)&(!IEMobile)]>
                               <span class="inline-logo inline-guardian-logo-160"></span>
                             <![endif]-->
                         } else {
                             <!--[if (gt IE 8)&(IEMobile)]><!-->
-                                @fragments.inlineSvg("guardian-logo-320", "logo")
+                                @if(TributeSwitch.isSwitchedOn){ @fragments.inlineSvg("guardian-tribute-logo-320", "logo") } else { @fragments.inlineSvg("guardian-logo-320", "logo") }
                             <!--<![endif]-->
                             <!--[if (lt IE 9)&(!IEMobile)]>
                                 <span class="inline-logo inline-guardian-logo-320"></span>

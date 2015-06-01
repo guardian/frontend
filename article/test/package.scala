@@ -11,7 +11,8 @@ class ArticleTestSuite extends Suites (
   new ArticleFeatureTest,
   new CdnHealthCheckTest,
   new HealthCheckTest,
-  new SectionsNavigationFeatureTest
+  new SectionsNavigationFeatureTest,
+  new MembershipAccessTest
 ) with SingleServerSuite {
 
   override lazy val port: Int = conf.HealthCheck.testPort

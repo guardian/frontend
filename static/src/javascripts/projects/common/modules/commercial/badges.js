@@ -99,7 +99,7 @@ define([
                     if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
                         var $container = bonzo(container);
 
-                        renderAd(
+                        return renderAd(
                             container,
                             $container.data('sponsorship'),
                             {
@@ -112,7 +112,7 @@ define([
                 }));
             });
 
-            return Promise.all([sponsoredFrontPromise, sponsoredContainersPromise]);
+            return sponsoredContainersPromise;
         },
         badges = {
 

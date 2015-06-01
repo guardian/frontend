@@ -1,15 +1,10 @@
-define([
-    'jquery',
-    'underscore',
-    'modules/authed-ajax'
-], function (
-    $,
-    _,
-    authedAjax
-) {
-    return function (type, groups) {
-        var deferred = new $.Deferred(),
-            stories = [];
+import Promise from 'Promise';
+import _ from 'underscore';
+import authedAjax from 'modules/authed-ajax';
+
+export default function(type, groups) {
+    return new Promise(function (resolve, reject) {
+        var stories = [];
         _.each(groups, function (group) {
             _.each(group.items(), function (story) {
                 stories.push({
@@ -20,7 +15,7 @@ define([
         });
 
         if (!stories.length) {
-            deferred.reject(new Error('Empty collection'));
+            reject(new Error('Empty collection'));
         } else {
             authedAjax.request({
                 url: '/stories-visible/' + type,
@@ -31,13 +26,11 @@ define([
                 dataType: 'json'
             })
             .done(function (result) {
-                deferred.resolve(result);
+                resolve(result);
             })
             .fail(function (error) {
-                deferred.reject(error);
+                reject(new Error(error.statusText));
             });
         }
-
-        return deferred.promise();
-    };
-});
+    });
+}

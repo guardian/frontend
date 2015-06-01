@@ -51,6 +51,17 @@ define([
         Group
     ) {
         alert = alert.default;
+        deepGet = deepGet.default;
+        fullTrim = fullTrim.default;
+        isGuardianUrl = isGuardianUrl.default;
+        urlHost = urlHost.default;
+        sanitizeHtml = sanitizeHtml.default;
+        urlAbsPath = urlAbsPath.default;
+        asObservableProps = asObservableProps.default;
+        populateObservables = populateObservables.default;
+        mediator = mediator.default;
+        humanTime = humanTime.default;
+        validateImageSrc = validateImageSrc.default;
 
         var capiProps = [
                 'webUrl',
@@ -281,40 +292,29 @@ define([
                     key: 'snapCss',
                     label: 'snap class',
                     type: 'text'
-                }
-            ],
-
-            rxScriptStriper = new RegExp(/<script.*/gi),
-
-            slideshowMetaFieldsAdded = false,
-            addSlideshowMetaFields = function () {
-                if (slideshowMetaFieldsAdded) {
-                    return;
-                }
-                slideshowMetaFieldsAdded = true;
-
-                metaFields.push({
+                },
+                {
                     key: 'imageSlideshowReplace',
+                    omitForSupporting: true,
                     editable: true,
                     label: 'slideshow',
                     singleton: 'images',
                     type: 'boolean'
-                });
-
-                for (var i = 0; i < vars.CONST.maxSlideshowImages; i += 1) {
-                    metaFields.push({
-                        key: 'slideshowImageSrc_' + i,
+                },
+                {
+                    key: 'slideshow',
+                    editable: true,
+                    omitForSupporting: true,
+                    'if': 'imageSlideshowReplace',
+                    type: 'list',
+                    length: vars.CONST.maxSlideshowImages,
+                    item: {
+                        type: 'image',
                         editable: true,
                         dropImage: true,
-                        omitForSupporting: true,
-                        'if': 'imageSlideshowReplace',
-                        label: 'slideshow image ' + (i + 1) + ' URL',
                         validator: {
-                            fn: 'validateImage',
+                            fn: 'validateListImage',
                             params: {
-                                src: 'slideshowImageSrc_' + i,
-                                width: 'slideshowImageSrcWidth_' + i,
-                                height: 'slideshowImageSrcHeight_' + i,
                                 options: {
                                     maxWidth: 1000,
                                     minWidth: 400,
@@ -322,31 +322,14 @@ define([
                                     heightAspectRatio: 3
                                 }
                             }
-                        },
-                        type: 'text'
-                    }, {
-                        key: 'slideshowImageSrcWidth_' + i,
-                        'if': 'imageSlideshowReplace',
-                        label: 'slideshow image ' + i + ' width',
-                        type: 'text'
-                    }, {
-                        key: 'slideshowImageSrcHeight_' + i,
-                        'if': 'imageSlideshowReplace',
-                        label: 'slideshow image ' + i + ' height',
-                        type: 'text'
-                    });
+                        }
+                    }
                 }
-            };
+            ],
 
+            rxScriptStriper = new RegExp(/<script.*/gi);
 
         function Article(opts, withCapiData) {
-            // Once the switch is remove this should be moved outside of the constructor
-            // For the moment it can only be here because the model is not ready yet
-            // when this file is required. It's a sad story.
-            var slideshowEnabled = vars.model.switches()['slideshow-images'];
-            if (slideshowEnabled) {
-                addSlideshowMetaFields();
-            }
             var self = this;
 
             opts = opts || {};
@@ -365,9 +348,6 @@ define([
             this.meta = asObservableProps(_.pluck(metaFields, 'key'));
 
             populateObservables(this.meta, opts.meta);
-            if (slideshowEnabled) {
-                populateSlideshow(this.meta, opts.meta ? opts.meta.slideshow : null);
-            }
 
             this.metaDefaults = {};
 
@@ -476,8 +456,8 @@ define([
                     return meta.imageSrc();
                 } else if (meta.imageCutoutReplace()) {
                     return meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail();
-                } else if (meta.imageSlideshowReplace && meta.imageSlideshowReplace() && meta.slideshowImageSrc_0()) {
-                    return meta.slideshowImageSrc_0();
+                } else if (meta.imageSlideshowReplace && meta.imageSlideshowReplace() && meta.slideshow() && meta.slideshow()[0]) {
+                    return meta.slideshow()[0].src;
                 } else {
                     return fields.thumbnail();
                 }
@@ -529,21 +509,44 @@ define([
             }
         };
 
-        Article.prototype.metaEditor = function(opts, index, all) {
+        Article.prototype.metaEditor = function(opts, index, all, defaults) {
             var self = this,
                 key,
                 meta,
-                field;
+                field,
+                items = [];
 
             if (!opts.editable) { return; }
             if (this.slimEditor && opts.slimEditable !== true) { return; }
+            if (!defaults) { defaults = {}; }
 
             key = opts.key;
-            meta = self.meta[key] || function() {};
-            field = self.fields[key] || function() {};
+            meta = self.meta[key] || ko.observable(defaults.meta);
+            field = self.fields[key] || ko.observable(defaults.field);
 
             if (opts.validator && _.isFunction(self[opts.validator.fn])) {
-                meta.subscribe(function() { self[opts.validator.fn](opts.validator.params); });
+                meta.subscribe(function() {
+                    self[opts.validator.fn](opts.validator.params, meta);
+                });
+            }
+
+            if (opts.type === 'list') {
+                items = _.chain(opts.length)
+                .times(function (i) {
+                    return this.metaEditor(opts.item, null, all, {
+                        meta: (self.meta[key]() || [])[i]
+                    });
+                }, this)
+                .filter(function (editor) { return !!editor; })
+                .map(function (editor) {
+                    editor.meta.subscribe(function () {
+                        meta(_.map(items, function (item) {
+                            return item.meta();
+                        }));
+                    });
+                    return editor;
+                })
+                .value();
             }
 
             return {
@@ -556,6 +559,8 @@ define([
                 meta: meta,
 
                 field: field,
+
+                items: items,
 
                 revert: function() { meta(undefined); },
 
@@ -615,17 +620,27 @@ define([
                 underDrag: ko.observable(false),
 
                 dropInEditor: function (element) {
+                    var sourceMeta = element.getData('sourceMeta');
+                    if (sourceMeta) {
+                        try {
+                            sourceMeta = JSON.parse(sourceMeta);
+                            meta(sourceMeta);
+                            return;
+                        } catch (ex) {}
+                    }
+
                     try {
-                        var source = draggableElement.getMediaItem(element);
-                        if (source && source.file) {
-                            source = source.file;
-                        } else {
-                            source = element.getData('Url');
-                        }
-                        meta(source);
+                        meta({
+                            media: draggableElement.getMediaItem(element),
+                            origin: element.getData('Url')
+                        });
                     } catch (ex) {
                         alert(ex.message);
                     }
+                },
+
+                clear: function () {
+                    undefineObservables(meta);
                 }
             };
         };
@@ -685,7 +700,7 @@ define([
 
         Article.prototype.getMeta = function() {
             var self = this,
-                cleanMeta, slideshow = [];
+                cleanMeta;
 
             cleanMeta = _.chain(self.meta)
                 .pairs()
@@ -705,8 +720,18 @@ define([
                         return item.get();
                     }) : p[1]];
                 })
+                // clean sparse arrays
+                .map(function (p) {
+                    return [p[0], _.isArray(p[1]) ? _.filter(p[1], function (item) { return !!item; }) : p[1]];
+                })
                 // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
+                // recurse convert numbers to strings:
+                .map(function(p){ return [p[0], _.isArray(p[1]) ? _.map(p[1], function (nested) {
+                    return _.isObject(nested) ? _.mapObject(nested, function (val) {
+                        return _.isNumber(val) ? '' + val : val;
+                    }) : nested; }) : p[1]];
+                })
                 // return as obj, or as undefined if empty (this omits it from any subsequent JSON.stringify result)
                 .reduce(function(obj, p) {
                     obj = obj || {};
@@ -714,22 +739,6 @@ define([
                     return obj;
                 }, {})
                 .value();
-
-            for (var i = 0; i < vars.CONST.maxSlideshowImages; i += 1) {
-                if (cleanMeta['slideshowImageSrc_' + i]) {
-                    slideshow.push({
-                        src: cleanMeta['slideshowImageSrc_' + i],
-                        width: cleanMeta['slideshowImageSrcWidth_' + i],
-                        height: cleanMeta['slideshowImageSrcHeight_' + i]
-                    });
-                    delete cleanMeta['slideshowImageSrc_' + i];
-                    delete cleanMeta['slideshowImageSrcWidth_' + i];
-                    delete cleanMeta['slideshowImageSrcHeight_' + i];
-                }
-            }
-            if (slideshow.length) {
-                cleanMeta.slideshow = slideshow;
-            }
 
             if (this.group && this.group.parentType === 'Collection') {
                 cleanMeta.group = this.group.index + '';
@@ -838,7 +847,7 @@ define([
             });
         };
 
-        Article.prototype.open = function() {
+        Article.prototype.open = function(article, evt) {
             if (this.uneditable) { return; }
 
             this.meta.supporting && this.meta.supporting.items().forEach(function(sublink) { sublink.close(); });
@@ -860,6 +869,10 @@ define([
                 );
             } else {
                 mediator.emit('ui:open', null, null, this.front);
+            }
+
+            if ($(evt.target).hasClass('allow-default-click')) {
+                return true;
             }
         };
 
@@ -900,21 +913,48 @@ define([
             var imageSrc = this.meta[params.src],
                 imageSrcWidth = this.meta[params.width],
                 imageSrcHeight = this.meta[params.height],
-                opts = params.height;
+                image = imageSrc(),
+                src,
+                opts = params.options;
 
-            if (imageSrc()) {
-                validateImageSrc(imageSrc(), opts)
-                    .done(function(img) {
+
+            if (image) {
+                src = typeof image === 'string' ? image : (image.media ? image.media.file || image.origin : image.origin);
+                validateImageSrc(src, opts)
+                    .then(function(img) {
                         imageSrc(img.src);
                         imageSrcWidth(img.width);
                         imageSrcHeight(img.height);
-                    })
-                    .fail(function(err) {
+                    }, function(err) {
                         undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
-                        alert(err);
+                        alert(err.message);
                     });
             } else {
                 undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
+            }
+        };
+
+        Article.prototype.validateListImage = function (params, meta) {
+            var image = meta();
+
+            if (image && image.src) {
+                // This image is already validated
+                return;
+            } else if (image) {
+                var originUrl = image.origin,
+                    src = image.media ? image.media.file || originUrl : originUrl,
+                    origin = image.media ? image.media.origin || originUrl : originUrl;
+                validateImageSrc(src, params.options)
+                    .then(function(img) {
+                        meta(_.extend({
+                            origin: origin,
+                        }, img));
+                    }, function(err) {
+                        undefineObservables(meta);
+                        alert(err);
+                    });
+            } else {
+                undefineObservables(meta);
             }
         };
 
@@ -934,19 +974,6 @@ define([
             return contentApiArticle.fields.membershipAccess === 'members-only' ||
                 contentApiArticle.fields.membershipAccess === 'paid-members-only' ||
                 !!_.find(contentApiArticle.tags, {id: 'news/series/looking-back'});
-        }
-
-        function populateSlideshow (meta, slideshow) {
-            if (!slideshow) {
-                return;
-            }
-            for (var i = 0; i < vars.CONST.maxSlideshowImages; i += 1) {
-                if (slideshow[i]) {
-                    meta['slideshowImageSrc_' + i](slideshow[i].src);
-                    meta['slideshowImageSrcWidth_' + i](slideshow[i].width);
-                    meta['slideshowImageSrcHeight_' + i](slideshow[i].height);
-                }
-            }
         }
 
         function undefineObservables() {
@@ -1013,6 +1040,9 @@ define([
                         evt.preventDefault();
                         evt.stopPropagation();
                         bindingContext.$data.underDrag(false);
+                    });
+                    el.addEventListener('dragstart', function (evt) {
+                        evt.dataTransfer.setData('sourceMeta', JSON.stringify(bindingContext.$data.meta()));
                     });
                 }
             }

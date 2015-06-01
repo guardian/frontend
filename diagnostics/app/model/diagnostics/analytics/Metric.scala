@@ -43,11 +43,13 @@ object Metric extends Logging {
     ("ipad-2orMini-start", CountMetric(s"ipad-2orMini-start")),
     ("ipad-2orMini-after-5", CountMetric(s"ipad-2orMini-after-5")),
 
-    ("tech-feedback", CountMetric("tech-feedback"))
+    ("tech-feedback", CountMetric("tech-feedback")),
+
+    //counts http proxy errors when submitting comments
+    ("comment-http-proxy-error", CountMetric("comment-http-proxy-error")),
+    ("comment-error", CountMetric("comment-error")),
+    ("comment-post-success", CountMetric("comment-post-success"))
   ) ++ iPhoneMetrics
-
-  lazy val techFeedback = Switches.FeedbackLink // remove tech-feedback metric when this switch is removed.
-
 
   private val iPhoneMetrics: Seq[(String, CountMetric)] = Seq(4, 6).flatMap( model =>
     Seq(

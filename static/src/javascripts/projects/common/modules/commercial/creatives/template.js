@@ -29,6 +29,7 @@ define([
 
         this.params.marque36icon = svgs('marque36icon');
         this.params.marque54icon = svgs('marque54icon');
+        this.params.arrowRight = svgs('arrowRight', ['i-right']);
         this.params.logoguardian = svgs('logoguardian');
         this.params.marque36iconCreativeMarque = svgs('marque36icon', ['creative__marque']);
     };

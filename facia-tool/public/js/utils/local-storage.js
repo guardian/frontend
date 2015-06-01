@@ -1,9 +1,9 @@
-define(function () {
-    function Memory (location) {
+class Memory {
+    constructor(location) {
         this.location = location;
     }
 
-    Memory.prototype.getItem = function (defaultValue) {
+    getItem(defaultValue) {
         var inMemory, location = this.location;
         try {
             inMemory = localStorage.getItem(location);
@@ -21,17 +21,19 @@ define(function () {
         }
 
         return inMemory;
-    };
+    }
 
-    Memory.prototype.setItem = function (item) {
+    setItem(item) {
         try {
             localStorage.setItem(this.location, JSON.stringify(item));
         } catch (ex) {}
-    };
+    }
+}
 
-    return {
-        bind: function (location) {
-            return new Memory(location);
-        }
-    };
-});
+function bind(location) {
+    return new Memory(location);
+}
+
+export {
+    bind
+};

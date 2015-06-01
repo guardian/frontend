@@ -1,12 +1,10 @@
-@(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[com.gu.googleauth.UserIdentity] = None)(content: Html)
+@(title: String, env: String, priority: Option[String] = None, identity: Option[com.gu.pandomainauth.model.User] = None, model: Option[String] = None)(content: Html)
 
-@import slices.{FixedContainers, DynamicContainers, IdsJson}
-@import IdsJson.{fixed, dynamic}
 @import conf.Configuration
 
 <!DOCTYPE html>
 
-<html ng-app>
+<html>
     <head>
         <title>@priority @title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -29,36 +27,17 @@
         <script src="@routes.UncachedAssets.at("jspm_packages/system.js")"></script>
         <script src="@routes.UncachedAssets.at("js/jspm-config.js")"></script>
 
-
-        <script>
-            System.import('font-awesome/css/font-awesome.min.css!');
-
-            System.amdDefine('config', function() {
-                return {
-                    env: '@env.toLowerCase',
-                    priority: '@priority',
-                    editions: [@Html(Edition.all.map(_.id.toLowerCase).mkString("'","','", "'"))],
-                    navSections: [@Html(FaciaToolConfiguration.sectionsFromNav.mkString("'", "', '", "'"))],
-                    email: '@identity.map(_.email).getOrElse("")',
-                    avatarUrl: '@identity.map(_.avatarUrl).getOrElse("")',
-                    lowFrequency: @Configuration.faciatool.adminPressJobLowPushRateInMinutes,
-                    highFrequency: @Configuration.faciatool.adminPressJobHighPushRateInMinutes,
-                    standardFrequency: @Configuration.faciatool.adminPressJobStandardPushRateInMinutes,
-                    sentryPublicDSN: 'https://4527e03d554a4962ae99a7481e9278ff@@app.getsentry.com/35467'
-                }
-            });
-
-            System.amdDefine('fixed-containers', function () {
-                return @Html(fixed(FixedContainers.all.keys.toSeq));
-            });
-
-            System.amdDefine('dynamic-containers', function () {
-                return @Html(dynamic(DynamicContainers.all.keys.toSeq));
-            });
-        </script>
-
+        @model match {
+            case Some("collections") => {
+                <script>System.import('models/collections/loader');</script>
+            }
+            case Some("config") => {
+                <script>System.import('models/config/loader');</script>
+            }
+            case _ => {}
+        }
     </head>
-    <body class="@if(isAuthed){is-authed}">
+    <body class="is-authed">
 
     @if(Switches.ToolDisable.isSwitchedOn) {
         <span class="message message--important">Temporarily disabled. Please try again shortly.</span>
@@ -71,7 +50,6 @@
                     @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") { : @Configuration.facia.stage }
                 </h1>
             </a>
-            @if(isAuthed) {
                 <div class="log-in-out top-button"><a href="/logout">Logout</a></div>
                 <div class="top-button-collections" data-bind="if: !!$data.layout">
                     <!-- ko if: layout.configVisible() -->
@@ -85,16 +63,6 @@
             }
         </header>
 
-        @if(isAuthed) {
-            @content
-        } else {
-            <form action="@routes.OAuthLoginController.loginAction()" method="post" class="login-form tools">
-                <input value="Log In" class="tool" type="submit" id="login-button">
-            </form>
-        }
-    }
-
+        @content
     </body>
 </html>
-
-

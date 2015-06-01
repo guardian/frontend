@@ -1,33 +1,16 @@
-define([
-    'underscore',
-    'utils/mediator'
-], function (
-    _,
-    mediator
-) {
-    var mockResponse = {};
+import Mock from 'mock/generic-mock';
 
-    $.mockjax({
-        url: /\/ophan\/histogram\?(.*)/,
-        type: 'get',
-        urlParams: ['queryString'],
-        response: function (req) {
-            var front = req.urlParams.queryString.split('&').filter(function (param) {
-                return param.split('=')[0] === 'referring-path';
-            })[0].split('=')[1];
-            this.responseText = mockResponse[front] || {};
-        },
-        onAfterComplete: function () {
-            mediator.emit('mock:histogram');
-        }
-    });
+class Histogram extends Mock {
+    constructor() {
+        super(/\/ophan\/histogram\?(.*)/, ['queryString']);
+    }
 
-    return {
-        set: function (response) {
-            mockResponse = response;
-        },
-        update: function (response) {
-            _.extend(mockResponse, response);
-        }
-    };
-});
+    handle(req, data) {
+        var front = req.urlParams.queryString.split('&').filter(function (param) {
+            return param.split('=')[0] === 'referring-path';
+        })[0].split('=')[1];
+        return data[front] || {};
+    }
+}
+
+export default Histogram;

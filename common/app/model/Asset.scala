@@ -29,6 +29,13 @@ case class ImageAsset(delegate: Asset, index: Int) {
   lazy val photographer: Option[String] = fields.get("photographer")
   lazy val credit: Option[String] = fields.get("credit")
   lazy val displayCredit: Boolean = fields.get("displayCredit").exists(_=="true")
+
+  def showCaption = caption.exists(_.trim.nonEmpty) || (displayCredit && credit.nonEmpty)
+
+  lazy val creditEndsWithCaption = (for {
+    credit <- credit
+    caption <- caption
+  } yield caption.endsWith(credit)).getOrElse(false)
 }
 
 case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]) {

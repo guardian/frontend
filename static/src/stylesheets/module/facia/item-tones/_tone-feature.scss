@@ -21,6 +21,11 @@
         }
     }
 
+    .inline-quote,
+    .fc-item__meta .inline-icon {
+        fill: colour(feature-mute);
+    }
+
     .fc-item__container:before,
     .rich-link__container:before {
         background-color: colour(feature-mute);

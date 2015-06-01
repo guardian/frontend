@@ -1,27 +1,33 @@
 package services
 
+import com.gu.identity.model.SavedArticles
 import common.ExecutionContexts
+import idapiclient.IdApiClient
+import org.joda.time.DateTime
+import org.joda.time.format.ISODateTimeFormat
 
 import scala.concurrent.Future
 
-import client.{Error, Response}
-import com.google.inject.Singleton
-import model.FrontendSavedArticles
+import client.{Auth, Error, Response}
+import com.google.inject.{Inject, Singleton}
 import utils.SafeLogging
 
-
-//{"status":"error","errors":[{"message":"Not found","description":"Resource not found"}]}
 @Singleton
-class PlaySavedArticlesService extends SafeLogging with ExecutionContexts{
+class PlaySavedArticlesService @Inject()(api: IdApiClient) extends SafeLogging with ExecutionContexts{
 
-  def getOrCreateArticlesList(savedArticlesResponse: Future[Response[FrontendSavedArticles]]): Future[Response[FrontendSavedArticles]] = {
+  val fmt = ISODateTimeFormat.dateTimeNoMillis()
+
+  def getOrCreateArticlesList(auth: Auth): Future[Response[SavedArticles]] = {
+    val savedArticlesResponse = api.savedArticles(auth)
     savedArticlesResponse.flatMap {
-      case Right(_) =>  savedArticlesResponse
+      case Right(_) => savedArticlesResponse
       case Left(errors) =>
-            errors match {
-              case List(Error("Not found", "Resource not found", _, _)) =>  Future { Right(new FrontendSavedArticles()) }
-              case _ => savedArticlesResponse
-            }
-      }
+        errors match {
+          case List(Error("Not found", "Resource not found", _, _)) =>
+            val timestamp = fmt.print(new DateTime())
+            Future { Right(new SavedArticles(timestamp, List.empty)) }
+          case _ => savedArticlesResponse
+        }
+    }
   }
 }

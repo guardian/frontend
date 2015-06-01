@@ -18,6 +18,7 @@ define([
         return {
             minAbove: 200,
             minBelow: 250,
+            clearContentMeta: 50,
             selectors: {
                 ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 20 : 0, minBelow: 200},
                 ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 300},

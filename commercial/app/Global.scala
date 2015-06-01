@@ -1,14 +1,14 @@
 import common._
-import conf.{Configuration, Filters}
+import conf.Filters
 import dev.DevParametersLifecycle
 import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.{Industries, JobsAgent}
 import model.commercial.masterclasses.{MasterClassAgent, MasterClassTagsAgent}
 import model.commercial.money.BestBuysAgent
-import model.commercial.soulmates.SoulmatesAggregatingAgent
+import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.{Countries, TravelOffersAgent}
 import play.api.mvc.WithFilters
-import play.api.{GlobalSettings, Application => PlayApp}
+import play.api.{Application => PlayApp, GlobalSettings}
 
 import scala.util.{Failure, Random, Success}
 
@@ -39,7 +39,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     }
 
     AkkaAsync {
-      SoulmatesAggregatingAgent.refresh()
+      SoulmatesAgent.refresh()
 
       MasterClassTagsAgent.refresh() andThen {
         case Success(_) => MasterClassAgent.refresh()
@@ -97,10 +97,10 @@ trait RefreshJob extends Logging {
   }
 }
 
-object SoulmatesRefresh extends RefreshJob {
+object SoulmatesRefresh extends RefreshJob with ExecutionContexts {
   val name: String = "Soulmates"
 
-  def refresh() = SoulmatesAggregatingAgent.refresh()
+  def refresh() = SoulmatesAgent.refresh()
 }
 
 object MasterClassTagsRefresh extends RefreshJob {

@@ -9,6 +9,8 @@ define([
     copiedArticle,
     mediator
 ) {
+    mediator = mediator.default;
+
     function Group(opts) {
         var self = this;
 

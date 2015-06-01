@@ -124,7 +124,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object ophanApi {
     lazy val key = configuration.getStringProperty("ophan.api.key")
     lazy val host = configuration.getStringProperty("ophan.api.host")
-    lazy val timeout = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
   object ophan {
@@ -350,6 +349,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       assert(size <= 100, "Best to keep this less then 50 because of pageSize on search queries")
       size
     }
+
+    lazy val pandomainHost = configuration.getStringProperty("faciatool.pandomain.host")
+    lazy val pandomainDomain = configuration.getStringProperty("faciatool.pandomain.domain")
+    lazy val pandomainSecret = configuration.getStringProperty("pandomain.aws.secret")
+    lazy val pandomainKey = configuration.getStringProperty("pandomain.aws.key")
+
     lazy val configBeforePressTimeout: Int = 1000
 
     val oauthCredentials: Option[OAuthCredentials] =
@@ -374,6 +379,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         .getOrElse(60)
 
     lazy val faciaToolUpdatesStream: Option[String] = configuration.getStringProperty("faciatool.updates.stream")
+
+    lazy val sentryPublicDSN = configuration.getStringProperty("faciatool.sentryPublicDSN")
   }
 
   object pa {
@@ -457,10 +464,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     val cacheTimeInSeconds = configuration.getIntegerProperty("png_resizer.image_cache_time").getOrElse(86400)
     val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
   }
+
+  object pushNotifications {
+    val host = configuration.getStringProperty("push_notifications.host").getOrElse("//")
+  }
 }
 
 object ManifestData {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
   lazy val revision = ManifestFile.asKeyValuePairs.getOrElse("Revision", "DEV").dequote.trim
 }
-
