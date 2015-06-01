@@ -68,14 +68,7 @@ define([
 
     function setUpListeners() {
         _.forEach([
-            'modules:onward:loaded',
-            'modules:related:loaded',
-            'modules:popular:loaded',
-            'modules:tonal:loaded',
-            'page:media:moreinloaded',
-            'page:media:most-viewed-loaded',
-            'module:gallery-most-popular:loaded',
-            'module:lightbox-end-slate:loaded'
+            'page:new-content'
         ], function (event) {
             mediator.on(event, function (context) {
                 attachLazyLoad(qwery('.js-lazy-loaded-image', context));

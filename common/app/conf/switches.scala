@@ -615,7 +615,7 @@ object Switches {
     "Feature",
     "facebook-most-popular",
     "Facebook most popular",
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2015, 8, 17),
     exposeClientSide = true
   )

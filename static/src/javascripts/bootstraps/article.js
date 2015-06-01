@@ -30,7 +30,7 @@ define([
     openModule,
     truncate,
     twitter,
-    facebookMostPopular,
+    FacebookMostPopular,
     geoMostPopular,
     OpenCta,
     rhc,
@@ -93,8 +93,13 @@ define([
             },
 
             initFacebookMostPopular: function () {
+                var el;
+
                 if (config.switches.facebookMostPopular) {
-                    facebookMostPopular.render();
+                    el = qwery('.js-facebook-most-popular');
+                    if (el) {
+                        new FacebookMostPopular(el);
+                    }
                 }
             }
         },
