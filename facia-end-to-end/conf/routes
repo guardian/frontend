@@ -12,10 +12,8 @@ GET        /pressed/live/*id      controllers.Application.generateLivePressedFor
 
 #FACIA-TOOL
 # authentication endpoints
-GET           /login                     controllers.OAuthLoginController.login
-POST          /login                     controllers.OAuthLoginController.loginAction
-GET           /oauth2callback            controllers.OAuthLoginController.oauth2Callback
-GET           /logout                    controllers.OAuthLoginController.logout
+GET           /oauth2callback            controllers.PandaAuthController.oauthCallback
+GET           /logout                    controllers.PandaAuthController.logout
 
 # static files
 GET           /humans.txt                controllers.Assets.at(path="/public", file="humans.txt")
