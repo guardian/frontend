@@ -1,0 +1,43 @@
+@import model.Content
+
+@(page: model.MetaData, savedArticleForm: Form[SavedArticleData], articles: List[Content], total: Int, pageNum: Int, totalPages: Int,  formActionUrl: String, prevPage: Option[String], nextPage: Option[String])(implicit request: RequestHeader)
+
+@main(page, projectName = Option("identity")) {
+}{
+    <div class="identity-wrapper monocolumn-wrapper">
+        <h1 class="identity-title">Saved Articles</h1>
+        @if(savedArticleForm.globalError.isDefined) {
+            <div class="form__error">@savedArticleForm.globalErrors.map(_.message).mkString(", ")</div>
+        }
+            <!-- Open form here and handle errors here -->
+        <form class="form js-saved-content-form" novalidate action="@formActionUrl" role="main" method="post">
+            <div class="saved-contents js-saved-contents">
+            @fragments.profile.saveForLater.contentListPage(articles)
+            </div>
+            <fieldset class="fieldset">
+                <ul class="u-unstyled">
+
+                    <li class="form-field">
+                        <label class="label"> Delete individual articles with the button above, or click below to remove them all</label>
+                        <div class="form-field__note js-saved-content__num-articles">
+                            you have @total saved articles. Page @pageNum of @totalPages
+                        </div>
+                    </li>
+
+                    <li>
+                        <button type="submit" class="submit-input js-saved-content__button-delete-all" name="deleteArticle" value="all" data-link-name="Saved deletre all">Delete All</button>
+                    </li>
+                </ul>
+            </fieldset>
+        </form>
+        <div class=saved-content__list-nav">
+            @prevPage.map { prev =>
+                <a href="@(prev)" class="submit-input" data-link-name="saved content next page">Prev</a>
+            }
+            @nextPage.map { next =>
+                <a href="@(next)" class="submit-input" data-link-name="saved content next page">Next</a>
+            }
+        </div>
+
+    </div>
+}

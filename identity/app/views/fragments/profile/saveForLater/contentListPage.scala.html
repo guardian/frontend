@@ -1,0 +1,30 @@
+@import model.Content
+
+@(articles: List[Content])(implicit request: RequestHeader)
+
+@articles.zipWithRowInfo.map { case (article, row) =>
+    <div class="@RenderClasses(Map(
+        "u-cf" -> true,
+        "saved-content" -> true,
+        "js-saved-content" -> true,
+        "saved-content-first" -> row.isFirst))" shortUrl="@article.shortUrlPath">
+
+        <input type="hidden" name="article[@row.rowNum]" value="@article.shortUrlPath"/>
+        @fragments.profile.saveForLater.savedArticleImage(article)
+        <div class=="saved-content__meta">
+            <a class="saved-content__title" href="@article.webUrl">@article.webTitle</a>
+            <div class="saved-content__standfirst">@article.trailText</div>
+        </div>
+
+        <div class="saved-content__meta u-cf">
+            <button class="saved-content__button js-saved-content__button"
+            data-link-name="Delete"
+            name="deleteArticle"
+            type="submit"
+            value="@article.shortUrlPath">
+        Delete
+    </button>
+    </div>
+    </div>
+}
+

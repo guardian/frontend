@@ -15,8 +15,11 @@ trait Articles {
 
   implicit class RichSavedArticles(savedArticles: SavedArticles) {
     val fmt = ISODateTimeFormat.dateTimeNoMillis()
+    val itemsPerPage = 5
+    lazy val pages = savedArticles.articles.grouped(itemsPerPage).toList
+    lazy val numPages = pages.length
 
-
+    lazy val totalSaved = savedArticles.articles.length
     def newestFirst = savedArticles.articles.reverse
     def contains(shortUrl: String) : Boolean = savedArticles.articles.exists( sa => sa.shortUrl == shortUrl)
 
@@ -41,6 +44,22 @@ trait Articles {
 
       SavedArticles(savedArticles.version, articles)
     }
+
+    def prevPage( currentPage: Int ) : Option[Int] =  (currentPage > 0) match {
+      case true => Option(currentPage - 1)
+      case _ => None
+    }
+
+    def nextPage( currentPage: Int ) : Option[Int] = {
+      val nextPage = currentPage + 1
+      nextPage == pages.length match {
+        case true => None
+        case _ => Some(nextPage)
+      }
+    }
+
+
+    def getPage(page: Int): List[SavedArticle] = pages(page)
   }
 }
 

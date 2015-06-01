@@ -224,7 +224,7 @@ object FaciaCard {
       DisplaySettings.fromTrail(faciaContent),
       faciaContent.isLive,
       None,
-      faciaContent.shortUrlPath
+      faciaContent.shortUrlPath,
       useShortByline = false
     )
   }

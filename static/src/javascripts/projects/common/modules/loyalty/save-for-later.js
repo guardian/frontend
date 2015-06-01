@@ -116,8 +116,6 @@ define([
 
     SaveForLater.prototype.getSavedArticles = function () {
         var self = this,
-            saveLinkHolder = qwery('.js-save-for-later')[0],
-            shortUrl = config.page.shortUrl.replace('http://gu.com', ''),
             notFound  = {message:'Not found', description:'Resource not found'};
 
         console.log("+++ Get the Atricles");
@@ -133,7 +131,7 @@ define([
                         self.userData = {version: date, articles:[]};
                     }
                 } else {
-                    console.log("++ Error");
+                    console.log("++ Resp");
                     self.userData = resp.savedArticles;
                 }
 

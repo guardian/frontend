@@ -97,6 +97,22 @@ class SaveContentController @Inject() ( api: IdApiClient,
     }
   }
 
+  def listSavedContentPage(pageNum: Integer) = authenticatedActions.authAction.async { implicit request  =>
+
+    val idRequest = identityRequestParser(request)
+
+    savedArticleService.getOrCreateArticlesList(request.user.auth).flatMap {
+      case Right(savedArticles) =>
+        fillFormWithApiDataForPageAndGetResult(idRequest, savedArticles, pageNum)
+       case Left(errors) =>
+        val formWithErrors = errors.foldLeft(savedArticlesForm) {
+          case (formWithErrors, Error(message, decription, _, context)) =>
+            formWithErrors.withError(context.getOrElse(""), message)
+        }
+        Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, List.empty, 0, 0, 0, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"), None, None))))
+    }
+  }
+
 
   def deleteSavedContentItem  =
     authenticatedActions.authAction.async { implicit request =>
@@ -173,7 +189,36 @@ class SaveContentController @Inject() ( api: IdApiClient,
       NoCache(Ok(views.html.profile.savedForLater(page, form, contentList, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"))))
     }
   }
+
+
+  private def fillFormWithApiDataForPageAndGetResult(idRequest: IdentityRequest,  updatedArticles: SavedArticles, pageNum: Int)(implicit request: RequestHeader): Future[Result] = {
+
+    def getAdjacentPageNumber(maybePage: Option[Int]) : Option[String] = maybePage match {
+      case Some (page) => Some(formActionUrl(idUrlBuilder, idRequest, "/saved-for-later/%d".format(page)))
+      case _ => None
+    }
+
+    val articles = updatedArticles.getPage(pageNum)
+    val form = savedArticlesForm.fill(SavedArticleData(articles.map(_.shortUrl)))
+    lazy val next = getAdjacentPageNumber(updatedArticles.nextPage(pageNum))
+    lazy val prev = getAdjacentPageNumber(updatedArticles.prevPage(pageNum))
+
+    val savedApiContentItems: Iterable[Future[Option[Content]]] = articles.map {
+      article =>
+        getResponse(LiveContentApi.item(article.id, Edition.defaultEdition).showFields("webTitle,webUrl,trailText,shortUrl").showElements("all")).map(_.content.map(Content(_)))
+    }
+
+    Future.sequence(savedApiContentItems).map { savedForLaterSeq =>
+      val contentList = savedForLaterSeq.toList.collect {
+        case Some(content) => content
+      }
+
+      NoCache(Ok(views.html.profile.savedForLaterPage(page, form, contentList, updatedArticles.totalSaved, pageNum + 1, updatedArticles.numPages, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"), prev, next)))
+    }
+  }
 }
+
+
 case class SavedArticleData(shortUrls: List[String], deleteArticle: Option[String] = None)
 object SavedArticleData {
   val savedArticlesForm = Form (
