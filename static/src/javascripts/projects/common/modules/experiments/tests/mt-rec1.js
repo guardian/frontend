@@ -61,8 +61,8 @@ define([
             var panelLinks = {
                 mobile: 'https://s.userzoom.com/m/MyBDMTBTMjE1',
                 tablet: 'https://s.userzoom.com/m/MiBDMTBTMjE1',
-                desktop: 'https://s.userzoom.com/m/OSBDMTBTMjE4',
-                wide: 'https://s.userzoom.com/m/OSBDMTBTMjE4'
+                desktop: 'https://s.userzoom.com/m/MSBDMTBTMjE1',
+                wide: 'https://s.userzoom.com/m/MSBDMTBTMjE1'
             };
 
             stickyNav.stickySlow.init();
