@@ -935,7 +935,7 @@ object Switches {
     "ab-mt-rec1",
     "Viewability results - Recommendation option 1",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 2),
+    sellByDate = new LocalDate(2015, 6, 16),
     exposeClientSide = true
   )
 
@@ -944,7 +944,7 @@ object Switches {
     "ab-mt-rec2",
     "Viewability results - Recommendation option 2",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 2),
+    sellByDate = new LocalDate(2015, 6, 16),
     exposeClientSide = true
   )
 
@@ -971,7 +971,7 @@ object Switches {
     "ab-defer-spacefinder",
     "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 2),
+    sellByDate = new LocalDate(2015, 6, 16),
     exposeClientSide = true
   )
 
