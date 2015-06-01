@@ -68,7 +68,7 @@ define([
             stickyNav.stickySlow.init();
 
             if (!detect.adblockInUse) {
-                this.showMessage('panelMtRec1', 'panel message mtRec1 variant', panelLinks);
+                this.showMessage('panel-mtrec1', 'panel message mtRec1 variant', panelLinks);
             }
 
         };
@@ -92,7 +92,7 @@ define([
                     };
 
                     if (!detect.adblockInUse) {
-                        this.showMessage('panelMtRec1', 'panel message mtRec1 control', panelLinks);
+                        this.showMessage('panel-mtrec1', 'panel message mtRec1 control', panelLinks);
                     }
                 }.bind(this)
             }

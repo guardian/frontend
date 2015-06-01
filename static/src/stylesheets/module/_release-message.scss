@@ -102,8 +102,8 @@
         max-width: none;
     }
 
-    .site-message--panelMtRec1 & ,
-    .site-message--panelMtRec2 & {
+    .site-message--panel-mtrec1 & ,
+    .site-message--panel-mtrec2 & {
         font-weight: bold;
         padding-top: 10px;
 
@@ -133,8 +133,8 @@
         margin-top: 0;
     }
 
-    .site-message--panelMtRec1 & ,
-    .site-message--panelMtRec2 & {
+    .site-message--panel-mtrec1 & ,
+    .site-message--panel-mtrec2 & {
         @include mq(mobile) {
             padding-left: 14px;
         }
@@ -429,7 +429,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     background: colour(news-support-2);
 }
 
-.site-message--panelMtRec1,
-.site-message--panelMtRec2 {
+.site-message--panel-mtrec1,
+.site-message--panel-mtrec2 {
     background: colour(neutral-2);
 }

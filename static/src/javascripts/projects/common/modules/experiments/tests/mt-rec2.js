@@ -68,7 +68,7 @@ define([
             stickyNav.stickySlow.init(2);
 
             if (!detect.adblockInUse) {
-                this.showMessage('panelMtRec2', 'panel message mtRec2 variant', panelLinks);
+                this.showMessage('panel-mtrec2', 'panel message mtRec2 variant', panelLinks);
             }
         };
 
@@ -91,7 +91,7 @@ define([
                     };
 
                     if (!detect.adblockInUse) {
-                        this.showMessage('panelMtRec2', 'panel message mtRec2 control', panelLinks);
+                        this.showMessage('panel-mtrec2', 'panel message mtRec2 control', panelLinks);
                     }
                 }.bind(this)
             }
