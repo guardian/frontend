@@ -52,4 +52,4 @@ GET        /series/*path.json                         controllers.SeriesControll
 GET        /business-data/stocks.json                 controllers.StocksController.stocks
 
 # User tech feedback
-GET        /tech-feedback/:stage                   controllers.TechFeedbackController.techFeedback(stage)
+GET        /info/tech-feedback/                       controllers.TechFeedbackController.techFeedback()
