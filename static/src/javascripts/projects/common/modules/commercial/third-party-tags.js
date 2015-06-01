@@ -26,7 +26,6 @@ define([
 ) {
 
     function init() {
-
         if (config.page.contentType === 'Identity' || config.page.section === 'identity') {
             return false;
         }
@@ -37,7 +36,7 @@ define([
                 break;
         }
 
-        if (config.switch.thirdPartiesLaterSwitch) {
+        if (config.switches.thirdPartiesLater) {
             mediator.once('modules:commercial:dfp:alladsrendered', function () {
                 loadOther();
             });

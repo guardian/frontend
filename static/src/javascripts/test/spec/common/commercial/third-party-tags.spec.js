@@ -1,4 +1,6 @@
 import Injector from 'helpers/injector';
+import sinonjs from 'sinonjs';
+import jasmineSinon from 'jasmine-sinon';
 
 describe('Tags Container', function () {
 
@@ -8,17 +10,19 @@ describe('Tags Container', function () {
     }
 
     var injector = new Injector(),
-        tagsContainer, config;
+        tagsContainer, config, pointroll;
 
     beforeEach(function (done) {
-        injector.test(['common/modules/commercial/third-party-tags', 'common/utils/config'], function () {
+        injector.test(['common/modules/commercial/third-party-tags', 'common/utils/config', 'common/modules/commercial/third-party-tags/pointroll-resp-lib'], function () {
             tagsContainer = arguments[0];
             config = arguments[1];
+            pointroll = arguments[2];
             config.page = {
                 contentType: 'Article',
                 section: 'article',
                 edition: 'uk'
-            };    
+            };
+            config.switches = {};
             done();
         });        
     });
@@ -37,5 +41,12 @@ describe('Tags Container', function () {
         config.page.section = 'identity';
 
         expect(tagsContainer.init()).toBe(false);
+    });
+
+    it('should not load tags if ThirdPartiesLater switch is on', function () {
+        config.switches.thirdPartiesLater = true;
+        spyOn(pointroll, "load");
+        tagsContainer.init();
+        expect(pointroll.load).not.toHaveBeenCalled();
     });
 });
