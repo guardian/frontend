@@ -1,3 +1,4 @@
+/*jshint -W031 */
 define([
     'fence',
     'qwery',
