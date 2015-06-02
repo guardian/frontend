@@ -266,19 +266,18 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
     println("Artcles %d".format(updatedArticles.articles.length))
     val articles = updatedArticles.getPage(pageNum)
-    val form = savedArticlesForm.fill(SavedArticleData(articles.map(_.shortUrl)))
-    val savedApiContentItems: Iterable[Future[Option[ApiContent]]] = articles.map {
-      article =>
-        getResponse(LiveContentApi.item(article.id, Edition.defaultEdition).showFields("webTitle,webUrl,trailText,shortUrl").showElements("all")).map(_.content.map(Content(_)))
-    }
+    val shortUrls = articles.map(_.shortUrl)
+    val form = savedArticlesForm.fill(SavedArticleData(shortUrls))
 
-    Future.sequence(savedApiContentItems).map { savedForLaterSeq =>
-      val contentList = savedForLaterSeq.toList.collect {
-        case Some(content) => content
-      }
+    val futureContentList: Future[List[ApiContent]] = getResponse(LiveContentApi.search(Edition.defaultEdition)
+      .ids(shortUrls.map(_.drop(1)).mkString(","))
+      .showFields("webTitle,webUrl,trailText,shortUrl")
+       showElements("all")
+    ).map( r => r.results.map(ApiContent(_)))
 
-      val pageData = pageDataBuilder(contentList, updatedArticles, idRequest, pageNum)
-      NoCache(Ok(views.html.profile.savedForLaterPage(page, form, pageData ) ) )
+    futureContentList.map { contentList =>
+        val pageData = pageDataBuilder(contentList, updatedArticles, idRequest, pageNum)
+        NoCache(Ok(views.html.profile.savedForLaterPage(page, form, pageData ) ) )
     }
   }
 }

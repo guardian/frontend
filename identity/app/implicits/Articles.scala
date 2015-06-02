@@ -16,7 +16,12 @@ trait Articles {
   implicit class RichSavedArticles(savedArticles: SavedArticles) {
     val fmt = ISODateTimeFormat.dateTimeNoMillis()
     val itemsPerPage = 5
-    val pages = savedArticles.articles.grouped(itemsPerPage).toList
+
+    val pages = savedArticles.articles match {
+      case Nil => List.empty
+      case _ => savedArticles.articles.grouped(4).toList
+    }
+
     lazy val numPages = pages.length
 
     lazy val totalSaved = savedArticles.articles.length
@@ -58,8 +63,15 @@ trait Articles {
       }
     }
 
+    //Deal with just having removed the only item on the last page
+    def getPage(page: Int): List[SavedArticle] = pages match {
+      case Nil => List.empty
+      case _ => page > pages.length match {
+        case true => pages.last
+        case _ =>pages(page)
+      }
 
-    def getPage(page: Int): List[SavedArticle] = pages(page)
+    }
   }
 }
 
