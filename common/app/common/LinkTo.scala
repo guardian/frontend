@@ -54,7 +54,8 @@ trait LinkTo extends Logging {
     case t: Trail => Option(apply(t.url))
   }
 
-  def apply(faciaContent: FaciaContent)(implicit request: RequestHeader): Option[String] = faciaContent.href
+  def hrefOrId(faciaContent: FaciaContent)(implicit request: RequestHeader): String =
+    faciaContent.href.getOrElse(faciaContent.id)
 
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
     faciaCard.url.get(request)
