@@ -44,6 +44,7 @@ define([
         krux.load();
         pointroll.load();
         gravity.lightBeacon();
+        gravity.getRecommendations();
 
         return Promise.resolve(null);
     }
