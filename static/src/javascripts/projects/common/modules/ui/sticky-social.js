@@ -82,14 +82,7 @@ define([
             socialContext;
 
         if (testVariant.indexOf('referrer') > -1) {
-            referrer = ((window.location.hash + '').match(/referrer=([^&]+)/) || [])[1] || document.referrer || '',
-
-            socialContext = [
-                {id: 'facebook', matchReferrer: 'facebook.com', isApp: detect.isFacebookApp},
-                {id: 'twitter', matchReferrer: 't.co', isApp: detect.isTwitterApp}
-            ].filter(function (social) {
-                return referrer.indexOf(social.matchReferrer) > -1 || social.isApp();
-            })[0];
+            socialContext = detect.socialContext();
 
             if (socialContext) {
                 fastdom.read(function () {

@@ -142,6 +142,24 @@ define([
         return navigator.userAgent.indexOf('Twitter for iPhone') > -1;
     }
 
+    function isTwitterReferral() {
+        return /\.t\.co/.test(document.referrer);
+    }
+
+    function isFacebookReferral() {
+        return /\.facebook\.com/.test(document.referrer);
+    }
+
+    function socialContext() {
+        if (isFacebookApp() || isFacebookReferral()) {
+            return 'facebook';
+        } else if (isTwitterApp() || isTwitterReferral()) {
+            return 'twitter';
+        } else {
+            return null;
+        }
+    }
+
     getUserAgent = (function () {
         var ua = navigator.userAgent, tem,
             M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -442,6 +460,9 @@ define([
         isFireFoxOSApp: isFireFoxOSApp,
         isFacebookApp: isFacebookApp,
         isTwitterApp: isTwitterApp,
+        isFacebookReferral: isFacebookReferral,
+        isTwitterReferral: isTwitterReferral,
+        socialContext: socialContext,
         isBreakpoint: isBreakpoint,
         isReload:  isReload,
         initPageVisibility: initPageVisibility,
