@@ -40,7 +40,8 @@ define([
         }
 
         if (config.switches.thirdPartiesLater) {
-            mediator.once('modules:commercial:dfp:alladsrendered', function () {
+            // Load third parties after first ad was rendered
+            mediator.once('modules:commercial:dfp:rendered', function () {
                 loadOther();
             });
         } else {
