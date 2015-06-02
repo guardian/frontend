@@ -45,30 +45,24 @@ define([
                 return !urlHost || (urlHost === host && urlProtocol === protocol);
             },
             getClickSpec = function (spec, forceValid) {
-                if (!spec.el) { return false; }
+                if (!spec.el) {
+                    return false;
+                }
                 var el = spec.el,
                     elName = el.tagName.toLowerCase(),
                     dataLinkName = el.getAttribute('data-link-name'),
                     href;
 
                 if (dataLinkName) {
-                    spec.tag = spec.tag || [];
-                    spec.tag.push(dataLinkName);
+                    spec.tag.unshift(dataLinkName);
                 }
 
                 if (elName === 'body') {
-                    if (spec.validTarget && spec.tag && spec.tag.length) {
-                        spec.tag = [].concat(spec.tag).reverse().join(' | ');
-                        if (el.getAttribute('data-link-test')) {
-                            spec.tag = el.getAttribute('data-link-test') + ' | ' + spec.tag;
-                        }
-                        delete spec.el;
-                        delete spec.validTarget;
-                        return spec;
-                    } else {
-                        mediator.emit('module:clickstream:null');
-                        return false;
+                    spec.tag = spec.tag.join(' | ');
+                    if (spec.validTarget && el.getAttribute('data-link-test')) {
+                        spec.tag = el.getAttribute('data-link-test') + ' | ' + spec.tag;
                     }
+                    return spec;
                 }
 
                 if (!spec.validTarget) {
@@ -99,7 +93,10 @@ define([
         if (opts.addListener !== false) {
             bean.add(document.body, 'click', function (event) {
                 var applicableTests,
-                    clickSpec = {el: event.target};
+                    clickSpec = {
+                        el: event.target,
+                        tag : []
+                    };
 
                 if (opts.withEvent !== false) {
                     clickSpec.event = event;
@@ -116,9 +113,7 @@ define([
                     }).join(',');
                 }
 
-                if (clickSpec) {
-                    mediator.emit('module:clickstream:click', clickSpec);
-                }
+                mediator.emit('module:clickstream:click', clickSpec);
             });
         }
 

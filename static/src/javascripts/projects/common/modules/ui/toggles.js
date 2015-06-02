@@ -38,9 +38,7 @@ define([
             }).map(self.close);
         };
 
-        mediator.on('module:clickstream:interaction', this.reset);
         mediator.on('module:clickstream:click', this.reset);
-        mediator.on('module:clickstream:null', this.reset);
     };
 
     Toggles.prototype.toggle = function (control, controls) {

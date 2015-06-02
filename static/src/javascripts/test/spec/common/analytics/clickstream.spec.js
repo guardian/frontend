@@ -1,4 +1,4 @@
-import Clickstream from 'common/modules/analytics/clickstream';
+import Clickstream from 'common/modules/ui/clickstream';
 import bean from 'bean';
 import mediator from 'common/utils/mediator';
 import fixtures from 'helpers/fixtures';
