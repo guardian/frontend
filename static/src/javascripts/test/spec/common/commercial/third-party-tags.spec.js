@@ -10,13 +10,13 @@ describe('Tags Container', function () {
     }
 
     var injector = new Injector(),
-        tagsContainer, config, pointroll;
+        tagsContainer, config, krux;
 
     beforeEach(function (done) {
-        injector.test(['common/modules/commercial/third-party-tags', 'common/utils/config', 'common/modules/commercial/third-party-tags/pointroll-resp-lib'], function () {
+        injector.test(['common/modules/commercial/third-party-tags', 'common/utils/config', 'common/modules/commercial/third-party-tags/krux'], function () {
             tagsContainer = arguments[0];
             config = arguments[1];
-            pointroll = arguments[2];
+            krux = arguments[2];
             config.page = {
                 contentType: 'Article',
                 section: 'article',
