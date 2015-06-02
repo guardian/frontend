@@ -14,7 +14,7 @@ class SaveForLaterDataBuilder @Inject()(idUrlBuilder: IdentityUrlBuilder) {
 
   def apply(savedArticlesForPage: List[Content], allSavedArticles: SavedArticles, idRequest: IdentityRequest, pageNum: Int) = {
     def getAdjacentPageNumber(maybePage: Option[Int]) : Option[String] = maybePage match {
-      case Some (page) => Some(formActionUrl(idRequest, "/saved-for-later/%d".format(page)))
+      case Some (page) => Some(formActionUrl(idRequest, "/saved-for-later-page/%d".format(page)))
       case _ => None
     }
 
