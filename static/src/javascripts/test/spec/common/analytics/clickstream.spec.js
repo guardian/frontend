@@ -71,11 +71,13 @@ describe("Clickstream", function() {
             object = { method: function (p) {} },
             spy = sinon.spy(object, "method"),
             el = document.getElementById('click-me-descendant'),
+
             elAncestor = document.getElementById('click-me-ancestor'),
             clickSpec = {
                 target: elAncestor,
                 samePage: false,
                 sameHost: true,
+                validTarget: true,
                 tag: 'outer div | the ancestor | the descendant'
             };
 
@@ -86,17 +88,21 @@ describe("Clickstream", function() {
         expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
     });
 
-    it("should ignore clicks *not* from a list of given element sources", function(){
+    it("should return clickspec with false validTarget when clicked element is *not* in the filter list of given element sources", function(){
 
         var cs  = new Clickstream({ filter: ['a'], withEvent: false }), // only log events on [a]nchor elements
             object = { method: function (tag) {} },
-            spy = sinon.spy(object, "method");
+            spy = sinon.spy(object, "method"),
+            clickSpec = {
+                validTarget: false,
+                tag: 'outer div'
+            };
 
         mediator.on('module:clickstream:click', spy);
 
         bean.fire(document.getElementById('not-inside-a-link'), 'click');
 
-        expect(spy.callCount).toBe(0);
+        expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
 
     });
 
@@ -110,6 +116,7 @@ describe("Clickstream", function() {
                 target: el,
                 samePage: true,
                 sameHost: true,
+                validTarget: true,
                 tag: 'outer div | paragraph'
             };
 
@@ -130,6 +137,7 @@ describe("Clickstream", function() {
                 target: el,
                 samePage: false,
                 sameHost: true,
+                validTarget: true,
                 tag: 'outer div | internal link'
             };
 
@@ -150,6 +158,7 @@ describe("Clickstream", function() {
                 target: el,
                 samePage: false,
                 sameHost: false,
+                validTarget: true,
                 tag: 'outer div | external link'
             };
 
@@ -184,6 +193,7 @@ describe("Clickstream", function() {
                 target: el,
                 samePage: true,
                 sameHost: true,
+                validTarget: true,
                 tag: 'outer div | the contextual link',
                 linkContextPath: 'the inner context path',
                 linkContextName: 'the inner context name'

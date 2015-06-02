@@ -59,6 +59,8 @@ define([
 
                 if (elName === 'body') {
                     spec.tag = spec.tag.join(' | ');
+                    delete spec.el;
+
                     if (spec.validTarget && el.getAttribute('data-link-test')) {
                         spec.tag = el.getAttribute('data-link-test') + ' | ' + spec.tag;
                     }
@@ -66,7 +68,7 @@ define([
                 }
 
                 if (!spec.validTarget) {
-                    spec.validTarget = filterSource(el.tagName.toLowerCase()).length > 0 || forceValid;
+                    spec.validTarget = filterSource(el.tagName.toLowerCase()).length > 0 || !!forceValid;
                     if (spec.validTarget) {
                         spec.target = el;
                         href = el.getAttribute('href');
