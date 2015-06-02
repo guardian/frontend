@@ -227,13 +227,7 @@ define([
                 fastdom.read(function () {
                     var scrollTop    = bonzo(document.body).scrollTop(),
                         scrollBottom = scrollTop + bonzo.viewport().height,
-                        depth;
-
-                    if (isDeferSpaceFinderTest()) {
-                        depth = 100;
-                    } else {
                         depth = 0.5;
-                    }
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
