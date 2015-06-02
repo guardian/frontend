@@ -6,7 +6,6 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/referrers',
     'common/utils/url',
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
@@ -26,7 +25,6 @@ define([
     config,
     detect,
     mediator,
-    referrers,
     urlutils,
     richLinks,
     membershipEvents,
@@ -98,7 +96,7 @@ define([
             initFacebookMostPopular: function () {
                 var el;
 
-                if (config.switches.facebookMostPopular && referrers.isFacebook()) {
+                if (config.switches.facebookMostPopular && detect.socialContext() === 'facebook') {
                     el = qwery('.js-facebook-most-popular');
                     if (el) {
                         new FacebookMostPopular(el);
