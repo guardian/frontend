@@ -8,7 +8,7 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 
-object ContentApiOffers extends Controller with ExecutionContexts with implicits.Requests {
+object ContentApiOffersController extends Controller with ExecutionContexts with implicits.Requests {
 
   private def renderItems(format: Format, isMulti: Boolean) = MemcachedAction { implicit request =>
 
