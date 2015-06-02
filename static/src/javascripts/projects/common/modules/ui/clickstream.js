@@ -95,7 +95,7 @@ define([
                 var applicableTests,
                     clickSpec = {
                         el: event.target,
-                        tag : []
+                        tag: []
                     };
 
                 if (opts.withEvent !== false) {
