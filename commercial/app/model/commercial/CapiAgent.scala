@@ -3,14 +3,15 @@ package model.commercial
 import common.AkkaAgent
 import model.Content
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
 object CapiAgent {
 
   private lazy val shortUrlAgent = AkkaAgent[Map[String, Option[Content]]](Map.empty)
 
-  def contentByShortUrls(shortUrls: Seq[String]): Future[Seq[Content]] = {
+  def contentByShortUrls(shortUrls: Seq[String])
+                        (implicit ec: ExecutionContext): Future[Seq[Content]] = {
 
     val cache = shortUrlAgent.get()
 
