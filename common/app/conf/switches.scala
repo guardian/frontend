@@ -966,16 +966,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABDeferSpacefinder = Switch(
-    "A/B Tests",
-    "ab-defer-spacefinder",
-    "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 16),
-    exposeClientSide = true
-  )
-
-
   val ABHeadlineSwitches = (1 to 10) map { n =>
     Switch(
       "A/B Tests",
