@@ -40,16 +40,4 @@ abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDura
   }
 
   final def stop() = subscription foreach { _.cancel() }
-
-  trait Lifecycle extends GlobalSettings {
-    override def onStart(app: Application): Unit = {
-      super.onStart(app)
-      start()
-    }
-
-    override def onStop(app: Application): Unit = {
-      stop()
-      super.onStop(app)
-    }
-  }
 }
