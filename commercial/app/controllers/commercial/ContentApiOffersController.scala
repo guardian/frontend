@@ -31,16 +31,16 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     val optCapiAdFeature = request.getParameter("af")
 
     val sponsorTypeToClass = Map (
-        "sponsored" -> ("fc-container--sponsored"),
-        "advertisement-feature" -> ("fc-container--advertisement-feature"),
-        "foundation-supported" -> ("fc-container--foundation-supported")
+        "sponsored" -> "fc-container--sponsored",
+        "advertisement-feature" -> "fc-container--advertisement-feature",
+        "foundation-supported" -> "fc-container--foundation-supported"
         )
     val optSponsorType: Option[String] = optCapiAdFeature flatMap (feature => sponsorTypeToClass.get(feature))
 
     val sponsorTypeToLabel = Map (
-        "sponsored" -> ("Sponsored by"),
-        "advertisement-feature" -> ("Brought to you by"),
-        "foundation-supported" -> ("Supported by")
+        "sponsored" -> "Sponsored by",
+        "advertisement-feature" -> "Brought to you by",
+        "foundation-supported" -> "Supported by"
         )
     val optSponsorLabel: Option[String] = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
 
