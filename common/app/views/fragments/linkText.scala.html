@@ -5,6 +5,6 @@
 @import views.support.RemoveOuterParaHtml
 @import implicits.FaciaContentImplicits._
 
-<a href="@LinkTo(trail)" data-link-name="@info.rowNum | text">
+<a href="@LinkTo.hrefOrId(trail)" data-link-name="@info.rowNum | text">
     @trail.maybeWebTitle.map(RemoveOuterParaHtml.apply)
 </a>
