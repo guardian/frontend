@@ -270,7 +270,9 @@ category: Common
 }
 
 .social__item--referred {
-    margin-right: $gs-baseline / 3;
+    @include mq($until: desktop) {
+        margin-right: $gs-baseline / 3;
+    }
 
     .social-icon:after {
         @include fs-textSans(1);
