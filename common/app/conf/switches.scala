@@ -282,6 +282,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val CommercialExtraAdsSwitch = Switch(
+    "Commercial",
+    "commercial-extra-ads",
+    "If this switch is ON, extra ads are served on article pages",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 6, 30),
+    exposeClientSide = true
+  )
+
   val StandardAdvertsSwitch = Switch(
     "Commercial",
     "standard-adverts",
@@ -726,6 +735,15 @@ object Switches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val FontKerningSwitch = Switch(
+    "Feature",
+    "font-kerning",
+    "If this is switched on then fonts will be kerned/optimised for legibility.",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
   )
 
   val SearchSwitch = Switch(

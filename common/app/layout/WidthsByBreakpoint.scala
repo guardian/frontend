@@ -28,6 +28,7 @@ object FaciaWidths {
     (Half, 340.px),
     (ThreeQuarters, 340.px),
     (ThreeQuartersRight, 340.px),
+    (ThreeQuartersTall, 520.px),
     (FullMedia50, 350.px),
     (FullMedia75, 520.px),
     (FullMedia100, 700.px)
@@ -40,6 +41,7 @@ object FaciaWidths {
     (Half, 331.px),
     (ThreeQuarters, 331.px),
     (ThreeQuartersRight, 331.px),
+    (ThreeQuartersTall, 331.px),
     (FullMedia50, 331.px),
     (FullMedia75, 331.px),
     (FullMedia100, 331.px)
@@ -53,6 +55,7 @@ object FaciaWidths {
     (Half, 460.px),
     (ThreeQuarters, 460.px),
     (ThreeQuartersRight, 460.px),
+    (ThreeQuartersTall, 700.px),
     (FullMedia50, 470.px),
     (FullMedia75, 700.px),
     (FullMedia100, 940.px)
@@ -65,6 +68,7 @@ object FaciaWidths {
     (Half, 331.px),
     (ThreeQuarters, 389.px),
     (ThreeQuartersRight, 389.px),
+    (ThreeQuartersTall, 331.px),
     (FullMedia50, 331.px),
     (FullMedia75, 331.px),
     (FullMedia100, 331.px)
