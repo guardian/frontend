@@ -7,8 +7,8 @@ define([
     accessibility,
     $
 ) {
-    function hideFlashingImages(callback) {
-        if (!accessibility.isOn('flashing-images')) {
+    function shouldHideFlashingElements(callback) {
+        if (!accessibility.isOn('flashing-elements')) {
             fastdom.write(function () {
                 $('.js-flashing-image').remove();
                 if (callback) {
@@ -21,6 +21,6 @@ define([
     }
 
     return {
-        hideFlashingImages: hideFlashingImages
+        shouldHideFlashingElements: shouldHideFlashingElements
     };
 });

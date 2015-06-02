@@ -33,7 +33,7 @@ describe('Accessibility', function () {
     }
 
     function storedValue() {
-        return storage.local.get('gu.prefs.' + accessibility.KEY_PREFIX + '.flashing-images');
+        return storage.local.get('gu.prefs.' + accessibility.KEY_PREFIX + '.flashing-elements');
     }
 
     it('toggles from unknown', function (done) {
@@ -41,16 +41,16 @@ describe('Accessibility', function () {
 
         var run = installSpy();
         bootstrap.init(function () {
-            var checkbox = bonzo(qwery('input[data-link-name=flashing-images]'));
+            var checkbox = bonzo(qwery('input[data-link-name=flashing-elements]'));
             expect(checkbox.attr('checked')).toBe(true);
-            expect(accessibility.isOn('flashing-images')).toBe(true);
+            expect(accessibility.isOn('flashing-elements')).toBe(true);
 
             run(function () {
                 checkbox[0].click();
             }, function () {
                 expect(checkbox.attr('checked')).toBe(false);
                 expect(storedValue()).toBe(false);
-                expect(accessibility.isOn('flashing-images')).toBe(false);
+                expect(accessibility.isOn('flashing-elements')).toBe(false);
 
                 // toggle again
                 run(function () {
@@ -58,7 +58,7 @@ describe('Accessibility', function () {
                 }, function () {
                     expect(checkbox.attr('checked')).toBe(true);
                     expect(storedValue()).toBe(true);
-                    expect(accessibility.isOn('flashing-images')).toBe(true);
+                    expect(accessibility.isOn('flashing-elements')).toBe(true);
 
                     done();
                 });
@@ -68,20 +68,20 @@ describe('Accessibility', function () {
 
     it('initializes to known value', function (done) {
         window.localStorage.clear();
-        storage.local.set('gu.prefs.' + accessibility.KEY_PREFIX + '.flashing-images', false);
+        storage.local.set('gu.prefs.' + accessibility.KEY_PREFIX + '.flashing-elements', false);
 
         var run = installSpy();
         bootstrap.init(function () {
-            var checkbox = bonzo(qwery('input[data-link-name=flashing-images]'));
+            var checkbox = bonzo(qwery('input[data-link-name=flashing-elements]'));
             expect(checkbox.attr('checked')).toBe(false);
-            expect(accessibility.isOn('flashing-images')).toBe(false);
+            expect(accessibility.isOn('flashing-elements')).toBe(false);
 
             run(function () {
                 checkbox[0].click();
             }, function () {
                 expect(checkbox.attr('checked')).toBe(true);
                 expect(storedValue()).toBe(true);
-                expect(accessibility.isOn('flashing-images')).toBe(true);
+                expect(accessibility.isOn('flashing-elements')).toBe(true);
 
                 done();
             });
@@ -106,9 +106,9 @@ describe('Accessibility helpers', function () {
 
     it('hides flashing images when disabled', function (done) {
         accessibility.saveState({
-            'flashing-images': false
+            'flashing-elements': false
         });
-        helpers.hideFlashingImages(function () {
+        helpers.shouldHideFlashingElements(function () {
             expect(qwery('.js-flashing-image').length).toBe(0);
             done();
         });
@@ -116,9 +116,9 @@ describe('Accessibility helpers', function () {
 
     it('does nothing when enabled', function (done) {
         accessibility.saveState({
-            'flashing-images': true
+            'flashing-elements': true
         });
-        helpers.hideFlashingImages(function () {
+        helpers.shouldHideFlashingElements(function () {
             expect(qwery('.js-flashing-image').length).toBe(2);
             done();
         });

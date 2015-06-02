@@ -110,7 +110,7 @@ define([
         ready = function () {
             if (!this.initialised) {
                 this.initialised = true;
-                accessibility.hideFlashingImages();
+                accessibility.shouldHideFlashingElements();
                 modules.showSnaps();
                 modules.showContainerShowMore();
                 modules.showContainerToggle();

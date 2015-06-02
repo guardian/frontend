@@ -239,7 +239,7 @@ define([
         },
 
         accessibility: function () {
-            accessibility.hideFlashingImages();
+            accessibility.shouldHideFlashingElements();
         }
     };
 

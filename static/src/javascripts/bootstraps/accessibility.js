@@ -42,7 +42,7 @@ define([
         var Accessibility = React.createClass({
             getInitialState: function () {
                 return {
-                    'flashing-images': accessibility.isOn('flashing-images')
+                    'flashing-elements': accessibility.isOn('flashing-elements')
                 };
             },
             toggle: function (key) {
@@ -62,16 +62,18 @@ define([
                         React.DOM.p({ key: 'p1' }, 'We aim to make this site accessible to a wide audience and to ensure a great experience for all users by conforming to World Wide Web Consortium accessibility guidelines (W3C\'s WCAG)'),
                         React.DOM.p({ key: 'p2' }, 'However, if you are having trouble reading this website you can change the way it looks or disable some of its functionalities.'),
                         React.createElement(BinaryToggle, {
-                            key: 'flashing-images',
-                            name: 'flashing-images',
+                            key: 'flashing-elements',
+                            name: 'flashing-elements',
                             label: [
                                 React.DOM.strong({
                                     key: 'label'
                                 }, 'Flashing elements.'),
-                                ' Disable any element or image that flashes or animates.'
+                                this.state['flashing-elements'] ?
+                                    ' Disable any element or image that flashes or animates.' :
+                                    ' Elements disabled. Check to enable elements or images that flash or animate.'
                             ],
-                            enabled: this.state['flashing-images'],
-                            handleChange: this.toggle.bind(this, 'flashing-images')
+                            enabled: this.state['flashing-elements'],
+                            handleChange: this.toggle.bind(this, 'flashing-elements')
                         })
                     ])
                 );

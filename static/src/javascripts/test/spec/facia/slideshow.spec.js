@@ -456,7 +456,7 @@ describe('Slideshow component', function () {
 
         it('doesn\'t play when accessibility is off', function (done) {
             accessibility.saveState({
-                'flashing-images': false
+                'flashing-elements': false
             });
 
             var testDOM = bonzo.create([

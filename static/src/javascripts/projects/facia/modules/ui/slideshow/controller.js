@@ -43,7 +43,7 @@ define([
     }
 
     function actualInit() {
-        if (!accessibility.isOn('flashing-images')) {
+        if (!accessibility.isOn('flashing-elements')) {
             return;
         }
 
