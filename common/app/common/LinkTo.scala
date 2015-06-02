@@ -1,6 +1,6 @@
 package common
 
-import com.gu.facia.api.models.FaciaContent
+import com.gu.facia.api.models._
 import layout.ContentCard
 import play.twirl.api.Html
 import play.api.mvc.{Result, AnyContent, Request, RequestHeader}
@@ -55,7 +55,14 @@ trait LinkTo extends Logging {
   }
 
   def hrefOrId(faciaContent: FaciaContent)(implicit request: RequestHeader): String =
-    faciaContent.href.getOrElse(faciaContent.id)
+    faciaContent match {
+      case curatedContent: CuratedContent => curatedContent.href.getOrElse(curatedContent.id)
+      case supportingCuratedContent: SupportingCuratedContent => supportingCuratedContent.href.getOrElse(supportingCuratedContent.id)
+      //LinkSnap.id would be a snap id, which is a link to nothing
+      case linkSnap: LinkSnap => linkSnap.href.getOrElse("")
+      //LatestSnap.id would be the internal content code, so never use this
+      case latestSnap: LatestSnap => latestSnap.href.orElse(latestSnap.latestContent.map(_.id)).getOrElse("")
+    }
 
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
     faciaCard.url.get(request)
