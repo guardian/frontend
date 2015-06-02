@@ -1,0 +1,40 @@
+package model.commercial
+
+import common.AkkaAgent
+import model.Content
+
+import scala.concurrent.Future
+import scala.util.control.NonFatal
+
+object CapiAgent {
+
+  private lazy val shortUrlAgent = AkkaAgent[Map[String, Option[Content]]](Map.empty)
+
+  def contentByShortUrls(shortUrls: Seq[String]): Future[Seq[Content]] = {
+
+    val cache = shortUrlAgent.get()
+
+    val urlsNotInCache = shortUrls filterNot cache.contains
+
+    def addToCache(contents: Seq[Content]): Future[Map[String, Option[Content]]] = {
+      val initialValues = urlsNotInCache.map(_ -> None).toMap
+      shortUrlAgent alter (_ ++ initialValues)
+      val newContents = contents.map(content => content.shortUrlId -> Some(content)).toMap
+      shortUrlAgent alter (_ ++ newContents)
+    }
+
+    val eventualNewCache = if (urlsNotInCache.isEmpty) {
+      Future.successful(cache)
+    } else {
+      Lookup.contentByShortUrls(shortUrls) flatMap {
+        addToCache
+      } recoverWith {
+        case NonFatal(e) => Future.successful(cache)
+      }
+    }
+
+    eventualNewCache map { newCache =>
+      shortUrls.flatMap(newCache.get).flatten
+    }
+  }
+}
