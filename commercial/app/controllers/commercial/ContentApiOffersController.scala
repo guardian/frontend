@@ -1,7 +1,7 @@
 package controllers.commercial
 
 import common.ExecutionContexts
-import model.commercial.Lookup
+import model.commercial.{CapiAgent, Lookup}
 import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
@@ -54,7 +54,7 @@ object ContentApiOffersController extends Controller with ExecutionContexts with
     }.getOrElse(Future.successful(Nil))
 
     val futureContents = for {
-      specific <- Lookup.contentByShortUrls(specificIds)
+      specific <- CapiAgent.contentByShortUrls(specificIds)
       latestByKeyword <- futureLatestByKeyword
     } yield (specific ++ latestByKeyword.filter(_.trailPicture.nonEmpty)).distinct take 4
 
