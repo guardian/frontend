@@ -466,7 +466,7 @@ object Switches {
     "Commercial",
     "third-parties-later",
     "If this switch is on, less important third parties will be loaded after all ads are rendered",
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2015,8, 30),
     exposeClientSide = true
   )
