@@ -13,9 +13,15 @@ object CapiAgent {
   def contentByShortUrls(shortUrls: Seq[String])
                         (implicit ec: ExecutionContext): Future[Seq[Content]] = {
 
+    val shortUrlIds = shortUrls map { url =>
+      val slashPrefixed = if (url startsWith "/") url else s"/$url"
+      val endTrimmed = slashPrefixed.take(slashPrefixed.indexOf("/", 3))
+      endTrimmed
+    }
+
     val cache = shortUrlAgent.get()
 
-    val urlsNotInCache = shortUrls filterNot cache.contains
+    val urlsNotInCache = shortUrlIds filterNot cache.contains
 
     def addToCache(contents: Seq[Content]): Future[Map[String, Option[Content]]] = {
       val initialValues = urlsNotInCache.map(_ -> None).toMap
@@ -27,7 +33,7 @@ object CapiAgent {
     val eventualNewCache = if (urlsNotInCache.isEmpty) {
       Future.successful(cache)
     } else {
-      Lookup.contentByShortUrls(shortUrls) flatMap {
+      Lookup.contentByShortUrls(shortUrlIds) flatMap {
         addToCache
       } recoverWith {
         case NonFatal(e) => Future.successful(cache)
@@ -35,7 +41,7 @@ object CapiAgent {
     }
 
     eventualNewCache map { newCache =>
-      shortUrls.flatMap(newCache.get).flatten
+      shortUrlIds.flatMap(newCache.get).flatten
     }
   }
 }
