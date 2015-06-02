@@ -719,6 +719,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val FontKerningSwitch = Switch(
+    "Feature",
+    "font-kerning",
+    "If this is switched on then fonts will be kerned/optimised for legibility.",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val SearchSwitch = Switch(
     "Feature",
     "google-search",
