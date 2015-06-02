@@ -13,8 +13,7 @@ define([
     'common/modules/experiments/tests/mt-rec2',
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
-    'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/defer-spacefinder'
+    'common/modules/experiments/headlines'
 ], function (
     raven,
     _,
@@ -30,8 +29,7 @@ define([
     MtRec2,
     SaveForLater,
     CookieRefresh,
-    Headline,
-    DeferSpacefinder
+    Headline
     ) {
 
     var ab,
@@ -43,7 +41,6 @@ define([
             new MtRec2(),
             new SaveForLater(),
             new CookieRefresh(),
-            new DeferSpacefinder(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             })
