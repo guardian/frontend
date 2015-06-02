@@ -15,7 +15,7 @@ define([
             readyClass = 'js-toggle-ready';
 
         this.init = function () {
-            controls = Array.prototype.slice.call(document.body.querySelectorAll('[data-toggle]'), 0);
+            controls = Array.prototype.slice.call(document.body.querySelectorAll('[data-toggle]'));
 
             controls.forEach(function (control) {
                 if (!bonzo(control).hasClass(readyClass)) {
