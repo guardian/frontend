@@ -10,7 +10,8 @@ define([
     'common/modules/commercial/third-party-tags/remarketing',
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/commercial/third-party-tags/outbrain',
-    'common/modules/commercial/third-party-tags/pointroll-resp-lib'
+    'common/modules/commercial/third-party-tags/pointroll-resp-lib',
+    'common/modules/commercial/third-party-tags/gravity'
 ], function (
     Promise,
     config,
@@ -20,7 +21,8 @@ define([
     remarketing,
     krux,
     outbrain,
-    pointroll
+    pointroll,
+    gravity
 ) {
 
     function init() {
@@ -41,6 +43,7 @@ define([
         outbrain.load();
         krux.load();
         pointroll.load();
+        gravity.lightBeacon();
 
         return Promise.resolve(null);
     }
