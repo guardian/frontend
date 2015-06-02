@@ -26,7 +26,7 @@ define([
     }
 
     function getRecommendations() {
-        if (config.switches.gravity) {
+        if (config.switches.gravity && config.page.contentType === 'Article') {
             return require(['js!' + 'https://secure-api.gravity.com/v1/api/intelligence/wl?' +
             'jq=&' +
             'sg=14b492cf6727dd1ab3a6efc7556b91bc&' +
