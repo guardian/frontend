@@ -11,7 +11,8 @@ define([
     'common/modules/commercial/third-party-tags/remarketing',
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/commercial/third-party-tags/outbrain',
-    'common/modules/commercial/third-party-tags/pointroll-resp-lib'
+    'common/modules/commercial/third-party-tags/pointroll-resp-lib',
+    'common/modules/commercial/third-party-tags/gravity'
 ], function (
     Promise,
     config,
@@ -22,10 +23,12 @@ define([
     remarketing,
     krux,
     outbrain,
-    pointroll
+    pointroll,
+    gravity
 ) {
 
     function init() {
+
         if (config.page.contentType === 'Identity' || config.page.section === 'identity') {
             return false;
         }
@@ -41,9 +44,11 @@ define([
                 loadOther();
             });
         } else {
-            pointroll.load();
             loadOther();
         }
+
+        pointroll.load();
+        gravity.lightBeacon();
 
         return Promise.resolve(null);
     }
@@ -53,6 +58,7 @@ define([
         audienceScience.load();
         imrWorldwide.load();
         remarketing.load();
+        outbrain.load();
         krux.load();
     }
 
