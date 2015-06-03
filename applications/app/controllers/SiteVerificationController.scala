@@ -5,8 +5,7 @@ import scala.concurrent.duration._
 
 object SiteVerificationController extends Controller {
 
-  // A list of accepted accounts. Note, the main guardian.com youtube account
-  // is not present here, it was already verified using an alternative method (domain).
+  // A list of accepted accounts.
   private val acceptedGoogleAccounts = List(
     "f2ddac7ca1547968", // Main Guardian channel - https://www.youtube.com/user/TheGuardian
     "bbb4e09fa25b64ba"  // Used by:
