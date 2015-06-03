@@ -2,6 +2,7 @@ package controllers
 
 import com.gu.contentapi.client.model.ItemResponse
 import controllers.front.{FrontJsonFapiLive, FrontJsonFapi, FrontJson}
+import controllers.preview.FrontJsonFapiDraft._
 import play.api.mvc.{RequestHeader, Result}
 import services.ConfigAgent
 
@@ -11,9 +12,13 @@ object FrontJsonDraft extends FrontJson {
   val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
 }
 
+object FrontJsonFapiDraft extends FrontJsonFapi {
+  val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
+}
+
 object FaciaDraftController extends FaciaController with RendersItemResponse {
   val frontJson: FrontJson = FrontJsonDraft
-  val frontJsonFapi: FrontJsonFapi = FrontJsonFapiLive
+  val frontJsonFapi: FrontJsonFapi = FrontJsonFapiDraft
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     log.info(s"Serving Path: $path")
