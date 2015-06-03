@@ -127,15 +127,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val TributeSwitch = Switch(
-    "Feature",
-    "ar-tribute",
-    "If switched on will display the Alana tribute.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 5),
-    exposeClientSide = false
-  )
-
   val IncludeBuildNumberInMemcachedKey = Switch(
     "Performance",
     "memcached-build-number",
