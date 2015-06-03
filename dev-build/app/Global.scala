@@ -4,7 +4,7 @@ import conf.Filters
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
 import dfp.{DfpDataCacheLifecycle, DfpAgentLifecycle}
-import feed.{OnwardJourneyLifecycle, MostReadLifecycle, MostPopularFacebookAutoRefresh}
+import feed.{OnwardJourneyLifecycle, MostReadLifecycle, MostPopularFacebookAutoRefreshLifecycle}
 import implicits.Requests
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
@@ -69,7 +69,7 @@ with ConfigAgentLifecycle
 with SurgingContentAgentLifecycle
 with SectionsLookUpLifecycle
 with ABTHeadlinesLifecycle
-with MostPopularFacebookAutoRefresh.Lifecycle
+with MostPopularFacebookAutoRefreshLifecycle
 with CorsErrorHandler {
   override val allowedParams: Seq[String] =
     CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")

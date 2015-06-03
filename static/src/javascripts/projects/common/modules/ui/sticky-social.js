@@ -92,7 +92,7 @@ define([
                                     $(el).addClass('social--referred-only');
                                 }
 
-                                moveToFirstPosition($('.social__item--' + socialContext.id, el).addClass('social__item--referred'));
+                                moveToFirstPosition($('.social__item--' + socialContext, el).addClass('social__item--referred'));
                             });
                         }
                     });
