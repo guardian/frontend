@@ -451,6 +451,10 @@ $fc-item-gutter: $gs-gutter / 4;
     @include fs-textSans(1);
     color: colour(neutral-2);
 
+    .inline-icon {
+        fill: colour(neutral-3);
+    }
+
     a {
         // make sure meta links always clickable,
         // even on mobile/tablet
@@ -476,7 +480,6 @@ $fc-item-gutter: $gs-gutter / 4;
         height: 11px;
         width: 11px;
         margin-right: 2px;
-        fill: colour(neutral-3);
     }
 }
 
@@ -487,7 +490,6 @@ $fc-item-gutter: $gs-gutter / 4;
     top: 3px;
     float: left;
     margin-right: 1px;
-    fill: colour(neutral-3);
 }
 
 .fc-trail__count--inline-template {
