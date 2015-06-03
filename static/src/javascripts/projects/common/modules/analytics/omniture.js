@@ -96,7 +96,7 @@ define([
             storage.session.set(NG_STORAGE_KEY, storeObj);
         } else {
             // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
-            delay = spec.samePage ? true : spec.target;
+            delay = spec.samePage ? true : spec.event.target;
             this.trackLink(delay, spec.tag);
         }
     };

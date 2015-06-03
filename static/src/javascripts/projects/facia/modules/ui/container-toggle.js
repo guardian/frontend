@@ -91,7 +91,7 @@ define([
             });
 
             mediator.on('module:clickstream:click', function (clickSpec) {
-                if (clickSpec.target === _$button[0]) {
+                if (clickSpec.event.target === _$button[0]) {
                     setState((_state === 'displayed') ? 'hidden' : 'displayed');
                     _updatePref(id, _state);
                 }

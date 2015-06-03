@@ -11,9 +11,11 @@ define([
     function $(selector, context) {
         return bonzo(qwery(selector, context));
     }
+
     $.create = function (s) {
         return bonzo(bonzo.create(s));
     };
+ 
     $.ancestor = function (el, c) {
         if (el.nodeName.toLowerCase() === 'html') {
             return false;
@@ -24,11 +26,25 @@ define([
             return $.ancestor(el.parentNode, c);
         }
     };
+
+    $.isDescendantOrSelf = function (el, ancestor) {
+        if (!el || !ancestor || !el.parentNode || el.nodeName.toLowerCase() === 'html') {
+            return false;
+        }
+
+        if (el === ancestor || el.parentNode === ancestor) {
+            return true;
+        }
+
+        return $.isDescendantOrSelf(el.parentNode, ancestor);
+    };
+
     $.forEachElement = function (selector, fn) {
         var els = qwery(selector);
         _.forEach(els, fn);
         return els;
     };
+ 
     return $;
 
 }); // define

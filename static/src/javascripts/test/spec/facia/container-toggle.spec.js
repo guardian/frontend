@@ -22,7 +22,9 @@ describe('Container Toggle', function() {
 
     function simulateClick() {
         mediator.emit('module:clickstream:click', {
-            target: $('button', container)[0]
+            event: {
+                target: $('button', container)[0]
+            }
         });
     }
 

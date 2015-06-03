@@ -219,7 +219,7 @@ define([
 
                 mediator.on('module:clickstream:click', function (clickSpec) {
                     var clickedButton = _.find(buttons, function (button) {
-                        return button.$el[0] === clickSpec.target;
+                        return button.$el[0] === clickSpec.event.target;
                     });
                     if (clickedButton && clickedButton.state !== STATE_LOADING) {
                         if (clickedButton.isLoaded) {

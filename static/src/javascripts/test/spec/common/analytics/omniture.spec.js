@@ -204,7 +204,7 @@ describe('omniture', function () {
     it('should make a delayed s.tl call for other-host links', function () {
         var el        = document.createElement('a'),
             clickSpec = {
-                target: el,
+                event: {target: el},
                 samePage: false,
                 sameHost: false,
                 validTarget: true,

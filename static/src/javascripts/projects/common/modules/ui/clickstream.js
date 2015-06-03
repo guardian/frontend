@@ -70,6 +70,7 @@ define([
                 if (!spec.validTarget) {
                     spec.validTarget = filterSource(el.tagName.toLowerCase()).length > 0 || !!forceValid;
                     if (spec.validTarget) {
+                        spec.event.target = el;
                         href = el.getAttribute('href');
                         spec.samePage = href && href.indexOf('#') === 0
                             || elName === 'button'
@@ -113,7 +114,6 @@ define([
                 }
 
                 mediator.emit('module:clickstream:click', clickSpec);
-                console.log(clickSpec)
             });
         }
 
