@@ -70,7 +70,7 @@ define([
                 if (!spec.validTarget) {
                     spec.validTarget = filterSource(elName).length > 0 || !!forceValid;
                     if (spec.validTarget) {
-                        spec.event.target = el;
+                        spec.target = el;
                         href = el.getAttribute('href');
                         spec.samePage = href && href.indexOf('#') === 0
                             || elName === 'button'
@@ -100,7 +100,7 @@ define([
                         tag: []
                     };
 
-                clickSpec.event = event;
+                clickSpec.target = event.target;
 
                 clickSpec = getClickSpec(clickSpec);
 

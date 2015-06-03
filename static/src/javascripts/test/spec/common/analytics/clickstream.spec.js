@@ -69,7 +69,7 @@ describe("Clickstream", function() {
 
         var cs  = new Clickstream({ filter: ["a"], withEvent: false }),
             object = { method: function (p) {
-                clickSpec.event = p.event;
+                clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
             }},
@@ -93,7 +93,7 @@ describe("Clickstream", function() {
 
         var cs  = new Clickstream({ filter: ['a'], withEvent: false }), // only log events on [a]nchor elements
             object = { method: function (p) {
-                clickSpec.event = p.event;
+                clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();                
             }},
@@ -112,7 +112,7 @@ describe("Clickstream", function() {
 
         var cs  = new Clickstream({ filter: ["p"], withEvent: false }),
             object = { method: function (p) {
-                clickSpec.event = p.event;
+                clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
             }},
@@ -134,7 +134,7 @@ describe("Clickstream", function() {
 
         var cs  = new Clickstream({ filter: ["a"], withEvent: false }),
             object = { method: function (p) {
-                clickSpec.event = p.event;
+                clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
             }},
@@ -156,7 +156,7 @@ describe("Clickstream", function() {
 
         var cs  = new Clickstream({ filter: ["a"], withEvent: false }),
             object = { method: function (p) {
-                clickSpec.event = p.event;
+                clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
             }},
@@ -192,7 +192,7 @@ describe("Clickstream", function() {
 
         var cs  = new Clickstream({ filter: ['button'], withEvent: false }),
             object = { method: function (p) {
-                clickSpec.event = p.event;
+                clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
             }},

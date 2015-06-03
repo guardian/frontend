@@ -41,7 +41,7 @@ define([
         };
 
         mediator.on('module:clickstream:click', function (clickSpec) {
-            self.reset(clickSpec ? clickSpec.event.target : null);
+            self.reset(clickSpec ? clickSpec.target : null);
         });
     };
 
