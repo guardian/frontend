@@ -86,7 +86,7 @@ define([
                 mobile: '1,1|140,90'
             }
         },
-        comment: {
+        comments: {
             sizeMappings: {
                 mobile:  '1,1|300,250'
             }
