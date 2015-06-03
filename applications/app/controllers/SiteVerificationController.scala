@@ -8,7 +8,13 @@ object SiteVerificationController extends Controller {
   // A list of accepted accounts. Note, the main guardian.com youtube account
   // is not present here, it was already verified using an alternative method (domain).
   private val acceptedGoogleAccounts = List(
-    "367bc8736b2b40ff" // Owen Jones
+    "f2ddac7ca1547968", // Main Guardian channel - https://www.youtube.com/user/TheGuardian
+    "bbb4e09fa25b64ba"  // Used by:
+      // Football channel - https://www.youtube.com/user/GuardianFootball
+      // Owen Jones channel - https://www.youtube.com/channel/UCSYCo8uRGF39qDCxF870K5Q
+      // Music channel - https://www.youtube.com/user/GuardianMusic
+      // Culture & arts channel - https://www.youtube.com/user/GuardianCultureArts
+      // Science & technology channel - https://www.youtube.com/user/gdntech
   )
 
   def googleSiteVerify(account: String) = Action { implicit request =>
