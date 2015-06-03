@@ -68,7 +68,7 @@ define([
                 }
 
                 if (!spec.validTarget) {
-                    spec.validTarget = filterSource(el.tagName.toLowerCase()).length > 0 || !!forceValid;
+                    spec.validTarget = filterSource(elName).length > 0 || !!forceValid;
                     if (spec.validTarget) {
                         spec.event.target = el;
                         href = el.getAttribute('href');
