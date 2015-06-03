@@ -429,6 +429,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     background: colour(news-support-2);
 }
 
+.site-message--supporter {
+    background: colour(news-main-2);
+}
+
 .site-message--panel-mtrec1,
 .site-message--panel-mtrec2 {
     background: colour(neutral-2);
