@@ -1,7 +1,5 @@
 package feed
 
-import java.net.URL
-
 import conf.LiveContentApi
 import common._
 import model.{Content, Gallery}
