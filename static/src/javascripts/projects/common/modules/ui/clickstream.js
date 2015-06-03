@@ -70,7 +70,6 @@ define([
                 if (!spec.validTarget) {
                     spec.validTarget = filterSource(el.tagName.toLowerCase()).length > 0 || !!forceValid;
                     if (spec.validTarget) {
-                        spec.target = el;
                         href = el.getAttribute('href');
                         spec.samePage = href && href.indexOf('#') === 0
                             || elName === 'button'
@@ -100,9 +99,7 @@ define([
                         tag: []
                     };
 
-                if (opts.withEvent !== false) {
-                    clickSpec.event = event;
-                }
+                clickSpec.event = event;
 
                 clickSpec = getClickSpec(clickSpec);
 
@@ -116,6 +113,7 @@ define([
                 }
 
                 mediator.emit('module:clickstream:click', clickSpec);
+                console.log(clickSpec)
             });
         }
 

@@ -34,7 +34,7 @@ define([
 
         this.reset = function (clickSpec) {
             controls.filter(function (c) {
-                return !clickSpec || c !== clickSpec.target;
+                return c !== clickSpec.event.target;
             }).map(self.close);
         };
 
