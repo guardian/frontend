@@ -127,15 +127,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val TributeSwitch = Switch(
-    "Feature",
-    "ar-tribute",
-    "If switched on will display the Alana tribute.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 5),
-    exposeClientSide = false
-  )
-
   val IncludeBuildNumberInMemcachedKey = Switch(
     "Performance",
     "memcached-build-number",
@@ -719,6 +710,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val TaboolaSwitch = Switch(
+    "Feature",
+    "taboola",
+    "Enable the Taboola content recommendation widget.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 1),
+    exposeClientSide = true
+  )
+
   val ForeseeSwitch = Switch(
     "Feature",
     "foresee",
@@ -1101,15 +1101,6 @@ object Switches {
     "Facia",
     "facia-tool-sparklines",
     "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val ContentApiPutSwitch = Switch(
-    "Facia",
-    "facia-tool-contentapi-put",
-    "If this switch is on facia tool will PUT all collection changes to content api",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false

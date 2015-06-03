@@ -113,12 +113,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       user <- configuration.getStringProperty("content.api.preview.user")
       password <- configuration.getStringProperty("content.api.preview.password")
     } yield Auth(user, password)
-
-    object write {
-      lazy val username: Option[String] = configuration.getStringProperty("contentapi.write.username")
-      lazy val password: Option[String] = configuration.getStringProperty("contentapi.write.password")
-      lazy val endpoint: Option[String] = configuration.getStringProperty("contentapi.write.endpoint")
-    }
   }
 
   object ophanApi {

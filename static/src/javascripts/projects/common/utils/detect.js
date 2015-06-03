@@ -151,7 +151,11 @@ define([
     }
 
     function socialContext() {
-        if (isFacebookApp() || isFacebookReferral()) {
+        var override = /socialContext=(facebook|twitter)/.exec(window.location.hash);
+
+        if (override !== null) {
+            return override[1];
+        } else if (isFacebookApp() || isFacebookReferral()) {
             return 'facebook';
         } else if (isTwitterApp() || isTwitterReferral()) {
             return 'twitter';
