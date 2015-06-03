@@ -59,7 +59,6 @@ define([
     }
 
     function loadOther() {
-        outbrain.load(); // todo remove
         audienceScience.load();
         imrWorldwide.load();
         remarketing.load();
