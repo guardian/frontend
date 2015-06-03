@@ -2,7 +2,7 @@ package controllers
 
 import com.gu.facia.client.models.{FrontJson, CollectionConfigJson}
 import play.api.mvc.Controller
-import services.PressAndNotify
+import services.Press
 import util.Requests._
 import play.api.libs.json.Json
 import config.UpdateManager
@@ -35,7 +35,7 @@ object FrontController extends Controller with PanDomainAuthActions {
       case Some(createFrontRequest) =>
         val identity = request.user
         val newCollectionId = UpdateManager.createFront(createFrontRequest, identity)
-        PressAndNotify(Set(newCollectionId))
+        Press.fromSetOfIds(Set(newCollectionId))
         Ok
 
       case None => BadRequest

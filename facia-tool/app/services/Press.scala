@@ -1,8 +1,7 @@
 package services
 
-object PressAndNotify {
-  def apply(ids: Set[String]) = {
-    ContentApiPush.notifyContentApi(ids)
+object Press {
+  def fromSetOfIds(ids: Set[String]) = {
     FaciaPress.press(PressCommand(
       ids,
       live = true,
