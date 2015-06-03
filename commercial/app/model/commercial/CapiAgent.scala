@@ -10,6 +10,8 @@ object CapiAgent {
 
   private lazy val shortUrlAgent = AkkaAgent[Map[String, Option[Content]]](Map.empty)
 
+  private lazy val cache = shortUrlAgent.get()
+
   def contentByShortUrls(shortUrls: Seq[String])
                         (implicit ec: ExecutionContext): Future[Seq[Content]] = {
 
@@ -18,8 +20,6 @@ object CapiAgent {
       val endTrimmed = slashPrefixed.take(slashPrefixed.indexOf("/", 3))
       endTrimmed
     }
-
-    val cache = shortUrlAgent.get()
 
     val urlsNotInCache = shortUrlIds filterNot cache.contains
 
