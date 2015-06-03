@@ -12,7 +12,8 @@ define([
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/commercial/third-party-tags/outbrain',
     'common/modules/commercial/third-party-tags/pointroll-resp-lib',
-    'common/modules/commercial/third-party-tags/gravity'
+    'common/modules/commercial/third-party-tags/gravity',
+    'common/modules/commercial/third-party-tags/taboola'
 ], function (
     Promise,
     config,
@@ -24,7 +25,8 @@ define([
     krux,
     outbrain,
     pointroll,
-    gravity
+    gravity,
+    taboola
 ) {
 
     function init() {
@@ -57,13 +59,14 @@ define([
     }
 
     function loadOther() {
-        outbrain.load();
+        outbrain.load(); // todo remove
         audienceScience.load();
         imrWorldwide.load();
         remarketing.load();
         outbrain.load();
         krux.load();
         gravity.getRecommendations();
+        taboola.load();
     }
 
     return {
