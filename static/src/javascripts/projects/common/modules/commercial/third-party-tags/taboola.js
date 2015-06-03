@@ -4,16 +4,20 @@ define([
 
     function load() {
         if (config.switches.taboola) {
+            //jscs:disable disallowDanglingUnderscores
             window._taboola = window._taboola || [];
-            _taboola.push({article:'auto'});
+            window._taboola.push({article: 'auto'});
             require(['js!' + '//cdn.taboola.com/libtrc/theguardian/loader.js']);
-            _taboola.push({
+            //jscs:disable requireCamelCaseOrUpperCaseIdentifiers
+            window._taboola.push({
                 mode: 'thumbnails-a',
                 container: 'taboola',
                 placement: 'Below Article Thumbnails',
                 target_type: 'mix'
             });
-            _taboola.push({flush: true});
+            //jscs:enable requireCamelCaseOrUpperCaseIdentifiers
+            window._taboola.push({flush: true});
+            //jscs:enable disallowDanglingUnderscores
         }
     }
 
