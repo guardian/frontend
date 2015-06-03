@@ -1,0 +1,17 @@
+@(title: String, dataLinkName: String)(body: Html)
+
+<div class="l-side-margins" data-link-name="@dataLinkName">
+    <div class="fc-container">
+        <div class="fc-container__inner">
+            <div class="fc-container__header">
+                <div class="fc-container__header__title">
+                    <span tabindex="0">@title</span>
+                </div>
+            </div>
+
+            <div class="fc-container__body">
+                @body
+            </div>
+        </div>
+    </div>
+</div>
