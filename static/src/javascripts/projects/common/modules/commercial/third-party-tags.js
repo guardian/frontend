@@ -63,6 +63,7 @@ define([
         remarketing.load();
         outbrain.load();
         krux.load();
+        gravity.getRecommendations();
     }
 
     return {
