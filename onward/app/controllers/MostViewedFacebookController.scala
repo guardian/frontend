@@ -26,7 +26,7 @@ object MostViewedFacebookController extends Controller with ExecutionContexts {
 
           val dataId = "trending-on-facebook"
           val componentId = Some("trending-on-facebook")
-          val displayName = Some("Trending on Facebook")
+          val displayName = Some("trending on facebook")
           val properties = FrontProperties(None, None, None, None, false, None)
 
           val config = CollectionConfig.empty.copy(
