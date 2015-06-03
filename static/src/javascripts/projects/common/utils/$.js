@@ -15,7 +15,7 @@ define([
     $.create = function (s) {
         return bonzo(bonzo.create(s));
     };
- 
+
     $.ancestor = function (el, c) {
         if (el.nodeName.toLowerCase() === 'html') {
             return false;
@@ -44,7 +44,7 @@ define([
         _.forEach(els, fn);
         return els;
     };
- 
+
     return $;
 
 }); // define
