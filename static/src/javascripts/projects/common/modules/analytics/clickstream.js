@@ -66,6 +66,7 @@ define([
                         delete spec.validTarget;
                         return spec;
                     } else {
+                        mediator.emit('module:clickstream:null');
                         return false;
                     }
                 }

@@ -4,6 +4,7 @@
 define([
     'Promise',
     'common/utils/config',
+    'common/utils/mediator',
     'common/modules/commercial/third-party-tags/audience-science',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
     'common/modules/commercial/third-party-tags/imr-worldwide',
@@ -15,6 +16,7 @@ define([
 ], function (
     Promise,
     config,
+    mediator,
     audienceScience,
     audienceScienceGateway,
     imrWorldwide,
@@ -37,15 +39,31 @@ define([
                 break;
         }
 
+        if (config.switches.thirdPartiesLater) {
+            var timeout = setTimeout(loadOther, 1000);
+            // Load third parties after first ad was rendered
+            mediator.once('modules:commercial:dfp:rendered', function () {
+                loadOther();
+                clearTimeout(timeout);
+            });
+        } else {
+            loadOther();
+        }
+
+        pointroll.load();
+        gravity.lightBeacon();
+
+        return Promise.resolve(null);
+    }
+
+    function loadOther() {
+        outbrain.load();
         audienceScience.load();
         imrWorldwide.load();
         remarketing.load();
         outbrain.load();
         krux.load();
-        pointroll.load();
-        gravity.lightBeacon();
-
-        return Promise.resolve(null);
+        gravity.getRecommendations();
     }
 
     return {
