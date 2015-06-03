@@ -255,6 +255,14 @@ object Switches {
     exposeClientSide = false
   )
 
+  // Commercial
+  val OphanViewIdSwitch = Switch("Commercial",
+    "ophan-view-id",
+    "Depeneding on ophan to pass view ID to the gdf targeting",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 6, 30)
+  )
+
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",

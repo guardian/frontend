@@ -128,7 +128,17 @@ define([
             }));
         },
         setPageTargeting = function () {
-            _.forOwn(buildPageTargeting(), function (value, key) {
+            if (config.switches.ophan && config.switches.ophanViewId) {
+                require(['ophan/ng'], function (ophan) {
+                    setTargets({viewId: ophan.viewId});
+                });
+            } else {
+                setTargets();
+            }
+        },
+
+        setTargets =  function (opts) {
+            _.forOwn(buildPageTargeting(opts), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
