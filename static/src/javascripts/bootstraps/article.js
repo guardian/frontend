@@ -12,9 +12,10 @@ define([
     'common/modules/article/open-module',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
-    'common/modules/onward/facebook-most-popular',
+    'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
+    'common/modules/onward/facebook-most-popular',
     'common/modules/ui/rhc',
     'common/modules/ui/selection-sharing'
 ], function (
@@ -30,9 +31,10 @@ define([
     openModule,
     truncate,
     twitter,
-    FacebookMostPopular,
+    ab,
     geoMostPopular,
     OpenCta,
+    FacebookMostPopular,
     rhc,
     selectionSharing
 ) {
@@ -86,10 +88,9 @@ define([
             },
 
             initFacebookMostPopular: function () {
-                var el;
+                if (ab.shouldRunTest('FacebookMostViewed', 'variant')) {
+                    var el = qwery('.js-facebook-most-popular');
 
-                if (config.switches.facebookMostPopular && detect.socialContext() === 'facebook') {
-                    el = qwery('.js-facebook-most-popular');
                     if (el) {
                         new FacebookMostPopular(el);
                     }
@@ -109,7 +110,6 @@ define([
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
             openModule.init();
-
             mediator.emit('page:article:ready');
         };
 
