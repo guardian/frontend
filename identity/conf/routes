@@ -43,7 +43,7 @@ GET         /form/embed/:formReference            @controllers.FormstackControll
 
 GET         /et/subscribe/:subDefId               @controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)
 GET         /save-content                         @controllers.SaveContentController.saveContentItem
-GET         /saved-for-later-page                 @controllers.SaveContentController.listSavedContentPage(pageNum: Integer = 0)
+GET         /saved-for-later-page                 @controllers.SaveContentController.listSavedContentPage(pageNum: Integer = 1)
 GET         /saved-for-later-page/:pageNum        @controllers.SaveContentController.listSavedContentPage(pageNum: Integer)
 POST        /saved-for-later-page/:pageNum        @controllers.SaveContentController.deleteSavedContentItemFromPage(pageNum: Integer)
 GET         /saved-for-later                      @controllers.SaveContentController.listSavedContent

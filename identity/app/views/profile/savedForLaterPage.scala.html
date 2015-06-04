@@ -12,9 +12,7 @@
         }
             <!-- Open form here and handle errors here -->
         <form class="form js-saved-content-form" novalidate action="@(pageData.formActionUrl)" role="main" method="post">
-            <div class="saved-contents js-saved-contents">
-            @fragments.profile.saveForLater.contentListPage(pageData.articles)
-            </div>
+            @fragments.profile.saveForLater.contentListPage(pageData.contentCards)
             <fieldset class="fieldset">
                 <ul class="u-unstyled">
 
@@ -31,12 +29,12 @@
                 </ul>
             </fieldset>
         </form>
-        <div class=saved-content__list-nav">
+        <div class="saved-content__list-nav js-saved-content__list-nav">
             @pageData.prevPage.map { prev =>
-                <a href="@(prev)" class="submit-input" data-link-name="saved content next page">Prev</a>
+                <a href="@(prev)" class="submit-input js-saved-content__prev" data-link-name="saved content next page">Prev</a>
             }
             @pageData.nextPage.map { next =>
-                <a href="@(next)" class="submit-input" data-link-name="saved content next page">Next</a>
+                <a href="@(next)" class="submit-input js-saved-content__next" data-link-name="saved content next page">Next</a>
             }
         </div>
 
