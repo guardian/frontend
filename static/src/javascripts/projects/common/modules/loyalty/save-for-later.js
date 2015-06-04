@@ -41,7 +41,6 @@ define([
     };
 
     function SaveForLater() {
-        console.log("++ New");
         this.classes = {
              saveThisArticle: '.js-save-for-later',
              saveThisArticleButton: '.save-for-later__button',
@@ -64,20 +63,15 @@ define([
         };
 
         this.isContent = !/Network Front|Section/.test(config.page.contentType);
-        console.log("+++ New " + this.isContent);
         this.userData = null;
-        console.log("++ New 1" );
         this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
-        console.log("++ New 2 ");
     }
 
     var bookmarkSvg = svgs('bookmark', ['i-left']);
 
     SaveForLater.prototype.init = function () {
-        console.log("Init");
         var userLoggedIn = identity.isUserLoggedIn();
         if (userLoggedIn) {
-            console.log("++ Signed In " + this.isContent);
             this.getSavedArticles();
         } else {
             if (this.isContent) {
@@ -92,12 +86,10 @@ define([
 
     SaveForLater.prototype.renderSaveThisArticleLink = function (deferToClick, url, state) {
 
-         console.log("++ Render");
          var self = this,
              $saver = bonzo(qwery(self.classes['saveThisArticle'])[0]),
              templateName = self.templates[deferToClick ? "signedInThisArticle" : "signedOutThisArticle"];
 
-         console.log("++ Q");
 
          $saver.html(template(templateName, {
                  url: url,
@@ -105,7 +97,6 @@ define([
                  state: state
              })
          );
-        console.log("++ Done");
 
     };
 

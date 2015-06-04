@@ -33,7 +33,6 @@ define([
         this.showForSensitive = false;
 
         this.canRun = function () {
-            console.log("Can run");
             return true;
         };
 
@@ -42,16 +41,12 @@ define([
                 id: 'variant',
                 test: function () {
                     mediator.on('module:identity:api:loaded', function () {
-                        console.log("+++ Run!");
                         var saveArticle = new SaveForLater();
-                        console.log("++ New!");
 
                         saveArticle.init();
-                        console.log("++ Init!");
                     });
 
                     mediator.on('modules:profilenav:loaded', function () {
-                        console.log("Mate popup ink")
                         var popup = qwery('.popup--profile')[0];
                         bonzo(popup).append(bonzo.create(
                             template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
