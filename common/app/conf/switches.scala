@@ -1023,6 +1023,15 @@ object Switches {
     )
   }
 
+  val ABSupporterMessage = Switch(
+    "A/B Tests",
+    "ab-supporter",
+    "Switch for the Supporter Message A/B test.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 11),
+    exposeClientSide = true
+  )
+
   val FootballFeedRecorderSwitch = Switch(
     "Feature",
     "football-feed-recorder",
