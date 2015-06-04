@@ -18,11 +18,11 @@ define([
 
         this.id = 'Supporter';
         this.start = '2015-06-04';
-        this.expiry = '2015-06-06';
+        this.expiry = '2015-06-11';
         this.author = 'David Rapson';
         this.description = 'Test if logged in users are encouraged to become a Supporter';
         this.audience = 0.1;
-        this.audienceOffset = 0;
+        this.audienceOffset = 0.25;
         this.successMeasure = 'Users will be interested in Supporter tier';
         this.audienceCriteria = '10% of logged in users, only on article pages';
         this.dataLinkNames = 'supporter message, hide, read more';
