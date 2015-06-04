@@ -26,8 +26,7 @@
     }
 }
 
-.commentcount2,
-.save-for-later-link {
+.commentcount2 {
     display: block;
     .i {
         vertical-align: bottom;
@@ -53,7 +52,6 @@
         border-bottom: 1px dotted colour(neutral-5);
     }
 
-    .save-for-later-link__heading
     .commentcount2__heading,
     .sharecount__heading {
         @include fs-textSans(1);
