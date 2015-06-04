@@ -834,7 +834,9 @@ object Switches {
     "Identity",
     "id-use-avatar-api",
     "If switched on, avatars will be uploaded using the new Avatar API",
-    safeState = Off, sellByDate = new LocalDate(2015, 7, 1)
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 1),
+    exposeClientSide = true
   )
 
   val EnhanceTweetsSwitch = Switch(

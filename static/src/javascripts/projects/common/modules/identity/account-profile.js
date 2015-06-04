@@ -46,7 +46,7 @@ define([
 
         self.urls = {
             avatarTokenUrl: 'https://gu-image-upload.appspot.com/upload-endpoint-generator',
-            avatarApiUrl: 'https://avatar.code.dev-guardianapis.com/v1/avatars'
+            avatarApiUrl: config.page.avatarApiUrl + '/v1/avatars'
         };
 
         self.unsavedFields = [];
