@@ -73,20 +73,30 @@
         <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
         <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
 
-        <script type="text/javascript">
-            var curl = {
-                baseUrl: 'assets/javascripts',
-                apiName: 'require',
-                paths:   {
-                    text: 'text', // noop
-                    inlineSvg: 'inlineSvg' // noop
+        <script>
+            @Html(Static.js.es6ModuleLoader)
+            @Html(Static.js.systemJs)
+            @Html(Static.js.systemJsAppConfig)
+
+            @if(!play.Play.isDev()) {
+                @Html(Static.js.systemJsBundleConfig)
+            }
+
+            System.baseURL = '/assets';
+
+            @Html(Static.js.systemJsNormalize)
+
+            // Our app assumes a normal env
+            window.guardian = {
+                config: {
+                    switches: { },
+                    page: { }
                 }
             };
 
-            @Html(Static.js.curl)
+            System.import('bootstraps/admin')
         </script>
         <script src="//code.jquery.com/jquery.js"></script>
         <script type="text/javascript" src="@routes.Assets.at("javascripts/components/bootstrap/dist/js/bootstrap.js")"></script>
-        <script type="text/javascript" src="@Static("javascripts/bootstraps/admin.js")" async></script>
     </body>
 </html>
