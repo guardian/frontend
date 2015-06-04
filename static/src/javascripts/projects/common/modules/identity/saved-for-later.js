@@ -8,8 +8,10 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/identity/api' ,
+    'common/views/svgs',
 
-    'text!common/views/identity/saved-for-later-profile-link.html'
+    'text!common/views/identity/saved-for-later-profile-link.html',
+    'text!common/views/identity/saved-for-later--delete-all-button.html'
 ], function (
     $,
     qwery,
@@ -20,8 +22,10 @@ define([
     mediator,
     template,
     identity,
+    svgs,
 
-    profileLinkTmp
+    profileLinkTmp,
+    deleteButtonAllTmp
 
 ) {
     function SavedForLater() {
@@ -60,6 +64,20 @@ define([
             });
         };
 
+
+        this.renderDeleteButton = function ( state) {
+
+            var self = this,
+                $button = bonzo(qwery('.js-save-for-later__delete-all')[0])
+
+            $button.html(template(profileLinkTmp, {
+                icon: svgs('bookmark', ['i-left']),
+                state: state
+           }));
+        };
+
+
+
         this.fetchArticlesAndRemoveAll = function () {
             var self = this,
                 data;
@@ -71,6 +89,8 @@ define([
                 }
             );
         };
+
+
 
         this.fetchArticlesAndRemove = function (element) {
             var self = this,

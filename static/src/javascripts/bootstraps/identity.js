@@ -132,6 +132,7 @@ define([
             modules.validationEmail();
             modules.tabs();
             modules.accountProfile();
+            modules.savedForLater();
 
             mediator.emit('page:identity:ready', config);
         };
