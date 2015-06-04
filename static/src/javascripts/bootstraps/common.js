@@ -500,7 +500,6 @@ define([
         },
 
         ready = function () {
-
             robust('c-fonts',           modules.loadFonts);
             robust('c-identity',        modules.initId);
             robust('c-adverts',         modules.initUserAdTargeting);
