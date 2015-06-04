@@ -8,7 +8,7 @@
 
     @* majority of footer components we don't want to appear on advertisement feature articles *@
     @if(!content.isAdvertisementFeature) {
-        @if(Switches.FacebookMostPopular.isSwitchedOn && content.showFooterContainers) {
+        @if(Switches.FacebookMostViewed.isSwitchedOn && content.showFooterContainers) {
             @fragments.mostPopularFacebook()
         }
 
