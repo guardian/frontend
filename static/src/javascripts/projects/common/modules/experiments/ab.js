@@ -6,6 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/facebook-most-viewed',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/share-buttons-2',
     'common/modules/experiments/tests/high-commercial-component',
@@ -23,6 +24,7 @@ define([
     mediator,
     store,
     mvtCookie,
+    FacebookMostViewed,
     LiveblogNotifications,
     ShareButtons2,
     HighCommercialComponent,
@@ -36,6 +38,7 @@ define([
 
     var ab,
         TESTS = _.flatten([
+            new FacebookMostViewed(),
             new LiveblogNotifications(),
             new ShareButtons2(),
             new HighCommercialComponent(),
@@ -220,7 +223,7 @@ define([
 
     function shouldRunTest(id, variant) {
         var test = getTest(id);
-        return test && isParticipating(test) && ab.getTestVariant(id) === variant && testCanBeRun(id);
+        return test && isParticipating(test) && ab.getTestVariant(id) === variant && testCanBeRun(test);
     }
 
     ab = {
