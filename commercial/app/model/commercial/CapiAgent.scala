@@ -1,12 +1,12 @@
 package model.commercial
 
-import common.AkkaAgent
+import common.{AkkaAgent, Logging}
 import model.Content
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
-object CapiAgent {
+object CapiAgent extends Logging {
 
   private lazy val shortUrlAgent = AkkaAgent[Map[String, Option[Content]]](Map.empty)
 
@@ -36,7 +36,9 @@ object CapiAgent {
       Lookup.contentByShortUrls(shortUrlIds) flatMap {
         addToCache
       } recoverWith {
-        case NonFatal(e) => Future.successful(cache)
+        case NonFatal(e) =>
+          log.error(s"Lookup failed: ${e.getMessage}")
+          Future.successful(cache)
       }
     }
 
