@@ -660,7 +660,7 @@
             padding: $gs-baseline / 2;
             font-size: get-font-size(headline, 2);
             line-height: get-line-height(headline, 1);
-            height: 36px;
+            height: $gs-row-height;
         }
     }
 
