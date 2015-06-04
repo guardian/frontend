@@ -6,16 +6,16 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/facebook-most-viewed',
     'common/modules/experiments/tests/liveblog-notifications',
-    'common/modules/experiments/tests/share-buttons-2',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/mt-rec1',
     'common/modules/experiments/tests/mt-rec2',
-    'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/defer-spacefinder'
+    'common/modules/experiments/tests/defer-spacefinder',
+    'common/modules/experiments/tests/supporter-message'
 ], function (
     raven,
     _,
@@ -24,29 +24,29 @@ define([
     mediator,
     store,
     mvtCookie,
+    FacebookMostViewed,
     LiveblogNotifications,
-    ShareButtons2,
     HighCommercialComponent,
     MtRec1,
     MtRec2,
-    HeatMap,
     SaveForLater,
     CookieRefresh,
     Headline,
-    DeferSpacefinder
+    DeferSpacefinder,
+    SupporterMessage
     ) {
 
     var ab,
         TESTS = _.flatten([
+            new FacebookMostViewed(),
             new LiveblogNotifications(),
-            new ShareButtons2(),
             new HighCommercialComponent(),
             new MtRec1(),
             new MtRec2(),
-            new HeatMap(),
             new SaveForLater(),
             new CookieRefresh(),
             new DeferSpacefinder(),
+            new SupporterMessage(),
             _.map(_.range(1, 10), function (n) {
                 return new Headline(n);
             })
@@ -221,6 +221,11 @@ define([
         }
     }
 
+    function shouldRunTest(id, variant) {
+        var test = getTest(id);
+        return test && isParticipating(test) && ab.getTestVariant(id) === variant && testCanBeRun(test);
+    }
+
     ab = {
 
         addTest: function (test) {
@@ -348,6 +353,8 @@ define([
 
             return test.id && test.expiry && testCanBeRun(test);
         },
+
+        shouldRunTest: shouldRunTest,
 
         // testing
         reset: function () {

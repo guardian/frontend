@@ -3,13 +3,19 @@ define([
     'common/utils/$',
     'common/utils/template',
     'fastdom',
-    'text!common/views/ui/notifications-subcribe-link.html'
+    'text!common/views/ui/notifications-subcribe-link.html',
+    'common/utils/cookies',
+    'bean',
+    'common/views/svgs'
 ], function (
     config,
     $,
     template,
     fastdom,
-    subscribeTemplate
+    subscribeTemplate,
+    cookies,
+    bean,
+    svgs
 ) {
 
     return function () {
@@ -37,11 +43,21 @@ define([
             {
                 id: 'a',
                 test: function () {
-                    if (config.page.contentType === 'LiveBlog') {
-                        fastdom.write(function () {
-                            $('.js-update-notification').prepend(template(subscribeTemplate, {url: window.location}));
+                    var enabled = cookies.get('notifications-demo-following'),
+                        src = template(subscribeTemplate, {
+                            className: enabled ? '' : 'notifications--disabled',
+                            url: window.location,
+                            text: enabled ? 'Following story' : 'Follow story',
+                            imgMobile: svgs('notificationsExplainerMobile', ['mobile-only', 'notification-explainer']),
+                            imgDesktop: svgs('notificationsExplainerDesktop', ['hide-on-mobile', 'notification-explainer']),
+                            arrow: svgs('arrowWhiteRight')
                         });
-                    }
+                    fastdom.write(function () {
+                        $('.js-liveblog-body').prepend(src);
+                    });
+                    bean.on(document.body, 'click', '.js-notifications-subscribe-link', function () {
+                        cookies.add('notifications-demo-following', 'true', 100);
+                    });
                 }
             }
         ];

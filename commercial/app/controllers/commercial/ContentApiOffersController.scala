@@ -1,14 +1,14 @@
 package controllers.commercial
 
 import common.ExecutionContexts
-import model.commercial.Lookup
+import model.commercial.{CapiAgent, Lookup}
 import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
 
 import scala.concurrent.Future
 
-object ContentApiOffers extends Controller with ExecutionContexts with implicits.Requests {
+object ContentApiOffersController extends Controller with ExecutionContexts with implicits.Requests {
 
   private def renderItems(format: Format, isMulti: Boolean) = MemcachedAction { implicit request =>
 
@@ -31,16 +31,16 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
     val optCapiAdFeature = request.getParameter("af")
 
     val sponsorTypeToClass = Map (
-        "sponsored" -> ("fc-container--sponsored"),
-        "advertisement-feature" -> ("fc-container--advertisement-feature"),
-        "foundation-supported" -> ("fc-container--foundation-supported")
+        "sponsored" -> "fc-container--sponsored",
+        "advertisement-feature" -> "fc-container--advertisement-feature",
+        "foundation-supported" -> "fc-container--foundation-supported"
         )
     val optSponsorType: Option[String] = optCapiAdFeature flatMap (feature => sponsorTypeToClass.get(feature))
 
     val sponsorTypeToLabel = Map (
-        "sponsored" -> ("Sponsored by"),
-        "advertisement-feature" -> ("Brought to you by"),
-        "foundation-supported" -> ("Supported by")
+        "sponsored" -> "Sponsored by",
+        "advertisement-feature" -> "Brought to you by",
+        "foundation-supported" -> "Supported by"
         )
     val optSponsorLabel: Option[String] = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
 
@@ -54,7 +54,7 @@ object ContentApiOffers extends Controller with ExecutionContexts with implicits
     }.getOrElse(Future.successful(Nil))
 
     val futureContents = for {
-      specific <- Lookup.contentByShortUrls(specificIds)
+      specific <- CapiAgent.contentByShortUrls(specificIds)
       latestByKeyword <- futureLatestByKeyword
     } yield (specific ++ latestByKeyword.filter(_.trailPicture.nonEmpty)).distinct take 4
 

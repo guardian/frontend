@@ -79,7 +79,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   lazy val hasTonalHeaderIllustration: Boolean = isLetters
-  
+
   lazy val showCircularBylinePicAtSide: Boolean =
     cardStyle == Feature && hasLargeContributorImage && contributors.length == 1
 
@@ -317,6 +317,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val seriesTag: Option[Tag] = {
     blogs.find{tag => tag.id != "commentisfree/commentisfree"}.orElse(series.headOption)
   }
+
+  def showFooterContainers = false
 }
 
 object Content {
@@ -429,6 +431,8 @@ private object ArticleSchemas {
     // http://schema.org/Review
     if (article.isReview)
       "http://schema.org/Review"
+    else if (article.isLive)
+      "http://schema.org/LiveBlogPosting"
     else
       "http://schema.org/NewsArticle"
   }
@@ -566,6 +570,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
   )
+
+  override def showFooterContainers = !isLiveBlog && !shouldHideAdverts
 }
 
 class LiveBlog(content: ApiContentWithMeta) extends Article(content) {

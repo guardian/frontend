@@ -10,6 +10,7 @@ define([
     'common/utils/storage',
     'common/utils/to-array',
     // Modules
+    'common/modules/accessibility/helpers',
     'common/modules/experiments/ab',
     'common/modules/business/stocks',
     'facia/modules/onwards/geo-most-popular-front',
@@ -30,6 +31,7 @@ define([
     mediator,
     storage,
     toArray,
+    accessibility,
     ab,
     stocks,
     GeoMostPopularFront,
@@ -108,6 +110,7 @@ define([
         ready = function () {
             if (!this.initialised) {
                 this.initialised = true;
+                accessibility.shouldHideFlashingElements();
                 modules.showSnaps();
                 modules.showContainerShowMore();
                 modules.showContainerToggle();

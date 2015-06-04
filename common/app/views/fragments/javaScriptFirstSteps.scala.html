@@ -204,6 +204,17 @@
             if (testCssSupport('position', 'fixed')) {
                 docClass += ' has-fixed';
             }
+
+            @if(FontKerningSwitch.isSwitchedOn) {
+                if (window.location.hash !== '#no-kern') {
+                    docClass += ' should-kern';
+                }
+            } else {
+                if (window.location.hash === '#kern') {
+                    docClass += ' should-kern';
+                }
+            }
+
             docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
         }
     })(guardian.isModernBrowser);
@@ -245,6 +256,7 @@
             *@
             var isOlderIpad = !isIphone && window.devicePixelRatio === 1 && /.*iPad; CPU OS ([345])_\d+.*/.test(navigator.userAgent);
             var isIpad2orMini = !isIphone && window.devicePixelRatio === 1 && /.*iPad; CPU OS ([678])_\d+.*/.test(navigator.userAgent);
+            var isIpad3orLater = !isIphone && window.devicePixelRatio === 2 && /.*iPad; CPU OS ([678])_\d+.*/.test(navigator.userAgent);
 
             if ( isOlderIpad ) {
                 logDevice ( 'old', 'ipad' );
@@ -254,6 +266,10 @@
                 logDevice ( '2orMini', 'ipad' );
             }
 
+            if ( isIpad3orLater ) {
+            logDevice ( '3orLater', 'ipad' );
+            }
+
             if ( isIphone6 ) {
                 logDevice ( '6', 'iphone' );
             }
@@ -261,7 +277,6 @@
             if ( isIphone4 ) {
                 logDevice ( '4', 'iphone' );
             }
-
         }
     </script>
 }

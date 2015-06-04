@@ -118,11 +118,27 @@ define([
         });
     };
 
+    SaveForLater.prototype.renderSaveThisArticleLink = function (deferToClick, url, state) {
+
+        var self = this,
+            $saver = bonzo(qwery('.js-save-for-later')[0]),
+            //$saver = bonzo('.js-save-for-later'),
+            templateName = self.templates[deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
+
+        $saver.html(template(templateName, {
+            url: url,
+            icon: bookmarkSvg,
+            state: state
+
+        }));
+    };
+
     SaveForLater.prototype.getSavedArticles = function () {
         var self = this,
+            saveLinkHolder = qwery('.js-save-for-later')[0],
+            shortUrl = config.page.shortUrl.replace('http://gu.com', ''),
             notFound  = {message:'Not found', description:'Resource not found'};
 
-        console.log("+++ Get the Atricles");
         identity.getSavedArticles().then(
             function success(resp) {
                 console.log("++ Rsp");
@@ -135,7 +151,6 @@ define([
                         self.userData = {version: date, articles:[]};
                     }
                 } else {
-                    console.log("++ Error");
                     self.userData = resp.savedArticles;
                 }
 
@@ -254,7 +269,7 @@ define([
         console.log("++ Dom Done");
     };
 
-        //--- Get articles
+       //--- Get articles
     // -------------------------Save Article
 
     SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl) {
@@ -289,9 +304,9 @@ define([
 
         identity.saveToArticles(userData).then(
             function(resp) {
-                if(resp.status === 'error') {
-                     console.log("Delete Resp Failure");
-                     onArticleDeletedError();
+                if (resp.status === 'error') {
+                    console.log("Delete Resp Failure");
+                    onArticleDeletedError();
                 }
                 else {
                     console.log("Delete success");

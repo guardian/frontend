@@ -10,6 +10,7 @@ define([
     'common/utils/scroller',
     'common/utils/template',
     'common/utils/url',
+    'common/modules/accessibility/helpers',
     'common/modules/article/rich-links',
     'common/modules/commercial/liveblog-adverts',
     'common/modules/experiments/affix',
@@ -32,6 +33,7 @@ define([
     scroller,
     template,
     url,
+    accessibility,
     richLinks,
     liveblogAdverts,
     Affix,
@@ -234,10 +236,15 @@ define([
                 60000
             );
 
+        },
+
+        accessibility: function () {
+            accessibility.shouldHideFlashingElements();
         }
     };
 
     function ready() {
+        robust('lb-a11y',       modules.accessibility);
         robust('lb-adverts',    modules.initAdverts);
         robust('lb-filter',     modules.createFilter);
         robust('lb-timeline',   modules.createTimeline);

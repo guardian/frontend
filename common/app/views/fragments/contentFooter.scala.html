@@ -1,6 +1,5 @@
 @(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
 
-@import model.Article
 @import conf.Switches._
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
@@ -9,6 +8,9 @@
 
     @* majority of footer components we don't want to appear on advertisement feature articles *@
     @if(!content.isAdvertisementFeature) {
+        @if(Switches.FacebookMostViewed.isSwitchedOn && content.showFooterContainers) {
+            @fragments.mostPopularFacebook()
+        }
 
         @if(!content.shouldHideAdverts && !(mvt.CMHRTest.isParticipating || mvt.CMOutbrainTest.isParticipating)) {
             <div class="fc-container fc-container--commercial-high">
@@ -17,26 +19,20 @@
         }
 
         @fragments.storyPackagePlaceholder(content, related)
-        @if(Switches.RelatedContentSwitch.isSwitchedOn && mvt.CMOutbrainTest.isParticipating) {
-            @content match {
-                case article: Article if !article.isLiveBlog && !article.shouldHideAdverts => {
-                    <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
-                    @fragments.outbrainPlaceholder()
-                    </div>
-                }
-                case _ => { }
-            }
+        @if(Switches.RelatedContentSwitch.isSwitchedOn && mvt.CMOutbrainTest.isParticipating && content.showFooterContainers) {
+            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
+                @fragments.outbrainPlaceholder()
+                @fragments.gravityPlaceholder()
+                @fragments.taboolaPlaceholder()
+            </div>
         }
         @fragments.onwardPlaceholder()
-        @if(!Switches.RelatedContentSwitch.isSwitchedOn && mvt.CMOutbrainTest.isParticipating) {
-            @content match {
-                case article: Article if !article.isLiveBlog && !article.shouldHideAdverts => {
-                    <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
-                    @fragments.outbrainPlaceholder()
-                    </div>
-                }
-                case _ => { }
-            }
+        @if(!Switches.RelatedContentSwitch.isSwitchedOn && mvt.CMOutbrainTest.isParticipating && content.showFooterContainers) {
+            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
+                @fragments.outbrainPlaceholder()
+                @fragments.gravityPlaceholder()
+                @fragments.taboolaPlaceholder()
+            </div>
         }
 
         @if(content.isCommentable) {
@@ -50,15 +46,12 @@
         }
         @fragments.mostPopularPlaceholder(content.section)
 
-        @if(!mvt.CMOutbrainTest.isParticipating) {
-            @content match {
-                case article: Article if !article.isLiveBlog && !article.shouldHideAdverts => {
-                    <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
-                    @fragments.outbrainPlaceholder()
-                    </div>
-                }
-                case _ => {}
-            }
+        @if(!mvt.CMOutbrainTest.isParticipating && content.showFooterContainers) {
+            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
+                @fragments.outbrainPlaceholder()
+                @fragments.gravityPlaceholder()
+                @fragments.taboolaPlaceholder()
+            </div>
         }
 
         @if(!content.shouldHideAdverts) {
