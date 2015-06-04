@@ -30,9 +30,6 @@ GET           /editorial/config          controllers.FaciaToolController.configE
 GET           /commercial/config         controllers.FaciaToolController.configEditor(priority="commercial")
 GET           /training/config           controllers.FaciaToolController.configEditor(priority="training")
 
-GET           /publish-all               controllers.ContentApiPressController.publishAll()
-GET           /publish-all/comet         controllers.ContentApiPressController.publishAllStream()
-
 POST          /collection/publish/*collectionId    controllers.FaciaToolController.publishCollection(collectionId)
 POST          /collection/discard/*collectionId    controllers.FaciaToolController.discardCollection(collectionId)
 
@@ -41,7 +38,6 @@ POST          /press/draft/*path         controllers.FaciaToolController.pressDr
 
 GET           /front/lastmodified/*path  controllers.FaciaToolController.getLastModified(path)
 
-GET           /collection-put/*collectionId controllers.FaciaToolController.generatePutForCollectionId(collectionId)
 GET           /collection/*collectionId     controllers.FaciaToolController.getCollection(collectionId)
 POST          /edits                        controllers.FaciaToolController.collectionEdits
 GET           /collection                   controllers.FaciaToolController.listCollections
