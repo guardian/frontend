@@ -3,7 +3,7 @@
 @import views.support.Format
 
 <aside class="fc-item__meta js-item__meta">
-    <a href="" data-link-name="save-for-later" class="js-save-for-later-link fc-save-for-later">
+    <a href="" data-link-name="save-for-later" class="js-save-for-later-link fc-save-for-later is-hidden">
         @fragments.inlineSvg("bookmark", "icon")
     </a>
     @for(publishedAt <- item.webPublicationDate; timeStampDisplay <- item.timeStampDisplay) {
