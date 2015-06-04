@@ -34,6 +34,7 @@ define([
             var self = this,
                 form = $('.js-saved-content-form')[0];
 
+            /*
             if (form) {
                 bean.on(form, 'click', '.js-saved-content__button-delete-all', function (event) {
                     event.preventDefault();
@@ -47,7 +48,9 @@ define([
                     event.preventDefault();
                     self.fetchArticlesAndRemove(element);
                 });
-            });
+            })
+            */
+            this.renderDeleteButton('delete-all')
 
             mediator.on('modules:profilenav:loaded', function () {
 
@@ -70,7 +73,7 @@ define([
             var self = this,
                 $button = bonzo(qwery('.js-save-for-later__delete-all')[0])
 
-            $button.html(template(profileLinkTmp, {
+            $button.html(template(deleteButtonAllTmp, {
                 icon: svgs('bookmark', ['i-left']),
                 state: state
            }));
