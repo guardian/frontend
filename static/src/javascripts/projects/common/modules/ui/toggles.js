@@ -39,7 +39,7 @@ define([
 
         this.reset = function (omitEl) {
             controls.filter(function (control) {
-                return omitEl !== control && !_.contains(doNotReset, $(control).attr('data-toggle'));
+                return !(omitEl === control || _.contains(doNotReset, $(control).attr('data-toggle')));
             }).map(self.close);
         };
 
