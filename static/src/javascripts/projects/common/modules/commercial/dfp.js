@@ -129,17 +129,27 @@ define([
         },
 
         setPageTargeting = function () {
-            var opts = {
-                viewId: ''
-            };
-
             if (config.switches.ophan && config.switches.ophanViewId) {
                 require(['ophan/ng'],
                     function (ophan) {
-                        opts.viewId = ophan.viewId;
-                    });
-            }
+                        setTarget({viewId: ophan.viewId});
+                    },
+                    function (err) {
+                        raven.captureException(new Error('Error retrieving ophan (' + err + ')'), {
+                            tags: {
+                                feature: 'DFP'
+                            }
+                        });
 
+                        setTarget();
+                    }
+                );
+            } else {
+                setTarget();
+            }
+        },
+
+        setTarget = function (opts) {
             _.forOwn(buildPageTargeting(opts), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
