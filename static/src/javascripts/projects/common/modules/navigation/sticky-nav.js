@@ -255,10 +255,12 @@ define([
     };*/
 
     function StickyNav() {
+        console.log('sticky nav');
         this.$els = {};
     }
 
     StickyNav.prototype.init = function () {
+        console.log('sticky nav: init');
         var breakpoint = detect.getBreakpoint();
 
         fastdom.read(function () {
@@ -284,12 +286,12 @@ define([
             }.bind(this), 10));*/
         } else {
             mediator.on('window:scroll', _.throttle(function () {
-                updatePosition(breakpoint);
+                this.updatePosition(breakpoint);
             }.bind(this), 10));
         }
     };
 
-    StickySlow.prototype.updatePosition = function (breakpoint) {
+    StickyNav.prototype.updatePosition = function (breakpoint) {
         var bannerHeight = this.$els.bannerDesktop.dim().height,
             scrollY;
 
@@ -357,10 +359,8 @@ define([
         }.bind(this));
     };
 
-    new StickyNav().init();
-
     return {
         //stickySlow: new StickySlow()
-        //stickyNav: new StickyNav()
+        stickyNav: new StickyNav()
     };
 });

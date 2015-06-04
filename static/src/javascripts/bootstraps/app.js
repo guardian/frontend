@@ -11,7 +11,8 @@ define([
     'bootstraps/liveblog',
     'bootstraps/media',
     'bootstraps/profile',
-    'bootstraps/sport'
+    'bootstraps/sport',
+    'common/modules/navigation/sticky-nav'
 ], function (
     qwery,
     raven,
@@ -25,7 +26,8 @@ define([
     liveBlog,
     media,
     profile,
-    sport
+    sport,
+    stickyNav
 ) {
 
     var bootstrapContext = function (featureName, boostrap) {
@@ -110,6 +112,8 @@ define([
                     bootstrapContext('accessibility', accessibility);
                 });
             }
+
+            stickyNav.stickyNav.init();
 
             // Mark the end of synchronous execution.
             userTiming.mark('App End');
