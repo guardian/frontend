@@ -86,7 +86,7 @@ define([
             initSelectionSharing: function () {
                 selectionSharing.init();
             },
-            
+
             initFacebookMostPopular: function () {
                 if (ab.shouldRunTest('FacebookMostViewed', 'variant')) {
                     var el = qwery('.js-facebook-most-popular');
@@ -110,7 +110,6 @@ define([
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
             openModule.init();
-
             mediator.emit('page:article:ready');
         };
 
