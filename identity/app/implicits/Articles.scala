@@ -50,19 +50,6 @@ trait Articles {
       SavedArticles(savedArticles.version, articles)
     }
 
-    def prevPage( currentPage: Int ) : Option[Int] =  (currentPage > 1) match {
-      case true => Option(currentPage - 1)
-      case _ => None
-    }
-
-    def nextPage( currentPage: Int ) : Option[Int] = {
-      val nextPage = currentPage + 1
-      nextPage > pages.length match {
-        case true => None
-        case _ => Some(nextPage)
-      }
-    }
-
     //Deal with just having removed the only item on the last page
     def getPage(page: Int): List[SavedArticle] = pages match {
       case Nil => List.empty

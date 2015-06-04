@@ -2,6 +2,8 @@
 
 @import model.Content
 @import model.SaveForLaterPageData
+@import common.SimplePagePaths
+
 
 @main(page, projectName = Option("identity")) {
 }{
@@ -13,30 +15,25 @@
             <!-- Open form here and handle errors here -->
         <form class="form js-saved-content-form" novalidate action="@(pageData.formActionUrl)" role="main" method="post">
             @fragments.profile.saveForLater.contentListPage(pageData.contentCards)
+            <div class="saved-content__list-nav js-saved-content__list-nav">
+                    <!-- @page.url -->
+                @fragments.pagination(page.webTitle, pageData.pagination, SimplePagePaths(pageData.pageUrl), None, false, None )
+            </div>
             <fieldset class="fieldset">
                 <ul class="u-unstyled">
 
                     <li class="form-field">
-                        <label class="label"> Delete individual articles with the button above, or click below to remove them all</label>
+                        <label class="label">you have @(pageData.totalArticlesSaved) saved articles</label>
                         <div class="form-field__note js-saved-content__num-articles">
-                            you have @(pageData.totalArticlesSaved) saved articles. Page @(pageData.pageNum) of @(pageData.totalPages)
+                            Remove individual articles or click the button below to remove them all.
                         </div>
+                        <button type="submit" class="submit-input js-saved-content__button-delete-all" name="deleteArticle" value="all" data-link-name="Saved deletre all">Delete All</button>
                     </li>
 
                     <li>
-                        <button type="submit" class="submit-input js-saved-content__button-delete-all" name="deleteArticle" value="all" data-link-name="Saved deletre all">Delete All</button>
                     </li>
                 </ul>
             </fieldset>
         </form>
-        <div class="saved-content__list-nav js-saved-content__list-nav">
-            @pageData.prevPage.map { prev =>
-                <a href="@(prev)" class="submit-input js-saved-content__prev" data-link-name="saved content next page">Prev</a>
-            }
-            @pageData.nextPage.map { next =>
-                <a href="@(next)" class="submit-input js-saved-content__next" data-link-name="saved content next page">Next</a>
-            }
-        </div>
-
     </div>
 }

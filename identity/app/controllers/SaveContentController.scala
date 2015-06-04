@@ -107,9 +107,10 @@ class SaveContentController @Inject() ( api: IdApiClient,
     }
   }
 
-  def listSavedContentPage(pageNum: Integer) = authenticatedActions.authAction.async { implicit request =>
+  def listSavedContentPage() = authenticatedActions.authAction.async { implicit request =>
 
     val idRequest = identityRequestParser(request)
+    val pageNum = idRequest.page.getOrElse(1)
 
     savedArticleService.getOrCreateArticlesList(request.user.auth).flatMap {
       case Right(savedArticles) =>
@@ -188,11 +189,11 @@ class SaveContentController @Inject() ( api: IdApiClient,
       boundForm.fold[Future[Result]](onError, onSuccess)
     }
 
-  def deleteSavedContentItemFromPage(pageNum: Integer) =
+  def deleteSavedContentItemFromPage() =
     authenticatedActions.authAction.async { implicit request =>
       val idRequest = identityRequestParser(request)
       val boundForm = savedArticlesForm.bindFromRequest
-
+      val pageNum = idRequest.page.getOrElse(1)
 
       def buildFormFromErrors(errors: List[Error]): Form[SavedArticleData] = {
         val formWithErrors = errors.foldLeft(savedArticlesForm) {
@@ -267,20 +268,18 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
   private def fillFormWithApiDataForPageAndGetResult(idRequest: IdentityRequest, updatedArticles: SavedArticles, pageNum: Int)
                                                     (implicit request: RequestHeader): Future[Result] = {
-  if ( pageNum > updatedArticles.numPages) {
-    Future.successful(NoCache(SeeOther(routes.SaveContentController.listSavedContentPage(pageNum -1).url)))
-  } else {
+    if ( pageNum > updatedArticles.numPages && pageNum > 1) {
+      Future.successful(NoCache(SeeOther( s"/saved-for-later-page?page=%d".format(pageNum - 1))))
+    } else {
 
       val articles = updatedArticles.getPage(pageNum)
       val shortUrls = articles.map(_.shortUrl)
       val form = savedArticlesForm.fill(SavedArticleData(shortUrls))
 
-      println("Page %d pages %d".format(pageNum, updatedArticles.numPages))
-
       val futureContentList: Future[List[ApiContent]] = getResponse(LiveContentApi.search(Edition.defaultEdition)
         .ids(shortUrls.map(_.drop(1)).mkString(","))
         .showFields("all")
-        showElements ("all")
+        .showElements ("all")
       ).map(r => r.results.map(ApiContent(_)))
 
       futureContentList.map { contentList =>
