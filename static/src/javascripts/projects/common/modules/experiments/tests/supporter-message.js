@@ -40,7 +40,7 @@ define([
                     siteMessageLinkName: 'supporter message',
                     siteMessageCloseBtn: 'hide'
                 }).show(template(supporterMessageTmpl, {
-                    supporterLink: 'https://membership.theguardian.com/about/supporter',
+                    supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=SUPPORTER_BANNER_TEST_A',
                     messageText: 'Not already a member? Start supporting us today',
                     linkText: 'Become a supporter'
                 }));
@@ -54,7 +54,7 @@ define([
                     siteMessageLinkName: 'supporter message',
                     siteMessageCloseBtn: 'hide'
                 }).show(template(supporterMessageTmpl, {
-                    supporterLink: 'https://membership.theguardian.com/about/supporter',
+                    supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=SUPPORTER_BANNER_TEST_B',
                     messageText: 'Become a Guardian Member and support fearless investigative journalism',
                     linkText: 'Become a supporter'
                 }));
