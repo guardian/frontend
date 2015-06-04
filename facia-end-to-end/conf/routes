@@ -40,9 +40,6 @@ GET           /commercial/config         controllers.FaciaToolController.configE
 GET           /training/config           controllers.FaciaToolController.configEditor(priority="training")
 
 
-GET           /publish-all               controllers.ContentApiPressController.publishAll()
-GET           /publish-all/comet         controllers.ContentApiPressController.publishAllStream()
-
 POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
 POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)
 
