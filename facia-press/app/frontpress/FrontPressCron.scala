@@ -3,10 +3,9 @@ package frontpress
 import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import common.FaciaPressMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
-import common.SQSQueues._
-import common.{SNSNotification, StopWatch, JsonMessageQueue, Edition}
-import conf.{Switches, Configuration}
+import common.{Edition, JsonMessageQueue, SNSNotification, StopWatch}
 import conf.Switches.FrontPressJobSwitch
+import conf.{Configuration, Switches}
 import metrics.AllFrontsPressLatencyMetric
 
 import scala.concurrent.Future
