@@ -11,6 +11,7 @@ define([
     'common/modules/article/open-module',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
+    'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
     'common/modules/ui/rhc',
@@ -29,6 +30,7 @@ define([
     openModule,
     truncate,
     twitter,
+    ab,
     geoMostPopular,
     OpenCta,
     rhc,
@@ -87,6 +89,12 @@ define([
             initStickyShares: function () {
                 if (config.switches.abShareButtons2) {
                     stickySocial.init();
+                }
+            },
+
+            initTrendingOnFacebook: function () {
+                if (ab.shouldRunTest('FacebookMostViewed', 'variant')) {
+
                 }
             }
         },

@@ -620,10 +620,10 @@ object Switches {
   )
 
   // Features
-  val FacebookMostPopular = Switch(
+  val FacebookMostViewed = Switch(
     "Feature",
-    "facebook-most-popular",
-    "Facebook most popular",
+    "ab-facebook-most-viewed",
+    "Facebook most viewed",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 17),
     exposeClientSide = true

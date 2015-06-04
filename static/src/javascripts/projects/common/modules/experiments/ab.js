@@ -218,6 +218,11 @@ define([
         }
     }
 
+    function shouldRunTest(id, variant) {
+        var test = getTest(id);
+        return test && isParticipating(test) && ab.getTestVariant(id) === variant && testCanBeRun(id);
+    }
+
     ab = {
 
         addTest: function (test) {
@@ -345,6 +350,8 @@ define([
 
             return test.id && test.expiry && testCanBeRun(test);
         },
+
+        shouldRunTest: shouldRunTest,
 
         // testing
         reset: function () {
