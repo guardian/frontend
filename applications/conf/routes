@@ -62,3 +62,6 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                             
 
 # Tag combiners
 GET        /$leftSide<[^+]+>+*rightSide                                         controllers.IndexController.renderCombiner(leftSide, rightSide)
+
+# Google site verification
+GET        /google$account<[\w\d-]*>.html                                       controllers.SiteVerificationController.googleSiteVerify(account)

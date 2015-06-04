@@ -10,7 +10,7 @@ window.require = System.amdRequire;
 
 // Configure the test dependencies paths
 System.config({
-	"paths": {
-		"ophan/ng": "javascripts/test/vendor/ophan.js"
+	'paths': {
+		'ophan/ng': 'javascripts/test/vendor/ophan.js'
 	}
-})
+});

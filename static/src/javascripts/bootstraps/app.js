@@ -105,6 +105,12 @@ define([
                 });
             }
 
+            if (config.page.pageId === 'help/accessibility-help') {
+                require(['bootstraps/accessibility'], function (accessibility) {
+                    bootstrapContext('accessibility', accessibility);
+                });
+            }
+
             // Mark the end of synchronous execution.
             userTiming.mark('App End');
         };

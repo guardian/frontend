@@ -1,5 +1,7 @@
 package common
 
+import play.api.{Application, GlobalSettings}
+
 import scala.concurrent.duration.FiniteDuration
 import akka.agent.Agent
 import akka.actor.Cancellable

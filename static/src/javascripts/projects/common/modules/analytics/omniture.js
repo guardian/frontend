@@ -80,7 +80,7 @@ define([
         var storeObj,
             delay;
 
-        if (!spec.tag) {
+        if (!spec.validTarget) {
             return;
         }
 
@@ -89,7 +89,7 @@ define([
             // so do session storage rather than an omniture track.
             storeObj = {
                 pageName: this.s.pageName,
-                tag: spec.tag,
+                tag: spec.tag || 'untracked',
                 time: new Date().getTime()
             };
             try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {}
@@ -294,6 +294,8 @@ define([
             storage.session.remove(R2_STORAGE_KEY);
             storage.session.remove(NG_STORAGE_KEY);
         }
+
+        this.s.prop73 = detect.isFacebookApp() ? 'facebook app' : detect.isTwitterApp() ? 'twitter app' : null;
 
         this.s.prop75 = config.page.wordCount || 0;
         this.s.eVar75 = config.page.wordCount || 0;

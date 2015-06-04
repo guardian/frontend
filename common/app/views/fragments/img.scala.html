@@ -15,6 +15,8 @@
     <figure itemprop="associatedMedia image" itemscope itemtype="http://schema.org/ImageObject" data-component="image"
         class="media-primary media-content@if(isShowcase){ media-primary--showcase}">
 
+        <meta itemprop="representativeOfPage" content="true">
+
         @if(isFeature && isShowcase) {
             @lightbox(picture, MainMedia.FeatureShowcase)
             <div class="gs-container">
@@ -58,7 +60,7 @@
         srcset="@ImgSrc.srcset(picture, widths)"
         sizes="@widths.sizes"
         class="maxed responsive-img"
-        itemprop="contentUrl representativeOfPage"
+        itemprop="contentUrl"
         alt="@ImgSrc.getFallbackAsset(picture).flatMap(_.altText).getOrElse("")" />
 
 }

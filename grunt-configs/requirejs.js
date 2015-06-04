@@ -244,6 +244,18 @@ module.exports = function(grunt, options) {
                     'inlineSvg'
                 ]
             }
+        },
+        accessibility: {
+            options: {
+                name: 'bootstraps/accessibility',
+                out: options.staticTargetDir + 'javascripts/bootstraps/accessibility.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
         }
     };
 };

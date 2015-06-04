@@ -65,10 +65,21 @@ define([
             });
 
             return abParams;
+        },
+        adtestParams = function () {
+            if (cookies.get('adtest')) {
+                var cookieAdtest = cookies.get('adtest'),
+                    first4Char = cookieAdtest.substring(0, 4);
+                if (first4Char === 'demo') {
+                    cookies.remove('adtest');
+                }
+                return cookieAdtest;
+            }
         };
 
     return function (opts) {
         var win         = (opts || {}).window || window,
+            viewId      = (opts || {}).viewId,
             page        = config.page,
             contentType = formatTarget(page.contentType),
             pageTargets = _.merge({
@@ -80,8 +91,9 @@ define([
                 k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
                 x:       krux.getSegments(),
                 su:      page.isSurging,
+                pv:      viewId,
                 bp:      detect.getBreakpoint(),
-                at:      cookies.get('adtest'),
+                at:      adtestParams(),
                 gdncrm:  userAdTargeting.getUserSegments(),
                 ab:      abParam(),
                 co:      parseIds(page.authorIds),

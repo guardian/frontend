@@ -7,7 +7,7 @@ import conf.{Switches, Configuration}
 import metrics._
 import org.joda.time.DateTime
 import play.api.libs.json.JsNull
-import services.{Draft, FrontPath, Live, PressJob}
+import services._
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
@@ -32,7 +32,7 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
   )
 
   override def process(message: Message[PressJob]): Future[Unit] = {
-    val PressJob(FrontPath(path), pressType, creationTime) = message.get
+    val PressJob(FrontPath(path), pressType, creationTime, forceConfigUpdate) = message.get
 
     log.info(s"Processing job from tool to update $path on $pressType")
 
@@ -48,7 +48,17 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
       else { Future.successful(JsNull) }
 
 
-    val pressFuture = fapiFormat.flatMap(_ => oldFormat)
+    lazy val forceConfigUpdateFuture: Future[_] =
+      if (forceConfigUpdate.exists(identity)) {
+        ConfigAgent.refreshAndReturn()}
+      else
+        Future.successful(Unit)
+
+    val pressFuture = for {
+      _ <- forceConfigUpdateFuture
+      _ <- fapiFormat
+      _ <- oldFormat
+    } yield Unit
 
     pressFuture onComplete {
       case Success(_) =>
