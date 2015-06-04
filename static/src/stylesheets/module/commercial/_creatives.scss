@@ -647,37 +647,6 @@
         display: block;
         clear: left;
     }
-
-}
-
-.creative--ad-feature-mpu-large-v2 {
-    padding: 0 0 $gs-baseline / 2;
-
-    .creative__article {
-        padding: 0;
-
-        h2 {
-            padding: $gs-baseline / 2;
-            font-size: get-font-size(bodyHeading, 3);
-            line-height: get-line-height(bodyHeading, 1);
-            height: 44px;
-        }
-    }
-
-    .creative__logo-text,
-    .creative__logo-info {
-        margin-left: $gs-baseline / 2;
-    }
-
-    .creative__logo {
-        margin-right: $gs-baseline / 2;
-    }
-
-    .creative__article__image-container {
-        max-height: 156px;
-        overflow: hidden;
-    }
-
 }
 
 @keyframes textanimation {
