@@ -1,10 +1,12 @@
 define([
     'bean',
     'bonzo',
+    'common/utils/$',
     'common/utils/mediator'
 ], function (
     bean,
     bonzo,
+    $,
     mediator
 ) {
 
@@ -32,15 +34,15 @@ define([
             });
         };
 
-        this.reset = function (clickSpec) {
-            controls.filter(function (c) {
-                return !clickSpec || c !== clickSpec.target;
+        this.reset = function (omitEl) {
+            controls.filter(function (control) {
+                return !$.isDescendantOrSelf(omitEl, control) && !$.isDescendantOrSelf(omitEl, control.toggleTarget);
             }).map(self.close);
         };
 
-        mediator.on('module:clickstream:interaction', this.reset);
-        mediator.on('module:clickstream:click', this.reset);
-        mediator.on('module:clickstream:null', this.reset);
+        mediator.on('module:clickstream:click', function (clickSpec) {
+            self.reset(clickSpec ? clickSpec.target : null);
+        });
     };
 
     Toggles.prototype.toggle = function (control, controls) {
