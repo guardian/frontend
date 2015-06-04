@@ -4,7 +4,6 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/url',
     'common/modules/article/rich-links',
@@ -12,7 +11,6 @@ define([
     'common/modules/article/open-module',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
-    'common/modules/onward/facebook-most-popular',
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
     'common/modules/ui/rhc',
@@ -23,7 +21,6 @@ define([
     qwery,
     $,
     config,
-    detect,
     mediator,
     urlutils,
     richLinks,
@@ -31,7 +28,6 @@ define([
     openModule,
     truncate,
     twitter,
-    FacebookMostPopular,
     geoMostPopular,
     OpenCta,
     rhc,
@@ -91,17 +87,6 @@ define([
                 if (config.switches.abShareButtons2) {
                     stickySocial.init();
                 }
-            },
-
-            initFacebookMostPopular: function () {
-                var el;
-
-                if (config.switches.facebookMostPopular && detect.socialContext() === 'facebook') {
-                    el = qwery('.js-facebook-most-popular');
-                    if (el) {
-                        new FacebookMostPopular(el);
-                    }
-                }
             }
         },
 
@@ -113,7 +98,6 @@ define([
             modules.initSelectionSharing();
             modules.initCmpParam();
             modules.initStickyShares();
-            modules.initFacebookMostPopular();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
