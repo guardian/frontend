@@ -66,7 +66,7 @@ define([
 
     function initOphanTracking(player, mediaId) {
         EVENTS.concat(QUARTILES.map(function (q) {
-            return 'play:' + q;
+            return 'content:' + q;
         })).forEach(function (event) {
             player.one(constructEventName(event, player), function (event) {
                 ophanRecord(mediaId, event, player);
@@ -137,7 +137,7 @@ define([
                 var progress = Math.round(parseInt(player.currentTime() / player.duration() * 100, 10));
                 QUARTILES.reverse().some(function (quart) {
                     if (progress >= quart) {
-                        player.trigger(constructEventName('play:' + quart, player));
+                        player.trigger(constructEventName('content:' + quart, player));
                         return true;
                     } else {
                         return false;
