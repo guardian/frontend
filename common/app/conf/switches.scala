@@ -260,7 +260,8 @@ object Switches {
     "ophan-view-id",
     "Depeneding on ophan to pass view ID to the gdf targeting",
     safeState = On,
-    sellByDate = new LocalDate(2015, 6, 30)
+    sellByDate = new LocalDate(2015, 6, 30),
+    exposeClientSide = true
   )
 
   val DfpCachingSwitch = Switch(
