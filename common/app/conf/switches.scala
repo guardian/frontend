@@ -620,10 +620,10 @@ object Switches {
   )
 
   // Features
-  val FacebookMostPopular = Switch(
+  val FacebookMostViewed = Switch(
     "Feature",
-    "facebook-most-popular",
-    "Facebook most popular",
+    "ab-facebook-most-viewed",
+    "Facebook most viewed",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 17),
     exposeClientSide = true
@@ -945,15 +945,6 @@ object Switches {
     "Liveblog notifications",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 1),
-    exposeClientSide = true
-  )
-
-  val ABShareButtons2 = Switch(
-    "A/B Tests",
-    "ab-share-buttons-2",
-    "Switch for test of combinations of referrer-based size, visibility, and stickiness for article share buttons",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 4),
     exposeClientSide = true
   )
 

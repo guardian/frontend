@@ -12,11 +12,11 @@ define([
     'common/modules/article/open-module',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
-    'common/modules/onward/facebook-most-popular',
+    'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
+    'common/modules/onward/facebook-most-popular',
     'common/modules/ui/rhc',
-    'common/modules/ui/sticky-social',
     'common/modules/ui/selection-sharing'
 ], function (
     fence,
@@ -31,11 +31,11 @@ define([
     openModule,
     truncate,
     twitter,
-    FacebookMostPopular,
+    ab,
     geoMostPopular,
     OpenCta,
+    FacebookMostPopular,
     rhc,
-    stickySocial,
     selectionSharing
 ) {
     var modules = {
@@ -87,17 +87,10 @@ define([
                 selectionSharing.init();
             },
 
-            initStickyShares: function () {
-                if (config.switches.abShareButtons2) {
-                    stickySocial.init();
-                }
-            },
-
             initFacebookMostPopular: function () {
-                var el;
+                if (ab.shouldRunTest('FacebookMostViewed', 'variant')) {
+                    var el = qwery('.js-facebook-most-popular');
 
-                if (config.switches.facebookMostPopular && detect.socialContext() === 'facebook') {
-                    el = qwery('.js-facebook-most-popular');
                     if (el) {
                         new FacebookMostPopular(el);
                     }
@@ -112,13 +105,11 @@ define([
             modules.initRightHandComponent();
             modules.initSelectionSharing();
             modules.initCmpParam();
-            modules.initStickyShares();
             modules.initFacebookMostPopular();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
             openModule.init();
-
             mediator.emit('page:article:ready');
         };
 
