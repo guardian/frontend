@@ -16,6 +16,7 @@ define([
     'common/utils/url',
     'common/utils/robust',
     'common/utils/storage',
+    'common/modules/loyalty/save-for-later',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
     'common/modules/analytics/media-listener',
@@ -74,6 +75,7 @@ define([
     url,
     robust,
     storage,
+    SaveForLater,
     Foresee,
     liveStats,
     mediaListener,
@@ -496,11 +498,31 @@ define([
                         }).show(template(internationalControlMessage, {}));
                     }
                 }
+            },
+
+            initSaveForLater: function () {
+                // On top of the A/B test, we always want to give pre-existing SFL
+                // users the web feature.
+                mediator.on('module:identity:api:loaded', function () {
+                    id.getSavedArticles().then(function (resp) {
+                        var userHasSavedArticles = !! resp.savedArticles;
+
+                        var test = ab.getTest('SaveForLater');
+                        var participation = ab.isParticipating(test);
+                        var userIsNotInTest = !participation || !ab.getVariant(test, participation.variant);
+                        if (userIsNotInTest && userHasSavedArticles) {
+                            var saveForLater = new SaveForLater();
+                            saveForLater.init();
+                        }
+                    });
+                });
             }
         },
 
         ready = function () {
+
             robust('c-fonts',           modules.loadFonts);
+            robust('c-init-save-for-later', modules.initSaveForLater);
             robust('c-identity',        modules.initId);
             robust('c-adverts',         modules.initUserAdTargeting);
             robust('c-discussion',      modules.initDiscussion);
