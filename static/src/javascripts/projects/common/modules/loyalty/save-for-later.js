@@ -205,7 +205,9 @@ define([
         //--- Get articles
     // -------------------------Save Article
 
-    SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl) {
+    SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl, event) {
+        event.stop();
+
         var self = this,
             date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
             newArticle = {id: pageId, shortUrl: shortUrl, date: date, read: false  };
@@ -225,7 +227,9 @@ define([
         );
     };
 
-    SaveForLater.prototype.deleteArticle = function (onArticleDeleted, onArticleDeletedError, userData, pageId, shortUrl) {
+    SaveForLater.prototype.deleteArticle = function (onArticleDeleted, onArticleDeletedError, userData, pageId, shortUrl, event) {
+        event.stop();
+
         var self = this;
 
         userData.articles = _.filter(userData.articles, function (article) {
@@ -256,36 +260,44 @@ define([
     };
 
     //--- Handle saving an article on a front of container
-    SaveForLater.prototype.onSaveArticle = function (saveLink, id, shortUrl) {
+    SaveForLater.prototype.onSaveArticle = function (link, id, shortUrl) {
         var self = this;
-        console.log("On Save article: " + id );
-        bonzo(qwery(self.classes['itemSaveLinkHeading'], saveLink)[0]).html('Saved');
-        self.createDeleteArticleHandler(saveLink, id, shortUrl);
+        self.createDeleteArticleHandler(link, id, shortUrl);
+
+        fastdom.write(function () {
+            bonzo(link).addClass(self.classes['fcItemIsSaved']);
+        });
     };
 
-    SaveForLater.prototype.onSaveArticleError = function (saveLink, id, shortUrl) {
+    SaveForLater.prototype.onSaveArticleError = function (link, id, shortUrl) {
         var self = this;
-        console.log("On Save article error: " + id );
-        bonzo(qwery(self.classes['itemSaveLinkHeading'], saveLink)[0]).html('Error Saving');
-        self.createSaveArticleHandler(saveLink, id, shortUrl);
+        self.createSaveArticleHandler(link, id, shortUrl);
+
+        fastdom.write(function () {
+            bonzo(qwery(self.classes['itemSaveLinkHeading'], link)[0]).html('Error Saving');
+        });
     };
 
-    SaveForLater.prototype.onDeleteArticle = function (deleteLink, id, shortUrl) {
+    SaveForLater.prototype.onDeleteArticle = function (link, id, shortUrl) {
         var self = this;
-        console.log("Un Save article: " + id );
-        bonzo(qwery(self.classes['itemSaveLinkHeading'], deleteLink)[0]).html('Save');
-        self.createDeleteArticleHandler(deleteLink, id, shortUrl);
+        self.createSaveArticleHandler(link, id, shortUrl);
+
+        fastdom.write(function () {
+            bonzo(link).removeClass(self.classes['fcItemIsSaved']);
+        });
     };
 
-    SaveForLater.prototype.onDeleteArticleError = function (deleteLink, id, shortUrl) {
+    SaveForLater.prototype.onDeleteArticleError = function (link, id, shortUrl) {
         var self = this;
-        console.log("Error Un Save article: " + id );
-        bonzo(qwery(self.classes['itemSaveLinkHeading'], deleteLink)[0]).html('Error Removing');
-        self.createDeleteArticleHandler(deleteLink, id, shortUrl);
+        self.createDeleteArticleHandler(link, id, shortUrl);
+
+        fastdom.write(function () {
+            bonzo(qwery(self.classes['itemSaveLinkHeading'], link)[0]).html('Error Removing');
+        });
     };
 
     //--Create container link click handlers
-    SaveForLater.prototype.createSaveArticleHandler = function(saveLink, id, shortUrl) {
+    SaveForLater.prototype.createSaveArticleHandler = function (saveLink, id, shortUrl) {
         var self = this;
 
         bean.one(saveLink, 'click',
@@ -300,7 +312,7 @@ define([
     };
 
 
-    SaveForLater.prototype.createDeleteArticleHandler = function(deleteLink, id, shortUrl) {
+    SaveForLater.prototype.createDeleteArticleHandler = function (deleteLink, id, shortUrl) {
         var self = this;
 
         bean.one(deleteLink, 'click',
