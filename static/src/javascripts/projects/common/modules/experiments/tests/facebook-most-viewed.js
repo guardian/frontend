@@ -1,4 +1,3 @@
-/*jshint -W031 */
 define([
     'qwery',
     'common/utils/config',
