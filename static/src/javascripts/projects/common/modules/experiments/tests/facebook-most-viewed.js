@@ -1,8 +1,10 @@
 define([
+    'qwery',
     'common/utils/config',
     'common/utils/detect',
     'common/modules/onward/facebook-most-popular'
 ], function (
+    qwery,
     config,
     detect,
     FacebookMostPopular
