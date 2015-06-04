@@ -17,7 +17,6 @@ define([
     'common/modules/open/cta',
     'common/modules/onward/facebook-most-popular',
     'common/modules/ui/rhc',
-    'common/modules/ui/sticky-social',
     'common/modules/ui/selection-sharing'
 ], function (
     fence,
@@ -37,7 +36,6 @@ define([
     OpenCta,
     FacebookMostPopular,
     rhc,
-    stickySocial,
     selectionSharing
 ) {
     var modules = {
@@ -88,14 +86,8 @@ define([
             initSelectionSharing: function () {
                 selectionSharing.init();
             },
-
-            initStickyShares: function () {
-                if (config.switches.abShareButtons2) {
-                    stickySocial.init();
-                }
-            },
-
-            initTrendingOnFacebook: function () {
+            
+            initFacebookMostPopular: function () {
                 if (ab.shouldRunTest('FacebookMostViewed', 'variant')) {
                     var el = qwery('.js-facebook-most-popular');
 
@@ -113,8 +105,7 @@ define([
             modules.initRightHandComponent();
             modules.initSelectionSharing();
             modules.initCmpParam();
-            modules.initStickyShares();
-            modules.initTrendingOnFacebook();
+            modules.initFacebookMostPopular();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();

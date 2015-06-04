@@ -8,7 +8,6 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/facebook-most-viewed',
     'common/modules/experiments/tests/liveblog-notifications',
-    'common/modules/experiments/tests/share-buttons-2',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/mt-rec1',
     'common/modules/experiments/tests/mt-rec2',
@@ -26,7 +25,6 @@ define([
     mvtCookie,
     FacebookMostViewed,
     LiveblogNotifications,
-    ShareButtons2,
     HighCommercialComponent,
     MtRec1,
     MtRec2,
@@ -40,7 +38,6 @@ define([
         TESTS = _.flatten([
             new FacebookMostViewed(),
             new LiveblogNotifications(),
-            new ShareButtons2(),
             new HighCommercialComponent(),
             new MtRec1(),
             new MtRec2(),
