@@ -155,7 +155,6 @@ define([
             });
         },
 
-
         /**
          * Loop through each slot detected on the page and define it based on the data
          * attributes on the element.
