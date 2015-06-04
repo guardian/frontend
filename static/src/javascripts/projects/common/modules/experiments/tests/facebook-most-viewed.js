@@ -2,14 +2,14 @@
 define([
     'qwery',
     'common/utils/config',
-    'common/utils/detect',
-    'common/modules/onward/facebook-most-popular'
+    'common/utils/detect'
 ], function (
     qwery,
     config,
-    detect,
-    FacebookMostPopular
+    detect
 ) {
+    function noop() {}
+
     return function () {
         this.id = 'FacebookMostViewed';
         this.start = '2015-06-04';
@@ -30,17 +30,11 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function () {}
+                test: noop
             },
             {
                 id: 'variant',
-                test: function () {
-                    var el = qwery('.js-facebook-most-popular');
-
-                    if (el) {
-                        new FacebookMostPopular(el);
-                    }
-                }
+                test: noop
             }
         ];
     };

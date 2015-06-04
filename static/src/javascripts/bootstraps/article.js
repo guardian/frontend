@@ -14,6 +14,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
+    'common/modules/onward/facebook-most-popular',
     'common/modules/ui/rhc',
     'common/modules/ui/sticky-social',
     'common/modules/ui/selection-sharing'
@@ -33,6 +34,7 @@ define([
     ab,
     geoMostPopular,
     OpenCta,
+    FacebookMostPopular,
     rhc,
     stickySocial,
     selectionSharing
@@ -94,7 +96,11 @@ define([
 
             initTrendingOnFacebook: function () {
                 if (ab.shouldRunTest('FacebookMostViewed', 'variant')) {
+                    var el = qwery('.js-facebook-most-popular');
 
+                    if (el) {
+                        new FacebookMostPopular(el);
+                    }
                 }
             }
         },
@@ -107,6 +113,7 @@ define([
             modules.initSelectionSharing();
             modules.initCmpParam();
             modules.initStickyShares();
+            modules.initTrendingOnFacebook();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
