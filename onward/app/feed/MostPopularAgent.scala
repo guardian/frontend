@@ -57,7 +57,7 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
         url <- (item \ "url").asOpt[String]
       } yield {
         getResponse(
-          LiveContentApi.item(OphanApi.UrlToContentPath(url), Edition.defaultEdition )
+          LiveContentApi.item(urlToContentPath(url), Edition.defaultEdition )
         ).map(_.content.map(Content(_)))
       }
 
@@ -104,7 +104,7 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        getResponse(LiveContentApi.item(OphanApi.UrlToContentPath(url), Edition.defaultEdition )).map(_.content.map(Content(_)))
+        getResponse(LiveContentApi.item(urlToContentPath(url), Edition.defaultEdition )).map(_.content.map(Content(_)))
       }
 
       Future.sequence(mostRead).map { contentSeq =>
@@ -118,7 +118,7 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
 
         } else {
 
-          log.info(s"Day popular update for ${countryCode} found nothing.")
+          log.info(s"Day popular update for $countryCode found nothing.")
         }
       }
     }
