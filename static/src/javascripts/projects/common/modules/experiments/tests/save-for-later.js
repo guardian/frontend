@@ -6,7 +6,8 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/loyalty/save-for-later',
-    'text!common/views/identity/saved-for-later-profile-link.html'
+    'text!common/views/identity/saved-for-later-profile-link.html',
+    'common/modules/identity/api'
 ], function (
     bonzo,
     qwery,
@@ -15,7 +16,8 @@ define([
     mediator,
     template,
     SaveForLater,
-    profileLinkTmp
+    profileLinkTmp,
+    Id
 ) {
 
     return function () {
@@ -33,7 +35,7 @@ define([
         this.showForSensitive = false;
 
         this.canRun = function () {
-            return true;
+            return Id.isUserLoggedIn();
         };
 
         this.variants = [
