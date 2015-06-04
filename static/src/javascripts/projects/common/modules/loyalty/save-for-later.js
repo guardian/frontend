@@ -42,14 +42,15 @@ define([
 
     function SaveForLater() {
         this.classes = {
-             saveThisArticle: '.js-save-for-later',
-             saveThisArticleButton: '.save-for-later__button',
-             onwardContainer: '.js-onward',
-             relatedContainer: '.js-related',
-             itemMeta: '.js-item__meta',
-             itemSaveLink: '.save-for-later-link',
-             itemSaveLinkHeading: '.save-for-later-link__heading',
-             profileDropdownLink: '.brand-bar__item--saved-for-later'
+            saveThisArticle: '.js-save-for-later',
+            saveThisArticleButton: '.save-for-later__button',
+            onwardContainer: '.js-onward',
+            relatedContainer: '.js-related',
+            itemMeta: '.js-item__meta',
+            itemSaveLink: '.js-save-for-later-link',
+            itemSaveLinkHeading: '.save-for-later-link__heading',
+            profileDropdownLink: '.brand-bar__item--saved-for-later',
+            fcItemIsSaved: 'fc-save-for-later--is-saved'
         };
         this.attributes = {
             containerItemShortUrl :'data-loyalty-short-url',
@@ -181,46 +182,22 @@ define([
         var self = this,
             elements = self.getElementsIndexedById(context);
 
-        fastdom.read(function() {
+        _.forEach(elements, function (item) {
+            var $itemSaveLink = $(self.classes['itemSaveLink'], item),
+                shortUrl = item.getAttribute(self.attributes['containerItemShortUrl']),
+                id = item.getAttribute(self.attributes['containerItemDataId']),
+                isSaved = signedIn ? self.hasUserSavedArticle(self.userData.articles, shortUrl) : false;
 
-            //TODO inline id
-            _.forEach(elements, function (node) {
-                console.log("Element: ");
-                var $node = bonzo(node),
-                    id = $node.attr(self.attributes['containerItemDataId']),
-                    shortUrl = $node.attr(self.attributes['containerItemShortUrl']),
-                    isSavedAlready = signedIn ? self.hasUserSavedArticle(self.userData.articles, shortUrl) : false,
-                    saveUrl = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
-                        '&shortUrl=' + shortUrl + '&articleId=' + id,
-                    templateName = self.templates[signedIn ? "signedIn" : "signedOut"],
-                    linkText = isSavedAlready ? "Saved" : "Save",
-                    html,
-                    meta,
-                    $container;
+            if (signedIn) {
+                self[isSaved ? 'createDeleteArticleHandler' : 'createSaveArticleHandler']($itemSaveLink[0], id, shortUrl);
+            };
 
-                html = template(templateName, {
-                    link_text: linkText,
-                    url: saveUrl
-                });
-
-
-                meta = qwery(self.classes['itemMeta'], node);
-
-
-                $container = meta.length ? bonzo(meta) : $node;
-
-
-                fastdom.write(function () {
-                    $container.append(html);
-                    if (signedIn) {
-                        var saveLink = $(self.classes['itemSaveLink'], node)[0];
-                        if (isSavedAlready) {
-                            self.createDeleteArticleHandler(saveLink,id, shortUrl);
-                        } else {
-                            self.createSaveArticleHandler(saveLink, id, shortUrl);
-                        }
-                    }
-                });
+            fastdom.write(function () {
+                console.log(self.classes['fcItemIsSaved']);
+                if (isSaved) {
+                    $itemSaveLink.addClass(self.classes['fcItemIsSaved']);
+                };
+                $itemSaveLink.removeClass('is-hidden'); // while in test
             });
         });
     };
