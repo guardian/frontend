@@ -69,7 +69,7 @@ define([
             // users the web feature.
             mediator.on('module:identity:api:loaded', function () {
                 id.getSavedArticles().then(function (resp) {
-                    var userHasSavedArticles = !! resp.savedArticles;
+                    var userHasSavedArticles = !!resp.savedArticles;
 
                     if (userHasSavedArticles) {
                         init();
