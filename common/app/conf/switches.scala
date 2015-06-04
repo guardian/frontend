@@ -1018,7 +1018,7 @@ object Switches {
     "A/B Tests",
     "ab-supporter",
     "Switch for the Supporter Message A/B test.",
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2015, 6, 28),
     exposeClientSide = true
   )
