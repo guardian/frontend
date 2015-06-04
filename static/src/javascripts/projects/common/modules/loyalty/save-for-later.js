@@ -113,12 +113,9 @@ define([
         var self = this,
             notFound  = {message:'Not found', description:'Resource not found'};
 
-        console.log("+++ Get the Atricles");
         identity.getSavedArticles().then(
             function success(resp) {
-                console.log("++ Rsp");
                 if (resp.status === 'error') {
-                    console.log("++ Error");
 
                     if (resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
                         //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
@@ -126,7 +123,6 @@ define([
                         self.userData = {version: date, articles:[]};
                     }
                 } else {
-                    console.log("++ Error");
                     self.userData = resp.savedArticles;
                 }
 
@@ -142,42 +138,33 @@ define([
     SaveForLater.prototype.renderLinksInContainers = function(signedIn) {
 
         var self = this;
-        console.log("++ Render container");
 
         if( !self.isContent ) {
-            console.log("Render front pages");
             self.renderContainerLinks(signedIn, document.body)
         }
 
         mediator.on('modules:tonal:loaded', function() {
-            console.log("+++ Got Tonal");
             self.renderContainerLinks(signedIn, self.classes['onwardContainer']);
         });
 
         mediator.on('modules:onward:loaded', function() {
-            console.log("+++ Got Onwards");
             self.renderContainerLinks(signedIn, self.classes['onwardContainer']);
         });
 
         mediator.on('modules:related:loaded', function() {
-            console.log("+++ Got related");
             self.renderContainerLinks(signedIn, self.classes['relatedContainer']);
         });
     };
 
     SaveForLater.prototype.configureSaveThisArticle = function () {
 
-        console.log(" ++ Conf");
-        console.log("Conf " + this.classes['saveThisArticle']);
 
         var saveLinkHolder = qwery(this.classes['saveThisArticle'])[0],
             shortUrl = config.page.shortUrl.replace('http://gu.com', '');
 
         if (this.hasUserSavedArticle(this.userData.articles, shortUrl)) {
-            console.log("++ Saaved");
             this.renderSaveThisArticleLink(false, this.savedArticlesUrl, 'saved');
         } else {
-            console.log("++ Not Saaved");
             this.renderSaveThisArticleLink(true, '', 'save');
 
             bean.one(saveLinkHolder, 'click', this.classes['saveThisArticleButton'],
@@ -193,7 +180,6 @@ define([
     SaveForLater.prototype.renderContainerLinks  = function(signedIn, context) {
         var self = this,
             elements = self.getElementsIndexedById(context);
-        console.log("+++ Elements: " + elements.length);
 
         fastdom.read(function() {
 
@@ -212,21 +198,17 @@ define([
                     meta,
                     $container;
 
-                console.log("++ Vars set");
                 html = template(templateName, {
                     link_text: linkText,
                     url: saveUrl
                 });
-                console.log("++ Template pop");
 
 
                 meta = qwery(self.classes['itemMeta'], node);
-                console.log("++ Meta");
 
 
                 $container = meta.length ? bonzo(meta) : $node;
 
-                console.log("++ Containter 2");
 
                 fastdom.write(function () {
                     $container.append(html);
@@ -239,10 +221,8 @@ define([
                         }
                     }
                 });
-                console.log("++ Written");
             });
         });
-        console.log("++ Dom Done");
     };
 
         //--- Get articles
@@ -252,18 +232,15 @@ define([
         var self = this,
             date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
             newArticle = {id: pageId, shortUrl: shortUrl, date: date, read: false  };
-        console.log("++ Click");
 
         userData.articles.push(newArticle);
 
         identity.saveToArticles(userData).then(
             function(resp) {
                 if(resp.status === 'error') {
-                     console.log("Resp Failure");
                      onArticleSavedError();
                 }
                 else {
-                    console.log("Resp success");
                     self.updateArticleCount();
                     onArticleSaved();
                 }
@@ -281,11 +258,9 @@ define([
         identity.saveToArticles(userData).then(
             function(resp) {
                 if(resp.status === 'error') {
-                     console.log("Delete Resp Failure");
                      onArticleDeletedError();
                 }
                 else {
-                    console.log("Delete success");
                     self.updateArticleCount();
                     onArticleDeleted();
                 }
@@ -296,12 +271,10 @@ define([
     //If this is an article Page, configure the save article link
 
     SaveForLater.prototype.onSaveThisArticle = function () {
-        console.log("++++++++++++++ Sucees " );
         this.renderSaveThisArticleLink(false, this.savedArticlesUrl, 'saved');
     };
 
     SaveForLater.prototype.onSaveThisArticleError = function() {
-        console.log("++++++++++++++ Error " );
         this.renderSaveThisArticleLink(true, '', 'save');
     };
 
@@ -338,7 +311,6 @@ define([
     SaveForLater.prototype.createSaveArticleHandler = function(saveLink, id, shortUrl) {
         var self = this;
 
-        console.log("Creating handla for " + id);
         bean.one(saveLink, 'click',
             self.saveArticle.bind(self,
                 self.onSaveArticle.bind(self, saveLink, id, shortUrl),
@@ -354,7 +326,6 @@ define([
     SaveForLater.prototype.createDeleteArticleHandler = function(deleteLink, id, shortUrl) {
         var self = this;
 
-        console.log("Creating delete handla for " + id);
         bean.one(deleteLink, 'click',
             self.deleteArticle.bind(self,
                 self.onDeleteArticle.bind(self, deleteLink, id, shortUrl),
