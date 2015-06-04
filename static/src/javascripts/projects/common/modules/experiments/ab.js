@@ -165,8 +165,7 @@ define([
             var variant = getVariant(test, variantId);
             if (variant) {
                 variant.test();
-            }
-            if (variantId === 'notintest' && test.notInTest) {
+            } else if (variantId === 'notintest' && test.notInTest) {
                 test.notInTest();
             }
         }
