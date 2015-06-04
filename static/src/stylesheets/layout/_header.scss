@@ -56,24 +56,6 @@ $c-guardian-services-action: #ffffff;
         }
     }
 
-    &.logo-wrapper--tribute {
-        margin-bottom: -$gs-gutter/3;
-
-        svg {
-            width: 160px;
-            height: 36px;
-        }
-
-        @include mq(tablet) {
-            margin-bottom: -$gs-gutter/3;
-
-            svg {
-                width: 320px;
-                height: 71px;
-            }
-        }
-    }
-
     .l-header--is-slim & {
         margin-top: $gs-baseline * .75;
         margin-bottom: 0;

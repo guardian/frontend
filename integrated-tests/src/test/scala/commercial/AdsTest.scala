@@ -11,7 +11,7 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
 
   override protected def get(path: String): Unit = {
-    webDriver.get(s"http://m.code.dev-theguardian.com/$path?test=test#gu.prefs.switchOn=adverts")
+    webDriver.get(s"${Config.baseUrl}/$path?test=test#gu.prefs.switchOn=adverts")
     webDriver.navigate().refresh()
   }
 

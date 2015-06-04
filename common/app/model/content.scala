@@ -317,6 +317,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val seriesTag: Option[Tag] = {
     blogs.find{tag => tag.id != "commentisfree/commentisfree"}.orElse(series.headOption)
   }
+
+  def showFooterContainers = false
 }
 
 object Content {
@@ -568,6 +570,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
   )
+
+  override def showFooterContainers = !isLiveBlog && !shouldHideAdverts
 }
 
 class LiveBlog(content: ApiContentWithMeta) extends Article(content) {

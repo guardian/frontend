@@ -82,6 +82,7 @@ GET         /discussion/profile/:id/witness.json                                
 GET         /open/cta/article/*discussionKey.json                                                                    controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
 
 # Onward
+GET         /most-read-facebook.json                                                                                 controllers.MostViewedFacebookController.renderMostViewed()
 GET         /most-read.json                                                                                          controllers.MostPopularController.render(path = "")
 GET         /most-read/*path.json                                                                                    controllers.MostPopularController.render(path)
 GET         /most-read-geo.json                                                                                      controllers.MostPopularController.renderPopularGeo()
@@ -268,12 +269,12 @@ GET         /commercial/money/current-accounts/:currentAccountType              
 GET         /commercial/money/credit-cards/:creditCardType                                                           controllers.commercial.MoneyOffers.creditCards(creditCardType)
 GET         /commercial/money/loans/:loanType                                                                        controllers.commercial.MoneyOffers.loans(loanType)
 
-GET         /commercial/capi.json                                                                                    controllers.commercial.ContentApiOffers.itemsJson
-GET         /commercial/capi                                                                                         controllers.commercial.ContentApiOffers.itemsHtml
-GET         /commercial/capi-single.json                                                                             controllers.commercial.ContentApiOffers.itemJson
-GET         /commercial/capi-single                                                                                  controllers.commercial.ContentApiOffers.itemHtml
-GET         /commercial/capi-single-merch.json                                                                       controllers.commercial.ContentApiOffers.itemJson
-GET         /commercial/capi-single-merch                                                                            controllers.commercial.ContentApiOffers.itemHtml
+GET         /commercial/capi.json                                                                                    controllers.commercial.ContentApiOffersController.itemsJson
+GET         /commercial/capi                                                                                         controllers.commercial.ContentApiOffersController.itemsHtml
+GET         /commercial/capi-single.json                                                                             controllers.commercial.ContentApiOffersController.itemJson
+GET         /commercial/capi-single                                                                                  controllers.commercial.ContentApiOffersController.itemHtml
+GET         /commercial/capi-single-merch.json                                                                       controllers.commercial.ContentApiOffersController.itemJson
+GET         /commercial/capi-single-merch                                                                            controllers.commercial.ContentApiOffersController.itemHtml
 
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()

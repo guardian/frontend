@@ -28,11 +28,11 @@ define([
     userPrefs
 ) {
     var modules = [
-        ['cm-thirdPartyTags', thirdPartyTags],
         ['cm-articleAsideAdverts', articleAsideAdverts],
         ['cm-articleBodyAdverts', articleBodyAdverts],
         ['cm-sliceAdverts', sliceAdverts],
         ['cm-frontCommercialComponents', frontCommercialComponents],
+        ['cm-thirdPartyTags', thirdPartyTags],
         ['cm-badges', badges]
     ];
 
