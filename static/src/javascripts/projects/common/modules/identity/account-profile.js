@@ -154,7 +154,6 @@ define([
         xhr.send(formData);
     };
 
-
     /*
     *   Handle user avatar upload
     *   TO DO: Use html5 file api to validate file size prior to upload @chrisfinch
