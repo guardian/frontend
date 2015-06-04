@@ -17,8 +17,8 @@ define([
     return function () {
 
         this.id = 'Supporter';
-        this.start = '2015-06-03';
-        this.expiry = '2015-06-08';
+        this.start = '2015-06-04';
+        this.expiry = '2015-06-06';
         this.author = 'David Rapson';
         this.description = 'Test if logged in users are encouraged to become a Supporter';
         this.audience = 0.2;
@@ -41,7 +41,7 @@ define([
                     siteMessageCloseBtn: 'hide'
                 }).show(template(supporterMessageTmpl, {
                     supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=SUPPORTER_BANNER_TEST_A',
-                    messageText: 'Not already a member? Start supporting us today',
+                    messageText: 'Not already a Guardian Member? Start supporting us today',
                     linkText: 'Become a supporter'
                 }));
             }
