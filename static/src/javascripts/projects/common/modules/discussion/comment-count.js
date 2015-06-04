@@ -62,7 +62,6 @@ define([
                         $node = bonzo(node),
                         commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
                         url = $node.attr('data-discussion-url') || getContentUrl(node),
-                        hideLabel = $node.attr('data-discussion-hide-label') === 'true',
                         $container,
                         meta,
                         html;
@@ -76,8 +75,7 @@ define([
                     html = template(templates[format] || defaultTemplate, {
                         url: url,
                         icon: svgs('commentCount16icon', ['inline-tone-fill']),
-                        count: formatters.integerCommas(c.count),
-                        label: hideLabel ? '' : commentOrComments
+                        count: formatters.integerCommas(c.count)
                     });
 
                     meta = qwery('.js-item__meta', node);
