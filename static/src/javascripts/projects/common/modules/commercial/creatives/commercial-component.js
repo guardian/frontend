@@ -102,6 +102,9 @@ define([
                 this.postLoadEvents[this.type] && this.postLoadEvents[this.type](this.$adSlot);
 
                 mediator.emit('modules:commercial:creatives:commercial-component:loaded');
+            }.bind(this),
+            error: function (err) {
+                this.$adSlot.hide();
             }.bind(this)
         }).load();
 
