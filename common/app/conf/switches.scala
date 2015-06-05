@@ -127,15 +127,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val TributeSwitch = Switch(
-    "Feature",
-    "ar-tribute",
-    "If switched on will display the Alana tribute.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 5),
-    exposeClientSide = false
-  )
-
   val IncludeBuildNumberInMemcachedKey = Switch(
     "Performance",
     "memcached-build-number",
@@ -264,6 +255,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  // Commercial
+  val OphanViewIdSwitch = Switch("Commercial",
+    "ophan-view-id",
+    "Depeneding on ophan to pass view ID to the gdf targeting",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 6, 30),
+    exposeClientSide = true
+  )
+
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",
@@ -279,6 +279,15 @@ object Switches {
     "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
     safeState = On,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val CommercialExtraAdsSwitch = Switch(
+    "Commercial",
+    "commercial-extra-ads",
+    "If this switch is ON, extra ads are served on article pages",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 6, 30),
     exposeClientSide = true
   )
 
@@ -462,6 +471,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val ThirdPartiesLaterSwitch = Switch(
+    "Commercial",
+    "third-parties-later",
+    "If this switch is on, less important third parties will be loaded after all ads are rendered",
+    safeState = Off,
+    sellByDate = new LocalDate(2015,8, 30),
+    exposeClientSide = true
+  )
+
   private val appleSellByDate = new LocalDate(2015, 7, 15)
 
   val AppleAdUkNetworkFrontSwitch = Switch(
@@ -611,6 +629,15 @@ object Switches {
   )
 
   // Features
+  val FacebookMostViewed = Switch(
+    "Feature",
+    "ab-facebook-most-viewed",
+    "Facebook most viewed",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
+
   val ABTestHeadlines = Switch(
     "Feature",
     "a-b-test-headlines",
@@ -692,6 +719,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val TaboolaSwitch = Switch(
+    "Feature",
+    "taboola",
+    "Enable the Taboola content recommendation widget.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 1),
+    exposeClientSide = true
+  )
+
   val ForeseeSwitch = Switch(
     "Feature",
     "foresee",
@@ -717,6 +753,15 @@ object Switches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val FontKerningSwitch = Switch(
+    "Feature",
+    "font-kerning",
+    "If this is switched on then fonts will be kerned/optimised for legibility.",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
   )
 
   val SearchSwitch = Switch(
@@ -912,15 +957,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ABShareButtons2 = Switch(
-    "A/B Tests",
-    "ab-share-buttons-2",
-    "Switch for test of combinations of referrer-based size, visibility, and stickiness for article share buttons",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 4),
-    exposeClientSide = true
-  )
-
   val ABHighCommercialComponent = Switch(
     "A/B Tests",
     "ab-high-commercial-component",
@@ -986,6 +1022,15 @@ object Switches {
       exposeClientSide = true
     )
   }
+
+  val ABSupporterMessage = Switch(
+    "A/B Tests",
+    "ab-supporter",
+    "Switch for the Supporter Message A/B test.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 11),
+    exposeClientSide = true
+  )
 
   val FootballFeedRecorderSwitch = Switch(
     "Feature",
@@ -1070,15 +1115,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ContentApiPutSwitch = Switch(
-    "Facia",
-    "facia-tool-contentapi-put",
-    "If this switch is on facia tool will PUT all collection changes to content api",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val FaciaToolPressSwitch = Switch(
     "Facia",
     "facia-tool-press-front",
@@ -1134,11 +1170,11 @@ object Switches {
     exposeClientSide = false
   )
 
-  val FaciaPressNewFormat = Switch(
+  val FaciaPressOldFormat = Switch(
     "Facia",
-    "facia-press-fapi-client-format",
-    "If this switch is on, facia-press will press in the new fapi-client JSON format",
-    safeState = Off,
+    "facia-press-old-client-format",
+    "If this switch is on, facia-press will press in the old fapi-client JSON format",
+    safeState = On,
     sellByDate = new LocalDate(2015, 8, 31),
     exposeClientSide = false
   )

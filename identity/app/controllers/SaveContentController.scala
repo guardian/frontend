@@ -89,24 +89,6 @@ class SaveContentController @Inject() ( api: IdApiClient,
     }
   }
 
-
-  def listSavedContent = authenticatedActions.authAction.async { implicit request =>
-
-    val idRequest = identityRequestParser(request)
-
-    savedArticleService.getOrCreateArticlesList(request.user.auth).flatMap {
-      case Right(savedArticles) =>
-        val form = savedArticlesForm.fill(SavedArticleData(savedArticles.newestFirst.map(_.shortUrl)))
-        fillFormWithApiDataAndGetResult(idRequest, form, savedArticles)
-      case Left(errors) =>
-        val formWithErrors = errors.foldLeft(savedArticlesForm) {
-          case (formWithErrors, Error(message, decription, _, context)) =>
-            formWithErrors.withError(context.getOrElse(""), message)
-        }
-        Future.successful(NoCache(Ok(views.html.profile.savedForLater(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later")))))
-    }
-  }
-
   def listSavedContentPage() = authenticatedActions.authAction.async { implicit request =>
 
     val idRequest = identityRequestParser(request)
@@ -114,7 +96,6 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
     savedArticleService.getOrCreateArticlesList(request.user.auth).flatMap {
       case Right(savedArticles) =>
-        println("Got articles %d".format(savedArticles.articles.length))
         fillFormWithApiDataForPageAndGetResult(idRequest, savedArticles, pageNum)
       case Left(errors) =>
         val formWithErrors = errors.foldLeft(savedArticlesForm) {
@@ -125,69 +106,6 @@ class SaveContentController @Inject() ( api: IdApiClient,
         Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData))))
     }
   }
-
-
-  def deleteSavedContentItem =
-    authenticatedActions.authAction.async { implicit request =>
-      val idRequest = identityRequestParser(request)
-      val boundForm = savedArticlesForm.bindFromRequest
-
-
-      def buildFormFromErrors(errors: List[Error]): Form[SavedArticleData] = {
-        val formWithErrors = errors.foldLeft(savedArticlesForm) {
-          case (formWithErrors, Error(message, decription, _, context)) =>
-            formWithErrors.withError(context.getOrElse(""), message)
-        }
-        formWithErrors
-      }
-
-      def onError(formWithErrors: Form[SavedArticleData]): Future[Result] = {
-        savedArticleService.getOrCreateArticlesList(request.user.auth).flatMap {
-          case Right(savedArticles) =>
-            fillFormWithApiDataAndGetResult(idRequest, formWithErrors, savedArticles)
-          case Left(errors) =>
-            val formWithApiErrors = buildFormFromErrors(errors)
-            Future.successful(NoCache(Ok(views.html.profile.savedForLater(page, formWithApiErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later")))))
-        }
-      }
-
-      def onSuccess(data: SavedArticleData): Future[Result] = {
-        val response: Future[Result] = savedArticleService.getOrCreateArticlesList(request.user.auth).flatMap {
-          case Right(savedArticles) =>
-            val form = savedArticlesForm.fill(SavedArticleData(savedArticles.articles.map(_.shortUrl)))
-
-            val updatedArticlesViow: Option[Future[Result]] = data.deleteArticle.map {
-              shortUrlOfDeletedArticle =>
-                val updatedArticles = savedArticles.removeArticle(shortUrlOfDeletedArticle)
-                val updatedResult = api.updateSavedArticles(request.user.auth, updatedArticles).flatMap {
-                  case Right(updatedArticles) =>
-                    fillFormWithApiDataAndGetResult(idRequest, form, updatedArticles)
-
-                  case Left(errors) =>
-                    val formWithApiErrors = buildFormFromErrors(errors)
-                    fillFormWithApiDataAndGetResult(idRequest, formWithApiErrors, savedArticles)
-                }
-                updatedResult
-            }
-
-            updatedArticlesViow.getOrElse {
-              val formWithError = form.withError("Error", "There was a problem with your request")
-              Future.successful(
-                NoCache(Ok(views.html.profile.savedForLater(page, form, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"))))
-              )
-            }
-
-          case Left(errors) =>
-            val formWithErrors = buildFormFromErrors(errors)
-            Future.successful(
-              NoCache(Ok(views.html.profile.savedForLater(page, formWithErrors, List.empty, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"))))
-            )
-        }
-        response
-      }
-
-      boundForm.fold[Future[Result]](onError, onSuccess)
-    }
 
   def deleteSavedContentItemFromPage() =
     authenticatedActions.authAction.async { implicit request =>
@@ -247,27 +165,13 @@ class SaveContentController @Inject() ( api: IdApiClient,
         }
         response
       }
-
       boundForm.fold[Future[Result]](onError, onSuccess)
     }
 
-  private def fillFormWithApiDataAndGetResult(idRequest: IdentityRequest, form: Form[SavedArticleData], updatedArticles: SavedArticles)(implicit request: RequestHeader): Future[Result] = {
-    val savedApiContentItems: Iterable[Future[Option[ApiContent]]] = updatedArticles.newestFirst.map {
-      article =>
-        getResponse(LiveContentApi.item(article.id, Edition.defaultEdition).showFields("webTitle,webUrl,trailText,shortUrl").showElements("all")).map(_.content.map(Content(_)))
-    }
-
-    Future.sequence(savedApiContentItems).map { savedForLaterSeq =>
-      val contentList = savedForLaterSeq.toList.collect {
-        case Some(content) => content
-      }
-      NoCache(Ok(views.html.profile.savedForLater(page, form, contentList, formActionUrl(idUrlBuilder, idRequest, "/saved-for-later"))))
-    }
-  }
-
-
   private def fillFormWithApiDataForPageAndGetResult(idRequest: IdentityRequest, updatedArticles: SavedArticles, pageNum: Int)
                                                     (implicit request: RequestHeader): Future[Result] = {
+
+    //Deal with case where one item on last page has` been deleted
     if ( pageNum > updatedArticles.numPages && pageNum > 1) {
       Future.successful(NoCache(SeeOther( s"/saved-for-later-page?page=%d".format(pageNum - 1))))
     } else {
@@ -289,7 +193,6 @@ class SaveContentController @Inject() ( api: IdApiClient,
     }
   }
 }
-
 
 case class SavedArticleData(shortUrls: List[String], deleteArticle: Option[String] = None)
 object SavedArticleData {

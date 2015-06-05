@@ -22,7 +22,7 @@ object MostReadAgent extends Logging with ExecutionContexts {
         url <- (item \ "url").asOpt[String]
         count <- (item \ "count").asOpt[Int]
       } yield {
-        (UrlToContentPath(url), count)
+        (urlToContentPath(url), count)
       }
 
       agent.alter(mostRead.toMap)
@@ -32,13 +32,4 @@ object MostReadAgent extends Logging with ExecutionContexts {
   def getViewCount(id: String): Option[Int] = {
     agent.get().get(id)
   }
-
-  private def UrlToContentPath(url: String): String = {
-    var contentId = new URL(url).getPath
-    if (contentId.startsWith("/")) {
-      contentId = contentId.substring(1)
-    }
-    contentId
-  }
-
 }

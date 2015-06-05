@@ -13,7 +13,6 @@ import cards._
 @Singleton
 class SaveForLaterDataBuilder @Inject()(idUrlBuilder: IdentityUrlBuilder) {
 
-
   def apply(savedArticlesForPage: List[Content], allSavedArticles: SavedArticles, idRequest: IdentityRequest, pageNum: Int) = {
 
     val contentCards: List[ContentCard] = savedArticlesForPage.map { article =>

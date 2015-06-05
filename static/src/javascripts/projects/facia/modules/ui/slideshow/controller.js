@@ -1,5 +1,6 @@
 define([
     'Promise',
+    'common/modules/accessibility/main',
     'common/utils/$',
     'common/utils/mediator',
     'bonzo',
@@ -7,6 +8,7 @@ define([
     'facia/modules/ui/slideshow/dom'
 ], function (
     Promise,
+    accessibility,
     $,
     mediator,
     bonzo,
@@ -41,6 +43,10 @@ define([
     }
 
     function actualInit() {
+        if (!accessibility.isOn('flashing-elements')) {
+            return;
+        }
+
         $('.js-slideshow').each(function (container) {
             return dom.init(container)
                 .then(waitForLazyLoad).then(startSlideshow);

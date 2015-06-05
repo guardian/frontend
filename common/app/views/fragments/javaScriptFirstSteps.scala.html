@@ -204,6 +204,17 @@
             if (testCssSupport('position', 'fixed')) {
                 docClass += ' has-fixed';
             }
+
+            @if(FontKerningSwitch.isSwitchedOn) {
+                if (window.location.hash !== '#no-kern') {
+                    docClass += ' should-kern';
+                }
+            } else {
+                if (window.location.hash === '#kern') {
+                    docClass += ' should-kern';
+                }
+            }
+
             docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
         }
     })(guardian.isModernBrowser);

@@ -41,19 +41,15 @@ define([
                 bean.one(delete_all, 'click', '.save-for-later__button', function(event) {
                     event.preventDefault();
                     self.renderDeleteButton('confirm-delete-all');
-                })
-
+                });
             }
         };
 
         this.renderDeleteButton = function ( state) {
+            fastdom.read(function () {
+                var $button = bonzo(qwery('.js-save-for-later__delete-all')[0]);
 
-            var self = this;
-
-            fastdom.read(function() {
-                var  $button = bonzo(qwery('.js-save-for-later__delete-all')[0]) ;
-
-                fastdom.write( function() {
+                fastdom.write(function () {
                     $button.html(template(deleteButtonAllTmp, {
                         icon: svgs('bookmark', ['i-left']),
                         state: state
