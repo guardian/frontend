@@ -4,6 +4,7 @@ define([
     'bonzo',
     'bean',
     'common/utils/_',
+    'fastdom',
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/template',
@@ -11,13 +12,14 @@ define([
     'common/views/svgs',
 
     'text!common/views/identity/saved-for-later-profile-link.html',
-    'text!common/views/identity/saved-for-later--delete-all-button.html'
+    'text!common/views/loyalty/save-for-later--delete-all-button.html'
 ], function (
     $,
     qwery,
     bonzo,
     bean,
     _,
+    fastdom,
     config,
     mediator,
     template,
@@ -32,133 +34,32 @@ define([
 
         this.init = function () {
             var self = this,
-                form = $('.js-saved-content-form')[0];
+                delete_all = $('.js-save-for-later__delete-all')[0];
 
-            /*
-            if (form) {
-                bean.on(form, 'click', '.js-saved-content__button-delete-all', function (event) {
+            if(delete_all) {
+                this.renderDeleteButton('delete-all');
+                bean.one(delete_all, 'click', '.save-for-later__button', function(event) {
                     event.preventDefault();
-                    self.fetchArticlesAndRemoveAll();
-                });
+                    self.renderDeleteButton('confirm-delete-all');
+                })
+
             }
-
-            this.savedArticles = $('.js-saved-content');
-            this.savedArticles.each(function (element) {
-                bean.on(element, 'click', '.js-saved-content__button', function (event) {
-                    event.preventDefault();
-                    self.fetchArticlesAndRemove(element);
-                });
-            })
-            */
-            this.renderDeleteButton('delete-all')
-
-            mediator.on('modules:profilenav:loaded', function () {
-
-                console.log("Mate popup ink");
-                var popup = qwery('.popup--profile')[0];
-                console.log("Got bonzo");
-
-                bonzo(popup).append(bonzo.create(
-                    template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
-                        idUrl: config.page.idUrl
-                    })
-                ));
-                console.log("Done");
-            });
         };
-
 
         this.renderDeleteButton = function ( state) {
 
-            var self = this,
-                $button = bonzo(qwery('.js-save-for-later__delete-all')[0])
-
-            $button.html(template(deleteButtonAllTmp, {
-                icon: svgs('bookmark', ['i-left']),
-                state: state
-           }));
-        };
-
-
-
-        this.fetchArticlesAndRemoveAll = function () {
-            var self = this,
-                data;
-
-            identity.getSavedArticles().then(
-                function success(resp) {
-                    data = self.getArticleDataFromResponse(resp);
-                    self.deleteAllArticles(data.version);
-                }
-            );
-        };
-
-
-
-        this.fetchArticlesAndRemove = function (element) {
-            var self = this,
-                data,
-                shortUrl = element.getAttribute('shortUrl');
-
-            identity.getSavedArticles().then(
-                function success(resp) {
-                    data = self.getArticleDataFromResponse(resp);
-                    self.deleteArticle(data, shortUrl, element);
-                }
-            );
-        };
-
-        this.deleteArticle = function (data, shortUrl, element) {
-
             var self = this;
 
-            data.articles = _.filter(data.articles, function (article) {
-                return article.shortUrl !== shortUrl;
+            fastdom.read(function() {
+                var  $button = bonzo(qwery('.js-save-for-later__delete-all')[0]) ;
+
+                fastdom.write( function() {
+                    $button.html(template(deleteButtonAllTmp, {
+                        icon: svgs('bookmark', ['i-left']),
+                        state: state
+                    }));
+                });
             });
-
-            identity.saveToArticles(data).then(
-                function success(resp) {
-                    if (resp.status !== 'error') {
-                        element.remove();
-                        self.updateNumArticles(data.articles.length);
-                    }
-                }
-            );
-        };
-
-        this.deleteAllArticles = function (version) {
-
-            var self = this;
-
-            identity.saveToArticles({version: version, articles:[]}).then(
-                function success(resp) {
-                    if (resp.status !== 'error') {
-                        self.savedArticles.each(function (element) {
-                            element.remove();
-                        });
-                        self.updateNumArticles(0);
-                    }
-                }
-            );
-        };
-
-        this.getArticleDataFromResponse = function (resp) {
-
-            var notFound  = {message:'Not found', description:'Resource not found'},
-                date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
-
-            if (resp.status === 'error') {
-                if (resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
-                    return {version: date, articles:[]};
-                }
-            } else {
-                return resp.savedArticles;
-            }
-        };
-
-        this.updateNumArticles = function (numArticles) {
-            bonzo(qwery('.js-saved-content__num-articles')[0]).html('You have ' + numArticles + ' saved articles.');
-            bonzo(qwery('.brand-bar__item--saved-for-later')[0]).html('Saved (' + numArticles + ')')
         };
     }
 
