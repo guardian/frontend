@@ -306,7 +306,7 @@ define([
             this.$els.navigationScroll.css('display', 'block');
             if (breakpoint === 'desktop' || breakpoint === 'wide') {
                 this.$els.navigationGreySection.css('border-top', '36px solid #00456e');
-                this.$els.header.addClass('has-navigation');
+                this.$els.header.addClass('l-header--has-navigation');
                 //this.$els.burgerIcon.show();
                 //this.$els.navigation.show();
             } else if (breakpoint === 'mobile' || breakpoint === 'tablet') {
@@ -318,7 +318,7 @@ define([
         } else {
             this.$els.navigationScroll.css('display', 'none');
             if (breakpoint === 'desktop' || breakpoint === 'wide') {
-                this.$els.header.removeClass('has-navigation');
+                this.$els.header.removeClass('l-header--has-navigation');
                 //this.$els.burgerIcon.hide();
                 //this.$els.navigation.hide();
             } else if (breakpoint === 'mobile' || breakpoint === 'tablet') {
@@ -352,7 +352,7 @@ define([
                 });
 
                 this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
-                this.$els.header.addClass('is-slim');
+                this.$els.header.addClass('l-header--is-slim');
                 this.$els.header.css('transform', 'translateY(0%)');
                 this.showNavigation(scrollY, breakpoint);
             } else if (scrollY >= this.headerBigHeight) {
@@ -364,7 +364,7 @@ define([
                 });
 
                 //header is slim from now on
-                this.$els.header.addClass('is-slim');
+                this.$els.header.addClass('l-header--is-slim');
                 this.$els.burgerIcon.hide();
 
                 this.$els.header.css({
@@ -382,7 +382,7 @@ define([
                     'z-index': '10000'
                 });
                 //header is not slim yet
-                this.$els.header.removeClass('is-slim');
+                this.$els.header.removeClass('l-header--is-slim');
                 this.$els.burgerIcon.show();
 
                 this.$els.header.css({

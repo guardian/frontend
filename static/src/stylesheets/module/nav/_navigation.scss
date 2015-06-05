@@ -78,10 +78,6 @@ $c-navigation-expandable-background: colour(neutral-1);
         .l-header--is-slim & {
             display: none;
         }
-
-        .l-header--is-slim-ab & {
-            display: block;
-        }
     }
 
     &:after {
@@ -784,8 +780,19 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 }
 
-.has-navigation {
-    .navigation-toggle
+.l-header--is-slim {
+    .navigation {
+        display: none;
+    }
+}
+
+.l-header--has-navigation {
+    .navigation,
+    .navigation:before {
+        display: block;
+    }
+
+    .navigation-toggle {
         min-width: 0;
         float: left;
         line-height: 48px;
