@@ -20,9 +20,6 @@
         }
         data-discussion-closed="@item.discussionSettings.isClosedForComments"
         data-discussion-url="@item.header.url.get(request)#comments"
-        @if(item.cutOut.isDefined || item.showTimestamp) {
-            data-discussion-hide-label="true"
-        }
     }
 
     @for(id <- item.id; headlines <- headlinesJsonString(id)) {

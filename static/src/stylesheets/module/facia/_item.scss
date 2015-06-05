@@ -465,8 +465,14 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__meta {
     position: absolute;
     bottom: 0;
+    left: $gs-gutter * .25;
+    right: $gs-gutter * .25;
     @include fs-textSans(1);
     color: colour(neutral-2);
+
+    .inline-icon {
+        fill: colour(neutral-3);
+    }
 
     a {
         // make sure meta links always clickable,
@@ -493,7 +499,6 @@ $fc-item-gutter: $gs-gutter / 4;
         height: 11px;
         width: 11px;
         margin-right: 2px;
-        fill: colour(neutral-3);
     }
 }
 
@@ -504,11 +509,27 @@ $fc-item-gutter: $gs-gutter / 4;
     top: 3px;
     float: left;
     margin-right: 1px;
-    fill: colour(neutral-3);
 }
 
 .fc-trail__count--inline-template {
     display: none;
+}
+
+.fc-save-for-later {
+    float: right;
+
+    &:before {
+        content: 'save';
+        margin-right: .4em;
+    }
+
+    .inline-icon {
+        float: right;
+    }
+
+    &.fc-save-for-later--is-saved:before {
+        content: 'saved';
+    }
 }
 
 .fc-item--has-cutout .fc-item__media-wrapper {

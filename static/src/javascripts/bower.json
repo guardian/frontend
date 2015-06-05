@@ -3,6 +3,7 @@
   "version": "0.1.0 ",
   "dependencies": {
     "bean": "~1.0.14",
+    "classnames": "~2.1.2",
     "eventEmitter": "~4.2.6",
     "fastdom": "0.8.5",
     "lodash": "~2.4.1",
@@ -32,6 +33,7 @@
   "install": {
     "path": "components",
     "sources": {
+      "classnames": "bower_components/classnames/index.js",
       "curl": [
         "bower_components/curl/dist/curl/curl.js",
         {
