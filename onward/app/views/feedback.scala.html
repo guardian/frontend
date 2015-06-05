@@ -6,7 +6,7 @@
             <header class="content__head">
                 <div class="gs-container">
                     <div class="content__main-column">
-                        <h1 itemprop="headline" class="content__headline">Send technical feedback</h1>
+                        <h1 itemprop="headline" class="content__headline">Report technical feedback</h1>
                     </div>
                 </div>
             </header>
@@ -19,26 +19,25 @@
                                     @defining(layout.Feedback(path)) { feedback =>
                                         <p>@feedback.problem</p>
                                         @feedback.links.map { links =>
-                                            <p>Please tell us more by choosing one of the options below:</p>
+                                            <p>Please tell us more by choosing one of the options below.  You will then be taken to a new page.</p>
                                             <ul>
                                             @links.map { link =>
                                                 <li><a data-link-name="tech feedback : @link._1" href="@link._1/">@link._2</a></li>
                                             }
                                             </ul>
                                         }
+                                        <p>Need help, or want something else? Please see our
+                                            <a data-link-name="tech feedback : contact-us" href="/info/contact-us">
+                                                contact us page</a>.</p>
                                         @if(feedback.email) {
                                             <p>
-                                                Although we can't reply, if you would like to attach additional feedback please send it to
-                                                <a class="js-tech-feedback-mailto" data-link-name="tech feedback : mailto: dotcom" href="mailto:dotcom.feedback@@theguardian.com">dotcom.feedback@@theguardian.com</a>
+                                                Want to attach more detail to your report?  Drop a message to
+                                                <a class="js-tech-feedback-mailto" data-link-name="tech feedback : mailto : dotcom" href="mailto:dotcom.feedback@@theguardian.com">dotcom.feedback@@theguardian.com</a><br>
+                                                <em>Please note that we can't reply to messages sent there.</em>
                                             </p>
+                                            <p>Think you can fix it yourself?  Come and <a href="http://developers.theguardian.com/">work for us</a>!</p>
                                         }
                                     }
-                                    <p>If you need specific assistance contact Guardian userhelp at
-                                        <a class="js-userhelp-mailto" data-link-name="tech feedback : mailto: userhelp" href="mailto:userhelp@@theguardian.com">
-                                            userhelp@@theguardian.com</a>
-                                    </p>
-                                    <p>You can also visit our <a data-link-name="tech feedback : faq" href="http://www.theguardian.com/help/users/faq">
-                                        User help page</a> for further information.</p>
                                 </div>
                             </div>
                         </div>
