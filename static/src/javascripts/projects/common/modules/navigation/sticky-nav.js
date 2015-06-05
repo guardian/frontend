@@ -271,9 +271,6 @@ define([
             this.$els.sticky                 = $('.sticky-nav-mt-test');
             this.$els.burgerIcon             = $('.js-navigation-toggle', this.$els.navHeader);
             this.$els.logoWrapper            = $('.logo-wrapper', this.$els.navHeader);
-            this.$els.navigationScroll       = $('.navigation__scroll', this.$els.navHeader);
-            this.$els.$navigationScroll      = $('.navigation__scroll', this.$els.navHeader);
-            this.$els.$navigationGreySection = $('.navigation__container--first', this.$els.navHeader);
             this.$els.navigation             = $('.navigation', this.$els.navHeader);
             this.$els.bannerMobile           = $('.top-banner-ad-container--mobile');
             this.headerBigHeight             = this.$els.navHeader.dim().height;
@@ -290,6 +287,36 @@ define([
             }.bind(this), 10));
         }
     };
+
+    StickyNav.prototype.showNavigation = function (scrollY, breakpoint) {
+        if (scrollDirection(scrollY, this.$els) === 'up') {
+            this.$els.$navigationScroll.css('display', 'block');
+            if (breakpoint === 'desktop' || breakpoint === 'wide') {
+                this.$els.$navigationGreySection.css('border-top', '36px solid #00456e');
+                this.$els.burgerIcon.show();
+                this.$els.header.removeClass('l-header--is-slim l-header--is-slim-ab');
+            } else if (breakpoint === 'mobile' || breakpoint === 'tablet') {
+                this.$els.navigation.css('height', null);
+                if (breakpoint === 'tablet') {
+                    this.$els.burgerIcon.show();
+                    this.$els.header.removeClass('l-header--is-slim l-header--is-slim-ab');
+                }
+            }
+        } else {
+            this.$els.$navigationScroll.css('display', 'none');
+            if (breakpoint === 'desktop' || breakpoint === 'wide') {
+                this.$els.burgerIcon.hide();
+                this.$els.header.addClass('l-header--is-slim l-header--is-slim-ab');
+            } else if (breakpoint === 'mobile' || breakpoint === 'tablet') {
+                this.$els.navigation.css('height', 0);
+                if (breakpoint === 'tablet') {
+                    this.$els.burgerIcon.hide();
+                    this.$els.header.addClass('l-header--is-slim l-header--is-slim-ab');
+                }
+            }
+        }
+    };
+
 
     StickyNav.prototype.updatePosition = function (breakpoint) {
         var bannerHeight = this.$els.bannerDesktop.dim().height,
@@ -313,7 +340,7 @@ define([
                 this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
                 this.$els.header.addClass('is-slim');
                 this.$els.header.css('transform', 'translateY(0%)');
-                //this.showNavigation(scrollY, breakpoint);
+                this.showNavigation(scrollY, breakpoint);
             } else if (scrollY >= this.headerBigHeight) {
                 // Add is not sticky anymore
                 this.$els.bannerDesktop.css({
