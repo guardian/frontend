@@ -12,7 +12,6 @@ class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
 
   override protected def get(path: String): Unit = {
     webDriver.get(s"${Config.baseUrl}/$path?test=test#gu.prefs.switchOn=adverts")
-    webDriver.navigate().refresh()
   }
 
   private def waitForElement(selector: String): Unit = {
@@ -25,6 +24,7 @@ class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
                             domSlotId: String,
                             selector: String): Option[WebElement] = {
     get(path)
+    waitForAdLoad(domSlotId)
     waitForElement(selector)
     $(selector).headOption
   }
