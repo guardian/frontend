@@ -108,7 +108,7 @@ define([
                 applicableTests = ab.getActiveTestsEventIsApplicableTo(clickSpec);
                 if (applicableTests !== undefined && applicableTests.length > 0) {
                     clickSpec.tag = _.map(applicableTests, function (test) {
-                        var variant = ab.getTestVariant(test);
+                        var variant = ab.getTestVariantId(test);
                         return 'AB,' + test + ',' + variant + ',' + clickSpec.tag;
                     }).join(',');
                 }
