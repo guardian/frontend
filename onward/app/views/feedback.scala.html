@@ -1,36 +1,54 @@
-@(page: model.Page)(implicit request: RequestHeader)
+@(page: model.Page, path: String)(implicit request: RequestHeader)
 
-@main(page){ }{
-<div class="l-side-margins">
-    <div class="content content--expired">
-        <header class="content__head">
-            <div class="gs-container">
-                <div class="content__main-column">
-                    <h1 itemprop="headline" class="content__headline">Report technical feedback</h1>
+@main(page){ } {
+    <div class="l-side-margins">
+        <div class="content content--expired">
+            <header class="content__head">
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        <h1 itemprop="headline" class="content__headline">Send technical feedback</h1>
+                    </div>
                 </div>
-            </div>
-        </header>
-        <div class="content__main">
-            <div class="gs-container">
-                <div class="content__main-column content__main-column--expired">
-                    <div class="js-article__container u-cf">
-                        <div class="from-content-api" itemprop="articleBody">
-                            <div class="from-content-api">
-                                <p>We're sorry to hear that you've experienced an issue</p>
-                                <p>If you'd like to give us details, please email us at
-                                    <a class="js-tech-feedback-mailto" data-link-name="tech feedback : mailto" href="mailto:userhelp@@theguardian.com">userhelp@@theguardian.com</a>
-                                </p>
-                                <p>You can also visit our <a data-link-name="tech feedback : faq" href="http://www.theguardian.com/help/users/faq">User help page</a> for further help.</p>
+            </header>
+            <div class="content__main">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--expired">
+                        <div class="js-article__container u-cf">
+                            <div class="from-content-api" itemprop="articleBody">
+                                <div class="from-content-api">
+                                    @defining(layout.Feedback(path)) { feedback =>
+                                        <p>@feedback.problem</p>
+                                        @feedback.links.map { links =>
+                                            <p>Please tell us more by choosing one of the options below:</p>
+                                            <ul>
+                                            @links.map { link =>
+                                                <li><a data-link-name="tech feedback : @link._1" href="@link._1/">@link._2</a></li>
+                                            }
+                                            </ul>
+                                        }
+                                        @if(feedback.email) {
+                                            <p>
+                                                Although we can't reply, if you would like to attach additional feedback please send it to
+                                                <a class="js-tech-feedback-mailto" data-link-name="tech feedback : mailto: dotcom" href="mailto:dotcom.feedback@@theguardian.com">dotcom.feedback@@theguardian.com</a>
+                                            </p>
+                                        }
+                                    }
+                                    <p>If you need specific assistance contact Guardian userhelp at
+                                        <a class="js-userhelp-mailto" data-link-name="tech feedback : mailto: userhelp" href="mailto:userhelp@@theguardian.com">
+                                            userhelp@@theguardian.com</a>
+                                    </p>
+                                    <p>You can also visit our <a data-link-name="tech feedback : faq" href="http://www.theguardian.com/help/users/faq">
+                                        User help page</a> for further information.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="facia-container facia-container--layout-content">
-        @fragments.mostPopularPlaceholder("../../../diagnostics/public/")
+        <div class="facia-container facia-container--layout-content">
+        @fragments.mostPopularPlaceholder("/")
+        </div>
     </div>
-</div>
 }

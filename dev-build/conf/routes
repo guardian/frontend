@@ -108,7 +108,8 @@ GET         /video/end-slate/section/*sectionId.json                            
 GET         /embed/card/*path.json                                                                                   controllers.RichLinkController.render(path)
 GET         /embed/card/*path                                                                                        controllers.RichLinkController.renderHtml(path)
 # User tech feedback
-GET            /info/tech-feedback/                                                                                           controllers.TechFeedbackController.techFeedback()
+GET        /info/tech-feedback/                                                                                      controllers.TechFeedbackController.techFeedback(path = "")
+GET        /info/tech-feedback/*path                                                                                 controllers.TechFeedbackController.techFeedback(path)
 
 # Sport
 GET         /sport/cricket/match/:matchId.json                                                                       controllers.CricketMatchController.renderMatchIdJson(matchId)

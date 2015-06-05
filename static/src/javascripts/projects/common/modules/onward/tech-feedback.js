@@ -18,23 +18,32 @@ define([
         return str;
     }
 
+    function addEmailHeaders(link) {
+        return function () {
+            var oldHref = link.attr('href');
+            var props = {
+                browser: window.navigator.userAgent,
+                page: window.location,
+                width: window.innerWidth
+            };
+            var body = '\r\n\r\n\r\n\r\n------------------------------\r\nAdditional technical data about your request - please do not edit:\r\n\r\n'
+                + objToString(props)
+                + '\r\n\r\n';
+            link.attr('href', oldHref + '?body=' + encodeURIComponent(body));
+        };
+    }
+
+    function registerEmailHandler(cssClass) {
+        var link = $(cssClass);
+        if (link.length) {
+            bean.on(link[0], 'click', addEmailHeaders(link));
+        }
+    }
+
     return {
         init: function () {
-            var link = $('.js-tech-feedback-mailto');
-            if (link.length) {
-                bean.on(link[0], 'click', function () {
-                    var oldHref = link.attr('href');
-                    var props = {
-                        referrer: document.referrer,
-                        width: window.innerWidth
-                    };
-                    var body = '\r\n\r\n\r\n\r\n------------------------------\r\nAdditional technical data about your request - please do not edit:\r\n\r\n'
-                        + objToString(props)
-                        + '\r\n\r\n';
-                    link.attr('href', oldHref + '?body=' + encodeURIComponent(body));
-                });
-            }
-
+            registerEmailHandler('.js-tech-feedback-mailto');
+            registerEmailHandler('.js-userhelp-mailto');
         }
     };
 });
