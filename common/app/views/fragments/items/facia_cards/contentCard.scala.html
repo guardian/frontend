@@ -20,6 +20,9 @@
         }
         data-discussion-closed="@item.discussionSettings.isClosedForComments"
         data-discussion-url="@item.header.url.get(request)#comments"
+        @if(item.cutOut.isDefined || item.showTimestamp) {
+            data-discussion-hide-label="true"
+        }
     }
 
     @for(id <- item.id; headlines <- headlinesJsonString(id)) {
@@ -159,7 +162,9 @@ data-test-id="facia-card"
             <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
         }
 
-        @meta(item)
+        @if(item.showMeta) {
+            @meta(item)
+        }
     </div>
 
         @if(item.cardTypes.showCutOut) {

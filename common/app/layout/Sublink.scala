@@ -281,6 +281,8 @@ case class ContentCard(
   def mediaWidthsByBreakpoint = FaciaWidths.mediaFromItemClasses(cardTypes)
 
   def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
+
+  def showMeta = discussionSettings.isCommentable || showTimestamp
 }
 
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard
