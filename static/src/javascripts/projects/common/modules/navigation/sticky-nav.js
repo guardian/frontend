@@ -271,6 +271,8 @@ define([
             this.$els.sticky                 = $('.sticky-nav-mt-test');
             this.$els.burgerIcon             = $('.js-navigation-toggle', this.$els.navHeader);
             this.$els.logoWrapper            = $('.logo-wrapper', this.$els.navHeader);
+            this.$els.navigationScroll      = $('.navigation__scroll', this.$els.navHeader);
+            this.$els.navigationGreySection = $('.navigation__container--first', this.$els.navHeader);
             this.$els.navigation             = $('.navigation', this.$els.navHeader);
             this.$els.bannerMobile           = $('.top-banner-ad-container--mobile');
             this.headerBigHeight             = this.$els.navHeader.dim().height;
@@ -288,30 +290,41 @@ define([
         }
     };
 
+    StickyNav.prototype.scrollDirection = function (scrollY, config) {
+        if (scrollY > config.prevScroll) {
+            config.direction = 'down';
+        } else if (scrollY < config.prevScroll) {
+            config.direction = 'up';
+        }
+        config.prevScroll = scrollY;
+
+        return config.direction;
+    }
+
     StickyNav.prototype.showNavigation = function (scrollY, breakpoint) {
-        if (scrollDirection(scrollY, this.$els) === 'up') {
-            this.$els.$navigationScroll.css('display', 'block');
+        if (this.scrollDirection(scrollY, this.$els) === 'up') {
+            this.$els.navigationScroll.css('display', 'block');
             if (breakpoint === 'desktop' || breakpoint === 'wide') {
-                this.$els.$navigationGreySection.css('border-top', '36px solid #00456e');
-                this.$els.burgerIcon.show();
-                this.$els.header.removeClass('l-header--is-slim l-header--is-slim-ab');
+                this.$els.navigationGreySection.css('border-top', '36px solid #00456e');
+                this.$els.header.addClass('has-navigation');
+                //this.$els.burgerIcon.show();
+                //this.$els.navigation.show();
             } else if (breakpoint === 'mobile' || breakpoint === 'tablet') {
                 this.$els.navigation.css('height', null);
                 if (breakpoint === 'tablet') {
                     this.$els.burgerIcon.show();
-                    this.$els.header.removeClass('l-header--is-slim l-header--is-slim-ab');
                 }
             }
         } else {
-            this.$els.$navigationScroll.css('display', 'none');
+            this.$els.navigationScroll.css('display', 'none');
             if (breakpoint === 'desktop' || breakpoint === 'wide') {
-                this.$els.burgerIcon.hide();
-                this.$els.header.addClass('l-header--is-slim l-header--is-slim-ab');
+                this.$els.header.removeClass('has-navigation');
+                //this.$els.burgerIcon.hide();
+                //this.$els.navigation.hide();
             } else if (breakpoint === 'mobile' || breakpoint === 'tablet') {
                 this.$els.navigation.css('height', 0);
                 if (breakpoint === 'tablet') {
                     this.$els.burgerIcon.hide();
-                    this.$els.header.addClass('l-header--is-slim l-header--is-slim-ab');
                 }
             }
         }
@@ -327,6 +340,7 @@ define([
         });
 
         fastdom.write(function () {
+            // Header is slim and navigation is shown on the scroll up
             if (scrollY >= this.headerBigHeight + bannerHeight) {
                 this.$els.header.css({
                     position:  'fixed',
@@ -350,7 +364,7 @@ define([
                 });
 
                 //header is slim from now on
-                this.$els.header.addClass('l-header--is-slim l-header--is-slim-ab');
+                this.$els.header.addClass('is-slim');
                 this.$els.burgerIcon.hide();
 
                 this.$els.header.css({
@@ -358,7 +372,6 @@ define([
                     'margin-top': bannerHeight,
                     'transform': 'translateY(-500%)'
                 });
-                this.$els.header.removeClass('is-slim');
                 this.$els.main.css('margin-top', this.headerBigHeight - this.$els.header.dim().height);
             } else {
                 // Make sure that we show slim nav when page loaded with anchor
@@ -369,10 +382,9 @@ define([
                     'z-index': '10000'
                 });
                 //header is not slim yet
-                this.$els.header.removeClass('l-header--is-slim l-header--is-slim-ab');
+                this.$els.header.removeClass('is-slim');
                 this.$els.burgerIcon.show();
 
-                this.$els.header.removeClass('is-slim');
                 this.$els.header.css({
                     position:  'static',
                     width:     '100%',

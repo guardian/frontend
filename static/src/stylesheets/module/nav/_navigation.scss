@@ -784,6 +784,16 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 }
 
+.has-navigation {
+    .navigation-toggle
+        min-width: 0;
+        float: left;
+        line-height: 48px;
+        position: static;
+        border-left: 0;
+    }
+}
+
 /**
  * Burger icon
  */
