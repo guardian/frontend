@@ -66,8 +66,6 @@ define([
             // the username in the header
             if (!$container.hasClass('is-signed-in')) {
                 fastdom.write(function () {
-
-
                     $content.text(user.displayName);
                     $container.addClass('is-signed-in');
                     if (config.switches.becomeAMember) {
@@ -87,7 +85,6 @@ define([
             );
         }
 
-        console.log("++ Profile loaded");
         this.emitLoadedEvent(user);
     };
 
