@@ -101,21 +101,6 @@
     @include mq(wide) {
         max-width: none;
     }
-
-    .site-message--panel-mtrec1 & ,
-    .site-message--panel-mtrec2 & {
-        font-weight: bold;
-        padding-top: 10px;
-
-        @include mq(mobile) {
-            padding-left: 14px;
-        }
-    }
-}
-
-.site-message__description {
-    font-size: 14px;
-    font-weight: normal;
 }
 
 .site-message__message--tall {
@@ -131,13 +116,6 @@
         display: table-cell;
         vertical-align: middle;
         margin-top: 0;
-    }
-
-    .site-message--panel-mtrec1 & ,
-    .site-message--panel-mtrec2 & {
-        @include mq(mobile) {
-            padding-left: 14px;
-        }
     }
 }
 
@@ -431,9 +409,4 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message--supporter {
     background: colour(news-main-2);
-}
-
-.site-message--panel-mtrec1,
-.site-message--panel-mtrec2 {
-    background: colour(neutral-2);
 }

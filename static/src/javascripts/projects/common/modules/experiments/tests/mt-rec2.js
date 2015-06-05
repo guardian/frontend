@@ -5,10 +5,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/template',
-    'common/modules/ui/message',
-    'common/modules/navigation/sticky-nav',
-    'text!common/views/invite-to-panel.html'
+    'common/modules/navigation/sticky-nav'
 ], function (
     fastdom,
     $,
@@ -16,10 +13,7 @@ define([
     config,
     detect,
     mediator,
-    template,
-    Message,
-    stickyNav,
-    inviteToPanelTemplate
+    stickyNav
 ) {
     return function () {
         this.id = 'MtRec2';
@@ -41,35 +35,8 @@ define([
             return !isIE && _.contains(['UK', 'US'], config.page.edition);
         };
 
-        this.showMessage = function (id, linkName, panelLinks) {
-            new Message(id, {
-                pinOnHide: false,
-                siteMessageLinkName: linkName,
-                siteMessageCloseBtn: 'hide'
-            }).show(template(
-                    inviteToPanelTemplate,
-                    {
-                        panelLink: panelLinks[detect.getBreakpoint()],
-                        messageTextHeader: 'Tell us about your experience using the Guardian site',
-                        messageText: 'Complete a quick survey (5 mins max) and get involved in the development of the site.',
-                        linkText: 'Open survey'
-                    }
-                ));
-        };
-
         this.fireRecTest = function () {
-            var panelLinks = {
-                mobile: 'https://s.userzoom.com/m/NiBDMTBTMjE1',
-                tablet: 'https://s.userzoom.com/m/NSBDMTBTMjE1',
-                desktop: 'https://s.userzoom.com/m/NCBDMTBTMjE1',
-                wide: 'https://s.userzoom.com/m/NCBDMTBTMjE1'
-            };
-
             stickyNav.stickySlow.init(2);
-
-            if (!detect.adblockInUse) {
-                this.showMessage('panel-mtrec2', 'panel message mtRec2 variant', panelLinks);
-            }
         };
 
         /**
@@ -82,18 +49,7 @@ define([
             },
             {
                 id: 'B',
-                test: function () {
-                    var panelLinks = {
-                        mobile: 'https://s.userzoom.com/m/OSBDMTBTMjE4',
-                        tablet: 'https://s.userzoom.com/m/OCBDMTBTMjE4',
-                        desktop: 'https://s.userzoom.com/m/NyBDMTBTMjE4',
-                        wide: 'https://s.userzoom.com/m/NyBDMTBTMjE4'
-                    };
-
-                    if (!detect.adblockInUse) {
-                        this.showMessage('panel-mtrec2', 'panel message mtRec2 control', panelLinks);
-                    }
-                }.bind(this)
+                test: function () { }
             }
         ];
     };

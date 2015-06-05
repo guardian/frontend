@@ -349,7 +349,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see paragraph 16")
-        findFirst("#block-16").getText should startWith("11.31am:Vince Cable, the business secretary")
+        findFirst("#block-16").getText should startWith("11.31am: Vince Cable, the business secretary")
       }
     }
 
