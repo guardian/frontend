@@ -2,39 +2,26 @@ package controllers
 
 import java.net.URL
 
-import conf.LiveContentApi
-import common._
-import implicits.Dates
-import model.{Content => ApiContent}
-import model._
-
 import actions.AuthenticatedActions
-import actions.AuthenticatedActions.AuthRequest
 import client.Error
-import com.google.inject.Inject
-import com.gu.identity.model.{SavedArticles, SavedArticle}
-import common.ExecutionContexts
+import com.gu.identity.model.SavedArticles
+import common._
+import conf.LiveContentApi
+import model.{Content => ApiContent, _}
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 
-import scala.util.{Failure, Success}
-
-//import controllers.SavedArticleData
-import idapiclient.IdApiClient
-import play.api.data.{Forms, Form}
 import com.google.inject.Inject
 import common.ExecutionContexts
+import conf.LiveContentApi.getResponse
 import idapiclient.IdApiClient
+import implicits.Articles._
+import play.api.data.{Form, Forms}
 import play.api.mvc._
-import play.filters.csrf.CSRFCheck
 import services._
 import utils.SafeLogging
 
 import scala.concurrent.Future
-import implicits.Articles._
-import implicits.Requests
-import LiveContentApi.getResponse
-import implicits.Dates
 
 class SaveContentController @Inject() ( api: IdApiClient,
                                         identityRequestParser: IdRequestParser,
@@ -48,9 +35,8 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
   import SavedArticleData._
 
-  implicit val dateOrdering: Ordering[DateTime] = Ordering[Long] on {
-    _.getMillis
-  }
+  implicit val dateOrdering: Ordering[DateTime] = Ordering[Long] on { _.getMillis }
+
 
   val page = IdentityPage("/saved-for-later", "Saved for later", "saved-for-later")
 
