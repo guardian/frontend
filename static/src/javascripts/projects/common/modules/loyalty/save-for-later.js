@@ -110,8 +110,25 @@ define([
         });
     };
 
+    SaveForLater.prototype.renderSaveThisArticleLink = function (deferToClick, url, state) {
+        var self = this,
+
+            $saver = bonzo(qwery('.js-save-for-later')[0]),
+            //$saver = bonzo('.js-save-for-later'),
+            templateName = self.templates[deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
+
+        $saver.html(template(templateName, {
+            url: url,
+            icon: bookmarkSvg,
+            state: state
+
+        }));
+    };
+
     SaveForLater.prototype.getSavedArticles = function () {
         var self = this,
+            saveLinkHolder = qwery('.js-save-for-later')[0],
+            shortUrl = config.page.shortUrl.replace('http://gu.com', ''),
             notFound  = {message:'Not found', description:'Resource not found'};
 
         identity.getSavedArticles().then(
@@ -238,7 +255,7 @@ define([
 
         identity.saveToArticles(userData).then(
             function(resp) {
-                if(resp.status === 'error') {
+                if (resp.status === 'error') {
                      onArticleDeletedError();
                 }
                 else {

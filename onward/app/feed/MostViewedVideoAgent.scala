@@ -1,11 +1,13 @@
 package feed
 
-import conf.LiveContentApi
 import common._
-import model.{Content, Video}
-import scala.concurrent.Future
+import common.editions.Uk
+import conf.LiveContentApi
+import conf.LiveContentApi.getResponse
+import model.{Video, _}
 import play.api.libs.json._
-import LiveContentApi.getResponse
+
+import scala.concurrent.Future
 
 object MostViewedVideoAgent extends Logging with ExecutionContexts {
 
@@ -17,7 +19,7 @@ object MostViewedVideoAgent extends Logging with ExecutionContexts {
 
   def mostViewedVideo(): Seq[Video] = agent()
 
-  def refresh() = {
+  def refresh(): Unit = {
     log.info("Refreshing most viewed video.")
 
     val ophanResponse = services.OphanApi.getMostViewedVideos(hours = 3, count = 20)
@@ -31,16 +33,16 @@ object MostViewedVideoAgent extends Logging with ExecutionContexts {
         path
       }
 
-      val mostViewed: Iterable[Future[Option[Content]]] = paths.distinct.map { path =>
-        getResponse(LiveContentApi.item(path, Edition.defaultEdition)).map(_.content.map(Content(_)))
-      }
+      val contentIds = paths.distinct.take(10)
+        .map(id => id.drop(1)) // drop leading '/'
+        .mkString(",")
 
-      Future.sequence(mostViewed).map { contentSeq =>
-        val videos = contentSeq.toSeq.collect {
-          case Some(video: Video) => video
-        }
-        if(videos.nonEmpty) agent.alter(videos)
-      }
+      val mostViewed: Future[Seq[Video]] = getResponse(LiveContentApi.search(Uk)
+        .ids(contentIds)
+        .pageSize(20)
+      ).map(r => r.results.filter(_.isVideo).map(Video(_)))
+
+      mostViewed.filter(_.nonEmpty).foreach(agent.alter)
     }
   }
 }

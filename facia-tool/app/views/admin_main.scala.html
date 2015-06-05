@@ -1,4 +1,4 @@
-@(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[com.gu.googleauth.UserIdentity] = None, model: Option[String] = None)(content: Html)
+@(title: String, env: String, priority: Option[String] = None, identity: Option[com.gu.pandomainauth.model.User] = None, model: Option[String] = None)(content: Html)
 
 @import conf.Configuration
 
@@ -37,7 +37,7 @@
             case _ => {}
         }
     </head>
-    <body class="@if(isAuthed){is-authed}">
+    <body class="is-authed">
 
     @if(Switches.ToolDisable.isSwitchedOn) {
         <span class="message message--important">Temporarily disabled. Please try again shortly.</span>
@@ -50,7 +50,6 @@
                     @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") { : @Configuration.facia.stage }
                 </h1>
             </a>
-            @if(isAuthed) {
                 <div class="log-in-out top-button"><a href="/logout">Logout</a></div>
                 <div class="top-button-collections" data-bind="if: !!$data.layout">
                     <!-- ko if: layout.configVisible() -->
@@ -64,14 +63,6 @@
             }
         </header>
 
-        @if(isAuthed) {
-            @content
-        } else {
-            <form action="@routes.OAuthLoginController.loginAction()" method="post" class="login-form tools">
-                <input value="Log In" class="tool" type="submit" id="login-button">
-            </form>
-        }
-    }
-
+        @content
     </body>
 </html>

@@ -83,7 +83,7 @@ trait FapiFrontJsonLite extends ExecutionContexts{
 
     (curated ++ editorsPicks ++ results)
       .filterNot{ j =>
-      (j \ "LinkSnap").asOpt[String].isDefined
+      (j \ "type").asOpt[String].contains("LinkSnap")
     }
       .map{ j =>
       Json.obj(

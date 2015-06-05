@@ -12,7 +12,7 @@ describe('omniture', function () {
     var s, omniture, mediator,
         injector = new Injector();
 
-    injector.mock('common/utils/config', config);    
+    injector.mock('common/utils/config', config);
 
     beforeEach(function (done) {
         injector.test([
@@ -148,7 +148,7 @@ describe('omniture', function () {
                 target: document.documentElement,
                 samePage: true,
                 sameHost: true,
-                tag: 'something'
+                validTarget: true
             };
 
         omniture.go();
@@ -157,12 +157,25 @@ describe('omniture', function () {
         expect(s.tl).toHaveBeenCalledOnce();
     });
 
+    it('should not log clickstream events with an invalidTarget', function () {
+        var clickSpec = {
+            target: document.documentElement,
+            validTarget: false
+        };
+
+        omniture.go();
+        mediator.emit('module:clickstream:click', clickSpec);
+
+        expect(s.tl.callCount).toBe(0);
+    });
+
     it('should make a non-delayed s.tl call for same-page links', function () {
         var el                = document.createElement('a'),
             clickSpecSamePage = {
                 target: el,
                 samePage: true,
                 sameHost: true,
+                validTarget: true,
                 tag: 'tag'
             };
         omniture.go();
@@ -178,6 +191,7 @@ describe('omniture', function () {
                 target: el,
                 samePage: false,
                 sameHost: true,
+                validTarget: true,
                 tag: 'tag in localstorage'
             };
 
@@ -193,6 +207,7 @@ describe('omniture', function () {
                 target: el,
                 samePage: false,
                 sameHost: false,
+                validTarget: true,
                 tag: 'tag'
             };
 
@@ -200,5 +215,5 @@ describe('omniture', function () {
         mediator.emit('module:clickstream:click', clickSpec);
 
         expect(s.tl.withArgs(el, 'o', 'tag')).toHaveBeenCalledOnce();
-    });    
+    });
  });

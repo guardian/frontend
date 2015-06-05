@@ -6,7 +6,8 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/modules/article/spacefinder',
-    'common/modules/commercial/create-ad-slot'
+    'common/modules/commercial/create-ad-slot',
+    'common/modules/experiments/ab'
 ], function (
     fastdom,
     Promise,
@@ -15,7 +16,8 @@ define([
     config,
     detect,
     spacefinder,
-    createAdSlot
+    createAdSlot,
+    ab
 ) {
     function getRules() {
         return {
@@ -35,6 +37,41 @@ define([
         lenientRules.minAbove = 300;
         lenientRules.selectors[' > h2'].minAbove = 20;
         return lenientRules;
+    }
+
+    function getLongArticleRules() {
+        var newRules = _.cloneDeep(getRules());
+
+        newRules.selectors[' .ad-slot'] = {
+            minAbove: 1300,
+            minBelow: 1300
+        };
+
+        return newRules;
+    }
+
+    // Add new ads while there is still space
+    function getAdSpace() {
+        return spacefinder.getParaWithSpace(getLongArticleRules()).then(function (nextSpace) {
+            // check if spacefinder found another space
+            if (typeof nextSpace === 'undefined') {
+                return Promise.resolve(null);
+            }
+
+            // if yes add another ad and try another run
+            adNames.push(['inline-extra' + ads.length, 'inline']);
+            return insertAdAtP(nextSpace).then(function () {
+                return getAdSpace();
+            });
+        });
+    }
+
+    function isMtRecTest() {
+        var MtRec1Test = ab.getParticipations().MtRec1,
+            MtRec2Test = ab.getParticipations().MtRec2;
+
+        return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A' ||
+            ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
     }
 
     var ads = [],
@@ -80,19 +117,33 @@ define([
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            return inlineMercPromise.then(function () {
-                return spacefinder.getParaWithSpace(rules).then(function (space) {
-                    return insertAdAtP(space);
-                }).then(function () {
-                    if (detect.isBreakpoint({max: 'tablet'})) {
+            if (isMtRecTest() && config.switches.commercialExtraAds) {
+                return inlineMercPromise.then(function () {
+                    return spacefinder.getParaWithSpace(rules).then(function (space) {
+                        return insertAdAtP(space);
+                    }).then(function () {
                         return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
                             return insertAdAtP(nextSpace);
+                        }).then(function () {
+                            return getAdSpace();
                         });
-                    } else {
-                        return Promise.resolve(null);
-                    }
+                    });
                 });
-            });
+            } else {
+                return inlineMercPromise.then(function () {
+                    return spacefinder.getParaWithSpace(rules).then(function (space) {
+                        return insertAdAtP(space);
+                    }).then(function () {
+                        if (detect.isBreakpoint({max: 'tablet'})) {
+                            return spacefinder.getParaWithSpace(rules).then(function (nextSpace) {
+                                return insertAdAtP(nextSpace);
+                            });
+                        } else {
+                            return Promise.resolve(null);
+                        }
+                    });
+                });
+            }
         };
 
     return {

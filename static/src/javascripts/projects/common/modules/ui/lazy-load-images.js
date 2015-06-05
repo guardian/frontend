@@ -66,26 +66,12 @@ define([
         lazyLoad();
     }
 
-    function setUpListeners() {
-        _.forEach([
-            'modules:onward:loaded',
-            'modules:related:loaded',
-            'modules:popular:loaded',
-            'modules:tonal:loaded',
-            'page:media:moreinloaded',
-            'page:media:most-viewed-loaded',
-            'module:gallery-most-popular:loaded',
-            'module:lightbox-end-slate:loaded'
-        ], function (event) {
-            mediator.on(event, function (context) {
-                attachLazyLoad(qwery('.js-lazy-loaded-image', context));
-            });
-        });
-    }
-
     function init() {
         attachLazyLoad(qwery('.js-lazy-loaded-image'));
-        setUpListeners();
+
+        mediator.on('page:new-content', function (context) {
+            attachLazyLoad(qwery('.js-lazy-loaded-image', context));
+        });
     }
 
     return {

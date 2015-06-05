@@ -34,21 +34,7 @@
             float: left;
         }
     }
-    &.content--sponsored,
-    &.content--foundation-supported,
-    &.content--advertisement-feature {
-        .content__headline {
-            @include mq(desktop) {
-                width: gs-span(5) + ($gs-gutter / 2);
-            }
-            @include mq(leftCol) {
-                width: gs-span(6);
-            }
-            @include mq(wide) {
-                width: gs-span(6) + ($gs-gutter / 2);
-            }
-        }
-    }
+
     .content__meta-container {
         margin-left: 0;
         width: 100%;

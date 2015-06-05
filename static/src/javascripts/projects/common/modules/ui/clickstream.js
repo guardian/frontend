@@ -45,33 +45,30 @@ define([
                 return !urlHost || (urlHost === host && urlProtocol === protocol);
             },
             getClickSpec = function (spec, forceValid) {
-                if (!spec.el) { return false; }
+                if (!spec.el) {
+                    return false;
+                }
                 var el = spec.el,
                     elName = el.tagName.toLowerCase(),
                     dataLinkName = el.getAttribute('data-link-name'),
                     href;
 
                 if (dataLinkName) {
-                    spec.tag = spec.tag || [];
-                    spec.tag.push(dataLinkName);
+                    spec.tag.unshift(dataLinkName);
                 }
 
                 if (elName === 'body') {
-                    if (spec.validTarget && spec.tag && spec.tag.length) {
-                        spec.tag = [].concat(spec.tag).reverse().join(' | ');
-                        if (el.getAttribute('data-link-test')) {
-                            spec.tag = el.getAttribute('data-link-test') + ' | ' + spec.tag;
-                        }
-                        delete spec.el;
-                        delete spec.validTarget;
-                        return spec;
-                    } else {
-                        return false;
+                    spec.tag = spec.tag.join(' | ');
+                    delete spec.el;
+
+                    if (spec.validTarget && el.getAttribute('data-link-test')) {
+                        spec.tag = el.getAttribute('data-link-test') + ' | ' + spec.tag;
                     }
+                    return spec;
                 }
 
                 if (!spec.validTarget) {
-                    spec.validTarget = filterSource(el.tagName.toLowerCase()).length > 0 || forceValid;
+                    spec.validTarget = filterSource(elName).length > 0 || !!forceValid;
                     if (spec.validTarget) {
                         spec.target = el;
                         href = el.getAttribute('href');
@@ -98,11 +95,12 @@ define([
         if (opts.addListener !== false) {
             bean.add(document.body, 'click', function (event) {
                 var applicableTests,
-                    clickSpec = {el: event.target};
+                    clickSpec = {
+                        el: event.target,
+                        tag: []
+                    };
 
-                if (opts.withEvent !== false) {
-                    clickSpec.event = event;
-                }
+                clickSpec.target = event.target;
 
                 clickSpec = getClickSpec(clickSpec);
 
@@ -110,14 +108,12 @@ define([
                 applicableTests = ab.getActiveTestsEventIsApplicableTo(clickSpec);
                 if (applicableTests !== undefined && applicableTests.length > 0) {
                     clickSpec.tag = _.map(applicableTests, function (test) {
-                        var variant = ab.getTestVariant(test);
+                        var variant = ab.getTestVariantId(test);
                         return 'AB,' + test + ',' + variant + ',' + clickSpec.tag;
                     }).join(',');
                 }
 
-                if (clickSpec) {
-                    mediator.emit('module:clickstream:click', clickSpec);
-                }
+                mediator.emit('module:clickstream:click', clickSpec);
             });
         }
 

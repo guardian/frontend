@@ -5,6 +5,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/template',
+    'common/modules/identity/api',
     'common/modules/loyalty/save-for-later',
     'text!common/views/identity/saved-for-later-profile-link.html'
 ], function (
@@ -14,6 +15,7 @@ define([
     config,
     mediator,
     template,
+    id,
     SaveForLater,
     profileLinkTmp
 ) {
@@ -33,19 +35,20 @@ define([
         this.showForSensitive = false;
 
         this.canRun = function () {
-            return true;
+            return id.isUserLoggedIn();
+        };
+
+        var init = function () {
+            var saveForLater = new SaveForLater();
+            saveForLater.init();
         };
 
         this.variants = [
             {
                 id: 'variant',
                 test: function () {
-                    mediator.on('module:identity:api:loaded', function () {
-                        var saveArticle = new SaveForLater();
 
-                        saveArticle.init();
-                    });
-
+                    mediator.on('module:identity:api:loaded', init);
                     mediator.on('modules:profilenav:loaded', function () {
                         var popup = qwery('.popup--profile')[0];
                         bonzo(popup).append(bonzo.create(
@@ -58,5 +61,19 @@ define([
                 }
             }
         ];
+
+        this.notInTest = function () {
+            // On top of the A/B test, we always want to give pre-existing SFL
+            // users the web feature.
+            mediator.on('module:identity:api:loaded', function () {
+                id.getSavedArticles().then(function (resp) {
+                    var userHasSavedArticles = !!resp.savedArticles;
+
+                    if (userHasSavedArticles) {
+                        init();
+                    }
+                });
+            });
+        };
     };
 });
