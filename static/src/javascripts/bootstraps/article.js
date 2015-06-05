@@ -95,6 +95,23 @@ define([
                         new FacebookMostPopular(el);
                     }
                 }
+            },
+
+            initQuizListeners: function () {
+                var eventNames = [
+                    'progress',
+                    'knowledge-results',
+                    'personality-results'
+                ];
+
+                require(['ophan/ng'], function (ophan) {
+                    eventNames.forEach(function (eventName) {
+                        mediator.on('quiz/' + eventName, function (event) {
+                            event.eventType = 'quiz-' + eventName;
+                            ophan.record(event);
+                        });
+                    });
+                });
             }
         },
 
@@ -106,6 +123,7 @@ define([
             modules.initSelectionSharing();
             modules.initCmpParam();
             modules.initFacebookMostPopular();
+            modules.initQuizListeners();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
