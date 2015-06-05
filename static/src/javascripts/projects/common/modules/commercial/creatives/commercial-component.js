@@ -103,7 +103,7 @@ define([
 
                 mediator.emit('modules:commercial:creatives:commercial-component:loaded');
             }.bind(this),
-            error: function (err) {
+            error: function () {
                 this.$adSlot.hide();
             }.bind(this)
         }).load();
