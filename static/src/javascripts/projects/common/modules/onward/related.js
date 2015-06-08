@@ -90,6 +90,7 @@ define([
                         new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
                         // upgrade images
                         mediator.emit('modules:related:loaded', container);
+                        mediator.emit('page:new-content', container);
                         register.end(componentName);
                     },
                     error: function () {

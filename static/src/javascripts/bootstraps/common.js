@@ -16,7 +16,6 @@ define([
     'common/utils/url',
     'common/utils/robust',
     'common/utils/storage',
-    'common/modules/analytics/clickstream',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
     'common/modules/analytics/media-listener',
@@ -43,6 +42,7 @@ define([
     'common/modules/onward/tonal',
     'common/modules/social/share-count',
     'common/modules/ui/accessibility-prefs',
+    'common/modules/ui/clickstream',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/fonts',
@@ -74,7 +74,6 @@ define([
     url,
     robust,
     storage,
-    Clickstream,
     Foresee,
     liveStats,
     mediaListener,
@@ -101,6 +100,7 @@ define([
     TonalComponent,
     shareCount,
     accessilbilityPrefs,
+    Clickstream,
     Dropdowns,
     fauxBlockLink,
     fonts,
@@ -475,16 +475,12 @@ define([
             },
 
             runCustomAbTests: function () {
-                var rec1Test = ab.getTest('MtRec1'),
-                    rec2Test = ab.getTest('MtRec2');
-
-                if (rec1Test && ab.isParticipating(rec1Test) && ab.getTestVariant('MtRec1') === 'A'
-                    && ab.testCanBeRun('MtRec1')) {
-                    rec1Test.fireRecTest();
+                if (ab.shouldRunTest('MtRec1', 'A')) {
+                    ab.getTest('MtRec1').fireRecTest();
                 }
-                if (rec2Test && ab.isParticipating(rec2Test) && ab.getTestVariant('MtRec2') === 'A'
-                    && ab.testCanBeRun('MtRec2')) {
-                    rec2Test.fireRecTest();
+
+                if (ab.shouldRunTest('MtRec2', 'A')) {
+                    ab.getTest('MtRec2').fireRecTest();
                 }
             },
 

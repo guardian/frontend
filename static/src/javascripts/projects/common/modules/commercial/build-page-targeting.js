@@ -79,6 +79,7 @@ define([
 
     return function (opts) {
         var win         = (opts || {}).window || window,
+            viewId      = (opts || {}).viewId,
             page        = config.page,
             contentType = formatTarget(page.contentType),
             pageTargets = _.merge({
@@ -90,6 +91,7 @@ define([
                 k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
                 x:       krux.getSegments(),
                 su:      page.isSurging,
+                pv:      viewId,
                 bp:      detect.getBreakpoint(),
                 at:      adtestParams(),
                 gdncrm:  userAdTargeting.getUserSegments(),

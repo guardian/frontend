@@ -198,7 +198,7 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
         val figureClasses = List(orientationClass, smallImageClass, hinting.className).flatten.mkString(" ")
 
         val html = views.html.fragments.contentImage(container, image, widths, figureClasses).toString()
-        figure.replaceWith(Jsoup.parse(html).body())
+        figure.replaceWith(Jsoup.parseBodyFragment(html).body().child(0))
     }
 
     body

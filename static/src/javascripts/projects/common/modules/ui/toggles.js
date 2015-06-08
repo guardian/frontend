@@ -1,20 +1,28 @@
 define([
     'bean',
-    'bonzo'
+    'bonzo',
+    'common/utils/$',
+    'common/utils/_',
+    'common/utils/mediator'
 ], function (
     bean,
-    bonzo
+    bonzo,
+    $,
+    _,
+    mediator
 ) {
 
     var Toggles = function () {
 
         var self = this,
             controls,
+            doNotReset = ['popup--search'],
             readyClass = 'js-toggle-ready';
 
         this.init = function () {
-            controls = document.body.querySelectorAll('[data-toggle]');
-            Array.prototype.forEach.call(controls, function (control) {
+            controls = Array.prototype.slice.call(document.body.querySelectorAll('[data-toggle]'));
+
+            controls.forEach(function (control) {
                 if (!bonzo(control).hasClass(readyClass)) {
                     var target = self.getTarget(control);
                     if (target) {
@@ -29,14 +37,21 @@ define([
             });
         };
 
-        this.reset = function () {
-            Array.prototype.forEach.call(controls, self.close);
+        this.reset = function (omitEl) {
+            controls.filter(function (control) {
+                return !(omitEl === control || _.contains(doNotReset, $(control).attr('data-toggle')));
+            }).map(self.close);
         };
+
+        mediator.on('module:clickstream:click', function (clickSpec) {
+            self.reset(clickSpec ? clickSpec.target : null);
+        });
     };
 
     Toggles.prototype.toggle = function (control, controls) {
         var self = this;
-        Array.prototype.forEach.call(controls, function (c) {
+
+        controls.forEach(function (c) {
             if (c === control) {
                 self[bonzo(c).hasClass('is-active') ? 'close' : 'open'](c);
             } else {

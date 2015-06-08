@@ -62,7 +62,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isProd = stage == "prod"
-    lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
+    lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
 
     lazy val isPreview = projectName == "preview"
   }
@@ -113,12 +113,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       user <- configuration.getStringProperty("content.api.preview.user")
       password <- configuration.getStringProperty("content.api.preview.password")
     } yield Auth(user, password)
-
-    object write {
-      lazy val username: Option[String] = configuration.getStringProperty("contentapi.write.username")
-      lazy val password: Option[String] = configuration.getStringProperty("contentapi.write.password")
-      lazy val endpoint: Option[String] = configuration.getStringProperty("contentapi.write.endpoint")
-    }
   }
 
   object ophanApi {
@@ -208,6 +202,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
+    object backends {
+      lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
+      lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
+    }
   }
 
   object assets {

@@ -1,16 +1,15 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import common.ExternalLinks.internalPath
-@import crosswords.{CrosswordGrid, TodaysCrosswordGrid, CrosswordPreview}
 @import implicits.FaciaContentImplicits._
 @import crosswords.{CrosswordGrid, CrosswordPreview, TodaysCrosswordGrid}
 @import views.support.{Treat, CrosswordTreat, SnappableTreat, ClimateTreat, NormalTreat}
+@import model.SupportedUrl
 
 @if(containerDefinition.collectionEssentials.treats.nonEmpty) {
     <ul class="treats__container">
     @containerDefinition.collectionEssentials.treats.zipWithIndex.map { case (treat, index) =>
-        @defining(LinkTo(treat).getOrElse("")) { link =>
+        @defining(SupportedUrl.fromFaciaContent(treat)) { link =>
             <li class="treats__list-item">
                 @Treat.fromUrl(link) match {
                     case CrosswordTreat => {

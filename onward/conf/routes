@@ -10,6 +10,7 @@ GET        /_healthcheck                              conf.HealthCheck.healthche
 GET        /nav.json                                  controllers.NavigationController.nav()
 
 # Onward public endpoints
+GET        /most-read-facebook.json                   controllers.MostViewedFacebookController.renderMostViewed
 GET        /most-read.json                            controllers.MostPopularController.render(path = "")
 GET        /most-read/*path.json                      controllers.MostPopularController.render(path)
 GET        /most-read-geo.json                        controllers.MostPopularController.renderPopularGeo()
