@@ -1023,12 +1023,12 @@ object Switches {
     )
   }
 
-  val ABSupporterMessage = Switch(
+  val ABMembershipMessage = Switch(
     "A/B Tests",
-    "ab-supporter",
-    "Switch for the Supporter Message A/B test.",
+    "ab-membership-message",
+    "Switch for the Membership message A/B test.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 11),
+    sellByDate = new LocalDate(2015, 6, 19),
     exposeClientSide = true
   )
 
