@@ -15,8 +15,13 @@ trait Articles {
 
   implicit class RichSavedArticles(savedArticles: SavedArticles) {
     val fmt = ISODateTimeFormat.dateTimeNoMillis()
+    val itemsPerPage = 5
 
+    val pages = savedArticles.articles.grouped(4).toList
 
+    lazy val numPages = pages.length
+
+    lazy val totalSaved = savedArticles.articles.length
     def newestFirst = savedArticles.articles.reverse
     def contains(shortUrl: String) : Boolean = savedArticles.articles.exists( sa => sa.shortUrl == shortUrl)
 
@@ -41,6 +46,10 @@ trait Articles {
 
       SavedArticles(savedArticles.version, articles)
     }
+
+    //Deal with just having removed the only item on the last page
+    def getPage(page: Int): List[SavedArticle] =
+     pages.lift(Math.min(page, page-1)) orElse pages.lastOption getOrElse Nil
   }
 }
 
