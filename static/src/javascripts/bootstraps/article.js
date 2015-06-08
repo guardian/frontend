@@ -98,19 +98,8 @@ define([
             },
 
             initQuizListeners: function () {
-                var eventNames = [
-                    'progress',
-                    'knowledge-results',
-                    'personality-results'
-                ];
-
                 require(['ophan/ng'], function (ophan) {
-                    eventNames.forEach(function (eventName) {
-                        mediator.on('quiz/' + eventName, function (event) {
-                            event.eventType = 'quiz-' + eventName;
-                            ophan.record(event);
-                        });
-                    });
+                    mediator.on('quiz/ophan-event', ophan.record);
                 });
             }
         },
