@@ -40,6 +40,13 @@ define([
             return Id.isUserLoggedIn();
         };
 
+        var init = function () {
+            if (!/Network Front|Section/.test(config.page.contentType)) {
+                var saveForLater = new SaveForLater();
+                saveForLater.init();
+            }
+        };
+
         this.variants = [
             {
                 id: 'variant',
@@ -52,13 +59,24 @@ define([
                         mediator.on('modules:profilenav:loaded', resolve);
                     });
 
-                    Promise.all([loadIdentityApi, loadProfileNav]).then(function () {
-                        var saveForLater = new SaveForLater();
-                        saveForLater.init();
-                    });
+                    Promise.all([loadIdentityApi, loadProfileNav]).then(init);
 
                 }
             }
         ];
+
+        this.notInTest = function () {
+            // On top of the A/B test, we always want to give pre-existing SFL
+            // users the web feature.
+            mediator.on('module:identity:api:loaded', function () {
+                Id.getSavedArticles().then(function (resp) {
+                    var userHasSavedArticles = !!resp.savedArticles;
+
+                    if (userHasSavedArticles) {
+                        init();
+                    }
+                });
+            });
+        };
     };
 });
