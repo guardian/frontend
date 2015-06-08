@@ -1018,7 +1018,7 @@ object Switches {
       s"ab-headline$n",
       s"Switch for headline $n",
       safeState = On,
-      sellByDate = new LocalDate(2015, 6, 10),
+      sellByDate = new LocalDate(2015, 7, 17),
       exposeClientSide = true
     )
   }

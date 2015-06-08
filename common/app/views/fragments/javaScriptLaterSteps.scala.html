@@ -349,6 +349,7 @@
 
         @Html(Static.js.systemJsNormalize)
 
+        // Needed for lazy loading
         window.require = System.amdRequire.bind(System);
         window.define = System.amdDefine.bind(System);
 
