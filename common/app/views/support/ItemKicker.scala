@@ -117,7 +117,7 @@ case object LiveKicker extends ItemKicker {
     "fc-item__live-indicator"
   )
 
-  override val kickerHtml = "<span class=\"live-pulse-icon\"></span>Live"
+  override val kickerHtml = "<span class=\"live-pulse-icon js-flashing-image\"></span>Live"
 
   override def sublinkKickerHtml: String = "Live"
 

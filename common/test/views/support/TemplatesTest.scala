@@ -5,11 +5,13 @@ import common.Edition
 import common.editions.Uk
 import conf.Configuration
 import model._
+import org.jsoup.Jsoup
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
 import test.TestRequest
 
+import scala.collection.JavaConversions._
 import scala.xml.XML
 
 class TemplatesTest extends FlatSpec with Matchers {
@@ -51,32 +53,37 @@ class TemplatesTest extends FlatSpec with Matchers {
 
   "PictureCleaner" should "correctly format inline pictures" in {
     implicit val request: RequestHeader = TestRequest()
-    val body = XML.loadString(withJsoup(bodyTextWithInlineElements)(PictureCleaner(testContent)).body.trim)
+    val body = Jsoup.parse(withJsoup(bodyTextWithInlineElements)(PictureCleaner(testContent)).body)
 
-    val figures = (body \\ "figure").toList
+    val figures = body.getElementsByTag("figure")
 
-    val inlineImg = figures(0)
-    (inlineImg \ "@class").text should include("img--inline")
-    (inlineImg \ "img" \ "@class").text should be("gu-image")
+    val inlineImg = figures.get(0)
+    inlineImg.hasClass("img--inline") should be (true)
+    inlineImg.getElementsByTag("img").hasClass("gu-image") should be (true)
+    inlineImg.attr("data-media-id") should be ("gu-image-1")
+    inlineImg.previousElementSibling.hasClass("previous-element") should be (true)
 
-    val landscapeImg = figures(3)
-    (landscapeImg \ "@class").text should include("img--landscape")
-    (landscapeImg \ "img" \ "@class").text should be("gu-image")
+    val landscapeImg = figures.get(3)
+    landscapeImg.hasClass("img--landscape") should be (true)
+    landscapeImg.getElementsByTag("img").hasClass("gu-image") should be (true)
+    landscapeImg.attr("data-media-id") should be ("gu-image-4")
 
-    val portaitImg = figures(4)
-    (portaitImg \ "@class").text should include("img--portrait")
-    (portaitImg \ "img" \ "@class").text should be("gu-image")
-    (portaitImg \ "img" \ "@height").length should be (0) // we remove the height attribute
+    val portraitImg = figures.get(4)
+    portraitImg.hasClass("img--portrait") should be (true)
+    portraitImg.getElementsByTag("img").hasClass("gu-image") should be (true)
+    portraitImg.getElementsByTag("img").hasAttr("height") should be (false) // we remove the height attribute
+    portraitImg.attr("data-media-id") should be ("gu-image-5")
+    portraitImg.nextElementSibling.hasClass("following-element") should be (true)
 
-    (body \\ "figure").foreach { fig =>
-      (fig \ "@itemprop").text should be("associatedMedia image")
-      (fig \ "@itemscope").text should be("")
-      (fig \ "@itemtype").text should be("http://schema.org/ImageObject")
+    for {fig <- figures} {
+      fig.attr("itemprop") should be ("associatedMedia image")
+      fig.attr("itemscope") should be ("")
+      fig.attr("itemtype") should be ("http://schema.org/ImageObject")
     }
 
-    (body \\ "figcaption").foreach { fig =>
-      (fig \ "@itemprop").text should be("description")
-      (fig).text should include("test caption")
+    for { caption <- body.getElementsByTag("figcaption") } {
+      caption.attr("itemprop") should be("description")
+      caption.text should include("test caption")
     }
   }
 
@@ -177,7 +184,7 @@ class TemplatesTest extends FlatSpec with Matchers {
 
   val bodyTextWithInlineElements = """
   <span>
-    <p>more than hearty breakfast we asked if the hotel could find out if nearby Fraserburgh was open. "Yes, but bring your own snorkel," was the response. How could we resist?</p>
+    <p class='previous-element'>more than hearty breakfast we asked if the hotel could find out if nearby Fraserburgh was open. "Yes, but bring your own snorkel," was the response. How could we resist?</p>
 
     <figure data-media-id="gu-image-1">
       <img src='http://www.a.b.c/img3' alt='Meldrum House in Oldmeldrum\n' width='140' height='84' class='gu-image'/>
@@ -206,20 +213,25 @@ class TemplatesTest extends FlatSpec with Matchers {
        <figcaption>Image caption</figcaption>
      </figure>
 
-    <p>But first to <a href="http://www.glengarioch.com/verify.php" title="">Glen Garioch distillery</a></p>
+    <p class='following-element'>But first to <a href="http://www.glengarioch.com/verify.php" title="">Glen Garioch distillery</a></p>
   </span>
                                    """
 
-  private def asset(caption: String, width: Int, height: Int): ApiAsset = {
-    ApiAsset("image", Some("image/jpeg"), Some("http://www.foo.com/bar"), Map("caption" -> caption, "width" -> width.toString, "height" -> height.toString))
+  private def asset(caption: String, width: Int, height: Int, mediaId: String): ApiAsset = {
+    ApiAsset("image", Some("image/jpeg"), Some("http://www.foo.com/bar"), Map(
+      "caption" -> caption,
+      "width" -> width.toString,
+      "height" -> height.toString,
+      "mediaId" -> mediaId
+    ))
   }
 
   val testImages: List[ApiElement] = List(
-    ApiElement("gu-image-1", "body", "image", Some(0), List(asset("test caption", 140, 100))),
-    ApiElement("gu-image-2", "body", "image", Some(0), List(asset("test caption", 250, 100))),
-    ApiElement("gu-image-3", "body", "image", Some(0), List(asset("test caption", 600, 100))),
-    ApiElement("gu-image-4", "body", "image", Some(0), List(asset("test caption", 500, 100))),
-    ApiElement("gu-image-5", "body", "image", Some(0), List(asset("test caption", 500, 700)))
+    ApiElement("gu-image-1", "body", "image", Some(0), List(asset("test caption", 140, 100, "gu-image-1"))),
+    ApiElement("gu-image-2", "body", "image", Some(0), List(asset("test caption", 250, 100, "gu-image-2"))),
+    ApiElement("gu-image-3", "body", "image", Some(0), List(asset("test caption", 600, 100, "gu-image-3"))),
+    ApiElement("gu-image-4", "body", "image", Some(0), List(asset("test caption", 500, 100, "gu-image-4"))),
+    ApiElement("gu-image-5", "body", "image", Some(0), List(asset("test caption", 500, 700, "gu-image-5")))
   )
 
   val testContent = new Article(ApiContentWithMeta(ApiContent(

@@ -322,6 +322,7 @@ define([
 
         section.fetch(attachTo).then(function () {
             mediator.emit('page:media:moreinloaded', attachTo);
+            mediator.emit('page:new-content', attachTo);
         });
     }
 
@@ -339,7 +340,7 @@ define([
         mostViewed.endpoint = endpoint;
 
         mostViewed.fetch(attachTo, 'html').then(function () {
-            mediator.emit('page:media:most-viewed-loaded');
+            mediator.emit('page:new-content');
         });
     }
 

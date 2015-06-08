@@ -1,10 +1,14 @@
 define([
     'bean',
     'bonzo',
+    'common/utils/$',
+    'common/utils/_',
     'common/utils/mediator'
 ], function (
     bean,
     bonzo,
+    $,
+    _,
     mediator
 ) {
 
@@ -12,6 +16,7 @@ define([
 
         var self = this,
             controls,
+            doNotReset = ['popup--search'],
             readyClass = 'js-toggle-ready';
 
         this.init = function () {
@@ -32,15 +37,15 @@ define([
             });
         };
 
-        this.reset = function (clickSpec) {
-            controls.filter(function (c) {
-                return !clickSpec || c !== clickSpec.target;
+        this.reset = function (omitEl) {
+            controls.filter(function (control) {
+                return !(omitEl === control || _.contains(doNotReset, $(control).attr('data-toggle')));
             }).map(self.close);
         };
 
-        mediator.on('module:clickstream:interaction', this.reset);
-        mediator.on('module:clickstream:click', this.reset);
-        mediator.on('module:clickstream:null', this.reset);
+        mediator.on('module:clickstream:click', function (clickSpec) {
+            self.reset(clickSpec ? clickSpec.target : null);
+        });
     };
 
     Toggles.prototype.toggle = function (control, controls) {

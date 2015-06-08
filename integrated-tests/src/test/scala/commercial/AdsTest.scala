@@ -11,7 +11,7 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
 
   override protected def get(path: String): Unit = {
-    webDriver.get(s"http://m.code.dev-theguardian.com/$path?test=test#gu.prefs.switchOn=adverts")
+    webDriver.get(s"${Config.baseUrl}/$path?test=test#gu.prefs.switchOn=adverts")
     webDriver.navigate().refresh()
   }
 
@@ -21,16 +21,14 @@ class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
 
   private def waitForAdLoad(domSlotId: String): Unit = waitForElement(s"#$domSlotId > div > iframe")
 
-  private def findComponent(path: String,
-                            domSlotId: String,
-                            selector: String): Option[WebElement] = {
+  private def findComponent(path: String, selector: String): Option[WebElement] = {
     get(path)
     waitForElement(selector)
     $(selector).headOption
   }
 
   private def findLogo(path: String, domSlotId: String): Option[WebElement] = {
-    findComponent(path, domSlotId, s"#$domSlotId > div > a > img")
+    findComponent(path, s"#$domSlotId > div > a > img")
   }
 
   private def shouldBeVisible(maybeComponent: => Option[WebElement]): Unit = {
