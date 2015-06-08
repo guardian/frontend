@@ -127,21 +127,34 @@ define([
                 parseAd(event);
             }));
         },
+
         setPageTargeting = function () {
             if (config.switches.ophan && config.switches.ophanViewId) {
-                require(['ophan/ng'], function (ophan) {
-                    setTargets({viewId: ophan.viewId});
-                });
+                require(['ophan/ng'],
+                    function (ophan) {
+                        setTarget({viewId: ophan.viewId});
+                    },
+                    function (err) {
+                        raven.captureException(new Error('Error retrieving ophan (' + err + ')'), {
+                            tags: {
+                                feature: 'DFP'
+                            }
+                        });
+
+                        setTarget();
+                    }
+                );
             } else {
-                setTargets();
+                setTarget();
             }
         },
 
-        setTargets =  function (opts) {
+        setTarget = function (opts) {
             _.forOwn(buildPageTargeting(opts), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
+
         /**
          * Loop through each slot detected on the page and define it based on the data
          * attributes on the element.
@@ -393,6 +406,7 @@ define([
 
             if (_.every(slots, 'isRendered')) {
                 userTiming.mark('All ads are rendered');
+                mediator.emit('modules:commercial:dfp:alladsrendered');
             }
         },
         addLabel = function ($slot) {

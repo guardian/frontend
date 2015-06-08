@@ -3,11 +3,11 @@ package frontpress
 import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import common.FaciaPressMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
-import common.SQSQueues._
-import common.{SNSNotification, StopWatch, JsonMessageQueue, Edition}
-import conf.Configuration
+import common.{Edition, JsonMessageQueue, SNSNotification, StopWatch}
 import conf.Switches.FrontPressJobSwitch
+import conf.{Configuration, Switches}
 import metrics.AllFrontsPressLatencyMetric
+import play.api.libs.json.JsNull
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
@@ -33,7 +33,15 @@ object FrontPressCron extends JsonQueueWorker[SNSNotification] {
     if (FrontPressJobSwitch.isSwitchedOn) {
       log.info(s"Cron pressing path $path")
       val stopWatch = new StopWatch
-      val pressFuture = FrontPress.pressLiveByPathId(path)
+
+      lazy val fapiFormat = LiveFapiFrontPress.pressByPathId(path)
+
+      lazy val oldFormat =
+        if (Switches.FaciaPressOldFormat.isSwitchedOn) {
+          FrontPress.pressLiveByPathId(path)
+        } else { Future.successful(JsNull) }
+
+      val pressFuture = fapiFormat.flatMap(_ => oldFormat)
 
       pressFuture onComplete {
         case Success(_) =>

@@ -1,7 +1,6 @@
 define([
     'knockout',
     'underscore',
-    'config',
     'models/config/persistence',
     'modules/vars',
     'modules/content-api',
@@ -15,7 +14,6 @@ define([
 ], function(
     ko,
     _,
-    pageConfig,
     persistence,
     vars,
     contentApi,
@@ -189,7 +187,7 @@ define([
         cc = checkCount;
 
         apiQuery += apiQuery.indexOf('?') < 0 ? '?' : '&';
-        apiQuery += 'show-editors-picks=true&show-fields=headline';
+        apiQuery += 'show-fields=headline';
 
         contentApi.fetchContent(apiQuery)
         .done(function(results) {

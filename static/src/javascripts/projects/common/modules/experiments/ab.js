@@ -6,16 +6,16 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/sticky-shares',
-    'common/modules/experiments/tests/liveblog-sport-front-updates',
+    'common/modules/experiments/tests/facebook-most-viewed',
+    'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/mt-rec1',
     'common/modules/experiments/tests/mt-rec2',
-    'common/modules/experiments/tests/heatmap',
     'common/modules/experiments/tests/save-for-later',
-    'common/modules/experiments/tests/history-without-whitelist',
+    'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/defer-spacefinder'
+    'common/modules/experiments/tests/defer-spacefinder',
+    'common/modules/experiments/tests/supporter-message'
 ], function (
     raven,
     _,
@@ -24,34 +24,34 @@ define([
     mediator,
     store,
     mvtCookie,
-    StickyShares,
-    LiveblogSportFrontUpdates,
+    FacebookMostViewed,
+    LiveblogNotifications,
     HighCommercialComponent,
     MtRec1,
     MtRec2,
-    HeatMap,
     SaveForLater,
-    HistoryWithoutWhitelist,
+    CookieRefresh,
     Headline,
-    DeferSpacefinder
-    ) {
+    DeferSpacefinder,
+    SupporterMessage
+) {
 
-    var ab,
-        TESTS = _.flatten([
-            new StickyShares(),
-            new LiveblogSportFrontUpdates(),
-            new HighCommercialComponent(),
-            new MtRec1(),
-            new MtRec2(),
-            new HeatMap(),
-            new SaveForLater(),
-            new HistoryWithoutWhitelist(),
-            new DeferSpacefinder(),
-            _.map(_.range(1, 10), function (n) {
-                return new Headline(n);
-            })
-        ]),
-        participationsKey = 'gu.ab.participations';
+    var TESTS = _.flatten([
+        new FacebookMostViewed(),
+        new LiveblogNotifications(),
+        new HighCommercialComponent(),
+        new MtRec1(),
+        new MtRec2(),
+        new SaveForLater(),
+        new CookieRefresh(),
+        new DeferSpacefinder(),
+        new SupporterMessage(),
+        _.map(_.range(1, 10), function (n) {
+            return new Headline(n);
+        })
+    ]);
+
+    var participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
         return store.local.get(participationsKey) || {};
@@ -136,6 +136,12 @@ define([
             }
         });
 
+        _.forEach(_.keys(config.tests), function (k) {
+            if (k.toLowerCase().match(/^cm/)) {
+                tag.push(['AB', k, 'variant'].join(' | '));
+            }
+        });
+
         if (config.tests.internationalEditionVariant) {
             tag.push(['AB', 'InternationalEditionTest', config.tests.internationalEditionVariant].join(' | '));
 
@@ -156,13 +162,10 @@ define([
         if (isParticipating(test) && testCanBeRun(test)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
-            _.some(test.variants, function (variant) {
-                if (variant.id === variantId) {
-                    variant.test();
-                    return true;
-                }
-            });
-            if (variantId === 'notintest' && test.notInTest) {
+            var variant = getVariant(test, variantId);
+            if (variant) {
+                variant.test();
+            } else if (variantId === 'notintest' && test.notInTest) {
                 test.notInTest();
             }
         }
@@ -201,7 +204,7 @@ define([
         return config.switches['ab' + test.id];
     }
 
-    function getTestVariant(testId) {
+    function getTestVariantId(testId) {
         var participation = getParticipations()[testId];
         return participation && participation.variant;
     }
@@ -215,7 +218,18 @@ define([
         }
     }
 
-    ab = {
+    function shouldRunTest(id, variant) {
+        var test = getTest(id);
+        return test && isParticipating(test) && ab.getTestVariantId(id) === variant && testCanBeRun(test);
+    }
+
+    function getVariant(test, variantId) {
+        return _.find(test.variants, function (variant) {
+            return variant.id === variantId;
+        });
+    }
+
+    var ab = {
 
         addTest: function (test) {
             TESTS.push(test);
@@ -303,7 +317,7 @@ define([
             try {
                 _.forEach(getActiveTests(), function (test) {
                     if (isParticipating(test) && testCanBeRun(test)) {
-                        var variant = getTestVariant(test.id);
+                        var variant = getTestVariantId(test.id);
                         if (variant && variant !== 'notintest') {
                             abLogObject['ab' + test.id] = variant;
                         }
@@ -324,8 +338,9 @@ define([
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
-        getTestVariant: getTestVariant,
+        getTestVariantId: getTestVariantId,
         setTestVariant: setTestVariant,
+        getVariant: getVariant,
 
         /**
          * check if a test can be run (i.e. is not expired and switched on)
@@ -342,6 +357,8 @@ define([
 
             return test.id && test.expiry && testCanBeRun(test);
         },
+
+        shouldRunTest: shouldRunTest,
 
         // testing
         reset: function () {

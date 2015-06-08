@@ -114,8 +114,15 @@
         background-color: colour(live-support-1);
     }
 
-    .fc-item__liveblog-block {
-        background-color: darken(colour(story-package), 5%);
+    .fc-item__liveblog-block__text {
+        background-color: lighten(colour(story-package), 5%);
+        border-top-color: lighten(colour(story-package), 15%);
+        border-bottom-color: lighten(colour(story-package), 5%);
+    }
+
+    .fc-item__liveblog-block__text:after {
+        background-color: lighten(colour(story-package), 5%);
+        box-shadow: -5px 0 5px -2px lighten(colour(story-package), 5%);
     }
 
     // These need to exist for all kickers because of tone on tone action

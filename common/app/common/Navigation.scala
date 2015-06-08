@@ -188,7 +188,7 @@ trait Navigation {
   val asiaTravel = SectionLink("asia", "asia", "Asia", "/travel/asia")
 
   //Environment
-  val climatechange = SectionLink("environment", "climate change", "Climate change", "/environment/climate-change")
+  val climateChange = SectionLink("environment", "climate change", "Climate change", "/environment/climate-change")
   val wildlife = SectionLink("environment", "wildlife", "Wildlife", "/environment/wildlife")
   val energy = SectionLink("environment", "energy", "Energy", "/environment/energy")
   val conservation = SectionLink("environment", "conservation", "Conservation", "/environment/conservation")

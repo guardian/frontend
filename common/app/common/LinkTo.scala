@@ -1,5 +1,6 @@
 package common
 
+import com.gu.facia.api.models._
 import layout.ContentCard
 import play.twirl.api.Html
 import play.api.mvc.{Result, AnyContent, Request, RequestHeader}
@@ -9,6 +10,7 @@ import org.jsoup.Jsoup
 import scala.collection.JavaConversions._
 import conf.Configuration.environment
 import dev.HttpSwitch
+import implicits.FaciaContentImplicits._
 
 /*
  * Builds absolute links to the core site (www.theguardian.com)
@@ -51,6 +53,16 @@ trait LinkTo extends Logging {
     case snap: Snap => snap.snapHref.filter(_.nonEmpty).map(apply(_))
     case t: Trail => Option(apply(t.url))
   }
+
+  def hrefOrId(faciaContent: FaciaContent)(implicit request: RequestHeader): String =
+    faciaContent match {
+      case curatedContent: CuratedContent => curatedContent.href.getOrElse(curatedContent.id)
+      case supportingCuratedContent: SupportingCuratedContent => supportingCuratedContent.href.getOrElse(supportingCuratedContent.id)
+      //LinkSnap.id would be a snap id, which is a link to nothing
+      case linkSnap: LinkSnap => linkSnap.href.getOrElse("")
+      //LatestSnap.id would be the internal content code, so never use this
+      case latestSnap: LatestSnap => latestSnap.href.orElse(latestSnap.latestContent.map(_.id)).getOrElse("")
+    }
 
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
     faciaCard.url.get(request)

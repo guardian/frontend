@@ -133,6 +133,37 @@ define([
         return navigator.mozApps && !window.locationbar.visible;
     }
 
+    function isFacebookApp() {
+        return navigator.userAgent.indexOf('FBAN/') > -1;
+    }
+
+    function isTwitterApp() {
+        // NB Android app is indistinguishable from Chrome: http://mobiforge.com/research-analysis/webviews-and-user-agent-strings
+        return navigator.userAgent.indexOf('Twitter for iPhone') > -1;
+    }
+
+    function isTwitterReferral() {
+        return /\.t\.co/.test(document.referrer);
+    }
+
+    function isFacebookReferral() {
+        return /\.facebook\.com/.test(document.referrer);
+    }
+
+    function socialContext() {
+        var override = /socialContext=(facebook|twitter)/.exec(window.location.hash);
+
+        if (override !== null) {
+            return override[1];
+        } else if (isFacebookApp() || isFacebookReferral()) {
+            return 'facebook';
+        } else if (isTwitterApp() || isTwitterReferral()) {
+            return 'twitter';
+        } else {
+            return null;
+        }
+    }
+
     getUserAgent = (function () {
         var ua = navigator.userAgent, tem,
             M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -403,13 +434,18 @@ define([
     }
 
     function adblockInUse() {
-        var displayed = '';
+        var displayed = '',
+            isAdblock = false;
 
         $.create('<div class="ad_unit"></div>').appendTo(document.body);
         displayed = $('.ad_unit').css('display');
         $('.ad_unit').remove();
 
-        return displayed === 'none' ? true : false;
+        if (displayed === 'none') {
+            isAdblock = true;
+        }
+
+        return isAdblock;
     }
 
     detect = {
@@ -426,6 +462,11 @@ define([
         isIOS: isIOS,
         isAndroid: isAndroid,
         isFireFoxOSApp: isFireFoxOSApp,
+        isFacebookApp: isFacebookApp,
+        isTwitterApp: isTwitterApp,
+        isFacebookReferral: isFacebookReferral,
+        isTwitterReferral: isTwitterReferral,
+        socialContext: socialContext,
         isBreakpoint: isBreakpoint,
         isReload:  isReload,
         initPageVisibility: initPageVisibility,
@@ -435,7 +476,7 @@ define([
         breakpoints: breakpoints,
         fontHinting: fontHinting(),
         isModernBrowser: isModernBrowser,
-        adblockInUse: adblockInUse
+        adblockInUse: adblockInUse()
     };
     return detect;
 });

@@ -6,7 +6,7 @@ import frontsapi.model.UpdateActions
 import services.{IdGeneration, ConfigAgent, S3FrontsApi}
 import play.api.libs.json.Json
 import util.SanitizeInput
-import com.gu.googleauth.UserIdentity
+import com.gu.pandomainauth.model.User
 
 object UpdateManager {
   /**
@@ -21,7 +21,7 @@ object UpdateManager {
    *
    * @param transform The transformation to apply
    */
-  private def transformConfig(transform: ConfigJson => ConfigJson, identity: UserIdentity): Unit = {
+  private def transformConfig(transform: ConfigJson => ConfigJson, identity: User): Unit = {
     S3FrontsApi.getMasterConfig map { configString =>
       val configJson = Json.parse(configString)
       val config = configJson.asOpt[ConfigJson] getOrElse {
@@ -35,23 +35,23 @@ object UpdateManager {
     }
   }
 
-  def createFront(request: CreateFront, identity: UserIdentity): String = {
+  def createFront(request: CreateFront, identity: User): String = {
     val newCollectionId = IdGeneration.nextId
     transformConfig(Transformations.createFront(request, newCollectionId), identity)
     newCollectionId
   }
 
-  def updateFront(id: String, newVersion: FrontJson, identity: UserIdentity): Unit = {
+  def updateFront(id: String, newVersion: FrontJson, identity: User): Unit = {
     transformConfig(Transformations.updateFront(id, newVersion), identity)
   }
 
-  def addCollection(frontIds: List[String], collection: CollectionConfigJson, identity: UserIdentity): String = {
+  def addCollection(frontIds: List[String], collection: CollectionConfigJson, identity: User): String = {
     val newCollectionId = IdGeneration.nextId
     transformConfig(Transformations.updateCollection(frontIds, newCollectionId, collection), identity)
     newCollectionId
   }
 
-  def updateCollection(id: String, frontIds: List[String], collection: CollectionConfigJson, identity: UserIdentity): Unit = {
+  def updateCollection(id: String, frontIds: List[String], collection: CollectionConfigJson, identity: User): Unit = {
     transformConfig(Transformations.updateCollection(frontIds, id, collection), identity)
   }
 }

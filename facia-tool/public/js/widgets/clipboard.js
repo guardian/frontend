@@ -1,4 +1,4 @@
-import vars from 'modules/vars';
+import * as vars from 'modules/vars';
 import ko from 'knockout';
 import _ from 'underscore';
 import BaseWidget from 'widgets/base-widget';
@@ -28,6 +28,7 @@ mediator.on('ui:resize', updateClipboardScrollable);
 
 class Clipboard extends BaseWidget {
     constructor(params) {
+        super();
         var listeners = mediator.scope();
 
         this.storage = storage.bind('gu.front-tools.clipboard.' + vars.identity.email);

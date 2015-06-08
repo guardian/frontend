@@ -1,5 +1,6 @@
 import mockjax from 'test/utils/mockjax';
 import Promise from 'Promise';
+var originalSetTimeout = window.setTimeout;
 
 export default function(mockConfig, action) {
     return new Promise(function (resolve) {
@@ -16,7 +17,9 @@ export default function(mockConfig, action) {
                 clearRequest();
                 // Every such action is also triggering an update of the config
                 jasmine.clock().tick(100);
-                resolve(lastRequest);
+                originalSetTimeout(function () {
+                    resolve(lastRequest);
+                }, 10);
             }
         });
         var interceptEdit = mockjax({
@@ -33,7 +36,9 @@ export default function(mockConfig, action) {
                 clearRequest();
                 // Every such action is also triggering an update of the config
                 jasmine.clock().tick(100);
-                resolve(lastRequest);
+                originalSetTimeout(function () {
+                    resolve(lastRequest);
+                });
             }
         });
 

@@ -5,9 +5,11 @@ System.baseURL = '/base/public/';
 
 System.amdRequire([
     'test-config',
+    'Promise',
     'underscore'
 ], function (
     testConfig,
+    Promise,
     _
 ) {
     var tests = [],
@@ -39,13 +41,9 @@ System.amdRequire([
         .map(prepareForLoad)
         .value();
 
-    System.amdRequire([
-        'mock/logger',
-        'Promise'
-    ], function (
-        onceMock,
-        Promise
-    ) {
+    System.import('modules/vars').then(function (vars) {
+        vars.init(testConfig);
+
         Promise.all(_.map(tests, function (test) {
             return System.import(test);
         })).then(function () {

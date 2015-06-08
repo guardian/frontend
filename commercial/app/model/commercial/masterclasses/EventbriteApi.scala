@@ -4,6 +4,7 @@ import common.{ExecutionContexts, Logging}
 import conf.Switches.MasterclassFeedSwitch
 import conf.{CommercialConfiguration, Configuration}
 import model.commercial.{FeedMissingConfigurationException, FeedReader, FeedRequest}
+import org.joda.time.DateTime.now
 import play.api.libs.json.JsValue
 
 import scala.concurrent.Future
@@ -35,9 +36,12 @@ object EventbriteApi extends ExecutionContexts with Logging {
         timeout = 60.seconds,
         responseEncoding = Some("utf-8"))
       FeedReader.readSeqFromJson(request) { json =>
-      val maybes = extractEventsFromFeed(json) map (EventbriteMasterClass(_))
-      maybes.flatten
-    }
+        for {
+          jsValue <- extractEventsFromFeed(json)
+          masterclass <- EventbriteMasterClass(jsValue)
+          if masterclass.startDate.isAfter(now.plusWeeks(2))
+        } yield masterclass
+      }
     } getOrElse {
       log.warn(s"Missing URL for Masterclasses feed")
       Future.failed(FeedMissingConfigurationException("Masterclasses"))

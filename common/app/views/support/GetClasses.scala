@@ -1,6 +1,7 @@
 package views.support
 
 import ab_headlines.ABTestHeadlines
+import com.gu.facia.api.utils.{Audio, Video, Gallery}
 import layout._
 
 object GetClasses {
@@ -40,15 +41,15 @@ object GetClasses {
   ).flatten: _*)
 
   def mediaTypeClass(faciaCard: ContentCard) = faciaCard.mediaType map {
-    case layout.Gallery => "fc-item--gallery"
-    case layout.Video => "fc-item--video"
-    case layout.Audio => "fc-item--audio"
+    case Gallery => "fc-item--gallery"
+    case Video => "fc-item--video"
+    case Audio => "fc-item--audio"
   }
 
   def sublinkMediaTypeClass(sublink: Sublink) = sublink.mediaType map {
-    case layout.Gallery => "fc-sublink--gallery"
-    case layout.Video => "fc-sublink--video"
-    case layout.Audio => "fc-sublink--audio"
+    case Gallery => "fc-sublink--gallery"
+    case Video => "fc-sublink--video"
+    case Audio => "fc-sublink--audio"
   }
 
   def forContainerDefinition(containerDefinition: FaciaContainer) =

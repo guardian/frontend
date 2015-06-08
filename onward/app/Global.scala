@@ -3,7 +3,7 @@ import common.{ContentApiMetrics, CloudWatchApplicationMetrics}
 import conf.Filters
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
-import feed.{MostReadLifecycle, OnwardJourneyLifecycle}
+import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
 import metrics.FrontendMetric
 import play.api.mvc.WithFilters
 
@@ -14,6 +14,7 @@ object Global extends WithFilters(Filters.common: _*)
   with DfpAgentLifecycle
   with MostReadLifecycle
   with StocksDataLifecycle
+  with MostPopularFacebookAutoRefreshLifecycle
   with CorsErrorHandler {
   override lazy val applicationName = "frontend-onward"
 

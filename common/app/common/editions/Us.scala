@@ -33,11 +33,30 @@ object Us extends Edition(
     ussmallbusiness
   )
 
+  val worldLocalNav = Seq(
+    uk,
+    europeNews,
+    americas,
+    asia,
+    middleEast,
+    africa,
+    australia,
+    cities,
+    globalDevelopment
+  )
+
+  val environmentLocalNav = Seq(
+    climateChange,
+    wildlife,
+    energy,
+    pollution
+  )
+
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
       NavItem(us),
-      NavItem(world, Seq(uk, europeNews, americas, asia, middleEast, africa, australia)),
+      NavItem(world, worldLocalNav),
       NavItem(opinion),
       NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl)),
       NavItem(soccer, footballNav),
@@ -47,7 +66,7 @@ object Us extends Edition(
       NavItem(fashion),
       NavItem(business, businessLocalNav),
       NavItem(travel, Seq(usaTravel, europetravel, uktravel)),
-      NavItem(environment, Seq(globalDevelopment, cities)),
+      NavItem(environment, environmentLocalNav),
       NavItem(science),
       NavItem(media),
       NavItem(crosswords),
@@ -58,7 +77,7 @@ object Us extends Edition(
   override def briefNav: Seq[NavItem] = Seq(
     NavItem(home),
     NavItem(us),
-    NavItem(world, Seq(uk, europeNews, americas, asia, middleEast, africa, australia)),
+    NavItem(world, worldLocalNav),
     NavItem(opinion),
     NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl)),
     NavItem(soccer, footballNav),
@@ -68,7 +87,7 @@ object Us extends Edition(
     NavItem(fashion),
     NavItem(business, Seq(markets, companies)),
     NavItem(travel, Seq(usaTravel, europetravel, uktravel)),
-    NavItem(environment, Seq(globalDevelopment, cities)),
+    NavItem(environment, environmentLocalNav),
     NavItem(science)
   )
 }

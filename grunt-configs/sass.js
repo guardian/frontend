@@ -3,11 +3,9 @@ module.exports = function(grunt, options) {
 
     return {
         options: {
-            style: 'compressed',
-            sourcemap: options.isDev,
-            noCache: true,
-            quiet: options.isDev ? false : true,
-            bundleExec: true
+            outputStyle: 'compressed',
+            sourceMap: options.isDev,
+            precision: 5
         },
         compileStyleguide: {
             files: [{

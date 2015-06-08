@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import authedAjax from 'modules/authed-ajax';
-import vars from 'modules/vars';
+import {CONST} from 'modules/vars';
 import mediator from 'utils/mediator';
 
 var detectPressFailureCount = 0;
@@ -21,7 +21,7 @@ var detectFailures = _.debounce(function (front) {
             }
         }
     });
-}, vars.CONST.detectPressFailureMs || 10000);
+}, CONST.detectPressFailureMs || 10000);
 
 mediator.on('presser:detectfailures', function (front) {
     detectFailures(front);

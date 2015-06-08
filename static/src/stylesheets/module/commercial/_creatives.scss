@@ -17,11 +17,23 @@
         width: 300px;
         position: absolute;
         top: 0;
+        left: 0;
         box-sizing: border-box;
     }
     .creative--scrollable-mpu-image {
         border: 1px solid colour(neutral-5);
         background: none 0 0 repeat;
+
+        &.creative--scrollable-mpu-image-fixed {
+            background-attachment: fixed;
+            background-repeat: repeat;
+            background-position: 50% 0;
+        }
+        &.creative--scrollable-mpu-image-parallax {
+            background-attachment: scroll;
+            background-repeat: repeat-y;
+            height: 500px;
+        }
     }
     .creative--scrollable-mpu-static-image {
         z-index: 1;
@@ -247,8 +259,8 @@
     }
     .ad-exp__close-button {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 10px;
+        right: 10px;
         border-radius: 100px;
         border: 1px solid #ffffff;
         background-color: #000000;
@@ -259,10 +271,7 @@
         width: 32px;
         transform: rotate(45deg);
         transition: all 1s ease;
-
-        @include mq(tablet) {
-            right: $gs-gutter;
-        }
+        box-shadow: 0 0 1px 0px #ffffff inset, 0 0 1px 0px #ffffff;
 
         &:focus {
             outline-color: transparent;
@@ -293,7 +302,7 @@
     .ad-exp__open-chevron {
         position: absolute;
         z-index: 11;
-        bottom: 0;
+        bottom: -10px;
         left: 50%;
         border: 1px solid #ffffff;
         border-width: 1px 1px 0;
@@ -304,17 +313,25 @@
         width: gs-span(1);
         margin-left: $gs-gutter*-1.5;
         text-align: center;
+        outline: none;
+        height: 39px;
         @include fs-textSans(1);
         border-radius: $gs-gutter $gs-gutter 0 0;
+        box-shadow: 0 0 1px 0px #ffffff inset, 0 0 1px 0px #ffffff;
 
         .inline-arrow-down {
             transition: all 1s ease;
             display: block;
-            margin: -2px auto 2px;
+            margin: -12px auto 2px;
         }
 
         &.chevron-down .inline-arrow-down {
             transform: rotate(180deg);
+            transition: all 1s ease;
+        }
+
+        &.chevron-up {
+            animation: chevronanimation 3s ease-in-out 2;
         }
 
     }
@@ -353,6 +370,14 @@
         top: 0;
         height: 500px;
         width: 100%;
+
+        &.ad-exp--expand-scrolling-bg-fixed {
+            background-attachment: fixed;
+        }
+
+        &.ad-exp--expand-scrolling-bg-parallax {
+            background-attachment: scroll;
+        }
     }
 }
 
@@ -455,6 +480,49 @@
         padding-top: 0;
         padding-bottom: $gs-baseline*1.5;
     }
+}
+
+.creative--fluid250-bg-container {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0 !important;
+
+    .ad-scrolling-bg {
+        position: absolute;
+        top: 0;
+        height: 500px;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .ad-scrolling-bg-parallax {
+        background-attachment: scroll;
+    }
+
+    .fluid250_layer {
+
+        .is-modern & {
+            &.ad-scrolling-text-hide {
+                background-position: 0 -250px;
+            }
+            &.ad-scrolling-text-animate {
+                animation: textanimation 1.4s ease .4s;
+                animation-fill-mode: forwards;
+            }
+        }
+    }
+
+    .ad-slot__label {
+        position: relative;
+        text-align: left;
+    }
+
+    .fc-container__inner {
+        padding-top: 0;
+        border-top: 0;
+    }
+
 }
 
 .ad-slot--merchandising-high {
@@ -578,5 +646,68 @@
     .creative__logo-info {
         display: block;
         clear: left;
+    }
+
+}
+
+.creative--ad-feature-mpu-large-v2 {
+    padding: 0;
+
+    .creative__article {
+        padding: 0;
+
+        h2 {
+            padding: $gs-baseline / 2;
+            font-size: get-font-size(headline, 2);
+            line-height: get-line-height(headline, 1);
+            height: $gs-row-height;
+        }
+    }
+
+    .creative__logo-text,
+    .creative__logo-info {
+        margin-left: $gs-baseline / 2;
+    }
+
+    .creative__logo-info {
+        margin-bottom: $gs-baseline / 2;
+    }
+
+    .creative__logo {
+        margin-right: $gs-baseline / 2;
+    }
+
+    .creative__article__image-container {
+        max-height: 156px;
+        overflow: hidden;
+    }
+
+}
+
+@keyframes textanimation {
+    0% {
+        background-position: 0 -250px; 
+    }
+
+    75% {
+        background-position: 0 0; 
+    }
+
+    100% {
+        background-position: 0 0; 
+    }
+}
+
+@keyframes chevronanimation {
+    0%, 50%, 80%, 100% {
+        transform: (translateY(0));
+    }
+
+    60% {
+        transform: (translateY(-10px));
+    }
+
+    70% {
+        transform: (translateY(5px));
     }
 }

@@ -1,4 +1,4 @@
-import vars from 'modules/vars';
+import {CONST} from 'modules/vars';
 import params from 'utils/parse-query-params';
 import urlQuery from 'utils/url-query';
 import ammend from 'utils/ammended-query-str';
@@ -109,17 +109,17 @@ describe('utils/internal-content-code', function () {
             fields: {
                 internalContentCode: 'banana'
             }
-        })).toBe(vars.CONST.internalContentPrefix + 'banana');
+        })).toBe(CONST.internalContentPrefix + 'banana');
     });
 });
 
 describe('utils/is-guardian-url', function () {
     it('matches guardian domain', function () {
-        expect(isGuardian('http://' + vars.CONST.mainDomain)).toBe(true);
-        expect(isGuardian('https://' + vars.CONST.mainDomain)).toBe(true);
+        expect(isGuardian('http://' + CONST.mainDomain)).toBe(true);
+        expect(isGuardian('https://' + CONST.mainDomain)).toBe(true);
         expect(isGuardian('http://guaridian.it')).toBe(false);
-        expect(isGuardian('https://' + vars.CONST.mainDomain + '/')).toBe(true);
-        expect(isGuardian('https://' + vars.CONST.mainDomain + '/uk?search=fruit#hash')).toBe(true);
+        expect(isGuardian('https://' + CONST.mainDomain + '/')).toBe(true);
+        expect(isGuardian('https://' + CONST.mainDomain + '/uk?search=fruit#hash')).toBe(true);
     });
 });
 
@@ -179,39 +179,41 @@ describe('utils/human-time', function () {
     it('converts to a readable time', function () {
         expect(humanTime()).toBeUndefined();
 
-        var justnow = new Date();
+        var now = new Date();
+
+        var justnow = new Date(now);
         justnow.setSeconds(0);
-        expect(humanTime(justnow)).toBe('just now');
+        expect(humanTime(justnow, now)).toBe('just now');
 
-        var minutes = new Date();
+        var minutes = new Date(now);
         minutes.setMinutes(minutes.getMinutes() - 3);
-        expect(humanTime(minutes)).toBe('3 mins ago');
+        expect(humanTime(minutes, now)).toBe('3 mins ago');
 
-        var hours = new Date();
+        var hours = new Date(now);
         hours.setHours(hours.getHours() - 4);
-        expect(humanTime(hours)).toBe('4 hours ago');
+        expect(humanTime(hours, now)).toBe('4 hours ago');
 
-        var days = new Date();
+        var days = new Date(now);
         days.setDate(days.getDate() - 5);
-        expect(humanTime(days)).toBe('5 days ago');
+        expect(humanTime(days, now)).toBe('5 days ago');
 
-        var months = new Date();
+        var months = new Date(now);
         months.setMonth(months.getMonth() - 1);
-        expect(humanTime(months)).toBe('1 month ago');
+        expect(humanTime(months, now)).toBe('1 month ago');
 
-        var years = new Date();
+        var years = new Date(now);
         years.setFullYear(years.getFullYear() - 1);
-        expect(humanTime(years)).toBe('1 year ago');
+        expect(humanTime(years, now)).toBe('1 year ago');
 
         // test the rounding
-        var hoursRound = new Date();
+        var hoursRound = new Date(now);
         hoursRound.setHours(hoursRound.getHours() - 1);
         hoursRound.setMinutes(hoursRound.getMinutes() - 45);
-        expect(humanTime(hoursRound)).toBe('2 hours ago');
+        expect(humanTime(hoursRound, now)).toBe('2 hours ago');
 
         // future
-        var future = new Date();
+        var future = new Date(now);
         future.setSeconds(future.getSeconds() + 90);
-        expect(humanTime(future)).toBe('in 2 mins');
+        expect(humanTime(future, now)).toBe('in 2 mins');
     });
 });
