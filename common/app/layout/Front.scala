@@ -393,7 +393,7 @@ object Front extends implicits.Collections {
     import scalaz.syntax.traverse._
 
     Front(
-      pressedPage.collections.zipWithIndex.mapAccumL(
+      pressedPage.collections.filterNot(_.all.isEmpty).zipWithIndex.mapAccumL(
         (Set.empty[TrailUrl], initialContext)
       ) { case ((seenTrails, context), (pressedCollection, index)) =>
         val container = Container.fromPressedCollection(pressedCollection)
@@ -420,7 +420,7 @@ object Front extends implicits.Collections {
             None
           ))
         }
-      }._2.filterNot(_.items.isEmpty)
+      }._2
     )
 
   }
