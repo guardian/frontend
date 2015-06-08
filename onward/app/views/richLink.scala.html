@@ -21,17 +21,7 @@
 
         @if(play.Play.isDev()) {
             <script>
-                @Html(Static.js.es6ModuleLoader)
-                @Html(Static.js.systemJs)
-                @Html(Static.js.systemJsAppConfig)
-
-                @if(!play.Play.isDev()) {
-                    @Html(Static.js.systemJsBundleConfig)
-                }
-
-                System.baseURL = '@{Configuration.assets.path}';
-
-                @Html(Static.js.systemJsNormalize)
+                @Html(Static.js.systemJsSetupFragment)
 
                 // Our app assumes a normal env
                 window.guardian = {

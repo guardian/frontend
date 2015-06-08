@@ -29,21 +29,7 @@
 
 @bootSystemJs() = {
     <script>
-        @Html(Static.js.es6ModuleLoader)
-        @Html(Static.js.systemJs)
-        @Html(Static.js.systemJsAppConfig)
-
-        @if(!play.Play.isDev()) {
-            @Html(Static.js.systemJsBundleConfig)
-        }
-
-        System.baseURL = '@{Configuration.assets.securePath}';
-        System.paths['ophan/embed']  = '@{Configuration.javascript.config("ophanEmbedJsUrl")}.js';
-
-        @Html(Static.js.systemJsNormalize)
-
-        // Support lazy loading
-        window.require = System.amdRequire.bind(System);
+        @Html(Static.js.systemJsSetupFragment)
 
         System.import('core').then(function () {
             System.import('bootstraps/video-embed').then(function (bootstrap) {
