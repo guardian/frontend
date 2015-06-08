@@ -35,6 +35,7 @@ define([
     function SaveForLater() {
         this.classes = {
             saveThisArticle: '.js-save-for-later',
+            saveThisVideo: '.js-save-for-later-video',
             saveThisArticleButton: '.save-for-later__button',
             onwardContainer: '.js-onward',
             relatedContainer: '.js-related',
@@ -97,9 +98,7 @@ define([
 
     SaveForLater.prototype.renderSaveThisArticleLink = function (deferToClick, url, state) {
         var self = this,
-
             $saver = bonzo(qwery('.js-save-for-later')[0]),
-            //$saver = bonzo('.js-save-for-later'),
             templateName = self.templates[deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
 
         $saver.html(template(templateName, {
