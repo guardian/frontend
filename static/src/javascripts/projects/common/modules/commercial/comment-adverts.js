@@ -4,18 +4,18 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
+    'common/modules/identity/api',
     'common/modules/experiments/ab',
-    'common/modules/commercial/create-ad-slot',
-    'common/modules/commercial/user-ad-targeting'
+    'common/modules/commercial/create-ad-slot'
 ], function (
     fastdom,
     Promise,
     _,
     $,
     config,
+    identityApi,
     ab,
-    createAdSlot,
-    userAdTargeting
+    createAdSlot
 ) {
     function init(options) {
         var adType,
@@ -36,31 +36,27 @@ define([
                     ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
             };
 
-    //    mediator.once('modules:comments:renderComments:rendered', function () {
-            $adSlotContainer = $(opts.adSlotContainerSelector);
-            $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
+        $adSlotContainer = $(opts.adSlotContainerSelector);
+        $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
 
-            console.log($adSlotContainer.length);
-            console.log($commentMainColumn, $commentMainColumn.dim().height);
-            // is the switch off, or not in the AB test, or there is no adslot container, or comments are disabled, or not signed in TODO
-            if (!config.switches.standardAdverts || !isMtRecTest() || !$adSlotContainer.length || !config.switches.discussion) {
-                return false;
-            }
+        // is the switch off, or not in the AB test, or there is no adslot container, or comments are disabled, or not signed in
+        if (!config.switches.standardAdverts || !isMtRecTest() || !$adSlotContainer.length || !config.switches.discussion || !identityApi.isUserLoggedIn()) {
+            return false;
+        }
 
-            $commentMainColumn.addClass('discussion__mtrec-test');
+        $commentMainColumn.addClass('discussion__mtrec-test');
 
-            return new Promise(function (resolve) {
-                fastdom.read(function () {
-                    adType = 'comments';
+        return new Promise(function (resolve) {
+            fastdom.read(function () {
+                adType = 'comments';
 
-                    fastdom.write(function () {
-                        $adSlotContainer.append(createAdSlot(adType, 'mpu-banner-ad'));
+                fastdom.write(function () {
+                    $adSlotContainer.append(createAdSlot(adType, 'mpu-banner-ad'));
 
-                        resolve($adSlotContainer);
-                    });
+                    resolve($adSlotContainer);
                 });
             });
-    //    });
+        });
     }
 
     return {

@@ -236,16 +236,10 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .discussion__mtrec-test {
-    .content__repositioned-comments & {
-        @include mq(desktop) {
-            max-width: gs-span(8);
-            position: relative;
-            .discussion__ad-slot {
-                position: absolute;
-                top: 10px;
-                right: -320px;
-            }
-        }
+    .discussion__ad-slot {
+        position: absolute;
+        top: 10px;
+        right: -320px;
     }
 }
 
