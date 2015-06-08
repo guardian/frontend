@@ -17,10 +17,7 @@ trait Articles {
     val fmt = ISODateTimeFormat.dateTimeNoMillis()
     val itemsPerPage = 5
 
-    val pages = savedArticles.articles match {
-      case Nil => List.empty
-      case _ => savedArticles.articles.grouped(4).toList
-    }
+    val pages = savedArticles.articles.grouped(4).toList
 
     lazy val numPages = pages.length
 
@@ -51,14 +48,8 @@ trait Articles {
     }
 
     //Deal with just having removed the only item on the last page
-    def getPage(page: Int): List[SavedArticle] = pages match {
-      case Nil => List.empty
-      case _ => page >= pages.length match {
-        case true => pages.last
-        case _ =>pages(page - 1)
-      }
-
-    }
+    def getPage(page: Int): List[SavedArticle] =
+     pages.lift(Math.min(page, page-1)) orElse pages.lastOption getOrElse Nil
   }
 }
 
