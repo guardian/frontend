@@ -40,8 +40,10 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    var saveForLater = new SaveForLater();
-                    saveForLater.init();
+                    mediator.on('module:identity:api:loaded', function () {
+                        var saveForLater = new SaveForLater();
+                        saveForLater.init();
+                    });
 
                     mediator.on('modules:profilenav:loaded', function () {
                         var popup = qwery('.popup--profile')[0];

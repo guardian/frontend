@@ -35,6 +35,7 @@ define([
     function SaveForLater() {
         this.classes = {
             saveThisArticle: '.js-save-for-later',
+            saveThisVideo: '.js-save-for-later-video',
             saveThisArticleButton: '.save-for-later__button',
             onwardContainer: '.js-onward',
             relatedContainer: '.js-related',
@@ -93,6 +94,19 @@ define([
         return _.forEach(elements, function (el) {
             return bonzo(el).attr(self.attributes.containerItemShortUrl);
         });
+    };
+
+    SaveForLater.prototype.renderSaveThisArticleLink = function (deferToClick, url, state) {
+        var self = this,
+            $saver = bonzo(qwery('.js-save-for-later')[0]),
+            templateName = self.templates[deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
+
+        $saver.html(template(templateName, {
+            url: url,
+            icon: bookmarkSvg,
+            state: state
+
+        }));
     };
 
     SaveForLater.prototype.getSavedArticles = function () {
