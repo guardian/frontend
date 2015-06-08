@@ -7,7 +7,6 @@ define([
     config,
     ajax
 ) {
-
     var canBeacon = !!navigator.sendBeacon;
 
     function buildCounts(keys) {
@@ -61,5 +60,4 @@ define([
 
         beaconCounts: beaconCounts
     };
-
 });
