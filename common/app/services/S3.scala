@@ -2,7 +2,7 @@ package services
 
 import com.gu.googleauth.UserIdentity
 import com.gu.pandomainauth.model.User
-import conf.Configuration
+import conf.{Switches, Configuration}
 import common.Logging
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model._
@@ -162,8 +162,12 @@ object S3FrontsApi extends S3 {
   def getBlock(id: String) = get(s"$location/collection/$id/collection.json")
   def listConfigsIds: List[String] = getConfigIds(s"$location/config/")
   def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")
-  def putCollectionJson(id: String, json: String) =
-    putPublic(s"$location/collection/$id/collection.json", json, "application/json")
+  def putCollectionJson(id: String, json: String) = {
+    val location: String = s"$location/collection/$id/collection.json", json, "application/json"
+    if (Switches.FaciaToolPutPrivate.isSwitchedOn) {
+      putPrivate(location, json, "application/json")}
+    else {
+      putPublic(location, json, "application/json")}}
 
   def archive(id: String, json: String, identity: User) = {
     val now = DateTime.now
