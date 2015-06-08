@@ -471,10 +471,6 @@ $c-navigation-expandable-background: colour(neutral-1);
             white-space: nowrap;
         }
 
-        .l-header--is-slim & {
-            display: none;
-        }
-
         &::-webkit-scrollbar {
             display: none;
         }
@@ -487,9 +483,9 @@ $c-navigation-expandable-background: colour(neutral-1);
     .local-navigation {
         height: $navigation-height;
 
-        .l-header--is-slim & {
+        /*.l-header--is-slim & {
             height: auto;
-        }
+        }*/
     }
     .signposting,
     .local-navigation {
@@ -736,7 +732,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
 
-    .l-header--is-slim & {
+    .l-header--slim-all & {
         display: none;
     }
 
@@ -754,15 +750,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     display: inline;
 }
 
-// This must appear last in the cascade
-.navigation-toggle-label {
-    .l-header--is-slim & {
-        @include mq($until: mobileLandscape) {
-            display: none;
-        }
-    }
-}
-
 // Remove redundant min-width and override breakpoint
 .l-header--no-navigation {
     float: left;
@@ -773,6 +760,22 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     &:before {
         display: none;
+    }
+
+    .navigation-container--collapsed {
+        .navigation__scroll {
+            .l-header--is-slim & {
+                display: none;
+            }
+        }
+    }
+}
+
+.l-header--slim-all {
+    .navigation-toggle-label {
+        @include mq($until: mobileLandscape) {
+            display: none;
+        }
     }
 }
 
@@ -800,7 +803,8 @@ $burger-width: 16px;
     margin: 13px 6px 0 0; // We need to position burger icon to the middle and push text after
     position: relative;
 
-    .l-header--is-slim & {
+
+    .l-header--slim-all & {
         @include mq($until: mobileLandscape) {
             margin-right: 0;
         }
@@ -854,7 +858,7 @@ $burger-width: 16px;
         display: none;
     }
 
-    .l-header--is-slim & {
+    .l-header--slim-all & {
         margin-top: $gs-baseline * 1.5;
     }
 }
