@@ -35,7 +35,7 @@ define([
             if (e.currentTarget.textContent == "show") {
                 e.currentTarget.textContent = "hide";
                 $expired.style.display = "block";
-                expiredTests.forEach(function(t){t.renderChart();});
+                expiredTestItems.forEach(function(t){t.renderChart();});
             } else {
                 e.currentTarget.textContent = "show";
                 $expired.style.display = "none";
