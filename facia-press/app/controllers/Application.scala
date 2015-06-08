@@ -1,13 +1,13 @@
 package controllers
 
 import common.ExecutionContexts
-import frontpress.{DraftFapiFrontPress, LiveFapiFrontPress, FrontPress}
 import conf.Configuration
+import conf.Switches.FaciaPressOnDemand
+import frontpress.{DraftFapiFrontPress, LiveFapiFrontPress}
 import model.NoCache
 import play.api.libs.json.Json
-import play.api.mvc.{Result, Action, Controller}
+import play.api.mvc.{Action, Controller, Result}
 import services.ConfigAgent
-import conf.Switches.FaciaPressOnDemand
 
 import scala.concurrent.Future
 
