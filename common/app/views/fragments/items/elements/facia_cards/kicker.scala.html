@@ -3,49 +3,59 @@
 @import common.LinkTo
 @import com.gu.facia.api.utils._
 
+@* TODO: this is only used by dream snaps now (see title.scala.html for the actual kicker branching code for
+   elsewhere). Given that, how much of the below do we need? *@
+
+@makeLink(uri: String, inner: String) = {
+    <a href="@LinkTo(uri)" data-link-name="kicker" class="fc-item__kicker @classes.mkString(" ")">@Html(inner)</a>
+}
+
+@makeSpan(inner: String) = {
+    <span class="fc-item__kicker @classes.mkString(" ")">@Html(inner)</span>
+}
+
 @header.kicker.map {
     case BreakingNewsKicker => {
         <span class="fc-item__breaking-indicator @classes.mkString(" ")">Breaking news</span>
     }
 
     case LiveKicker => {
-        <span class="fc-item__kicker fc-item__live-indicator @classes.mkString(" ")"><span class="live-pulse-icon"></span>Live</span>
+        <span class="fc-item__kicker fc-item__live-indicator @classes.mkString(" ")"><span class="live-pulse-icon js-flashing-image"></span>Live</span>
     }
 
     case CartoonKicker => {
-        <span class="fc-item__kicker @classes.mkString(" ")">Cartoon</span>
+        @makeSpan("Cartoon")
     }
 
     case AnalysisKicker => {
-        <span class="fc-item__kicker @classes.mkString(" ")">Analysis</span>
+        @makeSpan("Analysis")
     }
 
     case PodcastKicker(Some(series)) => {
-        <a href="@LinkTo(series.url)" data-link-name="kicker" class="fc-item__kicker @classes.mkString(" ")">@Html(series.name)</a>
+        @makeLink(series.url, series.name)
     }
 
     case PodcastKicker(None) => {
-        <span class="fc-item__kicker @classes.mkString(" ")">Podcast</span>
+        @makeSpan("Podcast")
     }
 
     case ReviewKicker => {
-        <span class="fc-item__kicker @classes.mkString(" ")">Review</span>
+        @makeSpan("Review")
     }
 
     case TagKicker(tagName, tagLink, _) => {
-        <a href="@LinkTo(tagLink)" data-link-name="kicker" class="fc-item__kicker @classes.mkString(" ")">@Html(tagName)</a>
+        @makeLink(tagLink, tagName)
     }
 
     case SectionKicker(sectionName, sectionLink) => {
-        <a href="@LinkTo(sectionLink)" data-link-name="kicker" class="fc-item__kicker @classes.mkString(" ")">@Html(sectionName)</a>
+        @makeLink(sectionLink, sectionName)
     }
 
     case FreeHtmlKickerWithLink(html, link) => {
-        <a href="@LinkTo(link)" data-link-name="kicker" class="fc-item__kicker @classes.mkString(" ")">@Html(html)</a>
+        @makeLink(link, html)
     }
 
     case FreeHtmlKicker(html) => {
-        <span class="fc-item__kicker @classes.mkString(" ")">@Html(html)</span>
+        @makeSpan(html)
     }
 }
-

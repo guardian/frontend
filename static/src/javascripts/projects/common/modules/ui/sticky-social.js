@@ -2,12 +2,14 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/_',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/modules/experiments/ab'
 ], function (
     fastdom,
     $,
     _,
+    detect,
     mediator,
     ab
     ) {
@@ -75,21 +77,13 @@ define([
     }
 
     function init() {
-        var testVariant = ab.getTestVariant('ShareButtons'),
-            referrer,
-            socialReferrer;
+        var testVariant = ab.getTestVariantId('ShareButtons2'),
+            socialContext;
 
         if (testVariant.indexOf('referrer') > -1) {
-            referrer = ((window.location.hash + '').match(/referrer=([^&]+)/) || [])[1] || document.referrer,
+            socialContext = detect.socialContext();
 
-            socialReferrer = referrer ? [
-                'facebook',
-                'twitter'
-            ].filter(function (social) {
-                return referrer.indexOf(social) > -1;
-            })[0] : null;
-
-            if (socialReferrer) {
+            if (socialContext) {
                 fastdom.read(function () {
                     [topEl(), bottomEl()].forEach(function (el) {
                         if (el) {
@@ -98,7 +92,7 @@ define([
                                     $(el).addClass('social--referred-only');
                                 }
 
-                                moveToFirstPosition($('.social__item--' + socialReferrer, el).addClass('social__item--referred'));
+                                moveToFirstPosition($('.social__item--' + socialContext, el).addClass('social__item--referred'));
                             });
                         }
                     });

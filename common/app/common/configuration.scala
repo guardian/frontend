@@ -62,7 +62,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isProd = stage == "prod"
-    lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
+    lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
 
     lazy val isPreview = projectName == "preview"
   }
@@ -113,12 +113,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       user <- configuration.getStringProperty("content.api.preview.user")
       password <- configuration.getStringProperty("content.api.preview.password")
     } yield Auth(user, password)
-
-    object write {
-      lazy val username: Option[String] = configuration.getStringProperty("contentapi.write.username")
-      lazy val password: Option[String] = configuration.getStringProperty("contentapi.write.password")
-      lazy val endpoint: Option[String] = configuration.getStringProperty("contentapi.write.endpoint")
-    }
   }
 
   object ophanApi {
@@ -208,6 +202,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
+    object backends {
+      lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
+      lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
+    }
   }
 
   object assets {
@@ -349,6 +347,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       assert(size <= 100, "Best to keep this less then 50 because of pageSize on search queries")
       size
     }
+
+    lazy val pandomainHost = configuration.getStringProperty("faciatool.pandomain.host")
+    lazy val pandomainDomain = configuration.getStringProperty("faciatool.pandomain.domain")
+    lazy val pandomainSecret = configuration.getStringProperty("pandomain.aws.secret")
+    lazy val pandomainKey = configuration.getStringProperty("pandomain.aws.key")
+
     lazy val configBeforePressTimeout: Int = 1000
 
     val oauthCredentials: Option[OAuthCredentials] =
@@ -468,4 +472,3 @@ object ManifestData {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
   lazy val revision = ManifestFile.asKeyValuePairs.getOrElse("Revision", "DEV").dequote.trim
 }
-

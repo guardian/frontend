@@ -23,6 +23,7 @@ Media list item. Looks a bit like this:
 
     .fc-item__content {
         min-height: $item-min-height + ($mobile-media-padding * 2);
+        position: relative;
     }
 
     &.fc-item--has-metadata .fc-item__content {

@@ -217,7 +217,7 @@ describe('AB Testing', function () {
             var event = {};
             event.tag = 'most popular | The Guardian | trail | 1 | text';
 
-            expect(ab.getTestVariant('DummyTest')).toEqual('control')
+            expect(ab.getTestVariantId('DummyTest')).toEqual('control')
         });
 
         it('should generate a string for Omniture to tag the test(s) the user is in', function () {

@@ -25,6 +25,7 @@ case class ItemClasses(mobile: CardType, tablet: CardType, desktop: Option[CardT
   def showVideoEndSlate = allTypes.exists(_.videoPlayer.showEndSlate)
 
   def showCutOut = allTypes.exists(_.showCutOut)
+  def canShowSlideshow = allTypes.exists(_.canShowSlideshow)
 }
 case class SliceLayout(cssClassName: String, columns: Seq[Column]) {
   def numItems = columns.map(_.numItems).sum

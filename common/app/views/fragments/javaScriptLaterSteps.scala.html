@@ -192,28 +192,11 @@
 
     })(guardian.isModernBrowser);
 
-</script>
+    @****************************
+    **** boostrap the JS app ****
+    ****************************@
 
-@****************************
-**** boostrap the JS app ****
-****************************@
-<script>
-    @Html(Static.js.es6ModuleLoader)
-    @Html(Static.js.systemJs)
-    @Html(Static.js.systemJsAppConfig)
-
-    @if(!play.Play.isDev()) {
-        @Html(Static.js.systemJsBundleConfig)
-    }
-
-    System.baseURL = '@{Configuration.assets.path}';
-    System.paths['ophan/ng']  = '@{Configuration.javascript.config("ophanJsUrl")}.js';
-    System.paths['googletag'] = '@{Configuration.javascript.config("googletagJsUrl")}';
-
-    @Html(Static.js.systemJsNormalize)
-
-    window.require = System.amdRequire.bind(System);
-    window.define = System.amdDefine.bind(System);
+    @Html(Static.js.systemJsSetupFragment)
 
     System.import('core')
     .then(function(){

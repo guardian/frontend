@@ -131,7 +131,10 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('test:unit', function(app) {
         var target = app ? ':' + app : '';
-        grunt.config.set('karma.options.singleRun', (options.singleRun === false) ? false : true);
+        if (options.singleRun === false) {
+            grunt.config.set('karma.options.singleRun', false);
+            grunt.config.set('karma.options.autoWatch', true);
+        }
 
         grunt.task.run(['copy:inlineSVGs']);
         grunt.task.run('karma' + target);

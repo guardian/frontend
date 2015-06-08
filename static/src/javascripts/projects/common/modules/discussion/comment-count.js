@@ -55,46 +55,41 @@ define([
     }
 
     function renderCounts(counts, indexedElements) {
-        fastdom.read(function () {
-            counts.forEach(function (c) {
-                _.forEach(indexedElements[c.id], function (node) {
-                    var format,
-                        $node = bonzo(node),
-                        commentOrComments = (c.count === 1 ? 'comment' : 'comments'),
-                        url = $node.attr('data-discussion-url') || getContentUrl(node),
-                        hideLabel = $node.attr('data-discussion-hide-label') === 'true',
-                        $container,
-                        meta,
-                        html;
+        counts.forEach(function (c) {
+            _.forEach(indexedElements[c.id], function (node) {
+                var format,
+                    $node = bonzo(node),
+                    url = $node.attr('data-discussion-url') || getContentUrl(node),
+                    $container,
+                    meta,
+                    html;
 
-                    if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
-                        return; // Discussion is closed and had no comments, we don't want to show a comment count
-                    }
+                if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
+                    return; // Discussion is closed and had no comments, we don't want to show a comment count
+                }
+
+                format = $node.data('commentcount-format');
+                html = template(templates[format] || defaultTemplate, {
+                    url: url,
+                    icon: svgs('commentCount16icon', ['inline-tone-fill']),
+                    count: formatters.integerCommas(c.count)
+                });
+
+                meta = qwery('.js-item__meta', node);
+                $container = meta.length ? bonzo(meta) : $node;
+
+                fastdom.write(function () {
+                    $container.append(html);
+                    $node.removeAttr(attributeName);
                     $node.removeClass('u-h');
-
-                    format = $node.data('commentcount-format');
-                    html = template(templates[format] || defaultTemplate, {
-                        url: url,
-                        icon: svgs('commentCount16icon', ['inline-tone-fill']),
-                        count: formatters.integerCommas(c.count),
-                        label: hideLabel ? '' : commentOrComments
-                    });
-
-                    meta = qwery('.js-item__meta', node);
-                    $container = meta.length ? bonzo(meta) : $node;
-
-                    fastdom.write(function () {
-                        $container.append(html);
-                        $node.removeAttr(attributeName);
-                    });
                 });
             });
+        });
 
-            // This is the only way to ensure that this event is fired after all the comment counts have been rendered to
-            // the DOM.
-            fastdom.write(function () {
-                mediator.emit('modules:commentcount:loaded', counts);
-            });
+        // This is the only way to ensure that this event is fired after all the comment counts have been rendered to
+        // the DOM.
+        fastdom.write(function () {
+            mediator.emit('modules:commentcount:loaded', counts);
         });
     }
 

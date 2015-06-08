@@ -4,20 +4,22 @@
 
 define([
     'common/utils/_',
-    'svgs/icon/comment-16!svg',
-    'svgs/icon/marque-36!svg',
-    'svgs/icon/marque-54!svg',
-    'svgs/icon/market-down!svg',
-    'svgs/icon/market-up!svg',
-    'svgs/icon/market-same!svg',
-    'svgs/icon/arrow!svg',
-    'svgs/icon/arrow-down!svg',
-    'svgs/logo/logo-guardian!svg',
-    'svgs/commercial/logo-soulmates!svg',
-    'svgs/icon/close-central!svg',
-    'svgs/icon/arrow-white-right!svg',
-    'svgs/icon/arrow-right!svg',
-    'svgs/icon/bookmark!svg'
+    'svgs/icon/comment-16!inlineSvg',
+    'svgs/icon/marque-36!inlineSvg',
+    'svgs/icon/marque-54!inlineSvg',
+    'svgs/icon/market-down!inlineSvg',
+    'svgs/icon/market-up!inlineSvg',
+    'svgs/icon/market-same!inlineSvg',
+    'svgs/icon/arrow!inlineSvg',
+    'svgs/icon/arrow-down!inlineSvg',
+    'svgs/logo/logo-guardian!inlineSvg',
+    'svgs/commercial/logo-soulmates!inlineSvg',
+    'svgs/icon/close-central!inlineSvg',
+    'svgs/icon/arrow-white-right!inlineSvg',
+    'svgs/icon/arrow-right!inlineSvg',
+    'svgs/icon/bookmark!inlineSvg',
+    'svgs/notifications-explainer-mobile!inlineSvg',
+    'svgs/notifications-explainer-desktop!inlineSvg'
 ], function (
     _,
     commentCount16icon,
@@ -33,7 +35,9 @@ define([
     closeCentralIcon,
     arrowWhiteRight,
     arrowRight,
-    bookmark
+    bookmark,
+    notificationsExplainerMobile,
+    notificationsExplainerDesktop
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -49,7 +53,9 @@ define([
         closeCentralIcon: closeCentralIcon,
         arrowWhiteRight: arrowWhiteRight,
         arrowRight: arrowRight,
-        bookmark: bookmark
+        bookmark: bookmark,
+        notificationsExplainerMobile: notificationsExplainerMobile,
+        notificationsExplainerDesktop: notificationsExplainerDesktop
     };
 
     return function (name, classes, title) {

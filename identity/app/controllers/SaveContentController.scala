@@ -63,7 +63,11 @@ class SaveContentController @Inject() ( api: IdApiClient,
         savedArticleService.getOrCreateArticlesList(request.user.auth).map {
           case Right(prefs) =>
             if (!prefs.contains(shortUrl)) {
-              val savedArticles = prefs.addArticle(new URL(returnUrl).getPath.drop(1), shortUrl)
+              val articleId = idRequest.articleId match {
+                case Some(id) => id
+                case _ =>  new URL(returnUrl).getPath.drop(1)
+              }
+              val savedArticles = prefs.addArticle(articleId, shortUrl)
               api.updateSavedArticles(request.user.auth, savedArticles)
             }
           case Left(errors) => logger.error(errors.toString)

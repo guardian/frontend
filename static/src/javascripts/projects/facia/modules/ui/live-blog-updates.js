@@ -24,14 +24,14 @@ define([
     blockTemplate
 ) {
     var numDisplayedBlocks = 4,
-        blockHeightPx = 40,
+        blockHeightPx = 74,
 
-        animateDelayMs = 1000,
+        animateDelayMs = 2000,
         refreshSecs = 30,
         refreshDecay = 1,
-        refreshMaxTimes = 3,
+        refreshMaxTimes = 5,
 
-        selector = '.js-liveblog-blocks',
+        selector = '.js-snappable .js-liveblog-blocks',
         blocksClassName = 'fc-item__liveblog-blocks',
         newBlockClassName = 'fc-item__liveblog-block--new',
         oldBlockClassName = 'fc-item__liveblog-block--old',
@@ -54,10 +54,8 @@ define([
 
         if (relTime.match(/yesterday/i)) {
             relTime = relTime.toLowerCase();
-        } else if (relTime && block.isNew) {
-            relTime = 'updated ' + relTime + ' ago';
         } else if (relTime) {
-            relTime = relTime + ' ago';
+            relTime = 'latest update ' + relTime + ' ago';
         } else {
             relTime = 'updated just now';
         }
@@ -66,7 +64,7 @@ define([
             classes: block.isNew ? newBlockClassName : oldBlockClassName,
             href: '/' + articleId + '#' + block.id,
             relativeTime: relTime,
-            text: _.compact([block.title, block.body.slice(0, 200)]).join('. '),
+            text: _.compact([block.title, block.body.slice(0, 500)]).join('. '),
             index: index + 1
         });
     }
@@ -115,7 +113,7 @@ define([
                         '</div>'
                     );
 
-                bonzo(element).empty().addClass(blocksClassName).append(el);
+                bonzo(element).addClass(blocksClassName).append(el);
 
                 if (numNewBlocks) {
                     animateBlocks(el[0]);

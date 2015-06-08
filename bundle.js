@@ -23,6 +23,7 @@ var bundlesUri = 'bundles';
 var bundleConfigs = [
     ['core + system-script', 'core'],
     ['es6/bootstraps/crosswords - core', 'crosswords'],
+    ['bootstraps/accessibility - core', 'accessibility'],
     ['bootstraps/app - core', 'app'],
     ['bootstraps/commercial - core', 'commercial'],
     ['bootstraps/sudoku - core - bootstraps/app', 'sudoku'],
@@ -33,8 +34,12 @@ var bundleConfigs = [
     ['bootstraps/membership - core - bootstraps/app', 'membership'],
     ['bootstraps/ophan - core', 'ophan'],
     ['bootstraps/admin - core', 'admin'],
+    // Odd issue when bundling admin with core: https://github.com/jspm/jspm-cli/issues/806
+    // ['bootstraps/admin', 'admin'],
     ['bootstraps/video-player - core', 'video-player'],
     ['bootstraps/video-embed - core', 'video-embed'],
+    // Odd issue when bundling admin with core: https://github.com/jspm/jspm-cli/issues/806
+    // ['bootstraps/video-embed', 'video-embed'],
     ['bootstraps/dev - core - bootstraps/app', 'dev'],
     ['bootstraps/creatives - core - bootstraps/app', 'creatives']
 ];

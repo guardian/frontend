@@ -59,7 +59,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
     val response = () => views.html.fragments.containers.facia_cards.container(
       FaciaContainer(
         1,
-        Fixed(FixedContainers.fixedMediumSlowVII),
+        Fixed(visuallyPleasingContainerForStories(series.trails.length)),
         CollectionConfigWithId(dataId, config),
         CollectionEssentials(series.trails map FaciaContentConvert.frontentContentToFaciaContent take 7, Nil, displayName, None, None, None),
         componentId

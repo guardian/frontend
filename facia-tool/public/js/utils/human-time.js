@@ -1,6 +1,6 @@
 import _ from 'underscore';
 
-export default function(date) {
+export default function(date, now) {
     var periods = [
             { secs: 30758400, unit: 'year'},
             { secs: 2563200, unit: 'month'},
@@ -16,7 +16,7 @@ export default function(date) {
 
     if (!date) { return; }
 
-    elapsed = (new Date() - new Date(date))/1000;
+    elapsed = ((now || new Date()) - new Date(date))/1000;
 
     abs = Math.abs(elapsed);
 

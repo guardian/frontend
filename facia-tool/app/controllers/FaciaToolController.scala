@@ -1,6 +1,5 @@
 package controllers
 
-import auth.ExpiringActions
 import common.{ExecutionContexts, FaciaToolMetrics, Logging}
 import conf.Configuration
 import fronts.FrontsApi
@@ -10,45 +9,49 @@ import play.api.libs.json._
 import play.api.mvc._
 import services._
 import tools.FaciaApiIO
-
+import akka.actor.ActorSystem
 import scala.concurrent.Future
+import play.api.Logger
+import auth.PanDomainAuthActions
 
+object FaciaToolController extends Controller with Logging with ExecutionContexts with PanDomainAuthActions {
 
-object FaciaToolController extends Controller with Logging with ExecutionContexts {
+  override lazy val actorSystem = ActorSystem()
 
-  def priorities() = ExpiringActions.ExpiringAuthAction { request =>
+  def priorities() = AuthAction { request =>
+    Logger.info("Doing priorities..." + request)
     val identity = request.user
     Cached(60) { Ok(views.html.priority(Configuration.environment.stage, "", Option(identity))) }
   }
 
-  def collectionEditor(priority: String) = ExpiringActions.ExpiringAuthAction { request =>
+  def collectionEditor(priority: String) = AuthAction { request =>
     val identity = request.user
     Cached(60) { Ok(views.html.collections(Configuration.environment.stage, priority, Option(identity))) }
   }
 
-  def configEditor(priority: String) = ExpiringActions.ExpiringAuthAction { request =>
+  def configEditor(priority: String) = AuthAction { request =>
     val identity = request.user
     Cached(60) { Ok(views.html.config(Configuration.environment.stage, priority, Option(identity))) }
   }
 
-  def listCollections = ExpiringActions.ExpiringAuthAction { request =>
+  def listCollections = AuthAction { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     NoCache { Ok(Json.toJson(S3FrontsApi.listCollectionIds)) }
   }
 
-  def getConfig = ExpiringActions.ExpiringAuthAction.async { request =>
+  def getConfig = AuthAction.async { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     FrontsApi.amazonClient.config.map { configJson =>
       NoCache {
         Ok(Json.toJson(configJson)).as("application/json")}}}
 
-  def getCollection(collectionId: String) = ExpiringActions.ExpiringAuthAction.async { request =>
+  def getCollection(collectionId: String) = AuthAction.async { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     FrontsApi.amazonClient.collection(collectionId).map { configJson =>
       NoCache {
         Ok(Json.toJson(configJson)).as("application/json")}}}
 
-  def publishCollection(collectionId: String) = ExpiringActions.ExpiringAuthAction.async { request =>
+  def publishCollection(collectionId: String) = AuthAction.async { request =>
     val identity = request.user
     FaciaToolMetrics.DraftPublishCount.increment()
     val futureCollectionJson = FaciaApiIO.publishCollectionJson(collectionId, identity)
@@ -57,10 +60,9 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         UpdateActions.archivePublishBlock(collectionId, b, identity)
         FaciaPress.press(PressCommand.forOneId(collectionId).withPressDraft().withPressLive())
         FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(PublishUpdate(collectionId), identity.email))}
-    ContentApiPush.notifyContentApi(Set(collectionId))
     NoCache(Ok)}}
 
-  def discardCollection(collectionId: String) = ExpiringActions.ExpiringAuthAction.async { request =>
+  def discardCollection(collectionId: String) = AuthAction.async { request =>
     val identity = request.user
     val futureCollectionJson = FaciaApiIO.discardCollectionJson(collectionId, identity)
     futureCollectionJson.map { maybeCollectionJson =>
@@ -70,7 +72,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       FaciaPress.press(PressCommand.forOneId(collectionId).withPressDraft())}
     NoCache(Ok)}}
 
-  def treatEdits(collectionId: String) = ExpiringActions.ExpiringAuthAction.async { request =>
+  def treatEdits(collectionId: String) = AuthAction.async { request =>
     request.body.asJson.flatMap(_.asOpt[FaciaToolUpdate]).map {
       case update: Update =>
         val identity = request.user
@@ -107,7 +109,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }.getOrElse(Future.successful(NotAcceptable))
   }
 
-  def collectionEdits(): Action[AnyContent] = ExpiringActions.ExpiringAuthAction.async { request =>
+  def collectionEdits(): Action[AnyContent] = AuthAction.async { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
       request.body.asJson.flatMap (_.asOpt[FaciaToolUpdate]).map {
         case update: Update =>
@@ -128,7 +130,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
               live = shouldUpdateLive,
               draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || update.update.draft)
             )
-            ContentApiPush.notifyContentApi(collectionIds)
 
             if (updatedCollections.nonEmpty)
               Ok(Json.toJson(updatedCollections)).as("application/json")
@@ -146,7 +147,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
               live = shouldUpdateLive,
               draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || remove.remove.draft)
             )
-            ContentApiPush.notifyContentApi(collectionIds)
             Ok(Json.toJson(updatedCollections)).as("application/json")
           }
         case updateAndRemove: UpdateAndRemove =>
@@ -167,37 +167,30 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
               live = shouldUpdateLive,
               draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || shouldUpdateDraft)
             )
-            ContentApiPush.notifyContentApi(collectionIds)
             Ok(Json.toJson(updatedCollections)).as("application/json")
           }
         case _ => Future.successful(NotAcceptable)
       } getOrElse Future.successful(NotFound)
   }
 
-  def pressLivePath(path: String) = ExpiringActions.ExpiringAuthAction { request =>
-    FaciaPressQueue.enqueue(PressJob(FrontPath(path), Live))
+  def pressLivePath(path: String) = AuthAction { request =>
+    FaciaPressQueue.enqueue(PressJob(FrontPath(path), Live, forceConfigUpdate = Option(true)))
     NoCache(Ok)
   }
 
-  def pressDraftPath(path: String) = ExpiringActions.ExpiringAuthAction { request =>
-    FaciaPressQueue.enqueue(PressJob(FrontPath(path), Draft))
+  def pressDraftPath(path: String) = AuthAction { request =>
+    FaciaPressQueue.enqueue(PressJob(FrontPath(path), Draft, forceConfigUpdate = Option(true)))
     NoCache(Ok)
   }
 
-  def updateCollection(collectionId: String) = ExpiringActions.ExpiringAuthAction { request =>
+  def updateCollection(collectionId: String) = AuthAction { request =>
     FaciaPress.press(PressCommand.forOneId(collectionId).withPressDraft().withPressLive())
-    ContentApiPush.notifyContentApi(Set(collectionId))
     NoCache(Ok)
   }
 
-  def getLastModified(path: String) = ExpiringActions.ExpiringAuthAction { request =>
+  def getLastModified(path: String) = AuthAction { request =>
     val now: Option[String] = S3FrontsApi.getPressedLastModified(path)
     now.map(Ok(_)).getOrElse(NotFound)
   }
 
-  def generatePutForCollectionId(collectionId: String) = ExpiringActions.ExpiringAuthAction.async { request =>
-    ConfigAgent.getConfig(collectionId).map { collectionConfig =>
-      ContentApiWrite.generateContentApiPut(collectionId, collectionConfig).map( contentApiWrite => Ok(Json.toJson(contentApiWrite)))
-    }.getOrElse(Future.successful(NotFound(s"Collection ID $collectionId does not exist in ConfigAgent")))
-  }
 }

@@ -1,20 +1,22 @@
 package common
 
-import com.gu.facia.api.models.{LinkSnap, FaciaContent}
-import model._
-import play.api.mvc.RequestHeader
-import org.joda.time.DateTime
 import java.io.StringWriter
-import org.jsoup.Jsoup
-import com.sun.syndication.feed.synd._
-import com.sun.syndication.feed.module.{DCModuleImpl}
+
+import com.gu.facia.api.models.{FaciaContent, LinkSnap}
+import com.sun.syndication.feed.module.DCModuleImpl
 import com.sun.syndication.feed.module.mediarss._
-import com.sun.syndication.feed.module.mediarss.types.{Credit, Metadata, UrlReference, MediaContent}
+import com.sun.syndication.feed.module.mediarss.types.{Credit, MediaContent, Metadata, UrlReference}
+import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
-import scala.collection.JavaConverters._
-import collection.JavaConversions._
-import implicits.FaciaContentImplicits._
 import implicits.FaciaContentFrontendHelpers._
+import implicits.FaciaContentImplicits._
+import model._
+import org.joda.time.DateTime
+import org.jsoup.Jsoup
+import play.api.mvc.RequestHeader
+
+import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 object TrailsToRss extends implicits.Collections {
 
@@ -173,9 +175,9 @@ object TrailsToRss extends implicits.Collections {
       val readMore = s""" <a href="$webUrl">Continue reading...</a>"""
       description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
 
-      val images: Seq[ImageAsset] = (faciaContent.bodyImages ++ faciaContent.mainPicture ++ faciaContent.thumbnail).map{ i =>
-        i.imageCrops.filter(c => (c.width == 140 && c.height == 84) || (c.width == 460 && c.height == 276))
-      }.flatten.distinctBy(_.url)
+      val images: Seq[ImageAsset] = (faciaContent.bodyImages ++ faciaContent.mainPicture ++ faciaContent.thumbnail).flatMap{ i =>
+        i.imageCrops.filter(c => c.width == 140 || c.width == 460 )
+      }.distinctBy(_.url)
 
       val modules: Seq[MediaEntryModuleImpl] = images.filter(_.url.nonEmpty).map { i =>
         // create image

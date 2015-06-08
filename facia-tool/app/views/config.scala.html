@@ -1,7 +1,7 @@
-@(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity])
+@(env: String, priority: String, identity: Option[com.gu.pandomainauth.model.User])
 @import views.helpers.environment.urlBase
 
-@admin_main("config", env, Some(priority), isAuthed = true, identity=identity, model=Option("config")) {
+@admin_main("config", env, Some(priority), identity=identity, model=Option("config")) {
 
 <div style="display: none;" data-bind="
     visible: true,
@@ -260,7 +260,9 @@
                             valueAllowUnset: true"></select>
 
                         <div class="tools action-buttons">
-                            <span class="tool" data-bind="click: saveProps">Save metadata</span>
+                            <button class="tool" data-bind="
+                                enable: state.isValidMetadata() !== false,
+                                click: saveProps">Save metadata</button>
                         </div>
                     </div>
                 <!-- /ko -->
