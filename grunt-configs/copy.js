@@ -60,14 +60,6 @@ module.exports = function(grunt, options) {
                 dest: 'common/conf/assets'
             }]
         },
-        headJs: {
-            files: [
-                {
-                    src: ['static/src/jspm_packages/github/cujojs/curl@0.8.12/dist/curl-with-js-and-domReady/curl.js'],
-                    dest: 'common/conf/assets/curl-domReady.js'
-                }
-            ]
-        },
         // assets.map must go where Play can find it from resources at runtime.
         // Everything else goes into frontend-static bundling.
         assetMap: {
