@@ -71,7 +71,14 @@
 
 .witness-cta {
     overflow: hidden;
-    margin-bottom: ($gs-baseline/3)*4;
+    padding: $gs-baseline / 3 0;
+    border-top: 1px dotted colour(neutral-4);
+    margin-top: $gs-baseline / 3;
+
+    @include mq(leftCol) {
+        border-bottom: 1px dotted colour(neutral-4);
+        margin-bottom: $gs-baseline;
+    }
 }
 
 .witness__button {
