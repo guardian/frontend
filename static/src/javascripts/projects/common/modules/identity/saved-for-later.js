@@ -8,7 +8,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/identity/api' ,
+    'common/modules/identity/api',
     'common/views/svgs',
 
     'text!common/views/identity/saved-for-later-profile-link.html',
@@ -34,18 +34,18 @@ define([
 
         this.init = function () {
             var self = this,
-                delete_all = $('.js-save-for-later__delete-all')[0];
+                deleteAll = $('.js-save-for-later__delete-all')[0];
 
-            if(delete_all) {
+            if (deleteAll) {
                 this.renderDeleteButton('delete-all');
-                bean.one(delete_all, 'click', '.save-for-later__button', function(event) {
+                bean.one(deleteAll, 'click', '.save-for-later__button', function (event) {
                     event.preventDefault();
                     self.renderDeleteButton('confirm-delete-all');
                 });
             }
         };
 
-        this.renderDeleteButton = function ( state) {
+        this.renderDeleteButton = function (state) {
             fastdom.read(function () {
                 var $button = bonzo(qwery('.js-save-for-later__delete-all')[0]);
 
