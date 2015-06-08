@@ -137,7 +137,7 @@
         left: ($social-width * 6);
         border-top: 0;
     }
-    
+
     @include mq(tablet, leftCol) {
         left: ($social-width * 5);
     }

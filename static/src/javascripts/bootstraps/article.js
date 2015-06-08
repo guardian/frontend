@@ -95,6 +95,12 @@ define([
                         new FacebookMostPopular(el);
                     }
                 }
+            },
+
+            initQuizListeners: function () {
+                require(['ophan/ng'], function (ophan) {
+                    mediator.on('quiz/ophan-event', ophan.record);
+                });
             }
         },
 
@@ -106,6 +112,7 @@ define([
             modules.initSelectionSharing();
             modules.initCmpParam();
             modules.initFacebookMostPopular();
+            modules.initQuizListeners();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();

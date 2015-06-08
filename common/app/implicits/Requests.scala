@@ -1,12 +1,12 @@
 package implicits
 
-import conf.Switches
+import conf.{Configuration, Switches}
 import play.api.http.MediaRange
 import play.api.mvc.RequestHeader
 
 trait Requests {
 
-  private val imgixTestSections: Seq[String] = Seq("/uk/money", "/au/money", "/uk/money", "/money")
+
 
   implicit class RichRequestHeader(r: RequestHeader) {
 
@@ -32,7 +32,16 @@ trait Requests {
 
     lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase  "X-Gu-Management-Healthcheck")
 
-    def isInImgixTest: Boolean = Switches.ImgixSwitch.isSwitchedOn && (imgixTestSections.exists(r.path.startsWith) || getParameter("inImgixTest").nonEmpty)
+
+    private val imgixTestSections = Seq(
+      "/uk/money",
+      "/au/money",
+      "/us/money",
+      "/money"
+    )
+
+    lazy val isInImgixTest: Boolean = Switches.ImgixSwitch.isSwitchedOn &&
+      (Configuration.environment.isNonProd || imgixTestSections.exists(r.path.startsWith))
 
     // see http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/TerminologyandKeyConcepts.html#x-forwarded-proto
     lazy val isSecure: Boolean = r.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))
