@@ -4,21 +4,29 @@ define([
     'bonzo',
     'bean',
     'common/utils/_',
-    'common/modules/identity/api'
+    'common/utils/config',
+    'common/utils/mediator',
+    'common/utils/template',
+    'common/modules/identity/api',
+    'text!common/views/identity/saved-for-later-profile-link.html'
 ], function (
     $,
     qwery,
     bonzo,
     bean,
     _,
-    identity
-
+    config,
+    mediator,
+    template,
+    identity,
+    profileLinkTmp
 ) {
     function SavedForLater() {
 
         this.init = function () {
             var self = this,
-            form = $('.js-saved-content-form')[0];
+                form = $('.js-saved-content-form')[0];
+
             if (form) {
                 bean.on(form, 'click', '.js-saved-content__button-delete-all', function (event) {
                     event.preventDefault();
@@ -32,6 +40,16 @@ define([
                     event.preventDefault();
                     self.fetchArticlesAndRemove(element);
                 });
+            });
+
+            mediator.on('modules:profilenav:loaded', function () {
+                var popup = qwery('.popup--profile')[0];
+
+                bonzo(popup).append(bonzo.create(
+                    template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
+                        idUrl: config.page.idUrl
+                    })
+                ));
             });
         };
 
@@ -61,7 +79,6 @@ define([
         };
 
         this.deleteArticle = function (data, shortUrl, element) {
-
             var self = this;
 
             data.articles = _.filter(data.articles, function (article) {
@@ -79,7 +96,6 @@ define([
         };
 
         this.deleteAllArticles = function (version) {
-
             var self = this;
 
             identity.saveToArticles({version: version, articles:[]}).then(
@@ -95,7 +111,6 @@ define([
         };
 
         this.getArticleDataFromResponse = function (resp) {
-
             var notFound  = {message:'Not found', description:'Resource not found'},
                 date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
 
@@ -110,6 +125,7 @@ define([
 
         this.updateNumArticles = function (numArticles) {
             bonzo(qwery('.js-saved-content__num-articles')[0]).html('You have ' + numArticles + ' saved articles.');
+            bonzo(qwery('.brand-bar__item--saved-for-later')[0]).html('Saved (' + numArticles + ')');
         };
     }
 
