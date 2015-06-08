@@ -36,7 +36,6 @@ define([
             return true;
         };
 
-
         this.variants = [
             {
                 id: 'variant',
