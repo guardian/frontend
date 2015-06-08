@@ -21,10 +21,10 @@ define([
         this.expiry = '2015-06-19';
         this.author = 'David Rapson';
         this.description = 'Test if logged in users are encouraged to join Membership';
-        this.audience = 0.8;
-        this.audienceOffset = 0.2;
+        this.audience = 1;
+        this.audienceOffset = 0;
         this.successMeasure = 'Users will be interested in Membership';
-        this.audienceCriteria = '80% of logged in users, only on article pages';
+        this.audienceCriteria = '100% of logged in users, only on article pages';
         this.dataLinkNames = 'supporter message, hide, read more';
         this.idealOutcome = 'Users will sign up as a Guardian Member';
 
