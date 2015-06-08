@@ -163,7 +163,7 @@ object S3FrontsApi extends S3 {
   def listConfigsIds: List[String] = getConfigIds(s"$location/config/")
   def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")
   def putCollectionJson(id: String, json: String) = {
-    val location: String = s"$location/collection/$id/collection.json", json, "application/json"
+    val location: String = s"$location/collection/$id/collection.json"
     if (Switches.FaciaToolPutPrivate.isSwitchedOn) {
       putPrivate(location, json, "application/json")}
     else {
