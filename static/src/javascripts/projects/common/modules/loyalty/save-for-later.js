@@ -35,6 +35,7 @@ define([
     function SaveForLater() {
         this.classes = {
             saveThisArticle: '.js-save-for-later',
+            saveThisVideo: '.js-save-for-later-video',
             saveThisArticleButton: '.save-for-later__button',
             onwardContainer: '.js-onward',
             relatedContainer: '.js-related',

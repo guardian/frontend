@@ -3,6 +3,7 @@ package integration
 import org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated
 import org.openqa.selenium.support.ui.WebDriverWait
 import org.openqa.selenium.{By, WebElement}
+import org.scalatest.OptionValues._
 import org.scalatest.tags.Retryable
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 
@@ -12,6 +13,7 @@ class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
 
   override protected def get(path: String): Unit = {
     webDriver.get(s"${Config.baseUrl}/$path?test=test#gu.prefs.switchOn=adverts")
+    webDriver.navigate().refresh()
   }
 
   private def waitForElement(selector: String): Unit = {
@@ -20,22 +22,18 @@ class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
 
   private def waitForAdLoad(domSlotId: String): Unit = waitForElement(s"#$domSlotId > div > iframe")
 
-  private def findComponent(path: String,
-                            domSlotId: String,
-                            selector: String): Option[WebElement] = {
+  private def findComponent(path: String, selector: String): Option[WebElement] = {
     get(path)
-    waitForAdLoad(domSlotId)
     waitForElement(selector)
     $(selector).headOption
   }
 
   private def findLogo(path: String, domSlotId: String): Option[WebElement] = {
-    findComponent(path, domSlotId, s"#$domSlotId > div > a > img")
+    findComponent(path, s"#$domSlotId > div > a > img")
   }
 
   private def shouldBeVisible(maybeComponent: => Option[WebElement]): Unit = {
-    maybeComponent shouldBe defined
-    maybeComponent.get.isDisplayed shouldBe true
+    maybeComponent.value shouldBe 'displayed
   }
 
   "Ads" should "display on the sport front" in {

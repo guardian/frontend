@@ -474,7 +474,7 @@ $fc-item-gutter: $gs-gutter / 4;
         fill: colour(neutral-3);
     }
 
-    a {
+    a, button {
         // make sure meta links always clickable,
         // even on mobile/tablet
         z-index: 1 !important;
@@ -516,7 +516,16 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-save-for-later {
+    // reset button defaults
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+
     float: right;
+
+    &:hover {
+        text-decoration: underline;
+    }
 
     &:before {
         content: 'save';

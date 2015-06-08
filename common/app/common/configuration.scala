@@ -62,7 +62,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isProd = stage == "prod"
-    lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
+    lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
 
     lazy val isPreview = projectName == "preview"
   }
@@ -202,6 +202,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
+    object backends {
+      lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
+      lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
+    }
   }
 
   object assets {
