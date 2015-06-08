@@ -303,11 +303,7 @@ define([
     StickyNav.prototype.showNavigation = function (scrollY, breakpoint) {
         if (this.scrollDirection(scrollY, this.$els) === 'up') {
             this.$els.navigation.css('display', 'block');
-            if (breakpoint === 'desktop' || breakpoint === 'wide') {
-                //this.$els.navigationGreySection.css('border-top', '36px solid #00456e');
-                //this.$els.burgerIcon.show();
-                //this.$els.navigation.show();
-            } else if (breakpoint === 'mobile' || breakpoint === 'tablet') {
+            if (breakpoint === 'mobile' || breakpoint === 'tablet') {
                 this.$els.navigation.css('height', null);
                 if (breakpoint === 'tablet') {
                     this.$els.burgerIcon.show();
@@ -315,10 +311,7 @@ define([
             }
         } else {
             this.$els.navigation.css('display', 'none');
-            if (breakpoint === 'desktop' || breakpoint === 'wide') {
-                //this.$els.burgerIcon.hide();
-                //this.$els.navigation.hide();
-            } else if (breakpoint === 'mobile' || breakpoint === 'tablet') {
+            if (breakpoint === 'mobile' || breakpoint === 'tablet') {
                 this.$els.navigation.css('height', 0);
                 if (breakpoint === 'tablet') {
                     this.$els.burgerIcon.hide();
