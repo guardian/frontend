@@ -74,10 +74,6 @@ $c-navigation-expandable-background: colour(neutral-1);
         background: $c-navigation-background-side-bar;
         border-bottom: 1px solid $c-global-navigation-border;
         background-clip: padding-box;
-
-        .l-header--is-slim & {
-            display: none;
-        }
     }
 
     &:after {
@@ -694,19 +690,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     outline: none;
     min-width: $navigation-toggler-width;
 
-    // Remove redundant min-width and override breakpoint
-    .l-header--is-slim & {
-        min-width: 0;
-    }
-
-    .l-header--is-slim & {
-        float: left;
-        line-height: 48px;
-        position: static;
-        border-left: 0;
-    }
-
-
     &,
     &:hover,
     &:focus,
@@ -780,24 +763,16 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 }
 
-.l-header--is-slim {
-    .navigation {
+// Remove redundant min-width and override breakpoint
+.l-header--no-navigation {
+    float: left;
+    min-width: 0;
+    line-height: 48px;
+    position: static;
+    border-left: 0;
+
+    &:before {
         display: none;
-    }
-}
-
-.l-header--has-navigation {
-    .navigation,
-    .navigation:before {
-        display: block;
-    }
-
-    .navigation-toggle {
-        min-width: 0;
-        float: left;
-        line-height: 48px;
-        position: static;
-        border-left: 0;
     }
 }
 

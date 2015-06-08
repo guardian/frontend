@@ -306,7 +306,6 @@ define([
             this.$els.navigationScroll.css('display', 'block');
             if (breakpoint === 'desktop' || breakpoint === 'wide') {
                 this.$els.navigationGreySection.css('border-top', '36px solid #00456e');
-                this.$els.header.addClass('l-header--has-navigation');
                 //this.$els.burgerIcon.show();
                 //this.$els.navigation.show();
             } else if (breakpoint === 'mobile' || breakpoint === 'tablet') {
@@ -318,7 +317,6 @@ define([
         } else {
             this.$els.navigationScroll.css('display', 'none');
             if (breakpoint === 'desktop' || breakpoint === 'wide') {
-                this.$els.header.removeClass('l-header--has-navigation');
                 //this.$els.burgerIcon.hide();
                 //this.$els.navigation.hide();
             } else if (breakpoint === 'mobile' || breakpoint === 'tablet') {
