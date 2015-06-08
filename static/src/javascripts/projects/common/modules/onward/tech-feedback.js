@@ -11,7 +11,7 @@ define([
 ) {
 
     function objToString(obj) {
-        return _.reduce(obj, function (str, value, key){
+        return _.reduce(obj, function (str, value, key) {
             return str + key + ': ' + value + '\n';
         }, '');
     }
