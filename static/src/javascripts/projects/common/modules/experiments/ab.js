@@ -34,24 +34,24 @@ define([
     Headline,
     DeferSpacefinder,
     SupporterMessage
-) {
+    ) {
 
-    var TESTS = _.flatten([
-        new FacebookMostViewed(),
-        new LiveblogNotifications(),
-        new HighCommercialComponent(),
-        new MtRec1(),
-        new MtRec2(),
-        new SaveForLater(),
-        new CookieRefresh(),
-        new DeferSpacefinder(),
-        new SupporterMessage(),
-        _.map(_.range(1, 10), function (n) {
-            return new Headline(n);
-        })
-    ]);
-
-    var participationsKey = 'gu.ab.participations';
+    var ab,
+        TESTS = _.flatten([
+            new FacebookMostViewed(),
+            new LiveblogNotifications(),
+            new HighCommercialComponent(),
+            new MtRec1(),
+            new MtRec2(),
+            new SaveForLater(),
+            new CookieRefresh(),
+            new DeferSpacefinder(),
+            new SupporterMessage(),
+            _.map(_.range(1, 10), function (n) {
+                return new Headline(n);
+            })
+        ]),
+        participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
         return store.local.get(participationsKey) || {};
@@ -162,10 +162,13 @@ define([
         if (isParticipating(test) && testCanBeRun(test)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
-            var variant = getVariant(test, variantId);
-            if (variant) {
-                variant.test();
-            } else if (variantId === 'notintest' && test.notInTest) {
+            _.some(test.variants, function (variant) {
+                if (variant.id === variantId) {
+                    variant.test();
+                    return true;
+                }
+            });
+            if (variantId === 'notintest' && test.notInTest) {
                 test.notInTest();
             }
         }
@@ -204,7 +207,7 @@ define([
         return config.switches['ab' + test.id];
     }
 
-    function getTestVariantId(testId) {
+    function getTestVariant(testId) {
         var participation = getParticipations()[testId];
         return participation && participation.variant;
     }
@@ -220,16 +223,10 @@ define([
 
     function shouldRunTest(id, variant) {
         var test = getTest(id);
-        return test && isParticipating(test) && ab.getTestVariantId(id) === variant && testCanBeRun(test);
+        return test && isParticipating(test) && ab.getTestVariant(id) === variant && testCanBeRun(test);
     }
 
-    function getVariant(test, variantId) {
-        return _.find(test.variants, function (variant) {
-            return variant.id === variantId;
-        });
-    }
-
-    var ab = {
+    ab = {
 
         addTest: function (test) {
             TESTS.push(test);
@@ -317,7 +314,7 @@ define([
             try {
                 _.forEach(getActiveTests(), function (test) {
                     if (isParticipating(test) && testCanBeRun(test)) {
-                        var variant = getTestVariantId(test.id);
+                        var variant = getTestVariant(test.id);
                         if (variant && variant !== 'notintest') {
                             abLogObject['ab' + test.id] = variant;
                         }
@@ -338,9 +335,8 @@ define([
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
-        getTestVariantId: getTestVariantId,
+        getTestVariant: getTestVariant,
         setTestVariant: setTestVariant,
-        getVariant: getVariant,
 
         /**
          * check if a test can be run (i.e. is not expired and switched on)

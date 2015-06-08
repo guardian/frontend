@@ -77,7 +77,7 @@ define([
     }
 
     function init() {
-        var testVariant = ab.getTestVariantId('ShareButtons2'),
+        var testVariant = ab.getTestVariant('ShareButtons2'),
             socialContext;
 
         if (testVariant.indexOf('referrer') > -1) {
