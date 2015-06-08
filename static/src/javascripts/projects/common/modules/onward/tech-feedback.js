@@ -1,21 +1,19 @@
 define([
     'bean',
     'fastdom',
+    'common/utils/_',
     'common/utils/$'
 ], function (
     bean,
     fastdom,
+    _,
     $
 ) {
 
     function objToString(obj) {
-        var str = '';
-        for (var p in obj) {
-            if (obj.hasOwnProperty(p)) {
-                str += p + ': ' + obj[p] + '\n';
-            }
-        }
-        return str;
+        return _.reduce(obj, function (str, value, key){
+            return str + key + ': ' + value + '\n';
+        }, '');
     }
 
     function addEmailHeaders(link) {

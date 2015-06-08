@@ -8,8 +8,7 @@ import play.api.mvc.{Action, Controller}
 object TechFeedbackController extends Controller with Logging {
 
   def techFeedback(path: String) = Action { implicit request =>
-    val page: Page {def metaData: Map[String, JsValue]; val contentType: String; val canonicalUrl: Option[String]} =
-      model.Page(request.path, "info", "Thanks for your report", "GFE:Tech Feedback")
+    val page = model.Page(request.path, "info", "Thanks for your report", "GFE:Tech Feedback")
     Cached(900)(Ok(views.html.feedback(page, path)))
   }
 
