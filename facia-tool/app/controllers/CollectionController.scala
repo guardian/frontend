@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.facia.client.models.CollectionConfigJson
-import services.PressAndNotify
+import services.Press
 import util.Requests._
 import play.api.mvc.Controller
 import config.UpdateManager
@@ -29,7 +29,7 @@ object CollectionController extends Controller with PanDomainAuthActions {
       case Some(CollectionRequest(frontIds, collection)) =>
         val identity = request.user
         val collectionId = UpdateManager.addCollection(frontIds, collection, identity)
-        PressAndNotify(Set(collectionId))
+        Press.fromSetOfIdsWithForceConfig(Set(collectionId))
         Ok(Json.toJson(CreateCollectionResponse(collectionId)))
 
       case None => BadRequest
@@ -41,7 +41,7 @@ object CollectionController extends Controller with PanDomainAuthActions {
       case Some(CollectionRequest(frontIds, collection)) =>
         val identity = request.user
         UpdateManager.updateCollection(collectionId, frontIds, collection, identity)
-        PressAndNotify(Set(collectionId))
+        Press.fromSetOfIdsWithForceConfig(Set(collectionId))
         Ok
 
       case None => BadRequest

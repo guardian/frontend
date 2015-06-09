@@ -42,7 +42,7 @@ System.config({
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@1.4.0",
     "classnames": "npm:classnames@1.2.0",
-    "domready": "npm:domready@1.0.7",
+    "domready": "npm:domready@1.0.8",
     "enhancer": "github:guardian/enhancer@0.1.3",
     "fastclick": "npm:fastclick@1.0.6",
     "fastdom": "github:wilsonpage/fastdom@0.8.6",

@@ -1,8 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.ItemResponse
-import controllers.front.{FrontJsonFapiLive, FrontJsonFapi, FrontJson}
-import controllers.preview.FrontJsonFapiDraft._
+import controllers.front.{FrontJsonFapi, FrontJson}
 import play.api.mvc.{RequestHeader, Result}
 import services.ConfigAgent
 
