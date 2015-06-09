@@ -417,11 +417,6 @@
 .saved-content__meta {
     padding-top: $gs-baseline;
     text-align: right;
-
-    .button {
-        margin-right: 0;
-        margin-left: $gs-gutter;
-    }
 }
 
 .saved-content__button {
@@ -431,6 +426,8 @@
     color: #ffffff;
     cursor: pointer;
     padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
+    margin-right: 0;
+    margin-left: $gs-gutter;
 
     .inline-icon {
         float: left;
