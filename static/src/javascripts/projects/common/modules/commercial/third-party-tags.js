@@ -6,6 +6,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
+    'common/modules/commercial/third-party-tags/criteo',
     'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
     'common/modules/commercial/third-party-tags/krux',
@@ -17,6 +18,7 @@ define([
     config,
     mediator,
     audienceScienceGateway,
+    criteo,
     imrWorldwide,
     remarketing,
     krux,
@@ -54,6 +56,7 @@ define([
     }
 
     function loadOther() {
+        criteo.load();
         imrWorldwide.load();
         remarketing.load();
         outbrain.load();
