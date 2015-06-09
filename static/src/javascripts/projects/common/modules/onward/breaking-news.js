@@ -81,7 +81,7 @@ define([
                         .flatten()
                         .filter(function(article) {
                             var alertTime = article.frontPublicationDate;
-                            return alertTime && relativeDates.isWithinSeconds(alertTime, alertWithinSeconds);
+                            return alertTime && relativeDates.isWithinSeconds(new Date(alertTime), alertWithinSeconds);
                         })
                         .value(),
 
