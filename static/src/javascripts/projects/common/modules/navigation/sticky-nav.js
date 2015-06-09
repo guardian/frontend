@@ -258,7 +258,9 @@ define([
         this.$els   = {};
         this.config = {
             showHeaderDepth: 0.5,
-            showNavigationDepth: 50
+            showNavigationDepth: 100, // Navigation will show when user scrolls X px up
+            distance: 0,
+            thresholdMobile: 400
         };
     }
 
@@ -266,18 +268,17 @@ define([
         var breakpoint = detect.getBreakpoint();
 
         fastdom.read(function () {
-            this.$els.header                 = $('#header');
-            this.$els.bannerDesktop          = $('.top-banner-ad-container--above-nav');
-            this.$els.main                   = $('#maincontent');
-            this.$els.navHeader              = $('.js-navigation-header');
-            this.$els.sticky                 = $('.sticky-nav-mt-test');
-            this.$els.burgerIcon             = $('.js-navigation-toggle', this.$els.navHeader);
-            this.$els.logoWrapper            = $('.logo-wrapper', this.$els.navHeader);
+            this.$els.header                = $('#header');
+            this.$els.bannerDesktop         = $('.top-banner-ad-container--above-nav');
+            this.$els.main                  = $('#maincontent');
+            this.$els.navHeader             = $('.js-navigation-header');
+            this.$els.sticky                = $('.sticky-nav-mt-test');
+            this.$els.burgerIcon            = $('.js-navigation-toggle', this.$els.navHeader);
+            this.$els.logoWrapper           = $('.logo-wrapper', this.$els.navHeader);
             this.$els.navigationGreySection = $('.navigation__container--first', this.$els.navHeader);
-            this.$els.navigation             = $('.navigation', this.$els.navHeader);
-            this.$els.bannerMobile           = $('.top-banner-ad-container--mobile');
-            this.headerBigHeight             = this.$els.navHeader.dim().height;
-            this.thresholdMobile             = 400;
+            this.$els.navigation            = $('.navigation', this.$els.navHeader);
+            this.$els.bannerMobile          = $('.top-banner-ad-container--mobile');
+            this.headerBigHeight            = this.$els.navHeader.dim().height;
         }.bind(this));
 
         if (breakpoint === 'mobile') {
@@ -291,15 +292,26 @@ define([
         }
     };
 
-    StickyNav.prototype.scrollDirection = function (scrollY, config) {
-        config.direction = (scrollY > config.prevScroll) ? 'down' : 'up';
-        config.prevScroll = scrollY;
+    StickyNav.prototype.getScrollDirection = function (scrollY) {
+        this.config.direction = (scrollY > this.config.prevScroll) ? 'down' : 'up';
+        this.config.prevScroll = scrollY;
+    }
 
-        return config.direction;
+    StickyNav.prototype.shouldShowNavigation = function (scrollY) {
+        if (this.config.direction === 'up' && this.config.distance === 0) {
+            this.config.distance = scrollY;
+        }
+
+        // If distance scolled is more than showNavigationDepth show navigation
+        this.config.showNavigation = (Math.abs(scrollY - this.config.distance) > this.config.showNavigationDepth);
     }
 
     StickyNav.prototype.showNavigation = function (scrollY, breakpoint) {
-        if (this.scrollDirection(scrollY, this.config) === 'up') {
+        this.getScrollDirection(scrollY);
+        this.shouldShowNavigation(scrollY);
+
+        // If user is scrolling up and navigation threshold was met show navigation
+        if (this.config.direction === 'up' && this.config.showNavigation) {
             this.$els.navigation.css('display', 'block');
             if (breakpoint === 'mobile' || breakpoint === 'tablet') {
                 this.$els.navigation.css('height', null);
@@ -308,6 +320,12 @@ define([
                 }
             }
         } else {
+            // If user is scrolling down and navigation is visible reset bounce distance
+            if (this.config.showNavigation) {
+                // Reset distance bouncing
+                this.config.distance = 0;
+            }
+
             this.$els.navigation.css('display', 'none');
             if (breakpoint === 'mobile' || breakpoint === 'tablet') {
                 this.$els.navigation.css('height', 0);
@@ -337,6 +355,13 @@ define([
                     'z-index': '1000',
                     'margin-top': 0,
                     'transform': 'translateY(-100%)'
+                });
+
+                // Make sure banner is outside of the view
+                this.$els.bannerDesktop.css({
+                    position: 'absolute',
+                    width: '100%',
+                    top: this.headerBigHeight
                 });
 
                 this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
