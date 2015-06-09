@@ -73,20 +73,22 @@
         <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
         <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
 
-        <script type="text/javascript">
-            var curl = {
-                baseUrl: 'assets/javascripts',
-                apiName: 'require',
-                paths:   {
-                    text: 'text', // noop
-                    inlineSvg: 'inlineSvg' // noop
+        <script>
+            @Html(Static.js.systemJsSetupFragment)
+
+            // Our app assumes a normal env
+            window.guardian = {
+                config: {
+                    switches: { },
+                    page: { }
                 }
             };
 
-            @Html(Static.js.curl)
+            System.import('core').then(function () {
+                System.import('bootstraps/admin');
+            })
         </script>
         <script src="//code.jquery.com/jquery.js"></script>
         <script type="text/javascript" src="@routes.Assets.at("javascripts/components/bootstrap/dist/js/bootstrap.js")"></script>
-        <script type="text/javascript" src="@Static("javascripts/bootstraps/admin.js")" async></script>
     </body>
 </html>

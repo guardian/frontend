@@ -683,15 +683,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val BecomeAMemberSwitch = Switch(
-    "Feature",
-    "become-a-member",
-    "If this switch is on the “Become a Member” button will be visible.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 15),
-    exposeClientSide = true
-  )
-
   val Hmtl5MediaCompatibilityCheck = Switch(
     "Feature",
     "html-5-media-compatibility-check",
@@ -1013,12 +1004,12 @@ object Switches {
     )
   }
 
-  val ABSupporterMessage = Switch(
+  val ABMembershipMessage = Switch(
     "A/B Tests",
-    "ab-supporter",
-    "Switch for the Supporter Message A/B test.",
+    "ab-membership-message",
+    "Switch for the Membership message A/B test.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 11),
+    sellByDate = new LocalDate(2015, 6, 19),
     exposeClientSide = true
   )
 

@@ -14,7 +14,7 @@ define([
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/supporter-message'
+    'common/modules/experiments/tests/membership-message'
 ], function (
     raven,
     _,
@@ -31,7 +31,7 @@ define([
     SaveForLater,
     CookieRefresh,
     Headline,
-    SupporterMessage
+    MembershipMessage
 ) {
 
     var TESTS = _.flatten([
@@ -42,7 +42,7 @@ define([
         new MtRec2(),
         new SaveForLater(),
         new CookieRefresh(),
-        new SupporterMessage(),
+        new MembershipMessage(),
         _.map(_.range(1, 10), function (n) {
             return new Headline(n);
         })

@@ -97,7 +97,7 @@ module.exports = function(grunt, options) {
                     {
                         'font-family': '"Guardian Egyptian Web"',
                         'font-weight': '500',
-                        file: options.webfontsDir + 'hinting-off/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff2',
+                        file: options.webfontsDir + 'hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff2',
                         format: 'woff'
                     },
                     // This weight contains only a certain set of chars
@@ -131,7 +131,7 @@ module.exports = function(grunt, options) {
                     {
                         'font-family': '"Guardian Egyptian Web"',
                         'font-weight': '500',
-                        file: options.webfontsDir + 'hinting-off/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff',
+                        file: options.webfontsDir + 'hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff',
                         format: 'woff'
                     },
                     // This weight contains only a certain set of chars
@@ -391,7 +391,7 @@ module.exports = function(grunt, options) {
                     {
                         'font-family': '"Guardian Egyptian Web"',
                         'font-weight': '500',
-                        file: options.webfontsDir + 'hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff2',
+                        file: options.webfontsDir + 'hinting-cleartype/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff2',
                         format: 'woff'
                     },
                     // This weight contains only a certain set of chars
@@ -425,7 +425,7 @@ module.exports = function(grunt, options) {
                     {
                         'font-family': '"Guardian Egyptian Web"',
                         'font-weight': '500',
-                        file: options.webfontsDir + 'hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff',
+                        file: options.webfontsDir + 'hinting-cleartype/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff',
                         format: 'woff'
                     },
                     // This weight contains only a certain set of chars
@@ -685,7 +685,7 @@ module.exports = function(grunt, options) {
                     {
                         'font-family': '"Guardian Egyptian Web"',
                         'font-weight': '500',
-                        file: options.webfontsDir + 'hinting-auto/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff2',
+                        file: options.webfontsDir + 'hinting-auto/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff2',
                         format: 'woff'
                     },
                     // This weight contains only a certain set of chars
@@ -719,7 +719,7 @@ module.exports = function(grunt, options) {
                     {
                         'font-family': '"Guardian Egyptian Web"',
                         'font-weight': '500',
-                        file: options.webfontsDir + 'hinting-auto/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff',
+                        file: options.webfontsDir + 'hinting-auto/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff',
                         format: 'woff'
                     },
                     // This weight contains only a certain set of chars

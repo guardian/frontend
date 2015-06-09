@@ -3,6 +3,7 @@ package integration
 import org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated
 import org.openqa.selenium.support.ui.WebDriverWait
 import org.openqa.selenium.{By, WebElement}
+import org.scalatest.OptionValues._
 import org.scalatest.tags.Retryable
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 
@@ -32,8 +33,7 @@ class AdsTest extends FlatSpec with Matchers with SharedWebDriver {
   }
 
   private def shouldBeVisible(maybeComponent: => Option[WebElement]): Unit = {
-    maybeComponent shouldBe defined
-    maybeComponent.get.isDisplayed shouldBe true
+    maybeComponent.value shouldBe 'displayed
   }
 
   "Ads" should "display on the sport front" in {
