@@ -37,6 +37,11 @@ define([
         return (date.valueOf() > today.valueOf() - (24 * 60 * 60 * 1000));
     }
 
+    function isWithinSeconds(date, seconds) {
+        var today = adjustedNow();
+        return (date.valueOf() > today.valueOf() - (seconds * 1000));
+    }
+
     function isYesterday(relative) {
         var today = adjustedNow(),
             yesterday = adjustedNow();
