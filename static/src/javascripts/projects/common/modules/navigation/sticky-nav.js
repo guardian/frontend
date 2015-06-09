@@ -255,12 +255,14 @@ define([
     };*/
 
     function StickyNav() {
-        console.log('sticky nav');
-        this.$els = {};
+        this.$els   = {};
+        this.config = {
+            showHeaderDepth: 0.5,
+            showNavigationDepth: 50
+        };
     }
 
     StickyNav.prototype.init = function () {
-        console.log('sticky nav: init');
         var breakpoint = detect.getBreakpoint();
 
         fastdom.read(function () {
@@ -290,18 +292,14 @@ define([
     };
 
     StickyNav.prototype.scrollDirection = function (scrollY, config) {
-        if (scrollY > config.prevScroll) {
-            config.direction = 'down';
-        } else if (scrollY < config.prevScroll) {
-            config.direction = 'up';
-        }
+        config.direction = (scrollY > config.prevScroll) ? 'down' : 'up';
         config.prevScroll = scrollY;
 
         return config.direction;
     }
 
     StickyNav.prototype.showNavigation = function (scrollY, breakpoint) {
-        if (this.scrollDirection(scrollY, this.$els) === 'up') {
+        if (this.scrollDirection(scrollY, this.config) === 'up') {
             this.$els.navigation.css('display', 'block');
             if (breakpoint === 'mobile' || breakpoint === 'tablet') {
                 this.$els.navigation.css('height', null);
@@ -322,7 +320,7 @@ define([
 
 
     StickyNav.prototype.updatePosition = function (breakpoint) {
-        var bannerHeight = this.$els.bannerDesktop.dim().height,
+        var bannerHeight    = this.$els.bannerDesktop.dim().height,
             scrollY;
 
         fastdom.read(function () {
@@ -331,7 +329,7 @@ define([
 
         fastdom.write(function () {
             // Header is slim and navigation is shown on the scroll up
-            if (scrollY >= this.headerBigHeight + bannerHeight) {
+            if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth)) {
                 this.$els.header.css({
                     position:  'fixed',
                     top:       0,
