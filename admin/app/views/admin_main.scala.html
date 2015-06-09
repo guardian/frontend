@@ -84,7 +84,9 @@
                 }
             };
 
-            System.import('bootstraps/admin')
+            System.import('core').then(function () {
+                System.import('bootstraps/admin');
+            })
         </script>
         <script src="//code.jquery.com/jquery.js"></script>
         <script type="text/javascript" src="@routes.Assets.at("javascripts/components/bootstrap/dist/js/bootstrap.js")"></script>

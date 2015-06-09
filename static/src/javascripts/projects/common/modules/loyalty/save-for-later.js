@@ -56,7 +56,7 @@ define([
 
         this.isContent = !/Network Front|Section/.test(config.page.contentType);
         this.userData = null;
-        this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
+        this.savedArticlesUrl = config.page.idUrl + '/saved-for-later-page';
     }
 
     var bookmarkSvg = svgs('bookmark', ['i-left']);
@@ -199,7 +199,6 @@ define([
 
         //--- Get articles
     // -------------------------Save Article
-
     SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl, event) {
         event.stop();
 

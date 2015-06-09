@@ -25,6 +25,8 @@
     @include save-for-later-state(save, colour(neutral-2));
     @include save-for-later-state(saved, colour(news-accent));
     @include save-for-later-state(remove, colour(live-accent));
+    @include save-for-later-state(confirm-delete-all, colour(live-accent));
+    @include save-for-later-state(delete-all, colour(neutral-1));
 
     &.save-for-later--save {
         @include button-colour(
