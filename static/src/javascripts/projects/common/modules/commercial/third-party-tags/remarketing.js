@@ -4,12 +4,12 @@ define([
     config
 ) {
 
-    var remarketingUrl = '//www.googleadservices.com/pagead/conversion_async.js';
+    var remarketingUrl = 'http://www.googleadservices.com/pagead/conversion_async.js';
 
     function load() {
 
         if (config.switches.remarketing) {
-            return require(['js!' + remarketingUrl + '!exports=google_trackConversion'], function () {
+            return require([remarketingUrl + '!system-script'], function () {
                 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
                 window.google_trackConversion({
                     google_conversion_id: 971225648,

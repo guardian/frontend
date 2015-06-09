@@ -3,7 +3,7 @@ define([
     'common/utils/$',
     'common/utils/template',
     'fastdom',
-    'text!common/views/ui/notifications-subcribe-link.html',
+    'common/views/ui/notifications-subcribe-link.html!text',
     'common/utils/cookies',
     'bean',
     'common/views/svgs'

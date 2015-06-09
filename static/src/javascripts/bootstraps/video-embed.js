@@ -16,8 +16,8 @@ define([
     'common/modules/video/events',
     'common/modules/video/fullscreener',
     'common/views/svgs',
-    'text!common/views/ui/loading.html',
-    'text!common/views/media/titlebar.html'
+    'common/views/ui/loading.html!text',
+    'common/views/media/titlebar.html!text'
 ], function (
     bean,
     bonzo,

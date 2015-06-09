@@ -9,7 +9,7 @@ define([
     'common/utils/template',
     'common/utils/mediator',
     'common/utils/detect',
-    'text!facia/views/liveblog-block.html'
+    'facia/views/liveblog-block.html!text'
 ], function (
     bonzo,
     fastdom,

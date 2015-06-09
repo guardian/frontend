@@ -11,7 +11,6 @@ module.exports = function (grunt) {
         staticTargetDir: './static/target/',
         staticHashDir:   './static/hash/',
         testConfDir:     './static/test/javascripts/conf/',
-        requirejsDir:    './static/requirejs',
         webfontsDir:     './static/src/stylesheets/components/guss-webfonts/webfonts/'
     };
 
@@ -91,7 +90,8 @@ module.exports = function (grunt) {
             grunt.task.run('replace:jspmSourceMaps');
         }
 
-        grunt.task.run(['concurrent:requireJS', 'copy:javascript']);
+        grunt.task.run(['copy:javascript']);
+
         if (!options.isDev) {
             grunt.task.run('uglify:javascript');
         }
@@ -104,7 +104,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:inlineSvgs', ['copy:inlineSVGs', 'svgmin:inlineSVGs']);
-    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap', 'compile:inlineSvgs', 'uglify:conf']);
+    grunt.registerTask('compile:conf', ['copy:headCss', 'copy:assetMap', 'compile:inlineSvgs', 'uglify:conf']);
     grunt.registerTask('compile', [
         'compile:css',
         'compile:js',
@@ -125,21 +125,6 @@ module.exports = function (grunt) {
     grunt.registerTask('jspmInstall', function() {
         megalog.error('`grunt jspmInstall` has been removed.\n\nUse `grunt install:jspm` instead… ');
     });
-
-    /**
-     * compile:js:<requiretask> tasks. Generate one for each require task
-     */
-    function compileSpecificJs(requirejsName) {
-        if (!options.isDev && requirejsName !== 'common') {
-            grunt.task.run('requirejs:common');
-        }
-        grunt.task.run(['requirejs:' + requirejsName, 'copy:javascript', 'asset_hash']);
-    }
-    for (var requireTaskName in grunt.config('requirejs')) {
-        if (requireTaskName !== 'options') {
-            grunt.registerTask('compile:js:' + requireTaskName, compileSpecificJs.bind(this, requireTaskName) );
-        }
-    }
 
     /**
      * Test tasks
