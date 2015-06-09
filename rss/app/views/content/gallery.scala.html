@@ -1,0 +1,16 @@
+@import model.Gallery
+
+@(gallery: Gallery)
+
+@main(gallery) {
+    <figure class="op-slideshow">
+        @gallery.galleryImages.map { image =>
+            <figure>
+                @image.largestImage.map { img =>
+                    @img.path.map { path => <img src="@path.replaceAll("^//", "http://")" alt="@Html(img.altText.getOrElse(""))" /> }
+                    @img.caption.map { caption => <figcaption class="op-center">@Html(caption)</figcaption> }
+                }
+            </figure>
+        }
+    </figure>
+}

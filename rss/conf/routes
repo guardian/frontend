@@ -5,6 +5,8 @@
 
 GET        /_healthcheck                                               conf.HealthCheck.healthcheck()
 
+GET        /instant/rss                                                controllers.InstantArticlesRssController.renderInstantArticles()
+
 GET        /$leftSide<[^+]+>+*rightSide/rss                            controllers.RssController.renderCombinerRss(leftSide, rightSide)
 GET        /*path/rss                                                  controllers.RssController.renderRss(path)
 

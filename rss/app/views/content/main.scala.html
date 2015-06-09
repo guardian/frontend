@@ -1,0 +1,37 @@
+@import model.Content
+@(content: Content)(contentBody: Html)
+
+@import implicits.Dates._
+@import org.joda.time.DateTime
+
+<!doctype html>
+<html lang="en" prefix="op: http://media.facebook.com/op#">
+    <head>
+        <meta charset="utf-8">
+        <link rel="canonical" href="@content.webUrl">
+        @* TODO <link rel="stylesheet" title="default" href="#"> *@
+        <meta property=“fb:likes” content=“true”>
+        <meta property=“fb:comments” content=“@content.isCommentable”>
+        <meta property="op:markup_version" content="v1.0">
+    </head>
+    <body>
+        <article>
+            <header>
+
+                <h1>@Html(content.headline)</h1>
+                <details>
+                    <summary>@Html(content.description.getOrElse(""))</summary>
+                </details>
+                <time datetime="@content.webPublicationDate.toISODateTimeNoMillisString" class="op-published">December 11th, 4:44 PM</time>
+                <time datetime="@content.lastModified.toISODateTimeNoMillisString" class="op-modified"></time>
+            </header>
+
+            @contentBody
+
+            <footer>
+                <small>&copy; @DateTime.now.getYear Guardian News and Media Limited or its affiliated companies. All rights reserved.</small>
+                <iframe class="op-tracker" srcdoc="<script src='http://j.ophan.co.uk/fb-instant.js'>" src="#" hidden></iframe>
+            </footer>
+        </article>
+    </body>
+</html>
