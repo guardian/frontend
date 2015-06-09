@@ -15,6 +15,7 @@ object FaciaContentConvert {
       case snap: model.Snap =>
         LinkSnap(
           id = snap.id,
+          maybeFrontPublicationDate = None,
           snapType = snap.snapType.getOrElse("link"),
           snapUri = snap.snapUri,
           snapCss = snap.snapCss,
@@ -36,6 +37,7 @@ object FaciaContentConvert {
       case other =>
         CuratedContent(
           content = frontendContent.apiContent.delegate,
+          maybeFrontPublicationDate = None,
           supportingContent = frontendContent.apiContent.supporting.map(FaciaContentConvert.frontentContentToFaciaContent(_, maybeCollectionConfig)),
           cardStyle = com.gu.facia.api.utils.CardStyle(frontendContent.delegate, trailMetaData),
           headline = frontendContent.headline,
