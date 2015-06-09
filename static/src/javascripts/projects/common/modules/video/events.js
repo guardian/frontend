@@ -10,7 +10,7 @@ define([
     'common/utils/template',
     'common/modules/analytics/omnitureMedia',
     'common/modules/onward/history',
-    'text!common/views/ui/video-ads-skip-overlay.html'
+    'common/views/ui/video-ads-skip-overlay.html!text'
 ], function (
     bean,
     qwery,
@@ -53,7 +53,7 @@ define([
     function ophanRecord(id, event, player) {
         var ophanPath = isEmbed ? 'ophan/embed' : 'ophan/ng';
         if (id) {
-            require(ophanPath, function (ophan) {
+            require([ophanPath], function (ophan) {
                 var eventObject = {};
                 eventObject[getMediaType(player)] = {
                     id: id,

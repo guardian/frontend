@@ -683,15 +683,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val BecomeAMemberSwitch = Switch(
-    "Feature",
-    "become-a-member",
-    "If this switch is on the “Become a Member” button will be visible.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 15),
-    exposeClientSide = true
-  )
-
   val Hmtl5MediaCompatibilityCheck = Switch(
     "Feature",
     "html-5-media-compatibility-check",
@@ -1002,16 +993,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABDeferSpacefinder = Switch(
-    "A/B Tests",
-    "ab-defer-spacefinder",
-    "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 16),
-    exposeClientSide = true
-  )
-
-
   val ABHeadlineSwitches = (1 to 10) map { n =>
     Switch(
       "A/B Tests",
@@ -1023,12 +1004,12 @@ object Switches {
     )
   }
 
-  val ABSupporterMessage = Switch(
+  val ABMembershipMessage = Switch(
     "A/B Tests",
-    "ab-supporter",
-    "Switch for the Supporter Message A/B test.",
+    "ab-membership-message",
+    "Switch for the Membership message A/B test.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 11),
+    sellByDate = new LocalDate(2015, 6, 19),
     exposeClientSide = true
   )
 

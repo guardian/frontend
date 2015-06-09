@@ -7,7 +7,7 @@ define([
     config,
     detect
 ) {
-    var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
+    var outbrainUrl = 'http://widgets.outbrain.com/outbrain.js';
 
     function load() {
         if (config.switches.outbrain) {
@@ -20,7 +20,7 @@ define([
             $('.OUTBRAIN')
                 .first()
                 .attr('data-widget-id', widgetIds[detect.getBreakpoint()]);
-            return require(['js!' + outbrainUrl + '!exports=outbrain']);
+            return require([outbrainUrl + '!system-script']);
         }
     }
 

@@ -2,7 +2,7 @@ package services
 
 import com.gu.googleauth.UserIdentity
 import com.gu.pandomainauth.model.User
-import conf.Configuration
+import conf.{Switches, Configuration}
 import common.Logging
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model._
@@ -205,7 +205,10 @@ object S3FrontsApi extends S3 {
     putPrivateGzipped(getDraftFapiPressedKeyForPath(path), json, "application/json")
 
   def getPressedLastModified(path: String): Option[String] =
-    getLastModified(getLivePressedKeyForPath(path)).map(_.toString)
+      if (Switches.FaciaServerNewFormat.isSwitchedOn)
+        getLastModified(getLiveFapiPressedKeyForPath(path)).map(_.toString)
+      else
+        getLastModified(getLivePressedKeyForPath(path)).map(_.toString)
 }
 
 trait SecureS3Request extends implicits.Dates with Logging {

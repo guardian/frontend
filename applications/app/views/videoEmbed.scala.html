@@ -1,7 +1,7 @@
 @(page: EmbedPage)(implicit request: RequestHeader)
 
 @import model.{Video, VideoPlayer}
-@import views.support.{Video640}
+@import views.support.Video640
 @import conf.Static
 @import conf.Configuration
 
@@ -101,22 +101,12 @@
 
                     document.documentElement.className = docClass;
 
-                    var curl = {
-                        baseUrl: '@{Configuration.assets.securePath}javascripts',
-                        apiName: 'require',
-                        paths: {
-                            core: '@StaticSecure("javascripts/core.js")',
-                            text: 'text', // noop
-                            inlineSvg: 'inlineSvg', // noop
-                            'bootstraps/video-embed': '@StaticSecure("javascripts/bootstraps/video-embed.js")',
-                            'ophan/embed':  '@{Configuration.javascript.config("ophanEmbedJsUrl")}'
-                        }
-                    };
+                    @Html(Static.js.systemJsSetupFragment)
 
-                    @Html(StaticSecure.js.curl)
-
-                    require(['bootstraps/video-embed'], function(bootstrap) {
-                        bootstrap.init();
+                    System.import('core').then(function () {
+                        System.import('bootstraps/video-embed').then(function (bootstrap) {
+                            bootstrap.init();
+                        });
                     });
                 </script>
 

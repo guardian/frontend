@@ -214,13 +214,6 @@ define([
             return config.switches.lzAds;
         },
 
-        isDeferSpaceFinderTest = function () {
-            var test = ab.getParticipations().DeferSpacefinder,
-                eligible = test && test.variant === 'A';
-
-            return ab.testCanBeRun('DeferSpacefinder') && eligible;
-        },
-
         /**
          * Public functions
          */
@@ -235,7 +228,7 @@ define([
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
-                require(['js!googletag']);
+                require(['googletag!system-script']);
             }
 
             window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
@@ -245,7 +238,7 @@ define([
             window.googletag.cmd.push(defineSlots);
 
             // We want to run lazy load if user is in the main test or if there is a switch on
-            (isMtRecTest() || isLzAdsSwitchOn() || isDeferSpaceFinderTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            (isMtRecTest() || isLzAdsSwitchOn()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
@@ -258,13 +251,7 @@ define([
                 fastdom.read(function () {
                     var scrollTop    = bonzo(document.body).scrollTop(),
                         scrollBottom = scrollTop + bonzo.viewport().height,
-                        depth;
-
-                    if (isDeferSpaceFinderTest()) {
-                        depth = 100;
-                    } else {
                         depth = 0.5;
-                    }
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)

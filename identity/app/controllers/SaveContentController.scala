@@ -1,6 +1,6 @@
 package controllers
 
-import java.net.URL
+import java.net.URI
 
 import actions.AuthenticatedActions
 import client.Error
@@ -61,7 +61,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
             if (!prefs.contains(shortUrl)) {
               val articleId = idRequest.articleId match {
                 case Some(id) => id
-                case _ => new URL(returnUrl).getPath.drop(1)
+                case _ => new URI(returnUrl).getPath.drop(1)
               }
               val savedArticles = prefs.addArticle(articleId, shortUrl)
               api.updateSavedArticles(request.user.auth, savedArticles)
@@ -88,7 +88,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
           case (formWithErrors, Error(message, decription, _, context)) =>
             formWithErrors.withError(context.getOrElse(""), message)
         }
-        val pageData = pageDataBuilder.apply(List.empty, emptyArticles, idRequest, pageNum)
+        val pageData = pageDataBuilder(List.empty, emptyArticles, idRequest, pageNum)
         Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData))))
     }
   }
@@ -113,7 +113,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
             fillFormWithApiDataForPageAndGetResult(idRequest, savedArticles, pageNum)
           case Left(errors) =>
             val formWithApiErrors = buildFormFromErrors(errors)
-            val pageData = pageDataBuilder.apply(List.empty, emptyArticles, idRequest, pageNum)
+            val pageData = pageDataBuilder(List.empty, emptyArticles, idRequest, pageNum)
             Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData))))
         }
       }
@@ -132,7 +132,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
                   case Left(errors) =>
                     val formWithApiErrors = buildFormFromErrors(errors)
-                    val pageData = pageDataBuilder.apply(List.empty, emptyArticles, idRequest, pageNum)
+                    val pageData = pageDataBuilder(List.empty, emptyArticles, idRequest, pageNum)
                     Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithApiErrors, pageData))))
                 }
                 updatedResult
@@ -140,13 +140,13 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
             updatedArticlesViow.getOrElse {
               val formWithError = form.withError("Error", "There was a problem with your request")
-              val pageData = pageDataBuilder.apply(List.empty, emptyArticles, idRequest, pageNum)
+              val pageData = pageDataBuilder(List.empty, emptyArticles, idRequest, pageNum)
               Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithError, pageData))))
             }
 
           case Left(errors) =>
             val formWithErrors = buildFormFromErrors(errors)
-            val pageData = pageDataBuilder.apply(List.empty, emptyArticles, idRequest, pageNum)
+            val pageData = pageDataBuilder(List.empty, emptyArticles, idRequest, pageNum)
             Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData))))
         }
         response
@@ -157,7 +157,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
   private def fillFormWithApiDataForPageAndGetResult(idRequest: IdentityRequest, updatedArticles: SavedArticles, pageNum: Int)
                                                     (implicit request: RequestHeader): Future[Result] = {
 
-    //Deal with case where one item on last page has` been deleted
+    //Deal with case where one item on last page has been deleted
     if ( pageNum > updatedArticles.numPages && pageNum > 1) {
       Future.successful(NoCache(SeeOther( s"/saved-for-later-page?page=%d".format(pageNum - 1))))
     } else {

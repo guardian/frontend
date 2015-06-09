@@ -50,10 +50,8 @@
                 if (userDisplayName) {
                     document.getElementsByClassName('js-profile-info')[0].innerHTML = userDisplayName;
                     document.getElementsByClassName('js-profile-nav')[0].classList.add('is-signed-in');
-                    if (window.guardian.config.switches.becomeAMember) {
-                        var $register = document.getElementsByClassName('js-profile-register')[0];
-                        $register.parentElement.removeChild($register);
-                    }
+                    var $register = document.getElementsByClassName('js-profile-register')[0];
+                    $register.parentElement.removeChild($register);
                 }
             }
             insertUserName();
