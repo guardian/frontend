@@ -368,7 +368,7 @@ object Switches {
     "criteo",
     "If this switch is on, Criteo segments will be used to target ads.",
     safeState = Off,
-    sellByDate = never,
+    sellByDate = new LocalDate(2015, 6, 30),
     exposeClientSide = true
   )
 
