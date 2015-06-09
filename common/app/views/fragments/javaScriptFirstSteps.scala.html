@@ -216,8 +216,9 @@
 
             docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
         }
-        @if(IPadNothrasherSwitch.isSwitchedOn){
-            if(navigator.platform === 'iPad'){
+
+        @if(IPadNothrasherSwitch.isSwitchedOn) {
+            if (navigator.platform === 'iPad') {
                 docClass += ' ipad-no-thrashers';
             }
         }

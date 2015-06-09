@@ -95,5 +95,8 @@
         overflow: auto;
         width: 100%;
     }
-    .ipad-no-thrashers &{display: none}
+
+    .ipad-no-thrashers & {
+        display: none;
+    }
 }
