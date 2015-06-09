@@ -356,6 +356,9 @@ define([
                 //header is slim from now on
                 this.$els.header.addClass('l-header--is-slim');
 
+                // Make sure navigation is hidden
+                this.$els.navigation.css('display', 'none');
+
                 this.$els.header.css({
                     position:  'static',
                     'margin-top': bannerHeight,
@@ -372,6 +375,9 @@ define([
                 });
                 //header is not slim yet
                 this.$els.header.removeClass('l-header--is-slim');
+
+                // Make sure navigation is visible
+                this.$els.navigation.css('display', 'block');
 
                 this.$els.header.css({
                     position:  'static',
