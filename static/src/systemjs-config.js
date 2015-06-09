@@ -24,7 +24,8 @@ System.config({
     "npm:*": "jspm_packages/npm/*.js",
     "bower:*": "jspm_packages/bower/*.js",
     "facebook": "//connect.facebook.net/en_US/all.js",
-    "interactive/*": "//*"
+    "http/*": "http://*",
+    "https/*": "https://*"
   },
   "shim": {
     "omniture": {
