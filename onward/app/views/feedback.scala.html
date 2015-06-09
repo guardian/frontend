@@ -1,0 +1,73 @@
+@(page: model.Page, path: String)(implicit request: RequestHeader)
+
+@main(page){ } {
+    <div class="l-side-margins">
+        @defining(layout.Feedback(path)) { feedback =>
+            <div class="content content--expired">
+                <header class="content__head">
+                    <div class="gs-container">
+                        <div class="content__main-column">
+                            @defining(feedback.links match {
+                                case None => "Thank you for leaving technical feedback"
+                                case _ => "Report technical feedback"
+                            }) { headline =>
+                                <h1 itemprop="headline" class="content__headline">@headline</h1>
+                            }
+                        </div>
+                    </div>
+                </header>
+                <div class="content__main">
+                    <div class="gs-container">
+                        <div class="content__main-column content__main-column--expired">
+                            <div class="js-article__container u-cf">
+                                <div class="from-content-api" itemprop="articleBody">
+                                    <div class="from-content-api">
+                                        <p>@feedback.problem</p>
+                                        @feedback.links.map { links =>
+                                            <p>Please tell us more by choosing one of the options below.  We will record your choice and give you more options on a new page.</p>
+                                            <ul>
+                                                @links.map { link =>
+                                                    <li><a data-link-name="tech feedback : @link._1" href="tech-feedback/@link._1">@link._2</a></li>
+                                                }
+                                            </ul>
+                                        }
+                                        @if(feedback.email) {
+                                            <p>
+                                                Want to attach more detail to your report?  Drop a message to
+                                                <a class="js-tech-feedback-mailto" data-link-name="tech feedback : mailto : dotcom" href="mailto:dotcom.feedback@@theguardian.com">
+                                                    dotcom.feedback@@theguardian.com
+                                                </a>
+                                            </p>
+                                            <p>
+                                                <em>We value all feedback, but if you need a reply please contact
+                                                    <a class="js-userhelp-mailto" data-link-name="tech feedback : mailto : userhelp" href="mailto:userhelp@@theguardian.com">
+                                                        userhelp@@theguardian.com
+                                                    </a>.
+                                                </em>
+                                            </p>
+                                            <p>Think you can fix it yourself?  <a href="http://developers.theguardian.com/">Work for us</a>!</p>
+                                        } else {
+                                            <p>Need help, or want something else? For website queries contact
+                                                <a class="js-userhelp-mailto" data-link-name="tech feedback : mailto : userhelp" href="mailto:userhelp@@theguardian.com">
+                                                    userhelp@@theguardian.com
+                                                </a>
+                                                or alternatively use our
+                                                <a data-link-name="tech feedback : contact-us" href="/help/contact-us">
+                                                    contact us page
+                                                </a>.
+                                            </p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="facia-container facia-container--layout-content">
+        @fragments.mostPopularPlaceholder("/")
+        </div>
+    </div>
+}

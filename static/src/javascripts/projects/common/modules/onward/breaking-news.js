@@ -9,6 +9,7 @@ define([
     'common/utils/config',
     'common/utils/storage',
     'common/utils/template',
+    'common/modules/ui/relativedates',
     'common/modules/analytics/omniture',
     'common/views/svgs',
     'text!common/views/breaking-news.html'
@@ -23,11 +24,13 @@ define([
     config,
     storage,
     template,
+    relativeDates,
     omniture,
     svgs,
     alertHtml
 ) {
-    var supportedSections = {
+    var alertWithinSeconds = 1200, // 20 minutes
+        supportedSections = {
             'sport': 'sport',
             'football': 'sport'
         },
@@ -70,11 +73,17 @@ define([
                     edition = treatAsInternationalForAlerts ? 'intl' : (page.edition || '').toLowerCase(),
                     section = supportedSections[page.section],
 
-                    articles = _.flatten([
+                    articles = _.chain([
                         collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
                         collections.filter(function (c) { return c.href === edition;  }).map(function (c) { return c.content; }),
                         collections.filter(function (c) { return section && c.href === section; }).map(function (c) { return c.content; })
-                    ]),
+                    ])
+                    .flatten()
+                    .filter(function (article) {
+                        var alertTime = article.frontPublicationDate;
+                        return alertTime && relativeDates.isWithinSeconds(new Date(alertTime), alertWithinSeconds);
+                    })
+                    .value(),
 
                     articleIds = articles.map(function (article) { return article.id; }),
                     alertDelay = 3000,
