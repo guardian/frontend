@@ -260,6 +260,8 @@ define([
             showHeaderDepth: 0.5,
             showNavigationDepth: 100, // Navigation will show when user scrolls X px up
             distance: 0,
+            direction: 'down',
+            showNavigation: false,
             thresholdMobile: 400
         };
     }
@@ -292,7 +294,7 @@ define([
         }
     };
 
-    StickyNav.prototype.getScrollDirection = function (scrollY) {
+    StickyNav.prototype.setScrollDirection = function (scrollY) {
         this.config.direction = (scrollY > this.config.prevScroll) ? 'down' : 'up';
         this.config.prevScroll = scrollY;
     }
@@ -307,7 +309,6 @@ define([
     }
 
     StickyNav.prototype.showNavigation = function (scrollY, breakpoint) {
-        this.getScrollDirection(scrollY);
         this.shouldShowNavigation(scrollY);
 
         // If user is scrolling up and navigation threshold was met show navigation
@@ -346,6 +347,8 @@ define([
         });
 
         fastdom.write(function () {
+            this.setScrollDirection(scrollY);
+            
             // Header is slim and navigation is shown on the scroll up
             if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth)) {
                 this.$els.header.css({
@@ -379,15 +382,20 @@ define([
                 //header is slim from now on
                 this.$els.header.addClass('l-header--is-slim');
 
-                // Make sure navigation is hidden
-                this.$els.navigation.css('display', 'none');
+                if (this.config.direction === 'up') {
+                    this.$els.header.css('transform', 'translateY(-100%)');
+                } else {
+                    // Make sure navigation is hidden
+                    this.$els.navigation.css('display', 'none');
 
-                this.$els.header.css({
-                    position:  'static',
-                    'margin-top': bannerHeight,
-                    'transform': 'translateY(-500%)'
-                });
-                this.$els.main.css('margin-top', this.headerBigHeight - this.$els.header.dim().height);
+                    this.$els.header.css({
+                        position:  'static',
+                        'margin-top': bannerHeight,
+                        'transform': 'translateY(-500%)'
+                    });
+
+                    this.$els.main.css('margin-top', this.headerBigHeight - this.$els.header.dim().height);
+                }
             } else {
                 // Make sure that we show slim nav when page loaded with anchor
                 this.$els.bannerDesktop.css({
