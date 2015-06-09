@@ -74,16 +74,16 @@ define([
                     section = supportedSections[page.section],
 
                     articles = _.chain([
-                            collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
-                            collections.filter(function (c) { return c.href === edition;  }).map(function (c) { return c.content; }),
-                            collections.filter(function (c) { return section && c.href === section; }).map(function (c) { return c.content; })
-                        ])
-                        .flatten()
-                        .filter(function(article) {
-                            var alertTime = article.frontPublicationDate;
-                            return alertTime && relativeDates.isWithinSeconds(new Date(alertTime), alertWithinSeconds);
-                        })
-                        .value(),
+                        collections.filter(function (c) { return c.href === 'global'; }).map(function (c) { return c.content; }),
+                        collections.filter(function (c) { return c.href === edition;  }).map(function (c) { return c.content; }),
+                        collections.filter(function (c) { return section && c.href === section; }).map(function (c) { return c.content; })
+                    ])
+                    .flatten()
+                    .filter(function (article) {
+                        var alertTime = article.frontPublicationDate;
+                        return alertTime && relativeDates.isWithinSeconds(new Date(alertTime), alertWithinSeconds);
+                    })
+                    .value(),
 
                     articleIds = articles.map(function (article) { return article.id; }),
                     alertDelay = 3000,
