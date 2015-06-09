@@ -11,7 +11,7 @@ define([
     'common/utils/template',
     'common/modules/analytics/omniture',
     'common/views/svgs',
-    'common/views/breaking-news.html!text'
+    'text!common/views/breaking-news.html'
 ], function (
     bean,
     bonzo,

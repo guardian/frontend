@@ -3,7 +3,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
-    'common/views/commercial/ad-slot.html!text'
+    'text!common/views/commercial/ad-slot.html'
 ], function (
     _,
     $,
