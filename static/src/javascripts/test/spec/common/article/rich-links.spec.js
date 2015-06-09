@@ -3,7 +3,7 @@ import $ from 'common/utils/$';
 import template from 'common/utils/template';
 import fixtures from 'helpers/fixtures';
 import Injector from 'helpers/injector';
-import richLinkTagTmpl from 'common/views/content/richLinkTag.html!text';
+import richLinkTagTmpl from 'text!common/views/content/richLinkTag.html';
 
 describe('richLinks', function () {
     var articleBodyConf = {
