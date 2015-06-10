@@ -17,4 +17,9 @@ export default function (overridePanda, overrideRedirect) {
         };
 
     poll();
+    document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) {
+            session(CONST.reauthPath, CONST.reauthInterval).catch(redirect);
+        }
+    }, false);
 }
