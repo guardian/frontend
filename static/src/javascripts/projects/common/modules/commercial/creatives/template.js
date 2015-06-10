@@ -4,14 +4,14 @@ define([
     'common/views/svgs',
 
     // require templates, so they're bundled up as part of the build
-    'text!common/views/commercial/creatives/ad-feature-mpu.html',
-    'text!common/views/commercial/creatives/ad-feature-mpu-large.html',
-    'text!common/views/commercial/creatives/ad-feature-mpu-large-v2.html',
-    'text!common/views/commercial/creatives/logo-ad-feature.html',
-    'text!common/views/commercial/creatives/logo-sponsored.html',
-    'text!common/views/commercial/creatives/manual-inline.html',
-    'text!common/views/commercial/creatives/manual-multiple.html',
-    'text!common/views/commercial/creatives/manual-single.html'
+    'common/views/commercial/creatives/ad-feature-mpu.html!text',
+    'common/views/commercial/creatives/ad-feature-mpu-large.html!text',
+    'common/views/commercial/creatives/ad-feature-mpu-large-v2.html!text',
+    'common/views/commercial/creatives/logo-ad-feature.html!text',
+    'common/views/commercial/creatives/logo-sponsored.html!text',
+    'common/views/commercial/creatives/manual-inline.html!text',
+    'common/views/commercial/creatives/manual-multiple.html!text',
+    'common/views/commercial/creatives/manual-single.html!text'
 ], function (
     $,
     template,
@@ -36,7 +36,7 @@ define([
     };
 
     Template.prototype.create = function () {
-        require(['text!common/views/commercial/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+        require(['common/views/commercial/creatives/' + this.params.creative + '.html!text'], function (creativeTpl) {
             var creativeHtml = template(creativeTpl, this.params);
 
             $.create(creativeHtml)

@@ -132,8 +132,6 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
      private def inlineJs(path: String): String = IOUtils.toString(AssetFinder(path))
 
-     val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
-
      val es6ModuleLoader: String = inlineJs("assets/es6-module-loader.src.js")
 
      val systemJs: String = inlineJs("assets/system.src.js")

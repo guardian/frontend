@@ -12,7 +12,7 @@ define([
     'common/modules/ui/relativedates',
     'common/modules/analytics/omniture',
     'common/views/svgs',
-    'text!common/views/breaking-news.html'
+    'common/views/breaking-news.html!text'
 ], function (
     bean,
     bonzo,

@@ -25,20 +25,6 @@ module.exports = function(grunt, options) {
                         '**/*'
                     ],
                     dest: options.staticHashDir + 'javascripts/vendor'
-                },
-                {
-                    expand: true,
-                    cwd: options.requirejsDir,
-                    src: [
-                        'core.js',
-                        'core.js.map',
-                        'bootstraps/app.js',
-                        'bootstraps/app.js.map',
-                        'bootstraps/commercial.js',
-                        'bootstraps/commercial.js.map',
-                        'components/curl/curl-domReady.js'
-                    ],
-                    dest: options.staticTargetDir + 'javascripts'
                 }
             ]
         },
@@ -73,16 +59,6 @@ module.exports = function(grunt, options) {
                 src: ['**/head*.css'],
                 dest: 'common/conf/assets'
             }]
-        },
-        headJs: {
-            files: [
-                {
-                    expand: true,
-                    cwd: 'static/src/javascripts/components/curl',
-                    src: ['curl-domReady.js'],
-                    dest: 'common/conf/assets'
-                }
-            ]
         },
         // assets.map must go where Play can find it from resources at runtime.
         // Everything else goes into frontend-static bundling.
