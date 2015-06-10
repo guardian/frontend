@@ -254,7 +254,7 @@ define([
         }.bind(this));
     };*/
 
-    function StickyNav() {
+    function StickyHeader() {
         this.$els   = {};
         this.config = {
             showHeaderDepth: 0.5,
@@ -268,7 +268,7 @@ define([
         this.isMobile = _.contains(this.breakpoint, 'mobile');
     }
 
-    StickyNav.prototype.init = function () {
+    StickyHeader.prototype.init = function () {
         fastdom.read(function () {
             this.$els.header                = $('#header');
             this.$els.bannerDesktop         = $('.top-banner-ad-container--above-nav');
@@ -298,12 +298,12 @@ define([
         }
     };
 
-    StickyNav.prototype.setScrollDirection = function (scrollY) {
+    StickyHeader.prototype.setScrollDirection = function (scrollY) {
         this.config.direction = (scrollY > this.config.prevScroll) ? 'down' : 'up';
         this.config.prevScroll = scrollY;
     };
 
-    StickyNav.prototype.shouldShowNavigation = function (scrollY) {
+    StickyHeader.prototype.shouldShowNavigation = function (scrollY) {
         if (this.config.direction === 'up' && this.config.distance === 0) {
             this.config.distance = scrollY;
         }
@@ -312,7 +312,7 @@ define([
         this.config.showNavigation = (Math.abs(scrollY - this.config.distance) > this.config.showNavigationDepth);
     };
 
-    StickyNav.prototype.showNavigation = function (scrollY) {
+    StickyHeader.prototype.showNavigation = function (scrollY) {
         this.shouldShowNavigation(scrollY);
 
         // If user is scrolling up and navigation threshold was met show navigation
@@ -329,7 +329,7 @@ define([
         }
     };
 
-    StickyNav.prototype.updatePosition = function (breakpoint) {
+    StickyHeader.prototype.updatePosition = function (breakpoint) {
         var bannerHeight = this.$els.bannerDesktop.dim().height || 128,
             scrollY;
 
@@ -414,7 +414,7 @@ define([
         }.bind(this));
     };
 
-    StickyNav.prototype.updatePositionMobile = function () {
+    StickyHeader.prototype.updatePositionMobile = function () {
         var bannerHeight = this.$els.bannerMobile.dim().height,
             scrollY;
 
@@ -453,9 +453,5 @@ define([
         }.bind(this));
     };
 
-
-    return {
-        //stickySlow: new StickySlow()
-        stickyNav: new StickyNav()
-    };
+    return new StickyHeader();
 });
