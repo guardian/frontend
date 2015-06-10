@@ -442,11 +442,11 @@ define([
         $.create('<div class="ad_unit"></div>').appendTo(document.body);
         displayed = $('.ad_unit').css('display');
         mozBinding = $('.ad_unit').css('-moz-binding');
-        if (mozBinding !== undefined) {
+        if (typeof mozBinding !== 'undefined') {
             mozBindingHidden = $('.ad_unit').css('-moz-binding').indexOf('elemhidehit');
         }
         $('.ad_unit').remove();
-        if (displayed === 'none' || (mozBinding !== undefined && mozBindingHidden !== -1)) {
+        if (displayed === 'none' || (typeof mozBinding !== 'undefined' && mozBindingHidden !== -1)) {
             isAdblock = true;
         }
         return isAdblock;
