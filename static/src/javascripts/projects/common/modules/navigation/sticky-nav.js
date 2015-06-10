@@ -314,17 +314,10 @@ define([
 
     StickyNav.prototype.showNavigation = function (scrollY) {
         this.shouldShowNavigation(scrollY);
-        console.log(this.config.direction, this.config.showNavigation);
 
         // If user is scrolling up and navigation threshold was met show navigation
         if (this.config.direction === 'up' && this.config.showNavigation) {
             this.$els.navigation.css('display', 'block');
-            /*if (this.breakpoint === 'mobile' || this.breakpoint === 'tablet') {
-                this.$els.navigation.css('height', null);
-                if (this.breakpoint === 'tablet') {
-                    this.$els.burgerIcon.show();
-                }
-            }*/
         } else {
             // If user is scrolling down and navigation is visible reset bounce distance
             if (this.config.showNavigation) {
@@ -333,12 +326,6 @@ define([
             }
 
             this.$els.navigation.css('display', 'none');
-            /*if (this.breakpoint === 'mobile' || this.breakpoint === 'tablet') {
-                this.$els.navigation.css('height', 0);
-                if (this.breakpoint === 'tablet') {
-                    this.$els.burgerIcon.hide();
-                }
-            }*/
         }
     };
 
@@ -437,7 +424,7 @@ define([
 
         fastdom.write(function () {
             this.setScrollDirection(scrollY);
-            
+
             //header, navigation and banner are sticky from the beginning
             if (scrollY < this.config.thresholdMobile) {
                 this.$els.header.css({
