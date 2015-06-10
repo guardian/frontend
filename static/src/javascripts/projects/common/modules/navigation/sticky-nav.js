@@ -264,7 +264,8 @@ define([
             showNavigation: false,
             thresholdMobile: 400
         };
-        this.isMobile = _.contains(detect.getBreakpoint(), 'mobile');
+        this.breakpoint = detect.getBreakpoint();
+        this.isMobile = _.contains(this.breakpoint, 'mobile');
     }
 
     StickyNav.prototype.init = function () {
@@ -311,18 +312,18 @@ define([
         this.config.showNavigation = (Math.abs(scrollY - this.config.distance) > this.config.showNavigationDepth);
     };
 
-    StickyNav.prototype.showNavigation = function (scrollY, breakpoint) {
+    StickyNav.prototype.showNavigation = function (scrollY) {
         this.shouldShowNavigation(scrollY);
 
         // If user is scrolling up and navigation threshold was met show navigation
         if (this.config.direction === 'up' && this.config.showNavigation) {
             this.$els.navigation.css('display', 'block');
-            if (breakpoint === 'mobile' || breakpoint === 'tablet') {
+            /*if (this.breakpoint === 'mobile' || this.breakpoint === 'tablet') {
                 this.$els.navigation.css('height', null);
-                if (breakpoint === 'tablet') {
+                if (this.breakpoint === 'tablet') {
                     this.$els.burgerIcon.show();
                 }
-            }
+            }*/
         } else {
             // If user is scrolling down and navigation is visible reset bounce distance
             if (this.config.showNavigation) {
@@ -331,12 +332,12 @@ define([
             }
 
             this.$els.navigation.css('display', 'none');
-            if (breakpoint === 'mobile' || breakpoint === 'tablet') {
+            /*if (this.breakpoint === 'mobile' || this.breakpoint === 'tablet') {
                 this.$els.navigation.css('height', 0);
-                if (breakpoint === 'tablet') {
+                if (this.breakpoint === 'tablet') {
                     this.$els.burgerIcon.hide();
                 }
-            }
+            }*/
         }
     };
 
@@ -450,16 +451,13 @@ define([
                     'z-index': '1000'
                 });
                 this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
-
-                //this.$els.navigationScroll.css('display', 'block');
             } else {
-                console.log(this.config.thresholdMobile + this.headerBigHeight, this.headerBigHeight);
                 //after this.thresholdMobile px of scrolling 'release' banner and navigation
                 this.$els.bannerMobile.css({
                     position:  'absolute',
                     top:       this.config.thresholdMobile + this.headerBigHeight
                 });
-                //this.showNavigation(scrollY, breakpoint);
+                //this.showNavigation(scrollY);
             }
         }.bind(this));
     };
