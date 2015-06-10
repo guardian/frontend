@@ -53,7 +53,7 @@ System.config({
     "lodash": "npm:lodash@2.4.1",
     "omniture": "vendor/omniture",
     "picturefill": "common/utils/picturefill",
-    "qwery": "npm:qwery@4.0.0",
+    "qwery": "npm:qwery@3.4.2",
     "raven": "github:getsentry/raven-js@1.1.18",
     "react": "npm:react@0.13.2",
     "reqwest": "github:ded/reqwest@1.1.5",
@@ -218,7 +218,7 @@ System.config({
     "npm:punycode@1.3.2": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:qwery@4.0.0": {
+    "npm:qwery@3.4.2": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:react@0.13.2": {
