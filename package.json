@@ -73,7 +73,7 @@
       "EventEmitter": "github:Wolfy87/EventEmitter@~4.2.6",
       "Promise": "github:guardian/native-promise-only@0.7.6-e",
       "bean": "npm:bean@^1.0.15",
-      "bonzo": "npm:bonzo@^1.4.0",
+      "bonzo": "npm:bonzo@^2.0.0",
       "classnames": "npm:classnames@^1.2.0",
       "domready": "npm:domready@^1.0.8",
       "enhancer": "github:guardian/enhancer@0.1.3",
