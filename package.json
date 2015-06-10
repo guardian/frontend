@@ -36,7 +36,7 @@
     "jasmine-core": "^2.3.2",
     "jit-grunt": "0.9.1",
     "jsonfile": "2.0.0",
-    "jspm": "0.15.0",
+    "jspm": "0.15.6",
     "jspm-bower-endpoint": "^0.3.2",
     "karma": "0.12.31",
     "karma-chrome-launcher": "0.1.10",
@@ -72,8 +72,6 @@
     "dependencies": {
       "EventEmitter": "github:Wolfy87/EventEmitter@~4.2.6",
       "Promise": "github:guardian/native-promise-only@0.7.6-e",
-      "babel": "npm:babel@^4.7.16",
-      "babel-runtime": "npm:babel-runtime@^4.7.16",
       "bean": "npm:bean@^1.0.15",
       "bonzo": "npm:bonzo@^1.4.0",
       "classnames": "npm:classnames@^1.2.0",
@@ -101,8 +99,9 @@
       "videojsplaylist": "github:tim-peterson/videojs-playlist@master"
     },
     "devDependencies": {
-      "babel": "npm:babel@^4.7.16",
-      "babel-runtime": "npm:babel-runtime@^4.7.16"
+      "babel": "npm:babel-core@^5.1.13",
+      "babel-runtime": "npm:babel-runtime@^5.1.13",
+      "core-js": "npm:core-js@^0.9.4"
     }
   }
 }

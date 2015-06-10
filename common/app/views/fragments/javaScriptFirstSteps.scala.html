@@ -83,7 +83,6 @@
             return fBound;
         };
     }
-
     @* needed due to class manipulation in bonzo is not x-browser - https://github.com/ded/bonzo/pull/133 *@
     if (!String.prototype.trim) {
         String.prototype.trim = function () {
@@ -216,6 +215,12 @@
             }
 
             docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
+        }
+
+        @if(IPadNothrasherSwitch.isSwitchedOn) {
+            if (navigator.platform === 'iPad') {
+                docClass += ' ipad-no-thrashers';
+            }
         }
     })(guardian.isModernBrowser);
 

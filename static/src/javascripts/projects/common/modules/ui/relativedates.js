@@ -29,12 +29,17 @@ define([
 
     function isToday(date) {
         var today = adjustedNow();
-        return (date.toDateString() === today.toDateString());
+        return date && (date.toDateString() === today.toDateString());
     }
 
     function isWithin24Hours(date) {
         var today = adjustedNow();
-        return (date.valueOf() > today.valueOf() - (24 * 60 * 60 * 1000));
+        return date && (date.valueOf() > today.valueOf() - (24 * 60 * 60 * 1000));
+    }
+
+    function isWithinSeconds(date, seconds) {
+        var today = adjustedNow();
+        return date && (date.valueOf() > today.valueOf() - ((seconds || 0) * 1000));
     }
 
     function isYesterday(relative) {
@@ -205,6 +210,7 @@ define([
 
     return {
         makeRelativeDate: makeRelativeDate,
+        isWithinSeconds: isWithinSeconds,
         init: init
     };
 

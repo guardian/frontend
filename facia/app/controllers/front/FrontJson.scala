@@ -92,7 +92,8 @@ trait FapiFrontJsonLite extends ExecutionContexts{
         "thumbnail" -> (j \ "content" \ "fields" \ "thumbnail"),
         "shortUrl" -> (j \ "content" \ "fields" \ "shortUrl"),
         "id" -> (j \ "content" \ "id"),
-        "group" -> (j \ "group")
+        "group" -> (j \ "group"),
+        "frontPublicationDate" -> (j \ "maybeFrontPublicationDate")
       )
     }
   }
