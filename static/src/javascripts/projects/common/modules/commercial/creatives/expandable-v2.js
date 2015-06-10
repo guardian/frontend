@@ -137,7 +137,7 @@ define([
             },
             $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
 
-        var domPromise = new Promise( function (resolve) {
+        var domPromise = new Promise(function (resolve) {
             fastdom.write(function () {
 
                 this.$ad     = $('.ad-exp--expand', $expandablev2).css('height', this.closedHeight);

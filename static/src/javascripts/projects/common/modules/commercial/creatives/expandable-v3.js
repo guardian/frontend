@@ -155,7 +155,7 @@ define([
             },
             $expandableV3 = $.create(template(expandableV3Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
 
-        var domPromise = new Promise( function (resolve) {
+        var domPromise = new Promise(function (resolve) {
             fastdom.write(function () {
 
                 this.$ad     = $('.ad-exp--expand', $expandableV3).css('height', this.closedHeight);
