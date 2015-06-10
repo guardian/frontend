@@ -281,12 +281,13 @@ define([
             this.$els.navigation            = $('.navigation', this.$els.navHeader);
             this.$els.bannerMobile          = $('.top-banner-ad-container--mobile');
             this.headerBigHeight            = this.$els.navHeader.dim().height;
+            this.updatePosition(breakpoint);
         }.bind(this));
 
         if (breakpoint === 'mobile') {
-            /*mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionMobile(breakpoint);
-            }.bind(this), 10));*/
+            mediator.on('window:scroll', _.throttle(function () {
+                //this.updatePositionMobile(breakpoint);
+            }.bind(this), 10));
         } else {
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePosition(breakpoint);
@@ -297,7 +298,7 @@ define([
     StickyNav.prototype.setScrollDirection = function (scrollY) {
         this.config.direction = (scrollY > this.config.prevScroll) ? 'down' : 'up';
         this.config.prevScroll = scrollY;
-    }
+    };
 
     StickyNav.prototype.shouldShowNavigation = function (scrollY) {
         if (this.config.direction === 'up' && this.config.distance === 0) {
@@ -306,7 +307,7 @@ define([
 
         // If distance scolled is more than showNavigationDepth show navigation
         this.config.showNavigation = (Math.abs(scrollY - this.config.distance) > this.config.showNavigationDepth);
-    }
+    };
 
     StickyNav.prototype.showNavigation = function (scrollY, breakpoint) {
         this.shouldShowNavigation(scrollY);
@@ -337,9 +338,8 @@ define([
         }
     };
 
-
     StickyNav.prototype.updatePosition = function (breakpoint) {
-        var bannerHeight    = this.$els.bannerDesktop.dim().height,
+        var bannerHeight = this.$els.bannerDesktop.dim().height || 128,
             scrollY;
 
         fastdom.read(function () {
@@ -348,7 +348,7 @@ define([
 
         fastdom.write(function () {
             this.setScrollDirection(scrollY);
-            
+
             // Header is slim and navigation is shown on the scroll up
             if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth)) {
                 this.$els.header.css({
