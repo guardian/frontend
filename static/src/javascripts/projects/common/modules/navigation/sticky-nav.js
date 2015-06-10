@@ -264,14 +264,14 @@ define([
             showNavigation: false,
             thresholdMobile: 400
         };
+        this.isMobile = _.contains(detect.getBreakpoint(), 'mobile');
     }
 
     StickyNav.prototype.init = function () {
-        var breakpoint = detect.getBreakpoint();
-
         fastdom.read(function () {
             this.$els.header                = $('#header');
             this.$els.bannerDesktop         = $('.top-banner-ad-container--above-nav');
+            this.$els.bannerMobile          = $('.top-banner-ad-container--mobile');
             this.$els.main                  = $('#maincontent');
             this.$els.navHeader             = $('.js-navigation-header');
             this.$els.sticky                = $('.sticky-nav-mt-test');
@@ -279,18 +279,20 @@ define([
             this.$els.logoWrapper           = $('.logo-wrapper', this.$els.navHeader);
             this.$els.navigationGreySection = $('.navigation__container--first', this.$els.navHeader);
             this.$els.navigation            = $('.navigation', this.$els.navHeader);
-            this.$els.bannerMobile          = $('.top-banner-ad-container--mobile');
             this.headerBigHeight            = this.$els.navHeader.dim().height;
-            this.updatePosition(breakpoint);
+
+            if (!this.isMobile) {
+                this.updatePosition();
+            }
         }.bind(this));
 
-        if (breakpoint === 'mobile') {
+        if (this.isMobile) {
             mediator.on('window:scroll', _.throttle(function () {
-                //this.updatePositionMobile(breakpoint);
+                this.updatePositionMobile();
             }.bind(this), 10));
         } else {
             mediator.on('window:scroll', _.throttle(function () {
-                this.updatePosition(breakpoint);
+                this.updatePosition();
             }.bind(this), 10));
         }
     };
@@ -422,6 +424,46 @@ define([
 
         }.bind(this));
     };
+
+    StickyNav.prototype.updatePositionMobile = function () {
+        var bannerHeight = this.$els.bannerMobile.dim().height,
+            scrollY;
+
+        fastdom.read(function () {
+            scrollY = $(window).scrollTop();
+        });
+
+        fastdom.write(function () {
+            //header, navigation and banner are sticky from the beginning
+            if (scrollY < this.config.thresholdMobile) {
+                this.$els.header.css({
+                    position: 'fixed',
+                    top: 0,
+                    width: '100%',
+                    'z-index': '1001',
+                    'margin-top': 0
+                });
+                this.$els.bannerMobile.css({
+                    position:  'fixed',
+                    top:       this.headerBigHeight,
+                    width:     '100%',
+                    'z-index': '1000'
+                });
+                this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
+
+                //this.$els.navigationScroll.css('display', 'block');
+            } else {
+                console.log(this.config.thresholdMobile + this.headerBigHeight, this.headerBigHeight);
+                //after this.thresholdMobile px of scrolling 'release' banner and navigation
+                this.$els.bannerMobile.css({
+                    position:  'absolute',
+                    top:       this.config.thresholdMobile + this.headerBigHeight
+                });
+                //this.showNavigation(scrollY, breakpoint);
+            }
+        }.bind(this));
+    };
+
 
     return {
         //stickySlow: new StickySlow()
