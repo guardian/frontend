@@ -3,7 +3,7 @@ import ajax from 'common/utils/ajax';
 import $ from 'common/utils/$';
 import stripe from 'stripe';
 import stripeErrorMessages from 'membership/stripe-error-messages';
-import paymentFormHtml from 'fixtures/membership/paymentForm.fixture.html!text';
+import paymentFormHtml from 'text!fixtures/membership/paymentForm.fixture.html';
 
 describe('Payment form module', function() {
 
