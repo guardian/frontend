@@ -18,9 +18,9 @@ define(['your/dependencies'], function (dependency) {
 
         /**
          *
-         * @param el        : The Element of the interactive that is being progressively enhanced. 
+         * @param el        : The Element of the interactive that is being progressively enhanced.
          * @param context   : The DOM context this module must work within.
-         * @param config    : The configuration object for this page. 
+         * @param config    : The configuration object for this page.
          *
         **/
 
@@ -50,11 +50,10 @@ Currently any URL with the `ng-interactive` will be routed to the interactive se
 
 Note how, in each of these examples, there is a &lt;figure> element in the source of the HTML with a `data-interactive` attribute.
 
-Note, also how, in your web inspector network panel, the boot.js file is loaded, and subsequently loads the interactive application. 
+Note, also how, in your web inspector network panel, the boot.js file is loaded, and subsequently loads the interactive application.
 
 ## Notes
 
-- Frontend currently use [curl.js](https://github.com/cujojs/curl) to load AMD modules.
 - Interactives can be hosted on s3://gdn-cdn, which is mapped to [interactive.guim.co.uk](http://interactive.guim.co.uk).
 - s3 [supports CORS](http://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html).
 
@@ -64,7 +63,7 @@ The simplest way of previewing the interactive content on non-production environ
 
 Follow instructions on the project [README](https://github.com/guardian/frontend/tree/master/README.md).
 
-## Composer 
+## Composer
 
 Composer is used to write (i) a basic accessible description of the interactive from within an article, (ii) define the URL to an
 interactive application associated with that block.
@@ -82,7 +81,7 @@ For example, such a block might look like this as it comes out of Content API:-
     <figure class="interactive" data-interactive="http://path/to/interactive/boot.js">
         ...
         <caption>
-            This is a chart describing the most polluted roads in London. 
+            This is a chart describing the most polluted roads in London.
         </caption>
     </figure>
     ...

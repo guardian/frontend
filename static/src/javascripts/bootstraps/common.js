@@ -54,9 +54,9 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
-    'text!common/views/international-message.html',
-    'text!common/views/international-control-message.html',
-    'text!common/views/donot-use-adblock.html',
+    'common/views/international-message.html!text',
+    'common/views/international-control-message.html!text',
+    'common/views/donot-use-adblock.html!text',
     'bootstraps/identity'
 ], function (
     bean,
@@ -131,7 +131,7 @@ define([
             },
 
             initFastClick: function () {
-                FastClick.attach(document.body);
+                new FastClick(document.body);
             },
 
             initialiseFauxBlockLink: function () {

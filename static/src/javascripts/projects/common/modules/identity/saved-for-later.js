@@ -10,9 +10,8 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'common/views/svgs',
-
-    'text!common/views/identity/saved-for-later-profile-link.html',
-    'text!common/views/loyalty/save-for-later--delete-all-button.html'
+    'common/views/identity/saved-for-later-profile-link.html!text',
+    'common/views/loyalty/save-for-later--delete-all-button.html!text'
 ], function (
     $,
     qwery,

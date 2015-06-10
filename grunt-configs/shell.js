@@ -29,7 +29,7 @@ module.exports = function(grunt, options) {
         },
 
         jspmInstallFaciaTool: {
-            command: 'node ../../node_modules/jspm/jspm.js install',
+            command: 'node ../../node_modules/jspm/jspm.js install --dev',
             options: {
                 execOptions: {
                     cwd: 'facia-tool/public'
@@ -38,7 +38,7 @@ module.exports = function(grunt, options) {
         },
 
         jspmInstallStatic: {
-            command: './jspm install && ./jspm clean',
+            command: './jspm install && ./jspm dl-loader && ./jspm clean',
             options: {
                 execOptions: {
                     cwd: './node_modules/.bin'

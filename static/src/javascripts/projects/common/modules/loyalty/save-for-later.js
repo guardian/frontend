@@ -10,8 +10,8 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'common/views/svgs',
-    'text!common/views/loyalty/save-for-later--signed-out.html',
-    'text!common/views/loyalty/save-for-later--signed-in.html'
+    'common/views/loyalty/save-for-later--signed-out.html!text',
+    'common/views/loyalty/save-for-later--signed-in.html!text'
 ], function (
     qwery,
     bonzo,
