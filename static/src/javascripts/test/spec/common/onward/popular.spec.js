@@ -11,7 +11,7 @@ describe('Most popular', function () {
         html = '<b>popular</b>',
         server,
         injector = new Injector(),
-        Popular, config, mediator;
+        Popular, config, mediator, $fixturesContainer;
 
     beforeEach(function (done) {
         injector.mock({
