@@ -103,8 +103,9 @@
 
                     @Html(Static.js.systemJsSetupFragment)
 
-                    System.import('core').then(function () {
-                        System.import('bootstraps/video-embed').then(function (bootstrap) {
+                    // Bracket notation for IE8 (import is reserved)
+                    System['import']('core').then(function () {
+                        System['import']('bootstraps/video-embed').then(function (bootstrap) {
                             bootstrap.init();
                         });
                     });
