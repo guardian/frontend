@@ -44,7 +44,7 @@ define([
             return false;
         }
 
-        $commentMainColumn.addClass('discussion__mtrec-test');
+        $commentMainColumn.addClass('discussion__ad-wrapper');
 
         return new Promise(function (resolve) {
             fastdom.read(function () {
