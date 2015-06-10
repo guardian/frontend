@@ -15,14 +15,14 @@
 
 
         <div class="saved-content__meta u-cf">
-            <button class="saved-content__button js-saved-content__button"
-            data-link-name="Delete"
-            name="deleteArticle"
-            type="submit"
-            value="@article.shortUrl">
-        Delete
-    </button>
-    </div>
+            <button class="button button--secondary saved-content__button js-saved-content__button"
+                data-link-name="Delete"
+                name="deleteArticle"
+                type="submit"
+                value="@article.shortUrl">
+                @fragments.inlineSvg("bookmark", "icon") remove
+            </button>
+        </div>
     </div>
 }
 </div>
