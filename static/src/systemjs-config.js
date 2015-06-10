@@ -24,8 +24,7 @@ System.config({
     "npm:*": "jspm_packages/npm/*.js",
     "bower:*": "jspm_packages/bower/*.js",
     "facebook": "//connect.facebook.net/en_US/all.js",
-    "http/*": "http://*",
-    "https/*": "https://*"
+    "interactive/*": "//*"
   },
   "shim": {
     "omniture": {
@@ -38,27 +37,27 @@ System.config({
   "map": {
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
     "Promise": "github:guardian/native-promise-only@0.7.6-e",
-    "babel": "npm:babel-core@5.5.6",
-    "babel-runtime": "npm:babel-runtime@5.5.6",
+    "babel": "npm:babel@4.7.16",
+    "babel-runtime": "npm:babel-runtime@4.7.16",
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@1.4.0",
     "classnames": "npm:classnames@1.2.0",
-    "core-js": "npm:core-js@0.9.15",
     "domready": "npm:domready@1.0.8",
     "enhancer": "github:guardian/enhancer@0.1.3",
     "fastclick": "npm:fastclick@1.0.6",
     "fastdom": "github:wilsonpage/fastdom@0.8.6",
     "fence": "github:guardian/fence@0.2.11",
-    "jasmine-sinon": "npm:jasmine-sinon@0.4.0",
+    "jasmine-sinon": "bower:jasmine-sinon@0.4.0",
     "lodash": "npm:lodash@2.4.1",
     "omniture": "vendor/omniture",
     "picturefill": "common/utils/picturefill",
-    "qwery": "npm:qwery@3.4.2",
+    "qwery": "npm:qwery@4.0.0",
     "raven": "github:getsentry/raven-js@1.1.18",
     "react": "npm:react@0.13.2",
     "reqwest": "github:ded/reqwest@1.1.5",
     "sinonjs": "bower:sinonjs@1.10.2",
-    "socketio": "github:Automattic/socket.io-client@1.1.0",
+    "socketio": "bower:socket.io-client@1.1.0",
+    "squire": "bower:squire@0.2.0",
     "stripe": "vendor/stripe/stripe.min",
     "svg": "es6/projects/common/utils/svg",
     "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
@@ -69,6 +68,10 @@ System.config({
     "videojsima": "github:guardian/videojs-ima@0.1.2",
     "videojspersistvolume": "bower:videojs-persistvolume@0.1.2",
     "videojsplaylist": "github:tim-peterson/videojs-playlist@master",
+    "bower:jasmine-sinon@0.4.0": {
+      "jasmine": "bower:jasmine@2.0.4",
+      "sinonjs": "bower:sinonjs@1.10.2"
+    },
     "bower:video.js@4.12.5": {
       "css": "github:systemjs/plugin-css@0.1.9"
     },
@@ -127,7 +130,7 @@ System.config({
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"
     },
-    "npm:babel-runtime@5.5.6": {
+    "npm:babel-runtime@4.7.16": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:bean@1.0.15": {
@@ -164,11 +167,6 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:core-js@0.9.15": {
-      "fs": "github:jspm/nodelibs-fs@0.1.2",
-      "process": "github:jspm/nodelibs-process@0.1.1",
-      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
-    },
     "npm:core-util-is@1.0.1": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
     },
@@ -184,18 +182,11 @@ System.config({
     "npm:events-browserify@0.0.1": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:formatio@1.1.1": {
-      "process": "github:jspm/nodelibs-process@0.1.1",
-      "samsam": "npm:samsam@1.1.2"
-    },
     "npm:https-browserify@0.0.0": {
       "http": "github:jspm/nodelibs-http@1.7.1"
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
-    },
-    "npm:jasmine-sinon@0.4.0": {
-      "sinon": "npm:sinon@1.14.1"
     },
     "npm:jstransform@10.1.0": {
       "base62": "npm:base62@0.1.1",
@@ -217,7 +208,7 @@ System.config({
     "npm:punycode@1.3.2": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:qwery@3.4.2": {
+    "npm:qwery@4.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:react@0.13.2": {
@@ -236,12 +227,6 @@ System.config({
       "stream-browserify": "npm:stream-browserify@1.0.0",
       "string_decoder": "npm:string_decoder@0.10.31",
       "util": "github:jspm/nodelibs-util@0.1.0"
-    },
-    "npm:sinon@1.14.1": {
-      "formatio": "npm:formatio@1.1.1",
-      "lolex": "npm:lolex@1.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.1",
-      "util": "npm:util@0.10.3"
     },
     "npm:source-map@0.1.31": {
       "amdefine": "npm:amdefine@0.1.0",

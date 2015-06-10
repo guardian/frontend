@@ -35,7 +35,7 @@ describe('Krux', function () {
         krux.load();
         var url = requireStub.args[0][0][0];
 
-        expect(url).toBe('http://cdn.krxd.net/controltag?confid=JVZiE3vn!system-script');
+        expect(url).toBe('js!//cdn.krxd.net/controltag?confid=JVZiE3vn');
     });
 
 });

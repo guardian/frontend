@@ -9,7 +9,7 @@ define([
     ) {
 
     function openForesee() {
-        require(['foresee!system-script']);
+        require(['js!foresee']);
     }
 
     function load() {

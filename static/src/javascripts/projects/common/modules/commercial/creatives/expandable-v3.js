@@ -9,7 +9,7 @@ define([
     'common/utils/storage',
     'common/utils/template',
     'common/views/svgs',
-    'common/views/commercial/creatives/expandable-v3.html!text'
+    'text!common/views/commercial/creatives/expandable-v3.html'
 ], function (
     bean,
     bonzo,
@@ -155,21 +155,18 @@ define([
             },
             $expandableV3 = $.create(template(expandableV3Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
 
-        var domPromise = new Promise(function (resolve) {
-            fastdom.write(function () {
+        fastdom.write(function () {
 
-                this.$ad     = $('.ad-exp--expand', $expandableV3).css('height', this.closedHeight);
-                this.$button = $('.ad-exp__open', $expandableV3);
+            this.$ad     = $('.ad-exp--expand', $expandableV3).css('height', this.closedHeight);
+            this.$button = $('.ad-exp__open', $expandableV3);
 
-                $('.ad-exp-collapse__slide', $expandableV3).css('height', this.closedHeight);
+            $('.ad-exp-collapse__slide', $expandableV3).css('height', this.closedHeight);
 
-                if (this.params.trackingPixel) {
-                    this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
-                }
+            if (this.params.trackingPixel) {
+                this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+            }
 
-                $expandableV3.appendTo(this.$adSlot);
-                resolve();
-            }.bind(this));
+            $expandableV3.appendTo(this.$adSlot);
         }.bind(this));
 
         mediator.on('window:scroll', this.listener.bind(this));
@@ -192,8 +189,6 @@ define([
             // to be safe, also update on window resize
             mediator.on('window:resize', this.updateBgPosition.bind(this));
         }
-
-        return domPromise;
     };
 
     return ExpandableV3;
