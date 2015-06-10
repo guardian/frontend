@@ -3,7 +3,8 @@ module.exports = function(grunt, options) {
         js: [
             options.staticTargetDir + 'javascripts',
             options.staticHashDir + 'javascripts',
-            options.staticHashDir + 'bundles'
+            options.staticHashDir + 'bundles',
+            options.requirejsDir
         ],
         css: [
             options.staticTargetDir + 'stylesheets',

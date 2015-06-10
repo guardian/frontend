@@ -9,7 +9,7 @@ define([
     'common/utils/storage',
     'common/utils/template',
     'common/views/svgs',
-    'common/views/commercial/creatives/expandable-v2.html!text'
+    'text!common/views/commercial/creatives/expandable-v2.html'
 ], function (
     bean,
     bonzo,

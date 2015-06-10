@@ -4,7 +4,7 @@ define([
     'common/utils/template',
     'common/modules/ui/message',
     'common/modules/identity/api',
-    'common/views/memebership-message.html!text'
+    'text!common/views/memebership-message.html'
 ], function (
     config,
     detect,

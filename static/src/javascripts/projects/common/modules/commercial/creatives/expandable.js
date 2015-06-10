@@ -5,7 +5,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
-    'common/views/commercial/creatives/expandable.html!text'
+    'text!common/views/commercial/creatives/expandable.html'
 ], function (
     bean,
     bonzo,
