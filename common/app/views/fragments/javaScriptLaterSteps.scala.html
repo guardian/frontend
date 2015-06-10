@@ -198,9 +198,10 @@
 
     @Html(Static.js.systemJsSetupFragment)
 
-    System.import('core')
+    // Bracket notation for IE8 (import is reserved)
+    System['import']('core')
     .then(function(){
-        return System.import('raven');
+        return System['import']('raven');
     })
     .then(function(raven) {
         raven.config(
@@ -241,7 +242,7 @@
             'common/modules/experiments/ab',
             'common/modules/ui/images',
             'common/modules/ui/lazy-load-images'].map(function(module){
-            return System.import(module);
+            return System['import'](module);
         })).then(function(values) {
             var config = values[0];
             var ab = values[1];
@@ -260,7 +261,7 @@
             images.listen();
 
             if (config.switches.commercial && !config.page.isPreferencesPage) {
-                System.import('bootstraps/commercial').then(raven.wrap(
+                System['import']('bootstraps/commercial').then(raven.wrap(
                     { tags: { feature: 'commercial' } },
                     function (commercial) {
                         commercial.init();
@@ -270,20 +271,20 @@
 
             if (guardian.isModernBrowser) {
                 @if(play.Play.isDev()) {
-                    System.import('bootstraps/dev').then(function (devmode) { devmode.init(); });
+                    System['import']('bootstraps/dev').then(function (devmode) { devmode.init(); });
                 }
 
-                System.import('bootstraps/app').then(function(app) {
+                System['import']('bootstraps/app').then(function(app) {
                     app.go();
                 });
             }
 
             @if(item.section == "crosswords") {
-                System.import('es6/bootstraps/crosswords').then(function (crosswords) {
+                System['import']('es6/bootstraps/crosswords').then(function (crosswords) {
                     crosswords.default.init();
                 });
 
-                System.import('es6/projects/common/modules/crosswords/thumbnails').then(function (crosswordThumbnails) {
+                System['import']('es6/projects/common/modules/crosswords/thumbnails').then(function (crosswordThumbnails) {
                     crosswordThumbnails.default.init();
                 });
             }
