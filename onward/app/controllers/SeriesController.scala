@@ -14,8 +14,6 @@ import layout.{SeriesDescriptionMetaHeader, MetaDataHeader, CollectionEssentials
 import slices.{Fixed, FixedContainers}
 import LiveContentApi.getResponse
 
-import scala.xml.MetaData
-
 case class Series(id: String, tag: Tag, trails: Seq[Content])
 
 object SeriesController extends Controller with Logging with Paging with ExecutionContexts with Requests {
