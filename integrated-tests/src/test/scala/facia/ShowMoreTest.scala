@@ -8,10 +8,10 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
   "Facia containers" should "have show more functionality" in {
 
     get("/uk")
-    implicitlyWait(1)
+    implicitlyWait(10)
 
     withClue("Should show the 'show more' button") {
-      first("[data-test-id='show-more']").isDisplayed should be (true)
+      first("[data-test-id='show-more']") shouldBe 'displayed
     }
   }
 }
