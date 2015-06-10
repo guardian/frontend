@@ -457,7 +457,7 @@ define([
                     position:  'absolute',
                     top:       this.config.thresholdMobile + this.headerBigHeight
                 });
-                //this.showNavigation(scrollY);
+                this.showNavigation(scrollY);
             }
         }.bind(this));
     };
