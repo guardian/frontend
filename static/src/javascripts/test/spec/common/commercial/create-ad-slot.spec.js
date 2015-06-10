@@ -93,6 +93,12 @@ describe('Create Ad Slot', function () {
         });
     });
 
+    it('should create "inline1" ad slot for inline-extra slots', function () {
+            var adSlot = createAdSlot('inline-extra', 'inline');
+
+            expect(bonzo(adSlot).hasClass('ad-slot--inline-extra')).toBeTruthy();
+        });
+
     it('should accept multiple types', function () {
         var types  = ['paid-for-badge', 'paid-for-badge--container'],
             adSlot = createAdSlot('adbadge', ['paid-for-badge', 'paid-for-badge--container']);

@@ -35,9 +35,9 @@ GET        /commercial/multi.json                                    controllers
 
 
 # Content API offers
-GET        /commercial/capi.json                                     controllers.commercial.ContentApiOffers.itemsJson
-GET        /commercial/capi                                          controllers.commercial.ContentApiOffers.itemsHtml
-GET        /commercial/capi-single.json                              controllers.commercial.ContentApiOffers.itemJson
-GET        /commercial/capi-single                                   controllers.commercial.ContentApiOffers.itemHtml
-GET        /commercial/capi-single-merch.json                        controllers.commercial.ContentApiOffers.itemJson
-GET        /commercial/capi-single-merch                             controllers.commercial.ContentApiOffers.itemHtml
+GET        /commercial/capi.json                                     controllers.commercial.ContentApiOffersController.itemsJson
+GET        /commercial/capi                                          controllers.commercial.ContentApiOffersController.itemsHtml
+GET        /commercial/capi-single.json                              controllers.commercial.ContentApiOffersController.itemJson
+GET        /commercial/capi-single                                   controllers.commercial.ContentApiOffersController.itemHtml
+GET        /commercial/capi-single-merch.json                        controllers.commercial.ContentApiOffersController.itemJson
+GET        /commercial/capi-single-merch                             controllers.commercial.ContentApiOffersController.itemHtml

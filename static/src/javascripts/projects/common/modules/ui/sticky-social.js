@@ -77,19 +77,11 @@ define([
     }
 
     function init() {
-        var testVariant = ab.getTestVariant('ShareButtons2'),
-            referrer,
+        var testVariant = ab.getTestVariantId('ShareButtons2'),
             socialContext;
 
         if (testVariant.indexOf('referrer') > -1) {
-            referrer = ((window.location.hash + '').match(/referrer=([^&]+)/) || [])[1] || document.referrer || '',
-
-            socialContext = [
-                {id: 'facebook', matchReferrer: 'facebook.com', isApp: detect.isFacebookApp},
-                {id: 'twitter', matchReferrer: 't.co', isApp: detect.isTwitterApp}
-            ].filter(function (social) {
-                return referrer.indexOf(social.matchReferrer) > -1 || social.isApp();
-            })[0];
+            socialContext = detect.socialContext();
 
             if (socialContext) {
                 fastdom.read(function () {
@@ -100,7 +92,7 @@ define([
                                     $(el).addClass('social--referred-only');
                                 }
 
-                                moveToFirstPosition($('.social__item--' + socialContext.id, el).addClass('social__item--referred'));
+                                moveToFirstPosition($('.social__item--' + socialContext, el).addClass('social__item--referred'));
                             });
                         }
                     });

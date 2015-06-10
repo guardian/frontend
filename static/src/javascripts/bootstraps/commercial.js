@@ -30,12 +30,12 @@ define([
     userPrefs
 ) {
     var modules = [
-        ['cm-thirdPartyTags', thirdPartyTags],
         ['cm-articleAsideAdverts', articleAsideAdverts],
         ['cm-articleBodyAdverts', articleBodyAdverts],
         ['cm-sliceAdverts', sliceAdverts],
         ['cm-frontCommercialComponents', frontCommercialComponents],
         ['cm-commentAdverts', commentAdverts],
+        ['cm-thirdPartyTags', thirdPartyTags],
         ['cm-badges', badges]
     ];
 
@@ -44,10 +44,8 @@ define([
             var modulePromises = [];
 
             if (
-                !userPrefs.isOff('adverts') &&
-                !config.page.shouldHideAdverts &&
-                (!config.page.isSSL || config.page.section === 'admin') &&
-                !window.location.hash.match(/[#&]noads(&.*)?$/)
+                !userPrefs.isOff('adverts') && !config.page.shouldHideAdverts &&
+                (!config.page.isSSL || config.page.section === 'admin') && !window.location.hash.match(/[#&]noads(&.*)?$/)
             ) {
                 _.forEach(modules, function (pair) {
                     robust(pair[0], function () {
@@ -56,12 +54,17 @@ define([
                 });
 
                 Promise.all(modulePromises).then(function () {
-                    robust('cm-dfp', function () {
-                        dfp.init();
-                    });
-                    // TODO does dfp return a promise?
-                    robust('cm-ready', function () { mediator.emit('page:commercial:ready'); });
+                    if (config.switches.commercial) {
+                        robust('cm-dfp', function () {
+                            dfp.init();
+                        });
+                        // TODO does dfp return a promise?
+                        robust('cm-ready', function () {
+                            mediator.emit('page:commercial:ready');
+                        });
+                    }
                 });
+
             }
         }
     };

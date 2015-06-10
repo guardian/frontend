@@ -219,6 +219,7 @@
                 text:                       'text', // noop
                 inlineSvg:                  'inlineSvg', // noop
                 zxcvbn:                     '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
+                'bootstraps/accessibility': '@Static("javascripts/bootstraps/accessibility.js")',
                 'bootstraps/app':           '@Static("javascripts/bootstraps/app.js")',
                 'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
                 'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
@@ -304,7 +305,7 @@
                     // Preference pages are served via HTTPS for service worker support.
                     // These pages must not have mixed (HTTP/HTTPS) content, so
                     // we disable ads (until the day comes when all ads are HTTPS).
-                    if (config.switches.commercial && ! config.page.isPreferencesPage) {
+                    if (! config.page.isPreferencesPage) {
                         require(['bootstraps/commercial'], raven.wrap(
                             { tags: { feature: 'commercial' } },
                             function (commercial) {
@@ -334,22 +335,7 @@
 @bootSystemJs() = {
 
     <script>
-        @Html(Static.js.es6ModuleLoader)
-        @Html(Static.js.systemJs)
-        @Html(Static.js.systemJsAppConfig)
-
-        @if(!play.Play.isDev()) {
-            @Html(Static.js.systemJsBundleConfig)
-        }
-
-        System.baseURL = '@{Configuration.assets.path}';
-        System.paths['ophan/ng']  = '@{Configuration.javascript.config("ophanJsUrl")}.js';
-        System.paths['googletag'] = '@{Configuration.javascript.config("googletagJsUrl")}';
-
-        @Html(Static.js.systemJsNormalize)
-
-        window.require = System.amdRequire.bind(System);
-        window.define = System.amdDefine.bind(System);
+        @Html(Static.js.systemJsSetupFragment)
 
         System.import('core')
         .then(function(){

@@ -156,17 +156,6 @@ module.exports = function(grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/ophan.js'
             }
         },
-        admin: {
-            options: {
-                name: 'bootstraps/admin',
-                out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
-                shim: {
-                    omniture: {
-                        exports: 's'
-                    }
-                }
-            }
-        },
         video : {
             options: {
                 name: 'bootstraps/video-player',
@@ -240,6 +229,18 @@ module.exports = function(grunt, options) {
                     'core',
                     'bootstraps/app',
                     'bootstraps/commercial',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        accessibility: {
+            options: {
+                name: 'bootstraps/accessibility',
+                out: options.staticTargetDir + 'javascripts/bootstraps/accessibility.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
                     'text',
                     'inlineSvg'
                 ]

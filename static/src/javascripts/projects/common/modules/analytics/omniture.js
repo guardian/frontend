@@ -80,7 +80,7 @@ define([
         var storeObj,
             delay;
 
-        if (!spec.tag) {
+        if (!spec.validTarget) {
             return;
         }
 
@@ -89,7 +89,7 @@ define([
             // so do session storage rather than an omniture track.
             storeObj = {
                 pageName: this.s.pageName,
-                tag: spec.tag,
+                tag: spec.tag || 'untracked',
                 time: new Date().getTime()
             };
             try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {}

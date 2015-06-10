@@ -34,7 +34,7 @@
                         @fragments.standfirst(article)
 
                         <div class="content__updated-container content__updated-container--liveblog">
-                            @if(article.isLive) {<span class="blog__live live-pulse-icon">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.lastModified" data-relativeformat="med"></time>
+                            @if(article.isLive) {<span class="blog__live live-pulse-icon js-flashing-image">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.lastModified" data-relativeformat="med"></time>
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                             @fragments.liveFilter(article.isLive)
 
                             <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}" data-test-id="live-blog-blocks"
-                                itemprop="@if(article.isReview) {reviewBody} else {@if(article.isLive) {liveBlogUpdate} else {articleBody}}">
+                                itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
                                 @BodyCleaner(article, article.body)
                             </div>
                         </div>

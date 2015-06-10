@@ -15,12 +15,7 @@ object SupportedUrl {
   def fromFaciaContent(fc: FaciaContent): String = fc match {
     case curatedContent: CuratedContent => s"/${curatedContent.href.getOrElse(fc.id)}"
     case supportingCuratedContent: SupportingCuratedContent => s"/${supportingCuratedContent.href.getOrElse(fc.id)}"
-    case linkSnap: LinkSnap =>
-      linkSnap.href match {
-        case Some(href) if href.startsWith("/") => s"$href"
-        case Some(href) => href
-        case None => linkSnap.snapUri.getOrElse(linkSnap.id)
-      }
-    case latestSnap: LatestSnap => latestSnap.latestContent.map(_.id).orElse(latestSnap.snapUri).getOrElse(latestSnap.id)
+    case linkSnap: LinkSnap => linkSnap.href.orElse(linkSnap.snapUri).getOrElse(linkSnap.id)
+    case latestSnap: LatestSnap => s"/${latestSnap.latestContent.map(_.id).orElse(latestSnap.snapUri).getOrElse(latestSnap.id)}"
   }
 }
