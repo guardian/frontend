@@ -53,12 +53,13 @@ System.config({
     "lodash": "npm:lodash@2.4.1",
     "omniture": "vendor/omniture",
     "picturefill": "common/utils/picturefill",
-    "qwery": "npm:qwery@3.4.2",
+    "qwery": "npm:qwery@4.0.0",
     "raven": "github:getsentry/raven-js@1.1.18",
     "react": "npm:react@0.13.2",
     "reqwest": "github:ded/reqwest@1.1.5",
     "sinonjs": "bower:sinonjs@1.10.2",
     "socketio": "github:Automattic/socket.io-client@1.1.0",
+    "squire": "npm:squirejs@0.2.0",
     "stripe": "vendor/stripe/stripe.min",
     "svg": "es6/projects/common/utils/svg",
     "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
@@ -217,7 +218,7 @@ System.config({
     "npm:punycode@1.3.2": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:qwery@3.4.2": {
+    "npm:qwery@4.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:react@0.13.2": {
