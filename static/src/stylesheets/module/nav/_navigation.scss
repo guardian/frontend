@@ -482,10 +482,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     .signposting,
     .local-navigation {
         height: $navigation-height;
-
-        /*.l-header--is-slim & {
-            height: auto;
-        }*/
     }
     .signposting,
     .local-navigation {
@@ -752,31 +748,52 @@ $c-navigation-expandable-background: colour(neutral-1);
 
 // Remove redundant min-width and override breakpoint
 .l-header--no-navigation {
-    float: left;
-    min-width: 0;
-    line-height: 48px;
-    position: static;
-    border-left: 0;
-
     &:before {
         display: none;
     }
 
     .navigation-container--collapsed {
         .navigation__scroll {
-            .l-header--is-slim & {
-                display: none;
-            }
+            display: none;
+        }
+
+        .navigation,
+        .signposting,
+        .local-navigation {
+            height: auto;
         }
     }
-}
 
-.l-header--slim-all {
     .navigation-toggle-label {
         @include mq($until: mobileLandscape) {
             display: none;
         }
     }
+
+    @include mq(navigationBreakOnTwoLevels) {
+        .navigation--has-signposting {
+            .navigation__container--first {
+                border-top: 0;
+            }
+        }
+    }
+
+    .navigation-toggle {
+        float: left;
+        min-width: 0;
+        line-height: 48px;
+        position: static;
+        border-left: 0;
+    }
+
+    .navigation-toggle-label__extra {
+        display: none;
+    }
+
+    .burger-icon {
+        margin-top: $gs-baseline * 1.5;
+    }
+
 }
 
 /**
