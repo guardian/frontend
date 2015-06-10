@@ -314,6 +314,7 @@ define([
 
     StickyNav.prototype.showNavigation = function (scrollY) {
         this.shouldShowNavigation(scrollY);
+        console.log(this.config.direction, this.config.showNavigation);
 
         // If user is scrolling up and navigation threshold was met show navigation
         if (this.config.direction === 'up' && this.config.showNavigation) {
@@ -435,6 +436,8 @@ define([
         });
 
         fastdom.write(function () {
+            this.setScrollDirection(scrollY);
+            
             //header, navigation and banner are sticky from the beginning
             if (scrollY < this.config.thresholdMobile) {
                 this.$els.header.css({
@@ -451,6 +454,7 @@ define([
                     'z-index': '1000'
                 });
                 this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
+                this.$els.navigation.css('display', 'block');
             } else {
                 //after this.thresholdMobile px of scrolling 'release' banner and navigation
                 this.$els.bannerMobile.css({
