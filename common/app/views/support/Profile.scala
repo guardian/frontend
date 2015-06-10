@@ -90,7 +90,7 @@ object ImgSrc extends Logging {
     "media.guim.co.uk" -> HostMapping("media", Configuration.images.backends.mediaToken)
   )
 
-  def apply(url: String, imageType: ElementProfile, useImageService: Boolean = true): String = {
+  def apply(url: String, imageType: ElementProfile, useImageService: Boolean = false): String = {
     try {
       val uri = new URI(url.trim)
 
