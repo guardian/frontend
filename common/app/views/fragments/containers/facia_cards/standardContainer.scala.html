@@ -14,7 +14,7 @@
         ("js-container--fc-show-more", containerDefinition.addShowMoreClasses),
         ("fc-show-more--mobile-only", containerDefinition.hasMobileOnlyShowMore)
     ))"
-         data-title="@Html(Localisation(containerDefinition.displayName getOrElse ""))"
+         data-title="@Localisation(containerDefinition.displayName getOrElse "")"
          data-id="@containerDefinition.dataId">
 
         @for(sliceWithCards <- containerLayout.slices) {
