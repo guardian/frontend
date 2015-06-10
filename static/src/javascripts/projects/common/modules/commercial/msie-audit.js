@@ -21,10 +21,7 @@ define([
 
         // if I am MSIE, send a beacon
         if (detect.getUserAgent.browser === 'MSIE') {
-            console.log("MSIE audit script running");
             (_.once(function () {
-                console.log("Sending Browser");
-
                 beacon.beaconCounts('msie-browser');
             }) ());
 
