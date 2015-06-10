@@ -240,15 +240,16 @@ define([
                                 events.bindPrerollEvents(player);
                                 player.adSkipCountdown(15);
 
-                                require(['http://imasdk.googleapis.com/js/sdkloader/ima3.js!system-script'], function () {
-                                    player.ima({
-                                        id: mediaId,
-                                        adTagUrl: getAdUrl()
+                                require(['//imasdk.googleapis.com/js/sdkloader/ima3!system-script'])
+                                    .then(function () {
+                                        player.ima({
+                                            id: mediaId,
+                                            adTagUrl: getAdUrl()
+                                        });
+                                        // Video analytics event.
+                                        player.trigger(events.constructEventName('preroll:request', player));
+                                        player.ima.requestAds();
                                     });
-                                    // Video analytics event.
-                                    player.trigger(events.constructEventName('preroll:request', player));
-                                    player.ima.requestAds();
-                                });
                             }
                         )();
                     } else {
