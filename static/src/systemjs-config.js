@@ -59,7 +59,6 @@ System.config({
     "reqwest": "github:ded/reqwest@1.1.5",
     "sinonjs": "bower:sinonjs@1.10.2",
     "socketio": "github:Automattic/socket.io-client@1.1.0",
-    "squire": "npm:squirejs@0.2.0",
     "stripe": "vendor/stripe/stripe.min",
     "svg": "es6/projects/common/utils/svg",
     "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
