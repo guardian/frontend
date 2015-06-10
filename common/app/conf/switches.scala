@@ -363,6 +363,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val CriteoSwitch = Switch(
+    "Commercial",
+    "criteo",
+    "If this switch is on, Criteo segments will be used to target ads.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 30),
+    exposeClientSide = true
+  )
+
   val ImrWorldwideSwitch = Switch(
     "Commercial",
     "imr-worldwide",
@@ -937,8 +946,16 @@ object Switches {
     exposeClientSide = true
   )
 
-  // A/B Tests
+  val IPadNothrasherSwitch = Switch(
+    "Feature",
+    "ipad-no-thrashers",
+    "This switch will disable Thrashers on ipads",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 20),
+    exposeClientSide = true
+  )
 
+  // A/B Tests
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
     "ab-liveblog-notifications",

@@ -5,8 +5,8 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/business/stock-value.html',
-    'text!common/views/business/stocks.html'
+    'common/views/business/stock-value.html!text',
+    'common/views/business/stocks.html!text'
 ], function (
     $,
     _,

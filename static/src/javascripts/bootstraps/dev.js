@@ -1,5 +1,5 @@
 define([
-    'socketio',
+    'socketio/socket.io',
     'common/modules/dev/debugObject'
 ], function (
     io,

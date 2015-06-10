@@ -24,7 +24,6 @@ define([
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
-    'common/modules/analytics/tech-feedback',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
@@ -39,6 +38,7 @@ define([
     'common/modules/onward/onward-content',
     'common/modules/onward/popular',
     'common/modules/onward/related',
+    'common/modules/onward/tech-feedback',
     'common/modules/onward/tonal',
     'common/modules/social/share-count',
     'common/modules/ui/accessibility-prefs',
@@ -54,9 +54,9 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
-    'text!common/views/international-message.html',
-    'text!common/views/international-control-message.html',
-    'text!common/views/donot-use-adblock.html',
+    'common/views/international-message.html!text',
+    'common/views/international-control-message.html!text',
+    'common/views/donot-use-adblock.html!text',
     'bootstraps/identity'
 ], function (
     bean,
@@ -82,7 +82,6 @@ define([
     ScrollDepth,
     logCss,
     simpleMetrics,
-    techFeedback,
     userAdTargeting,
     CommentCount,
     DiscussionLoader,
@@ -97,6 +96,7 @@ define([
     Onward,
     Popular,
     Related,
+    techFeedback,
     TonalComponent,
     shareCount,
     accessilbilityPrefs,
@@ -131,7 +131,7 @@ define([
             },
 
             initFastClick: function () {
-                FastClick.attach(document.body);
+                new FastClick(document.body);
             },
 
             initialiseFauxBlockLink: function () {

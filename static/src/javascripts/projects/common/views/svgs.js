@@ -4,22 +4,22 @@
 
 define([
     'common/utils/_',
-    'inlineSvg!svgs/icon/comment-16',
-    'inlineSvg!svgs/icon/marque-36',
-    'inlineSvg!svgs/icon/marque-54',
-    'inlineSvg!svgs/icon/market-down',
-    'inlineSvg!svgs/icon/market-up',
-    'inlineSvg!svgs/icon/market-same',
-    'inlineSvg!svgs/icon/arrow',
-    'inlineSvg!svgs/icon/arrow-down',
-    'inlineSvg!svgs/logo/logo-guardian',
-    'inlineSvg!svgs/commercial/logo-soulmates',
-    'inlineSvg!svgs/icon/close-central',
-    'inlineSvg!svgs/icon/arrow-white-right',
-    'inlineSvg!svgs/icon/arrow-right',
-    'inlineSvg!svgs/icon/bookmark',
-    'inlineSvg!svgs/notifications-explainer-mobile',
-    'inlineSvg!svgs/notifications-explainer-desktop'
+    'svgs/icon/comment-16!svg',
+    'svgs/icon/marque-36!svg',
+    'svgs/icon/marque-54!svg',
+    'svgs/icon/market-down!svg',
+    'svgs/icon/market-up!svg',
+    'svgs/icon/market-same!svg',
+    'svgs/icon/arrow!svg',
+    'svgs/icon/arrow-down!svg',
+    'svgs/logo/logo-guardian!svg',
+    'svgs/commercial/logo-soulmates!svg',
+    'svgs/icon/close-central!svg',
+    'svgs/icon/arrow-white-right!svg',
+    'svgs/icon/arrow-right!svg',
+    'svgs/icon/bookmark!svg',
+    'svgs/notifications-explainer-mobile!svg',
+    'svgs/notifications-explainer-desktop!svg'
 ], function (
     _,
     commentCount16icon,
@@ -66,7 +66,7 @@ define([
             if (_.isArray(classes)) {
                 svg = svg.replace(/class="/, '$&' + classes.join(' ') + ' ');
             } else {
-                console.error('Classes for inlineSvg must be an array: ', classes);
+                console.error('Classes for svg must be an array: ', classes);
             }
         }
 

@@ -387,9 +387,7 @@
 }
 
 .saved-content {
-    border-top: 1px solid colour(neutral-5);
     margin-bottom: $gs-baseline*2;
-    padding-top: $gs-baseline/3;
     display: block;
 
     .saved-content-item__img {
@@ -402,12 +400,6 @@
             width: 100%;
         }
     }
-
-}
-
-.saved-content__meta {
-    display: block;
-    float: right;
 }
 
 .saved-content__title {
@@ -422,18 +414,29 @@
     @include fs-bodyCopy(1);
 }
 
+.saved-content__meta {
+    padding-top: $gs-baseline;
+    text-align: right;
+}
+
 .saved-content__button {
     @include fs-textSans(2);
-
     background: colour(guardian-brand);
     border: 0;
     color: #ffffff;
     cursor: pointer;
-    float: left;
     padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
-}
+    margin-right: 0;
+    margin-left: $gs-gutter;
 
-.saved-content__list-nav {
-    padding: $gs-gutter*2;
+    .inline-icon {
+        float: left;
+        padding-right: .5em;
+        fill: colour(neutral-1);
+
+        svg {
+            width: 8px;
+        }
+    }
 }
 

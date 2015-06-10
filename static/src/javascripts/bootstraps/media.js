@@ -18,7 +18,7 @@ define([
     'common/modules/video/fullscreener',
     'common/modules/video/supportedBrowsers',
     'common/modules/video/tech-order',
-    'text!common/views/ui/loading.html'
+    'common/views/ui/loading.html!text'
 ], function (
     bean,
     bonzo,
@@ -240,7 +240,7 @@ define([
                                 events.bindPrerollEvents(player);
                                 player.adSkipCountdown(15);
 
-                                require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
+                                require(['//imasdk.googleapis.com/js/sdkloader/ima3!system-script'])
                                     .then(function () {
                                         player.ima({
                                             id: mediaId,
