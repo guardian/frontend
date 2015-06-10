@@ -946,6 +946,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val IPadNothrasherSwitch = Switch(
+    "Feature",
+    "ipad-no-thrashers",
+    "This switch will disable Thrashers on ipads",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 20),
+    exposeClientSide = true
+  )
+
   // A/B Tests
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
