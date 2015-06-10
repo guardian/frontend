@@ -363,15 +363,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val CriteoSwitch = Switch(
-    "Commercial",
-    "criteo",
-    "If this switch is on, Criteo segments will be used to target ads.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
-    exposeClientSide = true
-  )
-
   val ImrWorldwideSwitch = Switch(
     "Commercial",
     "imr-worldwide",
@@ -956,6 +947,7 @@ object Switches {
   )
 
   // A/B Tests
+
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
     "ab-liveblog-notifications",
