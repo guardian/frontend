@@ -24,10 +24,8 @@ define([
     template,
     identity,
     svgs,
-
     profileLinkTmp,
     deleteButtonAllTmp
-
 ) {
     function SavedForLater() {
 
@@ -37,7 +35,7 @@ define([
 
             if (deleteAll) {
                 this.renderDeleteButton('delete-all');
-                bean.one(deleteAll, 'click', '.save-for-later__button', function (event) {
+                bean.one(deleteAll, 'click', '.js-save-for-later__button', function (event) {
                     event.preventDefault();
                     self.renderDeleteButton('confirm-delete-all');
                 });

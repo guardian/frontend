@@ -36,7 +36,7 @@ define([
         this.classes = {
             saveThisArticle: '.js-save-for-later',
             saveThisVideo: '.js-save-for-later-video',
-            saveThisArticleButton: '.save-for-later__button',
+            saveThisArticleButton: '.js-save-for-later__button',
             onwardContainer: '.js-onward',
             relatedContainer: '.js-related',
             itemMeta: '.js-item__meta',
