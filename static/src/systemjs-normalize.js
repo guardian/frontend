@@ -5,6 +5,15 @@
 // Used in JavaScriptLaterSteps.scala.html and bundle.js
 // IIFE is the only way to share this piece of code.
 // If only we had a module loader to load the module loader.
+
+// For older browsers
+var reduce = function (array, fn, accumulator) {
+    for (var i = array.length - 1; i >= 0; i--) {
+        accumulator = fn(accumulator, array[i]);
+    };
+    return accumulator;
+};
+
 (function () {
     var systemNormalize = System.normalize;
     System.normalize = function (name, parentName) {
@@ -21,7 +30,7 @@
             }
         ];
 
-        var newName = transformers.reduce(function (name, fn) {
+        var newName = reduce(transformers, function (name, fn) {
             return fn(name);
         }, name);
 

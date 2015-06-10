@@ -31,8 +31,9 @@
                     }
                 };
 
-                System.import('core').then(function () {
-                    System.import('bootstraps/dev').then(function (devmode) { devmode.init(); });
+                // Bracket notation for IE8 (import is reserved)
+                System['import']('core').then(function () {
+                    System['import']('bootstraps/dev').then(function (devmode) { devmode.init(); });
                 });
             </script>
         }
