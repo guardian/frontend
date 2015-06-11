@@ -7,6 +7,7 @@ define([
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',
+    'common/modules/commercial/comment-adverts',
     'common/modules/commercial/dfp',
     'common/modules/commercial/front-commercial-components',
     'common/modules/commercial/slice-adverts',
@@ -21,6 +22,7 @@ define([
     articleAsideAdverts,
     articleBodyAdverts,
     badges,
+    commentAdverts,
     dfp,
     frontCommercialComponents,
     sliceAdverts,
@@ -32,6 +34,7 @@ define([
         ['cm-articleBodyAdverts', articleBodyAdverts],
         ['cm-sliceAdverts', sliceAdverts],
         ['cm-frontCommercialComponents', frontCommercialComponents],
+        ['cm-commentAdverts', commentAdverts],
         ['cm-thirdPartyTags', thirdPartyTags],
         ['cm-badges', badges]
     ];

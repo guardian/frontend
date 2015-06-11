@@ -11,8 +11,8 @@ define([
     'common/utils/storage',
     'common/utils/url',
     'common/modules/experiments/ab',
-    'common/views/history/tag.html!text',
-    'common/views/history/mega-nav.html!text'
+    'text!common/views/history/tag.html',
+    'text!common/views/history/mega-nav.html'
 ], function (
     fastdom,
     $,

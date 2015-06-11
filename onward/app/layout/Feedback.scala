@@ -5,7 +5,7 @@ case class Feedback(problem: String, email: Boolean = false, links: Option[Seq[(
 object Feedback {
 
   val thanks = "Thanks for letting us know that"
-  val monitor = "We monitor the total number of reports so we know which areas you would like to see improved."
+  val monitor = "Your feedback helps us understand which areas of the site need attention."
 
   def apply(path: String): Feedback = path match {
     case "" => Feedback(

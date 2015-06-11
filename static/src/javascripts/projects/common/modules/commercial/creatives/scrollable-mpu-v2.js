@@ -4,7 +4,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
-    'common/views/commercial/creatives/scrollable-mpu-v2.html!text'
+    'text!common/views/commercial/creatives/scrollable-mpu-v2.html'
 ], function (
     fastdom,
     $,

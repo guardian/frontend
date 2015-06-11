@@ -3,7 +3,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
-    'common/views/commercial/ad-slot.html!text'
+    'text!common/views/commercial/ad-slot.html'
 ], function (
     _,
     $,
@@ -84,6 +84,11 @@ define([
             refresh: false,
             sizeMappings: {
                 mobile: '1,1|140,90'
+            }
+        },
+        comments: {
+            sizeMappings: {
+                mobile:  '1,1|300,250'
             }
         }
     };
