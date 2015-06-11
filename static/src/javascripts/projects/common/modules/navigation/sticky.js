@@ -25,7 +25,8 @@ define([
             distance: 0,
             direction: 'down',
             showNavigation: false,
-            thresholdMobile: 400
+            thresholdMobile: 400,
+            firstLoadDepth: 500
         };
         this.breakpoint = detect.getBreakpoint();
         this.isMobile = _.contains(this.breakpoint, 'mobile');
@@ -45,7 +46,9 @@ define([
             this.$els.navigation            = $('.navigation', this.$els.navHeader);
             this.headerBigHeight            = this.$els.navHeader.dim().height;
 
-            if (!this.isMobile) {
+            // Top ads are revealed with CSS animation. As we don't know when animation is finished we will
+            // start updating position only if the viewport is 'firstLoadDepth' scrolled down on page load
+            if (!this.isMobile && $(window).scrollTop() > this.config.firstLoadDepth) {
                 this.updatePosition();
             }
         }.bind(this));
