@@ -168,6 +168,10 @@ $c-navigation-expandable-background: colour(neutral-1);
     background: $c-navigation-expandable-background;
     overflow: hidden;
 }
+.navigation__expandable--sticky {
+    overflow-x: hidden;
+    overflow-y: scroll; 
+}
 .signposting,
 .local-navigation,
 .top-navigation,

@@ -63,6 +63,19 @@ define([
                 this.updatePosition();
             }.bind(this), 10));
         }
+
+        // Make sure sticky header has sticky nav
+        mediator.on('modules:nav:open', function () {
+            this.showStickyNavigation();
+        }.bind(this));
+    };
+
+    StickyHeader.prototype.showStickyNavigation = function () {
+        var height = window.innerHeight - $('.js-global-navigation').offset().top;
+
+        $('.js-global-navigation')
+            .addClass('navigation__expandable--sticky')
+            .css('height', height);
     };
 
     StickyHeader.prototype.setScrollDirection = function (scrollY) {
