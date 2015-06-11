@@ -1,4 +1,5 @@
 System.config({
+  "defaultJSExtensions": true,
   "transpiler": "babel",
   "babelOptions": {
     "optional": [
@@ -7,25 +8,23 @@ System.config({
     "blacklist": []
   },
   "paths": {
-    "*": "javascripts/*.js",
-    "admin/*": "javascripts/projects/admin/*.js",
-    "common/*": "javascripts/projects/common/*.js",
-    "facia/*": "javascripts/projects/facia/*.js",
-    "membership/*": "javascripts/projects/membership/*.js",
-    "bundles/*": "bundles/*.js",
-    "test/*": "javascripts/test/*.js",
-    "helpers/*": "javascripts/test/helpers/*.js",
-    "fixtures/*": "javascripts/test/fixtures/*.js",
-    "es6/*": "javascripts/es6/*.js",
-    "bootstraps/*": "javascripts/bootstraps/*.js",
-    "vendor/*": "javascripts/vendor/*.js",
+    "*": "javascripts/*",
+    "admin/*": "javascripts/projects/admin/*",
+    "common/*": "javascripts/projects/common/*",
+    "facia/*": "javascripts/projects/facia/*",
+    "membership/*": "javascripts/projects/membership/*",
+    "bundles/*": "bundles/*",
+    "test/*": "javascripts/test/*",
+    "helpers/*": "javascripts/test/helpers/*",
+    "fixtures/*": "javascripts/test/fixtures/*",
+    "es6/*": "javascripts/es6/*",
+    "bootstraps/*": "javascripts/bootstraps/*",
+    "vendor/*": "javascripts/vendor/*",
     "svgs/*": "inline-svgs/*.svg",
-    "github:*": "jspm_packages/github/*.js",
-    "npm:*": "jspm_packages/npm/*.js",
-    "bower:*": "jspm_packages/bower/*.js",
-    "facebook": "//connect.facebook.net/en_US/all.js",
-    "http/*": "http://*",
-    "https/*": "https://*"
+    "github:*": "jspm_packages/github/*",
+    "npm:*": "jspm_packages/npm/*",
+    "bower:*": "jspm_packages/bower/*",
+    "facebook": "//connect.facebook.net/en_US/all"
   },
   "shim": {
     "omniture": {
@@ -73,11 +72,11 @@ System.config({
       "jasmine": "bower:jasmine@2.0.4",
       "sinonjs": "bower:sinonjs@1.10.2"
     },
-    "bower:video.js@4.12.5": {
+    "bower:video.js@4.12.8": {
       "css": "github:systemjs/plugin-css@0.1.9"
     },
     "bower:videojs-persistvolume@0.1.2": {
-      "video.js": "bower:video.js@4.12.5"
+      "video.js": "bower:video.js@4.12.8"
     },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
