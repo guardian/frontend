@@ -46,7 +46,7 @@ define([
             this.headerBigHeight            = this.$els.navHeader.dim().height;
 
             if (!this.isMobile) {
-                //this.updatePosition();
+                this.updatePosition();
             }
         }.bind(this));
 
