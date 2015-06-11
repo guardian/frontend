@@ -37,10 +37,10 @@ conditionallyGrunt() {
 
 # Validate CSS
 CSS_SRC_PATTERN="\.scss$"
-#conditionallyGrunt "$CSS_SRC_PATTERN" "validate:css"
-#cssValidateResult1=$?
-#conditionallyGrunt "$CSS_SRC_PATTERN" "validate:sass"
-#cssValidateResult2=$?
+conditionallyGrunt "$CSS_SRC_PATTERN" "validate:css"
+cssValidateResult1=$?
+conditionallyGrunt "$CSS_SRC_PATTERN" "validate:sass"
+cssValidateResult2=$?
 
 # Validate JS
 JS_SRC_PATTERN="\.js$"
