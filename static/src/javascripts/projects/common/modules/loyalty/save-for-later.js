@@ -76,14 +76,16 @@ define([
     };
 
     SaveForLater.prototype.renderSaveThisArticleLink = function (options) {
-        var $saver = bonzo(qwery(this.classes.saveThisArticle)[0]);
+        var $savers = bonzo(qwery(this.classes.saveThisArticle));
         var templateString = this.templates[options.deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
 
-        $saver.html(template(templateString, {
-            url: options.url,
-            icon: bookmarkSvg,
-            state: options.state
-        }));
+        $savers.each(function (saver) {
+            bonzo(saver).html(template(templateString, {
+                url: options.url,
+                icon: bookmarkSvg,
+                state: options.state
+            }));
+        });
     };
 
     SaveForLater.prototype.getElementsIndexedById = function (context) {
