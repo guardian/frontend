@@ -268,6 +268,7 @@ define([
         };
         this.breakpoint = detect.getBreakpoint();
         this.isMobile = _.contains(this.breakpoint, 'mobile');
+        this.isTablet = _.contains(this.breakpoint, 'tablet');
     }
 
     StickyHeader.prototype.init = function () {
@@ -319,7 +320,12 @@ define([
 
         // If user is scrolling up and navigation threshold was met show navigation
         if (this.config.direction === 'up' && this.config.showNavigation) {
-            this.$els.navigation.removeClass('animate-down').addClass('animate-up');
+            if (this.isTablet || this.isMobile) {
+                this.$els.navigation.removeClass('animate-down-mobile').addClass('animate-up-mobile');
+            } else {
+                this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
+            }
+
         } else {
             // If user is scrolling down and navigation is visible reset bounce distance
             if (this.config.showNavigation) {
@@ -333,7 +339,11 @@ define([
                 }*/
             }
 
-            this.$els.navigation.removeClass('animate-up').addClass('animate-down');
+            if (this.isTablet || this.isMobile) {
+                this.$els.navigation.removeClass('animate-up-mobile').addClass('animate-down-mobile');
+            } else {
+                this.$els.navigation.removeClass('animate-up-desktop').addClass('animate-down-desktop');
+            }
         }
     };
 

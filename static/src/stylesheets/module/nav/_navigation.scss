@@ -44,6 +44,35 @@ $c-navigation-expandable-background: colour(neutral-1);
 @include mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
 @include mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(leftCol));
 
+@mixin animate-height-up($height) {
+    @keyframes animate-height-up {
+        from {
+            height: 0px;
+        }
+
+        to {
+            height: $height;
+        }
+    }
+
+    animation: animate-height-up ease-in 0.2s;
+    animation-fill-mode: forwards;
+}
+
+@mixin animate-height-down($height) {
+    @keyframes animate-height-down {
+        from {
+            height: $height;
+        }
+
+        to {
+            height: 0px;
+        }
+    }
+
+    animation: animate-height-down ease-in 0.2s;
+    animation-fill-mode: forwards;
+}
 
 /* Styles common to all states
    ========================================================================== */
@@ -59,34 +88,20 @@ $c-navigation-expandable-background: colour(neutral-1);
     background: $c-navigation-background;
     height: $navigation-height;
 
-    @keyframes animate-height-up {
-        from {
-            height: 0px;
-        }
-
-        to {
-            height: 72px;
-        }
+    &.animate-up-desktop {
+        @include animate-height-up('72px');
     }
 
-    @keyframes animate-height-down {
-        from {
-            height: 72px;
-        }
-
-        to {
-            height: 0px;
-        }
+    &.animate-down-desktop {
+        @include animate-height-down('72px');
     }
 
-    &.animate-up {
-        animation: animate-height-up ease-in 0.2s;
-        animation-fill-mode: forwards;
+    &.animate-up-mobile {
+        @include animate-height-up('0px');
     }
 
-    &.animate-down {
-        animation: animate-height-down ease-in 0.2s;
-        animation-fill-mode: forwards;
+    &.animate-down-mobile {
+        @include animate-height-down('0px');
     }
 
     &:before,
