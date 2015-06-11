@@ -1,6 +1,6 @@
 /*
- Module: abtest-item.js
- Description: Displays information about a single test
+ Module: abtest-report.js
+ Description: Displays headings for all tests
  */
 define([
     'common/utils/_',
@@ -18,25 +18,25 @@ define([
     bean
 ) {
 
-    function ABTestItem(config) {
+    function ABTestReport(config) {
         this.config = _.extend(_.clone(this.config), config);
         if (window.abCharts) {
             this.chart = window.abCharts["ab" + this.config.test.id];
         }
     }
 
-    Component.define(ABTestItem);
+    Component.define(ABTestReport);
 
-    ABTestItem.prototype.config = {
+    ABTestReport.prototype.config = {
         test: {},
         active: true
     };
 
-    ABTestItem.prototype.templateName = 'abtest-item-template';
-    ABTestItem.prototype.componentClass = 'abtest-item';
-    ABTestItem.prototype.useBem = true;
+    ABTestReport.prototype.templateName = 'abtest-report-template';
+    ABTestReport.prototype.componentClass = 'abtest-report';
+    ABTestReport.prototype.useBem = true;
 
-    ABTestItem.prototype.renderChart = function() {
+    ABTestReport.prototype.renderChart = function() {
         if (this.chart) {
             new google.visualization.LineChart(this.getElem('chart'))
                 .draw(google.visualization.arrayToDataTable(this.chart.data), {
@@ -63,26 +63,15 @@ define([
         }
     };
 
-    ABTestItem.prototype.prerender = function() {
+    ABTestReport.prototype.prerender = function() {
 
         this.elem.className += this.config.active ? " abtest-item--active" : " abtest-item--expired";
         this.elem.setAttribute('data-abtest-name', this.config.test.id);
         bonzo(this.elem).addClass(window.abSwitches['ab'+this.config.test.id] ? 'abtest-item--switched-on' : 'abtest-item--switched-off');
 
-        this.getElem('name').textContent = this.config.test.id;
-        this.getElem('description').textContent = " " + this.config.test.description;
-        var daysTillExpiry = (Date.parse(this.config.test.expiry) - new Date()) / (1000*60*60*24);
-        this.getElem('expiry').textContent = Math.floor(daysTillExpiry).toString() + (daysTillExpiry == 1 ? " day" : " days");
-        this.getElem('expiry').setAttribute('title', this.config.test.expiry);
-
-        this.getElem('audience').textContent = (this.config.test.audience * 100) + "%";
-        this.getElem('audience-offset').textContent = (this.config.test.audienceOffset * 100) + "%";
-
-        var participation = new Participation({ test: this.config.test });
-        participation.render(this.getElem('participation'));
     };
 
-    ABTestItem.prototype.ready = function() {
+    ABTestReport.prototype.ready = function() {
         if (this.chart) {
             var redraw = this.renderChart.bind(this);
             redraw();
@@ -94,6 +83,7 @@ define([
         }
     };
 
-    return ABTestItem;
+    return ABTestReport;
 
 });
+

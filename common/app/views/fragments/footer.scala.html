@@ -81,9 +81,9 @@
             }
 
         <li class="colophon__item">
-            <form class="js-tech-feedback" action="@Configuration.debug.beaconUrl/tech-feedback?uri=http@{if (request.secure) "s" else ""}://@request.host@request.uri" method="post">
-                <input data-link-name="tech feedback" type="submit" value="report technical issue">
-            </form>
+            <a data-link-name="tech feedback" href="@LinkTo{/info/tech-feedback}">
+                report technical issue
+            </a>
         </li>
 
             @if(currentEdition == Us) {

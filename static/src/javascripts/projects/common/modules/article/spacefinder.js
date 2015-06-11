@@ -113,7 +113,7 @@ define([
             return !img.complete;
         });
 
-        return Promise.all(notLoaded.map(function (img) {
+        return Promise.all(_.map(notLoaded, function (img) {
             return new Promise(function (resolve) {
                 window.setTimeout(resolve, 5000);
                 bean.on(img, 'load', resolve);

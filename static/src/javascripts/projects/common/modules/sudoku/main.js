@@ -38,7 +38,7 @@ define([
                     });
                 });
 
-                React.renderComponent(Grid({
+                React.render(Grid({
                     cells: cells
                 }), element);
             }

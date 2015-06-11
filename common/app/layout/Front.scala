@@ -251,9 +251,10 @@ case class FaciaContainer(
   def withTimeStamps = transformCards(_.withTimeStamp)
 
   def dateLink: Option[String] = {
-    val maybeDateHeadline = customHeader map {
-      case MetaDataHeader(_, _, _, dateHeadline, _) => dateHeadline
-      case LoneDateHeadline(dateHeadline) => dateHeadline
+    val maybeDateHeadline = customHeader flatMap  {
+      case MetaDataHeader(_, _, _, dateHeadline, _) => Some(dateHeadline)
+      case LoneDateHeadline(dateHeadline) => Some(dateHeadline)
+      case SeriesDescriptionMetaHeader(_) => None
     }
 
     for {

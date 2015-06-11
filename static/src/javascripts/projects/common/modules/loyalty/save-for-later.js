@@ -96,19 +96,6 @@ define([
         });
     };
 
-    SaveForLater.prototype.renderSaveThisArticleLink = function (deferToClick, url, state) {
-        var self = this,
-            $saver = bonzo(qwery('.js-save-for-later')[0]),
-            templateName = self.templates[deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
-
-        $saver.html(template(templateName, {
-            url: url,
-            icon: bookmarkSvg,
-            state: state
-
-        }));
-    };
-
     SaveForLater.prototype.getSavedArticles = function () {
         var self = this,
             notFound  = {message:'Not found', description:'Resource not found'};

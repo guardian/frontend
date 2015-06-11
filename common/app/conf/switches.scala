@@ -628,6 +628,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val MsieAudit = Switch(
+    "Monitoring",
+    "msie-audit",
+    "Enables beacon tracking of MSIE and their ad blockers",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 30),
+    exposeClientSide = true
+  )
+
   // Features
   val FacebookMostViewed = Switch(
     "Feature",
@@ -934,6 +943,15 @@ object Switches {
     "Switch for the latest liveblog updates on non-network fronts",
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val IPadNothrasherSwitch = Switch(
+    "Feature",
+    "ipad-no-thrashers",
+    "This switch will disable Thrashers on ipads",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 20),
     exposeClientSide = true
   )
 
