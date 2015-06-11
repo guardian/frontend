@@ -134,7 +134,7 @@ define([
                 // Unfortunately FastClick’s UMD exports are not consistent for
                 // all types. AMD exports FastClick, CJS exports FastClick.attach
                 // As per: https://github.com/ftlabs/fastclick/blob/master/lib/fastclick.js#L829-L840
-                var isRequireJs = !! FastClick.attach;
+                var isRequireJs = !!FastClick.attach;
                 (isRequireJs ? FastClick.attach : FastClick)(document.body);
             },
 
