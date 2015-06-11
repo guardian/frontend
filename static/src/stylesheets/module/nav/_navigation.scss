@@ -80,12 +80,12 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 
     &.animate-up {
-        animation: animate-height-up ease-in 0.2s;
+        animation: animate-height-up ease-in .2s;
         animation-fill-mode: forwards;
     }
 
     &.animate-down {
-        animation: animate-height-down ease-in 0.2s;
+        animation: animate-height-down ease-in .2s;
         animation-fill-mode: forwards;
     }
 
