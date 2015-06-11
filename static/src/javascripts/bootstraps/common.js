@@ -162,7 +162,7 @@ define([
             },
 
             initialiseStickyHeader: function () {
-                 if (config.page.contentType !== 'Interactive') {
+                if (config.page.contentType !== 'Interactive') {
                     sticky.init();
                 }
             },
