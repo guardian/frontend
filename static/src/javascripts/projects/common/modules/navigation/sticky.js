@@ -1,4 +1,5 @@
 define([
+    'bean',
     'fastdom',
     'common/utils/$',
     'common/utils/_',
@@ -6,6 +7,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator'
 ], function (
+    bean,
     fastdom,
     $,
     _,
@@ -323,6 +325,12 @@ define([
             if (this.config.showNavigation) {
                 // Reset distance bouncing
                 this.config.distance = 0;
+
+                // TODO: close meganav on scroll down
+                /*if (this.$els.burgerIcon.hasClass('navigation-container--expanded')) {
+                    console.log('fire');
+                    bean.fire(document, 'click', '.js-navigation-toggle');
+                }*/
             }
 
             this.$els.navigation.css('display', 'none');
