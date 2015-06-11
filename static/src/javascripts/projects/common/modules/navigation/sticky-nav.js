@@ -258,7 +258,7 @@ define([
         this.$els   = {};
         this.config = {
             showHeaderDepth: 0.5,
-            showNavigationDepth: 100, // Navigation will show when user scrolls X px up
+            showNavigationDepth: 150, // Navigation will show when user scrolls X px up
             distance: 0,
             direction: 'down',
             showNavigation: false,
@@ -305,7 +305,7 @@ define([
             this.config.distance = scrollY;
         }
 
-        // If distance scolled is more than showNavigationDepth show navigation
+        // If distance scrolled is more than showNavigationDepth show navigation
         this.config.showNavigation = (Math.abs(scrollY - this.config.distance) > this.config.showNavigationDepth);
     };
 
@@ -314,7 +314,7 @@ define([
 
         // If user is scrolling up and navigation threshold was met show navigation
         if (this.config.direction === 'up' && this.config.showNavigation) {
-            this.$els.navigation.css('display', 'block');
+            this.$els.navigation.removeClass('animate-down').addClass('animate-up');
             if (breakpoint === 'mobile' || breakpoint === 'tablet') {
                 this.$els.navigation.css('height', null);
                 if (breakpoint === 'tablet') {
@@ -328,7 +328,7 @@ define([
                 this.config.distance = 0;
             }
 
-            this.$els.navigation.css('display', 'none');
+            this.$els.navigation.removeClass('animate-up').addClass('animate-down');
             if (breakpoint === 'mobile' || breakpoint === 'tablet') {
                 this.$els.navigation.css('height', 0);
                 if (breakpoint === 'tablet') {
@@ -386,7 +386,7 @@ define([
                     this.$els.header.css('transform', 'translateY(-100%)');
                 } else {
                     // Make sure navigation is hidden
-                    this.$els.navigation.css('display', 'none');
+                    this.$els.navigation.removeClass('animate-up').addClass('animate-down');
 
                     this.$els.header.css({
                         position:  'static',
@@ -408,7 +408,7 @@ define([
                 this.$els.header.removeClass('l-header--is-slim');
 
                 // Make sure navigation is visible
-                this.$els.navigation.css('display', 'block');
+                //this.$els.navigation.css('display', 'block');
 
                 this.$els.header.css({
                     position:  'static',
