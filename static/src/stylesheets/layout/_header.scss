@@ -13,11 +13,15 @@ $c-guardian-services-action: #ffffff;
             width: gs-span(12) + ($gs-gutter*2);
         }
     }
+
+    @include mq(mobile) {
+        background: colour(guardian-brand);
+    }
 }
 
 .l-header--is-slim {
     // TODO: Palette?
-    background: darken(colour(guardian-brand), 2%);
+    background: colour(guardian-brand);
     transition: transform .3s;
 
     .l-header__inner {

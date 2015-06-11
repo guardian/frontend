@@ -32,6 +32,7 @@ define([
     'common/modules/identity/api',
     'common/modules/identity/autosignin',
     'common/modules/navigation/navigation',
+    'common/modules/navigation/sticky',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -90,6 +91,7 @@ define([
     id,
     AutoSignin,
     navigation,
+    sticky,
     Profile,
     Search,
     history,
@@ -157,6 +159,12 @@ define([
 
             initialiseNavigation: function () {
                 navigation.init();
+            },
+
+            initialiseStickyHeader: function () {
+                 if (config.page.contentType !== 'Interactive') {
+                    sticky.init();
+                }
             },
 
             transcludeRelated: function () {
@@ -516,6 +524,7 @@ define([
             robust('c-tabs',            modules.showTabs);
             robust('c-top-nav',         modules.initialiseTopNavItems);
             robust('c-init-nav',        modules.initialiseNavigation);
+            robust('c-sticky-header',   modules.initialiseStickyHeader);
             robust('c-toggles',         modules.showToggles);
             robust('c-dates',           modules.showRelativeDates);
             robust('c-clickstream',     modules.initClickstream);

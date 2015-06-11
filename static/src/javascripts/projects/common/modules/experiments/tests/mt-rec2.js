@@ -5,7 +5,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/navigation/sticky-nav'
+    'common/modules/navigation/sticky'
 ], function (
     fastdom,
     $,
