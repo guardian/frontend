@@ -116,32 +116,30 @@ define([
     };
 
     SaveForLater.prototype.getElementsIndexedById = function (context) {
-        var self = this,
-            elements = qwery('[' + self.attributes.containerItemShortUrl + ']', context);
+        var elements = qwery('[' + this.attributes.containerItemShortUrl + ']', context);
 
         return _.forEach(elements, function (el) {
-            return bonzo(el).attr(self.attributes.containerItemShortUrl);
-        });
+            return bonzo(el).attr(this.attributes.containerItemShortUrl);
+        }.bind(this));
     };
 
     SaveForLater.prototype.renderLinksInContainers = function (signedIn) {
-        var self = this;
 
-        if (!self.isContent) {
-            self.renderContainerLinks(signedIn, document.body);
+        if (!this.isContent) {
+            this.renderContainerLinks(signedIn, document.body);
         }
 
-        mediator.on('modules:tonal:loaded', function () {
-            self.renderContainerLinks(signedIn, self.classes.onwardContainer);
-        });
+        mediator.once('modules:tonal:loaded', function () {
+            this.renderContainerLinks(signedIn, this.classes.onwardContainer);
+        }.bind(this));
 
-        mediator.on('modules:onward:loaded', function () {
-            self.renderContainerLinks(signedIn, self.classes.onwardContainer);
-        });
+        mediator.once('modules:onward:loaded', function () {
+            this.renderContainerLinks(signedIn, this.classes.onwardContainer);
+        }.bind(this));
 
-        mediator.on('modules:related:loaded', function () {
-            self.renderContainerLinks(signedIn, self.classes.relatedContainer);
-        });
+        mediator.once('modules:related:loaded', function () {
+            this.renderContainerLinks(signedIn, this.classes.relatedContainer);
+        }.bind(this));
     };
 
     SaveForLater.prototype.renderLinksInContent = function () {
@@ -154,35 +152,33 @@ define([
 
     // Configure the save for later links on a front or in a container
     SaveForLater.prototype.renderContainerLinks = function (signedIn, context) {
-        var self = this,
-            elements = self.getElementsIndexedById(context);
+        var elements = this.getElementsIndexedById(context);
 
         _.forEach(elements, function (item) {
             var $item = $(item),
-                $itemSaveLink = $(self.classes.itemSaveLink, item),
-                shortUrl = item.getAttribute(self.attributes.containerItemShortUrl),
-                id = item.getAttribute(self.attributes.containerItemDataId),
-                isSaved = signedIn ? self.hasUserSavedArticle(self.userData.articles, shortUrl) : false;
+                $itemSaveLink = $(this.classes.itemSaveLink, item),
+                shortUrl = item.getAttribute(this.attributes.containerItemShortUrl),
+                id = item.getAttribute(this.attributes.containerItemDataId),
+                isSaved = signedIn ? this.hasUserSavedArticle(this.userData.articles, shortUrl) : false;
 
             if (signedIn) {
-                self[isSaved ? 'createDeleteArticleHandler' : 'createSaveArticleHandler']($itemSaveLink[0], id, shortUrl);
+                this[isSaved ? 'createDeleteArticleHandler' : 'createSaveArticleHandler']($itemSaveLink[0], id, shortUrl);
             }
 
             fastdom.write(function () {
                 if (isSaved) {
-                    $itemSaveLink.addClass(self.classes.fcItemIsSaved);
+                    $itemSaveLink.addClass(this.classes.fcItemIsSaved);
                 }
                 $item.addClass('fc-item--has-metadata'); // while in test
                 $itemSaveLink.removeClass('is-hidden'); // while in test
-            });
-        });
+            }.bind(this));
+        }.bind(this));
     };
 
         //--- Get articles
     // -------------------------Save Article
     SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl) {
-        var self = this,
-            date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
+        var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
             newArticle = {id: pageId, shortUrl: shortUrl, date: date, read: false  };
 
         userData.articles.push(newArticle);
@@ -192,17 +188,15 @@ define([
                 if (resp.status === 'error') {
                     onArticleSavedError();
                 } else {
-                    self.updateArticleCount();
+                    this.updateArticleCount();
                     onArticleSaved();
                 }
-            }
+            }.bind(this)
         );
     };
 
     SaveForLater.prototype.deleteArticle = function (onArticleDeleted, onArticleDeletedError, userData, pageId, shortUrl, event) {
         event.stop();
-
-        var self = this;
 
         userData.articles = _.filter(userData.articles, function (article) {
             return article.shortUrl !== shortUrl;
@@ -213,10 +207,10 @@ define([
                 if (resp.status === 'error') {
                     onArticleDeletedError();
                 } else {
-                    self.updateArticleCount();
+                    this.updateArticleCount();
                     onArticleDeleted();
                 }
-            }
+            }.bind(this)
         );
     };
 
@@ -232,50 +226,45 @@ define([
 
     //--- Handle saving an article on a front of container
     SaveForLater.prototype.onSaveArticle = function (link, id, shortUrl) {
-        var self = this;
-        self.createDeleteArticleHandler(link, id, shortUrl);
+        this.createDeleteArticleHandler(link, id, shortUrl);
 
         fastdom.write(function () {
-            bonzo(link).addClass(self.classes.fcItemIsSaved);
-        });
+            bonzo(link).addClass(this.classes.fcItemIsSaved);
+        }.bind(this));
     };
 
     SaveForLater.prototype.onSaveArticleError = function (link, id, shortUrl) {
-        var self = this;
-        self.createSaveArticleHandler(link, id, shortUrl);
+        this.createSaveArticleHandler(link, id, shortUrl);
 
         fastdom.write(function () {
-            bonzo(qwery(self.classes.itemSaveLinkHeading, link)[0]).html('Error Saving');
-        });
+            bonzo(qwery(this.classes.itemSaveLinkHeading, link)[0]).html('Error Saving');
+        }.bind(this));
     };
 
     SaveForLater.prototype.onDeleteArticle = function (link, id, shortUrl) {
-        var self = this;
-        self.createSaveArticleHandler(link, id, shortUrl);
+        this.createSaveArticleHandler(link, id, shortUrl);
 
         fastdom.write(function () {
-            bonzo(link).removeClass(self.classes.fcItemIsSaved);
-        });
+            bonzo(link).removeClass(this.classes.fcItemIsSaved);
+        }.bind(this));
     };
 
     SaveForLater.prototype.onDeleteArticleError = function (link, id, shortUrl) {
-        var self = this;
-        self.createDeleteArticleHandler(link, id, shortUrl);
+        this.createDeleteArticleHandler(link, id, shortUrl);
 
         fastdom.write(function () {
-            bonzo(qwery(self.classes.itemSaveLinkHeading, link)[0]).html('Error Removing');
-        });
+            bonzo(qwery(this.classes.itemSaveLinkHeading, link)[0]).html('Error Removing');
+        }.bind(this));
     };
 
     //--Create container link click handlers
     SaveForLater.prototype.createSaveArticleHandler = function (saveLink, id, shortUrl) {
-        var self = this;
 
         bean.one(saveLink, 'click',
-            self.saveArticle.bind(self,
-                self.onSaveArticle.bind(self, saveLink, id, shortUrl),
-                self.onSaveArticleError.bind(self, saveLink, id, shortUrl),
-                self.userData,
+            this.saveArticle.bind(this,
+                this.onSaveArticle.bind(this, saveLink, id, shortUrl),
+                this.onSaveArticleError.bind(this, saveLink, id, shortUrl),
+                this.userData,
                 id,
                 shortUrl
             )
@@ -283,13 +272,12 @@ define([
     };
 
     SaveForLater.prototype.createDeleteArticleHandler = function (deleteLink, id, shortUrl) {
-        var self = this;
 
         bean.one(deleteLink, 'click',
-            self.deleteArticle.bind(self,
-                self.onDeleteArticle.bind(self, deleteLink, id, shortUrl),
-                self.onDeleteArticleError.bind(self, deleteLink, id, shortUrl),
-                self.userData,
+            this.deleteArticle.bind(this,
+                this.onDeleteArticle.bind(this, deleteLink, id, shortUrl),
+                this.onDeleteArticleError.bind(this, deleteLink, id, shortUrl),
+                this.userData,
                 id,
                 shortUrl
             )
@@ -304,10 +292,8 @@ define([
     };
 
     SaveForLater.prototype.updateArticleCount = function () {
-        var self = this,
-            saveForLaterProfileLink = $(self.classes.profileDropdownLink);
-
-        saveForLaterProfileLink.html('Saved (' + self.userData.articles.length + ')');
+        var saveForLaterProfileLink = $(this.classes.profileDropdownLink);
+        saveForLaterProfileLink.html('Saved (' + this.userData.articles.length + ')');
     };
 
     return SaveForLater;
