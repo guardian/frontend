@@ -51,7 +51,7 @@ define([
         };
 
         this.isContent = !/Network Front|Section/.test(config.page.contentType);
-        this.userData = null;
+        this.userData = {};
         this.savedArticlesUrl = config.page.idUrl + '/saved-for-later-page';
     }
 
