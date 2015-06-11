@@ -76,7 +76,7 @@ define([
                         }
                     });
 
-                React.renderComponent(React.createElement(SummaryTagsSettings), placeholder);
+                React.render(React.createElement(SummaryTagsSettings), placeholder);
             },
 
             initialiseNotificationPreferences = function () {
