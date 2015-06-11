@@ -298,15 +298,11 @@
 .fc-item--saved-for-later-mobile {
     @include mq($until: tablet) {
         @include fc-item--saved-for-later;
-    }
+        padding-left: 0;
+        padding-right: 0;
 
-    @include mq(mobileLandscape, tablet) {
         .fc-item__image-container {
             display: none;
-        }
-
-        .fc-item__header {
-            @include fs-headline(5, true);
         }
     }
 }
@@ -321,17 +317,9 @@
                 flex-direction: row;
             }
         }
-
-        .fc-item__header {
-            @include fs-headline(3, true);
-        }
     }
 
     @include mq(desktop) {
-        .fc-item__header {
-            @include fs-headline(6, true);
-        }
-
         .fc-item__header,
         .fc-item__standfirst {
             padding-right: 30%;

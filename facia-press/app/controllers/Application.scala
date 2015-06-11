@@ -1,14 +1,13 @@
 package controllers
 
 import common.ExecutionContexts
-import frontpress.LiveFapiFrontPress
 import conf.Configuration
-import frontpress.FrontPress
+import conf.Switches.FaciaPressOnDemand
+import frontpress.{DraftFapiFrontPress, LiveFapiFrontPress}
 import model.NoCache
 import play.api.libs.json.Json
-import play.api.mvc.{Result, Action, Controller}
+import play.api.mvc.{Action, Controller, Result}
 import services.ConfigAgent
-import conf.Switches.FaciaPressOnDemand
 
 import scala.concurrent.Future
 
@@ -52,10 +51,10 @@ object Application extends Controller with ExecutionContexts {
       Future.successful(NoCache(ServiceUnavailable))}
 
   def pressLiveForPath(path: String) = Action.async {
-    handlePressRequest(path, "live")(FrontPress.pressLiveByPathId)
+    handlePressRequest(path, "live")(LiveFapiFrontPress.pressByPathId)
   }
 
   def pressDraftForPath(path: String) = Action.async {
-    handlePressRequest(path, "draft")(FrontPress.pressDraftByPathId)
+    handlePressRequest(path, "draft")(DraftFapiFrontPress.pressByPathId)
   }
 }

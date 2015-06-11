@@ -115,8 +115,9 @@ object IndexPage {
 
     front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
       val timeStampDisplay = header match {
-        case MetaDataHeader(_, _, _, dateHeadline, _) => cardTimestampDisplay(dateHeadline)
-        case LoneDateHeadline(dateHeadline) => cardTimestampDisplay(dateHeadline)
+        case MetaDataHeader(_, _, _, dateHeadline, _) => Some(cardTimestampDisplay(dateHeadline))
+        case LoneDateHeadline(dateHeadline) => Some(cardTimestampDisplay(dateHeadline))
+        case SeriesDescriptionMetaHeader(_) => None
       }
 
       container.copy(
@@ -133,7 +134,7 @@ object IndexPage {
         dateLinkPath = Some(s"/${indexPage.idWithoutEdition}")
       ).transformCards({ card =>
         card.copy(
-          timeStampDisplay = Some(timeStampDisplay),
+          timeStampDisplay = timeStampDisplay,
           byline = if (indexPage.page.isContributorPage) None else card.byline,
           useShortByline = true
         ).setKicker(card.header.kicker flatMap {

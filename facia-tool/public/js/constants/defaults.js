@@ -67,7 +67,7 @@ export default {
     frontendApiBase:       '/frontend',
 
     reauthPath:            '/login/status',
-    reauthInterval:        60000 * 20, // 20 minutes
+    reauthInterval:        60000 * 10, // 10 minutes
     reauthTimeout:         60000,
 
     imageCdnDomain:        '.guim.co.uk',

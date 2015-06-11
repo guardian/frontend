@@ -1,5 +1,5 @@
 .ad-slot {
-    z-index: 1000;
+    z-index: $zindex-ads;
     overflow: hidden;
 
     .js-off & {

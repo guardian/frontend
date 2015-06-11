@@ -96,6 +96,8 @@ case class MetaDataHeader(
 
 case class LoneDateHeadline(get: DateHeadline) extends FaciaContainerHeader
 
+case class SeriesDescriptionMetaHeader(description: Option[String]) extends FaciaContainerHeader
+
 object DateHeadline {
   def cardTimestampDisplay(dateHeadline: DateHeadline) = dateHeadline match {
     case _: DayHeadline => TimeTimestamp

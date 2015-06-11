@@ -6,9 +6,6 @@ import qwery from 'qwery';
 import bonzo from 'bonzo';
 import React from 'react';
 
-// TODO remove when we upgrade to 0.13.x
-React.renderComponent = React.render;
-
 describe('Accessibility', function () {
     beforeEach(function () {
         document.body.innerHTML += '<div id="' + bootstrap.DOM_ID + '"></div>';

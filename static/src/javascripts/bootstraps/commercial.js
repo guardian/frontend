@@ -7,8 +7,10 @@ define([
     'common/modules/commercial/article-aside-adverts',
     'common/modules/commercial/article-body-adverts',
     'common/modules/commercial/badges',
+    'common/modules/commercial/comment-adverts',
     'common/modules/commercial/dfp',
     'common/modules/commercial/front-commercial-components',
+    'common/modules/commercial/msie-audit',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/user-prefs'
@@ -21,8 +23,10 @@ define([
     articleAsideAdverts,
     articleBodyAdverts,
     badges,
+    commentAdverts,
     dfp,
     frontCommercialComponents,
+    msieAudit,
     sliceAdverts,
     thirdPartyTags,
     userPrefs
@@ -32,12 +36,14 @@ define([
         ['cm-articleBodyAdverts', articleBodyAdverts],
         ['cm-sliceAdverts', sliceAdverts],
         ['cm-frontCommercialComponents', frontCommercialComponents],
+        ['cm-commentAdverts', commentAdverts],
         ['cm-thirdPartyTags', thirdPartyTags],
         ['cm-badges', badges]
     ];
 
     return {
         init: function () {
+            msieAudit.init();
             var modulePromises = [];
 
             if (

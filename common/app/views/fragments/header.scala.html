@@ -87,14 +87,14 @@
                         <span class="u-h">The Guardian</span>
                         @if(metaData.hasSlimHeader) {
                             @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
-                            <!--[if (gt IE 8)&(IEMobile)]><!-->
+                            <!--[if (gt IE 8)|(IEMobile)]><!-->
                                 @fragments.inlineSvg("guardian-logo-160", "logo")
                             <!--<![endif]-->
                             <!--[if (lt IE 9)&(!IEMobile)]>
                               <span class="inline-logo inline-guardian-logo-160"></span>
                             <![endif]-->
                         } else {
-                            <!--[if (gt IE 8)&(IEMobile)]><!-->
+                            <!--[if (gt IE 8)|(IEMobile)]><!-->
                                 @fragments.inlineSvg("guardian-logo-320", "logo")
                             <!--<![endif]-->
                             <!--[if (lt IE 9)&(!IEMobile)]>
