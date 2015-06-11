@@ -1,4 +1,4 @@
-@(trail:  com.gu.facia.api.models.FaciaContent, info: RowInfo)(implicit request: RequestHeader)
+@(faciaContent: com.gu.facia.api.models.FaciaContent, info: RowInfo)(implicit request: RequestHeader)
 
 @import views.support.RowInfo
 @import common.LinkTo
@@ -6,6 +6,6 @@
 @import implicits.FaciaContentImplicits._
 @import model.SupportedUrl
 
-<a href="@LinkTo(SupportedUrl.fromFaciaContent(trail))" data-link-name="@info.rowNum | text">
-    @trail.maybeWebTitle.map(RemoveOuterParaHtml.apply)
+<a href="@LinkTo(SupportedUrl.fromFaciaContent(faciaContent))" data-link-name="@info.rowNum | text">
+    @faciaContent.maybeWebTitle.map(RemoveOuterParaHtml.apply)
 </a>
