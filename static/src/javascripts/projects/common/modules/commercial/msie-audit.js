@@ -29,7 +29,7 @@ define([
                 if (detect.adblockInUse) {
                     beacon.beaconCounts('msie-adblock');
                 }
-            }, 5000));
+            }, 3000));
         }
 
         // then set a timer to send ad detection beacon after 2 seconds
