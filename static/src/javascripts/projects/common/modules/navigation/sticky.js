@@ -1,5 +1,6 @@
 define([
     'bean',
+    'qwery',
     'fastdom',
     'common/utils/$',
     'common/utils/_',
@@ -8,6 +9,7 @@ define([
     'common/utils/mediator'
 ], function (
     bean,
+    qwery,
     fastdom,
     $,
     _,
@@ -326,11 +328,10 @@ define([
                 // Reset distance bouncing
                 this.config.distance = 0;
 
-                // TODO: close meganav on scroll down
-                /*if (this.$els.burgerIcon.hasClass('navigation-container--expanded')) {
-                    console.log('fire');
-                    bean.fire(document, 'click', '.js-navigation-toggle');
-                }*/
+                // Close meganav if it's open
+                if (this.$els.navHeader.hasClass('navigation-container--expanded')) {
+                    bean.fire(qwery('.js-navigation-toggle')[0], 'click');
+                }
             }
 
             this.$els.navigation.css('display', 'none');
