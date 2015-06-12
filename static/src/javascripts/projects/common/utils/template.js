@@ -4,10 +4,14 @@ define([
     _
 ) {
 
-    return function template(tmpl, params) {
-        return _.reduce(_.keys(params), function (tmpl, token) {
-            return tmpl.replace(new RegExp('{{' + token + '}}', 'g'), params[token]);
-        }, tmpl);
-    };
+    // Update default settings
+    _.merge(_.templateSettings, {
+        // Normally evaluate and interpolate at the other way round
+        evaluate:    /{{=([\s\S]+?)}}/g,
+        interpolate: /{{([\s\S]+?)}}/g,
+        escape:      /{{-([\s\S]+?)}}/g
+    });
+
+    return _.template.bind(_);
 
 });
