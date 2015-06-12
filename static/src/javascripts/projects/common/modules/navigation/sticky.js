@@ -40,7 +40,6 @@ define([
             this.$els.bannerMobile          = $('.top-banner-ad-container--mobile');
             this.$els.main                  = $('#maincontent');
             this.$els.navHeader             = $('.js-navigation-header');
-            this.$els.sticky                = $('.js-l-header-wrapper');
             this.$els.burgerIcon            = $('.js-navigation-toggle', this.$els.navHeader);
             this.$els.logoWrapper           = $('.logo-wrapper', this.$els.navHeader);
             this.$els.navigationGreySection = $('.navigation__container--first', this.$els.navHeader);
@@ -49,7 +48,7 @@ define([
 
             // Top ads are revealed with CSS animation. As we don't know when animation is finished we will
             // start updating position only if the viewport is 'firstLoadDepth' scrolled down on page load
-            if (!this.isMobile && $(window).scrollTop() > this.config.firstLoadDepth) {
+            if ($(window).scrollTop() > this.config.firstLoadDepth) {
                 this.updatePosition();
             }
         }.bind(this));
@@ -161,7 +160,8 @@ define([
                 this.$els.bannerDesktop.css({
                     position: 'absolute',
                     width: '100%',
-                    top: this.headerBigHeight
+                    top: this.headerBigHeight,
+                    'z-index': '999' // Sticky z-index +1 so banner is over sticky header
                 });
 
                 //header is slim from now on
@@ -174,9 +174,10 @@ define([
                     this.$els.navigation.removeClass('animate-up').addClass('animate-down');
 
                     this.$els.header.css({
-                        position:  'static',
+                        position:  'relative',
                         'margin-top': bannerHeight,
-                        'transform': 'translateY(-500%)'
+                        'transform': 'translateY(-500%)',
+                        'z-index': '998'
                     });
 
                     this.$els.main.css('margin-top', this.headerBigHeight - this.$els.header.dim().height);
@@ -187,7 +188,7 @@ define([
                     position:  'fixed',
                     top:       0,
                     width:     '100%',
-                    'z-index': '1000'
+                    'z-index': '999'
                 });
                 // Header is not slim yet
                 this.$els.header.removeClass('l-header--is-slim');
@@ -197,10 +198,11 @@ define([
                 this.$els.navigation.attr('class', 'navigation');
 
                 this.$els.header.css({
-                    position:  'static',
+                    position:  'relative',
                     width:     '100%',
                     'margin-top': bannerHeight,
-                    'transform': 'translateY(0%)'
+                    'transform': 'translateY(0%)',
+                    'z-index': '998'
                 });
 
                 this.$els.main.css('margin-top', 0);
@@ -233,10 +235,13 @@ define([
                     position:  'fixed',
                     top:       this.headerBigHeight,
                     width:     '100%',
-                    'z-index': '1000'
+                    'z-index': '999' // Sticky z-index -1 as it should be sticky but should go below the sticky header
                 });
                 this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
-                this.$els.navigation.css('display', 'block');
+
+                // Make sure navigation is visible
+                this.$els.navigation.removeAttr('class');
+                this.$els.navigation.attr('class', 'navigation');
             } else {
                 //after this.thresholdMobile px of scrolling 'release' banner and navigation
                 this.$els.bannerMobile.css({
