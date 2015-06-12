@@ -7,14 +7,14 @@
             <button class="ad-exp__close-button">
                 <i class="i i-close-icon-white-small"></i>
             </button>
-            <a href="{{clickMacro}}{{link}}" target="_new">
-                <div class="ad-exp-collapse__slide slide-1" style="background-image: url('{{slide1}}');">
-                    <div class="ad-exp__cta" style="background-image: url('{{cta}}');"></div>
-                    <div class="ad-exp__logo" style="background-image: url('{{logo}}');"></div>
+            <a href="<%=data.clickMacro%><%=data.link%>" target="_new">
+                <div class="ad-exp-collapse__slide slide-1" style="background-image: url('<%=data.slide1%>');">
+                    <div class="ad-exp__cta" style="background-image: url('<%=data.cta%>');"></div>
+                    <div class="ad-exp__logo" style="background-image: url('<%=data.logo%>');"></div>
                 </div>
-                <div class="ad-exp-collapse__slide slide-2" style="background-image: url('{{slide2}}');">
-                    <div class="ad-exp__text-1 mobile-only" style="background-image: url('{{textMobile}}');"></div>
-                    <div class="ad-exp__text-1 hide-until-tablet" style="background-image: url('{{text}}');"></div>
+                <div class="ad-exp-collapse__slide slide-2" style="background-image: url('<%=data.slide2%>');">
+                    <div class="ad-exp__text-1 mobile-only" style="background-image: url('<%=data.textMobile%>');"></div>
+                    <div class="ad-exp__text-1 hide-until-tablet" style="background-image: url('<%=data.text%>');"></div>
                 </div>
             </a>
         </div>

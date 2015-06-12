@@ -43,7 +43,7 @@ define([
     };
 
     Expandable.prototype.create = function () {
-        var $expandable = $.create(template(expandableTpl, this.params));
+        var $expandable = $.create(template(expandableTpl, { data: this.params }));
 
         this.$ad     = $('.ad-exp--expand', $expandable).css('height', this.closedHeight);
         this.$button = $('.ad-exp__close-button', $expandable);

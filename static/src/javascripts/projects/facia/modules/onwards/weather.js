@@ -204,7 +204,7 @@ define([
             }
 
             $('.js-weather', $holder).remove();
-            $holder.append(tmpl.replace(new RegExp('{{city}}', 'g'), city));
+            $holder.append(tmpl.replace(new RegExp('<%=city%>', 'g'), city));
         },
 
         renderForecast: function (forecastData) {

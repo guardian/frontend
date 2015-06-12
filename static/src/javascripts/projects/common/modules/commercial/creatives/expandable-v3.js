@@ -153,20 +153,23 @@ define([
                 scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
                     '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%; background-repeat: ' + this.params.backgroundImagePRepeat + ';"></div>' : ''
             },
-            $expandableV3 = $.create(template(expandableV3Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
+            $expandableV3 = $.create(template(expandableV3Tpl, { data: _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
 
-        fastdom.write(function () {
+        var domPromise = new Promise(function (resolve) {
+            fastdom.write(function () {
 
-            this.$ad     = $('.ad-exp--expand', $expandableV3).css('height', this.closedHeight);
-            this.$button = $('.ad-exp__open', $expandableV3);
+                this.$ad     = $('.ad-exp--expand', $expandableV3).css('height', this.closedHeight);
+                this.$button = $('.ad-exp__open', $expandableV3);
 
-            $('.ad-exp-collapse__slide', $expandableV3).css('height', this.closedHeight);
+                $('.ad-exp-collapse__slide', $expandableV3).css('height', this.closedHeight);
 
-            if (this.params.trackingPixel) {
-                this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
-            }
+                if (this.params.trackingPixel) {
+                    this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
+                }
 
-            $expandableV3.appendTo(this.$adSlot);
+                $expandableV3.appendTo(this.$adSlot);
+                resolve();
+            }.bind(this));
         }.bind(this));
 
         mediator.on('window:scroll', this.listener.bind(this));
@@ -189,6 +192,8 @@ define([
             // to be safe, also update on window resize
             mediator.on('window:resize', this.updateBgPosition.bind(this));
         }
+
+        return domPromise;
     };
 
     return ExpandableV3;

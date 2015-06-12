@@ -16,7 +16,8 @@ describe('Article Body Adverts', function () {
             ]
         },
         injector = new Injector(),
-        articleBodyAdverts, config, detect, spacefinder;
+        articleBodyAdverts, config, detect, spacefinder, ab, getParticipationsStub,
+        testCanBeRunStub;
 
     beforeEach(function (done) {
 
