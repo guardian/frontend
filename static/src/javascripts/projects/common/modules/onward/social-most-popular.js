@@ -5,17 +5,17 @@ define([
     Component,
     mediator
 ) {
-    function FacebookMostPopular(context) {
+    function SocialMostPopular(context, socialContext) {
         this.context = context;
-        this.endpoint = '/most-read-facebook.json';
+        this.endpoint = '/most-read-' + socialContext + '.json';
         this.fetch(this.context, 'html');
     }
 
-    Component.define(FacebookMostPopular);
+    Component.define(SocialMostPopular);
 
-    FacebookMostPopular.prototype.ready = function (elem) {
+    SocialMostPopular.prototype.ready = function (elem) {
         mediator.emit('page:new-content', elem);
     };
 
-    return FacebookMostPopular;
+    return SocialMostPopular;
 });
