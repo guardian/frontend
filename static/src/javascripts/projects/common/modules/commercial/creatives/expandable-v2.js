@@ -135,7 +135,7 @@ define([
                 scrollbg: (this.params.backgroundImagePType !== '' || this.params.backgroundImagePType !== 'none') ?
                     '<div class="ad-exp--expand-scrolling-bg" style="background-image: url(' + this.params.backgroundImageP + '); background-position: ' + this.params.backgroundImagePPosition + ' 50%;"></div>' : ''
             },
-            $expandablev2 = $.create(template(expandableV2Tpl, _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg)));
+            $expandablev2 = $.create(template(expandableV2Tpl, { data: _.merge(this.params, showmoreArrow, showmorePlus, videoDesktop, scrollingbg) }));
 
         var domPromise = new Promise(function (resolve) {
             fastdom.write(function () {
