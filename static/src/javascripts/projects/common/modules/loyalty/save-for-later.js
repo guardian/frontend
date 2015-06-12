@@ -80,10 +80,13 @@ define([
         var templateString = this.templates[options.deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
 
         $savers.each(function (saver) {
-            bonzo(saver).html(template(templateString, {
+            var $saver = bonzo(saver);
+            $saver.html(template(templateString, {
                 url: options.url,
                 icon: bookmarkSvg,
-                isSaved: options.isSaved
+                isSaved: options.isSaved,
+                contentType: config.page.contentType,
+                position: $saver.attr('data-position')
             }));
         });
     };
