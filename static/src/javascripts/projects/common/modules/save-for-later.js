@@ -177,11 +177,17 @@ define([
     // -------------------------Save Article
     SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl) {
         var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
-            newArticle = {id: pageId, shortUrl: shortUrl, date: date, read: false  };
+            newArticle = {
+                id: pageId,
+                shortUrl: shortUrl,
+                date: date,
+                read: false,
+                platform: 'web:' + detect.getUserAgent.browser + ':' + detect.getBreakpoint()
+            };
 
-        userData.articles.push(newArticle);
+        this.userData.articles.push(newArticle);
 
-        identity.saveToArticles(userData).then(
+        identity.saveToArticles(this.userData).then(
             function (resp) {
                 if (resp.status === 'error') {
                     onArticleSavedError();
@@ -262,7 +268,6 @@ define([
             this.saveArticle.bind(this,
                 this.onSaveArticle.bind(this, saveLink, id, shortUrl),
                 this.onSaveArticleError.bind(this, saveLink, id, shortUrl),
-                this.userData,
                 id,
                 shortUrl
             )
@@ -275,7 +280,6 @@ define([
             this.deleteArticle.bind(this,
                 this.onDeleteArticle.bind(this, deleteLink, id, shortUrl),
                 this.onDeleteArticleError.bind(this, deleteLink, id, shortUrl),
-                this.userData,
                 id,
                 shortUrl
             )
