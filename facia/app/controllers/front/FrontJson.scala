@@ -67,6 +67,7 @@ trait FapiFrontJsonLite extends ExecutionContexts{
     Json.obj(
       "displayName" -> pressedCollection.displayName,
       "href" -> pressedCollection.href,
+      "id" -> pressedCollection.id,
       "content" -> pressedCollection.all.filterNot(isLinkSnap).map(getContent))
 
   private def isLinkSnap(faciaContent: FaciaContent) = faciaContent match {
