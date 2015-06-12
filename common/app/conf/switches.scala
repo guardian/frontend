@@ -647,6 +647,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val TwitterMostViewed = Switch(
+    "Feature",
+    "ab-twitter-most-viewed",
+    "Twitter most viewed",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
+
   val ABTestHeadlines = Switch(
     "Feature",
     "a-b-test-headlines",

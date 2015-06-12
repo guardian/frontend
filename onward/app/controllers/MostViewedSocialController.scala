@@ -4,7 +4,7 @@ import com.gu.facia.api.models.CollectionConfig
 import common.`package`._
 import common.{ExecutionContexts, Edition, JsonNotFound}
 import conf.LiveContentApi
-import feed.MostPopularFacebookAutoRefresh
+import feed.MostPopularSocialAutoRefresh
 import layout.{CollectionEssentials, FaciaContainer}
 import model.{Content, FrontProperties}
 import play.api.mvc.{Action, Controller}
@@ -12,9 +12,17 @@ import services.{FaciaContentConvert, CollectionConfigWithId}
 import slices.Fixed
 import scala.concurrent.Future.{successful => unit}
 
-object MostViewedFacebookController extends Controller with ExecutionContexts {
-  def renderMostViewed = Action.async { implicit request =>
-    MostPopularFacebookAutoRefresh.get match {
+object MostViewedSocialController extends Controller with ExecutionContexts {
+  def renderMostViewed(socialContext: String) = Action.async { implicit request =>
+    val mostPopularSocial = MostPopularSocialAutoRefresh.get
+
+    val articles = socialContext match {
+      case "twitter" => mostPopularSocial.map(_.twitter)
+      case "facebook" => mostPopularSocial.map(_.facebook)
+      case _ => None
+    }
+
+    articles match {
       case Some(articleIds) if articleIds.nonEmpty =>
         LiveContentApi.getResponse(
           LiveContentApi
@@ -24,9 +32,9 @@ object MostViewedFacebookController extends Controller with ExecutionContexts {
           val items = response.results
           val container = visuallyPleasingContainerForStories(items.length)
 
-          val dataId = "trending-on-facebook"
-          val componentId = Some("trending-on-facebook")
-          val displayName = Some("trending on facebook")
+          val dataId = s"trending-on-$socialContext"
+          val componentId = Some(s"trending-on-$socialContext")
+          val displayName = Some(s"trending on $socialContext")
           val properties = FrontProperties(None, None, None, None, false, None)
 
           val config = CollectionConfig.empty.copy(
