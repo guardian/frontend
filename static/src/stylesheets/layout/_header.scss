@@ -5,6 +5,11 @@ $guardian-services-toggle-arrow-size: 4px;
 $c-guardian-services-active-background: #ffffff;
 $c-guardian-services-action: #ffffff;
 
+.l-header-wrapper {
+    position: relative;
+    z-index: $zindex-sticky;
+}
+
 .l-header {
     position: relative;
 

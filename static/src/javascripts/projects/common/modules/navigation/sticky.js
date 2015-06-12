@@ -40,7 +40,7 @@ define([
             this.$els.bannerMobile          = $('.top-banner-ad-container--mobile');
             this.$els.main                  = $('#maincontent');
             this.$els.navHeader             = $('.js-navigation-header');
-            this.$els.sticky                = $('.sticky-nav-mt-test');
+            this.$els.sticky                = $('.js-l-header-wrapper');
             this.$els.burgerIcon            = $('.js-navigation-toggle', this.$els.navHeader);
             this.$els.logoWrapper           = $('.logo-wrapper', this.$els.navHeader);
             this.$els.navigationGreySection = $('.navigation__container--first', this.$els.navHeader);
