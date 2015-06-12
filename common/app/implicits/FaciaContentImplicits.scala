@@ -118,5 +118,6 @@ object FaciaContentImplicits {
     def imageHide = FaciaContentUtils.properties(fc).exists(_.imageHide)
     def imageSlideshowReplace = FaciaContentUtils.properties(fc).exists(_.imageSlideshowReplace)
     def group = FaciaContentUtils.group(fc)
+    def maybeFrontPublicationDate = FaciaContentUtils.maybeFrontPublicationDate(fc)
   }
 }

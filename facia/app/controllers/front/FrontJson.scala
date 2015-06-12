@@ -1,15 +1,14 @@
 package controllers.front
 
-import com.gu.facia.api.models.{Groups, CollectionConfig}
-import com.gu.facia.client.models.CollectionConfigJson
-import model._
-import model.facia.FapiJsonFormats
-import scala.concurrent.Future
-import play.api.libs.json._
-import common.{Logging, S3Metrics, ExecutionContexts}
-import model.PressedPage
-import services.{CollectionConfigWithId, SecureS3Request}
+import com.gu.facia.api.models.{CollectionConfig, FaciaContent, Groups, LinkSnap}
+import common.{ExecutionContexts, Logging, S3Metrics}
 import conf.Configuration
+import implicits.FaciaContentImplicits._
+import model.facia.PressedCollection
+import model.{PressedPage, _}
+import play.api.libs.json._
+import services.{CollectionConfigWithId, SecureS3Request}
+import scala.concurrent.Future
 
 
 trait FrontJsonLite extends ExecutionContexts{
@@ -56,46 +55,36 @@ trait FrontJsonLite extends ExecutionContexts{
 object FrontJsonLite extends FrontJsonLite
 
 trait FapiFrontJsonLite extends ExecutionContexts{
-  def get(json: JsValue): JsObject = {
+  def get(pressedPage: PressedPage): JsObject = {
     Json.obj(
-      "webTitle" -> (json \ "seoData" \ "webTitle"),
-      "collections" -> getCollections(json)
-    )
-  }
+      "webTitle" -> pressedPage.seoData.webTitle,
+      "collections" -> getCollections(pressedPage))}
 
-  private def getCollections(json: JsValue): Seq[JsValue] = {
-    (json \ "collections").asOpt[Seq[JsObject]].getOrElse(Nil).map(getCollection)
-  }
+  private def getCollections(pressedPage: PressedPage): Seq[JsValue] =
+    pressedPage.collections.map(getCollection)
 
-  private def getCollection(json: JsValue): JsValue = {
+  private def getCollection(pressedCollection: PressedCollection): JsValue =
     Json.obj(
-      "displayName" -> (json \ "displayName"),
-      "href" -> (json \ "href"),
-      "id" -> (json \ "id"),
-      "content" -> getContent(json)
-    )
-  }
+      "displayName" -> pressedCollection.displayName,
+      "href" -> pressedCollection.href,
+      "content" -> pressedCollection.all.filterNot(isLinkSnap).map(getContent))
 
-  private def getContent(json: JsValue): Seq[JsValue] = {
-    val curated = (json \ "curated").asOpt[Seq[JsObject]].getOrElse(Nil)
-    val editorsPicks = (json \ "editorsPicks").asOpt[Seq[JsObject]].getOrElse(Nil)
-    val results = (json \ "results").asOpt[Seq[JsObject]].getOrElse(Nil)
+  private def isLinkSnap(faciaContent: FaciaContent) = faciaContent match {
+    case _: LinkSnap => true
+    case _ => false}
 
-    (curated ++ editorsPicks ++ results)
-      .filterNot{ j =>
-      (j \ "type").asOpt[String].contains("LinkSnap")
-    }
-      .map{ j =>
+  private def getContent(faciaContent: FaciaContent): JsValue = {
+    JsObject(
       Json.obj(
-        "headline" -> ((j \ "headline").asOpt[JsString].getOrElse(j \ "fields" \ "headline"): JsValue),
-        "trailText" -> ((j \ "trailText").asOpt[JsString].getOrElse(j \ "fields" \ "trailText"): JsValue),
-        "thumbnail" -> (j \ "content" \ "fields" \ "thumbnail"),
-        "shortUrl" -> (j \ "content" \ "fields" \ "shortUrl"),
-        "id" -> (j \ "content" \ "id"),
-        "group" -> (j \ "group"),
-        "frontPublicationDate" -> (j \ "maybeFrontPublicationDate")
-      )
-    }
+        "headline" -> faciaContent.headline,
+        "trailText" -> faciaContent.trailText,
+        "thumbnail" -> faciaContent.maybeContent.flatMap(_.safeFields.get("thumbnail")),
+        "shortUrl" -> faciaContent.shortUrl,
+        "id" -> faciaContent.maybeContent.map(_.id),
+        "group" -> faciaContent.group,
+        "frontPublicationDate" -> faciaContent.maybeFrontPublicationDate)
+      .fields
+      .filterNot{ case (_, v) => v == JsNull})
   }
 }
 
