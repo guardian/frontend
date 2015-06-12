@@ -189,11 +189,12 @@ define([
                     width:     '100%',
                     'z-index': '1000'
                 });
-                //header is not slim yet
+                // Header is not slim yet
                 this.$els.header.removeClass('l-header--is-slim');
 
                 // Make sure navigation is visible
-                //this.$els.navigation.css('display', 'block');
+                this.$els.navigation.removeAttr('class');
+                this.$els.navigation.attr('class', 'navigation');
 
                 this.$els.header.css({
                     position:  'static',
