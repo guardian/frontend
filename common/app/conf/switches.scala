@@ -1196,6 +1196,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val FaciaToolPutPrivate = Switch(
+    "Facia",
+    "facia-tool-put-private",
+    "If this is switched on, facia tool will put collections to S3 as private",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 30),
+    exposeClientSide = false
+  )
+
   // Server-side A/B Tests
   val ServerSideTests = {
     // It's for the side effect. Blame agents.
