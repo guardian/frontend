@@ -90,14 +90,15 @@ define([
             storeObj = {
                 pageName: this.s.pageName,
                 tag: spec.tag || 'untracked',
-                time: new Date().getTime()
+                time: new Date().getTime(),
+                customEventProperties: spec.customEventProperties
             };
             try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {}
             storage.session.set(NG_STORAGE_KEY, storeObj);
         } else {
             // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
             delay = spec.samePage ? true : spec.target;
-            this.trackLink(delay, spec.tag);
+            this.trackLink(delay, spec.tag, { customEventProperties: spec.customEventProperties });
         }
     };
 
@@ -127,8 +128,9 @@ define([
         this.trackLink(true, linkName);
     };
 
-    Omniture.prototype.trackLink = function (linkObject, linkName) {
+    Omniture.prototype.trackLink = function (linkObject, linkName, options) {
         this.populateEventProperties(linkName);
+        _.assign(this.s, options.customEventProperties);
         this.s.tl(linkObject, 'o', linkName);
     };
 
@@ -290,6 +292,8 @@ define([
                 // this allows 'live' Omniture tracking of Navigation Interactions
                 this.s.eVar7 = ni.pageName;
                 this.s.prop37 = ni.tag;
+
+                _.assign(this.s, ni.customEventProperties);
             }
             storage.session.remove(R2_STORAGE_KEY);
             storage.session.remove(NG_STORAGE_KEY);

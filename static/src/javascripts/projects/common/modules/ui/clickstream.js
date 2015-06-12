@@ -67,6 +67,9 @@ define([
                     return spec;
                 }
 
+                var customEventProperties = JSON.parse(el.getAttribute('data-custom-event-properties') || '{}');
+                spec.customEventProperties = _.merge(customEventProperties, spec.customEventProperties);
+
                 if (!spec.validTarget) {
                     spec.validTarget = filterSource(elName).length > 0 || !!forceValid;
                     if (spec.validTarget) {
