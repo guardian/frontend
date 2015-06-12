@@ -4,6 +4,7 @@ define([
     'bean',
     'fastdom',
     'common/utils/_',
+    'common/utils/$',
     'common/utils/detect',
     'common/utils/config',
     'common/utils/mediator',
@@ -18,6 +19,7 @@ define([
     bean,
     fastdom,
     _,
+    $,
     detect,
     config,
     mediator,
@@ -27,10 +29,6 @@ define([
     saveForLaterLinkTmpl,
     saveForLaterButtonTmpl
 ) {
-    //This is because of some a/b test wierdness - '$' doesn't work
-    var $ = function (selector, context) {
-        return bonzo(qwery(selector, context));
-    };
 
     function SaveForLater() {
         this.classes = {
