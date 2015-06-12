@@ -198,10 +198,7 @@
 
 .brand-bar__item--masterclasses {
     .brand-bar__item--right--au-edition & {
-        // Hide on mobile
-        @include mq($until: tablet) {
-            display: none;
-        }
+        display: none;
     }
 }
 
