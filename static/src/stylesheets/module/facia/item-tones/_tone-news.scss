@@ -11,7 +11,8 @@
 
     .fc-item__kicker,
     .fc-item__byline,
-    .rich-link__read-more-text {
+    .rich-link__read-more-text,
+    .fc-save-for-later--is-saved {
         color: colour(news-default);
     }
 
@@ -24,6 +25,10 @@
     }
 
     .rich-link__arrow-icon {
+        fill: colour(news-default);
+    }
+
+    .fc-save-for-later--is-saved .inline-tone-fill {
         fill: colour(news-default);
     }
 }

@@ -31,7 +31,8 @@
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__meta,
-    .rich-link__read-more-text {
+    .rich-link__read-more-text,
+    .fc-save-for-later--is-saved {
         color: colour(live-mute);
     }
 
@@ -67,6 +68,10 @@
         .inline-icon {
             fill: colour(live-mute);
         }
+    }
+
+    .fc-save-for-later--is-saved .inline-tone-fill {
+        fill: colour(live-mute);
     }
 }
 

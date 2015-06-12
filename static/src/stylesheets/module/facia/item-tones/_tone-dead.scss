@@ -14,7 +14,8 @@
     }
 
     .fc-item__kicker,
-    .fc-item__byline {
+    .fc-item__byline,
+    .fc-save-for-later--is-saved {
         color: colour(live-accent);
     }
 
@@ -28,6 +29,10 @@
 
     .rich-link__arrow-icon {
         fill: colour(neutral-2);
+    }
+
+    .fc-save-for-later--is-saved .inline-tone-fill {
+        fill: colour(live-accent);
     }
 }
 

@@ -34,7 +34,8 @@
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__standfirst,
-    .rich-link__read-more-text {
+    .rich-link__read-more-text,
+    .fc-save-for-later--is-saved {
         color: colour(editorial-accent);
     }
 
@@ -48,6 +49,10 @@
 
     .fc-item__meta {
         color: colour(editorial-accent);
+    }
+
+    .fc-save-for-later--is-saved .inline-tone-fill {
+        fill: colour(editorial-accent);
     }
 
     .fc-sublink__title:before {
