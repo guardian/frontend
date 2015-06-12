@@ -112,9 +112,9 @@ define([
     }
 
     function createKeyEventHTML(el) {
-        var keyEventTemplate = '<li class="timeline__item" data-event-id="{{id}}">' +
-                '<a class="timeline__link" href="#{{id}}" data-event-id="{{id}}">' +
-                '<span class="timeline__date">{{time}}</span><span class="timeline__title u-underline">{{title}}</span></a></li>',
+        var keyEventTemplate = '<li class="timeline__item" data-event-id="<%=id%>">' +
+                '<a class="timeline__link" href="#<%=id%>" data-event-id="<%=id%>">' +
+                '<span class="timeline__date"><%=time%></span><span class="timeline__title u-underline"><%=title%></span></a></li>',
             data = {
                 id: el.getAttribute('id'),
                 title: $('.block-title', el).text(),
