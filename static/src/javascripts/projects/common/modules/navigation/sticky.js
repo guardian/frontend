@@ -35,16 +35,18 @@ define([
 
     StickyHeader.prototype.init = function () {
         fastdom.read(function () {
-            this.$els.header                = $('#header');
-            this.$els.bannerDesktop         = $('.top-banner-ad-container--above-nav');
-            this.$els.bannerMobile          = $('.top-banner-ad-container--mobile');
-            this.$els.main                  = $('#maincontent');
-            this.$els.navHeader             = $('.js-navigation-header');
-            this.$els.burgerIcon            = $('.js-navigation-toggle', this.$els.navHeader);
-            this.$els.logoWrapper           = $('.logo-wrapper', this.$els.navHeader);
-            this.$els.navigationGreySection = $('.navigation__container--first', this.$els.navHeader);
-            this.$els.navigation            = $('.navigation', this.$els.navHeader);
-            this.headerBigHeight            = this.$els.navHeader.dim().height;
+            this.$els.header         = $('#header');
+            this.$els.bannerDesktop  = $('.top-banner-ad-container--above-nav');
+            this.$els.bannerMobile   = $('.top-banner-ad-container--mobile');
+            this.$els.main           = $('#maincontent');
+            this.$els.navHeader      = $('.js-navigation-header');
+            this.$els.burgerIcon     = $('.js-navigation-toggle', this.$els.navHeader);
+            this.$els.logoWrapper    = $('.logo-wrapper', this.$els.navHeader);
+            this.$els.navigation     = $('.navigation', this.$els.navHeader);
+            this.headerBigHeight     = this.$els.navHeader.dim().height;
+            this.navigationClassList = this.$els.navigation.attr('class');
+
+            console.log(this.navigationClassList);
 
             // Top ads are revealed with CSS animation. As we don't know when animation is finished we will
             // start updating position only if the viewport is 'firstLoadDepth' scrolled down on page load
@@ -122,6 +124,12 @@ define([
         }
     };
 
+    StickyHeader.prototype.setNavigationDefault = function () {
+        // Make sure navigation is visible and has its default styles
+        this.$els.navigation.removeAttr('class');
+        this.$els.navigation.attr('class', this.navigationClassList);
+    };
+
     StickyHeader.prototype.updatePosition = function (breakpoint) {
         var bannerHeight = this.$els.bannerDesktop.dim().height || 128,
             scrollY;
@@ -193,9 +201,8 @@ define([
                 // Header is not slim yet
                 this.$els.header.removeClass('l-header--is-slim');
 
-                // Make sure navigation is visible
-                this.$els.navigation.removeAttr('class');
-                this.$els.navigation.attr('class', 'navigation');
+                // Put navigation to its default state
+                this.setNavigationDefault();
 
                 this.$els.header.css({
                     position:  'relative',
@@ -239,9 +246,8 @@ define([
                 });
                 this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
 
-                // Make sure navigation is visible
-                this.$els.navigation.removeAttr('class');
-                this.$els.navigation.attr('class', 'navigation');
+                // Put navigation to its default state
+                this.setNavigationDefault();
             } else {
                 //after this.thresholdMobile px of scrolling 'release' banner and navigation
                 this.$els.bannerMobile.css({
