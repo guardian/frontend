@@ -7,6 +7,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/facebook-most-viewed',
+    'common/modules/experiments/tests/twitter-most-viewed',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/mt-rec1',
@@ -24,6 +25,7 @@ define([
     store,
     mvtCookie,
     FacebookMostViewed,
+    TwitterMostViewed,
     LiveblogNotifications,
     HighCommercialComponent,
     MtRec1,
@@ -36,6 +38,7 @@ define([
 
     var TESTS = _.flatten([
         new FacebookMostViewed(),
+        new TwitterMostViewed(),
         new LiveblogNotifications(),
         new HighCommercialComponent(),
         new MtRec1(),
