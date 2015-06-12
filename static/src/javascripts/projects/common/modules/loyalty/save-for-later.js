@@ -69,7 +69,7 @@ define([
             if (this.isContent) {
                 var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
                     '&shortUrl=' + config.page.shortUrl.replace('http://gu.com', '');
-                this.renderSaveThisArticleLink({ deferToClick: false, url: url, state: 'save' });
+                this.renderSaveThisArticleLink({ deferToClick: false, url: url, isSaved: false });
             }
             this.renderLinksInContainers(false);
         }
@@ -80,10 +80,13 @@ define([
         var templateString = this.templates[options.deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
 
         $savers.each(function (saver) {
-            bonzo(saver).html(template(templateString, {
+            var $saver = bonzo(saver);
+            $saver.html(template(templateString, {
                 url: options.url,
                 icon: bookmarkSvg,
-                state: options.state
+                isSaved: options.isSaved,
+                contentType: config.page.contentType,
+                position: $saver.attr('data-position')
             }));
         });
     };
@@ -148,9 +151,9 @@ define([
             shortUrl = config.page.shortUrl.replace('http://gu.com', '');
 
         if (this.hasUserSavedArticle(this.userData.articles, shortUrl)) {
-            this.renderSaveThisArticleLink({ deferToClick: false, url: this.savedArticlesUrl, state: 'saved' });
+            this.renderSaveThisArticleLink({ deferToClick: false, url: this.savedArticlesUrl, isSaved: true });
         } else {
-            this.renderSaveThisArticleLink({ deferToClick: true, url: '', state: 'save' });
+            this.renderSaveThisArticleLink({ deferToClick: true, url: '', isSaved: false });
 
             bean.one(saveLinkHolder, 'click', this.classes.saveThisArticleButton,
                 this.saveArticle.bind(this,
@@ -232,11 +235,11 @@ define([
     //If this is an article Page, configure the save article link
 
     SaveForLater.prototype.onSaveThisArticle = function () {
-        this.renderSaveThisArticleLink({ deferToClick: false, url: this.savedArticlesUrl, state: 'saved' });
+        this.renderSaveThisArticleLink({ deferToClick: false, url: this.savedArticlesUrl, isSaved: true });
     };
 
     SaveForLater.prototype.onSaveThisArticleError = function () {
-        this.renderSaveThisArticleLink({ deferToClick: true, url: '', state: 'save' });
+        this.renderSaveThisArticleLink({ deferToClick: true, url: '', isSaved: false });
     };
 
     //--- Handle saving an article on a front of container
