@@ -37,7 +37,11 @@ trait Requests {
       "/uk/money",
       "/au/money",
       "/us/money",
-      "/money"
+      "/money",
+      "/uk/technology",
+      "/au/technology",
+      "/us/technology",
+      "/technology"
     )
 
     lazy val isInImgixTest: Boolean = Switches.ImgixSwitch.isSwitchedOn &&
