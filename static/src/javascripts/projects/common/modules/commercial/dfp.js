@@ -105,13 +105,9 @@ define([
         },
 
         isViewabilityTest = function () {
-            var MtRec1Test = ab.getParticipations().MtRec1,
-                MtRec2Test = ab.getParticipations().MtRec2,
-                ViewabilityTest = ab.getParticipations().Viewability;
+            var ViewabilityTest = ab.getParticipations().Viewability;
 
-            return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A' ||
-                ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A' ||
-                ab.testCanBeRun('Viewability') && ViewabilityTest && ViewabilityTest.variant === 'variant';
+            return ab.testCanBeRun('Viewability') && ViewabilityTest && ViewabilityTest.variant === 'variant';
         },
 
         recordFirstAdRendered = _.once(function () {
