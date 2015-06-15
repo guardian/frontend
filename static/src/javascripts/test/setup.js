@@ -14,3 +14,16 @@ System.config({
 		'ophan/ng': 'javascripts/test/vendor/ophan.js'
 	}
 });
+
+// Helper for async tests using promises
+// Mocha supports promises, Jasmine doesn't…
+// https://github.com/jasmine/jasmine/issues/681
+var partialItPromise = function (it, description, fn) {
+    it(description, function (done) {
+        fn().then(done, done.fail);
+    });
+};
+
+window.itPromise = partialItPromise.bind(null, it);
+// Exclusive run
+window.fitPromise = partialItPromise.bind(null, fit);
