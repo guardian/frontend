@@ -81,7 +81,8 @@ describe("Clickstream", function() {
                 samePage: false,
                 sameHost: true,
                 validTarget: true,
-                tag: 'outer div | the ancestor | the descendant'
+                tag: 'outer div | the ancestor | the descendant',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -100,7 +101,8 @@ describe("Clickstream", function() {
             spy = sinon.spy(object, "method"),
             clickSpec = {
                 validTarget: false,
-                tag: 'outer div'
+                tag: 'outer div',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -122,7 +124,8 @@ describe("Clickstream", function() {
                 samePage: true,
                 sameHost: true,
                 validTarget: true,
-                tag: 'outer div | paragraph'
+                tag: 'outer div | paragraph',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -144,7 +147,8 @@ describe("Clickstream", function() {
                 samePage: false,
                 sameHost: true,
                 validTarget: true,
-                tag: 'outer div | internal link'
+                tag: 'outer div | internal link',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -166,7 +170,8 @@ describe("Clickstream", function() {
                 samePage: false,
                 sameHost: false,
                 validTarget: true,
-                tag: 'outer div | external link'
+                tag: 'outer div | external link',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -204,7 +209,8 @@ describe("Clickstream", function() {
                 validTarget: true,
                 tag: 'outer div | the contextual link',
                 linkContextPath: 'the inner context path',
-                linkContextName: 'the inner context name'
+                linkContextName: 'the inner context name',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
