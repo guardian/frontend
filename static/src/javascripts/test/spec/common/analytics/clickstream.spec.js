@@ -36,6 +36,9 @@ describe("Clickstream", function() {
                                     '<button href="/foo" id="click-me-link-context" data-link-name="the contextual link">The link</button>' +
                                 '</span>' +
                             '</span>' +
+                            '<div data-custom-event-properties=\'{ "prop1": "foo" }\'>' +
+                                '<button id="click-me-custom-event-properties" data-custom-event-properties=\'{ "prop2": "foo" }\'>Button</button>' +
+                            '</div>' +
                         '</p>' +
                     '</div>'
                     ]
@@ -211,6 +214,30 @@ describe("Clickstream", function() {
                 linkContextPath: 'the inner context path',
                 linkContextName: 'the inner context name',
                 customEventProperties: {}
+            };
+
+        mediator.on('module:clickstream:click', spy);
+
+        bean.fire(el, 'click');
+    });
+
+    it("should get custom event properties recursively", function(done){
+
+        var cs  = new Clickstream({ filter: ['button'], withEvent: false }),
+            object = { method: function (p) {
+                console.log(0, p)
+                clickSpec.target = p.target;
+                expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+                done();
+            }},
+            spy = sinon.spy(object, "method"),
+            el = document.getElementById('click-me-custom-event-properties'),
+            clickSpec = {
+                tag: 'outer div',
+                samePage: true,
+                sameHost: true,
+                validTarget: true,
+                customEventProperties: { 'prop1': 'foo', 'prop2': 'foo' }
             };
 
         mediator.on('module:clickstream:click', spy);
