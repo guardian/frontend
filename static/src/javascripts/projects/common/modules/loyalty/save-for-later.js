@@ -178,7 +178,7 @@ define([
 
         //--- Get articles
     // -------------------------Save Article
-    SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl, event) {
+    SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl) {
         var self = this,
             date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
             newArticle = {id: pageId, shortUrl: shortUrl, date: date, read: false  };
