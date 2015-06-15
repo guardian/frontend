@@ -15,6 +15,7 @@ object FaciaContentImplicits {
     def webPublicationDate: DateTime = FaciaContentUtils.webPublicationDate(fc)
 
     def id: String = FaciaContentUtils.id(fc)
+    def maybeContentId = FaciaContentUtils.maybeContentId(fc)
 
     def embedType: Option[String] = FaciaContentUtils.embedType(fc)
     def embedCss: Option[String] = FaciaContentUtils.embedCss(fc)
