@@ -28,19 +28,21 @@ define([
             ),
             $adSlotContainer,
             $commentMainColumn,
-            isMtRecTest = function () {
+            isViewabilityTest = function () {
                 var MtRec1Test = ab.getParticipations().MtRec1,
-                    MtRec2Test = ab.getParticipations().MtRec2;
+                    MtRec2Test = ab.getParticipations().MtRec2,
+                    ViewabilityTest = ab.getParticipations().Viewability;
 
                 return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A' ||
-                    ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
+                    ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A' ||
+                    ab.testCanBeRun('Viewability') && ViewabilityTest && ViewabilityTest.variant === 'variant';
             };
 
         $adSlotContainer = $(opts.adSlotContainerSelector);
         $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
 
         // is the switch off, or not in the AB test, or there is no adslot container, or comments are disabled, or not signed in
-        if (!config.switches.standardAdverts || !isMtRecTest() || !$adSlotContainer.length || !config.switches.discussion || !identityApi.isUserLoggedIn()) {
+        if (!config.switches.standardAdverts || !isViewabilityTest() || !$adSlotContainer.length || !config.switches.discussion || !identityApi.isUserLoggedIn()) {
             return false;
         }
 
