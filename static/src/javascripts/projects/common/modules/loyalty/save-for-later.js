@@ -56,7 +56,7 @@ define([
     }
 
     var bookmarkSvg = svgs('bookmark', ['i-left']);
-    var shortUrl = config.page.shortUrl.replace('http://gu.com', '');
+    var shortUrl = (config.page.shortUrl || '').replace('http://gu.com', '');
 
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
