@@ -137,7 +137,7 @@ define([
         });
     }
 
-    function isMtRec() {
+    function isViewabilityTest() {
         var MtRec1Test = ab.getParticipations().MtRec1,
             MtRec2Test = ab.getParticipations().MtRec2;
 
@@ -146,7 +146,7 @@ define([
     }
 
     function getReady() {
-        if (isMtRec()) {
+        if (isViewabilityTest()) {
             return Promise.all([onImagesLoaded(), onRichLinksUpgraded()]);
         }
 
