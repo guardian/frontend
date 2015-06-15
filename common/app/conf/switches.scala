@@ -984,24 +984,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABMtRec1 = Switch(
-    "A/B Tests",
-    "ab-mt-rec1",
-    "Viewability results - Recommendation option 1",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
-    exposeClientSide = true
-  )
-
-  val ABMtRec2 = Switch(
-    "A/B Tests",
-    "ab-mt-rec2",
-    "Viewability results - Recommendation option 2",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
-    exposeClientSide = true
-  )
-
   val ABViewability = Switch(
     "A/B Tests",
     "ab-viewability",
