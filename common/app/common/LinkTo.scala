@@ -1,6 +1,6 @@
 package common
 
-import com.gu.facia.api.models.FaciaContent
+import com.gu.facia.api.models._
 import layout.ContentCard
 import play.twirl.api.Html
 import play.api.mvc.{Result, AnyContent, Request, RequestHeader}
@@ -53,8 +53,6 @@ trait LinkTo extends Logging {
     case snap: Snap => snap.snapHref.filter(_.nonEmpty).map(apply(_))
     case t: Trail => Option(apply(t.url))
   }
-
-  def apply(faciaContent: FaciaContent)(implicit request: RequestHeader): Option[String] = faciaContent.href
 
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
     faciaCard.url.get(request)

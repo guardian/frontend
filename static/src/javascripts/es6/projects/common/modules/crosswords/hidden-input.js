@@ -25,7 +25,7 @@ export default class HiddenInput extends React.Component {
         }
     }
 
-    handleChange () {
+    handleChange (event) {
         this.props.onChange(event.target.value.toUpperCase());
         this.setState({value: ''});
     }

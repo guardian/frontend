@@ -1,12 +1,12 @@
 package controllers
 
 import com.gu.facia.client.models.CollectionConfigJson
-import services.PressAndNotify
+import services.Press
 import util.Requests._
 import play.api.mvc.Controller
 import config.UpdateManager
 import play.api.libs.json.Json
-import auth.ExpiringActions
+import auth.PanDomainAuthActions
 
 object CollectionRequest {
   implicit val jsonFormat = Json.format[CollectionRequest]
@@ -23,25 +23,25 @@ object CreateCollectionResponse {
 
 case class CreateCollectionResponse(id: String)
 
-object CollectionController extends Controller {
-  def create = ExpiringActions.ExpiringAuthAction { request =>
+object CollectionController extends Controller with PanDomainAuthActions {
+  def create = AuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
         val identity = request.user
         val collectionId = UpdateManager.addCollection(frontIds, collection, identity)
-        PressAndNotify(Set(collectionId))
+        Press.fromSetOfIdsWithForceConfig(Set(collectionId))
         Ok(Json.toJson(CreateCollectionResponse(collectionId)))
 
       case None => BadRequest
     }
   }
 
-  def update(collectionId: String) = ExpiringActions.ExpiringAuthAction { request =>
+  def update(collectionId: String) = AuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
         val identity = request.user
         UpdateManager.updateCollection(collectionId, frontIds, collection, identity)
-        PressAndNotify(Set(collectionId))
+        Press.fromSetOfIdsWithForceConfig(Set(collectionId))
         Ok
 
       case None => BadRequest

@@ -29,7 +29,7 @@
             @fragments.social(content, "top")
         </div>
         @if(ABSaveForLaterSwitch.isSwitchedOn) {
-            <div class="js-save-for-later"></div>
+            <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
         }
         <div class="meta__numbers modern-visible">
             <div class="u-h meta__number js-sharecount">
@@ -53,7 +53,7 @@
         @fragments.commercial.badge(content)
     }
 
-    @if(content.showBylinePic) {
+    @if(content.showCircularBylinePicAtSide) {
         <div class="media__body meta__body">
             <div class="media__img meta__image">
                 @fragments.meta.bylineImage(content)

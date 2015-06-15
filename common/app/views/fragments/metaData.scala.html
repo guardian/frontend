@@ -17,6 +17,10 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="HandheldFriendly" content="True" />
 
+@if(conf.Switches.NotificationsSwitch.isSwitchedOn && item.isPreferencesPage) {
+    <link rel="manifest" href="/2015-05-28-manifest.json" crossorigin="use-credentials">
+}
+
 @* http://www.chromium.org/developers/design-documents/dns-prefetching *@
 <link rel="dns-prefetch" href="@Configuration.assets.path" />
 <link rel="dns-prefetch" href="@Configuration.images.path" />
@@ -104,13 +108,14 @@
 @*
     this script allows you to hook up an external debugger for mobile devices
     see: http://people.apache.org/~pmuellr/weinre/docs/latest/
+
 *@
 @if(play.Play.isDev()) {
     @Configuration.javascript.pageData.get("guardian.page.iphoneDebugger").map{ scriptUrl => <script src="@scriptUrl"></script> }
 }
 
-<meta name="google-site-verification" content="LR-FN6c2gIEUoo3k049w1nxyHykmac5ZE3SaUOiKc30" />
-
-<script data-schema="organization" type="application/ld+json">
-@Html(LinkedData.toJson(item.linkedData))
-</script>
+@item.linkedData.map { linkedData =>
+    <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+        @Html(LinkedData.toJson(linkedData))
+    </script>
+}

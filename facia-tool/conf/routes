@@ -2,13 +2,16 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET           /_healthcheck              controllers.HealthCheck.healthcheck()
+GET           /_healthcheck              controllers.StatusController.healthStatus
 
 # authentication endpoints
-GET           /login                     controllers.OAuthLoginController.login
-POST          /login                     controllers.OAuthLoginController.loginAction
-GET           /oauth2callback            controllers.OAuthLoginController.oauth2Callback
-GET           /logout                    controllers.OAuthLoginController.logout
+GET           /authError                 controllers.PandaAuthController.authError(message:String)
+GET           /oauthCallback             controllers.PandaAuthController.oauthCallback
+GET           /logout                    controllers.PandaAuthController.logout
+GET           /login/status              controllers.PandaAuthController.status
+
+# healthcheck
+GET          /status                     controllers.StatusController.healthStatus
 
 # static files
 GET           /assets/*file              controllers.UncachedAssets.at(file)
@@ -27,9 +30,6 @@ GET           /editorial/config          controllers.FaciaToolController.configE
 GET           /commercial/config         controllers.FaciaToolController.configEditor(priority="commercial")
 GET           /training/config           controllers.FaciaToolController.configEditor(priority="training")
 
-GET           /publish-all               controllers.ContentApiPressController.publishAll()
-GET           /publish-all/comet         controllers.ContentApiPressController.publishAllStream()
-
 POST          /collection/publish/*collectionId    controllers.FaciaToolController.publishCollection(collectionId)
 POST          /collection/discard/*collectionId    controllers.FaciaToolController.discardCollection(collectionId)
 
@@ -38,7 +38,6 @@ POST          /press/draft/*path         controllers.FaciaToolController.pressDr
 
 GET           /front/lastmodified/*path  controllers.FaciaToolController.getLastModified(path)
 
-GET           /collection-put/*collectionId controllers.FaciaToolController.generatePutForCollectionId(collectionId)
 GET           /collection/*collectionId     controllers.FaciaToolController.getCollection(collectionId)
 POST          /edits                        controllers.FaciaToolController.collectionEdits
 GET           /collection                   controllers.FaciaToolController.listCollections
@@ -66,7 +65,7 @@ POST          /config/collections/*collectionId    controllers.CollectionControl
 
 
 # Depend on frontend project
-GET           /frontend/config                  controllers.FrontendDependentController.config()
+GET           /frontend/config                  controllers.FrontendDependentController.configuration()
 
 # Stories visible
 POST          /stories-visible/*containerType   controllers.StoriesVisibleController.storiesVisible(containerType)

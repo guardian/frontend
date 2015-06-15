@@ -127,11 +127,35 @@ define([
                 parseAd(event);
             }));
         },
+
         setPageTargeting = function () {
-            _.forOwn(buildPageTargeting(), function (value, key) {
+            if (config.switches.ophan && config.switches.ophanViewId) {
+                require(['ophan/ng'],
+                    function (ophan) {
+                        var viewId = (ophan || {}).viewId;
+                        setTarget({viewId: viewId});
+                    },
+                    function (err) {
+                        raven.captureException(new Error('Error retrieving ophan (' + err + ')'), {
+                            tags: {
+                                feature: 'DFP'
+                            }
+                        });
+
+                        setTarget();
+                    }
+                );
+            } else {
+                setTarget();
+            }
+        },
+
+        setTarget = function (opts) {
+            _.forOwn(buildPageTargeting(opts), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
+
         /**
          * Loop through each slot detected on the page and define it based on the data
          * attributes on the element.
@@ -190,13 +214,6 @@ define([
             return config.switches.lzAds;
         },
 
-        isDeferSpaceFinderTest = function () {
-            var test = ab.getParticipations().DeferSpacefinder,
-                eligible = test && test.variant === 'A';
-
-            return ab.testCanBeRun('DeferSpacefinder') && eligible;
-        },
-
         /**
          * Public functions
          */
@@ -221,7 +238,7 @@ define([
             window.googletag.cmd.push(defineSlots);
 
             // We want to run lazy load if user is in the main test or if there is a switch on
-            (isMtRecTest() || isLzAdsSwitchOn() || isDeferSpaceFinderTest()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            (isMtRecTest() || isLzAdsSwitchOn()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
@@ -234,13 +251,7 @@ define([
                 fastdom.read(function () {
                     var scrollTop    = bonzo(document.body).scrollTop(),
                         scrollBottom = scrollTop + bonzo.viewport().height,
-                        depth;
-
-                    if (isDeferSpaceFinderTest()) {
-                        depth = 100;
-                    } else {
                         depth = 0.5;
-                    }
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
@@ -383,6 +394,7 @@ define([
 
             if (_.every(slots, 'isRendered')) {
                 userTiming.mark('All ads are rendered');
+                mediator.emit('modules:commercial:dfp:alladsrendered');
             }
         },
         addLabel = function ($slot) {

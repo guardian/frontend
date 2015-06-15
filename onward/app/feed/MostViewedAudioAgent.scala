@@ -17,11 +17,6 @@ object MostViewedAudioAgent extends Logging with ExecutionContexts {
   def mostViewedAudio(): Seq[Audio] = audioAgent()
   def mostViewedPodcast(): Seq[Audio] = podcastAgent()
 
-  private def UrlToContentPath(url: String): String = {
-    val path = new URL(url).getPath
-    if (path.startsWith("/")) path.substring(1) else path
-  }
-
   def refresh() = {
     log.info("Refreshing most viewed audio.")
 
@@ -34,7 +29,7 @@ object MostViewedAudioAgent extends Logging with ExecutionContexts {
         url <- (item \ "url").asOpt[String]
         count <- (item \ "count").asOpt[Int]
       } yield {
-        getResponse(LiveContentApi.item(UrlToContentPath(url), Edition.defaultEdition)).map(_.content.map(Content(_)))
+        getResponse(LiveContentApi.item(urlToContentPath(url), Edition.defaultEdition)).map(_.content.map(Content(_)))
       }
 
       Future.sequence(mostViewed).map { contentSeq =>

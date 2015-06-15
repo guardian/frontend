@@ -12,12 +12,15 @@ define([
     'inlineSvg!svgs/icon/market-same',
     'inlineSvg!svgs/icon/arrow',
     'inlineSvg!svgs/icon/arrow-down',
+    'inlineSvg!svgs/icon/cross',
     'inlineSvg!svgs/logo/logo-guardian',
     'inlineSvg!svgs/commercial/logo-soulmates',
     'inlineSvg!svgs/icon/close-central',
     'inlineSvg!svgs/icon/arrow-white-right',
     'inlineSvg!svgs/icon/arrow-right',
-    'inlineSvg!svgs/icon/bookmark'
+    'inlineSvg!svgs/icon/bookmark',
+    'inlineSvg!svgs/notifications-explainer-mobile',
+    'inlineSvg!svgs/notifications-explainer-desktop'
 ], function (
     _,
     commentCount16icon,
@@ -28,12 +31,15 @@ define([
     marketSameIcon,
     arrowicon,
     arrowdownicon,
+    crossIcon,
     logoguardian,
     logosoulmates,
     closeCentralIcon,
     arrowWhiteRight,
     arrowRight,
-    bookmark
+    bookmark,
+    notificationsExplainerMobile,
+    notificationsExplainerDesktop
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -44,12 +50,15 @@ define([
         marketSameIcon: marketSameIcon,
         arrowicon: arrowicon,
         arrowdownicon: arrowdownicon,
+        crossIcon: crossIcon,
         logoguardian: logoguardian,
         logosoulmates: logosoulmates,
         closeCentralIcon: closeCentralIcon,
         arrowWhiteRight: arrowWhiteRight,
         arrowRight: arrowRight,
-        bookmark: bookmark
+        bookmark: bookmark,
+        notificationsExplainerMobile: notificationsExplainerMobile,
+        notificationsExplainerDesktop: notificationsExplainerDesktop
     };
 
     return function (name, classes, title) {

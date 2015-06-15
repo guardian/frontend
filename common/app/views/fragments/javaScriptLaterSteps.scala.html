@@ -219,6 +219,7 @@
                 text:                       'text', // noop
                 inlineSvg:                  'inlineSvg', // noop
                 zxcvbn:                     '@Static("javascripts/components/zxcvbn/zxcvbn.js")',
+                'bootstraps/accessibility': '@Static("javascripts/bootstraps/accessibility.js")',
                 'bootstraps/app':           '@Static("javascripts/bootstraps/app.js")',
                 'bootstraps/commercial':    '@Static("javascripts/bootstraps/commercial.js")',
                 'bootstraps/creatives':     '@Static("javascripts/bootstraps/creatives.js")',
@@ -301,7 +302,10 @@
                     images.upgradePictures();
                     images.listen();
 
-                    if (config.switches.commercial) {
+                    // Preference pages are served via HTTPS for service worker support.
+                    // These pages must not have mixed (HTTP/HTTPS) content, so
+                    // we disable ads (until the day comes when all ads are HTTPS).
+                    if (! config.page.isPreferencesPage) {
                         require(['bootstraps/commercial'], raven.wrap(
                             { tags: { feature: 'commercial' } },
                             function (commercial) {
@@ -331,26 +335,12 @@
 @bootSystemJs() = {
 
     <script>
-        @Html(Static.js.es6ModuleLoader)
-        @Html(Static.js.systemJs)
-        @Html(Static.js.systemJsAppConfig)
+        @Html(Static.js.systemJsSetupFragment)
 
-        @if(!play.Play.isDev()) {
-            @Html(Static.js.systemJsBundleConfig)
-        }
-
-        System.baseURL = '@{Configuration.assets.path}';
-        System.paths['ophan/ng']  = '@{Configuration.javascript.config("ophanJsUrl")}.js';
-        System.paths['googletag'] = '@{Configuration.javascript.config("googletagJsUrl")}';
-
-        @Html(Static.js.systemJsNormalize)
-
-        window.require = System.amdRequire.bind(System);
-        window.define = System.amdDefine.bind(System);
-
-        System.import('core')
+        // Bracket notation for IE8 (import is reserved)
+        System['import']('core')
         .then(function(){
-            return System.import('raven');
+            return System['import']('raven');
         })
         .then(function(raven) {
             raven.config(
@@ -386,58 +376,66 @@
                 }
             ).install();
 
-            Promise.all([
-                'common/utils/config',
-                'common/modules/experiments/ab',
-                'common/modules/ui/images',
-                'common/modules/ui/lazy-load-images'].map(function(module){
-                return System.import(module);
-            })).then(function(values) {
-                var config = values[0];
-                var ab = values[1];
-                var images = values[2];
-                var lazyLoadImages = values[3];
+            // Safe to depend on Lodash because it's part of core
+            System['import']('common/utils/_').then(function (_) {
+                var importAll = function (moduleIds) {
+                    return Promise.all(_(moduleIds)
+                        .map(function(module){ return System['import'](module); })
+                        .value());
+                };
 
-                ab.segmentUser();
-                ab.run();
-                if(guardian.config.page.isFront) {
-                    if(!document.addEventListener) { // IE8 and below
-                        window.onload = images.upgradePictures;
-                    }
-                }
-                lazyLoadImages.init();
-                images.upgradePictures();
-                images.listen();
+                importAll([
+                    'common/utils/config',
+                    'common/modules/experiments/ab',
+                    'common/modules/ui/images',
+                    'common/modules/ui/lazy-load-images']).then(function(values) {
+                    var config = values[0];
+                    var ab = values[1];
+                    var images = values[2];
+                    var lazyLoadImages = values[3];
 
-                if (config.switches.commercial) {
-                    System.import('bootstraps/commercial').then(raven.wrap(
-                        { tags: { feature: 'commercial' } },
-                        function (commercial) {
-                            commercial.init();
+                    ab.segmentUser();
+                    ab.run();
+                    if(guardian.config.page.isFront) {
+                        if(!document.addEventListener) { // IE8 and below
+                            window.onload = images.upgradePictures;
                         }
-                    ));
-                }
+                    }
+                    lazyLoadImages.init();
+                    images.upgradePictures();
+                    images.listen();
 
-                if (guardian.isModernBrowser) {
-                    @if(play.Play.isDev()) {
-                        System.import('bootstraps/dev').then(function (devmode) { devmode.init(); });
+                    if (config.switches.commercial && !config.page.isPreferencesPage) {
+                        System['import']('bootstraps/commercial').then(raven.wrap(
+                            { tags: { feature: 'commercial' } },
+                            function (commercial) {
+                                commercial.init();
+                            }
+                        ));
                     }
 
-                    System.import('bootstraps/app').then(function(app) {
-                        app.go();
-                    });
-                }
+                    if (guardian.isModernBrowser) {
+                        @if(play.Play.isDev()) {
+                            System['import']('bootstraps/dev').then(function (devmode) { devmode.init(); });
+                        }
 
-                @if(item.section == "crosswords") {
-                    System.import('es6/bootstraps/crosswords').then(function (crosswords) {
-                        crosswords.default.init();
-                    });
+                        System['import']('bootstraps/app').then(function(app) {
+                            app.go();
+                        });
+                    }
 
-                    System.import('es6/projects/common/modules/crosswords/thumbnails').then(function (crosswordThumbnails) {
-                        crosswordThumbnails.default.init();
-                    });
-                }
+                    @if(item.section == "crosswords") {
+                        System['import']('es6/bootstraps/crosswords').then(function (crosswords) {
+                            crosswords.default.init();
+                        });
+
+                        System['import']('es6/projects/common/modules/crosswords/thumbnails').then(function (crosswordThumbnails) {
+                            crosswordThumbnails.default.init();
+                        });
+                    }
+                });
             });
+
 
             @membershipAccess()
 

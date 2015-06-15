@@ -15,6 +15,8 @@
         class="content content--liveblog tonal tonal--@articleToneClass(article) blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
         itemscope itemtype="@article.schemaType" role="main">
 
+        <a itemprop="url" href=""/>
+
         <header class="content__head tonal__head tonal__head--@articleToneClass(article)">
             @* UPPER HEADER *@
             <div class="content__header tonal__header u-cf">
@@ -32,7 +34,7 @@
                         @fragments.standfirst(article)
 
                         <div class="content__updated-container content__updated-container--liveblog">
-                            @if(article.isLive) {<span class="blog__live live-pulse-icon">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.lastModified" data-relativeformat="med"></time>
+                            @if(article.isLive) {<span class="blog__live live-pulse-icon js-flashing-image">LIVE</span> }Updated <time class="js-timestamp" datetime="@article.lastModified" data-relativeformat="med"></time>
                         </div>
                     </div>
                 </div>

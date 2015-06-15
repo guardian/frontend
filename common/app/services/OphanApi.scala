@@ -10,6 +10,12 @@ import play.api.libs.ws.WS
 
 import scala.concurrent.Future
 
+object MostReadItem {
+  implicit val jsonReads = Json.reads[MostReadItem]
+}
+
+case class MostReadItem(url: String, count: Int)
+
 object OphanApi extends ExecutionContexts with Logging with implicits.WSRequests {
 
   private def getBody(path: String)(params: Map[String, String] = Map.empty): Future[JsValue] = {
@@ -30,15 +36,6 @@ object OphanApi extends ExecutionContexts with Logging with implicits.WSRequests
     }
   }
 
-  def UrlToContentPath(url: String): String = {
-    var contentId = new URL(url).getPath
-    if (contentId.startsWith("/")) {
-      contentId = contentId.substring(1)
-    }
-    contentId
-  }
-
-
   private def getBreakdown = getBody("breakdown") _
 
   def getBreakdown(platform: String, hours: Int): Future[JsValue] =
@@ -48,6 +45,12 @@ object OphanApi extends ExecutionContexts with Logging with implicits.WSRequests
 
 
   private def getMostRead = getBody("mostread") _
+
+  def getMostReadFacebook(hours: Int): Future[Seq[MostReadItem]] =
+    getMostRead("Facebook", hours).map(_.as[Seq[MostReadItem]])
+
+  def getMostReadTwitter(hours: Int): Future[Seq[MostReadItem]] =
+    getMostRead("Twitter", hours).map(_.as[Seq[MostReadItem]])
 
   def getMostRead(referrer: String, hours: Int): Future[JsValue] =
     getMostRead(Map("referrer" -> referrer, "hours" -> hours.toString))

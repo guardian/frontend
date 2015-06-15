@@ -20,7 +20,7 @@ define([
     return function (n) {
         this.id = 'Headline' + n;
         this.start = '2015-04-9';
-        this.expiry = '2015-06-10';
+        this.expiry = '2015-07-17';
         this.author = 'Robert Berry';
         this.description = 'A/B test for headline number ' + n;
         this.audience = 0.01;

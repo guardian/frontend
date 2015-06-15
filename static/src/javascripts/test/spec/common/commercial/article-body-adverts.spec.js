@@ -16,7 +16,8 @@ describe('Article Body Adverts', function () {
             ]
         },
         injector = new Injector(),
-        articleBodyAdverts, config, detect, spacefinder;
+        articleBodyAdverts, config, detect, spacefinder, ab, getParticipationsStub,
+        testCanBeRunStub;
 
     beforeEach(function (done) {
 
@@ -24,12 +25,26 @@ describe('Article Body Adverts', function () {
             'common/modules/commercial/article-body-adverts',
             'common/utils/config',
             'common/utils/detect',
-            'common/modules/article/spacefinder'], function () {
+            'common/modules/article/spacefinder',
+            'common/modules/experiments/ab'], function () {
 
             articleBodyAdverts = arguments[0];
             config = arguments[1];
             detect = arguments[2];
             spacefinder = arguments[3];
+            ab = arguments[4];
+
+            getParticipationsStub = sinon.stub();
+            getParticipationsStub.returns({
+                'MtRec2': {
+                    'variant': 'A'
+                }
+            });
+            ab.getParticipations = getParticipationsStub;
+
+            testCanBeRunStub = sinon.stub();
+            testCanBeRunStub.returns(true);
+            ab.testCanBeRun = testCanBeRunStub;
 
             $fixturesContainer = fixtures.render(fixturesConfig);
             $style = $.create('<style type="text/css"></style>')
@@ -50,8 +65,10 @@ describe('Article Body Adverts', function () {
 
             getParaWithSpaceStub = sinon.stub();
             var paras = qwery('p', $fixturesContainer);
-            getParaWithSpaceStub.onFirstCall().returns(Promise.resolve(paras[0]));
-            getParaWithSpaceStub.onSecondCall().returns(Promise.resolve(paras[1]));
+            getParaWithSpaceStub.onCall(0).returns(Promise.resolve(paras[0]));
+            getParaWithSpaceStub.onCall(1).returns(Promise.resolve(paras[1]));
+            getParaWithSpaceStub.onCall(2).returns(Promise.resolve(paras[2]));
+            getParaWithSpaceStub.onCall(3).returns(Promise.resolve(undefined));
             spacefinder.getParaWithSpace = getParaWithSpaceStub;
 
             done();
@@ -73,7 +90,8 @@ describe('Article Body Adverts', function () {
             return false;
         };
 
-        articleBodyAdverts.init().then(function () {
+        articleBodyAdverts.init()
+        .then(function () {
             expect(getParaWithSpaceStub).toHaveBeenCalledWith({
                 minAbove: 700,
                 minBelow: 300,
@@ -81,6 +99,48 @@ describe('Article Body Adverts', function () {
                     ' > h2': {minAbove: 0, minBelow: 250},
                     ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
                     ' .ad-slot': {minAbove: 500, minBelow: 500}
+                }
+            });
+            done();
+        });
+    });
+
+    it('should call "getParaWithSpace" with correct arguments multiple times - in test', function (done) {
+        config.switches.commercialExtraAds = true;
+
+        articleBodyAdverts.init()
+        .then(function () {
+            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                minAbove: 700,
+                minBelow: 300,
+                selectors: {
+                    ' > h2': {minAbove: 0, minBelow: 250},
+                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                    ' .ad-slot': {minAbove: 500, minBelow: 500}
+                }
+            });
+            done();
+        })
+        .then(function () {
+            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                minAbove: 700,
+                minBelow: 300,
+                selectors: {
+                    ' > h2': {minAbove: 0, minBelow: 250},
+                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                    ' .ad-slot': {minAbove: 500, minBelow: 500}
+                }
+            });
+            done();
+        })
+        .then(function () {
+            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                minAbove: 700,
+                minBelow: 300,
+                selectors: {
+                    ' > h2': {minAbove: 0, minBelow: 250},
+                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                    ' .ad-slot': {minAbove: 1300, minBelow: 1300}
                 }
             });
             done();
@@ -104,7 +164,7 @@ describe('Article Body Adverts', function () {
 
     it('should insert an inline ad container to the available slot', function (done) {
         articleBodyAdverts.init().then(function () {
-            expect(getParaWithSpaceStub).toHaveBeenCalledOnce();
+            expect(getParaWithSpaceStub).toHaveBeenCalled();
             expect(qwery('#dfp-ad--inline1', $fixturesContainer).length).toBe(1);
             done();
         });

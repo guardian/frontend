@@ -1,7 +1,8 @@
 package services
 
 import com.gu.googleauth.UserIdentity
-import conf.Configuration
+import com.gu.pandomainauth.model.User
+import conf.{Switches, Configuration}
 import common.Logging
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model._
@@ -161,10 +162,14 @@ object S3FrontsApi extends S3 {
   def getBlock(id: String) = get(s"$location/collection/$id/collection.json")
   def listConfigsIds: List[String] = getConfigIds(s"$location/config/")
   def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")
-  def putCollectionJson(id: String, json: String) =
-    putPublic(s"$location/collection/$id/collection.json", json, "application/json")
+  def putCollectionJson(id: String, json: String) = {
+    val putLocation: String = s"$location/collection/$id/collection.json"
+    if (Switches.FaciaToolPutPrivate.isSwitchedOn) {
+      putPrivate(putLocation, json, "application/json")}
+    else {
+      putPublic(putLocation, json, "application/json")}}
 
-  def archive(id: String, json: String, identity: UserIdentity) = {
+  def archive(id: String, json: String, identity: User) = {
     val now = DateTime.now
     putPrivate(s"$location/history/collection/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/$id/${now}.${identity.email}.json", json, "application/json")
   }
@@ -172,7 +177,7 @@ object S3FrontsApi extends S3 {
   def putMasterConfig(json: String) =
     putPublic(s"$location/config/config.json", json, "application/json")
 
-  def archiveMasterConfig(json: String, identity: UserIdentity) = {
+  def archiveMasterConfig(json: String, identity: User) = {
     val now = DateTime.now
     putPublic(s"$location/history/config/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
   }
@@ -204,7 +209,10 @@ object S3FrontsApi extends S3 {
     putPrivateGzipped(getDraftFapiPressedKeyForPath(path), json, "application/json")
 
   def getPressedLastModified(path: String): Option[String] =
-    getLastModified(getLivePressedKeyForPath(path)).map(_.toString)
+      if (Switches.FaciaServerNewFormat.isSwitchedOn)
+        getLastModified(getLiveFapiPressedKeyForPath(path)).map(_.toString)
+      else
+        getLastModified(getLivePressedKeyForPath(path)).map(_.toString)
 }
 
 trait SecureS3Request extends implicits.Dates with Logging {
@@ -274,5 +282,3 @@ object S3Infosec extends S3 {
   val key = "blocked-email-domains.txt"
   def getBlockedEmailDomains = get(key)
 }
-
-

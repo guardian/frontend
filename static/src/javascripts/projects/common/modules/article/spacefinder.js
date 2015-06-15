@@ -113,7 +113,7 @@ define([
             return !img.complete;
         });
 
-        return Promise.all(notLoaded.map(function (img) {
+        return Promise.all(_.map(notLoaded, function (img) {
             return new Promise(function (resolve) {
                 window.setTimeout(resolve, 5000);
                 bean.on(img, 'load', resolve);
@@ -137,22 +137,16 @@ define([
         });
     }
 
-    function isDeferSpacefinder() {
-        var group = ab.getParticipations().DeferSpacefinder,
-            eligible = group && group.variant === 'A';
+    function isMtRec() {
+        var MtRec1Test = ab.getParticipations().MtRec1,
+            MtRec2Test = ab.getParticipations().MtRec2;
 
-        return ab.testCanBeRun('DeferSpacefinder') && eligible;
-    }
-
-    function isMtRec1() {
-        var group = ab.getParticipations().MtRec1,
-            eligible = group && group.variant === 'A';
-
-        return ab.testCanBeRun('MtRec1') && eligible;
+        return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A' ||
+            ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
     }
 
     function getReady() {
-        if (isDeferSpacefinder() || isMtRec1()) {
+        if (isMtRec()) {
             return Promise.all([onImagesLoaded(), onRichLinksUpgraded()]);
         }
 

@@ -133,6 +133,37 @@ define([
         return navigator.mozApps && !window.locationbar.visible;
     }
 
+    function isFacebookApp() {
+        return navigator.userAgent.indexOf('FBAN/') > -1;
+    }
+
+    function isTwitterApp() {
+        // NB Android app is indistinguishable from Chrome: http://mobiforge.com/research-analysis/webviews-and-user-agent-strings
+        return navigator.userAgent.indexOf('Twitter for iPhone') > -1;
+    }
+
+    function isTwitterReferral() {
+        return /\.t\.co/.test(document.referrer);
+    }
+
+    function isFacebookReferral() {
+        return /\.facebook\.com/.test(document.referrer);
+    }
+
+    function socialContext() {
+        var override = /socialContext=(facebook|twitter)/.exec(window.location.hash);
+
+        if (override !== null) {
+            return override[1];
+        } else if (isFacebookApp() || isFacebookReferral()) {
+            return 'facebook';
+        } else if (isTwitterApp() || isTwitterReferral()) {
+            return 'twitter';
+        } else {
+            return null;
+        }
+    }
+
     getUserAgent = (function () {
         var ua = navigator.userAgent, tem,
             M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -404,16 +435,20 @@ define([
 
     function adblockInUse() {
         var displayed = '',
-            isAdblock = false;
+            isAdblock = false,
+            mozBinding = '',
+            mozBindingHidden = -1;
 
         $.create('<div class="ad_unit"></div>').appendTo(document.body);
         displayed = $('.ad_unit').css('display');
+        mozBinding = $('.ad_unit').css('-moz-binding');
+        if (typeof mozBinding !== 'undefined') {
+            mozBindingHidden = $('.ad_unit').css('-moz-binding').indexOf('elemhidehit');
+        }
         $('.ad_unit').remove();
-
-        if (displayed === 'none') {
+        if (displayed === 'none' || (typeof mozBinding !== 'undefined' && mozBindingHidden !== -1)) {
             isAdblock = true;
         }
-
         return isAdblock;
     }
 
@@ -431,6 +466,11 @@ define([
         isIOS: isIOS,
         isAndroid: isAndroid,
         isFireFoxOSApp: isFireFoxOSApp,
+        isFacebookApp: isFacebookApp,
+        isTwitterApp: isTwitterApp,
+        isFacebookReferral: isFacebookReferral,
+        isTwitterReferral: isTwitterReferral,
+        socialContext: socialContext,
         isBreakpoint: isBreakpoint,
         isReload:  isReload,
         initPageVisibility: initPageVisibility,

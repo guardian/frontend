@@ -125,7 +125,7 @@ import collection.JavaConversions._
         ImageServerSwitch.switchOn()
 
         Then("I should see the article's image")
-        findFirst("[itemprop='contentUrl representativeOfPage']").getAttribute("src") should
+        findFirst("[itemprop='contentUrl']").getAttribute("src") should
           include("Gunnerside-village-Swaled")
 
         And("I should see the image caption")
@@ -349,7 +349,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see paragraph 16")
-        findFirst("#block-16").getText should startWith("11.31am:Vince Cable, the business secretary")
+        findFirst("#block-16").getText should startWith("11.31am: Vince Cable, the business secretary")
       }
     }
 
@@ -389,7 +389,7 @@ import collection.JavaConversions._
 //        import browser._
 //
 //        Then("the main picture should be shown")
-//        $("[itemprop='contentURL representativeOfPage']") should have size 1
+//        $("[itemprop='contentURL']") should have size 1
 //
 //        And("the embedded video should not have a poster when there are no images in the video element")
 //        findFirst("video").getAttribute("poster") should be("")
@@ -428,7 +428,7 @@ import collection.JavaConversions._
       goTo("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { browser =>
         import browser._
         Then("The main picture should be show")
-        $("[itemprop='contentUrl representativeOfPage']") should have size 1
+        $("[itemprop='contentUrl']") should have size 1
       }
     }
 

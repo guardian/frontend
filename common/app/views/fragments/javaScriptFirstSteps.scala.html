@@ -83,7 +83,6 @@
             return fBound;
         };
     }
-
     @* needed due to class manipulation in bonzo is not x-browser - https://github.com/ded/bonzo/pull/133 *@
     if (!String.prototype.trim) {
         String.prototype.trim = function () {
@@ -106,8 +105,10 @@
                 'older' iOs normally indicates a device with lower power (they stop being upgradeable at some point).
                 We won't run all javascript on these
                 For usage stats see http://david-smith.org/iosversionstats/
+
+                On 12 June 2015 this represents about 1/4 iPads and 1/4 iPhones
             *@
-            return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent);
+            return /.*(iPhone|iPad; CPU) OS ([34567])_\d+.*/.test(navigator.userAgent) || window.devicePixelRatio === 1;
         }
         return false;
     })();
@@ -204,7 +205,24 @@
             if (testCssSupport('position', 'fixed')) {
                 docClass += ' has-fixed';
             }
+
+            @if(FontKerningSwitch.isSwitchedOn) {
+                if (window.location.hash !== '#no-kern') {
+                    docClass += ' should-kern';
+                }
+            } else {
+                if (window.location.hash === '#kern') {
+                    docClass += ' should-kern';
+                }
+            }
+
             docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
+        }
+
+        @if(IPadNothrasherSwitch.isSwitchedOn) {
+            if (navigator.platform === 'iPad') {
+                docClass += ' ipad-no-thrashers';
+            }
         }
     })(guardian.isModernBrowser);
 
@@ -245,6 +263,7 @@
             *@
             var isOlderIpad = !isIphone && window.devicePixelRatio === 1 && /.*iPad; CPU OS ([345])_\d+.*/.test(navigator.userAgent);
             var isIpad2orMini = !isIphone && window.devicePixelRatio === 1 && /.*iPad; CPU OS ([678])_\d+.*/.test(navigator.userAgent);
+            var isIpad3orLater = !isIphone && window.devicePixelRatio === 2 && /.*iPad; CPU OS ([678])_\d+.*/.test(navigator.userAgent);
 
             if ( isOlderIpad ) {
                 logDevice ( 'old', 'ipad' );
@@ -254,6 +273,10 @@
                 logDevice ( '2orMini', 'ipad' );
             }
 
+            if ( isIpad3orLater ) {
+            logDevice ( '3orLater', 'ipad' );
+            }
+
             if ( isIphone6 ) {
                 logDevice ( '6', 'iphone' );
             }
@@ -261,7 +284,6 @@
             if ( isIphone4 ) {
                 logDevice ( '4', 'iphone' );
             }
-
         }
     </script>
 }

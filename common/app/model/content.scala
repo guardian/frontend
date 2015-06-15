@@ -3,7 +3,7 @@ package model
 import java.net.URL
 
 import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
-import com.gu.facia.api.utils.{CardStyle, ResolvedMetaData}
+import com.gu.facia.api.utils._
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.util.liveblogs.{Block, BlockToText, Parser => LiveBlogParser}
 import common.{LinkCounts, LinkTo, Reference}
@@ -60,25 +60,28 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     conf.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty && url.contains("/membership/")
   }
 
-  lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
+  lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").contains("true")
   lazy val hasSingleContributor: Boolean = {
     (contributors.headOption, byline) match {
       case (Some(t), Some(b)) => contributors.length == 1 && t.name == b
       case _ => false
     }
   }
+
   lazy val hasTonalHeaderByline: Boolean = {
-    visualTone == Tags.VisualTone.Comment && hasSingleContributor && contentType != GuardianContentTypes.ImageContent
+    (cardStyle == Comment || cardStyle == Editorial) &&
+      hasSingleContributor &&
+      contentType != GuardianContentTypes.ImageContent
   }
+
   lazy val hasBeenModified: Boolean = {
     new Duration(webPublicationDate, lastModified).isLongerThan(Duration.standardSeconds(60))
   }
+
   lazy val hasTonalHeaderIllustration: Boolean = isLetters
-  lazy val showBylinePic: Boolean = {
-    visualTone != Tags.VisualTone.News && visualTone != Tags.VisualTone.Live &&
-      contentType != GuardianContentTypes.ImageContent &&
-      hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
-  }
+
+  lazy val showCircularBylinePicAtSide: Boolean =
+    cardStyle == Feature && hasLargeContributorImage && contributors.length == 1
 
   private def largestImageUrl(i: ImageContainer) = i.largestImage.flatMap(_.url)
 
@@ -314,6 +317,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val seriesTag: Option[Tag] = {
     blogs.find{tag => tag.id != "commentisfree/commentisfree"}.orElse(series.headOption)
   }
+
+  def showFooterContainers = false
 }
 
 object Content {
@@ -426,6 +431,8 @@ private object ArticleSchemas {
     // http://schema.org/Review
     if (article.isReview)
       "http://schema.org/Review"
+    else if (article.isLive)
+      "http://schema.org/LiveBlogPosting"
     else
       "http://schema.org/NewsArticle"
   }
@@ -563,6 +570,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) with Lightbo
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
   )
+
+  override def showFooterContainers = !isLiveBlog && !shouldHideAdverts
 }
 
 class LiveBlog(content: ApiContentWithMeta) extends Article(content) {

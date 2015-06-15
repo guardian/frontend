@@ -8,6 +8,7 @@ import contentapi.Paths
 import layout.DateHeadline.cardTimestampDisplay
 import layout._
 import model._
+import model.meta.{ListItem, ItemList}
 import org.joda.time.DateTime
 import slices.{ContainerDefinition, Fixed, FixedContainers}
 
@@ -114,8 +115,9 @@ object IndexPage {
 
     front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
       val timeStampDisplay = header match {
-        case MetaDataHeader(_, _, _, dateHeadline, _) => cardTimestampDisplay(dateHeadline)
-        case LoneDateHeadline(dateHeadline) => cardTimestampDisplay(dateHeadline)
+        case MetaDataHeader(_, _, _, dateHeadline, _) => Some(cardTimestampDisplay(dateHeadline))
+        case LoneDateHeadline(dateHeadline) => Some(cardTimestampDisplay(dateHeadline))
+        case SeriesDescriptionMetaHeader(_) => None
       }
 
       container.copy(
@@ -132,8 +134,9 @@ object IndexPage {
         dateLinkPath = Some(s"/${indexPage.idWithoutEdition}")
       ).transformCards({ card =>
         card.copy(
-          timeStampDisplay = Some(timeStampDisplay),
-          byline = if (indexPage.page.isContributorPage) None else card.byline
+          timeStampDisplay = timeStampDisplay,
+          byline = if (indexPage.page.isContributorPage) None else card.byline,
+          useShortByline = true
         ).setKicker(card.header.kicker flatMap {
           case ReviewKicker if isReviewPage => None
           case CartoonKicker if isCartoonPage => None
@@ -143,6 +146,17 @@ object IndexPage {
       })
     }))
   }
+
+  def makeLinkedData(indexPage: IndexPage): ItemList = {
+    ItemList(
+      indexPage.page.url,
+      indexPage.trails.zipWithIndex.map {
+        case (trail, index) =>
+          ListItem(position = index, url = Some(trail.url))
+      }
+    )
+  }
+
 }
 
 case class IndexPage(page: MetaData, trails: Seq[Content],
@@ -180,4 +194,5 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
   }
 
   def allPath = s"/$idWithoutEdition"
+
 }

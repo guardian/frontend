@@ -1,5 +1,5 @@
 .ad-slot {
-    z-index: 1000;
+    z-index: $zindex-ads;
     overflow: hidden;
 
     .js-off & {
@@ -200,6 +200,11 @@
         float: right;
         margin-top: $gs-baseline/3;
         margin-left: $gs-gutter;
+    }
+}
+.ad-slot__content {
+    > div {
+        margin: 0 auto;            
     }
 }
 .ad-slot--container-inline {

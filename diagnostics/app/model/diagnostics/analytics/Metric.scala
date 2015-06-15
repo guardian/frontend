@@ -23,6 +23,11 @@ object Metric extends Logging {
     ("ad-render", CountMetric("first-ad-rendered")),
     ("ad-wrapper", CountMetric("dfp-served-ad")),
 
+    // Investigating MSIE ad blocking
+    ("msie-adblock", CountMetric("msie-ad-block")),
+    ("msie-browser", CountMetric("msie-browser")),
+
+
     // error pages
     ("50x", CountMetric("kpis-user-50x")),             // beacon on the 50x page that tells us that real users are getting 500 errors
     ("404", CountMetric("kpis-user-404")),             // beacon on the 404 page that tells us that real users are getting 404 not found
@@ -42,6 +47,8 @@ object Metric extends Logging {
     ("ipad-old-after-5", CountMetric(s"ipad-old-after-5")),
     ("ipad-2orMini-start", CountMetric(s"ipad-2orMini-start")),
     ("ipad-2orMini-after-5", CountMetric(s"ipad-2orMini-after-5")),
+    ("ipad-3orLater-start", CountMetric(s"ipad-3orLater-start")),
+    ("ipad-3orLater-after-5", CountMetric(s"ipad-3orLater-after-5")),
 
     ("tech-feedback", CountMetric("tech-feedback")),
 
@@ -50,9 +57,6 @@ object Metric extends Logging {
     ("comment-error", CountMetric("comment-error")),
     ("comment-post-success", CountMetric("comment-post-success"))
   ) ++ iPhoneMetrics
-
-  lazy val techFeedback = Switches.FeedbackLink // remove tech-feedback metric when this switch is removed.
-
 
   private val iPhoneMetrics: Seq[(String, CountMetric)] = Seq(4, 6).flatMap( model =>
     Seq(

@@ -8,8 +8,22 @@ class HttpSwitchTest extends FlatSpec with Matchers with HttpSwitchHelper {
 
   private lazy val never = new LocalDate(2100, 1, 1)
 
-  val httpOnSwitch = new HttpSwitch(Switch("Feature Switches", "switch2", "What the switch is for", safeState = On, sellByDate = never)) with NonProdEnvConfig
-  val httpOffSwitch = new HttpSwitch(Switch("Feature Switches", "switch2", "What the switch is for", safeState = Off, sellByDate = never)) with NonProdEnvConfig
+  val httpOnSwitch = new HttpSwitch(Switch(
+    "Feature Switches",
+    "switch2",
+    "What the switch is for",
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )) with NonProdEnvConfig
+  val httpOffSwitch = new HttpSwitch(Switch(
+    "Feature Switches",
+    "switch2",
+    "What the switch is for",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )) with NonProdEnvConfig
 
   "HttpSwitch" should "not affect a Switch if no query parameters are present" in {
     implicit val request = requestWithNoSwitches

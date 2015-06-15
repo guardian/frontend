@@ -4,7 +4,6 @@ define([
     'common/utils/cookies',
     'common/utils/detect',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
-    'common/modules/commercial/third-party-tags/criteo',
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab'
@@ -14,7 +13,6 @@ define([
     cookies,
     detect,
     audienceScienceGateway,
-    criteo,
     krux,
     userAdTargeting,
     ab
@@ -55,17 +53,33 @@ define([
                 abParticipations = ab.getParticipations();
 
             _.forIn(abParticipations, function (n, key) {
-                if (key.indexOf('Mt') > -1 && n.variant &&
-                    n.variant !== 'notintest') {
+                if (n.variant && n.variant !== 'notintest') {
                     abParams.push(key + '-' + n.variant.substring(0, 1));
                 }
             });
 
+            _.forIn(_.keys(config.tests), function (n) {
+                if (n.toLowerCase().match(/^cm/)) {
+                    abParams.push(n);
+                }
+            });
+
             return abParams;
+        },
+        adtestParams = function () {
+            if (cookies.get('adtest')) {
+                var cookieAdtest = cookies.get('adtest'),
+                    first4Char = cookieAdtest.substring(0, 4);
+                if (first4Char === 'demo') {
+                    cookies.remove('adtest');
+                }
+                return cookieAdtest;
+            }
         };
 
     return function (opts) {
         var win         = (opts || {}).window || window,
+            viewId      = (opts || {}).viewId,
             page        = config.page,
             contentType = formatTarget(page.contentType),
             pageTargets = _.merge({
@@ -77,8 +91,9 @@ define([
                 k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
                 x:       krux.getSegments(),
                 su:      page.isSurging,
+                pv:      viewId,
                 bp:      detect.getBreakpoint(),
-                at:      cookies.get('adtest'),
+                at:      adtestParams(),
                 gdncrm:  userAdTargeting.getUserSegments(),
                 ab:      abParam(),
                 co:      parseIds(page.authorIds),
@@ -87,7 +102,7 @@ define([
                 tn:      _.uniq(_.compact([page.sponsorshipType].concat(parseIds(page.tones)))),
                 // round video duration up to nearest 30 multiple
                 vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
-            }, audienceScienceGateway.getSegments(), criteo.getSegments());
+            }, audienceScienceGateway.getSegments());
 
         // filter out empty values
         return _.pick(pageTargets, function (target) {

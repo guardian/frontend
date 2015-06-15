@@ -101,6 +101,8 @@ trait MetaData extends Tags {
   lazy val isExpiredAdvertisementFeature: Boolean =
     DfpAgent.isExpiredAdvertisementFeature(id, tags, Some(section))
   lazy val sponsorshipTag: Option[Tag] = DfpAgent.sponsorshipTag(tags, Some(section))
+
+  def isPreferencesPage = metaData.get("isPreferencesPage").collect{ case prefs: JsBoolean => prefs.value } getOrElse false
 }
 
 
@@ -301,19 +303,7 @@ trait Tags {
   }
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
-  /**
-   * NOTE:
-   *
-   * This is used only for OLD-STYLE containers. It only includes the visual tones those containers care about. For
-   * the new container equivalent, see `views.support.CardStyle`.
-   *
-   * TODO: Once we've deleted all of the old-style containers, remove this.
-   */
-  lazy val visualTone: String =
-    if (isLiveBlog) Tags.VisualTone.Live
-    else if (isComment) Tags.VisualTone.Comment
-    else if (isFeature) Tags.VisualTone.Feature
-    else Tags.VisualTone.News
+  def isNews = !(isLiveBlog || isComment || isFeature)
 
   lazy val isLiveBlog: Boolean = tones.exists(t => Tags.liveMappings.contains(t.id))
   lazy val isComment = tones.exists(t => Tags.commentMappings.contains(t.id))
@@ -360,13 +350,6 @@ object Tags {
   val Poll = "type/poll"
   val Interactive = "type/interactive"
   val Sudoku = "type/sudoku"
-
-  object VisualTone {
-    val Live = "live"
-    val Comment = "comment"
-    val Feature = "feature"
-    val News = "news"
-  }
 
   val liveMappings = Seq(
     "tone/minutebyminute"

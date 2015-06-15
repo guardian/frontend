@@ -16,7 +16,6 @@ define([
     'common/utils/url',
     'common/utils/robust',
     'common/utils/storage',
-    'common/modules/analytics/clickstream',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
     'common/modules/analytics/media-listener',
@@ -25,7 +24,6 @@ define([
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
-    'common/modules/analytics/tech-feedback',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
@@ -40,9 +38,11 @@ define([
     'common/modules/onward/onward-content',
     'common/modules/onward/popular',
     'common/modules/onward/related',
+    'common/modules/onward/tech-feedback',
     'common/modules/onward/tonal',
     'common/modules/social/share-count',
     'common/modules/ui/accessibility-prefs',
+    'common/modules/ui/clickstream',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/fonts',
@@ -74,7 +74,6 @@ define([
     url,
     robust,
     storage,
-    Clickstream,
     Foresee,
     liveStats,
     mediaListener,
@@ -83,7 +82,6 @@ define([
     ScrollDepth,
     logCss,
     simpleMetrics,
-    techFeedback,
     userAdTargeting,
     CommentCount,
     DiscussionLoader,
@@ -98,9 +96,11 @@ define([
     Onward,
     Popular,
     Related,
+    techFeedback,
     TonalComponent,
     shareCount,
     accessilbilityPrefs,
+    Clickstream,
     Dropdowns,
     fauxBlockLink,
     fonts,
@@ -131,7 +131,10 @@ define([
             },
 
             initFastClick: function () {
-                FastClick.attach(document.body);
+                // Unfortunately FastClick’s UMD exports are not consistent for
+                // all types. AMD exports FastClick, CJS exports FastClick.attach
+                // As per: https://github.com/ftlabs/fastclick/blob/master/lib/fastclick.js#L829-L840
+                (config.tests.jspmTest ? FastClick : FastClick.attach)(document.body);
             },
 
             initialiseFauxBlockLink: function () {
@@ -475,16 +478,12 @@ define([
             },
 
             runCustomAbTests: function () {
-                var rec1Test = ab.getTest('MtRec1'),
-                    rec2Test = ab.getTest('MtRec2');
-
-                if (rec1Test && ab.isParticipating(rec1Test) && ab.getTestVariant('MtRec1') === 'A'
-                    && ab.testCanBeRun('MtRec1')) {
-                    rec1Test.fireRecTest();
+                if (ab.shouldRunTest('MtRec1', 'A')) {
+                    ab.getTest('MtRec1').fireRecTest();
                 }
-                if (rec2Test && ab.isParticipating(rec2Test) && ab.getTestVariant('MtRec2') === 'A'
-                    && ab.testCanBeRun('MtRec2')) {
-                    rec2Test.fireRecTest();
+
+                if (ab.shouldRunTest('MtRec2', 'A')) {
+                    ab.getTest('MtRec2').fireRecTest();
                 }
             },
 
@@ -548,6 +547,9 @@ define([
             robust('c-run-custom-ab',   modules.runCustomAbTests);
             robust('c-accessibility-prefs',       modules.initAccessibilityPrefs);
             robust('c-international-signposting', modules.internationalSignposting);
+            if (window.console && window.console.log && !config.page.isDev) {
+                window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');
+            }
         };
 
     return {

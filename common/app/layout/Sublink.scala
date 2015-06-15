@@ -9,7 +9,6 @@ import model._
 import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import views.support.CardStyleForFrontend
 import views.support._
 
 import scala.Function.const
@@ -71,8 +70,20 @@ case class Byline(
   get: String,
   contributorTags: Seq[model.Tag]
 ) {
-  def htmlWithLinks(requestHeader: RequestHeader) =
-    ContributorLinks(Html(get), contributorTags)(requestHeader)
+  private def primaryContributor = {
+    if (contributorTags.length > 2) {
+      contributorTags.sortBy({ tag =>
+        get.indexOf(tag.webTitle) match {
+          case -1 => Int.MaxValue
+          case n => n
+        }
+      }).headOption
+    } else {
+      None
+    }
+  }
+
+  def shortByline = primaryContributor map { tag => s"${tag.webTitle} and others" } getOrElse get
 }
 
 object DisplaySettings {
@@ -198,7 +209,7 @@ object FaciaCard {
       faciaContent.headline,
       FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
       getByline(faciaContent).filterNot(Function.const(suppressByline)),
-      FaciaDisplayElement.fromFaciaContent(faciaContent),
+      FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
       CutOut.fromTrail(faciaContent),
       faciaContent.cardStyle,
       cardTypes,
@@ -212,7 +223,9 @@ object FaciaCard {
       MediaType.fromFaciaContent(faciaContent),
       DisplaySettings.fromTrail(faciaContent),
       faciaContent.isLive,
-      None
+      None,
+      faciaContent.shortUrlPath,
+      useShortByline = false
     )
   }
 }
@@ -238,8 +251,12 @@ case class ContentCard(
   mediaType: Option[MediaType],
   displaySettings: DisplaySettings,
   isLive: Boolean,
-  timeStampDisplay: Option[FaciaCardTimestamp]
+  timeStampDisplay: Option[FaciaCardTimestamp],
+  shortUrl: Option[String],
+  useShortByline: Boolean
 ) extends FaciaCard {
+  def bylineText: Option[String] = if (useShortByline) byline.map(_.shortByline) else byline.map(_.get)
+
   def setKicker(kicker: Option[ItemKicker]) = copy(header = header.copy(kicker = kicker))
 
   def isVideo = displayElement match {
@@ -264,8 +281,6 @@ case class ContentCard(
   def mediaWidthsByBreakpoint = FaciaWidths.mediaFromItemClasses(cardTypes)
 
   def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
-
-  def showMeta = discussionSettings.isCommentable || showTimestamp
 }
 
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard

@@ -1,4 +1,6 @@
-<a href="{{href}}" class="fc-item__liveblog-block {{classes}}" data-link-name="block | {{index}}">
-    <div class="fc-item__liveblog-block__time">{{relativeTime}}</div>
-    <div class="fc-item__liveblog-block__text">{{text}}</div>
+<a href="<%=href%>" class="fc-item__liveblog-block <%=classes%>" data-link-name="block | <%=index%>">
+    <div class="fc-item__liveblog-block__text">
+        <div class="fc-item__liveblog-block__time"><%=relativeTime%></div>
+        <%=text%>
+    </div>
 </a>

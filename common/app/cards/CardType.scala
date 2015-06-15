@@ -30,7 +30,12 @@ sealed trait CardType {
   }
 
   def showStandfirst = this match {
-    case Fluid | FullMedia100 | FullMedia75 | FullMedia50 | Half | ThreeQuarters | ThreeQuartersRight | Standard => true
+    case Fluid | FullMedia100 | FullMedia75 | FullMedia50 | Half | ThreeQuarters | ThreeQuartersRight | Standard | SavedForLater => true
+    case _ => false
+  }
+
+  def canShowSlideshow = this match {
+    case Half | ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall | FullMedia50 | FullMedia75 | FullMedia100 => true
     case _ => false
   }
 }
@@ -82,4 +87,8 @@ case object Fluid extends CardType {
 
 case object Third extends CardType {
   override val cssClassName: String = "third"
+}
+
+case object SavedForLater extends CardType {
+  override val cssClassName: String = "saved-for-later"
 }

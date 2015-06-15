@@ -4,7 +4,7 @@
 
 GET         /humans.txt                                                                                              dev.DevAssetsController.humans()
 GET         /surveys/*file                                                                                           dev.DevAssetsController.surveys(file)
-GET         /commercial/test-page                                                                                    controllers.commercial.CreativeTestPage.allComponents
+GET         /commercial/test-page                                     												 controllers.commercial.CreativeTestPage.allComponents(k: List[String])
 
 # For dev machines
 GET         /assets/internal/*file                                                                                   controllers.Assets.at(path="/public", file)
@@ -15,8 +15,6 @@ GET         /ab.gif                                                             
 GET         /js.gif                                                                                                  controllers.DiagnosticsController.js
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
 GET         /counts.gif                                                                                              controllers.DiagnosticsController.analyticsCounts()
-POST        /tech-feedback                                                                                           controllers.DiagnosticsController.techFeedback()
-GET         /tech-feedback                                                                                           controllers.DiagnosticsController.techFeedback()
 POST        /css                                                                                                     controllers.DiagnosticsController.css
 OPTIONS     /css                                                                                                     controllers.DiagnosticsController.cssOptions
 POST        /accept-beacon                                                                                           controllers.DiagnosticsController.acceptBeacon
@@ -82,6 +80,8 @@ GET         /discussion/profile/:id/witness.json                                
 GET         /open/cta/article/*discussionKey.json                                                                    controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
 
 # Onward
+GET         /most-read-facebook.json                                                                                 controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "facebook")
+GET         /most-read-twitter.json                                                                                  controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "twitter")
 GET         /most-read.json                                                                                          controllers.MostPopularController.render(path = "")
 GET         /most-read/*path.json                                                                                    controllers.MostPopularController.render(path)
 GET         /most-read-geo.json                                                                                      controllers.MostPopularController.renderPopularGeo()
@@ -109,6 +109,9 @@ GET         /video/end-slate/series/*seriesId.json                              
 GET         /video/end-slate/section/*sectionId.json                                                                 controllers.VideoEndSlateController.renderSection(sectionId)
 GET         /embed/card/*path.json                                                                                   controllers.RichLinkController.render(path)
 GET         /embed/card/*path                                                                                        controllers.RichLinkController.renderHtml(path)
+# User tech feedback
+GET        /info/tech-feedback                                                                                       controllers.TechFeedbackController.techFeedback(path = "")
+GET        /info/tech-feedback/*path                                                                                 controllers.TechFeedbackController.techFeedback(path)
 
 # Sport
 GET         /sport/cricket/match/:matchId.json                                                                       controllers.CricketMatchController.renderMatchIdJson(matchId)
@@ -268,12 +271,12 @@ GET         /commercial/money/current-accounts/:currentAccountType              
 GET         /commercial/money/credit-cards/:creditCardType                                                           controllers.commercial.MoneyOffers.creditCards(creditCardType)
 GET         /commercial/money/loans/:loanType                                                                        controllers.commercial.MoneyOffers.loans(loanType)
 
-GET         /commercial/capi.json                                                                                    controllers.commercial.ContentApiOffers.itemsJson
-GET         /commercial/capi                                                                                         controllers.commercial.ContentApiOffers.itemsHtml
-GET         /commercial/capi-single.json                                                                             controllers.commercial.ContentApiOffers.itemJson
-GET         /commercial/capi-single                                                                                  controllers.commercial.ContentApiOffers.itemHtml
-GET         /commercial/capi-single-merch.json                                                                       controllers.commercial.ContentApiOffers.itemJson
-GET         /commercial/capi-single-merch                                                                            controllers.commercial.ContentApiOffers.itemHtml
+GET         /commercial/capi.json                                                                                    controllers.commercial.ContentApiOffersController.itemsJson
+GET         /commercial/capi                                                                                         controllers.commercial.ContentApiOffersController.itemsHtml
+GET         /commercial/capi-single.json                                                                             controllers.commercial.ContentApiOffersController.itemJson
+GET         /commercial/capi-single                                                                                  controllers.commercial.ContentApiOffersController.itemHtml
+GET         /commercial/capi-single-merch.json                                                                       controllers.commercial.ContentApiOffersController.itemJson
+GET         /commercial/capi-single-merch                                                                            controllers.commercial.ContentApiOffersController.itemHtml
 
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()
@@ -308,15 +311,17 @@ GET         /*path/lite.json                                                    
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 
 # Applications
+GET         /2015-05-28-2-service-worker.js                                                                            controllers.WebAppController.serviceWorker()
+GET         /2015-05-28-manifest.json                                                                                controllers.WebAppController.manifest()
 GET         /$path<international>                                                                                    controllers.FaciaController.renderFront(path)
-GET         /preferences                                                                                             controllers.PreferencesController.userPrefs()
+GET         /preferences                                                                                             controllers.PreferencesController.indexPrefs()
+GET         /preferences/notifications                                                                               controllers.PreferencesController.notificationPrefs()
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                     controllers.IndexController.renderTrailsJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                          controllers.IndexController.renderTrails(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                                            controllers.IndexController.renderJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                                 controllers.IndexController.render(path)
 GET         /$leftSide<[^+]+>+*rightSide                                                                             controllers.IndexController.renderCombiner(leftSide, rightSide)
 GET         /embed/video/*path                                                                                       controllers.EmbedController.render(path)
-
 
 # Editionalised pages
 GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)

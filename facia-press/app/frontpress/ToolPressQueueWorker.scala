@@ -6,7 +6,8 @@ import common._
 import conf.{Switches, Configuration}
 import metrics._
 import org.joda.time.DateTime
-import services.{Draft, FrontPath, Live, PressJob}
+import play.api.libs.json.JsNull
+import services._
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
@@ -31,23 +32,33 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
   )
 
   override def process(message: Message[PressJob]): Future[Unit] = {
-    val PressJob(FrontPath(path), pressType, creationTime) = message.get
+    val PressJob(FrontPath(path), pressType, creationTime, forceConfigUpdate) = message.get
 
     log.info(s"Processing job from tool to update $path on $pressType")
 
-    lazy val fapiFormat =
-      if (Switches.FaciaPressNewFormat.isSwitchedOn) {
-        pressType match {
-          case Draft => DraftFapiFrontPress.pressByPathId(path)
-          case Live => LiveFapiFrontPress.pressByPathId(path)}}
-      else { Future.successful(Unit) }
+    lazy val fapiFormat = pressType match {
+      case Draft => DraftFapiFrontPress.pressByPathId(path)
+      case Live => LiveFapiFrontPress.pressByPathId(path)}
 
     lazy val oldFormat =
+      if (Switches.FaciaPressOldFormat.isSwitchedOn) {
         pressType match {
           case Draft => FrontPress.pressDraftByPathId(path)
-          case Live => FrontPress.pressLiveByPathId(path)}
+          case Live => FrontPress.pressLiveByPathId(path)}}
+      else { Future.successful(JsNull) }
 
-    val pressFuture = oldFormat.flatMap(_ => fapiFormat)
+
+    lazy val forceConfigUpdateFuture: Future[_] =
+      if (forceConfigUpdate.exists(identity)) {
+        ConfigAgent.refreshAndReturn()}
+      else
+        Future.successful(Unit)
+
+    val pressFuture = for {
+      _ <- forceConfigUpdateFuture
+      _ <- fapiFormat
+      _ <- oldFormat
+    } yield Unit
 
     pressFuture onComplete {
       case Success(_) =>

@@ -240,16 +240,15 @@ define([
                                 events.bindPrerollEvents(player);
                                 player.adSkipCountdown(15);
 
-                                require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
-                                    .then(function () {
-                                        player.ima({
-                                            id: mediaId,
-                                            adTagUrl: getAdUrl()
-                                        });
-                                        // Video analytics event.
-                                        player.trigger(events.constructEventName('preroll:request', player));
-                                        player.ima.requestAds();
+                                require(['js!http://imasdk.googleapis.com/js/sdkloader/ima3.js'], function () {
+                                    player.ima({
+                                        id: mediaId,
+                                        adTagUrl: getAdUrl()
                                     });
+                                    // Video analytics event.
+                                    player.trigger(events.constructEventName('preroll:request', player));
+                                    player.ima.requestAds();
+                                });
                             }
                         )();
                     } else {
@@ -322,6 +321,7 @@ define([
 
         section.fetch(attachTo).then(function () {
             mediator.emit('page:media:moreinloaded', attachTo);
+            mediator.emit('page:new-content', attachTo);
         });
     }
 
@@ -339,7 +339,7 @@ define([
         mostViewed.endpoint = endpoint;
 
         mostViewed.fetch(attachTo, 'html').then(function () {
-            mediator.emit('page:media:most-viewed-loaded');
+            mediator.emit('page:new-content');
         });
     }
 

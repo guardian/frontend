@@ -15,7 +15,7 @@
         <div class="gs-container l-header__inner">
             <div class="l-header-pre u-cf">
                 <div class="brand-bar">
-                    @if(BecomeAMemberSwitch.isSwitchedOn && Edition(request) == Uk) {
+                    @if(Edition(request) == Uk) {
                         <div class="brand-bar__item brand-bar__item--profile
                                     brand-bar__item--has-control brand-bar__item--register
                                     popup-container has-popup js-profile-register">
@@ -50,7 +50,7 @@
                                 popup-container brand-bar__item--subscribe"
                          data-component="subscribe">
                         <a href="http://subscribe.theguardian.com/@if(Edition(request) != Uk) {@{Edition(request).id.toLowerCase}}?INTCMP=NGW_HEADER_@{Edition(request).id}_GU_SUBSCRIBE" class="brand-bar__item--action"
-                        data-link-name="@Edition(request) : topNav : subscribe" class="brand-bar__item--action">
+                        data-link-name="@Edition(request).id.toLowerCase : topNav : subscribe">
                             @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
                             <span class="control__info">subscribe</span>
                         </a>
@@ -87,14 +87,14 @@
                         <span class="u-h">The Guardian</span>
                         @if(metaData.hasSlimHeader) {
                             @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
-                            <!--[if (gt IE 8)&(IEMobile)]><!-->
+                            <!--[if (gt IE 8)|(IEMobile)]><!-->
                                 @fragments.inlineSvg("guardian-logo-160", "logo")
                             <!--<![endif]-->
                             <!--[if (lt IE 9)&(!IEMobile)]>
                               <span class="inline-logo inline-guardian-logo-160"></span>
                             <![endif]-->
                         } else {
-                            <!--[if (gt IE 8)&(IEMobile)]><!-->
+                            <!--[if (gt IE 8)|(IEMobile)]><!-->
                                 @fragments.inlineSvg("guardian-logo-320", "logo")
                             <!--<![endif]-->
                             <!--[if (lt IE 9)&(!IEMobile)]>

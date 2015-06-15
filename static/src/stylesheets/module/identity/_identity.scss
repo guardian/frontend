@@ -1,6 +1,8 @@
 /* Identity and registration
    ========================================================================== */
 
+@import '../../components/pasteup-buttons/src/_mixins.scss';
+
 .l-header--identity {
     height: 45px;
 
@@ -382,14 +384,9 @@
 
 /* Saved-content
    ========================================================================== */
-.saved-contents {
-    margin-top: $gs-baseline*2;
-}
 
 .saved-content {
-    border-top: 1px solid colour(neutral-5);
     margin-bottom: $gs-baseline*2;
-    padding-top: $gs-baseline/3;
     display: block;
 
     .saved-content-item__img {
@@ -402,12 +399,32 @@
             width: 100%;
         }
     }
-
 }
 
-.saved-content__meta {
-    display: block;
-    float: right;
+.saved-content_header__title {
+    float: none !important;
+}
+
+.saved-content__header__description {
+    @include fs-headline(1);
+    padding-bottom: $gs-baseline / 2;
+    color: colour(neutral-2);
+
+    @include mq(tablet) {
+        padding-bottom: $gs-baseline;
+    }
+
+    @include mq(leftCol) {
+        width: $left-column;
+        clear: left;
+        float: left;
+        margin-top: 0;
+        text-align: left;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
 }
 
 .saved-content__title {
@@ -422,14 +439,55 @@
     @include fs-bodyCopy(1);
 }
 
-.saved-content__button {
-    @include fs-textSans(2);
-
-    background: colour(guardian-brand);
-    border: 0;
-    color: #ffffff;
-    cursor: pointer;
-    float: left;
-    padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
+.saved-content__meta {
+    padding-top: $gs-baseline;
+    text-align: right;
 }
 
+.save-for-later__delete-all-container {
+    @include mq($from: mobile, $until: leftCol) {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
+
+// these !importants are a horrible hack while we see what happens in the test.
+// due to *.head css appearing in the source BEFORE the global, which overides these as it loads
+.saved-content__button,
+.save-for-later__button--delete-all {
+    background-color: colour(neutral-5) !important;
+    color: colour(neutral-2) !important;
+    border: 0 !important;
+    cursor: pointer;
+    margin-right: 0 !important;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: colour(neutral-3) !important;
+    }
+
+    .inline-icon {
+        float: left;
+        padding-right: .5em;
+        fill: colour(neutral-2);
+
+        svg {
+            width: 18px;
+        }
+    }
+}
+
+.save-for-later__button--delete-all--delete .save-for-later__label--delete,
+.save-for-later__button--delete-all--confirm .save-for-later__label--confirm {
+    display: inline;
+}
+
+.save-for-later__button--delete-all--confirm {
+    color: colour(error) !important;
+
+    .inline-icon {
+        fill: colour(error);
+    }
+}

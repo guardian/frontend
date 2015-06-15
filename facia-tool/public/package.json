@@ -17,6 +17,7 @@
       "jquery-ui": "github:jquery/jquery-ui@1.11.3",
       "knockout": "npm:knockout@3.3.0",
       "numeral": "npm:numeral@1.5.3",
+      "panda-session": "github:guardian/panda-session@0.1.2",
       "raven-js": "npm:raven-js@1.1.18",
       "sinon": "npm:sinon@^1.14.1",
       "text": "github:systemjs/plugin-text@0.0.2",
@@ -24,7 +25,8 @@
     },
     "devDependencies": {
       "babel": "npm:babel@^4.7.16",
-      "babel-runtime": "npm:babel-runtime@^4.7.16"
+      "babel-runtime": "npm:babel-runtime@^4.7.16",
+      "core-js": "npm:core-js@^0.9.4"
     }
   }
 }

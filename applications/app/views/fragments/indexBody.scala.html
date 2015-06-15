@@ -3,9 +3,16 @@
 @import model.FrontProperties.empty
 @import services.IndexPage
 @import views.html.fragments.containers.facia_cards.container
+@import views.html.fragments.containers.facia_cards.containerScaffold
 @import views.html.fragments.pagination
 @import views.support.RenderClasses
 @import services.FaciaContentConvert
+
+@if(index.page.id == "help/accessibility-help") {
+    @containerScaffold("Preferences", "accesibility preferences") {
+        <div id="js-accessibility-preferences">Loading&hellip;</div>
+    }
+}
 
 <div class="l-side-margins">
     <div class="@RenderClasses(Map(
@@ -41,5 +48,12 @@
         <div class="fc-container fc-container--commercial">
             @fragments.commercial.commercialComponent()
         </div>
+
+        @defining(IndexPage.makeLinkedData(index)) { linkedData =>
+            <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+                @Html(model.meta.LinkedData.toJson(linkedData))
+            </script>
+        }
+
     </div>
 </div>

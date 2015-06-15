@@ -7,11 +7,11 @@ import common.editions.EditionalisedSections
 import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.Switches
 import controllers.front._
-import layout.{CollectionEssentials, FaciaContainer}
+import layout.{Front, CollectionEssentials, FaciaContainer}
 import model._
 import model.facia.PressedCollection
 import performance.MemcachedAction
-import play.api.libs.json.Json
+import play.api.libs.json.{JsObject, Json}
 import play.api.mvc._
 import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
@@ -114,8 +114,9 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       case p if p.startsWith("breaking-news") => 10
       case _ => 60}
 
-    lazy val newFormat = frontJsonFapi.getAsJsValue(path).map { json =>
-      Cached(cacheTime)(Cors(JsonComponent(FapiFrontJsonLite.get(json))))}
+    lazy val newFormat = frontJsonFapi.get(path).map {
+        case Some(pressedPage) => Cached(cacheTime)(Cors(JsonComponent(FapiFrontJsonLite.get(pressedPage))))
+        case None => Cached(cacheTime)(Cors(JsonComponent(JsObject(Nil))))}
     lazy val oldFormat = frontJson.getAsJsValue(path).map { json =>
       Cached(cacheTime)(Cors(JsonComponent(FrontJsonLite.get(json))))}
 
@@ -250,7 +251,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         case Some(pressedPage) =>
           val maybeResponse =
             for {
-              (container, index) <- pressedPage.front.containers.zipWithIndex.find(_._1.dataId == collectionId)
+              (container, index) <- Front.fromPressedPage(pressedPage).containers.zipWithIndex.find(_._1.dataId == collectionId)
               containerLayout <- container.containerLayout
             } yield
             Future.successful{Cached(pressedPage) {
@@ -289,7 +290,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     log.info(s"Serving collection $collectionId on front $frontId")
 
     withPressedPage(frontId) { pressedPage =>
-      pressedPage.front.containers.find(_.dataId == collectionId) match {
+      Front.fromPressedPage(pressedPage).containers.find(_.dataId == collectionId) match {
         case Some(containerDefinition) =>
           Cached(60) {
             JsonComponent(

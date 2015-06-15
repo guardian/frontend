@@ -78,12 +78,18 @@ case class PressedPage(id: String,
     }
   }
 
-  lazy val front = Front.fromPressedPage(this)
-
   override lazy val description: Option[String] = seoData.description
   override lazy val section: String = seoData.navSection
   lazy val navSection: String = section
-  override lazy val analyticsName: String = s"GFE:${seoData.webTitle.capitalize}"
+
+  //For network fronts we want the string "Network Front"
+  //This allows us to change webTitle in tool easily on fronts
+  override lazy val analyticsName: String =
+    if (isNetworkFront)
+      s"GFE:${GuardianContentTypes.NetworkFront}"
+    else
+      s"GFE:${seoData.webTitle.capitalize}"
+
   override lazy val webTitle: String = seoData.webTitle
   override lazy val title: Option[String] = seoData.title
 
