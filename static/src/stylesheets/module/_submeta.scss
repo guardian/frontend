@@ -33,3 +33,19 @@
     float: left;
     margin-right: $gs-gutter / 2;
 }
+
+.submeta__share {
+    @include mq(tablet) {
+        float: left;
+    }
+}
+
+.submeta__save-for-later {
+    margin-top: $gs-baseline / 2;
+
+    @include mq(tablet) {
+        margin-left: $gs-gutter / 2;
+        margin-top: 0;
+        float: left;
+    }
+}

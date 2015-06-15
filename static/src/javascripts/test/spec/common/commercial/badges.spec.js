@@ -36,8 +36,8 @@ describe('Badges', function () {
             }
             return template(
                 '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">\n' +
-                '    <h3 class="ad-slot--paid-for-badge__header">{{header}}</h3>\n' +
-                '    <p class="ad-slot--paid-for-badge__header">{{sponsor}}</p>\n' +
+                '    <h3 class="ad-slot--paid-for-badge__header"><%=header%></h3>\n' +
+                '    <p class="ad-slot--paid-for-badge__header"><%=sponsor%></p>\n' +
                 '</div>',
                 {
                     header: header,
@@ -52,7 +52,7 @@ describe('Badges', function () {
         injector.test(['common/modules/commercial/badges', 'common/utils/config'], function () {
             badges = arguments[0];
             config = arguments[1];
-            
+
             config.images = {
                 commercial: {}
             };
@@ -65,7 +65,7 @@ describe('Badges', function () {
 
             $fixtureContainer = fixtures.render(fixturesConfig);
             done();
-        });        
+        });
     });
 
     afterEach(function () {

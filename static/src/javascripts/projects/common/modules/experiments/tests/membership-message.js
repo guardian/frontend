@@ -45,20 +45,6 @@ define([
                     linkText: 'Become a supporter'
                 }));
             }
-        },
-        {
-            id: 'B',
-            test: function () {
-                new Message('membership-message', {
-                    pinOnHide: false,
-                    siteMessageLinkName: 'membership message',
-                    siteMessageCloseBtn: 'hide'
-                }).show(template(messageTmpl, {
-                    supporterLink: 'https://membership.theguardian.com/about?INTCMP=MEMBERSHIP_BANNER_TEST_B',
-                    messageText: 'Become a Guardian Member and support fearless investigative journalism',
-                    linkText: 'Become a partner'
-                }));
-            }
         }];
 
     };

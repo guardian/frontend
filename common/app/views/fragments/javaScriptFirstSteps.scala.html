@@ -105,8 +105,10 @@
                 'older' iOs normally indicates a device with lower power (they stop being upgradeable at some point).
                 We won't run all javascript on these
                 For usage stats see http://david-smith.org/iosversionstats/
+
+                On 12 June 2015 this represents about 1/4 iPads and 1/4 iPhones
             *@
-            return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent);
+            return /.*(iPhone|iPad; CPU) OS ([34567])_\d+.*/.test(navigator.userAgent) || window.devicePixelRatio === 1;
         }
         return false;
     })();

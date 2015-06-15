@@ -10,7 +10,7 @@ define([
     urlUtils
 ) {
 
-    var gatewayUrl = '//pq-direct.revsci.net/pql',
+    var gatewayUrl = 'http://pq-direct.revsci.net/pql',
         storageKey = 'gu.ads.audsci-gateway',
         sectionPlacements = {
             sport:        ['FKSWod', '2xivTZ', 'MTLELH'],

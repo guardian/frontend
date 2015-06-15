@@ -647,6 +647,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val TwitterMostViewed = Switch(
+    "Feature",
+    "ab-twitter-most-viewed",
+    "Twitter most viewed",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
+
   val ABTestHeadlines = Switch(
     "Feature",
     "a-b-test-headlines",
@@ -1193,6 +1202,15 @@ object Switches {
     "If this is switched on, facia will serve off the new JSON format (It will fallback to old if it doesn't exist)",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 30),
+    exposeClientSide = false
+  )
+
+  val FaciaToolPutPrivate = Switch(
+    "Facia",
+    "facia-tool-put-private",
+    "If this is switched on, facia tool will put collections to S3 as private",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 30),
     exposeClientSide = false
   )
 

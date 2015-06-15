@@ -36,7 +36,7 @@ define([
         this.classes = {
             saveThisArticle: '.js-save-for-later',
             saveThisVideo: '.js-save-for-later-video',
-            saveThisArticleButton: '.save-for-later__button',
+            saveThisArticleButton: '.js-save-for-later__button',
             onwardContainer: '.js-onward',
             relatedContainer: '.js-related',
             itemMeta: '.js-item__meta',
@@ -69,22 +69,26 @@ define([
             if (this.isContent) {
                 var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
                     '&shortUrl=' + config.page.shortUrl.replace('http://gu.com', '');
-                this.renderSaveThisArticleLink(false, url, 'save');
+                this.renderSaveThisArticleLink({ deferToClick: false, url: url, isSaved: false });
             }
             this.renderLinksInContainers(false);
         }
     };
 
-    SaveForLater.prototype.renderSaveThisArticleLink = function (deferToClick, url, state) {
-        var self = this,
-            $saver = bonzo(qwery(self.classes.saveThisArticle)[0]),
-            templateName = self.templates[deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
+    SaveForLater.prototype.renderSaveThisArticleLink = function (options) {
+        var $savers = bonzo(qwery(this.classes.saveThisArticle));
+        var templateString = this.templates[options.deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
 
-        $saver.html(template(templateName, {
-            url: url,
-            icon: bookmarkSvg,
-            state: state
-        }));
+        $savers.each(function (saver) {
+            var $saver = bonzo(saver);
+            $saver.html(template(templateString, {
+                url: options.url,
+                icon: bookmarkSvg,
+                isSaved: options.isSaved,
+                contentType: config.page.contentType,
+                position: $saver.attr('data-position')
+            }));
+        });
     };
 
     SaveForLater.prototype.getElementsIndexedById = function (context) {
@@ -147,9 +151,9 @@ define([
             shortUrl = config.page.shortUrl.replace('http://gu.com', '');
 
         if (this.hasUserSavedArticle(this.userData.articles, shortUrl)) {
-            this.renderSaveThisArticleLink(false, this.savedArticlesUrl, 'saved');
+            this.renderSaveThisArticleLink({ deferToClick: false, url: this.savedArticlesUrl, isSaved: true });
         } else {
-            this.renderSaveThisArticleLink(true, '', 'save');
+            this.renderSaveThisArticleLink({ deferToClick: true, url: '', isSaved: false });
 
             bean.one(saveLinkHolder, 'click', this.classes.saveThisArticleButton,
                 this.saveArticle.bind(this,
@@ -231,11 +235,11 @@ define([
     //If this is an article Page, configure the save article link
 
     SaveForLater.prototype.onSaveThisArticle = function () {
-        this.renderSaveThisArticleLink(false, this.savedArticlesUrl, 'saved');
+        this.renderSaveThisArticleLink({ deferToClick: false, url: this.savedArticlesUrl, isSaved: true });
     };
 
     SaveForLater.prototype.onSaveThisArticleError = function () {
-        this.renderSaveThisArticleLink(true, '', 'save');
+        this.renderSaveThisArticleLink({ deferToClick: true, url: '', isSaved: false });
     };
 
     //--- Handle saving an article on a front of container
