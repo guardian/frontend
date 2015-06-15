@@ -46,8 +46,6 @@ define([
             this.headerBigHeight     = this.$els.navHeader.dim().height;
             this.navigationClassList = this.$els.navigation.attr('class');
 
-            console.log(this.navigationClassList);
-
             // Top ads are revealed with CSS animation. As we don't know when animation is finished we will
             // start updating position only if the viewport is 'firstLoadDepth' scrolled down on page load
             if ($(window).scrollTop() > this.config.firstLoadDepth) {
