@@ -1002,6 +1002,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ABViewability = Switch(
+    "A/B Tests",
+    "ab-viewability",
+    "Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 1),
+    exposeClientSide = true
+  )
+
   val ABSaveForLaterSwitch = Switch(
     "A/B Tests",
     "ab-save-for-later",
