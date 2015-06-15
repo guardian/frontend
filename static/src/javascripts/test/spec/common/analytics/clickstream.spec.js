@@ -221,26 +221,24 @@ describe("Clickstream", function() {
         bean.fire(el, 'click');
     });
 
-    it("should get custom event properties recursively", function(done){
+    it('should get custom event properties recursively', function (done) {
+        var cs = new Clickstream({ filter: ['button'], withEvent: false });
 
-        var cs  = new Clickstream({ filter: ['button'], withEvent: false }),
-            object = { method: function (p) {
-                clickSpec.target = p.target;
-                expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
-                done();
-            }},
-            spy = sinon.spy(object, "method"),
-            el = document.getElementById('click-me-custom-event-properties'),
-            clickSpec = {
+        var spy = sinon.spy({ method: function (p) {
+            var clickSpec = {
                 tag: 'outer div',
                 samePage: true,
                 sameHost: true,
                 validTarget: true,
                 customEventProperties: { 'prop1': 'foo', 'prop2': 'foo' }
             };
-
+            clickSpec.target = p.target;
+            expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+            done();
+        } }, 'method');
         mediator.on('module:clickstream:click', spy);
 
+        var el = document.getElementById('click-me-custom-event-properties');
         bean.fire(el, 'click');
     });
 
