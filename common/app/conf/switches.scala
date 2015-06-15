@@ -989,7 +989,7 @@ object Switches {
     "ab-mt-rec1",
     "Viewability results - Recommendation option 1",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 16),
+    sellByDate = new LocalDate(2015, 6, 30),
     exposeClientSide = true
   )
 
@@ -998,7 +998,7 @@ object Switches {
     "ab-mt-rec2",
     "Viewability results - Recommendation option 2",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 16),
+    sellByDate = new LocalDate(2015, 6, 30),
     exposeClientSide = true
   )
 

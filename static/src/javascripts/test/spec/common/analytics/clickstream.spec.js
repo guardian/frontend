@@ -36,6 +36,9 @@ describe("Clickstream", function() {
                                     '<button href="/foo" id="click-me-link-context" data-link-name="the contextual link">The link</button>' +
                                 '</span>' +
                             '</span>' +
+                            '<div data-custom-event-properties=\'{ "prop1": "foo" }\'>' +
+                                '<button id="click-me-custom-event-properties" data-custom-event-properties=\'{ "prop2": "foo" }\'>Button</button>' +
+                            '</div>' +
                         '</p>' +
                     '</div>'
                     ]
@@ -81,7 +84,8 @@ describe("Clickstream", function() {
                 samePage: false,
                 sameHost: true,
                 validTarget: true,
-                tag: 'outer div | the ancestor | the descendant'
+                tag: 'outer div | the ancestor | the descendant',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -100,7 +104,8 @@ describe("Clickstream", function() {
             spy = sinon.spy(object, "method"),
             clickSpec = {
                 validTarget: false,
-                tag: 'outer div'
+                tag: 'outer div',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -122,7 +127,8 @@ describe("Clickstream", function() {
                 samePage: true,
                 sameHost: true,
                 validTarget: true,
-                tag: 'outer div | paragraph'
+                tag: 'outer div | paragraph',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -144,7 +150,8 @@ describe("Clickstream", function() {
                 samePage: false,
                 sameHost: true,
                 validTarget: true,
-                tag: 'outer div | internal link'
+                tag: 'outer div | internal link',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -166,7 +173,8 @@ describe("Clickstream", function() {
                 samePage: false,
                 sameHost: false,
                 validTarget: true,
-                tag: 'outer div | external link'
+                tag: 'outer div | external link',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -204,11 +212,33 @@ describe("Clickstream", function() {
                 validTarget: true,
                 tag: 'outer div | the contextual link',
                 linkContextPath: 'the inner context path',
-                linkContextName: 'the inner context name'
+                linkContextName: 'the inner context name',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
 
+        bean.fire(el, 'click');
+    });
+
+    it('should get custom event properties recursively', function (done) {
+        var cs = new Clickstream({ filter: ['button'], withEvent: false });
+
+        var spy = sinon.spy({ method: function (p) {
+            var clickSpec = {
+                tag: 'outer div',
+                samePage: true,
+                sameHost: true,
+                validTarget: true,
+                customEventProperties: { 'prop1': 'foo', 'prop2': 'foo' }
+            };
+            clickSpec.target = p.target;
+            expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+            done();
+        } }, 'method');
+        mediator.on('module:clickstream:click', spy);
+
+        var el = document.getElementById('click-me-custom-event-properties');
         bean.fire(el, 'click');
     });
 

@@ -36,7 +36,8 @@
     .fc-item__kicker,
     .rich-link__kicker,
     .fc-item__byline,
-    .rich-link__read-more-text {
+    .rich-link__read-more-text,
+    .fc-save-for-later--is-saved {
         color: colour(media-default);
     }
 
@@ -54,6 +55,10 @@
     .rich-link__standfirst,
     .fc-item__meta {
         color: colour(neutral-3);
+    }
+
+    .fc-save-for-later--is-saved .inline-tone-fill {
+        fill: colour(media-default);
     }
 }
 

@@ -85,8 +85,8 @@ define([
                 url: options.url,
                 icon: bookmarkSvg,
                 isSaved: options.isSaved,
-                contentType: config.page.contentType,
-                position: $saver.attr('data-position')
+                position: $saver.attr('data-position'),
+                config: config
             }));
         });
     };
