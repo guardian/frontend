@@ -225,7 +225,6 @@ describe("Clickstream", function() {
 
         var cs  = new Clickstream({ filter: ['button'], withEvent: false }),
             object = { method: function (p) {
-                console.log(0, p)
                 clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
