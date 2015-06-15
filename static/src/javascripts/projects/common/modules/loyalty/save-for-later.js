@@ -170,7 +170,8 @@ define([
             elements = self.getElementsIndexedById(context);
 
         _.forEach(elements, function (item) {
-            var $itemSaveLink = $(self.classes.itemSaveLink, item),
+            var $item = $(item),
+                $itemSaveLink = $(self.classes.itemSaveLink, item),
                 shortUrl = item.getAttribute(self.attributes.containerItemShortUrl),
                 id = item.getAttribute(self.attributes.containerItemDataId),
                 isSaved = signedIn ? self.hasUserSavedArticle(self.userData.articles, shortUrl) : false;
@@ -183,6 +184,7 @@ define([
                 if (isSaved) {
                     $itemSaveLink.addClass(self.classes.fcItemIsSaved);
                 }
+                $item.addClass('fc-item--has-metadata'); // while in test
                 $itemSaveLink.removeClass('is-hidden'); // while in test
             });
         });
