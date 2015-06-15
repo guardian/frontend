@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "devDependencies": {
     "autoprefixer-core": "^5.1.11",
+    "babel": "^5.5.8",
     "btoa": "1.1.2",
     "del": "^1.2.0",
     "esprima": "1.2.2",
@@ -35,7 +36,7 @@
     "grunt-svgmin": "^2.0.0",
     "grunt-text-replace": "0.3.12",
     "grunt-webfontjson": "0.0.4",
-    "gulp": "^3.8.11",
+    "gulp": "^3.9.0",
     "gulp-filter": "^2.0.2",
     "gulp-load-plugins": "^0.10.0",
     "gulp-load-tasks": "^0.8.3",
