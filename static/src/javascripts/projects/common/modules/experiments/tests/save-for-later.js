@@ -5,6 +5,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/template',
+    'common/modules/identity/api',
     'common/modules/loyalty/save-for-later',
     'text!common/views/identity/saved-for-later-profile-link.html'
 ], function (
@@ -14,6 +15,7 @@ define([
     config,
     mediator,
     template,
+    Id,
     SaveForLater,
     profileLinkTmp
 ) {
@@ -33,7 +35,7 @@ define([
         this.showForSensitive = false;
 
         this.canRun = function () {
-            return true;
+            return Id.isUserLoggedIn();
         };
 
         this.variants = [
