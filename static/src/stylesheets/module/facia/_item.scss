@@ -523,6 +523,8 @@ $fc-item-gutter: $gs-gutter / 4;
 
     color: transparent;
     float: right;
+    margin-right: 0 - ($gs-gutter * .25);
+    padding-right: ($gs-gutter * .25);
 
     &:hover,
     &:focus,
