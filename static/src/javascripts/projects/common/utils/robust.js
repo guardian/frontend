@@ -19,6 +19,7 @@ define([
             block();
         } catch (e) {
             reporter(e, { tags: { module: name } });
+            throw e;
         }
     }
 
