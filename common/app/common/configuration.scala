@@ -174,9 +174,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object ajax {
-    lazy val url =
-      if (environment.secure) configuration.getStringProperty("ajax.secureUrl").getOrElse("")
-      else configuration.getStringProperty("ajax.url").getOrElse("")
+    lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val nonSecureUrl =
       configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigins: Seq[String] = configuration.getStringProperty("ajax.cors.origin").map(_.split(",")
