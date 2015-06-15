@@ -165,7 +165,9 @@ define([
             },
 
             initialiseStickyHeader: function () {
-                if (config.page.contentType !== 'Interactive') {
+                var ViewabilityTest = ab.getParticipations().Viewability;
+
+                if (ab.testCanBeRun('Viewability') && ViewabilityTest && ViewabilityTest.variant === 'variant' && config.page.contentType !== 'Interactive') {
                     sticky.init();
                 }
             },
