@@ -1,71 +1,86 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var postcss = require('gulp-postcss');
-var sourcemaps = require('gulp-sourcemaps');
-var autoprefixer = require('autoprefixer-core');
-var pxtorem = require('postcss-pxtorem');
-var filter = require('gulp-filter');
-var del = require('del');
-var runSequence = require('run-sequence');
+import gulp from 'gulp';
+import sass from 'gulp-sass';
+import postcss from 'gulp-postcss';
+import sourcemaps from 'gulp-sourcemaps';
+import autoprefixer from 'autoprefixer-core';
+import pxtorem from 'postcss-pxtorem';
+import filter from 'gulp-filter';
+import del from 'del';
+import runSequence from 'run-sequence';
 
-var config = require('./config');
-var dest = config.dir.target + 'stylesheets/';
+import {DIRECTORIES} from './config';
 
-gulp.task('clean:stylesheets', function (cb) {
+const SRC = `${DIRECTORIES.src}/stylesheets`;
+const DEST = `${DIRECTORIES.target}/stylesheets`;
+
+const PRESETS = {
+    sass: {
+        outputStyle: 'compressed',
+        precision: 5
+    },
+    pxtorem: {
+        replace: true,
+        root_value: 16,
+        unit_precision: 5,
+        prop_white_list: 'all'
+    }
+}
+
+gulp.task('clean:stylesheets', (cb) =>
     del([
-        config.dir.target + 'stylesheets'
-    ], cb);
-});
+        DIRECTORIES.target + 'stylesheets'
+    ], cb)
+);
 
-gulp.task('stylesheets:modern', function () {
-    return gulp.src([
-            config.dir.src + 'stylesheets/*.scss',
-            '!' + config.dir.src + 'stylesheets/ie9.*.scss',
-            '!' + config.dir.src + 'stylesheets/old-ie.*.scss',
-            '!' + config.dir.src + 'stylesheets/webfonts-*.scss'
+gulp.task('stylesheets:modern', () =>
+    gulp.src([
+            `${SRC}/*.scss`,
+            `!${SRC}/ie9.*.scss`,
+            `!${SRC}/old-ie.*.scss`,
+            `!${SRC}/webfonts-*.scss`
         ])
         .pipe(sourcemaps.init())
-        .pipe(sass(config.presets.sass))
+        .pipe(sass(PRESETS.sass))
         .pipe(postcss([
             autoprefixer(),
-            pxtorem(config.presets.pxtorem)
+            pxtorem(PRESETS.pxtorem)
         ]))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(dest));
-});
+        .pipe(gulp.dest(DEST))
+);
 
-gulp.task('stylesheets:ie9', function () {
-    return gulp.src(config.dir.src + 'stylesheets/ie9.*.scss')
+gulp.task('stylesheets:ie9', () =>
+    gulp.src(`${SRC}/ie9.*.scss`)
         .pipe(sourcemaps.init())
-        .pipe(sass(config.presets.sass))
+        .pipe(sass(PRESETS.sass))
         .pipe(postcss([
             autoprefixer(),
-            pxtorem(config.presets.pxtorem)
+            pxtorem(PRESETS.pxtorem)
         ]))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(dest));
-});
+        .pipe(gulp.dest(DEST))
+);
 
-gulp.task('stylesheets:oldIE', function () {
-    return gulp.src(config.dir.src + 'stylesheets/old-ie.*.scss')
+gulp.task('stylesheets:oldIE', () =>
+    gulp.src(`${SRC}/old-ie.*.scss`)
         .pipe(sourcemaps.init())
-        .pipe(sass(config.presets.sass))
+        .pipe(sass(PRESETS.sass))
         .pipe(postcss([
             autoprefixer()
         ]))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(dest));
-});
+        .pipe(gulp.dest(DEST))
+);
 
-gulp.task('stylesheets:fonts', function () {
-    return gulp.src(config.dir.src + 'stylesheets/webfonts-*.scss')
+gulp.task('stylesheets:fonts', () =>
+    gulp.src(`${SRC}/webfonts-*.scss`)
         .pipe(sourcemaps.init())
-        .pipe(sass(config.presets.sass))
+        .pipe(sass(PRESETS.sass))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(dest));
-});
+        .pipe(gulp.dest(DEST))
+);
 
-gulp.task('stylesheets', ['images'], function (cb) {
+gulp.task('stylesheets', (cb) =>
     runSequence(
         'clean:stylesheets',
         [
@@ -75,5 +90,5 @@ gulp.task('stylesheets', ['images'], function (cb) {
             'stylesheets:fonts'
         ],
         cb
-    );
-});
+    )
+);
