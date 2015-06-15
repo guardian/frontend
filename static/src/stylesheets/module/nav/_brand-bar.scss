@@ -202,6 +202,19 @@
         @include mq($until: tablet) {
             display: none;
         }
+
+        .l-header--is-slim & {
+            display: none;
+        }
+    }
+}
+
+.brand-bar__item--masterclasses {
+    .brand-bar__item--right--au-edition & {
+        // Hide on mobile
+        @include mq($until: tablet) {
+            display: none;
+        }
     }
 }
 
