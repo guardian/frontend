@@ -338,8 +338,11 @@ define([
     };
 
     SaveForLater.prototype.updateSavedCount = function () {
-        var saveForLaterProfileLink = $(this.classes.profileDropdownLink);
-        saveForLaterProfileLink.html('Saved (' + this.userData.articles.length + ')');
+        var saveForLaterProfileLink = $(this.classes.profileDropdownLink),
+            that = this;
+        fastdom.write(function () {
+            saveForLaterProfileLink.html('Saved (' + that.userData.articles.length + ')');
+        });
     };
 
     return SaveForLater;
