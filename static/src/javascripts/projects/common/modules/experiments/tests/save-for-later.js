@@ -49,8 +49,7 @@ define([
 
                     mediator.on('modules:profilenav:loaded', function () {
                         var popup = qwery('.popup--profile')[0];
-                        var signOutItem = popup.lastChild;
-                        bonzo(signOutItem).before(bonzo.create(
+                        bonzo(popup).prepend(bonzo.create(
                             template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
                                 idUrl: config.page.idUrl
                             })
