@@ -4,8 +4,8 @@
 
 <aside class="fc-item__meta js-item__meta">
     @if(conf.Switches.ABSaveForLaterSwitch.isSwitchedOn) {
-        <button data-link-name="save-for-later" class="js-save-for-later-link fc-save-for-later is-hidden u-faux-block-link__promote" type="button">
-            @fragments.inlineSvg("bookmark", "icon")
+        <button class="js-save-for-later-link fc-save-for-later is-hidden u-faux-block-link__promote" type="button">
+           @fragments.inlineSvg("bookmark", "icon", List("inline-tone-fill"))
         </button>
     }
     @for(publishedAt <- item.webPublicationDate; timeStampDisplay <- item.timeStampDisplay) {

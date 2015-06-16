@@ -204,6 +204,8 @@ Comments.prototype.renderComments = function(resp) {
 
     this.relativeDates();
     this.emit('rendered', resp.paginationHtml);
+
+    mediator.emit('modules:comments:renderComments:rendered');
 };
 
 Comments.prototype.showHiddenComments = function(e) {

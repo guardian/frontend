@@ -57,6 +57,11 @@ define([
         shortUrl = (config.page.shortUrl || '').replace('http://gu.com', ''),
         savedPlatformAnalytics = 'web:' + detect.getUserAgent.browser + ':' + detect.getBreakpoint();
 
+    var getCustomEventProperties = function (contentId) {
+        var prefix = config.page.contentType.match(/^Network Front|Section$/) ? 'Front' : 'Content';
+        return { prop74: prefix + 'ContainerSave:' + contentId };
+    };
+
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
         if (userLoggedIn) {
@@ -171,8 +176,12 @@ define([
             fastdom.write(function () {
                 if (isSaved) {
                     $itemSaveLink.addClass(this.classes.fcItemIsSaved);
+                } else {
+                    var contentId = $($.ancestor($itemSaveLink[0], 'fc-item')).attr('data-id');
+                    $itemSaveLink.attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties(contentId)));
                 }
                 $item.addClass('fc-item--has-metadata'); // while in test
+                $itemSaveLink.attr('data-link-name', isSaved ? 'Unsave' : 'Save');
                 $itemSaveLink.removeClass('is-hidden'); // while in test
             }.bind(this));
         }.bind(this));
@@ -202,8 +211,7 @@ define([
         );
     };
 
-    SaveForLater.prototype.deleteArticle = function (onArticleDeleted, onArticleDeletedError, userData, pageId, shortUrl, event) {
-        event.stop();
+    SaveForLater.prototype.deleteArticle = function (onArticleDeleted, onArticleDeletedError, userData, pageId, shortUrl) {
 
         userData.articles = _.filter(userData.articles, function (article) {
             return article.shortUrl !== shortUrl;
@@ -236,8 +244,12 @@ define([
         this.createDeleteArticleHandler(link, id, shortUrl);
 
         fastdom.write(function () {
-            bonzo(link).addClass(this.classes.fcItemIsSaved);
-        }.bind(this));
+            bonzo(link)
+                .addClass(this.classes.fcItemIsSaved)
+                .attr('data-link-name', 'Unsave')
+                // Remove attr
+                .attr('data-custom-event-properties', '');
+        });
     };
 
     SaveForLater.prototype.onSaveArticleError = function (link, id, shortUrl) {
@@ -252,8 +264,12 @@ define([
         this.createSaveArticleHandler(link, id, shortUrl);
 
         fastdom.write(function () {
-            bonzo(link).removeClass(this.classes.fcItemIsSaved);
-        }.bind(this));
+            var contentId = $($.ancestor(link, 'fc-item')).attr('data-id');
+            bonzo(link)
+                .removeClass(this.classes.fcItemIsSaved)
+                .attr('data-link-name', 'Save')
+                .attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties(contentId)));
+        });
     };
 
     SaveForLater.prototype.onDeleteArticleError = function (link, id, shortUrl) {
