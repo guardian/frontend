@@ -14,6 +14,6 @@ define([
                 feature: 'fastdom'
             }
         });
-        console.error(error);
+        window.console.error(error);
     };
 });
