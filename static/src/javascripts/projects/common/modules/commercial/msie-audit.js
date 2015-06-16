@@ -23,7 +23,7 @@ define([
         if (detect.getUserAgent.browser === 'MSIE') {
             (_.once(function () {
                 beacon.beaconCounts('msie-browser');
-            }) ());
+            })());
 
             (_.delay(function () {
                 if (detect.adblockInUse) {

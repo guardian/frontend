@@ -1,3 +1,4 @@
+/* global s */
 define([
     'bonzo',
     'common/utils/_',

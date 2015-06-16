@@ -172,7 +172,7 @@ define([
     function replaceValidTimestamps(opts) {
         opts = opts || {};
 
-        findValidTimestamps().each(function (el) {
+        findValidTimestamps().each(function (el) {
             var targetEl,
                 $el = bonzo(el),
                 // Epoch dates are more reliable, fallback to datetime for liveblog blocks

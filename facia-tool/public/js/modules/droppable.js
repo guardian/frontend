@@ -86,11 +86,11 @@ define([
     function init() {
         window.addEventListener('dragover', function(event) {
             event.preventDefault();
-        },false);
+        }, false);
 
         window.addEventListener('drop', function(event) {
             event.preventDefault();
-        },false);
+        }, false);
 
         ko.bindingHandlers.makeDroppable = {
             init: function(element) {

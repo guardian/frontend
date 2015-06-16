@@ -22,7 +22,7 @@ define([
         },
         update: function (element, valueAccessor) {
             var value = ko.unwrap(valueAccessor());
-            value ? $(element).slideDown(200) : $(element).slideUp(200);
+            if (value) { $(element).slideDown(200); } else { $(element).slideUp(200); }
         }
     };
 
@@ -33,7 +33,7 @@ define([
         },
         update: function(element, valueAccessor) {
             var value = valueAccessor();
-            ko.unwrap(value) ? $(element).fadeIn() : $(element).fadeOut();
+            if (ko.unwrap(value)) { $(element).fadeIn(); } else { $(element).fadeOut(); }
         }
     };
 });

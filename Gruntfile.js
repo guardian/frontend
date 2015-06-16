@@ -1,3 +1,4 @@
+'use strict';
 /* global module: false, process: false */
 var megalog = require('megalog');
 
@@ -28,8 +29,10 @@ module.exports = function (grunt) {
                 scsslint: 'grunt-scss-lint',
                 cssmetrics: 'grunt-css-metrics',
                 assetmonitor: 'grunt-asset-monitor',
+                /*eslint-disable camelcase*/
                 px_to_rem: 'grunt-px-to-rem',
                 frequency_graph: 'grunt-frequency-graph'
+                /*eslint-enable camelcase*/
             }
         }
     });

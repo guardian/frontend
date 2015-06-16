@@ -342,7 +342,7 @@ Loader.prototype.renderCommentCount = function() {
         method: 'get',
         crossOrigin: true,
         success: function(response) {
-            if(response && response.counts &&response.counts.length) {
+            if(response && response.counts && response.counts.length) {
                 var commentCount = response.counts[0].count;
                 if (commentCount > 0) {
                     // Remove non-JS links
@@ -351,7 +351,7 @@ Loader.prototype.renderCommentCount = function() {
                     var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
                         html = '<a href="#comments" class="js-show-discussion commentcount tone-colour" data-link-name="Comment count">' +
                                '  <i class="i"></i>' + commentCount +
-                               '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
+                               '  <span class="commentcount__label">' + commentCountLabel + '</span>' +
                                '</a>';
                     $('.js-comment-count').html(html);
 
@@ -379,15 +379,15 @@ Loader.prototype.initPagination = function() {
 };
 
 Loader.prototype.gotoComment = function(id) {
-    var comment = $('#comment-'+ id, this.elem);
+    var comment = $('#comment-' + id, this.elem);
 
     if (comment.length > 0) {
-        window.location.replace('#comment-'+ id);
+        window.location.replace('#comment-' + id);
         return;
     }
 
     this.loadComments({comment: id}).then(function() {
-        window.location.replace('#comment-'+ id);
+        window.location.replace('#comment-' + id);
     });
 };
 
