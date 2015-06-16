@@ -202,6 +202,10 @@
         @include mq($until: tablet) {
             display: none;
         }
+
+        .l-header--is-slim & {
+            display: none;
+        }
     }
 }
 
