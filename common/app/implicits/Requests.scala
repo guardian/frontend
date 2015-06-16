@@ -24,25 +24,23 @@ trait Requests {
 
     lazy val isWebp: Boolean = {
       val requestedContentType = r.acceptedTypes.sorted(MediaRange.ordering)
-      val imageMimeType = requestedContentType.find(media => media.accepts("image/jpeg")|| media.accepts("image/webp"))
+      val imageMimeType = requestedContentType.find(media => media.accepts("image/jpeg") || media.accepts("image/webp"))
       imageMimeType.exists(_.mediaSubType == "webp")
     }
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 
-    lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase  "X-Gu-Management-Healthcheck")
+    lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Management-Healthcheck")
 
 
-    private val imgixTestSections = Seq(
-      "/uk/money",
-      "/au/money",
-      "/us/money",
-      "/money",
-      "/uk/technology",
-      "/au/technology",
-      "/us/technology",
-      "/technology"
-    )
+    private val imgixTestSections = {
+      def editionalise(path: String) = Seq(s"/uk$path", s"/au$path", s"/us$path", path)
+
+      Seq("/books") ++
+        editionalise("/money") ++
+        editionalise("/technology") ++
+        editionalise("/business")
+  }
 
     lazy val isInImgixTest: Boolean = Switches.ImgixSwitch.isSwitchedOn &&
       (Configuration.environment.isNonProd || imgixTestSections.exists(r.path.startsWith))
