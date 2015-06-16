@@ -14,8 +14,7 @@ Add the following properties to your local properties file:
 
     # Generic
     guardian.page.host=http://m.thegulocal.com
-    ajax.url=http://m.thegulocal.com
-    ajax.secureUrl=https://m.thegulocal.com
+    ajax.url=//m.thegulocal.com
 
 ## APIs
 ### Discussion API
@@ -49,7 +48,7 @@ You will need to copy the `GU_U` cookie with something like
 [or this firefox extension](https://addons.mozilla.org/en-US/firefox/addon/edit-cookies/).
 
 Then create the same cookie on your `.thegulocal.com` domain.
- 
+
 We should hopefully have a fix for this soon.
- 
+
 Happy yapping.
