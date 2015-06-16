@@ -49,7 +49,7 @@ define([
 
         this.filter     = ko.observable();
         this.filterType = ko.observable();
-        this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []);
+        this.filterTypes = ko.observableArray(_.values(opts.filterTypes) || []);
 
         this.suggestions = ko.observableArray();
         this.lastSearch = ko.observable();

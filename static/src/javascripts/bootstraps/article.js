@@ -1,4 +1,4 @@
-/*jshint -W031 */
+/*eslint-disable no-new*/
 define([
     'fence',
     'qwery',

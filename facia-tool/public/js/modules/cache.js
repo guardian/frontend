@@ -1,3 +1,4 @@
+/*eslint-disable consistent-return*/
 define(['modules/vars'], function(vars) {
     var cache = {},
         expiry = vars.CONST.cacheExpiryMs || 300000; // 300000 == 5 mins
