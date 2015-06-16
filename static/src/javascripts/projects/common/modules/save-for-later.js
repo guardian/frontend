@@ -4,6 +4,7 @@ define([
     'bean',
     'fastdom',
     'common/utils/_',
+    'common/utils/$',
     'common/utils/detect',
     'common/utils/config',
     'common/utils/mediator',
@@ -18,6 +19,7 @@ define([
     bean,
     fastdom,
     _,
+    $,
     detect,
     config,
     mediator,
@@ -27,10 +29,6 @@ define([
     saveForLaterLinkTmpl,
     saveForLaterButtonTmpl
 ) {
-    //This is because of some a/b test wierdness - '$' doesn't work
-    var $ = function (selector, context) {
-        return bonzo(qwery(selector, context));
-    };
 
     function SaveForLater() {
         this.classes = {
@@ -57,6 +55,11 @@ define([
 
     var bookmarkSvg = svgs('bookmark', ['i-left']);
     var shortUrl = (config.page.shortUrl || '').replace('http://gu.com', '');
+
+    var getCustomEventProperties = function (contentId) {
+        var prefix = config.page.contentType.match(/^Network Front|Section$/) ? 'Front' : 'Content';
+        return { prop74: prefix + 'ContainerSave:' + contentId };
+    };
 
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
@@ -171,6 +174,9 @@ define([
             fastdom.write(function () {
                 if (isSaved) {
                     $itemSaveLink.addClass(self.classes.fcItemIsSaved);
+                } else {
+                    var contentId = $($.ancestor($itemSaveLink[0], 'fc-item')).attr('data-id');
+                    $itemSaveLink.attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties(contentId)));
                 }
                 $item.addClass('fc-item--has-metadata'); // while in test
                 $itemSaveLink.attr('data-link-name', isSaved ? 'Unsave' : 'Save');
@@ -237,7 +243,9 @@ define([
         fastdom.write(function () {
             bonzo(link)
                 .addClass(self.classes.fcItemIsSaved)
-                .attr('data-link-name', 'Unsave');
+                .attr('data-link-name', 'Unsave')
+                // Remove attr
+                .attr('data-custom-event-properties', '');
         });
     };
 
@@ -255,9 +263,11 @@ define([
         self.createSaveArticleHandler(link, id, shortUrl);
 
         fastdom.write(function () {
+            var contentId = $($.ancestor(link, 'fc-item')).attr('data-id');
             bonzo(link)
                 .removeClass(self.classes.fcItemIsSaved)
-                .attr('data-link-name', 'Save');
+                .attr('data-link-name', 'Save')
+                .attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties(contentId)));
         });
     };
 
