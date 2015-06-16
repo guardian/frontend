@@ -6,7 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/identity/api',
-    'common/modules/loyalty/save-for-later',
+    'common/modules/save-for-later',
     'text!common/views/identity/saved-for-later-profile-link.html'
 ], function (
     bonzo,
