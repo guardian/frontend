@@ -10,8 +10,8 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'common/views/svgs',
-    'text!common/views/loyalty/save-for-later--signed-out.html',
-    'text!common/views/loyalty/save-for-later--signed-in.html'
+    'text!common/views/save-for-later/save-link.html',
+    'text!common/views/save-for-later/save-button.html'
 ], function (
     qwery,
     bonzo,
@@ -24,8 +24,8 @@ define([
     template,
     identity,
     svgs,
-    saveForLaterOutTmpl,
-    saveForLaterInTmpl
+    saveForLaterLinkTmpl,
+    saveForLaterButtonTmpl
 ) {
     //This is because of some a/b test wierdness - '$' doesn't work
     var $ = function (selector, context) {
@@ -49,10 +49,6 @@ define([
             containerItemShortUrl: 'data-loyalty-short-url',
             containerItemDataId: 'data-id'
         };
-        this.templates = {
-            signedOutThisArticle: saveForLaterOutTmpl,
-            signedInThisArticle: saveForLaterInTmpl
-        };
 
         this.isContent = !/Network Front|Section/.test(config.page.contentType);
         this.userData = null;
@@ -60,35 +56,63 @@ define([
     }
 
     var bookmarkSvg = svgs('bookmark', ['i-left']);
+    var shortUrl = (config.page.shortUrl || '').replace('http://gu.com', '');
 
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
         if (userLoggedIn) {
-            this.getSavedArticles();
+            identity.getSavedArticles()
+                .then(function (resp) {
+                    var notFound = { message: 'Not found', description: 'Resource not found' };
+                    if (resp.status === 'error' && resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
+                        //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
+                        var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
+                        this.userData = {version: date, articles:[]};
+                    } else {
+                        this.userData = resp.savedArticles;
+                    }
+
+                    this.renderLinksInContainers(true);
+                    if (this.isContent) {
+                        this.renderLinksInContent();
+                    }
+                    this.updateArticleCount();
+                }.bind(this));
         } else {
             if (this.isContent) {
                 var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
                     '&shortUrl=' + config.page.shortUrl.replace('http://gu.com', '');
-                this.renderSaveThisArticleLink({ deferToClick: false, url: url, isSaved: false });
+                this.renderSaveThisArticleElement({ url: url, isSaved: false });
             }
             this.renderLinksInContainers(false);
         }
     };
 
-    SaveForLater.prototype.renderSaveThisArticleLink = function (options) {
+    SaveForLater.prototype.renderSaveThisArticleElement = function (options) {
         var $savers = bonzo(qwery(this.classes.saveThisArticle));
-        var templateString = this.templates[options.deferToClick ? 'signedInThisArticle' : 'signedOutThisArticle'];
 
         $savers.each(function (saver) {
             var $saver = bonzo(saver);
-            $saver.html(template(templateString, {
-                url: options.url,
+            var templateData = {
                 icon: bookmarkSvg,
                 isSaved: options.isSaved,
                 position: $saver.attr('data-position'),
                 config: config
-            }));
-        });
+            };
+            if (options.url) {
+                $saver.html(template(saveForLaterLinkTmpl,
+                    _.assign({ url: options.url }, templateData)));
+            } else {
+                $saver.html(template(saveForLaterButtonTmpl, templateData));
+
+                bean.one($saver[0], 'click', this.classes.saveThisArticleButton,
+                    this.saveArticle.bind(this,
+                        this.onSaveThisArticle.bind(this),
+                        this.onSaveThisArticleError.bind(this),
+                        this.userData,
+                        config.page.pageId, shortUrl));
+            }
+        }.bind(this));
     };
 
     SaveForLater.prototype.getElementsIndexedById = function (context) {
@@ -98,32 +122,6 @@ define([
         return _.forEach(elements, function (el) {
             return bonzo(el).attr(self.attributes.containerItemShortUrl);
         });
-    };
-
-    SaveForLater.prototype.getSavedArticles = function () {
-        var self = this,
-            notFound  = {message:'Not found', description:'Resource not found'};
-
-        identity.getSavedArticles().then(
-            function success(resp) {
-                if (resp.status === 'error') {
-
-                    if (resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
-                        //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
-                        var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
-                        self.userData = {version: date, articles:[]};
-                    }
-                } else {
-                    self.userData = resp.savedArticles;
-                }
-
-                self.renderLinksInContainers(true);
-                if (self.isContent) {
-                    self.configureSaveThisArticle();
-                }
-                self.updateArticleCount();
-            }
-        );
     };
 
     SaveForLater.prototype.renderLinksInContainers = function (signedIn) {
@@ -146,21 +144,11 @@ define([
         });
     };
 
-    SaveForLater.prototype.configureSaveThisArticle = function () {
-        var saveLinkHolder = qwery(this.classes.saveThisArticle)[0],
-            shortUrl = config.page.shortUrl.replace('http://gu.com', '');
-
+    SaveForLater.prototype.renderLinksInContent = function () {
         if (this.hasUserSavedArticle(this.userData.articles, shortUrl)) {
-            this.renderSaveThisArticleLink({ deferToClick: false, url: this.savedArticlesUrl, isSaved: true });
+            this.renderSaveThisArticleElement({ url: this.savedArticlesUrl, isSaved: true });
         } else {
-            this.renderSaveThisArticleLink({ deferToClick: true, url: '', isSaved: false });
-
-            bean.one(saveLinkHolder, 'click', this.classes.saveThisArticleButton,
-                this.saveArticle.bind(this,
-                    this.onSaveThisArticle.bind(this),
-                    this.onSaveThisArticleError.bind(this),
-                    this.userData,
-                    config.page.pageId, shortUrl));
+            this.renderSaveThisArticleElement({ isSaved: false });
         }
     };
 
@@ -185,6 +173,7 @@ define([
                     $itemSaveLink.addClass(self.classes.fcItemIsSaved);
                 }
                 $item.addClass('fc-item--has-metadata'); // while in test
+                $itemSaveLink.attr('data-link-name', isSaved ? 'Unsave' : 'Save');
                 $itemSaveLink.removeClass('is-hidden'); // while in test
             });
         });
@@ -192,9 +181,7 @@ define([
 
         //--- Get articles
     // -------------------------Save Article
-    SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl, event) {
-        event.stop();
-
+    SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl) {
         var self = this,
             date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
             newArticle = {id: pageId, shortUrl: shortUrl, date: date, read: false  };
@@ -213,9 +200,7 @@ define([
         );
     };
 
-    SaveForLater.prototype.deleteArticle = function (onArticleDeleted, onArticleDeletedError, userData, pageId, shortUrl, event) {
-        event.stop();
-
+    SaveForLater.prototype.deleteArticle = function (onArticleDeleted, onArticleDeletedError, userData, pageId, shortUrl) {
         var self = this;
 
         userData.articles = _.filter(userData.articles, function (article) {
@@ -237,11 +222,11 @@ define([
     //If this is an article Page, configure the save article link
 
     SaveForLater.prototype.onSaveThisArticle = function () {
-        this.renderSaveThisArticleLink({ deferToClick: false, url: this.savedArticlesUrl, isSaved: true });
+        this.renderSaveThisArticleElement({ url: this.savedArticlesUrl, isSaved: true });
     };
 
     SaveForLater.prototype.onSaveThisArticleError = function () {
-        this.renderSaveThisArticleLink({ deferToClick: true, url: '', isSaved: false });
+        this.renderSaveThisArticleElement({ isSaved: false });
     };
 
     //--- Handle saving an article on a front of container
@@ -250,7 +235,9 @@ define([
         self.createDeleteArticleHandler(link, id, shortUrl);
 
         fastdom.write(function () {
-            bonzo(link).addClass(self.classes.fcItemIsSaved);
+            bonzo(link)
+                .addClass(self.classes.fcItemIsSaved)
+                .attr('data-link-name', 'Unsave');
         });
     };
 
@@ -268,7 +255,9 @@ define([
         self.createSaveArticleHandler(link, id, shortUrl);
 
         fastdom.write(function () {
-            bonzo(link).removeClass(self.classes.fcItemIsSaved);
+            bonzo(link)
+                .removeClass(self.classes.fcItemIsSaved)
+                .attr('data-link-name', 'Save');
         });
     };
 
