@@ -141,7 +141,7 @@ define([
     };
 
     SaveForLater.prototype.renderLinksInContent = function () {
-        if (this.hasUserSavedArticle(this.userData.articles, shortUrl)) {
+        if (this.getSavedArticle(shortUrl)) {
             this.renderSaveThisArticleElement({ url: this.savedArticlesUrl, isSaved: true });
         } else {
             this.renderSaveThisArticleElement({ isSaved: false });
@@ -157,7 +157,7 @@ define([
                 $itemSaveLink = $(this.classes.itemSaveLink, item),
                 shortUrl = item.getAttribute(this.attributes.containerItemShortUrl),
                 id = item.getAttribute(this.attributes.containerItemDataId),
-                isSaved = signedIn ? this.hasUserSavedArticle(this.userData.articles, shortUrl) : false;
+                isSaved = signedIn ? this.getSavedArticle(shortUrl) : false;
 
             if (signedIn) {
                 this[isSaved ? 'createDeleteArticleHandler' : 'createSaveArticleHandler']($itemSaveLink[0], id, shortUrl);
@@ -286,9 +286,8 @@ define([
         );
     };
 
-    ///------------------------------Utils
-    SaveForLater.prototype.hasUserSavedArticle = function (articles, shortUrl) {
-        return _.some(articles, function (article) {
+    SaveForLater.prototype.getSavedArticle = function (shortUrl) {
+        return _.some(this.userData.articles, function (article) {
             return article.shortUrl.indexOf(shortUrl) > -1;
         });
     };
