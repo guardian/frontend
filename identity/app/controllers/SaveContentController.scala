@@ -48,14 +48,16 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
   protected def formActionUrl(idUrlBuilder: IdentityUrlBuilder, idRequest: IdentityRequest, path: String): String = idUrlBuilder.buildUrl(path, idRequest)
 
-
   def saveContentItem = authenticatedActions.authAction.apply { implicit request =>
 
     val idRequest = identityRequestParser(request)
     val userId = request.user.getId()
 
-    (idRequest.returnUrl, idRequest.shortUrl) match {
-      case (Some(returnUrl), Some(shortUrl)) => {
+    (for {
+      returnUrl <- idRequest.returnUrl
+      shortUrl <- idRequest.shortUrl
+      platform <- idRequest.platform
+    } yield {
         savedArticleService.getOrCreateArticlesList(request.user.auth).map {
           case Right(prefs) =>
             if (!prefs.contains(shortUrl)) {
@@ -63,16 +65,13 @@ class SaveContentController @Inject() ( api: IdApiClient,
                 case Some(id) => id
                 case _ => new URI(returnUrl).getPath.drop(1)
               }
-              val savedArticles = prefs.addArticle(articleId, shortUrl)
+              val savedArticles = prefs.addArticle(articleId, shortUrl, platform)
               api.updateSavedArticles(request.user.auth, savedArticles)
             }
           case Left(errors) => logger.error(errors.toString)
         }
         SeeOther(returnUrl)
-      }
-      case _ =>
-        SeeOther(returnUrlVerifier.defaultReturnUrl)
-    }
+    }) getOrElse SeeOther(returnUrlVerifier.defaultReturnUrl)
   }
 
   def listSavedContentPage() = authenticatedActions.authAction.async { implicit request =>
