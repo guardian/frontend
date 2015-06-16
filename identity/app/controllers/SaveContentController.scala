@@ -87,8 +87,9 @@ class SaveContentController @Inject() ( api: IdApiClient,
           case (formWithErrors, Error(message, decription, _, context)) =>
             formWithErrors.withError(context.getOrElse(""), message)
         }
-        val pageData = pageDataBuilder(List.empty, emptyArticles, idRequest, pageNum)
-        Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData))))
+        pageDataBuilder(emptyArticles, idRequest, pageNum).map { pageData =>
+          NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData)))
+        }
     }
   }
 
@@ -112,8 +113,9 @@ class SaveContentController @Inject() ( api: IdApiClient,
             fillFormWithApiDataForPageAndGetResult(idRequest, savedArticles, pageNum)
           case Left(errors) =>
             val formWithApiErrors = buildFormFromErrors(errors)
-            val pageData = pageDataBuilder(List.empty, emptyArticles, idRequest, pageNum)
-            Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData))))
+            pageDataBuilder(emptyArticles, idRequest, pageNum).map { pageData =>
+              NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData)))
+            }
         }
       }
 
@@ -131,22 +133,25 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
                   case Left(errors) =>
                     val formWithApiErrors = buildFormFromErrors(errors)
-                    val pageData = pageDataBuilder(List.empty, emptyArticles, idRequest, pageNum)
-                    Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithApiErrors, pageData))))
+                    pageDataBuilder(emptyArticles, idRequest, pageNum).map { pageData =>
+                      NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithApiErrors, pageData)))
+                    }
                 }
                 updatedResult
             }
 
             updatedArticlesViow.getOrElse {
               val formWithError = form.withError("Error", "There was a problem with your request")
-              val pageData = pageDataBuilder(List.empty, emptyArticles, idRequest, pageNum)
-              Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithError, pageData))))
+              pageDataBuilder(emptyArticles, idRequest, pageNum).map { pageData =>
+                NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithError, pageData)))
+              }
             }
 
           case Left(errors) =>
             val formWithErrors = buildFormFromErrors(errors)
-            val pageData = pageDataBuilder(List.empty, emptyArticles, idRequest, pageNum)
-            Future.successful(NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData))))
+            pageDataBuilder(emptyArticles, idRequest, pageNum).map { pageData =>
+              NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData)))
+            }
         }
         response
       }
@@ -160,19 +165,8 @@ class SaveContentController @Inject() ( api: IdApiClient,
     if ( pageNum > updatedArticles.numPages && pageNum > 1) {
       Future.successful(NoCache(SeeOther( s"/saved-for-later-page?page=%d".format(pageNum - 1))))
     } else {
-
-      val articles = updatedArticles.getPage(pageNum)
-      val shortUrls = articles.map(_.shortUrl)
-      val form = savedArticlesForm.fill(SavedArticleData(shortUrls))
-
-      val futureContentList: Future[List[ApiContent]] = getResponse(LiveContentApi.search(Edition.defaultEdition)
-        .ids(shortUrls.map(_.drop(1)).mkString(","))
-        .showFields("all")
-        .showElements ("all")
-      ).map(r => r.results.map(ApiContent(_)))
-
-      futureContentList.map { contentList =>
-        val pageData = pageDataBuilder(contentList, updatedArticles, idRequest, pageNum)
+      pageDataBuilder(updatedArticles, idRequest, pageNum).map { pageData =>
+        val form = savedArticlesForm.fill(SavedArticleData(pageData.shortUrls))
         NoCache(Ok(views.html.profile.savedForLaterPage(page, form, pageData)))
       }
     }
