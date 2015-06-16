@@ -21,7 +21,7 @@
     "grunt-eslint": "^15.0.0",
     "grunt-frequency-graph": "^0.1.6",
     "grunt-hologram": "0.0.4",
-    "grunt-jscs": "0.7.1",
+    "grunt-jscs": "1.8.0",
     "grunt-karma": "0.10.1",
     "grunt-mkdir": "0.1.2",
     "grunt-pagespeed": "0.3.0",

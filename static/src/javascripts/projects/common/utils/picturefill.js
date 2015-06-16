@@ -167,7 +167,9 @@ define([
                 media = parsedSize.media;
 
                 if (!length) {
+                    // jscs:disable disallowKeywords
                     continue;
+                    // jscs:enable disallowKeywords
                 }
                 // if there is no media query or it matches, choose this as our winning length
                 if ((!media || pf.matchesMedia(media)) &&
@@ -419,7 +421,9 @@ define([
 
                     // immediately skip non-`img` nodes
                     if (element.nodeName.toUpperCase() !== 'IMG') {
+                        // jscs:disable disallowKeywords
                         continue;
+                        // jscs:enable disallowKeywords
                     }
 
                     // expando for caching data on the img
@@ -431,7 +435,9 @@ define([
                     // `options.reevaluate` is set to true (this, for example,
                     // is set to true when running `picturefill` on `resize`).
                     if (!options.reevaluate && element[ pf.ns ].evaluated) {
+                        // jscs:disable disallowKeywords
                         continue;
+                        // jscs:enable disallowKeywords
                     }
 
                     if (!pf.sizesSupported && (element.srcset && regWDesc.test(element.srcset))) {
