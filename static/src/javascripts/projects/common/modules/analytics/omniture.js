@@ -90,8 +90,7 @@ define([
             storeObj = {
                 pageName: this.s.pageName,
                 tag: spec.tag || 'untracked',
-                time: new Date().getTime(),
-                customEventProperties: spec.customEventProperties
+                time: new Date().getTime()
             };
             try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {}
             storage.session.set(NG_STORAGE_KEY, storeObj);
@@ -293,8 +292,6 @@ define([
                 // this allows 'live' Omniture tracking of Navigation Interactions
                 this.s.eVar7 = ni.pageName;
                 this.s.prop37 = ni.tag;
-
-                _.assign(this.s, ni.customEventProperties);
             }
             storage.session.remove(R2_STORAGE_KEY);
             storage.session.remove(NG_STORAGE_KEY);
