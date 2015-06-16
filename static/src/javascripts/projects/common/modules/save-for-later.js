@@ -226,7 +226,7 @@ define([
     // handle saving/deleting from content pages
 
     SaveForLater.prototype.saveArticle = function (userData, pageId, shortUrl) {
-        this.save(userData, pageId, shortUrl, this.onSaveArticle)
+        this.save(userData, pageId, shortUrl, this.onSaveArticle);
     };
 
     SaveForLater.prototype.onSaveArticle = function (success) {
@@ -250,7 +250,7 @@ define([
     // handle saving/deleting from fronts
 
     SaveForLater.prototype.saveFaciaItem = function (userData, pageId, shortUrl) {
-        this.save(userData, pageId, shortUrl, this.onSaveFaciaItem)
+        this.save(userData, pageId, shortUrl, this.onSaveFaciaItem);
     };
 
     SaveForLater.prototype.onSaveFaciaItem = function (link, id, shortUrl, success) {
@@ -271,7 +271,7 @@ define([
     };
 
     SaveForLater.prototype.deleteFaciaItem = function (userData, pageId, shortUrl) {
-        this.save(userData, pageId, shortUrl, this.onDeleteFaciaItem)
+        this.save(userData, pageId, shortUrl, this.onDeleteFaciaItem);
     };
 
     SaveForLater.prototype.onDeleteFaciaItem = function (link, id, shortUrl, success) {
