@@ -126,6 +126,7 @@ define([
                 $saver.html(template(saveButton, templateData));
 
                 bean.one($saver[0], 'click', this.classes.saveThisArticleButton,
+                    this[options.isSaved ? 'deleteArticle' : 'saveArticle'].bind(this,
                         this.userData,
                         config.page.pageId,
                         shortUrl
