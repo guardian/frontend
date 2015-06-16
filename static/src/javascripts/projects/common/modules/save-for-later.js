@@ -107,8 +107,8 @@ define([
                     this.saveArticle.bind(this,
                         this.onSaveThisArticle.bind(this),
                         this.onSaveThisArticleError.bind(this),
-                        this.userData,
-                        config.page.pageId, shortUrl));
+                        config.page.pageId,
+                        shortUrl));
             }
         }.bind(this));
     };
@@ -175,7 +175,7 @@ define([
 
         //--- Get articles
     // -------------------------Save Article
-    SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl) {
+    SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, pageId, shortUrl) {
         var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
             newArticle = {
                 id: pageId,
