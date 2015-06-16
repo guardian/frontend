@@ -58,6 +58,12 @@ define([
     var bookmarkSvg = svgs('bookmark', ['i-left']);
     var shortUrl = (config.page.shortUrl || '').replace('http://gu.com', '');
 
+    var getCustomEventProperties = function () {
+        var contentType = config.page.contentType;
+        var prefix = contentType.match(/^Network Front|Section$/) ? 'Front' : 'Content';
+        return { prop74: prefix + 'ContainerSave:' + config.page.pageId };
+    };
+
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
         if (userLoggedIn) {
@@ -171,6 +177,8 @@ define([
             fastdom.write(function () {
                 if (isSaved) {
                     $itemSaveLink.addClass(self.classes.fcItemIsSaved);
+                } else {
+                    $itemSaveLink.attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties()));
                 }
                 $item.addClass('fc-item--has-metadata'); // while in test
                 $itemSaveLink.attr('data-link-name', isSaved ? 'Unsave' : 'Save');
@@ -237,7 +245,9 @@ define([
         fastdom.write(function () {
             bonzo(link)
                 .addClass(self.classes.fcItemIsSaved)
-                .attr('data-link-name', 'Unsave');
+                .attr('data-link-name', 'Unsave')
+                // Remove attr
+                .attr('data-custom-event-properties', '');
         });
     };
 
@@ -257,7 +267,8 @@ define([
         fastdom.write(function () {
             bonzo(link)
                 .removeClass(self.classes.fcItemIsSaved)
-                .attr('data-link-name', 'Save');
+                .attr('data-link-name', 'Save')
+                .attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties()));
         });
     };
 
