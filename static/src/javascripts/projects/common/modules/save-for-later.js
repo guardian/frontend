@@ -320,7 +320,12 @@ define([
         var self = this,
             saveForLaterProfileLink = $(self.classes.profileDropdownLink);
 
-        saveForLaterProfileLink.html('Saved (' + self.userData.articles.length + ')');
+        var count = self.userData.articles.length;
+        saveForLaterProfileLink.html('Saved (' + count + ')');
+
+        var profile = $('.brand-bar__item--profile');
+        profile.addClass('brand-bar__item--profile--show-saved');
+        $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
     };
 
     return SaveForLater;
