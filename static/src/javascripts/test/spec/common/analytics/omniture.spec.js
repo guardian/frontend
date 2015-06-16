@@ -67,6 +67,18 @@ describe('omniture', function () {
         expect(s.eVar7).toBe('D=pageName');
     });
 
+    it('should remove custom event properties after tracking', function () {
+        s.pageType = 'article';
+        omniture.go();
+        omniture.trackLink('link object', 'outer:link', { prop74: 'foo' });
+
+        expect(s.eVar37).toBe('Article:outer:link');
+        expect(s.prop37).toBe('D=v37');
+        expect(s.eVar7).toBe('D=pageName');
+
+        expect(s.prop74).toBe(undefined);
+    });
+
     it('should track clicks with a standardised set of variables', function () {
         s.pageType = 'article';
         omniture.go();

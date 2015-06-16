@@ -132,6 +132,9 @@ define([
         this.populateEventProperties(linkName);
         _.assign(this.s, options.customEventProperties);
         this.s.tl(linkObject, 'o', linkName);
+        _.forEach(options.customEventProperties, function (value, key) {
+            delete this.s[key];
+        });
     };
 
     Omniture.prototype.populatePageProperties = function () {
