@@ -37,7 +37,7 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
     ).flatten.contains(name.href.stripPrefix("/")) || page.url == name.href
   }
 
-  def repelCutout: Boolean = links.size > 5
+  val repelCutout: Boolean = links.size > 5
 
 }
 
