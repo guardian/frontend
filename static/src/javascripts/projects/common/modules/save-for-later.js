@@ -19,7 +19,7 @@ define([
     bean,
     fastdom,
     _,
-    $
+    $,
     detect,
     config,
     mediator,
