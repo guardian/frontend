@@ -53,8 +53,9 @@ define([
         this.savedArticlesUrl = config.page.idUrl + '/saved-for-later-page';
     }
 
-    var bookmarkSvg = svgs('bookmark', ['i-left']);
-    var shortUrl = (config.page.shortUrl || '').replace('http://gu.com', '');
+    var bookmarkSvg = svgs('bookmark', ['i-left']),
+        shortUrl = (config.page.shortUrl || '').replace('http://gu.com', ''),
+        savedPlatformAnalytics = 'web:' + detect.getUserAgent.browser + ':' + detect.getBreakpoint();
 
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
@@ -78,8 +79,12 @@ define([
                 }.bind(this));
         } else {
             if (this.isContent) {
-                var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
-                    '&shortUrl=' + config.page.shortUrl.replace('http://gu.com', '');
+                var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>', {
+                    idUrl: config.page.idUrl,
+                    returnUrl: encodeURIComponent(document.location.href),
+                    shortUrl: shortUrl,
+                    platform: savedPlatformAnalytics
+                });
                 this.renderSaveThisArticleElement({ url: url, isSaved: false });
             }
             this.renderLinksInContainers(false);
@@ -173,8 +178,6 @@ define([
         }.bind(this));
     };
 
-        //--- Get articles
-    // -------------------------Save Article
     SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, pageId, shortUrl) {
         var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
             newArticle = {
@@ -182,7 +185,7 @@ define([
                 shortUrl: shortUrl,
                 date: date,
                 read: false,
-                platform: 'web:' + detect.getUserAgent.browser + ':' + detect.getBreakpoint()
+                platform: savedPlatformAnalytics
             };
 
         this.userData.articles.push(newArticle);
