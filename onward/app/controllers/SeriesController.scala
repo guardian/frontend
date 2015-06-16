@@ -16,7 +16,7 @@ import LiveContentApi.getResponse
 
 case class Series(id: String, tag: Tag, trails: Seq[Content]) {
   lazy val displayName = tag.id match {
-    case "commentisfree/commentisfree" => "Opinion"
+    case "commentisfree/commentisfree" => "opinion"
     case _ => tag.webTitle
  }
 }
