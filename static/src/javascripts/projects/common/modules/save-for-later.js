@@ -4,6 +4,7 @@ define([
     'bean',
     'fastdom',
     'common/utils/_',
+    'common/utils/$',
     'common/utils/detect',
     'common/utils/config',
     'common/utils/mediator',
@@ -18,6 +19,7 @@ define([
     bean,
     fastdom,
     _,
+    $
     detect,
     config,
     mediator,
@@ -27,10 +29,6 @@ define([
     saveLink,
     saveButton
 ) {
-    //This is because of some a/b test wierdness - '$' doesn't work
-    var $ = function (selector, context) {
-        return bonzo(qwery(selector, context));
-    };
 
     function SaveForLater() {
         this.classes = {
@@ -66,6 +64,11 @@ define([
 
     var bookmarkSvg = svgs('bookmark', ['i-left']);
     var shortUrl = (config.page.shortUrl || '').replace('http://gu.com', '');
+
+    var getCustomEventProperties = function (contentId) {
+        var prefix = config.page.contentType.match(/^Network Front|Section$/) ? 'Front' : 'Content';
+        return { prop74: prefix + 'ContainerSave:' + contentId };
+    };
 
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
@@ -184,9 +187,15 @@ define([
             fastdom.write(function () {
                 if (isSaved) {
                     $itemSaveLink.addClass(self.classes.fcItemIsSaved);
+                } else {
+                    var contentId = $($.ancestor($itemSaveLink[0], 'fc-item')).attr('data-id');
+                    $itemSaveLink.attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties(contentId)));
                 }
-                $item.addClass('fc-item--has-metadata'); // while in test
-                $itemSaveLink.removeClass('is-hidden'); // while in test
+                $itemSaveLink.attr('data-link-name', isSaved ? 'Unsave' : 'Save');
+
+                // only while in test
+                $item.addClass('fc-item--has-metadata');
+                $itemSaveLink.removeClass('is-hidden');
             });
         });
     };
@@ -259,7 +268,10 @@ define([
             this.createDeleteFaciaItemHandler(link, id, shortUrl);
 
             fastdom.write(function () {
-                bonzo(link).addClass(that.classes.fcItemIsSaved);
+                bonzo(link)
+                    .addClass(that.classes.fcItemIsSaved)
+                    .attr('data-link-name', 'Unsave')
+                    .attr('data-custom-event-properties', '');
             });
         } else {
             this.createSaveFaciaItemHandler(link, id, shortUrl);
@@ -280,7 +292,11 @@ define([
             this.createSaveFaciaItemHandler(link, id, shortUrl);
 
             fastdom.write(function () {
-                bonzo(link).removeClass(that.classes.fcItemIsSaved);
+                var contentId = $($.ancestor(link, 'fc-item')).attr('data-id');
+                bonzo(link)
+                    .removeClass(that.classes.fcItemIsSaved)
+                    .attr('data-link-name', 'Save')
+                    .attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties(contentId)));
             });
         } else {
             this.createDeleteFaciaItemHandler(link, id, shortUrl);

@@ -74,7 +74,7 @@ trait SharedWebDriver extends SuiteMixin { this: Suite =>
   }
 
   protected def implicitlyWait(seconds: Int) = {
-    webDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
+    webDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS)
   }
 
   protected def $(selector: String): List[WebElement] = webDriver.findElements(By.cssSelector(selector)).toList
@@ -86,6 +86,5 @@ class IntegratedTestsSuite extends Suites (
   new AdsTest,
   new MostPopularTest,
   new SslCertTest,
-  new ShowMoreTest,
   new ProfileCommentsTest) with SingleWebDriver {
 }
