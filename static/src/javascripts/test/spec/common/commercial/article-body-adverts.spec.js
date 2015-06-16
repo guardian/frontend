@@ -36,8 +36,8 @@ describe('Article Body Adverts', function () {
 
             getParticipationsStub = sinon.stub();
             getParticipationsStub.returns({
-                'MtRec2': {
-                    'variant': 'A'
+                'Viewability': {
+                    'variant': 'variant'
                 }
             });
             ab.getParticipations = getParticipationsStub;
