@@ -24,9 +24,7 @@ define(function () {
             },
             {
                 id: 'variant',
-                test: function () {
-                    stickyNav.stickyNav.init();
-                }
+                test: function () {}
             }
         ];
     };
