@@ -173,6 +173,7 @@ define([
                     $itemSaveLink.addClass(self.classes.fcItemIsSaved);
                 }
                 $item.addClass('fc-item--has-metadata'); // while in test
+                $itemSaveLink.attr('data-link-name', isSaved ? 'Unsave' : 'Save');
                 $itemSaveLink.removeClass('is-hidden'); // while in test
             });
         });
@@ -199,9 +200,7 @@ define([
         );
     };
 
-    SaveForLater.prototype.deleteArticle = function (onArticleDeleted, onArticleDeletedError, userData, pageId, shortUrl, event) {
-        event.stop();
-
+    SaveForLater.prototype.deleteArticle = function (onArticleDeleted, onArticleDeletedError, userData, pageId, shortUrl) {
         var self = this;
 
         userData.articles = _.filter(userData.articles, function (article) {
@@ -236,7 +235,9 @@ define([
         self.createDeleteArticleHandler(link, id, shortUrl);
 
         fastdom.write(function () {
-            bonzo(link).addClass(self.classes.fcItemIsSaved);
+            bonzo(link)
+                .addClass(self.classes.fcItemIsSaved)
+                .attr('data-link-name', 'Unsave');
         });
     };
 
@@ -254,7 +255,9 @@ define([
         self.createSaveArticleHandler(link, id, shortUrl);
 
         fastdom.write(function () {
-            bonzo(link).removeClass(self.classes.fcItemIsSaved);
+            bonzo(link)
+                .removeClass(self.classes.fcItemIsSaved)
+                .attr('data-link-name', 'Save');
         });
     };
 
