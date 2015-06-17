@@ -1,7 +1,7 @@
-import qwery from 'qwery'
-import $ from 'common/utils/$'
-import fixtures from 'helpers/fixtures'
-import Fluid250GoogleAndroid from 'common/modules/commercial/creatives/fluid250GoogleAndroid'
+import qwery from 'qwery';
+import $ from 'common/utils/$';
+import fixtures from 'helpers/fixtures';
+import Fluid250GoogleAndroid from 'common/modules/commercial/creatives/fluid250GoogleAndroid';
 
 var fixturesConfig = {
     id: 'ad-slot',

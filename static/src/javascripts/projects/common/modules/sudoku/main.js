@@ -1,4 +1,4 @@
-/* jshint newcap: false */
+/* eslint-disable new-cap */
 define([
     'bonzo',
     'react',

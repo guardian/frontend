@@ -171,7 +171,7 @@ define([
             .replace(/^\/|\/$/g, '')
             .replace(/[^a-z0-9\/\-+]*/g, '')
             .split('/')
-            .slice(0,3)
+            .slice(0, 3)
             .join('/')
         );
 

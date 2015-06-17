@@ -1,5 +1,6 @@
 import Id from 'common/modules/identity/api';
 import bean from 'bean';
+import sinon from 'sinonjs';
 import fixtures from 'helpers/fixtures';
 import discussionJson from 'fixtures/discussion/discussion';
 import validCommentText from 'fixtures/discussion/comment-valid';
@@ -14,8 +15,8 @@ describe('Comment box', function() {
         fixture = {
             id: fixturesId,
             fixtures: [
-                '<form class="component js-comment-box d-comment-box">'+
-                    '<label for="body" class="d-comment-box__add-comment cta">Add your comment</label>'+
+                '<form class="component js-comment-box d-comment-box">' +
+                    '<label for="body" class="d-comment-box__add-comment cta">Add your comment</label>' +
 
                     '<div class="d-comment-box__meta">' +
                         '<span class="d-comment-box__avatar-wrapper">' +
@@ -36,23 +37,23 @@ describe('Comment box', function() {
                             '<span class="u-fauxlink d-comment-box__hide-parent" role="button">Hide comment</span>' +
                         '</div>' +
                     '</div>' +
-                    '<div class="d-comment-box__content">'+
-                        '<div class="d-comment-box__messages"></div>'+
-                        '<div class="d-comment-box__error d-comment-box__premod">Your comments are currently being pre-moderated (<a href="/community-faqs#311" target="_blank">why?</a>)</div>'+
-                        '<textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…"></textarea>'+
-                        '<button type="submit" class="submit-input d-comment-box__submit">Post comment</button>'+
-                    '</div>'+
-                    '<div class="d-comment-box__preview-wrapper">'+
-                        '<div class="d-comment-box__preview-body"></div>'+
-                        '<button type="submit" class="submit-input d-comment-box__submit d-comment-box__preview-submit">Post your comment</button>'+
-                    '</div>'+
+                    '<div class="d-comment-box__content">' +
+                        '<div class="d-comment-box__messages"></div>' +
+                        '<div class="d-comment-box__error d-comment-box__premod">Your comments are currently being pre-moderated (<a href="/community-faqs#311" target="_blank">why?</a>)</div>' +
+                        '<textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…"></textarea>' +
+                        '<button type="submit" class="submit-input d-comment-box__submit">Post comment</button>' +
+                    '</div>' +
+                    '<div class="d-comment-box__preview-wrapper">' +
+                        '<div class="d-comment-box__preview-body"></div>' +
+                        '<button type="submit" class="submit-input d-comment-box__submit d-comment-box__preview-submit">Post your comment</button>' +
+                    '</div>' +
                 '</form>'
             ]
         },
         idConfig = {
             'page' : {
-                'idApiUrl' : "https://idapi.theguardian.com",
-                'idUrl' : "https://profile.theguardian.com",
+                'idApiUrl' : 'https://idapi.theguardian.com',
+                'idUrl' : 'https://profile.theguardian.com',
                 ajaxUrl: '',
                 edition: 'UK'
             }
@@ -73,7 +74,7 @@ describe('Comment box', function() {
         });
 
         spyOn(commentBox, 'getUserData').and.returnValue({
-            displayName: "testy",
+            displayName: 'testy',
             id: 1,
             accountCreatedDate: new Date(1392719401338)
         });
@@ -118,7 +119,7 @@ describe('Comment box', function() {
                 '<a href="http://example.com/existinglink">http://example.com/existinglink</a>';
 
             var urlified = commentBox.urlify(post);
-            expect(urlified).toBe(expected)
+            expect(urlified).toBe(expected);
         });
     });
 
@@ -147,11 +148,11 @@ describe('Comment box', function() {
             expect(commentBox.getElem('error')).not.toBeUndefined();
         });
 
-        it('should error on comments over '+ maxCommentLength +' characters', function() {
+        it('should error on comments over ' + maxCommentLength + ' characters', function() {
             var commentBody = commentBox.getElem('body');
             expect(commentBox.getElem('error')).toBeUndefined();
             for (var i = 0, len = maxCommentLength; i <= len; i++) {
-                commentBody.value = commentBody.value+'j';
+                commentBody.value = commentBody.value + 'j';
             }
             bean.fire(commentBox.elem, 'submit');
             expect(commentBox.getElem('error')).not.toBeUndefined();

@@ -11,8 +11,7 @@ define([
     'common/modules/identity/api',
     'common/views/svgs',
 
-    'text!common/views/identity/saved-for-later-profile-link.html',
-    'text!common/views/loyalty/save-for-later--delete-all-button.html'
+    'text!common/views/save-for-later/delete-all-button.html'
 ], function (
     $,
     qwery,
@@ -25,7 +24,6 @@ define([
     template,
     identity,
     svgs,
-    profileLinkTmp,
     deleteButtonAllTmp
 ) {
     function SavedForLater() {

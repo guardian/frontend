@@ -13,9 +13,9 @@ describe('Container Toggle', function() {
         containerId = 'uk/culture/regular-stories',
         storageId = 'container-states',
     // helper assertion method
-        assertState = function ($container, state) {
-            var $button = $('button', $container[0]);
-            expect($container.hasClass('fc-container--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
+        assertState = function ($cont, state) {
+            var $button = $('button', $cont[0]);
+            expect($cont.hasClass('fc-container--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
             expect($button.text().trim()).toBe(state === 'open' ? 'Hide' : 'Show');
             expect($button.attr('data-link-name')).toBe(state === 'open' ? 'Show' : 'Hide');
         };
@@ -69,7 +69,9 @@ describe('Container Toggle', function() {
     it('should delete old storage key', function() {
         var oldStorageKey = 'gu.prefs.front-trailblocks';
         window.localStorage.setItem(oldStorageKey, 'foo');
+        /*eslint-disable no-new*/
         new ContainerDisplayToggle(container);
+        /*eslint-enable no-new*/
         expect(window.localStorage.getItem(oldStorageKey)).toBeNull();
     });
 

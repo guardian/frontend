@@ -1,19 +1,23 @@
 define([
     'bonzo',
     'qwery',
+    'fastdom',
     'common/utils/detect',
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/loyalty/save-for-later',
+    'common/modules/identity/api',
+    'common/modules/save-for-later',
     'text!common/views/identity/saved-for-later-profile-link.html'
 ], function (
     bonzo,
     qwery,
+    fastdom,
     detect,
     config,
     mediator,
     template,
+    Id,
     SaveForLater,
     profileLinkTmp
 ) {
@@ -33,7 +37,7 @@ define([
         this.showForSensitive = false;
 
         this.canRun = function () {
-            return true;
+            return Id.isUserLoggedIn();
         };
 
         this.variants = [
@@ -47,11 +51,13 @@ define([
 
                     mediator.on('modules:profilenav:loaded', function () {
                         var popup = qwery('.popup--profile')[0];
-                        bonzo(popup).append(bonzo.create(
-                            template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
-                                idUrl: config.page.idUrl
-                            })
-                        ));
+                        fastdom.write(function () {
+                            bonzo(popup).prepend(bonzo.create(
+                                template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
+                                    idUrl: config.page.idUrl
+                                })
+                            ));
+                        });
                     });
 
                 }

@@ -28,6 +28,6 @@ define([
             return add(conf.id, conf.fixtures);
         },
         clean: clean
-    }
+    };
 
 });

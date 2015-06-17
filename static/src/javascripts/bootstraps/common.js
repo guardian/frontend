@@ -1,5 +1,5 @@
-/* jshint nonew: false */
-/* TODO - fix module constructors so we can remove the above jshint override */
+/*eslint-disable no-new*/
+/* TODO - fix module constructors */
 define([
     'bean',
     'bonzo',

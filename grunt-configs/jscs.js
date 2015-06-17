@@ -1,8 +1,5 @@
 module.exports = function(grunt, options) {
     return {
-        options: {
-            config: 'resources/jscs_conf.json'
-        },
         common: {
             files: [{
                 expand: true,

@@ -1,4 +1,4 @@
-import outbrain from 'common/modules/commercial/third-party-tags/outbrain'
+import outbrain from 'common/modules/commercial/third-party-tags/outbrain';
 
 describe('Outbrain', function() {
 

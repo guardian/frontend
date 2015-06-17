@@ -31,7 +31,7 @@ define([
         if (!config.page.keywordIds) {
             return false;
         }
-        var whitelistedTags = [ // order matters here (first match wins)
+        var whitelistedTags = [// order matters here (first match wins)
                 // sport tags
                 'sport/cricket', 'sport/rugby-union', 'sport/rugbyleague', 'sport/formulaone',
                 'sport/tennis', 'sport/cycling', 'sport/motorsports', 'sport/golf', 'sport/horse-racing',

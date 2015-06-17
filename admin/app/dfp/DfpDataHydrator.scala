@@ -104,7 +104,8 @@ class DfpDataHydrator extends Logging {
               geoTargetsIncluded,
               geoTargetsExcluded,
               customTargetSets),
-            status = dfpLineItem.getStatus.toString
+            status = dfpLineItem.getStatus.toString,
+            lastModified = toJodaTime(dfpLineItem.getLastModifiedDateTime)
           )
 
         }

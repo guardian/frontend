@@ -1,25 +1,30 @@
-@import layout.ContentCard
+@import model.SaveForLaterItem
 @import views.html.fragments.items.facia_cards.contentCard
 
-
-@(articles: List[ContentCard])(implicit request: RequestHeader)
+@(articles: List[SaveForLaterItem])(implicit request: RequestHeader)
 <div class="saved-contents js-saved-contents">
 @articles.zipWithRowInfo.map { case (article, row) =>
     <div class="@RenderClasses(Map(
         "u-cf" -> true,
         "saved-content" -> true,
         "js-saved-content" -> true,
-        "saved-content-first" -> row.isFirst))" shortUrl="@article.shortUrl">
+        "saved-content-first" -> row.isFirst))"
 
-        @contentCard(article, 0, 0, "all",  false, false )
+        shortUrl="@article.savedArticle.shortUrl"
 
+        @article.savedArticle.platform.map { analyticsPlatform =>
+            data-link-name=@analyticsPlatform
+        }
+        >
+
+        @contentCard(article.contentCard, 0, 0, "all",  false, false )
 
         <div class="saved-content__meta u-cf">
             <button class="button button--secondary button--medium saved-content__button js-saved-content__button"
                 data-link-name="Delete"
                 name="deleteArticle"
                 type="submit"
-                value="@article.shortUrl">
+                value="@article.savedArticle.shortUrl">
                 @fragments.inlineSvg("cross", "icon") Remove
             </button>
         </div>

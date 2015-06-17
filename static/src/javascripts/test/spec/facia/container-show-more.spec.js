@@ -24,13 +24,13 @@ describe('Container Show More', function () {
         $container.remove();
     });
 
-    it("should be able to group elements by id", function () {
+    it('should be able to group elements by id', function () {
         var grouped = containerShowMore.itemsByArticleId($container);
 
         expect(_.intersection(_.keys(grouped), ['loldongs', 'corgi', 'geekpie']).length === 3).toBeTruthy();
     });
 
-    it("should de-duplicate items loaded in", function () {
+    it('should de-duplicate items loaded in', function () {
         var $after = containerShowMore.dedupShowMore($container,
             '<div>' +
                 itemWithId('corgi') +

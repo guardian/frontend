@@ -964,6 +964,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val SplitOlderIPadsSwitch = Switch(
+    "Feature",
+    "ipad-split-capabilities",
+    "If switched on then this gives older ipads the stripped down front but full articles",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = false
+  )
+
   // A/B Tests
 
   val ABLiveblogNotifications = Switch(
@@ -1091,6 +1100,15 @@ object Switches {
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val DiscussionProxySwitch = Switch(
+    "Feature",
+    "discussion-proxy",
+    "in discussion/api.js we have a feature to let you go through a proxy.  This will be permanently switched over if it works out.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 16),
     exposeClientSide = false
   )
 

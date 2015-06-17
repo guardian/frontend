@@ -1,5 +1,6 @@
 import fastdom from 'fastdom';
 import qwery from 'qwery';
+import sinon from 'sinonjs';
 import Promise from 'Promise';
 import $ from 'common/utils/$';
 import fixtures from 'helpers/fixtures';

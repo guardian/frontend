@@ -13,7 +13,7 @@ function testImageSrc(srcActual, srcTemplate) {
     }
 }
 
-describe("Gallery lightbox", function() {
+describe('Gallery lightbox', function() {
 
     var lightbox,
         testJson = lightboxFixtures.barbie.gallery;
@@ -22,31 +22,31 @@ describe("Gallery lightbox", function() {
         lightbox = new galleryLightbox.GalleryLightbox();
     });
 
-    it("should create a DOM element in the body", function() {
+    it('should create a DOM element in the body', function() {
         expect(document.querySelectorAll('.gallery-lightbox').length).toBe(1);
     });
 
-    it("should start closed", function() {
+    it('should start closed', function() {
         expect(lightbox.$lightboxEl.hasClass('gallery-lightbox--closed')).toBe(true);
     });
 
-    it("should display when opened", function() {
+    it('should display when opened', function() {
         lightbox.loadGalleryfromJson(testJson, 1);
         expect(lightbox.$lightboxEl.hasClass('gallery-lightbox--open')).toBe(true);
     });
 
-    it("should start on correct index", function() {
+    it('should start on correct index', function() {
         lightbox.loadGalleryfromJson(testJson, 4);
         expect(lightbox.index).toBe(4);
     });
 
-    it("should hide when closed", function() {
+    it('should hide when closed', function() {
         lightbox.loadGalleryfromJson(testJson, 1);
         lightbox.trigger('close');
         expect(lightbox.$lightboxEl.hasClass('gallery-lightbox--closed')).toBe(true);
     });
 
-    it("should load surrounding images", function() {
+    it('should load surrounding images', function() {
         lightbox.loadGalleryfromJson(testJson, 1);
         lightbox.loadSurroundingImages(4, testJson.images.length);
         expect(lightbox.$images[2].src).toBeTruthy();
@@ -58,44 +58,44 @@ describe("Gallery lightbox", function() {
         testImageSrc(lightbox.$images[4].src, testJson.images[4].src);
     });
 
-    it("should load/preload images correctly", function() {
+    it('should load/preload images correctly', function() {
         lightbox.loadGalleryfromJson(testJson, 1);
 
-        expect      (lightbox.$images[testJson.images.length-2].src).toBeFalsy();
-        testImageSrc(lightbox.$images[testJson.images.length-1].src, testJson.images[testJson.images.length-1].src);
+        expect(lightbox.$images[testJson.images.length - 2].src).toBeFalsy();
+        testImageSrc(lightbox.$images[testJson.images.length - 1].src, testJson.images[testJson.images.length - 1].src);
         testImageSrc(lightbox.$images[0].src, testJson.images[0].src);
         testImageSrc(lightbox.$images[1].src, testJson.images[1].src);
-        expect      (lightbox.$images[2].src).toBeFalsy();
+        expect(lightbox.$images[2].src).toBeFalsy();
 
         bean.fire(lightbox.nextBtn, 'click');
         testImageSrc(lightbox.$images[2].src, testJson.images[2].src);
-        expect      (lightbox.$images[3].src).toBeFalsy();
+        expect(lightbox.$images[3].src).toBeFalsy();
         bean.fire(lightbox.nextBtn, 'click');
         testImageSrc(lightbox.$images[3].src, testJson.images[3].src);
-        expect      (lightbox.$images[4].src).toBeFalsy();
+        expect(lightbox.$images[4].src).toBeFalsy();
 
         bean.fire(lightbox.prevBtn, 'click');
         bean.fire(lightbox.prevBtn, 'click');
         bean.fire(lightbox.prevBtn, 'click');
-        testImageSrc(lightbox.$images[testJson.images.length-2].src, testJson.images[testJson.images.length-2].src);
-        expect      (lightbox.$images[testJson.images.length-3].src).toBeFalsy();
+        testImageSrc(lightbox.$images[testJson.images.length - 2].src, testJson.images[testJson.images.length - 2].src);
+        expect(lightbox.$images[testJson.images.length - 3].src).toBeFalsy();
     });
 
-    it("should show the endslate after the last image", function() {
+    it('should show the endslate after the last image', function() {
         lightbox.loadGalleryfromJson(testJson, testJson.images.length);
         lightbox.showEndslate = true;
         bean.fire(lightbox.nextBtn, 'click');
         expect(lightbox.$lightboxEl.hasClass('gallery-lightbox--endslate')).toBe(true);
     });
 
-    it("should loop to the endslate", function() {
+    it('should loop to the endslate', function() {
         lightbox.loadGalleryfromJson(testJson, 1);
         lightbox.showEndslate = true;
         bean.fire(lightbox.prevBtn, 'click');
         expect(lightbox.$lightboxEl.hasClass('gallery-lightbox--endslate')).toBe(true);
     });
 
-    it("should loop from the endslate back to the beginning", function() {
+    it('should loop from the endslate back to the beginning', function() {
         lightbox.loadGalleryfromJson(testJson, testJson.images.length);
         lightbox.showEndslate = true;
         bean.fire(lightbox.nextBtn, 'click');
@@ -104,7 +104,7 @@ describe("Gallery lightbox", function() {
         expect(lightbox.$lightboxEl.hasClass('gallery-lightbox--endslate')).toBe(false);
     });
 
-    it("should toggle info when info button is clicked", function() {
+    it('should toggle info when info button is clicked', function() {
         lightbox.loadGalleryfromJson(testJson, 1);
         var expectInfo = function(bool) {
             expect(lightbox.$lightboxEl.hasClass('gallery-lightbox--show-info')).toBe(bool);
@@ -116,7 +116,7 @@ describe("Gallery lightbox", function() {
         expectInfo(false);
     });
 
-    it("should generate the correct image HTML", function() {
+    it('should generate the correct image HTML', function() {
         lightbox.loadGalleryfromJson(testJson, testJson.images.length);
         var img = testJson.images[2],
             imgEl = bonzo.create(lightbox.generateImgHTML(img, 2));
@@ -128,7 +128,7 @@ describe("Gallery lightbox", function() {
 
     });
 
-    it("should not show the credit where displayCredit is false", function() {
+    it('should not show the credit where displayCredit is false', function() {
         lightbox.loadGalleryfromJson(testJson, testJson.images.length);
         var img = testJson.images[3],
             imgEl = bonzo.create(lightbox.generateImgHTML(img, 3));

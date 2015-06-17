@@ -108,7 +108,7 @@ Comments.prototype.handlePickClick = function(e) {
 
 Comments.prototype.pickComment = function(commentId, $thisButton) {
     var self = this,
-        comment = qwery('#comment-'+ commentId, this.elem);
+        comment = qwery('#comment-' + commentId, this.elem);
 
     return DiscussionApi
         .pickComment(commentId)
@@ -121,7 +121,7 @@ Comments.prototype.pickComment = function(commentId, $thisButton) {
 
 Comments.prototype.unPickComment = function(commentId, $thisButton) {
     var self = this,
-        comment = qwery('#comment-'+ commentId);
+        comment = qwery('#comment-' + commentId);
 
     return DiscussionApi
         .unPickComment(commentId)
@@ -135,9 +135,9 @@ Comments.prototype.unPickComment = function(commentId, $thisButton) {
 Comments.prototype.fetchComments = function(options) {
     options = options || {};
 
-    var url = '/discussion/'+
-        (options.comment ? 'comment-context/'+ options.comment : this.options.discussionId)+
-        '.json?'+ (options.page ? '&page=' + options.page : '');
+    var url = '/discussion/' +
+        (options.comment ? 'comment-context/' + options.comment : this.options.discussionId) +
+        '.json?' + (options.page ? '&page=' + options.page : '');
 
     var queryParams = {
         orderBy: options.order || this.options.order,
@@ -183,7 +183,7 @@ Comments.prototype.goToPermalink = function(commentId) {
     if (commentId) {
         this.showHiddenComments();
         $('.d-discussion__show-all-comments').addClass('u-h');
-        window.location.replace('#comment-'+ commentId);
+        window.location.replace('#comment-' + commentId);
     }
 };
 
@@ -204,6 +204,8 @@ Comments.prototype.renderComments = function(resp) {
 
     this.relativeDates();
     this.emit('rendered', resp.paginationHtml);
+
+    mediator.emit('modules:comments:renderComments:rendered');
 };
 
 Comments.prototype.showHiddenComments = function(e) {
@@ -225,7 +227,7 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
                 $btn = $.create(
                     '<button class="u-button-reset button button--show-more button--small button--tone-news d-show-more-replies__button">' +
                         '<i class="i i-plus-blue"></i>' +
-                        'Show '+ numHiddenReplies +' more '+ (numHiddenReplies === 1 ? 'reply' : 'replies')+
+                        'Show ' + numHiddenReplies + ' more ' + (numHiddenReplies === 1 ? 'reply' : 'replies') +
                     '</button>').attr({
                         'data-link-name': 'Show more replies',
                         'data-is-ajax': '',
@@ -248,7 +250,7 @@ Comments.prototype.getMoreReplies = function(event) {
     var source = bonzo(event.target).data('source-comment');
 
     ajaxPromise({
-        url: '/discussion/comment/'+ event.currentTarget.getAttribute('data-comment-id') +'.json',
+        url: '/discussion/comment/' + event.currentTarget.getAttribute('data-comment-id') + '.json',
         type: 'json',
         method: 'get',
         data: {displayThreaded: true},
@@ -288,9 +290,9 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         values = {
             username: this.user.displayName,
             timestamp: 'Just now',
-            body: '<p>'+ comment.body.replace(/\n+/g, '</p><p>') +'</p>',
+            body: '<p>' + comment.body.replace(/\n+/g, '</p><p>') + '</p>',
             report: {
-                href: 'http://discussion.theguardian.com/components/report-abuse/'+ comment.id
+                href: 'http://discussion.theguardian.com/components/report-abuse/' + comment.id
             },
             avatar: {
                 src: this.user.avatar
@@ -305,7 +307,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         if (map.hasOwnProperty(key)) {
             selector = map[key];
             val = values[key];
-            elem = qwery('.'+ selector, commentElem)[0];
+            elem = qwery('.' + selector, commentElem)[0];
             if (typeof val === 'string') {
                 elem.innerHTML = val;
             } else {
@@ -315,7 +317,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
             }
         }
     }
-    commentElem.id = 'comment-'+ comment.id;
+    commentElem.id = 'comment-' + comment.id;
 
     if (this.user && !this.user.isStaff) {
         $commentElem.addClass(this.getClass('commentStaff', true));
@@ -330,7 +332,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         bonzo(parent).append($commentElem);
     }
 
-    window.location.replace('#comment-'+ comment.id);
+    window.location.replace('#comment-' + comment.id);
 };
 
 Comments.prototype.replyToComment = function(e) {
@@ -342,14 +344,14 @@ Comments.prototype.replyToComment = function(e) {
         self = this;
 
     // There is already a comment box for this on the page
-    if (document.getElementById('reply-to-'+ replyToId)) {
-        document.getElementById('reply-to-'+ replyToId).focus();
+    if (document.getElementById('reply-to-' + replyToId)) {
+        document.getElementById('reply-to-' + replyToId).focus();
         return;
     }
 
     $('.d-comment-box--response').remove();
 
-    var replyToComment = qwery('#comment-'+ replyToId)[0],
+    var replyToComment = qwery('#comment-' + replyToId)[0],
         replyToAuthor = replyToComment.getAttribute('data-comment-author'),
         replyToAuthorId = replyToComment.getAttribute('data-comment-author-id'),
         $replyToComment = bonzo(replyToComment),
@@ -413,7 +415,7 @@ Comments.prototype.reportComment = function(e) {
             bonzo(form).addClass('u-h');
         });
     }).appendTo(
-        $('#comment-'+ commentId +' .js-report-comment-container').first()
+        $('#comment-' + commentId + ' .js-report-comment-container').first()
     ).removeClass('u-h');
 };
 

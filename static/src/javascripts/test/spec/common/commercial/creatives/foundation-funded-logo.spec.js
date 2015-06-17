@@ -1,4 +1,4 @@
-import FoundationFundedLogo from 'common/modules/commercial/creatives/foundation-funded-logo'
+import FoundationFundedLogo from 'common/modules/commercial/creatives/foundation-funded-logo';
 
 describe('Foundation Funded Logo', function() {
 

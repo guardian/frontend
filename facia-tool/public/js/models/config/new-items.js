@@ -20,7 +20,7 @@ define([
         newItemsValidator: function(newItems) {
             var defer = $.Deferred();
 
-            defer[newItems[0]? 'resolve' : 'reject']();
+            defer[newItems[0] ? 'resolve' : 'reject']();
 
             return defer.promise();
         },

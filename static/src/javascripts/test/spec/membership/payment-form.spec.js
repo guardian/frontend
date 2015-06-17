@@ -1,3 +1,4 @@
+/*eslint-disable camelcase*/
 import PaymentForm from 'membership/payment-form';
 import ajax from 'common/utils/ajax';
 import $ from 'common/utils/$';
@@ -40,13 +41,13 @@ describe('Payment form module', function() {
         now,
         guConfig = {
             page: {
-                stripePublicToken: "pk_test_xxxxxxxxxxxxx"
+                stripePublicToken: 'pk_test_xxxxxxxxxxxxx'
             }
         };
 
     function triggerEvent (element, eventType) {
         var event;
-        event = document.createEvent("HTMLEvents");
+        event = document.createEvent('HTMLEvents');
         event.initEvent(eventType, true, true);
         event.eventName = eventType;
         element.dispatchEvent(event);

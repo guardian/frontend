@@ -7,7 +7,7 @@ class Memory {
         var inMemory, location = this.location;
         try {
             inMemory = localStorage.getItem(location);
-        } catch (ex) {}
+        } catch (ex) {/**/}
 
         if (!inMemory) {
             return defaultValue;
@@ -26,7 +26,7 @@ class Memory {
     setItem(item) {
         try {
             localStorage.setItem(this.location, JSON.stringify(item));
-        } catch (ex) {}
+        } catch (ex) {/**/}
     }
 }
 

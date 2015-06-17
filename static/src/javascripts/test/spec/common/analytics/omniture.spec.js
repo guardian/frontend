@@ -1,5 +1,5 @@
 import Injector from 'helpers/injector';
-import sinonjs from 'sinonjs';
+import sinon from 'sinonjs';
 import jasmineSinon from 'jasmine-sinon';
 
 describe('omniture', function () {
@@ -67,6 +67,18 @@ describe('omniture', function () {
         expect(s.eVar7).toBe('D=pageName');
     });
 
+    it('should remove custom event properties after tracking', function () {
+        s.pageType = 'article';
+        omniture.go();
+        omniture.trackLink('link object', 'outer:link', { prop74: 'foo' });
+
+        expect(s.eVar37).toBe('Article:outer:link');
+        expect(s.prop37).toBe('D=v37');
+        expect(s.eVar7).toBe('D=pageName');
+
+        expect(s.prop74).toBe(undefined);
+    });
+
     it('should track clicks with a standardised set of variables', function () {
         s.pageType = 'article';
         omniture.go();
@@ -127,7 +139,7 @@ describe('omniture', function () {
         s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk';
         omniture.go();
 
-        expect(s.cookieDomainPeriods).toBe('2')
+        expect(s.cookieDomainPeriods).toBe('2');
     });
 
     it('should log a page view event', function () {
@@ -198,7 +210,7 @@ describe('omniture', function () {
         omniture.go();
         mediator.emit('module:clickstream:click', clickSpec);
 
-        expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage')
+        expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage');
     });
 
     it('should make a delayed s.tl call for other-host links', function () {

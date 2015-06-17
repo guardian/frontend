@@ -10,7 +10,7 @@ define([
     'modules/vars',
     'utils/layout-from-url',
     'utils/update-scrollables'
-],function (
+], function (
     ko,
     $,
     $effect,

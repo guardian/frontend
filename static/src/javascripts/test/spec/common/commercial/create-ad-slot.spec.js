@@ -27,7 +27,7 @@ describe('Create Ad Slot', function () {
                 edition: 'UK'
             };
             done();
-        });        
+        });
     });
 
     it('should exist', function () {

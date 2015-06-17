@@ -11,7 +11,8 @@ define([
     'bootstraps/liveblog',
     'bootstraps/media',
     'bootstraps/profile',
-    'bootstraps/sport'
+    'bootstraps/sport',
+    'common/modules/experiments/tests/save-for-later'
 ], function (
     qwery,
     raven,
@@ -25,7 +26,8 @@ define([
     liveBlog,
     media,
     profile,
-    sport
+    sport,
+    SaveForLaterTest
 ) {
 
     var bootstrapContext = function (featureName, boostrap) {
@@ -38,6 +40,12 @@ define([
 
         routes = function () {
             userTiming.mark('App Begin');
+
+            if (config.switches.abSaveForLater
+                && config.page.section === 'identity'
+                && config.page.pageId === '/saved-for-later') {
+                new SaveForLaterTest().variants[0].test();
+            }
 
             bootstrapContext('common', common);
 
