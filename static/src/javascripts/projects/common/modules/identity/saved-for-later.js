@@ -11,7 +11,6 @@ define([
     'common/modules/identity/api',
     'common/views/svgs',
 
-    'text!common/views/identity/saved-for-later-profile-link.html',
     'text!common/views/save-for-later/delete-all-button.html'
 ], function (
     $,
@@ -25,7 +24,6 @@ define([
     template,
     identity,
     svgs,
-    profileLinkTmp,
     deleteButtonAllTmp
 ) {
     function SavedForLater() {

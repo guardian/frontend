@@ -338,10 +338,15 @@ define([
     };
 
     SaveForLater.prototype.updateSavedCount = function () {
-        var saveForLaterProfileLink = $(this.classes.profileDropdownLink),
-            that = this;
+        var saveForLaterProfileLink = $(this.classes.profileDropdownLink);
+
+        var count = this.userData.articles.length;
         fastdom.write(function () {
-            saveForLaterProfileLink.html('Saved (' + that.userData.articles.length + ')');
+            saveForLaterProfileLink.html('Saved (' + count + ')');
+
+            var profile = $('.brand-bar__item--profile');
+            profile.addClass('brand-bar__item--profile--show-saved');
+            $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
         });
     };
 
