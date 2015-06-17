@@ -964,6 +964,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val SplitOlderIPadsSwitch = Switch(
+    "Feature",
+    "ipad-split-capabilities",
+    "If switched on then this gives older ipads the stripped down front but full articles",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = false
+  )
+
   // A/B Tests
 
   val ABLiveblogNotifications = Switch(
