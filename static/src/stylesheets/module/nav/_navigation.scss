@@ -680,10 +680,6 @@ $c-navigation-expandable-background: colour(neutral-1);
         .navigation__container--first {
             background: $c-local-navigation-background;
             border-top: $navigation-height solid $c-top-header-background;
-
-            /*.l-header--is-slim & {
-                border-top: 0;
-            }*/
         }
         .navigation__container--second {
             position: absolute;
