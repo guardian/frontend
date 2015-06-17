@@ -236,8 +236,8 @@ define([
 
     // handle saving/deleting from content pages
 
-    SaveForLater.prototype.saveArticle = function (userData, pageId, shortUrl) {
-        this.save(userData, pageId, shortUrl, this.onSaveArticle);
+    SaveForLater.prototype.saveArticle = function (pageId, shortUrl) {
+        this.save(pageId, shortUrl, this.onSaveArticle);
     };
 
     SaveForLater.prototype.onSaveArticle = function (success) {
