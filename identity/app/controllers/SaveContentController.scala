@@ -87,7 +87,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
           case (formWithErrors, Error(message, decription, _, context)) =>
             formWithErrors.withError(context.getOrElse(""), message)
         }
-        pageDataBuilder(emptyArticles, idRequest, pageNum).map { pageData =>
+        pageDataBuilder(emptyArticles(), idRequest, pageNum).map { pageData =>
           NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData)))
         }
     }
@@ -113,7 +113,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
             fillFormWithApiDataForPageAndGetResult(idRequest, savedArticles, pageNum)
           case Left(errors) =>
             val formWithApiErrors = buildFormFromErrors(errors)
-            pageDataBuilder(emptyArticles, idRequest, pageNum).map { pageData =>
+            pageDataBuilder(emptyArticles(), idRequest, pageNum).map { pageData =>
               NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData)))
             }
         }
@@ -133,7 +133,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
                   case Left(errors) =>
                     val formWithApiErrors = buildFormFromErrors(errors)
-                    pageDataBuilder(emptyArticles, idRequest, pageNum).map { pageData =>
+                    pageDataBuilder(emptyArticles(), idRequest, pageNum).map { pageData =>
                       NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithApiErrors, pageData)))
                     }
                 }
@@ -142,14 +142,14 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
             updatedArticlesViow.getOrElse {
               val formWithError = form.withError("Error", "There was a problem with your request")
-              pageDataBuilder(emptyArticles, idRequest, pageNum).map { pageData =>
+              pageDataBuilder(emptyArticles(), idRequest, pageNum).map { pageData =>
                 NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithError, pageData)))
               }
             }
 
           case Left(errors) =>
             val formWithErrors = buildFormFromErrors(errors)
-            pageDataBuilder(emptyArticles, idRequest, pageNum).map { pageData =>
+            pageDataBuilder(emptyArticles(), idRequest, pageNum).map { pageData =>
               NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData)))
             }
         }
