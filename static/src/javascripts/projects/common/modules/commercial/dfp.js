@@ -78,7 +78,7 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                if (isViewabilityTest() && $adSlot.hasClass('ad-slot--right')) {
+                if (ab.shouldRunTest('Viewability', 'variant') && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         // Hardcoded for sticky nav test. It will need some on time checking if this will go to PROD
                         new StickyMpu($adSlot, {top: 58}).create();
