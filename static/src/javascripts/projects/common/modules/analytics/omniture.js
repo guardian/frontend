@@ -214,7 +214,7 @@ define([
 
         this.s.prop47    = config.page.edition || '';
 
-        this.s.prop51  = config.page.allowUserGeneratedContent ? "witness-contribution-cta-shown" : null;
+        this.s.prop51  = config.page.allowUserGeneratedContent ? 'witness-contribution-cta-shown' : null;
 
         this.s.eVar51  = mvt;
 
