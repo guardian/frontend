@@ -4,7 +4,6 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/detect',
     'common/utils/mediator',
     'common/modules/identity/api',
     'common/modules/experiments/ab',
@@ -15,7 +14,6 @@ define([
     _,
     $,
     config,
-    detect,
     mediator,
     identityApi,
     ab,
@@ -43,20 +41,15 @@ define([
         $adSlotContainer = $(opts.adSlotContainerSelector);
         $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
 
-        return new Promise(function (resolve) {
-            mediator.once('modules:comments:renderComments:rendered', function () {
-                // is the switch off, or not in the AB test, or there is no adslot container, or comments are disabled, or not signed in, or comments container is lower than 280px, or breakpoint in live-blog is lower than desktop
-                if (!config.switches.standardAdverts || !isMtRecTest() || !$adSlotContainer.length || !config.switches.discussion || !identityApi.isUserLoggedIn() || $commentMainColumn.dim().height < 280
-                    || (config.page.contentType === 'LiveBlog' && detect.getBreakpoint() !== 'wide')) {
-                    return false;
-                }
+        mediator.once('modules:comments:renderComments:rendered', function () {
+            // is the switch off, or not in the AB test, or there is no adslot container, or comments are disabled, or not signed in, or comments container is lower than 280px
+            if (!config.switches.standardAdverts || !isMtRecTest() || !$adSlotContainer.length || !config.switches.discussion || !identityApi.isUserLoggedIn() || $commentMainColumn.dim().height < 280) {
+                return false;
+            }
 
-                $commentMainColumn.addClass('discussion__ad-wrapper');
+            $commentMainColumn.addClass('discussion__ad-wrapper');
 
-                if (config.page.contentType !== 'LiveBlog') {
-                    $commentMainColumn.addClass('discussion__ad-wrapper-wider');
-                }
-
+            return new Promise(function (resolve) {
                 fastdom.read(function () {
                     adType = 'comments';
 
@@ -68,6 +61,7 @@ define([
                 });
             });
         });
+
     }
 
     return {
