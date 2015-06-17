@@ -108,7 +108,7 @@ define([
     };
 
     SaveForLater.prototype.renderSaveButtonsInArticle = function () {
-        if (this.hasUserSavedArticle(this.userData.articles, shortUrl)) {
+        if (this.getSavedArticle(shortUrl)) {
             this.renderArticleSaveButton({ isSaved: true });
         } else {
             this.renderArticleSaveButton({ isSaved: false });
