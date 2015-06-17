@@ -43,7 +43,6 @@ define([
         $adSlotContainer = $(opts.adSlotContainerSelector);
         $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
 
-        console.log(detect.getBreakpoint());
         return new Promise(function (resolve) {
             mediator.once('modules:comments:renderComments:rendered', function () {
                 // is the switch off, or not in the AB test, or there is no adslot container, or comments are disabled, or not signed in, or comments container is lower than 280px, or breakpoint in live-blog is lower than desktop
