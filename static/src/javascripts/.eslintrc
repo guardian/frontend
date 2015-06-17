@@ -6,10 +6,10 @@
     },
     "rules": {
         "camelcase": 0,
-        // TODO: Remove
+        // We should reset these to errors, but will require lots of changes
         "no-shadow": 0,
         "strict": 0,
-        // TODO: Reset for ES6
+        // These are reset back to errors for ES6
         "no-use-before-define": 0,
         "no-alert": 0
     }

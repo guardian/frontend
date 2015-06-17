@@ -23,8 +23,7 @@
         "superInFunctions": true,
         "templateStrings": true,
         "unicodeCodePointEscapes": true,
-        "globalReturn": true,
-        "jsx": true
+        "globalReturn": true
     },
     "rules": {
         // Overrides old
