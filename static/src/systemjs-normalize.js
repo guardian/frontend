@@ -36,7 +36,7 @@ var reduce = function (array, fn, accumulator) {
                 }
             },
             function reversePluginFormat(name) {
-                var destructuredName = /(.+)!(.+)/.exec(name);
+                var destructuredName = /(.+?)!(.+)/.exec(name);
 
                 if (destructuredName) {
                     var pluginName = destructuredName[1];
