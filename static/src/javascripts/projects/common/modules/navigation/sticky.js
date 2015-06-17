@@ -148,6 +148,8 @@ define([
                     width:     '100%',
                     'z-index': '1000',
                     'margin-top': 0,
+                    '-webkit-transform': 'translateY(-100%)',
+                    '-ms-transform': 'translateY(-100%)',
                     'transform': 'translateY(-100%)'
                 });
 
@@ -160,7 +162,11 @@ define([
 
                 this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
                 this.$els.header.addClass('l-header--is-slim');
-                this.$els.header.css('transform', 'translateY(0%)');
+                this.$els.header.css({
+                    '-webkit-transform': 'translateY(0%)',
+                    '-ms-transform': 'translateY(0%)',
+                    'transform': 'translateY(0%)'
+                });
                 this.showNavigation(scrollY, breakpoint);
             } else if (scrollY >= this.headerBigHeight) {
                 // Add is not sticky anymore
@@ -175,7 +181,11 @@ define([
                 this.$els.header.addClass('l-header--is-slim');
 
                 if (this.config.direction === 'up') {
-                    this.$els.header.css('transform', 'translateY(-100%)');
+                    this.$els.header.css({
+                        '-webkit-transform': 'translateY(-100%)',
+                        '-ms-transform': 'translateY(-100%)',
+                        'transform': 'translateY(-100%)'
+                    });
                 } else {
                     // Make sure navigation is hidden
                     this.$els.navigation.removeClass('animate-up').addClass('animate-down');
@@ -183,6 +193,8 @@ define([
                     this.$els.header.css({
                         position:  'relative',
                         'margin-top': bannerHeight,
+                        '-webkit-transform': 'translateY(-500%)',
+                        '-ms-transform': 'translateY(-500%)',
                         'transform': 'translateY(-500%)',
                         'z-index': '998'
                     });
@@ -207,6 +219,8 @@ define([
                     position:  'relative',
                     width:     '100%',
                     'margin-top': bannerHeight,
+                    '-webkit-transform': 'translateY(0%)',
+                    '-ms-transform': 'translateY(0%)',
                     'transform': 'translateY(0%)',
                     'z-index': '998'
                 });
