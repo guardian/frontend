@@ -137,14 +137,8 @@ define([
         });
     }
 
-    function isViewabilityTest() {
-        var ViewabilityTest = ab.getParticipations().Viewability;
-
-        return ab.testCanBeRun('Viewability') && ViewabilityTest && ViewabilityTest.variant === 'variant';
-    }
-
     function getReady() {
-        if (isViewabilityTest()) {
+        if (ab.shouldRunTest('Viewability', 'variant')) {
             return Promise.all([onImagesLoaded(), onRichLinksUpgraded()]);
         }
 

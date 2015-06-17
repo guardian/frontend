@@ -66,12 +66,6 @@ define([
         });
     }
 
-    function isViewabilityTest() {
-        var ViewabilityTest = ab.getParticipations().Viewability;
-
-        return ab.testCanBeRun('Viewability') && ViewabilityTest && ViewabilityTest.variant === 'variant';
-    }
-
     var ads = [],
         adNames = [['inline1', 'inline'], ['inline2', 'inline']],
         insertAdAtP = function (para) {
@@ -115,7 +109,7 @@ define([
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            if (isViewabilityTest() && config.switches.commercialExtraAds) {
+            if (ab.shouldRunTest('Viewability', 'variant') && config.switches.commercialExtraAds) {
                 return inlineMercPromise.then(function () {
                     return spacefinder.getParaWithSpace(rules).then(function (space) {
                         return insertAdAtP(space);

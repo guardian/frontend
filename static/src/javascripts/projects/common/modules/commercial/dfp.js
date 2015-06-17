@@ -104,12 +104,6 @@ define([
             }
         },
 
-        isViewabilityTest = function () {
-            var ViewabilityTest = ab.getParticipations().Viewability;
-
-            return ab.testCanBeRun('Viewability') && ViewabilityTest && ViewabilityTest.variant === 'variant';
-        },
-
         recordFirstAdRendered = _.once(function () {
             beacon.beaconCounts('ad-render');
         }),
@@ -236,7 +230,7 @@ define([
             window.googletag.cmd.push(defineSlots);
 
             // We want to run lazy load if user is in the main test or if there is a switch on
-            (isViewabilityTest() || isLzAdsSwitchOn()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            (ab.shouldRunTest('Viewability', 'variant') || isLzAdsSwitchOn()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 

@@ -165,9 +165,7 @@ define([
             },
 
             initialiseStickyHeader: function () {
-                var ViewabilityTest = ab.getParticipations().Viewability;
-
-                if (ab.testCanBeRun('Viewability') && ViewabilityTest && ViewabilityTest.variant === 'variant' && config.page.contentType !== 'Interactive') {
+                if (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') {
                     sticky.init();
                 }
             },
@@ -487,16 +485,6 @@ define([
                 };
             },
 
-            runCustomAbTests: function () {
-                if (ab.shouldRunTest('MtRec1', 'A')) {
-                    ab.getTest('MtRec1').fireRecTest();
-                }
-
-                if (ab.shouldRunTest('MtRec2', 'A')) {
-                    ab.getTest('MtRec2').fireRecTest();
-                }
-            },
-
             internationalSignposting: function () {
                 if ('internationalEdition' in config.page) {
                     if (config.page.internationalEdition === 'international' && config.page.pageId === 'international') {
@@ -555,7 +543,6 @@ define([
             robust('c-simple-metrics',  modules.initSimpleMetrics);
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
-            robust('c-run-custom-ab',   modules.runCustomAbTests);
             robust('c-accessibility-prefs',       modules.initAccessibilityPrefs);
             robust('c-international-signposting', modules.internationalSignposting);
             if (window.console && window.console.log && !config.page.isDev) {

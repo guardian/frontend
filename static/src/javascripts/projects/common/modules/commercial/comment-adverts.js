@@ -27,18 +27,13 @@ define([
                 }
             ),
             $adSlotContainer,
-            $commentMainColumn,
-            isViewabilityTest = function () {
-                var ViewabilityTest = ab.getParticipations().Viewability;
-
-                return ab.testCanBeRun('Viewability') && ViewabilityTest && ViewabilityTest.variant === 'variant';
-            };
+            $commentMainColumn;
 
         $adSlotContainer = $(opts.adSlotContainerSelector);
         $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
 
         // is the switch off, or not in the AB test, or there is no adslot container, or comments are disabled, or not signed in
-        if (!config.switches.standardAdverts || !isViewabilityTest() || !$adSlotContainer.length || !config.switches.discussion || !identityApi.isUserLoggedIn()) {
+        if (!config.switches.standardAdverts || !ab.shouldRunTest('Viewability', 'variant') || !$adSlotContainer.length || !config.switches.discussion || !identityApi.isUserLoggedIn()) {
             return false;
         }
 
