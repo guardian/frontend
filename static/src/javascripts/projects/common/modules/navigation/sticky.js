@@ -34,24 +34,25 @@ define([
     }
 
     StickyHeader.prototype.init = function () {
+        this.$els.header         = $('#header');
+        this.$els.bannerDesktop  = $('.top-banner-ad-container--above-nav');
+        this.$els.bannerMobile   = $('.top-banner-ad-container--mobile');
+        this.$els.main           = $('#maincontent');
+        this.$els.navHeader      = $('.js-navigation-header');
+        this.$els.burgerIcon     = $('.js-navigation-toggle', this.$els.navHeader);
+        this.$els.logoWrapper    = $('.logo-wrapper', this.$els.navHeader);
+        this.$els.navigation     = $('.navigation', this.$els.navHeader);
+
         fastdom.read(function () {
-            this.$els.header         = $('#header');
-            this.$els.bannerDesktop  = $('.top-banner-ad-container--above-nav');
-            this.$els.bannerMobile   = $('.top-banner-ad-container--mobile');
-            this.$els.main           = $('#maincontent');
-            this.$els.navHeader      = $('.js-navigation-header');
-            this.$els.burgerIcon     = $('.js-navigation-toggle', this.$els.navHeader);
-            this.$els.logoWrapper    = $('.logo-wrapper', this.$els.navHeader);
-            this.$els.navigation     = $('.navigation', this.$els.navHeader);
             this.headerBigHeight     = this.$els.navHeader.dim().height;
             this.navigationClassList = this.$els.navigation.attr('class');
-
-            // Top ads are revealed with CSS animation. As we don't know when animation is finished we will
-            // start updating position only if the viewport is 'firstLoadDepth' scrolled down on page load
-            if ($(window).scrollTop() > this.config.firstLoadDepth) {
-                this.updatePosition();
-            }
         }.bind(this));
+
+        // Top ads are revealed with CSS animation. As we don't know when animation is finished we will
+        // start updating position only if the viewport is 'firstLoadDepth' scrolled down on page load
+        if ($(window).scrollTop() > this.config.firstLoadDepth) {
+            this.updatePosition();
+        }
 
         if (this.isMobile) {
             mediator.on('window:scroll', _.throttle(function () {
