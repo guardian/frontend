@@ -106,9 +106,14 @@
                 We won't run all javascript on these
                 For usage stats see http://david-smith.org/iosversionstats/
 
-                On 12 June 2015 this represents about 1/4 iPads and 1/4 iPhones
+                NOTE: modifying this moves people into a category where they do not get important things such as
+                commenting
             *@
-            return /.*(iPhone|iPad; CPU) OS ([34567])_\d+.*/.test(navigator.userAgent) || window.devicePixelRatio === 1;
+
+            @* NOTE - this is NOT what we want to be doing long term. It is a stopgap measure only *@
+            var olderIPadOnFront = @SplitOlderIPadsSwitch.isSwitchedOn && @item.isFront && window.devicePixelRatio === 1;
+
+            return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent) || olderIPadOnFront;
         }
         return false;
     })();
