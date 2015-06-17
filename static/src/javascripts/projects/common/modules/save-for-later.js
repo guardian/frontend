@@ -321,11 +321,13 @@ define([
             saveForLaterProfileLink = $(self.classes.profileDropdownLink);
 
         var count = self.userData.articles.length;
-        saveForLaterProfileLink.html('Saved (' + count + ')');
+        fastdom.write(function () {
+            saveForLaterProfileLink.html('Saved (' + count + ')');
 
-        var profile = $('.brand-bar__item--profile');
-        profile.addClass('brand-bar__item--profile--show-saved');
-        $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
+            var profile = $('.brand-bar__item--profile');
+            profile.addClass('brand-bar__item--profile--show-saved');
+            $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
+        });
     };
 
     return SaveForLater;

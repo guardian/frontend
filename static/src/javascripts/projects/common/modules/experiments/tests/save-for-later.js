@@ -1,6 +1,7 @@
 define([
     'bonzo',
     'qwery',
+    'fastdom',
     'common/utils/detect',
     'common/utils/config',
     'common/utils/mediator',
@@ -11,6 +12,7 @@ define([
 ], function (
     bonzo,
     qwery,
+    fastdom,
     detect,
     config,
     mediator,
@@ -49,11 +51,13 @@ define([
 
                     mediator.on('modules:profilenav:loaded', function () {
                         var popup = qwery('.popup--profile')[0];
-                        bonzo(popup).prepend(bonzo.create(
-                            template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
-                                idUrl: config.page.idUrl
-                            })
-                        ));
+                        fastdom.write(function () {
+                            bonzo(popup).prepend(bonzo.create(
+                                template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
+                                    idUrl: config.page.idUrl
+                                })
+                            ));
+                        });
                     });
 
                 }
