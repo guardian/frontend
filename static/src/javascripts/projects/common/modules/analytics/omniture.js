@@ -92,7 +92,7 @@ define([
                 tag: spec.tag || 'untracked',
                 time: new Date().getTime()
             };
-            try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {}
+            try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {/**/}
             storage.session.set(NG_STORAGE_KEY, storeObj);
         } else {
             // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.

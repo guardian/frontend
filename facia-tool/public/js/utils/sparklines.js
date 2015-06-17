@@ -1,3 +1,4 @@
+/*eslint-disable consistent-return*/
 import * as vars from 'modules/vars';
 import ko from 'knockout';
 import _ from 'underscore';

@@ -1,4 +1,3 @@
-/* jshint newcap: false */
 /* eslint new-cap: 0 */
 
 import React from 'react';
@@ -258,7 +257,7 @@ class Crossword extends React.Component {
         } else {
             this.state.cellInFocus = {x: x, y: y};
 
-            const isStartOfClue = (clue) => clue && clue.position.x === x && clue.position.y === y;
+            const isStartOfClue = (sourceClue) => sourceClue && sourceClue.position.x === x && sourceClue.position.y === y;
 
             /**
              * If the user clicks on the start of a down clue midway through an across clue, we should

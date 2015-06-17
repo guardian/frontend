@@ -1,7 +1,6 @@
 // This module attempts to load webfonts in over XMLHTTP, add them to the
 // current page and then save them to `localStorage` for next time.
 
-/* jshint loopfunc: true */
 define([
     'bonzo',
     'qwery',

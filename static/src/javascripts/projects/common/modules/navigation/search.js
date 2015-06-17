@@ -52,7 +52,7 @@ define([
             }
         };
 
-        this.load = function () {
+        this.load = function () {
             /* jscs:disable disallowDanglingUnderscores */
             var s,
                 x;

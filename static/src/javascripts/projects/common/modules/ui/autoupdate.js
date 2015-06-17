@@ -140,7 +140,7 @@ define([
                 type: 'json',
                 crossOrigin: true
             }).then(
-                function (response) {
+                function (response) {
                     if (response.refreshStatus === false) {
                         that.off();
                         that.view.destroy();

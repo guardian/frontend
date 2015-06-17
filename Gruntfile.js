@@ -1,3 +1,4 @@
+'use strict';
 /* global module: false, process: false */
 var megalog = require('megalog');
 
@@ -28,8 +29,10 @@ module.exports = function (grunt) {
                 scsslint: 'grunt-scss-lint',
                 cssmetrics: 'grunt-css-metrics',
                 assetmonitor: 'grunt-asset-monitor',
+                /*eslint-disable camelcase*/
                 px_to_rem: 'grunt-px-to-rem',
                 frequency_graph: 'grunt-frequency-graph'
+                /*eslint-enable camelcase*/
             }
         }
     });
@@ -52,8 +55,8 @@ module.exports = function (grunt) {
     grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function(app) {
         var target = (app) ? ':' + app : '';
-        grunt.task.run(['jshint' + target, 'jscs' + target]);
-        grunt.task.run(['eslint']); // ES6 modules
+        grunt.task.run(['jscs' + target]);
+        grunt.task.run(['eslint' + target]);
     });
     grunt.registerTask('validate', function(app) {
         grunt.task.run(['validate:css', 'validate:sass', 'validate:js:' + (app || '')]);

@@ -3,7 +3,6 @@
     Description: Used to detect various characteristics of the current browsing environment.
                  layout mode, connection speed, battery level, etc...
 */
-/*jshint strict: false */
 /*global DocumentTouch: true */
 
 define([
@@ -269,12 +268,12 @@ define([
             types = {};
 
         try {
-            if (!!elem.canPlayType) {
+            if (elem.canPlayType) {
                 types.mp4 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"') .replace(/^no$/, '');
                 types.ogg = elem.canPlayType('video/ogg; codecs="theora"').replace(/^no$/, '');
                 types.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/, '');
             }
-        } catch (e) {}
+        } catch (e) {/**/}
 
         return types;
     }
@@ -368,7 +367,7 @@ define([
                     pageshow: v,
                     blur: h,
                     focusout: h,
-                    pagehide:h
+                    pagehide: h
                 };
 
             evt = evt || window.event;

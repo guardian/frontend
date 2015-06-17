@@ -188,9 +188,17 @@ define([
             dx = 0;
 
             if (direction === 1) {
-                this.index > 1 ? this.trigger('prev') : this.trigger('reload');
+                if (this.index > 1) {
+                    this.trigger('prev');
+                } else {
+                    this.trigger('reload');
+                }
             } else if (direction === -1) {
-                this.index < this.$slides.length ? this.trigger('next') : this.trigger('reload');
+                if (this.index < this.$slides.length) {
+                    this.trigger('next');
+                } else {
+                    this.trigger('reload');
+                }
             } else {
                 this.trigger('reload');
             }
@@ -264,7 +272,9 @@ define([
             },
             events: {
                 'open': function () {
-                    this.swipe && this.swipe.slide(this.index, 0);
+                    if (this.swipe) {
+                        this.swipe.slide(this.index, 0);
+                    }
                     this.state = 'image';
                 },
                 'loadJson': function (json) {
@@ -424,7 +434,11 @@ define([
     };
 
     GalleryLightbox.prototype.close = function () {
-        url.hasHistorySupport ? url.back() : this.trigger('close');
+        if (url.hasHistorySupport) {
+            url.back();
+        } else {
+            this.trigger('close');
+        }
         this.trigger('close');
     };
 
@@ -477,7 +491,7 @@ define([
             this.endslate.endpoint = '/gallery/most-viewed.json';
             this.endslate.ready = function () {
                 mediator.emit('page:new-content');
-            }.bind(this);
+            };
             this.endslate.prerender = function () {
                 bonzo(this.elem).addClass(this.componentClass);
             };

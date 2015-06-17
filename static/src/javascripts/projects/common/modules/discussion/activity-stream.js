@@ -44,7 +44,7 @@ define([
         return this._fetch().then(function (resp) {
             $.create(resp.html).each(function (el) {
                 $el.html($(el).html()).attr({ 'class': el.className });
-            }.bind(this));
+            });
             this.removeState('loading');
         }.bind(this));
     };
