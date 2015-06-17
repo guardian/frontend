@@ -45,7 +45,7 @@ describe('Article Body Adverts', function () {
 
             testCanBeRunStub = sinon.stub();
             testCanBeRunStub.returns(true);
-            ab.testCanBeRun = testCanBeRunStub;
+            ab.shouldRunTest = testCanBeRunStub;
 
             $fixturesContainer = fixtures.render(fixturesConfig);
             $style = $.create('<style type="text/css"></style>')
