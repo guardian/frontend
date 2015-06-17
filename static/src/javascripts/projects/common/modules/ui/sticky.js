@@ -11,13 +11,6 @@ define([
     mediator,
     ab
 ) {
-
-    function isViewabilityTest() {
-        var ViewabilityTest = ab.getParticipations().Viewability;
-
-        return ab.testCanBeRun('Viewability') && ViewabilityTest && ViewabilityTest.variant === 'variant';
-    }
-
     /**
      * @todo: check if browser natively supports "position: sticky"
      */
@@ -38,7 +31,7 @@ define([
     Sticky.prototype.updatePosition = function () {
         var fixedTop, css, stickyHeaderHeight;
 
-        stickyHeaderHeight = isViewabilityTest() ? $('.navigation').dim().height : 0;
+        stickyHeaderHeight = ab.shouldRunTest('Viewability', 'variant') ? $('.navigation').dim().height : 0;
 
         // have we scrolled past the element
         if (window.scrollY >= this.$parent.offset().top - this.opts.top - stickyHeaderHeight) {
