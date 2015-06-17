@@ -159,15 +159,15 @@ define([
 
         mediator.once('modules:tonal:loaded', function () {
             this.renderFaciaItemLinks(signedIn, this.classes.onwardContainer);
-        });
+        }.bind(this));
 
         mediator.once('modules:onward:loaded', function () {
             this.renderFaciaItemLinks(signedIn, this.classes.onwardContainer);
-        });
+        }.bind(this));
 
         mediator.once('modules:related:loaded', function () {
             this.renderFaciaItemLinks(signedIn, this.classes.relatedContainer);
-        });
+        }.bind(this));
     };
 
     // Configure the save for later links on a front or in a container
