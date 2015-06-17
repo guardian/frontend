@@ -150,6 +150,7 @@ trait FrontJson extends ExecutionContexts with Logging {
   private def parseCollection(json: JsValue): Collection = {
     val displayName: Option[String] = (json \ "displayName").asOpt[String]
     val href: Option[String] = (json \ "href").asOpt[String]
+    val description: Option[String] = (json \ "description").asOpt[String]
     val curated =      (json \ "curated").asOpt[List[JsValue]].getOrElse(Nil)
       .flatMap(Content.fromPressedJson)
     val editorsPicks = (json \ "editorsPicks").asOpt[List[JsValue]].getOrElse(Nil)
@@ -173,6 +174,7 @@ trait FrontJson extends ExecutionContexts with Logging {
       treats=treats,
       displayName=displayName,
       href=href,
+      description=description,
       lastUpdated=lastUpdated,
       updatedBy=updatedBy,
       updatedEmail=updatedEmail
@@ -192,6 +194,7 @@ trait FrontJson extends ExecutionContexts with Logging {
       apiQuery        = (json \ "apiQuery").asOpt[String],
       displayName     = (json \ "displayName").asOpt[String],
       href            = (json \ "href").asOpt[String],
+      description     = (json \ "description").asOpt[String],
       groups          = (json \ "groups").asOpt[List[String]].map(Groups.apply),
       collectionType  = (json \ "type").asOpt[String].getOrElse(CollectionConfig.DefaultCollectionType),
       showTags        = (json \ "showTags").asOpt[Boolean].exists(identity),

@@ -87,6 +87,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
       applicationsRedirect(path)
     else
+      println("Editionalising")
       renderFrontPressResult(path)
   }
 
@@ -194,6 +195,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     lazy val newFormat =
       getPressedCollection(id).map { collectionOption =>
         collectionOption.map { collection =>
+
           Cached(60) {
             val config = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
 

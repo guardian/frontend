@@ -4,7 +4,7 @@
 @import views.support.{ImgSrc, Item140, RenderClasses}
 @import views.html.fragments.containers.facia_cards.{date, latestUpdate}
 @import common.Localisation
-@import layout.{MetaDataHeader, LoneDateHeadline, SeriesDescriptionMetaHeader}
+@import layout.{MetaDataHeader, LoneDateHeadline, DescriptionMetaHeader}
 @import fragments.containers.facia_cards.{dateHeadline, seriesHeadline, standardHeaderMeta}
 @import fragments.nav.treats
 
@@ -19,7 +19,7 @@
                 @dateHeadline(dateHeader.get, containerDefinition.dateLink)
             }
 
-            case seriesHeader: SeriesDescriptionMetaHeader => {
+            case seriesHeader: DescriptionMetaHeader => {
                 @seriesHeadline(containerDefinition, frontProperties, seriesHeader.description)
             }
         }

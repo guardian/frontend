@@ -254,7 +254,7 @@ case class FaciaContainer(
     val maybeDateHeadline = customHeader flatMap  {
       case MetaDataHeader(_, _, _, dateHeadline, _) => Some(dateHeadline)
       case LoneDateHeadline(dateHeadline) => Some(dateHeadline)
-      case SeriesDescriptionMetaHeader(_) => None
+      case DescriptionMetaHeader(_) => None
     }
 
     for {
