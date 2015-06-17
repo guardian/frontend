@@ -816,10 +816,8 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 
     @include mq(navigationBreakOnTwoLevels) {
-        .navigation--has-signposting {
-            .navigation__container--first {
-                border-top: 0;
-            }
+        .navigation--has-signposting .navigation__container--first {
+            border-top: 0;
         }
     }
 
