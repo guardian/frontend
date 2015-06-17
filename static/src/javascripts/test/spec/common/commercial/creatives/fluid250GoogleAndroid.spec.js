@@ -10,16 +10,16 @@ var fixturesConfig = {
     ]
 };
 
-describe('Fluid 250 Google Android', function() {
+describe('Fluid 250 Google Android', function () {
 
     var fluid250GoogleAndroid,
         $fixturesContainer;
 
-    it('should exist', function() {
+    it('should exist', function () {
         expect(Fluid250GoogleAndroid).toBeDefined();
     });
 
-    it('should be defined', function() {
+    it('should be defined', function () {
         $fixturesContainer = fixtures.render(fixturesConfig);
 
         fluid250GoogleAndroid = new Fluid250GoogleAndroid($('.ad-slot', $fixturesContainer), {});

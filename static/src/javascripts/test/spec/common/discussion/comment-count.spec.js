@@ -5,7 +5,7 @@ import mediator from 'common/utils/mediator';
 import commentCount from 'common/modules/discussion/comment-count';
 import testData from 'fixtures/commentcounts';
 
-describe('Comment counts', function() {
+describe('Comment counts', function () {
 
     var server;
 
@@ -15,7 +15,7 @@ describe('Comment counts', function() {
                 + '<div class="trail" data-discussion-id="/p/3gh4n"><a href="/article/3">1</a></div>'
                 + '</div>';
 
-    beforeEach(function() {
+    beforeEach(function () {
 
         $('body').append(fixtureTrails);
 
@@ -31,13 +31,13 @@ describe('Comment counts', function() {
         server.autoRespondAfter = 20;
     });
 
-    afterEach(function() {
+    afterEach(function () {
         $('.comment-trails').remove();
         commentCount.getCommentCounts.restore();
         server.restore();
     });
 
-    it('should get discussion id\'s from the DOM', function(){
+    it('should get discussion id\'s from the DOM', function () {
         var data = '/p/3gh4n,/p/3ghv5,/p/3ghx3';
         expect(commentCount.getContentIds(commentCount.getElementsIndexedById())).toEqual(data);
     });

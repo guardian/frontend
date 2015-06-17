@@ -8,7 +8,9 @@ import sinonjs from 'sinonjs';
 describe('Related', function () {
 
     var expandableSpy = {
+        /*jscs:disable disallowDanglingUnderscores*/
         __useDefault: true,
+        /*jscs:enable disallowDanglingUnderscores*/
         default: sinon.spy(function () {
             return {
                 init: function () {}

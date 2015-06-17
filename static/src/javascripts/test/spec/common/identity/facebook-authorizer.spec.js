@@ -1,9 +1,10 @@
+// jscs:disable disallowDanglingUnderscores
 /*global FB*/
 import bonzo from 'bonzo';
 import sinon from 'sinonjs';
 import FacebookAuthorizer from 'common/modules/identity/facebook-authorizer';
 
-describe('Facebook Authorizer', function() {
+describe('Facebook Authorizer', function () {
     var authorizer,
         loginResponse = {
             status: 'unknown'
@@ -11,7 +12,7 @@ describe('Facebook Authorizer', function() {
         userData = {},
         userDetailsCallBack;
 
-    beforeEach(function() {
+    beforeEach(function () {
         userDetailsCallBack = sinon.stub();
         authorizer = new FacebookAuthorizer('123');
 
@@ -34,7 +35,7 @@ describe('Facebook Authorizer', function() {
         sinon.spy(authorizer, 'getLoginStatus');
     });
 
-    afterEach(function() {
+    afterEach(function () {
         delete window.FB;
         authorizer.destroy();
         bonzo('meta').remove();
@@ -45,15 +46,15 @@ describe('Facebook Authorizer', function() {
         authorizer._handleScriptLoaded();
     }
 
-    describe('Get Login Status', function() {
-        it('should call facebook init after loading the facebook script', function() {
+    describe('Get Login Status', function () {
+        it('should call facebook init after loading the facebook script', function () {
             authorizer.getLoginStatus();
             whenTheScriptLoads();
 
             expect(FB.init.callCount).toBe(1);
         });
 
-        it('does not load the facebook script or call FB.init more than once', function() {
+        it('does not load the facebook script or call FB.init more than once', function () {
             authorizer.getLoginStatus();
             whenTheScriptLoads();
 
@@ -62,7 +63,7 @@ describe('Facebook Authorizer', function() {
             expect(FB.init.callCount).toEqual(1);
         });
 
-        it('should queue calls to get login status', function() {
+        it('should queue calls to get login status', function () {
             var callback1 = sinon.stub(), callback2 = sinon.stub();
             loginResponse = {
                 status: 'connected',
@@ -85,7 +86,7 @@ describe('Facebook Authorizer', function() {
             expect(callback1.getCall(0).args[1]).toBe(loginResponse.authResponse);
         });
 
-        it('should load facebook api if requested to auth the user', function() {
+        it('should load facebook api if requested to auth the user', function () {
             loginResponse = {
                 status: 'connected',
                 authResponse: {
@@ -102,7 +103,7 @@ describe('Facebook Authorizer', function() {
             expect(authorizer.userId).toEqual('123456');
         });
 
-        it('should not try to login to facebook more than once', function() {
+        it('should not try to login to facebook more than once', function () {
             authorizer.login();
             authorizer.login();
             whenTheScriptLoads();
@@ -110,7 +111,7 @@ describe('Facebook Authorizer', function() {
             expect(FB.login.callCount).toEqual(1);
         });
 
-        it('should get the user data from facebook', function() {
+        it('should get the user data from facebook', function () {
             loginResponse = {
                 status : 'not_authorized'
             };
@@ -126,7 +127,7 @@ describe('Facebook Authorizer', function() {
             expect(userDetailsCallBack.getCall(0).args[0]).toBe(userData);
         });
 
-        it('should not get the user data user when an error occurs', function() {
+        it('should not get the user data user when an error occurs', function () {
             loginResponse = {
                 status : 'not_authorized'
             };

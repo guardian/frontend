@@ -1,8 +1,8 @@
 import userPrefs from 'common/modules/user-prefs';
 
-describe('userPrefs - Client-side preferences', function() {
+describe('userPrefs - Client-side preferences', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
         localStorage.clear();
         userPrefs.set('key', 'value');
     });
@@ -20,11 +20,11 @@ describe('userPrefs - Client-side preferences', function() {
         expect(userPrefs.get('key')).toBeNull();
     });
 
-    it('should allow setting of preferences via the address bar', function() {
+    it('should allow setting of preferences via the address bar', function () {
 
         var prefix = 'gu.prefs.',
             hash = { a: 1, b: false, c: 'str', switchOn: 'd', switchOff: 'e' },
-            hashAsAnchor = Object.keys(hash).map(function(h){
+            hashAsAnchor = Object.keys(hash).map(function (h) {
                 return prefix + h + '=' + hash[h];
             }).join('&');
 
@@ -42,9 +42,9 @@ describe('userPrefs - Client-side preferences', function() {
 
 });
 
-describe('userPrefs - Switch overrides', function() {
+describe('userPrefs - Switch overrides', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
         localStorage.clear();
     });
 

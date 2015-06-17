@@ -2,12 +2,12 @@ import LazyLoad from 'common/modules/lazyload';
 import sinon from 'sinonjs';
 import bonzo from 'bonzo';
 
-describe('Lazy Load', function() {
+describe('Lazy Load', function () {
 
     var $container = bonzo(bonzo.create('<div id="lazy-load-container"></div>')),
         server;
 
-    beforeEach(function() {
+    beforeEach(function () {
         // create container
         $container.appendTo('body');
         // set up fake server
@@ -15,7 +15,7 @@ describe('Lazy Load', function() {
         server.autoRespond = true;
     });
 
-    afterEach(function() {
+    afterEach(function () {
         $container.remove();
         server.restore();
     });
