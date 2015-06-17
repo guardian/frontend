@@ -8,9 +8,9 @@
 
 // For older browsers
 var reduce = function (array, fn, accumulator) {
-    for (var i = array.length - 1; i >= 0; i--) {
+    for (var i = 0; i <= array.length - 1; i++) {
         accumulator = fn(accumulator, array[i]);
-    };
+    }
     return accumulator;
 };
 
