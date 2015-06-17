@@ -18,12 +18,12 @@ var config = {
             '<div class="js-secondary-column"></div>'
         ]
     },
-    injector = new Injector,
+    injector = new Injector(),
     BrandedComponent;
 
-describe('Branded Component', function() {
+describe('Branded Component', function () {
 
-    beforeEach(function(done){
+    beforeEach(function (done) {
         injector.mock({'common/utils/config': config});
         injector.test(['common/modules/commercial/creatives/branded-component'], function () {
             BrandedComponent = arguments[0];
@@ -34,7 +34,7 @@ describe('Branded Component', function() {
     var brandedComponent,
         $fixturesContainer;
 
-    it('should exist', function() {
+    it('should exist', function () {
         expect(BrandedComponent).toBeDefined();
     });
 

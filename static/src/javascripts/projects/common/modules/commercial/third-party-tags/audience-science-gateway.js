@@ -32,9 +32,9 @@ define([
                         placementIdList: placements.join(','),
                         cb: new Date().getTime()
                     }),
-                    url = gatewayUrl + '?' + query;
+                    url = [gatewayUrl, '?', query].join('');
 
-                return require([url + '!system-script'], function (asiPlacements) {
+                return require(['js!' + url + '!exports=asiPlacements'], function (asiPlacements) {
                     var segments = storage.local.get(storageKey) || {};
                     // override the global value with our previously stored one
                     window.asiPlacements = segments[section];
@@ -49,7 +49,7 @@ define([
             if (config.switches.audienceScienceGateway && storedSegments) {
                 segments = _(_.pairs(storedSegments[section]))
                     .filter(function (placement) {
-                        return placement[1]['default'];
+                        return placement[1].default;
                     })
                     .map(function (placement) {
                         return ['pq_' + placement[0], 'T'];

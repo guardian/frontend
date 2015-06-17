@@ -11,7 +11,7 @@ import layout.{Front, CollectionEssentials, FaciaContainer}
 import model._
 import model.facia.PressedCollection
 import performance.MemcachedAction
-import play.api.libs.json.Json
+import play.api.libs.json.{JsObject, Json}
 import play.api.mvc._
 import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
@@ -116,8 +116,9 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       case p if p.startsWith("breaking-news") => 10
       case _ => 60}
 
-    lazy val newFormat = frontJsonFapi.getAsJsValue(path).map { json =>
-      Cached(cacheTime)(Cors(JsonComponent(FapiFrontJsonLite.get(json))))}
+    lazy val newFormat = frontJsonFapi.get(path).map {
+        case Some(pressedPage) => Cached(cacheTime)(Cors(JsonComponent(FapiFrontJsonLite.get(pressedPage))))
+        case None => Cached(cacheTime)(Cors(JsonComponent(JsObject(Nil))))}
     lazy val oldFormat = frontJson.getAsJsValue(path).map { json =>
       Cached(cacheTime)(Cors(JsonComponent(FrontJsonLite.get(json))))}
 

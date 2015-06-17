@@ -1,5 +1,6 @@
 import fastdom from 'fastdom';
 import qwery from 'qwery';
+import sinon from 'sinonjs';
 import Promise from 'Promise';
 import $ from 'common/utils/$';
 import fixtures from 'helpers/fixtures';
@@ -16,7 +17,8 @@ describe('Article Body Adverts', function () {
             ]
         },
         injector = new Injector(),
-        articleBodyAdverts, config, detect, spacefinder;
+        articleBodyAdverts, config, detect, spacefinder, ab, getParticipationsStub,
+        testCanBeRunStub;
 
     beforeEach(function (done) {
 
@@ -27,51 +29,51 @@ describe('Article Body Adverts', function () {
             'common/modules/article/spacefinder',
             'common/modules/experiments/ab'], function () {
 
-            articleBodyAdverts = arguments[0];
-            config = arguments[1];
-            detect = arguments[2];
-            spacefinder = arguments[3];
-            ab = arguments[4];
+                articleBodyAdverts = arguments[0];
+                config = arguments[1];
+                detect = arguments[2];
+                spacefinder = arguments[3];
+                ab = arguments[4];
 
-            getParticipationsStub = sinon.stub();
-            getParticipationsStub.returns({
+                getParticipationsStub = sinon.stub();
+                getParticipationsStub.returns({
                 'MtRec2': {
                     'variant': 'A'
                 }
             });
-            ab.getParticipations = getParticipationsStub;
+                ab.getParticipations = getParticipationsStub;
 
-            testCanBeRunStub = sinon.stub();
-            testCanBeRunStub.returns(true);
-            ab.testCanBeRun = testCanBeRunStub;
+                testCanBeRunStub = sinon.stub();
+                testCanBeRunStub.returns(true);
+                ab.testCanBeRun = testCanBeRunStub;
 
-            $fixturesContainer = fixtures.render(fixturesConfig);
-            $style = $.create('<style type="text/css"></style>')
-                .html('body:after{ content: "desktop"}')
-                .appendTo('head');
+                $fixturesContainer = fixtures.render(fixturesConfig);
+                $style = $.create('<style type="text/css"></style>')
+                    .html('body:after{ content: "desktop"}')
+                    .appendTo('head');
 
-            config.page = {
+                config.page = {
                 contentType: 'Article',
                 isLiveBlog: false,
                 hasInlineMerchandise: false
             };
-            config.switches = {
+                config.switches = {
                 standardAdverts: true
             };
-            detect.getBreakpoint = function () {
+                detect.getBreakpoint = function () {
                 return 'desktop';
             };
 
-            getParaWithSpaceStub = sinon.stub();
-            var paras = qwery('p', $fixturesContainer);
-            getParaWithSpaceStub.onCall(0).returns(Promise.resolve(paras[0]));
-            getParaWithSpaceStub.onCall(1).returns(Promise.resolve(paras[1]));
-            getParaWithSpaceStub.onCall(2).returns(Promise.resolve(paras[2]));
-            getParaWithSpaceStub.onCall(3).returns(Promise.resolve(undefined));
-            spacefinder.getParaWithSpace = getParaWithSpaceStub;
+                getParaWithSpaceStub = sinon.stub();
+                var paras = qwery('p', $fixturesContainer);
+                getParaWithSpaceStub.onCall(0).returns(Promise.resolve(paras[0]));
+                getParaWithSpaceStub.onCall(1).returns(Promise.resolve(paras[1]));
+                getParaWithSpaceStub.onCall(2).returns(Promise.resolve(paras[2]));
+                getParaWithSpaceStub.onCall(3).returns(Promise.resolve(undefined));
+                spacefinder.getParaWithSpace = getParaWithSpaceStub;
 
-            done();
-        });
+                done();
+            });
     });
 
     afterEach(function () {

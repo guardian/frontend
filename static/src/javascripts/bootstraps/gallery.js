@@ -19,7 +19,6 @@ define([
 ) {
 
     var verticallyResponsiveImages = function () {
-
             var setHeight = function () {
                 if (!bonzo(document.body).hasClass('has-overlay')) {
                     var $imgs = $('.js-gallery-img'),

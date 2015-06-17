@@ -5,7 +5,7 @@ import $ from 'common/utils/$';
 import userPrefs from 'common/modules/user-prefs';
 import fixtures from 'helpers/fixtures';
 import Injector from 'helpers/injector';
-import sliceAdvertsHtml from 'fixtures/commercial/slice-adverts.html!text';
+import sliceAdvertsHtml from 'text!fixtures/commercial/slice-adverts.html';
 
 describe('Slice Adverts', function () {
 
@@ -23,14 +23,14 @@ describe('Slice Adverts', function () {
             config = arguments[1];
             config.page = {
                 pageId: 'uk/commentisfree'
-                };
+            };
             config.switches = {
                 standardAdverts: true
             };
 
             $fixtureContainer = fixtures.render(fixturesConfig);
             done();
-        });        
+        });
     });
 
     afterEach(function () {

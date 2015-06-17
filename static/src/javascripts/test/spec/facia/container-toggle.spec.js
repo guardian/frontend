@@ -7,15 +7,15 @@ import fastdom from 'fastdom';
 import userPrefs from 'common/modules/user-prefs';
 import qwery from 'qwery';
 
-describe('Container Toggle', function() {
+describe('Container Toggle', function () {
     var container,
         $container,
         containerId = 'uk/culture/regular-stories',
         storageId = 'container-states',
     // helper assertion method
-        assertState = function ($container, state) {
-            var $button = $('button', $container[0]);
-            expect($container.hasClass('fc-container--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
+        assertState = function ($cont, state) {
+            var $button = $('button', $cont[0]);
+            expect($cont.hasClass('fc-container--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
             expect($button.text().trim()).toBe(state === 'open' ? 'Hide' : 'Show');
             expect($button.attr('data-link-name')).toBe(state === 'open' ? 'Show' : 'Hide');
         };
@@ -26,7 +26,7 @@ describe('Container Toggle', function() {
         });
     }
 
-    beforeEach(function(){
+    beforeEach(function () {
         container = bonzo.create(
             '<section class="fc-container js-container--toggle" data-id="' + containerId + '">' +
             '<div class="fc-container__header js-container__header">' +
@@ -38,17 +38,17 @@ describe('Container Toggle', function() {
         $container = bonzo(container);
     });
 
-    afterEach(function(){
+    afterEach(function () {
         window.localStorage.clear();
         $container.remove();
     });
 
-    it('should be able to initialise', function() {
+    it('should be able to initialise', function () {
         var containerDisplayToggle = new ContainerDisplayToggle(container);
         expect(containerDisplayToggle).toBeDefined();
     });
 
-    it('should remove "js-container--toggle" class from container', function(done) {
+    it('should remove "js-container--toggle" class from container', function (done) {
         new ContainerDisplayToggle(container).addToggle();
 
         fastdom.defer(1, function () {
@@ -57,7 +57,7 @@ describe('Container Toggle', function() {
         });
     });
 
-    it('should add "container--has-toggle" class to container', function(done) {
+    it('should add "container--has-toggle" class to container', function (done) {
         new ContainerDisplayToggle(container).addToggle();
 
         fastdom.defer(1, function () {
@@ -66,14 +66,16 @@ describe('Container Toggle', function() {
         });
     });
 
-    it('should delete old storage key', function() {
+    it('should delete old storage key', function () {
         var oldStorageKey = 'gu.prefs.front-trailblocks';
         window.localStorage.setItem(oldStorageKey, 'foo');
+        /*eslint-disable no-new*/
         new ContainerDisplayToggle(container);
+        /*eslint-enable no-new*/
         expect(window.localStorage.getItem(oldStorageKey)).toBeNull();
     });
 
-    it('should add button to the container\'s header', function(done) {
+    it('should add button to the container\'s header', function (done) {
         new ContainerDisplayToggle(container).addToggle();
 
         fastdom.defer(1, function () {
@@ -82,7 +84,7 @@ describe('Container Toggle', function() {
         });
     });
 
-    it('initial state should be open', function(done) {
+    it('initial state should be open', function (done) {
         new ContainerDisplayToggle(container).addToggle();
 
         fastdom.defer(1, function () {
@@ -91,7 +93,7 @@ describe('Container Toggle', function() {
         });
     });
 
-    it('should be able to close container', function(done) {
+    it('should be able to close container', function (done) {
         new ContainerDisplayToggle(container).addToggle();
 
         fastdom.defer(1, function () {
@@ -104,7 +106,7 @@ describe('Container Toggle', function() {
         });
     });
 
-    it('should store state as user preference', function(done) {
+    it('should store state as user preference', function (done) {
         new ContainerDisplayToggle(container).addToggle();
         // click button
 

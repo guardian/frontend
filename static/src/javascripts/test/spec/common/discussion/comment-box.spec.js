@@ -1,12 +1,13 @@
 import Id from 'common/modules/identity/api';
 import bean from 'bean';
+import sinon from 'sinonjs';
 import fixtures from 'helpers/fixtures';
 import discussionJson from 'fixtures/discussion/discussion';
 import validCommentText from 'fixtures/discussion/comment-valid';
 import apiPostValidCommentResp from 'fixtures/discussion/api-post-comment-valid';
 import CommentBox from 'common/modules/discussion/comment-box';
 
-describe('Comment box', function() {
+describe('Comment box', function () {
     var server,
         fixturesId = 'comment-box',
         discussionId = '/p/3ht42',
@@ -14,8 +15,8 @@ describe('Comment box', function() {
         fixture = {
             id: fixturesId,
             fixtures: [
-                '<form class="component js-comment-box d-comment-box">'+
-                    '<label for="body" class="d-comment-box__add-comment cta">Add your comment</label>'+
+                '<form class="component js-comment-box d-comment-box">' +
+                    '<label for="body" class="d-comment-box__add-comment cta">Add your comment</label>' +
 
                     '<div class="d-comment-box__meta">' +
                         '<span class="d-comment-box__avatar-wrapper">' +
@@ -36,34 +37,34 @@ describe('Comment box', function() {
                             '<span class="u-fauxlink d-comment-box__hide-parent" role="button">Hide comment</span>' +
                         '</div>' +
                     '</div>' +
-                    '<div class="d-comment-box__content">'+
-                        '<div class="d-comment-box__messages"></div>'+
-                        '<div class="d-comment-box__error d-comment-box__premod">Your comments are currently being pre-moderated (<a href="/community-faqs#311" target="_blank">why?</a>)</div>'+
-                        '<textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…"></textarea>'+
-                        '<button type="submit" class="submit-input d-comment-box__submit">Post comment</button>'+
-                    '</div>'+
-                    '<div class="d-comment-box__preview-wrapper">'+
-                        '<div class="d-comment-box__preview-body"></div>'+
-                        '<button type="submit" class="submit-input d-comment-box__submit d-comment-box__preview-submit">Post your comment</button>'+
-                    '</div>'+
+                    '<div class="d-comment-box__content">' +
+                        '<div class="d-comment-box__messages"></div>' +
+                        '<div class="d-comment-box__error d-comment-box__premod">Your comments are currently being pre-moderated (<a href="/community-faqs#311" target="_blank">why?</a>)</div>' +
+                        '<textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…"></textarea>' +
+                        '<button type="submit" class="submit-input d-comment-box__submit">Post comment</button>' +
+                    '</div>' +
+                    '<div class="d-comment-box__preview-wrapper">' +
+                        '<div class="d-comment-box__preview-body"></div>' +
+                        '<button type="submit" class="submit-input d-comment-box__submit d-comment-box__preview-submit">Post your comment</button>' +
+                    '</div>' +
                 '</form>'
             ]
         },
         idConfig = {
             'page' : {
-                'idApiUrl' : "https://idapi.theguardian.com",
-                'idUrl' : "https://profile.theguardian.com",
+                'idApiUrl' : 'https://idapi.theguardian.com',
+                'idUrl' : 'https://profile.theguardian.com',
                 ajaxUrl: '',
                 edition: 'UK'
             }
         },
         reqwestReturn = {
-            'then': function() {}
+            'then': function () {}
         },
         commentBox;
 
     // rerender the button each time
-    beforeEach(function() {
+    beforeEach(function () {
         server = sinon.fakeServer.create();
         fixtures.render(fixture);
         commentBox = new CommentBox({
@@ -73,7 +74,7 @@ describe('Comment box', function() {
         });
 
         spyOn(commentBox, 'getUserData').and.returnValue({
-            displayName: "testy",
+            displayName: 'testy',
             id: 1,
             accountCreatedDate: new Date(1392719401338)
         });
@@ -93,13 +94,13 @@ describe('Comment box', function() {
         };
     });
 
-    afterEach(function() {
+    afterEach(function () {
         server.restore();
         fixtures.clean(fixturesId);
     });
 
-    describe('urlify', function() {
-        it('should convert unlinked urls to urls', function() {
+    describe('urlify', function () {
+        it('should convert unlinked urls to urls', function () {
             var post =
                 '<a href="http://example.com/existinglink">http://example.com/existinglink</a> ' +
                 'www.example.com<a href="http://example.com/existinglink">http://example.com/existinglink</a> ' +
@@ -118,12 +119,12 @@ describe('Comment box', function() {
                 '<a href="http://example.com/existinglink">http://example.com/existinglink</a>';
 
             var urlified = commentBox.urlify(post);
-            expect(urlified).toBe(expected)
+            expect(urlified).toBe(expected);
         });
     });
 
-    describe('Post comment', function() {
-        it('should only disable button when there is no comment body', function() {
+    describe('Post comment', function () {
+        it('should only disable button when there is no comment body', function () {
             var button = commentBox.getElem('submit'),
                 commentBody = commentBox.getElem('body');
 
@@ -140,24 +141,24 @@ describe('Comment box', function() {
             expect(button.getAttribute('disabled')).toBe('disabled');
         });
 
-        it('should error on empty comments', function() {
+        it('should error on empty comments', function () {
             expect(commentBox.getElem('error')).toBeUndefined();
             commentBox.getElem('body').value = '';
             bean.fire(commentBox.elem, 'submit');
             expect(commentBox.getElem('error')).not.toBeUndefined();
         });
 
-        it('should error on comments over '+ maxCommentLength +' characters', function() {
+        it('should error on comments over ' + maxCommentLength + ' characters', function () {
             var commentBody = commentBox.getElem('body');
             expect(commentBox.getElem('error')).toBeUndefined();
             for (var i = 0, len = maxCommentLength; i <= len; i++) {
-                commentBody.value = commentBody.value+'j';
+                commentBody.value = commentBody.value + 'j';
             }
             bean.fire(commentBox.elem, 'submit');
             expect(commentBox.getElem('error')).not.toBeUndefined();
         });
 
-        it('should error on invalid email address', function() {
+        it('should error on invalid email address', function () {
             expect(commentBox.getElem('error')).toBeUndefined();
             commentBox.getElem('body').value = validCommentText;
 

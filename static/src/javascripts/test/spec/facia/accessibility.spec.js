@@ -23,7 +23,7 @@ describe('Accessibility', function () {
             return originalSaveState.apply(accessibility, arguments);
         });
 
-        return function(fn, callback) {
+        return function (fn, callback) {
             onSaveCallback = callback;
             fn();
         };

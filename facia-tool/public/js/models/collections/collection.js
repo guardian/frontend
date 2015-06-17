@@ -227,7 +227,7 @@ define([
 
         authedAjax.request({
             type: 'post',
-            url: vars.CONST.apiBase + '/collection/'+ (goLive ? 'publish' : 'discard') + '/' + this.id
+            url: vars.CONST.apiBase + '/collection/' + (goLive ? 'publish' : 'discard') + '/' + this.id
         })
         .then(function() {
             self.load()

@@ -2,8 +2,8 @@ import $ from 'common/utils/$';
 import MoreTags from 'common/modules/onward/more-tags';
 import fixtures from 'helpers/fixtures';
 
-describe("MoreTabs", function() {
-    beforeEach(function() {
+describe('MoreTabs', function () {
+    beforeEach(function () {
         fixtures.render({
             id: 'more-tags-fixtures',
             fixtures: [
@@ -47,16 +47,16 @@ describe("MoreTabs", function() {
 
     });
 
-    afterEach(function() {
+    afterEach(function () {
         fixtures.clean('more-tags-fixtures');
     });
 
-    it("should initially hide the 'more...' link", function(){
+    it('should initially hide the \'more...\' link', function () {
         expect($('.js-more-tags').hasClass('modern-hidden')).toBeTruthy();
         expect($('.modern-hidden-tag').hasClass('modern-hidden')).toBeTruthy();
     });
 
-    it("should reveal the 'more...' link when initialised", function(){
+    it('should reveal the \'more...\' link when initialised', function () {
 
         new MoreTags().init();
 
@@ -66,7 +66,7 @@ describe("MoreTabs", function() {
         expect($('.modern-hidden-tag').hasClass('modern-hidden')).toBeTruthy();
     });
 
-    it("should reveal the hidden keywords when clicked", function(){
+    it('should reveal the hidden keywords when clicked', function () {
 
         new MoreTags().init();
 

@@ -1,3 +1,4 @@
+/*eslint-disable no-unused-expressions*/
 /*! Picturefill - v2.3.0-beta - 2015-02-25
 * http://scottjehl.github.io/picturefill
 * Copyright (c) 2015 https://github.com/scottjehl/picturefill/blob/master/Authors.txt; Licensed MIT */
@@ -166,7 +167,9 @@ define([
                 media = parsedSize.media;
 
                 if (!length) {
+                    // jscs:disable disallowKeywords
                     continue;
+                    // jscs:enable disallowKeywords
                 }
                 // if there is no media query or it matches, choose this as our winning length
                 if ((!media || pf.matchesMedia(media)) &&
@@ -418,7 +421,9 @@ define([
 
                     // immediately skip non-`img` nodes
                     if (element.nodeName.toUpperCase() !== 'IMG') {
+                        // jscs:disable disallowKeywords
                         continue;
+                        // jscs:enable disallowKeywords
                     }
 
                     // expando for caching data on the img
@@ -430,7 +435,9 @@ define([
                     // `options.reevaluate` is set to true (this, for example,
                     // is set to true when running `picturefill` on `resize`).
                     if (!options.reevaluate && element[ pf.ns ].evaluated) {
+                        // jscs:disable disallowKeywords
                         continue;
+                        // jscs:enable disallowKeywords
                     }
 
                     if (!pf.sizesSupported && (element.srcset && regWDesc.test(element.srcset))) {

@@ -363,15 +363,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val CriteoSwitch = Switch(
-    "Commercial",
-    "criteo",
-    "If this switch is on, Criteo segments will be used to target ads.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
-    exposeClientSide = true
-  )
-
   val ImrWorldwideSwitch = Switch(
     "Commercial",
     "imr-worldwide",
@@ -637,11 +628,29 @@ object Switches {
     exposeClientSide = true
   )
 
+  val MsieAudit = Switch(
+    "Monitoring",
+    "msie-audit",
+    "Enables beacon tracking of MSIE and their ad blockers",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 6, 30),
+    exposeClientSide = true
+  )
+
   // Features
   val FacebookMostViewed = Switch(
     "Feature",
     "ab-facebook-most-viewed",
     "Facebook most viewed",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
+
+  val TwitterMostViewed = Switch(
+    "Feature",
+    "ab-twitter-most-viewed",
+    "Twitter most viewed",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 17),
     exposeClientSide = true
@@ -955,7 +964,17 @@ object Switches {
     exposeClientSide = true
   )
 
+  val SplitOlderIPadsSwitch = Switch(
+    "Feature",
+    "ipad-split-capabilities",
+    "If switched on then this gives older ipads the stripped down front but full articles",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = false
+  )
+
   // A/B Tests
+
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
     "ab-liveblog-notifications",
@@ -979,7 +998,7 @@ object Switches {
     "ab-mt-rec1",
     "Viewability results - Recommendation option 1",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 16),
+    sellByDate = new LocalDate(2015, 6, 30),
     exposeClientSide = true
   )
 
@@ -988,7 +1007,7 @@ object Switches {
     "ab-mt-rec2",
     "Viewability results - Recommendation option 2",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 16),
+    sellByDate = new LocalDate(2015, 6, 30),
     exposeClientSide = true
   )
 
@@ -1093,6 +1112,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val DiscussionProxySwitch = Switch(
+    "Feature",
+    "discussion-proxy",
+    "in discussion/api.js we have a feature to let you go through a proxy.  This will be permanently switched over if it works out.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 16),
+    exposeClientSide = false
+  )
+
   // Facia
 
   val ToolDisable = Switch(
@@ -1192,6 +1220,15 @@ object Switches {
     "If this is switched on, facia will serve off the new JSON format (It will fallback to old if it doesn't exist)",
     safeState = Off,
     sellByDate = new LocalDate(2015, 6, 30),
+    exposeClientSide = false
+  )
+
+  val FaciaToolPutPrivate = Switch(
+    "Facia",
+    "facia-tool-put-private",
+    "If this is switched on, facia tool will put collections to S3 as private",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 30),
     exposeClientSide = false
   )
 

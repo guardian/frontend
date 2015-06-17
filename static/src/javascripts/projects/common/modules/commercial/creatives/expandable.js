@@ -5,7 +5,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
-    'common/views/commercial/creatives/expandable.html!text'
+    'text!common/views/commercial/creatives/expandable.html'
 ], function (
     bean,
     bonzo,
@@ -43,7 +43,7 @@ define([
     };
 
     Expandable.prototype.create = function () {
-        var $expandable = $.create(template(expandableTpl, this.params));
+        var $expandable = $.create(template(expandableTpl, { data: this.params }));
 
         this.$ad     = $('.ad-exp--expand', $expandable).css('height', this.closedHeight);
         this.$button = $('.ad-exp__close-button', $expandable);

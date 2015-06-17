@@ -16,8 +16,8 @@ define([
     'common/modules/video/events',
     'common/modules/video/fullscreener',
     'common/views/svgs',
-    'common/views/ui/loading.html!text',
-    'common/views/media/titlebar.html!text'
+    'text!common/views/ui/loading.html',
+    'text!common/views/media/titlebar.html'
 ], function (
     bean,
     bonzo,
@@ -172,5 +172,3 @@ define([
         init: initPlayer
     };
 });
-/* jshint unused: false */
-/* global guardian */

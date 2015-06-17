@@ -1,4 +1,4 @@
-"format es6";
+'format es6';
 
 export default class Injector {
    constructor() {
@@ -14,7 +14,7 @@ export default class Injector {
 
         // Support alternative syntax
         if (typeof mocks === 'string') {
-            mocks = { [mocks]: arguments[1] }
+            mocks = { [mocks]: arguments[1] };
         }
         Object.keys(mocks).forEach(moduleId => {
             var mock = mocks[moduleId];
@@ -30,6 +30,6 @@ export default class Injector {
             dependencies = [dependencies];
         }
         return Promise.all(dependencies.map(dep => this.loader.import(dep)))
-            .then(args => callback(...args))
+            .then(args => callback(...args));
     }
 }

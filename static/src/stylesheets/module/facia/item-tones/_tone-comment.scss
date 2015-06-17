@@ -18,7 +18,8 @@
     .rich-link__kicker,
     .fc-item__byline,
     .rich-link__byline,
-    .rich-link__read-more-text {
+    .rich-link__read-more-text,
+    .fc-save-for-later--is-saved {
         color: colour(comment-default);
     }
 
@@ -35,6 +36,10 @@
         ul > li:before {
             background: colour(neutral-3);
         }
+    }
+
+    .fc-save-for-later--is-saved  .inline-tone-fill {
+        fill: colour(comment-default);
     }
 }
 

@@ -25,7 +25,8 @@
     .fc-item__kicker,
     .rich-link__kicker,
     .fc-item__byline,
-    .rich-link__standfirst {
+    .rich-link__standfirst,
+    .fc-save-for-later--is-saved {
         color: colour(news-support-6);
     }
 
@@ -35,6 +36,10 @@
 
     .fc-item__meta {
         color: colour(neutral-2);
+    }
+
+    .fc-save-for-later--is-saved .inline-tone-fill {
+        fill: colour(news-support-6);
     }
 }
 

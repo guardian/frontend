@@ -1,3 +1,4 @@
+/*eslint-disable consistent-return*/
 define([
     'underscore',
     'modules/vars',
@@ -10,7 +11,7 @@ define([
     mediator = mediator.default;
 
     var storage = window.localStorage,
-        storageKeyCopied ='gu.fronts-tool.copied';
+        storageKeyCopied = 'gu.fronts-tool.copied';
 
     return {
         flush: function() {

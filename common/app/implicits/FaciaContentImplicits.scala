@@ -15,6 +15,7 @@ object FaciaContentImplicits {
     def webPublicationDate: DateTime = FaciaContentUtils.webPublicationDate(fc)
 
     def id: String = FaciaContentUtils.id(fc)
+    def maybeContentId = FaciaContentUtils.maybeContentId(fc)
 
     def embedType: Option[String] = FaciaContentUtils.embedType(fc)
     def embedCss: Option[String] = FaciaContentUtils.embedCss(fc)
@@ -118,5 +119,6 @@ object FaciaContentImplicits {
     def imageHide = FaciaContentUtils.properties(fc).exists(_.imageHide)
     def imageSlideshowReplace = FaciaContentUtils.properties(fc).exists(_.imageSlideshowReplace)
     def group = FaciaContentUtils.group(fc)
+    def maybeFrontPublicationDate = FaciaContentUtils.maybeFrontPublicationDate(fc)
   }
 }

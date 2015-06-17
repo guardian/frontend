@@ -29,7 +29,7 @@ case class Collection(curated: Seq[Content],
 
 object Collection {
   def apply(curated: Seq[Content]): Collection = Collection(curated, Nil, Nil, Nil, Nil, None, None, None, Option(DateTime.now.toString), None, None)
-  def apply(curated: Seq[Content], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, Nil, None, displayName, None, Option(DateTime.now.toString), None, None)
+  def apply(curated: Seq[Content], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, Nil, displayName, None, None, Option(DateTime.now.toString), None, None)
 }
 case class SeoDataJson(
   id: String,

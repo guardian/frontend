@@ -49,6 +49,9 @@ object OphanApi extends ExecutionContexts with Logging with implicits.WSRequests
   def getMostReadFacebook(hours: Int): Future[Seq[MostReadItem]] =
     getMostRead("Facebook", hours).map(_.as[Seq[MostReadItem]])
 
+  def getMostReadTwitter(hours: Int): Future[Seq[MostReadItem]] =
+    getMostRead("Twitter", hours).map(_.as[Seq[MostReadItem]])
+
   def getMostRead(referrer: String, hours: Int): Future[JsValue] =
     getMostRead(Map("referrer" -> referrer, "hours" -> hours.toString))
 

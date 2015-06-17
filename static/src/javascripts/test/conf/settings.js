@@ -1,4 +1,5 @@
-module.exports = function(config) {
+/*eslint-env node*/
+module.exports = function (config) {
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)

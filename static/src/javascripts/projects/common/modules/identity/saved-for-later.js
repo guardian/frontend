@@ -10,8 +10,8 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'common/views/svgs',
-    'common/views/identity/saved-for-later-profile-link.html!text',
-    'common/views/loyalty/save-for-later--delete-all-button.html!text'
+
+    'text!common/views/save-for-later/delete-all-button.html'
 ], function (
     $,
     qwery,
@@ -24,10 +24,7 @@ define([
     template,
     identity,
     svgs,
-
-    profileLinkTmp,
     deleteButtonAllTmp
-
 ) {
     function SavedForLater() {
 
@@ -36,10 +33,10 @@ define([
                 deleteAll = $('.js-save-for-later__delete-all')[0];
 
             if (deleteAll) {
-                this.renderDeleteButton('delete-all');
-                bean.one(deleteAll, 'click', '.save-for-later__button', function (event) {
+                this.renderDeleteButton('delete');
+                bean.one(deleteAll, 'click', '.js-save-for-later__button', function (event) {
                     event.preventDefault();
-                    self.renderDeleteButton('confirm-delete-all');
+                    self.renderDeleteButton('confirm');
                 });
             }
         };
@@ -50,7 +47,7 @@ define([
 
                 fastdom.write(function () {
                     $button.html(template(deleteButtonAllTmp, {
-                        icon: svgs('bookmark', ['i-left']),
+                        icon: svgs('crossIcon'),
                         state: state
                     }));
                 });

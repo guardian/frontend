@@ -54,16 +54,6 @@ trait LinkTo extends Logging {
     case t: Trail => Option(apply(t.url))
   }
 
-  def hrefOrId(faciaContent: FaciaContent)(implicit request: RequestHeader): String =
-    faciaContent match {
-      case curatedContent: CuratedContent => curatedContent.href.getOrElse(curatedContent.id)
-      case supportingCuratedContent: SupportingCuratedContent => supportingCuratedContent.href.getOrElse(supportingCuratedContent.id)
-      //LinkSnap.id would be a snap id, which is a link to nothing
-      case linkSnap: LinkSnap => linkSnap.href.getOrElse("")
-      //LatestSnap.id would be the internal content code, so never use this
-      case latestSnap: LatestSnap => latestSnap.href.orElse(latestSnap.latestContent.map(_.id)).getOrElse("")
-    }
-
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
     faciaCard.url.get(request)
 

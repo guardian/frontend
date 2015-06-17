@@ -90,8 +90,9 @@ define([
                     $adSlot.addClass('u-h');
                     var $parent = $adSlot.parent();
                     // if in a slice, add the 'no mpu' class
-                    $parent.hasClass('js-fc-slice-mpu-candidate') &&
+                    if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
                         $parent.addClass('fc-slice__item--no-mpu');
+                    }
                 }
             },
             '300,1050': function () {
@@ -228,7 +229,7 @@ define([
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
-                require(['googletag!system-script']);
+                require(['js!googletag']);
             }
 
             window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
@@ -238,7 +239,11 @@ define([
             window.googletag.cmd.push(defineSlots);
 
             // We want to run lazy load if user is in the main test or if there is a switch on
-            (isMtRecTest() || isLzAdsSwitchOn()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            if (isMtRecTest() || isLzAdsSwitchOn()) {
+                window.googletag.cmd.push(displayLazyAds);
+            } else {
+                window.googletag.cmd.push(displayAds);
+            }
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
@@ -367,7 +372,9 @@ define([
                 addLabel($slot);
                 size = event.size.join(',');
                 // is there a callback for this size
-                callbacks[size] && callbacks[size](event, $slot);
+                if (callbacks[size]) {
+                    callbacks[size](event, $slot);
+                }
 
                 if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
                     fastdom.write(function () {
@@ -413,7 +420,7 @@ define([
             return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
         },
         breakoutIFrame = function (iFrame, $slot) {
-            /* jshint evil: true */
+            /*eslint-disable no-eval*/
             var shouldRemoveIFrame = false,
                 $iFrame            = bonzo(iFrame),
                 iFrameBody         = iFrame.contentDocument.body,
@@ -481,9 +488,11 @@ define([
                         var updatedIFrame = e.srcElement;
 
                         if (
+                            /*eslint-disable valid-typeof*/
                             updatedIFrame &&
                                 typeof updatedIFrame.readyState !== 'unknown' &&
                                 updatedIFrame.readyState === 'complete'
+                            /*eslint-enable valid-typeof*/
                         ) {
                             breakoutIFrame(updatedIFrame, $slot);
                             bean.off(updatedIFrame, 'readystatechange');

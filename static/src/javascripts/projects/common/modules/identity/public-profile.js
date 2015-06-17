@@ -68,7 +68,7 @@ function (
     }
 
     function init() {
-        getActivityStream(function (activityStream) {
+        getActivityStream(function (activityStream) {
             setupActivityStreamChanger(activityStream);
             setupActivityStreamSearch(activityStream);
         });

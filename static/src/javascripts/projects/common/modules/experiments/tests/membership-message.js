@@ -4,7 +4,7 @@ define([
     'common/utils/template',
     'common/modules/ui/message',
     'common/modules/identity/api',
-    'common/views/memebership-message.html!text'
+    'text!common/views/memebership-message.html'
 ], function (
     config,
     detect,
@@ -43,20 +43,6 @@ define([
                     supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_BANNER_TEST_A',
                     messageText: 'Become a Guardian Member and support fearless investigative journalism',
                     linkText: 'Become a supporter'
-                }));
-            }
-        },
-        {
-            id: 'B',
-            test: function () {
-                new Message('membership-message', {
-                    pinOnHide: false,
-                    siteMessageLinkName: 'membership message',
-                    siteMessageCloseBtn: 'hide'
-                }).show(template(messageTmpl, {
-                    supporterLink: 'https://membership.theguardian.com/about?INTCMP=MEMBERSHIP_BANNER_TEST_B',
-                    messageText: 'Become a Guardian Member and support fearless investigative journalism',
-                    linkText: 'Become a partner'
                 }));
             }
         }];

@@ -364,7 +364,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
     val version = "1418141910657"
 
     val requestJson = """{"version":"1418141910657","articles":[{"id":"%s","shortUrl":"%s","date":"%s","read":false}]}""".format(id, shortUrl, fmt.print(date))
-    val articles = List(SavedArticle(id, shortUrl, date, false))
+    val articles = List(SavedArticle(id, shortUrl, date, false, None))
     val savedArticles = SavedArticles(version, articles)
 
     "when recieving a valid response" - {

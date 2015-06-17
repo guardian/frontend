@@ -1,15 +1,15 @@
 import bonzo from 'bonzo';
 import Injector from 'helpers/injector';
-import adbadgeHtml from 'fixtures/commercial/ad-slots/adbadge.html!text';
-import fobadgeHtml from 'fixtures/commercial/ad-slots/fobadge.html!text';
-import imHtml from 'fixtures/commercial/ad-slots/im.html!text';
-import inline1Html from 'fixtures/commercial/ad-slots/inline1.html!text';
-import inline2Html from 'fixtures/commercial/ad-slots/inline2.html!text';
-import inline3Html from 'fixtures/commercial/ad-slots/inline3.html!text';
-import merchandisingHighHtml from 'fixtures/commercial/ad-slots/merchandising-high.html!text';
-import rightHtml from 'fixtures/commercial/ad-slots/right.html!text';
-import rightSmallHtml from 'fixtures/commercial/ad-slots/right-small.html!text';
-import spbadgeHtml from 'fixtures/commercial/ad-slots/spbadge.html!text';
+import adbadgeHtml from 'text!fixtures/commercial/ad-slots/adbadge.html';
+import fobadgeHtml from 'text!fixtures/commercial/ad-slots/fobadge.html';
+import imHtml from 'text!fixtures/commercial/ad-slots/im.html';
+import inline1Html from 'text!fixtures/commercial/ad-slots/inline1.html';
+import inline2Html from 'text!fixtures/commercial/ad-slots/inline2.html';
+import inline3Html from 'text!fixtures/commercial/ad-slots/inline3.html';
+import merchandisingHighHtml from 'text!fixtures/commercial/ad-slots/merchandising-high.html';
+import rightHtml from 'text!fixtures/commercial/ad-slots/right.html';
+import rightSmallHtml from 'text!fixtures/commercial/ad-slots/right-small.html';
+import spbadgeHtml from 'text!fixtures/commercial/ad-slots/spbadge.html';
 
 
 
@@ -19,7 +19,7 @@ describe('Create Ad Slot', function () {
         createAdSlot, config;
 
     beforeEach(function (done) {
-        injector.test(['common/modules/commercial/create-ad-slot', 'common/utils/config'], function (){
+        injector.test(['common/modules/commercial/create-ad-slot', 'common/utils/config'], function () {
             createAdSlot = arguments[0];
             config = arguments[1];
 
@@ -27,7 +27,7 @@ describe('Create Ad Slot', function () {
                 edition: 'UK'
             };
             done();
-        });        
+        });
     });
 
     it('should exist', function () {

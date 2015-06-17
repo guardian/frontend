@@ -6,7 +6,7 @@ define([
     'common/utils/config',
     'common/utils/formatters',
     'common/utils/template',
-    'common/views/content/share-count.html!text'
+    'text!common/views/content/share-count.html'
 ], function (
     raven,
     $,

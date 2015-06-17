@@ -10,7 +10,7 @@ define([
 
     return {
         init: function () {
-            if (!!navigator.sendBeacon) {
+            if (navigator.sendBeacon) {
                 // sm = simple metrics
                 beacon.beaconCounts('sm-page-view');
 

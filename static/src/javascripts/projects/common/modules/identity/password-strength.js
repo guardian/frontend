@@ -44,7 +44,7 @@ define([
         this.init = function () {
             if (!bonzo(dom.element).hasClass(config.classes.ready)) {
                 var self = this;
-                require(['zxcvbn!system-script'], function () {
+                require(['js!zxcvbn'], function () {
                     zxcvbn = this.zxcvbn;
                     dom.indicator = bonzo(bonzo.create(template)).insertAfter(dom.element)[0];
                     dom.label = dom.indicator.querySelector('.' + config.classes.label);
@@ -74,10 +74,10 @@ define([
                     label = config.text.label + ': ' + config.labels[score];
 
                 if (dom.element.value.length < config.minLength) {
-                    label = config.text['short'];
+                    label = config.text.short;
                     score = null;
                 } else if (dom.element.value.length > config.maxLength) {
-                    label = config.text['long'];
+                    label = config.text.long;
                     score = null;
                 }
 

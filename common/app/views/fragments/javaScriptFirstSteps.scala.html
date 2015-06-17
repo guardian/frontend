@@ -105,8 +105,15 @@
                 'older' iOs normally indicates a device with lower power (they stop being upgradeable at some point).
                 We won't run all javascript on these
                 For usage stats see http://david-smith.org/iosversionstats/
+
+                NOTE: modifying this moves people into a category where they do not get important things such as
+                commenting
             *@
-            return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent);
+
+            @* NOTE - this is NOT what we want to be doing long term. It is a stopgap measure only *@
+            var olderIPadOnFront = @SplitOlderIPadsSwitch.isSwitchedOn && @item.isFront && window.devicePixelRatio === 1;
+
+            return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent) || olderIPadOnFront;
         }
         return false;
     })();

@@ -193,7 +193,10 @@ object FaciaContainer {
       case MostPopular => ContainerCommercialOptions.empty
       case _ => ContainerCommercialOptions.fromConfig(config.config)
     },
-    None,
+    config.config.description match {
+      case Some(description)  => DescriptionMetaHeader(description)
+      case _ => None
+    },
     None,
     hideToggle = false,
     showTimestamps = false,
