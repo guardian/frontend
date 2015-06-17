@@ -198,7 +198,7 @@ define([
         });
     }
 
-     // DEPRECATED: Bindings
+    // DEPRECATED: Bindings
     ['related', 'autoupdate'].forEach(function (module) {
         mediator.on('modules:' + module + ':render', replaceValidTimestamps);
     });

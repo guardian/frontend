@@ -80,7 +80,7 @@ define([
                     if (resp.status === 'error' && resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
                         //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
                         var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
-                        this.userData = {version: date, articles:[]};
+                        this.userData = {version: date, articles: []};
                     } else {
                         this.userData = resp.savedArticles;
                     }

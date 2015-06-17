@@ -367,7 +367,7 @@ define([
                     pageshow: v,
                     blur: h,
                     focusout: h,
-                    pagehide:h
+                    pagehide: h
                 };
 
             evt = evt || window.event;
