@@ -4,6 +4,7 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/modules/identity/api',
     'common/modules/experiments/ab',
@@ -14,6 +15,7 @@ define([
     _,
     $,
     config,
+    detect,
     mediator,
     identityApi,
     ab,
@@ -41,15 +43,29 @@ define([
         $adSlotContainer = $(opts.adSlotContainerSelector);
         $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
 
-        mediator.once('modules:comments:renderComments:rendered', function () {
-            // is the switch off, or not in the AB test, or there is no adslot container, or comments are disabled, or not signed in, or comments container is lower than 280px
-            if (!config.switches.standardAdverts || !isMtRecTest() || !$adSlotContainer.length || !config.switches.discussion || !identityApi.isUserLoggedIn() || $commentMainColumn.dim().height < 280) {
-                return false;
-            }
+        if (!config.switches.standardAdverts ||
+            !isMtRecTest() ||
+            !$adSlotContainer.length ||
+            !config.switches.discussion ||
+            !identityApi.isUserLoggedIn() ||
+            (config.page.isLiveBlog && detect.getBreakpoint() !== 'wide') ||
+            !config.page.commentable) {
+            return false;
+        }
 
-            $commentMainColumn.addClass('discussion__ad-wrapper');
+        return new Promise(function (resolve) {
+            mediator.once('modules:comments:renderComments:rendered', function () {
+                //if comments container is lower than 280px
+                if ($commentMainColumn.dim().height < 280) {
+                    resolve(false);
+                }
 
-            return new Promise(function (resolve) {
+                $commentMainColumn.addClass('discussion__ad-wrapper');
+
+                if (!config.page.isLiveBlog) {
+                    $commentMainColumn.addClass('discussion__ad-wrapper-wider');
+                }
+
                 fastdom.read(function () {
                     adType = 'comments';
 
