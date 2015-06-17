@@ -36,10 +36,11 @@ trait Requests {
     private val imgixTestSections = {
       def editionalise(path: String) = Seq(s"/uk$path", s"/au$path", s"/us$path", path)
 
-      Seq("/books") ++
+      Seq("/books", "/football") ++
         editionalise("/money") ++
         editionalise("/technology") ++
-        editionalise("/business")
+        editionalise("/business") ++
+        editionalise("/sport")
   }
 
     lazy val isInImgixTest: Boolean = Switches.ImgixSwitch.isSwitchedOn &&
