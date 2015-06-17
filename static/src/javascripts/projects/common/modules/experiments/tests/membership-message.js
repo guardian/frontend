@@ -23,8 +23,8 @@ define([
         this.expiry = '2015-06-26';
         this.author = 'David Rapson';
         this.description = 'Test if loyal users are encouraged to join Membership as a Supporter';
-        this.audience = 0.5;
-        this.audienceOffset = 0.5;
+        this.audience = 1;
+        this.audienceOffset = 0;
         this.successMeasure = 'Loyal users will be interested in becoming a Supporter';
         this.audienceCriteria = 'Users who have seen at least 10 pages, message shown only on article pages';
         this.dataLinkNames = 'supporter message, hide, read more';
