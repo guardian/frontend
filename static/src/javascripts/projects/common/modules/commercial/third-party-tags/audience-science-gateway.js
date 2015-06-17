@@ -34,7 +34,8 @@ define([
                     }),
                     url = [gatewayUrl, '?', query].join('');
 
-                return require(['js!' + url + '!exports=asiPlacements'], function (asiPlacements) {
+                return require(['js!' + url], function () {
+                    var asiPlacements = window.asiPlacements;
                     var segments = storage.local.get(storageKey) || {};
                     // override the global value with our previously stored one
                     window.asiPlacements = segments[section];
