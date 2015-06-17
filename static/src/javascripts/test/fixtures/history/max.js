@@ -1,4 +1,4 @@
-define(function() {
+define(function () {
     return [
         ['/p/3kxct', 1],
         ['/p/3kxch', 1],

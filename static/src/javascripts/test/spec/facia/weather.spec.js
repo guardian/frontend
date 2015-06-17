@@ -38,7 +38,7 @@ describe('Weather component', function () {
         container = null;
     });
 
-    it('should be behind switches', function() {
+    it('should be behind switches', function () {
         config.page.pageId = 'uk';
         config.switches.weather = false;
 
@@ -58,7 +58,7 @@ describe('Weather component', function () {
         expect(sut.getDefaultLocation).toHaveBeenCalled();
     });
 
-    it('should initialize only if on front page', function() {
+    it('should initialize only if on front page', function () {
         spyOn(sut, 'getDefaultLocation');
 
         config.switches = {
@@ -74,7 +74,7 @@ describe('Weather component', function () {
         expect(sut.getDefaultLocation).toHaveBeenCalled();
     });
 
-    it('should return false when the page is not front', function() {
+    it('should return false when the page is not front', function () {
         config.page.pageId = 'uk';
         expect(sut.isNetworkFront()).toBeTruthy();
 
@@ -97,7 +97,7 @@ describe('Weather component', function () {
         expect(sut.getUserLocation()).toEqual(result);
     });
 
-    it('should get the default location', function(done) {
+    it('should get the default location', function (done) {
         var server = sinon.fakeServer.create(),
             data = {id: '1', city: 'London'};
         spyOn(sut, 'fetchWeatherData');
@@ -115,7 +115,7 @@ describe('Weather component', function () {
         server.restore();
     });
 
-    it('should remove data from localStorage and fetchWeatherData if user searches', function() {
+    it('should remove data from localStorage and fetchWeatherData if user searches', function () {
         spyOn(sut, 'saveUserLocation');
         spyOn(sut, 'fetchWeatherData');
 
@@ -125,7 +125,7 @@ describe('Weather component', function () {
         expect(sut.fetchWeatherData).toHaveBeenCalled();
     });
 
-    it('should save data to localStorage and getDefaultLocation if user remove data', function() {
+    it('should save data to localStorage and getDefaultLocation if user remove data', function () {
         spyOn(sut, 'clearLocation');
         spyOn(sut, 'getDefaultLocation');
 

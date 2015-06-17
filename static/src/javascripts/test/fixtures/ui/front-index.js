@@ -1,4 +1,4 @@
-define([], function() {
+define([], function () {
     return {
         'containers': {
             'f3d7d2bc-e667-4a86-974f-fe27daeaebcc': {

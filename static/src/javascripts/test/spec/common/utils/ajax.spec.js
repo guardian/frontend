@@ -4,7 +4,9 @@ import sinon from 'sinonjs';
 describe('AJAX', function () {
 
     var reqwestSpy = {
+        /*jscs:disable disallowDanglingUnderscores*/
         __useDefault: true,
+        /*jscs:enable disallowDanglingUnderscores*/
         default: sinon.spy(function () {
             return {
                 then: function () {}
@@ -14,7 +16,7 @@ describe('AJAX', function () {
         injector = new Injector(),
         ajax;
 
-    beforeEach(function(done){
+    beforeEach(function (done) {
         injector.mock({
             reqwest:  reqwestSpy,
             'common/utils/config': {
