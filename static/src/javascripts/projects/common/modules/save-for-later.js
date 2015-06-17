@@ -49,7 +49,7 @@ define([
         };
 
         this.isContent = !/Network Front|Section/.test(config.page.contentType);
-        this.userData = null;
+        this.userData = {};
         this.savedArticlesUrl = config.page.idUrl + '/saved-for-later-page';
 
         _.bindAll(this,
@@ -62,8 +62,9 @@ define([
         );
     }
 
-    var bookmarkSvg = svgs('bookmark', ['i-left']);
-    var shortUrl = (config.page.shortUrl || '').replace('http://gu.com', '');
+    var bookmarkSvg = svgs('bookmark', ['i-left']),
+        shortUrl = (config.page.shortUrl || '').replace('http://gu.com', ''),
+        savedPlatformAnalytics = 'web:' + detect.getUserAgent.browser + ':' + detect.getBreakpoint();
 
     var getCustomEventProperties = function (contentId) {
         var prefix = config.page.contentType.match(/^Network Front|Section$/) ? 'Front' : 'Content';
@@ -94,8 +95,12 @@ define([
                 }.bind(this));
         } else {
             if (this.isContent) {
-                var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
-                    '&shortUrl=' + config.page.shortUrl.replace('http://gu.com', '');
+                var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>', {
+                    idUrl: config.page.idUrl,
+                    returnUrl: encodeURIComponent(document.location.href),
+                    shortUrl: shortUrl,
+                    platform: savedPlatformAnalytics
+                });
                 this.renderArticleSaveButton({ url: url, isSaved: false });
             }
             this.prepareFaciaItemLinks(false);
@@ -130,7 +135,6 @@ define([
 
                 bean.one($saver[0], 'click', this.classes.saveThisArticleButton,
                     this[options.isSaved ? 'deleteArticle' : 'saveArticle'].bind(this,
-                        this.userData,
                         config.page.pageId,
                         shortUrl
                     )
@@ -140,53 +144,50 @@ define([
     };
 
     SaveForLater.prototype.getElementsIndexedById = function (context) {
-        var self = this,
-            elements = qwery('[' + self.attributes.containerItemShortUrl + ']', context);
+        var elements = qwery('[' + this.attributes.containerItemShortUrl + ']', context);
 
         return _.forEach(elements, function (el) {
-            return bonzo(el).attr(self.attributes.containerItemShortUrl);
-        });
+            return bonzo(el).attr(this.attributes.containerItemShortUrl);
+        }.bind(this));
     };
 
     SaveForLater.prototype.prepareFaciaItemLinks = function (signedIn) {
-        var self = this;
 
-        if (!self.isContent) {
-            self.renderFaciaItemLinks(signedIn, document.body);
+        if (!this.isContent) {
+            this.renderFaciaItemLinks(signedIn, document.body);
         }
 
-        mediator.on('modules:tonal:loaded', function () {
-            self.renderFaciaItemLinks(signedIn, self.classes.onwardContainer);
+        mediator.once('modules:tonal:loaded', function () {
+            this.renderFaciaItemLinks(signedIn, this.classes.onwardContainer);
         });
 
-        mediator.on('modules:onward:loaded', function () {
-            self.renderFaciaItemLinks(signedIn, self.classes.onwardContainer);
+        mediator.once('modules:onward:loaded', function () {
+            this.renderFaciaItemLinks(signedIn, this.classes.onwardContainer);
         });
 
-        mediator.on('modules:related:loaded', function () {
-            self.renderFaciaItemLinks(signedIn, self.classes.relatedContainer);
+        mediator.once('modules:related:loaded', function () {
+            this.renderFaciaItemLinks(signedIn, this.classes.relatedContainer);
         });
     };
 
     // Configure the save for later links on a front or in a container
     SaveForLater.prototype.renderFaciaItemLinks = function (signedIn, context) {
-        var self = this,
-            elements = self.getElementsIndexedById(context);
+        var elements = this.getElementsIndexedById(context);
 
         _.forEach(elements, function (item) {
             var $item = $(item),
-                $itemSaveLink = $(self.classes.itemSaveLink, item),
-                shortUrl = item.getAttribute(self.attributes.containerItemShortUrl),
-                id = item.getAttribute(self.attributes.containerItemDataId),
-                isSaved = signedIn ? self.hasUserSavedArticle(self.userData.articles, shortUrl) : false;
+                $itemSaveLink = $(this.classes.itemSaveLink, item),
+                shortUrl = item.getAttribute(this.attributes.containerItemShortUrl),
+                id = item.getAttribute(this.attributes.containerItemDataId),
+                isSaved = signedIn ? this.getSavedArticle(shortUrl) : false;
 
             if (signedIn) {
-                self[isSaved ? 'createDeleteFaciaItemHandler' : 'createSaveFaciaItemHandler']($itemSaveLink[0], id, shortUrl);
+                this[isSaved ? 'createDeleteFaciaItemHandler' : 'createSaveFaciaItemHandler']($itemSaveLink[0], id, shortUrl);
             }
 
             fastdom.write(function () {
                 if (isSaved) {
-                    $itemSaveLink.addClass(self.classes.fcItemIsSaved);
+                    $itemSaveLink.addClass(this.classes.fcItemIsSaved);
                 } else {
                     var contentId = $($.ancestor($itemSaveLink[0], 'fc-item')).attr('data-id');
                     $itemSaveLink.attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties(contentId)));
@@ -196,36 +197,37 @@ define([
                 // only while in test
                 $item.addClass('fc-item--has-metadata');
                 $itemSaveLink.removeClass('is-hidden');
-            });
-        });
+            }.bind(this));
+        }.bind(this));
     };
 
     // generic functions to save/delete an article, from anywhere
 
-    SaveForLater.prototype.save = function (userData, pageId, shortUrl, onSave) {
+    SaveForLater.prototype.save = function (pageId, shortUrl, onSave) {
         var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
             newArticle = {
                 id: pageId,
                 shortUrl: shortUrl,
                 date: date,
-                read: false
+                read: false,
+                platform: savedPlatformAnalytics
             };
 
-        userData.articles.push(newArticle);
+        this.userData.articles.push(newArticle);
 
-        identity.saveToArticles(userData).then(
+        identity.saveToArticles(this.userData).then(
             function (resp) {
                 onSave(resp.status !== 'error');
             }
         );
     };
 
-    SaveForLater.prototype.delete = function (userData, pageId, shortUrl, onDelete) {
-        userData.articles = _.filter(userData.articles, function (article) {
+    SaveForLater.prototype.delete = function (pageId, shortUrl, onDelete) {
+        this.userData.articles = _.filter(this.userData.articles, function (article) {
             return article.shortUrl !== shortUrl;
         });
 
-        identity.saveToArticles(userData).then(
+        identity.saveToArticles(this.userData).then(
             function (resp) {
                 onDelete(resp.status !== 'error');
             }
@@ -245,8 +247,8 @@ define([
         }
     };
 
-    SaveForLater.prototype.deleteArticle = function (userData, pageId, shortUrl) {
-        this.delete(userData, pageId, shortUrl, this.onDeleteArticle);
+    SaveForLater.prototype.deleteArticle = function (pageId, shortUrl) {
+        this.delete(pageId, shortUrl, this.onDeleteArticle);
     };
 
     SaveForLater.prototype.onDeleteArticle = function (success) {
@@ -258,8 +260,8 @@ define([
 
     // handle saving/deleting from fronts
 
-    SaveForLater.prototype.saveFaciaItem = function (userData, pageId, shortUrl) {
-        this.save(userData, pageId, shortUrl, this.onSaveFaciaItem);
+    SaveForLater.prototype.saveFaciaItem = function (pageId, shortUrl) {
+        this.save(pageId, shortUrl, this.onSaveFaciaItem);
     };
 
     SaveForLater.prototype.onSaveFaciaItem = function (link, id, shortUrl, success) {
@@ -282,8 +284,8 @@ define([
         }
     };
 
-    SaveForLater.prototype.deleteFaciaItem = function (userData, pageId, shortUrl) {
-        this.save(userData, pageId, shortUrl, this.onDeleteFaciaItem);
+    SaveForLater.prototype.deleteFaciaItem = function (pageId, shortUrl) {
+        this.save(pageId, shortUrl, this.onDeleteFaciaItem);
     };
 
     SaveForLater.prototype.onDeleteFaciaItem = function (link, id, shortUrl, success) {
@@ -311,7 +313,6 @@ define([
     SaveForLater.prototype.createSaveFaciaItemHandler = function (link, id, shortUrl) {
         bean.one(link, 'click',
             this.save.bind(this,
-                this.userData,
                 id,
                 shortUrl,
                 this.onSaveFaciaItem.bind(this, link, id, shortUrl)
@@ -322,7 +323,6 @@ define([
     SaveForLater.prototype.createDeleteFaciaItemHandler = function (link, id, shortUrl) {
         bean.one(link, 'click',
             this.delete.bind(this,
-                this.userData,
                 id,
                 shortUrl,
                 this.onDeleteFaciaItem.bind(this, link, id, shortUrl)
@@ -330,9 +330,8 @@ define([
         );
     };
 
-    ///------------------------------Utils
-    SaveForLater.prototype.hasUserSavedArticle = function (articles, shortUrl) {
-        return _.some(articles, function (article) {
+    SaveForLater.prototype.getSavedArticle = function (shortUrl) {
+        return _.some(this.userData.articles, function (article) {
             return article.shortUrl.indexOf(shortUrl) > -1;
         });
     };

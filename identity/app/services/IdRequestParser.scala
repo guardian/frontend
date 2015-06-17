@@ -10,28 +10,26 @@ import conf.Switches
 @Singleton
 class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddress {
   def apply(request: RequestHeader): IdentityRequest = {
+
     val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
     val ip = clientIp(request)
-    val skipConfirmation = request.getQueryString("skipConfirmation").map(_ == "true")
-    val shortUrl = request.getQueryString("shortUrl")
-    val articleId = request.getQueryString("articleId")
-    val page = request.getQueryString("page").map(_.toInt)
 
     IdentityRequest(
-      TrackingData(
-        returnUrl,
-        request.getQueryString("type"),
-        request.cookies.get("S_VI").map(_.value),
-        ip,
-        request.headers.get("Referer"),
-        request.headers.get("User-Agent")
+      trackingData = TrackingData(
+        returnUrl = returnUrl,
+        registrationType = request.getQueryString("type"),
+        omnitureSVi =  request.cookies.get("S_VI").map(_.value),
+        ipAddress = ip,
+        referrer =  request.headers.get("Referer"),
+        userAgent = request.headers.get("User-Agent")
       ),
-      returnUrl,
-      ip,
-      skipConfirmation,
-      shortUrl,
-      articleId,
-      page
+      returnUrl = returnUrl,
+      clientIp = ip,
+      skipConfirmation =  request.getQueryString("skipConfirmation").map(_ == "true"),
+      shortUrl = request.getQueryString("shortUrl"),
+      articleId = request.getQueryString("articleId"),
+      page = request.getQueryString("page").map(_.toInt),
+      platform = request.getQueryString("platform")
     )
   }
 }
@@ -53,4 +51,12 @@ class TorNodeLoggingIdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifi
   }
 }
 
-case class IdentityRequest(trackingData: TrackingData, returnUrl: Option[String], clientIp: Option[String], skipConfirmation: Option[Boolean], shortUrl: Option[String] = None, articleId: Option[String] = None, page: Option[Int] = None)
+case class IdentityRequest(
+  trackingData: TrackingData,
+  returnUrl: Option[String],
+  clientIp: Option[String],
+  skipConfirmation: Option[Boolean],
+  shortUrl: Option[String] = None,
+  articleId: Option[String] = None,
+  page: Option[Int] = None,
+  platform: Option[String] = None)
