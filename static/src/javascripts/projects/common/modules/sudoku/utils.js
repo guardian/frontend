@@ -1,4 +1,3 @@
-/* jshint newcap: false */
 define([
     'react',
     'common/modules/sudoku/constants'

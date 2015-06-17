@@ -2,15 +2,15 @@ import Clickstream from 'common/modules/ui/clickstream';
 import bean from 'bean';
 import mediator from 'common/utils/mediator';
 import fixtures from 'helpers/fixtures';
-import sinonjs from 'sinonjs';
+import sinon from 'sinonjs';
 import jasmineSinon from 'jasmine-sinon';
 
-describe("Clickstream", function() {
+describe('Clickstream', function () {
 
     var fixtureId = 'clickstream-fixture',
     clickIds = ['click-me', 'click-me-ancestor', 'click-me-descendant', 'click-me-quick', 'click-me-internal', 'click-me-external'];
 
-    beforeEach(function(){
+    beforeEach(function () {
 
         fixtures.render(
             {
@@ -36,24 +36,27 @@ describe("Clickstream", function() {
                                     '<button href="/foo" id="click-me-link-context" data-link-name="the contextual link">The link</button>' +
                                 '</span>' +
                             '</span>' +
+                            '<div data-custom-event-properties=\'{ "prop1": "foo" }\'>' +
+                                '<button id="click-me-custom-event-properties" data-custom-event-properties=\'{ "prop2": "foo" }\'>Button</button>' +
+                            '</div>' +
                         '</p>' +
                     '</div>'
                     ]
             }
         );
 
-        clickIds.forEach(function(id) {
+        clickIds.forEach(function (id) {
             // prevents unit tests from visiting the link
-            bean.on(document.getElementById(id), 'click', function(e) {
+            bean.on(document.getElementById(id), 'click', function (e) {
                 e.preventDefault();
             });
         });
 
     });
 
-    afterEach(function() {
+    afterEach(function () {
         // remove events anf fixture
-        clickIds.forEach(function(id) {
+        clickIds.forEach(function (id) {
             bean.off(document.getElementById(id), 'click');
         });
         fixtures.clean(fixtureId);
@@ -65,15 +68,15 @@ describe("Clickstream", function() {
         mediator.removeEvent('module:clickstream:click');
     });
 
-    it("should report the ancestor 'clickable' element, not the element that actually received the click", function(done){
+    it('should report the ancestor \'clickable\' element, not the element that actually received the click', function (done) {
 
-        var cs  = new Clickstream({ filter: ["a"], withEvent: false }),
+        var cs  = new Clickstream({ filter: ['a'], withEvent: false }),
             object = { method: function (p) {
                 clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
             }},
-            spy = sinon.spy(object, "method"),
+            spy = sinon.spy(object, 'method'),
             el = document.getElementById('click-me-descendant'),
 
             elAncestor = document.getElementById('click-me-ancestor'),
@@ -81,7 +84,8 @@ describe("Clickstream", function() {
                 samePage: false,
                 sameHost: true,
                 validTarget: true,
-                tag: 'outer div | the ancestor | the descendant'
+                tag: 'outer div | the ancestor | the descendant',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -89,18 +93,19 @@ describe("Clickstream", function() {
         bean.fire(el, 'click');
     });
 
-    it("should return clickspec with false validTarget when clicked element is *not* in the filter list of given element sources", function(done){
+    it('should return clickspec with false validTarget when clicked element is *not* in the filter list of given element sources', function (done) {
 
         var cs  = new Clickstream({ filter: ['a'], withEvent: false }), // only log events on [a]nchor elements
             object = { method: function (p) {
                 clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
-                done();                
+                done();
             }},
-            spy = sinon.spy(object, "method"),
+            spy = sinon.spy(object, 'method'),
             clickSpec = {
                 validTarget: false,
-                tag: 'outer div'
+                tag: 'outer div',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -108,21 +113,22 @@ describe("Clickstream", function() {
         bean.fire(document.getElementById('not-inside-a-link'), 'click');
     });
 
-    it("should indicate if a click emanates from a internal anchor", function(done){
+    it('should indicate if a click emanates from a internal anchor', function (done) {
 
-        var cs  = new Clickstream({ filter: ["p"], withEvent: false }),
+        var cs  = new Clickstream({ filter: ['p'], withEvent: false }),
             object = { method: function (p) {
                 clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
             }},
-            spy = sinon.spy(object, "method"),
+            spy = sinon.spy(object, 'method'),
             el = document.getElementById('click-me-slow'),
             clickSpec = {
                 samePage: true,
                 sameHost: true,
                 validTarget: true,
-                tag: 'outer div | paragraph'
+                tag: 'outer div | paragraph',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -130,21 +136,22 @@ describe("Clickstream", function() {
         bean.fire(el, 'click');
     });
 
-    it("should indicate if a click emanates from a same-host link", function(done){
+    it('should indicate if a click emanates from a same-host link', function (done) {
 
-        var cs  = new Clickstream({ filter: ["a"], withEvent: false }),
+        var cs  = new Clickstream({ filter: ['a'], withEvent: false }),
             object = { method: function (p) {
                 clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
             }},
-            spy = sinon.spy(object, "method"),
+            spy = sinon.spy(object, 'method'),
             el = document.getElementById('click-me-internal'),
             clickSpec = {
                 samePage: false,
                 sameHost: true,
                 validTarget: true,
-                tag: 'outer div | internal link'
+                tag: 'outer div | internal link',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -152,21 +159,22 @@ describe("Clickstream", function() {
         bean.fire(el, 'click');
     });
 
-    it("should indicate if a click emanates from an other-host link", function(done){
+    it('should indicate if a click emanates from an other-host link', function (done) {
 
-        var cs  = new Clickstream({ filter: ["a"], withEvent: false }),
+        var cs  = new Clickstream({ filter: ['a'], withEvent: false }),
             object = { method: function (p) {
                 clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
             }},
-            spy = sinon.spy(object, "method"),
+            spy = sinon.spy(object, 'method'),
             el = document.getElementById('click-me-external'),
             clickSpec = {
                 samePage: false,
                 sameHost: false,
                 validTarget: true,
-                tag: 'outer div | external link'
+                tag: 'outer div | external link',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
@@ -174,11 +182,11 @@ describe("Clickstream", function() {
         bean.fire(el, 'click');
     });
 
-    it("should not fire clicks when instantiated without the listener", function(){
+    it('should not fire clicks when instantiated without the listener', function () {
 
         var cs  = new Clickstream({ filter: ['a'], addListener: false, withEvent: false }), // disable the listener on the body
             object = { method: function (tag) {} },
-            spy = sinon.spy(object, "method");
+            spy = sinon.spy(object, 'method');
 
         mediator.on('module:clickstream:click', spy);
 
@@ -188,7 +196,7 @@ describe("Clickstream", function() {
 
     });
 
-    it("should pick up the closest data-link-context attribute (only)", function(done){
+    it('should pick up the closest data-link-context attribute (only)', function (done) {
 
         var cs  = new Clickstream({ filter: ['button'], withEvent: false }),
             object = { method: function (p) {
@@ -196,7 +204,7 @@ describe("Clickstream", function() {
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
             }},
-            spy = sinon.spy(object, "method"),
+            spy = sinon.spy(object, 'method'),
             el = document.getElementById('click-me-link-context'),
             clickSpec = {
                 samePage: true,
@@ -204,11 +212,33 @@ describe("Clickstream", function() {
                 validTarget: true,
                 tag: 'outer div | the contextual link',
                 linkContextPath: 'the inner context path',
-                linkContextName: 'the inner context name'
+                linkContextName: 'the inner context name',
+                customEventProperties: {}
             };
 
         mediator.on('module:clickstream:click', spy);
 
+        bean.fire(el, 'click');
+    });
+
+    it('should get custom event properties recursively', function (done) {
+        var cs = new Clickstream({ filter: ['button'], withEvent: false });
+
+        var spy = sinon.spy({ method: function (p) {
+            var clickSpec = {
+                tag: 'outer div',
+                samePage: true,
+                sameHost: true,
+                validTarget: true,
+                customEventProperties: { 'prop1': 'foo', 'prop2': 'foo' }
+            };
+            clickSpec.target = p.target;
+            expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
+            done();
+        } }, 'method');
+        mediator.on('module:clickstream:click', spy);
+
+        var el = document.getElementById('click-me-custom-event-properties');
         bean.fire(el, 'click');
     });
 

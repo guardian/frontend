@@ -1,37 +1,16 @@
 {
-  "env": {
-      "browser": true
-  },
-  "ecmaFeatures": {
-    "arrowFunctions": true,
-    "binaryLiterals": true,
-    "blockBindings": true,
-    "classes": true,
-    "defaultParams": true,
-    "destructuring": true,
-    "forOf": true,
-    "generators": true,
-    "modules": true,
-    "objectLiteralComputedProperties": true,
-    "objectLiteralDuplicateProperties": true,
-    "objectLiteralShorthandMethods": true,
-    "objectLiteralShorthandProperties": true,
-    "octalLiterals": true,
-    "regexUFlag": true,
-    "regexYFlag": true,
-    "spread": true,
-    "superInFunctions": true,
-    "templateStrings": true,
-    "unicodeCodePointEscapes": true,
-    "globalReturn": true,
-    "jsx": true
-  },
-  "rules": {
-      "semi": 2,
-      "no-var": 2,
-      "quotes": [2, "single"],
-      "no-undef": 2,
-      "no-unused-vars": 2,
-      "no-caller": 2
-  }
+    "env": {
+        "node": false,
+        "browser": true,
+        "amd": true
+    },
+    "rules": {
+        "camelcase": 0,
+        // We should reset these to errors, but will require lots of changes
+        "no-shadow": 0,
+        "strict": 0,
+        // These are reset back to errors for ES6
+        "no-use-before-define": 0,
+        "no-alert": 0
+    }
 }

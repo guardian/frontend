@@ -201,7 +201,8 @@ case class GuLineItem(id: Long,
                       isPageSkin: Boolean,
                       sponsor: Option[String],
                       status: String,
-                      targeting: GuTargeting) {
+                      targeting: GuTargeting,
+                      lastModified: DateTime) {
 
   val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
   val isExpired = endTime.exists(_.isBeforeNow)
@@ -225,7 +226,7 @@ case class GuLineItem(id: Long,
 
 object GuLineItem {
 
-  private val timeFormatter = ISODateTimeFormat.dateTime()
+  private val timeFormatter = ISODateTimeFormat.dateTime().withZoneUTC()
 
   implicit val lineItemWrites = new Writes[GuLineItem] {
     def writes(lineItem: GuLineItem): JsValue = {
@@ -237,7 +238,8 @@ object GuLineItem {
         "isPageSkin" -> lineItem.isPageSkin,
         "sponsor" -> lineItem.sponsor,
         "status" -> lineItem.status,
-        "targeting" -> lineItem.targeting
+        "targeting" -> lineItem.targeting,
+        "lastModified" -> timeFormatter.print(lineItem.lastModified)
       )
     }
   }
@@ -250,7 +252,8 @@ object GuLineItem {
       (JsPath \ "isPageSkin").read[Boolean] and
       (JsPath \ "sponsor").readNullable[String] and
       (JsPath \ "status").read[String] and
-      (JsPath \ "targeting").read[GuTargeting]
+      (JsPath \ "targeting").read[GuTargeting] and
+      (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
     )(GuLineItem.apply _)
 
 }

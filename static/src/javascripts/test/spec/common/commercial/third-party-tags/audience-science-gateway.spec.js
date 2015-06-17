@@ -1,4 +1,4 @@
-import Injector from 'helpers/injector'
+import Injector from 'helpers/injector';
 
 describe('Audience Science Gateway', function () {
 
@@ -12,19 +12,19 @@ describe('Audience Science Gateway', function () {
             'common/utils/config',
             'common/utils/storage'], function () {
 
-            audienceScienceGateway = arguments[0];
-            config = arguments[1];
-            storage = arguments[2];
+                audienceScienceGateway = arguments[0];
+                config = arguments[1];
+                storage = arguments[2];
 
-            config.page = {
+                config.page = {
                 section: 'news'
             };
-            config.switches = {
+                config.switches = {
                 audienceScienceGateway: true
             };
 
-            done();
-        });
+                done();
+            });
     });
 
     it('should be able to get segments', function () {
@@ -54,11 +54,13 @@ describe('Audience Science Gateway', function () {
                     blob: 'CjQ3YmM2YjgzZC02ZTk4LTQ3MjEtYTVmZC05ZGJiYzcwZmQyOWItMTQwODYzMjE4NTI4MS0w'
                 }
             };
-        stored['news'] = storedValue;
+        stored.news = storedValue;
         storage.local.set('gu.ads.audsci-gateway', stored);
         expect(audienceScienceGateway.getSegments()).toEqual({
+            /*eslint-disable camelcase*/
             pq_Y1C40a: 'T',
             pq_c7Zrhu: 'T'
+            /*eslint-enable camelcase*/
         });
     });
 

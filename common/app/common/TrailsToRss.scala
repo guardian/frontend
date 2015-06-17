@@ -131,9 +131,10 @@ object TrailsToRss extends implicits.Collections {
         .filterNot(_.config.excludeFromRss)
         .flatMap(_.all)
         .filter{
-        case _: LinkSnap => false
-        case _ => true}
-        .distinctBy(_.id)
+          case _: LinkSnap => false
+          case _ => true}
+        .filter(_.maybeContentId.isDefined)
+        .distinctBy(faciaContent => faciaContent.maybeContentId.getOrElse(faciaContent.id))
 
     fromFaciaContent(pressedPage.webTitle, faciaContentList, pressedPage.url, pressedPage.description)
   }

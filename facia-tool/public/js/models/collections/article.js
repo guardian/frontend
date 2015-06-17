@@ -1,3 +1,4 @@
+/*eslint-disable consistent-return*/
 define([
     'modules/vars',
     'knockout',
@@ -571,7 +572,7 @@ define([
                 }, self),
 
                 displayEditor: ko.pureComputed(function() {
-                    var display = opts['if'] ? _.some(all, function(editor) { return editor.key === opts['if'] && self.meta[editor.key](); }) : true;
+                    var display = opts.if ? _.some(all, function(editor) { return editor.key === opts.if && self.meta[editor.key](); }) : true;
 
                     display = display && (self.state.enableContentOverrides() || key === 'customKicker');
                     display = display && (opts.ifState ? self.state[opts.ifState]() : true);
@@ -592,7 +593,7 @@ define([
                     meta(!meta());
 
                    _.chain(all)
-                    .filter(function(editor) { return editor['if'] === key; })
+                    .filter(function(editor) { return editor.if === key; })
                     .first(1)
                     .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key], self, self.front); });
                 },
@@ -626,7 +627,7 @@ define([
                             sourceMeta = JSON.parse(sourceMeta);
                             meta(sourceMeta);
                             return;
-                        } catch (ex) {}
+                        } catch (ex) {/**/}
                     }
 
                     try {
@@ -657,7 +658,7 @@ define([
                 'webUrl',
                 'fields',
                 'fields.headline'
-            ].filter(function(prop) {return !deepGet(opts, prop);});
+            ].filter(function(prop) {return !deepGet(opts, prop); });
 
             if (missingProps.length) {
                 vars.model.alert('ContentApi is returning invalid data. Fronts may not update.');
@@ -850,7 +851,7 @@ define([
         Article.prototype.open = function(article, evt) {
             if (this.uneditable) { return; }
 
-            this.meta.supporting && this.meta.supporting.items().forEach(function(sublink) { sublink.close(); });
+            if (this.meta.supporting) { this.meta.supporting.items().forEach(function(sublink) { sublink.close(); }); }
 
             if (!this.state.isOpen()) {
                 if (this.editors().length === 0) {
@@ -947,7 +948,7 @@ define([
                 validateImageSrc(src, params.options)
                     .then(function(img) {
                         meta(_.extend({
-                            origin: origin,
+                            origin: origin
                         }, img));
                     }, function(err) {
                         undefineObservables(meta);

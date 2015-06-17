@@ -308,7 +308,7 @@ define([
                 // This stops the SecurityError from halting the execution any further.
                 try {
                     i = $('.interactive iframe', window.parent.document).get(0);
-                } catch (e) {}
+                } catch (e) {/**/}
 
                 resize = (function r() {
                     if (!t) {

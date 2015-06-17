@@ -24,7 +24,7 @@ describe('Tags Container', function () {
             };
             config.switches = {};
             done();
-        });        
+        });
     });
 
     it('should exist', function () {
@@ -47,7 +47,7 @@ describe('Tags Container', function () {
         jasmine.clock().install();
 
         config.switches.thirdPartiesLater = true;
-        spyOn(krux, "load");
+        spyOn(krux, 'load');
         tagsContainer.init();
         jasmine.clock().tick(0);
         expect(krux.load).not.toHaveBeenCalled();
@@ -59,7 +59,7 @@ describe('Tags Container', function () {
         jasmine.clock().install();
 
         config.switches.thirdPartiesLater = true;
-        spyOn(krux, "load");
+        spyOn(krux, 'load');
         tagsContainer.init();
         jasmine.clock().tick(1000);
         expect(krux.load).toHaveBeenCalled();

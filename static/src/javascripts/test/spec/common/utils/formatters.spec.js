@@ -1,8 +1,8 @@
 import formatters from 'common/utils/formatters';
 
-describe("integerCommas", function () {
+describe('integerCommas', function () {
 
-    it("should correctly add a comma for >=4 digit numbers", function () {
+    it('should correctly add a comma for >=4 digit numbers', function () {
 
         var tests = [
             [1, '1'],
@@ -14,7 +14,7 @@ describe("integerCommas", function () {
             [1234567, '1,234,567'],
             [12345678, '12,345,678'],
             [123456789, '123,456,789'],
-            [1234567890, '1,234,567,890'],
+            [1234567890, '1,234,567,890']
         ];
         for (var i = 0; i < tests.length; i++) {
             expect(formatters.integerCommas(tests[i][0])).toBe(tests[i][1]);

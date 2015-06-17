@@ -1,8 +1,10 @@
 define([
+    'common/modules/user-prefs',
     'common/utils/ajax',
     'common/utils/config',
     'common/utils/cookies'
 ], function (
+    prefs,
     ajax,
     config,
     cookies
@@ -15,7 +17,7 @@ define([
     var Api = {
         root: (document.location.protocol === 'https:')
                 ? config.page.secureDiscussionApiRoot
-                : config.page.discussionApiRoot,
+                : (prefs.isOn('discussion.useProxy') ? 'http://www.theguardian.com/guardianapis/discussion/discussion-api' : config.page.discussionApiRoot),
         clientHeader: config.page.discussionApiClientHeader
     };
 

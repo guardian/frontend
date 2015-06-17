@@ -18,7 +18,7 @@ var articleAsideAdverts,
 
 injector.mock({
     'common/utils/config': config
-})
+});
 
 describe('Article Aside Adverts', function () {
 
