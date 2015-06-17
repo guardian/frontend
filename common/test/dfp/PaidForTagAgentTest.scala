@@ -38,14 +38,17 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
     val customTargetSets = editionId map { edition =>
       Seq(CustomTargetSet("AND", Seq(CustomTarget("edition", "IS", Seq(edition)))))
     } getOrElse Nil
-    GuLineItem(Random.nextInt(),
+    GuLineItem(
+      Random.nextInt(),
       "liName",
       DateTime.now(),
       expiryDate,
       isPageSkin = false,
       sponsor,
       state,
-      GuTargeting(adUnits, Nil, Nil, customTargetSets))
+      GuTargeting(adUnits, Nil, Nil, customTargetSets),
+      DateTime.now()
+    )
   }
 
   private def paidForTag(targetedName: String,
