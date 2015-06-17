@@ -51,10 +51,10 @@ class SaveForLaterDataBuilder @Inject()(idUrlBuilder: IdentityUrlBuilder) extend
       contentModels.map(SaveForLaterItem.tupled)
 
       SaveForLaterPageData(
-        idUrlBuilder.buildUrl("/saved-for-later-page?page=%d".format(pageNum), idRequest),
+        idUrlBuilder.buildUrl("/saved-for-later", idRequest),
         contentModels.map(SaveForLaterItem.tupled),
         Pagination(pageNum, savedArticles.numPages, savedArticles.totalSaved),
-        idUrlBuilder.buildUrl("/saved-for-later-page", idRequest),
+        "/saved-for-later",
         savedArticles.totalSaved,
         shortUrls
       )

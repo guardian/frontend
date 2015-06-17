@@ -50,7 +50,7 @@ define([
 
         this.isContent = !/Network Front|Section/.test(config.page.contentType);
         this.userData = {};
-        this.savedArticlesUrl = config.page.idUrl + '/saved-for-later-page';
+        this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
 
         _.bindAll(this,
             'save',
