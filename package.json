@@ -37,7 +37,7 @@
     "jasmine-core": "^2.3.2",
     "jit-grunt": "0.9.1",
     "jsonfile": "2.0.0",
-    "jspm": "0.16.0-beta",
+    "jspm": "0.16.0-beta.2",
     "jspm-bower-endpoint": "^0.3.2",
     "karma": "0.12.31",
     "karma-chrome-launcher": "0.1.10",
@@ -100,9 +100,9 @@
       "videojsplaylist": "github:tim-peterson/videojs-playlist@master"
     },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.4.3",
-      "babel-runtime": "npm:babel-runtime@^5.4.3",
-      "core-js": "npm:core-js@^0.9.10"
+      "babel": "npm:babel-core@^5.5.8",
+      "babel-runtime": "npm:babel-runtime@^5.5.8",
+      "core-js": "npm:core-js@^0.9.17"
     }
   }
 }
