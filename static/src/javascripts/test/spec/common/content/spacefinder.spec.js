@@ -1,8 +1,8 @@
 import spacefinder from 'common/modules/article/spacefinder';
 
-describe("spacefinder", function() {
+describe('spacefinder', function() {
 
-    it("should test elements correctly", function() {
+    it('should test elements correctly', function() {
 
         var para = {top: 200, bottom: 300},
             rules = {minAbove: 50, minBelow: 300},
@@ -16,12 +16,12 @@ describe("spacefinder", function() {
                 {top: 100, bottom: 250, expectedResult: false} // overlapping
             ];
 
-        for (var i=0; i < others.length; i++) {
+        for (var i = 0; i < others.length; i++) {
             expect(spacefinder._testElem(para, others[i], rules)).toBe(others[i].expectedResult);
         }
 
         expect(spacefinder._testElems(para, others, rules)).toBe(false);
-        expect(spacefinder._testElems(para, others.slice(0,2), rules)).toBe(true);
+        expect(spacefinder._testElems(para, others.slice(0, 2), rules)).toBe(true);
 
     });
 });

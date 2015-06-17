@@ -1,3 +1,4 @@
+/*eslint-disable no-multi-str*/
 import fastdom from 'fastdom';
 import qwery from 'qwery';
 import $ from 'common/utils/$';
@@ -46,7 +47,7 @@ describe('Badges', function () {
             );
         },
         $fixtureContainer, badges, config,
-        injector = new Injector;
+        injector = new Injector();
 
     beforeEach(function (done) {
         injector.test(['common/modules/commercial/badges', 'common/utils/config'], function () {

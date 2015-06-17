@@ -1,4 +1,4 @@
-import Injector from 'helpers/injector'
+import Injector from 'helpers/injector';
 
 describe('Audience Science Gateway', function () {
 
@@ -54,11 +54,13 @@ describe('Audience Science Gateway', function () {
                     blob: 'CjQ3YmM2YjgzZC02ZTk4LTQ3MjEtYTVmZC05ZGJiYzcwZmQyOWItMTQwODYzMjE4NTI4MS0w'
                 }
             };
-        stored['news'] = storedValue;
+        stored.news = storedValue;
         storage.local.set('gu.ads.audsci-gateway', stored);
         expect(audienceScienceGateway.getSegments()).toEqual({
+            /*eslint-disable camelcase*/
             pq_Y1C40a: 'T',
             pq_c7Zrhu: 'T'
+            /*eslint-enable camelcase*/
         });
     });
 

@@ -14,7 +14,7 @@ describe('Url', function() {
         ].forEach(function(dataProvider) {
             var query = dataProvider[0],
                 expected = dataProvider[1];
-            it('query: ' + query +', expected: ' + JSON.stringify(expected), function() {
+            it('query: ' + query + ', expected: ' + JSON.stringify(expected), function() {
                 expect(url.getUrlVars({ query: query })).toEqual(expected);
             });
         });
@@ -31,12 +31,12 @@ describe('Url', function() {
         ].forEach(function(dataProvider) {
             var vars = dataProvider[0],
                 expected = dataProvider[1];
-            it('vars: ' + JSON.stringify(vars) +', expected: ' + expected, function() {
+            it('vars: ' + JSON.stringify(vars) + ', expected: ' + expected, function() {
                 expect(url.constructQuery(vars)).toEqual(expected);
             });
         });
 
-    })
+    });
 
 });
 

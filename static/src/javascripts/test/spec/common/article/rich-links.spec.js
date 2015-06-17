@@ -24,16 +24,16 @@ describe('richLinks', function () {
 
     beforeEach(function(done) {
         articleBodyFixtureElement = fixtures.render(articleBodyConf);
-        
+
         injector.test(['common/modules/article/rich-links', 'common/utils/config', 'common/modules/article/spacefinder'], function () {
             richLinks = arguments[0];
             config = arguments[1];
-            spacefinder = arguments[2];            
+            spacefinder = arguments[2];
 
             spacefinder.getParaWithSpace = function () {
                 return Promise.resolve($('#article-body p').first());
             };
-            
+
             done();
         });
     });

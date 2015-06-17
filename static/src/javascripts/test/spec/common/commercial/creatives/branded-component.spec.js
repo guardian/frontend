@@ -18,7 +18,7 @@ var config = {
             '<div class="js-secondary-column"></div>'
         ]
     },
-    injector = new Injector,
+    injector = new Injector(),
     BrandedComponent;
 
 describe('Branded Component', function() {

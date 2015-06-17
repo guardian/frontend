@@ -4,7 +4,9 @@ window.guardian = {
         page: { }
     }
 };
+/*eslint-disable camelcase*/
 window.s_account = 'guardiangu-frontend,guardiangu-network';
+/*eslint-enable camelcase*/
 
 window.require = System.amdRequire;
 

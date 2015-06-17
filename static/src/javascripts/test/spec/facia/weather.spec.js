@@ -1,5 +1,6 @@
 import bean from 'bean';
 import bonzo from 'bonzo';
+import sinon from 'sinonjs';
 import $ from 'common/utils/$';
 import ajax from 'common/utils/ajax';
 import Injector from 'helpers/injector';
@@ -37,11 +38,11 @@ describe('Weather component', function () {
         container = null;
     });
 
-    it("should be behind switches", function() {
+    it('should be behind switches', function() {
         config.page.pageId = 'uk';
         config.switches.weather = false;
 
-        spyOn(sut, "getDefaultLocation");
+        spyOn(sut, 'getDefaultLocation');
 
         expect(sut.init()).toEqual(false);
         expect(sut.getDefaultLocation).not.toHaveBeenCalled();
@@ -57,8 +58,8 @@ describe('Weather component', function () {
         expect(sut.getDefaultLocation).toHaveBeenCalled();
     });
 
-    it("should initialize only if on front page", function() {
-        spyOn(sut, "getDefaultLocation");
+    it('should initialize only if on front page', function() {
+        spyOn(sut, 'getDefaultLocation');
 
         config.switches = {
             weather: true
@@ -73,7 +74,7 @@ describe('Weather component', function () {
         expect(sut.getDefaultLocation).toHaveBeenCalled();
     });
 
-    it("should return false when the page is not front", function() {
+    it('should return false when the page is not front', function() {
         config.page.pageId = 'uk';
         expect(sut.isNetworkFront()).toBeTruthy();
 
@@ -87,8 +88,8 @@ describe('Weather component', function () {
         expect(sut.isNetworkFront()).toBeFalsy();
     });
 
-    it("should get location from local storage", function () {
-        var result = {id: 1, city: "London"};
+    it('should get location from local storage', function () {
+        var result = {id: 1, city: 'London'};
 
         expect(typeof sut.getUserLocation()).toEqual('undefined');
 
@@ -96,14 +97,14 @@ describe('Weather component', function () {
         expect(sut.getUserLocation()).toEqual(result);
     });
 
-    it("should get the default location", function(done) {
+    it('should get the default location', function(done) {
         var server = sinon.fakeServer.create(),
-            data = {id: '1', city: "London"};
-        spyOn(sut, "fetchWeatherData");
+            data = {id: '1', city: 'London'};
+        spyOn(sut, 'fetchWeatherData');
 
         server.autoRespond = true;
 
-        server.respondWith([200, { "Content-Type": "application/json" },
+        server.respondWith([200, { 'Content-Type': 'application/json' },
             '[{"WeatherIcon": 3}]']);
 
         sut.getDefaultLocation().then(function () {
@@ -114,35 +115,35 @@ describe('Weather component', function () {
         server.restore();
     });
 
-    it("should remove data from localStorage and fetchWeatherData if user searches", function() {
-        spyOn(sut, "saveUserLocation");
-        spyOn(sut, "fetchWeatherData");
+    it('should remove data from localStorage and fetchWeatherData if user searches', function() {
+        spyOn(sut, 'saveUserLocation');
+        spyOn(sut, 'fetchWeatherData');
 
-        sut.saveDeleteLocalStorage({store: "set"});
+        sut.saveDeleteLocalStorage({store: 'set'});
 
         expect(sut.saveUserLocation).toHaveBeenCalled();
         expect(sut.fetchWeatherData).toHaveBeenCalled();
     });
 
-    it("should save data to localStorage and getDefaultLocation if user remove data", function() {
-        spyOn(sut, "clearLocation");
-        spyOn(sut, "getDefaultLocation");
+    it('should save data to localStorage and getDefaultLocation if user remove data', function() {
+        spyOn(sut, 'clearLocation');
+        spyOn(sut, 'getDefaultLocation');
 
-        sut.saveDeleteLocalStorage({store: "remove"});
+        sut.saveDeleteLocalStorage({store: 'remove'});
 
         expect(sut.clearLocation).toHaveBeenCalled();
         expect(sut.getDefaultLocation).toHaveBeenCalled();
     });
 
-    it("should fetch the data", function () {
-        var result = {id: '2', city: "Sydney", store: true};
+    it('should fetch the data', function () {
+        var result = {id: '2', city: 'Sydney', store: true};
 
-        spyOn(sut, "getWeatherData").and.returnValue({
+        spyOn(sut, 'getWeatherData').and.returnValue({
             then: function () {
                 return {
                     fail: function (err, msg) {
                     }
-                }
+                };
             }
         });
 
@@ -150,32 +151,32 @@ describe('Weather component', function () {
         expect(sut.getWeatherData).toHaveBeenCalled();
     });
 
-    it("should fetch the data and not to save location if using fastly geoip", function () {
-        var result = {id: '2', city: "Sydney"};
+    it('should fetch the data and not to save location if using fastly geoip', function () {
+        var result = {id: '2', city: 'Sydney'};
 
-        spyOn(sut, "getWeatherData").and.returnValue({
+        spyOn(sut, 'getWeatherData').and.returnValue({
             then: function () {
                 return {
                     fail: function (err, msg) {
                     }
-                }
+                };
             }
         });
-        spyOn(sut, "saveUserLocation");
+        spyOn(sut, 'saveUserLocation');
 
         sut.fetchWeatherData(result);
         expect(sut.saveUserLocation).not.toHaveBeenCalled();
         expect(sut.getWeatherData).toHaveBeenCalled();
     });
 
-    it("should fetch weather data", function (done) {
+    it('should fetch weather data', function (done) {
         var server = sinon.fakeServer.create();
         server.autoRespond = true;
 
-        server.respondWith([200, { "Content-Type": "application/json" },
+        server.respondWith([200, { 'Content-Type': 'application/json' },
             '[{"weatherIcon": 3}]']);
 
-        sut.getWeatherData("/testurl/").then(function (response) {
+        sut.getWeatherData('/testurl/').then(function (response) {
             expect(response).toEqual([
                 {weatherIcon: 3}
             ]);
@@ -185,46 +186,46 @@ describe('Weather component', function () {
         server.restore();
     });
 
-    it("should call proper weather url", function () {
-        var data = {id: '1', city: "London"};
+    it('should call proper weather url', function () {
+        var data = {id: '1', city: 'London'};
 
-        spyOn(sut, "getWeatherData").and.returnValue({
+        spyOn(sut, 'getWeatherData').and.returnValue({
             then: function () {
                 return {
                     fail: function (err, msg) {
                     }
-                }
+                };
             }
         });
 
         config.page.weatherapiurl = '/weather/city';
 
         sut.fetchWeatherData(data);
-        expect(sut.getWeatherData).toHaveBeenCalledWith("/weather/city/1.json?_edition=uk");
+        expect(sut.getWeatherData).toHaveBeenCalledWith('/weather/city/1.json?_edition=uk');
     });
 
-    it("should call render function after fetching the weather data", function (done) {
+    it('should call render function after fetching the weather data', function (done) {
         var server = sinon.fakeServer.create(),
-            data = {id: '1', city: "London"};
+            data = {id: '1', city: 'London'};
 
         server.autoRespond = true;
 
-        server.respondWith([200, { "Content-Type": "application/json" },
+        server.respondWith([200, { 'Content-Type': 'application/json' },
             '{"weatherIcon": 3}']);
 
-        spyOn(sut, "render");
+        spyOn(sut, 'render');
 
         sut.fetchWeatherData(data).then(function () {
-            expect(sut.render).toHaveBeenCalledWith({"weatherIcon": 3}, "London");
+            expect(sut.render).toHaveBeenCalledWith({'weatherIcon': 3}, 'London');
             done();
         });
 
         server.restore();
     });
 
-    it("should add weather component to the DOM", function () {
-        spyOn(sut, "bindEvents");
-        spyOn(sut, "addSearch").and.callThrough();
+    it('should add weather component to the DOM', function () {
+        spyOn(sut, 'bindEvents');
+        spyOn(sut, 'addSearch').and.callThrough();
 
         var mockWeatherData = {
                 html: '<div class="weather js-weather">' +
@@ -239,9 +240,9 @@ describe('Weather component', function () {
 
         $weather = $('.weather');
 
-        expect($(".js-search-tool-input", $weather).val()).toEqual('London');
-        expect($(".js-weather-temp", $weather).text()).toEqual('4°C');
-        expect($(".inline-weather-31", $weather).length).toEqual(1);
+        expect($('.js-search-tool-input', $weather).val()).toEqual('London');
+        expect($('.js-weather-temp', $weather).text()).toEqual('4°C');
+        expect($('.inline-weather-31', $weather).length).toEqual(1);
         expect(sut.bindEvents).toHaveBeenCalled();
         expect(sut.addSearch).toHaveBeenCalled();
 
@@ -259,40 +260,40 @@ describe('Weather component', function () {
         $body.append(container);
 
         sut.render(mockWeatherData, mockCity);
-        expect($(".js-search-tool-input", $body).val()).toEqual('Sydney');
-        expect($(".js-weather-temp", $body).text()).toEqual('6°C');
-        expect($(".inline-weather-12", $body).length).toEqual(1);
+        expect($('.js-search-tool-input', $body).val()).toEqual('Sydney');
+        expect($('.js-weather-temp', $body).text()).toEqual('6°C');
+        expect($('.inline-weather-12', $body).length).toEqual(1);
         expect(sut.bindEvents.calls.count()).toEqual(1);
         expect(sut.addSearch.calls.count()).toEqual(1);
     });
 
-    it("should fetch the forecast data", function () {
-        var result = {id: '2', city: "Sydney"};
+    it('should fetch the forecast data', function () {
+        var result = {id: '2', city: 'Sydney'};
 
-        spyOn(sut, "getWeatherData").and.returnValue({
+        spyOn(sut, 'getWeatherData').and.returnValue({
             then: function () {
                 return {
                     fail: function (err, msg) {
                     }
-                }
+                };
             }
         });
-        spyOn(sut, "renderForecast");
+        spyOn(sut, 'renderForecast');
 
         sut.fetchForecastData(result);
         expect(sut.getWeatherData).toHaveBeenCalled();
     });
 
-    it("should call render function after fetching the forecast data", function (done) {
+    it('should call render function after fetching the forecast data', function (done) {
         var server = sinon.fakeServer.create(),
-            data = {id: '1', city: "London"};
+            data = {id: '1', city: 'London'};
 
         server.autoRespond = true;
 
-        server.respondWith([200, { "Content-Type": "application/json" },
+        server.respondWith([200, { 'Content-Type': 'application/json' },
             '[{"weatherIcon": 3}]']);
 
-        spyOn(sut, "renderForecast");
+        spyOn(sut, 'renderForecast');
 
         sut.fetchForecastData(data).then(function () {
             expect(sut.renderForecast).toHaveBeenCalled();

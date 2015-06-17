@@ -1,4 +1,4 @@
-import Template from 'common/modules/commercial/creatives/template'
+import Template from 'common/modules/commercial/creatives/template';
 
 describe('Template', function() {
 

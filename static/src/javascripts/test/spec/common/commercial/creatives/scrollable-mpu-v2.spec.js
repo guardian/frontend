@@ -1,4 +1,4 @@
-import ScrollableMpu from 'common/modules/commercial/creatives/scrollable-mpu-v2'
+import ScrollableMpu from 'common/modules/commercial/creatives/scrollable-mpu-v2';
 
 describe('Scrollable MPU', function() {
 

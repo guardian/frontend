@@ -1,5 +1,6 @@
 import bean from 'bean';
 import bonzo from 'bonzo';
+import sinon from 'sinonjs';
 import $ from 'common/utils/$';
 import Injector from 'helpers/injector';
 
@@ -34,36 +35,36 @@ describe('Search tool', function () {
             });
 
             done();
-        });        
+        });
     });
 
     afterEach(function() {
-        $('body').html("");
+        $('body').html('');
         container = null;
     });
 
-    it("should be defined", function() {
+    it('should be defined', function() {
         expect(sut).toEqual(jasmine.any(Object));
     });
 
-    it("should bind events after initialization", function() {
-        spyOn(sut, "bindEvents");
+    it('should bind events after initialization', function() {
+        spyOn(sut, 'bindEvents');
 
         sut.init();
 
         expect(sut.bindEvents).toHaveBeenCalled();
     });
 
-    it("should respond to keydown event", function() {
+    it('should respond to keydown event', function() {
         var stubEvent = {
             keyCode: 38,
             preventDefault: function() {},
             target: $('.js-search-tool-input')[0]
         };
 
-        spyOn(sut, "move");
-        spyOn(sut, "pushData");
-        spyOn(sut, "getListOfResults");
+        spyOn(sut, 'move');
+        spyOn(sut, 'pushData');
+        spyOn(sut, 'getListOfResults');
 
         // Test for up key
         sut.handleKeyEvents(stubEvent);
@@ -85,21 +86,21 @@ describe('Search tool', function () {
         expect(sut.getListOfResults).toHaveBeenCalledWith(stubEvent);
     });
 
-    it("should close search tool if not clicked on the list", function() {
-        spyOn(mediator, "emit");
+    it('should close search tool if not clicked on the list', function() {
+        spyOn(mediator, 'emit');
 
         sut.handleClick({target: $('body')[0]});
         expect(mediator.emit).toHaveBeenCalledWith('autocomplete:toggle', false);
     });
 
-    it("should push data after click on list item", function() {
-        spyOn(sut, "pushData").and.callThrough();
-        spyOn(mediator, "emit");
+    it('should push data after click on list item', function() {
+        spyOn(sut, 'pushData').and.callThrough();
+        spyOn(mediator, 'emit');
 
-        $(".js-search-tool-list").html("<li><a class='js-search-tool-link active'></a><a class='js-search-tool-link' data-weather-id='292177' data-weather-city='Ufa'><span></span></a></li>");
+        $('.js-search-tool-list').html('<li><a class="js-search-tool-link active"></a><a class="js-search-tool-link" data-weather-id="292177" data-weather-city="Ufa"><span></span></a></li>');
         sut.init();
 
-        bean.fire($(".js-search-tool-list span")[0], "click");
+        bean.fire($('.js-search-tool-list span')[0], 'click');
 
         expect(sut.pushData).toHaveBeenCalled();
         expect(mediator.emit).toHaveBeenCalledWith('autocomplete:fetch',
@@ -109,25 +110,25 @@ describe('Search tool', function () {
                 'store': 'set'
             }
         );
-        expect($(".active").length).toEqual(1);
+        expect($('.active').length).toEqual(1);
     });
 
-    it("should not push data after enter without selecting from the list", function() {
+    it('should not push data after enter without selecting from the list', function() {
         sut.init();
         $('.js-search-tool-input').val('');
 
-        expect(sut.pushData()).toEqual({'id': null, 'city': null, 'store': 'remove'})
+        expect(sut.pushData()).toEqual({'id': null, 'city': null, 'store': 'remove'});
     });
 
-    it("should not push data after enter with uncomplete city name ", function() {
+    it('should not push data after enter with uncomplete city name ', function() {
         sut.init();
         $('.js-search-tool-input').val('Syd');
 
         expect(sut.pushData()).toEqual(false);
     });
 
-    it("should return new ID", function() {
-        $(".js-search-tool-list").html("<li></li><li></li><li></li><li></li>");
+    it('should return new ID', function() {
+        $('.js-search-tool-list').html('<li></li><li></li><li></li><li></li>');
 
         sut.init();
 
@@ -139,34 +140,34 @@ describe('Search tool', function () {
         expect(sut.getNewId(-1)).toEqual(-1);
     });
 
-    it("should not call for results if data haven't change", function() {
+    it('should not call for results if data haven\'t change', function() {
         var stubEvent = {
             keyCode: 38,
             preventDefault: function() {},
             target: {
-                value: "test"
+                value: 'test'
             }
         };
 
-        spyOn(sut, "fetchData");
-        spyOn(sut, "hasInputValueChanged").and.returnValue(false);
+        spyOn(sut, 'fetchData');
+        spyOn(sut, 'hasInputValueChanged').and.returnValue(false);
 
         sut.getListOfResults(stubEvent);
 
         expect(sut.fetchData).not.toHaveBeenCalled();
     });
 
-    it("should close list if input is empty", function() {
+    it('should close list if input is empty', function() {
         var stubEvent = {
             keyCode: 8, // Backspace
             preventDefault: function() {},
             target: {
-                value: ""
+                value: ''
             }
         };
 
-        spyOn(sut, "fetchData");
-        spyOn(sut, "clear");
+        spyOn(sut, 'fetchData');
+        spyOn(sut, 'clear');
 
         sut.getListOfResults(stubEvent);
 
@@ -174,10 +175,10 @@ describe('Search tool', function () {
         expect(sut.fetchData).not.toHaveBeenCalled();
     });
 
-    it("should clear after pushing data", function() {
-        spyOn(sut, "destroy");
+    it('should clear after pushing data', function() {
+        spyOn(sut, 'destroy');
 
-        $(".js-search-tool-list").html('<li><a class="active" data-weather-city="test2"></a></li>');
+        $('.js-search-tool-list').html('<li><a class="active" data-weather-city="test2"></a></li>');
 
         sut.init();
 
@@ -194,33 +195,33 @@ describe('Search tool', function () {
         jasmine.clock().uninstall();
     });
 
-    it("should fetch data", function(done) {
+    it('should fetch data', function(done) {
         var server = sinon.fakeServer.create();
         server.autoRespond = true;
 
-        server.respondWith([200, { "Content-Type": "application/json" },
+        server.respondWith([200, { 'Content-Type': 'application/json' },
             '[{ "localizedName": "London"}]']);
 
-        spyOn(sut, "renderList");
+        spyOn(sut, 'renderList');
 
         sut.fetchData().then(function() {
-            expect(sut.renderList).toHaveBeenCalledWith([{"localizedName": "London"}], 5);
+            expect(sut.renderList).toHaveBeenCalledWith([{'localizedName': 'London'}], 5);
             done();
         });
 
         server.restore();
     });
 
-    it("should set input value", function() {
-        spyOn(sut, "setInputValue").and.callThrough();
+    it('should set input value', function() {
+        spyOn(sut, 'setInputValue').and.callThrough();
 
         sut.init();
 
-        sut.setInputValue("test1");
-        expect($(".js-search-tool-input").val()).toEqual("test1");
+        sut.setInputValue('test1');
+        expect($('.js-search-tool-input').val()).toEqual('test1');
 
-        $(".js-search-tool-list").html('<li><a class="active" data-weather-city="test2"></a></li>');
+        $('.js-search-tool-list').html('<li><a class="active" data-weather-city="test2"></a></li>');
         sut.setInputValue();
-        expect($(".js-search-tool-input").val()).toEqual("test2");
+        expect($('.js-search-tool-input').val()).toEqual('test2');
     });
 });

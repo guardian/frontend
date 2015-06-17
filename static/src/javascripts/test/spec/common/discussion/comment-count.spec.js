@@ -1,10 +1,11 @@
 import qwery from 'qwery';
+import sinon from 'sinonjs';
 import $ from 'common/utils/$';
 import mediator from 'common/utils/mediator';
 import commentCount from 'common/modules/discussion/comment-count';
 import testData from 'fixtures/commentcounts';
 
-describe("Comment counts", function() {
+describe('Comment counts', function() {
 
     var server;
 
@@ -23,7 +24,7 @@ describe("Comment counts", function() {
         server = sinon.fakeServer.create();
         server.respondWith([
             200,
-            { "Content-Type": "application/json" },
+            { 'Content-Type': 'application/json' },
             testData
         ]);
         server.autoRespond = true;
@@ -36,12 +37,12 @@ describe("Comment counts", function() {
         server.restore();
     });
 
-    it("should get discussion id's from the DOM", function(){
+    it('should get discussion id\'s from the DOM', function(){
         var data = '/p/3gh4n,/p/3ghv5,/p/3ghx3';
         expect(commentCount.getContentIds(commentCount.getElementsIndexedById())).toEqual(data);
     });
 
-    it("should get comment counts from ajax end-point", function (done) {
+    it('should get comment counts from ajax end-point', function (done) {
         mediator.once('modules:commentcount:loaded', function () {
             done();
         });
@@ -49,7 +50,7 @@ describe("Comment counts", function() {
         commentCount.init();
     });
 
-    it("should append comment counts to DOM", function (done) {
+    it('should append comment counts to DOM', function (done) {
         mediator.once('modules:commentcount:loaded', function () {
             expect(qwery('.fc-trail__count--commentcount').length).toBe(3);
             done();

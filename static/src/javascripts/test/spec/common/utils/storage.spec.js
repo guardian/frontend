@@ -1,18 +1,21 @@
 import mediator from 'common/utils/mediator';
+import sinon from 'sinonjs';
 import storage from 'common/utils/storage';
 
 describe('Storage', function() {
 
     var date;
 
+    /*eslint-disable no-extend-native*/
     Date.prototype.addHours = function(h){
-        this.setHours(this.getHours()+h);
+        this.setHours(this.getHours() + h);
         return this;
     };
+    /*eslint-enable no-extend-native*/
 
     beforeEach(function() {
         sinon.spy(mediator, 'emit');
-        date = new Date;
+        date = new Date();
     });
 
     afterEach(function() {
@@ -28,7 +31,7 @@ describe('Storage', function() {
     });
 
     function setWindowLocalStorage(winLocalStorage) {
-        storage.local.setWindow({localStorage: winLocalStorage})
+        storage.local.setWindow({localStorage: winLocalStorage});
     }
 
     function testSetAndGet(key, data, dataAsString) {
@@ -83,15 +86,15 @@ describe('Storage', function() {
 
     it('should return number of items in storage', function() {
         storage.local.removeAll();
-        storage.local.set('foo',' bar');
+        storage.local.set('foo', ' bar');
         expect(storage.local.length()).toBe(1);
-        storage.local.set('foo2',' bar2');
+        storage.local.set('foo2', ' bar2');
         expect(storage.local.length()).toBe(2);
     });
 
     it('should return item by index', function() {
         storage.local.removeAll();
-        storage.local.set('foo',' bar');
+        storage.local.set('foo', ' bar');
         expect(storage.local.getKey(0)).toBe('foo');
     });
 

@@ -5,7 +5,7 @@ import $ from 'common/utils/$';
 import sut from 'common/modules/navigation/navigation';
 import fixtures from 'helpers/fixtures';
 
-describe("Navigation", function() {
+describe('Navigation', function() {
 
     beforeEach(function() {
         fixtures.render({
@@ -17,19 +17,19 @@ describe("Navigation", function() {
                     '</div>' +
                     '<div class="js-mega-nav"><div class="global-navigation">Nav</div></div>'
             ]
-        })
+        });
     });
 
     afterEach(function() {
         fixtures.clean('navigation-fixture');
     });
 
-    it("should initialise", function() {
+    it('should initialise', function() {
         expect(sut).toEqual(jasmine.any(Object));
 
-        spyOn(sut, "copyMegaNavMenu");
-        spyOn(sut, "enableMegaNavToggle");
-        spyOn(sut, "replaceAllSectionsLink");
+        spyOn(sut, 'copyMegaNavMenu');
+        spyOn(sut, 'enableMegaNavToggle');
+        spyOn(sut, 'replaceAllSectionsLink');
 
         sut.init();
 
@@ -38,7 +38,7 @@ describe("Navigation", function() {
         expect(sut.replaceAllSectionsLink).toHaveBeenCalled();
     });
 
-    it("should copy mega nav menu to placeholder", function(done) {
+    it('should copy mega nav menu to placeholder', function(done) {
 
         sut.copyMegaNavMenu();
 
@@ -48,15 +48,15 @@ describe("Navigation", function() {
         });
     });
 
-    it("should change all sections link", function() {
-        expect($('.js-navigation-header .js-navigation-toggle').attr("href")).toEqual("#footer-nav");
+    it('should change all sections link', function() {
+        expect($('.js-navigation-header .js-navigation-toggle').attr('href')).toEqual('#footer-nav');
 
         sut.replaceAllSectionsLink();
 
-        expect($('.js-navigation-header .js-navigation-toggle').attr("href")).toEqual("#nav-allsections");
+        expect($('.js-navigation-header .js-navigation-toggle').attr('href')).toEqual('#nav-allsections');
     });
 
-    it("should toggle navigation class", function(done) {
+    it('should toggle navigation class', function(done) {
         var className = $('.js-navigation-toggle').attr('data-target-nav');
 
         expect($('.' + className).hasClass('navigation-container--collapsed')).toBeTruthy();
