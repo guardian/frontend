@@ -17,7 +17,8 @@ define([
     var Api = {
         root: (document.location.protocol === 'https:')
                 ? config.page.secureDiscussionApiRoot
-                : (prefs.isOn('discussion.useProxy') ? 'http://www.theguardian.com/guardianapis/discussion/discussion-api' : config.page.discussionApiRoot),
+                : config.page.discussionApiRoot,
+        proxyRoot: (prefs.isOn('discussion.useProxy') ? 'http://www.theguardian.com/guardianapis/discussion/discussion-api' : config.page.discussionApiRoot),
         clientHeader: config.page.discussionApiClientHeader
     };
 
@@ -25,16 +26,18 @@ define([
      * @param {string} endpoint
      * @param {string} method
      * @param {Object.<string.*>} data
+     * @param {boolean} proxy use a non cross domain proxy to avoid needing CORS which is blocked by http1 proxies
      * @return {Reqwest} a promise
      */
-    Api.send = function (endpoint, method, data) {
+    Api.send = function (endpoint, method, data, proxy) {
+        var root = (proxy || false) ? Api.proxyRoot : Api.root;
         data = data || {};
         if (cookies.get('GU_U')) {
             data.GU_U = cookies.get('GU_U');
         }
 
         var request = ajax({
-            url: Api.root + endpoint,
+            url: root + endpoint,
             type: (method === 'get') ? 'jsonp' : 'json',
             method: method,
             crossOrigin: true,
@@ -57,7 +60,7 @@ define([
         var endpoint = '/discussion/' + discussionId + '/comment' +
             (comment.replyTo ? '/' + comment.replyTo.commentId + '/reply' : '');
 
-        return Api.send(endpoint, 'post', comment);
+        return Api.send(endpoint, 'post', comment, true);
     };
 
     /**
