@@ -1,4 +1,5 @@
 import LazyLoad from 'common/modules/lazyload';
+import sinon from 'sinonjs';
 import bonzo from 'bonzo';
 
 describe('Lazy Load', function() {
@@ -32,7 +33,7 @@ describe('Lazy Load', function() {
             }
         }).load();
 
-    })
+    });
 
 });
 

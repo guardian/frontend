@@ -1,4 +1,5 @@
 import RelativeDates from 'common/modules/ui/relativedates';
+import sinon from 'sinonjs';
 import bonzo from 'bonzo';
 import fixtures from 'helpers/fixtures';
 import qwery from 'qwery';
@@ -15,11 +16,11 @@ var conf =  {
     fakeNow = Date.parse('2012-08-13T12:00:00+01:00'),
     date;
 
-describe("Relative dates", function() {
+describe('Relative dates', function() {
 
     beforeEach(function() {
         fixtures.render(conf);
-        date = sinon.useFakeTimers(fakeNow, "Date");
+        date = sinon.useFakeTimers(fakeNow, 'Date');
     });
 
     afterEach(function() {
@@ -117,6 +118,7 @@ describe("Relative dates", function() {
         };
 
         for (var category in datesToTest) {
+            /*eslint-disable no-loop-func*/
             describe('Show relative dates for timestamps formatted as YYYY-MM-DD HH:MM:SS [' + category + ']', function(){
                 var d     = datesToTest[category],
                     epoch = Date.parse(d.date);
@@ -135,32 +137,33 @@ describe("Relative dates", function() {
                     expect(RelativeDates.makeRelativeDate(epoch, { format: 'long' })).toBe(d.expectedLongOutput);
                 });
             });
+            /*eslint-enable no-loop-func*/
         }
 
-    it("Return the input date if said date is in the future", function(){
+    it('Return the input date if said date is in the future', function(){
         expect(RelativeDates.makeRelativeDate(Date.parse(epochBug))).toBeFalsy();
     });
 
-    it("Fail politely if given non-date / invalid input for either argument", function(){
+    it('Fail politely if given non-date / invalid input for either argument', function(){
         expect(RelativeDates.makeRelativeDate('foo')).toBeFalsy();
     });
 
-    it("Fail politely if the date is older than a 'notAfter' value", function(){
+    it('Fail politely if the date is older than a \'notAfter\' value', function(){
         expect(RelativeDates.makeRelativeDate(Date.parse(fakeNow), {notAfter: 3600})).toBeFalsy();
     });
 
-    it("Convert valid timestamps in the HTML document into their expected output", function(){
+    it('Convert valid timestamps in the HTML document into their expected output', function(){
         RelativeDates.init();
         expect(document.getElementById('time-valid').innerHTML).toBe('Yesterday 19:43');
         expect(document.getElementById('time-valid').getAttribute('title')).toBe('12th August');
     });
 
-    it("Ignore invalid timestamps", function(){
+    it('Ignore invalid timestamps', function(){
         RelativeDates.init();
         expect(document.getElementById('time-invalid').innerHTML).toBe('Last Tuesday');
     });
 
-    it("Should convert timestamps to users locale", function(){
+    it('Should convert timestamps to users locale', function(){
         RelativeDates.init();
         expect(document.getElementById('time-locale').innerHTML).toBe('17:00');
     });

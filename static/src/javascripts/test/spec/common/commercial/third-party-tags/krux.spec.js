@@ -1,5 +1,6 @@
-import $ from 'common/utils/$'
-import Injector from 'helpers/injector'
+import $ from 'common/utils/$';
+import Injector from 'helpers/injector';
+import sinon from 'sinonjs';
 
 describe('Krux', function () {
 

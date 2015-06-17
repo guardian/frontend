@@ -11,7 +11,7 @@ describe('Scroll depth', function() {
     it('should log page depth on scroll.', function(done) {
 
         mediator.on('scrolldepth:data', function (data){
-            expect(data.page.depth).toEqual(100);            
+            expect(data.page.depth).toEqual(100);
             done();
         });
 

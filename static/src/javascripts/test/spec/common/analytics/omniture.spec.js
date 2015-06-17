@@ -1,5 +1,5 @@
 import Injector from 'helpers/injector';
-import sinonjs from 'sinonjs';
+import sinon from 'sinonjs';
 import jasmineSinon from 'jasmine-sinon';
 
 describe('omniture', function () {
@@ -139,7 +139,7 @@ describe('omniture', function () {
         s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk';
         omniture.go();
 
-        expect(s.cookieDomainPeriods).toBe('2')
+        expect(s.cookieDomainPeriods).toBe('2');
     });
 
     it('should log a page view event', function () {
@@ -210,7 +210,7 @@ describe('omniture', function () {
         omniture.go();
         mediator.emit('module:clickstream:click', clickSpec);
 
-        expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage')
+        expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage');
     });
 
     it('should make a delayed s.tl call for other-host links', function () {

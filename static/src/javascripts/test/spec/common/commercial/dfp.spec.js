@@ -1,6 +1,8 @@
+/*eslint-disable no-multi-str*/
 import bean from 'bean';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
+import sinon from 'sinonjs';
 import qwery from 'qwery';
 import $ from 'common/utils/$';
 import fixtures from 'helpers/fixtures';
@@ -28,22 +30,22 @@ describe('DFP', function () {
                             getDomId: function() {
                                 return id;
                             }
-                        }
+                        };
                     }
                 },
                 size: ['300', '250']
-            }
+            };
         },
         injector = new Injector(),
         dfp, config, mediator;
 
-    beforeEach(function (done) {
+    beforeEach(function (done) {
 
         injector.test(['common/modules/commercial/dfp', 'common/utils/config', 'common/utils/mediator'], function () {
             dfp = arguments[0];
             config = arguments[1];
             mediator = arguments[2];
-            
+
             config.switches = {
                 commercialComponents: true,
                 standardAdverts:      true
@@ -103,7 +105,7 @@ describe('DFP', function () {
             };
             done();
         });
-    });    
+    });
 
     afterEach(function () {
         dfp.reset();
@@ -140,7 +142,7 @@ describe('DFP', function () {
     it('should set listeners', function () {
         dfp.init();
         window.googletag.cmd.forEach(function (func) { func(); });
-        expect(googletag.pubads().addEventListener).toHaveBeenCalledWith('slotRenderEnded');
+        expect(window.googletag.pubads().addEventListener).toHaveBeenCalledWith('slotRenderEnded');
     });
 
     it('should define slots', function () {
@@ -154,7 +156,7 @@ describe('DFP', function () {
             ['dfp-ad-dont-label', [[728, 90], [900, 250], [970, 250], [300, 50], [320, 50]], [ [[980, 0], [[728, 90], [900, 250], [970, 250]]], [[740, 0], [[728, 90]]], [[0, 0], [[300, 50], [320, 50]]] ], 'dont-label']
         ].forEach(function(data) {
                 expect(window.googletag.defineSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', data[1], data[0]);
-                expect(window.googletag.addService).toHaveBeenCalledWith(googletag.pubads());
+                expect(window.googletag.addService).toHaveBeenCalledWith(window.googletag.pubads());
                 data[2].forEach(function(size) {
                     expect(window.googletag.sizeMapping().addSize).toHaveBeenCalledWith(size[0], size[1]);
                 });
@@ -247,7 +249,9 @@ describe('DFP', function () {
                 var $frame = $.create('<iframe></iframe>')
                     .attr({
                         id: 'mock_frame',
+                        /*eslint-disable no-script-url*/
                         src: 'javascript:"<html><body style="background:transparent"></body></html>"'
+                        /*eslint-enable no-script-url*/
                     });
                 $frame[0].onload = function () {
                     this.contentDocument.body.innerHTML = html;
@@ -274,7 +278,7 @@ describe('DFP', function () {
 
         it('should run javascript', function () {
             var str = 'This came from an iframe';
-            createTestIframe(slotId, '<script class="breakout__script">window.dfpModuleTestVar = "'+ str +'"</script>');
+            createTestIframe(slotId, '<script class="breakout__script">window.dfpModuleTestVar = "' + str + '"</script>');
             dfp.init();
             window.googletag.cmd.forEach(function(func) { func(); });
             window.googletag.pubads().listener(makeFakeEvent(slotId));

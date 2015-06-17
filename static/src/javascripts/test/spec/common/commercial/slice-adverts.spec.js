@@ -30,7 +30,7 @@ describe('Slice Adverts', function () {
 
             $fixtureContainer = fixtures.render(fixturesConfig);
             done();
-        });        
+        });
     });
 
     afterEach(function () {

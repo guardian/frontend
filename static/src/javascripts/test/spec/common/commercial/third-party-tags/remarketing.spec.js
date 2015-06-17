@@ -1,4 +1,4 @@
-import remarketing from 'common/modules/commercial/third-party-tags/remarketing'
+import remarketing from 'common/modules/commercial/third-party-tags/remarketing';
 
 describe('Remarketing', function() {
 

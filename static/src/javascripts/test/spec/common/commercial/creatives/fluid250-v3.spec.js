@@ -1,7 +1,7 @@
-import qwery from 'qwery'
-import $ from 'common/utils/$'
-import fixtures from 'helpers/fixtures'
-import Fluid250 from 'common/modules/commercial/creatives/fluid250-v3'
+import qwery from 'qwery';
+import $ from 'common/utils/$';
+import fixtures from 'helpers/fixtures';
+import Fluid250 from 'common/modules/commercial/creatives/fluid250-v3';
 
 var fixturesConfig = {
     id: 'ad-slot',

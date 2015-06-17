@@ -1,5 +1,5 @@
 import Injector from 'helpers/injector';
-import sinonjs from 'sinonjs';
+import sinon from 'sinonjs';
 import jasmineSinon from 'jasmine-sinon';
 
 describe('Get user data', function () {

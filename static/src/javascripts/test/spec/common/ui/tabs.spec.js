@@ -11,7 +11,7 @@ var t,
     allTabs,
     fakeTab;
 
-describe("Tabs", function() {
+describe('Tabs', function() {
 
     beforeEach(function() {
         fixtures.render({
@@ -58,7 +58,7 @@ describe("Tabs", function() {
         // only way i can think of to test if a valid URL would actually execute
         bean.add(fakeTab, 'click', function(e){
             var link = this.getAttribute('href');
-            if (link.substring(0,1) !== '#') {
+            if (link.substring(0, 1) !== '#') {
                 e.stop(); // have to override us from leaving page
                 this.setAttribute('data-valid-link', '1');
             }
@@ -69,36 +69,36 @@ describe("Tabs", function() {
         fixtures.clean('tabs-fixtures');
     });
 
-    it("should add a CSS class and set the correct ARIA state to the selected tab when clicked", function(){
+    it('should add a CSS class and set the correct ARIA state to the selected tab when clicked', function(){
         var li = tab2.parentNode;
         bean.fire(tab2, 'click');
         expect(li.getAttribute('class')).toContain('tabs__tab tabs__tab--selected');
         expect(li.getAttribute('aria-selected')).toBe('true');
     });
 
-    it("should remove a CSS class and set the correct ARIA state on the previously-selected tab when clicked", function(){
+    it('should remove a CSS class and set the correct ARIA state on the previously-selected tab when clicked', function(){
         var li = tab1.parentNode;
         bean.fire(tab2, 'click');
         expect(li.getAttribute('class')).toBe('tabs__tab');
         expect(li.getAttribute('aria-selected')).toBe('false');
     });
 
-    it("should show the correct panel when a tab is clicked", function(){
+    it('should show the correct panel when a tab is clicked', function(){
         bean.fire(tab2, 'click');
         expect(tab2panel.getAttribute('class')).not.toContain('modern-hidden');
     });
 
-    it("should hide other panels when a tab is clicked", function(){
+    it('should hide other panels when a tab is clicked', function(){
         bean.fire(tab2, 'click');
         expect(tab1panel.getAttribute('style')).toContain('display: none');
     });
 
-    it("should operate independently of other tabsets on the page", function(){
+    it('should operate independently of other tabsets on the page', function(){
         bean.fire(tab2, 'click');
         expect(independentTabPanel.getAttribute('class')).toContain('modern-hidden');
     });
 
-    it("should allow 'fake' tabs with URL hrefs instead of ID selectors", function(){
+    it('should allow \'fake\' tabs with URL hrefs instead of ID selectors', function(){
         bean.fire(fakeTab, 'click');
         expect(fakeTab.getAttribute('data-valid-link')).toBe('1');
     });

@@ -1,6 +1,6 @@
-import ExpandableV3 from 'common/modules/commercial/creatives/expandable-v3'
-import fixtures from 'helpers/fixtures'
-import $ from 'common/utils/$'
+import ExpandableV3 from 'common/modules/commercial/creatives/expandable-v3';
+import fixtures from 'helpers/fixtures';
+import $ from 'common/utils/$';
 
 var fixturesConfig = {
     id: 'expandablev3-ad-slot',

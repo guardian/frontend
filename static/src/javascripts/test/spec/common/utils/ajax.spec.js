@@ -1,4 +1,5 @@
 import Injector from 'helpers/injector';
+import sinon from 'sinonjs';
 
 describe('AJAX', function () {
 
@@ -10,7 +11,7 @@ describe('AJAX', function () {
             };
         })
     },
-        injector = new Injector,
+        injector = new Injector(),
         ajax;
 
     beforeEach(function(done){
