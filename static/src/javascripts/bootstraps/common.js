@@ -25,6 +25,7 @@ define([
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
+    'common/modules/commercial/comment-adverts',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
     'common/modules/experiments/ab',
@@ -83,6 +84,7 @@ define([
     logCss,
     simpleMetrics,
     userAdTargeting,
+    commentAdverts,
     CommentCount,
     DiscussionLoader,
     ab,
@@ -377,6 +379,10 @@ define([
                 }
             },
 
+            commentsAds: function () {
+                commentAdverts.init();
+            },
+
             showMoreTagsLink: function () {
                 new MoreTags().init();
             },
@@ -529,6 +535,7 @@ define([
             robust('c-forsee',          modules.runForseeSurvey);
             robust('c-start-register',  modules.startRegister);
             robust('c-comments',        modules.repositionComments);
+            robust('c-comments-ads',        modules.commentsAds);
             robust('c-tag-links',       modules.showMoreTagsLink);
             robust('c-smart-banner',    modules.showSmartBanner);
             robust('c-adblock',         modules.showAdblockMessage);

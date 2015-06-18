@@ -8,7 +8,8 @@ define([
     'common/utils/mediator',
     'common/modules/identity/api',
     'common/modules/experiments/ab',
-    'common/modules/commercial/create-ad-slot'
+    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp'
 ], function (
     fastdom,
     Promise,
@@ -19,7 +20,8 @@ define([
     mediator,
     identityApi,
     ab,
-    createAdSlot
+    createAdSlot,
+    dfp
 ) {
     function init(options) {
         var adType,
@@ -32,6 +34,7 @@ define([
             ),
             $adSlotContainer,
             $commentMainColumn,
+            $adSlot,
             isMtRecTest = function () {
                 var MtRec1Test = ab.getParticipations().MtRec1,
                     MtRec2Test = ab.getParticipations().MtRec2;
@@ -53,28 +56,24 @@ define([
             return false;
         }
 
-        return new Promise(function (resolve) {
-            mediator.once('modules:comments:renderComments:rendered', function () {
-                //if comments container is lower than 280px
-                if ($commentMainColumn.dim().height < 280) {
-                    resolve(false);
-                }
+        mediator.once('modules:comments:renderComments:rendered', function () {
+            //if comments container is lower than 280px
+            if ($commentMainColumn.dim().height < 280) {
+                return false;
+            }
 
+            fastdom.write(function () {
                 $commentMainColumn.addClass('discussion__ad-wrapper');
 
                 if (!config.page.isLiveBlog) {
                     $commentMainColumn.addClass('discussion__ad-wrapper-wider');
                 }
 
-                fastdom.read(function () {
-                    adType = 'comments';
+                adType = 'comments';
 
-                    fastdom.write(function () {
-                        $adSlotContainer.append(createAdSlot(adType, 'mpu-banner-ad'));
-
-                        resolve($adSlotContainer);
-                    });
-                });
+                $adSlot = $(createAdSlot(adType, 'mpu-banner-ad'));
+                $adSlotContainer.append($adSlot);
+                dfp.addSlot($adSlot);
             });
         });
 
