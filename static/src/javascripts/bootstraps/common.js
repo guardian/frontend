@@ -535,7 +535,7 @@ define([
             robust('c-forsee',          modules.runForseeSurvey);
             robust('c-start-register',  modules.startRegister);
             robust('c-comments',        modules.repositionComments);
-            robust('c-comments-ads',        modules.commentsAds);
+            robust('c-comments-ads',    modules.commentsAds);
             robust('c-tag-links',       modules.showMoreTagsLink);
             robust('c-smart-banner',    modules.showSmartBanner);
             robust('c-adblock',         modules.showAdblockMessage);
