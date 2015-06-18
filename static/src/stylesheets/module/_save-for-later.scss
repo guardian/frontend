@@ -1,8 +1,11 @@
 @mixin sfl-button-style($foreground: colour(neutral-2), $background: #ffffff) {
+    .save-for-later__button {
+        border-color: $foreground;
+    }
+
     .save-for-later__button--save,
     .save-for-later__button--saved:hover {
         color: $foreground;
-        border-color: $foreground;
         background-color: $background;
 
         .inline-icon {
@@ -13,7 +16,6 @@
     .save-for-later__button--saved,
     .save-for-later__button--save:hover {
         color: $background;
-        border-color: $foreground;
         background-color: $foreground;
 
         .inline-icon {
