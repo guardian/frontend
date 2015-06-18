@@ -88,7 +88,9 @@ define([
                     isNetFront = _.contains(['uk', 'us', 'au'], pageId),
                     isSport = _.contains(['sport', 'football'], config.page.section);
 
-                if (config.switches.liveblogFrontUpdatesOther && !isSport && !isNetFront ||
+                if (detect.isBreakpoint({ max: 'tablet' })) {
+                    return;
+                } else if (config.switches.liveblogFrontUpdatesOther && !isSport && !isNetFront ||
                     config.switches.liveblogFrontUpdatesUk && pageId === 'uk' ||
                     config.switches.liveblogFrontUpdatesUs && pageId === 'us' ||
                     config.switches.liveblogFrontUpdatesAu && pageId === 'au') {
