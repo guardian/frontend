@@ -1,0 +1,20 @@
+.sport-summary--cricket {
+
+    @include mq($until: phablet) {
+        padding-top: $gs-baseline * 2;
+    }
+
+    .table__caption {
+        padding-left: 0;
+    }
+    .table__caption--bottom {
+        padding-bottom: 0;
+        margin-bottom: $gs-baseline;
+    }
+    .table__caption--bottom-link {
+        float: left;
+    }
+    table td {
+        padding-left: 0;
+    }
+}
