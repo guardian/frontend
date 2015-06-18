@@ -1,6 +1,6 @@
 @()
 
-@JavaScript(Static.js.es6ModuleLoader)
+@JavaScript(Static.js.systemJsPolyfills)
 @JavaScript(Static.js.systemJs)
 
 System.config({
