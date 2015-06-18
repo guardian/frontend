@@ -59,7 +59,6 @@ define([
         mediator.once('modules:comments:renderComments:rendered', function () {
             fastdom.read(function () {
                 //if comments container is lower than 280px
-                console.log($commentMainColumn, $commentMainColumn.dim().height);
                 if ($commentMainColumn.dim().height < 280) {
                     return false;
                 }
