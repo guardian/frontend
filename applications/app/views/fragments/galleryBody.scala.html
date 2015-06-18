@@ -16,12 +16,14 @@
         <div class="content__main tonal__main tonal__main--@articleToneClass(gallery)">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--gallery">
+                    @fragments.witnessCallToAction(gallery)
                     @fragments.contentMeta(gallery)
                     <ul class="gallery2">
                         @gallery.largestCrops.zipWithRowInfo.map { case (image, row) =>
                             @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, gallery.imageContainer(row.rowNum - 1))
                         }
                     </ul>
+                    @fragments.witnessCallToAction(gallery)
                     @fragments.submeta(gallery)
                 </div>
             </div>
