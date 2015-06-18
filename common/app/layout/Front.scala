@@ -194,7 +194,7 @@ object FaciaContainer {
       case _ => ContainerCommercialOptions.fromConfig(config.config)
     },
     config.config.description match {
-      case Some(description)  => DescriptionMetaHeader(description)
+      case Some(description)  => Some(DescriptionMetaHeader(Some(description)))
       case _ => None
     },
     None,

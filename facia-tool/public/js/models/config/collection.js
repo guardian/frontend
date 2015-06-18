@@ -55,7 +55,8 @@ define([
             'showDateHeader',
             'showLatestUpdate',
             'excludeFromRss',
-            'apiQuery']);
+            'apiQuery',
+            'description']);
 
         populateObservables(this.meta, opts);
 

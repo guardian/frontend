@@ -82,8 +82,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderFront(path: String) = MemcachedAction { implicit request =>
     println("Servin frontA!")
     log.info(s"Serving Path: $path")
-    if (EditionalisedSections.isEditionalised(path) && !request.getQueryString("page").isDefined)
+    if (EditionalisedSections.isEditionalised(path) && !request.getQueryString("page").isDefined) {
+      println("Edition r")
       redirectToEditionalisedVersion(path)
+    }
     else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
       applicationsRedirect(path)
     else
@@ -151,6 +153,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             else if (faciaPage.isExpiredAdvertisementFeature)
               MovedPermanently(expiredAdFeatureUrl)
             else
+              println("++ Hello")
               Ok(views.html.front(PressedPage.fromFaciaPage(faciaPage)))
           }
         case None => Cached(45)(NotFound)
@@ -161,6 +164,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   private[controllers] def renderFrontPressResult(path: String)(implicit request : RequestHeader) = {
     if (Switches.FaciaServerNewFormat.isSwitchedOn) {
+      println("Swith on")
       val futureResult = frontJsonFapi.get(path).flatMap {
         case Some(faciaPage) =>
           Future.successful(
@@ -172,7 +176,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
               else if (faciaPage.isExpiredAdvertisementFeature)
                 MovedPermanently(expiredAdFeatureUrl)
               else
-                Ok(views.html.front(faciaPage))
+                println("++ Hello 2 ")
+              Ok(views.html.front(faciaPage))
             }
           )
         case None => renderFrontPressResultFallback(path)
@@ -183,6 +188,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
       futureResult
     } else {
+      println("witch off")
       renderFrontPressResultFallback(path)
     }
 
