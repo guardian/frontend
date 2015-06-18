@@ -1,51 +1,41 @@
-@mixin save-for-later-state($state, $c-accent) {
-    &.save-for-later--#{$state} {
-        .save-for-later__label--#{$state} {
-            display: inline;
-        }
+@mixin sfl-button-style($foreground: colour(neutral-2), $background: #ffffff) {
+    .save-for-later__button--save,
+    .save-for-later__button--saved:hover {
+        color: $foreground;
+        border-color: $foreground;
+        background-color: $background;
 
-        &.button .inline-icon {
-            fill: $c-accent;
+        .inline-icon {
+            fill: $foreground;
+        }
+    }
+
+    .save-for-later__button--saved,
+    .save-for-later__button--save:hover {
+        color: $background;
+        border-color: $foreground;
+        background-color: $foreground;
+
+        .inline-icon {
+            fill: $background;
         }
     }
 }
 
-.button.save-for-later__button {
+@mixin sfl-button-toned($tone, $foreground: colour(news-main-1), $background: #ffffff) {
+    .tonal--tone-#{$tone} {
+        @include sfl-button-style($foreground, $background);
+    }
+}
+
+// size etc
+.save-for-later__button {
     font-size: get-font-size(textSans, 1);
-    width: gs-span(2) - $gs-gutter;
     @include button-height(32px);
-    @include button-colour(
-        $fill-colour: colour(neutral-6),
-        $border-color: colour(neutral-6),
-        $text-colour: colour(neutral-1),
-        $hover-colour: colour(neutral-5),
-        $hover-border: colour(neutral-5)
-    );
-
-    @include save-for-later-state(save, colour(neutral-2));
-    @include save-for-later-state(saved, colour(news-accent));
-    @include save-for-later-state(remove, colour(live-accent));
-    @include save-for-later-state(confirm-delete-all, colour(live-accent));
-    @include save-for-later-state(delete-all, colour(neutral-1));
-
-    &.save-for-later--save {
-        @include button-colour(
-            $fill-colour: transparent,
-            $border-color: colour(neutral-6),
-            $text-colour: colour(neutral-1),
-            $hover-colour: colour(neutral-8),
-            $hover-border: colour(neutral-8)
-        );
-    }
-
-    &:hover {
-        background-color: colour(neutral-5);
-    }
 
     .inline-icon {
-        fill: colour(neutral-1);
-        margin-left: 0;
-        margin: 0 4px 0 0;
+        margin: 0;
+        margin-right: .5em;
 
         svg {
             width: 8px;
@@ -53,6 +43,29 @@
     }
 }
 
+// colours per state
+@include sfl-button-style();
+@include sfl-button-toned(analysis, colour(analysis-accent));
+@include sfl-button-toned(comment, colour(comment-default));
+@include sfl-button-toned(dead, colour(live-default), colour(neutral-7));
+@include sfl-button-toned(editorial, colour(editorial-default));
+@include sfl-button-toned(feature, colour(feature-default));
+@include sfl-button-toned(letters, colour(comment-default));
+@include sfl-button-toned(live, colour(live-default), colour(neutral-8));
+@include sfl-button-toned(media, colour(media-default), colour(media-background));
+@include sfl-button-toned(news);
+@include sfl-button-toned(review, colour(review-background));
+@include sfl-button-toned(special-reports);
+
+// button labels per state
 .save-for-later__label {
     display: none;
+}
+
+@each $state in (save, saved, remove) {
+    .save-for-later__button--#{$state} {
+        .save-for-later__label--#{$state} {
+            display: inline;
+        }
+    }
 }
