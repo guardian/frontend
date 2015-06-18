@@ -18,32 +18,25 @@ define([
     identityApi,
     ab,
     createAdSlot
-) {
+    ) {
     function init(options) {
         var adType,
             opts = _.defaults(
-                options || {},
+                    options || {},
                 {
                     adSlotContainerSelector: '.js-discussion__ad-slot',
                     commentMainColumn: '.content__main-column'
                 }
             ),
             $adSlotContainer,
-            $commentMainColumn,
-            isMtRecTest = function () {
-                var MtRec1Test = ab.getParticipations().MtRec1,
-                    MtRec2Test = ab.getParticipations().MtRec2;
-
-                return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A' ||
-                    ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
-            };
+            $commentMainColumn;
 
         $adSlotContainer = $(opts.adSlotContainerSelector);
         $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
 
         mediator.once('modules:comments:renderComments:rendered', function () {
             // is the switch off, or not in the AB test, or there is no adslot container, or comments are disabled, or not signed in, or comments container is lower than 280px
-            if (!config.switches.standardAdverts || !isMtRecTest() || !$adSlotContainer.length || !config.switches.discussion || !identityApi.isUserLoggedIn() || $commentMainColumn.dim().height < 280) {
+            if (!config.switches.standardAdverts || !ab.shouldRunTest('Viewability', 'variant') || !$adSlotContainer.length || !config.switches.discussion || !identityApi.isUserLoggedIn() || $commentMainColumn.dim().height < 280) {
                 return false;
             }
 
