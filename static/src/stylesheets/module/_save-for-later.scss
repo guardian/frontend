@@ -1,25 +1,27 @@
+$sfl-button-height: 32px;
+
 @mixin sfl-button-style($foreground: colour(neutral-2), $background: #ffffff) {
     .save-for-later__button {
-        border-color: $foreground;
+        color: $foreground;
+
+        .inline-icon {
+            border-color: $foreground;
+        }
     }
 
     .save-for-later__button--save,
     .save-for-later__button--saved:hover {
-        color: $foreground;
-        background-color: $background;
-
         .inline-icon {
             fill: $foreground;
+            background-color: $background;
         }
     }
 
     .save-for-later__button--saved,
     .save-for-later__button--save:hover {
-        color: $background;
-        background-color: $foreground;
-
         .inline-icon {
             fill: $background;
+            background-color: $foreground;
         }
     }
 }
@@ -34,10 +36,17 @@
 .save-for-later__button {
     font-size: get-font-size(textSans, 1);
     @include button-height(32px);
+    border: none;
+    background-color: transparent;
+    padding: 0;
 
     .inline-icon {
         margin: 0;
         margin-right: .5em;
+        width: $sfl-button-height;
+        height: $sfl-button-height;
+        border-width: 1px;
+        border-style: solid;
 
         svg {
             width: 8px;
