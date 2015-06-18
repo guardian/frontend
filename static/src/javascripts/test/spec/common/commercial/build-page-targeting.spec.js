@@ -6,7 +6,7 @@ describe('Build Page Targeting', function () {
     var buildPageTargeting, config, cookies, detect, userAdTargeting, ab, krux, audienceScienceGateway,
         injector = new Injector();
 
-    beforeEach(function(done){
+    beforeEach(function (done) {
         injector.test([
                 'common/modules/commercial/build-page-targeting',
                 'common/utils/config',

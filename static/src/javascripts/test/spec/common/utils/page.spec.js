@@ -23,10 +23,10 @@ describe('Page', function () {
         });
     });
 
-    describe('isMatch', function() {
+    describe('isMatch', function () {
 
         it('should callback on match reports', function () {
-            config.referencesOfType = function() { return [34, 3]; };
+            config.referencesOfType = function () { return [34, 3]; };
             config.page.tones = 'Match reports';
 
             var cb = sinon.spy();
@@ -42,7 +42,7 @@ describe('Page', function () {
         });
 
         it('should callback on minute by minute live blogs', function () {
-            config.referencesOfType = function() { return [33, 1]; };
+            config.referencesOfType = function () { return [33, 1]; };
             config.page.isLiveBlog = true;
 
             var cb = sinon.spy();
@@ -59,7 +59,7 @@ describe('Page', function () {
         });
 
         it('should callback on match previews', function () {
-            config.referencesOfType = function() { return [1, 2]; };
+            config.referencesOfType = function () { return [1, 2]; };
             config.page.series = 'Match previews';
 
             var cb = sinon.spy();
@@ -76,7 +76,7 @@ describe('Page', function () {
         });
 
         it('should not callback without two teams', function () {
-            config.referencesOfType = function() { return [1]; };
+            config.referencesOfType = function () { return [1]; };
             config.page.isLiveBlog = true;
 
             var cb = sinon.spy();
@@ -89,7 +89,7 @@ describe('Page', function () {
     });
 
 
-    describe('isClockwatch', function() {
+    describe('isClockwatch', function () {
         it('should not callback on non-clockwatch series', function () {
             config.page.series = 'Blogger of the week (Cities)';
 
@@ -111,7 +111,7 @@ describe('Page', function () {
         });
     });
 
-    describe('isLiveClockwatch', function() {
+    describe('isLiveClockwatch', function () {
         it('should not callback on non-live clockwatches', function () {
             config.page.series = 'Clockwatch';
             config.page.isLive = false;

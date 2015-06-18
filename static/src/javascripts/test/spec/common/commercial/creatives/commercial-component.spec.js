@@ -16,7 +16,7 @@ xdescribe('Commercial component loader', function () {
         injector = new Injector(),
         CommercialComponent, config, mediator;
 
-    beforeEach(function(done) {
+    beforeEach(function (done) {
         injector.test([
             'common/modules/commercial/creatives/commercial-component',
             'common/utils/config',
@@ -48,7 +48,7 @@ xdescribe('Commercial component loader', function () {
                 adSlot = qwery('.ad-slot', $fixturesContainer)[0];
 
                 done();
-        });
+            });
     });
 
     afterEach(function () {

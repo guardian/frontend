@@ -50,7 +50,7 @@ define([
 
         this.isContent = !/Network Front|Section/.test(config.page.contentType);
         this.userData = {};
-        this.savedArticlesUrl = config.page.idUrl + '/saved-for-later-page';
+        this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
 
         _.bindAll(this,
             'save',
@@ -108,7 +108,7 @@ define([
     };
 
     SaveForLater.prototype.renderSaveButtonsInArticle = function () {
-        if (this.hasUserSavedArticle(this.userData.articles, shortUrl)) {
+        if (this.getSavedArticle(shortUrl)) {
             this.renderArticleSaveButton({ isSaved: true });
         } else {
             this.renderArticleSaveButton({ isSaved: false });
@@ -159,15 +159,15 @@ define([
 
         mediator.once('modules:tonal:loaded', function () {
             this.renderFaciaItemLinks(signedIn, this.classes.onwardContainer);
-        });
+        }.bind(this));
 
         mediator.once('modules:onward:loaded', function () {
             this.renderFaciaItemLinks(signedIn, this.classes.onwardContainer);
-        });
+        }.bind(this));
 
         mediator.once('modules:related:loaded', function () {
             this.renderFaciaItemLinks(signedIn, this.classes.relatedContainer);
-        });
+        }.bind(this));
     };
 
     // Configure the save for later links on a front or in a container
@@ -236,8 +236,8 @@ define([
 
     // handle saving/deleting from content pages
 
-    SaveForLater.prototype.saveArticle = function (userData, pageId, shortUrl) {
-        this.save(userData, pageId, shortUrl, this.onSaveArticle);
+    SaveForLater.prototype.saveArticle = function (pageId, shortUrl) {
+        this.save(pageId, shortUrl, this.onSaveArticle);
     };
 
     SaveForLater.prototype.onSaveArticle = function (success) {
@@ -268,6 +268,7 @@ define([
         var that = this;
         if (success) {
             this.createDeleteFaciaItemHandler(link, id, shortUrl);
+            this.updateSavedCount();
 
             fastdom.write(function () {
                 bonzo(link)
@@ -292,6 +293,7 @@ define([
         var that = this;
         if (success) {
             this.createSaveFaciaItemHandler(link, id, shortUrl);
+            this.updateSavedCount();
 
             fastdom.write(function () {
                 var contentId = $($.ancestor(link, 'fc-item')).attr('data-id');

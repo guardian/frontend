@@ -20,10 +20,10 @@ var mockDOM = {
     }
 },
 originalSetTimeout = setTimeout;
-function opacity (element) {
+function opacity(element) {
     return parseInt(element.css('opacity'), 10);
 }
-function tick (ms) {
+function tick(ms) {
     jasmine.clock().tick(ms);
     return new Promise(function (resolve) {
         originalSetTimeout(resolve, 46);

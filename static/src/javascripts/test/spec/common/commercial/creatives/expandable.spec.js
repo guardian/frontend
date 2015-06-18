@@ -9,12 +9,12 @@ var fixturesConfig = {
     ]
 };
 
-describe('Expandable', function() {
+describe('Expandable', function () {
 
     var expandable,
         $fixturesContainer;
 
-    it('should exist', function() {
+    it('should exist', function () {
         expect(Expandable).toBeDefined();
     });
 

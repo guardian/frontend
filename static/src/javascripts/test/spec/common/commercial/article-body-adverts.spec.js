@@ -92,60 +92,60 @@ describe('Article Body Adverts', function () {
         };
 
         articleBodyAdverts.init()
-        .then(function () {
-            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                minAbove: 700,
-                minBelow: 300,
-                selectors: {
-                    ' > h2': {minAbove: 0, minBelow: 250},
-                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                    ' .ad-slot': {minAbove: 500, minBelow: 500}
-                }
+            .then(function () {
+                expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                    minAbove: 700,
+                    minBelow: 300,
+                    selectors: {
+                        ' > h2': {minAbove: 0, minBelow: 250},
+                        ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                        ' .ad-slot': {minAbove: 500, minBelow: 500}
+                    }
+                });
+                done();
             });
-            done();
-        });
     });
 
     it('should call "getParaWithSpace" with correct arguments multiple times - in test', function (done) {
         config.switches.commercialExtraAds = true;
 
         articleBodyAdverts.init()
-        .then(function () {
-            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                minAbove: 700,
-                minBelow: 300,
-                selectors: {
-                    ' > h2': {minAbove: 0, minBelow: 250},
-                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                    ' .ad-slot': {minAbove: 500, minBelow: 500}
-                }
+            .then(function () {
+                expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                    minAbove: 700,
+                    minBelow: 300,
+                    selectors: {
+                        ' > h2': {minAbove: 0, minBelow: 250},
+                        ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                        ' .ad-slot': {minAbove: 500, minBelow: 500}
+                    }
+                });
+                done();
+            })
+            .then(function () {
+                expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                    minAbove: 700,
+                    minBelow: 300,
+                    selectors: {
+                        ' > h2': {minAbove: 0, minBelow: 250},
+                        ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                        ' .ad-slot': {minAbove: 500, minBelow: 500}
+                    }
+                });
+                done();
+            })
+            .then(function () {
+                expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                    minAbove: 700,
+                    minBelow: 300,
+                    selectors: {
+                        ' > h2': {minAbove: 0, minBelow: 250},
+                        ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                        ' .ad-slot': {minAbove: 1300, minBelow: 1300}
+                    }
+                });
+                done();
             });
-            done();
-        })
-        .then(function () {
-            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                minAbove: 700,
-                minBelow: 300,
-                selectors: {
-                    ' > h2': {minAbove: 0, minBelow: 250},
-                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                    ' .ad-slot': {minAbove: 500, minBelow: 500}
-                }
-            });
-            done();
-        })
-        .then(function () {
-            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                minAbove: 700,
-                minBelow: 300,
-                selectors: {
-                    ' > h2': {minAbove: 0, minBelow: 250},
-                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                    ' .ad-slot': {minAbove: 1300, minBelow: 1300}
-                }
-            });
-            done();
-        });
     });
 
     it('should not not display ad slot if standard-adverts switch is off', function () {

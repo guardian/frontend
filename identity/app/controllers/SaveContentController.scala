@@ -163,7 +163,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
     //Deal with case where one item on last page has been deleted
     if ( pageNum > updatedArticles.numPages && pageNum > 1) {
-      Future.successful(NoCache(SeeOther( s"/saved-for-later-page?page=%d".format(pageNum - 1))))
+      Future.successful(NoCache(SeeOther( s"/saved-for-later?page=${updatedArticles.numPages}")))
     } else {
       pageDataBuilder(updatedArticles, idRequest, pageNum).map { pageData =>
         val form = savedArticlesForm.fill(SavedArticleData(pageData.shortUrls))
