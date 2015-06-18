@@ -120,6 +120,7 @@ define([
 
         $savers.each(function (saver) {
             var $saver = bonzo(saver);
+            $saver.css('display', 'block');
             var templateData = {
                 icon: bookmarkSvg,
                 isSaved: options.isSaved,
