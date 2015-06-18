@@ -22,7 +22,7 @@ define([
         $shareCountEls = $('.js-sharecount'),
         $fullValueEls,
         $shortValueEls,
-        tooltip = 'Facebook: {{facebook}} \nTwitter: {{twitter}}',
+        tooltip = 'Facebook: <%=facebook%> \nTwitter: <%=twitter%>',
         counts = {
             facebook: 'n/a',
             twitter: 'n/a'
