@@ -1,4 +1,4 @@
-$sfl-button-height: 32px;
+$sfl-button-height: 30px;
 
 @mixin sfl-button-style($foreground: colour(neutral-2), $background: #ffffff) {
     .save-for-later__button {
@@ -35,8 +35,8 @@ $sfl-button-height: 32px;
 // size etc
 .save-for-later__button {
     font-size: get-font-size(textSans, 1);
-    @include button-height(32px);
-    border: none;
+    @include button-height($sfl-button-height);
+    border: 0;
     background-color: transparent;
     padding: 0;
 
