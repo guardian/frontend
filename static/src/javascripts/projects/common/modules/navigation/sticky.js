@@ -42,6 +42,7 @@ define([
         this.$els.burgerIcon     = $('.js-navigation-toggle', this.$els.navHeader);
         this.$els.logoWrapper    = $('.logo-wrapper', this.$els.navHeader);
         this.$els.navigation     = $('.navigation', this.$els.navHeader);
+        this.$els.window         = $(window);
 
         fastdom.read(function () {
             this.headerBigHeight     = this.$els.navHeader.dim().height;
@@ -50,7 +51,7 @@ define([
 
         // Top ads are revealed with CSS animation. As we don't know when animation is finished we will
         // start updating position only if the viewport is 'firstLoadDepth' scrolled down on page load
-        if ($(window).scrollTop() > this.config.firstLoadDepth) {
+        if (this.$els.window.scrollTop() > this.config.firstLoadDepth) {
             this.updatePosition();
         }
 
@@ -134,8 +135,8 @@ define([
             scrollY;
 
         fastdom.read(function () {
-            scrollY = $(window).scrollTop();
-        });
+            scrollY = this.$els.window.scrollTop();
+        }.bind(this));
 
         fastdom.write(function () {
             this.setScrollDirection(scrollY);
@@ -236,8 +237,8 @@ define([
             scrollY;
 
         fastdom.read(function () {
-            scrollY = $(window).scrollTop();
-        });
+            scrollY = this.$els.window.scrollTop();
+        }.bind(this));
 
         fastdom.write(function () {
             this.setScrollDirection(scrollY);
