@@ -60,7 +60,7 @@ System.config({
     "socketio": "github:Automattic/socket.io-client@1.1.0",
     "stripe": "vendor/stripe/stripe.min",
     "svg": "es6/projects/common/utils/svg",
-    "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
+    "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.10",
     "text": "github:systemjs/plugin-text@0.0.2",
     "videojs": "github:guardian/video.js@4.11.1.1",
     "videojsads": "github:guardian/videojs-contrib-ads@0.4.1",
