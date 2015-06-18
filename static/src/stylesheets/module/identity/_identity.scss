@@ -445,7 +445,7 @@
 }
 
 .save-for-later__delete-all-container {
-    @include mq($from: mobile, $until: leftCol) {
+    @include mq($from: mobileLandscape, $until: leftCol) {
         position: absolute;
         right: 0;
         top: 0;
