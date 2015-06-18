@@ -202,7 +202,7 @@ define([
                         this.$els.navigation.removeClass('animate-up').addClass('animate-down');
 
                         this.$els.header.css({
-                            position:  'relative',
+                            position:  'absolute',
                             'margin-top': bannerHeight,
                             '-webkit-transform': 'translateY(-500%)',
                             '-ms-transform': 'translateY(-500%)',
@@ -210,7 +210,7 @@ define([
                             'z-index': '998'
                         });
 
-                        this.$els.main.css('margin-top', this.headerBigHeight - this.$els.header.dim().height);
+                        this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
                     }.bind(this));
                 }
             } else {
