@@ -30,7 +30,7 @@ case class SaveForLaterPageData(
   formActionUrl: String,
   savedItems: List[SaveForLaterItem],
   pagination: Pagination,
-  pageUrl: String,
+  paginationUrl: String,
   totalArticlesSaved: Int,
   shortUrls: List[String])
 
@@ -54,7 +54,7 @@ class SaveForLaterDataBuilder @Inject()(idUrlBuilder: IdentityUrlBuilder) extend
         idUrlBuilder.buildUrl("/saved-for-later", idRequest),
         contentModels.map(SaveForLaterItem.tupled),
         Pagination(pageNum, savedArticles.numPages, savedArticles.totalSaved),
-        "/saved-for-later",
+        idUrlBuilder.buildUrl("/saved-for-later"),
         savedArticles.totalSaved,
         shortUrls
       )
