@@ -57,23 +57,26 @@ define([
         }
 
         mediator.once('modules:comments:renderComments:rendered', function () {
-            //if comments container is lower than 280px
-            if ($commentMainColumn.dim().height < 280) {
-                return false;
-            }
-
-            fastdom.write(function () {
-                $commentMainColumn.addClass('discussion__ad-wrapper');
-
-                if (!config.page.isLiveBlog) {
-                    $commentMainColumn.addClass('discussion__ad-wrapper-wider');
+            fastdom.read(function () {
+                //if comments container is lower than 280px
+                console.log($commentMainColumn, $commentMainColumn.dim().height);
+                if ($commentMainColumn.dim().height < 280) {
+                    return false;
                 }
 
-                adType = 'comments';
+                fastdom.write(function () {
+                    $commentMainColumn.addClass('discussion__ad-wrapper');
 
-                $adSlot = $(createAdSlot(adType, 'mpu-banner-ad'));
-                $adSlotContainer.append($adSlot);
-                dfp.addSlot($adSlot);
+                    if (!config.page.isLiveBlog) {
+                        $commentMainColumn.addClass('discussion__ad-wrapper-wider');
+                    }
+
+                    adType = 'comments';
+
+                    $adSlot = $(createAdSlot(adType, 'mpu-banner-ad'));
+                    $adSlotContainer.append($adSlot);
+                    dfp.addSlot($adSlot);
+                });
             });
         });
 
