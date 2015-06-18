@@ -62,7 +62,7 @@ define([
         );
     }
 
-    var bookmarkSvg = svgs('bookmark', ['i-left']),
+    var bookmarkSvg = svgs('bookmark', ['rounded-icon']),
         shortUrl = (config.page.shortUrl || '').replace('http://gu.com', ''),
         savedPlatformAnalytics = 'web:' + detect.getUserAgent.browser + ':' + detect.getBreakpoint();
 
