@@ -7,7 +7,8 @@ System.config({
     baseURL: '@{JavaScript(Configuration.assets.path)}',
     paths: {
         'ophan/ng': '@{JavaScript(Configuration.javascript.config("ophanJsUrl"))}.js',
-        'googletag': '@{JavaScript(Configuration.javascript.config("googletagJsUrl"))}'
+        // .js must be added: https://github.com/systemjs/systemjs/issues/528
+        'googletag.js': '@{JavaScript(Configuration.javascript.config("googletagJsUrl"))}'
     }
 });
 
