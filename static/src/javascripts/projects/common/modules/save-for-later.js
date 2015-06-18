@@ -268,6 +268,7 @@ define([
         var that = this;
         if (success) {
             this.createDeleteFaciaItemHandler(link, id, shortUrl);
+            this.updateSavedCount();
 
             fastdom.write(function () {
                 bonzo(link)
@@ -292,6 +293,7 @@ define([
         var that = this;
         if (success) {
             this.createSaveFaciaItemHandler(link, id, shortUrl);
+            this.updateSavedCount();
 
             fastdom.write(function () {
                 var contentId = $($.ancestor(link, 'fc-item')).attr('data-id');
