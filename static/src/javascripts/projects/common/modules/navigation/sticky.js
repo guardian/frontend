@@ -79,8 +79,8 @@ define([
                 $('.js-global-navigation')
                     .addClass('navigation__expandable--sticky')
                     .css('height', height);
-            }.bind(this));
-        }.bind(this));
+            });
+        });
     };
 
     StickyHeader.prototype.setScrollDirection = function (scrollY) {
@@ -142,104 +142,104 @@ define([
         var bannerHeight = this.$els.bannerDesktop.dim().height || 128,
             scrollY      = this.$els.window.scrollTop();
 
-            this.setScrollDirection(scrollY);
+        this.setScrollDirection(scrollY);
 
-            // Header is slim and navigation is shown on the scroll up
-            if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth)) {
+        // Header is slim and navigation is shown on the scroll up
+        if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth)) {
+            fastdom.write(function () {
+                this.$els.header.css({
+                    position:  'fixed',
+                    top:       0,
+                    width:     '100%',
+                    'z-index': '1000',
+                    'margin-top': 0,
+                    '-webkit-transform': 'translateY(-100%)',
+                    '-ms-transform': 'translateY(-100%)',
+                    'transform': 'translateY(-100%)'
+                });
+
+                // Make sure banner is outside of the view
+                this.$els.bannerDesktop.css({
+                    position: 'absolute',
+                    width: '100%',
+                    top: this.headerBigHeight
+                });
+
+                this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
+                this.$els.header.addClass('l-header--is-slim');
+                this.$els.header.css({
+                    '-webkit-transform': 'translateY(0%)',
+                    '-ms-transform': 'translateY(0%)',
+                    'transform': 'translateY(0%)'
+                });
+            }.bind(this));
+            this.showNavigation(scrollY, breakpoint);
+        } else if (scrollY >= this.headerBigHeight) {
+            fastdom.write(function () {
+                // Add is not sticky anymore
+                this.$els.bannerDesktop.css({
+                    position: 'absolute',
+                    width: '100%',
+                    top: this.headerBigHeight,
+                    'z-index': '999' // Sticky z-index +1 so banner is over sticky header
+                });
+
+                //header is slim from now on
+                this.$els.header.addClass('l-header--is-slim');
+            }.bind(this));
+            if (this.config.direction === 'up') {
                 fastdom.write(function () {
                     this.$els.header.css({
-                        position:  'fixed',
-                        top:       0,
-                        width:     '100%',
-                        'z-index': '1000',
-                        'margin-top': 0,
                         '-webkit-transform': 'translateY(-100%)',
                         '-ms-transform': 'translateY(-100%)',
                         'transform': 'translateY(-100%)'
                     });
-
-                    // Make sure banner is outside of the view
-                    this.$els.bannerDesktop.css({
-                        position: 'absolute',
-                        width: '100%',
-                        top: this.headerBigHeight
-                    });
-
-                    this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
-                    this.$els.header.addClass('l-header--is-slim');
-                    this.$els.header.css({
-                        '-webkit-transform': 'translateY(0%)',
-                        '-ms-transform': 'translateY(0%)',
-                        'transform': 'translateY(0%)'
-                    });
                 }.bind(this));
-                this.showNavigation(scrollY, breakpoint);
-            } else if (scrollY >= this.headerBigHeight) {
-                fastdom.write(function () {
-                    // Add is not sticky anymore
-                    this.$els.bannerDesktop.css({
-                        position: 'absolute',
-                        width: '100%',
-                        top: this.headerBigHeight,
-                        'z-index': '999' // Sticky z-index +1 so banner is over sticky header
-                    });
-
-                    //header is slim from now on
-                    this.$els.header.addClass('l-header--is-slim');
-                }.bind(this));
-                if (this.config.direction === 'up') {
-                    fastdom.write(function () {
-                        this.$els.header.css({
-                            '-webkit-transform': 'translateY(-100%)',
-                            '-ms-transform': 'translateY(-100%)',
-                            'transform': 'translateY(-100%)'
-                        });
-                    }.bind(this));
-                } else {
-                    fastdom.write(function () {
-                        // Make sure navigation is hidden
-                        this.$els.navigation.removeClass('animate-up').addClass('animate-down');
-
-                        this.$els.header.css({
-                            position:  'relative',
-                            'margin-top': bannerHeight,
-                            '-webkit-transform': 'translateY(-500%)',
-                            '-ms-transform': 'translateY(-500%)',
-                            'transform': 'translateY(-500%)',
-                            'z-index': '998'
-                        });
-
-                        this.$els.main.css('margin-top', this.headerBigHeight - this.$els.header.dim().height);
-                    }.bind(this));
-                }
             } else {
                 fastdom.write(function () {
-                    // Make sure that we show slim nav when page loaded with anchor
-                    this.$els.bannerDesktop.css({
-                        position:  'fixed',
-                        top:       0,
-                        width:     '100%',
-                        'z-index': '999'
-                    });
-                    // Header is not slim yet
-                    this.$els.header.removeClass('l-header--is-slim');
+                    // Make sure navigation is hidden
+                    this.$els.navigation.removeClass('animate-up').addClass('animate-down');
 
                     this.$els.header.css({
                         position:  'relative',
-                        width:     '100%',
                         'margin-top': bannerHeight,
-                        '-webkit-transform': 'translateY(0%)',
-                        '-ms-transform': 'translateY(0%)',
-                        'transform': 'translateY(0%)',
+                        '-webkit-transform': 'translateY(-500%)',
+                        '-ms-transform': 'translateY(-500%)',
+                        'transform': 'translateY(-500%)',
                         'z-index': '998'
                     });
 
-                    this.$els.main.css('margin-top', 0);
+                    this.$els.main.css('margin-top', this.headerBigHeight - this.$els.header.dim().height);
                 }.bind(this));
-
-                // Put navigation to its default state
-                this.setNavigationDefault();
             }
+        } else {
+            fastdom.write(function () {
+                // Make sure that we show slim nav when page loaded with anchor
+                this.$els.bannerDesktop.css({
+                    position:  'fixed',
+                    top:       0,
+                    width:     '100%',
+                    'z-index': '999'
+                });
+                // Header is not slim yet
+                this.$els.header.removeClass('l-header--is-slim');
+
+                this.$els.header.css({
+                    position:  'relative',
+                    width:     '100%',
+                    'margin-top': bannerHeight,
+                    '-webkit-transform': 'translateY(0%)',
+                    '-ms-transform': 'translateY(0%)',
+                    'transform': 'translateY(0%)',
+                    'z-index': '998'
+                });
+
+                this.$els.main.css('margin-top', 0);
+            }.bind(this));
+
+            // Put navigation to its default state
+            this.setNavigationDefault();
+        }
     };
 
     StickyHeader.prototype.updatePositionMobile = function () {
@@ -270,14 +270,14 @@ define([
                 // Put navigation to its default state
                 this.setNavigationDefault();
             } else {
-                    fastdom.write(function () {
+                fastdom.write(function () {
                     //after this.thresholdMobile px of scrolling 'release' banner and navigation
                     this.$els.bannerMobile.css({
                         position:  'absolute',
                         top:       this.config.thresholdMobile + this.headerBigHeight
                     });
                 }.bind(this));
-                    
+
                 this.showNavigation(scrollY);
             }
         }.bind(this));
