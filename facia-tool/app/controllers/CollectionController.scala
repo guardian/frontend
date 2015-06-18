@@ -24,7 +24,7 @@ object CreateCollectionResponse {
 case class CreateCollectionResponse(id: String)
 
 object CollectionController extends Controller with PanDomainAuthActions {
-  def create = AuthAction { request =>
+  def create = APIAuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
         val identity = request.user
@@ -36,7 +36,7 @@ object CollectionController extends Controller with PanDomainAuthActions {
     }
   }
 
-  def update(collectionId: String) = AuthAction { request =>
+  def update(collectionId: String) = APIAuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
         val identity = request.user

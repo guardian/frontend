@@ -1,25 +1,42 @@
 import {CONST} from 'modules/vars';
-import {reEstablishSession} from 'panda-session';
+import * as panda from 'panda-session';
 
 function locationRedirect() {
     window.location = '/logout';
 }
 
 export default function (overridePanda, overrideRedirect) {
-    let session = overridePanda || reEstablishSession,
-        redirect = overrideRedirect || locationRedirect,
+    let redirect = overrideRedirect || locationRedirect,
         poll = function () {
-            setTimeout(function () {
-                session(CONST.reauthPath, CONST.reauthInterval)
-                .then(poll)
-                .catch(redirect);
+            setTimeout(() => {
+                reauth(overridePanda).then(poll).catch(redirect);
             }, CONST.reauthInterval);
         };
 
     poll();
+}
+
+var currentAction;
+export function reauth (overridePanda) {
+    let session = overridePanda || panda.reEstablishSession;
+
+    if (!currentAction) {
+        currentAction = session(CONST.reauthPath, CONST.reauthTimeout)
+            .then(() => {
+                currentAction = null;
+            })
+            .catch((ex) => {
+                currentAction = null;
+                throw ex;
+            });
+    }
+    return currentAction;
+}
+
+export function onVisibilityChange () {
     document.addEventListener('visibilitychange', function () {
         if (!document.hidden) {
-            session(CONST.reauthPath, CONST.reauthInterval).catch(redirect);
+            reauth().catch(locationRedirect);
         }
     }, false);
 }

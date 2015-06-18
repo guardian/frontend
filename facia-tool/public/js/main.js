@@ -5,6 +5,7 @@ import 'font-awesome/css/font-awesome.min.css!';
 import {init, update, differs} from 'modules/vars';
 import logger from 'utils/logger';
 import oauthSession from 'utils/oauth-session';
+import {onVisibilityChange} from 'utils/oauth-session';
 
 function terminate (error) {
     if (error) {
@@ -54,6 +55,7 @@ export default function load (ModuleClass) {
         update(res);
         bootstrap.every(updateModuleConfig);
         oauthSession();
+        onVisibilityChange();
     }
 
     bootstrap = new Bootstrap()

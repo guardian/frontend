@@ -267,7 +267,7 @@ define([
         authedAjax.request({
             url: vars.CONST.apiBase + '/collection/' + this.id
         })
-        .done(function(raw) {
+        .then(function(raw) {
             if (opts.isRefresh && self.isPending()) { return; }
 
             if (!raw) {
@@ -285,10 +285,10 @@ define([
 
             self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
         })
-        .fail(function () {
+        .catch(function () {
             self.loaded.resolve();
         })
-        .always(function() {
+        .then(function() {
             self.setPending(false);
         });
 

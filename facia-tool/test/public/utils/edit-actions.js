@@ -1,5 +1,6 @@
 import Promise from 'Promise';
 import mockjax from 'test/utils/mockjax';
+import tick from 'test/utils/tick';
 
 export default function(mockCollection, action) {
     return new Promise(function (resolve) {
@@ -13,7 +14,9 @@ export default function(mockCollection, action) {
             },
             onAfterComplete: function () {
                 mockjax.clear(interceptor);
-                resolve(lastRequest);
+                tick(100).then(() => tick(100)).then(() => {
+                    resolve(lastRequest);
+                });
             }
         });
         desiredAnswer = action();
@@ -25,7 +28,6 @@ export default function(mockCollection, action) {
         mockCollection.set(desiredAnswer);
 
         // This action triggers a network request, advance time
-        jasmine.clock().tick(100);
-
+        tick(100).then(() => tick(100));
     });
 }

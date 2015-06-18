@@ -1,4 +1,5 @@
 import _ from 'underscore';
+import Promise from 'Promise';
 import sinon from 'sinon';
 import mockjax from 'test/utils/mockjax';
 import MockLastModified from 'mock/lastmodified';
@@ -7,7 +8,16 @@ import mediator from 'utils/mediator';
 import presser from 'utils/presser';
 
 describe('Presser', function () {
-    var ajax, mockPress, events;
+    var ajax, mockPress, events,
+        originalSetTimeout = setTimeout,
+        tick = function (ms) {
+            jasmine.clock().tick(ms);
+            return new Promise(function (resolve) {
+                originalSetTimeout(function () {
+                    resolve();
+                }, 10);
+            });
+        };
 
     beforeEach(function () {
         jasmine.clock().install();
@@ -45,7 +55,7 @@ describe('Presser', function () {
         expect(events.called).toBe(false);
     });
 
-    it('presses live successfully', function () {
+    it('presses live successfully', function (done) {
         // debounce uses the actual now() method, mock that one too
         var originalNow = _.now,
             currentTime = originalNow();
@@ -53,17 +63,23 @@ describe('Presser', function () {
         _.now = function () {
             return currentTime;
         };
-        presser('live', 'cool/front');
-        jasmine.clock().tick(100);
-        expect(ajax.getCall(0).args).toEqual(['live', 'cool/front']);
+        presser('live', 'cool/front').
+        then(() => {
+            expect(ajax.getCall(0).args).toEqual(['live', 'cool/front']);
 
-        var now = new Date();
-        this.mockLastModified.set({
-            'cool/front': now.toISOString()
+            var now = new Date();
+            this.mockLastModified.set({
+                'cool/front': now.toISOString()
+            });
+            currentTime += CONST.detectPressFailureMs + 10;
+            tick(CONST.detectPressFailureMs)
+            .then(() => tick(100))
+            .then(() => {
+                _.now = originalNow;
+                expect(events.getCall(0).args).toEqual(['cool/front', now]);
+                done();
+            });
         });
-        currentTime += CONST.detectPressFailureMs + 10;
-        jasmine.clock().tick(CONST.detectPressFailureMs + 10);
-        _.now = originalNow;
-        expect(events.getCall(0).args).toEqual(['cool/front', now]);
+        jasmine.clock().tick(100);
     });
 });
