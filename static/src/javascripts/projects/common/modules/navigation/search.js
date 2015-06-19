@@ -49,7 +49,6 @@ define([
 
         this.focusSearchField = function () {
             var $input = $('input.gsc-input');
-            var ViewabilityTest = ab.getParticipations().Viewability;
 
             if ($input.length > 0) {
                 $input.focus();
