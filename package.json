@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "private": true,
   "devDependencies": {
     "btoa": "1.1.2",
     "esprima": "1.2.2",
