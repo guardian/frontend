@@ -32,11 +32,3 @@ export function reauth (overridePanda) {
     }
     return currentAction;
 }
-
-export function onVisibilityChange () {
-    document.addEventListener('visibilitychange', function () {
-        if (!document.hidden) {
-            reauth().catch(locationRedirect);
-        }
-    }, false);
-}
