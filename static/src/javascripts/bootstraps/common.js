@@ -461,7 +461,7 @@ define([
             },
 
             loadBreakingNews: function () {
-                if (config.switches.breakingNews) {
+                if (config.switches.breakingNews && config.page.section !== 'identity') {
                     breakingNews();
                 }
             },
