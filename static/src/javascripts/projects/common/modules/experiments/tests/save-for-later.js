@@ -41,10 +41,8 @@ define([
         };
 
         var init = function () {
-            if (!/Network Front|Section/.test(config.page.contentType)) {
-                var saveForLater = new SaveForLater();
-                saveForLater.init();
-            }
+            var saveForLater = new SaveForLater();
+            saveForLater.init();
         };
 
         this.variants = [
