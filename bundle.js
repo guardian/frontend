@@ -3,17 +3,15 @@
 var path = require('path');
 
 var System = require('jspm/node_modules/systemjs');
-// Execute the IIFE
-global.systemJsRuntime = false;
-require(path.join(__dirname, 'static/src/systemjs-normalize'));
-// Modify System before creating the builder because it clones System
-System._extensions.push(function(loader) {
-    // System.normalize is exposed by the IIFE above
-    loader.normalize = System.normalize;
-});
 
 var jspm = require('jspm');
 var builder = new jspm.Builder();
+// Temporary hack, as per https://github.com/systemjs/systemjs/issues/533#issuecomment-113525639
+global.System = builder.loader;
+// Execute the IIFE
+global.systemJsRuntime = false;
+require(path.join(__dirname, 'static/src/systemjs-normalize'));
+
 var crypto = require('crypto');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
