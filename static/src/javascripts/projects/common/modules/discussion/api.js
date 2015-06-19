@@ -14,13 +14,14 @@ define([
      * Singleton to deal with Discussion API requests
      * @type {Object}
      */
-    var Api = {
-        root: (document.location.protocol === 'https:')
-                ? config.page.secureDiscussionApiRoot
-                : config.page.discussionApiRoot,
-        proxyRoot: (prefs.isOn('discussion.useProxy') ? 'http://www.theguardian.com/guardianapis/discussion/discussion-api' : config.page.discussionApiRoot),
-        clientHeader: config.page.discussionApiClientHeader
-    };
+    var root = (document.location.protocol === 'https:')
+            ? config.page.secureDiscussionApiRoot
+            : config.page.discussionApiRoot,
+        Api = {
+            root: root,
+            proxyRoot: (config.switches.discussionProxy ? (config.page.host + '/guardianapis/discussion/discussion-api') : root),
+            clientHeader: config.page.discussionApiClientHeader
+        };
 
     /**
      * @param {string} endpoint

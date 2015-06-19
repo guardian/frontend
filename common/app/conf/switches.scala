@@ -1109,7 +1109,7 @@ object Switches {
     "in discussion/api.js we have a feature to let you go through a proxy.  This will be permanently switched over if it works out.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 7, 16),
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   // Facia
