@@ -56,7 +56,8 @@ object SeriesController extends Controller with Logging with Paging with Executi
     val componentId = Some("series")
     val displayName = Some(series.displayName)
     val properties = FrontProperties(series.tag.description, None, None, None, false, None)
-    val header = Option(DescriptionMetaHeader(series.tag.description))
+    val header = series.tag.description map { description => DescriptionMetaHeader(description) }
+
 
     val config = CollectionConfig.empty.copy(
       apiQuery = Some(series.id), displayName = displayName, href = Some(series.id)
