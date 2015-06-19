@@ -4,6 +4,7 @@
   "devDependencies": {
     "btoa": "1.1.2",
     "esprima": "1.2.2",
+    "esprima-fb": "^15001.1.0-dev-harmony-fb",
     "glob": "4.0.6",
     "grunt": "0.4.5",
     "grunt-asset-hash": "0.1.6",

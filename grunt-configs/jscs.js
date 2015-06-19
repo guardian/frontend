@@ -3,6 +3,19 @@ module.exports = function(grunt, options) {
         options: {
             config: '.jscsrc'
         },
+        es6: {
+            options: {
+                esnext: true,
+                esprima: 'esprima-fb'
+            },
+            files: [{
+                expand: true,
+                cwd: 'static/src/javascripts/es6',
+                src: [
+                    '**/*.js'
+                ]
+            }]
+        },
         test: {
             options: {
                 esnext: true
