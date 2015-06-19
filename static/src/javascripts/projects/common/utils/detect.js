@@ -437,19 +437,26 @@ define([
         var displayed = '',
             isAdblock = false,
             mozBinding = '',
-            mozBindingHidden = -1;
+            mozBindingHidden = -1,
+            containerHeight = 1;
+            $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>').appendTo(document.body);
+            
+        setTimeout(function(){
+            displayed = $('.ad_unit').css('display');
+            mozBinding = $('.ad_unit').css('-moz-binding');
+            if (typeof mozBinding !== 'undefined') {
+                mozBindingHidden = $('.ad_unit').css('-moz-binding').indexOf('elemhidehit');
+            }
+            containerHeight = $('.ad_unit').dim().height;
 
-        $.create('<div class="ad_unit"></div>').appendTo(document.body);
-        displayed = $('.ad_unit').css('display');
-        mozBinding = $('.ad_unit').css('-moz-binding');
-        if (typeof mozBinding !== 'undefined') {
-            mozBindingHidden = $('.ad_unit').css('-moz-binding').indexOf('elemhidehit');
-        }
-        $('.ad_unit').remove();
-        if (displayed === 'none' || (typeof mozBinding !== 'undefined' && mozBindingHidden !== -1)) {
-            isAdblock = true;
-        }
-        return isAdblock;
+            $('.ad_unit').remove();
+            if (displayed === 'none' || containerHeight < 1 || (typeof mozBinding !== 'undefined' && mozBindingHidden !== -1 && containerHeight < 1)) {
+                isAdblock = true;
+            }
+            return isAdblock;
+
+        }, 2000);
+
     }
 
     detect = {
