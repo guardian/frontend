@@ -7,7 +7,8 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/identity/api',
-    'common/modules/save-for-later'
+    'common/modules/save-for-later',
+    'Promise'
 ], function (
     bonzo,
     qwery,
@@ -17,7 +18,8 @@ define([
     mediator,
     template,
     Id,
-    SaveForLater
+    SaveForLater,
+    Promise
 ) {
 
     return function () {
