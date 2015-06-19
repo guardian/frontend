@@ -28,7 +28,7 @@ define([
         this.expiry = '2015-07-09';
         this.author = 'Nathaniel Bennett';
         this.description = 'Internal test of save for later functionality';
-        this.audience = 0.0;
+        this.audience = 0.2;
         this.audienceOffset = 0;
         this.successMeasure = '';
         this.audienceCriteria = 'Interal only - we opt in';
@@ -38,6 +38,13 @@ define([
 
         this.canRun = function () {
             return Id.isUserLoggedIn();
+        };
+
+        var init = function () {
+            if (!/Network Front|Section/.test(config.page.contentType)) {
+                var saveForLater = new SaveForLater();
+                saveForLater.init();
+            }
         };
 
         this.variants = [
@@ -52,13 +59,24 @@ define([
                         mediator.on('modules:profilenav:loaded', resolve);
                     });
 
-                    Promise.all([loadIdentityApi, loadProfileNav]).then(function () {
-                        var saveForLater = new SaveForLater();
-                        saveForLater.init();
-                    });
+                    Promise.all([loadIdentityApi, loadProfileNav]).then(init);
 
                 }
             }
         ];
+
+        this.notInTest = function () {
+            // On top of the A/B test, we always want to give pre-existing SFL
+            // users the web feature.
+            mediator.on('module:identity:api:loaded', function () {
+                Id.getSavedArticles().then(function (resp) {
+                    var userHasSavedArticles = !!resp.savedArticles;
+
+                    if (userHasSavedArticles) {
+                        init();
+                    }
+                });
+            });
+        };
     };
 });
