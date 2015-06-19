@@ -78,7 +78,7 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                if (isMtRecTest() && $adSlot.hasClass('ad-slot--right')) {
+                if (ab.shouldRunTest('Viewability', 'variant') && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         // Hardcoded for sticky nav test. It will need some on time checking if this will go to PROD
                         new StickyMpu($adSlot, {top: 58}).create();
@@ -103,14 +103,6 @@ define([
                     });
                 });
             }
-        },
-
-        isMtRecTest = function () {
-            var MtRec1Test = ab.getParticipations().MtRec1,
-                MtRec2Test = ab.getParticipations().MtRec2;
-
-            return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A' ||
-                ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
         },
 
         recordFirstAdRendered = _.once(function () {
@@ -239,7 +231,7 @@ define([
             window.googletag.cmd.push(defineSlots);
 
             // We want to run lazy load if user is in the main test or if there is a switch on
-            if (isMtRecTest() || isLzAdsSwitchOn()) {
+            if (ab.shouldRunTest('Viewability', 'variant') || isLzAdsSwitchOn()) {
                 window.googletag.cmd.push(displayLazyAds);
             } else {
                 window.googletag.cmd.push(displayAds);

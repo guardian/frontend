@@ -1,5 +1,3 @@
-'format es6';
-
 export default class Injector {
    constructor() {
         this.loader = System.clone();
