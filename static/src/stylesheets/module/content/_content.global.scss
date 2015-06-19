@@ -133,11 +133,14 @@
 
     $social-width: 39px;
 
+    @include mq(mobileLandscape) {
+        border-top: 0;
+    }
+
     @include mq(mobileLandscape, leftCol) {
         position: absolute;
         top: 1px;
         left: ($social-width * 6);
-        border-top: 0;
     }
 
     @include mq(tablet, leftCol) {
