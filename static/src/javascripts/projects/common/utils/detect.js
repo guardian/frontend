@@ -439,9 +439,8 @@ define([
             mozBinding = '',
             mozBindingHidden = -1,
             containerHeight = 1;
-            $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>').appendTo(document.body);
-            
-        setTimeout(function(){
+        $.create('<div class="ad_unit" style="position: absolute; left: -9999px; height: 10px">&nbsp;</div>').appendTo(document.body);
+        setTimeout(function () {
             displayed = $('.ad_unit').css('display');
             mozBinding = $('.ad_unit').css('-moz-binding');
             if (typeof mozBinding !== 'undefined') {
