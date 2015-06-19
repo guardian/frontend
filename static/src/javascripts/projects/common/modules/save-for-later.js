@@ -50,7 +50,7 @@ define([
             containerItemDataId: 'data-id'
         };
 
-        this.isContent = !/Network Front|Section/.test(config.page.contentType);
+        this.isContent = !/Network Front|Section|Tag/.test(config.page.contentType);
         this.userData = {};
         this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
 
@@ -360,7 +360,11 @@ define([
 
             var profile = $('.brand-bar__item--profile');
             profile.addClass('brand-bar__item--profile--show-saved');
-            $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
+            if (count > 0) {
+                $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
+            } else {
+                $('.control__icon-wrapper', profile).removeAttr('data-saved-content-count');
+            }
         });
     };
 
