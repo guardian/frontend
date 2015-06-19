@@ -168,11 +168,7 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-<<<<<<< HEAD
-    "npm:core-js@0.9.16": {
-=======
     "npm:core-js@0.9.17": {
->>>>>>> origin/master
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.1",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
