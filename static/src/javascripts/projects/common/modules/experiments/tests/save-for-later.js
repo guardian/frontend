@@ -42,11 +42,11 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    var loadIdentityApi = new Promise(function (resolve, reject) {
+                    var loadIdentityApi = new Promise(function (resolve) {
                         mediator.on('module:identity:api:loaded', resolve);
                     });
 
-                    var loadProfileNav = new Promise(function (resolve, reject) {
+                    var loadProfileNav = new Promise(function (resolve) {
                         mediator.on('modules:profilenav:loaded', resolve);
                     });
 
