@@ -24,6 +24,13 @@ object JspmTest extends TestDefinition(
   new LocalDate(2015, 6, 30)
 )
 
+object JspmControlTest extends TestDefinition(
+  List(Variant7),
+  "Jspm-control",
+  "A control test/variant to compare with the JspmTest",
+  new LocalDate(2015, 6, 30)
+)
+
 object CMHRTest extends TestDefinition(
   List(Variant1, Variant2, Variant3),
   "cm-hr-test",
@@ -39,7 +46,7 @@ object CMOutbrainTest extends TestDefinition(
 )
 
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest, CMHRTest, CMOutbrainTest)
+  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, CMHRTest, CMOutbrainTest)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++
