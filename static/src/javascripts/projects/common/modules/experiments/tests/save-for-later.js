@@ -42,19 +42,15 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    var loadIdentityApi = function () {
-                        return new Promise(function (resolve, reject) {
-                            mediator.on('module:identity:api:loaded', resolve);
-                        });
-                    };
+                    var loadIdentityApi = new Promise(function (resolve, reject) {
+                        mediator.on('module:identity:api:loaded', resolve);
+                    });
 
-                    var loadProfileNav = function () {
-                        return new Promise(function (resolve, reject) {
-                            mediator.on('modules:profilenav:loaded', resolve);
-                        });
-                    };
+                    var loadProfileNav = new Promise(function (resolve, reject) {
+                        mediator.on('modules:profilenav:loaded', resolve);
+                    });
 
-                    Promise.all([loadIdentityApi(), loadProfileNav()]).then(function () {
+                    Promise.all([loadIdentityApi, loadProfileNav]).then(function () {
                         var saveForLater = new SaveForLater();
                         saveForLater.init();
                     });
