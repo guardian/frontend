@@ -819,7 +819,7 @@ define([
                 url: '/http/proxy/' + url + (isOnSite ? '?view=mobile' : ''),
                 type: 'GET'
             })
-            .done(function(response) {
+            .then(function(response) {
                 var doc = document.createElement('div'),
                     title,
                     og = {};
@@ -843,7 +843,7 @@ define([
 
                 self.updateEditorsDisplay();
             })
-            .fail(function() {
+            .catch(function() {
                 self.meta.headline(undefined);
             });
         };

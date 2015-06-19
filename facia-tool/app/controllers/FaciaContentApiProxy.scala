@@ -16,7 +16,7 @@ object FaciaContentApiProxy extends Controller with Logging with ExecutionContex
   override lazy val actorSystem = ActorSystem()
   import play.api.Play.current
 
-  def capi(path: String) = AuthAction.async { request =>
+  def capi(path: String) = APIAuthAction.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
     val queryString = request.queryString.filter(_._2.exists(_.nonEmpty)).map { p =>
        "%s=%s".format(p._1, p._2.head.urlEncoded)
@@ -35,7 +35,7 @@ object FaciaContentApiProxy extends Controller with Logging with ExecutionContex
     }
   }
 
-  def http(url: String) = AuthAction.async { request =>
+  def http(url: String) = APIAuthAction.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
 
     WS.url(url).withPreviewAuth.get().map { response =>
@@ -45,7 +45,7 @@ object FaciaContentApiProxy extends Controller with Logging with ExecutionContex
     }
   }
 
-  def json(url: String) = AuthAction.async { request =>
+  def json(url: String) = APIAuthAction.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
     Logger.info("Proxying json request to: %s".format(url, request))
 
@@ -56,7 +56,7 @@ object FaciaContentApiProxy extends Controller with Logging with ExecutionContex
     }
   }
 
-  def ophan(path: String) = AuthAction.async { request =>
+  def ophan(path: String) = APIAuthAction.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
     val paths = request.queryString.get("path").map(_.mkString("path=", "&path=", "")).getOrElse("")
     val queryString = request.queryString.filterNot(_._1 == "path").filter(_._2.exists(_.nonEmpty)).map { p =>

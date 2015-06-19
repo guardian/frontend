@@ -199,7 +199,7 @@ define([
         this.collections.items().map(function(collection) { collection.close(); });
 
         contentApi.fetchMetaForPath(this.id())
-        .done(function(meta) {
+        .then(function(meta) {
             meta = meta || {};
             _.each(self.capiProps, function(val, key) {
                 val(meta[key]);

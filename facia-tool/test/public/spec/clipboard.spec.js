@@ -2,7 +2,7 @@ import ko from 'knockout';
 import _ from 'underscore';
 import $ from 'jquery';
 import mockjax from 'test/utils/mockjax';
-import cache from 'modules/cache';
+import * as cache from 'modules/cache';
 import * as vars from 'modules/vars';
 import newItems from 'models/collections/new-items';
 import * as widgets from 'models/widgets';
