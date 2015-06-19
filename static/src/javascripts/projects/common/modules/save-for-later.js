@@ -12,7 +12,8 @@ define([
     'common/modules/identity/api',
     'common/views/svgs',
     'text!common/views/save-for-later/save-link.html',
-    'text!common/views/save-for-later/save-button.html'
+    'text!common/views/save-for-later/save-button.html',
+    'text!common/views/identity/saved-for-later-profile-link.html'
 ], function (
     qwery,
     bonzo,
@@ -27,7 +28,8 @@ define([
     identity,
     svgs,
     saveLink,
-    saveButton
+    saveButton,
+    profileLinkTmp
 ) {
 
     function SaveForLater() {
@@ -73,6 +75,16 @@ define([
 
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
+
+        var popup = qwery('.popup--profile')[0];
+        fastdom.write(function () {
+            bonzo(popup).prepend(bonzo.create(
+                template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
+                    idUrl: config.page.idUrl
+                })
+            ));
+        });
+
         if (userLoggedIn) {
             identity.getSavedArticles()
                 .then(function (resp) {
