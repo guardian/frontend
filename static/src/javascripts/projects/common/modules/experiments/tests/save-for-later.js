@@ -28,7 +28,7 @@ define([
         this.expiry = '2015-07-09';
         this.author = 'Nathaniel Bennett';
         this.description = 'Internal test of save for later functionality';
-        this.audience = 0.5;
+        this.audience = 0.2;
         this.audienceOffset = 0;
         this.successMeasure = '';
         this.audienceCriteria = 'Interal only - we opt in';
