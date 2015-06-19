@@ -353,11 +353,9 @@ define([
 
     SaveForLater.prototype.updateSavedCount = function () {
         var saveForLaterProfileLink = $(this.classes.profileDropdownLink);
-
         var profile = $('.brand-bar__item--profile');
         var count = this.userData.articles.length;
 
-            profile.addClass('brand-bar__item--profile--show-saved');
         fastdom.write(function () {
             if (count > 0) {
                 $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
