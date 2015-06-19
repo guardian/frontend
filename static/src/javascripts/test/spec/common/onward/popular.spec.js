@@ -17,7 +17,9 @@ describe('Most popular', function () {
     beforeEach(function (done) {
         injector.mock({
             'common/modules/commercial/create-ad-slot': {
+                /*jscs:disable disallowDanglingUnderscores*/
                 __useDefault: true,
+                /*jscs:enable disallowDanglingUnderscores*/
                 default: function () {
                     return '<div class="ad-slot"></div>';
                 }

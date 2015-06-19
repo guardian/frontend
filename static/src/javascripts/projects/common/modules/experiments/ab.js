@@ -10,12 +10,11 @@ define([
     'common/modules/experiments/tests/twitter-most-viewed',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/mt-rec1',
-    'common/modules/experiments/tests/mt-rec2',
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/membership-message'
+    'common/modules/experiments/tests/membership-message',
+    'common/modules/experiments/tests/viewability'
 ], function (
     raven,
     _,
@@ -28,12 +27,11 @@ define([
     TwitterMostViewed,
     LiveblogNotifications,
     HighCommercialComponent,
-    MtRec1,
-    MtRec2,
     SaveForLater,
     CookieRefresh,
     Headline,
-    MembershipMessage
+    MembershipMessage,
+    Viewability
 ) {
 
     var TESTS = _.flatten([
@@ -41,11 +39,10 @@ define([
         new TwitterMostViewed(),
         new LiveblogNotifications(),
         new HighCommercialComponent(),
-        new MtRec1(),
-        new MtRec2(),
         new SaveForLater(),
         new CookieRefresh(),
         new MembershipMessage(),
+        new Viewability(),
         _.map(_.range(1, 10), function (n) {
             return new Headline(n);
         })

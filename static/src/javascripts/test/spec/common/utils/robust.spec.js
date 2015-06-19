@@ -1,7 +1,7 @@
 import Promise from 'Promise';
 import robust from 'common/utils/robust';
 
-describe('Robust', function() {
+describe('Robust', function () {
     it('should complete successfully', function (success) {
         robust('test', function () { success(); });
     });

@@ -32,6 +32,7 @@ define([
     'common/modules/identity/api',
     'common/modules/identity/autosignin',
     'common/modules/navigation/navigation',
+    'common/modules/navigation/sticky',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -91,6 +92,7 @@ define([
     id,
     AutoSignin,
     navigation,
+    sticky,
     Profile,
     Search,
     history,
@@ -162,6 +164,12 @@ define([
 
             initialiseNavigation: function () {
                 navigation.init();
+            },
+
+            initialiseStickyHeader: function () {
+                if (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') {
+                    sticky.init();
+                }
             },
 
             transcludeRelated: function () {
@@ -483,16 +491,6 @@ define([
                 };
             },
 
-            runCustomAbTests: function () {
-                if (ab.shouldRunTest('MtRec1', 'A')) {
-                    ab.getTest('MtRec1').fireRecTest();
-                }
-
-                if (ab.shouldRunTest('MtRec2', 'A')) {
-                    ab.getTest('MtRec2').fireRecTest();
-                }
-            },
-
             internationalSignposting: function () {
                 if ('internationalEdition' in config.page) {
                     if (config.page.internationalEdition === 'international' && config.page.pageId === 'international') {
@@ -525,6 +523,7 @@ define([
             robust('c-tabs',            modules.showTabs);
             robust('c-top-nav',         modules.initialiseTopNavItems);
             robust('c-init-nav',        modules.initialiseNavigation);
+            robust('c-sticky-header',   modules.initialiseStickyHeader);
             robust('c-toggles',         modules.showToggles);
             robust('c-dates',           modules.showRelativeDates);
             robust('c-clickstream',     modules.initClickstream);
@@ -551,7 +550,6 @@ define([
             robust('c-simple-metrics',  modules.initSimpleMetrics);
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
-            robust('c-run-custom-ab',   modules.runCustomAbTests);
             robust('c-accessibility-prefs',       modules.initAccessibilityPrefs);
             robust('c-international-signposting', modules.internationalSignposting);
             if (window.console && window.console.log && !config.page.isDev) {

@@ -993,21 +993,12 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABMtRec1 = Switch(
+  val ABViewability = Switch(
     "A/B Tests",
-    "ab-mt-rec1",
-    "Viewability results - Recommendation option 1",
+    "ab-viewability",
+    "Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
-    exposeClientSide = true
-  )
-
-  val ABMtRec2 = Switch(
-    "A/B Tests",
-    "ab-mt-rec2",
-    "Viewability results - Recommendation option 2",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = new LocalDate(2015, 8, 1),
     exposeClientSide = true
   )
 
@@ -1045,7 +1036,7 @@ object Switches {
     "ab-membership-message",
     "Switch for the Membership message A/B test.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 19),
+    sellByDate = new LocalDate(2015, 6, 26),
     exposeClientSide = true
   )
 

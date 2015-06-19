@@ -45,6 +45,10 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
         case _ => false
       })),
       ("isPreview", JsBoolean(environment.isPreview)),
+      ("allowUserGeneratedContent", JsBoolean(metaData match {
+        case c: Content if c.allowUserGeneratedContent => true
+        case _ => false
+      })),
       ("isInappropriateForSponsorship", JsBoolean(metaData.isInappropriateForSponsorship)),
       ("idWebAppUrl", JsString(
         if (IdentitySocialOAuthSwitch.isSwitchedOn) Configuration.id.oauthUrl

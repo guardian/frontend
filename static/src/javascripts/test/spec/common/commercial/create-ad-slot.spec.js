@@ -19,7 +19,7 @@ describe('Create Ad Slot', function () {
         createAdSlot, config;
 
     beforeEach(function (done) {
-        injector.test(['common/modules/commercial/create-ad-slot', 'common/utils/config'], function (){
+        injector.test(['common/modules/commercial/create-ad-slot', 'common/utils/config'], function () {
             createAdSlot = arguments[0];
             config = arguments[1];
 

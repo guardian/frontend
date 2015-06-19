@@ -1,5 +1,20 @@
 module.exports = function(grunt, options) {
     return {
+        options: {
+            config: '.jscsrc'
+        },
+        test: {
+            options: {
+                esnext: true
+            },
+            files: [{
+                expand: true,
+                cwd: 'static/src/javascripts/test',
+                src: [
+                    '**/*.js'
+                ]
+            }]
+        },
         common: {
             files: [{
                 expand: true,

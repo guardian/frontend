@@ -19,10 +19,10 @@ describe('omniture', function () {
             'common/modules/analytics/omniture',
             'common/utils/mediator'], function () {
 
-            omniture = arguments[0];
-            mediator = arguments[1];
+                omniture = arguments[0];
+                mediator = arguments[1];
 
-            config.page = {
+                config.page = {
                 analyticsName:   'the_page_name',
                 beaconUrl:       '',
                 contentType:     'Article',
@@ -31,26 +31,26 @@ describe('omniture', function () {
                 omnitureAccount: 'the_account'
             };
 
-            s = {
+                s = {
                 t: function () {},
                 tl: function () {},
                 apl: function () {},
                 Util: { getQueryParam: function () { return 'test'; } },
                 getValOnce: function () { return 'test'; },
                 getTimeParting: function () { return ['4:03PM', '4:00PM', 'Thursday', 'Weekday']; },
-                getParamValue: function() { return ''; }
+                getParamValue: function () { return ''; }
             };
-            sinon.spy(s, 't');
-            sinon.spy(s, 'tl');
-            sinon.spy(s, 'apl');
+                sinon.spy(s, 't');
+                sinon.spy(s, 'tl');
+                sinon.spy(s, 'apl');
 
-            omniture.s = s;
-            omniture.addHandlers();
-            done();
-        });
+                omniture.s = s;
+                omniture.addHandlers();
+                done();
+            });
     });
 
-    afterEach(function(){
+    afterEach(function () {
         sessionStorage.removeItem('gu.analytics.referrerVars');
         mediator.removeEvent('module:clickstream:interaction');
         mediator.removeEvent('module:clickstream:click');
@@ -228,4 +228,4 @@ describe('omniture', function () {
 
         expect(s.tl.withArgs(el, 'o', 'tag')).toHaveBeenCalledOnce();
     });
- });
+});

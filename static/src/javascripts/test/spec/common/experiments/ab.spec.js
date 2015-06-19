@@ -13,7 +13,7 @@ describe('AB Testing', function () {
         injector = new Injector(),
         ab, config, mvtCookie;
 
-    beforeEach(function(done) {
+    beforeEach(function (done) {
         injector.test(['common/modules/experiments/ab', 'common/utils/config', 'common/modules/analytics/mvt-cookie'], function () {
             ab = arguments[0];
             config = arguments[1];
@@ -39,7 +39,7 @@ describe('AB Testing', function () {
         });
     });
 
-    afterEach(function() {
+    afterEach(function () {
         ab.reset();
         localStorage.removeItem(participationsKey);
         document.body.removeAttribute('data-link-test');
@@ -83,7 +83,7 @@ describe('AB Testing', function () {
         });
 
         it('should not segment user if test can\'t be run', function () {
-            test.one.canRun = function() { return false; };
+            test.one.canRun = function () { return false; };
             ab.addTest(test.one);
             ab.segment();
 
@@ -120,7 +120,7 @@ describe('AB Testing', function () {
             ab.addTest(test.one);
             ab.addTest(test.two);
             ab.segment();
-            var tests = Object.keys(ab.getParticipations()).map(function (k){ return k; }).toString();
+            var tests = Object.keys(ab.getParticipations()).map(function (k) { return k; }).toString();
 
             expect(tests).toBe('DummyTest,DummyTest2');
         });
@@ -236,7 +236,7 @@ describe('AB Testing', function () {
 
         it('should generate Omniture tags when there is two tests, but one cannot run', function () {
             mvtCookie.overwriteMvtCookie(2);
-            test.one.canRun = function() { return false; };
+            test.one.canRun = function () { return false; };
             ab.addTest(test.one);
             test.two.audience = 1;
             ab.addTest(test.two);
@@ -250,7 +250,7 @@ describe('AB Testing', function () {
             mvtCookie.overwriteMvtCookie(2);
 
             ab.addTest(test.one);
-            test.two.canRun = function() { return false; };
+            test.two.canRun = function () { return false; };
             ab.addTest(test.two);
             ab.segment();
             ab.run();

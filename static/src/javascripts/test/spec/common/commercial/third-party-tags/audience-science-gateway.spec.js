@@ -12,19 +12,19 @@ describe('Audience Science Gateway', function () {
             'common/utils/config',
             'common/utils/storage'], function () {
 
-            audienceScienceGateway = arguments[0];
-            config = arguments[1];
-            storage = arguments[2];
+                audienceScienceGateway = arguments[0];
+                config = arguments[1];
+                storage = arguments[2];
 
-            config.page = {
+                config.page = {
                 section: 'news'
             };
-            config.switches = {
+                config.switches = {
                 audienceScienceGateway: true
             };
 
-            done();
-        });
+                done();
+            });
     });
 
     it('should be able to get segments', function () {
