@@ -103,7 +103,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       treats = treats,
       displayName = collectionOption.flatMap(_.displayName),
       href = collectionOption.flatMap(_.href),
-      description = collectionOption.flatMap(_.description),
       lastUpdated = collectionOption.map(_.lastUpdated.toString()),
       updatedBy = collectionOption.map(_.updatedBy),
       updatedEmail = collectionOption.map(_.updatedEmail)

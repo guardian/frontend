@@ -230,7 +230,7 @@ object PressedCollection {
       collection.updatedBy,
       collection.updatedEmail,
       collection.href,
-      collection.description,
+      collection.collectionConfig.description,
       collection.collectionConfig.apiQuery,
       collection.collectionConfig.collectionType,
       collection.collectionConfig.groups.map(Group.fromGroups),

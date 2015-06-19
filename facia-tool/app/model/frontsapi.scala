@@ -226,9 +226,9 @@ trait UpdateActions extends Logging with ExecutionContexts {
 
   def createCollectionJson(identity: User, update: UpdateList): CollectionJson =
     if (update.live)
-      CollectionJson(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta)), None, None, DateTime.now, "${identity.firstName} ${identity.lastName}", identity.email, None, None, None, None)
+      CollectionJson(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta)), None, None, DateTime.now, "${identity.firstName} ${identity.lastName}", identity.email, None, None, None)
     else
-      CollectionJson(Nil, Some(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta))), None, DateTime.now, "${identity.firstName} ${identity.lastName}", identity.email, None, None, None, None)
+      CollectionJson(Nil, Some(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta))), None, DateTime.now, "${identity.firstName} ${identity.lastName}", identity.email, None, None, None)
 
   def capCollection(collectionJson: CollectionJson): CollectionJson =
     collectionJson.copy(live = collectionJson.live.take(collectionCap), draft = collectionJson.draft.map(_.take(collectionCap)))
@@ -276,8 +276,7 @@ trait UpdateActions extends Logging with ExecutionContexts {
       updatedEmail  = identity.email,
       displayName   = None,
       href          = None,
-      previously    = None,
-      description  = None)}
+      previously    = None)}
 
   def updateTreats(collectionId: String, update: UpdateList, identity: User): Future[Option[CollectionJson]] = {
     lazy val updateJson = Json.toJson(update)

@@ -164,7 +164,6 @@ trait FrontJson extends ExecutionContexts with Logging {
       treats=treats,
       displayName=displayName,
       href=href,
-      description=description,
       lastUpdated=lastUpdated,
       updatedBy=updatedBy,
       updatedEmail=updatedEmail

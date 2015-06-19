@@ -15,7 +15,6 @@ case class Collection(curated: Seq[Content],
                       treats: Seq[Content],
                       displayName: Option[String],
                       href: Option[String],
-                      description: Option[String],
                       lastUpdated: Option[String],
                       updatedBy: Option[String],
                       updatedEmail: Option[String]) extends implicits.Collections with CollectionItems {
@@ -28,8 +27,8 @@ case class Collection(curated: Seq[Content],
 }
 
 object Collection {
-  def apply(curated: Seq[Content]): Collection = Collection(curated, Nil, Nil, Nil, Nil, None, None, None, Option(DateTime.now.toString), None, None)
-  def apply(curated: Seq[Content], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, Nil, displayName, None, None, Option(DateTime.now.toString), None, None)
+  def apply(curated: Seq[Content]): Collection = Collection(curated, Nil, Nil, Nil, Nil, None, None, Option(DateTime.now.toString), None, None)
+  def apply(curated: Seq[Content], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, Nil, displayName, None, Option(DateTime.now.toString), None, None)
 }
 case class SeoDataJson(
   id: String,
