@@ -7,8 +7,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/modules/identity/api',
-    'common/modules/save-for-later',
-    'text!common/views/identity/saved-for-later-profile-link.html'
+    'common/modules/save-for-later'
 ], function (
     bonzo,
     qwery,
@@ -18,8 +17,7 @@ define([
     mediator,
     template,
     Id,
-    SaveForLater,
-    profileLinkTmp
+    SaveForLater
 ) {
 
     return function () {
@@ -56,26 +54,9 @@ define([
                         });
                     };
 
-                    var appendHeaderFragment = function () {
-                        return new Promise(function (resolve, reject) {
-                            var popup = qwery('.popup--profile')[0];
-                            fastdom.write(function () {
-                                bonzo(popup).prepend(bonzo.create(
-                                    template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
-                                        idUrl: config.page.idUrl
-                                    })
-                                ));
-                                resolve();
-                            });
-                        });
-                    };
-
                     Promise.all([loadIdentityApi(), loadProfileNav()]).then(function () {
-                        // Must be inserted before SFL is initialised
-                        appendHeaderFragment().then(function () {
-                            var saveForLater = new SaveForLater();
-                            saveForLater.init();
-                        });
+                        var saveForLater = new SaveForLater();
+                        saveForLater.init();
                     });
 
                 }
