@@ -1106,9 +1106,9 @@ object Switches {
   val DiscussionProxySwitch = Switch(
     "Feature",
     "discussion-proxy",
-    "in discussion/api.js we have a feature to let you go through a proxy.  This will be permanently switched over if it works out.",
+    "in discussion/api.js it will use a proxy to post comments so http 1.0 users can still comment",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 16),
+    sellByDate = never,
     exposeClientSide = true
   )
 
