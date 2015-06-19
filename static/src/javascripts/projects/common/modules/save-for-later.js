@@ -76,19 +76,20 @@ define([
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
 
-        var popup = qwery('.popup--profile')[0];
-        fastdom.write(function () {
-            bonzo(popup).prepend(bonzo.create(
-                template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
-                    idUrl: config.page.idUrl
-                })
-            ));
-        });
-
         if (userLoggedIn) {
             identity.getSavedArticles()
                 .then(function (resp) {
                     var notFound = { message: 'Not found', description: 'Resource not found' };
+                    var popup = qwery('.popup--profile')[0];
+
+                    fastdom.write(function () {
+                        bonzo(popup).prepend(bonzo.create(
+                            template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
+                                idUrl: config.page.idUrl
+                            })
+                        ));
+                        this.updateSavedCount();
+                    }.bind(this));
 
                     if (resp.status === 'error' && resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
                         //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
@@ -98,7 +99,6 @@ define([
                         this.userData = resp.savedArticles;
                     }
 
-                    this.updateSavedCount();
                     this.prepareFaciaItemLinks(true);
 
                     if (this.isContent) {
@@ -354,16 +354,17 @@ define([
     SaveForLater.prototype.updateSavedCount = function () {
         var saveForLaterProfileLink = $(this.classes.profileDropdownLink);
 
+        var profile = $('.brand-bar__item--profile');
         var count = this.userData.articles.length;
-        fastdom.write(function () {
-            saveForLaterProfileLink.html('Saved (' + count + ')');
 
-            var profile = $('.brand-bar__item--profile');
             profile.addClass('brand-bar__item--profile--show-saved');
+        fastdom.write(function () {
             if (count > 0) {
                 $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
+                saveForLaterProfileLink.html('Saved for later (' + count + ')');
             } else {
                 $('.control__icon-wrapper', profile).removeAttr('data-saved-content-count');
+                saveForLaterProfileLink.html('Saved for later');
             }
         });
     };
