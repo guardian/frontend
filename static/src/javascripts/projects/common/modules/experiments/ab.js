@@ -151,7 +151,7 @@ define([
             }
         }
 
-        getServerSideTests().forEach(function(testName) {
+        getServerSideTests().forEach(function (testName) {
             tag.push('AB | ' + testName + ' | inTest');
         });
 
@@ -235,7 +235,7 @@ define([
         // International Edition is not really a test.
         return _(config.tests)
             .omit('internationalEditionVariant')
-            .pick(function(participating){ return !!participating; })
+            .pick(function (participating) { return !!participating; })
             .keys()
             .value();
     }
@@ -334,7 +334,7 @@ define([
                         }
                     }
                 });
-                getServerSideTests().forEach(function(testName) {
+                getServerSideTests().forEach(function (testName) {
                     abLogObject['ab' + testName] = 'inTest';
                 })
             } catch (error) {
