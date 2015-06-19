@@ -26,7 +26,7 @@ object JspmTest extends TestDefinition(
 
 object JspmControlTest extends TestDefinition(
   List(Variant7),
-  "Jspm-control",
+  "jspm-control",
   "A control test/variant to compare with the JspmTest",
   new LocalDate(2015, 6, 30)
 )
