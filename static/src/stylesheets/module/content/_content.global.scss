@@ -146,6 +146,15 @@
     @include mq(tablet, leftCol) {
         left: ($social-width * 5);
     }
+
+    .content--liveblog & {
+        @include mq(desktop) {
+            position: relative;
+            left: 0;
+            top: 0;
+            border-top: 1px dotted colour(neutral-5);
+        }
+    }
 }
 
 .meta__number:not(.u-h) + .meta__number {
