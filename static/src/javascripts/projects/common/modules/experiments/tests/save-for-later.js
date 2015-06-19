@@ -44,19 +44,37 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    mediator.on('module:identity:api:loaded', function () {
-                        var saveForLater = new SaveForLater();
-                        saveForLater.init();
-                    });
+                    var loadIdentityApi = function () {
+                        return new Promise(function (resolve, reject) {
+                            mediator.on('module:identity:api:loaded', resolve);
+                        });
+                    };
 
-                    mediator.on('modules:profilenav:loaded', function () {
-                        var popup = qwery('.popup--profile')[0];
-                        fastdom.write(function () {
-                            bonzo(popup).prepend(bonzo.create(
-                                template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
-                                    idUrl: config.page.idUrl
-                                })
-                            ));
+                    var loadProfileNav = function () {
+                        return new Promise(function (resolve, reject) {
+                            mediator.on('modules:profilenav:loaded', resolve);
+                        });
+                    };
+
+                    var appendHeaderFragment = function () {
+                        return new Promise(function (resolve, reject) {
+                            var popup = qwery('.popup--profile')[0];
+                            fastdom.write(function () {
+                                bonzo(popup).prepend(bonzo.create(
+                                    template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
+                                        idUrl: config.page.idUrl
+                                    })
+                                ));
+                                resolve();
+                            });
+                        });
+                    };
+
+                    Promise.all([loadIdentityApi(), loadProfileNav()]).then(function () {
+                        // Must be inserted before SFL is initialised
+                        appendHeaderFragment().then(function () {
+                            var saveForLater = new SaveForLater();
+                            saveForLater.init();
                         });
                     });
 
