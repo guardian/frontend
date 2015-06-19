@@ -6,7 +6,8 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/modules/ui/smartAppBanner'
 ], function (
     bean,
     qwery,
@@ -15,7 +16,8 @@ define([
     _,
     config,
     detect,
-    mediator
+    mediator,
+    smartAppBanner
 ) {
     function StickyHeader() {
         this.$els   = {};
@@ -246,42 +248,76 @@ define([
 
     StickyHeader.prototype.updatePositionMobile = function () {
         fastdom.read(function () {
-            var bannerHeight = this.$els.bannerMobile.dim().height,
-                scrollY      = this.$els.window.scrollTop();
+            var bannerHeight      = this.$els.bannerMobile.dim().height,
+                scrollY           = this.$els.window.scrollTop(),
+                smartBannerHeight = smartAppBanner.getMessageHeight();
 
             fastdom.write(function () {
                 this.setScrollDirection(scrollY);
 
-                //header, navigation and banner are sticky from the beginning
-                if (scrollY < this.config.thresholdMobile) {
-                    fastdom.write(function () {
-                        this.$els.header.css({
-                            position: 'fixed',
-                            top: 0,
-                            width: '100%',
-                            'z-index': '1001',
-                            'margin-top': 0
-                        });
-                        this.$els.bannerMobile.css({
-                            position:  'fixed',
-                            top:       this.headerBigHeight,
-                            width:     '100%',
-                            'z-index': '999' // Sticky z-index -1 as it should be sticky but should go below the sticky header
-                        });
-                        this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
-                    }.bind(this));
-                    // Put navigation to its default state
-                    this.setNavigationDefault();
-                } else {
-                    fastdom.write(function () {
-                        //after this.thresholdMobile px of scrolling 'release' banner and navigation
-                        this.$els.bannerMobile.css({
-                            position:  'absolute',
-                            top:       this.config.thresholdMobile + this.headerBigHeight
-                        });
-                    }.bind(this));
+                if (smartAppBanner.isMessageShown()) {
+                    if (scrollY > smartBannerHeight && scrollY < this.config.thresholdMobile) {
+                        fastdom.write(function () {
+                            this.$els.header.css({
+                                position: 'fixed',
+                                top: 0,
+                                width: '100%',
+                                'z-index': '1001',
+                                'margin-top': 0
+                            });
+                            this.$els.bannerMobile.css({
+                                position: 'fixed',
+                                top: this.headerBigHeight,
+                                width: '100%',
+                                'z-index': '999' // Sticky z-index -1 as it should be sticky but should go below the sticky header
+                            });
+                            this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
+                        }.bind(this));
+                        // Put navigation to its default state
+                        this.setNavigationDefault();
+                    } else {
+                        fastdom.write(function () {
+                            //after this.thresholdMobile px of scrolling 'release' banner and navigation
+                            this.$els.bannerMobile.css({
+                                position: 'absolute',
+                                top: this.config.thresholdMobile + this.headerBigHeight
+                            });
+                        }.bind(this));
 
-                    this.showNavigation(scrollY);
+                        this.showNavigation(scrollY);
+                    }
+                } else {
+                    //header, navigation and banner are sticky from the beginning
+                    if (scrollY < this.config.thresholdMobile) {
+                        fastdom.write(function () {
+                            this.$els.header.css({
+                                position: 'fixed',
+                                top: 0,
+                                width: '100%',
+                                'z-index': '1001',
+                                'margin-top': 0
+                            });
+                            this.$els.bannerMobile.css({
+                                position: 'fixed',
+                                top: this.headerBigHeight,
+                                width: '100%',
+                                'z-index': '999' // Sticky z-index -1 as it should be sticky but should go below the sticky header
+                            });
+                            this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
+                        }.bind(this));
+                        // Put navigation to its default state
+                        this.setNavigationDefault();
+                    } else {
+                        fastdom.write(function () {
+                            //after this.thresholdMobile px of scrolling 'release' banner and navigation
+                            this.$els.bannerMobile.css({
+                                position: 'absolute',
+                                top: this.config.thresholdMobile + this.headerBigHeight
+                            });
+                        }.bind(this));
+
+                        this.showNavigation(scrollY);
+                    }
                 }
             }.bind(this));
         }.bind(this));
