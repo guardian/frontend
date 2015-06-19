@@ -336,7 +336,7 @@ define([
                 });
                 getServerSideTests().forEach(function (testName) {
                     abLogObject['ab' + testName] = 'inTest';
-                })
+                });
             } catch (error) {
                 // Encountering an error should invalidate the logging process.
                 abLogObject = {};
