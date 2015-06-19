@@ -170,30 +170,28 @@ define([
 
     function allocateUserToTest(test) {
 
-        // Skip allocation if the user is already participating, or the test is invalid.
-        if (!testCanBeRun(test) || isParticipating(test)) {
-            return;
-        }
+        // If test can be run and user is not already participating, allocate.
+        if (testCanBeRun(test) && !isParticipating(test)) {
+            // Determine whether the user is in the test or not. The test population is just a subset of mvt ids.
+            // A test population must begin from a specific value. Overlapping test ranges are permitted.
+            var variantIds, testVariantId,
+                smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset,
+                largestTestId  = smallestTestId + mvtCookie.getMvtNumValues() * test.audience,
+            // Get this browser's mvt test id.
+                mvtCookieId = mvtCookie.getMvtValue();
 
-        // Determine whether the user is in the test or not. The test population is just a subset of mvt ids.
-        // A test population must begin from a specific value. Overlapping test ranges are permitted.
-        var variantIds, testVariantId,
-            smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset,
-            largestTestId  = smallestTestId + mvtCookie.getMvtNumValues() * test.audience,
-        // Get this browser's mvt test id.
-            mvtCookieId = mvtCookie.getMvtValue();
+            if (smallestTestId <= mvtCookieId && largestTestId > mvtCookieId) {
+                // This mvt test id is in the test range, so allocate it to a test variant.
+                variantIds = _.map(test.variants, function (variant) {
+                    return variant.id;
+                });
+                testVariantId = mvtCookieId % variantIds.length;
 
-        if (smallestTestId <= mvtCookieId && largestTestId > mvtCookieId) {
-            // This mvt test id is in the test range, so allocate it to a test variant.
-            variantIds = _.map(test.variants, function (variant) {
-                return variant.id;
-            });
-            testVariantId = mvtCookieId % variantIds.length;
+                addParticipation(test, variantIds[testVariantId]);
 
-            addParticipation(test, variantIds[testVariantId]);
-
-        } else {
-            addParticipation(test, 'notintest');
+            } else {
+                addParticipation(test, 'notintest');
+            }
         }
     }
 
