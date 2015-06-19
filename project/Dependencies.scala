@@ -19,7 +19,7 @@ object Dependencies {
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.0.0"
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.51"
-  val faciaScalaClient = "com.gu" %% "facia-json" % "0.48"
+  val faciaScalaClient = "com.gu" %% "facia-json" % "0.51"
   val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.4"
   val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.6"
   val googleSheetsApi = "com.google.gdata" % "core" % "1.47.1"

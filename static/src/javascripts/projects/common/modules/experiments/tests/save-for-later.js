@@ -8,7 +8,7 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'common/modules/save-for-later',
-    'text!common/views/identity/saved-for-later-profile-link.html'
+    'Promise'
 ], function (
     bonzo,
     qwery,
@@ -19,7 +19,7 @@ define([
     template,
     Id,
     SaveForLater,
-    profileLinkTmp
+    Promise
 ) {
 
     return function () {
@@ -44,20 +44,17 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    mediator.on('module:identity:api:loaded', function () {
-                        var saveForLater = new SaveForLater();
-                        saveForLater.init();
+                    var loadIdentityApi = new Promise(function (resolve) {
+                        mediator.on('module:identity:api:loaded', resolve);
                     });
 
-                    mediator.on('modules:profilenav:loaded', function () {
-                        var popup = qwery('.popup--profile')[0];
-                        fastdom.write(function () {
-                            bonzo(popup).prepend(bonzo.create(
-                                template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
-                                    idUrl: config.page.idUrl
-                                })
-                            ));
-                        });
+                    var loadProfileNav = new Promise(function (resolve) {
+                        mediator.on('modules:profilenav:loaded', resolve);
+                    });
+
+                    Promise.all([loadIdentityApi, loadProfileNav]).then(function () {
+                        var saveForLater = new SaveForLater();
+                        saveForLater.init();
                     });
 
                 }
