@@ -97,5 +97,5 @@ Promise.all(bundleConfigs.map(createBundle))
         writeBundlesConfig(bundles);
     })
     .catch(function (error) {
-        console.error(error);
+        console.error(error.stack);
     });
