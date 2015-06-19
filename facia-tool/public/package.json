@@ -1,6 +1,9 @@
 {
   "name": "facia-tool",
   "version": "1.0.0",
+  "devDependencies": {
+    "jspm": "^0.15.6"
+  },
   "jspm": {
     "directories": {
       "lib": "js"
