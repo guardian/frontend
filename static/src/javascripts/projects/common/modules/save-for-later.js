@@ -50,7 +50,7 @@ define([
             containerItemDataId: 'data-id'
         };
 
-        this.isContent = !/Network Front|Section/.test(config.page.contentType);
+        this.isContent = !/Network Front|Section|Tag/.test(config.page.contentType);
         this.userData = {};
         this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
 
