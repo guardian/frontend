@@ -12,7 +12,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/social-most-popular',
-    'bootstraps/trail'
+    'bootstraps/article-liveblog-common'
 ], function (
     qwery,
     $,
@@ -26,7 +26,7 @@ define([
     ab,
     geoMostPopular,
     SocialMostPopular,
-    trail
+    articleLiveblogCommon
 ) {
     var modules = {
             initCmpParam: function () {
@@ -67,7 +67,7 @@ define([
         },
 
         ready = function () {
-            trail();
+            articleLiveblogCommon();
             modules.initRightHandComponent();
             modules.initCmpParam();
             modules.initSocialMostPopular();
