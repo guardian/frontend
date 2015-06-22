@@ -159,7 +159,13 @@ define([
         this.s.trackingServerSecure = 'hits-secure.theguardian.com';
 
         this.s.ce = 'UTF-8';
-        this.s.pageName  = config.page.analyticsName;
+        // Special case the saved for late page, adding the saved content count
+        // Get the count from the server response
+        var savedContentCount = $('.js-saved-content-count').text();
+        var analyticsName = config.page.analyticsName;
+        this.s.pageName  = analyticsName === 'saved-for-later'
+            ? [analyticsName, savedContentCount].join('-')
+            : analyticsName;
 
         this.s.prop1     = config.page.headline || '';
 
