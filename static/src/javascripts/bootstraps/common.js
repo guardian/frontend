@@ -457,7 +457,7 @@ define([
             },
 
             initLastModified: function () {
-                LastModified.init();
+                LastModified();
             },
 
             loadBreakingNews: function () {

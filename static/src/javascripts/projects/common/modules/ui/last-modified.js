@@ -7,18 +7,14 @@ define([
     qwery,
     $
 ) {
-    function expand() {
-        $('.js-lm').toggleClass('u-h');
-    }
+    return function () {
+        var $jsLm = $('.js-lm');
 
-    function init() {
-        if ($('.js-lm').length) {
+        if ($jsLm) {
             $('.js-wpd').addClass('content__dateline-wpd--modified tone-colour');
-            bean.on(qwery('.js-wpd')[0], 'click', expand);
+            bean.on(qwery('.js-wpd')[0], 'click', function () {
+                $jsLm.toggleClass('u-h');
+            });
         }
-    }
-
-    return {
-        init: init
     };
 });
