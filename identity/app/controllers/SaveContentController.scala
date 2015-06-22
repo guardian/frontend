@@ -23,6 +23,7 @@ import utils.SafeLogging
 
 import scala.concurrent.Future
 
+@Singleton
 class SaveContentController @Inject() ( api: IdApiClient,
                                         identityRequestParser: IdRequestParser,
                                         authenticatedActions: AuthenticatedActions,
