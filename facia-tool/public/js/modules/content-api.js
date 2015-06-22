@@ -11,6 +11,7 @@ import urlAbsPath from 'utils/url-abs-path';
 import identity from 'utils/identity';
 import isGuardianUrl from 'utils/is-guardian-url';
 import * as snap from 'utils/snap';
+import reportErrors from 'utils/report-errors';
 
 function populate(article, capiData) {
     article.addCapiData(capiData);
@@ -206,7 +207,8 @@ function decorateBatch (articles) {
         .each(function(article) {
             article.state.isEmpty(!article.state.isLoaded());
         });
-    });
+    })
+    .catch(reportErrors);
 }
 
 function decorateItems (articles) {
