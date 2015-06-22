@@ -349,10 +349,6 @@ define([
                 }
             },
 
-            mediaEventListeners: function () {
-                mediaListener.init();
-            },
-
             checkIframe: function () {
                 if (window.self !== window.top) {
                     $('html').addClass('iframed');
@@ -538,7 +534,7 @@ define([
             robust('c-public-api',      modules.initPublicApi);
             robust('c-simple-metrics',  simpleMetrics);
             robust('c-tech-feedback',   modules.initTechFeedback);
-            robust('c-media-listeners', modules.mediaEventListeners);
+            robust('c-media-listeners', mediaListener);
             robust('c-accessibility-prefs',       modules.initAccessibilityPrefs);
             robust('c-international-signposting', modules.internationalSignposting);
             if (window.console && window.console.log && !config.page.isDev) {
