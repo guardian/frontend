@@ -75,7 +75,7 @@ function s_doPlugins(s) {
     newDiary=newDiary.join(",");
     dtmNow.setFullYear(dtmNow.getFullYear()+5);
     s.c_w("s_daily_habit",newDiary,dtmNow);
-    if (s.getVisitStart==1) s.events = s.apl(s.events, 'event16='+vC, ',');
+    if (s.getVisitStart==1) s.events = s.apl(s.events, 'event89='+vC, ',');
     s.eVar64=vC;
 
     /* Campaign stacking */
