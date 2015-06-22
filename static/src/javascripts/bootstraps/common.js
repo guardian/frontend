@@ -466,10 +466,6 @@ define([
                 }
             },
 
-            initSimpleMetrics: function () {
-                simpleMetrics.init();
-            },
-
             initTechFeedback: function () {
                 techFeedback.init();
             },
@@ -540,7 +536,7 @@ define([
             robust('c-overlay',         modules.initOpenOverlayOnClick);
             robust('c-css-logging',     modules.runCssLogging);
             robust('c-public-api',      modules.initPublicApi);
-            robust('c-simple-metrics',  modules.initSimpleMetrics);
+            robust('c-simple-metrics',  simpleMetrics);
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
             robust('c-accessibility-prefs',       modules.initAccessibilityPrefs);

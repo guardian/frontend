@@ -26,7 +26,7 @@ define([
                     // people who clicked on the bottom "most popular" component (righthand popular not included)
                     ['sm-clicked-most-popular-component', /\| most popular \|/.test(spec.tag)]
                 ]);
-                
+
                 if (clickData.length > 0) {
                     beacon.beaconCounts(clickData);
                 }
