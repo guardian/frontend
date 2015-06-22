@@ -1,9 +1,11 @@
 define([
     'bean',
+    'fastdom',
     'qwery',
     'common/utils/$'
 ], function (
     bean,
+    fastdom,
     qwery,
     $
 ) {
@@ -11,9 +13,14 @@ define([
         var $jsLm = $('.js-lm');
 
         if ($jsLm) {
-            $('.js-wpd').addClass('content__dateline-wpd--modified tone-colour');
+            fastdom.write(function () {
+                $('.js-wpd').addClass('content__dateline-wpd--modified tone-colour');
+            });
+
             bean.on(qwery('.js-wpd')[0], 'click', function () {
-                $jsLm.toggleClass('u-h');
+                fastdom.write(function () {
+                    $jsLm.toggleClass('u-h');
+                });
             });
         }
     };
