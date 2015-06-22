@@ -17,6 +17,7 @@ define([
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
     'common/modules/ui/dropdowns',
+    'common/modules/ui/last-modified',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
     'bootstraps/article',
@@ -40,6 +41,7 @@ define([
     LiveFilter,
     AutoUpdate,
     dropdowns,
+    lastModified,
     NotificationCounter,
     RelativeDates,
     article,
@@ -258,6 +260,7 @@ define([
         robust('lb-fence',      article.modules.initFence);
         robust('lb-twitter',    article.modules.initTruncateAndTwitter);
         robust('lb-sharing',    article.modules.initSelectionSharing);
+        robust('lb-last-modified', lastModified);
 
         robust('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
     }

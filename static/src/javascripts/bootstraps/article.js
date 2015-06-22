@@ -16,6 +16,7 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
     'common/modules/onward/social-most-popular',
+    'common/modules/ui/last-modified',
     'common/modules/ui/rhc',
     'common/modules/ui/selection-sharing'
 ], function (
@@ -35,6 +36,7 @@ define([
     geoMostPopular,
     OpenCta,
     SocialMostPopular,
+    lastModified,
     rhc,
     selectionSharing
 ) {
@@ -119,6 +121,7 @@ define([
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
             openModule.init();
+            lastModified();
             mediator.emit('page:article:ready');
         };
 
