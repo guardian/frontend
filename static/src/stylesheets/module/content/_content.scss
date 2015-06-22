@@ -88,6 +88,20 @@
     }
 }
 
+.content__article-body--truncated {
+    max-height: 550px;
+    overflow: hidden;
+    position: relative;
+}
+
+.content__truncation-overlay {
+    position: absolute;
+    bottom: 0;
+    background: linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255, 1));
+    height: 200px;
+    width: 100%;
+}
+
 .content__hr {
     border: 0;
     margin: 0;
