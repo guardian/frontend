@@ -11,6 +11,7 @@ define([
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
     'common/modules/article/truncate',
+    'common/modules/article/truncation',
     'common/modules/article/twitter',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
@@ -30,6 +31,7 @@ define([
     membershipEvents,
     openModule,
     truncate,
+    truncation,
     twitter,
     ab,
     geoMostPopular,
@@ -107,9 +109,7 @@ define([
 
             initTruncation: function () {
                 if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
-                    $('.js-article__body')
-                        .addClass('content__article-body--truncated')
-                        .append('<div class="content__truncation-overlay"></div>');
+                    truncation();
                 }
             }
         },
