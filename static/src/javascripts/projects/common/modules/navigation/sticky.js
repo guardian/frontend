@@ -256,7 +256,27 @@ define([
                 this.setScrollDirection(scrollY);
 
                 if (smartAppBanner.isMessageShown()) {
-                    if (scrollY > smartBannerHeight && scrollY < this.config.thresholdMobile) {
+                    if (scrollY < smartBannerHeight) {
+                        console.log(0);
+                        fastdom.write(function () {
+                            this.$els.header.css({
+                                position: 'fixed',
+                                top: smartBannerHeight - scrollY,
+                                width: '100%',
+                                'z-index': '1001',
+                                'margin-top': 0
+                            });
+                            this.$els.bannerMobile.css({
+                                position: 'fixed',
+                                top: this.headerBigHeight + (smartBannerHeight - scrollY),
+                                width: '100%',
+                                'z-index': '999' // Sticky z-index -1 as it should be sticky but should go below the sticky header
+                            });
+                            this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
+                        }.bind(this));
+                    }
+                    else if (scrollY > smartBannerHeight && scrollY < this.config.thresholdMobile) {
+                        console.log(1);
                         fastdom.write(function () {
                             this.$els.header.css({
                                 position: 'fixed',
@@ -275,7 +295,8 @@ define([
                         }.bind(this));
                         // Put navigation to its default state
                         this.setNavigationDefault();
-                    } else {
+                    } else if (scrollY > this.config.thresholdMobile) {
+                        console.log(2);
                         fastdom.write(function () {
                             //after this.thresholdMobile px of scrolling 'release' banner and navigation
                             this.$els.bannerMobile.css({
