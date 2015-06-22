@@ -4,71 +4,19 @@ module.exports = function(grunt, options) {
         self: [
             'Gruntfile.js'
         ],
-        es6: {
+        all: {
             files: [{
                 expand: true,
-                cwd: 'static/src/javascripts/es6',
+                cwd: 'static/src',
                 src: [
                     '**/*.js'
                 ]
-            }]
-        },
-        test: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/test',
-                src: [
-                    '**/*.js'
-                ]
-            }]
-        },
-        common: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/projects/common',
-                src: [
-                    '**/*.js',
-                    '!utils/atob.js'
-                ]
-            }]
-        },
-        facia: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/projects/facia',
-                src: [
-                    '**/*.js'
-                ]
-            }]
-        },
-        'facia-tool': {
-            files: [{
-                expand: true,
-                cwd: 'facia-tool/public/js/',
-                src: [
-                    '**/*.js',
-                    '!jspm-config.js',
-                    '!components/**/*.js'
-                ]
-            }]
-        },
-        membership: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/projects/membership',
-                src: [
-                    '**/*.js'
-                ]
-            }]
-        },
-        bootstraps: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/bootstraps',
-                src: [
-                    '**/*.js'
-                ]
-            }]
+            }],
+            options: {
+                // https://github.com/eslint/eslint/issues/2824
+                ignorePath: 'static/src/.eslintignore',
+                quiet: true
+            }
         }
     };
 };
