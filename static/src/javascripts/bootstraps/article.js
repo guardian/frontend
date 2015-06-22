@@ -103,6 +103,14 @@ define([
                 require(['ophan/ng'], function (ophan) {
                     mediator.on('quiz/ophan-event', ophan.record);
                 });
+            },
+
+            initTruncation: function () {
+                if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
+                    $('.js-article__body')
+                        .addClass('content__article-body--truncated')
+                        .append('<div class="content__truncation-overlay"></div>');
+                }
             }
         },
 
@@ -115,6 +123,7 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
+            modules.initTruncation();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
