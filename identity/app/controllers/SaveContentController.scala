@@ -11,7 +11,7 @@ import model.{Content => ApiContent, _}
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 
-import com.google.inject.Inject
+import com.google.inject.{Singleton, Inject}
 import common.ExecutionContexts
 import conf.LiveContentApi.getResponse
 import idapiclient.IdApiClient
