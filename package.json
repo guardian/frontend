@@ -37,7 +37,7 @@
     "jasmine-core": "^2.3.2",
     "jit-grunt": "0.9.1",
     "jsonfile": "2.0.0",
-    "jspm": "0.15.6",
+    "jspm": "0.16.0-beta.2",
     "jspm-bower-endpoint": "^0.3.2",
     "karma": "0.12.31",
     "karma-chrome-launcher": "0.1.10",
@@ -46,7 +46,7 @@
     "karma-firefox-launcher": "0.1.6",
     "karma-html2js-preprocessor": "0.1.0",
     "karma-jasmine": "0.3.5",
-    "karma-jspm": "rich-nguyen/karma-jspm.git#1.1.5",
+    "karma-jspm": "rich-nguyen/karma-jspm.git#1.1.6",
     "karma-phantomjs-launcher": "0.1.4",
     "karma-phantomjs-shim": "^1.0.0",
     "karma-requirejs": "0.2.2",
@@ -90,7 +90,7 @@
       "reqwest": "github:ded/reqwest@1.1.5",
       "sinonjs": "bower:sinonjs@1.10.2",
       "socketio": "github:Automattic/socket.io-client@1.1.0",
-      "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
+      "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.10",
       "text": "github:systemjs/plugin-text@^0.0.2",
       "videojs": "github:guardian/video.js@4.11.1.1",
       "videojsads": "github:guardian/videojs-contrib-ads@0.4.1",
@@ -100,9 +100,9 @@
       "videojsplaylist": "github:tim-peterson/videojs-playlist@master"
     },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.1.13",
-      "babel-runtime": "npm:babel-runtime@^5.1.13",
-      "core-js": "npm:core-js@^0.9.4"
+      "babel": "npm:babel-core@^5.5.8",
+      "babel-runtime": "npm:babel-runtime@^5.5.8",
+      "core-js": "npm:core-js@^0.9.17"
     }
   }
 }
