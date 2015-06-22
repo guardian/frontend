@@ -34,6 +34,7 @@
                     @fragments.inlineSvg("soulmates-border-topleft", "commercial")
                     @fragments.inlineSvg("soulmates-border-topright", "commercial")
                     <form class="commercial__search" action="@Configuration.commercial.soulmates_url/find" method="get">
+                        <h4 class="feed__title">Guardian readers <span>looking for dates now</span></h4>
                         <div>
                             <label for="my_gender" class="search__dropdown">I'm a</label>
                             <select id="my_gender" name="my_gender" class="search__dropdown__options">
@@ -67,7 +68,7 @@
                             </select>
                         </div>
                         <button type="submit" class="search__submit" data-link-name="merchandising-soulmates-v@{version}_@{date}-find-a-soulmate">
-                            Find a soulmate @fragments.inlineSvg("soulmates-arrow", "commercial")
+                            Find a Soulmate @fragments.inlineSvg("soulmates-arrow", "commercial")
                         </button>
                     </form>
                 </div>

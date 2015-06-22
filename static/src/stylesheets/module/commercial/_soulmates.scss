@@ -83,6 +83,12 @@ $c-soulmates-high: colour(neutral-1);
 
     .commercial__title {
         min-height: 0;
+
+        @include mq(mobile) {
+            svg {
+                width: 100px;
+            }
+        }
     }
 
     .inline-logo-soulmates {
@@ -264,7 +270,7 @@ $c-soulmates-high: colour(neutral-1);
     .inline-soulmates-arrow {
         float: right;
         border-left: 1px solid #666666;
-        padding: $gs-baseline/6 $gs-baseline;
+        padding: 0 $gs-baseline;
     }
 
     .inline-soulmates-person {
@@ -294,11 +300,11 @@ $c-soulmates-high: colour(neutral-1);
         }
 
         &:before {
-            left: 30%;
+            left: 5%;
         }
 
         &:after {
-            right: 30%;
+            right: 5%;
         }
 
         @include mq(tablet) {
@@ -331,17 +337,27 @@ $c-soulmates-high: colour(neutral-1);
         background-color: #ffffff;
         height: 100%;
         position: relative;
-        padding: $gs-baseline*2 $gs-baseline*2 $gs-baseline $gs-baseline*2;
+        padding: 0 $gs-baseline*2 $gs-baseline $gs-baseline*2;
         overflow: hidden;
 
         @include mq(tablet) {
             float: right;
             overflow: visible;
             width: gs-span(6) - $gs-baseline*4;
+            padding-top: $gs-baseline*2;
         }
 
         @include mq(desktop) {
             width: gs-span(8) - $gs-baseline*4;
+        }
+
+        h4.feed__title {
+            display: none;
+
+            @include mq(tablet) {
+                display: block;
+            }
+
         }
     }
 
@@ -470,6 +486,15 @@ $c-soulmates-high: colour(neutral-1);
                 border: 0;
             }
         }
+
+        h4.feed__title {
+            display: block;
+
+            @include mq(tablet) {
+                display: none;
+            }
+
+        }
     }
 
     .search__dropdown {
@@ -489,13 +514,18 @@ $c-soulmates-high: colour(neutral-1);
         margin-right: 0;
         background-color: #332e2e;
         color: #ffffff;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 900;
-        line-height: 30px;
+        line-height: $gs-row-height;
         height: $gs-row-height;
         width: 100%;
         text-align: left;
-        padding-right: 0;
+        padding: 0 0 0 $gs-baseline;
         border: 0;
+
+        @include mq(tablet) {
+            font-size: 15px;
+        }
+
     }
 }
