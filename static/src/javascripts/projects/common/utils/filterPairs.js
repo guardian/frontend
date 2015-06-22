@@ -7,5 +7,5 @@ define([
         }).map(function (pair) {
             return pair[0];
         }).value();
-    }
+    };
 });
