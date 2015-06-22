@@ -97,7 +97,8 @@
       "videojsembed": "github:guardian/videojs-embed@~0.3.1",
       "videojsima": "github:guardian/videojs-ima@0.1.2",
       "videojspersistvolume": "bower:videojs-persistvolume@~0.1.0",
-      "videojsplaylist": "github:tim-peterson/videojs-playlist@master"
+      "videojsplaylist": "github:tim-peterson/videojs-playlist@master",
+      "zxcvbn": "github:dropbox/zxcvbn@v1.0"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.5.8",

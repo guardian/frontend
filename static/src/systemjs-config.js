@@ -69,6 +69,7 @@ System.config({
     "videojsima": "github:guardian/videojs-ima@0.1.2",
     "videojspersistvolume": "bower:videojs-persistvolume@0.1.2",
     "videojsplaylist": "github:tim-peterson/videojs-playlist@master",
+    "zxcvbn": "github:dropbox/zxcvbn@v1.0",
     "bower:jasmine-sinon@0.4.0": {
       "jasmine": "bower:jasmine@2.0.4",
       "sinonjs": "bower:sinonjs@1.10.2"
