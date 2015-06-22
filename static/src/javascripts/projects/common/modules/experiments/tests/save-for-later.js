@@ -47,6 +47,10 @@ define([
 
         this.variants = [
             {
+                id: 'control',
+                test: function () {}
+            },
+            {
                 id: 'variant',
                 test: function () {
                     var loadIdentityApi = new Promise(function (resolve) {
