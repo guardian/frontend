@@ -24,7 +24,6 @@ define([
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
-    'common/modules/commercial/comment-adverts',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
     'common/modules/experiments/ab',
@@ -78,7 +77,6 @@ define([
     logCss,
     simpleMetrics,
     userAdTargeting,
-    commentAdverts,
     CommentCount,
     DiscussionLoader,
     ab,
@@ -306,10 +304,6 @@ define([
                 }
             },
 
-            commentsAds: function () {
-                commentAdverts.init();
-            },
-
             showMoreTagsLink: function () {
                 new MoreTags().init();
             },
@@ -445,7 +439,6 @@ define([
                 ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
                 ['c-comments', modules.repositionComments],
-                ['c-comments-ads', modules.commentsAds],
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', modules.showSmartBanner],
                 ['c-adblock', modules.showAdblockMessage],
@@ -455,7 +448,7 @@ define([
                 ['c-overlay', modules.initOpenOverlayOnClick],
                 ['c-css-logging', modules.runCssLogging],
                 ['c-public-api', modules.initPublicApi],
-                ['c-simple-metrics',  simpleMetrics],
+                ['c-simple-metrics', simpleMetrics],
                 ['c-tech-feedback', modules.initTechFeedback],
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', modules.initAccessibilityPrefs],
