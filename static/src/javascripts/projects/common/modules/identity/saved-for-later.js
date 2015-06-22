@@ -10,7 +10,6 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'common/views/svgs',
-
     'text!common/views/save-for-later/delete-all-button.html'
 ], function (
     $,
@@ -52,6 +51,9 @@ define([
                     }));
                 });
             });
+            if (state === 'confirm') {
+                setTimeout(this.init.bind(this), 2000);
+            }
         };
     }
 
