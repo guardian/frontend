@@ -10,7 +10,6 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
-    'common/utils/proximity-loader',
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/url',
@@ -37,11 +36,7 @@ define([
     'common/modules/navigation/search',
     'common/modules/onward/history',
     'common/modules/onward/more-tags',
-    'common/modules/onward/onward-content',
-    'common/modules/onward/popular',
-    'common/modules/onward/related',
     'common/modules/onward/tech-feedback',
-    'common/modules/onward/tonal',
     'common/modules/social/share-count',
     'common/modules/ui/accessibility-prefs',
     'common/modules/ui/clickstream',
@@ -69,7 +64,6 @@ define([
     config,
     cookies,
     detect,
-    proximityLoader,
     mediator,
     template,
     url,
@@ -96,11 +90,7 @@ define([
     Search,
     history,
     MoreTags,
-    Onward,
-    Popular,
-    Related,
     techFeedback,
-    TonalComponent,
     shareCount,
     accessilbilityPrefs,
     Clickstream,
@@ -167,71 +157,6 @@ define([
             initialiseStickyHeader: function () {
                 if (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') {
                     sticky.init();
-                }
-            },
-
-            transcludeRelated: function () {
-                var opts = {
-                    excludeTags: []
-                };
-
-                // exclude ad features from non-ad feature content
-                if (config.page.sponsorshipType !== 'advertisement-features') {
-                    opts.excludeTags.push('tone/advertisement-features');
-                }
-                // don't want to show professional network content on videos or interactives
-                if ('contentType' in config.page && ['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) >= 0) {
-                    opts.excludeTags.push('guardian-professional/guardian-professional');
-                }
-                new Related(opts).renderRelatedComponent();
-            },
-
-            initRelated: function () {
-                if (window.location.hash) {
-                    modules.transcludeRelated();
-                } else {
-                    var relatedEl = qwery('.js-related')[0];
-                    if (relatedEl) {
-                        proximityLoader.add(relatedEl, 1500, modules.transcludeRelated);
-                    }
-                }
-            },
-
-            transcludePopular: function () {
-                new Popular().init();
-            },
-
-            initPopular: function () {
-                if (!config.page.isFront) {
-                    if (window.location.hash) {
-                        modules.transcludePopular();
-                    } else {
-                        var onwardEl = qwery('.js-popular-trails')[0];
-                        if (onwardEl) {
-                            proximityLoader.add(onwardEl, 1500, modules.transcludePopular);
-                        }
-                    }
-                }
-            },
-
-            transcludeOnwardContent: function () {
-                if ((config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent) {
-                    new Onward(qwery('.js-onward'));
-                } else if (config.page.tones !== '') {
-                    $('.js-onward').each(function (c) {
-                        new TonalComponent().fetch(c, 'html');
-                    });
-                }
-            },
-
-            initOnwardContent: function () {
-                if (window.location.hash) {
-                    modules.transcludeOnwardContent();
-                } else {
-                    var onwardEl = qwery('.js-onward')[0];
-                    if (onwardEl) {
-                        proximityLoader.add(onwardEl, 1500, modules.transcludeOnwardContent);
-                    }
                 }
             },
 
@@ -526,9 +451,6 @@ define([
             robust('c-log-stats',       modules.logLiveStats);
             robust('c-analytics',       modules.loadAnalytics);
             robust('c-cookies',         modules.cleanupCookies);
-            robust('c-popular',         modules.initPopular);
-            robust('c-related',         modules.initRelated);
-            robust('c-onward',          modules.initOnwardContent);
             robust('c-overlay',         modules.initOpenOverlayOnClick);
             robust('c-css-logging',     modules.runCssLogging);
             robust('c-public-api',      modules.initPublicApi);

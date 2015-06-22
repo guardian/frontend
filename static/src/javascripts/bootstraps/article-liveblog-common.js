@@ -1,4 +1,4 @@
-/** Bootstrap for functionality common to all article pages (incl. live blogs) */
+/** Bootstrap for functionality common to articles and live blogs */
 define([
     'fence',
     'common/utils/$',

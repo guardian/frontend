@@ -21,6 +21,7 @@ define([
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
     'bootstraps/article-liveblog-common',
+    'bootstraps/trail',
     'common/utils/robust'
 ], function (
     bean,
@@ -45,6 +46,7 @@ define([
     NotificationCounter,
     RelativeDates,
     articleLiveblogCommon,
+    trail,
     robust
 ) {
     'use strict';
@@ -255,6 +257,7 @@ define([
         robust('lb-updates',    modules.handleUpdates);
         robust('lb-richlinks',  richLinks.upgradeRichLinks);
 
+        trail();
         articleLiveblogCommon();
 
         robust('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
