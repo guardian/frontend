@@ -960,7 +960,7 @@ object Switches {
     "ipad-no-thrashers",
     "This switch will disable Thrashers on ipads",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 20),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
   )
 
