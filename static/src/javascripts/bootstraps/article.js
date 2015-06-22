@@ -1,6 +1,5 @@
 /*eslint-disable no-new*/
 define([
-    'fence',
     'qwery',
     'common/utils/$',
     'common/utils/config',
@@ -10,17 +9,11 @@ define([
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
-    'common/modules/article/truncate',
-    'common/modules/article/twitter',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
-    'common/modules/open/cta',
     'common/modules/onward/social-most-popular',
-    'common/modules/ui/last-modified',
-    'common/modules/ui/rhc',
-    'common/modules/ui/selection-sharing'
+    'bootstraps/trail'
 ], function (
-    fence,
     qwery,
     $,
     config,
@@ -30,36 +23,12 @@ define([
     richLinks,
     membershipEvents,
     openModule,
-    truncate,
-    twitter,
     ab,
     geoMostPopular,
-    OpenCta,
     SocialMostPopular,
-    lastModified,
-    rhc,
-    selectionSharing
+    trail
 ) {
     var modules = {
-            initOpenCta: function () {
-                if (config.switches.openCta && config.page.commentable) {
-                    var openCta = new OpenCta(mediator, {
-                        discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
-                    });
-
-                    $.create('<div class="open-cta"></div>').each(function (el) {
-                        openCta.fetch(el);
-                        if (!config.page.isLiveBlog) { rhc.addComponent(el); }
-                    });
-                }
-            },
-
-            initFence: function () {
-                $('.fenced').each(function (el) {
-                    fence.render(el);
-                });
-            },
-
             initCmpParam: function () {
                 var allvars = urlutils.getUrlVars();
 
@@ -70,23 +39,12 @@ define([
                 }
             },
 
-            initTruncateAndTwitter: function () {
-                // Ensure that truncation occurs before the tweet upgrading.
-                truncate();
-                twitter.init();
-                twitter.enhanceTweets();
-            },
-
             initRightHandComponent: function () {
                 var mainColumn = qwery('.js-content-main-column');
                 // only render when we have >1000px or more (enough space for ad + most popular)
                 if (mainColumn[0] && mainColumn[0].offsetHeight > 1150 && detect.isBreakpoint({ min: 'desktop' })) {
                     geoMostPopular.render();
                 }
-            },
-
-            initSelectionSharing: function () {
-                selectionSharing.init();
             },
 
             initSocialMostPopular: function () {
@@ -109,11 +67,8 @@ define([
         },
 
         ready = function () {
-            modules.initOpenCta();
-            modules.initFence();
-            modules.initTruncateAndTwitter();
+            trail();
             modules.initRightHandComponent();
-            modules.initSelectionSharing();
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
@@ -121,7 +76,6 @@ define([
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
             openModule.init();
-            lastModified();
             mediator.emit('page:article:ready');
         };
 
