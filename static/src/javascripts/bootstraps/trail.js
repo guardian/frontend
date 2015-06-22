@@ -3,7 +3,7 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/robust',
+    'common/utils/robusts',
     'common/utils/proximity-loader',
     'common/modules/onward/onward-content',
     'common/modules/onward/popular',
@@ -13,7 +13,7 @@ define([
     qwery,
     $,
     config,
-    robust,
+    robusts,
     proximityLoader,
     Onward,
     Popular,
@@ -89,8 +89,10 @@ define([
     };
 
     return function () {
-        robust('c-popular', modules.initPopular);
-        robust('c-related', modules.initRelated);
-        robust('c-onward', modules.initOnwardContent);
+        robusts([
+            ['c-popular', modules.initPopular],
+            ['c-related', modules.initRelated],
+            ['c-onward', modules.initOnwardContent]
+        ]);
     }
 });
