@@ -13,7 +13,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/url',
-    'common/utils/robust',
+    'common/utils/robusts',
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
@@ -67,7 +67,7 @@ define([
     mediator,
     template,
     url,
-    robust,
+    robusts,
     storage,
     Foresee,
     liveStats,
@@ -418,47 +418,49 @@ define([
         },
 
         ready = function () {
-            robust('c-fonts',           modules.loadFonts);
-            robust('c-identity',        modules.initId);
-            robust('c-adverts',         modules.initUserAdTargeting);
-            robust('c-discussion',      modules.initDiscussion);
-            robust('c-fast-click',      modules.initFastClick);
-            robust('c-test-cookie',     modules.testCookie);
-            robust('c-ad-cookie',       modules.adTestCookie);
-            robust('c-event-listeners', modules.windowEventListeners);
-            robust('c-breaking-news',   modules.loadBreakingNews);
-            robust('c-shares',          modules.initShareCounts);
-            robust('c-block-link',      modules.initialiseFauxBlockLink);
-            robust('c-iframe',          modules.checkIframe);
-            robust('c-tabs',            modules.showTabs);
-            robust('c-top-nav',         modules.initialiseTopNavItems);
-            robust('c-init-nav',        modules.initialiseNavigation);
-            robust('c-sticky-header',   modules.initialiseStickyHeader);
-            robust('c-toggles',         modules.showToggles);
-            robust('c-dates',           modules.showRelativeDates);
-            robust('c-clickstream',     modules.initClickstream);
-            robust('c-history',         modules.updateHistory);
-            robust('c-sign-in',         modules.initAutoSignin);
-            robust('c-interactive',     modules.augmentInteractive);
-            robust('c-history-nav',     modules.showHistoryInMegaNav);
-            robust('c-forsee',          modules.runForseeSurvey);
-            robust('c-start-register',  modules.startRegister);
-            robust('c-comments',        modules.repositionComments);
-            robust('c-comments-ads',    modules.commentsAds);
-            robust('c-tag-links',       modules.showMoreTagsLink);
-            robust('c-smart-banner',    modules.showSmartBanner);
-            robust('c-adblock',         modules.showAdblockMessage);
-            robust('c-log-stats',       modules.logLiveStats);
-            robust('c-analytics',       modules.loadAnalytics);
-            robust('c-cookies',         modules.cleanupCookies);
-            robust('c-overlay',         modules.initOpenOverlayOnClick);
-            robust('c-css-logging',     modules.runCssLogging);
-            robust('c-public-api',      modules.initPublicApi);
-            robust('c-simple-metrics',  simpleMetrics);
-            robust('c-tech-feedback',   modules.initTechFeedback);
-            robust('c-media-listeners', mediaListener);
-            robust('c-accessibility-prefs',       modules.initAccessibilityPrefs);
-            robust('c-international-signposting', modules.internationalSignposting);
+            robusts([
+                ['c-fonts', modules.loadFonts],
+                ['c-identity', modules.initId],
+                ['c-adverts', modules.initUserAdTargeting],
+                ['c-discussion', modules.initDiscussion],
+                ['c-fast-click', modules.initFastClick],
+                ['c-test-cookie', modules.testCookie],
+                ['c-ad-cookie', modules.adTestCookie],
+                ['c-event-listeners', modules.windowEventListeners],
+                ['c-breaking-news', modules.loadBreakingNews],
+                ['c-shares', modules.initShareCounts],
+                ['c-block-link', modules.initialiseFauxBlockLink],
+                ['c-iframe', modules.checkIframe],
+                ['c-tabs', modules.showTabs],
+                ['c-top-nav', modules.initialiseTopNavItems],
+                ['c-init-nav', modules.initialiseNavigation],
+                ['c-sticky-header', modules.initialiseStickyHeader],
+                ['c-toggles', modules.showToggles],
+                ['c-dates', modules.showRelativeDates],
+                ['c-clickstream', modules.initClickstream],
+                ['c-history', modules.updateHistory],
+                ['c-sign-in', modules.initAutoSignin],
+                ['c-interactive', modules.augmentInteractive],
+                ['c-history-nav', modules.showHistoryInMegaNav],
+                ['c-forsee', modules.runForseeSurvey],
+                ['c-start-register', modules.startRegister],
+                ['c-comments', modules.repositionComments],
+                ['c-comments-ads', modules.commentsAds],
+                ['c-tag-links', modules.showMoreTagsLink],
+                ['c-smart-banner', modules.showSmartBanner],
+                ['c-adblock', modules.showAdblockMessage],
+                ['c-log-stats', modules.logLiveStats],
+                ['c-analytics', modules.loadAnalytics],
+                ['c-cookies', modules.cleanupCookies],
+                ['c-overlay', modules.initOpenOverlayOnClick],
+                ['c-css-logging', modules.runCssLogging],
+                ['c-public-api', modules.initPublicApi],
+                ['c-simple-metrics',  simpleMetrics],
+                ['c-tech-feedback', modules.initTechFeedback],
+                ['c-media-listeners', mediaListener],
+                ['c-accessibility-prefs', modules.initAccessibilityPrefs],
+                ['c-international-signposting', modules.internationalSignposting]
+            ]);
             if (window.console && window.console.log && !config.page.isDev) {
                 window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');
             }
