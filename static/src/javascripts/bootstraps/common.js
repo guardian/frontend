@@ -349,7 +349,7 @@ define([
     return {
         init: function () {
             robusts([
-                ['c-fonts', fonts.load],
+                ['c-fonts', fonts],
                 ['c-identity', modules.initId],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
