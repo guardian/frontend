@@ -112,7 +112,7 @@
     }
 
     .element-witness--source & {
-        color: #247eb3;
+        color: colour(news-support-2);
         @include font($f-serif-text, 700, 16, 16);
     }
 
