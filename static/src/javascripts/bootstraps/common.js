@@ -25,7 +25,6 @@ define([
     'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/discussion/comment-count',
-    'common/modules/discussion/loader',
     'common/modules/experiments/ab',
     'common/modules/identity/api',
     'common/modules/identity/autosignin',
@@ -78,7 +77,6 @@ define([
     simpleMetrics,
     userAdTargeting,
     CommentCount,
-    DiscussionLoader,
     ab,
     id,
     AutoSignin,
@@ -291,12 +289,6 @@ define([
             initDiscussion: function () {
                 if (config.switches.discussion) {
                     CommentCount.init();
-                    if (config.page.commentable) {
-                        var el = qwery('.discussion')[0];
-                        if (el) {
-                            new DiscussionLoader().attachTo(el);
-                        }
-                    }
                 }
             },
 

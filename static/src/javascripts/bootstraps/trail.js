@@ -7,6 +7,7 @@ define([
     'common/utils/robusts',
     'common/utils/proximity-loader',
     'common/modules/commercial/comment-adverts',
+    'common/modules/discussion/loader',
     'common/modules/onward/onward-content',
     'common/modules/onward/popular',
     'common/modules/onward/related',
@@ -18,6 +19,7 @@ define([
     robusts,
     proximityLoader,
     commentAdverts,
+    DiscussionLoader,
     Onward,
     Popular,
     Related,
@@ -73,8 +75,18 @@ define([
         });
     }
 
+    function initDiscussion() {
+        if (config.switches.discussion && config.page.commentable) {
+            var el = qwery('.discussion')[0];
+            if (el) {
+                new DiscussionLoader().attachTo(el);
+            }
+        }
+    }
+
     return function () {
         robusts([
+            ['c-discussion', initDiscussion],
             ['c-popular', initPopular],
             ['c-related', initRelated],
             ['c-onward', initOnwardContent],
