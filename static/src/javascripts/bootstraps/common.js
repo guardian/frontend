@@ -25,7 +25,6 @@ define([
     'common/modules/commercial/user-ad-targeting',
     'common/modules/discussion/comment-count',
     'common/modules/experiments/ab',
-    'common/modules/identity/api',
     'common/modules/identity/autosignin',
     'common/modules/navigation/navigation',
     'common/modules/navigation/sticky',
@@ -75,7 +74,6 @@ define([
     userAdTargeting,
     CommentCount,
     ab,
-    id,
     AutoSignin,
     navigation,
     sticky,
@@ -261,12 +259,6 @@ define([
             startRegister: function () {
                 if (!config.page.isSSL) {
                     register.initialise();
-                }
-            },
-
-            repositionComments: function () {
-                if (!id.isUserLoggedIn()) {
-                    $('.js-comments').appendTo(qwery('.js-repositioned-comments'));
                 }
             },
 

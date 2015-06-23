@@ -2,6 +2,7 @@
 /** Bootstrap for functionality common to all trail pages: article, live blogs, podcasts, videos, etc. */
 define([
     'enhancer',
+    'fastdom',
     'qwery',
     'common/utils/$',
     'common/utils/config',
@@ -10,6 +11,7 @@ define([
     'common/utils/proximity-loader',
     'common/modules/commercial/comment-adverts',
     'common/modules/discussion/loader',
+    'common/modules/identity/api',
     'common/modules/onward/onward-content',
     'common/modules/onward/popular',
     'common/modules/onward/related',
@@ -17,6 +19,7 @@ define([
     'common/modules/social/share-count'
 ], function (
     enhancer,
+    fastdom,
     qwery,
     $,
     config,
@@ -25,6 +28,7 @@ define([
     proximityLoader,
     commentAdverts,
     DiscussionLoader,
+    identityApi,
     Onward,
     Popular,
     Related,
@@ -62,7 +66,8 @@ define([
                 opts.excludeTags.push('tone/advertisement-features');
             }
             // don't want to show professional network content on videos or interactives
-            if ('contentType' in config.page && ['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) >= 0) {
+            if ('contentType' in config.page &&
+                ['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) >= 0) {
                 opts.excludeTags.push('guardian-professional/guardian-professional');
             }
             new Related(opts).renderRelatedComponent();
@@ -93,7 +98,17 @@ define([
     function augmentInteractive() {
         if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
             $('figure.interactive').each(function (el) {
-                enhancer.render(el, document, config, mediator);
+                fastdom.defer(function () {
+                    enhancer.render(el, document, config, mediator);
+                });
+            });
+        }
+    }
+
+    function repositionComments() {
+        if (!identityApi.isUserLoggedIn()) {
+            fastdom.write(function () {
+                $('.js-comments').appendTo(qwery('.js-repositioned-comments'));
             });
         }
     }
@@ -101,6 +116,8 @@ define([
     return function () {
         robusts([
             ['c-discussion', initDiscussion],
+            ['c-comments', repositionComments],
+            ['c-enhance', augmentInteractive],
             ['c-shares', shareCount],
             ['c-popular', initPopular],
             ['c-related', initRelated],
