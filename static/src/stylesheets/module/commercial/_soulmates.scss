@@ -63,18 +63,12 @@ $c-soulmates-high: colour(neutral-1);
 
         .svg & {
             background-size: cover;
-
-            @include mq($until: leftCol) {
-                //width: gs-span(2);
-                //height: $gs-baseline*2.5;
-            }
         }
 
         @include mq(wide) {
             .has-page-skin & {
                 .svg & {
                     width: gs-span(2);
-                    //height: $gs-baseline*2.5;
                     padding-top: $gs-baseline*2;
                 }
             }
@@ -83,24 +77,22 @@ $c-soulmates-high: colour(neutral-1);
 
     .commercial__title {
         min-height: 0;
-
-        @include mq(mobile) {
-            svg {
-                width: 100px;
-            }
-        }
+        width: 120px;
     }
 
     .inline-logo-soulmates {
-        width: 86px;
-        height: 18px;
 
         .svg & {
             background-size: contain;
 
-            @include mq(wide) {
+            svg {
                 width: 100px;
                 height: 21px;
+
+                @include mq(mobileLandscape) {
+                    width: 120px;
+                    height: 28px;
+                }
             }
         }
         @include mq(wide) {
@@ -270,7 +262,7 @@ $c-soulmates-high: colour(neutral-1);
     .inline-soulmates-arrow {
         float: right;
         border-left: 1px solid #666666;
-        padding: 0 $gs-baseline;
+        padding: $gs-baseline/4 $gs-baseline;
     }
 
     .inline-soulmates-person {
@@ -281,6 +273,7 @@ $c-soulmates-high: colour(neutral-1);
 
     h4.feed__title {
         @include fs-header(1);
+        line-height: 1.1;
         text-align: center;
         margin: 0 auto $gs-gutter auto;
         position: relative;
@@ -516,15 +509,18 @@ $c-soulmates-high: colour(neutral-1);
         color: #ffffff;
         font-size: 14px;
         font-weight: 900;
-        line-height: $gs-row-height;
-        height: $gs-row-height;
+        line-height: 1;
         width: 100%;
         text-align: left;
-        padding: 0 0 0 $gs-baseline;
+        padding: 8px 0 8px $gs-baseline;
         border: 0;
 
-        @include mq(tablet) {
+        @include mq(desktop) {
             font-size: 15px;
+        }
+
+        .search__submit__text {
+            line-height: 29px;
         }
 
     }
