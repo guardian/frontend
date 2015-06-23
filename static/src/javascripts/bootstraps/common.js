@@ -108,16 +108,8 @@ define([
     identity
 ) {
     var modules = {
-            loadFonts: function () {
-                fonts.load();
-            },
-
             initId: function () {
                 identity.init(config);
-            },
-
-            initUserAdTargeting: function () {
-                userAdTargeting.requestUserSegmentsFromId();
             },
 
             initFastClick: function () {
@@ -125,10 +117,6 @@ define([
                 // all types. AMD exports FastClick, CJS exports FastClick.attach
                 // As per: https://github.com/ftlabs/fastclick/blob/master/lib/fastclick.js#L829-L840
                 (config.tests.jspmTest ? FastClick : FastClick.attach)(document.body);
-            },
-
-            initialiseFauxBlockLink: function () {
-                fauxBlockLink().init();
             },
 
             initialiseTopNavItems: function () {
@@ -413,9 +401,9 @@ define([
 
         ready = function () {
             robusts([
-                ['c-fonts', modules.loadFonts],
+                ['c-fonts', fonts.load],
                 ['c-identity', modules.initId],
-                ['c-adverts', modules.initUserAdTargeting],
+                ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
                 ['c-fast-click', modules.initFastClick],
                 ['c-test-cookie', modules.testCookie],
@@ -423,7 +411,7 @@ define([
                 ['c-event-listeners', modules.windowEventListeners],
                 ['c-breaking-news', modules.loadBreakingNews],
                 ['c-shares', modules.initShareCounts],
-                ['c-block-link', modules.initialiseFauxBlockLink],
+                ['c-block-link', fauxBlockLink],
                 ['c-iframe', modules.checkIframe],
                 ['c-tabs', modules.showTabs],
                 ['c-top-nav', modules.initialiseTopNavItems],
