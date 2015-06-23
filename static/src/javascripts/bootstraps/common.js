@@ -238,10 +238,9 @@ define([
             },
 
             windowEventListeners: function () {
-                var events = ['resize', 'scroll', 'orientationchange'];
-                for (var event in events) {
+                ['resize', 'scroll', 'orientationchange'].each(function (event) {
                     bean.on(window, event, mediator.emit.bind(mediator, 'window:' + event));
-                }
+                });
             },
 
             checkIframe: function () {
@@ -325,10 +324,6 @@ define([
                 }
             },
 
-            initTechFeedback: function () {
-                techFeedback.init();
-            },
-
             initPublicApi: function () {
                 // BE CAREFUL what you expose here...
                 window.guardian.api = {
@@ -388,7 +383,7 @@ define([
                 ['c-css-logging', modules.runCssLogging],
                 ['c-public-api', modules.initPublicApi],
                 ['c-simple-metrics', simpleMetrics],
-                ['c-tech-feedback', modules.initTechFeedback],
+                ['c-tech-feedback', techFeedback],
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-international-signposting', modules.internationalSignposting]
