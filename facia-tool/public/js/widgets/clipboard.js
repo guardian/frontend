@@ -4,7 +4,7 @@ import _ from 'underscore';
 import BaseWidget from 'widgets/base-widget';
 import Article from 'models/collections/article';
 import Group from 'models/group';
-import contentApi from 'modules/content-api';
+import * as contentApi from 'modules/content-api';
 import copiedArticle from 'modules/copied-article';
 import * as globalListeners from 'utils/global-listeners';
 import * as storage from 'utils/local-storage';

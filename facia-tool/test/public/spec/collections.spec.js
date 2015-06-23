@@ -384,9 +384,6 @@ describe('Collections', function () {
             expect($('.desktop-indicator .indicator')[0].clientHeight > 100).toBe(true);
             done();
         })
-        .catch(function () {
-            expect(true).toBe(false);
-            done();
-        });
+        .catch(done.fail);
     });
 });

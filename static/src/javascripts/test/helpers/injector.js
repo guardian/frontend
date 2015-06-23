@@ -1,11 +1,16 @@
 export default class Injector {
    constructor() {
-        this.loader = System.clone();
-
-        this.loader.paths = System.paths;
-        this.loader.map = System.map;
+        this.loader = new System.constructor();
+        this.loader.config({
+            baseURL: System.baseURL,
+            defaultJSExtensions: true,
+            transpiler: System.transpiler,
+            paths: System.paths,
+            map: System.map,
+            // Map is transformed to packages
+            packages: System.packages
+        });
         this.loader.normalize = System.normalize;
-        this.loader.transpiler = System.transpiler;
     }
 
     mock(mocks) {

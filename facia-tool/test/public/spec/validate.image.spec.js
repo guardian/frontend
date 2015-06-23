@@ -11,10 +11,7 @@ describe('Validate images', function () {
 
     it('fails on missing images', function (done) {
         validate()
-        .then(function () {
-            expect(true).toBe(false);
-            done();
-        }, function (err) {
+        .then(done.fail, function (err) {
             expect(err.message).toMatch(/missing/i);
             done();
         });
@@ -24,10 +21,7 @@ describe('Validate images', function () {
         CONST.imageCdnDomain = 'funny-host';
 
         validate('http://another-host/image.png')
-        .then(function () {
-            expect(true).toBe(false);
-            done();
-        }, function (err) {
+        .then(done.fail, function (err) {
             expect(err.message).toMatch(/images must come/i);
             done();
         });
@@ -37,10 +31,7 @@ describe('Validate images', function () {
         CONST.imageCdnDomain = window.location.host;
 
         validate('http://' + CONST.imageCdnDomain + '/this_image_doesnt_exists__promised.png')
-        .then(function () {
-            expect(true).toBe(false);
-            done();
-        }, function (err) {
+        .then(done.fail, function (err) {
             expect(err.message).toMatch(/could not be found/i);
             done();
         });
@@ -53,10 +44,7 @@ describe('Validate images', function () {
         };
 
         validate('http://' + CONST.imageCdnDomain + '/base/test/public/fixtures/square.png', criteria)
-        .then(function () {
-            expect(true).toBe(false);
-            done();
-        }, function (err) {
+        .then(done.fail, function (err) {
             expect(err.message).toMatch(/cannot be more/i);
             done();
         });
@@ -69,10 +57,7 @@ describe('Validate images', function () {
         };
 
         validate('http://' + CONST.imageCdnDomain + '/base/test/public/fixtures/square.png', criteria)
-        .then(function () {
-            expect(true).toBe(false);
-            done();
-        }, function (err) {
+        .then(done.fail, function (err) {
             expect(err.message).toMatch(/cannot be less/i);
             done();
         });
@@ -86,10 +71,7 @@ describe('Validate images', function () {
         };
 
         validate('http://' + CONST.imageCdnDomain + '/base/test/public/fixtures/square.png', criteria)
-        .then(function () {
-            expect(true).toBe(false);
-            done();
-        }, function (err) {
+        .then(done.fail, function (err) {
             expect(err.message).toMatch(/aspect ratio/i);
             done();
         });

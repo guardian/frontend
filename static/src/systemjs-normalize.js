@@ -48,16 +48,6 @@ var reduce = function (array, fn, accumulator) {
                 } else {
                     return name;
                 }
-            },
-            function interactives(name) {
-                // Transforms something like:     http://interactive.guim.co.uk/2015/04/climate-letters/assets-1430142775693/js/main.js
-                // into a legal module name: http/interactive.guim.co.uk/2015/04/climate-letters/assets-1430142775693/js/main.js
-                var regExp = /(^http[s]?):\/\/(.*)/.exec(name);
-                if (regExp) {
-                    return regExp[1] + '/' + regExp[2];
-                } else {
-                    return name;
-                }
             }
         ];
 

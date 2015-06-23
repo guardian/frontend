@@ -37,8 +37,8 @@ define([
              */
             var alreadyVisited = storage.local.get('alreadyVisited') || 0;
             return !detect.adblockInUse &&
-                config.page.edition.toLowerCase() === 'uk' &&
-                config.page.contentType.toLowerCase() === 'article' &&
+                config.page.edition === 'UK' &&
+                config.page.contentType === 'Article' &&
                 alreadyVisited > 9;
         };
 

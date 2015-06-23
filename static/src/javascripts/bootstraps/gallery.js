@@ -57,7 +57,9 @@ define([
             mediator.emit('ui:images:upgradePictures');
 
             mediator.emit('page:gallery:ready');
-            transcludeMostPopular();
+            if (config.page.showRelatedContent) {
+                transcludeMostPopular();
+            }
         };
 
     return {

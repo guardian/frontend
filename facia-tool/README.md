@@ -6,5 +6,7 @@ Setup
    [dev-nginx](https://github.com/guardian/dev-nginx).
 3. Use the mapping in the ```nginx``` folder to generate a host for
    nginx.
-4. Run the app in sbt.
-5. It should now be available at [https://fronts.local.dev-gutools.co.uk](https://fronts.local.dev-gutools.co.uk).
+4. Include the following line in the `nginx` config, i.e. `/usr/local/etc/nginx/sites-enabled/fronts.conf`
+   merge_slashes off;
+5. Run the app in sbt.
+6. It should now be available at [https://fronts.local.dev-gutools.co.uk](https://fronts.local.dev-gutools.co.uk).

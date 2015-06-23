@@ -3,17 +3,15 @@
 var path = require('path');
 
 var System = require('jspm/node_modules/systemjs');
-// Execute the IIFE
-global.systemJsRuntime = false;
-require(path.join(__dirname, 'static/src/systemjs-normalize'));
-// Modify System before creating the builder because it clones System
-System._extensions.push(function(loader) {
-    // System.normalize is exposed by the IIFE above
-    loader.normalize = System.normalize;
-});
 
 var jspm = require('jspm');
 var builder = new jspm.Builder();
+// Temporary hack, as per https://github.com/systemjs/systemjs/issues/533#issuecomment-113525639
+global.System = builder.loader;
+// Execute the IIFE
+global.systemJsRuntime = false;
+require(path.join(__dirname, 'static/src/systemjs-normalize'));
+
 var crypto = require('crypto');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
@@ -86,7 +84,7 @@ var writeBundlesConfig = function (bundles) {
         return accumulator;
     }, {});
     var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
-    var configFileData = 'System.bundles = ' + JSON.stringify(bundlesConfig, null, '\t');
+    var configFileData = 'System.config({ bundles: ' + JSON.stringify(bundlesConfig, null, '\t') + ' })';
     console.log('writing to %s', configFilePath);
     fs.writeFileSync(configFilePath, configFileData);
 };
@@ -97,5 +95,5 @@ Promise.all(bundleConfigs.map(createBundle))
         writeBundlesConfig(bundles);
     })
     .catch(function (error) {
-        console.error(error);
+        console.error(error.stack);
     });

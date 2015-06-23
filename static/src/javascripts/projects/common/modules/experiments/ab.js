@@ -151,6 +151,10 @@ define([
             }
         }
 
+        getServerSideTests().forEach(function (testName) {
+            tag.push('AB | ' + testName + ' | inTest');
+        });
+
         return tag.join(',');
     }
 
@@ -224,6 +228,16 @@ define([
         return _.find(test.variants, function (variant) {
             return variant.id === variantId;
         });
+    }
+
+    // These kinds of tests are both server and client side.
+    function getServerSideTests() {
+        // International Edition is not really a test.
+        return _(config.tests)
+            .omit('internationalEditionVariant')
+            .pick(function (participating) { return !!participating; })
+            .keys()
+            .value();
     }
 
     var ab = {
@@ -319,6 +333,9 @@ define([
                             abLogObject['ab' + test.id] = variant;
                         }
                     }
+                });
+                getServerSideTests().forEach(function (testName) {
+                    abLogObject['ab' + testName] = 'inTest';
                 });
             } catch (error) {
                 // Encountering an error should invalidate the logging process.
