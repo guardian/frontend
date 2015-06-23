@@ -68,6 +68,14 @@ define([
                 });
             }
 
+            if (config.isMedia) {
+                require(['bootstraps/trail'], function (trail) {
+                    bootstrapContext('media : trail', {
+                        init: trail
+                    });
+                });
+            }
+
             if (config.isMedia || qwery('video, audio').length) {
                 bootstrapContext('media', media);
             }
