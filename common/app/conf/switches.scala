@@ -1201,7 +1201,7 @@ object Switches {
     "facia-press-on-demand",
     "If this is switched on, you can force facia to press on demand (Leave off)",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = never,
     exposeClientSide = false
   )
 
