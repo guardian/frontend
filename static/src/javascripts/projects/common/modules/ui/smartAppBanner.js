@@ -59,7 +59,7 @@ define([
         cookies.add(COOKIE_IMPRESSION_KEY, impressions + 1);
     }
 
-    return function() {
+    return function () {
         if (isDevice() && canShow()) {
             showMessage();
         }
