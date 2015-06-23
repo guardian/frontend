@@ -166,6 +166,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
     if ( pageNum > updatedArticles.numPages && pageNum > 1) {
       Future.successful(NoCache(SeeOther( s"/saved-for-later?page=${updatedArticles.numPages}")))
     } else {
+      val page = IdentityPage("/saved-for-later", "Saved for later", s"saved-for-later-${updatedArticles.articles.length}")
       pageDataBuilder(updatedArticles, idRequest, pageNum).map { pageData =>
         val form = savedArticlesForm.fill(SavedArticleData(pageData.shortUrls))
         NoCache(Ok(views.html.profile.savedForLater(page, form, pageData)))
