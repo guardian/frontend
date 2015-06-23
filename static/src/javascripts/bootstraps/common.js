@@ -48,7 +48,7 @@ define([
     'text!common/views/international-message.html',
     'text!common/views/international-control-message.html',
     'text!common/views/donot-use-adblock.html',
-    'bootstraps/identity'
+    'bootstraps/identity-common'
 ], function (
     bean,
     bonzo,
@@ -100,10 +100,6 @@ define([
     identity
 ) {
     var modules = {
-            initId: function () {
-                identity.init(config);
-            },
-
             initFastClick: function () {
                 // Unfortunately FastClick’s UMD exports are not consistent for
                 // all types. AMD exports FastClick, CJS exports FastClick.attach
@@ -350,7 +346,7 @@ define([
         init: function () {
             robusts([
                 ['c-fonts', fonts],
-                ['c-identity', modules.initId],
+                ['c-identity', identity],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
                 ['c-fast-click', modules.initFastClick],
