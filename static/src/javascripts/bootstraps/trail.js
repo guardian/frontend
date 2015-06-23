@@ -118,9 +118,6 @@ define([
     }
 
     return function () {
-        console.trace();
-        console.log("Invoking trail!!");
-
         robusts([
             ['c-discussion', initDiscussion],
             ['c-comments', repositionComments],
