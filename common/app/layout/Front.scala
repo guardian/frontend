@@ -1,7 +1,7 @@
 package layout
 
 import com.gu.facia.api.models.{CollectionConfig, CuratedContent, FaciaContent}
-import conf.Switches
+import conf.{Configuration, Switches}
 import dfp.{DfpAgent, SponsorshipTag}
 import implicits.FaciaContentFrontendHelpers._
 import implicits.FaciaContentImplicits._
@@ -436,7 +436,7 @@ object Front extends implicits.Collections {
               "", // don't have a uri for each container
               collection.items.zipWithIndex.map {
                 case (item, index) =>
-                  ListItem(position = index, url = Some(item.url))
+                  ListItem(position = index, url = Some(Configuration.site.host + item.url))
               }
             )
           ))
