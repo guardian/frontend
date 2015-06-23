@@ -346,7 +346,6 @@ define([
     }
 
     function ready() {
-        trail();
         if (config.switches.enhancedMediaPlayer) {
             require(['bootstraps/video-player'], raven.wrap(
                 { tags: { feature: 'media' } },

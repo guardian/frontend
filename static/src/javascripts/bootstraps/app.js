@@ -30,10 +30,10 @@ define([
     SaveForLaterTest
 ) {
 
-    var bootstrapContext = function (featureName, boostrap) {
+    var bootstrapContext = function (featureName, bootstrap) {
             raven.context(
                 { tags: { feature: featureName } },
-                boostrap.init,
+                bootstrap.init,
                 []
             );
         },
@@ -95,7 +95,7 @@ define([
 
             if (config.page.section === 'football') {
                 require(['bootstraps/football'], function (football) {
-                    bootstrapContext('footbal', football);
+                    bootstrapContext('football', football);
                 });
             }
 
