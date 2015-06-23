@@ -3,7 +3,6 @@
 define([
     'bean',
     'bonzo',
-    'enhancer',
     'fastclick',
     'qwery',
     'common/utils/$',
@@ -54,7 +53,6 @@ define([
 ], function (
     bean,
     bonzo,
-    enhancer,
     FastClick,
     qwery,
     $,
@@ -257,14 +255,6 @@ define([
             runForseeSurvey: function () {
                 if (config.switches.foresee) {
                     Foresee.load();
-                }
-            },
-
-            augmentInteractive: function () {
-                if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
-                    $('figure.interactive').each(function (el) {
-                        enhancer.render(el, document, config, mediator);
-                    });
                 }
             },
 

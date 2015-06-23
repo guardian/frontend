@@ -1,9 +1,11 @@
 /*eslint-disable no-new*/
 /** Bootstrap for functionality common to all trail pages: article, live blogs, podcasts, videos, etc. */
 define([
+    'enhancer',
     'qwery',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/mediator',
     'common/utils/robusts',
     'common/utils/proximity-loader',
     'common/modules/commercial/comment-adverts',
@@ -14,9 +16,11 @@ define([
     'common/modules/onward/tonal',
     'common/modules/social/share-count'
 ], function (
+    enhancer,
     qwery,
     $,
     config,
+    mediator,
     robusts,
     proximityLoader,
     commentAdverts,
@@ -83,6 +87,14 @@ define([
             if (el) {
                 new DiscussionLoader().attachTo(el);
             }
+        }
+    }
+
+    function augmentInteractive() {
+        if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
+            $('figure.interactive').each(function (el) {
+                enhancer.render(el, document, config, mediator);
+            });
         }
     }
 
