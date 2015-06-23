@@ -341,10 +341,6 @@ define([
                 });
             },
 
-            initShareCounts: function () {
-                shareCount.init();
-            },
-
             loadBreakingNews: function () {
                 if (config.switches.breakingNews && config.page.section !== 'identity') {
                     breakingNews();
@@ -398,7 +394,7 @@ define([
                 ['c-ad-cookie', modules.adTestCookie],
                 ['c-event-listeners', modules.windowEventListeners],
                 ['c-breaking-news', modules.loadBreakingNews],
-                ['c-shares', modules.initShareCounts],
+                ['c-shares', shareCount],
                 ['c-block-link', fauxBlockLink],
                 ['c-iframe', modules.checkIframe],
                 ['c-tabs', modules.showTabs],
