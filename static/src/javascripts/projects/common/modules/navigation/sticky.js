@@ -105,7 +105,9 @@ define([
         // If user is scrolling up and navigation threshold was met show navigation
         if (this.config.direction === 'up' && this.config.showNavigation) {
             fastdom.write(function () {
-                if (this.isTablet || this.isMobile) {
+                if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                    this.$els.navigation.css('height', '72px');
+                } else if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-down-mobile').addClass('animate-up-mobile');
                 } else {
                     this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
@@ -123,7 +125,9 @@ define([
                 }
             }
             fastdom.write(function () {
-                if (this.isTablet || this.isMobile) {
+                if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                    this.$els.navigation.css('height', 0);
+                } else if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-up-mobile').addClass('animate-down-mobile');
                 } else {
                     this.$els.navigation.removeClass('animate-up-desktop').addClass('animate-down-desktop');
@@ -200,9 +204,6 @@ define([
                     }.bind(this));
                 } else {
                     fastdom.write(function () {
-                        // Make sure navigation is hidden
-                        this.$els.navigation.removeClass('animate-up').addClass('animate-down');
-
                         this.$els.header.css({
                             position:  'absolute',
                             'margin-top': bannerHeight,
