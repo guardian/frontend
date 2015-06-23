@@ -373,7 +373,6 @@ define([
                 ['c-history-nav', modules.showHistoryInMegaNav],
                 ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
-                ['c-comments', modules.repositionComments],
                 ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', smartAppBanner],
                 ['c-adblock', modules.showAdblockMessage],

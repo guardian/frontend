@@ -25,7 +25,7 @@ define([
     storage
 ) {
     var storagePrefix = 'gu.fonts.',
-        fileFormat    = detect.getFontFormatSupport(navigator.userAgent);
+        fileFormat = detect.getFontFormatSupport(navigator.userAgent);
 
     function disabled() {
         return cookies.get('GU_fonts') === 'off';
@@ -64,10 +64,10 @@ define([
             // `style.webfont` element, and save it to `localStorage`
             // for next time too.
             ajax({
-                url:               fontFile,
-                type:              'jsonp',
+                url: fontFile,
+                type: 'jsonp',
                 jsonpCallbackName: 'guFont',
-                success:           function (resp) {
+                success: function (resp) {
 
                     // If the response is no good, record an error and go.
                     if (!resp) {
