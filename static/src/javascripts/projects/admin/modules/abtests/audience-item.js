@@ -34,11 +34,11 @@ define([
         var audienceOffset = this.config.test.audienceOffset * 100;
         var audienceEnd = audience + audienceOffset;
 
-        this.getElem('test').style.width = audience.toString() + "%";
-        this.getElem('test').style.left = audienceOffset.toString() + "%";
+        this.getElem('test').style.width = audience.toString() + '%';
+        this.getElem('test').style.left = audienceOffset.toString() + '%';
 
         bonzo(this.getElem('caption-test')).append(this.config.test.id);
-        bonzo(this.getElem('caption-range')).append(audienceOffset + "% to " + audienceEnd  + "%");
+        bonzo(this.getElem('caption-range')).append(audienceOffset + '% to ' + audienceEnd  + '%');
     };
 
     AudienceItem.prototype.ready = function() {

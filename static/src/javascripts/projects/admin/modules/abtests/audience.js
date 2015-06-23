@@ -31,7 +31,9 @@ define([
         var testsContainer = this.getElem('tests');
 
         this.config.tests.forEach(function(test) {
+            /*eslint-disable new-cap*/
             new audienceItem({test: test}).render(testsContainer);
+            /*eslint-enable new-cap*/
         });
     };
 
