@@ -1,3 +1,4 @@
+/*eslint-disable no-new*/
 /** Bootstrap for functionality common to all trail pages: article, live blogs, podcasts, videos, etc. */
 define([
     'qwery',
@@ -79,5 +80,5 @@ define([
             ['c-onward', initOnwardContent],
             ['c-comment-adverts', commentAdverts]
         ]);
-    }
+    };
 });
