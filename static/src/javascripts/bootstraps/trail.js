@@ -7,6 +7,7 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/contains',
     'common/utils/mediator',
     'common/utils/robusts',
     'common/utils/proximity-loader',
@@ -25,6 +26,7 @@ define([
     _,
     $,
     config,
+    contains,
     mediator,
     robusts,
     proximityLoader,
@@ -69,7 +71,7 @@ define([
             }
             // don't want to show professional network content on videos or interactives
             if ('contentType' in config.page &&
-                _.includes(['video', 'interactive'], config.page.contentType.toLowerCase())) {
+                contains(['video', 'interactive'], config.page.contentType.toLowerCase())) {
                 opts.excludeTags.push('guardian-professional/guardian-professional');
             }
             new Related(opts).renderRelatedComponent();
