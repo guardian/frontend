@@ -318,7 +318,7 @@ category: Common
 
 .social--stickynav {
     position: fixed;
-    top: 0px;
-    z-index: 999999;
-    padding-right: 145px;
+    top: 0;
+    z-index: 1000;
+    padding-right: 145px; // logo width
 }
