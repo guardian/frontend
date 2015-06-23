@@ -11,7 +11,7 @@ import model.{Content => ApiContent, _}
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 
-import com.google.inject.Inject
+import com.google.inject.{Singleton, Inject}
 import common.ExecutionContexts
 import conf.LiveContentApi.getResponse
 import idapiclient.IdApiClient
@@ -23,6 +23,7 @@ import utils.SafeLogging
 
 import scala.concurrent.Future
 
+@Singleton
 class SaveContentController @Inject() ( api: IdApiClient,
                                         identityRequestParser: IdRequestParser,
                                         authenticatedActions: AuthenticatedActions,
@@ -88,7 +89,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
             formWithErrors.withError(context.getOrElse(""), message)
         }
         pageDataBuilder(emptyArticles(), idRequest, pageNum).map { pageData =>
-          NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData)))
+          NoCache(Ok(views.html.profile.savedForLater(page, formWithErrors, pageData)))
         }
     }
   }
@@ -114,7 +115,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
           case Left(errors) =>
             val formWithApiErrors = buildFormFromErrors(errors)
             pageDataBuilder(emptyArticles(), idRequest, pageNum).map { pageData =>
-              NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData)))
+              NoCache(Ok(views.html.profile.savedForLater(page, formWithErrors, pageData)))
             }
         }
       }
@@ -134,7 +135,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
                   case Left(errors) =>
                     val formWithApiErrors = buildFormFromErrors(errors)
                     pageDataBuilder(emptyArticles(), idRequest, pageNum).map { pageData =>
-                      NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithApiErrors, pageData)))
+                      NoCache(Ok(views.html.profile.savedForLater(page, formWithApiErrors, pageData)))
                     }
                 }
                 updatedResult
@@ -143,14 +144,14 @@ class SaveContentController @Inject() ( api: IdApiClient,
             updatedArticlesViow.getOrElse {
               val formWithError = form.withError("Error", "There was a problem with your request")
               pageDataBuilder(emptyArticles(), idRequest, pageNum).map { pageData =>
-                NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithError, pageData)))
+                NoCache(Ok(views.html.profile.savedForLater(page, formWithError, pageData)))
               }
             }
 
           case Left(errors) =>
             val formWithErrors = buildFormFromErrors(errors)
             pageDataBuilder(emptyArticles(), idRequest, pageNum).map { pageData =>
-              NoCache(Ok(views.html.profile.savedForLaterPage(page, formWithErrors, pageData)))
+              NoCache(Ok(views.html.profile.savedForLater(page, formWithErrors, pageData)))
             }
         }
         response
@@ -165,9 +166,10 @@ class SaveContentController @Inject() ( api: IdApiClient,
     if ( pageNum > updatedArticles.numPages && pageNum > 1) {
       Future.successful(NoCache(SeeOther( s"/saved-for-later?page=${updatedArticles.numPages}")))
     } else {
+      val page = IdentityPage("/saved-for-later", "Saved for later", s"saved-for-later-${updatedArticles.articles.length}")
       pageDataBuilder(updatedArticles, idRequest, pageNum).map { pageData =>
         val form = savedArticlesForm.fill(SavedArticleData(pageData.shortUrls))
-        NoCache(Ok(views.html.profile.savedForLaterPage(page, form, pageData)))
+        NoCache(Ok(views.html.profile.savedForLater(page, form, pageData)))
       }
     }
   }

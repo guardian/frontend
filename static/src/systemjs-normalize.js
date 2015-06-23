@@ -1,3 +1,5 @@
+/*eslint-disable strict*/
+/*eslint-disable no-shadow*/
 // We use system.normalize to convert RequireJS module IDs to SystemJS module
 // IDs. This is mainly necessary because the plugin format is reversed in
 // SystemJS (suffix rather than prefix).
@@ -45,16 +47,6 @@ var reduce = function (array, fn, accumulator) {
                     var reversedName = moduleId + '!' + newPluginName;
 
                     return newPluginName ? reversedName : name;
-                } else {
-                    return name;
-                }
-            },
-            function interactives(name) {
-                // Transforms something like:     http://interactive.guim.co.uk/2015/04/climate-letters/assets-1430142775693/js/main.js
-                // into a legal module name: http/interactive.guim.co.uk/2015/04/climate-letters/assets-1430142775693/js/main.js
-                var regExp = /(^http[s]?):\/\/(.*)/.exec(name);
-                if (regExp) {
-                    return regExp[1] + '/' + regExp[2];
                 } else {
                     return name;
                 }

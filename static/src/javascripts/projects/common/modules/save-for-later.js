@@ -12,7 +12,8 @@ define([
     'common/modules/identity/api',
     'common/views/svgs',
     'text!common/views/save-for-later/save-link.html',
-    'text!common/views/save-for-later/save-button.html'
+    'text!common/views/save-for-later/save-button.html',
+    'text!common/views/identity/saved-for-later-profile-link.html'
 ], function (
     qwery,
     bonzo,
@@ -27,7 +28,8 @@ define([
     identity,
     svgs,
     saveLink,
-    saveButton
+    saveButton,
+    profileLinkTmp
 ) {
 
     function SaveForLater() {
@@ -48,7 +50,7 @@ define([
             containerItemDataId: 'data-id'
         };
 
-        this.isContent = !/Network Front|Section/.test(config.page.contentType);
+        this.isContent = !/Network Front|Section|Tag/.test(config.page.contentType);
         this.userData = {};
         this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
 
@@ -62,7 +64,7 @@ define([
         );
     }
 
-    var bookmarkSvg = svgs('bookmark', ['i-left']),
+    var bookmarkSvg = svgs('bookmark', ['rounded-icon']),
         shortUrl = (config.page.shortUrl || '').replace('http://gu.com', ''),
         savedPlatformAnalytics = 'web:' + detect.getUserAgent.browser + ':' + detect.getBreakpoint();
 
@@ -73,10 +75,21 @@ define([
 
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
+
         if (userLoggedIn) {
             identity.getSavedArticles()
                 .then(function (resp) {
                     var notFound = { message: 'Not found', description: 'Resource not found' };
+                    var popup = qwery('.popup--profile')[0];
+
+                    fastdom.write(function () {
+                        bonzo(popup).prepend(bonzo.create(
+                            template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
+                                idUrl: config.page.idUrl
+                            })
+                        ));
+                        this.updateSavedCount();
+                    }.bind(this));
 
                     if (resp.status === 'error' && resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
                         //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
@@ -86,7 +99,6 @@ define([
                         this.userData = resp.savedArticles;
                     }
 
-                    this.updateSavedCount();
                     this.prepareFaciaItemLinks(true);
 
                     if (this.isContent) {
@@ -341,14 +353,17 @@ define([
 
     SaveForLater.prototype.updateSavedCount = function () {
         var saveForLaterProfileLink = $(this.classes.profileDropdownLink);
-
+        var profile = $('.brand-bar__item--profile');
         var count = this.userData.articles.length;
-        fastdom.write(function () {
-            saveForLaterProfileLink.html('Saved (' + count + ')');
 
-            var profile = $('.brand-bar__item--profile');
-            profile.addClass('brand-bar__item--profile--show-saved');
-            $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
+        fastdom.write(function () {
+            if (count > 0) {
+                $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
+                saveForLaterProfileLink.html('Saved for later (' + count + ')');
+            } else {
+                $('.control__icon-wrapper', profile).removeAttr('data-saved-content-count');
+                saveForLaterProfileLink.html('Saved for later');
+            }
         });
     };
 

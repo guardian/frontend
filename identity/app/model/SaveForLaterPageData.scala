@@ -47,12 +47,19 @@ class SaveForLaterDataBuilder @Inject()(idUrlBuilder: IdentityUrlBuilder) extend
       .showFields("all")
       .showElements ("all")
     ).map(r => {
-      val contentModels = r.results.map(ApiContent(_)).zip(articles)
-      contentModels.map(SaveForLaterItem.tupled)
+
+      val items = r.results.flatMap { result =>
+        for {
+          content <- Some(ApiContent(result))
+          article <- articles.find( article => article.id == content.id)
+        } yield {
+          SaveForLaterItem(content, article)
+        }
+      }
 
       SaveForLaterPageData(
         idUrlBuilder.buildUrl("/saved-for-later", idRequest),
-        contentModels.map(SaveForLaterItem.tupled),
+        items,
         Pagination(pageNum, savedArticles.numPages, savedArticles.totalSaved),
         idUrlBuilder.buildUrl("/saved-for-later"),
         savedArticles.totalSaved,

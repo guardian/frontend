@@ -27,7 +27,9 @@ class Clue extends React.Component {
                 })}
                 onClick={this.onClick}
                 value={parseInt(this.props.number, 10)}
+                /* jscs:disable disallowDanglingUnderscores */
                 dangerouslySetInnerHTML={{__html: this.props.clue}}
+                /* jscs:enable disallowDanglingUnderscores */
             />
         );
     }

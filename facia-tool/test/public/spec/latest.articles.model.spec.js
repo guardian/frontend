@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import contentApi from 'modules/content-api';
+import * as contentApi from 'modules/content-api';
 import MockSearch from 'mock/search';
 import mockjax from 'test/utils/mockjax';
 
@@ -73,10 +73,7 @@ describe('Latest articles', function() {
         this.mock.latest([]);
 
         contentApi.fetchLatest()
-        .then(function () {
-            expect(true).toBe(false);
-            done();
-        }, assert(this.mock, function (request, list) {
+        .then(done.fail, assert(this.mock, function (request, list) {
             expect(list instanceof Error).toBe(true);
             expect(list.message).toMatch(/not currently returning content/i);
 
@@ -125,10 +122,7 @@ describe('Latest articles', function() {
             article: 'uk-news/less/important',
             term: 'ignored'
         })
-        .then(function () {
-            // We shouldn't get here
-            expect(true).toBe(false);
-        }, function (error) {
+        .then(done.fail, function (error) {
             expect(error instanceof Error).toBe(true);
             expect(error.message).toMatch(/Content API error/i);
 

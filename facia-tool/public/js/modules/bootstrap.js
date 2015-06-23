@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import authedAjax from 'modules/authed-ajax';
+import {request} from 'modules/authed-ajax';
 import CONST from 'constants/defaults';
 import Promise from 'Promise';
 
@@ -20,20 +20,18 @@ var endpoints = [{
 }];
 
 function sendRequest (endpoint) {
-    return new Promise(function (resolve, reject) {
-        authedAjax.request({
-            url: endpoint.url
-        })
-        .then(function (response) {
-            var error = endpoint.validate && endpoint.validate(response);
-            if (error) {
-                reject(error);
-            } else {
-                resolve(response);
-            }
-        }, function () {
-            reject(new Error('The ' + endpoint.key + ' is invalid or unavailable'));
-        });
+    return request({
+        url: endpoint.url
+    })
+    .then(function (response) {
+        var error = endpoint.validate && endpoint.validate(response);
+        if (error) {
+            throw error;
+        } else {
+            return response;
+        }
+    }, function () {
+        throw new Error('The ' + endpoint.key + ' is invalid or unavailable');
     });
 }
 

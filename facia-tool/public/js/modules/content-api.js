@@ -1,48 +1,72 @@
-define([
-    'underscore',
-    'jquery',
-    'modules/vars',
-    'modules/authed-ajax',
-    'modules/cache',
-    'modules/modal-dialog',
-    'utils/internal-content-code',
-    'utils/url-abs-path',
-    'utils/identity',
-    'utils/is-guardian-url',
-    'utils/snap'
-],
-function (
-    _,
-    $,
-    vars,
-    authedAjax,
-    cache,
-    modalDialog,
-    internalContentCode,
-    urlAbsPath,
-    identity,
-    isGuardianUrl,
-    snap
-){
-    modalDialog = modalDialog.default;
-    internalContentCode = internalContentCode.default;
-    isGuardianUrl = isGuardianUrl.default;
-    urlAbsPath = urlAbsPath.default;
+/*eslint-disable consistent-return*/
+import _ from 'underscore';
+import $ from 'jquery';
+import Promise from 'Promise';
+import {CONST} from 'modules/vars';
+import {request} from 'modules/authed-ajax';
+import * as cache from 'modules/cache';
+import modalDialog from 'modules/modal-dialog';
+import internalContentCode from 'utils/internal-content-code';
+import urlAbsPath from 'utils/url-abs-path';
+import identity from 'utils/identity';
+import isGuardianUrl from 'utils/is-guardian-url';
+import * as snap from 'utils/snap';
+import reportErrors from 'utils/report-errors';
 
-    function validateItem (item) {
-        var defer = $.Deferred(),
-            snapId = snap.validateId(item.id()),
+function populate(article, capiData) {
+    article.addCapiData(capiData);
+}
+
+function getTagOrSectionTitle(response) {
+    return _.chain([response.tag, response.section])
+        .pluck('webTitle')
+        .filter(identity)
+        .first()
+        .value();
+}
+
+function fetchContent(apiUrl) {
+    return request({
+        url: CONST.apiSearchBase + '/' + apiUrl
+    }).then(function(resp) {
+        if (!resp.response
+            || _.intersection(['content', 'editorsPicks', 'results', 'mostViewed'], _.keys(resp.response)).length === 0
+            || resp.response.status === 'error') {
+            return;
+        } else if (resp.response.content) {
+            return {
+                content: [resp.response.content],
+                title: getTagOrSectionTitle(resp.response)
+            };
+        } else {
+            return {
+                content: _.chain(['editorsPicks', 'results', 'mostViewed'])
+                    .filter(function(key) { return _.isArray(resp.response[key]); })
+                    .map(function(key) { return resp.response[key]; })
+                    .flatten()
+                    .value(),
+                title: getTagOrSectionTitle(resp.response)
+            };
+        }
+    })
+    // swallow error
+    .catch(function () {});
+}
+
+function validateItem (item) {
+    return new Promise(function (resolve, reject) {
+        var snapId = snap.validateId(item.id()),
             capiId = urlAbsPath(item.id()),
             data = cache.get('contentApi', capiId);
 
         if (snapId) {
             item.id(snapId);
-            defer.resolve(item);
+            resolve(item);
 
         } else if (data) {
             item.id(capiId);
             populate(item, data);
-            defer.resolve(item);
+            resolve(item);
 
         } else {
             // Tag combiners need conversion from tag1+tag2 to search?tag=tag1,tag2
@@ -52,11 +76,14 @@ function (
                 capiId += '?';
             }
 
-            capiId += vars.CONST.apiSearchParams;
+            capiId += CONST.apiSearchParams;
 
             fetchContent(capiId)
-            .done(function(results, resultsTitle) {
-                var capiItem,
+            .then(function(res) {
+                res = res || {};
+                var results = res.content,
+                    resultsTitle = res.title,
+                    capiItem,
                     icc,
                     err;
 
@@ -97,15 +124,15 @@ function (
                     modalDialog.confirm({
                         name: 'select_snap_type',
                         data: {
-                            prefix: vars.CONST.latestSnapPrefix,
+                            prefix: CONST.latestSnapPrefix,
                             resultsTitle: resultsTitle
                         }
                     }).then(function () {
                         item.convertToLatestSnap(resultsTitle);
-                        defer.resolve(item);
+                        resolve(item);
                     }, function () {
                         item.convertToLinkSnap();
-                        defer.resolve(item);
+                        resolve(item);
                     });
 
                     // Waiting for the modal to be closed
@@ -117,211 +144,166 @@ function (
                 }
 
                 if (err) {
-                    defer.reject(err);
+                    reject(new Error(err));
                 } else {
-                    defer.resolve(item);
+                    resolve(item);
                 }
             });
         }
+    });
+}
 
-        return defer.promise();
+function fetchContentByIds(ids) {
+    var capiIds = _.chain(ids)
+        .filter(function(id) { return !snap.validateId(id); })
+        .map(function(id) { return encodeURIComponent(id); })
+        .value();
+
+    if (capiIds.length) {
+        return fetchContent('search?ids=' + capiIds.join(',') + '&' + CONST.apiSearchParams);
+    } else {
+        return Promise.resolve([]);
     }
+}
 
-    function decorateItems (articles) {
-        var num = vars.CONST.capiBatchSize || 10,
-            pending = [];
+function decorateBatch (articles) {
+    var ids = [];
 
-        _.each(_.range(0, articles.length, num), function(index) {
-            pending.push(decorateBatch(articles.slice(index, index + num)));
-        });
-
-        return $.when.apply($, pending);
-    }
-
-    function decorateBatch (articles) {
-        var ids = [];
-
-        articles.forEach(function(article){
-            var data = cache.get('contentApi', article.id());
-            if(data) {
-                populate(article, data);
-            } else {
-                ids.push(article.id());
-            }
-        });
-
-        return fetchContentByIds(ids)
-        .done(function(results){
-            if (!_.isArray(results)) {
-                return;
-            }
-
-            results.forEach(function(result) {
-                var icc = internalContentCode(result);
-
-                if(icc) {
-                    cache.put('contentApi', icc, result);
-
-                    _.filter(articles, function(article) {
-                        return article.id() === icc;
-                    }).forEach(function(article) {
-                        populate(article, result);
-                    });
-                }
-            });
-
-           _.chain(articles)
-            // legacy-snaps
-            .filter(function(article) { return !article.meta.href(); })
-
-            .filter(function(article) { return !article.meta.snapType(); })
-            .each(function(article) {
-                article.state.isEmpty(!article.state.isLoaded());
-            });
-        });
-    }
-
-    function populate(article, capiData) {
-        article.addCapiData(capiData);
-    }
-
-    function fetchContentByIds(ids) {
-        var capiIds = _.chain(ids)
-            .filter(function(id) { return !snap.validateId(id); })
-            .map(function(id) { return encodeURIComponent(id); })
-            .value();
-
-        if (capiIds.length) {
-            return fetchContent('search?ids=' + capiIds.join(',') + '&' + vars.CONST.apiSearchParams);
+    articles.forEach(function(article){
+        var data = cache.get('contentApi', article.id());
+        if(data) {
+            populate(article, data);
         } else {
-            return $.Deferred().resolve([]);
+            ids.push(article.id());
         }
-    }
+    });
 
-    function fetchContent(apiUrl) {
-        var defer = $.Deferred();
-
-        authedAjax.request({
-            url: vars.CONST.apiSearchBase + '/' + apiUrl
-        }).always(function(resp) {
-            if (!resp.response
-                || _.intersection(['content', 'editorsPicks', 'results', 'mostViewed'], _.keys(resp.response)).length === 0
-                || resp.response.status === 'error') {
-                defer.resolve();
-            } else if (resp.response.content) {
-                defer.resolve([resp.response.content], getTagOrSectionTitle(resp.response));
-            } else {
-                defer.resolve(
-                   _.chain(['editorsPicks', 'results', 'mostViewed'])
-                    .filter(function(key) { return _.isArray(resp.response[key]); })
-                    .map(function(key) { return resp.response[key]; })
-                    .flatten()
-                    .value(),
-                    getTagOrSectionTitle(resp.response)
-                );
-            }
-        });
-
-        return defer.promise();
-    }
-
-    function getTagOrSectionTitle(response) {
-        return _.chain([response.tag, response.section])
-            .filter(identity)
-            .pluck('webTitle')
-            .first()
-            .value();
-    }
-
-    function fetchMetaForPath(path) {
-        var defer = $.Deferred();
-
-        authedAjax.request({
-            url: vars.CONST.apiSearchBase + '/' + path + '?page-size=0'
-        }).always(function(resp) {
-            defer.resolve(!resp.response ? {} :
-               _.chain(['tag', 'section'])
-                .map(function(key) { return resp.response[key]; })
-                .filter(function(obj) { return _.isObject(obj); })
-                .reduce(function(m, obj) {
-                    m.section = m.section || _.last((obj.id || obj.sectionId).split('/'));
-                    m.webTitle = m.webTitle || obj.webTitle;
-                    m.description = m.description || obj.description; // upcoming in Capi, at time of writing
-                    m.title = m.title || obj.title;                   // this may never be added to Capi, or may under another name
-                    return m;
-                 }, {})
-                .value());
-        });
-
-        return defer.promise();
-    }
-
-    function dateYyyymmdd() {
-        var d = new Date();
-        return [d.getFullYear(), d.getMonth() + 1, d.getDate()].map(function(p) { return p < 10 ? '0' + p : p; }).join('-');
-    }
-
-    function fetchLatest (options) {
-        var url = vars.CONST.apiSearchBase + '/',
-            propName, term, filter;
-
-        options = _.extend({
-            article: '',
-            term: '',
-            filter: '',
-            filterType: '',
-            page: 1,
-            pageSize: vars.CONST.searchPageSize || 25,
-            isDraft: true
-        }, options);
-        term = options.term;
-        filter = options.filter;
-
-        if (options.article) {
-            term = options.article;
-            propName = 'content';
-            url += term + '?' + vars.CONST.apiSearchParams;
-        } else {
-            term = encodeURIComponent(term.trim());
-            propName = 'results';
-            url += 'search?' + vars.CONST.apiSearchParams;
-            url += options.isDraft ?
-                '&content-set=-web-live&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
-                '&content-set=web-live&order-by=newest';
-            url += '&page-size=' + options.pageSize;
-            url += '&page=' + options.page;
-            url += term ? '&q=' + term : '';
-            url += filter ? '&' + options.filterType + '=' + encodeURIComponent(filter) : '';
+    return fetchContentByIds(ids)
+    .then(function(res){
+        var results = res.content;
+        if (!_.isArray(results)) {
+            return;
         }
 
-        var deferred = new $.Deferred();
-        authedAjax.request({
-            url: url
-        }).then(function(data) {
-            var rawArticles = data.response && data.response[propName] ? [].concat(data.response[propName]) : [];
+        results.forEach(function(result) {
+            var icc = internalContentCode(result);
 
-            if (!term && !filter && !rawArticles.length) {
-                deferred.reject(new Error('Sorry, the Content API is not currently returning content'));
-            } else {
-                deferred.resolve(_.extend({}, data.response, {
-                    results: _.filter(rawArticles, function(opts) {
-                        return opts.fields && opts.fields.headline;
-                    })
-                }));
+            if(icc) {
+                cache.put('contentApi', icc, result);
+
+                _.filter(articles, function(article) {
+                    return article.id() === icc;
+                }).forEach(function(article) {
+                    populate(article, result);
+                });
             }
-        }, function (xhr) {
-            deferred.reject(new Error('Content API error (' + xhr.status + '). Content is currently unavailable'));
         });
 
-        return deferred.promise();
+       _.chain(articles)
+        // legacy-snaps
+        .filter(function(article) { return !article.meta.href(); })
+
+        .filter(function(article) { return !article.meta.snapType(); })
+        .each(function(article) {
+            article.state.isEmpty(!article.state.isLoaded());
+        });
+    })
+    .catch(reportErrors);
+}
+
+function decorateItems (articles) {
+    var num = CONST.capiBatchSize || 10,
+        pending = [];
+
+    _.each(_.range(0, articles.length, num), function(index) {
+        pending.push(decorateBatch(articles.slice(index, index + num)));
+    });
+
+    return Promise.all(pending);
+}
+
+function fetchMetaForPath(path) {
+    return request({
+        url: CONST.apiSearchBase + '/' + path + '?page-size=0'
+    }).then(function(resp) {
+        return !resp.response ? {} :
+           _.chain(['tag', 'section'])
+            .map(function(key) { return resp.response[key]; })
+            .filter(function(obj) { return _.isObject(obj); })
+            .reduce(function(m, obj) {
+                m.section = m.section || _.last((obj.id || obj.sectionId || '').split('/'));
+                m.webTitle = m.webTitle || obj.webTitle;
+                m.description = m.description || obj.description; // upcoming in Capi, at time of writing
+                m.title = m.title || obj.title;                   // this may never be added to Capi, or may under another name
+                return m;
+             }, {})
+            .value();
+    })
+    // swallow error
+    .catch(function () {});
+}
+
+function dateYyyymmdd() {
+    var d = new Date();
+    return [d.getFullYear(), d.getMonth() + 1, d.getDate()].map(function(p) { return p < 10 ? '0' + p : p; }).join('-');
+}
+
+function fetchLatest (options) {
+    var url = CONST.apiSearchBase + '/',
+        propName, term, filter;
+
+    options = _.extend({
+        article: '',
+        term: '',
+        filter: '',
+        filterType: '',
+        page: 1,
+        pageSize: CONST.searchPageSize || 25,
+        isDraft: true
+    }, options);
+    term = options.term;
+    filter = options.filter;
+
+    if (options.article) {
+        term = options.article;
+        propName = 'content';
+        url += term + '?' + CONST.apiSearchParams;
+    } else {
+        term = encodeURIComponent(term.trim());
+        propName = 'results';
+        url += 'search?' + CONST.apiSearchParams;
+        url += options.isDraft ?
+            '&content-set=-web-live&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
+            '&content-set=web-live&order-by=newest';
+        url += '&page-size=' + options.pageSize;
+        url += '&page=' + options.page;
+        url += term ? '&q=' + term : '';
+        url += filter ? '&' + options.filterType + '=' + encodeURIComponent(filter) : '';
     }
 
-    return {
-        fetchContent: fetchContent,
-        fetchMetaForPath: fetchMetaForPath,
-        decorateItems: decorateItems,
-        validateItem:  validateItem,
-        fetchLatest: fetchLatest
-    };
+    return request({
+        url: url
+    }).then(function (data) {
+        var rawArticles = data.response && data.response[propName] ? [].concat(data.response[propName]) : [];
 
-});
+        if (!term && !filter && !rawArticles.length) {
+            throw new Error('Sorry, the Content API is not currently returning content');
+        } else {
+            return _.extend({}, data.response, {
+                results: _.filter(rawArticles, function(opts) {
+                    return opts.fields && opts.fields.headline;
+                })
+            });
+        }
+    }, function (xhr) {
+        throw new Error('Content API error (' + xhr.status + '). Content is currently unavailable');
+    });
+}
+
+export {
+    fetchContent,
+    fetchMetaForPath,
+    decorateItems,
+    validateItem,
+    fetchLatest
+};

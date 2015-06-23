@@ -133,15 +133,27 @@
 
     $social-width: 39px;
 
+    @include mq(mobileLandscape) {
+        border-top: 0;
+    }
+
     @include mq(mobileLandscape, leftCol) {
         position: absolute;
         top: 1px;
         left: ($social-width * 6);
-        border-top: 0;
     }
 
     @include mq(tablet, leftCol) {
         left: ($social-width * 5);
+    }
+
+    .content--liveblog & {
+        @include mq(desktop) {
+            position: relative;
+            left: 0;
+            top: 0;
+            border-top: 1px dotted colour(neutral-5);
+        }
     }
 }
 
