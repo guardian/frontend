@@ -54,6 +54,7 @@ define([
                 $input.focus();
 
                 if (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') {
+                    clearInterval(checkInterval);
                     checkInterval = setInterval(self.checkResults, 250);
                 }
             }
