@@ -5,12 +5,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/user-timing',
-    'bootstraps/article',
     'bootstraps/common',
-    'bootstraps/gallery',
-    'bootstraps/liveblog',
     'bootstraps/media',
-    'bootstraps/profile',
     'bootstraps/sport',
     'common/modules/experiments/tests/save-for-later'
 ], function (
@@ -20,12 +16,8 @@ define([
     detect,
     mediator,
     userTiming,
-    article,
     common,
-    gallery,
-    liveBlog,
     media,
-    profile,
     sport,
     SaveForLaterTest
 ) {
@@ -63,14 +55,14 @@ define([
             }
 
             if (config.page.contentType === 'Article') {
-                require(['bootstraps/image-content'], function (imageContent) {
+                require(['bootstraps/article', 'bootstraps/image-content'], function (article, imageContent) {
                     bootstrapContext('article', article);
                     bootstrapContext('article : image-content', imageContent);
                 });
             }
 
             if (config.page.contentType === 'LiveBlog') {
-                require(['bootstraps/image-content'], function (imageContent) {
+                require(['bootstraps/liveblog', 'bootstraps/image-content'], function (liveBlog, imageContent) {
                     bootstrapContext('liveBlog', liveBlog);
                     bootstrapContext('liveBlog : image-content', imageContent);
                 });
@@ -81,7 +73,7 @@ define([
             }
 
             if (config.page.contentType === 'Gallery') {
-                require(['bootstraps/image-content'], function (imageContent) {
+                require(['bootstraps/gallery', 'bootstraps/image-content'], function (gallery, imageContent) {
                     bootstrapContext('gallery', gallery);
                     bootstrapContext('gallery : image-content', imageContent);
                 });
@@ -100,11 +92,14 @@ define([
             }
 
             if (config.page.section === 'sport') {
+                // Leaving this here for now as it's a tiny bootstrap.
                 bootstrapContext('sport', sport);
             }
 
             if (config.page.section === 'identity') {
-                bootstrapContext('profile', profile);
+                require(['bootstraps/profile'], function (profile) {
+                    bootstrapContext('profile', profile);
+                });
             }
 
             if (config.page.isPreferencesPage) {
