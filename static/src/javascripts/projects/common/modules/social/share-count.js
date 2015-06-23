@@ -68,7 +68,7 @@ define([
         }
     }
 
-    return function() {
+    return function () {
         if ($shareCountEls.length) {
             var url = 'http://www.theguardian.com/' + config.page.pageId;
             try {
