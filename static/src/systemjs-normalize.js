@@ -33,6 +33,9 @@ var reduce = function (array, fn, accumulator) {
                 // the package.json’s main property.
                 if (name === 'socketio') {
                     return 'socketio/socket.io';
+                // Unlike SystemJS, curl does not support globals out of the box
+                } else if (name === 'js!zxcvbn') {
+                    return 'zxcvbn';
                 } else {
                     return name;
                 }
