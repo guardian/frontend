@@ -1,3 +1,5 @@
+/*eslint-disable strict*/
+/*eslint-disable no-shadow*/
 // We use system.normalize to convert RequireJS module IDs to SystemJS module
 // IDs. This is mainly necessary because the plugin format is reversed in
 // SystemJS (suffix rather than prefix).
