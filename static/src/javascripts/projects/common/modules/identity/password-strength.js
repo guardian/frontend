@@ -44,7 +44,7 @@ define([
         this.init = function () {
             if (!bonzo(dom.element).hasClass(config.classes.ready)) {
                 var self = this;
-                require(['js!zxcvbn'], function () {
+                require(['zxcvbn'], function () {
                     zxcvbn = this.zxcvbn;
                     dom.indicator = bonzo(bonzo.create(template)).insertAfter(dom.element)[0];
                     dom.label = dom.indicator.querySelector('.' + config.classes.label);
