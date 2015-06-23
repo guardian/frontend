@@ -86,7 +86,7 @@ define([
     history,
     MoreTags,
     techFeedback,
-    accessilbilityPrefs,
+    accessibilityPrefs,
     Clickstream,
     Dropdowns,
     fauxBlockLink,
@@ -347,10 +347,6 @@ define([
                 techFeedback.init();
             },
 
-            initAccessibilityPrefs: function () {
-                accessilbilityPrefs.init();
-            },
-
             initPublicApi: function () {
                 // BE CAREFUL what you expose here...
                 window.guardian.api = {
@@ -412,7 +408,7 @@ define([
                 ['c-simple-metrics', simpleMetrics],
                 ['c-tech-feedback', modules.initTechFeedback],
                 ['c-media-listeners', mediaListener],
-                ['c-accessibility-prefs', modules.initAccessibilityPrefs],
+                ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-international-signposting', modules.internationalSignposting]
             ]);
             if (window.console && window.console.log && !config.page.isDev) {
