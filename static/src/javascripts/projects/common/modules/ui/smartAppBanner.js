@@ -66,7 +66,7 @@ define([
             showMessage();
         }
     }
-    
+
     function isMessageShown() {
         return ($('.site-message--android').css('display') === 'block' || $('.site-message--ios').css('display') === 'block');
     }
