@@ -151,7 +151,7 @@ define([
             }
         }
 
-        getServerSideTests().forEach(function (testName) {
+        _.forEach(getServerSideTests(), function (testName) {
             tag.push('AB | ' + testName + ' | inTest');
         });
 
@@ -334,7 +334,7 @@ define([
                         }
                     }
                 });
-                getServerSideTests().forEach(function (testName) {
+                _.forEach(getServerSideTests(), function (testName) {
                     abLogObject['ab' + testName] = 'inTest';
                 });
             } catch (error) {
