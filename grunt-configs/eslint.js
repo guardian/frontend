@@ -4,7 +4,7 @@ module.exports = function(grunt, options) {
         self: [
             'Gruntfile.js'
         ],
-        all: {
+        'static/src': {
             files: [{
                 expand: true,
                 cwd: 'static/src',
@@ -17,6 +17,17 @@ module.exports = function(grunt, options) {
                 ignorePath: 'static/src/.eslintignore',
                 quiet: true
             }
+        },
+        'facia-tool': {
+            files: [{
+                expand: true,
+                cwd: 'facia-tool/public/js/',
+                src: [
+                    '**/*.js',
+                    '!jspm-config.js',
+                    '!components/**/*.js'
+                ]
+            }]
         }
     };
 };
