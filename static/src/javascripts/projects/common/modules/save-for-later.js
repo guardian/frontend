@@ -235,7 +235,7 @@ define([
         );
     };
 
-    SaveForLater.prototype.delete = function (pageId, shortUrl, onDelete) {
+    SaveForLater.prototype['delete'] = function (pageId, shortUrl, onDelete) {
         this.userData.articles = _.filter(this.userData.articles, function (article) {
             return article.shortUrl !== shortUrl;
         });
@@ -261,7 +261,7 @@ define([
     };
 
     SaveForLater.prototype.deleteArticle = function (pageId, shortUrl) {
-        this.delete(pageId, shortUrl, this.onDeleteArticle);
+        this['delete'](pageId, shortUrl, this.onDeleteArticle);
     };
 
     SaveForLater.prototype.onDeleteArticle = function (success) {
@@ -337,7 +337,7 @@ define([
 
     SaveForLater.prototype.createDeleteFaciaItemHandler = function (link, id, shortUrl) {
         bean.one(link, 'click',
-            this.delete.bind(this,
+            this['delete'].bind(this,
                 id,
                 shortUrl,
                 this.onDeleteFaciaItem.bind(this, link, id, shortUrl)
