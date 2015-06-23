@@ -373,7 +373,7 @@ define([
                 ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
                 ['c-tag-links', modules.showMoreTagsLink],
-                ['c-smart-banner', smartAppBanner],
+                ['c-smart-banner', smartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-log-stats', modules.logLiveStats],
                 ['c-analytics', modules.loadAnalytics],

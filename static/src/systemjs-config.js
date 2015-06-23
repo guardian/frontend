@@ -24,7 +24,8 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*",
     "bower:*": "jspm_packages/bower/*",
-    "facebook": "//connect.facebook.net/en_US/all"
+    "facebook.js": "//connect.facebook.net/en_US/all",
+    "foresee.js": "javascripts/vendor/foresee/20141107/foresee-trigger"
   },
   "shim": {
     "omniture": {
@@ -68,6 +69,7 @@ System.config({
     "videojsima": "github:guardian/videojs-ima@0.1.2",
     "videojspersistvolume": "bower:videojs-persistvolume@0.1.2",
     "videojsplaylist": "github:tim-peterson/videojs-playlist@master",
+    "zxcvbn": "github:dropbox/zxcvbn@v1.0",
     "bower:jasmine-sinon@0.4.0": {
       "jasmine": "bower:jasmine@2.0.4",
       "sinonjs": "bower:sinonjs@1.10.2"

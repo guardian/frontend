@@ -1,4 +1,5 @@
 define([
+    'common/utils/$',
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/storage',
@@ -6,6 +7,7 @@ define([
     'common/modules/user-prefs',
     'common/modules/ui/message'
 ], function (
+    $,
     cookies,
     detect,
     storage,
@@ -59,9 +61,23 @@ define([
         cookies.add(COOKIE_IMPRESSION_KEY, impressions + 1);
     }
 
-    return function () {
+    function init() {
         if (isDevice() && canShow()) {
             showMessage();
         }
+    }
+    
+    function isMessageShown() {
+        return ($('.site-message--android').css('display') === 'block' || $('.site-message--ios').css('display') === 'block');
+    }
+
+    function getMessageHeight() {
+        return ($('.site-message--android').dim().height || $('.site-message--ios').dim().height);
+    }
+
+    return {
+        init: init,
+        isMessageShown: isMessageShown,
+        getMessageHeight: getMessageHeight
     };
 });

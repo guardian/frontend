@@ -151,7 +151,7 @@ define([
             }
         }
 
-        getServerSideTests().forEach(function (testName) {
+        _.forEach(getServerSideTests(), function (testName) {
             tag.push('AB | ' + testName + ' | inTest');
         });
 
@@ -272,7 +272,7 @@ define([
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
                 tokens = window.location.hash.replace('#ab-', '').split(',');
-                tokens.forEach(function (token) {
+                _.forEach(tokens, function (token) {
                     var abParam, test, variant;
                     abParam = token.split('=');
                     test = abParam[0];
@@ -334,7 +334,7 @@ define([
                         }
                     }
                 });
-                getServerSideTests().forEach(function (testName) {
+                _.forEach(getServerSideTests(), function (testName) {
                     abLogObject['ab' + testName] = 'inTest';
                 });
             } catch (error) {
