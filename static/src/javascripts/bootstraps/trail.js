@@ -11,7 +11,8 @@ define([
     'common/modules/onward/onward-content',
     'common/modules/onward/popular',
     'common/modules/onward/related',
-    'common/modules/onward/tonal'
+    'common/modules/onward/tonal',
+    'common/modules/social/share-count'
 ], function (
     qwery,
     $,
@@ -23,7 +24,8 @@ define([
     Onward,
     Popular,
     Related,
-    TonalComponent
+    TonalComponent,
+    shareCount
 ) {
     function insertOrProximity(selector, insert) {
         if (window.location.hash) {
@@ -87,6 +89,7 @@ define([
     return function () {
         robusts([
             ['c-discussion', initDiscussion],
+            ['c-shares', shareCount],
             ['c-popular', initPopular],
             ['c-related', initRelated],
             ['c-onward', initOnwardContent],
