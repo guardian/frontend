@@ -345,7 +345,7 @@ define([
                 }
             }
         };
-    
+
     return {
         init: function () {
             robusts([
