@@ -315,3 +315,10 @@ category: Common
         }
     }
 }
+
+.social--stickynav {
+    position: fixed;
+    top: 0px;
+    z-index: 999999;
+    padding-right: 145px;
+}
