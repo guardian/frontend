@@ -25,7 +25,7 @@ define([
         fastdom.read(function () {
             var topPos = topElParent().getBoundingClientRect().top;
 
-            if (!isStuck && topPos + deadzone*2 < 0) {
+            if (!isStuck && topPos + deadzone * 2 < 0) {
                 isStuck = stick();
             } else if (isStuck && topPos + deadzone > 0) {
                 isStuck = unStick();
@@ -51,5 +51,5 @@ define([
 
     return function () {
         mediator.on('window:scroll', _.throttle(setStickiness, 10));
-    }
+    };
 });
