@@ -246,7 +246,7 @@ define([
         }.bind(this));
     };
 
-    StickyHeader.prototype.FixedBannerMobile = function (headerTop, bannerHeight) {
+    StickyHeader.prototype.fixedBannerMobile = function (headerTop, bannerHeight) {
         fastdom.write(function () {
             this.$els.header.css({
                 position: 'fixed',
@@ -277,12 +277,24 @@ define([
                 if (smartAppBanner.isMessageShown()) {
                     if (scrollY < smartBannerHeight) {
                         fastdom.write(function () {
-                            this.FixedBannerMobile(smartBannerHeight - scrollY, bannerHeight);
+                            this.$els.header.css({
+                                position: 'static',
+                                top: null,
+                                width: '100%',
+                                'z-index': '1001',
+                                'margin-top': 0
+                            });
+                            this.$els.bannerMobile.css({
+                                position: 'static',
+                                top: null,
+                                width: '100%',
+                                'z-index': '999' // Sticky z-index -1 as it should be sticky but should go below the sticky header
+                            });
+                            this.$els.main.css('margin-top', 0);
                         }.bind(this));
-                    }
-                    else if (scrollY > smartBannerHeight && scrollY < this.config.thresholdMobile) {
+                    } else if (scrollY > smartBannerHeight && scrollY < this.config.thresholdMobile) {
                         fastdom.write(function () {
-                            this.FixedBannerMobile(0, bannerHeight);
+                            this.fixedBannerMobile(0, bannerHeight);
                         }.bind(this));
                         // Put navigation to its default state
                         this.setNavigationDefault();
@@ -301,7 +313,7 @@ define([
                     //header, navigation and banner are sticky from the beginning
                     if (scrollY < this.config.thresholdMobile) {
                         fastdom.write(function () {
-                            this.FixedBannerMobile(0, bannerHeight);
+                            this.fixedBannerMobile(0, bannerHeight);
                         }.bind(this));
                         // Put navigation to its default state
                         this.setNavigationDefault();

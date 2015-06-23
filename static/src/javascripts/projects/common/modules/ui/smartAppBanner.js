@@ -64,9 +64,9 @@ define([
     }
 
     function init() {
-      //  if (isDevice() && canShow()) {
+        if (isDevice() && canShow()) {
             showMessage();
-      //  }
+        }
     }
 
     function isMessageShown() {
