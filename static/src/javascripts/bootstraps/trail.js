@@ -4,6 +4,7 @@ define([
     'enhancer',
     'fastdom',
     'qwery',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
@@ -21,6 +22,7 @@ define([
     enhancer,
     fastdom,
     qwery,
+    _,
     $,
     config,
     mediator,
@@ -67,7 +69,7 @@ define([
             }
             // don't want to show professional network content on videos or interactives
             if ('contentType' in config.page &&
-                ['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) >= 0) {
+                _.includes(['video', 'interactive'], config.page.contentType.toLowerCase())) {
                 opts.excludeTags.push('guardian-professional/guardian-professional');
             }
             new Related(opts).renderRelatedComponent();
