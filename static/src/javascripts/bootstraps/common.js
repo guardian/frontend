@@ -369,7 +369,6 @@ define([
                 ['c-clickstream', modules.initClickstream],
                 ['c-history', modules.updateHistory],
                 ['c-sign-in', modules.initAutoSignin],
-                ['c-interactive', modules.augmentInteractive],
                 ['c-history-nav', modules.showHistoryInMegaNav],
                 ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
