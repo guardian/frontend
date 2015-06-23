@@ -148,10 +148,7 @@ define([
 
             showTabs: function () {
                 var tabs = new Tabs();
-                [
-                    'modules:popular:loaded',
-                    'modules:geomostpopular:ready'
-                ].forEach(function (event) {
+                ['modules:popular:loaded', 'modules:geomostpopular:ready'].forEach(function (event) {
                     mediator.on(event, function (el) {
                         tabs.init(el);
                     });
@@ -249,14 +246,9 @@ define([
             },
 
             windowEventListeners: function () {
-                var event,
-                    events = {
-                        resize:            'window:resize',
-                        scroll:            'window:scroll',
-                        orientationchange: 'window:orientationchange'
-                    };
-                for (event in events) {
-                    bean.on(window, event, mediator.emit.bind(mediator, events[event]));
+                var events = ['resize', 'scroll', 'orientationchange'];
+                for (var event in events) {
+                    bean.on(window, event, mediator.emit.bind(mediator, 'window:' + event));
                 }
             },
 
@@ -294,10 +286,6 @@ define([
 
             showMoreTagsLink: function () {
                 new MoreTags().init();
-            },
-
-            showSmartBanner: function () {
-                smartAppBanner.init();
             },
 
             initDiscussion: function () {
@@ -428,7 +416,7 @@ define([
                 ['c-start-register', modules.startRegister],
                 ['c-comments', modules.repositionComments],
                 ['c-tag-links', modules.showMoreTagsLink],
-                ['c-smart-banner', modules.showSmartBanner],
+                ['c-smart-banner', smartAppBanner],
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-log-stats', modules.logLiveStats],
                 ['c-analytics', modules.loadAnalytics],

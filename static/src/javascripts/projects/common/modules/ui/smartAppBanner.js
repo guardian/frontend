@@ -13,7 +13,6 @@ define([
     userPrefs,
     Message
 ) {
-
     /**
      * Rules:
      *
@@ -21,7 +20,6 @@ define([
      * 3 impressions
      * Persist close state
      */
-
     var COOKIE_IMPRESSION_KEY = 'GU_SMARTAPPBANNER',
         DATA = {
             IOS: {
@@ -61,14 +59,9 @@ define([
         cookies.add(COOKIE_IMPRESSION_KEY, impressions + 1);
     }
 
-    function init() {
+    return function() {
         if (isDevice() && canShow()) {
             showMessage();
         }
-    }
-
-    return {
-        init: init
     };
-
 });
