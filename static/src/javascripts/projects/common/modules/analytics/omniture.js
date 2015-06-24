@@ -320,6 +320,10 @@ define([
     Omniture.prototype.go = function () {
         this.populatePageProperties();
         this.logView();
+        // Clean up
+        this.s.events = _.filter(this.s.events.split(','), function (event) {
+            return event !== 'event46';
+        }).join(',');
         mediator.emit('analytics:ready');
     };
 
