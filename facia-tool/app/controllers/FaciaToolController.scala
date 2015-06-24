@@ -34,24 +34,24 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     Cached(60) { Ok(views.html.config(Configuration.environment.stage, priority, Option(identity))) }
   }
 
-  def listCollections = AuthAction { request =>
+  def listCollections = APIAuthAction { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     NoCache { Ok(Json.toJson(S3FrontsApi.listCollectionIds)) }
   }
 
-  def getConfig = AuthAction.async { request =>
+  def getConfig = APIAuthAction.async { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     FrontsApi.amazonClient.config.map { configJson =>
       NoCache {
         Ok(Json.toJson(configJson)).as("application/json")}}}
 
-  def getCollection(collectionId: String) = AuthAction.async { request =>
+  def getCollection(collectionId: String) = APIAuthAction.async { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     FrontsApi.amazonClient.collection(collectionId).map { configJson =>
       NoCache {
         Ok(Json.toJson(configJson)).as("application/json")}}}
 
-  def publishCollection(collectionId: String) = AuthAction.async { request =>
+  def publishCollection(collectionId: String) = APIAuthAction.async { request =>
     val identity = request.user
     FaciaToolMetrics.DraftPublishCount.increment()
     val futureCollectionJson = FaciaApiIO.publishCollectionJson(collectionId, identity)
@@ -62,7 +62,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(PublishUpdate(collectionId), identity.email))}
     NoCache(Ok)}}
 
-  def discardCollection(collectionId: String) = AuthAction.async { request =>
+  def discardCollection(collectionId: String) = APIAuthAction.async { request =>
     val identity = request.user
     val futureCollectionJson = FaciaApiIO.discardCollectionJson(collectionId, identity)
     futureCollectionJson.map { maybeCollectionJson =>
@@ -72,7 +72,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       FaciaPress.press(PressCommand.forOneId(collectionId).withPressDraft())}
     NoCache(Ok)}}
 
-  def treatEdits(collectionId: String) = AuthAction.async { request =>
+  def treatEdits(collectionId: String) = APIAuthAction.async { request =>
     request.body.asJson.flatMap(_.asOpt[FaciaToolUpdate]).map {
       case update: Update =>
         val identity = request.user
@@ -109,7 +109,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }.getOrElse(Future.successful(NotAcceptable))
   }
 
-  def collectionEdits(): Action[AnyContent] = AuthAction.async { request =>
+  def collectionEdits(): Action[AnyContent] = APIAuthAction.async { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
       request.body.asJson.flatMap (_.asOpt[FaciaToolUpdate]).map {
         case update: Update =>
@@ -173,22 +173,22 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       } getOrElse Future.successful(NotFound)
   }
 
-  def pressLivePath(path: String) = AuthAction { request =>
+  def pressLivePath(path: String) = APIAuthAction { request =>
     FaciaPressQueue.enqueue(PressJob(FrontPath(path), Live, forceConfigUpdate = Option(true)))
     NoCache(Ok)
   }
 
-  def pressDraftPath(path: String) = AuthAction { request =>
+  def pressDraftPath(path: String) = APIAuthAction { request =>
     FaciaPressQueue.enqueue(PressJob(FrontPath(path), Draft, forceConfigUpdate = Option(true)))
     NoCache(Ok)
   }
 
-  def updateCollection(collectionId: String) = AuthAction { request =>
+  def updateCollection(collectionId: String) = APIAuthAction { request =>
     FaciaPress.press(PressCommand.forOneId(collectionId).withPressDraft().withPressLive())
     NoCache(Ok)
   }
 
-  def getLastModified(path: String) = AuthAction { request =>
+  def getLastModified(path: String) = APIAuthAction { request =>
     val now: Option[String] = S3FrontsApi.getPressedLastModified(path)
     now.map(Ok(_)).getOrElse(NotFound)
   }

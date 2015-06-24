@@ -14,13 +14,15 @@ define([
     var postUpdate = function (opts) {
         vars.model.pending(true);
 
-        authedAjax.request(_.extend({
-            type: 'POST'
-        }, opts)).always(function () {
+        function callCallbacks () {
             _.each(onUpdateCallbacks, function (callback) {
                 callback();
             });
-        });
+        }
+
+        authedAjax.request(_.extend({
+            type: 'POST'
+        }, opts)).then(callCallbacks, callCallbacks);
     };
 
     /**

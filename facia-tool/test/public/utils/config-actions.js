@@ -1,8 +1,9 @@
 import mockjax from 'test/utils/mockjax';
 import Promise from 'Promise';
-var originalSetTimeout = window.setTimeout;
+import tick from 'test/utils/tick';
 
 export default function(mockConfig, action) {
+
     return new Promise(function (resolve) {
         var lastRequest, desiredAnswer;
         var interceptFront = mockjax({
@@ -16,10 +17,9 @@ export default function(mockConfig, action) {
             onAfterComplete: function () {
                 clearRequest();
                 // Every such action is also triggering an update of the config
-                jasmine.clock().tick(100);
-                originalSetTimeout(function () {
+                tick(100).then(() => tick(100)).then(() => {
                     resolve(lastRequest);
-                }, 10);
+                });
             }
         });
         var interceptEdit = mockjax({
@@ -35,8 +35,7 @@ export default function(mockConfig, action) {
             onAfterComplete: function () {
                 clearRequest();
                 // Every such action is also triggering an update of the config
-                jasmine.clock().tick(100);
-                originalSetTimeout(function () {
+                tick(100).then(() => tick(100)).then(() => {
                     resolve(lastRequest);
                 });
             }
@@ -51,6 +50,6 @@ export default function(mockConfig, action) {
         mockConfig.update(desiredAnswer);
 
         // This action triggers a network request, advance time
-        jasmine.clock().tick(100);
+        tick(100).then(() => tick(100));
     });
 }

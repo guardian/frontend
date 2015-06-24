@@ -2,6 +2,8 @@ package model
 
 import common.Edition
 import com.gu.contentapi.client.model.{Content => ApiContent}
+import org.jsoup.Jsoup
+import org.jsoup.safety.Whitelist
 import scala.math.abs
 
 object `package` {
@@ -48,6 +50,10 @@ object `package` {
       val normalizedPath = parts.mkString("-")
       Seq(path, s"$normalizedPath/$normalizedPath")
     }
+  }
+
+  def stripHtml(text: String) = {
+    Jsoup.clean(text, Whitelist.none())
   }
 
 }

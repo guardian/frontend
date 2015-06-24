@@ -50,7 +50,7 @@ define([
             containerItemDataId: 'data-id'
         };
 
-        this.isContent = !/Network Front|Section/.test(config.page.contentType);
+        this.isContent = !/Network Front|Section|Tag/.test(config.page.contentType);
         this.userData = {};
         this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
 
@@ -76,19 +76,20 @@ define([
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
 
-        var popup = qwery('.popup--profile')[0];
-        fastdom.write(function () {
-            bonzo(popup).prepend(bonzo.create(
-                template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
-                    idUrl: config.page.idUrl
-                })
-            ));
-        });
-
         if (userLoggedIn) {
             identity.getSavedArticles()
                 .then(function (resp) {
                     var notFound = { message: 'Not found', description: 'Resource not found' };
+                    var popup = qwery('.popup--profile')[0];
+
+                    fastdom.write(function () {
+                        bonzo(popup).prepend(bonzo.create(
+                            template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
+                                idUrl: config.page.idUrl
+                            })
+                        ));
+                        this.updateSavedCount();
+                    }.bind(this));
 
                     if (resp.status === 'error' && resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
                         //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
@@ -98,7 +99,6 @@ define([
                         this.userData = resp.savedArticles;
                     }
 
-                    this.updateSavedCount();
                     this.prepareFaciaItemLinks(true);
 
                     if (this.isContent) {
@@ -235,7 +235,11 @@ define([
         );
     };
 
-    SaveForLater.prototype.delete = function (pageId, shortUrl, onDelete) {
+    /*eslint-disable dot-notation*/
+    // jscs:disable requireDotNotation
+    SaveForLater.prototype['delete'] = function (pageId, shortUrl, onDelete) {
+        /*eslint-enable dot-notation*/
+        // jscs:enable requireDotNotation
         this.userData.articles = _.filter(this.userData.articles, function (article) {
             return article.shortUrl !== shortUrl;
         });
@@ -261,7 +265,11 @@ define([
     };
 
     SaveForLater.prototype.deleteArticle = function (pageId, shortUrl) {
-        this.delete(pageId, shortUrl, this.onDeleteArticle);
+        /*eslint-disable dot-notation*/
+        // jscs:disable requireDotNotation
+        this['delete'](pageId, shortUrl, this.onDeleteArticle);
+        /*eslint-enable dot-notation*/
+        // jscs:enable requireDotNotation
     };
 
     SaveForLater.prototype.onDeleteArticle = function (success) {
@@ -337,7 +345,11 @@ define([
 
     SaveForLater.prototype.createDeleteFaciaItemHandler = function (link, id, shortUrl) {
         bean.one(link, 'click',
-            this.delete.bind(this,
+            /*eslint-disable dot-notation*/
+            // jscs:disable requireDotNotation
+            this['delete'].bind(this,
+                /*eslint-enable dot-notation*/
+                // jscs:enable requireDotNotation
                 id,
                 shortUrl,
                 this.onDeleteFaciaItem.bind(this, link, id, shortUrl)
@@ -353,14 +365,17 @@ define([
 
     SaveForLater.prototype.updateSavedCount = function () {
         var saveForLaterProfileLink = $(this.classes.profileDropdownLink);
-
+        var profile = $('.brand-bar__item--profile');
         var count = this.userData.articles.length;
-        fastdom.write(function () {
-            saveForLaterProfileLink.html('Saved (' + count + ')');
 
-            var profile = $('.brand-bar__item--profile');
-            profile.addClass('brand-bar__item--profile--show-saved');
-            $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
+        fastdom.write(function () {
+            if (count > 0) {
+                $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
+                saveForLaterProfileLink.html('Saved for later (' + count + ')');
+            } else {
+                $('.control__icon-wrapper', profile).removeAttr('data-saved-content-count');
+                saveForLaterProfileLink.html('Saved for later');
+            }
         });
     };
 

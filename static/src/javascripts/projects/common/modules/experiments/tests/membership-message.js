@@ -36,7 +36,10 @@ define([
              * only show to users who have viewed at least 10 pages.
              */
             var alreadyVisited = storage.local.get('alreadyVisited') || 0;
-            return !detect.adblockInUse && config.page.contentType === 'Article' && alreadyVisited > 9;
+            return !detect.adblockInUse &&
+                config.page.edition === 'UK' &&
+                config.page.contentType === 'Article' &&
+                alreadyVisited > 9;
         };
 
         this.variants = [{

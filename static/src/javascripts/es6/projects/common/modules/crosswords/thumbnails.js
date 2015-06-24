@@ -40,7 +40,7 @@ function makeTextCells(savedState) {
 function init() {
     const thumbnails = qwery('.js-crossword-thumbnail');
 
-    if(thumbnails.length) {
+    if (thumbnails.length) {
         loadFont();
         _.forEach(thumbnails, (elem) => {
             const $elem = bonzo(elem);

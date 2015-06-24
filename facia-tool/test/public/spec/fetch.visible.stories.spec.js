@@ -33,10 +33,7 @@ describe('Fetch visible stories', function () {
 
     it('fails when there are no stories', function (done) {
         fetch('anything', createGroups())
-        .then(function () {
-            expect(true).toBe(false);
-            done();
-        }, function (err) {
+        .then(done.fail, function (err) {
             expect(err.message).toMatch(/Empty collection/i);
             done();
         });
@@ -44,10 +41,7 @@ describe('Fetch visible stories', function () {
 
     it('fails if the network fails', function (done) {
         return fetch('fail', createGroups([false]))
-        .then(function () {
-            expect(false).toBe(true);
-            done();
-        }, function (err) {
+        .then(done.fail, function (err) {
             expect(err).toMatch(/fail/i);
             done();
         });

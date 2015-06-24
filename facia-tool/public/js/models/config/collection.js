@@ -191,8 +191,9 @@ define([
         apiQuery += 'show-fields=headline';
 
         contentApi.fetchContent(apiQuery)
-        .done(function(results) {
+        .then(function(res) {
             if (cc === checkCount) {
+                var results = res && res.content;
                 self.capiResults(results || []);
                 self.state.apiQueryStatus(results && results.length ? 'valid' : 'invalid');
             }

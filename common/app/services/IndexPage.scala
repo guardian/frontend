@@ -3,7 +3,7 @@ package services
 import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
 import com.gu.facia.api.utils.{ReviewKicker, CartoonKicker, TagKicker}
 import common.Edition
-import conf.Switches
+import conf.{Configuration, Switches}
 import contentapi.Paths
 import layout.DateHeadline.cardTimestampDisplay
 import layout._
@@ -152,7 +152,7 @@ object IndexPage {
       indexPage.page.url,
       indexPage.trails.zipWithIndex.map {
         case (trail, index) =>
-          ListItem(position = index, url = Some(trail.url))
+          ListItem(position = index, url = Some(Configuration.site.host + trail.url))
       }
     )
   }
