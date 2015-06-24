@@ -24,7 +24,8 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*",
     "bower:*": "jspm_packages/bower/*",
-    "facebook": "//connect.facebook.net/en_US/all"
+    "facebook.js": "//connect.facebook.net/en_US/all",
+    "foresee.js": "javascripts/vendor/foresee/20141107/foresee-trigger"
   },
   "shim": {
     "omniture": {
@@ -37,8 +38,8 @@ System.config({
   "map": {
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
     "Promise": "github:guardian/native-promise-only@0.7.6-e",
-    "babel": "npm:babel-core@5.5.8",
-    "babel-runtime": "npm:babel-runtime@5.5.8",
+    "babel": "npm:babel-core@5.6.4",
+    "babel-runtime": "npm:babel-runtime@5.6.4",
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@1.4.0",
     "classnames": "npm:classnames@1.2.0",
@@ -68,6 +69,7 @@ System.config({
     "videojsima": "github:guardian/videojs-ima@0.1.2",
     "videojspersistvolume": "bower:videojs-persistvolume@0.1.2",
     "videojsplaylist": "github:tim-peterson/videojs-playlist@master",
+    "zxcvbn": "github:dropbox/zxcvbn@v1.0",
     "bower:jasmine-sinon@0.4.0": {
       "jasmine": "bower:jasmine@2.0.4",
       "sinonjs": "bower:sinonjs@1.10.2"
@@ -130,7 +132,7 @@ System.config({
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"
     },
-    "npm:babel-runtime@5.5.8": {
+    "npm:babel-runtime@5.6.4": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:bean@1.0.15": {

@@ -106,7 +106,7 @@ define([
         this.s.linkTrackVars = 'channel,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,' +
                                'prop51,prop61,prop64,prop65,prop74,eVar7,eVar37,eVar38,eVar39,eVar50,events';
         this.s.linkTrackEvents = 'event37';
-        this.s.events = 'event37';
+        this.s.events = this.s.apl(this.s.events, 'event37', ',');
         this.s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + linkName : linkName;
 
         // this allows 'live' Omniture tracking of Navigation Interactions
@@ -320,6 +320,10 @@ define([
     Omniture.prototype.go = function () {
         this.populatePageProperties();
         this.logView();
+        // Clean up
+        this.s.events = _.filter((this.s.events || '').split(','), function (event) {
+            return event !== 'event46';
+        }).join(',');
         mediator.emit('analytics:ready');
     };
 
