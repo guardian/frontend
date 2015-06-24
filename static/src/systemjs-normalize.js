@@ -1,3 +1,5 @@
+/*eslint-disable strict*/
+/*eslint-disable no-shadow*/
 // We use system.normalize to convert RequireJS module IDs to SystemJS module
 // IDs. This is mainly necessary because the plugin format is reversed in
 // SystemJS (suffix rather than prefix).
@@ -31,6 +33,9 @@ var reduce = function (array, fn, accumulator) {
                 // the package.json’s main property.
                 if (name === 'socketio') {
                     return 'socketio/socket.io';
+                // Unlike SystemJS, curl does not support globals out of the box
+                } else if (name === 'js!zxcvbn') {
+                    return 'zxcvbn';
                 } else {
                     return name;
                 }

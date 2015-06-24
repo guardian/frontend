@@ -47,7 +47,8 @@ define([
                 fastdom.write(function () {
                     $button.html(template(deleteButtonAllTmp, {
                         icon: svgs('crossIcon'),
-                        state: state
+                        state: state,
+                        dataLinkName: 'saved | remove all' + (state === 'confirm' ? ' | confirm' : '')
                     }));
                 });
             });

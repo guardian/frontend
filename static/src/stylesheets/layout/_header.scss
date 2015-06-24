@@ -73,11 +73,12 @@ $c-guardian-services-action: #ffffff;
         }
 
         @include mq($until: tablet) {
-            margin-top: $gs-baseline * .83;
+            margin-top: $gs-baseline * 1.2;
+            margin-right: 0;
 
             svg {
                 // Height / width
-                $height-to-width-ratio: 30 / 160;
+                $height-to-width-ratio: 25 / 160;
                 // Magic number to fit the logo to 320px+ screens
                 $width: 134px;
                 width: $width;

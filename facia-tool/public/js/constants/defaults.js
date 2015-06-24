@@ -62,7 +62,25 @@ export default {
 
     apiBase:               '',
     apiSearchBase:         '/api/proxy',
-    apiSearchParams:       'show-elements=video&show-tags=all&show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail,liveBloggingNow,membershipAccess',
+    apiSearchParams:       [
+        'show-elements=video',
+        'show-tags=all',
+        'show-fields=' + [
+            'internalContentCode',
+            'internalPageCode',
+            'isLive',
+            'firstPublicationDate',
+            'scheduledPublicationDate',
+            'headline',
+            'trailText',
+            'byline',
+            'thumbnail',
+            'secureThumbnail',
+            'liveBloggingNow',
+            'membershipAccess'
+        ].join(',')
+    ].join('&'),
+
 
     frontendApiBase:       '/frontend',
 

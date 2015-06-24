@@ -39,7 +39,8 @@ var bundleConfigs = [
     // Odd issue when bundling admin with core: https://github.com/jspm/jspm-cli/issues/806
     // ['bootstraps/video-embed', 'video-embed'],
     ['bootstraps/dev - core - bootstraps/app', 'dev'],
-    ['bootstraps/creatives - core - bootstraps/app', 'creatives']
+    ['bootstraps/creatives - core - bootstraps/app', 'creatives'],
+    ['zxcvbn', 'zxcvbn']
 ];
 
 var getHash = function (outputSource) {

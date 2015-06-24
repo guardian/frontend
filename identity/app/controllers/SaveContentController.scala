@@ -5,24 +5,25 @@ import java.net.URI
 import actions.AuthenticatedActions
 import client.Error
 import com.gu.identity.model.SavedArticles
-import common._
-import conf.LiveContentApi
-import model.{Content => ApiContent, _}
+import model._
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 
-import com.google.inject.Inject
+import com.google.inject.{Singleton, Inject}
 import common.ExecutionContexts
-import conf.LiveContentApi.getResponse
 import idapiclient.IdApiClient
 import implicits.Articles._
+import org.jsoup.nodes.Document
 import play.api.data.{Form, Forms}
 import play.api.mvc._
 import services._
 import utils.SafeLogging
+import views.support.{HtmlCleaner, withJsoup}
 
+import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
+@Singleton
 class SaveContentController @Inject() ( api: IdApiClient,
                                         identityRequestParser: IdRequestParser,
                                         authenticatedActions: AuthenticatedActions,
@@ -81,7 +82,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
     savedArticleService.getOrCreateArticlesList(request.user.auth).flatMap {
       case Right(savedArticles) =>
-        fillFormWithApiDataForPageAndGetResult(idRequest, savedArticles, pageNum)
+        renderSavedForLaterPage(idRequest, savedArticles, pageNum)
       case Left(errors) =>
         val formWithErrors = errors.foldLeft(savedArticlesForm) {
           case (formWithErrors, Error(message, decription, _, context)) =>
@@ -110,7 +111,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
       def onError(formWithErrors: Form[SavedArticleData]): Future[Result] = {
         savedArticleService.getOrCreateArticlesList(request.user.auth).flatMap {
           case Right(savedArticles) =>
-            fillFormWithApiDataForPageAndGetResult(idRequest, savedArticles, pageNum)
+            renderSavedForLaterPage(idRequest, savedArticles, pageNum)
           case Left(errors) =>
             val formWithApiErrors = buildFormFromErrors(errors)
             pageDataBuilder(emptyArticles(), idRequest, pageNum).map { pageData =>
@@ -129,7 +130,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
                 val updatedArticles = savedArticles.removeArticle(shortUrlOfDeletedArticle)
                 val updatedResult = api.updateSavedArticles(request.user.auth, updatedArticles).flatMap {
                   case Right(updatedArticles) =>
-                    fillFormWithApiDataForPageAndGetResult(idRequest, updatedArticles, pageNum)
+                    renderSavedForLaterPage(idRequest, updatedArticles, pageNum)
 
                   case Left(errors) =>
                     val formWithApiErrors = buildFormFromErrors(errors)
@@ -158,16 +159,18 @@ class SaveContentController @Inject() ( api: IdApiClient,
       boundForm.fold[Future[Result]](onError, onSuccess)
     }
 
-  private def fillFormWithApiDataForPageAndGetResult(idRequest: IdentityRequest, updatedArticles: SavedArticles, pageNum: Int)
+  private def renderSavedForLaterPage(idRequest: IdentityRequest, updatedArticles: SavedArticles, pageNum: Int)
                                                     (implicit request: RequestHeader): Future[Result] = {
 
     //Deal with case where one item on last page has been deleted
     if ( pageNum > updatedArticles.numPages && pageNum > 1) {
       Future.successful(NoCache(SeeOther( s"/saved-for-later?page=${updatedArticles.numPages}")))
     } else {
+      val page = IdentityPage("/saved-for-later", "Saved for later", s"saved-for-later-${updatedArticles.articles.length}")
       pageDataBuilder(updatedArticles, idRequest, pageNum).map { pageData =>
         val form = savedArticlesForm.fill(SavedArticleData(pageData.shortUrls))
-        NoCache(Ok(views.html.profile.savedForLater(page, form, pageData)))
+        val html = withJsoup(views.html.profile.savedForLater(page, form, pageData)) { CampaignLinkCleaner("sfl") }
+        NoCache(Ok(html))
       }
     }
   }
@@ -183,3 +186,12 @@ object SavedArticleData {
   )
 }
 
+case class CampaignLinkCleaner(campaign: String) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    document.select(".saved-content .fc-item__container a").foreach{ anchorElement =>
+      val linkWithCampaign = anchorElement.attr("href") + s"?INTCMP=$campaign"
+      anchorElement.attr("href", linkWithCampaign)
+    }
+    document
+  }
+}
