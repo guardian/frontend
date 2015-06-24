@@ -1,6 +1,6 @@
 package services
 
-import com.gu.identity.model.SavedArticles
+import com.gu.identity.model.{SavedArticle, SavedArticles}
 import common.ExecutionContexts
 import idapiclient.IdApiClient
 import org.joda.time.DateTime
@@ -21,7 +21,7 @@ class PlaySavedArticlesService @Inject()(api: IdApiClient) extends SafeLogging w
   def getOrCreateArticlesList(auth: Auth): Future[Response[SavedArticles]] = {
     val savedArticlesResponse = api.savedArticles(auth)
     savedArticlesResponse.flatMap {
-      case Right(response) => Future { Right(response.sanitizeArticleData) }
+      case Right(response) => Future { Right(sanitizeArticleData(response)) }
       case Left(errors) =>
         errors match {
           case List(Error("Not found", "Resource not found", _, _)) =>
@@ -31,4 +31,16 @@ class PlaySavedArticlesService @Inject()(api: IdApiClient) extends SafeLogging w
         }
     }
   }
+
+  def sanitizeArticleData(savedArticles: SavedArticles) : SavedArticles = {
+
+    val sanitizedArticles = savedArticles.articles map {
+      article =>
+        val id = article.id.replace("http://www.theguardian.com/","")
+        val shortUrl = article.shortUrl.replace("http://gu.com","")
+        SavedArticle(id, shortUrl, article.date, article.read, article.platform)
+    }
+    SavedArticles(savedArticles.version, sanitizedArticles)
+  }
+
 }

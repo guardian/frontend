@@ -46,17 +46,6 @@ trait Articles {
       SavedArticles(savedArticles.version, articles)
     }
 
-    def sanitizeArticleData : SavedArticles = {
-
-      val sanitizedArticles = savedArticles.articles map {
-        article =>
-          val id = article.id.replace("http://www.theguardian.com/","")
-          val shortUrl = article.shortUrl.replace("http://gu.com","")
-          SavedArticle(id, shortUrl, article.date, article.read, article.platform)
-      }
-      SavedArticles(savedArticles.version, sanitizedArticles)
-    }
-
     //Deal with just having removed the only item on the last page
     def getPage(page: Int): List[SavedArticle] =
      pages.lift(Math.min(page, page-1)) orElse pages.lastOption getOrElse Nil
