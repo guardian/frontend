@@ -50,11 +50,7 @@ define([
             if (config.switches.audienceScienceGateway && storedSegments) {
                 segments = _(_.pairs(storedSegments[section]))
                     .filter(function (placement) {
-                        /*eslint-disable dot-notation*/
-                        // jscs:disable requireDotNotation
-                        return placement[1]['default'];
-                        // jscs:enable requireDotNotation
-                        /*eslint-enable dot-notation*/
+                        return placement[1].default;
                     })
                     .map(function (placement) {
                         return ['pq_' + placement[0], 'T'];
