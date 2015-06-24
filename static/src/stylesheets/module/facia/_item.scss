@@ -522,6 +522,7 @@ $block-height: 74px;
     float: right;
     margin-right: 0 - ($gs-gutter * .25);
     padding-right: ($gs-gutter * .25);
+    transition: color 100ms;
 
     &:hover,
     &:focus,
