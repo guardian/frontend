@@ -8,10 +8,10 @@ define(function () {
         this.description = 'Viewability - Adds social buttons to the sticky nav; requires Viewability to be running.';
         this.audience = 0;
         this.audienceOffset = 0;
-        this.successMeasure = '';
+        this.successMeasure = 'Increased shares on content pages';
         this.audienceCriteria = '';
         this.dataLinkNames = '';
-        this.idealOutcome = '';
+        this.idealOutcome = 'More page views';
 
         this.canRun = function () {
             return true;
