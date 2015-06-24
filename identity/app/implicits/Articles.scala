@@ -23,7 +23,6 @@ trait Articles {
 
     val numPages = pages.length
 
-
     val totalSaved = savedArticles.articles.length
     def newestFirst = savedArticles.articles.reverse
     def contains(shortUrl: String) : Boolean = savedArticles.articles.exists( sa => sa.shortUrl == shortUrl)
