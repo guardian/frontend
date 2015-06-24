@@ -16,9 +16,6 @@ trait Articles {
   implicit class RichSavedArticles(savedArticles: SavedArticles) {
     val fmt = ISODateTimeFormat.dateTimeNoMillis()
     private val itemsPerPage = 4
-    val shortUrlPrefix: String = "http://gu.com"
-    val guardianDomainPrefix = "http://www.theguardian.com/"
-
     val pages = savedArticles.articles.grouped(itemsPerPage).toList
 
     val numPages = pages.length
@@ -53,14 +50,8 @@ trait Articles {
 
       val sanitizedArticles = savedArticles.articles map {
         article =>
-          val shortUrl = article.shortUrl match {
-            case shortUrl if shortUrl.startsWith(shortUrlPrefix) => shortUrl.substring(shortUrlPrefix.length)
-            case shortUrl => shortUrl
-          }
-          val id = article.id match {
-            case id if id.startsWith(guardianDomainPrefix) => id.substring(guardianDomainPrefix.length)
-            case id => id
-          }
+          val id = article.id.replace("http://www.theguardian.com/","")
+          val shortUrl = article.shortUrl.replace("http://gu.com","")
           SavedArticle(id, shortUrl, article.date, article.read, article.platform)
       }
       SavedArticles(savedArticles.version, sanitizedArticles)

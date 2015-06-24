@@ -21,7 +21,7 @@ class PlaySavedArticlesService @Inject()(api: IdApiClient) extends SafeLogging w
   def getOrCreateArticlesList(auth: Auth): Future[Response[SavedArticles]] = {
     val savedArticlesResponse = api.savedArticles(auth)
     savedArticlesResponse.flatMap {
-      case Right(response) => Future { Right(response.sanitizeArticleData)}
+      case Right(response) => Future { Right(response.sanitizeArticleData) }
       case Left(errors) =>
         errors match {
           case List(Error("Not found", "Resource not found", _, _)) =>
