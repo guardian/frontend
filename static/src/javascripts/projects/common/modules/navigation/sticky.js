@@ -109,7 +109,7 @@ define([
                     this.$els.navigation.removeClass('animate-down-mobile').addClass('animate-up-mobile');
                 } else {
                     if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
-                        this.$els.navigation.css('height', '72px');
+                        this.$els.navigation.css('display', 'block');
                     } else {
                         this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
                     }
@@ -131,7 +131,7 @@ define([
                     this.$els.navigation.removeClass('animate-up-mobile').addClass('animate-down-mobile');
                 } else {
                     if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
-                        this.$els.navigation.css('height', 0);
+                        this.$els.navigation.css('display', 'none');
                     } else {
                         this.$els.navigation.removeClass('animate-up-desktop').addClass('animate-down-desktop');
                     }
