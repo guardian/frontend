@@ -105,12 +105,14 @@ define([
         // If user is scrolling up and navigation threshold was met show navigation
         if (this.config.direction === 'up' && this.config.showNavigation) {
             fastdom.write(function () {
-                if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
-                    this.$els.navigation.css('height', '72px');
-                } else if (this.isTablet || this.isMobile) {
+                if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-down-mobile').addClass('animate-up-mobile');
                 } else {
-                    this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
+                    if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                        this.$els.navigation.css('height', '72px');
+                    } else {
+                        this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
+                    }
                 }
             }.bind(this));
         } else {
@@ -125,12 +127,14 @@ define([
                 }
             }
             fastdom.write(function () {
-                if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
-                    this.$els.navigation.css('height', 0);
-                } else if (this.isTablet || this.isMobile) {
+                if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-up-mobile').addClass('animate-down-mobile');
                 } else {
-                    this.$els.navigation.removeClass('animate-up-desktop').addClass('animate-down-desktop');
+                    if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                        this.$els.navigation.css('height', 0);
+                    } else {
+                        this.$els.navigation.removeClass('animate-up-desktop').addClass('animate-down-desktop');
+                    }
                 }
             }.bind(this));
         }
