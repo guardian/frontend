@@ -102,8 +102,7 @@ define([
             },
 
             initStickySocialNav: function () {
-                if (true ||
-                    ab.shouldRunTest('Viewability', 'variant') &&
+                if (ab.shouldRunTest('Viewability', 'variant') &&
                     ab.shouldRunTest('ViewabilitySocial', 'variant') &&
                     config.page.contentType !== 'Interactive') {
                     stickySocialButtons();
