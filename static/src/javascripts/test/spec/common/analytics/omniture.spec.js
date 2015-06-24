@@ -36,8 +36,8 @@ describe('omniture', function () {
                 tl: function () {},
                 apl: function (x, y, z) {
                     return [x, y]
-                        .filter(function (x) {
-                            return x;
+                        .filter(function (a) {
+                            return a;
                         })
                         .join(z);
                 },
