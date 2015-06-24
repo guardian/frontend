@@ -17,7 +17,8 @@ define([
     'common/modules/open/cta',
     'common/modules/onward/social-most-popular',
     'common/modules/ui/rhc',
-    'common/modules/ui/selection-sharing'
+    'common/modules/ui/selection-sharing',
+    'common/modules/navigation/sticky-social-buttons'
 ], function (
     fence,
     qwery,
@@ -36,7 +37,8 @@ define([
     OpenCta,
     SocialMostPopular,
     rhc,
-    selectionSharing
+    selectionSharing,
+    stickySocialButtons
 ) {
     var modules = {
             initOpenCta: function () {
@@ -99,6 +101,15 @@ define([
                 });
             },
 
+            initStickySocialNav: function () {
+                if (true ||
+                    ab.shouldRunTest('Viewability', 'variant') && 
+                    ab.shouldRunTest('ViewabilitySocial', 'variant') &&
+                    config.page.contentType !== 'Interactive') {
+                    stickySocialButtons();
+                }
+            },
+
             initQuizListeners: function () {
                 require(['ophan/ng'], function (ophan) {
                     mediator.on('quiz/ophan-event', ophan.record);
@@ -115,6 +126,7 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
+            modules.initStickySocialNav();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
