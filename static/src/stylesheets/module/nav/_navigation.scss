@@ -835,6 +835,10 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     .burger-icon {
         margin-top: $gs-baseline * 1.5;
+        
+        @include mq($until: mobileLandscape) {
+            margin: $gs-baseline * 1.5 0 0;
+        }
     }
 
 }
