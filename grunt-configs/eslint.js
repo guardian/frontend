@@ -4,42 +4,19 @@ module.exports = function(grunt, options) {
         self: [
             'Gruntfile.js'
         ],
-        es6: {
+        'static/src': {
             files: [{
                 expand: true,
-                cwd: 'static/src/javascripts/es6',
+                cwd: 'static/src',
                 src: [
                     '**/*.js'
                 ]
-            }]
-        },
-        test: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/test',
-                src: [
-                    '**/*.js'
-                ]
-            }]
-        },
-        common: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/projects/common',
-                src: [
-                    '**/*.js',
-                    '!utils/atob.js'
-                ]
-            }]
-        },
-        facia: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/projects/facia',
-                src: [
-                    '**/*.js'
-                ]
-            }]
+            }],
+            options: {
+                // https://github.com/eslint/eslint/issues/2824
+                ignorePath: 'static/src/.eslintignore',
+                quiet: true
+            }
         },
         'facia-tool': {
             files: [{
@@ -49,24 +26,6 @@ module.exports = function(grunt, options) {
                     '**/*.js',
                     '!jspm-config.js',
                     '!components/**/*.js'
-                ]
-            }]
-        },
-        membership: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/projects/membership',
-                src: [
-                    '**/*.js'
-                ]
-            }]
-        },
-        bootstraps: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/bootstraps',
-                src: [
-                    '**/*.js'
                 ]
             }]
         }

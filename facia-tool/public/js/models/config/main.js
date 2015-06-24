@@ -9,7 +9,7 @@ import findFirstById from 'utils/find-first-by-id';
 import Group from 'models/group';
 import Front from 'models/config/front';
 import Collection from 'models/config/collection';
-import newItems from 'models/config/new-items';
+import * as newItems from 'models/config/new-items';
 import persistence from 'models/config/persistence';
 import frontCount from 'utils/front-count';
 

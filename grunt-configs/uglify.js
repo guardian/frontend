@@ -22,7 +22,7 @@ module.exports = function(grunt, options) {
                 cwd: 'static/src/jspm_packages',
                 src: [
                     'system.src.js',
-                    'es6-module-loader.src.js'
+                    'system-polyfills.src.js'
                 ],
                 dest: 'common/conf/assets'
             },

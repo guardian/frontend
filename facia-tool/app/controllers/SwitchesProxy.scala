@@ -10,7 +10,7 @@ import auth.PanDomainAuthActions
 
 object SwitchesProxy extends Controller with PanDomainAuthActions {
 
-  def getSwitches() = AuthAction { request =>
+  def getSwitches() = APIAuthAction { request =>
     FaciaToolMetrics.ProxyCount.increment()
     val r = Switches.all.map {switch =>
       switch.name -> switch.isSwitchedOn

@@ -445,7 +445,7 @@
 }
 
 .save-for-later__delete-all-container {
-    @include mq($from: mobile, $until: leftCol) {
+    @include mq($from: mobileLandscape, $until: leftCol) {
         position: absolute;
         right: 0;
         top: 0;
@@ -479,8 +479,8 @@
     }
 }
 
-.save-for-later__button--delete-all--delete .save-for-later__label--delete,
-.save-for-later__button--delete-all--confirm .save-for-later__label--confirm {
+.save-for-later__button--delete-all--delete .save-for-later__label--delete-all,
+.save-for-later__button--delete-all--confirm .save-for-later__label--delete-all--confirm {
     display: inline;
 }
 

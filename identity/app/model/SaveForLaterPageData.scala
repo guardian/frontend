@@ -30,7 +30,7 @@ case class SaveForLaterPageData(
   formActionUrl: String,
   savedItems: List[SaveForLaterItem],
   pagination: Pagination,
-  pageUrl: String,
+  paginationUrl: String,
   totalArticlesSaved: Int,
   shortUrls: List[String])
 
@@ -47,14 +47,21 @@ class SaveForLaterDataBuilder @Inject()(idUrlBuilder: IdentityUrlBuilder) extend
       .showFields("all")
       .showElements ("all")
     ).map(r => {
-      val contentModels = r.results.map(ApiContent(_)).zip(articles)
-      contentModels.map(SaveForLaterItem.tupled)
+
+      val items = r.results.flatMap { result =>
+        for {
+          content <- Some(ApiContent(result))
+          article <- articles.find( article => article.id == content.id)
+        } yield {
+          SaveForLaterItem(content, article)
+        }
+      }
 
       SaveForLaterPageData(
-        idUrlBuilder.buildUrl("/saved-for-later-page?page=%d".format(pageNum), idRequest),
-        contentModels.map(SaveForLaterItem.tupled),
+        idUrlBuilder.buildUrl("/saved-for-later", idRequest),
+        items,
         Pagination(pageNum, savedArticles.numPages, savedArticles.totalSaved),
-        idUrlBuilder.buildUrl("/saved-for-later-page", idRequest),
+        idUrlBuilder.buildUrl("/saved-for-later"),
         savedArticles.totalSaved,
         shortUrls
       )

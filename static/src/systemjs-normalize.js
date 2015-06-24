@@ -1,3 +1,5 @@
+/*eslint-disable strict*/
+/*eslint-disable no-shadow*/
 // We use system.normalize to convert RequireJS module IDs to SystemJS module
 // IDs. This is mainly necessary because the plugin format is reversed in
 // SystemJS (suffix rather than prefix).
@@ -8,9 +10,9 @@
 
 // For older browsers
 var reduce = function (array, fn, accumulator) {
-    for (var i = array.length - 1; i >= 0; i--) {
+    for (var i = 0; i <= array.length - 1; i++) {
         accumulator = fn(accumulator, array[i]);
-    };
+    }
     return accumulator;
 };
 
@@ -31,12 +33,15 @@ var reduce = function (array, fn, accumulator) {
                 // the package.json’s main property.
                 if (name === 'socketio') {
                     return 'socketio/socket.io';
+                // Unlike SystemJS, curl does not support globals out of the box
+                } else if (name === 'js!zxcvbn') {
+                    return 'zxcvbn';
                 } else {
                     return name;
                 }
             },
             function reversePluginFormat(name) {
-                var destructuredName = /(.+)!(.+)/.exec(name);
+                var destructuredName = /(.+?)!(.+)/.exec(name);
 
                 if (destructuredName) {
                     var pluginName = destructuredName[1];
@@ -45,16 +50,6 @@ var reduce = function (array, fn, accumulator) {
                     var reversedName = moduleId + '!' + newPluginName;
 
                     return newPluginName ? reversedName : name;
-                } else {
-                    return name;
-                }
-            },
-            function interactives(name) {
-                // Transforms something like:     http://interactive.guim.co.uk/2015/04/climate-letters/assets-1430142775693/js/main.js
-                // into a legal module name: http/interactive.guim.co.uk/2015/04/climate-letters/assets-1430142775693/js/main.js
-                var regExp = /(^http[s]?):\/\/(.*)/.exec(name);
-                if (regExp) {
-                    return regExp[1] + '/' + regExp[2];
                 } else {
                     return name;
                 }

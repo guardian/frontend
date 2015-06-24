@@ -11,13 +11,6 @@ define([
     mediator,
     ab
 ) {
-
-    function isMtRec1Test() {
-        var MtRec1Test = ab.getParticipations().MtRec1;
-
-        return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A';
-    }
-
     /**
      * @todo: check if browser natively supports "position: sticky"
      */
@@ -38,7 +31,7 @@ define([
     Sticky.prototype.updatePosition = function () {
         var fixedTop, css, stickyHeaderHeight;
 
-        stickyHeaderHeight = isMtRec1Test() ? $('.navigation').dim().height : 0;
+        stickyHeaderHeight = ab.shouldRunTest('Viewability', 'variant') ? $('.navigation').dim().height : 0;
 
         // have we scrolled past the element
         if (window.scrollY >= this.$parent.offset().top - this.opts.top - stickyHeaderHeight) {

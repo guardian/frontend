@@ -25,12 +25,14 @@ define([
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
+    'common/modules/commercial/comment-adverts',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
     'common/modules/experiments/ab',
     'common/modules/identity/api',
     'common/modules/identity/autosignin',
     'common/modules/navigation/navigation',
+    'common/modules/navigation/sticky',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -83,12 +85,14 @@ define([
     logCss,
     simpleMetrics,
     userAdTargeting,
+    commentAdverts,
     CommentCount,
     DiscussionLoader,
     ab,
     id,
     AutoSignin,
     navigation,
+    sticky,
     Profile,
     Search,
     history,
@@ -160,6 +164,12 @@ define([
 
             initialiseNavigation: function () {
                 navigation.init();
+            },
+
+            initialiseStickyHeader: function () {
+                if (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') {
+                    sticky.init();
+                }
             },
 
             transcludeRelated: function () {
@@ -377,6 +387,10 @@ define([
                 }
             },
 
+            commentsAds: function () {
+                commentAdverts.init();
+            },
+
             showMoreTagsLink: function () {
                 new MoreTags().init();
             },
@@ -447,7 +461,7 @@ define([
             },
 
             loadBreakingNews: function () {
-                if (config.switches.breakingNews) {
+                if (config.switches.breakingNews && config.page.section !== 'identity') {
                     breakingNews();
                 }
             },
@@ -475,16 +489,6 @@ define([
                 window.guardian.api = {
                     logCss: logCss
                 };
-            },
-
-            runCustomAbTests: function () {
-                if (ab.shouldRunTest('MtRec1', 'A')) {
-                    ab.getTest('MtRec1').fireRecTest();
-                }
-
-                if (ab.shouldRunTest('MtRec2', 'A')) {
-                    ab.getTest('MtRec2').fireRecTest();
-                }
             },
 
             internationalSignposting: function () {
@@ -519,6 +523,7 @@ define([
             robust('c-tabs',            modules.showTabs);
             robust('c-top-nav',         modules.initialiseTopNavItems);
             robust('c-init-nav',        modules.initialiseNavigation);
+            robust('c-sticky-header',   modules.initialiseStickyHeader);
             robust('c-toggles',         modules.showToggles);
             robust('c-dates',           modules.showRelativeDates);
             robust('c-clickstream',     modules.initClickstream);
@@ -529,6 +534,7 @@ define([
             robust('c-forsee',          modules.runForseeSurvey);
             robust('c-start-register',  modules.startRegister);
             robust('c-comments',        modules.repositionComments);
+            robust('c-comments-ads',    modules.commentsAds);
             robust('c-tag-links',       modules.showMoreTagsLink);
             robust('c-smart-banner',    modules.showSmartBanner);
             robust('c-adblock',         modules.showAdblockMessage);
@@ -544,7 +550,6 @@ define([
             robust('c-simple-metrics',  modules.initSimpleMetrics);
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
-            robust('c-run-custom-ab',   modules.runCustomAbTests);
             robust('c-accessibility-prefs',       modules.initAccessibilityPrefs);
             robust('c-international-signposting', modules.internationalSignposting);
             if (window.console && window.console.log && !config.page.isDev) {

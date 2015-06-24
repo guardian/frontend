@@ -34,5 +34,9 @@
                 @fragments.social(content)
             </div>
         }
+    } else {
+        @if(ABSaveForLaterSwitch.isSwitchedOn) {
+            <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
+        }
     }
 </div>
