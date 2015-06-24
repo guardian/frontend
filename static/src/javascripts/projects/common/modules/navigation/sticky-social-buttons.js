@@ -11,19 +11,20 @@ define([
 ) {
 
     var selectorTopEl = '.social--top',
+        selectorBottomEl = '.social--bottom',
         selectorNavSwapOutEl = '.l-header-pre',
 
         deadzone = 50,
 
         topEl = _.memoize(function () { return $(selectorTopEl)[0]; }),
-        topElParent = _.memoize(function () { return $(topEl()).parent()[0]; }),
+        bottomEl = _.memoize(function () { return $(selectorBottomEl)[0]; }),
         navSwapOutEl = _.memoize(function () { return $(selectorNavSwapOutEl)[0]; }),
 
         isStuck = false;
 
     function setStickiness() {
         fastdom.read(function () {
-            var topPos = topElParent().getBoundingClientRect().top;
+            var topPos = topEl().getBoundingClientRect().top;
 
             if (!isStuck && topPos + deadzone * 2 < 0) {
                 isStuck = stick();
@@ -35,7 +36,7 @@ define([
 
     function stick() {
         fastdom.write(function () {
-            $(topEl()).addClass('social--stickynav');
+            $(bottomEl()).addClass('social--stickynav');
             $(navSwapOutEl()).css('visibility', 'hidden');
         });
         return true;
@@ -43,7 +44,7 @@ define([
 
     function unStick() {
         fastdom.write(function () {
-            $(topEl()).removeClass('social--stickynav');
+            $(bottomEl()).removeClass('social--stickynav');
             $(navSwapOutEl()).css('visibility', 'visible');
         });
         return false;

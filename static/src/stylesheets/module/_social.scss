@@ -319,6 +319,13 @@ category: Common
 .social--stickynav {
     position: fixed;
     top: 0;
+    margin: 7px 0 0 -7px;
     z-index: 1000;
     padding-right: 145px; // logo width
+    opacity: 1;
+    transition: opacity .25s ease-in-out;
+}
+
+.social--stickynav-hidden {
+    opacity: 0;
 }
