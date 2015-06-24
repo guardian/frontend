@@ -16,10 +16,13 @@ trait Articles {
   implicit class RichSavedArticles(savedArticles: SavedArticles) {
     val fmt = ISODateTimeFormat.dateTimeNoMillis()
     private val itemsPerPage = 4
+    val shortUrlPrefix: String = "http://gu.com"
+    val guardianDomainPrefix = "http://www.theguardian.com/"
 
     val pages = savedArticles.articles.grouped(itemsPerPage).toList
 
     val numPages = pages.length
+
 
     val totalSaved = savedArticles.articles.length
     def newestFirst = savedArticles.articles.reverse
@@ -45,6 +48,25 @@ trait Articles {
       }
 
       SavedArticles(savedArticles.version, articles)
+    }
+
+    def sanitizeArticleData : SavedArticles = {
+
+      val sanitizedArticles = savedArticles.articles map {
+        article =>
+          val shortUrl = article.shortUrl match {
+            case shortUrl if shortUrl.startsWith(shortUrlPrefix) => shortUrl.substring(shortUrlPrefix.length)
+            case shortUrl => shortUrl
+          }
+          val id = article.id match {
+            case id if id.startsWith(guardianDomainPrefix) => id
+              .substring(guardianDomainPrefix.length)
+            case id => id
+          }
+          SavedArticle(id, shortUrl, article.date, article.read, article.platform)
+      }
+      SavedArticles(savedArticles.version, sanitizedArticles)
+
     }
 
     //Deal with just having removed the only item on the last page
