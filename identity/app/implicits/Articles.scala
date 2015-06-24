@@ -58,14 +58,12 @@ trait Articles {
             case shortUrl => shortUrl
           }
           val id = article.id match {
-            case id if id.startsWith(guardianDomainPrefix) => id
-              .substring(guardianDomainPrefix.length)
+            case id if id.startsWith(guardianDomainPrefix) => id.substring(guardianDomainPrefix.length)
             case id => id
           }
           SavedArticle(id, shortUrl, article.date, article.read, article.platform)
       }
       SavedArticles(savedArticles.version, sanitizedArticles)
-
     }
 
     //Deal with just having removed the only item on the last page
