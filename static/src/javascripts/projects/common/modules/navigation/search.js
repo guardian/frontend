@@ -63,12 +63,14 @@ define([
         // Check if google returned results as there is no callback from google API v2 for this
         this.checkResults = function () {
             if ($('.gsc-resultsbox-visible').length > 0) {
+                var $search = $('.js-popup--search');
+
                 fastdom.read(function () {
-                    var height = window.innerHeight - $('.popup--search').offset().top;
+                    var height = window.innerHeight - $search.offset().top;
 
                     fastdom.write(function () {
-                        $('.popup--search').css('height', height);
-                        $('.gsc-results').css({
+                        $search.css('height', height);
+                        $('.gsc-results', $search).css({
                             height: height - 150,
                             'overflow-y': 'auto'
                         });
