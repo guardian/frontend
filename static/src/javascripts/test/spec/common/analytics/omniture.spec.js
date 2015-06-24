@@ -34,13 +34,7 @@ describe('omniture', function () {
                 s = {
                 t: function () {},
                 tl: function () {},
-                apl: function (x, y, z) {
-                    return [x, y]
-                        .filter(function (x) {
-                            return x;
-                        })
-                        .join(z);
-                },
+                apl: function () {},
                 Util: { getQueryParam: function () { return 'test'; } },
                 getValOnce: function () { return 'test'; },
                 getTimeParting: function () { return ['4:03PM', '4:00PM', 'Thursday', 'Weekday']; },
