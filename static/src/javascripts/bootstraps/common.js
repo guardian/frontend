@@ -33,6 +33,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/navigation/navigation',
     'common/modules/navigation/sticky',
+    'common/modules/navigation/sticky-social-buttons',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -93,6 +94,7 @@ define([
     AutoSignin,
     navigation,
     sticky,
+    stickySocialButtons,
     Profile,
     Search,
     history,
@@ -169,6 +171,11 @@ define([
             initialiseStickyHeader: function () {
                 if (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') {
                     sticky.init();
+
+                    if (ab.shouldRunTest('ViewabilitySocial', 'variant') &&
+                        ['Network Front', 'Section', 'Tag'].indexOf(config.page.contentType) === -1) {
+                        stickySocialButtons();
+                    }
                 }
             },
 

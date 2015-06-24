@@ -13,7 +13,7 @@ define([
     var selectorTopEl = '.social--top',
         selectorNavSwapOutEl = '.l-header-pre',
 
-        deadzone = 200,
+        deadzone = 50,
 
         topEl = _.memoize(function () { return $(selectorTopEl)[0]; }),
         topElParent = _.memoize(function () { return $(topEl()).parent()[0]; }),
@@ -25,9 +25,9 @@ define([
         fastdom.read(function () {
             var topPos = topElParent().getBoundingClientRect().top;
 
-            if (!isStuck && topPos + deadzone + 50 < 0) {
+            if (!isStuck && topPos + deadzone < 0) {
                 isStuck = stick();
-            } else if (isStuck && topPos + deadzone > 0) {
+            } else if (isStuck && topPos > 0) {
                 isStuck = unStick();
             }
         });
