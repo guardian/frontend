@@ -67,6 +67,7 @@ export default {
         'show-tags=all',
         'show-fields=' + [
             'internalContentCode',
+            'internalPageCode',
             'isLive',
             'firstPublicationDate',
             'scheduledPublicationDate',

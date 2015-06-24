@@ -235,11 +235,7 @@ define([
         );
     };
 
-    /*eslint-disable dot-notation*/
-    // jscs:disable requireDotNotation
-    SaveForLater.prototype['delete'] = function (pageId, shortUrl, onDelete) {
-        /*eslint-enable dot-notation*/
-        // jscs:enable requireDotNotation
+    SaveForLater.prototype.delete = function (pageId, shortUrl, onDelete) {
         this.userData.articles = _.filter(this.userData.articles, function (article) {
             return article.shortUrl !== shortUrl;
         });
@@ -265,11 +261,7 @@ define([
     };
 
     SaveForLater.prototype.deleteArticle = function (pageId, shortUrl) {
-        /*eslint-disable dot-notation*/
-        // jscs:disable requireDotNotation
-        this['delete'](pageId, shortUrl, this.onDeleteArticle);
-        /*eslint-enable dot-notation*/
-        // jscs:enable requireDotNotation
+        this.delete(pageId, shortUrl, this.onDeleteArticle);
     };
 
     SaveForLater.prototype.onDeleteArticle = function (success) {
@@ -345,11 +337,7 @@ define([
 
     SaveForLater.prototype.createDeleteFaciaItemHandler = function (link, id, shortUrl) {
         bean.one(link, 'click',
-            /*eslint-disable dot-notation*/
-            // jscs:disable requireDotNotation
-            this['delete'].bind(this,
-                /*eslint-enable dot-notation*/
-                // jscs:enable requireDotNotation
+            this.delete.bind(this,
                 id,
                 shortUrl,
                 this.onDeleteFaciaItem.bind(this, link, id, shortUrl)
