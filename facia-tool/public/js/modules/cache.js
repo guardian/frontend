@@ -41,6 +41,7 @@ function get(pot, key) {
     if (!obj) { return; }
 
     if (+new overrides.Date() - obj.time > expiry) {
+        p[key] = null;
         return;
     }
 
