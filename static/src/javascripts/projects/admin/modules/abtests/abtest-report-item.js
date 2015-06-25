@@ -84,7 +84,7 @@ define([
         var ophanUrl = 'https://dashboard.ophan.co.uk/graph/breakdown?ab=' + this.config.test.id;
         this.getElem('ophan').innerHTML = '<a href="' + ophanUrl + '"">graph</a>';
 
-        if (window.abConfigSwitches['abShowHypothesesDashboard']) {
+        if (window.abConfigSwitches.abShowHypothesesDashboard) {
             var hypothesis;
             var criteria = this.config.test.audienceCriteria ? true : false;
             var description = this.config.test.description ? true : false;
@@ -92,14 +92,14 @@ define([
             var success = this.config.test.successMeasure ? true : false;
             var outcome = this.config.test.idealOutcome ? true : false;
             if (criteria && description && reason && success && outcome) {
-                hypothesis = "We believe that " + this.config.test.audienceCriteria;
-                hypothesis += " has a need for " + this.config.test.description;
-                hypothesis += " because " + this.config.test.reason;
-                hypothesis += ". We will know this when " + this.config.test.successMeasure;
-                hypothesis += " has " + this.config.test.idealOutcome;
-                hypothesis += ".";
+                hypothesis = 'We believe that ' + this.config.test.audienceCriteria;
+                hypothesis += ' has a need for ' + this.config.test.description;
+                hypothesis += ' because ' + this.config.test.reason;
+                hypothesis += '. We will know this when ' + this.config.test.successMeasure;
+                hypothesis += ' has ' + this.config.test.idealOutcome;
+                hypothesis += '.';
             } else {
-                hypothesis = "Hypothesis incomplete: Test definition lacks sufficient criteria";
+                hypothesis = 'Hypothesis incomplete: Test definition lacks sufficient criteria';
             }
             this.getElem('hypothesis').textContent = hypothesis;
         }
