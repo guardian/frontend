@@ -46,7 +46,14 @@ module.exports = function (grunt) {
     }
 
     // Default task
-    grunt.registerTask('default', ['install', 'clean', 'validate', 'compile', 'test', 'analyse']);
+    grunt.registerTask('default', function () {
+        if (options.isDev) {
+            megalog.info('Running a full compile first.', {heading:'Preparing for dev'})
+            grunt.task.run(['compile', 'browserSync:dev', 'shell:watchSass']);
+        } else {
+            grunt.task.run(['install', 'clean', 'validate', 'compile', 'test', 'analyse']);
+        }
+    });
 
     /**
      * Validate tasks
@@ -74,9 +81,11 @@ module.exports = function (grunt) {
 
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
+        } else {
+            grunt.task.run(['shell:updateCanIUse'])
         }
 
-        grunt.task.run(['px_to_rem', 'shell:updateCanIUse', 'autoprefixer']);
+        grunt.task.run(['px_to_rem', 'autoprefixer']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
