@@ -18,16 +18,15 @@ class PlaySavedArticlesService @Inject()(api: IdApiClient) extends SafeLogging w
 
   val fmt = ISODateTimeFormat.dateTimeNoMillis()
 
-  def getOrCreateArticlesList(auth: Auth): Future[Response[SavedArticles]] = {
+  def getOrCreateArticlesList(auth: Auth): Future[SavedArticles] = {
     val savedArticlesResponse = api.savedArticles(auth)
     savedArticlesResponse.flatMap {
-      case Right(response) => Future { Right(sanitizeArticleData(response)) }
+      case Right(response) => Future { sanitizeArticleData(response) }
       case Left(errors) =>
         errors match {
           case List(Error("Not found", "Resource not found", _, _)) =>
             val timestamp = fmt.print(new DateTime())
-            Future { Right(new SavedArticles(timestamp, List.empty)) }
-          case _ => savedArticlesResponse
+            Future{ new SavedArticles(timestamp, List.empty) }
         }
     }
   }
