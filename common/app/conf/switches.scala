@@ -563,6 +563,16 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ExposeHasTopBelowNavAdSlotFlagSwitch = Switch(
+    "Commercial",
+    "expose-has-top-below-nav-ad-slot-flag",
+    "If switched on, flag for top below nav will be exposed.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 15),
+    exposeClientSide = true
+  )
+
+
   // Monitoring
 
   val OphanSwitch = Switch(
