@@ -28,7 +28,8 @@ define([
             direction: 'down',
             showNavigation: false,
             thresholdMobile: 400,
-            firstLoadDepth: 500
+            firstLoadDepth: 500,
+            isNavigationLocked: false
         };
         this.breakpoint = detect.getBreakpoint();
         this.isMobile = _.contains(this.breakpoint, 'mobile');
@@ -69,13 +70,18 @@ define([
 
         // Make sure sticky header has sticky nav
         mediator.on('modules:nav:open', function () {
+            this.config.isNavigationLocked = true;
             this.showStickyNavigation();
+        }.bind(this));
+
+        mediator.on('modules:nav:close', function () {
+            this.config.isNavigationLocked = false;
         }.bind(this));
     };
 
     StickyHeader.prototype.showStickyNavigation = function () {
         fastdom.read(function () {
-            var height = window.innerHeight - $('.js-global-navigation').offset().top;
+            var height = window.innerHeight - $('.js-mega-nav-placeholder')[0].getBoundingClientRect().top;
 
             fastdom.write(function () {
                 $('.js-global-navigation')
@@ -176,7 +182,11 @@ define([
                         'transform': 'translateY(0%)'
                     });
                 }.bind(this));
-                this.showNavigation(scrollY, breakpoint);
+
+                // If meganav is open we don't want to touch the navigation state
+                if (!this.config.isNavigationLocked) {
+                    this.showNavigation(scrollY, breakpoint);
+                }
             } else if (scrollY >= this.headerBigHeight) {
                 fastdom.write(function () {
                     // Add is not sticky anymore
