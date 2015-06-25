@@ -1,0 +1,16 @@
+{
+    "env": {
+        "node": false,
+        "browser": true,
+        "amd": true
+    },
+    "rules": {
+        "camelcase": 0,
+        // We should reset these to errors, but will require lots of changes
+        "no-shadow": 0,
+        "strict": 0,
+        // These are reset back to errors for ES6
+        "no-use-before-define": 0,
+        "no-alert": 0
+    }
+}

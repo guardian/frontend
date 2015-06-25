@@ -1,4 +1,4 @@
-define(function(){
+define(function () {
     return JSON.stringify({
         html: '<ul>'
             + '<li class="trail"><h2><a href="/link/one" data-link-name="1">Link one</a></h2></li>'

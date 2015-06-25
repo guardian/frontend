@@ -138,7 +138,7 @@ define([
                 url: Id.idApiRoot + endpoint,
                 type: 'jsonp',
                 data: {
-                    refreshCookie:true
+                    refreshCookie: true
                 }
             });
 

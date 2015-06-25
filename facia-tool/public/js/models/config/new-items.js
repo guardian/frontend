@@ -1,36 +1,26 @@
-define([
-    'jquery',
-    'modules/vars',
-    'utils/url-abs-path',
-    'utils/find-first-by-id'
-], function(
-    $,
-    vars,
-    urlAbsPath,
-    findFirstById
-) {
-    urlAbsPath = urlAbsPath.default;
-    findFirstById = findFirstById.default;
+import Promise from 'Promise';
+import * as vars from 'modules/vars';
+import urlAbsPath from 'utils/url-abs-path';
+import findFirstById from 'utils/find-first-by-id';
 
-    return {
-        newItemsConstructor: function(id) {
-            return [findFirstById(vars.model.collections, urlAbsPath(id))];
-        },
+function newItemsConstructor (id) {
+    return [findFirstById(vars.model.collections, urlAbsPath(id))];
+}
 
-        newItemsValidator: function(newItems) {
-            var defer = $.Deferred();
+function newItemsValidator (newItems) {
+    return Promise[newItems[0] ? 'resolve' : 'reject']();
+}
 
-            defer[newItems[0]? 'resolve' : 'reject']();
+function newItemsPersister (newItems, sourceContext, sourceGroup, targetContext, targetGroup) {
+    if (newItems[0].parents.indexOf(targetGroup.parent) < 0) {
+        newItems[0].parents.push(targetGroup.parent);
+    }
 
-            return defer.promise();
-        },
+    targetGroup.parent.saveProps();
+}
 
-        newItemsPersister: function(newItems, sourceContext, sourceGroup, targetContext, targetGroup) {
-            if (newItems[0].parents.indexOf(targetGroup.parent) < 0) {
-                newItems[0].parents.push(targetGroup.parent);
-            }
-
-            targetGroup.parent.saveProps();
-        }
-    };
-});
+export {
+    newItemsConstructor,
+    newItemsValidator,
+    newItemsPersister
+};

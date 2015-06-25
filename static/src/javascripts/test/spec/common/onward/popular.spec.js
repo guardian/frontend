@@ -1,4 +1,5 @@
 import fixtures from 'helpers/fixtures';
+import sinon from 'sinonjs';
 import Injector from 'helpers/injector';
 
 describe('Most popular', function () {
@@ -16,7 +17,9 @@ describe('Most popular', function () {
     beforeEach(function (done) {
         injector.mock({
             'common/modules/commercial/create-ad-slot': {
+                /*jscs:disable disallowDanglingUnderscores*/
                 __useDefault: true,
+                /*jscs:enable disallowDanglingUnderscores*/
                 default: function () {
                     return '<div class="ad-slot"></div>';
                 }
@@ -41,7 +44,7 @@ describe('Most popular', function () {
             server.autoRespondAfter = 20;
             $fixturesContainer = fixtures.render(fixturesConfig);
             done();
-        });        
+        });
     });
 
     afterEach(function () {
@@ -50,7 +53,7 @@ describe('Most popular', function () {
     });
 
     // json test needs to be run asynchronously
-    it("should request the most popular feed and graft it on to the dom", function (done) {
+    it('should request the most popular feed and graft it on to the dom', function (done) {
         var section = 'football';
 
         server.respondWith('/most-read/' + section + '.json', [200, {}, '{ "html": "' + html + '" }']);
@@ -63,7 +66,7 @@ describe('Most popular', function () {
         new Popular().init();
     });
 
-    it("should only request global most popular for blacklisted sections", function (done) {
+    it('should only request global most popular for blacklisted sections', function (done) {
         config.page.section = 'info';
 
         server.respondWith('/most-read.json', [200, {}, '{ "html": "' + html + '" }']);

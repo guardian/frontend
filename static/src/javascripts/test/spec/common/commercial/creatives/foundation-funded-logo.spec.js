@@ -1,8 +1,8 @@
-import FoundationFundedLogo from 'common/modules/commercial/creatives/foundation-funded-logo'
+import FoundationFundedLogo from 'common/modules/commercial/creatives/foundation-funded-logo';
 
-describe('Foundation Funded Logo', function() {
+describe('Foundation Funded Logo', function () {
 
-    it('should exist', function() {
+    it('should exist', function () {
         expect(FoundationFundedLogo).toBeDefined();
     });
 

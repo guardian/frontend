@@ -71,14 +71,14 @@ define([
         opts.targetGroup.items.splice(insertAt, 0, newItems[0]);
 
         opts.newItemsValidator(newItems, opts.targetContext)
-        .fail(function(err) {
-            _.each(newItems, function(item) { opts.targetGroup.items.remove(item); });
-            alertBadContent(err);
-        })
-        .done(function() {
+        .then(function() {
             if (opts.targetGroup.parent) {
                 opts.newItemsPersister(newItems, opts.sourceContext, opts.sourceGroup, opts.targetContext, opts.targetGroup, position, opts.isAfter);
             }
+        })
+        .catch(function(err) {
+            _.each(newItems, function(item) { opts.targetGroup.items.remove(item); });
+            alertBadContent(err.message);
         });
     }
 

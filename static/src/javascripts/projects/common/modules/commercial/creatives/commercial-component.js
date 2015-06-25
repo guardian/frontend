@@ -99,7 +99,9 @@ define([
                 return html ? html.replace(/%OASToken%/g, this.params.clickMacro).replace(/%OmnitureToken%/g, '') : html;
             }.bind(this),
             success: function () {
-                this.postLoadEvents[this.type] && this.postLoadEvents[this.type](this.$adSlot);
+                if (this.postLoadEvents[this.type]) {
+                    this.postLoadEvents[this.type](this.$adSlot);
+                }
 
                 mediator.emit('modules:commercial:creatives:commercial-component:loaded');
             }.bind(this),

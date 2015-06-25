@@ -14,7 +14,12 @@ import layout.{SeriesDescriptionMetaHeader, MetaDataHeader, CollectionEssentials
 import slices.{Fixed, FixedContainers}
 import LiveContentApi.getResponse
 
-case class Series(id: String, tag: Tag, trails: Seq[Content])
+case class Series(id: String, tag: Tag, trails: Seq[Content]) {
+  lazy val displayName = tag.id match {
+    case "commentisfree/commentisfree" => "opinion"
+    case _ => tag.webTitle
+ }
+}
 
 object SeriesController extends Controller with Logging with Paging with ExecutionContexts with Requests {
   def renderSeriesStories(seriesId: String) = Action.async { implicit request =>
@@ -49,7 +54,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
   private def renderSeriesTrails(series: Series)(implicit request: RequestHeader) = {
     val dataId = "series"
     val componentId = Some("series")
-    val displayName = Some(series.tag.webTitle)
+    val displayName = Some(series.displayName)
     val properties = FrontProperties(series.tag.description, None, None, None, false, None)
     val header = Option(SeriesDescriptionMetaHeader(series.tag.description))
 

@@ -1,7 +1,7 @@
-import qwery from 'qwery'
-import $ from 'common/utils/$'
-import fixtures from 'helpers/fixtures'
-import Fluid250 from 'common/modules/commercial/creatives/fluid250'
+import qwery from 'qwery';
+import $ from 'common/utils/$';
+import fixtures from 'helpers/fixtures';
+import Fluid250 from 'common/modules/commercial/creatives/fluid250';
 
 var fixturesConfig = {
     id: 'ad-slot',
@@ -10,23 +10,23 @@ var fixturesConfig = {
     ]
 };
 
-describe('Fluid 250', function() {
+describe('Fluid 250', function () {
 
     var fluid250,
         $fixturesContainer;
 
-    it('should exist', function() {
+    it('should exist', function () {
         expect(Fluid250).toBeDefined();
     });
 
-    it('should be defined', function() {
+    it('should be defined', function () {
         $fixturesContainer = fixtures.render(fixturesConfig);
 
         fluid250 = new Fluid250($('.ad-slot', $fixturesContainer), {});
         expect(fluid250).toBeDefined();
     });
 
-    it('ad slot should have a video iframe with proper styles', function() {
+    it('ad slot should have a video iframe with proper styles', function () {
         $fixturesContainer = fixtures.render(fixturesConfig);
 
         new Fluid250($('.ad-slot', $fixturesContainer), {

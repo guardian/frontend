@@ -1,5 +1,6 @@
 import fastdom from 'fastdom';
 import qwery from 'qwery';
+import sinon from 'sinonjs';
 import Promise from 'Promise';
 import $ from 'common/utils/$';
 import fixtures from 'helpers/fixtures';
@@ -28,51 +29,51 @@ describe('Article Body Adverts', function () {
             'common/modules/article/spacefinder',
             'common/modules/experiments/ab'], function () {
 
-            articleBodyAdverts = arguments[0];
-            config = arguments[1];
-            detect = arguments[2];
-            spacefinder = arguments[3];
-            ab = arguments[4];
+                articleBodyAdverts = arguments[0];
+                config = arguments[1];
+                detect = arguments[2];
+                spacefinder = arguments[3];
+                ab = arguments[4];
 
-            getParticipationsStub = sinon.stub();
-            getParticipationsStub.returns({
-                'MtRec2': {
-                    'variant': 'A'
-                }
+                getParticipationsStub = sinon.stub();
+                getParticipationsStub.returns({
+                    'Viewability': {
+                        'variant': 'variant'
+                    }
+                });
+                ab.getParticipations = getParticipationsStub;
+
+                testCanBeRunStub = sinon.stub();
+                testCanBeRunStub.returns(true);
+                ab.shouldRunTest = testCanBeRunStub;
+
+                $fixturesContainer = fixtures.render(fixturesConfig);
+                $style = $.create('<style type="text/css"></style>')
+                    .html('body:after{ content: "desktop"}')
+                    .appendTo('head');
+
+                config.page = {
+                    contentType: 'Article',
+                    isLiveBlog: false,
+                    hasInlineMerchandise: false
+                };
+                config.switches = {
+                    standardAdverts: true
+                };
+                detect.getBreakpoint = function () {
+                    return 'desktop';
+                };
+
+                getParaWithSpaceStub = sinon.stub();
+                var paras = qwery('p', $fixturesContainer);
+                getParaWithSpaceStub.onCall(0).returns(Promise.resolve(paras[0]));
+                getParaWithSpaceStub.onCall(1).returns(Promise.resolve(paras[1]));
+                getParaWithSpaceStub.onCall(2).returns(Promise.resolve(paras[2]));
+                getParaWithSpaceStub.onCall(3).returns(Promise.resolve(undefined));
+                spacefinder.getParaWithSpace = getParaWithSpaceStub;
+
+                done();
             });
-            ab.getParticipations = getParticipationsStub;
-
-            testCanBeRunStub = sinon.stub();
-            testCanBeRunStub.returns(true);
-            ab.testCanBeRun = testCanBeRunStub;
-
-            $fixturesContainer = fixtures.render(fixturesConfig);
-            $style = $.create('<style type="text/css"></style>')
-                .html('body:after{ content: "desktop"}')
-                .appendTo('head');
-
-            config.page = {
-                contentType: 'Article',
-                isLiveBlog: false,
-                hasInlineMerchandise: false
-            };
-            config.switches = {
-                standardAdverts: true
-            };
-            detect.getBreakpoint = function () {
-                return 'desktop';
-            };
-
-            getParaWithSpaceStub = sinon.stub();
-            var paras = qwery('p', $fixturesContainer);
-            getParaWithSpaceStub.onCall(0).returns(Promise.resolve(paras[0]));
-            getParaWithSpaceStub.onCall(1).returns(Promise.resolve(paras[1]));
-            getParaWithSpaceStub.onCall(2).returns(Promise.resolve(paras[2]));
-            getParaWithSpaceStub.onCall(3).returns(Promise.resolve(undefined));
-            spacefinder.getParaWithSpace = getParaWithSpaceStub;
-
-            done();
-        });
     });
 
     afterEach(function () {
@@ -91,60 +92,60 @@ describe('Article Body Adverts', function () {
         };
 
         articleBodyAdverts.init()
-        .then(function () {
-            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                minAbove: 700,
-                minBelow: 300,
-                selectors: {
-                    ' > h2': {minAbove: 0, minBelow: 250},
-                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                    ' .ad-slot': {minAbove: 500, minBelow: 500}
-                }
+            .then(function () {
+                expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                    minAbove: 700,
+                    minBelow: 300,
+                    selectors: {
+                        ' > h2': {minAbove: 0, minBelow: 250},
+                        ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                        ' .ad-slot': {minAbove: 500, minBelow: 500}
+                    }
+                });
+                done();
             });
-            done();
-        });
     });
 
     it('should call "getParaWithSpace" with correct arguments multiple times - in test', function (done) {
         config.switches.commercialExtraAds = true;
 
         articleBodyAdverts.init()
-        .then(function () {
-            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                minAbove: 700,
-                minBelow: 300,
-                selectors: {
-                    ' > h2': {minAbove: 0, minBelow: 250},
-                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                    ' .ad-slot': {minAbove: 500, minBelow: 500}
-                }
+            .then(function () {
+                expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                    minAbove: 700,
+                    minBelow: 300,
+                    selectors: {
+                        ' > h2': {minAbove: 0, minBelow: 250},
+                        ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                        ' .ad-slot': {minAbove: 500, minBelow: 500}
+                    }
+                });
+                done();
+            })
+            .then(function () {
+                expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                    minAbove: 700,
+                    minBelow: 300,
+                    selectors: {
+                        ' > h2': {minAbove: 0, minBelow: 250},
+                        ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                        ' .ad-slot': {minAbove: 500, minBelow: 500}
+                    }
+                });
+                done();
+            })
+            .then(function () {
+                expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                    minAbove: 700,
+                    minBelow: 300,
+                    selectors: {
+                        ' > h2': {minAbove: 0, minBelow: 250},
+                        ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
+                        ' .ad-slot': {minAbove: 1300, minBelow: 1300}
+                    }
+                });
+                done();
             });
-            done();
-        })
-        .then(function () {
-            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                minAbove: 700,
-                minBelow: 300,
-                selectors: {
-                    ' > h2': {minAbove: 0, minBelow: 250},
-                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                    ' .ad-slot': {minAbove: 500, minBelow: 500}
-                }
-            });
-            done();
-        })
-        .then(function () {
-            expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                minAbove: 700,
-                minBelow: 300,
-                selectors: {
-                    ' > h2': {minAbove: 0, minBelow: 250},
-                    ' > *:not(p):not(h2)': {minAbove: 35, minBelow: 400},
-                    ' .ad-slot': {minAbove: 1300, minBelow: 1300}
-                }
-            });
-            done();
-        });
     });
 
     it('should not not display ad slot if standard-adverts switch is off', function () {

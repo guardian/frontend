@@ -1,7 +1,32 @@
 module.exports = function(grunt, options) {
     return {
         options: {
-            config: 'resources/jscs_conf.json'
+            config: '.jscsrc'
+        },
+        es6: {
+            options: {
+                esnext: true,
+                esprima: 'esprima-fb'
+            },
+            files: [{
+                expand: true,
+                cwd: 'static/src/javascripts/es6',
+                src: [
+                    '**/*.js'
+                ]
+            }]
+        },
+        test: {
+            options: {
+                esnext: true
+            },
+            files: [{
+                expand: true,
+                cwd: 'static/src/javascripts/test',
+                src: [
+                    '**/*.js'
+                ]
+            }]
         },
         common: {
             files: [{

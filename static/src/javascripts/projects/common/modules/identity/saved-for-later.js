@@ -10,8 +10,6 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'common/views/svgs',
-
-    'text!common/views/identity/saved-for-later-profile-link.html',
     'text!common/views/save-for-later/delete-all-button.html'
 ], function (
     $,
@@ -25,7 +23,6 @@ define([
     template,
     identity,
     svgs,
-    profileLinkTmp,
     deleteButtonAllTmp
 ) {
     function SavedForLater() {
@@ -50,10 +47,14 @@ define([
                 fastdom.write(function () {
                     $button.html(template(deleteButtonAllTmp, {
                         icon: svgs('crossIcon'),
-                        state: state
+                        state: state,
+                        dataLinkName: 'saved | remove all' + (state === 'confirm' ? ' | confirm' : '')
                     }));
                 });
             });
+            if (state === 'confirm') {
+                setTimeout(this.init.bind(this), 2000);
+            }
         };
     }
 

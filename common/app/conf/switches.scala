@@ -960,8 +960,17 @@ object Switches {
     "ipad-no-thrashers",
     "This switch will disable Thrashers on ipads",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 20),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
+  )
+
+  val SplitOlderIPadsSwitch = Switch(
+    "Feature",
+    "ipad-split-capabilities",
+    "If switched on then this gives older ipads the stripped down front but full articles",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = false
   )
 
   // A/B Tests
@@ -984,21 +993,12 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABMtRec1 = Switch(
+  val ABViewability = Switch(
     "A/B Tests",
-    "ab-mt-rec1",
-    "Viewability results - Recommendation option 1",
+    "ab-viewability",
+    "Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
-    exposeClientSide = true
-  )
-
-  val ABMtRec2 = Switch(
-    "A/B Tests",
-    "ab-mt-rec2",
-    "Viewability results - Recommendation option 2",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = new LocalDate(2015, 8, 1),
     exposeClientSide = true
   )
 
@@ -1036,7 +1036,7 @@ object Switches {
     "ab-membership-message",
     "Switch for the Membership message A/B test.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 19),
+    sellByDate = new LocalDate(2015, 6, 26),
     exposeClientSide = true
   )
 
@@ -1101,6 +1101,15 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
+  )
+
+  val DiscussionProxySwitch = Switch(
+    "Feature",
+    "discussion-proxy",
+    "in discussion/api.js it will use a proxy to post comments so http 1.0 users can still comment",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
   )
 
   // Facia
@@ -1192,7 +1201,7 @@ object Switches {
     "facia-press-on-demand",
     "If this is switched on, you can force facia to press on demand (Leave off)",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = never,
     exposeClientSide = false
   )
 

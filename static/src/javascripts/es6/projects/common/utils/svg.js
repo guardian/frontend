@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 export function translate(load) {
     const prefix = 'inline-',
-          data = _.rest(load.metadata.pluginArgument.split('/')),
+          data = _.rest(load.metadata.loaderArgument.split('/')),
           fileName = data.pop(),
           typesClasses = _.map(data, function (imageType) {
               return prefix + imageType;

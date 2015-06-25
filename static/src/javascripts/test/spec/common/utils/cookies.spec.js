@@ -1,4 +1,5 @@
 import _ from 'common/utils/_';
+import sinon from 'sinonjs';
 import cookies from 'common/utils/cookies';
 
 describe('Cookies', function () {

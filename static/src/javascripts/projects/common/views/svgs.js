@@ -69,7 +69,7 @@ define([
             if (_.isArray(classes)) {
                 svg = svg.replace(/class="/, '$&' + classes.join(' ') + ' ');
             } else {
-                console.error('Classes for inlineSvg must be an array: ', classes);
+                window.console.error('Classes for inlineSvg must be an array: ', classes);
             }
         }
 

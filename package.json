@@ -1,9 +1,11 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "private": true,
   "devDependencies": {
     "btoa": "1.1.2",
     "esprima": "1.2.2",
+    "esprima-fb": "^15001.1.0-dev-harmony-fb",
     "glob": "4.0.6",
     "grunt": "0.4.5",
     "grunt-asset-hash": "0.1.6",
@@ -13,16 +15,15 @@
     "grunt-concurrent": "1.0.0",
     "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-copy": "0.6.0",
-    "grunt-contrib-jshint": "0.11.0",
     "grunt-contrib-requirejs": "0.4.4",
-    "grunt-contrib-uglify": "0.6.0",
+    "grunt-contrib-uglify": "0.9.1",
     "grunt-contrib-watch": "0.6.1",
     "grunt-csdevmode": "0.1.2",
     "grunt-css-metrics": "0.1.2",
-    "grunt-eslint": "^10.0.0",
+    "grunt-eslint": "^15.0.0",
     "grunt-frequency-graph": "^0.1.6",
     "grunt-hologram": "0.0.4",
-    "grunt-jscs": "0.7.1",
+    "grunt-jscs": "1.8.0",
     "grunt-karma": "0.10.1",
     "grunt-mkdir": "0.1.2",
     "grunt-pagespeed": "0.3.0",
@@ -37,7 +38,7 @@
     "jasmine-core": "^2.3.2",
     "jit-grunt": "0.9.1",
     "jsonfile": "2.0.0",
-    "jspm": "0.15.6",
+    "jspm": "0.16.0-beta.3",
     "jspm-bower-endpoint": "^0.3.2",
     "karma": "0.12.31",
     "karma-chrome-launcher": "0.1.10",
@@ -46,7 +47,7 @@
     "karma-firefox-launcher": "0.1.6",
     "karma-html2js-preprocessor": "0.1.0",
     "karma-jasmine": "0.3.5",
-    "karma-jspm": "rich-nguyen/karma-jspm.git#1.1.5",
+    "karma-jspm": "rich-nguyen/karma-jspm.git#1.1.6",
     "karma-phantomjs-launcher": "0.1.4",
     "karma-phantomjs-shim": "^1.0.0",
     "karma-requirejs": "0.2.2",
@@ -90,19 +91,20 @@
       "reqwest": "github:ded/reqwest@1.1.5",
       "sinonjs": "bower:sinonjs@1.10.2",
       "socketio": "github:Automattic/socket.io-client@1.1.0",
-      "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.9",
+      "system-script": "github:rich-nguyen/systemjs-script-plugin@0.1.10",
       "text": "github:systemjs/plugin-text@^0.0.2",
       "videojs": "github:guardian/video.js@4.11.1.1",
       "videojsads": "github:guardian/videojs-contrib-ads@0.4.1",
       "videojsembed": "github:guardian/videojs-embed@~0.3.1",
       "videojsima": "github:guardian/videojs-ima@0.1.2",
       "videojspersistvolume": "bower:videojs-persistvolume@~0.1.0",
-      "videojsplaylist": "github:tim-peterson/videojs-playlist@master"
+      "videojsplaylist": "github:tim-peterson/videojs-playlist@master",
+      "zxcvbn": "github:dropbox/zxcvbn@v1.0"
     },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.1.13",
-      "babel-runtime": "npm:babel-runtime@^5.1.13",
-      "core-js": "npm:core-js@^0.9.4"
+      "babel": "npm:babel-core@^5.6.4",
+      "babel-runtime": "npm:babel-runtime@^5.6.4",
+      "core-js": "npm:core-js@^0.9.17"
     }
   }
 }

@@ -4,9 +4,9 @@ import helpers from 'es6/projects/common/modules/crosswords/helpers';
 import thumbs from 'es6/projects/common/modules/crosswords/thumbnails';
 
 var fixture = [
-    ["", "", "", "H", ""],
-    ["", "", "", "I", ""],
-    ["R", "", "", "", ""]
+    ['', '', '', 'H', ''],
+    ['', '', '', 'I', ''],
+    ['R', '', '', '', '']
 ];
 
 function getLetters(cells) {
@@ -25,16 +25,16 @@ describe('Thumbnails', function () {
             var cells = thumbs.makeTextCells(fixture),
                 letters = getLetters(cells);
 
-            expect(_.contains(letters, "H")).toBe(true);
-            expect(_.contains(letters, "I")).toBe(true);
-            expect(_.contains(letters, "R")).toBe(true);
+            expect(_.contains(letters, 'H')).toBe(true);
+            expect(_.contains(letters, 'I')).toBe(true);
+            expect(_.contains(letters, 'R')).toBe(true);
         });
 
         it('should not create any empty text nodes', function () {
             var cells = thumbs.makeTextCells(fixture),
                 letters = getLetters(cells);
 
-            expect(_.contains(letters, "")).toBe(false);
+            expect(_.contains(letters, '')).toBe(false);
             expect(_.contains(letters, null)).toBe(false);
         });
 

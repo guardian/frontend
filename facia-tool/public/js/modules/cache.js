@@ -1,48 +1,50 @@
-define(['modules/vars'], function(vars) {
-    var cache = {},
-        expiry = vars.CONST.cacheExpiryMs || 300000; // 300000 == 5 mins
+/*eslint-disable consistent-return*/
+import {CONST} from 'modules/vars';
 
-    function put(pot, key, data) {
-        var p;
+export let overrides = {
+    Date: Date
+};
 
-        if (!pot || !key) { return; }
+var cache = {},
+    expiry = CONST.cacheExpiryMs || 300000; // 300000 == 5 mins
 
-        p = cache[pot];
+function put(pot, key, data) {
+    var p;
 
-        if (!p) {
-            p = cache[pot] = {};
-        }
+    if (!pot || !key) { return; }
 
-        p[key] = {
-            data: JSON.stringify(data),
+    p = cache[pot];
 
-            // Spread actual timeouts into the range of "two-times expiry"
-            time: +new Date() + expiry * Math.random()
-        };
-
-        return data;
+    if (!p) {
+        p = cache[pot] = {};
     }
 
-    function get(pot, key) {
-        var p,
-            obj;
+    p[key] = {
+        data: JSON.stringify(data),
 
-        if (!pot || !key) { return; }
-
-        p = cache[pot];
-        obj = p ? p[key] : undefined;
-
-        if (!obj) { return; }
-
-        if (+new Date() - obj.time > expiry) {
-            return;
-        }
-
-        return obj.data ? JSON.parse(obj.data) : undefined;
-    }
-
-    return {
-        put: put,
-        get: get
+        // Spread actual timeouts into the range of "two-times expiry"
+        time: +new overrides.Date() + expiry * Math.random()
     };
-});
+
+    return data;
+}
+
+function get(pot, key) {
+    var p,
+        obj;
+
+    if (!pot || !key) { return; }
+
+    p = cache[pot];
+    obj = p ? p[key] : undefined;
+
+    if (!obj) { return; }
+
+    if (+new overrides.Date() - obj.time > expiry) {
+        return;
+    }
+
+    return obj.data ? JSON.parse(obj.data) : undefined;
+}
+
+export {put, get};

@@ -171,7 +171,7 @@ define([
             .replace(/^\/|\/$/g, '')
             .replace(/[^a-z0-9\/\-+]*/g, '')
             .split('/')
-            .slice(0,3)
+            .slice(0, 3)
             .join('/')
         );
 
@@ -199,7 +199,7 @@ define([
         this.collections.items().map(function(collection) { collection.close(); });
 
         contentApi.fetchMetaForPath(this.id())
-        .done(function(meta) {
+        .then(function(meta) {
             meta = meta || {};
             _.each(self.capiProps, function(val, key) {
                 val(meta[key]);

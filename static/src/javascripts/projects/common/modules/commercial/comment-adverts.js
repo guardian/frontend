@@ -4,18 +4,24 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/detect',
+    'common/utils/mediator',
     'common/modules/identity/api',
     'common/modules/experiments/ab',
-    'common/modules/commercial/create-ad-slot'
+    'common/modules/commercial/create-ad-slot',
+    'common/modules/commercial/dfp'
 ], function (
     fastdom,
     Promise,
     _,
     $,
     config,
+    detect,
+    mediator,
     identityApi,
     ab,
-    createAdSlot
+    createAdSlot,
+    dfp
 ) {
     function init(options) {
         var adType,
@@ -28,35 +34,44 @@ define([
             ),
             $adSlotContainer,
             $commentMainColumn,
-            isMtRecTest = function () {
-                var MtRec1Test = ab.getParticipations().MtRec1,
-                    MtRec2Test = ab.getParticipations().MtRec2;
-
-                return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A' ||
-                    ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
-            };
+            $adSlot;
 
         $adSlotContainer = $(opts.adSlotContainerSelector);
         $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
 
-        // is the switch off, or not in the AB test, or there is no adslot container, or comments are disabled, or not signed in
-        if (!config.switches.standardAdverts || !isMtRecTest() || !$adSlotContainer.length || !config.switches.discussion || !identityApi.isUserLoggedIn()) {
+        if (!config.switches.standardAdverts ||
+            !ab.shouldRunTest('Viewability', 'variant') ||
+            !$adSlotContainer.length ||
+            !config.switches.discussion ||
+            !identityApi.isUserLoggedIn() ||
+            (config.page.isLiveBlog && detect.getBreakpoint() !== 'wide') ||
+            !config.page.commentable) {
             return false;
         }
 
-        $commentMainColumn.addClass('discussion__ad-wrapper');
-
-        return new Promise(function (resolve) {
+        mediator.once('modules:comments:renderComments:rendered', function () {
             fastdom.read(function () {
-                adType = 'comments';
+                //if comments container is lower than 280px
+                if ($commentMainColumn.dim().height < 280) {
+                    return false;
+                }
 
                 fastdom.write(function () {
-                    $adSlotContainer.append(createAdSlot(adType, 'mpu-banner-ad'));
+                    $commentMainColumn.addClass('discussion__ad-wrapper');
 
-                    resolve($adSlotContainer);
+                    if (!config.page.isLiveBlog) {
+                        $commentMainColumn.addClass('discussion__ad-wrapper-wider');
+                    }
+
+                    adType = 'comments';
+
+                    $adSlot = $(createAdSlot(adType, 'mpu-banner-ad'));
+                    $adSlotContainer.append($adSlot);
+                    dfp.addSlot($adSlot);
                 });
             });
         });
+
     }
 
     return {

@@ -1,3 +1,4 @@
+/*eslint-disable camelcase*/
 import PaymentForm from 'membership/payment-form';
 import ajax from 'common/utils/ajax';
 import $ from 'common/utils/$';
@@ -5,7 +6,7 @@ import stripe from 'stripe';
 import stripeErrorMessages from 'membership/stripe-error-messages';
 import paymentFormHtml from 'text!fixtures/membership/paymentForm.fixture.html';
 
-describe('Payment form module', function() {
+describe('Payment form module', function () {
 
     var NEW_LINE_CHARACTER = '\n',
         TEST_ERROR_MESSAGE = 'a test error message',
@@ -40,13 +41,13 @@ describe('Payment form module', function() {
         now,
         guConfig = {
             page: {
-                stripePublicToken: "pk_test_xxxxxxxxxxxxx"
+                stripePublicToken: 'pk_test_xxxxxxxxxxxxx'
             }
         };
 
-    function triggerEvent (element, eventType) {
+    function triggerEvent(element, eventType) {
         var event;
-        event = document.createEvent("HTMLEvents");
+        event = document.createEvent('HTMLEvents');
         event.initEvent(eventType, true, true);
         event.eventName = eventType;
         element.dispatchEvent(event);
@@ -143,7 +144,7 @@ describe('Payment form module', function() {
         expect(submitButtonElement.hasAttribute('disabled')).toBeTruthy();
     });
 
-    it('should add correct card type class to credit card image element', function() {
+    it('should add correct card type class to credit card image element', function () {
         var cardType;
 
         for (cardType in creditCardNumbers) {
@@ -160,19 +161,19 @@ describe('Payment form module', function() {
         }
     });
 
-    it('correct error returned from stripeErrorMessages via getErrorMessage', function() {
+    it('correct error returned from stripeErrorMessages via getErrorMessage', function () {
         var stripeErrorMessage = paymentForm.getErrorMessage(stripeErrorObjects.valid);
 
         expect(stripeErrorMessage).toEqual(stripeErrorMessages.card_error.incorrect_number);
     });
 
-    it('undefined returned from stripeErrorMessages via getErrorMessage for invalid stripe error object', function() {
+    it('undefined returned from stripeErrorMessages via getErrorMessage for invalid stripe error object', function () {
         var stripeErrorMessage = paymentForm.getErrorMessage(stripeErrorObjects.invalid);
 
         expect(stripeErrorMessage).toEqual(stripeErrorMessages.generic_error);
     });
 
-    it('correct error returned from stripeErrorMessages via getErrorMessage for declined_card', function() {
+    it('correct error returned from stripeErrorMessages via getErrorMessage for declined_card', function () {
         var stripeErrorMessage = paymentForm.getErrorMessage(stripeErrorObjects.declinedCard);
 
         expect(stripeErrorMessage).toEqual(stripeErrorMessages.card_error.card_declined.card_not_supported);

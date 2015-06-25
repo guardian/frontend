@@ -78,7 +78,7 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                if (isMtRecTest() && $adSlot.hasClass('ad-slot--right')) {
+                if (ab.shouldRunTest('Viewability', 'variant') && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         // Hardcoded for sticky nav test. It will need some on time checking if this will go to PROD
                         new StickyMpu($adSlot, {top: 58}).create();
@@ -90,8 +90,9 @@ define([
                     $adSlot.addClass('u-h');
                     var $parent = $adSlot.parent();
                     // if in a slice, add the 'no mpu' class
-                    $parent.hasClass('js-fc-slice-mpu-candidate') &&
+                    if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
                         $parent.addClass('fc-slice__item--no-mpu');
+                    }
                 }
             },
             '300,1050': function () {
@@ -102,14 +103,6 @@ define([
                     });
                 });
             }
-        },
-
-        isMtRecTest = function () {
-            var MtRec1Test = ab.getParticipations().MtRec1,
-                MtRec2Test = ab.getParticipations().MtRec2;
-
-            return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A' ||
-                ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
         },
 
         recordFirstAdRendered = _.once(function () {
@@ -228,7 +221,8 @@ define([
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
-                require(['js!googletag']);
+                // .js must be added: https://github.com/systemjs/systemjs/issues/528
+                require(['js!googletag.js']);
             }
 
             window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
@@ -238,7 +232,11 @@ define([
             window.googletag.cmd.push(defineSlots);
 
             // We want to run lazy load if user is in the main test or if there is a switch on
-            (isMtRecTest() || isLzAdsSwitchOn()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            if (ab.shouldRunTest('Viewability', 'variant') || isLzAdsSwitchOn()) {
+                window.googletag.cmd.push(displayLazyAds);
+            } else {
+                window.googletag.cmd.push(displayAds);
+            }
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
@@ -367,7 +365,9 @@ define([
                 addLabel($slot);
                 size = event.size.join(',');
                 // is there a callback for this size
-                callbacks[size] && callbacks[size](event, $slot);
+                if (callbacks[size]) {
+                    callbacks[size](event, $slot);
+                }
 
                 if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
                     fastdom.write(function () {
@@ -413,7 +413,7 @@ define([
             return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
         },
         breakoutIFrame = function (iFrame, $slot) {
-            /* jshint evil: true */
+            /*eslint-disable no-eval*/
             var shouldRemoveIFrame = false,
                 $iFrame            = bonzo(iFrame),
                 iFrameBody         = iFrame.contentDocument.body,
@@ -481,9 +481,11 @@ define([
                         var updatedIFrame = e.srcElement;
 
                         if (
+                            /*eslint-disable valid-typeof*/
                             updatedIFrame &&
                                 typeof updatedIFrame.readyState !== 'unknown' &&
                                 updatedIFrame.readyState === 'complete'
+                            /*eslint-enable valid-typeof*/
                         ) {
                             breakoutIFrame(updatedIFrame, $slot);
                             bean.off(updatedIFrame, 'readystatechange');

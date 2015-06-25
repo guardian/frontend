@@ -1,9 +1,11 @@
+/*eslint-disable consistent-return*/
 import * as vars from 'modules/vars';
 import ko from 'knockout';
 import _ from 'underscore';
 import $ from 'jquery';
+import Promise from 'Promise';
 import numeral from 'numeral';
-import authedAjax from 'modules/authed-ajax';
+import {request} from 'modules/authed-ajax';
 import Highcharts from 'utils/highcharts';
 import mediator from 'utils/mediator';
 import parseQueryParams from 'utils/parse-query-params';
@@ -129,30 +131,25 @@ function serializeParams (front, articles, options) {
 }
 
 function reduceRequest (memo, front, articles, options) {
-    var deferred = new $.Deferred();
-
-    authedAjax.request({
+    return request({
         url: '/ophan/histogram?' + serializeParams(front, articles, options)
-    }).then(function (data) {
+    })
+    .then(function (data) {
         _.each(data, function (content) {
             memo[content.path] = content;
         });
 
-        deferred.resolve(memo);
-    }).fail(function (error) {
-        deferred.reject(error);
+        return memo;
     });
-
-    return deferred.promise();
 }
 
 function getHistogram (front, articles, options) {
-    var deferred = new $.Deferred().resolve({});
+    var chain = Promise.resolve({});
 
     // Allow max articles in one request or the GET request is too big
     var maxArticles = vars.CONST.sparksBatchQueue;
     _.each(_.range(0, articles.length, maxArticles), function (limit) {
-        deferred = deferred.then(function (memo) {
+        chain = chain.then(function (memo) {
             return reduceRequest(
                 memo,
                 front,
@@ -162,7 +159,7 @@ function getHistogram (front, articles, options) {
         });
     });
 
-    return deferred;
+    return chain;
 }
 
 function differential (collection) {
