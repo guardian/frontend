@@ -169,8 +169,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
       val page = IdentityPage("/saved-for-later", "Saved for later", s"saved-for-later-${updatedArticles.articles.length}")
       pageDataBuilder(updatedArticles, idRequest, pageNum).map { pageData =>
         val form = savedArticlesForm.fill(SavedArticleData(pageData.shortUrls))
-        val html = withJsoup(views.html.profile.savedForLater(page, form, pageData)) { CampaignLinkCleaner("sfl") }
-        NoCache(Ok(html))
+        NoCache(Ok(views.html.profile.savedForLater(page, form, pageData)))
       }
     }
   }
@@ -184,6 +183,10 @@ object SavedArticleData {
          "deleteArticle" -> Forms.optional(Forms.text)
        )(SavedArticleData.apply)(SavedArticleData.unapply)
   )
+}
+
+object SaveForLaterCleaner {
+  def apply(html: String) = withJsoup(html){ CampaignLinkCleaner("sfl") }
 }
 
 case class CampaignLinkCleaner(campaign: String) extends HtmlCleaner {
