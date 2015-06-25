@@ -1,9 +1,8 @@
 package model
 
-import common.Edition
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import org.jsoup.Jsoup
-import org.jsoup.safety.Whitelist
+import common.Edition
+
 import scala.math.abs
 
 object `package` {
