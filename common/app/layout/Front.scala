@@ -193,7 +193,7 @@ object FaciaContainer {
       case MostPopular => ContainerCommercialOptions.empty
       case _ => ContainerCommercialOptions.fromConfig(config.config)
     },
-    None,
+    config.config.description.map(DescriptionMetaHeader.apply(_)),
     None,
     hideToggle = false,
     showTimestamps = false,
@@ -254,7 +254,7 @@ case class FaciaContainer(
     val maybeDateHeadline = customHeader flatMap  {
       case MetaDataHeader(_, _, _, dateHeadline, _) => Some(dateHeadline)
       case LoneDateHeadline(dateHeadline) => Some(dateHeadline)
-      case SeriesDescriptionMetaHeader(_) => None
+      case DescriptionMetaHeader(_) => None
     }
 
     for {
