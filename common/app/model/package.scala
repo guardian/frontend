@@ -53,7 +53,7 @@ object `package` {
   }
 
   def stripHtml(text: String) = {
-    Jsoup.clean(text, Whitelist.none())
+    text.replaceAll("""(<a[^>]*>)|(</a>)""", "")
   }
 
 }
