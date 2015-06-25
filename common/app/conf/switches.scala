@@ -973,6 +973,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val ABTestDashboardHypothesesSwitch = Switch(
+    "Feature",
+    "ab-show-hypotheses-dashboard",
+    "Display hypotheses on AB test dashboard",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 5),
+    exposeClientSide = true
+  )
+
   // A/B Tests
 
   val ABLiveblogNotifications = Switch(

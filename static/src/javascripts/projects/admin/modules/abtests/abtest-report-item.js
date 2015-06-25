@@ -84,13 +84,25 @@ define([
         var ophanUrl = 'https://dashboard.ophan.co.uk/graph/breakdown?ab=' + this.config.test.id;
         this.getElem('ophan').innerHTML = '<a href="' + ophanUrl + '"">graph</a>';
 
-        var hypothesis = "We believe that " + (this.config.test.audienceCriteria ? this.config.test.audienceCriteria : "<AUDIENCE CRITERIA>");
-        hypothesis += " has a need for " + (this.config.test.description ? this.config.test.description : "<DESCRIPTION>");
-        hypothesis += " because " + (this.config.test.reason ? this.config.test.reason : "<REASON>");
-        hypothesis += ". We will know this when " + (this.config.test.successMeasure ? this.config.test.successMeasure : "<SUCCESS MEASURE>");
-        hypothesis += " has " + (this.config.test.idealOutcome ? this.config.test.idealOutcome : "<OUTCOME>");
-        hypothesis += ".";
-        this.getElem('hypothesis').textContent = hypothesis;
+        if (window.abConfigSwitches['abShowHypothesesDashboard']) {
+            var hypothesis;
+            var criteria = this.config.test.audienceCriteria ? true : false;
+            var description = this.config.test.description ? true : false;
+            var reason = this.config.test.reason ? true : false;
+            var success = this.config.test.successMeasure ? true : false;
+            var outcome = this.config.test.idealOutcome ? true : false;
+            if (criteria && description && reason && success && outcome) {
+                hypothesis = "We believe that " + this.config.test.audienceCriteria;
+                hypothesis += " has a need for " + this.config.test.description;
+                hypothesis += " because " + this.config.test.reason;
+                hypothesis += ". We will know this when " + this.config.test.successMeasure;
+                hypothesis += " has " + this.config.test.idealOutcome;
+                hypothesis += ".";
+            } else {
+                hypothesis = "Hypothesis incomplete: Test definition lacks sufficient criteria";
+            }
+            this.getElem('hypothesis').textContent = hypothesis;
+        }
 
         var participation = new Participation({ test: this.config.test });
         participation.render(this.getElem('participation'));
