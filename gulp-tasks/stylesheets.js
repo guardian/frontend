@@ -26,13 +26,13 @@ const PRESETS = {
     }
 }
 
-gulp.task('clean:stylesheets', (cb) =>
+gulp.task('stylesheets:clean', (cb) =>
     del([
         DIRECTORIES.target + 'stylesheets'
     ], cb)
 );
 
-gulp.task('stylesheets:modern', () =>
+gulp.task('stylesheets:compile:modern', () =>
     gulp.src([
             `${SRC}/*.scss`,
             `!${SRC}/ie9.*.scss`,
@@ -49,7 +49,7 @@ gulp.task('stylesheets:modern', () =>
         .pipe(gulp.dest(DEST))
 );
 
-gulp.task('stylesheets:ie9', () =>
+gulp.task('stylesheets:compile:ie9', () =>
     gulp.src(`${SRC}/ie9.*.scss`)
         .pipe(sourcemaps.init())
         .pipe(sass(PRESETS.sass))
@@ -61,7 +61,7 @@ gulp.task('stylesheets:ie9', () =>
         .pipe(gulp.dest(DEST))
 );
 
-gulp.task('stylesheets:oldIE', () =>
+gulp.task('stylesheets:compile:oldIE', () =>
     gulp.src(`${SRC}/old-ie.*.scss`)
         .pipe(sourcemaps.init())
         .pipe(sass(PRESETS.sass))
@@ -72,7 +72,7 @@ gulp.task('stylesheets:oldIE', () =>
         .pipe(gulp.dest(DEST))
 );
 
-gulp.task('stylesheets:fonts', () =>
+gulp.task('stylesheets:compile:fonts', () =>
     gulp.src(`${SRC}/webfonts-*.scss`)
         .pipe(sourcemaps.init())
         .pipe(sass(PRESETS.sass))
@@ -80,15 +80,15 @@ gulp.task('stylesheets:fonts', () =>
         .pipe(gulp.dest(DEST))
 );
 
-gulp.task('stylesheets', (cb) =>
-    runSequence(
-        'clean:stylesheets',
-        [
-            'stylesheets:modern',
-            'stylesheets:ie9',
-            'stylesheets:oldIE',
-            'stylesheets:fonts'
-        ],
-        cb
-    )
+gulp.task('stylesheets:compile', ['stylesheets:clean'], (cb) =>
+    runSequence([
+        'stylesheets:compile:modern',
+        'stylesheets:compile:ie9',
+        'stylesheets:compile:oldIE',
+        'stylesheets:compile:fonts'
+    ], cb)
+);
+
+gulp.task('stylesheets', ['images'], (cb) =>
+    runSequence('stylesheets:compile', cb)
 );
