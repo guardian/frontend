@@ -1,6 +1,8 @@
 import _ from 'underscore';
 import Promise from 'Promise';
 import {CONST} from 'modules/vars';
+import absPath from 'utils/url-abs-path';
+import params from 'utils/parse-query-params';
 
 /**
  * Asserts if the given image URL is on The Guardian domain, is proper size and aspect ratio.
@@ -26,6 +28,8 @@ function validateImageSrc(src, criteria) {
             reject(new Error('Images must come from *' + CONST.imageCdnDomain));
 
         } else {
+            src = stripImgIXDetails(src);
+
             img = new Image();
             img.onerror = function() {
                 reject(new Error('That image could not be found'));
@@ -56,6 +60,18 @@ function validateImageSrc(src, criteria) {
             img.src = src;
         }
     });
+}
+
+function stripImgIXDetails (src) {
+    var pathname = '/' + absPath(src),
+        base = src.substring(0, src.indexOf(pathname)),
+        hash = params(src).s || '';
+
+    if (pathname.indexOf(CONST.imgIXBasePath) === 0 && hash.match(/[0-9a-f]{32}/)) {
+        return base + '/' + pathname.substring(CONST.imgIXBasePath.length);
+    } else {
+        return src;
+    }
 }
 
 export default validateImageSrc;
