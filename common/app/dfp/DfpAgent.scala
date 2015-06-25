@@ -4,6 +4,7 @@ import akka.agent.Agent
 import common._
 import conf.Configuration.commercial._
 import conf.Configuration.environment
+import conf.Switches.ExposeHasTopBelowNavAdSlotFlagSwitch
 import play.api.libs.json.Json
 import play.api.{Application, GlobalSettings, Play}
 import services.S3
@@ -121,7 +122,12 @@ object DfpAgent
     update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
 
-    update(lineItemAgent, grabCurrentLineItemsFromStore(dfpLineItemsKey))
+    if (ExposeHasTopBelowNavAdSlotFlagSwitch.isSwitchedOn) {
+      val topBelowNavLineItems = grabCurrentLineItemsFromStore(dfpLineItemsKey) filter {
+        _.targeting.customTargetSets.exists(_.targets.exists(_.isSlot("top-below-nav")))
+      }
+      update(lineItemAgent, topBelowNavLineItems)
+    }
   }
 }
 
