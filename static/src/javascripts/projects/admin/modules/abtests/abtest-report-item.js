@@ -88,11 +88,12 @@ define([
 
         if (window.abConfigSwitches.abShowHypothesesDashboard) {
             var hypothesis;
-            var criteria = this.config.test.audienceCriteria ? true : false;
-            var description = this.config.test.description ? true : false;
-            var reason = this.config.test.reason ? true : false;
-            var success = this.config.test.successMeasure ? true : false;
-            var outcome = this.config.test.idealOutcome ? true : false;
+            var criteria = this.config.test.audienceCriteria ? this.config.test.audienceCriteria.length > 0 : false,
+                description = this.config.test.description ? this.config.test.description.length > 0 : false,
+                reason = this.config.test.reason ? this.config.test.reason.length > 0 : false,
+                success = this.config.test.successMeasure ? this.config.test.successMeasure.length > 0 : false,
+                outcome = this.config.test.idealOutcome ? this.config.test.idealOutcome.length > 0 : false;
+
             if (criteria && description && reason && success && outcome) {
                 hypothesis = 'We believe that ' + this.config.test.audienceCriteria;
                 hypothesis += ' has a need for ' + this.config.test.description;
