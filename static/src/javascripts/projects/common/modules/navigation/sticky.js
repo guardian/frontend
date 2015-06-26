@@ -57,7 +57,11 @@ define([
         // Top ads are revealed with CSS animation. As we don't know when animation is finished we will
         // start updating position only if the viewport is 'firstLoadDepth' scrolled down on page load
         if (this.$els.window.scrollTop() > this.config.firstLoadDepth) {
-            this.updatePosition();
+            if (this.isAppleCampaign) {
+                this.updatePositionApple();
+            } else {
+                this.updatePosition();
+            }
         }
 
         if (this.isMobile) {
@@ -262,7 +266,6 @@ define([
 
             // Header is slim and navigation is shown on the scroll up
             if (scrollY >= bannerHeight * this.config.showHeaderAppleDepth) {
-                console.log(1);
                 fastdom.write(function () {
                     this.$els.header.css({
                         position:  'fixed',
@@ -298,7 +301,6 @@ define([
                 }.bind(this));
                 this.showNavigation(scrollY);
             } else {
-                console.log(3);
                 fastdom.write(function () {
                     // Header is not slim yet
                     this.$els.header.removeClass('l-header--is-slim');
