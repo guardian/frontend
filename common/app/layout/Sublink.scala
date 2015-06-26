@@ -225,7 +225,8 @@ object FaciaCard {
       faciaContent.isLive,
       None,
       faciaContent.shortUrlPath,
-      useShortByline = false
+      useShortByline = false,
+      faciaContent.group
     )
   }
 }
@@ -253,7 +254,8 @@ case class ContentCard(
   isLive: Boolean,
   timeStampDisplay: Option[FaciaCardTimestamp],
   shortUrl: Option[String],
-  useShortByline: Boolean
+  useShortByline: Boolean,
+  group: String
 ) extends FaciaCard {
   def bylineText: Option[String] = if (useShortByline) byline.map(_.shortByline) else byline.map(_.get)
 
@@ -281,6 +283,8 @@ case class ContentCard(
   def mediaWidthsByBreakpoint = FaciaWidths.mediaFromItemClasses(cardTypes)
 
   def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
+
+  val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if(displaySettings.isBoosted) "+" else ""}"
 }
 
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard

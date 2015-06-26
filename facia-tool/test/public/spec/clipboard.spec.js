@@ -32,7 +32,7 @@ describe('Clipboard', function () {
             expect(getArticles().length).toBe(0);
 
             dragArticle({
-                id: 'internal-code/content/first'
+                id: 'internal-code/page/first'
             }, clipboard, function () {
                 expect(getArticles().length).toBe(1);
                 expect(getArticles()[0].headline).toBe('Bananas are yellow');
@@ -47,7 +47,7 @@ describe('Clipboard', function () {
             expect(getArticles()[0].headline).toBe('Bananas are yellow');
 
             dragArticle({
-                id: 'internal-code/content/first'
+                id: 'internal-code/page/first'
             }, clipboard, function () {
                 dragArticle({
                     id: 'https://github.com/piuccio',
@@ -66,7 +66,7 @@ describe('Clipboard', function () {
 
             // Delete and item and check that it's not in storage anymore
             removeArticle({
-                id: 'internal-code/content/first'
+                id: 'internal-code/page/first'
             }, clipboard, function () {
                 injectClipboard(testLoadingAfterDelete);
             });
@@ -166,7 +166,7 @@ function setUpTests () {
     window.localStorage.clear();
     widgets.register();
     listManager.init(newItems);
-    cache.put('contentApi', 'internal-code/content/first', {
+    cache.put('contentApi', 'internal-code/page/first', {
         'webUrl': 'http://theguardian.com/banana',
         'fields': {
             'headline': 'Bananas are yellow'

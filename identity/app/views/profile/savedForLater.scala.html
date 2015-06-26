@@ -1,12 +1,14 @@
 @(page: model.MetaData, savedArticleForm: Form[SavedArticleData], pageData: model.SaveForLaterPageData)(implicit request: RequestHeader)
 
-@import model.Content
-@import model.SaveForLaterPageData
 @import common.SimplePagePaths
-
+@import controllers.SaveForLaterCleaner
 
 @main(page, projectName = Option("identity")) {
 }{
+    @SaveForLaterCleaner(body().toString)
+}
+
+@body() = {
     <div class="l-side-margins">
         <section class="fc-container fc-container--first">
             <div class="fc-container__inner">
