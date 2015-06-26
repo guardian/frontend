@@ -72,7 +72,10 @@ define([
             // users the web feature.
             mediator.on('module:identity:api:loaded', function () {
                 Id.getSavedArticles().then(function (resp) {
-                    var userHasSavedArticles = !!resp.savedArticles;
+                    // If the user hasn't saved articles before, ID responds
+                    // 404. If they have, but now they have none, ID responds
+                    // 200 with articles = [] (!!)
+                    var userHasSavedArticles = !!resp.savedArticles || resp.savedArticles.articles.length > 0;
 
                     if (userHasSavedArticles) {
                         init();
