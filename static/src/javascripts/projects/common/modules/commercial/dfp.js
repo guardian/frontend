@@ -203,14 +203,6 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
-        isLzAdsSwitchOn = function () {
-            return config.switches.lzAds;
-        },
-
-        isPageSkinned = function () {
-            return config.page.hasPageSkin;
-        },
-
         /**
          * Public functions
          */
@@ -237,7 +229,7 @@ define([
 
             // We want to run lazy load if user is in the main test or if there is a switch on
             // We do not want lazy loading on pageskins because it messes up the roadblock
-            if ((ab.shouldRunTest('Viewability', 'variant') || isLzAdsSwitchOn()) && !isPageSkinned()) {
+            if ((ab.shouldRunTest('Viewability', 'variant') || config.switches.lzAds) && !(config.page.hasPageSkin)) {
                 window.googletag.cmd.push(displayLazyAds);
             } else {
                 window.googletag.cmd.push(displayAds);
