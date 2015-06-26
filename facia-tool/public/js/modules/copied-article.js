@@ -1,4 +1,3 @@
-/*eslint-disable consistent-return*/
 define([
     'underscore',
     'modules/vars',
