@@ -1,11 +1,8 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
-@import common.LinkTo
-@import views.support.{ImgSrc, Item140, RenderClasses}
 @import views.html.fragments.containers.facia_cards.{date, latestUpdate}
-@import common.Localisation
-@import layout.{MetaDataHeader, LoneDateHeadline, SeriesDescriptionMetaHeader}
-@import fragments.containers.facia_cards.{dateHeadline, seriesHeadline, standardHeaderMeta}
+@import layout.{MetaDataHeader, LoneDateHeadline, DescriptionMetaHeader}
+@import fragments.containers.facia_cards.{dateHeadline, descriptionHeadline, standardHeaderMeta}
 @import fragments.nav.treats
 
 @containerDefinition.customHeader.map { customHeader =>
@@ -19,8 +16,8 @@
                 @dateHeadline(dateHeader.get, containerDefinition.dateLink)
             }
 
-            case seriesHeader: SeriesDescriptionMetaHeader => {
-                @seriesHeadline(containerDefinition, frontProperties, seriesHeader.description)
+            case descriptionHeader: DescriptionMetaHeader => {
+                @descriptionHeadline(containerDefinition, frontProperties, descriptionHeader.description)
             }
         }
     </div>
