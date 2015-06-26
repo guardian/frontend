@@ -1,4 +1,3 @@
-/*eslint-disable consistent-return*/
 import {CONST} from 'modules/vars';
 
 export let overrides = {
@@ -41,6 +40,7 @@ function get(pot, key) {
     if (!obj) { return; }
 
     if (+new overrides.Date() - obj.time > expiry) {
+        delete p[key];
         return;
     }
 

@@ -1,11 +1,10 @@
-/*eslint-disable consistent-return*/
 import _ from 'underscore';
-import $ from 'jquery';
 import Promise from 'Promise';
 import {CONST} from 'modules/vars';
 import {request} from 'modules/authed-ajax';
 import * as cache from 'modules/cache';
 import modalDialog from 'modules/modal-dialog';
+import internalPageCode from 'utils/internal-page-code';
 import internalContentCode from 'utils/internal-content-code';
 import urlAbsPath from 'utils/url-abs-path';
 import identity from 'utils/identity';
@@ -85,18 +84,28 @@ function validateItem (item) {
                     resultsTitle = res.title,
                     capiItem,
                     icc,
+                    pageCode,
                     err;
 
                 // ContentApi item
                 if (results && results.length === 1) {
                     capiItem = results[0];
                     icc = internalContentCode(capiItem);
-                    if (icc) {
+                    pageCode = internalPageCode(capiItem);
+                    if (icc && icc === item.id()) {
                         populate(item, capiItem);
                         cache.put('contentApi', icc, capiItem);
                         item.id(icc);
+                    } else if (pageCode) {
+                        populate(item, capiItem);
+                        cache.put('contentApi', pageCode, capiItem);
+                        // Populate the cache with icc as well
+                        if (icc) {
+                            cache.put('contentApi', icc, capiItem);
+                        }
+                        item.id(pageCode);
                     } else {
-                        err = 'Sorry, that article is malformed (has no internalContentCode)';
+                        err = 'Sorry, that article is malformed (has no internalPageCode)';
                     }
 
                 // A snap, but not an absolute url
@@ -186,13 +195,18 @@ function decorateBatch (articles) {
         }
 
         results.forEach(function(result) {
-            var icc = internalContentCode(result);
+            var pageCode = internalPageCode(result),
+                icc = internalContentCode(result);
 
-            if(icc) {
-                cache.put('contentApi', icc, result);
+            if (pageCode) {
+                cache.put('contentApi', pageCode, result);
+                if (icc) {
+                    cache.put('contentApi', icc, result);
+                }
 
                 _.filter(articles, function(article) {
-                    return article.id() === icc;
+                    var id = article.id();
+                    return id === pageCode || id === icc;
                 }).forEach(function(article) {
                     populate(article, result);
                 });

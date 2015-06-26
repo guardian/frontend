@@ -20,5 +20,5 @@ System.config({
 
 @JavaScript(Static.js.systemJsNormalize)
 
-window.require = System.amdRequire.bind(System);
-window.define = System.amdDefine.bind(System);
+window.require = System.amdRequire;
+window.define = System.amdDefine;

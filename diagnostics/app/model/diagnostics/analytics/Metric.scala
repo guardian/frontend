@@ -49,6 +49,12 @@ object Metric extends Logging {
     ("ipad-2orMini-after-5", CountMetric(s"ipad-2orMini-after-5")),
     ("ipad-3orLater-start", CountMetric(s"ipad-3orLater-start")),
     ("ipad-3orLater-after-5", CountMetric(s"ipad-3orLater-after-5")),
+    ("android-nexus5-start", CountMetric(s"android-nexus5-start")),
+    ("android-nexus5-after-5", CountMetric(s"android-nexus5-after-5")),
+    ("android-nexus7-start", CountMetric(s"android-nexus7-start")),
+    ("android-nexus7-after-5", CountMetric(s"android-nexus7-after-5")),
+    ("android-sgs4-start", CountMetric(s"android-sgs4-start")),
+    ("android-sgs4-after-5", CountMetric(s"android-sgs4-after-5")),
 
     ("tech-feedback", CountMetric("tech-feedback")),
 
