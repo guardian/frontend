@@ -109,6 +109,10 @@
         column-fill: auto;
     }
 
+    .headline-column__reflow {
+        min-height: 0;
+    }
+
     .headline-column__item {
         height: auto;
     }
@@ -116,4 +120,8 @@
 
 @include mq(desktop) {
     @include guss-columns('.headline-column--desktop', $column-min-width: 300px, $columns-fallback-width: gs-span(8), $columns-fallback-columns: 2);
+
+    .headline-column__reflow li:last-child {
+        display: none;
+    }
 }

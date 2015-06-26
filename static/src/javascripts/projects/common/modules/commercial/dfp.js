@@ -387,7 +387,7 @@ define([
                     fastdom.write(function () {
                         $slot.parent().css('display', 'none');
                         $('.tabs__pane', $slot.parent().parent()).removeClass('tabs__pane');
-                        $('.headline-list li:last-child', $slot.parent().parent()).css('display', 'none');
+                        $('.headline-list', $slot.parent().parent()).addClass('headline-column__reflow');
                         $('.l-list--columns-2', $slot.parent().parent()).removeClass('l-list--columns-2').addClass('l-list--columns-3');
                     });
                 }
