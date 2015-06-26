@@ -297,7 +297,7 @@
             There is a very large variety in model id's for Samsung devices, different id's for different carriers.
             so we will only really be able to beacon on a subset of the Samsung GS4's that visit us
             *@
-            var isSGS4 = (/.*SAMSUNG GT-I950\d+.*/.test(navigator.userAgent))||;(/.*SAMSUNG SCH-R970([05]])\d+.*/.test(navigator.userAgent)
+            var isSGS4 = (/.*SAMSUNG GT-I950\d+.*/.test(navigator.userAgent))||(/.*SAMSUNG SCH-R970([05]])\d+.*/.test(navigator.userAgent));
 
             if ( isNexus5 ) {
             logDevice ( 'nexus5', 'android' ) ;
