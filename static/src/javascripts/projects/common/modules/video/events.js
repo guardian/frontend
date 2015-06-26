@@ -222,12 +222,15 @@ define([
 
     function beaconError(err) {
         if (err && 'message' in err && 'code' in err) {
-            raven.captureException(new Error(err.message), {
-                tags: {
-                    feature: 'player',
-                    vjsCode: err.code
-                }
-            });
+            var error = new Error(err.message);
+            if (!error.message.match(/Your browser is no longer supported/)) {
+                raven.captureException(error, {
+                    tags: {
+                        feature: 'player',
+                        vjsCode: err.code
+                    }
+                });
+            }
         }
     }
 
