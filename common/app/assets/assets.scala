@@ -72,9 +72,9 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
     private val memoizedCss: ConcurrentMap[java.net.URL, String] = TrieMap()
 
     def projectCss(projectOverride: Option[String]) = project(projectOverride.getOrElse(Configuration.environment.projectName))
-    def head(projectOverride: Option[String] = None) = css(projectOverride.getOrElse(Configuration.environment.projectName))
-    def headOldIE(projectOverride: Option[String] = None) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
-    def headIE9(projectOverride: Option[String] = None) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
+    def head(projectOverride: Option[String]) = css(projectOverride.getOrElse(Configuration.environment.projectName))
+    def headOldIE(projectOverride: Option[String]) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
+    def headIE9(projectOverride: Option[String]) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
 
 
     private def css(project: String): String = {
