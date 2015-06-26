@@ -1,7 +1,7 @@
 package views.support
 
-import common.{InternationalEdition, Edition}
 import common.Maps.RichMap
+import common.{Edition, InternationalEdition}
 import conf.Configuration
 import conf.Configuration.environment
 import conf.Switches.IdentitySocialOAuthSwitch
@@ -40,6 +40,7 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
       ("isSSL", JsBoolean(Configuration.environment.secure)),
       ("assetsPath", JsString(Configuration.assets.path)),
       ("hasPageSkin", JsBoolean(metaData.hasPageSkin(edition))),
+      ("hasBelowTopNavSlot", JsBoolean(metaData.hasAdInBelowTopNavSlot(edition))),
       ("shouldHideAdverts", JsBoolean(metaData match {
         case c: Content if c.shouldHideAdverts => true
         case _ => false

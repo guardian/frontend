@@ -119,7 +119,11 @@ define([
                 if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-down-mobile').addClass('animate-up-mobile');
                 } else {
-                    this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
+                    if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                        this.$els.navigation.css('display', 'block');
+                    } else {
+                        this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
+                    }
                 }
             }.bind(this));
         } else {
@@ -137,7 +141,11 @@ define([
                 if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-up-mobile').addClass('animate-down-mobile');
                 } else {
-                    this.$els.navigation.removeClass('animate-up-desktop').addClass('animate-down-desktop');
+                    if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                        this.$els.navigation.css('display', 'none');
+                    } else {
+                        this.$els.navigation.removeClass('animate-up-desktop').addClass('animate-down-desktop');
+                    }
                 }
             }.bind(this));
         }
@@ -211,9 +219,6 @@ define([
                     }.bind(this));
                 } else {
                     fastdom.write(function () {
-                        // Make sure navigation is hidden
-                        this.$els.navigation.removeClass('animate-up').addClass('animate-down');
-
                         this.$els.header.css({
                             position:  'absolute',
                             'margin-top': bannerHeight,
