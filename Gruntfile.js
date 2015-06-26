@@ -49,7 +49,7 @@ module.exports = function (grunt) {
     grunt.registerTask('default', function () {
         if (options.isDev) {
             megalog.info('Running a full compile first.', {heading:'Preparing for dev'})
-            grunt.task.run(['compile', 'browserSync:dev', 'shell:watchSass']);
+            grunt.task.run(['compile', 'browserSync:dev', 'shell:nodeSassWatch']);
         } else {
             grunt.task.run(['install', 'clean', 'validate', 'compile', 'test', 'analyse']);
         }
