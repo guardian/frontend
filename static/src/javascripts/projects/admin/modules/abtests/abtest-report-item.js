@@ -70,6 +70,8 @@ define([
         this.elem.setAttribute('data-abtest-name', this.config.test.id);
         bonzo(this.elem).addClass(window.abSwitches['ab' + this.config.test.id] ? 'abtest-item--switched-on' : 'abtest-item--switched-off');
 
+        this.getElem('description').textContent = this.config.test.description;
+
         this.getElem('name').textContent = this.config.test.id;
         var daysTillExpiry = (Date.parse(this.config.test.expiry) - new Date()) / (1000 * 60 * 60 * 24);
         this.getElem('expiry').textContent = Math.floor(daysTillExpiry).toString() + (daysTillExpiry === 1 ? ' day' : ' days');
