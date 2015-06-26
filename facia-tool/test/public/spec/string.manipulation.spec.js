@@ -4,6 +4,7 @@ import urlQuery from 'utils/url-query';
 import ammend from 'utils/ammended-query-str';
 import trim from 'utils/full-trim';
 import icc from 'utils/internal-content-code';
+import ipc from 'utils/internal-page-code';
 import isGuardian from 'utils/is-guardian-url';
 import urlAbsPath from 'utils/url-abs-path';
 import urlHost from 'utils/url-host';
@@ -110,6 +111,21 @@ describe('utils/internal-content-code', function () {
                 internalContentCode: 'banana'
             }
         })).toBe(CONST.internalContentPrefix + 'banana');
+    });
+});
+
+describe('utils/internal-page-code', function () {
+    it('generate internal page codes', function () {
+        expect(ipc()).toBeUndefined();
+        expect(ipc({})).toBeUndefined();
+        expect(ipc({
+            fields: {}
+        })).toBeUndefined();
+        expect(ipc({
+            fields: {
+                internalPageCode: 'banana'
+            }
+        })).toBe(CONST.internalPagePrefix + 'banana');
     });
 });
 
