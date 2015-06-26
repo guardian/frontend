@@ -28,7 +28,7 @@ trait LinkTo extends Logging {
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
 
   def apply(url: String, edition: Edition)(implicit request: RequestHeader): String = {
-    val processedUrl: String = processUrl(url, edition, InternationalEdition.isInternationalEdition(request)).url
+    val processedUrl: String = processUrl(url, edition).url
     handleQueryStrings(processedUrl)
   }
 
@@ -37,9 +37,8 @@ trait LinkTo extends Logging {
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
 
-  def processUrl(url: String, edition: Edition, isInternational: Boolean) = url match {
+  def processUrl(url: String, edition: Edition) = url match {
     case "http://www.theguardian.com" => ProcessedUrl(homeLink(edition))
-    case "/" if isInternational => ProcessedUrl(InternationalEdition.path)
     case "/" => ProcessedUrl(homeLink(edition))
     case protocolRelative if protocolRelative.startsWith("//") => ProcessedUrl(protocolRelative)
     case AbsoluteGuardianUrl(path) =>  ProcessedUrl(urlFor(path, edition))

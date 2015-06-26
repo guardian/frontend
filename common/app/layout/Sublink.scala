@@ -27,7 +27,7 @@ case class EditionalisedLink(
     LinkTo(baseUrl)(requestHeader)
 
   def hrefWithRel(implicit requestHeader: RequestHeader): String =
-    processUrl(baseUrl, Edition(requestHeader), InternationalEdition.isInternationalEdition(requestHeader)) match {
+    processUrl(baseUrl, Edition(requestHeader)) match {
       case ProcessedUrl(url, true) => s"""href="${handleQueryStrings(url)}" rel="nofollow""""
       case ProcessedUrl(url, false) => s"""href="${handleQueryStrings(url)}""""
     }
