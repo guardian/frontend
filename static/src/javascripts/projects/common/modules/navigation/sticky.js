@@ -154,7 +154,7 @@ define([
             this.setScrollDirection(scrollY);
 
             // Header is slim and navigation is shown on the scroll up
-            if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth)) {
+            if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth) && !this.config.isNavigationLocked) {
                 fastdom.write(function () {
                     this.$els.header.css({
                         position:  'fixed',
@@ -200,30 +200,32 @@ define([
                     //header is slim from now on
                     this.$els.header.addClass('l-header--is-slim');
                 }.bind(this));
-                if (this.config.direction === 'up') {
-                    fastdom.write(function () {
-                        this.$els.header.css({
-                            '-webkit-transform': 'translateY(-100%)',
-                            '-ms-transform': 'translateY(-100%)',
-                            'transform': 'translateY(-100%)'
-                        });
-                    }.bind(this));
-                } else {
-                    fastdom.write(function () {
-                        // Make sure navigation is hidden
-                        this.$els.navigation.removeClass('animate-up').addClass('animate-down');
+                if (!this.config.isNavigationLocked) {
+                    if (this.config.direction === 'up') {
+                        fastdom.write(function () {
+                            this.$els.header.css({
+                                '-webkit-transform': 'translateY(-100%)',
+                                '-ms-transform': 'translateY(-100%)',
+                                'transform': 'translateY(-100%)'
+                            });
+                        }.bind(this));
+                    } else {
+                        fastdom.write(function () {
+                            // Make sure navigation is hidden
+                            this.$els.navigation.removeClass('animate-up').addClass('animate-down');
 
-                        this.$els.header.css({
-                            position:  'absolute',
-                            'margin-top': bannerHeight,
-                            '-webkit-transform': 'translateY(-500%)',
-                            '-ms-transform': 'translateY(-500%)',
-                            'transform': 'translateY(-500%)',
-                            'z-index': '998'
-                        });
+                            this.$els.header.css({
+                                position:  'absolute',
+                                'margin-top': bannerHeight,
+                                '-webkit-transform': 'translateY(-500%)',
+                                '-ms-transform': 'translateY(-500%)',
+                                'transform': 'translateY(-500%)',
+                                'z-index': '998'
+                            });
 
-                        this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
-                    }.bind(this));
+                            this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
+                        }.bind(this));
+                    }
                 }
             } else {
                 fastdom.write(function () {
