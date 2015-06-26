@@ -46,25 +46,20 @@ export default function() {
         // Mock the time
         jasmine.clock().install();
 
-        mediator.on('latest:loaded', function () {
-            // wait for the debounce (give some time to knockout to handle bindings)
-            tick(50).then(() => tick(350));
-        });
+        // After 2 because we are waiting for latest feed and front widget
+        var pageLoaded = _.after(2, _.once(resolve));
 
+        mediator.on('latest:loaded', pageLoaded);
+        mockSearch.on('complete', pageLoaded);
 
         new CollectionsEditor().init({}, testConfig);
 
-        // Number 2 is because we wait for two search, latest and the only
-        // article in the collection.
-        mockSearch.on('complete', _.after(2, _.once(function () {
-            resolve();
-        })));
-
-        // The first tick is for the configuration to be loaded
-        // The second tick is for the collections to be leaded
-        tick(100).then(() => tick(300)).then(() => tick(300))
-        .then(() => tick(100)).then(() => tick(100));
-
+        // The first 3 ticks are for the 3 initial configuration requests
+        tick(50).then(() => tick(50)).then(() => tick(50))
+        // These 2 other ticks are for the article search and lastmodified
+        .then(() => tick(50)).then(() => tick(50))
+        // The remaining ticks are for the latest feed to load
+        .then(() => tick(350)).then(() => tick(50));
     });
 
     function unload () {
