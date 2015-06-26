@@ -4,8 +4,9 @@ import akka.agent.Agent
 import common._
 import conf.Configuration.commercial._
 import conf.Configuration.environment
+import conf.Switches.ExposeHasTopBelowNavAdSlotFlagSwitch
 import play.api.libs.json.Json
-import play.api.{Play, Application, GlobalSettings}
+import play.api.{Application, GlobalSettings, Play}
 import services.S3
 
 import scala.io.Codec.UTF8
@@ -14,6 +15,7 @@ object DfpAgent
   extends PaidForTagAgent
   with PageskinAdAgent
   with InlineMerchandiseComponentAgent
+  with AdSlotAgent
   with ExecutionContexts {
 
   override protected val isProd: Boolean = environment.isProd
@@ -28,6 +30,7 @@ object DfpAgent
   private lazy val tagToAdvertisementFeatureSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
+  private lazy val lineItemAgent = AkkaAgent[Seq[GuLineItem]](Nil)
 
   protected def currentPaidForTags: Seq[PaidForTag] = currentPaidForTagsAgent get()
   protected def allAdFeatureTags: Seq[PaidForTag] = allAdFeatureTagsAgent get()
@@ -35,6 +38,7 @@ object DfpAgent
   protected def tagToAdvertisementFeatureSponsorsMap = tagToAdvertisementFeatureSponsorsMapAgent get()
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
+  protected def lineItems: Seq[GuLineItem] = lineItemAgent get()
 
   def generateTagToSponsorsMap(paidForTags: Seq[PaidForTag]): Map[String, Set[String]] = {
     paidForTags.foldLeft(Map.empty[String, Set[String]]) { (soFar, tag) =>
@@ -78,6 +82,13 @@ object DfpAgent
       maybeTagSet getOrElse InlineMerchandisingTagSet()
     }
 
+    def grabCurrentLineItemsFromStore(key: String): Seq[GuLineItem] = {
+      val maybeLineItems = for (jsonString <- stringFromS3(key)) yield {
+        Json.parse(jsonString).as[LineItemReport].lineItems
+      }
+      maybeLineItems getOrElse Nil
+    }
+
     def update[T](agent: Agent[Seq[T]], freshData: Seq[T]) {
       if (freshData.nonEmpty) {
         agent send freshData
@@ -110,6 +121,13 @@ object DfpAgent
 
     update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
+
+    if (ExposeHasTopBelowNavAdSlotFlagSwitch.isSwitchedOn) {
+      val topBelowNavLineItems = grabCurrentLineItemsFromStore(dfpLineItemsKey) filter {
+        _.targeting.customTargetSets.exists(_.targets.exists(_.isSlot("top-below-nav")))
+      }
+      update(lineItemAgent, topBelowNavLineItems)
+    }
   }
 }
 

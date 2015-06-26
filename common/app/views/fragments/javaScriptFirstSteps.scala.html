@@ -290,5 +290,26 @@
                 logDevice ( '4', 'iphone' );
             }
         }
+        else if ((navigator.platform === 'Linux armv7l') || (navigator.platform == 'Linuz aarch64') || (navigator.platform === 'Android')){
+            var isNexus5 = /.*Nexus 5\d+.*/.test(navigator.userAgent);
+            var isNexus7 = /.*Nexus 7\d+.*/.test(navigator.userAgent);
+            @*
+            There is a very large variety in model id's for Samsung devices, different id's for different carriers.
+            so we will only really be able to beacon on a subset of the Samsung GS4's that visit us
+            *@
+            var isSGS4 = (/.*SAMSUNG GT-I950\d+.*/.test(navigator.userAgent))||;(/.*SAMSUNG SCH-R970([05]])\d+.*/.test(navigator.userAgent)
+
+            if ( isNexus5 ) {
+            logDevice ( 'nexus5', 'android' ) ;
+            }
+
+            if ( isNexus7 ) {
+            logDevice ( 'nexus7', 'android' ) ;
+            }
+
+            if ( isSGS4 ) {
+            logDevice ( 'sgs4', 'android' ) ;
+            }
+        }
     </script>
 }

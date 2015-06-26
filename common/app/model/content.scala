@@ -37,7 +37,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
-  lazy val internalContentCode: String = delegate.safeFields("internalContentCode")
+  lazy val internalPageCode: String = delegate.safeFields("internalPageCode")
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   override lazy val webUrl: String = delegate.webUrl

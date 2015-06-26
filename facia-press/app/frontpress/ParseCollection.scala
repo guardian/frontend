@@ -201,7 +201,9 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       getContentApiItemFromCollectionItem(collectionItems, edition) map { items =>
           items.map { item =>
             item.fields.flatMap(_.get("internalContentCode")).map { internalContentCode =>
-              TrailId(InternalContentCode.toFormattedInternalContentCode(internalContentCode)) -> item}
+              TrailId(InternalCode.toFormattedInternalContentCode(internalContentCode)) -> item}
+            .orElse{ item.fields.flatMap(_.get("internalPageCode")).map { internalPageCode =>
+              TrailId(InternalCode.toFormattedInternalPageCode(internalPageCode)) -> item} }
           }.flatten
         }
     }).map(_.flatten.toMap)
