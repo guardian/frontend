@@ -89,6 +89,7 @@ export default {
     reauthTimeout:         60000,
 
     imageCdnDomain:        '.guim.co.uk',
+    imgIXBasePath:         '/img/static/',
     previewBase:           'http://preview.gutools.co.uk',
 
     latestSnapPrefix:      'Latest from ',
