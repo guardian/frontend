@@ -34,7 +34,7 @@ define([
         this.breakpoint = detect.getBreakpoint();
         this.isMobile = _.contains(this.breakpoint, 'mobile');
         this.isTablet = _.contains(this.breakpoint, 'tablet');
-        this.isAppleCampaign = config.page.contentType === 'Network Front' ? true : false;
+        this.isAppleCampaign = config.page.hasBelowTopNavSlot;
     }
 
     StickyHeader.prototype.init = function () {
@@ -290,13 +290,6 @@ define([
                         width:     '100%',
                         'z-index': '999'
                     });
-                    /*this.$els.bannerBelowNav.css({
-                        position: 'absolute',
-                        width: '100%',
-                        top: this.headerBigHeight
-                    });*/
-
-                    //this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
                     this.$els.header.addClass('l-header--is-slim');
                     this.$els.header.css({
                         '-webkit-transform': 'translateY(0%)',
@@ -318,7 +311,6 @@ define([
                         'transform': 'translateY(0%)',
                         'z-index': '998'
                     });
-                    //this.$els.bannerBelowNav.css('margin-top', this.headerBigHeight);
                 }.bind(this));
 
                 // Put navigation to its default state
