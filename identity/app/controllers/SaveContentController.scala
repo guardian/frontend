@@ -37,8 +37,6 @@ class SaveContentController @Inject() ( api: IdApiClient,
 
   import SavedArticleData._
 
-  implicit val dateOrdering: Ordering[DateTime] = Ordering[Long] on { _.getMillis }
-
 
   val page = IdentityPage("/saved-for-later", "Saved for later", "saved-for-later")
 
