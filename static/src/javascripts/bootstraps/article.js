@@ -99,6 +99,12 @@ define([
                 });
             },
 
+            initPintrest: function () {
+                if (ab.shouldRunTest('Pintrest', 'variant')) {
+                    $('.social__item--pinterest').css('display', 'block');
+                }
+            },
+
             initQuizListeners: function () {
                 require(['ophan/ng'], function (ophan) {
                     mediator.on('quiz/ophan-event', ophan.record);
@@ -115,6 +121,7 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
+            modules.initPintrest();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
