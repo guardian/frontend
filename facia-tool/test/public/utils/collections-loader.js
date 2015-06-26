@@ -13,18 +13,10 @@ import templateCollections from 'views/collections.scala.html!text';
 import verticalLayout from 'views/templates/vertical_layout.scala.html!text';
 import mediator from 'utils/mediator';
 import 'widgets/collection.html!text';
-var originalSetTimeout = window.setTimeout;
+import tick from 'test/utils/tick';
 
 export default function() {
     var mockConfig, mockSwitches, mockCollections, mockSearch;
-    function tick (ms) {
-        jasmine.clock().tick(ms);
-        return new Promise(function (resolve) {
-            originalSetTimeout(function () {
-                resolve();
-            }, 20);
-        });
-    }
 
     var loader = new Promise(function (resolve) {
         document.body.innerHTML += '<div id="_test_container_collections">' +
@@ -56,9 +48,7 @@ export default function() {
 
         mediator.on('latest:loaded', function () {
             // wait for the debounce (give some time to knockout to handle bindings)
-            originalSetTimeout(function () {
-                tick(350);
-            }, 50);
+            tick(50).then(() => tick(350));
         });
 
 
@@ -72,7 +62,7 @@ export default function() {
 
         // The first tick is for the configuration to be loaded
         // The second tick is for the collections to be leaded
-        tick(100).then(() => tick(300))
+        tick(100).then(() => tick(300)).then(() => tick(300))
         .then(() => tick(100)).then(() => tick(100));
 
     });

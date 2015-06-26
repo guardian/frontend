@@ -1,4 +1,3 @@
-/*eslint-disable consistent-return*/
 import {CONST} from 'modules/vars';
 
 export let overrides = {

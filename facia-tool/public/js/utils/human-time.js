@@ -1,4 +1,3 @@
-/*eslint-disable consistent-return*/
 import _ from 'underscore';
 
 export default function(date, now) {
