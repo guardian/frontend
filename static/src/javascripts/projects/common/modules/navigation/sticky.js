@@ -81,14 +81,18 @@ define([
 
     StickyHeader.prototype.showStickyNavigation = function () {
         fastdom.read(function () {
-            var height = window.innerHeight - $('.js-mega-nav-placeholder')[0].getBoundingClientRect().top;
 
-            fastdom.write(function () {
-                $('.js-global-navigation')
-                    .addClass('navigation__expandable--sticky')
-                    .css('height', height);
-            });
-        });
+            // Navigation should have scrollbar only if header is in slim version
+            if (this.$els.header.hasClass('l-header--is-slim')) {
+                var height = window.innerHeight - $('.js-mega-nav-placeholder')[0].getBoundingClientRect().top;
+
+                fastdom.write(function () {
+                    $('.js-global-navigation')
+                        .addClass('navigation__expandable--sticky')
+                        .css('height', height);
+                });
+            }
+        }.bind(this));
     };
 
     StickyHeader.prototype.setScrollDirection = function (scrollY) {
@@ -154,6 +158,7 @@ define([
             this.setScrollDirection(scrollY);
 
             // Header is slim and navigation is shown on the scroll up
+            // Unless meganav is opened
             if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth) && !this.config.isNavigationLocked) {
                 fastdom.write(function () {
                     this.$els.header.css({
@@ -185,7 +190,7 @@ define([
 
                 // If meganav is open we don't want to touch the navigation state
                 if (!this.config.isNavigationLocked) {
-                    this.showNavigation(scrollY, breakpoint);
+                    this.showNavigation(scrollY);
                 }
             } else if (scrollY >= this.headerBigHeight) {
                 fastdom.write(function () {
