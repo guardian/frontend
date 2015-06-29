@@ -1201,7 +1201,7 @@ object Switches {
     "Facia",
     "facia-new-format",
     "If this is switched on, facia will serve off the new JSON format (It will fallback to old if it doesn't exist)",
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2015, 7, 3),
     exposeClientSide = false
   )
