@@ -1,5 +1,4 @@
 @()
-@import conf.Switches.ABTestDashboardHypothesesSwitch
 
 <table class="abtest__data-table table table-r table-bordered table-hover">
     <thead>
@@ -29,17 +28,17 @@
             <td class="abtest-item__ophan"></td>
         </tr>
         <tr>
-            <td colspan="8">
+            <td><span class="abtest-item__description-label">Description</span></td>
+            <td colspan="7">
                 <span class="abtest-item__description"></span>
             </td>
         </tr>
-        @if(ABTestDashboardHypothesesSwitch.isSwitchedOn) {
-            <tr>
-                <td colspan="8">
-                    <span class="abtest-item__hypothesis"></span>
-                </td>
-            </tr>
-        }
+        <tr>
+            <td><span class="abtest-item__hypothesis-label">Hypothesis</span></td>
+            <td colspan="7">
+                <span class="abtest-item__hypothesis"></span>
+            </td>
+        </tr>
     </tbody>
 </table>
 

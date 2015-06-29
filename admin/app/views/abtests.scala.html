@@ -35,12 +35,6 @@
     <script type="text/template" id="tmpl-audience-item-template">@fragments.audienceItem()</script>
 
     <script type="text/javascript">
-        window.abConfigSwitches = {
-            @conf.Switches.all.filter(_.name == "ab-show-hypotheses-dashboard").map{ s =>
-                "@CamelCase.fromHyphenated(s.name)": @s.isSwitchedOn,
-            }
-        };
-
         window.abSwitches = {
             @conf.Switches.all.filter(_.group == "A/B Tests").map{ s =>
                 "@CamelCase.fromHyphenated(s.name)": @s.isSwitchedOn,
