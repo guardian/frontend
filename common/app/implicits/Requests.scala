@@ -3,6 +3,7 @@ package implicits
 import conf.{Configuration, Switches}
 import play.api.http.MediaRange
 import play.api.mvc.RequestHeader
+import common.Edition
 
 trait Requests {
 
@@ -36,12 +37,16 @@ trait Requests {
     private val imgixTestSections = {
       def editionalise(path: String) = Seq(s"/uk$path", s"/au$path", s"/us$path", path)
 
-      Seq("/books", "/football") ++
+      Seq("/books", "/football", "/uk", "/au", "/us") ++
         editionalise("/money") ++
         editionalise("/technology") ++
         editionalise("/business") ++
-        editionalise("/sport")
-  }
+        editionalise("/sport") ++
+        editionalise("/culture") ++
+        editionalise("/commentisfree")
+    }
+
+    private val networkFronts = Edition.all.map(_.id).map(id => s"/$id")
 
     lazy val isInImgixTest: Boolean = Switches.ImgixSwitch.isSwitchedOn &&
       (Configuration.environment.isNonProd || imgixTestSections.exists(r.path.startsWith))
