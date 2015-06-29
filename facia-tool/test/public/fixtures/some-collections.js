@@ -4,7 +4,7 @@ export default {
     latest: {
         lastUpdated: dates.yesterday.toISOString(),
         live: [{
-            id: 'internal-code/content/1',
+            id: 'internal-code/page/1',
             frontPublicationDate: dates.yesterday.getTime()
         }],
         updatedBy: 'Test'

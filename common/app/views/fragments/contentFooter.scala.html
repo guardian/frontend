@@ -1,6 +1,6 @@
 @(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
 
-@import conf.Switches._
+@import conf.Switches
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
 
@@ -22,16 +22,12 @@
         @if(Switches.RelatedContentSwitch.isSwitchedOn && mvt.CMOutbrainTest.isParticipating && content.showFooterContainers) {
             <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
                 @fragments.outbrainPlaceholder()
-                @fragments.gravityPlaceholder()
-                @fragments.taboolaPlaceholder()
             </div>
         }
         @fragments.onwardPlaceholder()
         @if(!Switches.RelatedContentSwitch.isSwitchedOn && mvt.CMOutbrainTest.isParticipating && content.showFooterContainers) {
             <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
                 @fragments.outbrainPlaceholder()
-                @fragments.gravityPlaceholder()
-                @fragments.taboolaPlaceholder()
             </div>
         }
 
@@ -49,8 +45,6 @@
         @if(!mvt.CMOutbrainTest.isParticipating && content.showFooterContainers) {
             <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
                 @fragments.outbrainPlaceholder()
-                @fragments.gravityPlaceholder()
-                @fragments.taboolaPlaceholder()
             </div>
         }
 

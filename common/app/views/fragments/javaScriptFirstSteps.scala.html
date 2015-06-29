@@ -135,17 +135,8 @@
             loaded: false
         },
         config: @fragments.javaScriptConfig(item)
-    }, baseFontSize,
+    },
     docClass = document.documentElement.className;
-
-    // rems are calculated in the CSS assuming a 16px baseline.
-    // if the user has changed theirs, account for it.
-    if('getComputedStyle' in window) {
-        baseFontSize = window.getComputedStyle(document.documentElement).getPropertyValue("font-size");
-        if(parseInt(baseFontSize, 10) !== 16) {
-            document.documentElement.style.fontSize = baseFontSize;
-        }
-    }
 
     @* http://modernizr.com/download/#-svg *@
     if (
@@ -231,6 +222,19 @@
         }
     })(guardian.isModernBrowser);
 
+    // *** MINIMISE DOM THRASHING…
+    // READ
+    // rems are calculated in the CSS assuming a 16px baseline.
+    // if the user has changed theirs, account for it.
+    var baseFontSize = null;
+    if('getComputedStyle' in window) {
+        baseFontSize = window.getComputedStyle(document.documentElement).getPropertyValue("font-size");
+    }
+
+    // WRITE
+    if(baseFontSize && parseInt(baseFontSize, 10) !== 16) {
+        document.documentElement.style.fontSize = baseFontSize;
+    }
     document.documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
 
 </script>
@@ -288,6 +292,27 @@
 
             if ( isIphone4 ) {
                 logDevice ( '4', 'iphone' );
+            }
+        }
+        else if ((navigator.platform === 'Linux armv7l') || (navigator.platform == 'Linuz aarch64') || (navigator.platform === 'Android')){
+            var isNexus5 = /.*Nexus 5\d+.*/.test(navigator.userAgent);
+            var isNexus7 = /.*Nexus 7\d+.*/.test(navigator.userAgent);
+            @*
+            There is a very large variety in model id's for Samsung devices, different id's for different carriers.
+            so we will only really be able to beacon on a subset of the Samsung GS4's that visit us
+            *@
+            var isSGS4 = (/.*SAMSUNG GT-I950\d+.*/.test(navigator.userAgent))||(/.*SAMSUNG SCH-R970([05]])\d+.*/.test(navigator.userAgent));
+
+            if ( isNexus5 ) {
+            logDevice ( 'nexus5', 'android' ) ;
+            }
+
+            if ( isNexus7 ) {
+            logDevice ( 'nexus7', 'android' ) ;
+            }
+
+            if ( isSGS4 ) {
+            logDevice ( 'sgs4', 'android' ) ;
             }
         }
     </script>

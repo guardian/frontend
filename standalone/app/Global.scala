@@ -25,7 +25,7 @@ object FilterExemptions {
     FilterExemption("/assets"),
     FilterExemption("/favicon.ico"),
     FilterExemption("/_healthcheck"),
-    FilterExemption("/2015-05-28-manifest.json"),
+    FilterExemption("/2015-06-24-manifest.json"),
     // the healthcheck url
     FilterExemption("/world/2012/sep/11/barcelona-march-catalan-independence")
   )
