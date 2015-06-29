@@ -9,9 +9,7 @@ define([
     'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
     'common/modules/commercial/third-party-tags/krux',
-    'common/modules/commercial/third-party-tags/outbrain',
-    'common/modules/commercial/third-party-tags/gravity',
-    'common/modules/commercial/third-party-tags/taboola'
+    'common/modules/commercial/third-party-tags/outbrain'
 ], function (
     Promise,
     config,
@@ -20,9 +18,7 @@ define([
     imrWorldwide,
     remarketing,
     krux,
-    outbrain,
-    gravity,
-    taboola
+    outbrain
 ) {
 
     function init() {
@@ -48,8 +44,6 @@ define([
             loadOther();
         }
 
-        gravity.lightBeacon();
-
         return Promise.resolve(null);
     }
 
@@ -58,8 +52,6 @@ define([
         remarketing.load();
         outbrain.load();
         krux.load();
-        gravity.getRecommendations();
-        taboola.load();
     }
 
     return {

@@ -101,11 +101,11 @@ object Edition {
 object Editionalise {
   import common.editions.EditionalisedSections._
 
-  def apply(id: String, edition: Edition, request: Option[RequestHeader] = None): String = {
+  def apply(id: String, edition: Edition, isInternationalEdition: Boolean): String = {
     if (isEditionalised(id)) id match {
         case "" =>
 
-          if (request.exists(InternationalEdition.isInternationalEdition)) {
+          if (isInternationalEdition) {
             s"international"
           } else {
             edition.id.toLowerCase
@@ -115,8 +115,6 @@ object Editionalise {
       id
     }
   }
-
-  def apply(id: String, request: RequestHeader): String = this(id, Edition(request), Some(request))
 
 }
 
