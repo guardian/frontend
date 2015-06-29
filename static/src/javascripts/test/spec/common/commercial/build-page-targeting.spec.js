@@ -38,8 +38,6 @@ describe('Build Page Targeting', function () {
                 blogIds: 'a/blog',
                 videoDuration: 63
             };
-            config.switches = {
-            };
             cookies.get = function () {
                 return 'ng101';
             };
