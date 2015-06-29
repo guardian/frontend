@@ -51,12 +51,6 @@ define([
                 .filter(function (el) { return el.getAttribute('data-snap-uri'); });
 
         snaps.forEach(initSnap);
-
-        if (snaps.length && !detect.isIOS) {
-            mediator.on('window:resize', _.debounce(function () {
-                snaps.forEach(function (el) { addCss(el, true); });
-            }, 200));
-        }
     }
 
     function addCss(el, isResize) {
@@ -150,6 +144,12 @@ define([
                 case 'json.html':
                     fetchFragment(el, true);
                     break;
+            }
+
+            if (!detect.isIOS) {
+                mediator.on('window:resize', _.debounce(function () {
+                    addCss(el, true);
+                }, 200));
             }
         });
     }
