@@ -1,0 +1,16 @@
+@import model.Video
+
+@(video: Video)
+@import views.support.VideoEncodingUrlCleaner
+
+@main(video) {
+    <figure>
+        @video.mainVideo.map { vid =>
+            <video autoplay >
+                @vid.encodings.filter(_.format == "video/mp4").map { encoding =>
+                    <source src="@VideoEncodingUrlCleaner(encoding.url)" type="@encoding.format" />
+                }
+            </video>
+        }
+    </figure>
+}
