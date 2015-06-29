@@ -702,6 +702,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ImgixAllImagesSwitch = Switch(
+    "Feature",
+    "imgix-all-images",
+    "If this switch is on, then all images will be served via the third party image resizing service",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 7, 31),
+    exposeClientSide = false
+  )
+
   val Hmtl5MediaCompatibilityCheck = Switch(
     "Feature",
     "html-5-media-compatibility-check",

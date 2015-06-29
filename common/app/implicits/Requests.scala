@@ -49,7 +49,7 @@ trait Requests {
     private val networkFronts = Edition.all.map(_.id).map(id => s"/$id")
 
     lazy val isInImgixTest: Boolean = Switches.ImgixSwitch.isSwitchedOn &&
-      (Configuration.environment.isNonProd || imgixTestSections.exists(r.path.startsWith))
+      (Switches.ImgixAllImagesSwitch.isSwitchedOn || imgixTestSections.exists(r.path.startsWith))
 
     // see http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/TerminologyandKeyConcepts.html#x-forwarded-proto
     lazy val isSecure: Boolean = r.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))
