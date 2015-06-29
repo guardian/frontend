@@ -253,6 +253,8 @@ Check that you own your own .npm directory `ls -ld ~/.npm`
 If it is owned by root, then take ownership of it
 `sudo chown -R username:username ~/.npm`
 
+###phantomjs permissions errors (OSX)
+If you get an error about not having permissions to execute phantomjs during `grunt compile`, your machine is probably set up as managed and you'll need to ask IT to make it unmanaged.
 
 ###File handles - "Too many files open"
 
