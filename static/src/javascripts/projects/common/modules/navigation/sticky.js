@@ -35,7 +35,7 @@ define([
         this.breakpoint = detect.getBreakpoint();
         this.isMobile = _.contains(this.breakpoint, 'mobile');
         this.isTablet = _.contains(this.breakpoint, 'tablet');
-        this.isAppleCampaign = config.page.hasBelowTopNavSlot;
+        this.isAppleCampaign = false;//config.page.hasBelowTopNavSlot;
     }
 
     StickyHeader.prototype.init = function () {

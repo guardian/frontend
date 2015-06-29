@@ -59,6 +59,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     animation-timing-function: ease-in;
     animation-duration: .2s;
     animation-fill-mode: forwards;
+    overflow: visible;
 }
 
 @mixin animate-height-down($height) {
@@ -76,6 +77,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     animation-timing-function: ease-in;
     animation-duration: .2s;
     animation-fill-mode: forwards;
+    overflow: hidden;
 }
 
 /* Styles common to all states
@@ -121,7 +123,6 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     &:before {
         background: $c-navigation-background-side-bar;
-        border-bottom: 1px solid $c-global-navigation-border;
         background-clip: padding-box;
     }
 
