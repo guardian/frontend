@@ -44,7 +44,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 @include mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
 @include mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(leftCol));
 
-@mixin animate-height-up($height) {
+@mixin animate-height($height) {
     @keyframes animate-height-up {
         from {
             height: 0px;
@@ -55,9 +55,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
 
-    animation: animate-height-up;
-    animation-timing-function: ease-in;
-    animation-duration: .2s;
+    animation: animate-height-up ease-in .2s;
     animation-fill-mode: forwards;
     overflow: visible;
 }
@@ -73,9 +71,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
 
-    animation: animate-height-down;
-    animation-timing-function: ease-in;
-    animation-duration: .2s;
+    animation: animate-height-up ease-in .2s;
     animation-fill-mode: forwards;
     overflow: hidden;
 }
