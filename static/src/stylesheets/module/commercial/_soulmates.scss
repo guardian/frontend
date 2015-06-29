@@ -198,6 +198,14 @@ $c-soulmates-high: colour(neutral-1);
             float: left;
             line-height: 20px;
             width: auto;
+            display: block;
+
+            @include mq(320px, $until: 479px) {
+                width: 90px;
+                &:last-child {
+                    line-height: 1.2;
+                }
+            }
 
             @include mq(leftCol, $until: wide) {
                 width: 90px;
