@@ -17,7 +17,7 @@ object LiveContentApi extends ElasticSearchLiveContentApiClient
 object PreviewContentApi extends ElasticSearchPreviewContentApiClient
 
 object Static extends Assets(Configuration.assets.path)
-object StaticSecure extends Assets(Configuration.assets.securePath)
+object StaticSecure extends Assets(Configuration.assets.path)
 
 import Responses._
 object Gzipper extends GzipFilter(shouldGzip = (_, resp) => !resp.isImage)
