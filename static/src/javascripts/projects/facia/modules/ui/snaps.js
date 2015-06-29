@@ -9,6 +9,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/to-array',
+    'common/utils/proximity-loader',
     'common/modules/ui/relativedates',
     'facia/modules/ui/football-snaps'
 ], function (
@@ -22,6 +23,7 @@ define([
     mediator,
     template,
     toArray,
+    proximityLoader,
     relativeDates,
     FootballSnaps
 ) {
@@ -48,7 +50,7 @@ define([
                 })
                 .filter(function (el) { return el.getAttribute('data-snap-uri'); });
 
-        snaps.forEach(fetchSnap);
+        snaps.forEach(initSnap);
 
         if (snaps.length && !detect.isIOS) {
             mediator.on('window:resize', _.debounce(function () {
@@ -129,25 +131,27 @@ define([
         });
     }
 
-    function fetchSnap(el) {
-        fastdom.write(function () {
-            bonzo(el).addClass('facia-snap-embed');
+    function initSnap(el) {
+        proximityLoader.add(el, 1500, function () {
+            fastdom.write(function () {
+                bonzo(el).addClass('facia-snap-embed');
+            });
+            addCss(el);
+
+            switch (el.getAttribute('data-snap-type')) {
+                case 'document':
+                    injectIframe(el);
+                    break;
+
+                case 'fragment':
+                    fetchFragment(el);
+                    break;
+
+                case 'json.html':
+                    fetchFragment(el, true);
+                    break;
+            }
         });
-        addCss(el);
-
-        switch (el.getAttribute('data-snap-type')) {
-            case 'document':
-                injectIframe(el);
-                break;
-
-            case 'fragment':
-                fetchFragment(el);
-                break;
-
-            case 'json.html':
-                fetchFragment(el, true);
-                break;
-        }
     }
 
     return {
