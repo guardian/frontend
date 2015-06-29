@@ -8,11 +8,10 @@ import * as cache from 'modules/cache';
 import modalDialog from 'modules/modal-dialog';
 
 describe('Content API', function () {
-    var default_capiBatchSize,
-        createArticle = function (id) {
+    var createArticle = function (id) {
             return {
                 id: function () {
-                    return 'internal-code/content/' + id;
+                    return 'internal-code/page/' + id;
                 },
                 addCapiData: sinon.spy(),
                 meta: {
@@ -23,13 +22,13 @@ describe('Content API', function () {
 
     beforeEach(function () {
         this.mock = new Mock();
-        default_capiBatchSize = CONST.capiBatchSize;
+        this.defaultCapiBatchSize = CONST.capiBatchSize;
         CONST.capiBatchSize = 3;
     });
 
     afterEach(function () {
         this.mock.dispose();
-        CONST.capiBatchSize = default_capiBatchSize;
+        CONST.capiBatchSize = this.defaultCapiBatchSize;
     });
 
     it('decorateItems empty', function (done) {
@@ -42,19 +41,19 @@ describe('Content API', function () {
 
     it('decorateItems in one batch', function (done) {
         this.mock.set({
-            'internal-code/content/capi1,internal-code/content/capi2,internal-code/content/capi3': {
+            'internal-code/page/capi1,internal-code/page/capi2,internal-code/page/capi3': {
                 response: {
                     results: [{
                         fields: {
-                            internalContentCode: 'capi1'
+                            internalPageCode: 'capi1'
                         }
                     }, {
                         fields: {
-                            internalContentCode: 'capi2'
+                            internalPageCode: 'capi2'
                         }
                     }, {
                         fields: {
-                            internalContentCode: 'capi3'
+                            internalPageCode: 'capi3'
                         }
                     }]
                 }
@@ -77,28 +76,28 @@ describe('Content API', function () {
 
     it('decorateItems in multiple batches', function (done) {
         this.mock.set({
-            'internal-code/content/batch1,internal-code/content/batch2,internal-code/content/batch3': {
+            'internal-code/page/batch1,internal-code/page/batch2,internal-code/page/batch3': {
                 response: {
                     results: [{
                         fields: {
-                            internalContentCode: 'batch1'
+                            internalPageCode: 'batch1'
                         }
                     }, {
                         fields: {
-                            internalContentCode: 'batch2'
+                            internalPageCode: 'batch2'
                         }
                     }, {
                         fields: {
-                            internalContentCode: 'batch3'
+                            internalPageCode: 'batch3'
                         }
                     }]
                 }
             },
-            'internal-code/content/batch4': {
+            'internal-code/page/batch4': {
                 response: {
                     results: [{
                         fields: {
-                            internalContentCode: 'batch4'
+                            internalPageCode: 'batch4'
                         }
                     }]
                 }
@@ -369,8 +368,8 @@ describe('Content API', function () {
                     response: {
                         content: [{
                             fields: {
-                                // content code is missing
-                                // internalContentCode: 'banana'
+                                // page code is missing
+                                // internalPageCode: 'banana'
                             }
                         }],
                         section: {
@@ -382,7 +381,7 @@ describe('Content API', function () {
 
             capi.validateItem(item)
             .then(done.fail, (error) => {
-                expect(error.message).toMatch(/internalContentCode/i);
+                expect(error.message).toMatch(/internalPageCode/i);
                 done();
             });
         });
@@ -399,7 +398,7 @@ describe('Content API', function () {
                     response: {
                         content: {
                             fields: {
-                                internalContentCode: 'banana',
+                                internalPageCode: 'banana',
                                 another: true
                             }
                         },
@@ -414,13 +413,13 @@ describe('Content API', function () {
             .then((valid) => {
                 var data = {
                     fields: {
-                        internalContentCode: 'banana',
+                        internalPageCode: 'banana',
                         another: true
                     }
                 };
                 expect(valid).toBe(item);
                 expect(item.addCapiData).toHaveBeenCalledWith(data);
-                expect(cache.get('contentApi', 'internal-code/content/banana')).toEqual(data);
+                expect(cache.get('contentApi', 'internal-code/page/banana')).toEqual(data);
                 done();
             });
         });
