@@ -11,6 +11,7 @@ trait Articles {
 
     lazy val href = "%s/%s".format(conf.Configuration.site.host, savedArticle.id)
     lazy val savedAt = fmt.print(savedArticle.date)
+    implicit val dateOrdering: Ordering[DateTime] = Ordering[Long] on { _.getMillis }
   }
 
   implicit class RichSavedArticles(savedArticles: SavedArticles) {
