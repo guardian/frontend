@@ -70,6 +70,8 @@ define([
         this.elem.setAttribute('data-abtest-name', this.config.test.id);
         bonzo(this.elem).addClass(window.abSwitches['ab' + this.config.test.id] ? 'abtest-item--switched-on' : 'abtest-item--switched-off');
 
+        this.getElem('description').textContent = this.config.test.description;
+
         this.getElem('name').textContent = this.config.test.id;
         var daysTillExpiry = (Date.parse(this.config.test.expiry) - new Date()) / (1000 * 60 * 60 * 24);
         this.getElem('expiry').textContent = Math.floor(daysTillExpiry).toString() + (daysTillExpiry === 1 ? ' day' : ' days');
@@ -83,6 +85,27 @@ define([
 
         var ophanUrl = 'https://dashboard.ophan.co.uk/graph/breakdown?ab=' + this.config.test.id;
         this.getElem('ophan').innerHTML = '<a href="' + ophanUrl + '"">graph</a>';
+
+        if (window.abConfigSwitches.abShowHypothesesDashboard) {
+            var hypothesis;
+            var criteria = this.config.test.audienceCriteria ? this.config.test.audienceCriteria.length > 0 : false,
+                description = this.config.test.description ? this.config.test.description.length > 0 : false,
+                reason = this.config.test.reason ? this.config.test.reason.length > 0 : false,
+                success = this.config.test.successMeasure ? this.config.test.successMeasure.length > 0 : false,
+                outcome = this.config.test.idealOutcome ? this.config.test.idealOutcome.length > 0 : false;
+
+            if (criteria && description && reason && success && outcome) {
+                hypothesis = 'We believe that ' + this.config.test.audienceCriteria;
+                hypothesis += ' has a need for ' + this.config.test.description;
+                hypothesis += ' because ' + this.config.test.reason;
+                hypothesis += '. We will know this when ' + this.config.test.successMeasure;
+                hypothesis += ' has ' + this.config.test.idealOutcome;
+                hypothesis += '.';
+            } else {
+                hypothesis = 'Hypothesis incomplete: Test definition lacks sufficient criteria';
+            }
+            this.getElem('hypothesis').textContent = hypothesis;
+        }
 
         var participation = new Participation({ test: this.config.test });
         participation.render(this.getElem('participation'));
