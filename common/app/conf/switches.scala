@@ -629,15 +629,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val AttachWeatherToTopContainerSwitch = Switch(
-    "Feature",
-    "attach-weather-to-top-container",
-    "Attach weather to top container",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
-    exposeClientSide = true
-  )
-
   val MsieAudit = Switch(
     "Monitoring",
     "msie-audit",
