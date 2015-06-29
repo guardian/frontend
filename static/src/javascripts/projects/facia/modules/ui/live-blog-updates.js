@@ -23,8 +23,8 @@ define([
     detect,
     blockTemplate
 ) {
-    var numDisplayedBlocks = 4,
-        blockHeightPx = 74,
+    var numDisplayedBlocks = 1,
+        blockHeightPx = 71,
 
         animateDelayMs = 2000,
         refreshSecs = 30,
@@ -33,8 +33,6 @@ define([
 
         selector = '.js-snappable .js-liveblog-blocks',
         blocksClassName = 'fc-item__liveblog-blocks',
-        newBlockClassName = 'fc-item__liveblog-block--new',
-        oldBlockClassName = 'fc-item__liveblog-block--old',
         articleIdAttribute = 'data-article-id',
         sessionStorageKey = 'gu.liveblog.block-dates',
         prefixedTransforms = ['-webkit-transform', '-ms-transform', 'transform'],
@@ -61,7 +59,7 @@ define([
         }
 
         return template(blockTemplate, {
-            classes: block.isNew ? newBlockClassName : oldBlockClassName,
+            ariaHidden: !block.isNew,
             href: '/' + articleId + '#' + block.id,
             relativeTime: relTime,
             text: _.compact([block.title, block.body.slice(0, 500)]).join('. '),
