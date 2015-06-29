@@ -2,7 +2,7 @@ import ko from 'knockout';
 import _ from 'underscore';
 import * as vars from 'modules/vars';
 import listManager from 'modules/list-manager';
-import droppable from 'modules/droppable';
+import * as droppable from 'modules/droppable';
 import updateScrollables from 'utils/update-scrollables';
 import cloneWithKey from 'utils/clone-with-key';
 import findFirstById from 'utils/find-first-by-id';

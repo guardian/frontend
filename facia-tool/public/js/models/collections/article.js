@@ -62,6 +62,8 @@ define([
         mediator = mediator.default;
         humanTime = humanTime.default;
         validateImageSrc = validateImageSrc.default;
+        copiedArticle = copiedArticle.default;
+        logger = logger.default;
 
         var capiProps = [
                 'webUrl',
@@ -475,7 +477,7 @@ define([
             if (!sourceItem || sourceItem.id === this.id()) { return; }
 
             mediator.emit('collection:updates', {
-                sourceItem: sourceItem,
+                sourceItem: sourceItem.article.get(),
                 sourceGroup: sourceItem.group,
                 targetItem: this,
                 targetGroup: this.group,
