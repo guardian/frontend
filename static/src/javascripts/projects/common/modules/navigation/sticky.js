@@ -93,7 +93,8 @@ define([
         fastdom.read(function () {
 
             // Navigation should have scrollbar only if header is in slim version
-            if (this.$els.header.hasClass('l-header--is-slim')) {
+            // Or we are in mobile and tablet version
+            if (this.$els.header.hasClass('l-header--is-slim') || this.isMobile || this.isTablet) {
                 var height = window.innerHeight - $('.js-mega-nav-placeholder')[0].getBoundingClientRect().top;
 
                 fastdom.write(function () {

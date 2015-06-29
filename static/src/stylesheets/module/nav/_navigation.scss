@@ -55,7 +55,9 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
 
-    animation: animate-height-up ease-in .2s;
+    animation: animate-height-up;
+    animation-timing-function: ease-in;
+    animation-duration: .2s;
     animation-fill-mode: forwards;
 }
 
@@ -70,7 +72,9 @@ $c-navigation-expandable-background: colour(neutral-1);
         }
     }
 
-    animation: animate-height-down ease-in .2s;
+    animation: animate-height-down;
+    animation-timing-function: ease-in;
+    animation-duration: .2s;
     animation-fill-mode: forwards;
 }
 
