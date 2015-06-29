@@ -44,7 +44,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 @include mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
 @include mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(leftCol));
 
-@mixin animate-height($height) {
+@mixin animate-height-up($height) {
     @keyframes animate-height-up {
         from {
             height: 0px;
