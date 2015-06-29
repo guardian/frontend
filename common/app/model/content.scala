@@ -37,7 +37,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
-  lazy val internalContentCode: String = delegate.safeFields("internalContentCode")
+  lazy val internalPageCode: String = delegate.safeFields("internalPageCode")
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   override lazy val webUrl: String = delegate.webUrl
@@ -167,7 +167,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val headline: String = apiContent.metaData.flatMap(_.headline).getOrElse(fields.getOrDefault("headline", ""))
 
   override lazy val trailText: Option[String] = apiContent.metaData.flatMap(_.trailText).orElse(fields.get("trailText"))
-  override lazy val byline: Option[String] = apiContent.metaData.flatMap(_.byline).orElse(fields.get("byline"))
+  // old bylines can have html http://internal.content.guardianapis.com/commentisfree/2012/nov/10/cocoa-chocolate-fix-under-threat?show-fields=byline
+  override lazy val byline: Option[String] = apiContent.metaData.flatMap(_.byline).orElse(fields.get("byline").map(stripHtml))
   override val showByline = resolvedMetaData.showByline
 
   override def isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)

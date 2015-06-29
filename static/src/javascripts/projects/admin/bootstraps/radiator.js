@@ -1,3 +1,4 @@
+/*global google*/
 define([
     'common/utils/ajax',
     'common/utils/$',
@@ -86,8 +87,8 @@ define([
                         li.setAttribute('title', d.projectName);
                         link.appendChild(li);
 
-                        if (latestDeployments['CODE'][deployment] && stage === 'PROD' && d.status === 'Completed') {
-                            var codeBuild = (latestDeployments['CODE'][deployment] || {}).build;
+                        if (latestDeployments.CODE[deployment] && stage === 'PROD' && d.status === 'Completed') {
+                            var codeBuild = (latestDeployments.CODE[deployment] || {}).build;
                             if (codeBuild !== d.build){
                                 li.className = 'Behind';
                             }
@@ -98,6 +99,7 @@ define([
                         }
                     });
                 }
+                /*global riffraffCODE, riffraffPROD*/
                 renderDeploys('CODE', riffraffCODE);
                 renderDeploys('PROD', riffraffPROD);
             }
@@ -111,7 +113,7 @@ define([
             function(data) {
 
                 var todayData = _.groupBy(_.flatten(_.pluck(data.seriesData, 'data')),
-                    function(entry) { return entry.dateTime }
+                    function(entry) { return entry.dateTime; }
                 );
 
                 // Remove first & last Ophan entries, as they always seem slightly off
@@ -128,7 +130,7 @@ define([
                         hours = ('0' + time.getHours()).slice(-2),
                         mins  = ('0' + time.getMinutes()).slice(-2),
                         formattedTime = hours + ':' + mins,
-                        totalViews = _.reduce(viewsBreakdown, function(memo, entry) { return entry.count + memo }, 0);
+                        totalViews = _.reduce(viewsBreakdown, function(memo, entry) { return entry.count + memo; }, 0);
 
                     graphData.push([formattedTime, totalViews]);
                 });
@@ -145,14 +147,14 @@ define([
                         hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
                         smoothLine: true,
                         chartArea: {
-                            width: "85%"
+                            width: '85%'
                         }
                     });
 
                 // Average pageviews now
                 var lastOphanEntry = _.reduce(_.last(_.values(todayData)),
-                    function(memo, entry) { return entry.count + memo }, 0);
-                var viewsPerSecond = Math.round(lastOphanEntry/60);
+                    function(memo, entry) { return entry.count + memo; }, 0);
+                var viewsPerSecond = Math.round(lastOphanEntry / 60);
                 $('.pageviews-per-second').html('(' + viewsPerSecond + ' views/sec)');
             }
         );
@@ -160,7 +162,7 @@ define([
         // "upgrade" build icons
         $('.buildConfigurationName').each(function(build){
             var icon = $('img', build);
-            var success = icon.attr('src').indexOf("success.png") >= 0;
+            var success = icon.attr('src').indexOf('success.png') >= 0;
             var link = $('a', build);
             var buildName = link[0].innerText;
             var status = success ? 'success' : 'failure';

@@ -12,7 +12,8 @@ define([
     'common/modules/identity/api',
     'common/views/svgs',
     'text!common/views/save-for-later/save-link.html',
-    'text!common/views/save-for-later/save-button.html'
+    'text!common/views/save-for-later/save-button.html',
+    'text!common/views/identity/saved-for-later-profile-link.html'
 ], function (
     qwery,
     bonzo,
@@ -26,8 +27,9 @@ define([
     template,
     identity,
     svgs,
-    saveForLaterLinkTmpl,
-    saveForLaterButtonTmpl
+    saveLink,
+    saveButton,
+    profileLinkTmp
 ) {
 
     function SaveForLater() {
@@ -48,13 +50,23 @@ define([
             containerItemDataId: 'data-id'
         };
 
-        this.isContent = !/Network Front|Section/.test(config.page.contentType);
-        this.userData = null;
-        this.savedArticlesUrl = config.page.idUrl + '/saved-for-later-page';
+        this.isContent = !/Network Front|Section|Tag/.test(config.page.contentType);
+        this.userData = {};
+        this.savedArticlesUrl = config.page.idUrl + '/saved-for-later';
+
+        _.bindAll(this,
+            'save',
+            'delete',
+            'onSaveArticle',
+            'onDeleteArticle',
+            'createSaveFaciaItemHandler',
+            'createDeleteFaciaItemHandler'
+        );
     }
 
-    var bookmarkSvg = svgs('bookmark', ['i-left']);
-    var shortUrl = (config.page.shortUrl || '').replace('http://gu.com', '');
+    var bookmarkSvg = svgs('bookmark', ['rounded-icon']),
+        shortUrl = (config.page.shortUrl || '').replace('http://gu.com', ''),
+        savedPlatformAnalytics = 'web:' + detect.getUserAgent.browser + ':' + detect.getBreakpoint();
 
     var getCustomEventProperties = function (contentId) {
         var prefix = config.page.contentType.match(/^Network Front|Section$/) ? 'Front' : 'Content';
@@ -63,39 +75,64 @@ define([
 
     SaveForLater.prototype.init = function () {
         var userLoggedIn = identity.isUserLoggedIn();
+
         if (userLoggedIn) {
             identity.getSavedArticles()
                 .then(function (resp) {
                     var notFound = { message: 'Not found', description: 'Resource not found' };
+                    var popup = qwery('.popup--profile')[0];
+
+                    fastdom.write(function () {
+                        bonzo(popup).prepend(bonzo.create(
+                            template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), {
+                                idUrl: config.page.idUrl
+                            })
+                        ));
+                        this.updateSavedCount();
+                    }.bind(this));
+
                     if (resp.status === 'error' && resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
                         //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
                         var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
-                        this.userData = {version: date, articles:[]};
+                        this.userData = {version: date, articles: []};
                     } else {
                         this.userData = resp.savedArticles;
                     }
 
-                    this.renderLinksInContainers(true);
+                    this.prepareFaciaItemLinks(true);
+
                     if (this.isContent) {
-                        this.renderLinksInContent();
+                        this.renderSaveButtonsInArticle();
                     }
-                    this.updateArticleCount();
                 }.bind(this));
         } else {
             if (this.isContent) {
-                var url = config.page.idUrl + '/save-content?returnUrl=' + encodeURIComponent(document.location.href) +
-                    '&shortUrl=' + config.page.shortUrl.replace('http://gu.com', '');
-                this.renderSaveThisArticleElement({ url: url, isSaved: false });
+                var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>', {
+                    idUrl: config.page.idUrl,
+                    returnUrl: encodeURIComponent(document.location.href),
+                    shortUrl: shortUrl,
+                    platform: savedPlatformAnalytics
+                });
+                this.renderArticleSaveButton({ url: url, isSaved: false });
             }
-            this.renderLinksInContainers(false);
+            this.prepareFaciaItemLinks(false);
         }
     };
 
-    SaveForLater.prototype.renderSaveThisArticleElement = function (options) {
+    SaveForLater.prototype.renderSaveButtonsInArticle = function () {
+        if (this.getSavedArticle(shortUrl)) {
+            this.renderArticleSaveButton({ isSaved: true });
+        } else {
+            this.renderArticleSaveButton({ isSaved: false });
+        }
+    };
+
+    SaveForLater.prototype.renderArticleSaveButton = function (options) {
         var $savers = bonzo(qwery(this.classes.saveThisArticle));
 
         $savers.each(function (saver) {
             var $saver = bonzo(saver);
+            $saver.css('display', 'block');
             var templateData = {
                 icon: bookmarkSvg,
                 isSaved: options.isSaved,
@@ -103,224 +140,231 @@ define([
                 config: config
             };
             if (options.url) {
-                $saver.html(template(saveForLaterLinkTmpl,
-                    _.assign({ url: options.url }, templateData)));
+                $saver.html(template(saveLink,
+                    _.assign({ url: options.url }, templateData))
+                );
             } else {
-                $saver.html(template(saveForLaterButtonTmpl, templateData));
+                $saver.html(template(saveButton, templateData));
 
                 bean.one($saver[0], 'click', this.classes.saveThisArticleButton,
-                    this.saveArticle.bind(this,
-                        this.onSaveThisArticle.bind(this),
-                        this.onSaveThisArticleError.bind(this),
-                        this.userData,
-                        config.page.pageId, shortUrl));
+                    this[options.isSaved ? 'deleteArticle' : 'saveArticle'].bind(this,
+                        config.page.pageId,
+                        shortUrl
+                    )
+                );
             }
         }.bind(this));
     };
 
     SaveForLater.prototype.getElementsIndexedById = function (context) {
-        var self = this,
-            elements = qwery('[' + self.attributes.containerItemShortUrl + ']', context);
+        var elements = qwery('[' + this.attributes.containerItemShortUrl + ']', context);
 
         return _.forEach(elements, function (el) {
-            return bonzo(el).attr(self.attributes.containerItemShortUrl);
-        });
+            return bonzo(el).attr(this.attributes.containerItemShortUrl);
+        }.bind(this));
     };
 
-    SaveForLater.prototype.renderLinksInContainers = function (signedIn) {
-        var self = this;
+    SaveForLater.prototype.prepareFaciaItemLinks = function (signedIn) {
 
-        if (!self.isContent) {
-            self.renderContainerLinks(signedIn, document.body);
+        if (!this.isContent) {
+            this.renderFaciaItemLinks(signedIn, document.body);
         }
 
-        mediator.on('modules:tonal:loaded', function () {
-            self.renderContainerLinks(signedIn, self.classes.onwardContainer);
-        });
+        mediator.once('modules:tonal:loaded', function () {
+            this.renderFaciaItemLinks(signedIn, this.classes.onwardContainer);
+        }.bind(this));
 
-        mediator.on('modules:onward:loaded', function () {
-            self.renderContainerLinks(signedIn, self.classes.onwardContainer);
-        });
+        mediator.once('modules:onward:loaded', function () {
+            this.renderFaciaItemLinks(signedIn, this.classes.onwardContainer);
+        }.bind(this));
 
-        mediator.on('modules:related:loaded', function () {
-            self.renderContainerLinks(signedIn, self.classes.relatedContainer);
-        });
-    };
-
-    SaveForLater.prototype.renderLinksInContent = function () {
-        if (this.hasUserSavedArticle(this.userData.articles, shortUrl)) {
-            this.renderSaveThisArticleElement({ url: this.savedArticlesUrl, isSaved: true });
-        } else {
-            this.renderSaveThisArticleElement({ isSaved: false });
-        }
+        mediator.once('modules:related:loaded', function () {
+            this.renderFaciaItemLinks(signedIn, this.classes.relatedContainer);
+        }.bind(this));
     };
 
     // Configure the save for later links on a front or in a container
-    SaveForLater.prototype.renderContainerLinks = function (signedIn, context) {
-        var self = this,
-            elements = self.getElementsIndexedById(context);
+    SaveForLater.prototype.renderFaciaItemLinks = function (signedIn, context) {
+        var elements = this.getElementsIndexedById(context);
 
         _.forEach(elements, function (item) {
             var $item = $(item),
-                $itemSaveLink = $(self.classes.itemSaveLink, item),
-                shortUrl = item.getAttribute(self.attributes.containerItemShortUrl),
-                id = item.getAttribute(self.attributes.containerItemDataId),
-                isSaved = signedIn ? self.hasUserSavedArticle(self.userData.articles, shortUrl) : false;
+                $itemSaveLink = $(this.classes.itemSaveLink, item),
+                shortUrl = item.getAttribute(this.attributes.containerItemShortUrl),
+                id = item.getAttribute(this.attributes.containerItemDataId),
+                isSaved = signedIn ? this.getSavedArticle(shortUrl) : false;
 
             if (signedIn) {
-                self[isSaved ? 'createDeleteArticleHandler' : 'createSaveArticleHandler']($itemSaveLink[0], id, shortUrl);
+                this[isSaved ? 'createDeleteFaciaItemHandler' : 'createSaveFaciaItemHandler']($itemSaveLink[0], id, shortUrl);
             }
 
             fastdom.write(function () {
                 if (isSaved) {
-                    $itemSaveLink.addClass(self.classes.fcItemIsSaved);
+                    $itemSaveLink.addClass(this.classes.fcItemIsSaved);
                 } else {
                     var contentId = $($.ancestor($itemSaveLink[0], 'fc-item')).attr('data-id');
                     $itemSaveLink.attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties(contentId)));
                 }
-                $item.addClass('fc-item--has-metadata'); // while in test
                 $itemSaveLink.attr('data-link-name', isSaved ? 'Unsave' : 'Save');
-                $itemSaveLink.removeClass('is-hidden'); // while in test
-            });
-        });
+
+                // only while in test
+                $item.addClass('fc-item--has-metadata');
+                $itemSaveLink.removeClass('is-hidden');
+            }.bind(this));
+        }.bind(this));
     };
 
-        //--- Get articles
-    // -------------------------Save Article
-    SaveForLater.prototype.saveArticle = function (onArticleSaved, onArticleSavedError, userData, pageId, shortUrl) {
-        var self = this,
-            date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
-            newArticle = {id: pageId, shortUrl: shortUrl, date: date, read: false  };
+    // generic functions to save/delete an article, from anywhere
 
-        userData.articles.push(newArticle);
+    SaveForLater.prototype.save = function (pageId, shortUrl, onSave) {
+        var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00'),
+            newArticle = {
+                id: pageId,
+                shortUrl: shortUrl,
+                date: date,
+                read: false,
+                platform: savedPlatformAnalytics
+            };
 
-        identity.saveToArticles(userData).then(
+        this.userData.articles.push(newArticle);
+
+        identity.saveToArticles(this.userData).then(
             function (resp) {
-                if (resp.status === 'error') {
-                    onArticleSavedError();
-                } else {
-                    self.updateArticleCount();
-                    onArticleSaved();
-                }
+                onSave(resp.status !== 'error');
             }
         );
     };
 
-    SaveForLater.prototype.deleteArticle = function (onArticleDeleted, onArticleDeletedError, userData, pageId, shortUrl) {
-        var self = this;
-
-        userData.articles = _.filter(userData.articles, function (article) {
+    SaveForLater.prototype.delete = function (pageId, shortUrl, onDelete) {
+        this.userData.articles = _.filter(this.userData.articles, function (article) {
             return article.shortUrl !== shortUrl;
         });
 
-        identity.saveToArticles(userData).then(
+        identity.saveToArticles(this.userData).then(
             function (resp) {
-                if (resp.status === 'error') {
-                    onArticleDeletedError();
-                } else {
-                    self.updateArticleCount();
-                    onArticleDeleted();
-                }
+                onDelete(resp.status !== 'error');
             }
         );
     };
 
-    //If this is an article Page, configure the save article link
+    // handle saving/deleting from content pages
 
-    SaveForLater.prototype.onSaveThisArticle = function () {
-        this.renderSaveThisArticleElement({ url: this.savedArticlesUrl, isSaved: true });
+    SaveForLater.prototype.saveArticle = function (pageId, shortUrl) {
+        this.save(pageId, shortUrl, this.onSaveArticle);
     };
 
-    SaveForLater.prototype.onSaveThisArticleError = function () {
-        this.renderSaveThisArticleElement({ isSaved: false });
+    SaveForLater.prototype.onSaveArticle = function (success) {
+        this.renderArticleSaveButton({ isSaved: success });
+        if (success) {
+            this.updateSavedCount();
+        }
     };
 
-    //--- Handle saving an article on a front of container
-    SaveForLater.prototype.onSaveArticle = function (link, id, shortUrl) {
-        var self = this;
-        self.createDeleteArticleHandler(link, id, shortUrl);
-
-        fastdom.write(function () {
-            bonzo(link)
-                .addClass(self.classes.fcItemIsSaved)
-                .attr('data-link-name', 'Unsave')
-                // Remove attr
-                .attr('data-custom-event-properties', '');
-        });
+    SaveForLater.prototype.deleteArticle = function (pageId, shortUrl) {
+        this.delete(pageId, shortUrl, this.onDeleteArticle);
     };
 
-    SaveForLater.prototype.onSaveArticleError = function (link, id, shortUrl) {
-        var self = this;
-        self.createSaveArticleHandler(link, id, shortUrl);
-
-        fastdom.write(function () {
-            bonzo(qwery(self.classes.itemSaveLinkHeading, link)[0]).html('Error Saving');
-        });
+    SaveForLater.prototype.onDeleteArticle = function (success) {
+        this.renderArticleSaveButton({ isSaved: !success });
+        if (success) {
+            this.updateSavedCount();
+        }
     };
 
-    SaveForLater.prototype.onDeleteArticle = function (link, id, shortUrl) {
-        var self = this;
-        self.createSaveArticleHandler(link, id, shortUrl);
+    // handle saving/deleting from fronts
 
-        fastdom.write(function () {
-            var contentId = $($.ancestor(link, 'fc-item')).attr('data-id');
-            bonzo(link)
-                .removeClass(self.classes.fcItemIsSaved)
-                .attr('data-link-name', 'Save')
-                .attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties(contentId)));
-        });
+    SaveForLater.prototype.saveFaciaItem = function (pageId, shortUrl) {
+        this.save(pageId, shortUrl, this.onSaveFaciaItem);
     };
 
-    SaveForLater.prototype.onDeleteArticleError = function (link, id, shortUrl) {
-        var self = this;
-        self.createDeleteArticleHandler(link, id, shortUrl);
+    SaveForLater.prototype.onSaveFaciaItem = function (link, id, shortUrl, success) {
+        var that = this;
+        if (success) {
+            this.createDeleteFaciaItemHandler(link, id, shortUrl);
+            this.updateSavedCount();
 
-        fastdom.write(function () {
-            bonzo(qwery(self.classes.itemSaveLinkHeading, link)[0]).html('Error Removing');
-        });
+            fastdom.write(function () {
+                bonzo(link)
+                    .addClass(that.classes.fcItemIsSaved)
+                    .attr('data-link-name', 'Unsave')
+                    .attr('data-custom-event-properties', '');
+            });
+        } else {
+            this.createSaveFaciaItemHandler(link, id, shortUrl);
+
+            fastdom.write(function () {
+                bonzo(qwery(that.classes.itemSaveLinkHeading, link)[0]).html('Error Saving');
+            });
+        }
+    };
+
+    SaveForLater.prototype.deleteFaciaItem = function (pageId, shortUrl) {
+        this.save(pageId, shortUrl, this.onDeleteFaciaItem);
+    };
+
+    SaveForLater.prototype.onDeleteFaciaItem = function (link, id, shortUrl, success) {
+        var that = this;
+        if (success) {
+            this.createSaveFaciaItemHandler(link, id, shortUrl);
+            this.updateSavedCount();
+
+            fastdom.write(function () {
+                var contentId = $($.ancestor(link, 'fc-item')).attr('data-id');
+                bonzo(link)
+                    .removeClass(that.classes.fcItemIsSaved)
+                    .attr('data-link-name', 'Save')
+                    .attr('data-custom-event-properties', JSON.stringify(getCustomEventProperties(contentId)));
+            });
+        } else {
+            this.createDeleteFaciaItemHandler(link, id, shortUrl);
+
+            fastdom.write(function () {
+                bonzo(qwery(that.classes.itemSaveLinkHeading, link)[0]).html('Error Removing');
+            });
+        }
     };
 
     //--Create container link click handlers
-    SaveForLater.prototype.createSaveArticleHandler = function (saveLink, id, shortUrl) {
-        var self = this;
-
-        bean.one(saveLink, 'click',
-            self.saveArticle.bind(self,
-                self.onSaveArticle.bind(self, saveLink, id, shortUrl),
-                self.onSaveArticleError.bind(self, saveLink, id, shortUrl),
-                self.userData,
+    SaveForLater.prototype.createSaveFaciaItemHandler = function (link, id, shortUrl) {
+        bean.one(link, 'click',
+            this.save.bind(this,
                 id,
-                shortUrl
+                shortUrl,
+                this.onSaveFaciaItem.bind(this, link, id, shortUrl)
             )
         );
     };
 
-    SaveForLater.prototype.createDeleteArticleHandler = function (deleteLink, id, shortUrl) {
-        var self = this;
-
-        bean.one(deleteLink, 'click',
-            self.deleteArticle.bind(self,
-                self.onDeleteArticle.bind(self, deleteLink, id, shortUrl),
-                self.onDeleteArticleError.bind(self, deleteLink, id, shortUrl),
-                self.userData,
+    SaveForLater.prototype.createDeleteFaciaItemHandler = function (link, id, shortUrl) {
+        bean.one(link, 'click',
+            this.delete.bind(this,
                 id,
-                shortUrl
+                shortUrl,
+                this.onDeleteFaciaItem.bind(this, link, id, shortUrl)
             )
         );
     };
 
-    ///------------------------------Utils
-    SaveForLater.prototype.hasUserSavedArticle = function (articles, shortUrl) {
-        return _.some(articles, function (article) {
+    SaveForLater.prototype.getSavedArticle = function (shortUrl) {
+        return _.some(this.userData.articles, function (article) {
             return article.shortUrl.indexOf(shortUrl) > -1;
         });
     };
 
-    SaveForLater.prototype.updateArticleCount = function () {
-        var self = this,
-            saveForLaterProfileLink = $(self.classes.profileDropdownLink);
+    SaveForLater.prototype.updateSavedCount = function () {
+        var saveForLaterProfileLink = $(this.classes.profileDropdownLink);
+        var profile = $('.brand-bar__item--profile');
+        var count = this.userData.articles.length;
 
-        saveForLaterProfileLink.html('Saved (' + self.userData.articles.length + ')');
+        fastdom.write(function () {
+            if (count > 0) {
+                $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
+                saveForLaterProfileLink.html('Saved for later (' + count + ')');
+            } else {
+                $('.control__icon-wrapper', profile).removeAttr('data-saved-content-count');
+                saveForLaterProfileLink.html('Saved for later');
+            }
+        });
     };
 
     return SaveForLater;

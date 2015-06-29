@@ -1,3 +1,3 @@
 export default {
-	viewId: '123456'
-}
+    viewId: '123456'
+};

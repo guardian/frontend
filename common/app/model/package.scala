@@ -1,7 +1,8 @@
 package model
 
-import common.Edition
 import com.gu.contentapi.client.model.{Content => ApiContent}
+import common.Edition
+
 import scala.math.abs
 
 object `package` {
@@ -48,6 +49,10 @@ object `package` {
       val normalizedPath = parts.mkString("-")
       Seq(path, s"$normalizedPath/$normalizedPath")
     }
+  }
+
+  def stripHtml(text: String) = {
+    text.replaceAll("""(<a[^>]*>)|(</a>)""", "")
   }
 
 }

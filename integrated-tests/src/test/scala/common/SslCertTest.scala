@@ -16,13 +16,10 @@ import sun.security.x509.X509CertImpl
   ctx.init(new Array[KeyManager](0), trustManager, new SecureRandom())
   SSLContext.setDefault(ctx)
 
-  // TODO Delete me after this date
-  val tooLate = LocalDate.now.isAfter(new LocalDate(2015, 6, 15))
-
   // NOTE - do not include self signed certificates. they do not cut the mustard
   // Also do not include hosts that are unreachable (e.g. inside the firewall)
-  private val webTeamHosts = if (tooLate) Seq(
-    "api.nextgen.guardianapps.co.uk") else Nil ++ Seq(
+  private val webTeamHosts = Seq(
+    "api.nextgen.guardianapps.co.uk",
     "i.guim.co.uk",
     "beacon.guim.co.uk",
     "profile.theguardian.com",
@@ -35,12 +32,6 @@ import sun.security.x509.X509CertImpl
   )
 
   private val hosts = webTeamHosts ++ ophanHosts
-
-  "API.nextgen host test" should "be turned on assuming if the cert is valid now" in {
-    if (tooLate/*TODO also delete this val*/) {
-      fail("api.nextgen cert should be updated by now")
-    }
-  }
 
   "SSL Certs" should "Be more than 30 days outside of their expiry time"  in {
 

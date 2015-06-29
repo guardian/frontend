@@ -19,7 +19,6 @@ define([
 ) {
 
     var verticallyResponsiveImages = function () {
-
             var setHeight = function () {
                 if (!bonzo(document.body).hasClass('has-overlay')) {
                     var $imgs = $('.js-gallery-img'),
@@ -58,7 +57,9 @@ define([
             mediator.emit('ui:images:upgradePictures');
 
             mediator.emit('page:gallery:ready');
-            transcludeMostPopular();
+            if (config.page.showRelatedContent) {
+                transcludeMostPopular();
+            }
         };
 
     return {

@@ -55,9 +55,9 @@ define([
         if (relTime.match(/yesterday/i)) {
             relTime = relTime.toLowerCase();
         } else if (relTime) {
-            relTime = 'latest update ' + relTime + ' ago';
+            relTime = 'Latest update ' + relTime + ' ago';
         } else {
-            relTime = 'updated just now';
+            relTime = 'Updated just now';
         }
 
         return template(blockTemplate, {

@@ -401,14 +401,11 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 // Liveblog blocks
-@function liveblog-blocks-height($blocks) {
-    $block-height: 74px;
-    @return $block-height * $blocks;
-}
+$block-height: 74px;
 
 .fc-item__liveblog-blocks {
     box-sizing: content-box !important;
-    height: liveblog-blocks-height(1);
+    height: $block-height;
     overflow: hidden;
     border-bottom: $gs-gutter/4 solid transparent;
 }
@@ -420,7 +417,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__liveblog-block {
     box-sizing: border-box;
     display: block;
-    height: liveblog-blocks-height(1);
+    height: $block-height;
 }
 
 .fc-item__liveblog-block:hover {
@@ -431,10 +428,10 @@ $fc-item-gutter: $gs-gutter / 4;
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
-    @include fs-textSans(1);
+    @include fs-headline(1);
     line-height: 1rem;
     color: mix(#ffffff, colour(live-default), 92%);
-    max-height: liveblog-blocks-height(1);
+    max-height: $block-height;
     padding: $gs-baseline/4 $gs-baseline/2;
     border-top: 1px solid mix(#ffffff, colour(live-default), 50%);
     border-bottom: 4px solid #cc2b12;
@@ -525,6 +522,7 @@ $fc-item-gutter: $gs-gutter / 4;
     float: right;
     margin-right: 0 - ($gs-gutter * .25);
     padding-right: ($gs-gutter * .25);
+    transition: color 100ms;
 
     &:hover,
     &:focus,

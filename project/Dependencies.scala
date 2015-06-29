@@ -4,7 +4,7 @@ import sbt._
 
 object Dependencies {
   val cucumberVersion = "1.1.5"
-  val identityLibVersion = "3.44"
+  val identityLibVersion = "3.45"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
 
@@ -18,8 +18,8 @@ object Dependencies {
   val crosswordsApiClient = "com.gu" %% "crosswords-api-client" % "0.5"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.0.0"
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.48"
-  val faciaScalaClient = "com.gu" %% "facia-json" % "0.48"
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.51"
+  val faciaScalaClient = "com.gu" %% "facia-json" % "0.51"
   val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.4"
   val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.6"
   val googleSheetsApi = "com.google.gdata" % "core" % "1.47.1"

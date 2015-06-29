@@ -34,7 +34,7 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('sport');
-            expect(request.data.update.item).toEqual('internal-code/content/1');
+            expect(request.data.update.item).toEqual('internal-code/page/1');
             expect(request.data.update.itemMeta.group).toEqual('3');
 
             return insertAfterAnArticle();
@@ -46,9 +46,9 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('latest');
-            expect(request.data.update.item).toEqual('internal-code/content/2');
+            expect(request.data.update.item).toEqual('internal-code/page/2');
             expect(!!request.data.update.itemMeta).toEqual(false);
-            expect(request.data.update.position).toEqual('internal-code/content/1');
+            expect(request.data.update.position).toEqual('internal-code/page/1');
 
             return insertOnTopOfTheList();
         })
@@ -59,9 +59,9 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('latest');
-            expect(request.data.update.item).toEqual('internal-code/content/3');
+            expect(request.data.update.item).toEqual('internal-code/page/3');
             expect(!!request.data.update.itemMeta).toEqual(false);
-            expect(request.data.update.position).toEqual('internal-code/content/1');
+            expect(request.data.update.position).toEqual('internal-code/page/1');
 
             return insertMetadataOnTopOfTheList();
         })
@@ -72,9 +72,9 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('latest');
-            expect(request.data.update.item).toEqual('internal-code/content/3');
+            expect(request.data.update.item).toEqual('internal-code/page/3');
             expect(request.data.update.itemMeta.isBreaking).toEqual(true);
-            expect(request.data.update.position).toEqual('internal-code/content/3');
+            expect(request.data.update.position).toEqual('internal-code/page/3');
 
             return moveFirstItemBelow();
         })
@@ -85,9 +85,9 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('latest');
-            expect(request.data.update.item).toEqual('internal-code/content/3');
+            expect(request.data.update.item).toEqual('internal-code/page/3');
             expect(request.data.update.itemMeta.isBreaking).toEqual(true);
-            expect(request.data.update.position).toEqual('internal-code/content/2');
+            expect(request.data.update.position).toEqual('internal-code/page/2');
 
             return moveToAnotherCollections();
         })
@@ -98,14 +98,14 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('sport');
-            expect(request.data.update.item).toEqual('internal-code/content/3');
+            expect(request.data.update.item).toEqual('internal-code/page/3');
             expect(request.data.update.itemMeta.isBreaking).toEqual(true);
             expect(request.data.update.itemMeta.group).toEqual('3');
-            expect(request.data.update.position).toEqual('internal-code/content/1');
+            expect(request.data.update.position).toEqual('internal-code/page/1');
             expect(request.data.remove.draft).toEqual(true);
             expect(request.data.remove.live).toEqual(false);
             expect(request.data.remove.id).toEqual('latest');
-            expect(request.data.remove.item).toEqual('internal-code/content/3');
+            expect(request.data.remove.item).toEqual('internal-code/page/3');
 
             return removeItemFromGroup();
         })
@@ -115,7 +115,7 @@ describe('Collections', function () {
             expect(request.data.remove.draft).toEqual(true);
             expect(request.data.remove.live).toEqual(false);
             expect(request.data.remove.id).toEqual('sport');
-            expect(request.data.remove.item).toEqual('internal-code/content/1');
+            expect(request.data.remove.item).toEqual('internal-code/page/1');
 
             return addSublinkInArticle();
         })
@@ -125,8 +125,8 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('latest');
-            expect(request.data.update.item).toEqual('internal-code/content/2');
-            expect(request.data.update.itemMeta.supporting[0].id).toEqual('internal-code/content/5');
+            expect(request.data.update.item).toEqual('internal-code/page/2');
+            expect(request.data.update.itemMeta.supporting[0].id).toEqual('internal-code/page/5');
 
             return publishLatestChanges();
         })
@@ -143,7 +143,7 @@ describe('Collections', function () {
                 return {
                     sport: {
                         draft: [{
-                            id: 'internal-code/content/1',
+                            id: 'internal-code/page/1',
                             meta: {
                                 group: 3
                             }
@@ -165,9 +165,9 @@ describe('Collections', function () {
                 return {
                     latest: {
                         draft: [{
-                            id: 'internal-code/content/1'
+                            id: 'internal-code/page/1'
                         }, {
-                            id: 'internal-code/content/2'
+                            id: 'internal-code/page/2'
                         }]
                     }
                 };
@@ -188,11 +188,11 @@ describe('Collections', function () {
                 return {
                     latest: {
                         draft: [{
-                            id: 'internal-code/content/3'
+                            id: 'internal-code/page/3'
                         }, {
-                            id: 'internal-code/content/1'
+                            id: 'internal-code/page/1'
                         }, {
-                            id: 'internal-code/content/2'
+                            id: 'internal-code/page/2'
                         }]
                     }
                 };
@@ -211,14 +211,14 @@ describe('Collections', function () {
                 return {
                     latest: {
                         draft: [{
-                            id: 'internal-code/content/3',
+                            id: 'internal-code/page/3',
                             meta: {
                                 isBreaking: true
                             }
                         }, {
-                            id: 'internal-code/content/1'
+                            id: 'internal-code/page/1'
                         }, {
-                            id: 'internal-code/content/2'
+                            id: 'internal-code/page/2'
                         }]
                     }
                 };
@@ -241,14 +241,14 @@ describe('Collections', function () {
                 return {
                     latest: {
                         draft: [{
-                            id: 'internal-code/content/1'
+                            id: 'internal-code/page/1'
                         }, {
-                            id: 'internal-code/content/3',
+                            id: 'internal-code/page/3',
                             meta: {
                                 isBreaking: true
                             }
                         }, {
-                            id: 'internal-code/content/2'
+                            id: 'internal-code/page/2'
                         }]
                     }
                 };
@@ -274,20 +274,20 @@ describe('Collections', function () {
                 return {
                     latest: {
                         draft: [{
-                            id: 'internal-code/content/1'
+                            id: 'internal-code/page/1'
                         }, {
-                            id: 'internal-code/content/2'
+                            id: 'internal-code/page/2'
                         }]
                     },
                     sport: {
                         draft: [{
-                            id: 'internal-code/content/3',
+                            id: 'internal-code/page/3',
                             meta: {
                                 isBreaking: true,
                                 group: 3
                             }
                         }, {
-                            id: 'internal-code/content/1',
+                            id: 'internal-code/page/1',
                             meta: {
                                 group: 3
                             }
@@ -307,7 +307,7 @@ describe('Collections', function () {
                 return {
                     sport: {
                         draft: [{
-                            id: 'internal-code/content/3',
+                            id: 'internal-code/page/3',
                             meta: {
                                 isBreaking: true,
                                 group: 3
@@ -334,12 +334,12 @@ describe('Collections', function () {
                 return {
                     latest: {
                         draft: [{
-                            id: 'internal-code/content/1'
+                            id: 'internal-code/page/1'
                         }, {
-                            id: 'internal-code/content/2',
+                            id: 'internal-code/page/2',
                             meta: {
                                 supporting: [{
-                                    id: 'internal-code/content/5'
+                                    id: 'internal-code/page/5'
                                 }]
                             }
                         }]
@@ -372,7 +372,7 @@ describe('Collections', function () {
             return {
                 sport: {
                     draft: [{
-                        id: 'internal-code/content/5',
+                        id: 'internal-code/page/5',
                         meta: {
                             group: 0
                         }
@@ -384,9 +384,6 @@ describe('Collections', function () {
             expect($('.desktop-indicator .indicator')[0].clientHeight > 100).toBe(true);
             done();
         })
-        .catch(function () {
-            expect(true).toBe(false);
-            done();
-        });
+        .catch(done.fail);
     });
 });

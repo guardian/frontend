@@ -1,35 +1,36 @@
 import RelativeDates from 'common/modules/ui/relativedates';
+import sinon from 'sinonjs';
 import bonzo from 'bonzo';
 import fixtures from 'helpers/fixtures';
 import qwery from 'qwery';
 
 var conf =  {
-        id: 'relative-dates',
-        fixtures: [
-                    '<time id="time-valid" class="js-timestamp" datetime="2012-08-12T18:43:00.000Z">12th August</time>',
-                    '<time id="time-invalid" class="js-timestamp" datetime="201-08-12agd18:43:00.000Z">Last Tuesday</time>',
-                    '<time id="time-locale" class="js-locale-timestamp" datetime="2014-06-13T17:00:00+0100" data-timestamp="1402675200000">17:00</time>'
-                   ]
-            },
-    // make the date static so tests are stable
-    fakeNow = Date.parse('2012-08-13T12:00:00+01:00'),
-    date;
+    id: 'relative-dates',
+    fixtures: [
+                '<time id="time-valid" class="js-timestamp" datetime="2012-08-12T18:43:00.000Z">12th August</time>',
+                '<time id="time-invalid" class="js-timestamp" datetime="201-08-12agd18:43:00.000Z">Last Tuesday</time>',
+                '<time id="time-locale" class="js-locale-timestamp" datetime="2014-06-13T17:00:00+0100" data-timestamp="1402675200000">17:00</time>'
+               ]
+},
+// make the date static so tests are stable
+fakeNow = Date.parse('2012-08-13T12:00:00+01:00'),
+date;
 
-describe("Relative dates", function() {
+describe('Relative dates', function () {
 
-    beforeEach(function() {
+    beforeEach(function () {
         fixtures.render(conf);
-        date = sinon.useFakeTimers(fakeNow, "Date");
+        date = sinon.useFakeTimers(fakeNow, 'Date');
     });
 
-    afterEach(function() {
+    afterEach(function () {
         fixtures.clean(conf.id);
         date.restore();
     });
 
     var epochBug = '2038-01-19T03:14:07';
 
-        var datesToTest = {
+    var datesToTest = {
             'lessThanAMinuteAgo': {
                 'date'           :      '2012-08-13T11:59:50+01:00',
                 'expectedOutput' :      '10s',
@@ -116,51 +117,53 @@ describe("Relative dates", function() {
             }
         };
 
-        for (var category in datesToTest) {
-            describe('Show relative dates for timestamps formatted as YYYY-MM-DD HH:MM:SS [' + category + ']', function(){
+    for (var category in datesToTest) {
+        /*eslint-disable no-loop-func*/
+        describe('Show relative dates for timestamps formatted as YYYY-MM-DD HH:MM:SS [' + category + ']', function () {
                 var d     = datesToTest[category],
                     epoch = Date.parse(d.date);
-                it('standard', function() {
+                it('standard', function () {
                     expect(RelativeDates.makeRelativeDate(epoch)).toBe(d.expectedOutput);
                 });
-                it('short', function() {
+                it('short', function () {
                     // Do the same but in short format
                     expect(RelativeDates.makeRelativeDate(epoch, { format: 'short' })).toBe(d.expectedShortOutput);
                 });
-                it('med', function() {
+                it('med', function () {
                     expect(RelativeDates.makeRelativeDate(epoch, { format: 'med' })).toBe(d.expectedMedOutput);
                 });
-                it('long', function() {
+                it('long', function () {
                     // and long format
                     expect(RelativeDates.makeRelativeDate(epoch, { format: 'long' })).toBe(d.expectedLongOutput);
                 });
             });
-        }
+        /*eslint-enable no-loop-func*/
+    }
 
-    it("Return the input date if said date is in the future", function(){
+    it('Return the input date if said date is in the future', function () {
         expect(RelativeDates.makeRelativeDate(Date.parse(epochBug))).toBeFalsy();
     });
 
-    it("Fail politely if given non-date / invalid input for either argument", function(){
+    it('Fail politely if given non-date / invalid input for either argument', function () {
         expect(RelativeDates.makeRelativeDate('foo')).toBeFalsy();
     });
 
-    it("Fail politely if the date is older than a 'notAfter' value", function(){
+    it('Fail politely if the date is older than a \'notAfter\' value', function () {
         expect(RelativeDates.makeRelativeDate(Date.parse(fakeNow), {notAfter: 3600})).toBeFalsy();
     });
 
-    it("Convert valid timestamps in the HTML document into their expected output", function(){
+    it('Convert valid timestamps in the HTML document into their expected output', function () {
         RelativeDates.init();
         expect(document.getElementById('time-valid').innerHTML).toBe('Yesterday 19:43');
         expect(document.getElementById('time-valid').getAttribute('title')).toBe('12th August');
     });
 
-    it("Ignore invalid timestamps", function(){
+    it('Ignore invalid timestamps', function () {
         RelativeDates.init();
         expect(document.getElementById('time-invalid').innerHTML).toBe('Last Tuesday');
     });
 
-    it("Should convert timestamps to users locale", function(){
+    it('Should convert timestamps to users locale', function () {
         RelativeDates.init();
         expect(document.getElementById('time-locale').innerHTML).toBe('17:00');
     });

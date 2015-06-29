@@ -30,7 +30,7 @@ case class CreateFront(
 )
 
 object FrontController extends Controller with PanDomainAuthActions {
-  def create = AuthAction { request =>
+  def create = APIAuthAction { request =>
     request.body.read[CreateFront] match {
       case Some(createFrontRequest) =>
         val identity = request.user
@@ -42,7 +42,7 @@ object FrontController extends Controller with PanDomainAuthActions {
     }
   }
 
-  def update(frontId: String) = AuthAction { request =>
+  def update(frontId: String) = APIAuthAction { request =>
     request.body.read[FrontJson] match {
       case Some(front) =>
         val identity = request.user

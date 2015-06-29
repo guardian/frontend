@@ -5,10 +5,9 @@ import common.{Edition, NavItem}
 import conf.Configuration
 import contentapi.Paths
 import dfp.DfpAgent
-import layout.Front
 import model.facia.PressedCollection
 import org.joda.time.DateTime
-import play.api.libs.json.{Json, JsString, JsValue}
+import play.api.libs.json.{JsString, JsValue, Json}
 import services.FaciaContentConvert
 
 import scala.language.postfixOps
@@ -30,6 +29,7 @@ object PressedPage {
           collection.updatedBy,
           collection.updatedEmail,
           collection.href,
+          collectionConfigWithId.config.description,
           collectionConfigWithId.config.apiQuery,
           collectionConfigWithId.config.collectionType,
           collectionConfigWithId.config.groups.map(Group.fromGroups),
@@ -118,6 +118,9 @@ case class PressedPage(id: String,
       Some(section)))
   override def sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
+  override def hasAdInBelowTopNavSlot(edition: Edition): Boolean = {
+    DfpAgent.hasAdInTopBelowNavSlot(adUnitSuffix, edition)
+  }
 
   def allItems = collections.flatMap(_.all).distinct
 

@@ -172,5 +172,3 @@ define([
         init: initPlayer
     };
 });
-/* jshint unused: false */
-/* global guardian */

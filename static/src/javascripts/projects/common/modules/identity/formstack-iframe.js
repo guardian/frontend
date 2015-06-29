@@ -65,7 +65,7 @@ define([
             $(el).css({ 'height': height });
         };
 
-        self.show = function () {
+        self.show = function () {
             $(el).removeClass('is-hidden');
         };
 
