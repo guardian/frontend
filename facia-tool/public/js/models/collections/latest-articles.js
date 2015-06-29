@@ -32,6 +32,7 @@ define([
     return function(options) {
 
         var self = this,
+            loadCallback = options.callback || function () {},
             deBounced,
             poller,
             opts = options || {},
@@ -172,11 +173,13 @@ define([
                         }
 
                         scrollable.scrollTop = initialScroll;
+                        loadCallback();
                     },
                     function (error) {
                         var errMsg = error.message;
                         vars.model.alert(errMsg);
                         self.flush(errMsg);
+                        loadCallback();
                     }
                 );
             }, 300);

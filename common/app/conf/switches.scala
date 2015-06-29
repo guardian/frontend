@@ -260,7 +260,7 @@ object Switches {
     "ophan-view-id",
     "Depeneding on ophan to pass view ID to the gdf targeting",
     safeState = On,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = new LocalDate(2015, 7, 14),
     exposeClientSide = true
   )
 
@@ -629,15 +629,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val AttachWeatherToTopContainerSwitch = Switch(
-    "Feature",
-    "attach-weather-to-top-container",
-    "Attach weather to top container",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
-    exposeClientSide = true
-  )
-
   val MsieAudit = Switch(
     "Monitoring",
     "msie-audit",
@@ -726,24 +717,6 @@ object Switches {
     "Enable the Outbrain content recommendation widget.",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val GravitySwitch = Switch(
-    "Feature",
-    "gravity",
-    "Enable the Gravity content recommendation widget.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 1),
-    exposeClientSide = true
-  )
-
-  val TaboolaSwitch = Switch(
-    "Feature",
-    "taboola",
-    "Enable the Taboola content recommendation widget.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 1),
     exposeClientSide = true
   )
 
