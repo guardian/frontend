@@ -109,7 +109,10 @@ export default function() {
             this.refreshConfig(res.config);
             vars.model.pending(false);
         }, this);
-        persistence.registerCallback(function () {
+        persistence.on('before update', function () {
+            model.pending(true);
+        });
+        persistence.on('after update', function () {
             bootstrap.get().onload(onload);
         });
 
