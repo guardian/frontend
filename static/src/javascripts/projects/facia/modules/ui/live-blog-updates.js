@@ -74,8 +74,7 @@ define([
                     wrapperClasses = [
                         'fc-item__liveblog-blocks__inner',
                         'u-faux-block-link__promote'
-                    ];
-
+                    ],
                     blocksHtml = _.chain(blocks)
                         .slice(0, 2)
                         .map(function (block, index) {
