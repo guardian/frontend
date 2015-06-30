@@ -28,7 +28,8 @@ case class ImageAsset(delegate: Asset, index: Int) {
   lazy val source: Option[String] = fields.get("source")
   lazy val photographer: Option[String] = fields.get("photographer")
   lazy val credit: Option[String] = fields.get("credit")
-  lazy val displayCredit: Boolean = fields.get("displayCredit").exists(_=="true")
+  lazy val displayCredit: Boolean = fields.get("displayCredit").contains("true")
+  lazy val isMaster: Boolean = fields.get("isMaster").contains("true")
 
   def showCaption = caption.exists(_.trim.nonEmpty) || (displayCredit && credit.nonEmpty)
 

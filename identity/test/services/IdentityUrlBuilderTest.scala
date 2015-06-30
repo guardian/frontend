@@ -14,6 +14,7 @@ class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSug
   when(idRequest.trackingData) thenReturn omnitureTracking
   when(idRequest.returnUrl) thenReturn None
   when(idRequest.skipConfirmation) thenReturn None
+  when(idRequest.page) thenReturn None
   when(omnitureTracking.registrationType) thenReturn None
 
   val idUrlBuilder = new IdentityUrlBuilder(conf)

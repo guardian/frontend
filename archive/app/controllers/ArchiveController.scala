@@ -15,6 +15,9 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   private val CombinerSection = """^(www.theguardian.com/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+$""".r
   private val CombinerSectionRss = """^(www.theguardian.com/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+/rss$""".r
   private val Guardian = """^www.theguardian.com/Guardian/(.*)$""".r
+  private val DatedSpecialIndexPage = """^www.theguardian.com(/[\w\d-]+)(/.*)/(week|lead)$""".r
+  private val SectionSpecialIndex = """^www.theguardian.com(/[\w\d-]+)/(week|lead)$""".r
+  private val NewspaperPage = "^www.theguardian.com(/theguardian|/theobserver)/(\\d{4}/\\w{3}/\\d{2})/(.+)".r
 
   def lookup(path: String) = Action.async{ implicit request =>
 
@@ -23,16 +26,19 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
 
       // if we do not have a location in the database then follow these rules
       path match {
-        case Gallery(gallery)             => redirectTo(gallery, "gallery")
-        case Century(century)             => redirectTo(century, "century")
-        case Guardian(endOfUrl)           => redirectTo(s"www.theguardian.com/$endOfUrl", "guardian")
-        case Lowercase(lower)             => redirectTo(lower, "lowercase")
+        case Gallery(gallery)                 => redirectTo(gallery, "gallery")
+        case Century(century)                 => redirectTo(century, "century")
+        case Guardian(endOfUrl)               => redirectTo(s"www.theguardian.com/$endOfUrl", "guardian")
+        case Lowercase(lower)                 => redirectTo(lower, "lowercase")
 
         // Googlebot hits a bunch of really old combiners and combiner RSS
         // bounce these to the section
-        case CombinerSectionRss(section)  => redirectTo(s"$section/rss", "combinerrss")
-        case CombinerSection(section)     => redirectTo(section, "combinersection")
-        case Combiner(combiner)           => redirectTo(combiner, "combiner")
+        case CombinerSectionRss(section)      => redirectTo(s"$section/rss", "combinerrss")
+        case CombinerSection(section)         => redirectTo(section, "combinersection")
+        case Combiner(combiner)               => redirectTo(combiner, "combiner")
+        case DatedSpecialIndexPage(section, rest, _) => Cached(300)(Redirect(s"${LinkTo(section)}$rest/all", 301))
+        case SectionSpecialIndex(section, _)  => Cached(300)(Redirect(s"${LinkTo(section)}/all", 301))
+        case NewspaperPage(paper, date, book)       =>  Cached(300)(Redirect(s"${LinkTo(paper)}/$book/$date/all", 301))
 
         case _ =>
           log404(request)
@@ -100,7 +106,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
 
   private def redirectTo(path: String, identifier: String)(implicit request: RequestHeader): Result = {
     log.info(s"301, $identifier, ${RequestLog(request)}")
-    Cached(300)(Redirect(s"http://$path?redirection=$identifier", 301))
+    Cached(300)(Redirect(s"http://$path", 301))
   }
 
   private def logDestination(path: String, msg: String, destination: String) {

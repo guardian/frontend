@@ -3,7 +3,7 @@ define([
     'underscore',
     'modules/vars',
     'utils/array',
-    'utils/internal-content-code',
+    'utils/internal-page-code',
     'utils/parse-query-params',
     'utils/url-abs-path',
     'models/collections/article',
@@ -16,7 +16,7 @@ define([
     _,
     vars,
     array,
-    internalContentCode,
+    internalPageCode,
     parseQueryParams,
     urlAbsPath,
     Article,
@@ -26,12 +26,13 @@ define([
     ko
 ) {
     parseQueryParams = parseQueryParams.default;
-    internalContentCode = internalContentCode.default;
+    internalPageCode = internalPageCode.default;
     urlAbsPath = urlAbsPath.default;
 
     return function(options) {
 
         var self = this,
+            loadCallback = options.callback || function () {},
             deBounced,
             poller,
             opts = options || {},
@@ -138,7 +139,7 @@ define([
 
                 contentApi.fetchLatest(request)
                 .then(
-                    function(response) {
+                    function (response) {
                         if (count !== counter) { return; }
                         var rawArticles = response.results,
                             newArticles,
@@ -150,11 +151,11 @@ define([
 
                         if (rawArticles.length) {
                             newArticles = array.combine(rawArticles, self.articles(), function (one, two) {
-                                var oneId = one instanceof Article ? one.id() : internalContentCode(one);
-                                var twoId = two instanceof Article ? two.id() : internalContentCode(two);
+                                var oneId = one instanceof Article ? one.id() : internalPageCode(one);
+                                var twoId = two instanceof Article ? two.id() : internalPageCode(two);
                                 return oneId === twoId;
                             }, function (opts) {
-                                var icc = internalContentCode(opts);
+                                var icc = internalPageCode(opts);
 
                                 opts.id = icc;
                                 cache.put('contentApi', icc, opts);
@@ -172,11 +173,13 @@ define([
                         }
 
                         scrollable.scrollTop = initialScroll;
+                        loadCallback();
                     },
-                    function(error) {
+                    function (error) {
                         var errMsg = error.message;
                         vars.model.alert(errMsg);
                         self.flush(errMsg);
+                        loadCallback();
                     }
                 );
             }, 300);
