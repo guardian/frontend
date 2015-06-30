@@ -287,7 +287,7 @@ object Switches {
     "commercial-extra-ads",
     "If this switch is ON, extra ads are served on article pages",
     safeState = On,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = new LocalDate(2015, 7, 8),
     exposeClientSide = true
   )
 
@@ -700,6 +700,15 @@ object Switches {
     safeState = Off,
     sellByDate = new LocalDate(2015, 7, 31),
     exposeClientSide = true
+  )
+
+  val ImgixAllImagesSwitch = Switch(
+    "Feature",
+    "imgix-all-images",
+    "If this switch is on, then all images will be served via the third party image resizing service",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 7, 31),
+    exposeClientSide = false
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch(
@@ -1193,7 +1202,7 @@ object Switches {
     "facia-new-format",
     "If this is switched on, facia will serve off the new JSON format (It will fallback to old if it doesn't exist)",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = new LocalDate(2015, 7, 3),
     exposeClientSide = false
   )
 
