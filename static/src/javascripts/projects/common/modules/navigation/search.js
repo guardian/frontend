@@ -69,18 +69,22 @@ define([
             if ($('.gsc-resultsbox-visible').length > 0) {
                 var $search = $('.js-popup--search');
 
-                fastdom.read(function () {
-                    var height = window.innerHeight - $search.offset().top;
+                // Cut search results to window size only when in slim header mode
+                if ($('.l-header--is-slim').length > 0) {
+                    fastdom.read(function () {
+                        var height = window.innerHeight - $search.offset().top;
 
-                    fastdom.write(function () {
-                        $search.css('height', height);
-                        $('.gsc-results', $search).css({
-                            height: height - 150,
-                            'overflow-y': 'auto'
+                        fastdom.write(function () {
+                            $search.css('height', height);
+                            $('.gsc-results', $search).css({
+                                height: height - 150,
+                                'overflow-y': 'auto'
+                            });
                         });
                     });
-                    clearInterval(checkInterval);
-                });
+                }
+
+                clearInterval(checkInterval);
             }
         };
 

@@ -79,7 +79,7 @@ define([
             }.bind(this), 10));
         }
 
-        // Make sure sticky header is locked when meganav is open
+        // Make sure header is locked when meganav is open
         mediator.on('modules:nav:open', function () {
             this.lockStickyNavigation();
         }.bind(this));
@@ -88,15 +88,13 @@ define([
             this.unlockStickyNavigation();
         }.bind(this));
 
-        // Make sure sticky header is locked when search is open
+        // Make sure header is locked when search is open
         mediator.on('modules:search', function () {
-            fastdom.read(function () {
-                if ($('.js-popup--search').hasClass('is-off')) {
-                    this.unlockStickyNavigation();
-                } else {
-                    this.lockStickyNavigation();
-                }
-            }.bind(this));
+            if ($('.js-popup--search').hasClass('is-off')) {
+                this.unlockStickyNavigation();
+            } else {
+                this.lockStickyNavigation();
+            }
         }.bind(this));
     };
 
@@ -297,7 +295,6 @@ define([
                     });
 
                     this.$els.main.css('margin-top', 0);
-                    this.unlockStickyNavigation();
                 }.bind(this));
 
                 // Put navigation to its default state
