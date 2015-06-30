@@ -1,6 +1,5 @@
 define([
     'bonzo',
-    'fastdom',
     'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
@@ -9,10 +8,10 @@ define([
     'common/utils/template',
     'common/utils/mediator',
     'common/utils/detect',
+    'common/utils/fastdom-promise',
     'text!facia/views/liveblog-block.html'
 ], function (
     bonzo,
-    fastdom,
     _,
     $,
     ajax,
@@ -21,6 +20,7 @@ define([
     template,
     mediator,
     detect,
+    fastdomPromise,
     blockTemplate
 ) {
     var pxBeforeAnimate = 100,
@@ -66,58 +66,80 @@ define([
     }
 
     function showBlocks(articleId, targets, blocks, oldBlockDate) {
-        var fakeUpdate = _.isUndefined(oldBlockDate);
+        var self = this,
+            fakeUpdate = _.isUndefined(oldBlockDate);
 
-        fastdom.write(function () {
-            _.forEach(targets, function (element) {
-                var hasNewBlock = false,
-                    wrapperClasses = [
-                        'fc-item__liveblog-blocks__inner',
-                        'u-faux-block-link__promote'
-                    ],
-                    blocksHtml = _.chain(blocks)
-                        .slice(0, 2)
-                        .map(function (block, index) {
-                            if (!hasNewBlock && (block.publishedDateTime > oldBlockDate || fakeUpdate)) {
-                                block.isNew = true;
-                                hasNewBlock = true;
-                                wrapperClasses.push('fc-item__liveblog-blocks__inner--offset');
-                            }
-                            return renderBlock(articleId, block, index);
-                        })
-                        .slice(0, hasNewBlock ? 2 : 1)
-                        .value(),
+        _.forEach(targets, function (element) {
+            var hasNewBlock = false,
+                wrapperClasses = [
+                    'fc-item__liveblog-blocks__inner',
+                    'u-faux-block-link__promote'
+                ],
+                blocksHtml = _.chain(blocks)
+                    .slice(0, 2)
+                    .map(function (block, index) {
+                        if (!hasNewBlock && (block.publishedDateTime > oldBlockDate || fakeUpdate)) {
+                            block.isNew = true;
+                            hasNewBlock = true;
+                            wrapperClasses.push('fc-item__liveblog-blocks__inner--offset');
+                        }
+                        return renderBlock(articleId, block, index);
+                    })
+                    .slice(0, hasNewBlock ? 2 : 1)
+                    .value(),
 
-                    el = bonzo.create(
-                        '<div class="' + wrapperClasses.join(' ') + '">' + blocksHtml.join('') + '</div>'
-                    );
+                el = bonzo.create(
+                    '<div class="' + wrapperClasses.join(' ') + '">' + blocksHtml.join('') + '</div>'
+                ),
+                $element = bonzo(element);
 
-                bonzo(element).addClass(blocksClassName).append(el);
-
+            fastdomPromise.write(function () {
+                $element.addClass(blocksClassName).append(el);
+            }, self)
+            .then(function() {
                 if (hasNewBlock) {
                     animateBlocks(el[0]);
-                }
-            });
+                }                
+            });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
         });
     }
 
     function animateBlocks(el) {
-        if (!maybeAnimateBlocks(el)) {
-            mediator.on('window:scroll', _.debounce(function () {
-                return maybeAnimateBlocks(el, true);
-            }, animateDelayMs));
-        }
+        maybeAnimateBlocks(el)
+        .then(function(didAnimate) {
+            var animateOnScroll;
+
+            if (!didAnimate) {
+                animateOnScroll = _.debounce(function () {
+                    maybeAnimateBlocks(el, true).then(function(didAnimate) {
+                        if (didAnimate) {
+                            mediator.off('window:scroll', animateOnScroll);
+                        }
+                    });
+                }, 300);
+
+                mediator.on('window:scroll', animateOnScroll);
+            }
+        });
     }
 
     function maybeAnimateBlocks(el, immediate) {
-        var vPosition = el.getBoundingClientRect().top;
+        var self = this;
 
-        if (vPosition > pxBeforeAnimate * -1 && vPosition < veiwportHeightPx - pxBeforeAnimate) {
-            setTimeout(function () {
-                bonzo(el).removeClass('fc-item__liveblog-blocks__inner--offset');
-            }, immediate ? 0 : animateDelayMs);
-            return true; // remove listener
-        }
+        return fastdomPromise.read(function () {
+            var vPosition = el.getBoundingClientRect().top;
+
+            if (vPosition > pxBeforeAnimate * -1 && vPosition < veiwportHeightPx - pxBeforeAnimate) {
+                setTimeout(function () {
+                    var $el = bonzo(el);
+
+                    fastdomPromise.write(function () {
+                        $el.removeClass('fc-item__liveblog-blocks__inner--offset');
+                    }, self);
+                }, immediate ? 0 : animateDelayMs);
+                return true;
+            }
+        }, this);
     }
 
     function sanitizeBlocks(blocks) {
