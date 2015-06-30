@@ -39,9 +39,9 @@ define([
 
         self.messages = {
             noCorsError: 'Cross-origin resource sharing is not supported by this browser. Please upgrade your browser to use this feature.',
-            noServerError: 'Oops, the Avatar upload service is currently unavailable. Please try again shortly.',
+            noServerError: 'Sorry, the Avatar upload service is currently unavailable. Please try again shortly.',
             avatarUploadSuccess: 'Thank you for uploading your avatar. It will be checked by Guardian moderators shortly.',
-            avatarUploadFailure: 'Oops, something went wrong. Please try again.'
+            avatarUploadFailure: 'Sorry, something went wrong. Please try again.'
         };
 
         self.urls = {

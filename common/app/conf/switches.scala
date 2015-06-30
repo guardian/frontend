@@ -835,7 +835,7 @@ object Switches {
     "id-use-avatar-api",
     "If switched on, avatars will be uploaded using the new Avatar API",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 1),
+    sellByDate = new LocalDate(2015, 8, 1),
     exposeClientSide = true
   )
 
