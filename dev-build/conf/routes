@@ -310,6 +310,11 @@ GET         /$path<(uk|au|us)(/(culture|sport|commentisfree|business|money|trave
 GET         /*path/lite.json                                                                                         controllers.FaciaController.renderFrontJsonLite(path)
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 
+# Editionalised pages
+GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)
+GET         /$path<[^/]+(/[^/]+)?>.json                                                                              controllers.FaciaController.renderFrontJson(path)
+GET         /$path<[^/]+(/[^/]+)?>                                                                                   controllers.FaciaController.renderFront(path)
+
 # Applications
 GET         /2015-05-28-2-service-worker.js                                                                            controllers.WebAppController.serviceWorker()
 GET         /2015-06-24-manifest.json                                                                                controllers.WebAppController.manifest()
@@ -322,11 +327,6 @@ GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                       
 GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                                 controllers.IndexController.render(path)
 GET         /$leftSide<[^+]+>+*rightSide                                                                             controllers.IndexController.renderCombiner(leftSide, rightSide)
 GET         /embed/video/*path                                                                                       controllers.EmbedController.render(path)
-
-# Editionalised pages
-GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)
-GET         /$path<[^/]+(/[^/]+)?>.json                                                                              controllers.FaciaController.renderFrontJson(path)
-GET         /$path<[^/]+(/[^/]+)?>                                                                                   controllers.FaciaController.renderFront(path)
 
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                                                    controllers.GalleryController.lightboxJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                                             controllers.GalleryController.renderJson(path)
