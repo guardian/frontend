@@ -71,7 +71,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderContainerJson(id: String) = renderContainer(id)
 
   def renderFrontRss(path: String) = MemcachedAction { implicit  request =>
-  log.info(s"Serving RSS Path: $path")
+    log.info(s"Serving RSS Path: $path")
     if (!ConfigAgent.shouldServeFront(path))
       rssRedirect(s"$path/rss")
     else
@@ -115,7 +115,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
               MovedPermanently(expiredAdFeatureUrl)
             else
               Ok(views.html.front(faciaPage))})
-      case None => Future.successful(NotFound)}
+      case None => Future.successful(Cached(60)(NotFound))}
 
     futureResult onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
     futureResult
@@ -158,7 +158,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             JsonComponent(views.html.fragments.containers.facia_cards.showMore(containerLayout.remainingCards, index))}}
 
         maybeResponse getOrElse Future.successful(Cached(60)(NotFound))
-      case None => Future.successful(NotFound)}}
+      case None => Future.successful(Cached(60)(NotFound))}}
 
 
 
@@ -197,7 +197,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             val webTitle = config.displayName.getOrElse("The Guardian")
             Ok(TrailsToRss.fromFaciaContent(webTitle, collection.all, "", None)).as("text/xml; charset=utf8")}}
 
-      case None => Future.successful(NotFound)}
+      case None => Future.successful(Cached(60)(NotFound))}
   }
 
 
