@@ -4,6 +4,7 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/mediator',
     'common/modules/experiments/ab'
 ], function (
     bean,
@@ -11,6 +12,7 @@ define([
     _,
     $,
     config,
+    mediator,
     ab
 ) {
     var Search = function () {
@@ -37,6 +39,7 @@ define([
                 searchLoader();
                 self.focusSearchField();
                 e.preventDefault();
+                mediator.emit('modules:search');
             });
 
             bean.on(document, 'click', '.search-results', function (e) {
@@ -48,9 +51,10 @@ define([
         }
 
         this.focusSearchField = function () {
-            var $input = $('input.gsc-input');
+            var $input = $('input.gsc-input'),
+                inputLenght = $input.length;
 
-            if ($input.length > 0) {
+            if (inputLenght > 0) {
                 $input.focus();
 
                 if (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') {

@@ -89,6 +89,21 @@ define([
             this.config.isNavigationLocked = false;
             this.unlockStickyNavigation();
         }.bind(this));
+
+        // Make sure sticky header has sticky nav
+        mediator.on('modules:search', function () {
+            console.log('search opened');
+            fastdom.read(function () {
+                console.log($('.js-popup--search').hasClass('is-off'));
+                if ($('.js-popup--search').hasClass('is-off')) {
+                    this.config.isNavigationLocked = false;
+                    this.unlockStickyNavigation();
+                } else {
+                    this.config.isNavigationLocked = true;
+                    this.lockStickyNavigation();
+                }
+            }.bind(this));
+        }.bind(this));
     };
 
     // Make sure meganav is always in the default state
@@ -232,8 +247,10 @@ define([
                         'z-index': '999' // Sticky z-index +1 so banner is over sticky header
                     });
 
-                    //header is slim from now on
-                    this.$els.header.addClass('l-header--is-slim');
+                    if (!this.config.isNavigationLocked) {
+                        //header is slim from now on
+                        this.$els.header.addClass('l-header--is-slim');
+                    }
                 }.bind(this));
                 if (!this.config.isNavigationLocked) {
                     if (this.config.direction === 'up') {
