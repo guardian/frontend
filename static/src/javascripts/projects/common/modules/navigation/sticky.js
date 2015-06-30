@@ -82,17 +82,17 @@ define([
         // Make sure sticky header has sticky nav
         mediator.on('modules:nav:open', function () {
             this.config.isNavigationLocked = true;
-            this.enableStickyNavigation();
+            this.unlockStickyNavigation();
         }.bind(this));
 
         mediator.on('modules:nav:close', function () {
             this.config.isNavigationLocked = false;
-            this.disableStickyNavigation();
+            this.lockStickyNavigation();
         }.bind(this));
     };
 
     // Make sure meganav is always in the default state
-    StickyHeader.prototype.disableStickyNavigation = function () {
+    StickyHeader.prototype.lockStickyNavigation = function () {
         fastdom.write(function () {
             $('.js-global-navigation')
                 .removeClass('navigation__expandable--sticky')
@@ -100,7 +100,7 @@ define([
         });
     };
 
-    StickyHeader.prototype.enableStickyNavigation = function () {
+    StickyHeader.prototype.unlockStickyNavigation = function () {
         fastdom.read(function () {
 
             // Navigation should have scrollbar only if header is in slim version
@@ -282,7 +282,7 @@ define([
                     });
 
                     this.$els.main.css('margin-top', 0);
-                    this.disableStickyNavigation();
+                    this.lockStickyNavigation();
                 }.bind(this));
 
                 // Put navigation to its default state
