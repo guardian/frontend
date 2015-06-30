@@ -29,7 +29,8 @@ define([
             direction: 'down',
             showNavigation: false,
             thresholdMobile: 400,
-            firstLoadDepth: 500
+            firstLoadDepth: 500,
+            isNavigationLocked: false
         };
         this.breakpoint = detect.getBreakpoint();
         this.isMobile = _.contains(this.breakpoint, 'mobile');
@@ -80,20 +81,40 @@ define([
 
         // Make sure sticky header has sticky nav
         mediator.on('modules:nav:open', function () {
-            this.showStickyNavigation();
+            this.config.isNavigationLocked = true;
+            this.lockStickyNavigation();
+        }.bind(this));
+
+        mediator.on('modules:nav:close', function () {
+            this.config.isNavigationLocked = false;
+            this.unlockStickyNavigation();
         }.bind(this));
     };
 
-    StickyHeader.prototype.showStickyNavigation = function () {
-        fastdom.read(function () {
-            var height = window.innerHeight - $('.js-global-navigation').offset().top;
-
-            fastdom.write(function () {
-                $('.js-global-navigation')
-                    .addClass('navigation__expandable--sticky')
-                    .css('height', height);
-            });
+    // Make sure meganav is always in the default state
+    StickyHeader.prototype.unlockStickyNavigation = function () {
+        fastdom.write(function () {
+            $('.js-global-navigation')
+                .removeClass('navigation__expandable--sticky')
+                .attr('height', 'auto');
         });
+    };
+
+    StickyHeader.prototype.lockStickyNavigation = function () {
+        fastdom.read(function () {
+
+            // Navigation should have scrollbar only if header is in slim version
+            // Or we are in mobile and tablet version
+            if (this.$els.header.hasClass('l-header--is-slim') || this.isMobile || this.isTablet) {
+                var height = window.innerHeight - $('.js-mega-nav-placeholder')[0].getBoundingClientRect().top;
+
+                fastdom.write(function () {
+                    $('.js-global-navigation')
+                        .addClass('navigation__expandable--sticky')
+                        .css('height', height);
+                });
+            }
+        }.bind(this));
     };
 
     StickyHeader.prototype.setScrollDirection = function (scrollY) {
@@ -167,7 +188,8 @@ define([
             this.setScrollDirection(scrollY);
 
             // Header is slim and navigation is shown on the scroll up
-            if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth)) {
+            // Unless meganav is opened
+            if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth) && !this.config.isNavigationLocked) {
                 fastdom.write(function () {
                     this.$els.header.css({
                         position:  'fixed',
@@ -195,7 +217,11 @@ define([
                         'transform': 'translateY(0%)'
                     });
                 }.bind(this));
-                this.showNavigation(scrollY);
+
+                // If meganav is open we don't want to touch the navigation state
+                if (!this.config.isNavigationLocked) {
+                    this.showNavigation(scrollY);
+                }
             } else if (scrollY >= this.headerBigHeight) {
                 fastdom.write(function () {
                     // Add is not sticky anymore
@@ -209,27 +235,29 @@ define([
                     //header is slim from now on
                     this.$els.header.addClass('l-header--is-slim');
                 }.bind(this));
-                if (this.config.direction === 'up') {
-                    fastdom.write(function () {
-                        this.$els.header.css({
-                            '-webkit-transform': 'translateY(-100%)',
-                            '-ms-transform': 'translateY(-100%)',
-                            'transform': 'translateY(-100%)'
-                        });
-                    }.bind(this));
-                } else {
-                    fastdom.write(function () {
-                        this.$els.header.css({
-                            position:  'absolute',
-                            'margin-top': bannerHeight,
-                            '-webkit-transform': 'translateY(-500%)',
-                            '-ms-transform': 'translateY(-500%)',
-                            'transform': 'translateY(-500%)',
-                            'z-index': '998'
-                        });
+                if (!this.config.isNavigationLocked) {
+                    if (this.config.direction === 'up') {
+                        fastdom.write(function () {
+                            this.$els.header.css({
+                                '-webkit-transform': 'translateY(-100%)',
+                                '-ms-transform': 'translateY(-100%)',
+                                'transform': 'translateY(-100%)'
+                            });
+                        }.bind(this));
+                    } else {
+                        fastdom.write(function () {
+                            this.$els.header.css({
+                                position: 'absolute',
+                                'margin-top': bannerHeight,
+                                '-webkit-transform': 'translateY(-500%)',
+                                '-ms-transform': 'translateY(-500%)',
+                                'transform': 'translateY(-500%)',
+                                'z-index': '998'
+                            });
 
-                        this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
-                    }.bind(this));
+                            this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
+                        }.bind(this));
+                    }
                 }
             } else {
                 fastdom.write(function () {
@@ -254,6 +282,7 @@ define([
                     });
 
                     this.$els.main.css('margin-top', 0);
+                    this.unlockStickyNavigation();
                 }.bind(this));
 
                 // Put navigation to its default state
