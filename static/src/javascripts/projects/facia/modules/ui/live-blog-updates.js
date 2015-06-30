@@ -23,9 +23,7 @@ define([
     detect,
     blockTemplate
 ) {
-    var numDisplayedBlocks = 1,
-        blockHeightPx = 71,
-
+    var pxBeforeAnimate = 100,
         animateDelayMs = 2000,
         refreshSecs = 30,
         refreshDecay = 1,
@@ -67,53 +65,37 @@ define([
         });
     }
 
-    function translateVertical(offset) {
-        return 'translate3d(0, -' + offset + 'px, 0)';
-    }
-
-    function translateNone() {
-        return 'translate3d(0)';
-    }
-
-    function translateCss(valueFn, offset) {
-        return prefixedTransforms.map(function (rule) {
-            return rule + ':' + valueFn(offset);
-        }).join(';');
-    }
-
     function showBlocks(articleId, targets, blocks, oldBlockDate) {
         var fakeUpdate = _.isUndefined(oldBlockDate);
 
         fastdom.write(function () {
             _.forEach(targets, function (element) {
-                var numNewBlocks = 0,
+                var hasNewBlock = false,
+                    wrapperClasses = [
+                        'fc-item__liveblog-blocks__inner',
+                        'u-faux-block-link__promote'
+                    ];
 
                     blocksHtml = _.chain(blocks)
+                        .slice(0, 2)
                         .map(function (block, index) {
-                            if (numNewBlocks < numDisplayedBlocks
-                                && (block.publishedDateTime > oldBlockDate || (fakeUpdate && index === 0))) {
+                            if (!hasNewBlock && (block.publishedDateTime > oldBlockDate || fakeUpdate)) {
                                 block.isNew = true;
-                                numNewBlocks += 1;
+                                hasNewBlock = true;
+                                wrapperClasses.push('fc-item__liveblog-blocks__inner--offset');
                             }
-                            return block;
-                        })
-                        .slice(0, numDisplayedBlocks + numNewBlocks)
-                        .map(function (block, index) {
                             return renderBlock(articleId, block, index);
                         })
-                        .value()
-                        .join(''),
+                        .slice(0, hasNewBlock ? 2 : 1)
+                        .value(),
 
                     el = bonzo.create(
-                        '<div class="fc-item__liveblog-blocks__inner u-faux-block-link__promote"' +
-                            ' style="' + translateCss(translateVertical, numNewBlocks * blockHeightPx) + '">' +
-                            blocksHtml +
-                        '</div>'
+                        '<div class="' + wrapperClasses.join(' ') + '">' + blocksHtml.join('') + '</div>'
                     );
 
                 bonzo(element).addClass(blocksClassName).append(el);
 
-                if (numNewBlocks) {
+                if (hasNewBlock) {
                     animateBlocks(el[0]);
                 }
             });
@@ -131,9 +113,9 @@ define([
     function maybeAnimateBlocks(el, immediate) {
         var vPosition = el.getBoundingClientRect().top;
 
-        if (vPosition > blockHeightPx * -1 && vPosition < veiwportHeightPx - blockHeightPx) {
+        if (vPosition > pxBeforeAnimate * -1 && vPosition < veiwportHeightPx - pxBeforeAnimate) {
             setTimeout(function () {
-                bonzo(el).attr('style', translateCss(translateNone));
+                bonzo(el).removeClass('fc-item__liveblog-blocks__inner--offset');
             }, immediate ? 0 : animateDelayMs);
             return true; // remove listener
         }
