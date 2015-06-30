@@ -107,7 +107,7 @@ define([
                 fastdom.write(function () {
                     container.innerHTML = '' +
                         '<div class="search-box" role="search">' +
-                            '<gcse:searchbox></gcse:searchbox>' +
+                            '<gcse:searchbox enableAutoComplete="false"></gcse:searchbox>' +
                         '</div>' +
                         '<div class="search-results" data-link-name="search">' +
                             '<gcse:searchresults webSearchResultSetSize="' + resultSetSize + '"></gcse:searchresults>' +

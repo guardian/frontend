@@ -289,11 +289,6 @@ define([
                 this.setNavigationDefault();
             }
         }.bind(this));
-
-        // If search is open close it
-        if (this.config.direction === 'down' && $('.js-search-toggle').hasClass('is-active')) {
-            bean.fire(qwery('.js-search-toggle')[0], 'click');
-        }
     };
 
     StickyHeader.prototype.updatePositionApple = function () {
