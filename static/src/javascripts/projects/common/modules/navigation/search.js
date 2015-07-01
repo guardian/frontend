@@ -56,10 +56,9 @@ define([
         }
 
         this.focusSearchField = function () {
-            var $input = $('input.gsc-input'),
-                inputLenght = $input.length;
+            var $input = $('input.gsc-input');
 
-            if (inputLenght > 0) {
+            if ($input.length > 0) {
                 $input.focus();
 
                 if (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') {
