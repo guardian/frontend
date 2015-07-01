@@ -287,7 +287,7 @@ object Switches {
     "commercial-extra-ads",
     "If this switch is ON, extra ads are served on article pages",
     safeState = On,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
 
@@ -634,7 +634,7 @@ object Switches {
     "msie-audit",
     "Enables beacon tracking of MSIE and their ad blockers",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
 
@@ -1201,7 +1201,7 @@ object Switches {
     "Facia",
     "facia-new-format",
     "If this is switched on, facia will serve off the new JSON format (It will fallback to old if it doesn't exist)",
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2015, 7, 3),
     exposeClientSide = false
   )
