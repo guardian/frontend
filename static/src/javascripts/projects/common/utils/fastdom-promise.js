@@ -1,34 +1,26 @@
 define([
-    'common/utils/_',
+    'common/utils/request-animation-frame',
     'fastdom',
     'Promise'
 ], function (
-    _,
+    requestAnimationFrame,
     fastdom,
     Promise
 ) {
+    function fastDomAction(action, fn) {
+        return new Promise(function (resolve) {
+            fastdom[action](function () {
+                resolve(fn());
+            });
+        });
+    }
+
     return {
-        read: function (fn, context) {
-            return new Promise(function (resolve, reject) {
-                fastdom.read(function () {
-                    if (_.isFunction(fn)) {
-                        resolve(fn.call(context));
-                    } else {
-                        reject();
-                    }
-                });
-            });
+        read: function (fn) {
+            return fastDomAction('read', fn);
         },
-        write: function (fn, context) {
-            return new Promise(function (resolve, reject) {
-                fastdom.write(function () {
-                    if (_.isFunction(fn)) {
-                        resolve(fn.call(context));
-                    } else {
-                        reject();
-                    }
-                });
-            });
+        write: function (fn) {
+            return fastDomAction('write', fn);
         }
     };
 });

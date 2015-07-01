@@ -93,7 +93,7 @@ define([
 
             fastdomPromise.write(function () {
                 $element.addClass(blocksClassName).append(el);
-            }, self)
+            })
             .then(function () {
                 if (hasNewBlock) {
                     animateBlocks(el[0]);
@@ -125,7 +125,9 @@ define([
         return fastdomPromise.read(function () {
             return el.getBoundingClientRect().top;
         })
-        .then(function (vPosition) {
+        .then(function (vPosition, ID) {
+            console.log('THEN: ' + ID);
+
             if (vPosition > 0 && vPosition < veiwportHeightPx) {
                 setTimeout(function () {
                     var $el = bonzo(el);
@@ -159,8 +161,10 @@ define([
             });
             return elementsById;
         })
-        .then(function (elementsById) {
+        .then(function (elementsById, ID) {
             var oldBlockDates;
+
+            console.log('THEN: ' + ID);
 
             if (!_.isEmpty(elementsById)) {
                 oldBlockDates = storage.session.get(sessionStorageKey) || {};
