@@ -287,7 +287,7 @@ object Switches {
     "commercial-extra-ads",
     "If this switch is ON, extra ads are served on article pages",
     safeState = On,
-    sellByDate = new LocalDate(2015, 7, 8),
+    sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
 
