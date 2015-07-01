@@ -4,6 +4,7 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/mediator',
     'common/modules/experiments/ab'
 ], function (
@@ -12,6 +13,7 @@ define([
     _,
     $,
     config,
+    detect,
     mediator,
     ab
 ) {
@@ -37,6 +39,8 @@ define([
 
             bean.on(document, 'click', '.js-search-toggle', function (e) {
                 searchLoader();
+
+                // Make sure search is always in the correct state
                 self.checkResults();
                 self.focusSearchField();
                 e.preventDefault();
@@ -80,7 +84,7 @@ define([
                 });
 
                 // Cut search results to window size only when in slim header mode
-                if ($('.l-header--is-slim').length > 0) {
+                if ($('.l-header--is-slim').length > 0 || detect.getBreakpoint() === 'mobile') {
                     fastdom.read(function () {
                         var height = window.innerHeight - $search[0].getBoundingClientRect().top;
 
