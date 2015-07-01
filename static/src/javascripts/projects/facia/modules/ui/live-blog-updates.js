@@ -23,8 +23,8 @@ define([
     fastdomPromise,
     blockTemplate
 ) {
-    var pxBeforeAnimate = 100,
-        animateDelayMs = 2000,
+    var animateDelayMs = 2000,
+        animateAfterScrollDelayMs = 1000,
         refreshSecs = 30,
         refreshDecay = 1,
         refreshMaxTimes = 5,
@@ -33,10 +33,8 @@ define([
         blocksClassName = 'fc-item__liveblog-blocks',
         articleIdAttribute = 'data-article-id',
         sessionStorageKey = 'gu.liveblog.block-dates',
-        prefixedTransforms = ['-webkit-transform', '-ms-transform', 'transform'],
 
-        veiwportHeightPx = detect.getViewport().height,
-        elementsById = {};
+        veiwportHeightPx = detect.getViewport().height;
 
     function blockRelativeTime(block) {
         var pubDate = (block || {}).publishedDateTime,
@@ -96,27 +94,27 @@ define([
             fastdomPromise.write(function () {
                 $element.addClass(blocksClassName).append(el);
             }, self)
-            .then(function() {
+            .then(function () {
                 if (hasNewBlock) {
                     animateBlocks(el[0]);
-                }                
-            });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                }
+            });
         });
     }
 
     function animateBlocks(el) {
         maybeAnimateBlocks(el)
-        .then(function(didAnimate) {
+        .then(function (didAnimate) {
             var animateOnScroll;
 
             if (!didAnimate) {
                 animateOnScroll = _.debounce(function () {
-                    maybeAnimateBlocks(el, true).then(function(didAnimate) {
+                    maybeAnimateBlocks(el, true).then(function (didAnimate) {
                         if (didAnimate) {
                             mediator.off('window:scroll', animateOnScroll);
                         }
                     });
-                }, 300);
+                }, animateAfterScrollDelayMs);
 
                 mediator.on('window:scroll', animateOnScroll);
             }
@@ -124,22 +122,21 @@ define([
     }
 
     function maybeAnimateBlocks(el, immediate) {
-        var self = this;
-
         return fastdomPromise.read(function () {
-            var vPosition = el.getBoundingClientRect().top;
-
-            if (vPosition > pxBeforeAnimate * -1 && vPosition < veiwportHeightPx - pxBeforeAnimate) {
+            return el.getBoundingClientRect().top;
+        })
+        .then(function (vPosition) {
+            if (vPosition > 0 && vPosition < veiwportHeightPx) {
                 setTimeout(function () {
                     var $el = bonzo(el);
 
                     fastdomPromise.write(function () {
                         $el.removeClass('fc-item__liveblog-blocks__inner--offset');
-                    }, self);
+                    });
                 }, immediate ? 0 : animateDelayMs);
                 return true;
             }
-        }, this);
+        });
     }
 
     function sanitizeBlocks(blocks) {
@@ -149,45 +146,52 @@ define([
     }
 
     function show() {
-        var oldBlockDates;
+        return fastdomPromise.read(function () {
+            var elementsById = {};
 
-        $(selector).each(function (element) {
-            if (element.hasAttribute(articleIdAttribute)) {
+            $(selector).each(function (element) {
                 var articleId = element.getAttribute(articleIdAttribute);
 
-                elementsById[articleId] = elementsById[articleId] || [];
-                elementsById[articleId].push(element);
-            }
-        });
-
-        if (!_.isEmpty(elementsById)) {
-            oldBlockDates = storage.session.get(sessionStorageKey) || {};
-
-            _.forEach(elementsById, function (elements, articleId) {
-                ajax({
-                    url: '/' + articleId + '.json?rendered=false',
-                    type: 'json',
-                    crossOrigin: true
-                })
-                .then(function (response) {
-                    var blocks = response && sanitizeBlocks(response.blocks);
-
-                    if (blocks && blocks.length) {
-                        showBlocks(articleId, elements, blocks, oldBlockDates[articleId]);
-                        oldBlockDates[articleId] = blocks[0].publishedDateTime;
-                        storage.session.set(sessionStorageKey, oldBlockDates);
-                    }
-                });
+                if (articleId) {
+                    elementsById[articleId] = elementsById[articleId] || [];
+                    elementsById[articleId].push(element);
+                }
             });
+            return elementsById;
+        })
+        .then(function (elementsById) {
+            var oldBlockDates;
 
-            if (refreshMaxTimes) {
-                refreshMaxTimes -= 1;
-                setTimeout(function () {
-                    show();
-                }, refreshSecs * 1000);
-                refreshSecs = refreshSecs * refreshDecay;
+            if (!_.isEmpty(elementsById)) {
+                oldBlockDates = storage.session.get(sessionStorageKey) || {};
+
+                _.forEach(elementsById, function (elements, articleId) {
+                    ajax({
+                        url: '/' + articleId + '.json?rendered=false',
+                        type: 'json',
+                        crossOrigin: true
+                    })
+                    .then(function (response) {
+                        var blocks = response && sanitizeBlocks(response.blocks);
+
+                        if (blocks && blocks.length) {
+                            showBlocks(articleId, elements, blocks, oldBlockDates[articleId]);
+                            oldBlockDates[articleId] = blocks[0].publishedDateTime;
+                            storage.session.set(sessionStorageKey, oldBlockDates);
+                        }
+                    });
+                });
+
+                if (refreshMaxTimes) {
+                    refreshMaxTimes -= 1;
+                    setTimeout(function () {
+                        show();
+                    }, refreshSecs * 1000);
+                    refreshSecs = refreshSecs * refreshDecay;
+                }
             }
-        }
+
+        });
     }
 
     return {
