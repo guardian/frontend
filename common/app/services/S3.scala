@@ -209,10 +209,7 @@ object S3FrontsApi extends S3 {
     putPrivateGzipped(getDraftFapiPressedKeyForPath(path), json, "application/json")
 
   def getPressedLastModified(path: String): Option[String] =
-      if (Switches.FaciaServerNewFormat.isSwitchedOn)
-        getLastModified(getLiveFapiPressedKeyForPath(path)).map(_.toString)
-      else
-        getLastModified(getLivePressedKeyForPath(path)).map(_.toString)
+    getLastModified(getLiveFapiPressedKeyForPath(path)).map(_.toString)
 }
 
 trait SecureS3Request extends implicits.Dates with Logging {
