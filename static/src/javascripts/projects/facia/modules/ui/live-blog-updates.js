@@ -126,8 +126,6 @@ define([
             return el.getBoundingClientRect().top;
         })
         .then(function (vPosition, ID) {
-            console.log('THEN: ' + ID);
-
             if (vPosition > 0 && vPosition < veiwportHeightPx) {
                 setTimeout(function () {
                     var $el = bonzo(el);
@@ -163,8 +161,6 @@ define([
         })
         .then(function (elementsById, ID) {
             var oldBlockDates;
-
-            console.log('THEN: ' + ID);
 
             if (!_.isEmpty(elementsById)) {
                 oldBlockDates = storage.session.get(sessionStorageKey) || {};
