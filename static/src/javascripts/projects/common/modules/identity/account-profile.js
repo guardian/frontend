@@ -150,7 +150,7 @@ define([
             self.prependErrorMessage(self.messages.noServerError, avatarForm);
         };
 
-        xhr.setRequestHeader('Authorization', 'Bearer ' + cookies.get('GU_U'));
+        xhr.setRequestHeader('Authorization', 'Bearer cookie=' + cookies.get('GU_U'));
         xhr.send(formData);
     };
 
