@@ -23,6 +23,11 @@ object Metric extends Logging {
     ("ad-render", CountMetric("first-ad-rendered")),
     ("ad-wrapper", CountMetric("dfp-served-ad")),
 
+    // Investigating MSIE ad blocking
+    ("msie-adblock", CountMetric("msie-ad-block")),
+    ("msie-browser", CountMetric("msie-browser")),
+
+
     // error pages
     ("50x", CountMetric("kpis-user-50x")),             // beacon on the 50x page that tells us that real users are getting 500 errors
     ("404", CountMetric("kpis-user-404")),             // beacon on the 404 page that tells us that real users are getting 404 not found
@@ -44,6 +49,15 @@ object Metric extends Logging {
     ("ipad-2orMini-after-5", CountMetric(s"ipad-2orMini-after-5")),
     ("ipad-3orLater-start", CountMetric(s"ipad-3orLater-start")),
     ("ipad-3orLater-after-5", CountMetric(s"ipad-3orLater-after-5")),
+    ("android-nexus5-start", CountMetric(s"android-nexus5-start")),
+    ("android-nexus5-after-5", CountMetric(s"android-nexus5-after-5")),
+    ("android-nexus7-start", CountMetric(s"android-nexus7-start")),
+    ("android-nexus7-after-5", CountMetric(s"android-nexus7-after-5")),
+    ("android-sgs4-start", CountMetric(s"android-sgs4-start")),
+    ("android-sgs4-after-5", CountMetric(s"android-sgs4-after-5")),
+    ("android-sgs3-start", CountMetric(s"android-sgs3-start")),
+    ("android-sgs3-after-5", CountMetric(s"android-sgs3-after-5")),
+
 
     ("tech-feedback", CountMetric("tech-feedback")),
 

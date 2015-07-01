@@ -1,4 +1,3 @@
-/* jshint newcap: false */
 /* eslint new-cap: 0 */
 
 import classNames from 'classnames';

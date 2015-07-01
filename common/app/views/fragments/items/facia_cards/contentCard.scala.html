@@ -20,22 +20,21 @@
         }
         data-discussion-closed="@item.discussionSettings.isClosedForComments"
         data-discussion-url="@item.header.url.get(request)#comments"
-        @if(item.cutOut.isDefined || item.showTimestamp) {
-            data-discussion-hide-label="true"
-        }
     }
 
     @for(id <- item.id; headlines <- headlinesJsonString(id)) {
         data-headline-variants="@headlines"
     }
 
-data-link-name="@item.cardStyle.toneString | @{index + 1}"
+data-link-name="@item.analyticsPrefix | card-@{index + 1}"
     @item.id.map { id =>
     data-id="@id"
     }
 data-item-visibility="@visibilityDataAttribute"
 data-test-id="facia-card"
-    @item.snapStuff.map(_.dataAttributes)>
+    @item.snapStuff.map(_.dataAttributes)
+
+@item.shortUrl.map{ shortUrl => data-loyalty-short-url="@shortUrl"}>
 
     <div class="fc-item__container">
         @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap)) {
@@ -160,9 +159,7 @@ data-test-id="facia-card"
             <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
         }
 
-        @if(item.showMeta) {
-            @meta(item)
-        }
+        @meta(item)
     </div>
 
         @if(item.cardTypes.showCutOut) {

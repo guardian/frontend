@@ -1,4 +1,4 @@
-/* global guardian */
+/* global guardian, s */
 define([
     'common/utils/_',
     'common/utils/config',

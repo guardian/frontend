@@ -7,10 +7,10 @@ define([], function () {
         this.audienceOffset = 0;
         this.expiry = '2045-01-01';
         this.description = 'Dummy test';
-        this.canRun = function() {
+        this.canRun = function () {
             return true;
         };
-        this.events = ['most popular | The Guardian | trail ', 'most popular | Section | trail ']
+        this.events = ['most popular | The Guardian | trail ', 'most popular | Section | trail '];
         this.variants = [
             {
                 id: 'control',

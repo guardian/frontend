@@ -92,21 +92,21 @@ define([
                 tag: spec.tag || 'untracked',
                 time: new Date().getTime()
             };
-            try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {}
+            try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {/**/}
             storage.session.set(NG_STORAGE_KEY, storeObj);
         } else {
             // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
             delay = spec.samePage ? true : spec.target;
-            this.trackLink(delay, spec.tag);
+            this.trackLink(delay, spec.tag, { customEventProperties: spec.customEventProperties });
         }
     };
 
     Omniture.prototype.populateEventProperties = function (linkName) {
 
         this.s.linkTrackVars = 'channel,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,' +
-                               'prop51,prop61,prop64,prop65,eVar7,eVar37,eVar38,eVar39,eVar50,events';
+                               'prop51,prop61,prop64,prop65,prop74,eVar7,eVar37,eVar38,eVar39,eVar50,events';
         this.s.linkTrackEvents = 'event37';
-        this.s.events = 'event37';
+        this.s.events = this.s.apl(this.s.events, 'event37', ',');
         this.s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + linkName : linkName;
 
         // this allows 'live' Omniture tracking of Navigation Interactions
@@ -127,9 +127,14 @@ define([
         this.trackLink(true, linkName);
     };
 
-    Omniture.prototype.trackLink = function (linkObject, linkName) {
+    Omniture.prototype.trackLink = function (linkObject, linkName, options) {
+        options = options || {};
         this.populateEventProperties(linkName);
+        _.assign(this.s, options.customEventProperties);
         this.s.tl(linkObject, 'o', linkName);
+        _.forEach(options.customEventProperties, function (value, key) {
+            delete this.s[key];
+        });
     };
 
     Omniture.prototype.populatePageProperties = function () {
@@ -209,8 +214,10 @@ define([
 
         this.s.prop47    = config.page.edition || '';
 
-        this.s.prop51  = mvt;
+        this.s.prop51  = config.page.allowUserGeneratedContent ? 'witness-contribution-cta-shown' : null;
+
         this.s.eVar51  = mvt;
+
         this.s.list1  = mvt; // allows us to 'unstack' the AB test names (allows longer names)
 
         // List of components on the page
@@ -219,7 +226,7 @@ define([
             .toString();
         this.s.list3 = _.map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
 
-        if (this.s.prop51) {
+        if (this.s.eVar51) {
             this.s.events = this.s.apl(this.s.events, 'event58', ',');
         }
 
@@ -313,6 +320,10 @@ define([
     Omniture.prototype.go = function () {
         this.populatePageProperties();
         this.logView();
+        // Clean up
+        this.s.events = _.filter((this.s.events || '').split(','), function (event) {
+            return event !== 'event46';
+        }).join(',');
         mediator.emit('analytics:ready');
     };
 

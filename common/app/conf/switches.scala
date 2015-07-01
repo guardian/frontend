@@ -260,7 +260,7 @@ object Switches {
     "ophan-view-id",
     "Depeneding on ophan to pass view ID to the gdf targeting",
     safeState = On,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = new LocalDate(2015, 7, 14),
     exposeClientSide = true
   )
 
@@ -287,7 +287,7 @@ object Switches {
     "commercial-extra-ads",
     "If this switch is ON, extra ads are served on article pages",
     safeState = On,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
 
@@ -563,6 +563,16 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ExposeHasTopBelowNavAdSlotFlagSwitch = Switch(
+    "Commercial",
+    "expose-has-top-below-nav-ad-slot-flag",
+    "If switched on, flag for top below nav will be exposed.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 15),
+    exposeClientSide = true
+  )
+
+
   // Monitoring
 
   val OphanSwitch = Switch(
@@ -619,12 +629,12 @@ object Switches {
     exposeClientSide = true
   )
 
-  val AttachWeatherToTopContainerSwitch = Switch(
-    "Feature",
-    "attach-weather-to-top-container",
-    "Attach weather to top container",
+  val MsieAudit = Switch(
+    "Monitoring",
+    "msie-audit",
+    "Enables beacon tracking of MSIE and their ad blockers",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
 
@@ -633,6 +643,15 @@ object Switches {
     "Feature",
     "ab-facebook-most-viewed",
     "Facebook most viewed",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
+
+  val TwitterMostViewed = Switch(
+    "Feature",
+    "ab-twitter-most-viewed",
+    "Twitter most viewed",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 17),
     exposeClientSide = true
@@ -683,13 +702,13 @@ object Switches {
     exposeClientSide = true
   )
 
-  val BecomeAMemberSwitch = Switch(
+  val ImgixAllImagesSwitch = Switch(
     "Feature",
-    "become-a-member",
-    "If this switch is on the “Become a Member” button will be visible.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 15),
-    exposeClientSide = true
+    "imgix-all-images",
+    "If this switch is on, then all images will be served via the third party image resizing service",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 7, 31),
+    exposeClientSide = false
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch(
@@ -707,24 +726,6 @@ object Switches {
     "Enable the Outbrain content recommendation widget.",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val GravitySwitch = Switch(
-    "Feature",
-    "gravity",
-    "Enable the Gravity content recommendation widget.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 1),
-    exposeClientSide = true
-  )
-
-  val TaboolaSwitch = Switch(
-    "Feature",
-    "taboola",
-    "Enable the Taboola content recommendation widget.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 1),
     exposeClientSide = true
   )
 
@@ -946,6 +947,24 @@ object Switches {
     exposeClientSide = true
   )
 
+  val IPadNothrasherSwitch = Switch(
+    "Feature",
+    "ipad-no-thrashers",
+    "This switch will disable Thrashers on ipads",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = true
+  )
+
+  val SplitOlderIPadsSwitch = Switch(
+    "Feature",
+    "ipad-split-capabilities",
+    "If switched on then this gives older ipads the stripped down front but full articles",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 9, 30),
+    exposeClientSide = false
+  )
+
   // A/B Tests
 
   val ABLiveblogNotifications = Switch(
@@ -966,21 +985,12 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABMtRec1 = Switch(
+  val ABViewability = Switch(
     "A/B Tests",
-    "ab-mt-rec1",
-    "Viewability results - Recommendation option 1",
+    "ab-viewability",
+    "Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 16),
-    exposeClientSide = true
-  )
-
-  val ABMtRec2 = Switch(
-    "A/B Tests",
-    "ab-mt-rec2",
-    "Viewability results - Recommendation option 2",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 16),
+    sellByDate = new LocalDate(2015, 8, 1),
     exposeClientSide = true
   )
 
@@ -1002,26 +1012,25 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABDeferSpacefinder = Switch(
-    "A/B Tests",
-    "ab-defer-spacefinder",
-    "A/B test to defer execution of spacefinder until images and richlinks have been loaded.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 16),
-    exposeClientSide = true
-  )
-
-
   val ABHeadlineSwitches = (1 to 10) map { n =>
     Switch(
       "A/B Tests",
       s"ab-headline$n",
       s"Switch for headline $n",
       safeState = On,
-      sellByDate = new LocalDate(2015, 6, 10),
+      sellByDate = new LocalDate(2015, 7, 17),
       exposeClientSide = true
     )
   }
+
+  val ABMembershipMessage = Switch(
+    "A/B Tests",
+    "ab-membership-message",
+    "Switch for the Membership message A/B test.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 14),
+    exposeClientSide = true
+  )
 
   val FootballFeedRecorderSwitch = Switch(
     "Feature",
@@ -1084,6 +1093,15 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
+  )
+
+  val DiscussionProxySwitch = Switch(
+    "Feature",
+    "discussion-proxy",
+    "in discussion/api.js it will use a proxy to post comments so http 1.0 users can still comment",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
   )
 
   // Facia
@@ -1161,11 +1179,11 @@ object Switches {
     exposeClientSide = false
   )
 
-  val FaciaPressNewFormat = Switch(
+  val FaciaPressOldFormat = Switch(
     "Facia",
-    "facia-press-fapi-client-format",
-    "If this switch is on, facia-press will press in the new fapi-client JSON format",
-    safeState = Off,
+    "facia-press-old-client-format",
+    "If this switch is on, facia-press will press in the old fapi-client JSON format",
+    safeState = On,
     sellByDate = new LocalDate(2015, 8, 31),
     exposeClientSide = false
   )
@@ -1175,7 +1193,7 @@ object Switches {
     "facia-press-on-demand",
     "If this is switched on, you can force facia to press on demand (Leave off)",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = never,
     exposeClientSide = false
   )
 
@@ -1184,7 +1202,16 @@ object Switches {
     "facia-new-format",
     "If this is switched on, facia will serve off the new JSON format (It will fallback to old if it doesn't exist)",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = new LocalDate(2015, 7, 3),
+    exposeClientSide = false
+  )
+
+  val FaciaToolPutPrivate = Switch(
+    "Facia",
+    "facia-tool-put-private",
+    "If this is switched on, facia tool will put collections to S3 as private",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 30),
     exposeClientSide = false
   )
 

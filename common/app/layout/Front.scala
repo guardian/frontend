@@ -1,7 +1,7 @@
 package layout
 
 import com.gu.facia.api.models.{CollectionConfig, CuratedContent, FaciaContent}
-import conf.Switches
+import conf.{Configuration, Switches}
 import dfp.{DfpAgent, SponsorshipTag}
 import implicits.FaciaContentFrontendHelpers._
 import implicits.FaciaContentImplicits._
@@ -193,7 +193,7 @@ object FaciaContainer {
       case MostPopular => ContainerCommercialOptions.empty
       case _ => ContainerCommercialOptions.fromConfig(config.config)
     },
-    None,
+    config.config.description.map(DescriptionMetaHeader.apply(_)),
     None,
     hideToggle = false,
     showTimestamps = false,
@@ -251,9 +251,10 @@ case class FaciaContainer(
   def withTimeStamps = transformCards(_.withTimeStamp)
 
   def dateLink: Option[String] = {
-    val maybeDateHeadline = customHeader map {
-      case MetaDataHeader(_, _, _, dateHeadline, _) => dateHeadline
-      case LoneDateHeadline(dateHeadline) => dateHeadline
+    val maybeDateHeadline = customHeader flatMap  {
+      case MetaDataHeader(_, _, _, dateHeadline, _) => Some(dateHeadline)
+      case LoneDateHeadline(dateHeadline) => Some(dateHeadline)
+      case DescriptionMetaHeader(_) => None
     }
 
     for {
@@ -393,7 +394,7 @@ object Front extends implicits.Collections {
     import scalaz.syntax.traverse._
 
     Front(
-      pressedPage.collections.zipWithIndex.mapAccumL(
+      pressedPage.collections.filterNot(_.all.isEmpty).zipWithIndex.mapAccumL(
         (Set.empty[TrailUrl], initialContext)
       ) { case ((seenTrails, context), (pressedCollection, index)) =>
         val container = Container.fromPressedCollection(pressedCollection)
@@ -420,7 +421,7 @@ object Front extends implicits.Collections {
             None
           ))
         }
-      }._2.filterNot(_.items.isEmpty)
+      }._2
     )
 
   }
@@ -435,7 +436,7 @@ object Front extends implicits.Collections {
               "", // don't have a uri for each container
               collection.items.zipWithIndex.map {
                 case (item, index) =>
-                  ListItem(position = index, url = Some(item.url))
+                  ListItem(position = index, url = Some(Configuration.site.host + item.url))
               }
             )
           ))

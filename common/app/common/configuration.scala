@@ -62,7 +62,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isProd = stage == "prod"
-    lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
+    lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
 
     lazy val isPreview = projectName == "preview"
   }
@@ -174,9 +174,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object ajax {
-    lazy val url =
-      if (environment.secure) configuration.getStringProperty("ajax.secureUrl").getOrElse("")
-      else configuration.getStringProperty("ajax.url").getOrElse("")
+    lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val nonSecureUrl =
       configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigins: Seq[String] = configuration.getStringProperty("ajax.cors.origin").map(_.split(",")
@@ -202,13 +200,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
+    object backends {
+      lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
+      lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
+    }
   }
 
   object assets {
-    lazy val path =
-      if (environment.secure) configuration.getMandatoryStringProperty("assets.securePath")
-      else configuration.getMandatoryStringProperty("assets.path")
-    lazy val securePath = configuration.getMandatoryStringProperty("assets.securePath")
+    lazy val path = configuration.getMandatoryStringProperty("assets.path")
   }
 
   object staticSport {
@@ -257,11 +256,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val guMerchandisingAdvertiserId = configuration.getMandatoryStringProperty("dfp.guMerchandising.advertiserId")
 
     private lazy val dfpRoot = s"${environment.stage.toUpperCase}/commercial/dfp"
-    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v2.json"
+    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v3.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v1.json"
-    lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v1.json"
+    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v2.json"
+    lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v2.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
@@ -358,7 +357,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         oauthCallback <- configuration.getStringProperty("faciatool.oauth.callback")
       } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
 
-    val showTestContainers = configuration.getStringProperty("faciatool.show_test_containers").exists(_ == "true")
+    val showTestContainers =
+      configuration.getStringProperty("faciatool.show_test_containers").contains("true")
 
     lazy val adminPressJobStandardPushRateInMinutes: Int =
       Try(configuration.getStringProperty("admin.pressjob.standard.push.rate.inminutes").get.toInt)

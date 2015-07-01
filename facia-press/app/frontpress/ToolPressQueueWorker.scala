@@ -6,6 +6,7 @@ import common._
 import conf.{Switches, Configuration}
 import metrics._
 import org.joda.time.DateTime
+import play.api.libs.json.JsNull
 import services._
 
 import scala.concurrent.Future
@@ -35,17 +36,17 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
 
     log.info(s"Processing job from tool to update $path on $pressType")
 
-    lazy val fapiFormat =
-      if (Switches.FaciaPressNewFormat.isSwitchedOn) {
-        pressType match {
-          case Draft => DraftFapiFrontPress.pressByPathId(path)
-          case Live => LiveFapiFrontPress.pressByPathId(path)}}
-      else { Future.successful(Unit) }
+    lazy val fapiFormat = pressType match {
+      case Draft => DraftFapiFrontPress.pressByPathId(path)
+      case Live => LiveFapiFrontPress.pressByPathId(path)}
 
     lazy val oldFormat =
+      if (Switches.FaciaPressOldFormat.isSwitchedOn) {
         pressType match {
           case Draft => FrontPress.pressDraftByPathId(path)
-          case Live => FrontPress.pressLiveByPathId(path)}
+          case Live => FrontPress.pressLiveByPathId(path)}}
+      else { Future.successful(JsNull) }
+
 
     lazy val forceConfigUpdateFuture: Future[_] =
       if (forceConfigUpdate.exists(identity)) {
@@ -55,8 +56,8 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
 
     val pressFuture = for {
       _ <- forceConfigUpdateFuture
-      _ <- oldFormat
       _ <- fapiFormat
+      _ <- oldFormat
     } yield Unit
 
     pressFuture onComplete {

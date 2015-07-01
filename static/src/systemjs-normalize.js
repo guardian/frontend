@@ -1,3 +1,5 @@
+/*eslint-disable strict*/
+/*eslint-disable no-shadow*/
 // We use system.normalize to convert RequireJS module IDs to SystemJS module
 // IDs. This is mainly necessary because the plugin format is reversed in
 // SystemJS (suffix rather than prefix).
@@ -5,6 +7,15 @@
 // Used in JavaScriptLaterSteps.scala.html and bundle.js
 // IIFE is the only way to share this piece of code.
 // If only we had a module loader to load the module loader.
+
+// For older browsers
+var reduce = function (array, fn, accumulator) {
+    for (var i = 0; i <= array.length - 1; i++) {
+        accumulator = fn(accumulator, array[i]);
+    }
+    return accumulator;
+};
+
 (function () {
     var systemNormalize = System.normalize;
     System.normalize = function (name, parentName) {
@@ -22,12 +33,15 @@
                 // the package.json’s main property.
                 if (name === 'socketio') {
                     return 'socketio/socket.io';
+                // Unlike SystemJS, curl does not support globals out of the box
+                } else if (name === 'js!zxcvbn') {
+                    return 'zxcvbn';
                 } else {
                     return name;
                 }
             },
             function reversePluginFormat(name) {
-                var destructuredName = /(.+)!(.+)/.exec(name);
+                var destructuredName = /(.+?)!(.+)/.exec(name);
 
                 if (destructuredName) {
                     var pluginName = destructuredName[1];
@@ -39,20 +53,10 @@
                 } else {
                     return name;
                 }
-            },
-            function interactives(name) {
-                // Transforms something like:     http://interactive.guim.co.uk/2015/04/climate-letters/assets-1430142775693/js/main.js
-                // into a legal module name: interactive/interactive.guim.co.uk/2015/04/climate-letters/assets-1430142775693/js/main.js
-                var regExp = /(^http[s]?:\/\/)(.*)/.exec(name);
-                if (regExp) {
-                    return 'interactive/' + regExp[2];
-                } else {
-                    return name;
-                }
             }
         ];
 
-        var newName = transformers.reduce(function (name, fn) {
+        var newName = reduce(transformers, function (name, fn) {
             return fn(name);
         }, name);
 

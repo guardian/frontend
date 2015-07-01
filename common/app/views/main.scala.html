@@ -43,11 +43,13 @@ http://developers.theguardian.com/join-the-team.html
                 (AppleAdTravelFrontSwitch.isSwitchedOn && edition.id == "UK" && metaData.id == "travel") ||
                 (AppleAdUsNetworkFrontSwitch.isSwitchedOn && edition.id == "US" && metaData.id == "us"))
     ) { adBelowNav =>
+        @defining(Navigation.topLevelItem(edition.navigation, metaData)) { navigation =>
     <body
         id="top"
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin(edition)),
-            ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty),
+            ("has-localnav", navigation.filter(_.links.nonEmpty).nonEmpty),
+            ("wide-localnav", navigation.map(_.repelCutout).getOrElse(false)),
             ("has-membership-access-requirement", metaData.requiresMembershipAccess),
             ("childrens-books-site", metaData.section == "childrens-books-site"),
             ("ad-below-nav", adBelowNav),
@@ -58,13 +60,11 @@ http://developers.theguardian.com/join-the-team.html
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        <div class="sticky-nav-mt-test">
-            @if(showAdverts) {
-                @fragments.commercial.topBanner()
-            }
+        @if(showAdverts) {
+            @fragments.commercial.topBanner()
+        }
 
-            @fragments.header(metaData)
-        </div>
+        @fragments.header(metaData)
 
         @if(adBelowNav) {
             @fragments.commercial.topBannerBelowNav()
@@ -94,5 +94,6 @@ http://developers.theguardian.com/join-the-team.html
 
     </body>
     </html>
+}
 }
 }

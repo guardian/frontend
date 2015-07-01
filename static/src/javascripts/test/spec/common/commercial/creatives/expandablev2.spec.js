@@ -1,6 +1,6 @@
-import ExpandableV2 from 'common/modules/commercial/creatives/expandable-v2'
-import fixtures from 'helpers/fixtures'
-import $ from 'common/utils/$'
+import ExpandableV2 from 'common/modules/commercial/creatives/expandable-v2';
+import fixtures from 'helpers/fixtures';
+import $ from 'common/utils/$';
 
 var fixturesConfig = {
     id: 'expandablev2-ad-slot',
@@ -9,12 +9,12 @@ var fixturesConfig = {
     ]
 };
 
-describe('Expandable v2', function() {
+describe('Expandable v2', function () {
 
     var expandablev2,
         $fixturesContainer;
 
-    it('should exist', function() {
+    it('should exist', function () {
         expect(ExpandableV2).toBeDefined();
     });
 
@@ -24,19 +24,24 @@ describe('Expandable v2', function() {
         expect(expandablev2).toBeDefined();
     });
 
-    it('should always have expand, open and collapse buttons', function () {
+    it('should always have expand, open and collapse buttons', function (done) {
         $fixturesContainer = fixtures.render(fixturesConfig);
-        new ExpandableV2($('.expandablev2-ad-slot', $fixturesContainer), {}).create();
-        expect($('.ad-exp--expand').length).toBeGreaterThan(0);
-        expect($('.ad-exp-collapse__slide').length).toBeGreaterThan(0);
+        new ExpandableV2($('.expandablev2-ad-slot', $fixturesContainer), {})
+        .create().then(function () {
+            expect($('.ad-exp--expand').length).toBeGreaterThan(0);
+            expect($('.ad-exp-collapse__slide').length).toBeGreaterThan(0);
+            done();
+        });
     });
 
-    it('should have show more button', function () {
+    it('should have show more button', function (done) {
         $fixturesContainer = fixtures.render(fixturesConfig);
         new ExpandableV2($('.expandablev2-ad-slot', $fixturesContainer), {
-            showPlus: 'plus-only'
-        }).create();
-        expect($('.ad-exp__close-button').length).toBeGreaterThan(0);
+            showMoreType: 'plus-only'
+        }).create().then(function () {
+            expect($('.ad-exp__close-button').length).toBeGreaterThan(0);
+            done();
+        });
     });
 
 });

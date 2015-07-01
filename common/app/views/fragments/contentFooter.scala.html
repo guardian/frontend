@@ -1,6 +1,6 @@
 @(content: model.Content, related: model.RelatedContent, cssClass: String = "")(implicit request: RequestHeader)
 
-@import conf.Switches._
+@import conf.Switches
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
 
@@ -8,8 +8,8 @@
 
     @* majority of footer components we don't want to appear on advertisement feature articles *@
     @if(!content.isAdvertisementFeature) {
-        @if(Switches.FacebookMostViewed.isSwitchedOn && content.showFooterContainers) {
-            @fragments.mostPopularFacebook()
+        @if((Switches.FacebookMostViewed.isSwitchedOn || Switches.TwitterMostViewed.isSwitchedOn) && content.showFooterContainers) {
+            @fragments.mostPopularSocial()
         }
 
         @if(!content.shouldHideAdverts && !(mvt.CMHRTest.isParticipating || mvt.CMOutbrainTest.isParticipating)) {
@@ -22,16 +22,12 @@
         @if(Switches.RelatedContentSwitch.isSwitchedOn && mvt.CMOutbrainTest.isParticipating && content.showFooterContainers) {
             <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
                 @fragments.outbrainPlaceholder()
-                @fragments.gravityPlaceholder()
-                @fragments.taboolaPlaceholder()
             </div>
         }
         @fragments.onwardPlaceholder()
         @if(!Switches.RelatedContentSwitch.isSwitchedOn && mvt.CMOutbrainTest.isParticipating && content.showFooterContainers) {
             <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
                 @fragments.outbrainPlaceholder()
-                @fragments.gravityPlaceholder()
-                @fragments.taboolaPlaceholder()
             </div>
         }
 
@@ -49,8 +45,6 @@
         @if(!mvt.CMOutbrainTest.isParticipating && content.showFooterContainers) {
             <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
                 @fragments.outbrainPlaceholder()
-                @fragments.gravityPlaceholder()
-                @fragments.taboolaPlaceholder()
             </div>
         }
 

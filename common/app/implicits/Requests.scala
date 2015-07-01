@@ -1,12 +1,13 @@
 package implicits
 
-import conf.Switches
+import conf.{Configuration, Switches}
 import play.api.http.MediaRange
 import play.api.mvc.RequestHeader
+import common.Edition
 
 trait Requests {
 
-  private val imgixTestSections: Seq[String] = Seq("/uk/money", "/au/money", "/uk/money", "/money")
+
 
   implicit class RichRequestHeader(r: RequestHeader) {
 
@@ -24,21 +25,37 @@ trait Requests {
 
     lazy val isWebp: Boolean = {
       val requestedContentType = r.acceptedTypes.sorted(MediaRange.ordering)
-      val imageMimeType = requestedContentType.find(media => media.accepts("image/jpeg")|| media.accepts("image/webp"))
+      val imageMimeType = requestedContentType.find(media => media.accepts("image/jpeg") || media.accepts("image/webp"))
       imageMimeType.exists(_.mediaSubType == "webp")
     }
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 
-    lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase  "X-Gu-Management-Healthcheck")
+    lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Management-Healthcheck")
 
-    def isInImgixTest: Boolean = Switches.ImgixSwitch.isSwitchedOn && (imgixTestSections.exists(r.path.startsWith) || getParameter("inImgixTest").nonEmpty)
+
+    private val imgixTestSections = {
+      def editionalise(path: String) = Seq(s"/uk$path", s"/au$path", s"/us$path", path)
+
+      Seq("/books", "/football", "/uk", "/au", "/us") ++
+        editionalise("/money") ++
+        editionalise("/technology") ++
+        editionalise("/business") ++
+        editionalise("/sport") ++
+        editionalise("/culture") ++
+        editionalise("/commentisfree")
+    }
+
+    private val networkFronts = Edition.all.map(_.id).map(id => s"/$id")
+
+    lazy val isInImgixTest: Boolean = Switches.ImgixSwitch.isSwitchedOn &&
+      (Switches.ImgixAllImagesSwitch.isSwitchedOn || imgixTestSections.exists(r.path.startsWith))
 
     // see http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/TerminologyandKeyConcepts.html#x-forwarded-proto
     lazy val isSecure: Boolean = r.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))
 
     //This is a header reliably set by jQuery for AJAX requests used in facia-tool
-    lazy val isXmlHttpRequest: Boolean = r.headers.get("X-Requested-With").exists(_ == "XMLHttpRequest")
+    lazy val isXmlHttpRequest: Boolean = r.headers.get("X-Requested-With").contains("XMLHttpRequest")
   }
 }
 

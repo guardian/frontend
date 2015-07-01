@@ -59,19 +59,11 @@ define([
             }
 
             // if yes add another ad and try another run
-            adNames.push(['inline-extra' + ads.length, 'inline']);
+            adNames.push(['inline' + (ads.length + 1), 'inline']);
             return insertAdAtP(nextSpace).then(function () {
                 return getAdSpace();
             });
         });
-    }
-
-    function isMtRecTest() {
-        var MtRec1Test = ab.getParticipations().MtRec1,
-            MtRec2Test = ab.getParticipations().MtRec2;
-
-        return ab.testCanBeRun('MtRec1') && MtRec1Test && MtRec1Test.variant === 'A' ||
-            ab.testCanBeRun('MtRec2') && MtRec2Test && MtRec2Test.variant === 'A';
     }
 
     var ads = [],
@@ -117,7 +109,7 @@ define([
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            if (isMtRecTest() && config.switches.commercialExtraAds) {
+            if (ab.shouldRunTest('Viewability', 'variant') && config.switches.commercialExtraAds) {
                 return inlineMercPromise.then(function () {
                     return spacefinder.getParaWithSpace(rules).then(function (space) {
                         return insertAdAtP(space);

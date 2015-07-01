@@ -22,23 +22,23 @@ describe('richLinks', function () {
         richLinks, config, spacefinder,
         injector = new Injector();
 
-    beforeEach(function(done) {
+    beforeEach(function (done) {
         articleBodyFixtureElement = fixtures.render(articleBodyConf);
-        
+
         injector.test(['common/modules/article/rich-links', 'common/utils/config', 'common/modules/article/spacefinder'], function () {
             richLinks = arguments[0];
             config = arguments[1];
-            spacefinder = arguments[2];            
+            spacefinder = arguments[2];
 
             spacefinder.getParaWithSpace = function () {
                 return Promise.resolve($('#article-body p').first());
             };
-            
+
             done();
         });
     });
 
-    afterEach(function() {
+    afterEach(function () {
         fixtures.clean(articleBodyConf.id);
     });
 
@@ -115,7 +115,7 @@ describe('richLinks', function () {
 
             describe('given an existing rich link with the same URL', function () {
                 // No need to clean because the parent element is reset after each
-                beforeEach(function() {
+                beforeEach(function () {
                     var existingRichLinkElement = $.create(template(richLinkTagTmpl, { href: config.page.richLink }));
 
                     articleBodyFixtureElement.append(existingRichLinkElement);

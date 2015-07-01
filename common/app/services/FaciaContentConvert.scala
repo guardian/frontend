@@ -15,6 +15,7 @@ object FaciaContentConvert {
       case snap: model.Snap =>
         LinkSnap(
           id = snap.id,
+          maybeFrontPublicationDate = None,
           snapType = snap.snapType.getOrElse("link"),
           snapUri = snap.snapUri,
           snapCss = snap.snapCss,
@@ -23,19 +24,14 @@ object FaciaContentConvert {
           trailText = snap.trailText,
           group = snap.group.getOrElse("0"),
           image = FaciaImage.getFaciaImage(Option(snap.delegate), trailMetaData, resolvedMetaData),
-          isBreaking = snap.isBreaking,
-          isBoosted = snap.isBoosted,
-          showMainVideo = snap.showMainVideo,
-          showKickerTag = snap.showKickerTag,
+          ContentProperties.fromResolvedMetaData(resolvedMetaData),
           byline = snap.byline,
-          showByLine = snap.showByline,
-          kicker = ItemKicker.fromContentAndTrail(Option(contentApiContent), trailMetaData, resolvedMetaData, maybeCollectionConfig),
-          showBoostedHeadline = snap.showBoostedHeadline,
-          showQuotedHeadline = snap.showQuotedHeadline
+          kicker = ItemKicker.fromContentAndTrail(Option(contentApiContent), trailMetaData, resolvedMetaData, maybeCollectionConfig)
         )
       case other =>
         CuratedContent(
           content = frontendContent.apiContent.delegate,
+          maybeFrontPublicationDate = None,
           supportingContent = frontendContent.apiContent.supporting.map(FaciaContentConvert.frontentContentToFaciaContent(_, maybeCollectionConfig)),
           cardStyle = com.gu.facia.api.utils.CardStyle(frontendContent.delegate, trailMetaData),
           headline = frontendContent.headline,

@@ -23,14 +23,14 @@ describe('Slice Adverts', function () {
             config = arguments[1];
             config.page = {
                 pageId: 'uk/commentisfree'
-                };
+            };
             config.switches = {
                 standardAdverts: true
             };
 
             $fixtureContainer = fixtures.render(fixturesConfig);
             done();
-        });        
+        });
     });
 
     afterEach(function () {

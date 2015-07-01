@@ -12,6 +12,7 @@ define([
     'inlineSvg!svgs/icon/market-same',
     'inlineSvg!svgs/icon/arrow',
     'inlineSvg!svgs/icon/arrow-down',
+    'inlineSvg!svgs/icon/cross',
     'inlineSvg!svgs/logo/logo-guardian',
     'inlineSvg!svgs/commercial/logo-soulmates',
     'inlineSvg!svgs/icon/close-central',
@@ -30,6 +31,7 @@ define([
     marketSameIcon,
     arrowicon,
     arrowdownicon,
+    crossIcon,
     logoguardian,
     logosoulmates,
     closeCentralIcon,
@@ -48,6 +50,7 @@ define([
         marketSameIcon: marketSameIcon,
         arrowicon: arrowicon,
         arrowdownicon: arrowdownicon,
+        crossIcon: crossIcon,
         logoguardian: logoguardian,
         logosoulmates: logosoulmates,
         closeCentralIcon: closeCentralIcon,
@@ -66,7 +69,7 @@ define([
             if (_.isArray(classes)) {
                 svg = svg.replace(/class="/, '$&' + classes.join(' ') + ' ');
             } else {
-                console.error('Classes for inlineSvg must be an array: ', classes);
+                window.console.error('Classes for inlineSvg must be an array: ', classes);
             }
         }
 

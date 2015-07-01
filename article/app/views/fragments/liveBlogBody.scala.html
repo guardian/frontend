@@ -44,7 +44,8 @@
         <div class="content__main tonal__main tonal__main--@articleToneClass(article)">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--liveblog">
-                    <div class="js-cricket-score js-football-tabs js-football-meta football-tabs content__mobile-full-width"></div>
+                    <div class="js-football-tabs js-football-meta football-tabs content__mobile-full-width"></div>
+                    <div class="js-cricket-score"></div>
 
                     @fragments.mainMedia(article)
 
@@ -72,7 +73,7 @@
                             @fragments.liveFilter(article.isLive)
 
                             <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}" data-test-id="live-blog-blocks"
-                                itemprop="@if(article.isReview) {reviewBody} else {@if(article.isLive) {liveBlogUpdate} else {articleBody}}">
+                                itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
                                 @BodyCleaner(article, article.body)
                             </div>
                         </div>

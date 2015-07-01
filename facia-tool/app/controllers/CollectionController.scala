@@ -24,24 +24,24 @@ object CreateCollectionResponse {
 case class CreateCollectionResponse(id: String)
 
 object CollectionController extends Controller with PanDomainAuthActions {
-  def create = AuthAction { request =>
+  def create = APIAuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
         val identity = request.user
         val collectionId = UpdateManager.addCollection(frontIds, collection, identity)
-        Press.fromSetOfIds(Set(collectionId))
+        Press.fromSetOfIdsWithForceConfig(Set(collectionId))
         Ok(Json.toJson(CreateCollectionResponse(collectionId)))
 
       case None => BadRequest
     }
   }
 
-  def update(collectionId: String) = AuthAction { request =>
+  def update(collectionId: String) = APIAuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
         val identity = request.user
         UpdateManager.updateCollection(collectionId, frontIds, collection, identity)
-        Press.fromSetOfIds(Set(collectionId))
+        Press.fromSetOfIdsWithForceConfig(Set(collectionId))
         Ok
 
       case None => BadRequest

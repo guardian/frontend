@@ -2,11 +2,13 @@ define([
     'bean',
     'bonzo',
     'common/utils/$',
+    'common/utils/_',
     'common/utils/mediator'
 ], function (
     bean,
     bonzo,
     $,
+    _,
     mediator
 ) {
 
@@ -14,6 +16,7 @@ define([
 
         var self = this,
             controls,
+            doNotReset = ['popup--search'],
             readyClass = 'js-toggle-ready';
 
         this.init = function () {
@@ -36,7 +39,7 @@ define([
 
         this.reset = function (omitEl) {
             controls.filter(function (control) {
-                return !$.isDescendantOrSelf(omitEl, control) && !$.isDescendantOrSelf(omitEl, control.toggleTarget);
+                return !(omitEl === control || _.contains(doNotReset, $(control).attr('data-toggle')));
             }).map(self.close);
         };
 

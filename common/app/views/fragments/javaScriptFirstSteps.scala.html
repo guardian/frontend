@@ -83,7 +83,6 @@
             return fBound;
         };
     }
-
     @* needed due to class manipulation in bonzo is not x-browser - https://github.com/ded/bonzo/pull/133 *@
     if (!String.prototype.trim) {
         String.prototype.trim = function () {
@@ -106,8 +105,15 @@
                 'older' iOs normally indicates a device with lower power (they stop being upgradeable at some point).
                 We won't run all javascript on these
                 For usage stats see http://david-smith.org/iosversionstats/
+
+                NOTE: modifying this moves people into a category where they do not get important things such as
+                commenting
             *@
-            return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent);
+
+            @* NOTE - this is NOT what we want to be doing long term. It is a stopgap measure only *@
+            var olderIPadOnFront = @SplitOlderIPadsSwitch.isSwitchedOn && @item.isFront && window.devicePixelRatio === 1;
+
+            return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent) || olderIPadOnFront;
         }
         return false;
     })();
@@ -129,17 +135,8 @@
             loaded: false
         },
         config: @fragments.javaScriptConfig(item)
-    }, baseFontSize,
+    },
     docClass = document.documentElement.className;
-
-    // rems are calculated in the CSS assuming a 16px baseline.
-    // if the user has changed theirs, account for it.
-    if('getComputedStyle' in window) {
-        baseFontSize = window.getComputedStyle(document.documentElement).getPropertyValue("font-size");
-        if(parseInt(baseFontSize, 10) !== 16) {
-            document.documentElement.style.fontSize = baseFontSize;
-        }
-    }
 
     @* http://modernizr.com/download/#-svg *@
     if (
@@ -217,8 +214,27 @@
 
             docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
         }
+
+        @if(IPadNothrasherSwitch.isSwitchedOn) {
+            if (navigator.platform === 'iPad') {
+                docClass += ' ipad-no-thrashers';
+            }
+        }
     })(guardian.isModernBrowser);
 
+    // *** MINIMISE DOM THRASHING…
+    // READ
+    // rems are calculated in the CSS assuming a 16px baseline.
+    // if the user has changed theirs, account for it.
+    var baseFontSize = null;
+    if('getComputedStyle' in window) {
+        baseFontSize = window.getComputedStyle(document.documentElement).getPropertyValue("font-size");
+    }
+
+    // WRITE
+    if(baseFontSize && parseInt(baseFontSize, 10) !== 16) {
+        document.documentElement.style.fontSize = baseFontSize;
+    }
     document.documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
 
 </script>
@@ -243,7 +259,6 @@
         }
 
         if (navigator.platform === 'iPhone' || navigator.platform === 'iPad') {
-
             var platform = navigator.platform;
             var isIphone = navigator.platform === 'iPhone';
 
@@ -277,6 +292,39 @@
             if ( isIphone4 ) {
                 logDevice ( '4', 'iphone' );
             }
+        };
+
+        @*
+        This is a subset of the navigator.platform values used by Android. We may need to add more to capture more devices
+        *@
+
+        if ((navigator.platform === 'Linux armv7l') || (navigator.platform === 'Linux aarch64') || (navigator.platform === 'Android')){
+            var isNexus5 = /.*Nexus 5 */.test(navigator.userAgent);
+            var isNexus7 = /.*Nexus 7 */.test(navigator.userAgent);
+            @*
+            There is a very large variety in model id's for Samsung devices, different id's for different carriers.
+            so we will only really be able to beacon on a subset of the Samsung GS4's that visit us
+            *@
+            var isSGS4 = ((/.*GT-I9500 */.test(navigator.userAgent)) || (/.*GT-I9505 */.test(navigator.userAgent)));
+            var isSGS3 = /.*GT-I9300 */.test(navigator.userAgent);
+
+            if ( isNexus5 ) {
+            logDevice ( 'nexus5', 'android' ) ;
+            }
+
+            if ( isNexus7 ) {
+            logDevice ( 'nexus7', 'android' ) ;
+            }
+
+            if ( isSGS4 ) {
+            logDevice ( 'sgs4', 'android' ) ;
+            }
+
+            if ( isSGS3 ) {
+            logDevice ( 'sgs3', 'android' ) ;
+            }
+
         }
+
     </script>
 }

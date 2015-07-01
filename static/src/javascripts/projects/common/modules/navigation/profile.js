@@ -68,9 +68,7 @@ define([
                 fastdom.write(function () {
                     $content.text(user.displayName);
                     $container.addClass('is-signed-in');
-                    if (config.switches.becomeAMember) {
-                        $register.hide();
-                    }
+                    $register.hide();
                 });
             }
 

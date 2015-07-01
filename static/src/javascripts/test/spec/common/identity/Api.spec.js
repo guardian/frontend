@@ -1,13 +1,15 @@
 import Injector from 'helpers/injector';
-import sinonjs from 'sinonjs';
+import sinon from 'sinonjs';
 import jasmineSinon from 'jasmine-sinon';
 
 describe('Get user data', function () {
 
     var reqwestStub = {
-          __useDefault: true,
-          default: sinon.stub()
-        },
+        // jscs:disable disallowDanglingUnderscores
+        __useDefault: true,
+        // jscs:enable disallowDanglingUnderscores
+        default: sinon.stub()
+    },
         reqwestReturn = {
             then: sinon.stub()
         };
@@ -25,27 +27,27 @@ describe('Get user data', function () {
                        'common/utils/cookies',
                        'common/utils/storage'], function () {
 
-            Id = arguments[0];
-            config = arguments[1];
-            cookies = arguments[2];
-            storage = arguments[3];
+                           Id = arguments[0];
+                           config = arguments[1];
+                           cookies = arguments[2];
+                           storage = arguments[3];
 
-            config.page = {
+                           config.page = {
                 idApiUrl: 'https://idapi.theguardian.com',
                 idUrl:    'https://profile.theguardian.com'
             };
-            getCookieStub = sinon.stub();
-            getCookieStub.withArgs('GU_U').returns(
-                'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJqYW1lc2dvcnJpZSIsIjUzNCIsMTM4Mjk1MzAzMT' +
-                'U5MSwxXQ.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
-            );
-            cookies.get = getCookieStub;
-            getStorageStub = sinon.stub();
-            storage.local.get = getStorageStub;
-            reqwestStub.default.reset();
+                           getCookieStub = sinon.stub();
+                           getCookieStub.withArgs('GU_U').returns(
+                               'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJqYW1lc2dvcnJpZSIsIjUzNCIsMTM4Mjk1MzAzMT' +
+                               'U5MSwxXQ.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
+                           );
+                           cookies.get = getCookieStub;
+                           getStorageStub = sinon.stub();
+                           storage.local.get = getStorageStub;
+                           reqwestStub.default.reset();
 
-            done();
-        });
+                           done();
+                       });
     });
 
     afterEach(function () {

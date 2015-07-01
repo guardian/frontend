@@ -80,7 +80,7 @@ define([
             }
         });
 
-        React.renderComponent(
+        React.render(
             React.createElement(Accessibility),
             document.getElementById(module.DOM_ID),
             callback

@@ -27,18 +27,6 @@ define([
         }
     };
 
-    $.isDescendantOrSelf = function (el, ancestor) {
-        if (!el || !ancestor || !el.parentNode || el.nodeName.toLowerCase() === 'html') {
-            return false;
-        }
-
-        if (el === ancestor || el.parentNode === ancestor) {
-            return true;
-        }
-
-        return $.isDescendantOrSelf(el.parentNode, ancestor);
-    };
-
     $.forEachElement = function (selector, fn) {
         var els = qwery(selector);
         _.forEach(els, fn);

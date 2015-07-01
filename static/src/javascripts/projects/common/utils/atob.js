@@ -13,6 +13,7 @@ define(function () {
             if (input.length % 4 === 1) {
                 throw INVALID_CHARACTER_ERR;
             }
+            /*eslint-disable no-cond-assign*/
             for (
                 // initialize result and counters
                     var bc = 0, bs, buffer, idx = 0, output = '';

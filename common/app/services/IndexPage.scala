@@ -3,7 +3,7 @@ package services
 import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
 import com.gu.facia.api.utils.{ReviewKicker, CartoonKicker, TagKicker}
 import common.Edition
-import conf.Switches
+import conf.{Configuration, Switches}
 import contentapi.Paths
 import layout.DateHeadline.cardTimestampDisplay
 import layout._
@@ -115,8 +115,9 @@ object IndexPage {
 
     front.copy(containers = front.containers.zip(headers).map({ case (container, header) =>
       val timeStampDisplay = header match {
-        case MetaDataHeader(_, _, _, dateHeadline, _) => cardTimestampDisplay(dateHeadline)
-        case LoneDateHeadline(dateHeadline) => cardTimestampDisplay(dateHeadline)
+        case MetaDataHeader(_, _, _, dateHeadline, _) => Some(cardTimestampDisplay(dateHeadline))
+        case LoneDateHeadline(dateHeadline) => Some(cardTimestampDisplay(dateHeadline))
+        case DescriptionMetaHeader(_) => None
       }
 
       container.copy(
@@ -133,7 +134,7 @@ object IndexPage {
         dateLinkPath = Some(s"/${indexPage.idWithoutEdition}")
       ).transformCards({ card =>
         card.copy(
-          timeStampDisplay = Some(timeStampDisplay),
+          timeStampDisplay = timeStampDisplay,
           byline = if (indexPage.page.isContributorPage) None else card.byline,
           useShortByline = true
         ).setKicker(card.header.kicker flatMap {
@@ -151,7 +152,7 @@ object IndexPage {
       indexPage.page.url,
       indexPage.trails.zipWithIndex.map {
         case (trail, index) =>
-          ListItem(position = index, url = Some(trail.url))
+          ListItem(position = index, url = Some(Configuration.site.host + trail.url))
       }
     )
   }

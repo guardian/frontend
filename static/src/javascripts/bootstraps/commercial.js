@@ -9,6 +9,7 @@ define([
     'common/modules/commercial/badges',
     'common/modules/commercial/dfp',
     'common/modules/commercial/front-commercial-components',
+    'common/modules/commercial/msie-audit',
     'common/modules/commercial/slice-adverts',
     'common/modules/commercial/third-party-tags',
     'common/modules/user-prefs'
@@ -23,6 +24,7 @@ define([
     badges,
     dfp,
     frontCommercialComponents,
+    msieAudit,
     sliceAdverts,
     thirdPartyTags,
     userPrefs
@@ -38,6 +40,7 @@ define([
 
     return {
         init: function () {
+            msieAudit.init();
             var modulePromises = [];
 
             if (

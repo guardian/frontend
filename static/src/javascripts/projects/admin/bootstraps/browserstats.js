@@ -18,7 +18,7 @@ define([
             // Format large numbers
             bonzo(this.querySelectorAll('.format-number')).each(function() {
                 var value  = this.getAttribute('data-value'),
-                    perc   = (value/total*100).toFixed(2),
+                    perc   = (value / total * 100).toFixed(2),
                     output = numberWithCommas(value)
                         + ' <span class="perc">' + perc + '%</span>';
 
@@ -27,7 +27,7 @@ define([
 
             // Do basic filtering on the table
             bean.on(this.querySelector('.search-query'), 'keyup', _.debounce(function() {
-                var filter = new RegExp(this.value, "i"),
+                var filter = new RegExp(this.value, 'i'),
                     filteredTotal = 0;
 
                 bonzo(rows).each(function() {
@@ -43,8 +43,8 @@ define([
 
                 // Update total
                 var totalOutput = numberWithCommas(filteredTotal)
-                    + ' <span class="perc">' + (filteredTotal/total*100).toFixed(2) + '%</span>';
-                bonzo(this.querySelector('.total')).html(totalOutput)
+                    + ' <span class="perc">' + (filteredTotal / total * 100).toFixed(2) + '%</span>';
+                bonzo(this.querySelector('.total')).html(totalOutput);
             }, 250));
         });
     }
@@ -52,8 +52,9 @@ define([
     function numberWithCommas(x) {
         x = x.toString();
         var pattern = /(-?\d+)(\d{3})/;
-        while (pattern.test(x))
-            x = x.replace(pattern, "$1,$2");
+        while (pattern.test(x)) {
+            x = x.replace(pattern, '$1,$2');
+        }
         return x;
     }
 

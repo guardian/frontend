@@ -1,6 +1,10 @@
 {
   "name": "facia-tool",
   "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "jspm": "^0.15.6"
+  },
   "jspm": {
     "directories": {
       "lib": "js"
@@ -25,7 +29,8 @@
     },
     "devDependencies": {
       "babel": "npm:babel@^4.7.16",
-      "babel-runtime": "npm:babel-runtime@^4.7.16"
+      "babel-runtime": "npm:babel-runtime@^4.7.16",
+      "core-js": "npm:core-js@^0.9.4"
     }
   }
 }

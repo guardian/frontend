@@ -1,4 +1,4 @@
-/*jshint -W031 */
+/*eslint-disable no-new*/
 define([
     'fence',
     'qwery',
@@ -15,7 +15,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/open/cta',
-    'common/modules/onward/facebook-most-popular',
+    'common/modules/onward/social-most-popular',
     'common/modules/ui/rhc',
     'common/modules/ui/selection-sharing'
 ], function (
@@ -34,7 +34,7 @@ define([
     ab,
     geoMostPopular,
     OpenCta,
-    FacebookMostPopular,
+    SocialMostPopular,
     rhc,
     selectionSharing
 ) {
@@ -87,14 +87,22 @@ define([
                 selectionSharing.init();
             },
 
-            initFacebookMostPopular: function () {
-                if (ab.shouldRunTest('FacebookMostViewed', 'variant')) {
-                    var el = qwery('.js-facebook-most-popular');
+            initSocialMostPopular: function () {
+                var el = qwery('.js-social-most-popular');
 
-                    if (el) {
-                        new FacebookMostPopular(el);
+                ['Twitter', 'Facebook'].forEach(function (socialContext) {
+                    if (ab.shouldRunTest(socialContext + 'MostViewed', 'variant')) {
+                        if (el) {
+                            new SocialMostPopular(el, socialContext.toLowerCase());
+                        }
                     }
-                }
+                });
+            },
+
+            initQuizListeners: function () {
+                require(['ophan/ng'], function (ophan) {
+                    mediator.on('quiz/ophan-event', ophan.record);
+                });
             }
         },
 
@@ -105,7 +113,8 @@ define([
             modules.initRightHandComponent();
             modules.initSelectionSharing();
             modules.initCmpParam();
-            modules.initFacebookMostPopular();
+            modules.initSocialMostPopular();
+            modules.initQuizListeners();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();

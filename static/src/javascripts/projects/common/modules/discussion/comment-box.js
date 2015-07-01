@@ -73,12 +73,12 @@ CommentBox.prototype.errorMessages = {
     HTTP_0: /*CORS blocked by HTTP/1.0 proxy*/'Could not post due to your internet settings, which might be controlled by your provider. Please contact your administrator or disable any proxy servers or VPNs and try again.',
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
     API_ERROR: 'Sorry, there was a problem posting your comment.  Please try another browser or network connection.  Reference code ',
-    EMAIL_VERIFIED: '<span class="d-comment-box__error-meta">Sent. Please check your email to verify '+
-        ' your email address' +'. Once verified post your comment.</span>',
-    EMAIL_VERIFIED_FAIL: 'We are having technical difficulties. Please try again later or '+
+    EMAIL_VERIFIED: '<span class="d-comment-box__error-meta">Sent. Please check your email to verify ' +
+        ' your email address' + '. Once verified post your comment.</span>',
+    EMAIL_VERIFIED_FAIL: 'We are having technical difficulties. Please try again later or ' +
         '<a href="/send/email" class="js-id-send-validation-email"><strong>resend the verification</strong></a>.',
-    EMAIL_NOT_VERIFIED: 'Please confirm your email address to post your first comment.<br />'+
-        'If you can\'t find the email, we can <a href="_#" class="js-id-send-validation-email"><strong>resend the verification email</strong></a><span class="d-comment-box__error-meta"> to '+
+    EMAIL_NOT_VERIFIED: 'Please confirm your email address to post your first comment.<br />' +
+        'If you can\'t find the email, we can <a href="_#" class="js-id-send-validation-email"><strong>resend the verification email</strong></a><span class="d-comment-box__error-meta"> to ' +
         ' your email address' + '.</span>'
 };
 
@@ -131,7 +131,7 @@ CommentBox.prototype.prerender = function() {
         this.getElem('parent-comment-body').innerHTML = this.options.replyTo.body;
 
         var setSpoutMargin = function() {
-            var spoutOffset = replyToAuthor.offsetLeft + (replyToAuthor.getBoundingClientRect().width/2);
+            var spoutOffset = replyToAuthor.offsetLeft + (replyToAuthor.getBoundingClientRect().width / 2);
             this.getElem('parent-comment-spout').style.marginLeft = spoutOffset + 'px';
         };
         window.setTimeout(setSpoutMargin.bind(this), 0);
@@ -182,7 +182,7 @@ CommentBox.prototype.urlify = function(str) {
         regexp = new RegExp(reUrl + reOutsideTags, 'g');
     return str.replace(regexp, function(match, url, protocol) {
         var fullUrl = protocol === 'www.' ? 'http://' + url : url;
-        return '<a href="' + fullUrl +'">' + url + '</a>';
+        return '<a href="' + fullUrl + '">' + url + '</a>';
     });
 };
 
@@ -204,8 +204,8 @@ CommentBox.prototype.postComment = function(e) {
         }
 
         if (comment.body.length > self.options.maxLength) {
-            self.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ self.options.maxLength +' characters.</b>'+
-                'Yours is currently '+ (comment.body.length-self.options.maxLength) +' character(s) too long.');
+            self.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than ' + self.options.maxLength + ' characters.</b>' +
+                'Yours is currently ' + (comment.body.length - self.options.maxLength) + ' character(s) too long.');
         }
 
         if (self.options.replyTo) {
@@ -262,9 +262,9 @@ CommentBox.prototype.error = function(type, message) {
 
     this.setState('invalid');
     var error = bonzo.create(
-        '<div class="d-discussion__error '+ this.getClass('error', true) +'">'+
-            '<i class="i i-alert"></i>'+
-            '<span class="d-discussion__error-text">'+ message +'</span>'+
+        '<div class="d-discussion__error ' + this.getClass('error', true) + '">' +
+            '<i class="i i-alert"></i>' +
+            '<span class="d-discussion__error-text">' + message + '</span>' +
         '</div>'
     )[0];
     this.getElem('messages').appendChild(error);
@@ -388,8 +388,8 @@ CommentBox.prototype.previewComment = function(e) {
     }
 
     if (comment.body.length > self.options.maxLength) {
-        self.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ self.options.maxLength +' characters.</b>'+
-            'Yours is currently '+ (comment.body.length-self.options.maxLength) +' characters too long.');
+        self.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than ' + self.options.maxLength + ' characters.</b>' +
+            'Yours is currently ' + (comment.body.length - self.options.maxLength) + ' characters too long.');
     }
 
     if (self.errors.length === 0) {
@@ -428,12 +428,12 @@ CommentBox.prototype.formatComment = function(formatStyle) {
 
     var commentBody = this.getElem('body');
     var cursorPositionStart = commentBody.selectionStart;
-    var selectedText = commentBody.value.substring(commentBody.selectionStart,commentBody.selectionEnd);
+    var selectedText = commentBody.value.substring(commentBody.selectionStart, commentBody.selectionEnd);
 
-    var formatSelection = function(startTag,endTag) {
+    var formatSelection = function(startTag, endTag) {
         var newText = startTag + selectedText + endTag;
 
-        commentBody.value = commentBody.value.substring(0, commentBody.selectionStart)+
+        commentBody.value = commentBody.value.substring(0, commentBody.selectionStart) +
             newText + commentBody.value.substring(commentBody.selectionEnd);
 
         selectNewText(newText);
@@ -457,18 +457,18 @@ CommentBox.prototype.formatComment = function(formatStyle) {
     };
 
     var selectNewText = function(newText) {
-        commentBody.setSelectionRange(cursorPositionStart,cursorPositionStart+newText.length);
+        commentBody.setSelectionRange(cursorPositionStart, cursorPositionStart + newText.length);
     };
 
     switch(formatStyle) {
         case 'bold':
-            formatSelection('<b>','</b>');
+            formatSelection('<b>', '</b>');
             break;
         case 'italic':
-            formatSelection('<i>','</i>');
+            formatSelection('<i>', '</i>');
             break;
         case 'quote':
-            formatSelection('<blockquote>','</blockquote>');
+            formatSelection('<blockquote>', '</blockquote>');
             break;
         case 'link':
             formatSelectionLink();

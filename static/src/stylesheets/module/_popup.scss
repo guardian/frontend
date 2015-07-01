@@ -213,6 +213,20 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
+.brand-bar__item--profile .control__icon-wrapper[data-saved-content-count]:before {
+    content: attr(data-saved-content-count);
+    background: colour(news-main-2);
+    display: block;
+    position: absolute;
+    bottom: -4px;
+    left: 20px;
+    font-size: 11px;
+    line-height: 1;
+    padding: 2px 5px;
+    border-radius: 30px;
+    font-family: $f-sans-serif-text;
+}
+
 /* Search Menu
    ========================================================================== */
 
@@ -243,38 +257,8 @@ $control-offset: 36 + $gs-gutter/2;
         margin-left: 0 - (gs-span(7) + $gs-gutter);
     }
 
-    @include mq(wide) {
-        margin-left: 0 - (gs-span(8) + $gs-gutter);
-    }
-
     // account for google search sizes.
     .search-box {
         margin-bottom: -1px;
-    }
-}
-
-/*
- *  Slim modification
- *
- *  Used for slim header ^l_header
- */
-.is-slim {
-    .popup {
-        .brand-bar__item--has-control & {
-            left: 0;
-        }
-    }
-
-    .popup__toggle {
-        &.is-active,
-        .is-active > & {
-            &:before {
-                margin-left: 0 - $popup-anchor-arrow-size;
-            }
-        }
-
-        &:after {
-            display: none;
-        }
     }
 }

@@ -2,7 +2,8 @@
     background-color: colour(neutral-6);
 
     .fc-item__kicker,
-    .fc-item__byline {
+    .fc-item__byline,
+    .fc-save-for-later--is-saved {
         color: colour(external-main-1);
     }
 
@@ -17,6 +18,10 @@
     .fc-item__container:before,
     .rich-link__container:before {
         background-color: colour(external-support-1);
+    }
+
+    .fc-save-for-later--is-saved .inline-tone-fill {
+        fill: colour(external-main-1);
     }
 }
 

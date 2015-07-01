@@ -24,12 +24,12 @@ module.exports = function(grunt, options) {
                      'static/abtests.json'
         },
 
-        npmInstall: {
-            command: 'npm prune && npm install'
+        npmInstallFaciaTool: {
+            command: 'cd facia-tool/public && npm prune && npm install'
         },
 
         jspmInstallFaciaTool: {
-            command: 'node ../../node_modules/jspm/jspm.js install',
+            command: './node_modules/.bin/jspm install',
             options: {
                 execOptions: {
                     cwd: 'facia-tool/public'
@@ -37,8 +37,12 @@ module.exports = function(grunt, options) {
             }
         },
 
+        npmInstall: {
+            command: 'npm prune && npm install'
+        },
+
         jspmInstallStatic: {
-            command: './jspm install && ./jspm clean',
+            command: './jspm install && ./jspm dl-loader && ./jspm clean',
             options: {
                 execOptions: {
                     cwd: './node_modules/.bin'

@@ -43,7 +43,7 @@ object FrontendDependentController extends Controller with PanDomainAuthActions 
     "snap"
   )
 
-  def configuration = AuthAction { request =>
+  def configuration = APIAuthAction { request =>
     Cached(60) {
       Ok(Json.toJson(Defaults(
         Play.isDev,

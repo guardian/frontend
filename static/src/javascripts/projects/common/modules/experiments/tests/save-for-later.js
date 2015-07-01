@@ -1,21 +1,25 @@
 define([
     'bonzo',
     'qwery',
+    'fastdom',
     'common/utils/detect',
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/template',
-    'common/modules/loyalty/save-for-later',
-    'text!common/views/identity/saved-for-later-profile-link.html'
+    'common/modules/identity/api',
+    'common/modules/save-for-later',
+    'Promise'
 ], function (
     bonzo,
     qwery,
+    fastdom,
     detect,
     config,
     mediator,
     template,
+    Id,
     SaveForLater,
-    profileLinkTmp
+    Promise
 ) {
 
     return function () {
@@ -24,7 +28,7 @@ define([
         this.expiry = '2015-07-09';
         this.author = 'Nathaniel Bennett';
         this.description = 'Internal test of save for later functionality';
-        this.audience = 0.0;
+        this.audience = 0.2;
         this.audienceOffset = 0;
         this.successMeasure = '';
         this.audienceCriteria = 'Interal only - we opt in';
@@ -33,30 +37,51 @@ define([
         this.showForSensitive = false;
 
         this.canRun = function () {
-            return true;
+            return Id.isUserLoggedIn();
+        };
+
+        var init = function () {
+            var saveForLater = new SaveForLater();
+            saveForLater.init();
         };
 
         this.variants = [
             {
+                id: 'control',
+                test: function () {}
+            },
+            {
                 id: 'variant',
                 test: function () {
-                    mediator.on('module:identity:api:loaded', function () {
-
-                        if (!/Network Front|Section/.test(config.page.contentType)) {
-                            var saveForLater = new SaveForLater();
-                            saveForLater.init();
-                        }
+                    var loadIdentityApi = new Promise(function (resolve) {
+                        mediator.on('module:identity:api:loaded', resolve);
                     });
 
-                    mediator.on('modules:profilenav:loaded', function () {
-                        var popup = qwery('.popup--profile')[0];
-                        bonzo(popup).append(bonzo.create(
-                            template(profileLinkTmp.replace(/^\s+|\s+$/gm, ''), { idUrl: config.page.idUrl })
-                        ));
+                    var loadProfileNav = new Promise(function (resolve) {
+                        mediator.on('modules:profilenav:loaded', resolve);
                     });
+
+                    Promise.all([loadIdentityApi, loadProfileNav]).then(init);
 
                 }
             }
         ];
+
+        this.notInTest = function () {
+            // On top of the A/B test, we always want to give pre-existing SFL
+            // users the web feature.
+            mediator.on('module:identity:api:loaded', function () {
+                Id.getSavedArticles().then(function (resp) {
+                    // If the user hasn't saved articles before, ID responds
+                    // 404. If they have, but now they have none, ID responds
+                    // 200 with articles = [] (!!)
+                    var userHasSavedArticles = !resp.savedArticles ? false : resp.savedArticles.articles.length > 0;
+
+                    if (userHasSavedArticles) {
+                        init();
+                    }
+                });
+            });
+        };
     };
 });

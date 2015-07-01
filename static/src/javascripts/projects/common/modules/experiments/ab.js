@@ -7,14 +7,14 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/facebook-most-viewed',
+    'common/modules/experiments/tests/twitter-most-viewed',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/mt-rec1',
-    'common/modules/experiments/tests/mt-rec2',
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/defer-spacefinder'
+    'common/modules/experiments/tests/membership-message',
+    'common/modules/experiments/tests/viewability'
 ], function (
     raven,
     _,
@@ -24,31 +24,31 @@ define([
     store,
     mvtCookie,
     FacebookMostViewed,
+    TwitterMostViewed,
     LiveblogNotifications,
     HighCommercialComponent,
-    MtRec1,
-    MtRec2,
     SaveForLater,
     CookieRefresh,
     Headline,
-    DeferSpacefinder
-    ) {
+    MembershipMessage,
+    Viewability
+) {
 
-    var ab,
-        TESTS = _.flatten([
-            new FacebookMostViewed(),
-            new LiveblogNotifications(),
-            new HighCommercialComponent(),
-            new MtRec1(),
-            new MtRec2(),
-            new SaveForLater(),
-            new CookieRefresh(),
-            new DeferSpacefinder(),
-            _.map(_.range(1, 10), function (n) {
-                return new Headline(n);
-            })
-        ]),
-        participationsKey = 'gu.ab.participations';
+    var TESTS = _.flatten([
+        new FacebookMostViewed(),
+        new TwitterMostViewed(),
+        new LiveblogNotifications(),
+        new HighCommercialComponent(),
+        new SaveForLater(),
+        new CookieRefresh(),
+        new MembershipMessage(),
+        new Viewability(),
+        _.map(_.range(1, 10), function (n) {
+            return new Headline(n);
+        })
+    ]);
+
+    var participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
         return store.local.get(participationsKey) || {};
@@ -151,6 +151,10 @@ define([
             }
         }
 
+        _.forEach(getServerSideTests(), function (testName) {
+            tag.push('AB | ' + testName + ' | inTest');
+        });
+
         return tag.join(',');
     }
 
@@ -159,13 +163,10 @@ define([
         if (isParticipating(test) && testCanBeRun(test)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
-            _.some(test.variants, function (variant) {
-                if (variant.id === variantId) {
-                    variant.test();
-                    return true;
-                }
-            });
-            if (variantId === 'notintest' && test.notInTest) {
+            var variant = getVariant(test, variantId);
+            if (variant) {
+                variant.test();
+            } else if (variantId === 'notintest' && test.notInTest) {
                 test.notInTest();
             }
         }
@@ -204,7 +205,7 @@ define([
         return config.switches['ab' + test.id];
     }
 
-    function getTestVariant(testId) {
+    function getTestVariantId(testId) {
         var participation = getParticipations()[testId];
         return participation && participation.variant;
     }
@@ -220,10 +221,26 @@ define([
 
     function shouldRunTest(id, variant) {
         var test = getTest(id);
-        return test && isParticipating(test) && ab.getTestVariant(id) === variant && testCanBeRun(test);
+        return test && isParticipating(test) && ab.getTestVariantId(id) === variant && testCanBeRun(test);
     }
 
-    ab = {
+    function getVariant(test, variantId) {
+        return _.find(test.variants, function (variant) {
+            return variant.id === variantId;
+        });
+    }
+
+    // These kinds of tests are both server and client side.
+    function getServerSideTests() {
+        // International Edition is not really a test.
+        return _(config.tests)
+            .omit('internationalEditionVariant')
+            .pick(function (participating) { return !!participating; })
+            .keys()
+            .value();
+    }
+
+    var ab = {
 
         addTest: function (test) {
             TESTS.push(test);
@@ -255,7 +272,7 @@ define([
                 forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
                 tokens = window.location.hash.replace('#ab-', '').split(',');
-                tokens.forEach(function (token) {
+                _.forEach(tokens, function (token) {
                     var abParam, test, variant;
                     abParam = token.split('=');
                     test = abParam[0];
@@ -311,11 +328,14 @@ define([
             try {
                 _.forEach(getActiveTests(), function (test) {
                     if (isParticipating(test) && testCanBeRun(test)) {
-                        var variant = getTestVariant(test.id);
+                        var variant = getTestVariantId(test.id);
                         if (variant && variant !== 'notintest') {
                             abLogObject['ab' + test.id] = variant;
                         }
                     }
+                });
+                _.forEach(getServerSideTests(), function (testName) {
+                    abLogObject['ab' + testName] = 'inTest';
                 });
             } catch (error) {
                 // Encountering an error should invalidate the logging process.
@@ -332,8 +352,9 @@ define([
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
-        getTestVariant: getTestVariant,
+        getTestVariantId: getTestVariantId,
         setTestVariant: setTestVariant,
+        getVariant: getVariant,
 
         /**
          * check if a test can be run (i.e. is not expired and switched on)

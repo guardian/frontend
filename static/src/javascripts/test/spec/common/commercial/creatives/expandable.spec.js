@@ -1,6 +1,6 @@
-import Expandable from 'common/modules/commercial/creatives/expandable'
-import qwery from 'qwery'
-import fixtures from 'helpers/fixtures'
+import Expandable from 'common/modules/commercial/creatives/expandable';
+import qwery from 'qwery';
+import fixtures from 'helpers/fixtures';
 
 var fixturesConfig = {
     id: 'expandable-ad-slot',
@@ -9,12 +9,12 @@ var fixturesConfig = {
     ]
 };
 
-describe('Expandable', function() {
+describe('Expandable', function () {
 
     var expandable,
         $fixturesContainer;
 
-    it('should exist', function() {
+    it('should exist', function () {
         expect(Expandable).toBeDefined();
     });
 

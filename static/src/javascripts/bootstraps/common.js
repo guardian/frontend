@@ -1,5 +1,5 @@
-/* jshint nonew: false */
-/* TODO - fix module constructors so we can remove the above jshint override */
+/*eslint-disable no-new*/
+/* TODO - fix module constructors */
 define([
     'bean',
     'bonzo',
@@ -24,14 +24,15 @@ define([
     'common/modules/analytics/scrollDepth',
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
-    'common/modules/analytics/tech-feedback',
     'common/modules/commercial/user-ad-targeting',
+    'common/modules/commercial/comment-adverts',
     'common/modules/discussion/comment-count',
     'common/modules/discussion/loader',
     'common/modules/experiments/ab',
     'common/modules/identity/api',
     'common/modules/identity/autosignin',
     'common/modules/navigation/navigation',
+    'common/modules/navigation/sticky',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -39,6 +40,7 @@ define([
     'common/modules/onward/onward-content',
     'common/modules/onward/popular',
     'common/modules/onward/related',
+    'common/modules/onward/tech-feedback',
     'common/modules/onward/tonal',
     'common/modules/social/share-count',
     'common/modules/ui/accessibility-prefs',
@@ -82,14 +84,15 @@ define([
     ScrollDepth,
     logCss,
     simpleMetrics,
-    techFeedback,
     userAdTargeting,
+    commentAdverts,
     CommentCount,
     DiscussionLoader,
     ab,
     id,
     AutoSignin,
     navigation,
+    sticky,
     Profile,
     Search,
     history,
@@ -97,6 +100,7 @@ define([
     Onward,
     Popular,
     Related,
+    techFeedback,
     TonalComponent,
     shareCount,
     accessilbilityPrefs,
@@ -131,7 +135,10 @@ define([
             },
 
             initFastClick: function () {
-                FastClick.attach(document.body);
+                // Unfortunately FastClick’s UMD exports are not consistent for
+                // all types. AMD exports FastClick, CJS exports FastClick.attach
+                // As per: https://github.com/ftlabs/fastclick/blob/master/lib/fastclick.js#L829-L840
+                (config.tests.jspmTest ? FastClick : FastClick.attach)(document.body);
             },
 
             initialiseFauxBlockLink: function () {
@@ -157,6 +164,12 @@ define([
 
             initialiseNavigation: function () {
                 navigation.init();
+            },
+
+            initialiseStickyHeader: function () {
+                if (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') {
+                    sticky.init();
+                }
             },
 
             transcludeRelated: function () {
@@ -374,6 +387,10 @@ define([
                 }
             },
 
+            commentsAds: function () {
+                commentAdverts.init();
+            },
+
             showMoreTagsLink: function () {
                 new MoreTags().init();
             },
@@ -444,7 +461,7 @@ define([
             },
 
             loadBreakingNews: function () {
-                if (config.switches.breakingNews) {
+                if (config.switches.breakingNews && config.page.section !== 'identity') {
                     breakingNews();
                 }
             },
@@ -472,16 +489,6 @@ define([
                 window.guardian.api = {
                     logCss: logCss
                 };
-            },
-
-            runCustomAbTests: function () {
-                if (ab.shouldRunTest('MtRec1', 'A')) {
-                    ab.getTest('MtRec1').fireRecTest();
-                }
-
-                if (ab.shouldRunTest('MtRec2', 'A')) {
-                    ab.getTest('MtRec2').fireRecTest();
-                }
             },
 
             internationalSignposting: function () {
@@ -516,6 +523,7 @@ define([
             robust('c-tabs',            modules.showTabs);
             robust('c-top-nav',         modules.initialiseTopNavItems);
             robust('c-init-nav',        modules.initialiseNavigation);
+            robust('c-sticky-header',   modules.initialiseStickyHeader);
             robust('c-toggles',         modules.showToggles);
             robust('c-dates',           modules.showRelativeDates);
             robust('c-clickstream',     modules.initClickstream);
@@ -526,6 +534,7 @@ define([
             robust('c-forsee',          modules.runForseeSurvey);
             robust('c-start-register',  modules.startRegister);
             robust('c-comments',        modules.repositionComments);
+            robust('c-comments-ads',    modules.commentsAds);
             robust('c-tag-links',       modules.showMoreTagsLink);
             robust('c-smart-banner',    modules.showSmartBanner);
             robust('c-adblock',         modules.showAdblockMessage);
@@ -541,7 +550,6 @@ define([
             robust('c-simple-metrics',  modules.initSimpleMetrics);
             robust('c-tech-feedback',   modules.initTechFeedback);
             robust('c-media-listeners', modules.mediaEventListeners);
-            robust('c-run-custom-ab',   modules.runCustomAbTests);
             robust('c-accessibility-prefs',       modules.initAccessibilityPrefs);
             robust('c-international-signposting', modules.internationalSignposting);
             if (window.console && window.console.log && !config.page.isDev) {

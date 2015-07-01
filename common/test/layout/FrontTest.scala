@@ -39,6 +39,7 @@ class FrontTest extends FlatSpec with Matchers {
 
     LatestSnap(
       id = theUrl,
+      maybeFrontPublicationDate = None,
       cardStyle = DefaultCardstyle,
       snapUri = None,
       snapCss = None,

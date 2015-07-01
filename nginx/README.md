@@ -20,7 +20,7 @@ Add the following to your ```/etc/hosts```:
     127.0.0.1   m.thegulocal.com
 
 
-## Now run the frontend setup script for nginx [setup.sh](nginx/setup.sh):
+## Now run the frontend setup script for nginx [setup.sh](setup.sh):
 
     sh setup.sh
 

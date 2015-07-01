@@ -9,13 +9,13 @@ describe('Beacon', function () {
             page: {
                 beaconUrl: '//beacon.guim.co.uk'
             }
-        };    
+        };
 
-    beforeEach(function(done) {
+    beforeEach(function (done) {
         inject.mock('common/utils/config', config);
-        
+
         inject.test('common/modules/analytics/beacon', function (beaconDependency) {
-            beacon = beaconDependency;   
+            beacon = beaconDependency;
             done();
         });
     });
@@ -34,13 +34,17 @@ describe('Beacon', function () {
     it('should create correct img element when counting', function () {
         var img = beacon.counts('blocked-ads');
 
-        expect(bonzo(img).attr('src')).toBe('//beacon.guim.co.uk/counts.gif?c=blocked-ads');
+        if (!navigator.sendBeacon) {
+            expect(bonzo(img).attr('src')).toBe('//beacon.guim.co.uk/counts.gif?c=blocked-ads');
+        }
     });
 
     it('should create correct img element when counting more than one', function () {
         var img = beacon.counts(['blocked-ads', 'localStorage-supported']);
 
-        expect(bonzo(img).attr('src'))
-            .toBe('//beacon.guim.co.uk/counts.gif?c=blocked-ads&c=localStorage-supported');
+        if (!navigator.sendBeacon) {
+            expect(bonzo(img).attr('src'))
+                .toBe('//beacon.guim.co.uk/counts.gif?c=blocked-ads&c=localStorage-supported');
+        }
     });
 });

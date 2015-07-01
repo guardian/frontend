@@ -102,7 +102,7 @@ define(function () {
     };
 
     FacebookAuthorizer.prototype._loadFacebookScript = function () {
-        require(['js!facebook'], this._handleScriptLoaded.bind(this));
+        require(['js!facebook.js'], this._handleScriptLoaded.bind(this));
     };
 
     FacebookAuthorizer.prototype._handleScriptLoaded = function () {

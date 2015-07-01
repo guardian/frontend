@@ -27,7 +27,7 @@ case class EditionalisedLink(
     LinkTo(baseUrl)(requestHeader)
 
   def hrefWithRel(implicit requestHeader: RequestHeader): String =
-    processUrl(baseUrl, Edition(requestHeader), InternationalEdition.isInternationalEdition(requestHeader)) match {
+    processUrl(baseUrl, Edition(requestHeader)) match {
       case ProcessedUrl(url, true) => s"""href="${handleQueryStrings(url)}" rel="nofollow""""
       case ProcessedUrl(url, false) => s"""href="${handleQueryStrings(url)}""""
     }
@@ -224,7 +224,9 @@ object FaciaCard {
       DisplaySettings.fromTrail(faciaContent),
       faciaContent.isLive,
       None,
-      useShortByline = false
+      faciaContent.shortUrlPath,
+      useShortByline = false,
+      faciaContent.group
     )
   }
 }
@@ -251,7 +253,9 @@ case class ContentCard(
   displaySettings: DisplaySettings,
   isLive: Boolean,
   timeStampDisplay: Option[FaciaCardTimestamp],
-  useShortByline: Boolean
+  shortUrl: Option[String],
+  useShortByline: Boolean,
+  group: String
 ) extends FaciaCard {
   def bylineText: Option[String] = if (useShortByline) byline.map(_.shortByline) else byline.map(_.get)
 
@@ -280,7 +284,7 @@ case class ContentCard(
 
   def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
 
-  def showMeta = discussionSettings.isCommentable || showTimestamp
+  val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if(displaySettings.isBoosted) "+" else ""}"
 }
 
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard

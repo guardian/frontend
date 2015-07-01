@@ -5,28 +5,20 @@ define([
     'Promise',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/commercial/third-party-tags/audience-science',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
     'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
     'common/modules/commercial/third-party-tags/krux',
-    'common/modules/commercial/third-party-tags/outbrain',
-    'common/modules/commercial/third-party-tags/pointroll-resp-lib',
-    'common/modules/commercial/third-party-tags/gravity',
-    'common/modules/commercial/third-party-tags/taboola'
+    'common/modules/commercial/third-party-tags/outbrain'
 ], function (
     Promise,
     config,
     mediator,
-    audienceScience,
     audienceScienceGateway,
     imrWorldwide,
     remarketing,
     krux,
-    outbrain,
-    pointroll,
-    gravity,
-    taboola
+    outbrain
 ) {
 
     function init() {
@@ -52,20 +44,14 @@ define([
             loadOther();
         }
 
-        pointroll.load();
-        gravity.lightBeacon();
-
         return Promise.resolve(null);
     }
 
     function loadOther() {
-        audienceScience.load();
         imrWorldwide.load();
         remarketing.load();
         outbrain.load();
         krux.load();
-        gravity.getRecommendations();
-        taboola.load();
     }
 
     return {

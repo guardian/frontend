@@ -198,13 +198,8 @@ define([
 
         attachToDOM: function (tmpl, city) {
             $holder = $('#headlines .js-container__header');
-
-            if (!!config.switches.attachWeatherToTopContainer) {
-                $holder = $($('.js-container__header')[0]);
-            }
-
             $('.js-weather', $holder).remove();
-            $holder.append(tmpl.replace(new RegExp('{{city}}', 'g'), city));
+            $holder.append(tmpl.replace(new RegExp('<%=city%>', 'g'), city));
         },
 
         renderForecast: function (forecastData) {
