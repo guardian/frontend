@@ -37,6 +37,7 @@ define([
 
             bean.on(document, 'click', '.js-search-toggle', function (e) {
                 searchLoader();
+                self.checkResults();
                 self.focusSearchField();
                 e.preventDefault();
                 mediator.emit('modules:search');
@@ -69,10 +70,19 @@ define([
             if ($('.gsc-resultsbox-visible').length > 0) {
                 var $search = $('.js-popup--search');
 
+                // Put search box to its default state
+                fastdom.write(function () {
+                    $search.css('height', 'auto');
+                    $('.gsc-results', $search).css({
+                        height: 'auto',
+                        'overflow-y': 'visible'
+                    });
+                });
+
                 // Cut search results to window size only when in slim header mode
                 if ($('.l-header--is-slim').length > 0) {
                     fastdom.read(function () {
-                        var height = window.innerHeight - $search.offset().top;
+                        var height = window.innerHeight - $search[0].getBoundingClientRect().top;
 
                         fastdom.write(function () {
                             $search.css('height', height);
