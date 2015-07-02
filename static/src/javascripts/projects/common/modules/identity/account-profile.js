@@ -133,13 +133,13 @@ define([
             self.prependErrorMessage(self.messages.noCorsError, avatarForm);
         }
 
-        xhr.onload = function (event) {
-            var status = event.srcElement.status;
+        xhr.onload = function () {
+            var status = xhr.status;
             if (status >= 200 && status < 300) {
                 self.prependSuccessMessage(self.messages.avatarUploadSuccess, avatarForm);
             } else if (status >= 400 && status < 500) {
                 self.prependErrorMessage(
-                    JSON.parse(event.srcElement.responseText).message || self.messages.avatarUploadFailure,
+                    JSON.parse(xhr.responseText).message || self.messages.avatarUploadFailure,
                     avatarForm);
             } else {
                 self.prependErrorMessage(self.messages.noServerError, avatarForm);

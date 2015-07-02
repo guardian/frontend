@@ -10,6 +10,7 @@ define([
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
+    'common/modules/article/truncation',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/social-most-popular',
@@ -26,6 +27,7 @@ define([
     richLinks,
     membershipEvents,
     openModule,
+    truncation,
     ab,
     geoMostPopular,
     SocialMostPopular,
@@ -79,6 +81,12 @@ define([
                 require(['ophan/ng'], function (ophan) {
                     mediator.on('quiz/ophan-event', ophan.record);
                 });
+            },
+
+            initTruncation: function () {
+                if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
+                    truncation();
+                }
             }
         },
 
@@ -90,6 +98,7 @@ define([
             modules.initSocialMostPopular();
             modules.initQuizListeners();
             modules.initPintrest();
+            modules.initTruncation();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
