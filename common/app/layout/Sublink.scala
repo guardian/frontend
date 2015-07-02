@@ -205,7 +205,7 @@ object FaciaCard {
     } yield kickerText contains byline) getOrElse false
 
     ContentCard(
-      Option(faciaContent.id),
+      faciaContent.maybeContentId,
       faciaContent.headline,
       FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
       getByline(faciaContent).filterNot(Function.const(suppressByline)),
