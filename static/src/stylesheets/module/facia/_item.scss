@@ -491,6 +491,7 @@ $block-height: 71px;
     position: relative;
     float: left;
     margin-bottom: $gs-baseline / 4;
+    margin-right: 1em;
 }
 
 .fc-item__timestamp {
@@ -525,9 +526,9 @@ $block-height: 71px;
     border: 0;
     background-color: transparent;
     padding: 0;
+    outline: none;
 
     color: transparent;
-    float: right;
     margin-right: 0 - ($gs-gutter * .25);
     padding-right: ($gs-gutter * .25);
     transition: color 100ms;
@@ -539,16 +540,16 @@ $block-height: 71px;
         color: inherit;
     }
 
-    &:before {
+    &:after {
         content: 'save';
-        margin-right: .4em;
     }
 
     .inline-icon {
-        float: right;
+        float: left;
+        margin-right: .4em;
     }
 
-    &.fc-save-for-later--is-saved:before {
+    &.fc-save-for-later--is-saved:after {
         content: 'saved';
     }
 }
