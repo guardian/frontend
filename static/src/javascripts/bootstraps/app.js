@@ -68,7 +68,7 @@ define([
                 });
             }
 
-            if (config.isMedia) {
+            if (config.isMedia || config.page.contentType === 'Interactive') {
                 require(['bootstraps/trail'], function (trail) {
                     bootstrapContext('media : trail', {
                         init: trail
