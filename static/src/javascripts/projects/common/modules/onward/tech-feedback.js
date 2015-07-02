@@ -9,7 +9,6 @@ define([
     _,
     $
 ) {
-
     function objToString(obj) {
         return _.reduce(obj, function (str, value, key) {
             return str + key + ': ' + value + '\n';
@@ -38,10 +37,8 @@ define([
         }
     }
 
-    return {
-        init: function () {
-            registerEmailHandler('.js-tech-feedback-mailto');
-            registerEmailHandler('.js-userhelp-mailto');
-        }
+    return function () {
+        registerEmailHandler('.js-tech-feedback-mailto');
+        registerEmailHandler('.js-userhelp-mailto');
     };
 });

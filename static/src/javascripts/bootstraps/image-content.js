@@ -3,13 +3,9 @@ define([
 ], function (
     Lightbox
 ) {
-
-    var ready = function () {
-            Lightbox.init();
-        };
-
     return {
-        init: ready
+        init: function () {
+            Lightbox.init();
+        }
     };
-
 });

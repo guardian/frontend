@@ -203,10 +203,6 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
-        isLzAdsSwitchOn = function () {
-            return config.switches.lzAds;
-        },
-
         /**
          * Public functions
          */
@@ -221,7 +217,8 @@ define([
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
-                require(['js!googletag']);
+                // .js must be added: https://github.com/systemjs/systemjs/issues/528
+                require(['js!googletag.js']);
             }
 
             window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
@@ -231,7 +228,8 @@ define([
             window.googletag.cmd.push(defineSlots);
 
             // We want to run lazy load if user is in the main test or if there is a switch on
-            if (ab.shouldRunTest('Viewability', 'variant') || isLzAdsSwitchOn()) {
+            // We do not want lazy loading on pageskins because it messes up the roadblock
+            if ((ab.shouldRunTest('Viewability', 'variant') || config.switches.lzAds) && !(config.page.hasPageSkin)) {
                 window.googletag.cmd.push(displayLazyAds);
             } else {
                 window.googletag.cmd.push(displayAds);

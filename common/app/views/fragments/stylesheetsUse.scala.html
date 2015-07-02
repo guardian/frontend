@@ -52,15 +52,6 @@
 
             // GO!
             useCss();
-
-            // TEMPORARY: Tidy up localStorage - can remove after a bit
-            try {
-                Object.keys(localStorage).forEach(function(key) {
-                    if (key.match(/^gu.css./g)) {
-                        localStorage.removeItem(key);
-                    }
-                });
-            } catch (e) {};
         })(document.getElementsByTagName('link'), window.document.styleSheets)
     </script>
 }

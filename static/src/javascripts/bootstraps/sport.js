@@ -8,7 +8,6 @@ define([
     Component
 ) {
     function init() {
-
         var cricketScore, parentEl,
             matchIdentifier = config.page.cricketMatch;
 

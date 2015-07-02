@@ -10,7 +10,8 @@ class IdentityUrlBuilder @Inject()(conf: IdentityConfiguration) {
     val params = List(
       "returnUrl" -> idRequest.returnUrl,
       "type" -> idRequest.trackingData.registrationType,
-      "skipConfirmation" -> idRequest.skipConfirmation.map(_.toString)
+      "skipConfirmation" -> idRequest.skipConfirmation.map(_.toString),
+      "page" -> idRequest.page.map(_.toString)
     )
     params.flatMap(param => if (param._2.isDefined) Some(param._1 -> param._2.get) else None)
   }

@@ -1,4 +1,3 @@
-/*eslint-disable consistent-return*/
 define([
     'modules/vars',
     'knockout',
@@ -63,6 +62,8 @@ define([
         mediator = mediator.default;
         humanTime = humanTime.default;
         validateImageSrc = validateImageSrc.default;
+        copiedArticle = copiedArticle.default;
+        logger = logger.default;
 
         var capiProps = [
                 'webUrl',
@@ -76,7 +77,8 @@ define([
                 'isLive',
                 'firstPublicationDate',
                 'scheduledPublicationDate',
-                'thumbnail'],
+                'thumbnail',
+                'secureThumbnail'],
 
             metaFields = [
                 {
@@ -433,7 +435,7 @@ define([
                     elementHasFocus: self.group.elementHasFocus.bind(self.group)
                 });
 
-                this.meta.supporting.items(_.map((opts.meta || {}).supporting, function(item) {
+                this.meta.supporting.items(_.map((opts.meta || {}).supporting, function (item) {
                     return new Article(_.extend(item, {
                         group: self.meta.supporting
                     }));
@@ -456,26 +458,26 @@ define([
                 if (meta.imageReplace() && meta.imageSrc()) {
                     return meta.imageSrc();
                 } else if (meta.imageCutoutReplace()) {
-                    return meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.thumbnail();
+                    return meta.imageCutoutSrc() || state.imageCutoutSrcFromCapi() || fields.secureThumbnail() || fields.thumbnail();
                 } else if (meta.imageSlideshowReplace && meta.imageSlideshowReplace() && meta.slideshow() && meta.slideshow()[0]) {
                     return meta.slideshow()[0].src;
                 } else {
-                    return fields.thumbnail();
+                    return fields.secureThumbnail() || fields.thumbnail();
                 }
             }, this);
         }
 
-        Article.prototype.copy = function() {
+        Article.prototype.copy = function () {
             copiedArticle.set(this);
         };
 
         Article.prototype.paste = function () {
             var sourceItem = copiedArticle.get(true);
 
-            if(!sourceItem || sourceItem.id === this.id()) { return; }
+            if (!sourceItem || sourceItem.id === this.id()) { return; }
 
             mediator.emit('collection:updates', {
-                sourceItem: sourceItem,
+                sourceItem: sourceItem.article.get(),
                 sourceGroup: sourceItem.group,
                 targetItem: this,
                 targetGroup: this.group,
@@ -484,7 +486,7 @@ define([
             });
         };
 
-        Article.prototype.metaDisplayer = function(opts, index, all) {
+        Article.prototype.metaDisplayer = function (opts, index, all) {
             var self = this,
                 display,
                 label;

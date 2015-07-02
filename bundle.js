@@ -3,17 +3,15 @@
 var path = require('path');
 
 var System = require('jspm/node_modules/systemjs');
-// Execute the IIFE
-global.systemJsRuntime = false;
-require(path.join(__dirname, 'static/src/systemjs-normalize'));
-// Modify System before creating the builder because it clones System
-System._extensions.push(function(loader) {
-    // System.normalize is exposed by the IIFE above
-    loader.normalize = System.normalize;
-});
 
 var jspm = require('jspm');
 var builder = new jspm.Builder();
+// Temporary hack, as per https://github.com/systemjs/systemjs/issues/533#issuecomment-113525639
+global.System = builder.loader;
+// Execute the IIFE
+global.systemJsRuntime = false;
+require(path.join(__dirname, 'static/src/systemjs-normalize'));
+
 var crypto = require('crypto');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
@@ -32,6 +30,10 @@ var bundleConfigs = [
     ['bootstraps/football - core - bootstraps/app', 'football'],
     ['bootstraps/preferences - core - bootstraps/app', 'preferences'],
     ['bootstraps/membership - core - bootstraps/app', 'membership'],
+    ['bootstraps/article - core - bootstraps/app', 'article'],
+    ['bootstraps/liveblog - core - bootstraps/app', 'liveblog'],
+    ['bootstraps/gallery - core - bootstraps/app', 'gallery'],
+    ['bootstraps/trail - core - bootstraps/app', 'trail'],
     ['bootstraps/ophan - core', 'ophan'],
     ['bootstraps/admin - core', 'admin'],
     // Odd issue when bundling admin with core: https://github.com/jspm/jspm-cli/issues/806
@@ -41,7 +43,8 @@ var bundleConfigs = [
     // Odd issue when bundling admin with core: https://github.com/jspm/jspm-cli/issues/806
     // ['bootstraps/video-embed', 'video-embed'],
     ['bootstraps/dev - core - bootstraps/app', 'dev'],
-    ['bootstraps/creatives - core - bootstraps/app', 'creatives']
+    ['bootstraps/creatives - core - bootstraps/app', 'creatives'],
+    ['zxcvbn', 'zxcvbn']
 ];
 
 var getHash = function (outputSource) {
@@ -86,7 +89,7 @@ var writeBundlesConfig = function (bundles) {
         return accumulator;
     }, {});
     var configFilePath = path.join(jspmBaseUrl, 'systemjs-bundle-config.js');
-    var configFileData = 'System.bundles = ' + JSON.stringify(bundlesConfig, null, '\t');
+    var configFileData = 'System.config({ bundles: ' + JSON.stringify(bundlesConfig, null, '\t') + ' })';
     console.log('writing to %s', configFilePath);
     fs.writeFileSync(configFilePath, configFileData);
 };
