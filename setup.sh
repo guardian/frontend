@@ -94,17 +94,18 @@ install_node() {
 
 install_grunt() {
   if ! installed grunt; then
-    sudo npm -g install grunt-cli
+    npm -g install grunt-cli
   fi
 }
 
 install_jspm() {
   if ! installed jspm; then
-    sudo npm -g install jspm
-    jspm registry config github
-    jspm registry create bower jspm-bower-endpoint
+    npm -g install jspm
   fi
-  jspm install
+
+ npm -g install jspm-bower-endpoint
+ jspm registry config github
+ jspm registry create bower jspm-bower-endpoint
 }
 
 install_ruby() {

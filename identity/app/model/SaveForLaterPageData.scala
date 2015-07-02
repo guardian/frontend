@@ -18,7 +18,7 @@ case class SaveForLaterItem (
   content: Content,
   savedArticle: SavedArticle) extends Ordered[SaveForLaterItem] {
 
-  def compare(other: SaveForLaterItem) : Int = this.savedArticle.date.compareTo(other.savedArticle.date)
+  def compare(other: SaveForLaterItem) : Int = other.savedArticle.date.compareTo(this.savedArticle.date)
 
   val contentCard = FaciaCard.fromTrail(
     FaciaContentConvert.frontentContentToFaciaContent(content),

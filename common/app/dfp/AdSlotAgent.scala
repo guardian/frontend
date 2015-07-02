@@ -6,6 +6,8 @@ import conf.Switches.ExposeHasTopBelowNavAdSlotFlagSwitch
 
 trait AdSlotAgent {
 
+  protected val isProd: Boolean
+
   protected def lineItems: Seq[GuLineItem]
 
   def hasAdInTopBelowNavSlot(adUnitWithoutRoot: String, edition: Edition): Boolean = {
@@ -38,13 +40,16 @@ trait AdSlotAgent {
         adUnits.contains(adUnitWithRoot)
       }
 
+      def targetsAdTest(lineItem: GuLineItem) = lineItem.targeting.hasAdTestTargetting
+
       val isFront = adUnitWithoutRoot.endsWith("/front") || adUnitWithoutRoot.endsWith("/front/ng")
 
       isFront && lineItems.exists { lineItem =>
         isCurrent(lineItem) &&
           targetsTopBelowNavSlot(lineItem) &&
           targetsEdition(lineItem) &&
-          targetsAdUnit(lineItem)
+          targetsAdUnit(lineItem) &&
+          !(isProd && targetsAdTest(lineItem))
       }
 
     } else false

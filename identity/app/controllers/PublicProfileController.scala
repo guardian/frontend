@@ -28,6 +28,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
   )
 
   def renderProfileFromId(id: String, activityType: String) = renderPublicProfilePage("/user/id/"+id, activityType, identityApiClient.user(id))
+
   def renderPublicProfilePage(url: String, activityType: String, futureUser: => Future[Response[User]]) = Action.async {
     implicit request =>
       futureUser map {

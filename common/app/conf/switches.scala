@@ -287,7 +287,7 @@ object Switches {
     "commercial-extra-ads",
     "If this switch is ON, extra ads are served on article pages",
     safeState = On,
-    sellByDate = new LocalDate(2015, 7, 8),
+    sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
 
@@ -634,7 +634,7 @@ object Switches {
     "msie-audit",
     "Enables beacon tracking of MSIE and their ad blockers",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 6, 30),
+    sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
 
@@ -828,6 +828,15 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
+  )
+
+  val IdentityUseAvatarApi = Switch(
+    "Identity",
+    "id-use-avatar-api",
+    "If switched on, avatars will be uploaded using the new Avatar API",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 1),
+    exposeClientSide = true
   )
 
   val EnhanceTweetsSwitch = Switch(
@@ -1179,30 +1188,12 @@ object Switches {
     exposeClientSide = false
   )
 
-  val FaciaPressOldFormat = Switch(
-    "Facia",
-    "facia-press-old-client-format",
-    "If this switch is on, facia-press will press in the old fapi-client JSON format",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 8, 31),
-    exposeClientSide = false
-  )
-
   val FaciaPressOnDemand = Switch(
     "Facia",
     "facia-press-on-demand",
     "If this is switched on, you can force facia to press on demand (Leave off)",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val FaciaServerNewFormat = Switch(
-    "Facia",
-    "facia-new-format",
-    "If this is switched on, facia will serve off the new JSON format (It will fallback to old if it doesn't exist)",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 3),
     exposeClientSide = false
   )
 

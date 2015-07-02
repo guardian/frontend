@@ -11,7 +11,7 @@ import * as sparklines from 'utils/sparklines';
 import parseQueryParams from 'utils/parse-query-params';
 import updateScrollables from 'utils/update-scrollables';
 import listManager from 'modules/list-manager';
-import droppable from 'modules/droppable';
+import * as droppable from 'modules/droppable';
 import copiedArticle from 'modules/copied-article';
 import modalDialog from 'modules/modal-dialog';
 import newItems from 'models/collections/new-items';
@@ -68,7 +68,7 @@ export default function() {
     mediator.on('front:disposed', function (front) {
         model.loadedFronts.remove(front);
     });
-    mediator.on('copied-article:change', function (hasArticle) {
+    copiedArticle.on('change', function (hasArticle) {
         model.isPasteActive(hasArticle);
     });
 

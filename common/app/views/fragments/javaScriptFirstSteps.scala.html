@@ -259,7 +259,6 @@
         }
 
         if (navigator.platform === 'iPhone' || navigator.platform === 'iPad') {
-
             var platform = navigator.platform;
             var isIphone = navigator.platform === 'iPhone';
 
@@ -293,15 +292,21 @@
             if ( isIphone4 ) {
                 logDevice ( '4', 'iphone' );
             }
-        }
-        else if ((navigator.platform === 'Linux armv7l') || (navigator.platform == 'Linuz aarch64') || (navigator.platform === 'Android')){
-            var isNexus5 = /.*Nexus 5\d+.*/.test(navigator.userAgent);
-            var isNexus7 = /.*Nexus 7\d+.*/.test(navigator.userAgent);
+        };
+
+        @*
+        This is a subset of the navigator.platform values used by Android. We may need to add more to capture more devices
+        *@
+
+        if ((navigator.platform === 'Linux armv7l') || (navigator.platform === 'Linux aarch64') || (navigator.platform === 'Android')){
+            var isNexus5 = /.*Nexus 5 */.test(navigator.userAgent);
+            var isNexus7 = /.*Nexus 7 */.test(navigator.userAgent);
             @*
             There is a very large variety in model id's for Samsung devices, different id's for different carriers.
             so we will only really be able to beacon on a subset of the Samsung GS4's that visit us
             *@
-            var isSGS4 = (/.*SAMSUNG GT-I950\d+.*/.test(navigator.userAgent))||(/.*SAMSUNG SCH-R970([05]])\d+.*/.test(navigator.userAgent));
+            var isSGS4 = ((/.*GT-I9500 */.test(navigator.userAgent)) || (/.*GT-I9505 */.test(navigator.userAgent)));
+            var isSGS3 = /.*GT-I9300 */.test(navigator.userAgent);
 
             if ( isNexus5 ) {
             logDevice ( 'nexus5', 'android' ) ;
@@ -314,6 +319,12 @@
             if ( isSGS4 ) {
             logDevice ( 'sgs4', 'android' ) ;
             }
+
+            if ( isSGS3 ) {
+            logDevice ( 'sgs3', 'android' ) ;
+            }
+
         }
+
     </script>
 }
