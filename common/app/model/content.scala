@@ -753,27 +753,29 @@ trait Lightboxable extends Content {
   lazy val isMainMediaLightboxable = !mainFiltered.isEmpty
 
   lazy val lightbox: JsObject = {
-    val imageContainers = lightboxImages.filter(_.largestEditorialCrop.nonEmpty)
-    val imageJson = imageContainers.map { imgContainer =>
-      imgContainer.largestEditorialCrop.map { img =>
-        JsObject(Seq(
-          "caption" -> JsString(img.caption.getOrElse("")),
-          "credit" -> JsString(img.credit.getOrElse("")),
-          "displayCredit" -> JsBoolean(img.displayCredit),
-          "src" -> JsString(ImgSrc.findSrc(imgContainer, Item700).getOrElse("")),
-          "srcsets" -> JsString(ImgSrc.normalSrcset(imgContainer, GalleryMedia.Lightbox)),
-          "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
-          "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
-          "role" -> JsString(img.role.toString)
-        ))
-      }
+
+    val imageJson = for {
+      container <- lightboxImages
+      img <- container.largestEditorialCrop
+    } yield {
+      JsObject(Seq(
+        "caption" -> JsString(img.caption.getOrElse("")),
+        "credit" -> JsString(img.credit.getOrElse("")),
+        "displayCredit" -> JsBoolean(img.displayCredit),
+        "src" -> JsString(Item700.bestFor(container).getOrElse("")),
+        "srcsets" -> JsString(ImgSrc.srcset(container, GalleryMedia.Lightbox)),
+        "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
+        "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
+        "role" -> JsString(img.role.toString)
+      ))
     }
+
     JsObject(Seq(
       "id" -> JsString(id),
       "headline" -> JsString(headline),
       "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
       "standfirst" -> JsString(standfirst.getOrElse("")),
-      "images" -> JsArray((imageJson).toSeq.flatten)
+      "images" -> JsArray(imageJson)
     ))
   }
 
