@@ -34,6 +34,7 @@ var bundleConfigs = [
     ['bootstraps/liveblog - core - bootstraps/app', 'liveblog'],
     ['bootstraps/gallery - core - bootstraps/app', 'gallery'],
     ['bootstraps/trail - core - bootstraps/app', 'trail'],
+    ['bootstraps/profile - core - bootstraps/app', 'profile'],
     ['bootstraps/ophan - core', 'ophan'],
     ['bootstraps/admin - core', 'admin'],
     // Odd issue when bundling admin with core: https://github.com/jspm/jspm-cli/issues/806
