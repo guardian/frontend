@@ -29,7 +29,7 @@ define([
     Participation.prototype.prerender = function() {
         var test = this.config.test,
             origin = /gutools.co.uk$/.test(document.location.origin) ? 'http://www.theguardian.com' : document.location.origin,
-            examplePath = (test.examplePath ? test.examplePath : '/uk') + '#ab-' + test.id;
+            examplePath = (test.examplePath || '/uk') + '#ab-' + test.id;
 
         this.getElem('opt-out').href = origin + examplePath + '=notintest';
 
