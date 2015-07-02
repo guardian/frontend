@@ -34,12 +34,9 @@ define([
         }
 
         if (config.switches.thirdPartiesLater) {
-            var timeout = setTimeout(loadOther, 1000);
             // Load third parties after first ad was rendered
             mediator.once('modules:commercial:dfp:rendered', function () {
-                console.log("I am in the IF block");
                 loadOther();
-                clearTimeout(timeout);
             });
         } else {
             loadOther();
