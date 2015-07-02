@@ -405,7 +405,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 // Liveblog blocks
-$block-height: 74px;
+$block-height: 71px;
 
 .fc-item__liveblog-blocks {
     box-sizing: content-box !important;
@@ -415,7 +415,11 @@ $block-height: 74px;
 }
 
 .fc-item__liveblog-blocks__inner {
-    transition: transform .75s ease-out;
+    transition: transform .5s ease-in;
+}
+
+.fc-item__liveblog-blocks__inner--offset {
+    transform: translate3d(0, $block-height * -1, 0);
 }
 
 .fc-item__liveblog-block {
@@ -449,7 +453,7 @@ $block-height: 74px;
     right: 0;
     @include fs-headline(1);
     font-size: 30px;
-    line-height: $gs-baseline/2;
+    line-height: $gs-baseline;
     color: mix(#ffffff, colour(live-default), 92%);
     height: 18px;
     padding-right: 8px;
