@@ -125,11 +125,7 @@ define([
             // Load the Google search monolith, if not already present in this context.
             // We have to re-run their script each time we do this.
             if (!container.innerHTML) {
-                var autoComplete = true;
-
-                if (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') {
-                    autoComplete = false;
-                }
+                var autoComplete = (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') ? true : false;
 
                 fastdom.write(function () {
                     container.innerHTML = '' +
