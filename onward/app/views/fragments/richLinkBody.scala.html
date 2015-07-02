@@ -1,7 +1,6 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
-
-@import views.support.{ImgSrc, Item460}
+@import views.support.Item460
 @import views.support.TrailCssClasses.toneClass
 @import model.Tag
 @import views.support.RenderClasses
@@ -30,7 +29,7 @@
     <div class="rich-link__container">
         @if(content.isGallery || content.isVideo || CardStyleForFrontend(content) == Feature || CardStyleForFrontend(content) == DefaultCardstyle) {
             @content.trailPicture.map { trailPictureContainer =>
-                @ImgSrc.findSrc(trailPictureContainer, Item460).map { imgSrc =>
+                @Item460.bestFor(trailPictureContainer).map { imgSrc =>
 
                     <div class="rich-link__image-container u-responsive-ratio">
                         <img src="@imgSrc" itemprop="contentURL">
