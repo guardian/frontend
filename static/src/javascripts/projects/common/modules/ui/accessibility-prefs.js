@@ -7,8 +7,8 @@ define([
     $,
     userPrefs
 ) {
-
     /* We live in a rainbow of chaos. */
+    // ^ U WOT
 
     function set(mode) {
         var val = mode + '(100%)';
@@ -18,15 +18,11 @@ define([
         });
     }
 
-    function init() {
+    return function () {
         _.forEach(['sepia', 'grayscale', 'invert', 'contrast', 'saturate', 'opacity'], function (filter) {
             if (userPrefs.isOn(filter)) {
                 set(filter);
             }
         });
-    }
-
-    return {
-        init: init
     };
 });
