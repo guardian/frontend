@@ -320,4 +320,8 @@ category: Common
 
 .social__item--pinterest {
     display: none;
+
+    .content--gallery & {
+        display: block;
+    }
 }
