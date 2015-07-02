@@ -3,12 +3,12 @@ import common.{CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
 import conf.Filters
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
-import dfp.{DfpDataCacheLifecycle, DfpAgentLifecycle}
-import feed.{OnwardJourneyLifecycle, MostReadLifecycle, MostPopularFacebookAutoRefreshLifecycle}
+import dfp.{DfpDataCacheLifecycle, FaciaDfpAgentLifecycle}
+import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
 import implicits.Requests
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
-import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
+import play.api.mvc.{EssentialAction, EssentialFilter, RequestHeader, WithFilters}
 import services.ConfigAgentLifecycle
 
 // obviously this is only for devbuild and should never end up in one of our
@@ -64,7 +64,7 @@ with OnwardJourneyLifecycle
 with CommercialLifecycle
 with MostReadLifecycle
 with DfpDataCacheLifecycle
-with DfpAgentLifecycle
+with FaciaDfpAgentLifecycle
 with ConfigAgentLifecycle
 with SurgingContentAgentLifecycle
 with SectionsLookUpLifecycle

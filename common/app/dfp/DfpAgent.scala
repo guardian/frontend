@@ -5,8 +5,8 @@ import common._
 import conf.Configuration.commercial._
 import conf.Configuration.environment
 import conf.Switches.ExposeHasTopBelowNavAdSlotFlagSwitch
+import play.api.Play
 import play.api.libs.json.Json
-import play.api.{Application, GlobalSettings, Play}
 import services.S3
 
 import scala.io.Codec.UTF8
@@ -128,27 +128,5 @@ object DfpAgent
       }
       update(lineItemAgent, topBelowNavLineItems)
     }
-  }
-}
-
-
-trait DfpAgentLifecycle extends GlobalSettings {
-
-  override def onStart(app: Application) {
-    super.onStart(app)
-
-    Jobs.deschedule("DfpDataRefreshJob")
-    Jobs.scheduleEveryNMinutes("DfpDataRefreshJob", 1) {
-      DfpAgent.refresh()
-    }
-
-    AkkaAsync {
-      DfpAgent.refresh()
-    }
-  }
-
-  override def onStop(app: Application) {
-    Jobs.deschedule("DfpDataRefreshJob")
-    super.onStop(app)
   }
 }

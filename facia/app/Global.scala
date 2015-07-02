@@ -3,18 +3,17 @@ import common._
 import conf.Filters
 import crosswords.TodaysCrosswordGridLifecycle
 import dev.DevParametersLifecycle
-import dfp.DfpAgentLifecycle
+import dfp.FaciaDfpAgentLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
-import services.{IndexListingsLifecycle, ConfigAgentLifecycle}
-import play.api.Application
+import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
 
 object Global extends WithFilters(Filters.common: _*)
   with ConfigAgentLifecycle
   with DevParametersLifecycle
   with CloudWatchApplicationMetrics
-  with DfpAgentLifecycle
+  with FaciaDfpAgentLifecycle
   with SurgingContentAgentLifecycle
   with IndexListingsLifecycle
   with ABTHeadlinesLifecycle
