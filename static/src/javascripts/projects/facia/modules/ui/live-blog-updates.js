@@ -24,7 +24,7 @@ define([
     blockTemplate
 ) {
     var animateDelayMs = 2000,
-        animateAfterScrollDelayMs = 1000,
+        animateAfterScrollDelayMs = 500,
         refreshSecs = 30,
         refreshDecay = 1,
         refreshMaxTimes = 5,
