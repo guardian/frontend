@@ -12,7 +12,7 @@ define([
         this.author = 'Robert Berry';
         this.description = 'Article truncation when in social context';
         this.audience = 0.1;
-        this.audienceOffset = 0.35;
+        this.audienceOffset = 0.75;
         this.successMeasure = 'More page views per visit';
         this.audienceCriteria = '';
         this.dataLinkNames = '';
