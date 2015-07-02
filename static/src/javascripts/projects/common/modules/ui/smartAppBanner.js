@@ -15,7 +15,6 @@ define([
     userPrefs,
     Message
 ) {
-
     /**
      * Rules:
      *
@@ -23,7 +22,6 @@ define([
      * 3 impressions
      * Persist close state
      */
-
     var COOKIE_IMPRESSION_KEY = 'GU_SMARTAPPBANNER',
         DATA = {
             IOS: {
@@ -82,5 +80,4 @@ define([
         isMessageShown: isMessageShown,
         getMessageHeight: getMessageHeight
     };
-
 });
