@@ -43,7 +43,12 @@ $c-soulmates-high: colour(neutral-1);
 
     .commercial__body {
         padding-top: $gs-baseline;
-        padding-bottom: 0;
+
+        @include mq(tablet) {
+            background-position: bottom 78px right 0px;
+            background-repeat: no-repeat;
+            padding-bottom: 0;
+        }
 
         @include mq(leftCol) {
             background-image: none;
@@ -78,6 +83,29 @@ $c-soulmates-high: colour(neutral-1);
     .commercial__title {
         min-height: 0;
         width: 120px;
+
+        .commercial--multi & {
+            text-align: center;
+            width: 100%;
+        }
+    }
+
+
+    .logo--soulmates_large .inline-logo-soulmates {
+
+        .svg & {
+
+            svg {
+                width: 100px !important;
+                height: 21px !important;
+
+                @include mq(mobileLandscape) {
+                    width: 120px !important;
+                    height: 28px !important;
+
+                }
+            }
+        }
     }
 
     .inline-logo-soulmates {
@@ -86,15 +114,12 @@ $c-soulmates-high: colour(neutral-1);
             background-size: contain;
 
             svg {
-                width: 100px;
-                height: 21px;
-
-                @include mq(mobileLandscape) {
-                    width: 120px;
-                    height: 28px;
-                }
+                width: 86px;
+                height: 18px;            
             }
+
         }
+
         @include mq(wide) {
             .has-page-skin & {
                 width: 86px;
@@ -257,6 +282,7 @@ $c-soulmates-high: colour(neutral-1);
         position: absolute;
         top: -112px;
         right: -66px;
+        z-index: 0;
 
         &.lineitems__box {
             display: none;
@@ -338,8 +364,9 @@ $c-soulmates-high: colour(neutral-1);
         background-color: #ffffff;
         height: 100%;
         position: relative;
-        padding: 0 $gs-baseline*2 $gs-baseline $gs-baseline*2;
+        padding: 0 $gs-baseline*2 $gs-baseline*2+$gs-gutter/2 $gs-baseline*2;
         overflow: hidden;
+        box-sizing: content-box;
 
         @include mq(tablet) {
             float: right;
@@ -415,12 +442,26 @@ $c-soulmates-high: colour(neutral-1);
 
     }
 
+    .lineitem__image__container {
+        max-height: 130px;
+        overflow: hidden;
+
+        @include mq(mobileLandscape) {
+            max-height: 140px;
+        }
+
+        @include mq($from: tablet) {
+            max-height: 120px;
+        }
+
+    }
+
     .lineitem__image {
         width: 100%;
     }
 
     .lineitem__text {
-        padding: $gs-gutter/2 $gs-gutter*2 $gs-gutter/2 $gs-gutter/2;
+        padding: $gs-gutter/4 $gs-gutter*2 $gs-gutter/4 $gs-gutter/2;
         position: relative;
     }
 
@@ -479,15 +520,6 @@ $c-soulmates-high: colour(neutral-1);
             width: gs-span(4);
         }
 
-        div {
-            border-top: 2px solid $c-soulmatesBorder;
-            height: $gs-row-height;
-
-            &:first-child {
-                border: 0;
-            }
-        }
-
         h4.feed__title {
             display: block;
 
@@ -498,29 +530,69 @@ $c-soulmates-high: colour(neutral-1);
         }
     }
 
+    .form-row {
+        border-top: 2px solid $c-soulmatesBorder;
+        height: $gs-row-height;
+        overflow: hidden;
+
+        &:first-of-type {
+            border-top: 0;
+        }
+    }
+
     .search__dropdown {
         display: inline;
         overflow: hidden;
         @include fs-data(3, $size-only: true);
         padding-bottom: $gs-baseline/2;
         margin-bottom: $gs-baseline/2;
+
+        &:focus {
+            outline: 0;
+        }
+
+        &::-ms-expand {
+            display: none;
+        }
+
+    }
+
+    select:-moz-focusring {
+        color: transparent;
+        text-shadow: 0 0 0 #000;
     }
 
     .search__dropdown__options {
-        min-width: 50%;
-        @include fs-data(3, $size-only: true);
+        width: 120%;
+        @include fs-data(4, $size-only: true);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-position: center 100%;
+        background-position: center right 20%;
+        background-repeat: no-repeat;
+        background-color: #ffffff;
+        height: $gs-row-height;
+        border: 0;
+        outline: 0;
+        outline-color: #ffffff;
+        position: relative;
+        text-indent: 0.01px;
+        text-overflow: '';
+        text-overflow: "";
+        z-index: 1;
     }
 
     .search__submit {
-        margin-right: 0;
+        margin: 23px 0 11px;
         background-color: #332e2e;
         color: #ffffff;
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 900;
         line-height: 1;
         width: 100%;
         text-align: left;
-        padding: 8px 0 8px $gs-baseline;
+        padding: 8px 0 7px $gs-baseline;
         border: 0;
 
         @include mq(desktop) {
