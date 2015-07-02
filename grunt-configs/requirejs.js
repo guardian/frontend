@@ -125,6 +125,18 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
+        profile: {
+            options: {
+                name: 'bootstraps/profile',
+                out: options.staticTargetDir + 'javascripts/bootstraps/profile.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
         sudoku: {
             options: {
                 name: 'bootstraps/sudoku',
