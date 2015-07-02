@@ -639,6 +639,15 @@ object Switches {
   )
 
   // Features
+  val ArticleTruncation = Switch(
+    "Feature",
+    "ab-article-truncation",
+    "Article truncation",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
+
   val FacebookMostViewed = Switch(
     "Feature",
     "ab-facebook-most-viewed",

@@ -1,0 +1,29 @@
+.content__article-body--truncated {
+    max-height: 550px;
+    overflow: hidden;
+    position: relative;
+}
+
+.content__truncation-overlay {
+    display: none;
+
+    .content__article-body--truncated & {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        background: linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+        height: 200px;
+        width: 100%;
+        border-bottom: solid 40px #ffffff;
+    }
+}
+
+.content__read-more-button {
+    display: none;
+
+    .content__article-body--truncated & {
+        display: block;
+        position: absolute;
+        bottom: 0;
+    }
+}
