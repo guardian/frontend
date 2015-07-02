@@ -17,9 +17,11 @@ define([
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
     'common/modules/ui/dropdowns',
+    'common/modules/ui/last-modified',
     'common/modules/ui/notification-counter',
     'common/modules/ui/relativedates',
-    'bootstraps/article',
+    'bootstraps/article-liveblog-common',
+    'bootstraps/trail',
     'common/utils/robust'
 ], function (
     bean,
@@ -40,9 +42,11 @@ define([
     LiveFilter,
     AutoUpdate,
     dropdowns,
+    lastModified,
     NotificationCounter,
     RelativeDates,
-    article,
+    articleLiveblogCommon,
+    trail,
     robust
 ) {
     'use strict';
@@ -253,11 +257,8 @@ define([
         robust('lb-updates',    modules.handleUpdates);
         robust('lb-richlinks',  richLinks.upgradeRichLinks);
 
-        // re-use modules from article bootstrap
-        robust('lb-article',    article.modules.initOpenCta);
-        robust('lb-fence',      article.modules.initFence);
-        robust('lb-twitter',    article.modules.initTruncateAndTwitter);
-        robust('lb-sharing',    article.modules.initSelectionSharing);
+        trail();
+        articleLiveblogCommon();
 
         robust('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
     }

@@ -17,8 +17,7 @@ define([
     template,
     shareCountTemplate
 ) {
-
-    var shareCount    = 0,
+    var shareCount = 0,
         $shareCountEls = $('.js-sharecount'),
         $fullValueEls,
         $shortValueEls,
@@ -44,7 +43,6 @@ define([
     }
 
     function addToShareCount(val) {
-
         $shareCountEls
             .removeClass('u-h')
             .html(shareCountTemplate)
@@ -56,7 +54,7 @@ define([
         if (detect.isBreakpoint({min: 'tablet'})) {
             var duration = 250,
                 updateStep = 25,
-                slices     = duration / updateStep,
+                slices = duration / updateStep,
                 amountPerStep = val / slices,
                 currentSlice = 0,
                 interval = window.setInterval(function () {
@@ -68,10 +66,9 @@ define([
         } else {
             incrementShareCount(val);
         }
-
     }
 
-    function init() {
+    return function () {
         if ($shareCountEls.length) {
             var url = 'http://www.theguardian.com/' + config.page.pageId;
             try {
@@ -104,12 +101,6 @@ define([
                     }
                 });
             }
-
         }
-
-    }
-
-    return {
-        init: init
     };
 });
