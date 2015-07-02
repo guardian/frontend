@@ -52,9 +52,22 @@ object DfpAgent
     }
   }
 
-  def refresh() {
+  private def stringFromS3(key: String): Option[String] = S3.get(key)(UTF8)
 
-    def stringFromS3(key: String): Option[String] = S3.get(key)(UTF8)
+  private def grabCurrentLineItemsFromStore(key: String): Seq[GuLineItem] = {
+    val maybeLineItems = for (jsonString <- stringFromS3(key)) yield {
+      Json.parse(jsonString).as[LineItemReport].lineItems
+    }
+    maybeLineItems getOrElse Nil
+  }
+
+  private def update[T](agent: Agent[Seq[T]], freshData: Seq[T]) {
+    if (freshData.nonEmpty) {
+      agent send freshData
+    }
+  }
+
+  def refresh() {
 
     def grabPaidForTagsFromStore(key: String): Seq[PaidForTag] = {
       val reportOption: Option[PaidForTagsReport] = for {
@@ -80,19 +93,6 @@ object DfpAgent
         report <- InlineMerchandisingTargetedTagsReportParser(jsonString)
       } yield report.targetedTags
       maybeTagSet getOrElse InlineMerchandisingTagSet()
-    }
-
-    def grabCurrentLineItemsFromStore(key: String): Seq[GuLineItem] = {
-      val maybeLineItems = for (jsonString <- stringFromS3(key)) yield {
-        Json.parse(jsonString).as[LineItemReport].lineItems
-      }
-      maybeLineItems getOrElse Nil
-    }
-
-    def update[T](agent: Agent[Seq[T]], freshData: Seq[T]) {
-      if (freshData.nonEmpty) {
-        agent send freshData
-      }
     }
 
     def updateMap(agent: Agent[Map[String, Set[String]]], freshData: Map[String, Set[String]]) {
@@ -121,7 +121,9 @@ object DfpAgent
 
     update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
+  }
 
+  def refreshFaciaSpecificData(): Unit = {
     if (ExposeHasTopBelowNavAdSlotFlagSwitch.isSwitchedOn) {
       val topBelowNavLineItems = grabCurrentLineItemsFromStore(dfpLineItemsKey) filter {
         _.targeting.customTargetSets.exists(_.targets.exists(_.isSlot("top-below-nav")))
