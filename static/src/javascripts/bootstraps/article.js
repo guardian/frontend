@@ -1,6 +1,7 @@
 /*eslint-disable no-new*/
 define([
     'qwery',
+    'bean',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -16,6 +17,7 @@ define([
     'bootstraps/trail'
 ], function (
     qwery,
+    bean,
     $,
     config,
     detect,
@@ -63,7 +65,15 @@ define([
 
             initPintrest: function () {
                 if (ab.shouldRunTest('Pintrest', 'variant')) {
-                    $('.social__item--pinterest').css('display', 'block');
+                    var $pin = $('.social__item--pinterest');
+
+                    if ($pin.length) {
+                        $pin.css('display', 'block');
+                        bean.on($pin[0], 'click', function (event) {
+                            event.preventDefault();
+                            require(['js!https://assets.pinterest.com/js/pinmarklet.js?r=' + new Date().getTime()]);
+                        });
+                    }
                 }
             },
 
