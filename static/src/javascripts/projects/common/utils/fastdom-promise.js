@@ -1,9 +1,7 @@
 define([
-    'common/utils/request-animation-frame',
     'fastdom',
     'Promise'
 ], function (
-    requestAnimationFrame,
     fastdom,
     Promise
 ) {
