@@ -65,15 +65,13 @@ define([
 
             initPintrest: function () {
                 if (ab.shouldRunTest('Pintrest', 'variant')) {
-                    var $pin = $('.social__item--pinterest');
-
-                    if ($pin.length) {
-                        $pin.css('display', 'block');
-                        bean.on($pin[0], 'click', function (event) {
+                    $('.social__item--pinterest').each(function (el) {
+                        $(el).css('display', 'block');
+                        bean.on(el, 'click', function (event) {
                             event.preventDefault();
                             require(['js!https://assets.pinterest.com/js/pinmarklet.js?r=' + new Date().getTime()]);
                         });
-                    }
+                    });
                 }
             },
 
