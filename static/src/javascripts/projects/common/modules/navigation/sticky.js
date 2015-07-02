@@ -36,6 +36,7 @@ define([
         this.isMobile = _.contains(this.breakpoint, 'mobile');
         this.isTablet = _.contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
+        this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
     }
 
     StickyHeader.prototype.init = function () {
@@ -151,7 +152,7 @@ define([
                 if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-down-mobile').addClass('animate-up-mobile');
                 } else {
-                    if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                    if (this.isSensitivePage) {
                         this.$els.navigation.css('display', 'block');
                     } else {
                         this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
@@ -173,7 +174,7 @@ define([
                 if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-up-mobile').addClass('animate-down-mobile');
                 } else {
-                    if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                    if (this.isSensitivePage) {
                         this.$els.navigation.css('display', 'none');
                     } else {
                         this.$els.navigation.removeClass('animate-up-desktop').addClass('animate-down-desktop');
@@ -193,8 +194,12 @@ define([
 
     StickyHeader.prototype.updatePosition = function () {
         fastdom.read(function () {
-            var bannerHeight = this.$els.bannerDesktop.dim().height || 128,
-                scrollY      = this.$els.window.scrollTop();
+            var bannerHeight = 0,
+                scrollY = this.$els.window.scrollTop();
+
+            if (!this.isSensitivePage) {
+                bannerHeight = this.$els.bannerDesktop.dim().height || 128;
+            }
 
             this.setScrollDirection(scrollY);
 
@@ -295,6 +300,9 @@ define([
                     });
 
                     this.$els.main.css('margin-top', 0);
+                    if (this.isSensitivePage) {
+                        this.$els.navigation.css('display', 'block');
+                    }
                 }.bind(this));
 
                 // Put navigation to its default state

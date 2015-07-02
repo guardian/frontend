@@ -16,11 +16,6 @@ object WebAppController extends Controller with ExecutionContexts {
   }
 
   def manifest() = Action {
-    Cached(3600) {
-      conf.Switches.NotificationsSwitch.isSwitchedOn match {
-        case true => Ok(templates.js.webAppManifest())
-        case false => NotFound
-      }
-    }
+    Cached(3600) { Ok(templates.js.webAppManifest()) }
   }
 }
