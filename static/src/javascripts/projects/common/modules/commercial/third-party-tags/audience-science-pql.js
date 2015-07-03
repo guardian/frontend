@@ -43,13 +43,33 @@ define([
                     storage.local.set(storageKey, segments);
                 });
             }
-        });
+        }),
+
+        getSegments = function () {
+            var segments = {},
+                storedSegments = storage.local.get(storageKey);
+            if (config.switches.audienceScienceGateway && storedSegments) {
+                segments = _(_.pairs(storedSegments[section]))
+                    .filter(function (placement) {
+                        return placement[1].default;
+                    })
+                    .map(function (placement) {
+                        return ['pq_' + placement[0], 'T'];
+                    })
+                    .zipObject()
+                    .valueOf();
+                // set up the global asiPlacements var in case dfp returns before asg
+                window.asiPlacements = storedSegments[section];
+            }
+            return segments;
+        };
 
     init();
 
     return {
         load: load,
-        init: init
+        init: init,
+        getSegments: getSegments
     };
 
 });
