@@ -77,8 +77,9 @@ var writeBundlesToDisk = function (bundles) {
         var bundleMapFileName = bundleFileName + '.map';
 
         mkdirp.sync(path.dirname(bundleFileName));
+
         console.log('writing to %s', bundleFileName);
-        fs.writeFileSync(bundleFileName, bundle.source);
+        fs.writeFileSync(bundleFileName, bundle.source + '\n//# sourceMappingURL=' + path.basename(bundleFileName) + '.map');
         console.log('writing to %s', bundleMapFileName);
         fs.writeFileSync(bundleMapFileName, bundle.sourceMap);
     });
