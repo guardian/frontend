@@ -84,9 +84,9 @@ define([
         this.getElem('tableau').innerHTML = '<a href="' + tableauUrl + '">view</a>';
 
         var ophanUrl = 'https://dashboard.ophan.co.uk/graph/breakdown?ab=' + this.config.test.id;
-        this.getElem('ophan').innerHTML = '<a href="' + ophanUrl + '"">graph</a>';
+        this.getElem('ophan').innerHTML = '<a href="' + ophanUrl + '">graph</a>';
 
-        this.getElem('hypothesis').textContent = this.config.test.hypothesis ? this.config.test.hypothesis : '';
+        this.getElem('hypothesis').textContent = this.config.test.hypothesis || '';
 
         var participation = new Participation({ test: this.config.test });
         participation.render(this.getElem('participation'));
