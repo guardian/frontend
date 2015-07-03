@@ -1054,7 +1054,7 @@ object Switches {
     "A/B Tests",
     "ab-pintrest",
     "Switch for the Pintrest on content pages A/B test.",
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2015, 7, 16),
     exposeClientSide = true
   )
