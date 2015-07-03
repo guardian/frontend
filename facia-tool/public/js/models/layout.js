@@ -23,6 +23,8 @@ define([
     layoutFromURL,
     updateScrollables
 ) {
+    copiedArticle = copiedArticle.default;
+
     function Layout () {
         this.initialState = {
             columns: ko.observableArray()

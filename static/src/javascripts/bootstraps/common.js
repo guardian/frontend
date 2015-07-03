@@ -3,18 +3,16 @@
 define([
     'bean',
     'bonzo',
-    'enhancer',
     'fastclick',
     'qwery',
     'common/utils/$',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
-    'common/utils/proximity-loader',
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/url',
-    'common/utils/robust',
+    'common/utils/robusts',
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
@@ -25,11 +23,8 @@ define([
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
-    'common/modules/commercial/comment-adverts',
     'common/modules/discussion/comment-count',
-    'common/modules/discussion/loader',
     'common/modules/experiments/ab',
-    'common/modules/identity/api',
     'common/modules/identity/autosignin',
     'common/modules/navigation/navigation',
     'common/modules/navigation/sticky',
@@ -37,18 +32,12 @@ define([
     'common/modules/navigation/search',
     'common/modules/onward/history',
     'common/modules/onward/more-tags',
-    'common/modules/onward/onward-content',
-    'common/modules/onward/popular',
-    'common/modules/onward/related',
     'common/modules/onward/tech-feedback',
-    'common/modules/onward/tonal',
-    'common/modules/social/share-count',
     'common/modules/ui/accessibility-prefs',
     'common/modules/ui/clickstream',
     'common/modules/ui/dropdowns',
     'common/modules/ui/faux-block-link',
     'common/modules/ui/fonts',
-    'common/modules/ui/last-modified',
     'common/modules/ui/message',
     'common/modules/ui/relativedates',
     'common/modules/ui/smartAppBanner',
@@ -59,22 +48,20 @@ define([
     'text!common/views/international-message.html',
     'text!common/views/international-control-message.html',
     'text!common/views/donot-use-adblock.html',
-    'bootstraps/identity'
+    'bootstraps/identity-common'
 ], function (
     bean,
     bonzo,
-    enhancer,
     FastClick,
     qwery,
     $,
     config,
     cookies,
     detect,
-    proximityLoader,
     mediator,
     template,
     url,
-    robust,
+    robusts,
     storage,
     Foresee,
     liveStats,
@@ -85,11 +72,8 @@ define([
     logCss,
     simpleMetrics,
     userAdTargeting,
-    commentAdverts,
     CommentCount,
-    DiscussionLoader,
     ab,
-    id,
     AutoSignin,
     navigation,
     sticky,
@@ -97,18 +81,12 @@ define([
     Search,
     history,
     MoreTags,
-    Onward,
-    Popular,
-    Related,
     techFeedback,
-    TonalComponent,
-    shareCount,
-    accessilbilityPrefs,
+    accessibilityPrefs,
     Clickstream,
     Dropdowns,
     fauxBlockLink,
     fonts,
-    LastModified,
     Message,
     RelativeDates,
     smartAppBanner,
@@ -122,27 +100,11 @@ define([
     identity
 ) {
     var modules = {
-            loadFonts: function () {
-                fonts.load();
-            },
-
-            initId: function () {
-                identity.init(config);
-            },
-
-            initUserAdTargeting: function () {
-                userAdTargeting.requestUserSegmentsFromId();
-            },
-
             initFastClick: function () {
                 // Unfortunately FastClick’s UMD exports are not consistent for
                 // all types. AMD exports FastClick, CJS exports FastClick.attach
                 // As per: https://github.com/ftlabs/fastclick/blob/master/lib/fastclick.js#L829-L840
                 (config.tests.jspmTest ? FastClick : FastClick.attach)(document.body);
-            },
-
-            initialiseFauxBlockLink: function () {
-                fauxBlockLink().init();
             },
 
             initialiseTopNavItems: function () {
@@ -172,77 +134,9 @@ define([
                 }
             },
 
-            transcludeRelated: function () {
-                var opts = {
-                    excludeTags: []
-                };
-
-                // exclude ad features from non-ad feature content
-                if (config.page.sponsorshipType !== 'advertisement-features') {
-                    opts.excludeTags.push('tone/advertisement-features');
-                }
-                // don't want to show professional network content on videos or interactives
-                if ('contentType' in config.page && ['video', 'interactive'].indexOf(config.page.contentType.toLowerCase()) >= 0) {
-                    opts.excludeTags.push('guardian-professional/guardian-professional');
-                }
-                new Related(opts).renderRelatedComponent();
-            },
-
-            initRelated: function () {
-                if (window.location.hash) {
-                    modules.transcludeRelated();
-                } else {
-                    var relatedEl = qwery('.js-related')[0];
-                    if (relatedEl) {
-                        proximityLoader.add(relatedEl, 1500, modules.transcludeRelated);
-                    }
-                }
-            },
-
-            transcludePopular: function () {
-                new Popular().init();
-            },
-
-            initPopular: function () {
-                if (!config.page.isFront) {
-                    if (window.location.hash) {
-                        modules.transcludePopular();
-                    } else {
-                        var onwardEl = qwery('.js-popular-trails')[0];
-                        if (onwardEl) {
-                            proximityLoader.add(onwardEl, 1500, modules.transcludePopular);
-                        }
-                    }
-                }
-            },
-
-            transcludeOnwardContent: function () {
-                if ((config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent) {
-                    new Onward(qwery('.js-onward'));
-                } else if (config.page.tones !== '') {
-                    $('.js-onward').each(function (c) {
-                        new TonalComponent().fetch(c, 'html');
-                    });
-                }
-            },
-
-            initOnwardContent: function () {
-                if (window.location.hash) {
-                    modules.transcludeOnwardContent();
-                } else {
-                    var onwardEl = qwery('.js-onward')[0];
-                    if (onwardEl) {
-                        proximityLoader.add(onwardEl, 1500, modules.transcludeOnwardContent);
-                    }
-                }
-            },
-
             showTabs: function () {
                 var tabs = new Tabs();
-                [
-                    'modules:popular:loaded',
-                    'modules:geomostpopular:ready'
-                ].forEach(function (event) {
+                ['modules:popular:loaded', 'modules:geomostpopular:ready'].forEach(function (event) {
                     mediator.on(event, function (el) {
                         tabs.init(el);
                     });
@@ -340,19 +234,9 @@ define([
             },
 
             windowEventListeners: function () {
-                var event,
-                    events = {
-                        resize:            'window:resize',
-                        scroll:            'window:scroll',
-                        orientationchange: 'window:orientationchange'
-                    };
-                for (event in events) {
-                    bean.on(window, event, mediator.emit.bind(mediator, events[event]));
-                }
-            },
-
-            mediaEventListeners: function () {
-                mediaListener.init();
+                ['resize', 'scroll', 'orientationchange'].forEach(function (event) {
+                    bean.on(window, event, mediator.emit.bind(mediator, 'window:' + event));
+                });
             },
 
             checkIframe: function () {
@@ -367,47 +251,19 @@ define([
                 }
             },
 
-            augmentInteractive: function () {
-                if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
-                    $('figure.interactive').each(function (el) {
-                        enhancer.render(el, document, config, mediator);
-                    });
-                }
-            },
-
             startRegister: function () {
                 if (!config.page.isSSL) {
                     register.initialise();
                 }
             },
 
-            repositionComments: function () {
-                if (!id.isUserLoggedIn()) {
-                    $('.js-comments').appendTo(qwery('.js-repositioned-comments'));
-                }
-            },
-
-            commentsAds: function () {
-                commentAdverts.init();
-            },
-
             showMoreTagsLink: function () {
                 new MoreTags().init();
-            },
-
-            showSmartBanner: function () {
-                smartAppBanner.init();
             },
 
             initDiscussion: function () {
                 if (config.switches.discussion) {
                     CommentCount.init();
-                    if (config.page.commentable) {
-                        var el = qwery('.discussion')[0];
-                        if (el) {
-                            new DiscussionLoader().attachTo(el);
-                        }
-                    }
                 }
             },
 
@@ -452,14 +308,6 @@ define([
                 });
             },
 
-            initShareCounts: function () {
-                shareCount.init();
-            },
-
-            initLastModified: function () {
-                LastModified.init();
-            },
-
             loadBreakingNews: function () {
                 if (config.switches.breakingNews && config.page.section !== 'identity') {
                     breakingNews();
@@ -470,18 +318,6 @@ define([
                 if (config.switches.cssLogging) {
                     logCss();
                 }
-            },
-
-            initSimpleMetrics: function () {
-                simpleMetrics.init();
-            },
-
-            initTechFeedback: function () {
-                techFeedback.init();
-            },
-
-            initAccessibilityPrefs: function () {
-                accessilbilityPrefs.init();
             },
 
             initPublicApi: function () {
@@ -504,60 +340,52 @@ define([
                     }
                 }
             }
-        },
-
-        ready = function () {
-            robust('c-fonts',           modules.loadFonts);
-            robust('c-identity',        modules.initId);
-            robust('c-adverts',         modules.initUserAdTargeting);
-            robust('c-discussion',      modules.initDiscussion);
-            robust('c-fast-click',      modules.initFastClick);
-            robust('c-test-cookie',     modules.testCookie);
-            robust('c-ad-cookie',       modules.adTestCookie);
-            robust('c-event-listeners', modules.windowEventListeners);
-            robust('c-breaking-news',   modules.loadBreakingNews);
-            robust('c-shares',          modules.initShareCounts);
-            robust('c-last-modified',   modules.initLastModified);
-            robust('c-block-link',      modules.initialiseFauxBlockLink);
-            robust('c-iframe',          modules.checkIframe);
-            robust('c-tabs',            modules.showTabs);
-            robust('c-top-nav',         modules.initialiseTopNavItems);
-            robust('c-init-nav',        modules.initialiseNavigation);
-            robust('c-sticky-header',   modules.initialiseStickyHeader);
-            robust('c-toggles',         modules.showToggles);
-            robust('c-dates',           modules.showRelativeDates);
-            robust('c-clickstream',     modules.initClickstream);
-            robust('c-history',         modules.updateHistory);
-            robust('c-sign-in',         modules.initAutoSignin);
-            robust('c-interactive',     modules.augmentInteractive);
-            robust('c-history-nav',     modules.showHistoryInMegaNav);
-            robust('c-forsee',          modules.runForseeSurvey);
-            robust('c-start-register',  modules.startRegister);
-            robust('c-comments',        modules.repositionComments);
-            robust('c-comments-ads',    modules.commentsAds);
-            robust('c-tag-links',       modules.showMoreTagsLink);
-            robust('c-smart-banner',    modules.showSmartBanner);
-            robust('c-adblock',         modules.showAdblockMessage);
-            robust('c-log-stats',       modules.logLiveStats);
-            robust('c-analytics',       modules.loadAnalytics);
-            robust('c-cookies',         modules.cleanupCookies);
-            robust('c-popular',         modules.initPopular);
-            robust('c-related',         modules.initRelated);
-            robust('c-onward',          modules.initOnwardContent);
-            robust('c-overlay',         modules.initOpenOverlayOnClick);
-            robust('c-css-logging',     modules.runCssLogging);
-            robust('c-public-api',      modules.initPublicApi);
-            robust('c-simple-metrics',  modules.initSimpleMetrics);
-            robust('c-tech-feedback',   modules.initTechFeedback);
-            robust('c-media-listeners', modules.mediaEventListeners);
-            robust('c-accessibility-prefs',       modules.initAccessibilityPrefs);
-            robust('c-international-signposting', modules.internationalSignposting);
-            if (window.console && window.console.log && !config.page.isDev) {
-                window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');
-            }
         };
 
     return {
-        init: ready
+        init: function () {
+            robusts([
+                ['c-fonts', fonts],
+                ['c-identity', identity],
+                ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
+                ['c-discussion', modules.initDiscussion],
+                ['c-fast-click', modules.initFastClick],
+                ['c-test-cookie', modules.testCookie],
+                ['c-ad-cookie', modules.adTestCookie],
+                ['c-event-listeners', modules.windowEventListeners],
+                ['c-breaking-news', modules.loadBreakingNews],
+                ['c-block-link', fauxBlockLink],
+                ['c-iframe', modules.checkIframe],
+                ['c-tabs', modules.showTabs],
+                ['c-top-nav', modules.initialiseTopNavItems],
+                ['c-init-nav', modules.initialiseNavigation],
+                ['c-sticky-header', modules.initialiseStickyHeader],
+                ['c-toggles', modules.showToggles],
+                ['c-dates', modules.showRelativeDates],
+                ['c-clickstream', modules.initClickstream],
+                ['c-history', modules.updateHistory],
+                ['c-sign-in', modules.initAutoSignin],
+                ['c-history-nav', modules.showHistoryInMegaNav],
+                ['c-forsee', modules.runForseeSurvey],
+                ['c-start-register', modules.startRegister],
+                ['c-tag-links', modules.showMoreTagsLink],
+                ['c-smart-banner', smartAppBanner.init],
+                ['c-adblock', modules.showAdblockMessage],
+                ['c-log-stats', modules.logLiveStats],
+                ['c-analytics', modules.loadAnalytics],
+                ['c-cookies', modules.cleanupCookies],
+                ['c-overlay', modules.initOpenOverlayOnClick],
+                ['c-css-logging', modules.runCssLogging],
+                ['c-public-api', modules.initPublicApi],
+                ['c-simple-metrics', simpleMetrics],
+                ['c-tech-feedback', techFeedback],
+                ['c-media-listeners', mediaListener],
+                ['c-accessibility-prefs', accessibilityPrefs],
+                ['c-international-signposting', modules.internationalSignposting]
+            ]);
+            if (window.console && window.console.log && !config.page.isDev) {
+                window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');
+            }
+        }
     };
 });

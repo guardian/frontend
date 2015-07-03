@@ -29,12 +29,14 @@ define([
             direction: 'down',
             showNavigation: false,
             thresholdMobile: 400,
-            firstLoadDepth: 500
+            firstLoadDepth: 500,
+            isNavigationLocked: false
         };
         this.breakpoint = detect.getBreakpoint();
         this.isMobile = _.contains(this.breakpoint, 'mobile');
         this.isTablet = _.contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
+        this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
     }
 
     StickyHeader.prototype.init = function () {
@@ -78,22 +80,53 @@ define([
             }.bind(this), 10));
         }
 
-        // Make sure sticky header has sticky nav
+        // Make sure header is locked when meganav is open
         mediator.on('modules:nav:open', function () {
-            this.showStickyNavigation();
+            this.lockStickyNavigation();
+        }.bind(this));
+
+        mediator.on('modules:nav:close', function () {
+            this.unlockStickyNavigation();
+        }.bind(this));
+
+        // Make sure header is locked when search is open
+        mediator.on('modules:search', function () {
+            if ($('.js-popup--search').hasClass('is-off')) {
+                this.unlockStickyNavigation();
+            } else {
+                this.lockStickyNavigation();
+            }
         }.bind(this));
     };
 
-    StickyHeader.prototype.showStickyNavigation = function () {
-        fastdom.read(function () {
-            var height = window.innerHeight - $('.js-global-navigation').offset().top;
+    // Make sure meganav is always in the default state
+    StickyHeader.prototype.unlockStickyNavigation = function () {
+        this.config.isNavigationLocked = false;
 
-            fastdom.write(function () {
-                $('.js-global-navigation')
-                    .addClass('navigation__expandable--sticky')
-                    .css('height', height);
-            });
+        fastdom.write(function () {
+            $('.js-global-navigation')
+                .removeClass('navigation__expandable--sticky')
+                .attr('height', 'auto');
         });
+    };
+
+    StickyHeader.prototype.lockStickyNavigation = function () {
+        this.config.isNavigationLocked = true;
+
+        fastdom.read(function () {
+
+            // Navigation should have scrollbar only if header is in slim version
+            // Or we are in mobile and tablet version
+            if (this.$els.header.hasClass('l-header--is-slim') || this.isMobile || this.isTablet) {
+                var height = window.innerHeight - $('.js-mega-nav-placeholder')[0].getBoundingClientRect().top;
+
+                fastdom.write(function () {
+                    $('.js-global-navigation')
+                        .addClass('navigation__expandable--sticky')
+                        .css('height', height);
+                });
+            }
+        }.bind(this));
     };
 
     StickyHeader.prototype.setScrollDirection = function (scrollY) {
@@ -119,7 +152,7 @@ define([
                 if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-down-mobile').addClass('animate-up-mobile');
                 } else {
-                    if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                    if (this.isSensitivePage) {
                         this.$els.navigation.css('display', 'block');
                     } else {
                         this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
@@ -141,7 +174,7 @@ define([
                 if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-up-mobile').addClass('animate-down-mobile');
                 } else {
-                    if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                    if (this.isSensitivePage) {
                         this.$els.navigation.css('display', 'none');
                     } else {
                         this.$els.navigation.removeClass('animate-up-desktop').addClass('animate-down-desktop');
@@ -161,13 +194,18 @@ define([
 
     StickyHeader.prototype.updatePosition = function () {
         fastdom.read(function () {
-            var bannerHeight = this.$els.bannerDesktop.dim().height || 128,
-                scrollY      = this.$els.window.scrollTop();
+            var bannerHeight = 0,
+                scrollY = this.$els.window.scrollTop();
+
+            if (!this.isSensitivePage) {
+                bannerHeight = this.$els.bannerDesktop.dim().height || 128;
+            }
 
             this.setScrollDirection(scrollY);
 
             // Header is slim and navigation is shown on the scroll up
-            if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth)) {
+            // Unless meganav is opened
+            if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth) && !this.config.isNavigationLocked) {
                 fastdom.write(function () {
                     this.$els.header.css({
                         position:  'fixed',
@@ -195,7 +233,11 @@ define([
                         'transform': 'translateY(0%)'
                     });
                 }.bind(this));
-                this.showNavigation(scrollY);
+
+                // If meganav is open we don't want to touch the navigation state
+                if (!this.config.isNavigationLocked) {
+                    this.showNavigation(scrollY);
+                }
             } else if (scrollY >= this.headerBigHeight) {
                 fastdom.write(function () {
                     // Add is not sticky anymore
@@ -206,30 +248,34 @@ define([
                         'z-index': '999' // Sticky z-index +1 so banner is over sticky header
                     });
 
-                    //header is slim from now on
-                    this.$els.header.addClass('l-header--is-slim');
+                    if (!this.config.isNavigationLocked) {
+                        //header is slim from now on
+                        this.$els.header.addClass('l-header--is-slim');
+                    }
                 }.bind(this));
-                if (this.config.direction === 'up') {
-                    fastdom.write(function () {
-                        this.$els.header.css({
-                            '-webkit-transform': 'translateY(-100%)',
-                            '-ms-transform': 'translateY(-100%)',
-                            'transform': 'translateY(-100%)'
-                        });
-                    }.bind(this));
-                } else {
-                    fastdom.write(function () {
-                        this.$els.header.css({
-                            position:  'absolute',
-                            'margin-top': bannerHeight,
-                            '-webkit-transform': 'translateY(-500%)',
-                            '-ms-transform': 'translateY(-500%)',
-                            'transform': 'translateY(-500%)',
-                            'z-index': '998'
-                        });
+                if (!this.config.isNavigationLocked) {
+                    if (this.config.direction === 'up') {
+                        fastdom.write(function () {
+                            this.$els.header.css({
+                                '-webkit-transform': 'translateY(-100%)',
+                                '-ms-transform': 'translateY(-100%)',
+                                'transform': 'translateY(-100%)'
+                            });
+                        }.bind(this));
+                    } else {
+                        fastdom.write(function () {
+                            this.$els.header.css({
+                                position: 'absolute',
+                                'margin-top': bannerHeight,
+                                '-webkit-transform': 'translateY(-500%)',
+                                '-ms-transform': 'translateY(-500%)',
+                                'transform': 'translateY(-500%)',
+                                'z-index': '998'
+                            });
 
-                        this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
-                    }.bind(this));
+                            this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
+                        }.bind(this));
+                    }
                 }
             } else {
                 fastdom.write(function () {
@@ -254,6 +300,9 @@ define([
                     });
 
                     this.$els.main.css('margin-top', 0);
+                    if (this.isSensitivePage) {
+                        this.$els.navigation.css('display', 'block');
+                    }
                 }.bind(this));
 
                 // Put navigation to its default state
