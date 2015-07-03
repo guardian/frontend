@@ -46,13 +46,6 @@ define([
                 e.preventDefault();
                 mediator.emit('modules:search');
             });
-
-            bean.on(document, 'click', '.search-results', function (e) {
-                var targetEl = e.target;
-                if (targetEl.nodeName.toLowerCase() === 'a') {
-                    targetEl.target = '_self';
-                }
-            });
         }
 
         this.focusSearchField = function () {
@@ -133,7 +126,7 @@ define([
                             '<gcse:searchbox enableAutoComplete="' + autoComplete + '"></gcse:searchbox>' +
                         '</div>' +
                         '<div class="search-results" data-link-name="search">' +
-                            '<gcse:searchresults webSearchResultSetSize="' + resultSetSize + '"></gcse:searchresults>' +
+                            '<gcse:searchresults webSearchResultSetSize="' + resultSetSize + '" linkTarget="_self"></gcse:searchresults>' +
                         '</div>';
                 });
 
