@@ -49,11 +49,15 @@ define([
 
             bean.on(document, 'keydown', '.gsc-input', function (e) {
                 fastdom.read(function () {
-                    var searchFromTop = $('.gssb_c').css('top');
-                        windowOffset  = $(window).scrollTop();
+                    var $autoCompleteObject = $('.gssb_c'),
+                        searchFromTop       = $autoCompleteObject.css('top'),
+                        windowOffset        = $(window).scrollTop();
 
                     fastdom.write(function () {
-                        $('.gssb_c').css('top', parseInt(searchFromTop, 10) + windowOffset);
+                        $autoCompleteObject.css({
+                            'top': parseInt(searchFromTop, 10) + windowOffset,
+                            'z-index': '998'
+                        });
                     });
                 });
             });
