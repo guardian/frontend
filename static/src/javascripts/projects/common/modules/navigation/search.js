@@ -47,6 +47,17 @@ define([
                 mediator.emit('modules:search');
             });
 
+            bean.on(document, 'keydown', '.gsc-input', function (e) {
+                fastdom.read(function () {
+                    var searchFromTop = $('.gssb_c').css('top');
+                        windowOffset  = $(window).scrollTop();
+
+                    fastdom.write(function () {
+                        $('.gssb_c').css('top', parseInt(searchFromTop, 10) + windowOffset);
+                    });
+                });
+            });
+
             bean.on(document, 'click', '.search-results', function (e) {
                 var targetEl = e.target;
                 if (targetEl.nodeName.toLowerCase() === 'a') {
@@ -130,7 +141,7 @@ define([
                 fastdom.write(function () {
                     container.innerHTML = '' +
                         '<div class="search-box" role="search">' +
-                            '<gcse:searchbox enableAutoComplete="' + autoComplete + '"></gcse:searchbox>' +
+                            '<gcse:searchbox></gcse:searchbox>' +
                         '</div>' +
                         '<div class="search-results" data-link-name="search">' +
                             '<gcse:searchresults webSearchResultSetSize="' + resultSetSize + '"></gcse:searchresults>' +
