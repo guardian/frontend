@@ -333,7 +333,7 @@ $c-soulmates-high: colour(neutral-1);
     }
 
 
-    .logo--soulmates_large .inline-logo-soulmates {
+    .logo--soulmates_large {
 
         .svg & {
 
@@ -404,7 +404,7 @@ $c-soulmates-high: colour(neutral-1);
         bottom: $gs-gutter;
         left: $gs-gutter;
 
-         @include mq($until: leftCol) {
+        @include mq($until: leftCol) {
             position: static;
             float: right;
             border-left: 1px solid #666666;
@@ -428,7 +428,7 @@ $c-soulmates-high: colour(neutral-1);
 
          }
 
-         @include mq(wide) {
+        @include mq(wide) {
             .has-page-skin & {
                 width: 25%;
                 height: 64px;
@@ -500,7 +500,7 @@ $c-soulmates-high: colour(neutral-1);
     .inline-soulmates-h-line {
         display: none;
 
-         @include mq($from: tablet) {
+        @include mq($from: tablet) {
             display: block;
         }
     }
@@ -513,7 +513,7 @@ $c-soulmates-high: colour(neutral-1);
         &.lineitems__box {
             display: none;
 
-             @include mq($from: tablet) {
+            @include mq($from: tablet) {
                 display: block;
             }
         }
@@ -528,7 +528,7 @@ $c-soulmates-high: colour(neutral-1);
         &.lineitems__box {
             display: none;
 
-             @include mq($from: tablet) {
+            @include mq($from: tablet) {
                 display: block;
             }
         }
@@ -550,7 +550,7 @@ $c-soulmates-high: colour(neutral-1);
         @include fs-header(1);
         line-height: 1.1;
         text-align: center;
-        margin: 0 auto $gs-gutter auto;
+        margin: 0 auto $gs-gutter;
         position: relative;
 
         span {
@@ -558,7 +558,7 @@ $c-soulmates-high: colour(neutral-1);
         }
 
         &:before, &:after {
-            content: "";
+            content: '';
             background-color: #dfded7;
             height: 1px;
             width: 20px;
@@ -605,7 +605,7 @@ $c-soulmates-high: colour(neutral-1);
         background-color: #ffffff;
         height: 100%;
         position: relative;
-        padding: 0 $gs-baseline*2 $gs-baseline*2+$gs-gutter/2 $gs-baseline*2;
+        padding: 0 $gs-baseline*2 $gs-baseline*2+$gs-gutter/2;
         overflow: hidden;
         box-sizing: content-box;
 
@@ -800,7 +800,7 @@ $c-soulmates-high: colour(neutral-1);
 
     select:-moz-focusring {
         color: transparent;
-        text-shadow: 0 0 0 #000;
+        text-shadow: 0 0 0 #000000;
     }
 
     .search__dropdown__options {
@@ -818,9 +818,8 @@ $c-soulmates-high: colour(neutral-1);
         outline: 0;
         outline-color: #ffffff;
         position: relative;
-        text-indent: 0.01px;
+        text-indent: .01px;
         text-overflow: '';
-        text-overflow: "";
         z-index: 1;
     }
 
