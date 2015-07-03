@@ -56,13 +56,17 @@ define([
             initSocialMostPopular: function () {
                 var el = qwery('.js-social-most-popular');
 
-                ['Twitter', 'Facebook'].forEach(function (socialContext) {
-                    if (ab.shouldRunTest(socialContext + 'MostViewed', 'variant')) {
-                        if (el) {
-                            new SocialMostPopular(el, socialContext.toLowerCase());
-                        }
+                if (el) {
+                    if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
+                        new SocialMostPopular(el, detect.socialContext());
+                    } else {
+                        ['Twitter', 'Facebook'].forEach(function (socialContext) {
+                            if (ab.shouldRunTest(socialContext + 'MostViewed', 'variant')) {
+                                new SocialMostPopular(el, socialContext.toLowerCase());
+                            }
+                        });
                     }
-                });
+                }
             },
 
             initPintrest: function () {
