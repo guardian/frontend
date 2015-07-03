@@ -15,7 +15,7 @@
     "grunt-concurrent": "1.0.0",
     "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-copy": "0.6.0",
-    "grunt-contrib-requirejs": "0.4.4",
+    "grunt-contrib-requirejs": "OliverJAsh/grunt-contrib-requirejs#30acf0e2a04767933c0ebade3ca814238e98957a",
     "grunt-contrib-uglify": "0.9.1",
     "grunt-contrib-watch": "0.6.1",
     "grunt-csdevmode": "0.1.2",
