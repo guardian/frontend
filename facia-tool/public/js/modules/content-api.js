@@ -78,8 +78,7 @@ function validateItem (item) {
             capiId += CONST.apiSearchParams;
 
             fetchContent(capiId)
-            .then(function(res) {
-                res = res || {};
+            .then(function(res = {}) {
                 var results = res.content,
                     resultsTitle = res.title,
                     capiItem,
@@ -171,7 +170,7 @@ function fetchContentByIds(ids) {
     if (capiIds.length) {
         return fetchContent('search?ids=' + capiIds.join(',') + '&' + CONST.apiSearchParams);
     } else {
-        return Promise.resolve([]);
+        return Promise.resolve();
     }
 }
 
@@ -188,7 +187,7 @@ function decorateBatch (articles) {
     });
 
     return fetchContentByIds(ids)
-    .then(function(res){
+    .then(function(res = {}) {
         var results = res.content;
         if (!_.isArray(results)) {
             return;

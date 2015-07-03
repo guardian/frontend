@@ -77,6 +77,66 @@ module.exports = function(grunt, options) {
                 ]
             }
         },
+        article: {
+            options: {
+                name: 'bootstraps/article',
+                out: options.staticTargetDir + 'javascripts/bootstraps/article.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        liveblog: {
+            options: {
+                name: 'bootstraps/liveblog',
+                out: options.staticTargetDir + 'javascripts/bootstraps/liveblog.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        gallery: {
+            options: {
+                name: 'bootstraps/gallery',
+                out: options.staticTargetDir + 'javascripts/bootstraps/gallery.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        trail: {
+            options: {
+                name: 'bootstraps/trail',
+                out: options.staticTargetDir + 'javascripts/bootstraps/trail.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
+        profile: {
+            options: {
+                name: 'bootstraps/profile',
+                out: options.staticTargetDir + 'javascripts/bootstraps/profile.js',
+                exclude: [
+                    'core',
+                    'bootstraps/app',
+                    'text',
+                    'inlineSvg'
+                ]
+            }
+        },
         sudoku: {
             options: {
                 name: 'bootstraps/sudoku',

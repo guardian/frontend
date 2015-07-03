@@ -17,7 +17,7 @@ trait Articles {
   implicit class RichSavedArticles(savedArticles: SavedArticles) {
     val fmt = ISODateTimeFormat.dateTimeNoMillis()
 
-    private val itemsPerPage = 4
+    private val itemsPerPage = 10
     val newestFirst = savedArticles.articles.reverse
 
     val pages = newestFirst.grouped(itemsPerPage).toList

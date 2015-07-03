@@ -8,7 +8,6 @@ define([
     raven
 ) {
     function Robust(name, block, reporter) {
-
         if (!reporter) {
             reporter = raven.captureException;
         }
@@ -22,5 +21,4 @@ define([
     }
 
     return Robust;
-
 });

@@ -36,6 +36,7 @@ define([
         this.isMobile = _.contains(this.breakpoint, 'mobile');
         this.isTablet = _.contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
+        this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
     }
 
     StickyHeader.prototype.init = function () {
@@ -79,20 +80,29 @@ define([
             }.bind(this), 10));
         }
 
-        // Make sure sticky header has sticky nav
+        // Make sure header is locked when meganav is open
         mediator.on('modules:nav:open', function () {
-            this.config.isNavigationLocked = true;
             this.lockStickyNavigation();
         }.bind(this));
 
         mediator.on('modules:nav:close', function () {
-            this.config.isNavigationLocked = false;
             this.unlockStickyNavigation();
+        }.bind(this));
+
+        // Make sure header is locked when search is open
+        mediator.on('modules:search', function () {
+            if ($('.js-popup--search').hasClass('is-off')) {
+                this.unlockStickyNavigation();
+            } else {
+                this.lockStickyNavigation();
+            }
         }.bind(this));
     };
 
     // Make sure meganav is always in the default state
     StickyHeader.prototype.unlockStickyNavigation = function () {
+        this.config.isNavigationLocked = false;
+
         fastdom.write(function () {
             $('.js-global-navigation')
                 .removeClass('navigation__expandable--sticky')
@@ -101,6 +111,8 @@ define([
     };
 
     StickyHeader.prototype.lockStickyNavigation = function () {
+        this.config.isNavigationLocked = true;
+
         fastdom.read(function () {
 
             // Navigation should have scrollbar only if header is in slim version
@@ -140,7 +152,7 @@ define([
                 if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-down-mobile').addClass('animate-up-mobile');
                 } else {
-                    if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                    if (this.isSensitivePage) {
                         this.$els.navigation.css('display', 'block');
                     } else {
                         this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
@@ -162,7 +174,7 @@ define([
                 if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-up-mobile').addClass('animate-down-mobile');
                 } else {
-                    if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                    if (this.isSensitivePage) {
                         this.$els.navigation.css('display', 'none');
                     } else {
                         this.$els.navigation.removeClass('animate-up-desktop').addClass('animate-down-desktop');
@@ -182,8 +194,12 @@ define([
 
     StickyHeader.prototype.updatePosition = function () {
         fastdom.read(function () {
-            var bannerHeight = this.$els.bannerDesktop.dim().height || 128,
-                scrollY      = this.$els.window.scrollTop();
+            var bannerHeight = 0,
+                scrollY = this.$els.window.scrollTop();
+
+            if (!this.isSensitivePage) {
+                bannerHeight = this.$els.bannerDesktop.dim().height || 128;
+            }
 
             this.setScrollDirection(scrollY);
 
@@ -232,8 +248,10 @@ define([
                         'z-index': '999' // Sticky z-index +1 so banner is over sticky header
                     });
 
-                    //header is slim from now on
-                    this.$els.header.addClass('l-header--is-slim');
+                    if (!this.config.isNavigationLocked) {
+                        //header is slim from now on
+                        this.$els.header.addClass('l-header--is-slim');
+                    }
                 }.bind(this));
                 if (!this.config.isNavigationLocked) {
                     if (this.config.direction === 'up') {
@@ -282,18 +300,15 @@ define([
                     });
 
                     this.$els.main.css('margin-top', 0);
-                    this.unlockStickyNavigation();
+                    if (this.isSensitivePage) {
+                        this.$els.navigation.css('display', 'block');
+                    }
                 }.bind(this));
 
                 // Put navigation to its default state
                 this.setNavigationDefault();
             }
         }.bind(this));
-
-        // If search is open close it
-        if (this.config.direction === 'down' && $('.js-search-toggle').hasClass('is-active')) {
-            bean.fire(qwery('.js-search-toggle')[0], 'click');
-        }
     };
 
     StickyHeader.prototype.updatePositionApple = function () {

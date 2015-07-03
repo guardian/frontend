@@ -4,6 +4,8 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/detect',
+    'common/utils/mediator',
     'common/modules/experiments/ab'
 ], function (
     bean,
@@ -11,6 +13,8 @@ define([
     _,
     $,
     config,
+    detect,
+    mediator,
     ab
 ) {
     var Search = function () {
@@ -35,8 +39,12 @@ define([
 
             bean.on(document, 'click', '.js-search-toggle', function (e) {
                 searchLoader();
+
+                // Make sure search is always in the correct state
+                self.checkResults();
                 self.focusSearchField();
                 e.preventDefault();
+                mediator.emit('modules:search');
             });
 
             bean.on(document, 'click', '.search-results', function (e) {
@@ -65,18 +73,31 @@ define([
             if ($('.gsc-resultsbox-visible').length > 0) {
                 var $search = $('.js-popup--search');
 
-                fastdom.read(function () {
-                    var height = window.innerHeight - $search.offset().top;
+                // Put search box to its default state
+                fastdom.write(function () {
+                    $search.css('height', 'auto');
+                    $('.gsc-results', $search).css({
+                        height: 'auto',
+                        'overflow-y': 'visible'
+                    });
+                });
 
-                    fastdom.write(function () {
-                        $search.css('height', height);
-                        $('.gsc-results', $search).css({
-                            height: height - 150,
-                            'overflow-y': 'auto'
+                // Cut search results to window size only when in slim header mode
+                if ($('.l-header--is-slim').length > 0 || detect.getBreakpoint() === 'mobile') {
+                    fastdom.read(function () {
+                        var height = window.innerHeight - $search[0].getBoundingClientRect().top;
+
+                        fastdom.write(function () {
+                            $search.css('height', height);
+                            $('.gsc-results', $search).css({
+                                height: height - 150,
+                                'overflow-y': 'auto'
+                            });
                         });
                     });
-                    clearInterval(checkInterval);
-                });
+                }
+
+                clearInterval(checkInterval);
             }
         };
 
@@ -104,10 +125,12 @@ define([
             // Load the Google search monolith, if not already present in this context.
             // We have to re-run their script each time we do this.
             if (!container.innerHTML) {
+                var autoComplete = !ab.shouldRunTest('Viewability', 'variant') || config.page.contentType === 'Interactive';
+
                 fastdom.write(function () {
                     container.innerHTML = '' +
                         '<div class="search-box" role="search">' +
-                            '<gcse:searchbox></gcse:searchbox>' +
+                            '<gcse:searchbox enableAutoComplete="' + autoComplete + '"></gcse:searchbox>' +
                         '</div>' +
                         '<div class="search-results" data-link-name="search">' +
                             '<gcse:searchresults webSearchResultSetSize="' + resultSetSize + '"></gcse:searchresults>' +
