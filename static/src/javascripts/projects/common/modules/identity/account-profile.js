@@ -34,6 +34,7 @@ define([
             changed: 'js-form-changed',
             textInput: '.text-input',
             avatarUploadForm: '.js-avatar-upload-form',
+            avatarUploadButton: '.js-avatar-upload-button',
             memberShipContainer: '.js-memebership-tab-container'
         };
 
@@ -126,7 +127,7 @@ define([
 
     accountProfile.prototype.avatarUploadByApi = function (avatarForm) {
         var self = this;
-        var formData = new FormData(document.querySelector('form.js-avatar-upload-form'));
+        var formData = new FormData(document.querySelector('form' + self.classes.avatarUploadForm));
         var xhr = self.createCORSRequest('POST', self.urls.avatarApiUrl);
 
         if (!xhr) {
@@ -137,6 +138,7 @@ define([
             var status = xhr.status;
             if (status >= 200 && status < 300) {
                 self.prependSuccessMessage(self.messages.avatarUploadSuccess, avatarForm);
+                document.querySelector(self.classes.avatarUploadButton).disabled = true;
             } else if (status >= 400 && status < 500) {
                 self.prependErrorMessage(
                     JSON.parse(xhr.responseText).message || self.messages.avatarUploadFailure,
