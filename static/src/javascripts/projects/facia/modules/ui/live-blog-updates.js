@@ -1,6 +1,5 @@
 define([
     'bonzo',
-    'fastdom',
     'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
@@ -9,10 +8,10 @@ define([
     'common/utils/template',
     'common/utils/mediator',
     'common/utils/detect',
+    'common/utils/fastdom-promise',
     'text!facia/views/liveblog-block.html'
 ], function (
     bonzo,
-    fastdom,
     _,
     $,
     ajax,
@@ -21,26 +20,21 @@ define([
     template,
     mediator,
     detect,
+    fastdomPromise,
     blockTemplate
 ) {
-    var numDisplayedBlocks = 4,
-        blockHeightPx = 74,
-
-        animateDelayMs = 2000,
+    var animateDelayMs = 2000,
+        animateAfterScrollDelayMs = 500,
         refreshSecs = 30,
         refreshDecay = 1,
         refreshMaxTimes = 5,
 
         selector = '.js-snappable .js-liveblog-blocks',
         blocksClassName = 'fc-item__liveblog-blocks',
-        newBlockClassName = 'fc-item__liveblog-block--new',
-        oldBlockClassName = 'fc-item__liveblog-block--old',
         articleIdAttribute = 'data-article-id',
         sessionStorageKey = 'gu.liveblog.block-dates',
-        prefixedTransforms = ['-webkit-transform', '-ms-transform', 'transform'],
 
-        veiwportHeightPx = detect.getViewport().height,
-        elementsById = {};
+        veiwportHeightPx = detect.getViewport().height;
 
     function blockRelativeTime(block) {
         var pubDate = (block || {}).publishedDateTime,
@@ -61,7 +55,7 @@ define([
         }
 
         return template(blockTemplate, {
-            classes: block.isNew ? newBlockClassName : oldBlockClassName,
+            ariaHidden: !block.isNew,
             href: '/' + articleId + '#' + block.id,
             relativeTime: relTime,
             text: _.compact([block.title, block.body.slice(0, 500)]).join('. '),
@@ -69,53 +63,39 @@ define([
         });
     }
 
-    function translateVertical(offset) {
-        return 'translate3d(0, -' + offset + 'px, 0)';
-    }
-
-    function translateNone() {
-        return 'translate3d(0)';
-    }
-
-    function translateCss(valueFn, offset) {
-        return prefixedTransforms.map(function (rule) {
-            return rule + ':' + valueFn(offset);
-        }).join(';');
-    }
-
     function showBlocks(articleId, targets, blocks, oldBlockDate) {
-        var fakeUpdate = _.isUndefined(oldBlockDate);
+        var self = this,
+            fakeUpdate = _.isUndefined(oldBlockDate);
 
-        fastdom.write(function () {
-            _.forEach(targets, function (element) {
-                var numNewBlocks = 0,
+        _.forEach(targets, function (element) {
+            var hasNewBlock = false,
+                wrapperClasses = [
+                    'fc-item__liveblog-blocks__inner',
+                    'u-faux-block-link__promote'
+                ],
+                blocksHtml = _.chain(blocks)
+                    .slice(0, 2)
+                    .map(function (block, index) {
+                        if (!hasNewBlock && (block.publishedDateTime > oldBlockDate || fakeUpdate)) {
+                            block.isNew = true;
+                            hasNewBlock = true;
+                            wrapperClasses.push('fc-item__liveblog-blocks__inner--offset');
+                        }
+                        return renderBlock(articleId, block, index);
+                    })
+                    .slice(0, hasNewBlock ? 2 : 1)
+                    .value(),
 
-                    blocksHtml = _.chain(blocks)
-                        .map(function (block, index) {
-                            if (numNewBlocks < numDisplayedBlocks
-                                && (block.publishedDateTime > oldBlockDate || (fakeUpdate && index === 0))) {
-                                block.isNew = true;
-                                numNewBlocks += 1;
-                            }
-                            return block;
-                        })
-                        .slice(0, numDisplayedBlocks + numNewBlocks)
-                        .map(function (block, index) {
-                            return renderBlock(articleId, block, index);
-                        })
-                        .value()
-                        .join(''),
+                el = bonzo.create(
+                    '<div class="' + wrapperClasses.join(' ') + '">' + blocksHtml.join('') + '</div>'
+                ),
+                $element = bonzo(element);
 
-                    el = bonzo.create(
-                        '<div class="fc-item__liveblog-blocks__inner u-faux-block-link__promote"' +
-                            ' style="' + translateCss(translateVertical, numNewBlocks * blockHeightPx) + '">' +
-                            blocksHtml +
-                        '</div>'
-                    );
-
-                bonzo(element).addClass(blocksClassName).append(el);
-
-                if (numNewBlocks) {
+            fastdomPromise.write(function () {
+                $element.addClass(blocksClassName).append(el);
+            })
+            .then(function () {
+                if (hasNewBlock) {
                     animateBlocks(el[0]);
                 }
             });
@@ -123,22 +103,40 @@ define([
     }
 
     function animateBlocks(el) {
-        if (!maybeAnimateBlocks(el)) {
-            mediator.on('window:scroll', _.debounce(function () {
-                return maybeAnimateBlocks(el, true);
-            }, animateDelayMs));
-        }
+        maybeAnimateBlocks(el)
+        .then(function (didAnimate) {
+            var animateOnScroll;
+
+            if (!didAnimate) {
+                animateOnScroll = _.debounce(function () {
+                    maybeAnimateBlocks(el, true).then(function (didAnimate) {
+                        if (didAnimate) {
+                            mediator.off('window:scroll', animateOnScroll);
+                        }
+                    });
+                }, animateAfterScrollDelayMs);
+
+                mediator.on('window:scroll', animateOnScroll);
+            }
+        });
     }
 
     function maybeAnimateBlocks(el, immediate) {
-        var vPosition = el.getBoundingClientRect().top;
+        return fastdomPromise.read(function () {
+            return el.getBoundingClientRect().top;
+        })
+        .then(function (vPosition, ID) {
+            if (vPosition > 0 && vPosition < veiwportHeightPx) {
+                setTimeout(function () {
+                    var $el = bonzo(el);
 
-        if (vPosition > blockHeightPx * -1 && vPosition < veiwportHeightPx - blockHeightPx) {
-            setTimeout(function () {
-                bonzo(el).attr('style', translateCss(translateNone));
-            }, immediate ? 0 : animateDelayMs);
-            return true; // remove listener
-        }
+                    fastdomPromise.write(function () {
+                        $el.removeClass('fc-item__liveblog-blocks__inner--offset');
+                    });
+                }, immediate ? 0 : animateDelayMs);
+                return true;
+            }
+        });
     }
 
     function sanitizeBlocks(blocks) {
@@ -148,45 +146,52 @@ define([
     }
 
     function show() {
-        var oldBlockDates;
+        return fastdomPromise.read(function () {
+            var elementsById = {};
 
-        $(selector).each(function (element) {
-            if (element.hasAttribute(articleIdAttribute)) {
+            $(selector).each(function (element) {
                 var articleId = element.getAttribute(articleIdAttribute);
 
-                elementsById[articleId] = elementsById[articleId] || [];
-                elementsById[articleId].push(element);
-            }
-        });
-
-        if (!_.isEmpty(elementsById)) {
-            oldBlockDates = storage.session.get(sessionStorageKey) || {};
-
-            _.forEach(elementsById, function (elements, articleId) {
-                ajax({
-                    url: '/' + articleId + '.json?rendered=false',
-                    type: 'json',
-                    crossOrigin: true
-                })
-                .then(function (response) {
-                    var blocks = response && sanitizeBlocks(response.blocks);
-
-                    if (blocks && blocks.length) {
-                        showBlocks(articleId, elements, blocks, oldBlockDates[articleId]);
-                        oldBlockDates[articleId] = blocks[0].publishedDateTime;
-                        storage.session.set(sessionStorageKey, oldBlockDates);
-                    }
-                });
+                if (articleId) {
+                    elementsById[articleId] = elementsById[articleId] || [];
+                    elementsById[articleId].push(element);
+                }
             });
+            return elementsById;
+        })
+        .then(function (elementsById, ID) {
+            var oldBlockDates;
 
-            if (refreshMaxTimes) {
-                refreshMaxTimes -= 1;
-                setTimeout(function () {
-                    show();
-                }, refreshSecs * 1000);
-                refreshSecs = refreshSecs * refreshDecay;
+            if (!_.isEmpty(elementsById)) {
+                oldBlockDates = storage.session.get(sessionStorageKey) || {};
+
+                _.forEach(elementsById, function (elements, articleId) {
+                    ajax({
+                        url: '/' + articleId + '.json?rendered=false',
+                        type: 'json',
+                        crossOrigin: true
+                    })
+                    .then(function (response) {
+                        var blocks = response && sanitizeBlocks(response.blocks);
+
+                        if (blocks && blocks.length) {
+                            showBlocks(articleId, elements, blocks, oldBlockDates[articleId]);
+                            oldBlockDates[articleId] = blocks[0].publishedDateTime;
+                            storage.session.set(sessionStorageKey, oldBlockDates);
+                        }
+                    });
+                });
+
+                if (refreshMaxTimes) {
+                    refreshMaxTimes -= 1;
+                    setTimeout(function () {
+                        show();
+                    }, refreshSecs * 1000);
+                    refreshSecs = refreshSecs * refreshDecay;
+                }
             }
-        }
+
+        });
     }
 
     return {

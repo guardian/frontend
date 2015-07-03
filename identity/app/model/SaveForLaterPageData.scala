@@ -14,9 +14,11 @@ import cards._
 
 import scala.concurrent.Future
 
-case class SaveForLaterItem(
+case class SaveForLaterItem (
   content: Content,
-  savedArticle: SavedArticle) {
+  savedArticle: SavedArticle) extends Ordered[SaveForLaterItem] {
+
+  def compare(other: SaveForLaterItem) : Int = other.savedArticle.date.compareTo(this.savedArticle.date)
 
   val contentCard = FaciaCard.fromTrail(
     FaciaContentConvert.frontentContentToFaciaContent(content),
@@ -59,7 +61,7 @@ class SaveForLaterDataBuilder @Inject()(idUrlBuilder: IdentityUrlBuilder) extend
 
       SaveForLaterPageData(
         idUrlBuilder.buildUrl("/saved-for-later", idRequest),
-        items,
+        items.sorted,
         Pagination(pageNum, savedArticles.numPages, savedArticles.totalSaved),
         idUrlBuilder.buildUrl("/saved-for-later"),
         savedArticles.totalSaved,

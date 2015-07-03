@@ -1,5 +1,5 @@
 import business.StocksDataLifecycle
-import common.{ContentApiMetrics, CloudWatchApplicationMetrics}
+import common.{CanonicalLink, WeatherMetrics, ContentApiMetrics, CloudWatchApplicationMetrics}
 import conf.Filters
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
@@ -22,6 +22,9 @@ object Global extends WithFilters(Filters.common: _*)
     ContentApiMetrics.ContentApiCircuitBreakerOnOpen,
     ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric,
     ContentApiMetrics.ElasticHttpTimeoutCountMetric,
-    ContentApiMetrics.ContentApiErrorMetric
+    ContentApiMetrics.ContentApiErrorMetric,
+    WeatherMetrics.whatIsMyCityRequests
   )
 }
+
+

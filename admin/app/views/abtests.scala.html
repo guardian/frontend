@@ -39,6 +39,6 @@
             @conf.Switches.all.filter(_.group == "A/B Tests").map{ s =>
                 "@CamelCase.fromHyphenated(s.name)": @s.isSwitchedOn,
             }
-        }
+        };
     </script>
 }

@@ -117,7 +117,7 @@ object IndexPage {
       val timeStampDisplay = header match {
         case MetaDataHeader(_, _, _, dateHeadline, _) => Some(cardTimestampDisplay(dateHeadline))
         case LoneDateHeadline(dateHeadline) => Some(cardTimestampDisplay(dateHeadline))
-        case SeriesDescriptionMetaHeader(_) => None
+        case DescriptionMetaHeader(_) => None
       }
 
       container.copy(

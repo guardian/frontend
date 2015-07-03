@@ -29,16 +29,16 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|
 GET        /business-data/stocks.json                 controllers.StocksController.stocks
 
 #Weather - OLD
-GET         /weather/city/:id.json                                                                                   controllers.WeatherController.forCity(id)
-GET         /weather/city.json                                                                                       controllers.LocationsController.whatIsMyCity()
-GET         /weather/locations                                                                                       controllers.LocationsController.findCity(query: String)
-GET         /weather/forecast/:id.json                                                                               controllers.WeatherController.forecastForCityId(id)
+GET         /weather/city/:id.json                                                                                   weather.controllers.WeatherController.forCity(id)
+GET         /weather/city.json                                                                                       weather.controllers.LocationsController.whatIsMyCity()
+GET         /weather/locations                                                                                       weather.controllers.LocationsController.findCity(query: String)
+GET         /weather/forecast/:id.json                                                                               weather.controllers.WeatherController.forecastForCityId(id)
 
 #Weather
-GET         /weatherapi/city/:id.json                                                                                controllers.WeatherController.forCity(id)
-GET         /weatherapi/city.json                                                                                    controllers.LocationsController.whatIsMyCity()
-GET         /weatherapi/locations                                                                                    controllers.LocationsController.findCity(query: String)
-GET         /weatherapi/forecast/:id.json                                                                            controllers.WeatherController.forecastForCityId(id)
+GET         /weatherapi/city/:id.json                                                                                weather.controllers.WeatherController.forCity(id)
+GET         /weatherapi/city.json                                                                                    weather.controllers.LocationsController.whatIsMyCity()
+GET         /weatherapi/locations                                                                                    weather.controllers.LocationsController.findCity(query: String)
+GET         /weatherapi/forecast/:id.json                                                                            weather.controllers.WeatherController.forecastForCityId(id)
 
 # Analytics
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
@@ -312,7 +312,7 @@ GET         /container/*id.json                                                 
 
 # Applications
 GET         /2015-05-28-2-service-worker.js                                                                            controllers.WebAppController.serviceWorker()
-GET         /2015-05-28-manifest.json                                                                                controllers.WebAppController.manifest()
+GET         /2015-06-24-manifest.json                                                                                controllers.WebAppController.manifest()
 GET         /$path<international>                                                                                    controllers.FaciaController.renderFront(path)
 GET         /preferences                                                                                             controllers.PreferencesController.indexPrefs()
 GET         /preferences/notifications                                                                               controllers.PreferencesController.notificationPrefs()

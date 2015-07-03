@@ -220,3 +220,13 @@ category: Common
     z-index: 1000;
     padding-right: 145px; // logo width
 }
+
+// Pintrest test
+
+.social__item--pinterest {
+    display: none;
+
+    .content--gallery & {
+        display: block;
+    }
+}
