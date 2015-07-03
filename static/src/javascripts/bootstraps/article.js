@@ -1,6 +1,7 @@
 /*eslint-disable no-new*/
 define([
     'qwery',
+    'bean',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -17,6 +18,7 @@ define([
     'bootstraps/trail'
 ], function (
     qwery,
+    bean,
     $,
     config,
     detect,
@@ -63,6 +65,18 @@ define([
                 });
             },
 
+            initPintrest: function () {
+                if (ab.shouldRunTest('Pintrest', 'variant')) {
+                    $('.social__item--pinterest').each(function (el) {
+                        $(el).css('display', 'block');
+                        bean.on(el, 'click', function (event) {
+                            event.preventDefault();
+                            require(['js!https://assets.pinterest.com/js/pinmarklet.js?r=' + new Date().getTime()]);
+                        });
+                    });
+                }
+            },
+
             initQuizListeners: function () {
                 require(['ophan/ng'], function (ophan) {
                     mediator.on('quiz/ophan-event', ophan.record);
@@ -83,6 +97,7 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
+            modules.initPintrest();
             modules.initTruncation();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();

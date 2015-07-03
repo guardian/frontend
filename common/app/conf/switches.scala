@@ -1050,6 +1050,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ABPintrest = Switch(
+    "A/B Tests",
+    "ab-pintrest",
+    "Switch for the Pintrest on content pages A/B test.",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 7, 16),
+    exposeClientSide = true
+  )
+
   val FootballFeedRecorderSwitch = Switch(
     "Feature",
     "football-feed-recorder",
