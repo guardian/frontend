@@ -321,7 +321,7 @@ object Front extends implicits.Collections {
           faciaContentList.map(Story.fromFaciaContent)
         ) map { containerDefinition =>
           (seen ++ faciaContentList
-            .map(faciaContent => faciaContent.maybeContentId.getOrElse(faciaContent.id))
+            .map(_.url)
             .take(itemsVisible(containerDefinition)), faciaContentList)
         } getOrElse {
           (seen, faciaContentList)
