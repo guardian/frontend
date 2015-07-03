@@ -308,6 +308,12 @@ define([
                 // Put navigation to its default state
                 this.setNavigationDefault();
             }
+
+            if ($('.gssb_c').length > 0) {
+                fastdom.write(function () {
+                    $('.gssb_c').hide();
+                });
+            }
         }.bind(this));
     };
 

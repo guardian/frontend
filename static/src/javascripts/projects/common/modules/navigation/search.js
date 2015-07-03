@@ -56,7 +56,7 @@ define([
                     fastdom.write(function () {
                         $autoCompleteObject.css({
                             'top': parseInt(searchFromTop, 10) + windowOffset,
-                            'z-index': '998'
+                            'z-index': '1000'
                         });
                     });
                 });
