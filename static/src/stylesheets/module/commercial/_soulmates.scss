@@ -411,22 +411,22 @@ $c-soulmates-high: colour(neutral-1);
             margin: $gs-baseline/2 0;
             padding-left: $gs-baseline;
 
-             @include mq(mobile) {
+            @include mq(mobile) {
                 width: 50%;
                 height: auto;
-             }
+            }
 
-             @include mq(tablet) {
+            @include mq(tablet) {
                 width: 33.33%;
                 height: 64px;
-             }
+            }
 
-             @include mq(desktop) {
+            @include mq(desktop) {
                 width: 25%;
                 height: 64px;
-             }
+            }
 
-         }
+        }
 
         @include mq(wide) {
             .has-page-skin & {
@@ -438,7 +438,7 @@ $c-soulmates-high: colour(neutral-1);
                 margin: $gs-baseline/2 0;
                 padding-left: $gs-baseline;
             }
-         }
+        }
 
     }
 
