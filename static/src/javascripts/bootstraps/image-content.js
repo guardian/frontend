@@ -1,13 +1,10 @@
 define([
-    'common/modules/gallery/lightbox',
-    'bootstraps/trail'
+    'common/modules/gallery/lightbox'
 ], function (
-    Lightbox,
-    trail
+    Lightbox
 ) {
     return {
         init: function () {
-            trail();
             Lightbox.init();
         }
     };
