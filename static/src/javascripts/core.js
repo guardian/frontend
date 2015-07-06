@@ -30,6 +30,7 @@ define([
     'common/modules/ui/lazy-load-images',
     'common/modules/ui/images',
     'common/modules/ui/tabs',
+    'common/modules/ui/rhc',
     'common/modules/user-prefs',
     'common/views/svgs'
 ], function () {});

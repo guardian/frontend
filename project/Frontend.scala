@@ -157,8 +157,7 @@ object Frontend extends Build with Prototypes {
       identity,
       admin,
       commercial,
-      onward,
-      weather
+      onward
     ).settings(crosswordsRouting: _*)
 
   val faciaEndToEnd = application("facia-end-to-end")
@@ -174,8 +173,7 @@ object Frontend extends Build with Prototypes {
     applications,
     sport,
     commercial,
-    onward,
-    weather
+    onward
   )
 
   val preview = application("preview").dependsOn(withTests(common), standalone).settings(

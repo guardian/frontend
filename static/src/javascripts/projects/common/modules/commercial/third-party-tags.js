@@ -6,6 +6,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
+    'common/modules/commercial/third-party-tags/audience-science-pql',
     'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
     'common/modules/commercial/third-party-tags/krux',
@@ -15,6 +16,7 @@ define([
     config,
     mediator,
     audienceScienceGateway,
+    audienceSciencePql,
     imrWorldwide,
     remarketing,
     krux,
@@ -29,6 +31,7 @@ define([
 
         switch (config.page.edition.toLowerCase()) {
             case 'uk':
+                audienceSciencePql.load();
                 audienceScienceGateway.load();
                 break;
         }

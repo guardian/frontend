@@ -8,7 +8,7 @@ import play.api.libs.iteratee.Enumerator
 
 object DevAssetsController extends Controller with ExecutionContexts {
 
-  def at(path: String): Action[AnyContent] = Action {
+  def at(path: String): Action[AnyContent] = Action { implicit request =>
     val contentType: Option[String] = MimeTypes.forFileName(path) map { mime =>
       // Add charset for text types
       if (MimeTypes.isText(mime)) s"${mime}; charset=utf-8" else mime
@@ -16,7 +16,9 @@ object DevAssetsController extends Controller with ExecutionContexts {
 
     val hashFile = new File(s"static/hash/$path")
 
-    val resolved = if (hashFile.exists()) {
+    val resolved = if (mvt.JspmTest.isParticipating && path.startsWith("javascripts")) {
+      new File(s"static/src/$path").toURI.toURL
+    } else if (hashFile.exists()) {
       hashFile.toURI.toURL
     } else {
       new File(s"static/src/$path").toURI.toURL

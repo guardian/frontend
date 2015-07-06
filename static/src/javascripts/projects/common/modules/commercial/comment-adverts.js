@@ -23,7 +23,7 @@ define([
     createAdSlot,
     dfp
 ) {
-    function init(options) {
+    return function (options) {
         var adType,
             opts = _.defaults(
                 options || {},
@@ -71,10 +71,5 @@ define([
                 });
             });
         });
-
-    }
-
-    return {
-        init: init
     };
 });
