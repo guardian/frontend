@@ -13,6 +13,7 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
+    'common/modules/experiments/tests/pintrest',
     'common/modules/experiments/headlines',
     'common/modules/experiments/tests/membership-message',
     'common/modules/experiments/tests/viewability'
@@ -31,6 +32,7 @@ define([
     HighCommercialComponent,
     SaveForLater,
     CookieRefresh,
+    Pintrest,
     Headline,
     MembershipMessage,
     Viewability
@@ -44,6 +46,7 @@ define([
         new HighCommercialComponent(),
         new SaveForLater(),
         new CookieRefresh(),
+        new Pintrest(),
         new MembershipMessage(),
         new Viewability(),
         _.map(_.range(1, 10), function (n) {

@@ -1,6 +1,7 @@
 /*eslint-disable no-new*/
 define([
     'qwery',
+    'bean',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -17,6 +18,7 @@ define([
     'bootstraps/trail'
 ], function (
     qwery,
+    bean,
     $,
     config,
     detect,
@@ -54,13 +56,29 @@ define([
             initSocialMostPopular: function () {
                 var el = qwery('.js-social-most-popular');
 
-                ['Twitter', 'Facebook'].forEach(function (socialContext) {
-                    if (ab.shouldRunTest(socialContext + 'MostViewed', 'variant')) {
-                        if (el) {
-                            new SocialMostPopular(el, socialContext.toLowerCase());
-                        }
+                if (el) {
+                    if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
+                        new SocialMostPopular(el, detect.socialContext());
+                    } else {
+                        ['Twitter', 'Facebook'].forEach(function (socialContext) {
+                            if (ab.shouldRunTest(socialContext + 'MostViewed', 'variant')) {
+                                new SocialMostPopular(el, socialContext.toLowerCase());
+                            }
+                        });
                     }
-                });
+                }
+            },
+
+            initPintrest: function () {
+                if (ab.shouldRunTest('Pintrest', 'variant')) {
+                    $('.social__item--pinterest').each(function (el) {
+                        $(el).css('display', 'block');
+                        bean.on(el, 'click', function (event) {
+                            event.preventDefault();
+                            require(['js!https://assets.pinterest.com/js/pinmarklet.js?r=' + new Date().getTime()]);
+                        });
+                    });
+                }
             },
 
             initQuizListeners: function () {
@@ -83,6 +101,7 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
+            modules.initPintrest();
             modules.initTruncation();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();

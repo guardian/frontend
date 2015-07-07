@@ -43,27 +43,4 @@ describe('Tags Container', function () {
         expect(tagsContainer.init()).toBe(false);
     });
 
-    it('should not load tags if ThirdPartiesLater switch is on', function () {
-        jasmine.clock().install();
-
-        config.switches.thirdPartiesLater = true;
-        spyOn(krux, 'load');
-        tagsContainer.init();
-        jasmine.clock().tick(0);
-        expect(krux.load).not.toHaveBeenCalled();
-
-        jasmine.clock().uninstall();
-    });
-
-    it('should load tags if timeout 1000', function () {
-        jasmine.clock().install();
-
-        config.switches.thirdPartiesLater = true;
-        spyOn(krux, 'load');
-        tagsContainer.init();
-        jasmine.clock().tick(1000);
-        expect(krux.load).toHaveBeenCalled();
-
-        jasmine.clock().uninstall();
-    });
 });
