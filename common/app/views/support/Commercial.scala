@@ -28,7 +28,7 @@ object Commercial {
       )
     }
 
-    def cssClasses(metaData: MetaData) = {
+    def cssClasses(metaData: MetaData): String = {
       val classes = Seq(
         "top-banner-ad-container",
         "top-banner-ad-container--desktop",
