@@ -2,7 +2,7 @@
 @import conf.Configuration
 @import common.AnalyticsHost
 @import views.support.OmnitureAnalyticsData
-@import conf.Static
+@import conf.{Static,Switches}
 
 @defining(s"${request.host}${request.path}") { path =>
 
@@ -13,6 +13,10 @@
                 <div>
                     <img id="omnitureNoScriptImage" alt=""
                          src="@Html(omnitureCall)" width="1" height="1" class="u-h" />
+                    @if(Switches.OmnitureConfidenceNoJsSwitch.isSwitchedOn) {
+                        <img id="omnitureConfidenceNoScriptImage" alt=""
+                             src="@{Configuration.debug.beaconUrl}/count/pva.gif" width="1" height="1" class="u-h" />
+                    }
                 </div>
             </noscript>
     }
