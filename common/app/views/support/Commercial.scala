@@ -1,6 +1,6 @@
 package views.support
 
-import conf.Switches.{TopAboveNavAdSlot728x90Switch, TopAboveNavAdSlot88x70Switch}
+import conf.Switches.{FixedTopAboveNavAdSlotSwitch, TopAboveNavAdSlot728x90Switch, TopAboveNavAdSlot88x70Switch}
 import model.MetaData
 
 object Commercial {
@@ -13,7 +13,7 @@ object Commercial {
       Map(
         "mobile" -> Seq("1,1", "88,70", "728,90"),
         "desktop" -> {
-          if (isUKNetworkFront(metaData)) {
+          if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isUKNetworkFront(metaData)) {
             if (TopAboveNavAdSlot728x90Switch.isSwitchedOn) {
               Seq("1,1", "728,90")
             } else if (TopAboveNavAdSlot88x70Switch.isSwitchedOn) {
@@ -35,7 +35,8 @@ object Commercial {
         "top-banner-ad-container--above-nav")
 
       val sizeSpecificClass = {
-        if (isUKNetworkFront(metaData) &&
+        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn &&
+          isUKNetworkFront(metaData) &&
           TopAboveNavAdSlot728x90Switch.isSwitchedOff &&
           TopAboveNavAdSlot88x70Switch.isSwitchedOff) {
           "top-banner-ad-container--large"

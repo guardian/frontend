@@ -3,8 +3,6 @@ package conf
 import common._
 import conf.Configuration.environment
 import org.joda.time._
-import play.api.Play.current
-import play.api.libs.ws.WS
 import play.api.{Application, Plugin}
 
 sealed trait SwitchState
@@ -570,6 +568,15 @@ object Switches {
     safeState = Off,
     sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
+  )
+
+  val FixedTopAboveNavAdSlotSwitch = Switch(
+    "Commercial",
+    "fixed-top-above-nav",
+    "Fixes size of top-above-nav ad slot on UK network front.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 22),
+    exposeClientSide = false
   )
 
   val TopAboveNavAdSlot728x90Switch = Switch(
