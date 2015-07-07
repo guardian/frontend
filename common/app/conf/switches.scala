@@ -1252,20 +1252,16 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
 
   def refresh() {
     log.info("Refreshing switches")
-    WS.url(config.switches.configurationUrl).get() foreach { response =>
-      response.status match {
-        case 200 =>
-          val nextState = Properties(response.body)
+    services.S3.get(config.switches.key) map { response =>
 
-          for (switch <- Switches.all) {
-            nextState.get(switch.name) foreach {
-              case "on" => switch.switchOn()
-              case "off" => switch.switchOff()
-              case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
-            }
-          }
+      val nextState = Properties(response)
 
-        case _ => log.warn(s"Could not load switch config ${response.status} ${response.statusText}")
+      for (switch <- Switches.all) {
+        nextState.get(switch.name) foreach {
+          case "on" => switch.switchOn()
+          case "off" => switch.switchOff()
+          case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
+        }
       }
     }
   }
