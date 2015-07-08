@@ -597,6 +597,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val TopAboveNavAdSlot1x1Switch = Switch(
+    "Commercial",
+    "top-above-nav-1-1",
+    "Expect a 1x1 ad in top-above-nav slot on UK network front.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 22),
+    exposeClientSide = false
+  )
+
 
   // Monitoring
 

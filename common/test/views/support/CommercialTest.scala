@@ -1,6 +1,6 @@
 package views.support
 
-import conf.Switches.{FixedTopAboveNavAdSlotSwitch, TopAboveNavAdSlot728x90Switch, TopAboveNavAdSlot88x70Switch}
+import conf.Switches._
 import model.MetaData
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers, OptionValues}
 import views.support.Commercial.topAboveNavSlot
@@ -24,6 +24,7 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
     FixedTopAboveNavAdSlotSwitch.switchOff()
     TopAboveNavAdSlot728x90Switch.switchOff()
     TopAboveNavAdSlot88x70Switch.switchOff()
+    TopAboveNavAdSlot1x1Switch.switchOff()
   }
 
   "topAboveNavSlot ad sizes" should "be fixed for UK network front" in {
@@ -40,7 +41,7 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
   }
 
   "topAboveNavSlot css classes" should
-    "be large for 900x250, 970x250 or 1x1 ad on UK network front" in {
+    "be large for 900x250 or 970x250 ad on UK network front" in {
     FixedTopAboveNavAdSlotSwitch.switchOn()
     topAboveNavSlot.cssClasses(metaDataFromId("uk")) should
       endWith("top-banner-ad-container--large")
@@ -58,6 +59,13 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
     TopAboveNavAdSlot88x70Switch.switchOn()
     topAboveNavSlot.cssClasses(metaDataFromId("uk")) should
       endWith("top-banner-ad-container--large")
+  }
+
+  they should "be default for 1x1 ad on UK network front" in {
+    FixedTopAboveNavAdSlotSwitch.switchOn()
+    TopAboveNavAdSlot1x1Switch.switchOn()
+    topAboveNavSlot.cssClasses(metaDataFromId("uk")) should
+      endWith("top-banner-ad-container--reveal")
   }
 
   they should "be default for any other page" in {

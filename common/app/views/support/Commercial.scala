@@ -1,6 +1,6 @@
 package views.support
 
-import conf.Switches.{FixedTopAboveNavAdSlotSwitch, TopAboveNavAdSlot728x90Switch, TopAboveNavAdSlot88x70Switch}
+import conf.Switches._
 import model.MetaData
 
 object Commercial {
@@ -38,6 +38,8 @@ object Commercial {
         if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isUKNetworkFront(metaData)) {
           if (TopAboveNavAdSlot728x90Switch.isSwitchedOn) {
             "top-banner-ad-container--medium"
+          } else if (TopAboveNavAdSlot1x1Switch.isSwitchedOn) {
+            "top-banner-ad-container--reveal"
           } else {
             "top-banner-ad-container--large"
           }
