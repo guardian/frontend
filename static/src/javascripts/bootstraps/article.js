@@ -14,6 +14,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/social-most-popular',
+    'common/modules/social/pintrest',
     'bootstraps/article-liveblog-common',
     'bootstraps/trail'
 ], function (
@@ -31,6 +32,7 @@ define([
     ab,
     geoMostPopular,
     SocialMostPopular,
+    pintrest,
     articleLiveblogCommon,
     trail
 ) {
@@ -71,13 +73,7 @@ define([
 
             initPintrest: function () {
                 if (ab.shouldRunTest('Pintrest', 'variant')) {
-                    $('.social__item--pinterest').each(function (el) {
-                        $(el).css('display', 'block');
-                        bean.on(el, 'click', function (event) {
-                            event.preventDefault();
-                            require(['js!https://assets.pinterest.com/js/pinmarklet.js?r=' + new Date().getTime()]);
-                        });
-                    });
+                    pintrest();
                 }
             },
 
