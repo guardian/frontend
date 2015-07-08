@@ -1,6 +1,7 @@
 @(metaData: model.MetaData)
 @import views.support.Commercial.topAboveNavSlot
 
+@if(topAboveNavSlot.show(metaData)) {
 <div class="@topAboveNavSlot.cssClasses(metaData)">
     @fragments.commercial.standardAd(
         "top-above-nav",
@@ -8,3 +9,4 @@
         topAboveNavSlot.adSizes(metaData)
     )
 </div>
+}

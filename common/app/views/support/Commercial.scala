@@ -9,6 +9,12 @@ object Commercial {
 
     private def isUKNetworkFront(metaData: MetaData) = metaData.id == "uk"
 
+    def show(metaData: MetaData): Boolean = {
+      FixedTopAboveNavAdSlotSwitch.isSwitchedOff ||
+        TopAboveNavAdSlotOmitSwitch.isSwitchedOff ||
+        !isUKNetworkFront(metaData)
+    }
+
     def adSizes(metaData: MetaData): Map[String, Seq[String]] = {
       Map(
         "mobile" -> Seq("1,1", "88,70", "728,90"),
@@ -38,8 +44,6 @@ object Commercial {
         if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isUKNetworkFront(metaData)) {
           if (TopAboveNavAdSlot728x90Switch.isSwitchedOn) {
             "top-banner-ad-container--medium"
-          } else if (TopAboveNavAdSlot1x1Switch.isSwitchedOn) {
-            "top-banner-ad-container--reveal"
           } else {
             "top-banner-ad-container--large"
           }

@@ -24,7 +24,7 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
     FixedTopAboveNavAdSlotSwitch.switchOff()
     TopAboveNavAdSlot728x90Switch.switchOff()
     TopAboveNavAdSlot88x70Switch.switchOff()
-    TopAboveNavAdSlot1x1Switch.switchOff()
+    TopAboveNavAdSlotOmitSwitch.switchOff()
   }
 
   "topAboveNavSlot ad sizes" should "be fixed for UK network front" in {
@@ -61,13 +61,6 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
       endWith("top-banner-ad-container--large")
   }
 
-  they should "be default for 1x1 ad on UK network front" in {
-    FixedTopAboveNavAdSlotSwitch.switchOn()
-    TopAboveNavAdSlot1x1Switch.switchOn()
-    topAboveNavSlot.cssClasses(metaDataFromId("uk")) should
-      endWith("top-banner-ad-container--reveal")
-  }
-
   they should "be default for any other page" in {
     FixedTopAboveNavAdSlotSwitch.switchOn()
     topAboveNavSlot.cssClasses(metaDataFromId("us")) should
@@ -77,5 +70,27 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
     topAboveNavSlot.cssClasses(metaDataFromId(
       "business/2015/jul/07/eurozone-calls-on-athens-to-get-serious-over-greece-debt-crisis"))
       .should(endWith("top-banner-ad-container--reveal"))
+  }
+
+  "topAboveNavSlot show" should "be false for 1x1 ad on UK network front" in {
+    FixedTopAboveNavAdSlotSwitch.switchOn()
+    TopAboveNavAdSlotOmitSwitch.switchOn()
+    topAboveNavSlot.show(metaDataFromId("uk")) shouldBe false
+  }
+
+  it should "be true for non-1x1 ad on UK network front" in {
+    FixedTopAboveNavAdSlotSwitch.switchOn()
+    topAboveNavSlot.show(metaDataFromId("uk")) shouldBe true
+  }
+
+  it should "be true for any other page" in {
+    FixedTopAboveNavAdSlotSwitch.switchOn()
+    TopAboveNavAdSlotOmitSwitch.switchOn()
+    topAboveNavSlot.show(metaDataFromId("us")) shouldBe true
+  }
+
+  it should "be true when master switch is off" in {
+    FixedTopAboveNavAdSlotSwitch.switchOff()
+    topAboveNavSlot.show(metaDataFromId("uk")) shouldBe true
   }
 }
