@@ -8,8 +8,7 @@ define([
         template,
         Message
     ) {
-
-    return function () {
+        return function () {
         this.id = 'Viewability';
         this.start = '2015-06-15';
         this.expiry = '2015-08-01';
@@ -38,7 +37,6 @@ define([
                 '<a href="<%=panelLink%>" target="_blank" data-link-name="read more"><%=linkText%></a>' +
                 '</li>' +
                 '</ul>';
-
 
 
             new Message('save-for-later', {
@@ -84,5 +82,5 @@ define([
             }
         ];
     };
-
-});
+    }
+);
