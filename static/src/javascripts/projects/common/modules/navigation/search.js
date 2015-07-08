@@ -46,6 +46,28 @@ define([
                 e.preventDefault();
                 mediator.emit('modules:search');
             });
+
+            bean.on(document, 'keydown', '.gsc-input', function (e) {
+                fastdom.read(function () {
+                    var $autoCompleteObject = $('.gssb_c'),
+                        searchFromTop       = $autoCompleteObject.css('top'),
+                        windowOffset        = $(window).scrollTop();
+
+                    fastdom.write(function () {
+                        $autoCompleteObject.css({
+                            'top': parseInt(searchFromTop, 10) + windowOffset,
+                            'z-index': '1000'
+                        });
+                    });
+                });
+            });
+
+            bean.on(document, 'click', '.search-results', function (e) {
+                var targetEl = e.target;
+                if (targetEl.nodeName.toLowerCase() === 'a') {
+                    targetEl.target = '_self';
+                }
+            });
         }
 
         this.focusSearchField = function () {
@@ -118,12 +140,10 @@ define([
             // Load the Google search monolith, if not already present in this context.
             // We have to re-run their script each time we do this.
             if (!container.innerHTML) {
-                var autoComplete = !ab.shouldRunTest('Viewability', 'variant') || config.page.contentType === 'Interactive';
-
                 fastdom.write(function () {
                     container.innerHTML = '' +
                         '<div class="search-box" role="search">' +
-                            '<gcse:searchbox enableAutoComplete="' + autoComplete + '"></gcse:searchbox>' +
+                            '<gcse:searchbox></gcse:searchbox>' +
                         '</div>' +
                         '<div class="search-results" data-link-name="search">' +
                             '<gcse:searchresults webSearchResultSetSize="' + resultSetSize + '" linkTarget="_self"></gcse:searchresults>' +
