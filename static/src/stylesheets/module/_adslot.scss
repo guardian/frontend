@@ -79,10 +79,13 @@
         @include mq(wide) {
             margin: 0;
         }
-    } 
+    }
 }
 .top-banner-ad-container--large {
     min-height: ($gs-row-height * 7) + 34;
+}
+.top-banner-ad-container--medium {
+    min-height: ($gs-row-height * 3) + 18;
 }
 .top-banner-ad-container--reveal iframe {
     transform: translateZ(0);
@@ -206,7 +209,7 @@
 }
 .ad-slot__content {
     > div {
-        margin: 0 auto;            
+        margin: 0 auto;
     }
 }
 .ad-slot--container-inline {
