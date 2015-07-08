@@ -101,6 +101,20 @@
     @include mq(wide) {
         max-width: none;
     }
+
+    .site-message--save-for-later & {
+        font-weight: bold;
+        padding-top: 10px;
+
+        @include mq(mobile) {
+            padding-left: 14px;
+        }
+    }
+}
+
+.site-message__description {
+    font-size: 14px;
+    font-weight: normal;
 }
 
 .site-message__message--tall {
@@ -116,6 +130,12 @@
         display: table-cell;
         vertical-align: middle;
         margin-top: 0;
+    }
+
+    .site-message--save-for-later & {
+        @include mq(mobile) {
+            padding-left: 14px;
+        }
     }
 }
 

@@ -238,7 +238,7 @@ define([
                             { tags: { feature: 'media' } },
                             function () {
                                 events.bindPrerollEvents(player);
-                                player.adSkipCountdown(15);
+                                player.adSkipCountdown(10);
 
                                 require(['js!http://imasdk.googleapis.com/js/sdkloader/ima3.js'], function () {
                                     player.ima({

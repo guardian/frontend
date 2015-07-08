@@ -59,7 +59,8 @@ var createBundle = function (bundleConfig) {
     var outName = bundleConfig[1];
     return builder.build(moduleExpression, null, {
             minify: true,
-            sourceMaps: true })
+            sourceMaps: true,
+            sourceMapContents: true })
         // Attach URI
         .then(function (output) {
             var hash = getHash(output.source);
@@ -77,8 +78,9 @@ var writeBundlesToDisk = function (bundles) {
         var bundleMapFileName = bundleFileName + '.map';
 
         mkdirp.sync(path.dirname(bundleFileName));
+
         console.log('writing to %s', bundleFileName);
-        fs.writeFileSync(bundleFileName, bundle.source);
+        fs.writeFileSync(bundleFileName, bundle.source + '\n//# sourceMappingURL=' + path.basename(bundleFileName) + '.map');
         console.log('writing to %s', bundleMapFileName);
         fs.writeFileSync(bundleMapFileName, bundle.sourceMap);
     });

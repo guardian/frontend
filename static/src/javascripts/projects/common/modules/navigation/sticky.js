@@ -215,7 +215,8 @@ define([
                         'margin-top': 0,
                         '-webkit-transform': 'translateY(-100%)',
                         '-ms-transform': 'translateY(-100%)',
-                        'transform': 'translateY(-100%)'
+                        'transform': 'translateY(-100%)',
+                        'backface-visibility': 'hidden'
                     });
 
                     // Make sure banner is outside of the view
@@ -284,7 +285,8 @@ define([
                         position:  'fixed',
                         top:       0,
                         width:     '100%',
-                        'z-index': '999'
+                        'z-index': '999',
+                        'backface-visibility': 'hidden'
                     });
                     // Header is not slim yet
                     this.$els.header.removeClass('l-header--is-slim');
@@ -335,7 +337,8 @@ define([
                         'margin-top': 0,
                         '-webkit-transform': 'translateY(-100%)',
                         '-ms-transform': 'translateY(-100%)',
-                        'transform': 'translateY(-100%)'
+                        'transform': 'translateY(-100%)',
+                        'backface-visibility': 'hidden'
                     });
 
                     // Make sure banner is outside of the view
@@ -381,13 +384,15 @@ define([
                 top: headerTop,
                 width: '100%',
                 'z-index': '1001',
-                'margin-top': 0
+                'margin-top': 0,
+                'backface-visibility': 'hidden'
             });
             this.$els.bannerMobile.css({
                 position: 'fixed',
                 top: this.headerBigHeight + headerTop,
                 width: '100%',
-                'z-index': '999' // Sticky z-index -1 as it should be sticky but should go below the sticky header
+                'z-index': '999', // Sticky z-index -1 as it should be sticky but should go below the sticky header,
+                'backface-visibility': 'hidden'
             });
             this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
         }.bind(this));

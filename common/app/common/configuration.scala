@@ -68,7 +68,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object switches {
-    lazy val configurationUrl = configuration.getMandatoryStringProperty("switchboard.config.url")
+    lazy val key = configuration.getMandatoryStringProperty("switches.key")
   }
 
   object healthcheck {
@@ -91,9 +91,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   case class Auth(user: String, password: String)
 
   object contentApi {
-    val defaultContentApi: String = "http://content.guardianapis.com"
-    lazy val contentApiLiveHost: String = configuration.getStringProperty("content.api.elastic.host").getOrElse(defaultContentApi)
-    lazy val contentApiPreviewHost: String = configuration.getStringProperty("content.api.preview.elastic.host").getOrElse(defaultContentApi)
+    val contentApiLiveHost: String = configuration.getMandatoryStringProperty("content.api.host")
 
     def contentApiDraftHost: String =
         configuration.getStringProperty("content.api.draft.host")
