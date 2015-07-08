@@ -34,7 +34,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
     withCrossword(crosswordType, id) { crossword =>
       val xml = CrosswordSvg(crossword, Some("100%"), Some("100%"), trim = true)
 
-      val globalStylesheet = Static("stylesheets/global.css")
+      val globalStylesheet = Static("stylesheets/content.css")
 
       Cached(60)(Ok(s"""<?xml-stylesheet type="text/css" href="$globalStylesheet" ?>$xml""").as("image/svg+xml"))
     }
