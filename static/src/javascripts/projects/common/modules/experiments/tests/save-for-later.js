@@ -59,8 +59,8 @@ define([
                 '</ul>';
 
             var panelLinks = {
-                mobile: 'https://s.userzoom.com/m/MSBDMTBTMjI5',
-                tablet: 'https://s.userzoom.com/m/MSBDMTBTMjI5',
+                mobile: 'https://m.userzoom.com/m/MSBDMTBTMjMw',
+                tablet: 'https://m.userzoom.com/m/MSBDMTBTMjMw',
                 desktop: 'https://s.userzoom.com/m/MSBDMTBTMjI5',
                 wide: 'https://s.userzoom.com/m/MSBDMTBTMjI5'
             };
