@@ -560,14 +560,6 @@ $block-height: 71px;
     padding: 0;
 }
 
-.saved-contents .fc-save-for-later {
-    color: inherit;
-
-    &:after {
-        content: 'remove';
-    }
-}
-
 .fc-item--has-cutout .fc-item__media-wrapper {
     // We never want to show the media and the cutout at the same time, hence the important
     display: none !important;

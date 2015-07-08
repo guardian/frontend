@@ -4,19 +4,20 @@
 
 <aside class="fc-item__meta js-item__meta">
     @if(conf.Switches.ABSaveForLaterSwitch.isSwitchedOn) {
-        <button class="js-save-for-later-link fc-save-for-later u-faux-block-link__promote @if(!item.isSavedForLater) { is-hidden }"
-                type="button"
-                data-link-name="Delete"
-                name="deleteArticle"
-                type="submit"
-                @item.shortUrl.map { url => value="@url" }>
-
-            @if(item.isSavedForLater) {
-                @fragments.inlineSvg("cross", "icon")
-            } else {
-                @fragments.inlineSvg("bookmark", "icon", List("inline-tone-fill"))
-            }
-        </button>
+        @if(item.isSavedForLater) {
+            <button class="button button--secondary button--medium saved-content__button js-saved-content__button"
+                    type="button"
+                    data-link-name="Delete"
+                    name="deleteArticle"
+                    type="submit"
+                    @item.shortUrl.map { url => value="@url" }>
+            @fragments.inlineSvg("cross", "icon") Remove
+            </button>
+        } else {
+            <button class="js-save-for-later-link fc-save-for-later u-faux-block-link__promote  is-hidden">
+            @fragments.inlineSvg("bookmark", "icon", List("inline-tone-fill"))
+            </button>
+        }
     }
 
     @for(publishedAt <- item.webPublicationDate; timeStampDisplay <- item.timeStampDisplay) {
