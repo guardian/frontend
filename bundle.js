@@ -59,7 +59,8 @@ var createBundle = function (bundleConfig) {
     var outName = bundleConfig[1];
     return builder.build(moduleExpression, null, {
             minify: true,
-            sourceMaps: true })
+            sourceMaps: true,
+            sourceMapContents: true })
         // Attach URI
         .then(function (output) {
             var hash = getHash(output.source);
