@@ -1,12 +1,14 @@
 define([
         'common/utils/detect',
         'common/utils/template',
-        'common/modules/ui/message'
+        'common/modules/ui/message',
+        'text!common/views/viewability-feedback.html'
     ],
     function (
         detect,
         template,
-        Message
+        Message,
+        viewabilityFeedbackTemplate
     ) {
         return function () {
         this.id = 'Viewability';
@@ -26,23 +28,10 @@ define([
         };
 
         var showMessage = function (panelLinks) {
-            var templateStr =
-                '<div class="site-message__message" id="site-message__message">' +
-                '<%=messageTextHeader%>' +
-                '<p class="site-message__description"><%=messageText%></p>' +
-                '</div>' +
-                '<ul class="site-message__actions u-unstyled">' +
-                '<li class="site-message__actions__item">' +
-                '<i class="i i-arrow-white-right"></i>' +
-                '<a href="<%=panelLink%>" target="_blank" data-link-name="read more"><%=linkText%></a>' +
-                '</li>' +
-                '</ul>';
-
-
             new Message('save-for-later', {
                 pinOnHide: false
             }).show(template(
-                    templateStr,
+                    viewabilityFeedbackTemplate,
                     {
                         panelLink: panelLinks[detect.getBreakpoint()],
                         messageTextHeader: 'Tell us about your experience using the Guardian site',
