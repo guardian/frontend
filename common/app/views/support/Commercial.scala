@@ -15,9 +15,9 @@ object Commercial {
         "desktop" -> {
           if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isUKNetworkFront(metaData)) {
             if (TopAboveNavAdSlot728x90Switch.isSwitchedOn) {
-              Seq("1,1", "728,90")
+              Seq("728,90")
             } else if (TopAboveNavAdSlot88x70Switch.isSwitchedOn) {
-              Seq("1,1", "88,70")
+              Seq("88,70")
             } else {
               Seq("1,1", "900,250", "970,250")
             }
@@ -35,11 +35,12 @@ object Commercial {
         "top-banner-ad-container--above-nav")
 
       val sizeSpecificClass = {
-        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn &&
-          isUKNetworkFront(metaData) &&
-          TopAboveNavAdSlot728x90Switch.isSwitchedOff &&
-          TopAboveNavAdSlot88x70Switch.isSwitchedOff) {
-          "top-banner-ad-container--large"
+        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isUKNetworkFront(metaData)) {
+          if (TopAboveNavAdSlot728x90Switch.isSwitchedOn) {
+            "top-banner-ad-container--medium"
+          } else {
+            "top-banner-ad-container--large"
+          }
         } else {
           "top-banner-ad-container--reveal"
         }
