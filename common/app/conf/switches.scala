@@ -581,7 +581,7 @@ object Switches {
 
   val TopAboveNavAdSlot728x90Switch = Switch(
     "Commercial",
-    "top-above-nav-728-90",
+    "fixed-top-above-nav-728-90",
     "Expect a 728 x 90 ad in top-above-nav slot on UK network front.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 7, 22),
@@ -590,17 +590,17 @@ object Switches {
 
   val TopAboveNavAdSlot88x70Switch = Switch(
     "Commercial",
-    "top-above-nav-88-70",
+    "fixed-top-above-nav-88-70",
     "Expect an 88 x 70 ad in top-above-nav slot on UK network front.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 7, 22),
     exposeClientSide = false
   )
 
-  val TopAboveNavAdSlot1x1Switch = Switch(
+  val TopAboveNavAdSlotOmitSwitch = Switch(
     "Commercial",
-    "top-above-nav-1-1",
-    "Expect a 1x1 ad in top-above-nav slot on UK network front.",
+    "fixed-top-above-nav-omit",
+    "Leave top-above-nav ad slot out of page on UK network front.",
     safeState = Off,
     sellByDate = new LocalDate(2015, 7, 22),
     exposeClientSide = false
