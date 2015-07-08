@@ -1,0 +1,10 @@
+@if ($svg-support) {
+    %svg-i-arrow-white-right,
+    .svg-i-arrow-white-right {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTIyLjggMTQuNkwxNS4yIDdsLS43LjcgNS41IDYuNkg2djEuNWgxNGwtNS41IDYuNi43LjcgNy42LTcuNnYtLjkiLz48L3N2Zz4=);
+        background-position: 0 0;
+    }
+    .svg .i-arrow-white-right {
+        @extend %svg-i-arrow-white-right !optional;
+    }
+}

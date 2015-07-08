@@ -79,11 +79,14 @@
         @include mq(wide) {
             margin: 0;
         }
-    }
-    iframe {
-        transform: translateZ(0);
-        transition: height 1s cubic-bezier(0, 0, 0, .985);
-    }
+    } 
+}
+.top-banner-ad-container--large {
+    min-height: ($gs-row-height * 7) + 34;
+}
+.top-banner-ad-container--reveal iframe {
+    transform: translateZ(0);
+    transition: height 1s cubic-bezier(0, 0, 0, .985);
 }
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {

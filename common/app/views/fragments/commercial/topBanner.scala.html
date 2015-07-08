@@ -1,10 +1,10 @@
 @(metaData: model.MetaData)
-@import views.support.Commercial
+@import views.support.Commercial.topAboveNavSlot
 
-<div class="top-banner-ad-container top-banner-ad-container--desktop top-banner-ad-container--above-nav">
+<div class="@topAboveNavSlot.cssClasses(metaData)">
     @fragments.commercial.standardAd(
         "top-above-nav",
         Seq("top-banner-ad"),
-        Commercial.topAboveNavAdSizes(metaData)
+        topAboveNavSlot.adSizes(metaData)
     )
 </div>

@@ -3,8 +3,6 @@ package conf
 import common._
 import conf.Configuration.environment
 import org.joda.time._
-import play.api.Play.current
-import play.api.libs.ws.WS
 import play.api.{Application, Plugin}
 
 sealed trait SwitchState
@@ -572,6 +570,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val FixedTopAboveNavAdSlotSwitch = Switch(
+    "Commercial",
+    "fixed-top-above-nav",
+    "Fixes size of top-above-nav ad slot on UK network front.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 22),
+    exposeClientSide = false
+  )
+
   val TopAboveNavAdSlot728x90Switch = Switch(
     "Commercial",
     "top-above-nav-728-90",
@@ -599,6 +606,15 @@ object Switches {
     "Enables the new Ophan tracking javascript",
     safeState = On,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val OmnitureConfidenceNoJsSwitch = Switch(
+    "Monitoring",
+    "enable-omniture-confidence-no-js",
+    "Enables Omniture confidence tracking for no-JS devices",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 1),
     exposeClientSide = true
   )
 
@@ -1270,20 +1286,16 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
 
   def refresh() {
     log.info("Refreshing switches")
-    WS.url(config.switches.configurationUrl).get() foreach { response =>
-      response.status match {
-        case 200 =>
-          val nextState = Properties(response.body)
+    services.S3.get(config.switches.key) map { response =>
 
-          for (switch <- Switches.all) {
-            nextState.get(switch.name) foreach {
-              case "on" => switch.switchOn()
-              case "off" => switch.switchOff()
-              case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
-            }
-          }
+      val nextState = Properties(response)
 
-        case _ => log.warn(s"Could not load switch config ${response.status} ${response.statusText}")
+      for (switch <- Switches.all) {
+        nextState.get(switch.name) foreach {
+          case "on" => switch.switchOn()
+          case "off" => switch.switchOff()
+          case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
+        }
       }
     }
   }
