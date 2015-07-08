@@ -524,13 +524,14 @@ $block-height: 71px;
 .fc-save-for-later {
     // reset button defaults
     border: 0;
+    border-left: 1px solid;
     background-color: transparent;
     padding: 0;
     outline: none;
-
     color: transparent;
     margin-right: 0 - ($gs-gutter * .25);
     padding-right: ($gs-gutter * .25);
+    padding-left: .75em;
     transition: color 100ms;
 
     &:hover,
@@ -554,9 +555,9 @@ $block-height: 71px;
     }
 }
 
-.facia-page .fc-item--is-commentable .fc-save-for-later {
-    border-left: 1px solid colour(neutral-3);
-    padding-left: .75em;
+.facia-page .fc-save-for-later:only-child {
+    border: none;
+    padding: 0;
 }
 
 .saved-contents .fc-save-for-later {
