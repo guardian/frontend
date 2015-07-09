@@ -284,6 +284,8 @@ case class ContentCard(
 
   def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
 
+  def isSavedForLater = cardTypes.allTypes.exists(_.savedForLater)
+
   val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if(displaySettings.isBoosted) "+" else ""}"
 }
 

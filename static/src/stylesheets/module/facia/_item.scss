@@ -491,6 +491,7 @@ $block-height: 71px;
     position: relative;
     float: left;
     margin-bottom: $gs-baseline / 4;
+    margin-right: 1em;
 }
 
 .fc-item__timestamp {
@@ -523,14 +524,19 @@ $block-height: 71px;
 .fc-save-for-later {
     // reset button defaults
     border: 0;
+    border-left: 1px solid;
     background-color: transparent;
     padding: 0;
-
     color: transparent;
-    float: right;
-    margin-right: 0 - ($gs-gutter * .25);
-    padding-right: ($gs-gutter * .25);
+    margin-right: 0 - ($gs-gutter / 4);
+    padding-right: ($gs-gutter / 4);
+    padding-left: $gs-gutter / 4;
     transition: color 100ms;
+
+    @include mq($until: tablet) {
+        border-left: 0;
+        float: right;
+    }
 
     &:hover,
     &:focus,
@@ -539,17 +545,30 @@ $block-height: 71px;
         color: inherit;
     }
 
-    &:before {
+    &:after {
         content: 'save';
-        margin-right: .4em;
     }
 
     .inline-icon {
         float: right;
+        margin-left: $gs-gutter / 4;
+        margin-right: 0;
+
+        @include mq(tablet) {
+            float: left;
+            margin-right: $gs-gutter / 4;
+        }
     }
 
-    &.fc-save-for-later--is-saved:before {
+    &.fc-save-for-later--is-saved:after {
         content: 'saved';
+    }
+}
+
+.facia-page .fc-save-for-later:only-child {
+    @include mq(tablet) {
+        border: 0;
+        padding: 0;
     }
 }
 
