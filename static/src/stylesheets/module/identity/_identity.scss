@@ -515,7 +515,7 @@
     .inline-icon {
         float: left;
         padding-right: .5em;
-        fill: colour(neutral-2);
+        fill: colour(neutral-2) !important;
 
         svg {
             width: 18px;
