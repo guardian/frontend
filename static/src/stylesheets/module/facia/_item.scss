@@ -527,11 +527,10 @@ $block-height: 71px;
     border-left: 1px solid;
     background-color: transparent;
     padding: 0;
-    outline: none;
     color: transparent;
     margin-right: 0 - ($gs-gutter * .25);
     padding-right: ($gs-gutter * .25);
-    padding-left: .75em;
+    padding-left: $gs-gutter / 4;
     transition: color 100ms;
 
     @include mq($until: tablet) {
@@ -552,12 +551,12 @@ $block-height: 71px;
 
     .inline-icon {
         float: right;
-        margin-left: $gs-gutter * .25;
+        margin-left: $gs-gutter / 4;
         margin-right: 0;
 
         @include mq(tablet) {
             float: left;
-            margin-right: .4em;
+            margin-right: $gs-gutter / 4;
         }
     }
 

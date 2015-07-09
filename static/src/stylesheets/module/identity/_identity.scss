@@ -399,7 +399,7 @@
     .fc-item__content,
     .fc-item--has-metadata .fc-item__content {
         @include mq($until: desktop) {
-            padding-bottom: $gs-gutter * 2;
+            padding-bottom: $gs-baseline * 3;
         }
     }
 
@@ -410,7 +410,7 @@
 
         @include mq(desktop) {
             right: 0;
-            top: 8px;
+            top: ($gs-baseline / 3) * 2;
         }
     }
 
