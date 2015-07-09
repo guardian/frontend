@@ -14,7 +14,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/social-most-popular',
-    'common/modules/social/pintrest',
+    'common/modules/social/pinterest',
     'bootstraps/article-liveblog-common',
     'bootstraps/trail'
 ], function (
@@ -32,7 +32,7 @@ define([
     ab,
     geoMostPopular,
     SocialMostPopular,
-    pintrest,
+    pinterest,
     articleLiveblogCommon,
     trail
 ) {
@@ -71,9 +71,9 @@ define([
                 }
             },
 
-            initPintrest: function () {
-                if (ab.shouldRunTest('Pintrest', 'variant')) {
-                    pintrest();
+            initPinterest: function () {
+                if (ab.shouldRunTest('Pintrest', 'variant')) { // The test was misspelt! Keeping it, to not confuse the data.
+                    pinterest();
                 }
             },
 
@@ -97,7 +97,7 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
-            modules.initPintrest();
+            modules.initPinterest();
             modules.initTruncation();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
