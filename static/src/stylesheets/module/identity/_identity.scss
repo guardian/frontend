@@ -391,8 +391,23 @@
         }
 
         @include mq(desktop) {
-            position: absolute;
             top: 0;
+        }
+    }
+
+    .has-flex-wrap & .fc-item--has-cutout .fc-item__content {
+        @include mq(tablet) {
+            max-width: none;
+            flex-basis: 100%;
+        }
+    }
+
+    .fc-item--has-cutout {
+        .fc-item__header,
+        .fc-item__standfirst {
+            @include mq(tablet) {
+                padding-right: 40%;
+            }
         }
     }
 
@@ -411,16 +426,6 @@
         @include mq(desktop) {
             right: 0;
             top: ($gs-baseline / 3) * 2;
-        }
-    }
-
-    .fc-item--has-cutout .saved-content__button {
-        @include mq(tablet) {
-            right: -130px;
-        }
-
-        @include mq(desktop) {
-            right: -188px;
         }
     }
 }
