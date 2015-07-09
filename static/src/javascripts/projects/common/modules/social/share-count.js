@@ -69,7 +69,10 @@ define([
     }
 
     return function () {
-        if ($shareCountEls.length) {
+        // asking for social counts in preview "leaks" upcoming URLs to social sites.
+        // when they then crawl them they get 404s which affects later sharing.
+        // don't call counts in preview
+        if ($shareCountEls.length && !config.page.isPreview) {
             var url = 'http://www.theguardian.com/' + config.page.pageId;
             try {
                 ajax({
