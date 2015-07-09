@@ -534,6 +534,11 @@ $block-height: 71px;
     padding-left: .75em;
     transition: color 100ms;
 
+    @include mq($until: tablet) {
+        border-left: 0;
+        float: right;
+    }
+
     &:hover,
     &:focus,
     &:active {
@@ -546,8 +551,14 @@ $block-height: 71px;
     }
 
     .inline-icon {
-        float: left;
-        margin-right: .4em;
+        float: right;
+        margin-left: $gs-gutter * .25;
+        margin-right: 0;
+
+        @include mq(tablet) {
+            float: left;
+            margin-right: .4em;
+        }
     }
 
     &.fc-save-for-later--is-saved:after {
@@ -556,8 +567,10 @@ $block-height: 71px;
 }
 
 .facia-page .fc-save-for-later:only-child {
-    border: 0;
-    padding: 0;
+    @include mq(tablet) {
+        border: 0;
+        padding: 0;
+    }
 }
 
 .fc-item--has-cutout .fc-item__media-wrapper {
