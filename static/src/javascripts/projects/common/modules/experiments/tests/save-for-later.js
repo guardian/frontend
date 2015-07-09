@@ -27,7 +27,7 @@ define([
     return function () {
         this.id = 'SaveForLater';
         this.start = '2015-04-09';
-        this.expiry = '2015-07-09';
+        this.expiry = '2015-08-09';
         this.author = 'Nathaniel Bennett';
         this.description = 'Internal test of save for later functionality';
         this.audience = 0.2;
