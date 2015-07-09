@@ -10,7 +10,8 @@ define([
     var outbrainUrl = 'http://widgets.outbrain.com/outbrain.js';
 
     function load() {
-        if (config.switches.outbrain) {
+        // outbrain leaks the URL of preview content so we don't show it there.
+        if (config.switches.outbrain && !config.page.isPreview) {
             var widgetIds = {
                 mobile: 'MB_2',
                 tablet: 'MB_1',
