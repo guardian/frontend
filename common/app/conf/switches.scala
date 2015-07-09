@@ -478,71 +478,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  private val appleSellByDate = new LocalDate(2015, 7, 15)
-
-  val AppleAdUkNetworkFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-uk-network-front",
-    "If this switch is on, Apple ads will appear below nav on the UK network front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = false
-  )
-
-  val AppleAdUsNetworkFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-us-network-front",
-    "If this switch is on, Apple ads will appear below nav on the US network front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = true
-  )
-
-  val AppleAdAuNetworkFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-au-network-front",
-    "If this switch is on, Apple ads will appear below nav on the AU network front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = false
-  )
-
-  val AppleAdTechFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-tech-front",
-    "If this switch is on, Apple ads will appear below nav on the tech section front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = false
-  )
-
-  val AppleAdCultureFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-culture-front",
-    "If this switch is on, Apple ads will appear below nav on the culture section front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = false
-  )
-
-  val AppleAdFashionFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-fashion-front",
-    "If this switch is on, Apple ads will appear below nav on the fashion section front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = false)
-
-  val AppleAdTravelFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-travel-front",
-    "If this switch is on, Apple ads will appear below nav on the travel section front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = false
-  )
-
-
   val LazyLoadAds = Switch(
     "Commercial",
     "lz-ads",
@@ -558,15 +493,6 @@ object Switches {
     "Switch for the Adblock Message.",
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val ExposeHasTopBelowNavAdSlotFlagSwitch = Switch(
-    "Commercial",
-    "expose-has-top-below-nav-ad-slot-flag",
-    "If switched on, flag for top below nav will be exposed.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 15),
     exposeClientSide = true
   )
 
