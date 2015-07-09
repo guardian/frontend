@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+    <HEAD>
+        <TITLE>Foresee Survey</TITLE>
+        <meta http-equiv="Content-Type" content= "text/html; charset=utf-8">
+        <link rel="stylesheet" href="foresee-qualifier.css" type="text/css" />
+        <script type="text/javascript" src="foresee-qualifier.js"></script>
+        <script type="text/javascript">
+            function gebid(){
+                if (arguments.length == 1) 
+                    return document.getElementById(arguments[0]);
+                else {
+                    var ids = Array();
+                    for (var i = 0; i < arguments.length; i++) {
+                        ids.push(document.getElementById(argument[i]));
+                    }
+                    return ids;
+                }
+            }
+            
+            function show(id){
+                var d = gebid(id);
+                d.style.display = "block";
+            }
+            
+            function hide(id){
+                var d = gebid(id);
+                d.style.display = "none";
+            }
+            
+            function Q2(q, f){
+                if (q.selectedIndex == 1) {
+                    show('Q3');
+                }
+                else {
+                	hide('Q3');
+                }
+            }
+
+            function qualify(f){
+                if (!validate(f)) {
+                    return false;
+                }
+                if (cancel(f)) {
+                    FSR.cancel();
+                }
+                FSR.qualified();
+                
+                return true;
+            }
+            
+            function cancel(f){
+                if (f.question3.selectedIndex == 2) {
+                    return true;
+                }
+                
+                return false;
+            }
+
+            function validate(f){
+                var val = true;
+                if (!(f.question1[0].checked || f.question1[1].checked)) {
+                    val = false;
+                }
+                if (val) {
+                    if (f.question1[0].checked) {
+                        FSR.CPPS.set('cpp1', 'a11');
+                        FSR.qualify("q11");
+                    }
+                    else {
+                        FSR.CPPS.set('cpp1', 'a12');
+                        FSR.qualify("q12");
+                    }
+                }
+                else {
+                    alert('Please answer all the questions before proceeding!');
+                }
+                return val;
+            }
+        </script>
+    </HEAD>
+    <BODY>
+        <form name="fsrform" style="margin: 0pt;" onsubmit="return false;">
+            <div id="fsrqualifier">
+                <div id="fsrcontainer">
+                    <div class="fsrq_top_ul">
+                        <img class="siteLogo" src="sitelogo.gif" alt="Site Logo">
+                    </div>
+                    <div class="fsrq_top_ur">
+                        <img class="fsrLogo" src="fsrlogo.gif" alt="Site Logo">
+                    </div>
+                </div>
+                <div class="fsrq_body">
+                    Thank you for visiting ABC Company!
+                    <br>
+                    <br>
+                   In order to determine if you are eligible to participate, please answer the questions on this page and click "Continue" at the bottom.
+                    <br>
+                </div>
+                <div id='Q1' style='margin: 15px 0 15px 0; display: block'>
+                    Question 1
+					<br>
+                    <br><input type='radio' name='question1' value='A11'>Answer 1
+                    <br><input type='radio' name='question1' value='A12'>Answer 2 
+                </div>
+                <div id='Q2' style='margin: 15px 0 15px 0; display: block'>
+                    Question 2
+                    <br>
+                    <br>
+                    <select name='question2' onchange='Q2(this, this.form)'>
+                        <option value="">Please Select</option>
+                        <option value="A21">Answer 1</option>
+                        <option value="A22">Answer 2</option>
+                        <option value="A23">Answer 3</option>
+                    </select>
+                </div>
+                <div id='Q3' style='margin: 15px 0 15px 0; display: none'>
+                    Question 3
+                    <br>
+                    <br>
+                    <select name='question3'>
+                        <option value="">Please Select</option>
+                        <option value="A31">Answer 1</option>
+                        <option value="A32">Answer 2</option>
+                        <option value="A33">Answer 3</option>
+                    </select>
+                </div>
+                <div>
+                </div>
+                <div class="fsrq_footer">
+                    <div>
+                        <input type='button' value='Continue' onclick='qualify(this.form);'>
+                        <br>
+                        <br>
+                    </div>
+                    <div>
+                    </div>
+                    Copyright 
+                    <script type="text/javascript">
+                        var today = new Date();
+                        document.write(today.getFullYear());
+                    </script>
+                    - all rights reserved
+                    <br>
+                    <a href="//www.foreseeresults.com" TARGET="_blank">ForeSee</a>
+                    &nbsp;<a href="//www.foreseeresults.com/Privacy.html" TARGET="_blank">Privacy</a>
+                    &nbsp;<a href="//www.foreseeresults.com/ContactUs.html" TARGET="_blank">Technical Support</a>
+                </div>
+            </div>
+            </div>
+        </form>
+    </BODY>
+</HTML>
