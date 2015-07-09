@@ -10,11 +10,9 @@ define([
     function launchOverlay(event) {
         event.preventDefault();
 
-        fastdom.read(function () {
-            $('img:not(.gu-image):not(.responsive-img)').each(function (img) {
-                fastdom.write(function () {
-                    $(img).attr('data-pin-nopin', 'true');
-                });
+        $('img:not(.gu-image):not(.responsive-img)').each(function (img) {
+            fastdom.write(function () {
+                $(img).attr('data-pin-nopin', 'true');
             });
         });
 
@@ -22,14 +20,12 @@ define([
     }
 
     return function () {
-        fastdom.read(function () {
-            $('.social__item--pinterest').each(function (el) {
-                fastdom.write(function () {
-                    $(el).css('display', 'block');
-                });
-
-                bean.on(el, 'click', launchOverlay);
+        $('.social__item--pinterest').each(function (el) {
+            fastdom.write(function () {
+                $(el).css('display', 'block');
             });
+
+            bean.on(el, 'click', launchOverlay);
         });
     };
 });
