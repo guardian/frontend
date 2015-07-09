@@ -69,7 +69,7 @@ define([
     }
 
     return function () {
-        // asking for social counts in preview "leaks" upcoming URLs to social sights.
+        // asking for social counts in preview "leaks" upcoming URLs to social sites.
         // when they then crawl them they get 404s which affects later sharing.
         // don't call counts in preview
         if ($shareCountEls.length && !config.page.isPreview) {
