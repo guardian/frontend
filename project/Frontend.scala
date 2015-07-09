@@ -125,7 +125,8 @@ object Frontend extends Build with Prototypes {
       commonsHttpClient,
       slf4jExt,
       exactTargetClient,
-      nScalaTime
+      nScalaTime,
+      dispatch
     )
   )
 
