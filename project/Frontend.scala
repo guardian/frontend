@@ -140,10 +140,6 @@ object Frontend extends Build with Prototypes {
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
-  val weather = application("weather")
-    .dependsOn(commonWithTests)
-    .aggregate(common)
-
   val dev = application("dev-build")
     .dependsOn(
       withTests(article)
@@ -219,7 +215,6 @@ object Frontend extends Build with Prototypes {
     archive,
     preview,
     trainingPreview,
-    rss,
-    weather
+    rss
   )
 }
