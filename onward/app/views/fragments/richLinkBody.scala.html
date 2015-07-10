@@ -3,7 +3,7 @@
 
 @import com.gu.facia.api.utils.{Comment, DefaultCardstyle, Feature, Media}
 @import views.support.TrailCssClasses.toneClass
-@import views.support.{CardStyleForFrontend, ImgSrc, Item460, RenderClasses}
+@import views.support.{CardStyleForFrontend, Item460, RenderClasses}
 
 @kicker = {
     @if(content.isAnalysis) {
@@ -27,7 +27,7 @@
     <div class="rich-link__container">
         @if(CardStyleForFrontend(content) == Media || CardStyleForFrontend(content) == Feature || CardStyleForFrontend(content) == DefaultCardstyle) {
             @content.trailPicture.map { trailPictureContainer =>
-                @ImgSrc.findSrc(trailPictureContainer, Item460).map { imgSrc =>
+                @Item460.bestFor(trailPictureContainer).map { imgSrc =>
 
                     <div class="rich-link__image-container u-responsive-ratio">
                         <img src="@imgSrc" itemprop="contentURL">
