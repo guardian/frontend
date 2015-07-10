@@ -598,12 +598,12 @@ object Switches {
     exposeClientSide = true
   )
 
-  val MsieAudit = Switch(
-    "Monitoring",
-    "msie-audit",
-    "Enables beacon tracking of MSIE and their ad blockers",
+  val AttachWeatherToTopContainerSwitch = Switch(
+    "Feature",
+    "attach-weather-to-top-container",
+    "Attach weather to top container",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 15),
+    sellByDate = new LocalDate(2015, 6, 30),
     exposeClientSide = true
   )
 
