@@ -3,51 +3,19 @@
 @import conf.Static
 @import conf.Configuration
 
-@modernBrowser()
+<script>
+    (function (isModern, win, doc) {
+        if (!isModern) { return false; }
+        @if(FontSwitch.isSwitchedOn) {
+            @Html(Static.js.loadFonts)
+        }
+    })(guardian.isModernBrowser, window, document);
+</script>
 
 @if(mvt.JspmTest.isParticipating || item.section == "crosswords") {
     @bootSystemJs()
 } else {
     @bootCurl()
-}
-
-@modernBrowser() = {
-    <script>
-        (function(isModern) {
-
-            if (!isModern) { return false; }
-
-            @* Duplicated in /static/src/javascripts/projects/common/utils/detect.js *@
-            // Determine what type of font-hinting we want.
-            var fontHinting = function () {
-                var ua = navigator.userAgent,
-                    windowsNT = /Windows NT (\d\.\d+)/.exec(ua),
-                    hinting = 'Off',
-                    version;
-
-                if (windowsNT) {
-                    var version = parseFloat(windowsNT[1], 10);
-                    // For Windows XP-7
-                    if (version >= 5.1 && version <= 6.1) {
-                        if (/Chrome/.exec(ua) && version < 6.0) {
-                            // Chrome on windows XP wants auto-hinting
-                            hinting = 'Auto';
-                        } else {
-                            // All others use cleartype
-                            hinting = 'Cleartype';
-                        }
-                    };
-                }
-                return hinting;
-            }();
-
-            @if(FontSwitch.isSwitchedOn) {
-                @Html(Static.js.loadFonts)
-            }
-
-        })(guardian.isModernBrowser);
-
-    </script>
 }
 
 @bootCurl() = {
