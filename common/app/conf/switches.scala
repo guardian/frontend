@@ -256,9 +256,9 @@ object Switches {
   // Commercial
   val OphanViewIdSwitch = Switch("Commercial",
     "ophan-view-id",
-    "Depeneding on ophan to pass view ID to the gdf targeting",
+    "Depending on ophan to pass view ID to the gpt targeting",
     safeState = On,
-    sellByDate = new LocalDate(2015, 7, 14),
+    sellByDate = new LocalDate(2015, 8, 5),
     exposeClientSide = true
   )
 
@@ -285,7 +285,7 @@ object Switches {
     "commercial-extra-ads",
     "If this switch is ON, extra ads are served on article pages",
     safeState = On,
-    sellByDate = new LocalDate(2015, 7, 15),
+    sellByDate = new LocalDate(2015, 8, 5),
     exposeClientSide = true
   )
 
@@ -1203,7 +1203,7 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
 
   def refresh() {
     log.info("Refreshing switches")
-    services.S3.get(config.switches.key) map { response =>
+    services.S3.get(config.switches.key) foreach { response =>
 
       val nextState = Properties(response)
 
