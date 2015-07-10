@@ -89,19 +89,14 @@ object RefreshFrontsJob extends Logging {
 
   //This is used by a route in admin to push ALL paths to the facia-press SQS queue.
   //The facia-press boxes will start to pick these off one by one, so there is no direct overloading of these boxes
-  def runAll(): Unit = {
-    if (Configuration.aws.frontPressSns.exists(_.nonEmpty)) {
+  def runAll(): Option[List[_]] = {
+    Configuration.aws.frontPressSns.map(Function.const {
       log.info("Putting press jobs on Facia Cron (MANUAL REQUEST)")
 
-      for {
-        updates <- getAllCronUpdates
-        update <- updates
-      } {
+      for {updates <- getAllCronUpdates
+           update <- updates}
+        yield {
         log.info(s"Pressing $update")
-        FrontPressNotification.sendWithoutSubject(update.path)
-      }
-    } else {
-      log.info("Not pressing jobs to Facia cron - is either turned off or no queue is set")
-    }
+        FrontPressNotification.sendWithoutSubject(update.path)}})
   }
 }
