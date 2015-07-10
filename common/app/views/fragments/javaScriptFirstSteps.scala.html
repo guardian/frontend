@@ -70,14 +70,14 @@
         // WRITEs
         if(baseFontSize && parseInt(baseFontSize, 10) !== 16) {documentElement.style.fontSize = baseFontSize}
         documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
-
-        @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
-        @* also delete iPhoneConfidenceCheck inside of facia.js *@
-        @if(IphoneConfidence.isSwitchedOn && Seq("uk", "us", "au").contains(item.id)) {
-            // Perf beacons
-            @Html(Static.js.cloudwatchBeacons)
-        }
     })(document.documentElement, window, navigator);
+
+    @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
+    @* also delete iPhoneConfidenceCheck inside of facia.js *@
+    @if(IphoneConfidence.isSwitchedOn && Seq("uk", "us", "au").contains(item.id)) {
+        // Perf beacons
+        @Html(Static.js.cloudwatchBeacons)
+    }
 
     @* must always be set before the Omniture file is parsed *@
     window.s_account = "@OmnitureAnalyticsAccount(item)"; //omniture
