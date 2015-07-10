@@ -269,7 +269,7 @@
 
 @membershipAccess() = {
     @for(membershipAccess <- item.membershipAccess if item.requiresMembershipAccess) {
-        (function(isModern, membershipUrl, membershipAccess, win) {
+        (function(isModern, membershipUrl, membershipAccess, window) {
             @Html(Static.js.membership)
         }(guardian.isModernBrowser, "@Configuration.id.membershipUrl", "@membershipAccess", window));
     }
