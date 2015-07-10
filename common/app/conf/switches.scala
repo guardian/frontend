@@ -598,15 +598,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val MsieAudit = Switch(
-    "Monitoring",
-    "msie-audit",
-    "Enables beacon tracking of MSIE and their ad blockers",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 15),
-    exposeClientSide = true
-  )
-
   // Features
   val ArticleTruncation = Switch(
     "Feature",
