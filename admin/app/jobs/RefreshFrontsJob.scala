@@ -18,7 +18,7 @@ object HighFrequency extends FrontType {
 case class CronUpdate(path: String, frontType: FrontType)
 
 object RefreshFrontsJob extends Logging {
-  def getCronUpdates: Option[Seq[CronUpdate]] = {
+  def getAllCronUpdates: Option[Seq[CronUpdate]] = {
     val masterConfigJson: Option[JsValue] = S3FrontsApi.getMasterConfig.map(Json.parse)
     for (json <- masterConfigJson)
       yield
@@ -44,7 +44,7 @@ object RefreshFrontsJob extends Logging {
       log.info("Putting press jobs on Facia Cron (High Frequency)")
 
       for {
-        updates <- getCronUpdates
+        updates <- getAllCronUpdates
         update <- updates.filter(_.frontType == HighFrequency)
       } {
         log.info(s"Pressing $update")
@@ -60,7 +60,7 @@ object RefreshFrontsJob extends Logging {
       log.info("Putting press jobs on Facia Cron (Standard Frequency)")
 
       for {
-        updates <- getCronUpdates
+        updates <- getAllCronUpdates
         update <- updates.filter(_.frontType == StandardFrequency)
       } {
         log.info(s"Pressing $update")
@@ -76,7 +76,7 @@ object RefreshFrontsJob extends Logging {
       log.info("Putting press jobs on Facia Cron (Commercial Frequency)")
 
       for {
-        updates <- getCronUpdates
+        updates <- getAllCronUpdates
         update <- updates.filter(_.frontType == LowFrequency)
       } {
         log.info(s"Pressing $update")
