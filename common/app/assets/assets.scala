@@ -141,6 +141,10 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
      val loadFonts: String = inlineJs("assets/loadFonts.js")
      val polyfills: String = inlineJs("assets/polyfills.js")
+     val isOlderDevice: String = inlineJs("assets/isOlderDevice.js")
+     val featureDetection: String = inlineJs("assets/featureDetection.js")
+     val cloudwatchBeacons: String = inlineJs("assets/cloudwatchBeacons.js")
+
      lazy val systemJsSetupFragment: String = templates.js.systemJsSetup().body
   }
 }
