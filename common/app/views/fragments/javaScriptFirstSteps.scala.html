@@ -42,41 +42,42 @@
         config: @fragments.javaScriptConfig(item)
     };
 
-    // feature detection
-    var doc = document.documentElement,
-        docClass = doc.className;
+    (function (doc, win) {
+        // feature detection
+        var docClass = doc.className;
 
-    @Html(Static.js.featureDetection)
+        @Html(Static.js.featureDetection)
 
-    @if(IPadNothrasherSwitch.isSwitchedOn) {
-        if (navigator.platform === 'iPad') {
-            docClass += ' ipad-no-thrashers';
+        @if(IPadNothrasherSwitch.isSwitchedOn) {
+            if (navigator.platform === 'iPad') {
+                docClass += ' ipad-no-thrashers';
+            }
         }
-    }
 
-    @if(FontKerningSwitch.isSwitchedOn) {
-        if (window.location.hash !== '#no-kern') {docClass += ' should-kern'}
-    } else {
-        if (window.location.hash === '#kern') {docClass += ' should-kern'}
-    }
+        @if(FontKerningSwitch.isSwitchedOn) {
+            if (win.location.hash !== '#no-kern') {docClass += ' should-kern'}
+        } else {
+            if (win.location.hash === '#kern') {docClass += ' should-kern'}
+        }
 
-    @* *** MINIMISE DOM THRASHING… *@
+        @* *** MINIMISE DOM THRASHING… *@
 
-    // READs
-    @* rems are calculated in the CSS assuming a 16px baseline. if the user has changed theirs, account for it. *@
-    var baseFontSize = null;
-    if('getComputedStyle' in window) {baseFontSize = window.getComputedStyle(doc).getPropertyValue("font-size")}
+        // READs
+        @* rems are calculated in the CSS assuming a 16px baseline. if the user has changed theirs, account for it. *@
+        var baseFontSize = null;
+        if('getComputedStyle' in win) {baseFontSize = win.getComputedStyle(doc).getPropertyValue("font-size")}
 
-    // WRITEs
-    if(baseFontSize && parseInt(baseFontSize, 10) !== 16) {doc.style.fontSize = baseFontSize}
-    doc.className = docClass.replace(/\bjs-off\b/g, 'js-on');
+        // WRITEs
+        if(baseFontSize && parseInt(baseFontSize, 10) !== 16) {doc.style.fontSize = baseFontSize}
+        doc.className = docClass.replace(/\bjs-off\b/g, 'js-on');
 
-    @* must always be set before the Omniture file is parsed *@
-    window.s_account = "@OmnitureAnalyticsAccount(item)"; //omniture
+        @* must always be set before the Omniture file is parsed *@
+        win.s_account = "@OmnitureAnalyticsAccount(item)"; //omniture
 
-    @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
-    @* also delete iPhoneConfidenceCheck inside of facia.js *@
-    @if(IphoneConfidence.isSwitchedOn && Seq("uk", "us", "au").contains(item.id)) {
-        @Html(Static.js.cloudwatchBeacons)
-    }
+        @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
+        @* also delete iPhoneConfidenceCheck inside of facia.js *@
+        @if(IphoneConfidence.isSwitchedOn && Seq("uk", "us", "au").contains(item.id)) {
+            @Html(Static.js.cloudwatchBeacons)
+        }
+    })(document.documentElement, window);
 </script>
