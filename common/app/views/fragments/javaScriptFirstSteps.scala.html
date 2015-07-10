@@ -43,7 +43,8 @@
     };
 
     // feature detection
-    var docClass = document.documentElement.className;
+    var doc = document.documentElement,
+        docClass = doc.className;
 
     @Html(Static.js.featureDetection)
 
@@ -64,11 +65,11 @@
     // READs
     @* rems are calculated in the CSS assuming a 16px baseline. if the user has changed theirs, account for it. *@
     var baseFontSize = null;
-    if('getComputedStyle' in window) {baseFontSize = window.getComputedStyle(doc.documentElement).getPropertyValue("font-size")}
+    if('getComputedStyle' in window) {baseFontSize = window.getComputedStyle(doc).getPropertyValue("font-size")}
 
     // WRITEs
-    if(baseFontSize && parseInt(baseFontSize, 10) !== 16) {doc.documentElement.style.fontSize = baseFontSize}
-    doc.documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
+    if(baseFontSize && parseInt(baseFontSize, 10) !== 16) {doc.style.fontSize = baseFontSize}
+    doc.className = docClass.replace(/\bjs-off\b/g, 'js-on');
 
     @* must always be set before the Omniture file is parsed *@
     window.s_account = "@OmnitureAnalyticsAccount(item)"; //omniture
