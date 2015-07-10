@@ -6,10 +6,10 @@
 //
 // olderIPadOnFront is set in the scala
 
-var isOlderDevice = (function() {
+var isOlderDevice = (function (navigator) {
     if (navigator.platform === 'iPhone' || navigator.platform === 'iPad' || navigator.platform === 'iPod') {
         // I'm intentionally being a bit over zealous in the detection department here
         return /.*(iPhone|iPad; CPU) OS ([3456])_\d+.*/.test(navigator.userAgent) || olderIPadOnFront;
     }
     return false;
-})();
+})(navigator);

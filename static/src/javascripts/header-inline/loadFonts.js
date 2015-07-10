@@ -26,15 +26,15 @@ var fontHinting = function () {
 var cookieData = 'GU_fonts=off; domain=' + location.hostname + '; path=/';
 
 function disableFonts() {
-    doc.cookie = cookieData + '; max-age=' + (60 * 60 * 24 * 365);
+    document.cookie = cookieData + '; max-age=' + (60 * 60 * 24 * 365);
 }
 
 function enableFonts() {
-    doc.cookie = cookieData + '; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    document.cookie = cookieData + '; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 }
 
 function fontsEnabled() {
-    return doc.cookie.indexOf('GU_fonts=off') === -1;
+    return document.cookie.indexOf('GU_fonts=off') === -1;
 }
 
 // Load fonts from `localStorage`.
@@ -43,7 +43,7 @@ function loadFontsFromStorage() {
     fonts, fontFormat, font;
 
     if (storedFontFormat) {
-        fonts = doc.querySelectorAll('.webfont');
+        fonts = document.querySelectorAll('.webfont');
         fontFormat = JSON.parse(storedFontFormat).value;
 
         for (var i = 0, j = fonts.length; i < j; ++i) {
@@ -62,16 +62,16 @@ function loadFontsFromStorage() {
 
 // Load fonts by injecting a `link` element.
 function loadFontsAsynchronously() {
-    var scripts = doc.getElementsByTagName('script'),
+    var scripts = document.getElementsByTagName('script'),
     thisScript = scripts[scripts.length - 1],
-    fonts = doc.createElement('link');
+    fonts = document.createElement('link');
 
     fonts.rel = 'stylesheet';
     fonts.className = 'webfonts';
 
     // show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE
-    fonts.href = win.guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
-    win.setTimeout(function () {
+    fonts.href = window.guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
+    window.setTimeout(function () {
         thisScript.parentNode.insertBefore(fonts, thisScript);
     }, 0);
 }
@@ -88,25 +88,25 @@ function fontSmoothingEnabled() {
 
     // If we've already run this test, return the result.
     // This can be force-overidden using a '#check-smoothing' hash fragment.
-    if (doc.cookie.indexOf('GU_fonts_smoothing') !== -1 && win.location.hash !== '#check-smoothing') {
-        return doc.cookie.indexOf('GU_fonts_smoothing=on') !== -1;
+    if (document.cookie.indexOf('GU_fonts_smoothing') !== -1 && window.location.hash !== '#check-smoothing') {
+        return document.cookie.indexOf('GU_fonts_smoothing=on') !== -1;
     }
 
     // Internal function to store font-smoothing state for 30 days
     function saveFontSmoothing(state) {
         state = state ? 'on' : 'off';
-        doc.cookie = 'GU_fonts_smoothing= ' + state + '; domain=' + location.hostname + '; path=/; max-age=' + (60 * 60 * 24 * 30);
+        document.cookie = 'GU_fonts_smoothing= ' + state + '; domain=' + location.hostname + '; path=/; max-age=' + (60 * 60 * 24 * 30);
     }
 
     // If Windows desktop and not IE…
     if (/Windows NT (\d\.\d+)/.exec(ua) && !/MSIE|Trident/.exec(ua)) {
         try {
             // Create a 35x35 Canvas block.
-            canvasNode = doc.createElement('canvas');
+            canvasNode = document.createElement('canvas');
             canvasNode.width = '35';
             canvasNode.height = '35';
             canvasNode.style.display = 'none';
-            doc.documentElement.appendChild(canvasNode);
+            document.documentElement.appendChild(canvasNode);
 
             // Draw a black '@', in 32px Arial, onto it.
             ctx = canvasNode.getContext('2d');
@@ -152,9 +152,9 @@ function fontSmoothingEnabled() {
 }
 
 // Make it possible to toggle fonts with `#fonts-off/on`.
-if (win.location.hash === '#fonts-off') {
+if (window.location.hash === '#fonts-off') {
     disableFonts();
-} else if (win.location.hash === '#fonts-on' || win.location.hash === '#check-smoothing') {
+} else if (window.location.hash === '#fonts-on' || window.location.hash === '#check-smoothing') {
     enableFonts();
 }
 

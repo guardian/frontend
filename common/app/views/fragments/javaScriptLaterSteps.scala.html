@@ -4,7 +4,7 @@
 @import conf.Configuration
 
 <script>
-    (function (isModern, win, doc) {
+    (function (isModern, window, document) {
         if (!isModern) { return false; }
         @if(FontSwitch.isSwitchedOn) {
             @Html(Static.js.loadFonts)
