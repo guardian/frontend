@@ -205,7 +205,7 @@ object FaciaCard {
     } yield kickerText contains byline) getOrElse false
 
     ContentCard(
-      Option(faciaContent.id),
+      faciaContent.maybeContentId.orElse(Option(faciaContent.id)),
       faciaContent.headline,
       FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
       getByline(faciaContent).filterNot(Function.const(suppressByline)),
@@ -283,6 +283,8 @@ case class ContentCard(
   def mediaWidthsByBreakpoint = FaciaWidths.mediaFromItemClasses(cardTypes)
 
   def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
+
+  def isSavedForLater = cardTypes.allTypes.exists(_.savedForLater)
 
   val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if(displaySettings.isBoosted) "+" else ""}"
 }

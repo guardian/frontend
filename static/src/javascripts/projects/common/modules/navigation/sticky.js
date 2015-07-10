@@ -36,6 +36,7 @@ define([
         this.isMobile = _.contains(this.breakpoint, 'mobile');
         this.isTablet = _.contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
+        this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
     }
 
     StickyHeader.prototype.init = function () {
@@ -151,7 +152,7 @@ define([
                 if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-down-mobile').addClass('animate-up-mobile');
                 } else {
-                    if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                    if (this.isSensitivePage) {
                         this.$els.navigation.css('display', 'block');
                     } else {
                         this.$els.navigation.removeClass('animate-down-desktop').addClass('animate-up-desktop');
@@ -173,7 +174,7 @@ define([
                 if (this.isTablet || this.isMobile) {
                     this.$els.navigation.removeClass('animate-up-mobile').addClass('animate-down-mobile');
                 } else {
-                    if (config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts) {
+                    if (this.isSensitivePage) {
                         this.$els.navigation.css('display', 'none');
                     } else {
                         this.$els.navigation.removeClass('animate-up-desktop').addClass('animate-down-desktop');
@@ -193,8 +194,12 @@ define([
 
     StickyHeader.prototype.updatePosition = function () {
         fastdom.read(function () {
-            var bannerHeight = this.$els.bannerDesktop.dim().height || 128,
-                scrollY      = this.$els.window.scrollTop();
+            var bannerHeight = 0,
+                scrollY = this.$els.window.scrollTop();
+
+            if (!this.isSensitivePage) {
+                bannerHeight = this.$els.bannerDesktop.dim().height || 128;
+            }
 
             this.setScrollDirection(scrollY);
 
@@ -210,7 +215,8 @@ define([
                         'margin-top': 0,
                         '-webkit-transform': 'translateY(-100%)',
                         '-ms-transform': 'translateY(-100%)',
-                        'transform': 'translateY(-100%)'
+                        'transform': 'translateY(-100%)',
+                        'backface-visibility': 'hidden'
                     });
 
                     // Make sure banner is outside of the view
@@ -279,7 +285,8 @@ define([
                         position:  'fixed',
                         top:       0,
                         width:     '100%',
-                        'z-index': '999'
+                        'z-index': '999',
+                        'backface-visibility': 'hidden'
                     });
                     // Header is not slim yet
                     this.$els.header.removeClass('l-header--is-slim');
@@ -295,10 +302,19 @@ define([
                     });
 
                     this.$els.main.css('margin-top', 0);
+                    if (this.isSensitivePage) {
+                        this.$els.navigation.css('display', 'block');
+                    }
                 }.bind(this));
 
                 // Put navigation to its default state
                 this.setNavigationDefault();
+            }
+
+            if ($('.gssb_c').length > 0) {
+                fastdom.write(function () {
+                    $('.gssb_c').hide();
+                });
             }
         }.bind(this));
     };
@@ -321,7 +337,8 @@ define([
                         'margin-top': 0,
                         '-webkit-transform': 'translateY(-100%)',
                         '-ms-transform': 'translateY(-100%)',
-                        'transform': 'translateY(-100%)'
+                        'transform': 'translateY(-100%)',
+                        'backface-visibility': 'hidden'
                     });
 
                     // Make sure banner is outside of the view
@@ -367,13 +384,15 @@ define([
                 top: headerTop,
                 width: '100%',
                 'z-index': '1001',
-                'margin-top': 0
+                'margin-top': 0,
+                'backface-visibility': 'hidden'
             });
             this.$els.bannerMobile.css({
                 position: 'fixed',
                 top: this.headerBigHeight + headerTop,
                 width: '100%',
-                'z-index': '999' // Sticky z-index -1 as it should be sticky but should go below the sticky header
+                'z-index': '999', // Sticky z-index -1 as it should be sticky but should go below the sticky header,
+                'backface-visibility': 'hidden'
             });
             this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
         }.bind(this));

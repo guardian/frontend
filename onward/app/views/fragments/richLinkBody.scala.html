@@ -1,11 +1,9 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
-@import views.support.Item460
+
+@import com.gu.facia.api.utils.{Comment, DefaultCardstyle, Feature, Media}
 @import views.support.TrailCssClasses.toneClass
-@import model.Tag
-@import views.support.RenderClasses
-@import views.support.CardStyleForFrontend
-@import com.gu.facia.api.utils.{Feature, DefaultCardstyle, Comment}
+@import views.support.{CardStyleForFrontend, Item460, RenderClasses}
 
 @kicker = {
     @if(content.isAnalysis) {
@@ -27,7 +25,7 @@
     ))">
 
     <div class="rich-link__container">
-        @if(content.isGallery || content.isVideo || CardStyleForFrontend(content) == Feature || CardStyleForFrontend(content) == DefaultCardstyle) {
+        @if(CardStyleForFrontend(content) == Media || CardStyleForFrontend(content) == Feature || CardStyleForFrontend(content) == DefaultCardstyle) {
             @content.trailPicture.map { trailPictureContainer =>
                 @Item460.bestFor(trailPictureContainer).map { imgSrc =>
 
