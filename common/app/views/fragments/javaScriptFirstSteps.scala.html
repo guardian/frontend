@@ -14,7 +14,9 @@
 
 <script id="gu">
     // define polyfills
-    (function (json2Src) {@Html(Static.js.polyfills)})('@Static('javascripts/components/JSON-js/json2.js')')
+    (function (json2Src) {
+        @Html(Static.js.polyfills)
+    })("@Static("javascripts/components/JSON-js/json2.js")")
 
     // guess whether the device is too old, regardless of whether it cuts the mustard
     @* NOTE - this is NOT what we want to be doing long term. It is a stopgap measure only *@
