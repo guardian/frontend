@@ -318,7 +318,7 @@ object Front extends implicits.Collections {
           * matter what occurred further up the page.
           */
         dynamicContainer.containerDefinitionFor(
-          faciaContentList.collect({ case content: CuratedContent => content }).map(Story.fromFaciaContent)
+          faciaContentList.map(Story.fromFaciaContent)
         ) map { containerDefinition =>
           (seen ++ faciaContentList
             .map(_.url)
