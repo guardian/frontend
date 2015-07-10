@@ -997,7 +997,7 @@ object Switches {
     "ab-membership-message",
     "Switch for the Membership message A/B test.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 14),
+    sellByDate = new LocalDate(2015, 8, 20),
     exposeClientSide = true
   )
 
