@@ -14,10 +14,10 @@
 
 <script id="gu">
     // define polyfills
-    @Html(Static.js.polyfills)
+    (function (json2Src) {@Html(Static.js.polyfills)})('@Static('javascripts/components/JSON-js/json2.js')')
 
-    @* NOTE - this is NOT what we want to be doing long term. It is a stopgap measure only *@
     // guess whether the device is too old, regardless of whether it cuts the mustard
+    @* NOTE - this is NOT what we want to be doing long term. It is a stopgap measure only *@
     var olderIPadOnFront = @SplitOlderIPadsSwitch.isSwitchedOn && @item.isFront && window.devicePixelRatio === 1;
 
     @Html(Static.js.isOlderDevice)

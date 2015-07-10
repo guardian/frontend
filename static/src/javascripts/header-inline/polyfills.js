@@ -1,9 +1,12 @@
+/* eslint-disable no-extend-native, new-cap */
+/* global json2Src:false */
+
 if (!Function.prototype.bind) {
     Function.prototype.bind = function (oThis) {
-        if (typeof this !== "function") {
+        if (typeof this !== 'function') {
             // closest thing possible to the ECMAScript 5
             // internal IsCallable function
-            throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+            throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
         }
 
         var aArgs = Array.prototype.slice.call(arguments, 1),
@@ -29,9 +32,9 @@ if (!String.prototype.trim) {
 }
 
 // JSON support needed for raven
-if ("object" !== typeof JSON) {
+if (typeof JSON !== 'object') {
     var s = document.createElement('script'),
     sc = document.getElementsByTagName('script')[0];
-    s.src = '@Static("javascripts/components/JSON-js/json2.js")';
+    s.src = json2Src;
     sc.parentNode.insertBefore(s, sc);
 }

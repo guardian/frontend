@@ -7,7 +7,8 @@ var fontHinting = function () {
         version;
 
     if (windowsNT) {
-        var version = parseFloat(windowsNT[1], 10);
+        version = parseFloat(windowsNT[1], 10);
+
         // For Windows XP-7
         if (version >= 5.1 && version <= 6.1) {
             if (/Chrome/.exec(ua) && version < 6.0) {
@@ -17,7 +18,7 @@ var fontHinting = function () {
                 // All others use cleartype
                 hinting = 'Cleartype';
             }
-        };
+        }
     }
     return hinting;
 }();
@@ -40,16 +41,16 @@ function fontsEnabled() {
 // Load fonts from `localStorage`.
 function loadFontsFromStorage() {
     var storedFontFormat = localStorage['gu.fonts.format'],
-    fonts, fontFormat, font;
+    fonts, fontFormat, font, dataAttrName, nameAndCacheKey, fontData;
 
     if (storedFontFormat) {
         fonts = document.querySelectorAll('.webfont');
         fontFormat = JSON.parse(storedFontFormat).value;
 
         for (var i = 0, j = fonts.length; i < j; ++i) {
-            font = fonts[i],
-            dataAttrName = 'data-cache-file-' + (fontHinting === 'Off' ? '' : 'hinted-' + fontHinting + '-') + fontFormat,
-            nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/),
+            font = fonts[i];
+            dataAttrName = 'data-cache-file-' + (fontHinting === 'Off' ? '' : 'hinted-' + fontHinting + '-') + fontFormat;
+            nameAndCacheKey = font.getAttribute(dataAttrName).match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|tff).json$/);
             fontData = localStorage['gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]];
 
             if (fontData) {

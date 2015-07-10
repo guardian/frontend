@@ -1,3 +1,5 @@
+/* global isModern:false, membershipUrl:false, membershipAccess:false */
+
 /**
  * Membership access
  * Items with either of the following fields require Membership access
@@ -5,7 +7,7 @@
  * - membershipAccess=paid-members-only
  */
 
-(function(isModern, membershipUrl, membershipAccess, win) {
+(function(isModern, membershipUrl, membershipAccess, window) {
     // Authenticating requires CORS and withCredentials. If we don't cut the mustard then pass through.
     if(!isModern) { return; }
 
@@ -16,15 +18,15 @@
 
         var membershipUrl = membershipUrl,
             membershipAccess = membershipAccess,
-            requiresPaidTier = (membershipAccess.indexOf("paid-members-only") !== -1),
+            requiresPaidTier = (membershipAccess.indexOf('paid-members-only') !== -1),
             membershipAuthUrl = membershipUrl + '/choose-tier?membershipAccess=' + membershipAccess;
 
         function redirect() {
-            win.location.href = membershipAuthUrl;
+            window.location.href = membershipAuthUrl;
         }
 
         ajax({
-            url: membershipUrl + "/user/me",
+            url: membershipUrl + '/user/me',
             type: 'json',
             crossOrigin: true,
             withCredentials: true
@@ -34,11 +36,11 @@
             if (canViewContent) {
                 $('body').removeClass('has-membership-access-requirement');
             } else {
-                redirect()
+                redirect();
             }
         }).fail(function() {
             // If the request fails assume non-member
-            redirect()
+            redirect();
         });
     });
-}(isModern, membershipUrl, membershipAccess, win));
+}(isModern, membershipUrl, membershipAccess, window));

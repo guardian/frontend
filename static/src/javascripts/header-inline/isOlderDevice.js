@@ -1,3 +1,5 @@
+/* global olderIPadOnFront:true */
+
 // 'older' iOS normally indicates a device with lower power (they stop being upgradeable at some point).
 // We won't run all javascript on these.
 // For usage stats see http://david-smith.org/iosversionstats/
