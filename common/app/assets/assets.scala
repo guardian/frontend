@@ -144,6 +144,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
      val isOlderDevice: String = inlineJs("assets/isOlderDevice.js")
      val featureDetection: String = inlineJs("assets/featureDetection.js")
      val cloudwatchBeacons: String = inlineJs("assets/cloudwatchBeacons.js")
+     val membership: String = inlineJs("assets/membership.js")
 
      lazy val systemJsSetupFragment: String = templates.js.systemJsSetup().body
   }
