@@ -10,25 +10,16 @@
     <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
 <![endif]-->
 
-@List("GuardianEgyptianWeb", "GuardianTextEgyptianWeb", "GuardianSansWeb", "GuardianTextSansWeb").map { typeface =>
-    <style class="webfont" data-cache-name="@typeface"
-        @List("woff2", "woff", "ttf").map { font =>
-            data-cache-file-@font="@Static(s"fonts/${typeface}.${font}.json")"
-            @List("cleartype", "auto").map { hinting =>
-                data-cache-file-hinted-@hinting-@font="@Static(s"fonts/${typeface}${hinting.capitalize}Hinted.${font}.json")"
-            }
-        }
-    ></style>
-}
+@fragments.fontDefinitions()
 
 <script id="gu">
-
     // define polyfills
     @Html(Static.js.polyfills)
 
     @* NOTE - this is NOT what we want to be doing long term. It is a stopgap measure only *@
     // guess whether the device is too old, regardless of whether it cuts the mustard
     var olderIPadOnFront = @SplitOlderIPadsSwitch.isSwitchedOn && @item.isFront && window.devicePixelRatio === 1;
+
     @Html(Static.js.isOlderDevice)
 
     // config
@@ -53,6 +44,7 @@
 
     // feature detection
     var docClass = document.documentElement.className;
+
     @Html(Static.js.featureDetection)
 
     @if(IPadNothrasherSwitch.isSwitchedOn) {
