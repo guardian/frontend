@@ -129,8 +129,8 @@ define([
                         placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                         player.removeClass('media__container--hidden').addClass('media__container--active');
                         $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
+                        enhanceVideo($('video', player).get(0), true);
                     });
-                    enhanceVideo($('video', player).get(0), true);
                 });
                 fastdom.write(function () {
                     $el.removeClass('media__placeholder--hidden').addClass('media__placeholder--active');
