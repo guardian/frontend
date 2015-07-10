@@ -37,6 +37,7 @@ define([
         this.isTablet = _.contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
         this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
+        this.isProfilePage = config.page.section === 'identity';
     }
 
     StickyHeader.prototype.init = function () {
@@ -74,6 +75,10 @@ define([
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePositionApple();
             }.bind(this), 10));
+        } else if (this.isProfilePage) {
+            //mediator.on('window:scroll', _.throttle(function () {
+                this.updatePositionProfile();
+            //}.bind(this), 10));
         } else {
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePosition();
@@ -317,6 +322,76 @@ define([
                 });
             }
         }.bind(this));
+    };
+
+    StickyHeader.prototype.updatePositionProfile = function () {
+        fastdom.read(function () {
+            var bannerHeight = this.$els.bannerBelowNav.dim().height || 336,
+                scrollY      = this.$els.window.scrollTop();
+
+            //this.setScrollDirection(scrollY);
+            fastdom.write(function () {
+                this.$els.header.css({
+                    position:  'fixed',
+                    top:       0,
+                    width:     '100%',
+                    'z-index': '1000',
+                    'margin-top': 0,
+                    'backface-visibility': 'hidden'
+                });
+            }.bind(this));
+
+        }.bind(this));
+
+            // Header is slim and navigation is shown on the scroll up
+            /*if (scrollY >= bannerHeight * this.config.showHeaderAppleDepth) {
+                fastdom.write(function () {
+                    this.$els.header.css({
+                        position:  'fixed',
+                        top:       0,
+                        width:     '100%',
+                        'z-index': '1000',
+                        'margin-top': 0,
+                        '-webkit-transform': 'translateY(-100%)',
+                        '-ms-transform': 'translateY(-100%)',
+                        'transform': 'translateY(-100%)',
+                        'backface-visibility': 'hidden'
+                    });
+
+                    // Make sure banner is outside of the view
+                    this.$els.bannerBelowNav.css({
+                        position:  'static',
+                        top:       null,
+                        width:     '100%',
+                        'z-index': '999'
+                    });
+                    this.$els.header.addClass('l-header--is-slim');
+                    this.$els.header.css({
+                        '-webkit-transform': 'translateY(0%)',
+                        '-ms-transform': 'translateY(0%)',
+                        'transform': 'translateY(0%)'
+                    });
+                }.bind(this));
+                this.showNavigation(scrollY);
+            } else {
+                fastdom.write(function () {
+                    // Header is not slim yet
+                    this.$els.header.removeClass('l-header--is-slim');
+                    this.$els.header.css({
+                        position:  'static',
+                        width:     '100%',
+                        'margin-top': 0,
+                        '-webkit-transform': 'translateY(0%)',
+                        '-ms-transform': 'translateY(0%)',
+                        'transform': 'translateY(0%)',
+                        'z-index': '998'
+                    });
+                }.bind(this));
+
+                // Put navigation to its default state
+                this.setNavigationDefault();
+            }
+        }.bind(this));*/
     };
 
     StickyHeader.prototype.updatePositionApple = function () {
