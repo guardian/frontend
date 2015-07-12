@@ -3,8 +3,6 @@ package conf
 import common._
 import conf.Configuration.environment
 import org.joda.time._
-import play.api.Play.current
-import play.api.libs.ws.WS
 import play.api.{Application, Plugin}
 
 sealed trait SwitchState
@@ -258,9 +256,9 @@ object Switches {
   // Commercial
   val OphanViewIdSwitch = Switch("Commercial",
     "ophan-view-id",
-    "Depeneding on ophan to pass view ID to the gdf targeting",
+    "Depending on ophan to pass view ID to the gpt targeting",
     safeState = On,
-    sellByDate = new LocalDate(2015, 7, 14),
+    sellByDate = new LocalDate(2015, 8, 5),
     exposeClientSide = true
   )
 
@@ -287,7 +285,7 @@ object Switches {
     "commercial-extra-ads",
     "If this switch is ON, extra ads are served on article pages",
     safeState = On,
-    sellByDate = new LocalDate(2015, 7, 15),
+    sellByDate = new LocalDate(2015, 8, 5),
     exposeClientSide = true
   )
 
@@ -480,71 +478,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  private val appleSellByDate = new LocalDate(2015, 7, 15)
-
-  val AppleAdUkNetworkFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-uk-network-front",
-    "If this switch is on, Apple ads will appear below nav on the UK network front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = false
-  )
-
-  val AppleAdUsNetworkFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-us-network-front",
-    "If this switch is on, Apple ads will appear below nav on the US network front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = true
-  )
-
-  val AppleAdAuNetworkFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-au-network-front",
-    "If this switch is on, Apple ads will appear below nav on the AU network front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = false
-  )
-
-  val AppleAdTechFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-tech-front",
-    "If this switch is on, Apple ads will appear below nav on the tech section front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = false
-  )
-
-  val AppleAdCultureFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-culture-front",
-    "If this switch is on, Apple ads will appear below nav on the culture section front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = false
-  )
-
-  val AppleAdFashionFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-fashion-front",
-    "If this switch is on, Apple ads will appear below nav on the fashion section front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = false)
-
-  val AppleAdTravelFrontSwitch = Switch(
-    "Commercial",
-    "apple-ads-on-travel-front",
-    "If this switch is on, Apple ads will appear below nav on the travel section front.",
-    safeState = Off,
-    sellByDate = appleSellByDate,
-    exposeClientSide = false
-  )
-
-
   val LazyLoadAds = Switch(
     "Commercial",
     "lz-ads",
@@ -563,13 +496,40 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ExposeHasTopBelowNavAdSlotFlagSwitch = Switch(
+  val FixedTopAboveNavAdSlotSwitch = Switch(
     "Commercial",
-    "expose-has-top-below-nav-ad-slot-flag",
-    "If switched on, flag for top below nav will be exposed.",
+    "fixed-top-above-nav",
+    "Fixes size of top-above-nav ad slot on UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 15),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2015, 7, 22),
+    exposeClientSide = false
+  )
+
+  val TopAboveNavAdSlot728x90Switch = Switch(
+    "Commercial",
+    "fixed-top-above-nav-728-90",
+    "Expect a 728 x 90 ad in top-above-nav slot on UK network front.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 22),
+    exposeClientSide = false
+  )
+
+  val TopAboveNavAdSlot88x70Switch = Switch(
+    "Commercial",
+    "fixed-top-above-nav-88-70",
+    "Expect an 88 x 70 ad in top-above-nav slot on UK network front.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 22),
+    exposeClientSide = false
+  )
+
+  val TopAboveNavAdSlotOmitSwitch = Switch(
+    "Commercial",
+    "fixed-top-above-nav-omit",
+    "Leave top-above-nav ad slot out of page on UK network front.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 22),
+    exposeClientSide = false
   )
 
 
@@ -581,6 +541,15 @@ object Switches {
     "Enables the new Ophan tracking javascript",
     safeState = On,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val OmnitureConfidenceNoJsSwitch = Switch(
+    "Monitoring",
+    "enable-omniture-confidence-no-js",
+    "Enables Omniture confidence tracking for no-JS devices",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 1),
     exposeClientSide = true
   )
 
@@ -629,16 +598,16 @@ object Switches {
     exposeClientSide = true
   )
 
-  val MsieAudit = Switch(
-    "Monitoring",
-    "msie-audit",
-    "Enables beacon tracking of MSIE and their ad blockers",
+  // Features
+  val ArticleTruncation = Switch(
+    "Feature",
+    "ab-article-truncation",
+    "Article truncation",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 15),
+    sellByDate = new LocalDate(2015, 8, 17),
     exposeClientSide = true
   )
 
-  // Features
   val FacebookMostViewed = Switch(
     "Feature",
     "ab-facebook-most-viewed",
@@ -700,15 +669,6 @@ object Switches {
     safeState = Off,
     sellByDate = new LocalDate(2015, 7, 31),
     exposeClientSide = true
-  )
-
-  val ImgixAllImagesSwitch = Switch(
-    "Feature",
-    "imgix-all-images",
-    "If this switch is on, then all images will be served via the third party image resizing service",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 7, 31),
-    exposeClientSide = false
   )
 
   val Hmtl5MediaCompatibilityCheck = Switch(
@@ -1041,6 +1001,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ABPintrest = Switch(
+    "A/B Tests",
+    "ab-pintrest",
+    "Switch for the Pintrest on content pages A/B test.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 16),
+    exposeClientSide = true
+  )
+
   val FootballFeedRecorderSwitch = Switch(
     "Feature",
     "football-feed-recorder",
@@ -1234,20 +1203,16 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
 
   def refresh() {
     log.info("Refreshing switches")
-    WS.url(config.switches.configurationUrl).get() foreach { response =>
-      response.status match {
-        case 200 =>
-          val nextState = Properties(response.body)
+    services.S3.get(config.switches.key) foreach { response =>
 
-          for (switch <- Switches.all) {
-            nextState.get(switch.name) foreach {
-              case "on" => switch.switchOn()
-              case "off" => switch.switchOff()
-              case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
-            }
-          }
+      val nextState = Properties(response)
 
-        case _ => log.warn(s"Could not load switch config ${response.status} ${response.statusText}")
+      for (switch <- Switches.all) {
+        nextState.get(switch.name) foreach {
+          case "on" => switch.switchOn()
+          case "off" => switch.switchOff()
+          case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
+        }
       }
     }
   }

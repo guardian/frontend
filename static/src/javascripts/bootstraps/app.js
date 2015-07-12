@@ -88,8 +88,11 @@ define([
             }
 
             if (config.page.contentType === 'ImageContent') {
-                require(['bootstraps/image-content'], function (imageContent) {
+                require(['bootstraps/image-content', 'bootstraps/trail'], function (imageContent, trail) {
                     bootstrapContext('image-content', imageContent);
+                    bootstrapContext('image-content : trail', {
+                        init: trail
+                    });
                 });
             }
 

@@ -34,6 +34,7 @@ define([
             changed: 'js-form-changed',
             textInput: '.text-input',
             avatarUploadForm: '.js-avatar-upload-form',
+            avatarUploadButton: '.js-avatar-upload-button',
             memberShipContainer: '.js-memebership-tab-container'
         };
 
@@ -126,20 +127,23 @@ define([
 
     accountProfile.prototype.avatarUploadByApi = function (avatarForm) {
         var self = this;
-        var formData = new FormData(document.querySelector('form.js-avatar-upload-form'));
+        var formData = new FormData(document.querySelector('form' + self.classes.avatarUploadForm));
         var xhr = self.createCORSRequest('POST', self.urls.avatarApiUrl);
+
+        // disable form while submitting to prevent overlapping submissions
+        document.querySelector(self.classes.avatarUploadButton).disabled = true;
 
         if (!xhr) {
             self.prependErrorMessage(self.messages.noCorsError, avatarForm);
         }
 
-        xhr.onload = function (event) {
-            var status = event.srcElement.status;
+        xhr.onload = function () {
+            var status = xhr.status;
             if (status >= 200 && status < 300) {
                 self.prependSuccessMessage(self.messages.avatarUploadSuccess, avatarForm);
             } else if (status >= 400 && status < 500) {
                 self.prependErrorMessage(
-                    JSON.parse(event.srcElement.responseText).message || self.messages.avatarUploadFailure,
+                    JSON.parse(xhr.responseText).message || self.messages.avatarUploadFailure,
                     avatarForm);
             } else {
                 self.prependErrorMessage(self.messages.noServerError, avatarForm);
@@ -148,6 +152,7 @@ define([
 
         xhr.onerror = function () {
             self.prependErrorMessage(self.messages.noServerError, avatarForm);
+            document.querySelector(self.classes.avatarUploadButton).disabled = false;
         };
 
         xhr.setRequestHeader('Authorization', 'Bearer cookie=' + cookies.get('GU_U'));

@@ -28,14 +28,15 @@ define([
 
     Participation.prototype.prerender = function() {
         var test = this.config.test,
-            origin = /gutools.co.uk$/.test(document.location.origin) ? 'http://www.theguardian.com' : document.location.origin;
+            origin = /gutools.co.uk$/.test(document.location.origin) ? 'http://www.theguardian.com' : document.location.origin,
+            examplePath = (test.examplePath || '/uk') + '#ab-' + test.id;
 
-        this.getElem('opt-out').href = origin + '/uk#ab-' + test.id + '=notintest';
+        this.getElem('opt-out').href = origin + examplePath + '=notintest';
 
         var linksContainer = this.getElem('links');
 
         test.variants.forEach(function(variant) {
-            new ParticipationItem({test: test.id, variant: variant.id}).render(linksContainer);
+            new ParticipationItem({test: test.id, examplePath: examplePath, variant: variant.id}).render(linksContainer);
         });
     };
 

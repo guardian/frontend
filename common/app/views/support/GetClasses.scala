@@ -58,6 +58,7 @@ object GetClasses {
       containerDefinition.showLatestUpdate,
       containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
       containerDefinition.displayName.isDefined,
+      containerDefinition.displayName == Some("headlines"),
       containerDefinition.commercialOptions,
       containerDefinition.hasDesktopShowMore,
       Some(containerDefinition.container),
@@ -72,6 +73,7 @@ object GetClasses {
     showLatestUpdate = false,
     isFirst = true,
     hasTitle,
+    false,
     ContainerCommercialOptions.empty,
     false,
     None,
@@ -84,6 +86,7 @@ object GetClasses {
     showLatestUpdate: Boolean,
     isFirst: Boolean,
     hasTitle: Boolean,
+    isHeadlines: Boolean,
     commercialOptions: ContainerCommercialOptions,
     hasDesktopShowMore: Boolean,
     container: Option[slices.Container] = None,
@@ -103,7 +106,8 @@ object GetClasses {
       ("js-container--lazy-load", lazyLoad),
       ("js-sponsored-container", commercialOptions.isPaidFor),
       ("js-container--toggle",
-        !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !commercialOptions.isPaidFor)
+        // no toggle for Headlines container as it will be hosting the weather widget instead
+        !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !isHeadlines && !commercialOptions.isPaidFor)
     ) collect {
       case (kls, true) => kls
     }) ++ extraClasses: _*)

@@ -6,12 +6,12 @@ define(function () {
         this.expiry = '2015-08-01';
         this.author = 'Steve Vadocz';
         this.description = 'Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments';
-        this.audience = 0;
-        this.audienceOffset = 0;
+        this.audience = 0.1;
+        this.audienceOffset = 0.5;
         this.successMeasure = '';
-        this.audienceCriteria = '';
+        this.audienceCriteria = 'Audience from all editions';
         this.dataLinkNames = '';
-        this.idealOutcome = '';
+        this.idealOutcome = 'Increased user engagement and commercial viewability';
 
         this.canRun = function () {
             return true;

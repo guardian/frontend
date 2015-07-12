@@ -27,7 +27,6 @@ define([
     AccountProfile,
     PublicProfile,
     SavedForLater,
-    UserAdTargeting,
     UserAvatars,
     mediator,
     Tabs
