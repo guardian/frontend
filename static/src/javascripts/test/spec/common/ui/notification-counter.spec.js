@@ -1,5 +1,4 @@
 import mediator from 'common/utils/mediator';
-import bean from 'bean';
 import NotificationCounter from 'common/modules/ui/notification-counter';
 
 describe('Notification Counter', function () {

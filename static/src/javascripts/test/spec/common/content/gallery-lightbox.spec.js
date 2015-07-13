@@ -1,6 +1,5 @@
 import bean from 'bean';
 import bonzo from 'bonzo';
-import qwery from 'qwery';
 import $ from 'common/utils/$';
 import galleryLightbox from 'common/modules/gallery/lightbox';
 import lightboxFixtures from 'fixtures/content/gallery-lightbox';

@@ -1,4 +1,3 @@
-import fastdom from 'fastdom';
 import qwery from 'qwery';
 import sinon from 'sinonjs';
 import Promise from 'Promise';
