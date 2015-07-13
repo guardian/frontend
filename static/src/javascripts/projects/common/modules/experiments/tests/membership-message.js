@@ -18,8 +18,8 @@ define([
 
     return function () {
 
-        this.id = 'MembershipMessage';
-        this.start = '2015-06-17';
+        this.id = 'MembershipMessageVariants';
+        this.start = '2015-07-13';
         this.expiry = '2015-08-20';
         this.author = 'David Rapson';
         this.description = 'Test if loyal users are encouraged to join Membership as a Supporter';
@@ -45,7 +45,7 @@ define([
         this.variants = [{
             id: 'A',
             test: function () {
-                new Message('membership-message', {
+                new Message('membership-message-variants', {
                     pinOnHide: false,
                     siteMessageLinkName: 'membership message',
                     siteMessageCloseBtn: 'hide'
@@ -59,7 +59,7 @@ define([
         {
             id: 'B',
             test: function () {
-                new Message('membership-message', {
+                new Message('membership-message-variants', {
                     pinOnHide: false,
                     siteMessageLinkName: 'membership message',
                     siteMessageCloseBtn: 'hide'
