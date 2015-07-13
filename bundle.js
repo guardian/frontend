@@ -1,8 +1,7 @@
 /*eslint-env node*/
+'use strict';
 
 var path = require('path');
-
-var System = require('jspm/node_modules/systemjs');
 
 var jspm = require('jspm');
 var builder = new jspm.Builder();
