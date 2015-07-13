@@ -14,6 +14,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/social-most-popular',
+    'common/modules/social/pinterest',
     'bootstraps/article-liveblog-common',
     'bootstraps/trail'
 ], function (
@@ -31,6 +32,7 @@ define([
     ab,
     geoMostPopular,
     SocialMostPopular,
+    pinterest,
     articleLiveblogCommon,
     trail
 ) {
@@ -69,15 +71,9 @@ define([
                 }
             },
 
-            initPintrest: function () {
-                if (ab.shouldRunTest('Pintrest', 'variant')) {
-                    $('.social__item--pinterest').each(function (el) {
-                        $(el).css('display', 'block');
-                        bean.on(el, 'click', function (event) {
-                            event.preventDefault();
-                            require(['js!https://assets.pinterest.com/js/pinmarklet.js?r=' + new Date().getTime()]);
-                        });
-                    });
+            initPinterest: function () {
+                if (ab.shouldRunTest('Pintrest', 'variant')) { // The test was misspelt! Keeping it, to not confuse the data.
+                    pinterest();
                 }
             },
 
@@ -101,7 +97,7 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
-            modules.initPintrest();
+            modules.initPinterest();
             modules.initTruncation();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();

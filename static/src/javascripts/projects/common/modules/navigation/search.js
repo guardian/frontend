@@ -20,7 +20,6 @@ define([
     var Search = function () {
 
         var searchLoader,
-            enabled,
             gcsUrl,
             resultSetSize,
             container,
@@ -29,7 +28,6 @@ define([
 
         if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
 
-            enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
             resultSetSize = config.page.section === 'identity' ? 3 : 10;
 
@@ -45,6 +43,21 @@ define([
                 self.focusSearchField();
                 e.preventDefault();
                 mediator.emit('modules:search');
+            });
+
+            bean.on(document, 'keydown', '.gsc-input', function () {
+                fastdom.read(function () {
+                    var $autoCompleteObject = $('.gssb_c'),
+                        searchFromTop       = $autoCompleteObject.css('top'),
+                        windowOffset        = $(window).scrollTop();
+
+                    fastdom.write(function () {
+                        $autoCompleteObject.css({
+                            'top': parseInt(searchFromTop, 10) + windowOffset,
+                            'z-index': '1000'
+                        });
+                    });
+                });
             });
 
             bean.on(document, 'click', '.search-results', function (e) {
@@ -125,15 +138,13 @@ define([
             // Load the Google search monolith, if not already present in this context.
             // We have to re-run their script each time we do this.
             if (!container.innerHTML) {
-                var autoComplete = !ab.shouldRunTest('Viewability', 'variant') || config.page.contentType === 'Interactive';
-
                 fastdom.write(function () {
                     container.innerHTML = '' +
                         '<div class="search-box" role="search">' +
-                            '<gcse:searchbox enableAutoComplete="' + autoComplete + '"></gcse:searchbox>' +
+                            '<gcse:searchbox></gcse:searchbox>' +
                         '</div>' +
                         '<div class="search-results" data-link-name="search">' +
-                            '<gcse:searchresults webSearchResultSetSize="' + resultSetSize + '"></gcse:searchresults>' +
+                            '<gcse:searchresults webSearchResultSetSize="' + resultSetSize + '" linkTarget="_self"></gcse:searchresults>' +
                         '</div>';
                 });
 

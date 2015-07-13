@@ -19,6 +19,7 @@ GET        /commercial/masterclasses.json                            controllers
 
 # Soulmates
 GET        /commercial/soulmates/$subgroup<\w+>.json                 controllers.commercial.SoulmatesController.renderSoulmates(subgroup)
+GET        /commercial/soulmates-test/$subgroup<\w+>.json            controllers.commercial.SoulmatesController.renderSoulmatesTest(subgroup)
 
 # Money offers
 GET        /commercial/money/bestbuys.json                           controllers.commercial.MoneyOffers.renderBestBuys

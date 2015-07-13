@@ -4,8 +4,7 @@ import fixtures from 'helpers/fixtures';
 
 describe('Controls', function () {
 
-    var delay = 405, // This is 5ms greater than the actual rateLimit delay, to allow a bit of leeway
-        conf = {
+    var conf = {
             id: 'controls',
             fixtures: [// NB: element ids are required by the test, not by the actual Toggles module
                 '<div id="controls-a">' +

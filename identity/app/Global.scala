@@ -1,7 +1,7 @@
 import com.google.inject.Guice
 import common.CloudWatchApplicationMetrics
 import conf._
-import filters.HeaderLoggingFilter
+import filters.{StrictTransportSecurityHeaderFilter, HeaderLoggingFilter}
 import play.api.Play.current
 import play.api._
 import play.api.mvc._
@@ -10,7 +10,7 @@ import scala.concurrent.Future
 import utils.SafeLogging
 import conf.{Configuration, Filters}
 
-object Global extends WithFilters(HeaderLoggingFilter :: Filters.common: _*) with SafeLogging
+object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurityHeaderFilter :: Filters.common: _*) with SafeLogging
                                                                                     with CloudWatchApplicationMetrics {
 
   override lazy val applicationName = "frontend-identity"

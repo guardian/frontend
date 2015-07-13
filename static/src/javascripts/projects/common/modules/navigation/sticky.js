@@ -37,6 +37,7 @@ define([
         this.isTablet = _.contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
         this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
+        this.isProfilePage = config.page.section === 'identity';
     }
 
     StickyHeader.prototype.init = function () {
@@ -74,6 +75,8 @@ define([
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePositionApple();
             }.bind(this), 10));
+        } else if (this.isProfilePage) {
+            this.updatePositionProfile();
         } else {
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePosition();
@@ -215,7 +218,8 @@ define([
                         'margin-top': 0,
                         '-webkit-transform': 'translateY(-100%)',
                         '-ms-transform': 'translateY(-100%)',
-                        'transform': 'translateY(-100%)'
+                        'transform': 'translateY(-100%)',
+                        'backface-visibility': 'hidden'
                     });
 
                     // Make sure banner is outside of the view
@@ -235,7 +239,7 @@ define([
                 }.bind(this));
 
                 // If meganav is open we don't want to touch the navigation state
-                if (!this.config.isNavigationLocked) {
+                if (!this.config.isNavigationLocked && config.page.contentType !== 'Interactive') {
                     this.showNavigation(scrollY);
                 }
             } else if (scrollY >= this.headerBigHeight) {
@@ -284,10 +288,13 @@ define([
                         position:  'fixed',
                         top:       0,
                         width:     '100%',
-                        'z-index': '999'
+                        'z-index': '999',
+                        'backface-visibility': 'hidden'
                     });
-                    // Header is not slim yet
-                    this.$els.header.removeClass('l-header--is-slim');
+                    //Header is slim only on interactives page
+                    if (config.page.contentType !== 'Interactive') {
+                        this.$els.header.removeClass('l-header--is-slim');
+                    }
 
                     this.$els.header.css({
                         position:  'relative',
@@ -308,6 +315,29 @@ define([
                 // Put navigation to its default state
                 this.setNavigationDefault();
             }
+
+            if ($('.gssb_c').length > 0) {
+                fastdom.write(function () {
+                    $('.gssb_c').hide();
+                });
+            }
+        }.bind(this));
+    };
+
+    StickyHeader.prototype.updatePositionProfile = function () {
+        fastdom.read(function () {
+            var headerHeight = this.$els.header.dim().height;
+            fastdom.write(function () {
+                this.$els.header.css({
+                    position:  'fixed',
+                    top:       0,
+                    width:     '100%',
+                    'z-index': '1000',
+                    'margin-top': 0,
+                    'backface-visibility': 'hidden'
+                });
+                this.$els.main.css('padding-top', headerHeight);
+            }.bind(this));
         }.bind(this));
     };
 
@@ -329,7 +359,8 @@ define([
                         'margin-top': 0,
                         '-webkit-transform': 'translateY(-100%)',
                         '-ms-transform': 'translateY(-100%)',
-                        'transform': 'translateY(-100%)'
+                        'transform': 'translateY(-100%)',
+                        'backface-visibility': 'hidden'
                     });
 
                     // Make sure banner is outside of the view
@@ -375,13 +406,15 @@ define([
                 top: headerTop,
                 width: '100%',
                 'z-index': '1001',
-                'margin-top': 0
+                'margin-top': 0,
+                'backface-visibility': 'hidden'
             });
             this.$els.bannerMobile.css({
                 position: 'fixed',
                 top: this.headerBigHeight + headerTop,
                 width: '100%',
-                'z-index': '999' // Sticky z-index -1 as it should be sticky but should go below the sticky header
+                'z-index': '999', // Sticky z-index -1 as it should be sticky but should go below the sticky header,
+                'backface-visibility': 'hidden'
             });
             this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
         }.bind(this));

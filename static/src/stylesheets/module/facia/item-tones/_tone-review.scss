@@ -35,6 +35,10 @@
         color: colour(review-accent);
     }
 
+    .fc-save-for-later {
+        border-color: mix($c-headline, colour(review-background), 20%);
+    }
+
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, colour(review-background), 10%);
     }
