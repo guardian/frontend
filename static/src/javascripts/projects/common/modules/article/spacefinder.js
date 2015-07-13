@@ -8,8 +8,7 @@ define([
     'Promise',
     'common/utils/_',
     'common/utils/config',
-    'common/utils/mediator',
-    'common/modules/experiments/ab'
+    'common/utils/mediator'
 ], function (
     $,
     fastdom,
@@ -19,8 +18,7 @@ define([
     Promise,
     _,
     config,
-    mediator,
-    ab
+    mediator
 ) {
     // find spaces in articles for inserting ads and other inline content
     var bodySelector = '.js-article__body',

@@ -3,15 +3,13 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/mediator',
-    'common/modules/experiments/ab'
+    'common/utils/mediator'
 ], function (
     bonzo,
     _,
     $,
     config,
-    mediator,
-    ab
+    mediator
 ) {
     /**
      * @todo: check if browser natively supports "position: sticky"
