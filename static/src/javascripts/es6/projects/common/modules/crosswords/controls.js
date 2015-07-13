@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React from 'react';
 
 const buttonClassName = 'button button--small';

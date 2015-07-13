@@ -149,7 +149,7 @@ object IndexPage {
 
   def makeLinkedData(indexPage: IndexPage): ItemList = {
     ItemList(
-      indexPage.page.url,
+      Configuration.site.host + indexPage.page.url,
       indexPage.trails.zipWithIndex.map {
         case (trail, index) =>
           ListItem(position = index, url = Some(Configuration.site.host + trail.url))

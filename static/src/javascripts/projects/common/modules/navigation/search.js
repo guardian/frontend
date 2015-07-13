@@ -20,7 +20,6 @@ define([
     var Search = function () {
 
         var searchLoader,
-            enabled,
             gcsUrl,
             resultSetSize,
             container,
@@ -29,7 +28,6 @@ define([
 
         if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
 
-            enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
             resultSetSize = config.page.section === 'identity' ? 3 : 10;
 
@@ -47,7 +45,7 @@ define([
                 mediator.emit('modules:search');
             });
 
-            bean.on(document, 'keydown', '.gsc-input', function (e) {
+            bean.on(document, 'keydown', '.gsc-input', function () {
                 fastdom.read(function () {
                     var $autoCompleteObject = $('.gssb_c'),
                         searchFromTop       = $autoCompleteObject.css('top'),

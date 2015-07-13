@@ -12,7 +12,7 @@ describe('Most popular', function () {
         html = '<b>popular</b>',
         server,
         injector = new Injector(),
-        Popular, config, mediator, $fixturesContainer;
+        Popular, config, mediator;
 
     beforeEach(function (done) {
         injector.mock({
@@ -42,7 +42,7 @@ describe('Most popular', function () {
             server = sinon.fakeServer.create();
             server.autoRespond = true;
             server.autoRespondAfter = 20;
-            $fixturesContainer = fixtures.render(fixturesConfig);
+            fixtures.render(fixturesConfig);
             done();
         });
     });

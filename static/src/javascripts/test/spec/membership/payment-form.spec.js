@@ -1,6 +1,5 @@
 /*eslint-disable camelcase*/
 import PaymentForm from 'membership/payment-form';
-import ajax from 'common/utils/ajax';
 import $ from 'common/utils/$';
 import stripe from 'stripe';
 import stripeErrorMessages from 'membership/stripe-error-messages';

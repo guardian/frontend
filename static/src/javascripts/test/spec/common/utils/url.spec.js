@@ -1,4 +1,3 @@
-import _ from 'common/utils/_';
 import url from 'common/utils/url';
 
 describe('Url', function () {
