@@ -39,6 +39,12 @@
                     @fragments.items.elements.starRating(rating)
                 }
 
+                @content.imdb.map { imdbId =>
+                    <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/Movie">
+                        <a itemprop="sameAs" href="http://www.imdb.com/title/@imdbId/"/>
+                    </div>
+                }
+
                 @if(showBadge) {
                     @fragments.commercial.badge(content)
                 }
