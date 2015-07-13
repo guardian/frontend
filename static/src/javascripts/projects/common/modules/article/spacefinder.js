@@ -138,7 +138,7 @@ define([
     }
 
     function getReady() {
-        if (ab.shouldRunTest('Viewability', 'variant')) {
+        if (config.switches.viewability) {
             return Promise.all([onImagesLoaded(), onRichLinksUpgraded()]);
         }
 
