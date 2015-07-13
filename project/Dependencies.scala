@@ -17,6 +17,7 @@ object Dependencies {
   val contentApiClient = "com.gu" %% "content-api-client" % "6.6"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.0.0"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
+  val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.51"
   val faciaScalaClient = "com.gu" %% "facia-json" % "0.51"
@@ -57,4 +58,5 @@ object Dependencies {
   val snappyJava = "org.xerial.snappy" % "snappy-java" % "1.0.5.1"
   val uaDetectorResources = "net.sf.uadetector" % "uadetector-resources" % "2013.04"
   val scalaTestPlus = "org.scalatestplus" %% "play" % "1.2.0" % "test"
+  val anormModule = "com.typesafe.play" %% "anorm" % "2.4.0"
 }
