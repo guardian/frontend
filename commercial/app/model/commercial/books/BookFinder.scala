@@ -81,7 +81,7 @@ object MagentoService extends Logging {
   }
 
   private implicit val bookLookupExecutionContext: ExecutionContext =
-    Akka.system.dispatchers.lookup("play.akka.actor.book-lookup")
+    Akka.system.dispatchers.lookup("akka.actor.book-lookup")
 
   private final val circuitBreaker = new CircuitBreaker(
     scheduler = Akka.system.scheduler,
