@@ -236,7 +236,7 @@ define([
                 }.bind(this));
 
                 // If meganav is open we don't want to touch the navigation state
-                if (!this.config.isNavigationLocked) {
+                if (!this.config.isNavigationLocked && config.page.contentType !== 'Interactive') {
                     this.showNavigation(scrollY);
                 }
             } else if (scrollY >= this.headerBigHeight) {
@@ -288,8 +288,10 @@ define([
                         'z-index': '999',
                         'backface-visibility': 'hidden'
                     });
-                    // Header is not slim yet
-                    this.$els.header.removeClass('l-header--is-slim');
+                    //Header is slim only on interactives page
+                    if (config.page.contentType !== 'Interactive') {
+                        this.$els.header.removeClass('l-header--is-slim');
+                    }
 
                     this.$els.header.css({
                         position:  'relative',
