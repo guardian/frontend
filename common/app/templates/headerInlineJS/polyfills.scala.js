@@ -1,5 +1,6 @@
-/* eslint-disable no-extend-native, new-cap */
-/* global json2Src:false */
+@()
+@import conf.Static
+@import conf.Configuration
 
 if (!Function.prototype.bind) {
     Function.prototype.bind = function (oThis) {
@@ -35,6 +36,6 @@ if (!String.prototype.trim) {
 if (typeof JSON !== 'object') {
     var s = document.createElement('script'),
     sc = document.getElementsByTagName('script')[0];
-    s.src = json2Src;
+    s.src = '@Static("javascripts/components/JSON-js/json2.js")';
     sc.parentNode.insertBefore(s, sc);
 }
