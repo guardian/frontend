@@ -1,7 +1,7 @@
-@import conf.Configuration
+
 @(model: ArticlePage)(implicit request: RequestHeader)
 
-@import conf.Switches._
+@import common.LinkTo
 @import views.BodyCleaner
 @import views.support.TrailCssClasses.articleToneClass
 
@@ -13,7 +13,7 @@
         @if(article.isFeature && article.hasShowcaseMainPicture){has-feature-showcase-picture}"
         itemscope itemtype="@article.schemaType" role="main">
 
-        <a itemprop="mainEntityOfPage" href="@{Configuration.site.host + article.url}"/>
+        <a itemprop="mainEntityOfPage" href="@LinkTo(article.url)"/>
 
         @fragments.headTonal(article)
 
