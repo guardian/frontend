@@ -99,7 +99,7 @@
     }
 
     var personPrefersCore = (function(){
-        if (window.sessionStorage) {
+        if (window.localStorage) {
             var preference = window.localStorage.getItem('gu.prefs.force-core') || 'off';
             return /"value":"on"/.test(preference);
         }
