@@ -2,12 +2,14 @@ define([
     'bonzo',
     'common/utils/_',
     'common/utils/$',
+    'common/utils/config',
     'common/utils/mediator',
     'common/modules/experiments/ab'
 ], function (
     bonzo,
     _,
     $,
+    config,
     mediator,
     ab
 ) {

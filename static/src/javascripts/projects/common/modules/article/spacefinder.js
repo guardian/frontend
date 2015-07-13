@@ -7,6 +7,7 @@ define([
     'bean',
     'Promise',
     'common/utils/_',
+    'common/utils/config',
     'common/utils/mediator',
     'common/modules/experiments/ab'
 ], function (
@@ -17,6 +18,7 @@ define([
     bean,
     Promise,
     _,
+    config,
     mediator,
     ab
 ) {
