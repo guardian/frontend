@@ -5,7 +5,6 @@ import React from 'react';
 
 import _ from 'common/utils/_';
 
-import constants from './constants';
 import helpers from './helpers';
 
 import Cell from './cell';

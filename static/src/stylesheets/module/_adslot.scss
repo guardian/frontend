@@ -52,7 +52,6 @@
 }
 .top-banner-ad-container--desktop {
     background-color: colour(neutral-8);
-    border-bottom: 2px solid colour(neutral-4);
     display: none;
     overflow: hidden;
 
@@ -81,10 +80,16 @@
             margin: 0;
         }
     }
-    iframe {
-        transform: translateZ(0);
-        transition: height 1s cubic-bezier(0, 0, 0, .985);
-    }
+}
+.top-banner-ad-container--large {
+    min-height: ($gs-row-height * 7) + 34;
+}
+.top-banner-ad-container--medium {
+    min-height: ($gs-row-height * 3) + 18;
+}
+.top-banner-ad-container--reveal iframe {
+    transform: translateZ(0);
+    transition: height 1s cubic-bezier(0, 0, 0, .985);
 }
 .top-banner-ad-container--above-nav {
     @include mq(tablet) {
@@ -204,7 +209,7 @@
 }
 .ad-slot__content {
     > div {
-        margin: 0 auto;            
+        margin: 0 auto;
     }
 }
 .ad-slot--container-inline {

@@ -1,11 +1,13 @@
 define([
     'knockout',
+    'underscore',
     'models/collections/latest-articles',
     'modules/vars',
     'utils/mediator',
     'utils/update-scrollables'
 ], function (
     ko,
+    _,
     LatestArticles,
     vars,
     mediator,
@@ -30,7 +32,10 @@ define([
         this.latestArticles = new LatestArticles({
             filterTypes: vars.CONST.filterTypes,
             container: element,
-            showingDrafts: this.showingDrafts
+            showingDrafts: this.showingDrafts,
+            callback: _.once(function () {
+                mediator.emit('latest:loaded');
+            })
         });
 
         this.latestArticles.search();
@@ -42,8 +47,6 @@ define([
             }
         });
         this.subscriptionOnArticles = this.latestArticles.articles.subscribe(updateScrollables);
-
-        mediator.emit('latest:loaded');
     }
 
     Latest.prototype.dispose = function () {

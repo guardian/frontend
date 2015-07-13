@@ -117,7 +117,7 @@ object IndexPage {
       val timeStampDisplay = header match {
         case MetaDataHeader(_, _, _, dateHeadline, _) => Some(cardTimestampDisplay(dateHeadline))
         case LoneDateHeadline(dateHeadline) => Some(cardTimestampDisplay(dateHeadline))
-        case SeriesDescriptionMetaHeader(_) => None
+        case DescriptionMetaHeader(_) => None
       }
 
       container.copy(
@@ -149,7 +149,7 @@ object IndexPage {
 
   def makeLinkedData(indexPage: IndexPage): ItemList = {
     ItemList(
-      indexPage.page.url,
+      Configuration.site.host + indexPage.page.url,
       indexPage.trails.zipWithIndex.map {
         case (trail, index) =>
           ListItem(position = index, url = Some(Configuration.site.host + trail.url))

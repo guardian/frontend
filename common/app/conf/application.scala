@@ -3,7 +3,7 @@ package conf
 import common.Assets.Assets
 import common.{ExecutionContexts, GuardianConfiguration}
 import filters.RequestLoggingFilter
-import contentapi.{ElasticSearchPreviewContentApiClient, ElasticSearchLiveContentApiClient}
+import contentapi.LiveContentApiClient
 import implicits.Responses
 import play.api.mvc._
 import play.filters.gzip.GzipFilter
@@ -12,12 +12,10 @@ import scala.concurrent.Future
 
 object Configuration extends GuardianConfiguration("frontend", webappConfDirectory = "env")
 
-object LiveContentApi extends ElasticSearchLiveContentApiClient
-
-object PreviewContentApi extends ElasticSearchPreviewContentApiClient
+object LiveContentApi extends LiveContentApiClient
 
 object Static extends Assets(Configuration.assets.path)
-object StaticSecure extends Assets(Configuration.assets.securePath)
+object StaticSecure extends Assets(Configuration.assets.path)
 
 import Responses._
 object Gzipper extends GzipFilter(shouldGzip = (_, resp) => !resp.isImage)

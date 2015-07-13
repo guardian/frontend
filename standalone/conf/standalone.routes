@@ -132,10 +132,12 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   
 
 # Facia
 GET        /                                                                                   controllers.FaciaDraftController.editionRedirect(path = "")
+GET        /$path<.+>/show-more/*id.json                                                       controllers.FaciaDraftController.renderShowMore(path, id)
 GET        /$path<(culture|sport|commentisfree|business|money|rss)>                            controllers.FaciaDraftController.editionRedirect(path)
 GET        /$path<(\w\w)(/[\w\d-]+)?>/rss                                                      controllers.FaciaDraftController.renderFrontRss(path)
 GET        /$path<.+>/lite.json                                                                controllers.FaciaDraftController.renderFrontJsonLite(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                       controllers.FaciaDraftController.renderFrontJson(path)
+
 
 GET        /container/*id.json                                                                 controllers.FaciaDraftController.renderContainerJson(id)
 
@@ -158,14 +160,14 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json       
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                   controllers.InteractiveController.renderInteractiveJson(path)
 
 # Weather - OLD
-GET        /weather/city/:id.json                                                              controllers.WeatherController.forCity(id)
-GET        /weather/city.json                                                                  controllers.LocationsController.whatIsMyCity()
-GET        /weather/locations                                                                  controllers.LocationsController.findCity(query: String)
+GET        /weather/city/:id.json                                                              weather.controllers.WeatherController.forCity(id)
+GET        /weather/city.json                                                                  weather.controllers.LocationsController.whatIsMyCity()
+GET        /weather/locations                                                                  weather.controllers.LocationsController.findCity(query: String)
 
 # Weather
-GET        /weatherapi/city/:id.json                                                           controllers.WeatherController.forCity(id)
-GET        /weatherapi/city.json                                                               controllers.LocationsController.whatIsMyCity()
-GET        /weatherapi/locations                                                               controllers.LocationsController.findCity(query: String)
+GET        /weatherapi/city/:id.json                                                           weather.controllers.WeatherController.forCity(id)
+GET        /weatherapi/city.json                                                               weather.controllers.LocationsController.whatIsMyCity()
+GET        /weatherapi/locations                                                               weather.controllers.LocationsController.findCity(query: String)
 
 # Articles
 GET        /*path.json                                                                         controllers.ArticleController.renderArticle(path, lastUpdate: Option[String], rendered: Option[Boolean])

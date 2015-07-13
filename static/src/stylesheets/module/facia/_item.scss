@@ -273,6 +273,10 @@ $fc-item-gutter: $gs-gutter / 4;
 .item__media-wrapper {
     box-sizing: border-box;
     position: relative;
+
+    .is-not-modern & {
+        display: none !important;
+    }
 }
 
 // Wraps all non-media content
@@ -401,7 +405,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 // Liveblog blocks
-$block-height: 74px;
+$block-height: 71px;
 
 .fc-item__liveblog-blocks {
     box-sizing: content-box !important;
@@ -411,7 +415,11 @@ $block-height: 74px;
 }
 
 .fc-item__liveblog-blocks__inner {
-    transition: transform .75s ease-out;
+    transition: transform .5s ease-in;
+}
+
+.fc-item__liveblog-blocks__inner--offset {
+    transform: translate3d(0, $block-height * -1, 0);
 }
 
 .fc-item__liveblog-block {
@@ -445,7 +453,7 @@ $block-height: 74px;
     right: 0;
     @include fs-headline(1);
     font-size: 30px;
-    line-height: $gs-baseline/2;
+    line-height: $gs-baseline;
     color: mix(#ffffff, colour(live-default), 92%);
     height: 18px;
     padding-right: 8px;
@@ -483,6 +491,12 @@ $block-height: 74px;
     position: relative;
     float: left;
     margin-bottom: $gs-baseline / 4;
+    margin-right: 1em;
+
+    .saved-contents & {
+        position: absolute;
+        bottom: 0;
+    }
 }
 
 .fc-item__timestamp {
@@ -515,14 +529,19 @@ $block-height: 74px;
 .fc-save-for-later {
     // reset button defaults
     border: 0;
+    border-left: 1px solid;
     background-color: transparent;
     padding: 0;
-
     color: transparent;
-    float: right;
-    margin-right: 0 - ($gs-gutter * .25);
-    padding-right: ($gs-gutter * .25);
+    margin-right: 0 - ($gs-gutter / 4);
+    padding-right: ($gs-gutter / 4);
+    padding-left: $gs-gutter / 4;
     transition: color 100ms;
+
+    @include mq($until: tablet) {
+        border-left: 0;
+        float: right;
+    }
 
     &:hover,
     &:focus,
@@ -531,17 +550,30 @@ $block-height: 74px;
         color: inherit;
     }
 
-    &:before {
+    &:after {
         content: 'save';
-        margin-right: .4em;
     }
 
     .inline-icon {
         float: right;
+        margin-left: $gs-gutter / 4;
+        margin-right: 0;
+
+        @include mq(tablet) {
+            float: left;
+            margin-right: $gs-gutter / 4;
+        }
     }
 
-    &.fc-save-for-later--is-saved:before {
+    &.fc-save-for-later--is-saved:after {
         content: 'saved';
+    }
+}
+
+.facia-page .fc-save-for-later:only-child {
+    @include mq(tablet) {
+        border: 0;
+        padding: 0;
     }
 }
 

@@ -33,6 +33,8 @@
         "new-cap": 0,
         // Overrides old
         "camelcase": 2,
-        "strict": 2
+        "strict": 2,
+        "consistent-return": 0,
+        "no-unused-vars": 1
     }
 }

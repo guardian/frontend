@@ -3,7 +3,7 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
-    'common/modules/commercial/third-party-tags/audience-science-gateway',
+    'common/modules/commercial/third-party-tags/audience-science-pql',
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab'

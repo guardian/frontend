@@ -38,7 +38,7 @@ define([
     MostPopular.prototype.prerender = function () {
         if (!config.page.shouldHideAdverts) {
             this.$mpu = $('.js-fc-slice-mpu-candidate', this.elem)
-                .append(createAdSlot('inline3', 'container-inline'));
+                .append(createAdSlot('mostpop', 'container-inline'));
         } else {
             this.$mpu = undefined;
         }

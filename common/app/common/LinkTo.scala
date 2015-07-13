@@ -37,10 +37,9 @@ trait LinkTo extends Logging {
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
 
-  def processUrl(url: String, edition: Edition, isInternational: Boolean) = url match {
-    case "http://www.theguardian.com" => ProcessedUrl(homeLink(edition))
-    case "/" if isInternational => ProcessedUrl(InternationalEdition.path)
-    case "/" => ProcessedUrl(homeLink(edition))
+  def processUrl(url: String, edition: Edition, isInternationalEdition: Boolean = false) = url match {
+    case "http://www.theguardian.com" => ProcessedUrl(urlFor("", edition, isInternationalEdition))
+    case "/" => ProcessedUrl(urlFor("", edition, isInternationalEdition))
     case protocolRelative if protocolRelative.startsWith("//") => ProcessedUrl(protocolRelative)
     case AbsoluteGuardianUrl(path) =>  ProcessedUrl(urlFor(path, edition))
     case "/rss" => ProcessedUrl(urlFor("", edition) + "/rss")
@@ -57,14 +56,12 @@ trait LinkTo extends Logging {
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
     faciaCard.url.get(request)
 
-  private def urlFor(path: String, edition: Edition) = s"$host/${Editionalise(clean(path), edition)}"
+  private def urlFor(path: String, edition: Edition, isInternationalEdition: Boolean = false) = s"$host/${Editionalise(clean(path), edition, isInternationalEdition)}"
 
   private def clean(path: String) = path match {
     case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books
     case _ => path
   }
-
-  private def homeLink(edition: Edition) = urlFor("", edition)
 
   def redirectWithParameters(request: Request[AnyContent], realPath: String): Result = {
     val params = if (request.hasParameters) s"?${request.rawQueryString}" else ""

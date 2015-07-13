@@ -57,6 +57,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     animation: animate-height-up ease-in .2s;
     animation-fill-mode: forwards;
+    overflow: visible;
 }
 
 @mixin animate-height-down($height) {
@@ -72,6 +73,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     animation: animate-height-down ease-in .2s;
     animation-fill-mode: forwards;
+    overflow: hidden;
 }
 
 /* Styles common to all states
@@ -117,7 +119,6 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     &:before {
         background: $c-navigation-background-side-bar;
-        border-bottom: 1px solid $c-global-navigation-border;
         background-clip: padding-box;
     }
 
@@ -170,7 +171,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 }
 .navigation__expandable--sticky {
     overflow-x: hidden;
-    overflow-y: scroll; 
+    overflow-y: scroll;
 }
 .signposting,
 .local-navigation,

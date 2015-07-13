@@ -3,6 +3,7 @@ package implicits
 import conf.{Configuration, Switches}
 import play.api.http.MediaRange
 import play.api.mvc.RequestHeader
+import common.Edition
 
 trait Requests {
 
@@ -32,19 +33,7 @@ trait Requests {
 
     lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Management-Healthcheck")
 
-
-    private val imgixTestSections = {
-      def editionalise(path: String) = Seq(s"/uk$path", s"/au$path", s"/us$path", path)
-
-      Seq("/books", "/football") ++
-        editionalise("/money") ++
-        editionalise("/technology") ++
-        editionalise("/business") ++
-        editionalise("/sport")
-  }
-
-    lazy val isInImgixTest: Boolean = Switches.ImgixSwitch.isSwitchedOn &&
-      (Configuration.environment.isNonProd || imgixTestSections.exists(r.path.startsWith))
+    private val networkFronts = Edition.all.map(_.id).map(id => s"/$id")
 
     // see http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/TerminologyandKeyConcepts.html#x-forwarded-proto
     lazy val isSecure: Boolean = r.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))

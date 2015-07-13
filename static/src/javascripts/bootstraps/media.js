@@ -129,8 +129,8 @@ define([
                         placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                         player.removeClass('media__container--hidden').addClass('media__container--active');
                         $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
+                        enhanceVideo($('video', player).get(0), true);
                     });
-                    enhanceVideo($('video', player).get(0), true);
                 });
                 fastdom.write(function () {
                     $el.removeClass('media__placeholder--hidden').addClass('media__placeholder--active');
@@ -238,7 +238,7 @@ define([
                             { tags: { feature: 'media' } },
                             function () {
                                 events.bindPrerollEvents(player);
-                                player.adSkipCountdown(15);
+                                player.adSkipCountdown(10);
 
                                 require(['js!http://imasdk.googleapis.com/js/sdkloader/ima3.js'], function () {
                                     player.ima({

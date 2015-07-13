@@ -27,7 +27,7 @@ case class EditionalisedLink(
     LinkTo(baseUrl)(requestHeader)
 
   def hrefWithRel(implicit requestHeader: RequestHeader): String =
-    processUrl(baseUrl, Edition(requestHeader), InternationalEdition.isInternationalEdition(requestHeader)) match {
+    processUrl(baseUrl, Edition(requestHeader)) match {
       case ProcessedUrl(url, true) => s"""href="${handleQueryStrings(url)}" rel="nofollow""""
       case ProcessedUrl(url, false) => s"""href="${handleQueryStrings(url)}""""
     }
@@ -205,7 +205,7 @@ object FaciaCard {
     } yield kickerText contains byline) getOrElse false
 
     ContentCard(
-      Option(faciaContent.id),
+      faciaContent.maybeContentId.orElse(Option(faciaContent.id)),
       faciaContent.headline,
       FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
       getByline(faciaContent).filterNot(Function.const(suppressByline)),
@@ -283,6 +283,8 @@ case class ContentCard(
   def mediaWidthsByBreakpoint = FaciaWidths.mediaFromItemClasses(cardTypes)
 
   def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
+
+  def isSavedForLater = cardTypes.allTypes.exists(_.savedForLater)
 
   val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if(displaySettings.isBoosted) "+" else ""}"
 }

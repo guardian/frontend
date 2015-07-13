@@ -98,6 +98,14 @@
         sc.parentNode.insertBefore(s, sc);
     }
 
+    var personPrefersCore = (function(){
+        if (window.localStorage) {
+            var preference = window.localStorage.getItem('gu.prefs.force-core') || 'off';
+            return /"value":"on"/.test(preference);
+        }
+        return false;
+    })();
+
     var isOlderDevice = (function(){
         @* I'm intentionally being a bit over zealous in the detection department here *@
         if (navigator.platform === 'iPhone' || navigator.platform === 'iPad' || navigator.platform === 'iPod') {
@@ -130,22 +138,14 @@
                 || 'XDomainRequest' in window
             )
             && !isOlderDevice
+            && !personPrefersCore
         ),
         css: {
             loaded: false
         },
         config: @fragments.javaScriptConfig(item)
-    }, baseFontSize,
+    },
     docClass = document.documentElement.className;
-
-    // rems are calculated in the CSS assuming a 16px baseline.
-    // if the user has changed theirs, account for it.
-    if('getComputedStyle' in window) {
-        baseFontSize = window.getComputedStyle(document.documentElement).getPropertyValue("font-size");
-        if(parseInt(baseFontSize, 10) !== 16) {
-            document.documentElement.style.fontSize = baseFontSize;
-        }
-    }
 
     @* http://modernizr.com/download/#-svg *@
     if (
@@ -231,6 +231,19 @@
         }
     })(guardian.isModernBrowser);
 
+    // *** MINIMISE DOM THRASHING…
+    // READ
+    // rems are calculated in the CSS assuming a 16px baseline.
+    // if the user has changed theirs, account for it.
+    var baseFontSize = null;
+    if('getComputedStyle' in window) {
+        baseFontSize = window.getComputedStyle(document.documentElement).getPropertyValue("font-size");
+    }
+
+    // WRITE
+    if(baseFontSize && parseInt(baseFontSize, 10) !== 16) {
+        document.documentElement.style.fontSize = baseFontSize;
+    }
     document.documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
 
 </script>
@@ -255,7 +268,6 @@
         }
 
         if (navigator.platform === 'iPhone' || navigator.platform === 'iPad') {
-
             var platform = navigator.platform;
             var isIphone = navigator.platform === 'iPhone';
 
@@ -289,6 +301,39 @@
             if ( isIphone4 ) {
                 logDevice ( '4', 'iphone' );
             }
+        };
+
+        @*
+        This is a subset of the navigator.platform values used by Android. We may need to add more to capture more devices
+        *@
+
+        if ((navigator.platform === 'Linux armv7l') || (navigator.platform === 'Linux aarch64') || (navigator.platform === 'Android')){
+            var isNexus5 = /.*Nexus 5 */.test(navigator.userAgent);
+            var isNexus7 = /.*Nexus 7 */.test(navigator.userAgent);
+            @*
+            There is a very large variety in model id's for Samsung devices, different id's for different carriers.
+            so we will only really be able to beacon on a subset of the Samsung GS4's that visit us
+            *@
+            var isSGS4 = ((/.*GT-I9500 */.test(navigator.userAgent)) || (/.*GT-I9505 */.test(navigator.userAgent)));
+            var isSGS3 = /.*GT-I9300 */.test(navigator.userAgent);
+
+            if ( isNexus5 ) {
+            logDevice ( 'nexus5', 'android' ) ;
+            }
+
+            if ( isNexus7 ) {
+            logDevice ( 'nexus7', 'android' ) ;
+            }
+
+            if ( isSGS4 ) {
+            logDevice ( 'sgs4', 'android' ) ;
+            }
+
+            if ( isSGS3 ) {
+            logDevice ( 'sgs3', 'android' ) ;
+            }
+
         }
+
     </script>
 }

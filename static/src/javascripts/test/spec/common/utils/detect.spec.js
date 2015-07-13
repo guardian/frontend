@@ -1,5 +1,3 @@
-import bonzo from 'bonzo';
-import $ from 'common/utils/$';
 import detect from 'common/utils/detect';
 
 describe('Connection speed', function () {

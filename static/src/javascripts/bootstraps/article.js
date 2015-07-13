@@ -1,7 +1,7 @@
 /*eslint-disable no-new*/
 define([
-    'fence',
     'qwery',
+    'bean',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -10,17 +10,16 @@ define([
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
-    'common/modules/article/truncate',
-    'common/modules/article/twitter',
+    'common/modules/article/truncation',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
-    'common/modules/open/cta',
     'common/modules/onward/social-most-popular',
-    'common/modules/ui/rhc',
-    'common/modules/ui/selection-sharing'
+    'common/modules/social/pinterest',
+    'bootstraps/article-liveblog-common',
+    'bootstraps/trail'
 ], function (
-    fence,
     qwery,
+    bean,
     $,
     config,
     detect,
@@ -29,35 +28,15 @@ define([
     richLinks,
     membershipEvents,
     openModule,
-    truncate,
-    twitter,
+    truncation,
     ab,
     geoMostPopular,
-    OpenCta,
     SocialMostPopular,
-    rhc,
-    selectionSharing
+    pinterest,
+    articleLiveblogCommon,
+    trail
 ) {
     var modules = {
-            initOpenCta: function () {
-                if (config.switches.openCta && config.page.commentable) {
-                    var openCta = new OpenCta(mediator, {
-                        discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
-                    });
-
-                    $.create('<div class="open-cta"></div>').each(function (el) {
-                        openCta.fetch(el);
-                        if (!config.page.isLiveBlog) { rhc.addComponent(el); }
-                    });
-                }
-            },
-
-            initFence: function () {
-                $('.fenced').each(function (el) {
-                    fence.render(el);
-                });
-            },
-
             initCmpParam: function () {
                 var allvars = urlutils.getUrlVars();
 
@@ -68,13 +47,6 @@ define([
                 }
             },
 
-            initTruncateAndTwitter: function () {
-                // Ensure that truncation occurs before the tweet upgrading.
-                truncate();
-                twitter.init();
-                twitter.enhanceTweets();
-            },
-
             initRightHandComponent: function () {
                 var mainColumn = qwery('.js-content-main-column');
                 // only render when we have >1000px or more (enough space for ad + most popular)
@@ -83,38 +55,50 @@ define([
                 }
             },
 
-            initSelectionSharing: function () {
-                selectionSharing.init();
-            },
-
             initSocialMostPopular: function () {
                 var el = qwery('.js-social-most-popular');
 
-                ['Twitter', 'Facebook'].forEach(function (socialContext) {
-                    if (ab.shouldRunTest(socialContext + 'MostViewed', 'variant')) {
-                        if (el) {
-                            new SocialMostPopular(el, socialContext.toLowerCase());
-                        }
+                if (el) {
+                    if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
+                        new SocialMostPopular(el, detect.socialContext());
+                    } else {
+                        ['Twitter', 'Facebook'].forEach(function (socialContext) {
+                            if (ab.shouldRunTest(socialContext + 'MostViewed', 'variant')) {
+                                new SocialMostPopular(el, socialContext.toLowerCase());
+                            }
+                        });
                     }
-                });
+                }
+            },
+
+            initPinterest: function () {
+                if (ab.shouldRunTest('Pintrest', 'variant')) { // The test was misspelt! Keeping it, to not confuse the data.
+                    pinterest();
+                }
             },
 
             initQuizListeners: function () {
                 require(['ophan/ng'], function (ophan) {
                     mediator.on('quiz/ophan-event', ophan.record);
                 });
+            },
+
+            initTruncation: function () {
+                if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
+                    truncation();
+                }
             }
         },
 
         ready = function () {
-            modules.initOpenCta();
-            modules.initFence();
-            modules.initTruncateAndTwitter();
+            trail();
+            articleLiveblogCommon();
             modules.initRightHandComponent();
-            modules.initSelectionSharing();
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
+            modules.initPinterest();
+            modules.initTruncation();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();

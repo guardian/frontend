@@ -31,6 +31,7 @@ define([
     asObservableProps = asObservableProps.default;
     populateObservables = populateObservables.default;
     mediator = mediator.default;
+    persistence = persistence.default;
 
     var checkCount = 0;
 
@@ -55,7 +56,8 @@ define([
             'showDateHeader',
             'showLatestUpdate',
             'excludeFromRss',
-            'apiQuery']);
+            'apiQuery',
+            'description']);
 
         populateObservables(this.meta, opts);
 
@@ -114,18 +116,6 @@ define([
         this.state.isOpen(false);
     };
 
-    Collection.prototype.isInitialCollection = function () {
-        var parents = this.parents();
-
-        if (parents.length === 1) {
-            var siblings = parents[0].collections.items();
-
-            return siblings.length === 1 && siblings[0] === this;
-        } else {
-            return false;
-        }
-    };
-
     /** IDs of fronts to which the collection belongs */
     Collection.prototype.frontIds = function () {
         return _.chain(this.parents()).map(function (front) {
@@ -158,15 +148,7 @@ define([
             vars.model.collections.unshift(this);
         }
 
-        if (!this.id) {
-            if (this.isInitialCollection()) {
-                persistence.front.create(this.parents()[0], this);
-            } else {
-                persistence.collection.create(this);
-            }
-        } else {
-            persistence.collection.update(this);
-        }
+        persistence.collection.save(this);
     };
 
     Collection.prototype.checkApiQueryStatus = function() {

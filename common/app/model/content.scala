@@ -37,7 +37,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
-  lazy val internalContentCode: String = delegate.safeFields("internalContentCode")
+  lazy val internalPageCode: String = delegate.safeFields("internalPageCode")
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   override lazy val webUrl: String = delegate.webUrl
@@ -167,7 +167,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val headline: String = apiContent.metaData.flatMap(_.headline).getOrElse(fields.getOrDefault("headline", ""))
 
   override lazy val trailText: Option[String] = apiContent.metaData.flatMap(_.trailText).orElse(fields.get("trailText"))
-  // old bylines can have html http://internal.content.guardianapis.com/commentisfree/2012/nov/10/cocoa-chocolate-fix-under-threat?show-fields=byline
+  // old bylines can have html http://content.guardianapis.com/commentisfree/2012/nov/10/cocoa-chocolate-fix-under-threat?show-fields=byline
   override lazy val byline: Option[String] = apiContent.metaData.flatMap(_.byline).orElse(fields.get("byline").map(stripHtml))
   override val showByline = resolvedMetaData.showByline
 
@@ -432,7 +432,7 @@ private object ArticleSchemas {
     // http://schema.org/Review
     if (article.isReview)
       "http://schema.org/Review"
-    else if (article.isLive)
+    else if (article.isLiveBlog)
       "http://schema.org/LiveBlogPosting"
     else
       "http://schema.org/NewsArticle"
@@ -753,27 +753,29 @@ trait Lightboxable extends Content {
   lazy val isMainMediaLightboxable = !mainFiltered.isEmpty
 
   lazy val lightbox: JsObject = {
-    val imageContainers = lightboxImages.filter(_.largestEditorialCrop.nonEmpty)
-    val imageJson = imageContainers.map { imgContainer =>
-      imgContainer.largestEditorialCrop.map { img =>
-        JsObject(Seq(
-          "caption" -> JsString(img.caption.getOrElse("")),
-          "credit" -> JsString(img.credit.getOrElse("")),
-          "displayCredit" -> JsBoolean(img.displayCredit),
-          "src" -> JsString(ImgSrc.findSrc(imgContainer, Item700).getOrElse("")),
-          "srcsets" -> JsString(ImgSrc.normalSrcset(imgContainer, GalleryMedia.Lightbox)),
-          "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
-          "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
-          "role" -> JsString(img.role.toString)
-        ))
-      }
+
+    val imageJson = for {
+      container <- lightboxImages
+      img <- container.largestEditorialCrop
+    } yield {
+      JsObject(Seq(
+        "caption" -> JsString(img.caption.getOrElse("")),
+        "credit" -> JsString(img.credit.getOrElse("")),
+        "displayCredit" -> JsBoolean(img.displayCredit),
+        "src" -> JsString(Item700.bestFor(container).getOrElse("")),
+        "srcsets" -> JsString(ImgSrc.srcset(container, GalleryMedia.Lightbox)),
+        "sizes" -> JsString(GalleryMedia.Lightbox.sizes),
+        "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
+        "role" -> JsString(img.role.toString)
+      ))
     }
+
     JsObject(Seq(
       "id" -> JsString(id),
       "headline" -> JsString(headline),
       "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
       "standfirst" -> JsString(standfirst.getOrElse("")),
-      "images" -> JsArray((imageJson).toSeq.flatten)
+      "images" -> JsArray(imageJson)
     ))
   }
 

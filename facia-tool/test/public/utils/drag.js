@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import droppable from 'modules/droppable';
+import * as droppable from 'modules/droppable';
 
 function Article (element) {
     this.Text = element.querySelector('a').getAttribute('href');
