@@ -24,7 +24,7 @@
 
         @fragments.mostPopularPlaceholder(content.section)
 
-        @if(content.showFooterContainers) {
+        @if(!Switches.RelatedContentSwitch.isSwitchedOn && content.showFooterContainers) {
             <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
                 @fragments.outbrainPlaceholder()
             </div>
