@@ -37,6 +37,7 @@ define([
         this.isTablet = _.contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
         this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
+        this.isProfilePage = config.page.section === 'identity';
     }
 
     StickyHeader.prototype.init = function () {
@@ -74,6 +75,8 @@ define([
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePositionApple();
             }.bind(this), 10));
+        } else if (this.isProfilePage) {
+            this.updatePositionProfile();
         } else {
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePosition();
@@ -318,6 +321,23 @@ define([
                     $('.gssb_c').hide();
                 });
             }
+        }.bind(this));
+    };
+
+    StickyHeader.prototype.updatePositionProfile = function () {
+        fastdom.read(function () {
+            var headerHeight = this.$els.header.dim().height;
+            fastdom.write(function () {
+                this.$els.header.css({
+                    position:  'fixed',
+                    top:       0,
+                    width:     '100%',
+                    'z-index': '1000',
+                    'margin-top': 0,
+                    'backface-visibility': 'hidden'
+                });
+                this.$els.main.css('padding-top', headerHeight);
+            }.bind(this));
         }.bind(this));
     };
 
