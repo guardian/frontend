@@ -98,6 +98,14 @@
         sc.parentNode.insertBefore(s, sc);
     }
 
+    var personPrefersCore = (function(){
+        if (window.sessionStorage) {
+            var preference = window.localStorage.getItem('gu.prefs.force-core') || 'off';
+            return /"value":"on"/.test(preference);
+        }
+        return false;
+    })();
+
     var isOlderDevice = (function(){
         @* I'm intentionally being a bit over zealous in the detection department here *@
         if (navigator.platform === 'iPhone' || navigator.platform === 'iPad' || navigator.platform === 'iPod') {
@@ -130,6 +138,7 @@
                 || 'XDomainRequest' in window
             )
             && !isOlderDevice
+            && !personPrefersCore
         ),
         css: {
             loaded: false
