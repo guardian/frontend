@@ -30,7 +30,7 @@ object BookFinder extends ExecutionContexts with Logging {
           case _ =>
             bookData.validate[Book] fold(
               invalid => {
-                log.error(Json.stringify(JsError.toFlatJson(invalid)))
+                log.error(Json.stringify(JsError.toJson(invalid)))
                 None
               },
               book => Some(book))
@@ -129,7 +129,7 @@ object MagentoService extends Logging {
                 case Some(me) =>
                   throw FeedReadException(request, me.code, me.message)
                 case None =>
-                  val jsonErr = JsError.toFlatJson(e).toString()
+                  val jsonErr = JsError.toJson(e).toString()
                   throw FeedParseException(request, jsonErr)
               }
             case JsSuccess(book, _) => Some(bookJson)
