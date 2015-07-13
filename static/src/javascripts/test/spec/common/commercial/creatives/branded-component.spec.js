@@ -1,5 +1,4 @@
 import qwery from 'qwery';
-import _ from 'common/utils/_';
 import $ from 'common/utils/$';
 import fixtures from 'helpers/fixtures';
 import Injector from 'helpers/injector';
@@ -31,8 +30,7 @@ describe('Branded Component', function () {
         });
     });
 
-    var brandedComponent,
-        $fixturesContainer;
+    var brandedComponent;
 
     it('should exist', function () {
         expect(BrandedComponent).toBeDefined();
@@ -50,14 +48,14 @@ describe('Branded Component', function () {
     });
 
     it('should always show branded component with force option', function () {
-        $fixturesContainer = fixtures.render(fixturesConfig);
+        fixtures.render(fixturesConfig);
 
         brandedComponent.create();
         expect(qwery('.creative--branded-component-soulmates').length).toBe(1);
     });
 
     it('should not show branded component without force option and in football section', function () {
-        $fixturesContainer = fixtures.render(fixturesConfig);
+        fixtures.render(fixturesConfig);
         brandedComponent = new BrandedComponent(qwery('.branded-component-soulmates'), {
             type: 'soulmates',
             clickMacro: '%%CLICK_URL_ESC%%',
@@ -71,7 +69,7 @@ describe('Branded Component', function () {
     });
 
     it('should show branded component without force option, long secondary column and not in football', function () {
-        $fixturesContainer = fixtures.render(fixturesConfig);
+        fixtures.render(fixturesConfig);
         $('.js-secondary-column').css('height', 1900);
         config.page.section = '';
         brandedComponent = new BrandedComponent(qwery('.branded-component-soulmates'), {
