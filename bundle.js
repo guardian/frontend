@@ -1,8 +1,7 @@
 /*eslint-env node*/
+'use strict';
 
 var path = require('path');
-
-var System = require('jspm/node_modules/systemjs');
 
 var jspm = require('jspm');
 var builder = new jspm.Builder();
@@ -19,7 +18,7 @@ var jspmBaseUrl = 'static/src';
 var prefixPath = 'static/hash';
 var bundlesUri = 'bundles';
 var bundleConfigs = [
-    ['core + system-script', 'core'],
+    ['core + system-script + domready', 'core'],
     ['es6/bootstraps/crosswords - core', 'crosswords'],
     ['bootstraps/accessibility - core', 'accessibility'],
     ['bootstraps/app - core', 'app'],

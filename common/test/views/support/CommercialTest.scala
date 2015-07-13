@@ -75,22 +75,22 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
   "topAboveNavSlot show" should "be false for 1x1 ad on UK network front" in {
     FixedTopAboveNavAdSlotSwitch.switchOn()
     TopAboveNavAdSlotOmitSwitch.switchOn()
-    topAboveNavSlot.show(metaDataFromId("uk")) shouldBe false
+    topAboveNavSlot.hasAd(metaDataFromId("uk")) shouldBe false
   }
 
   it should "be true for non-1x1 ad on UK network front" in {
     FixedTopAboveNavAdSlotSwitch.switchOn()
-    topAboveNavSlot.show(metaDataFromId("uk")) shouldBe true
+    topAboveNavSlot.hasAd(metaDataFromId("uk")) shouldBe true
   }
 
   it should "be true for any other page" in {
     FixedTopAboveNavAdSlotSwitch.switchOn()
     TopAboveNavAdSlotOmitSwitch.switchOn()
-    topAboveNavSlot.show(metaDataFromId("us")) shouldBe true
+    topAboveNavSlot.hasAd(metaDataFromId("us")) shouldBe true
   }
 
   it should "be true when master switch is off" in {
     FixedTopAboveNavAdSlotSwitch.switchOff()
-    topAboveNavSlot.show(metaDataFromId("uk")) shouldBe true
+    topAboveNavSlot.hasAd(metaDataFromId("uk")) shouldBe true
   }
 }
