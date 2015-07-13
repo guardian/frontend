@@ -5,6 +5,7 @@ define([
     'bonzo',
     'fastclick',
     'qwery',
+    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/cookies',
@@ -45,6 +46,7 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
+    'common/modules/save-for-later',
     'text!common/views/international-message.html',
     'text!common/views/international-control-message.html',
     'text!common/views/donot-use-adblock.html',
@@ -54,6 +56,7 @@ define([
     bonzo,
     FastClick,
     qwery,
+    Promise,
     $,
     config,
     cookies,
@@ -94,6 +97,7 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
+    SaveForLater,
     internationalMessage,
     internationalControlMessage,
     doNotUseAdblockTemplate,
@@ -339,7 +343,25 @@ define([
                         }).show(template(internationalControlMessage, {}));
                     }
                 }
+            },
+
+            saveForLater: function() {
+                var loadIdentityApi = new Promise(function (resolve) {
+                    mediator.on('module:identity:api:loaded', resolve);
+                });
+
+                var loadProfileNav = new Promise(function(resolve) {
+                    mediator.on('modules:profile:loded', resolve);
+                });
+
+                Promise.all([loadIdentityApi, loadProfileNav]).then( function() {
+                   console.log("Bonza");
+                   var saveForLater = new SaveForLater();
+                   saveForLater.init();
+                });
             }
+
+
         };
 
     return {
