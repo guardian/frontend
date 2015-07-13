@@ -1,4 +1,3 @@
-import Promise from 'Promise';
 import robust from 'common/utils/robust';
 
 describe('Robust', function () {

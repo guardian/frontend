@@ -318,7 +318,7 @@ object Front extends implicits.Collections {
           * matter what occurred further up the page.
           */
         dynamicContainer.containerDefinitionFor(
-          faciaContentList.collect({ case content: CuratedContent => content }).map(Story.fromFaciaContent)
+          faciaContentList.map(Story.fromFaciaContent)
         ) map { containerDefinition =>
           (seen ++ faciaContentList
             .map(_.url)
@@ -426,14 +426,14 @@ object Front extends implicits.Collections {
 
   }
 
-  def makeLinkedData(collections: Seq[FaciaContainer]): ItemList = {
+  def makeLinkedData(url: String, collections: Seq[FaciaContainer]): ItemList = {
     ItemList(
-      "", // relative iri so just resolves to the base
+      Configuration.site.host + url,
       collections.zipWithIndex.map {
         case (collection, index) =>
           ListItem(position = index, item = Some(
             ItemList(
-              "", // don't have a uri for each container
+              Configuration.site.host + url, // don't have a uri for each container
               collection.items.zipWithIndex.map {
                 case (item, index) =>
                   ListItem(position = index, url = Some(Configuration.site.host + item.url))

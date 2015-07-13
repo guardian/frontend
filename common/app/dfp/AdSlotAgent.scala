@@ -2,7 +2,6 @@ package dfp
 
 import common.Edition
 import conf.Configuration.commercial.dfpAdUnitRoot
-import conf.Switches.ExposeHasTopBelowNavAdSlotFlagSwitch
 
 trait AdSlotAgent {
 
@@ -11,8 +10,6 @@ trait AdSlotAgent {
   protected def lineItems: Seq[GuLineItem]
 
   def hasAdInTopBelowNavSlot(adUnitWithoutRoot: String, edition: Edition): Boolean = {
-
-    if (ExposeHasTopBelowNavAdSlotFlagSwitch.isSwitchedOn) {
 
       val adUnitWithRoot = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
 
@@ -51,7 +48,5 @@ trait AdSlotAgent {
           targetsAdUnit(lineItem) &&
           !(isProd && targetsAdTest(lineItem))
       }
-
-    } else false
   }
 }

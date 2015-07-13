@@ -5,7 +5,9 @@ describe('Scroll depth', function () {
 
     beforeEach(function () {
         document.body.style.height = '100px';
-        var sd = new ScrollDepth();
+        /*eslint-disable no-new*/
+        new ScrollDepth();
+        /*eslint-enable no-new*/
     });
 
     it('should log page depth on scroll.', function (done) {

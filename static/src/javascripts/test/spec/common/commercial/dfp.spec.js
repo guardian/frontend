@@ -1,6 +1,4 @@
 /*eslint-disable no-multi-str*/
-import bean from 'bean';
-import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import sinon from 'sinonjs';
 import qwery from 'qwery';
@@ -39,14 +37,13 @@ describe('DFP', function () {
             };
         },
         injector = new Injector(),
-        dfp, config, mediator;
+        dfp, config;
 
     beforeEach(function (done) {
 
-        injector.test(['common/modules/commercial/dfp', 'common/utils/config', 'common/utils/mediator'], function () {
+        injector.test(['common/modules/commercial/dfp', 'common/utils/config'], function () {
             dfp = arguments[0];
             config = arguments[1];
-            mediator = arguments[2];
 
             config.switches = {
                 commercialComponents: true,
@@ -125,7 +122,7 @@ describe('DFP', function () {
     });
 
     it('should get the slots', function () {
-        var slots = dfp.init();
+        dfp.init();
         window.googletag.cmd.forEach(function (func) { func(); });
         expect(Object.keys(dfp.getSlots()).length).toBe(4);
     });
@@ -262,8 +259,8 @@ describe('DFP', function () {
             };
 
         it('should insert html', function (done) {
-            var html = '<div class="dfp-iframe-content">Some content</div>',
-                $slot = $('#' + slotId).attr('data-label', false);
+            var html = '<div class="dfp-iframe-content">Some content</div>';
+            $('#' + slotId).attr('data-label', false);
             createTestIframe(slotId, '<div class="breakout__html">' + html + '</div>');
             dfp.init();
 

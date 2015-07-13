@@ -225,13 +225,13 @@ define([
 
     GalleryLightbox.prototype.loadSurroundingImages = function (index, count) {
 
-        var imageContent, $img, $parent;
+        var imageContent, $img;
         _([-1, 0, 1]).map(function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; })
             .each(function (i) {
                 imageContent = this.images[i];
                 $img = bonzo(this.$images[i]);
                 if (!$img.attr('src')) {
-                    $parent = $img.parent()
+                    $img.parent()
                         .append(bonzo.create(loaderTpl));
 
                     $img.attr('src', imageContent.src);

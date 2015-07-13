@@ -2,8 +2,7 @@ import Injector from 'helpers/injector';
 
 describe('Audience Science Gateway', function () {
 
-    var getParaWithSpaceStub, $fixturesContainer,
-        injector = new Injector(),
+    var injector = new Injector(),
         audienceScienceGateway, config, storage;
 
     beforeEach(function (done) {

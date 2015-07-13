@@ -6,7 +6,6 @@
 @import implicits.FaciaContentFrontendHelpers._
 @import common.LinkTo
 @import views.support.ImgSrc
-@import implicits.Requests._
 @import conf.Switches.ImgixSwitch
 
 @popular.map { pop =>
@@ -18,7 +17,7 @@
                     <a class="right-most-popular-item__url media u-cf" href="@LinkTo{@trail.url}">
                         @trail.trailPicture(5, 3).map{ image =>
                             <div class="right-most-popular-item__img media__img">
-                                <img class="responsiveimg" src="@if(request.isInImgixTest && ImgixSwitch.isSwitchedOn) { @ImgSrc.getFallbackUrl(image) } else { @Item120.bestFor(image) }" alt="" />
+                                <img class="responsiveimg" src="@if(ImgixSwitch.isSwitchedOn) { @ImgSrc.getFallbackUrl(image) } else { @Item120.bestFor(image) }" alt="" />
                             </div>
                         }
                         <h4 class="right-most-popular-item__headline media__body">@trail.linkText</h4>

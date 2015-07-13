@@ -2,11 +2,9 @@
 /* jscs:disable disallowDanglingUnderscores */
 define(function () {
 
-    var instance = null,
-        scriptId = 'facebook-jssdk';
+    var scriptId = 'facebook-jssdk';
 
     function FacebookAuthorizer(appId) {
-        instance = this;
         this.appId = appId;
         this.onConnected = new RepeatablePromise();
         this.onFBScriptLoaded = new RepeatablePromise();
@@ -120,10 +118,6 @@ define(function () {
 
         this.onFBScriptLoaded.resolve(FB);
 
-    };
-
-    FacebookAuthorizer.prototype.destroy = function () {
-        instance = null;
     };
 
     function RepeatablePromise() {

@@ -1,15 +1,22 @@
 package views.support
 
+import common.Edition
 import conf.Switches._
 import model.MetaData
 
 object Commercial {
 
+  def shouldShowAds(metaData: MetaData): Boolean = metaData match {
+    case c: model.Content if c.shouldHideAdverts => false
+    case p: model.Page if p.section == "identity" => false
+    case _ => true
+  }
+
   object topAboveNavSlot {
 
     private def isUKNetworkFront(metaData: MetaData) = metaData.id == "uk"
 
-    def show(metaData: MetaData): Boolean = {
+    def hasAd(metaData: MetaData): Boolean = {
       FixedTopAboveNavAdSlotSwitch.isSwitchedOff ||
         TopAboveNavAdSlotOmitSwitch.isSwitchedOff ||
         !isUKNetworkFront(metaData)
@@ -53,6 +60,13 @@ object Commercial {
       }
 
       (classes :+ sizeSpecificClass) mkString " "
+    }
+  }
+
+  object topBelowNavSlot {
+
+    def hasAd(metaData: MetaData, edition: Edition): Boolean = {
+      metaData.hasAdInBelowTopNavSlot(edition)
     }
   }
 }
