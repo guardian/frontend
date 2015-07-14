@@ -15,7 +15,7 @@
 <script id="gu">
     @Html(templates.headerInlineJS.js.polyfills().body)
 
-    @Html(templates.headerInlineJS.js.isOlderDevice(item).body)
+    @Html(templates.headerInlineJS.js.shouldEnhance(item).body)
 
     @Html(templates.headerInlineJS.js.config(item).body)
 

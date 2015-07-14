@@ -6,7 +6,8 @@
 
 window.guardian = {
     isModernBrowser: (
-        "querySelector" in document
+        window.shouldEnhance
+            && "querySelector" in document
             && "addEventListener" in window
             && "localStorage" in window
             && "sessionStorage" in window
@@ -15,8 +16,6 @@ window.guardian = {
                 ("XMLHttpRequest" in window && "withCredentials" in new XMLHttpRequest())
                     || "XDomainRequest" in window
             )
-            && !isOlderDevice
-            && !personPrefersCore
     ),
     css: {
         loaded: false
