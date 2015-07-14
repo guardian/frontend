@@ -1,9 +1,9 @@
 package common
 
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.Play
 import common.editions.Uk
+import play.api.mvc.RequestHeader
 import test._
 import play.api.test.FakeRequest
 
@@ -16,6 +16,10 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
 
   object TestLinkTo extends LinkTo {
     override lazy val host = "http://www.foo.com"
+  }
+
+  object TheGuardianLinkTo extends LinkTo {
+    override lazy val host = "http://www.theguardian.com"
   }
 
   "LinkTo" should "leave 'other' urls unchanged" in {
@@ -57,8 +61,14 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TestLinkTo("/football/rss", edition) should be ("http://www.foo.com/football/rss")
   }
 
+  it should "be protocol relative on https enabled sections" in {
+    TheGuardianLinkTo("/info/hello", edition) should be ("//www.theguardian.com/info/hello")
+    TheGuardianLinkTo("http://www.theguardian.com/info", edition) should be ("//www.theguardian.com/info")
+    TheGuardianLinkTo("/info/foo", edition) should be ("//www.theguardian.com/info/foo")
+  }
+
   object TestCanonicalLink extends CanonicalLink {
-    override lazy val scheme = "http"
+    override lazy val secureApp: Boolean = false
   }
 
   "CanonicalLink" should "be the gatekeeper for significant parameters" in {
@@ -104,4 +114,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
     TestCanonicalLink(TestRequest("/foo?page=http://www.theguardian.com").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo?page=http%3A%2F%2Fwww.theguardian.com")
   }
 
+  it should "link to https for https sections" in {
+    TestCanonicalLink(TestRequest("/info/foo").withHost("www.theguardian.com")) should be ("https://www.theguardian.com/info/foo")
+  }
 }
