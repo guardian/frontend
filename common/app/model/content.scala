@@ -432,7 +432,7 @@ private object ArticleSchemas {
     // http://schema.org/Review
     if (article.isReview)
       "http://schema.org/Review"
-    else if (article.isLive)
+    else if (article.isLiveBlog)
       "http://schema.org/LiveBlogPosting"
     else
       "http://schema.org/NewsArticle"

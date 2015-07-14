@@ -52,7 +52,6 @@ define([
     'use strict';
 
     var modules,
-        affix = null,
         autoUpdate = null;
 
     function getTimelineEvents() {
@@ -185,12 +184,14 @@ define([
 
                 if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0) {
                     topMarker = qwery('.js-top-marker')[0];
-                    affix = new Affix({
+                    /*eslint-disable no-new*/
+                    new Affix({
                         element: qwery('.js-live-blog__timeline-container')[0],
                         topMarker: topMarker,
                         bottomMarker: qwery('.js-bottom-marker')[0],
                         containerElement: qwery('.js-live-blog__key-events')[0]
                     });
+                    /*eslint-enable no-new*/
                 }
                 createScrollTransitions();
             }

@@ -2,7 +2,6 @@ import Id from 'common/modules/identity/api';
 import bean from 'bean';
 import sinon from 'sinonjs';
 import fixtures from 'helpers/fixtures';
-import discussionJson from 'fixtures/discussion/discussion';
 import validCommentText from 'fixtures/discussion/comment-valid';
 import apiPostValidCommentResp from 'fixtures/discussion/api-post-comment-valid';
 import CommentBox from 'common/modules/discussion/comment-box';
@@ -57,9 +56,6 @@ describe('Comment box', function () {
                 ajaxUrl: '',
                 edition: 'UK'
             }
-        },
-        reqwestReturn = {
-            'then': function () {}
         },
         commentBox;
 

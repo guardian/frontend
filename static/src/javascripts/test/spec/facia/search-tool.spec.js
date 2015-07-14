@@ -1,5 +1,4 @@
 import bean from 'bean';
-import bonzo from 'bonzo';
 import sinon from 'sinonjs';
 import $ from 'common/utils/$';
 import Injector from 'helpers/injector';
