@@ -21,7 +21,8 @@ const PRESETS = {
     pxtorem: {
         replace: true,
         root_value: 16,
-        unit_precision: 5
+        unit_precision: 5,
+        prop_white_list: []
     }
 }
 
