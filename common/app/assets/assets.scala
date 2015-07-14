@@ -134,7 +134,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
      val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
 
      val systemJsPolyfills: String = inlineJs("assets/system-polyfills.src.js")
-     val systemJs: String = inlineJs("assets/system.src.js")
+     val systemJs: String = inlineJs("assets/system-csp-production.src.js")
      val systemJsAppConfig: String = inlineJs("assets/systemjs-config.js")
      val systemJsNormalize: String = inlineJs("assets/systemjs-normalize.js")
      val systemJsBundleConfig: String = inlineJs("assets/systemjs-bundle-config.js")
