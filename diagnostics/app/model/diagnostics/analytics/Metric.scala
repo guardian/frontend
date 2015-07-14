@@ -21,7 +21,7 @@ object Metric extends Logging {
     // page views
     ("pv", CountMetric("kpis-page-views")),            // raw page views - simple <img> in body, no javascript involved
     ("pva", CountMetric("kpis-analytics-page-views")), // page view fires after analytics
-    ("bounce-test-present", CountMetric("bounce-test-present")),
+    ("user-navigated-early", CountMetric("user-navigated-early")),
 
     ("ads-blocked", CountMetric("ads-blocked")),
     ("ad-render", CountMetric("first-ad-rendered")),
