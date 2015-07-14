@@ -57,6 +57,6 @@ object Dependencies {
   val slf4jExt = "org.slf4j" % "slf4j-ext" % slf4jVersion
   val snappyJava = "org.xerial.snappy" % "snappy-java" % "1.0.5.1"
   val uaDetectorResources = "net.sf.uadetector" % "uadetector-resources" % "2013.04"
-  val scalaTestPlus = "org.scalatestplus" %% "play" % "1.2.0" % "test"
+  val scalaTestPlus = "org.scalatestplus" %% "play" % "1.4.0-M3" % "test"
   val anormModule = "com.typesafe.play" %% "anorm" % "2.4.0"
 }

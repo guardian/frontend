@@ -10,6 +10,7 @@ import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
+import play.api.libs.ws.WSSignatureCalculator
 import shade.memcached.{Configuration => MemcachedConfiguration, Memcached, MemcachedCodecs}
 
 import scala.concurrent.duration._
@@ -61,7 +62,7 @@ object BookFinder extends ExecutionContexts with Logging {
 
 object MagentoService extends Logging {
 
-  private case class MagentoProperties(oauth: OAuthCalculator, urlPrefix: String)
+  private case class MagentoProperties(oauth: WSSignatureCalculator, urlPrefix: String)
 
   private val magentoProperties = {
     for {
