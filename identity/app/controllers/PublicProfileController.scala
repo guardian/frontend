@@ -37,11 +37,13 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
           NotFound(views.html.errors._404())
 
         case Right(user) =>
-          user.publicFields.displayName.map { displayName =>
-            val idRequest = idRequestParser(request)
-            Cached(60)(Ok(views.html.publicProfilePage(
-              page(url, displayName), idRequest, idUrlBuilder, user, activityType)))
-          } getOrElse NotFound(views.html.errors._404())
+          (user.isGuest, user.publicFields.displayName) match {
+            case (false, Some(displayName)) =>
+              val idRequest = idRequestParser(request)
+              Cached(60)(Ok(views.html.publicProfilePage(
+                page(url, displayName), idRequest, idUrlBuilder, user, activityType)))
+            case _ => NotFound(views.html.errors._404())
+          }
       }
   }
 }
