@@ -45,6 +45,7 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
+    'common/modules/social/pinterest',
     'text!common/views/international-message.html',
     'text!common/views/international-control-message.html',
     'text!common/views/donot-use-adblock.html',
@@ -94,6 +95,7 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
+    pinterest,
     internationalMessage,
     internationalControlMessage,
     doNotUseAdblockTemplate,
@@ -340,6 +342,12 @@ define([
                         }).show(template(internationalControlMessage, {}));
                     }
                 }
+            },
+
+            initPinterest: function () {
+                if (config.page.contentType !== 'Network Front') {
+                    pinterest();
+                }
             }
         };
 
@@ -382,7 +390,8 @@ define([
                 ['c-tech-feedback', techFeedback],
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],
-                ['c-international-signposting', modules.internationalSignposting]
+                ['c-international-signposting', modules.internationalSignposting],
+                ['c-pinterest', modules.initPinterest]
             ]);
             if (window.console && window.console.log && !config.page.isDev) {
                 window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');

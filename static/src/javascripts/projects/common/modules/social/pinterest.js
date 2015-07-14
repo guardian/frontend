@@ -7,10 +7,13 @@ define([
     bean,
     $
 ) {
+    var buttonsSelector = '.social__item--pinterest',
+        buttons;
+
     function launchOverlay(event) {
         event.preventDefault();
 
-        $('img:not(.gu-image):not(.responsive-img)').each(function (img) {
+        $('img:not(.gu-image):not(.responsive-img):not(.gallery2__img)').each(function (img) {
             fastdom.write(function () {
                 $(img).attr('data-pin-nopin', 'true');
             });
@@ -20,11 +23,8 @@ define([
     }
 
     return function () {
-        $('.social__item--pinterest').each(function (el) {
-            fastdom.write(function () {
-                $(el).css('display', 'block');
-            });
-
+        buttons = buttons || $(buttonsSelector);
+        buttons.each(function (el) {
             bean.on(el, 'click', launchOverlay);
         });
     };

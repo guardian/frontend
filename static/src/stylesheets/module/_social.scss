@@ -315,13 +315,3 @@ category: Common
         }
     }
 }
-
-// Pintrest test
-
-.social__item--pinterest {
-    display: none;
-
-    .content--gallery & {
-        display: block;
-    }
-}
