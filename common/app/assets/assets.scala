@@ -104,7 +104,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
     private def project(project: String): String = {
       project match {
         case "facia" => "stylesheets/facia.css"
-        case _ => "stylesheets/global.css"
+        case _ => "stylesheets/content.css"
       }
     }
 
@@ -136,7 +136,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
      val systemJsPolyfills: String = inlineJs("assets/system-polyfills.src.js")
 
-     val systemJs: String = inlineJs("assets/system.src.js")
+     val systemJs: String = inlineJs("assets/system-csp-production.src.js")
 
      val systemJsAppConfig: String = inlineJs("assets/systemjs-config.js")
 

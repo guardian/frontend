@@ -1,4 +1,3 @@
-import $ from 'common/utils/$';
 import Injector from 'helpers/injector';
 import sinon from 'sinonjs';
 

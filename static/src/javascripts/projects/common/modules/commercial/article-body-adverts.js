@@ -6,8 +6,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/modules/article/spacefinder',
-    'common/modules/commercial/create-ad-slot',
-    'common/modules/experiments/ab'
+    'common/modules/commercial/create-ad-slot'
 ], function (
     fastdom,
     Promise,
@@ -16,8 +15,7 @@ define([
     config,
     detect,
     spacefinder,
-    createAdSlot,
-    ab
+    createAdSlot
 ) {
     function getRules() {
         return {
@@ -109,7 +107,7 @@ define([
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            if (ab.shouldRunTest('Viewability', 'variant') && config.switches.commercialExtraAds) {
+            if (config.switches.viewability && config.switches.commercialExtraAds) {
                 return inlineMercPromise.then(function () {
                     return spacefinder.getParaWithSpace(rules).then(function (space) {
                         return insertAdAtP(space);
