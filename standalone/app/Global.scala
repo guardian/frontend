@@ -59,7 +59,7 @@ object PreviewAuthFilters {
 object Global extends WithFilters(
     new PreviewAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
-    FilterExemptions.exemptions):: NoCacheFilter :: Filters.common: _*)
+    FilterExemptions.exemptions):: NoCacheFilter :: conf.Filters.common: _*)
   with CommercialLifecycle
   with OnwardJourneyLifecycle
   with ConfigAgentLifecycle
