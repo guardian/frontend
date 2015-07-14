@@ -658,7 +658,7 @@ object Switches {
     "notifications",
     "Notifications",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 15),
+    sellByDate = new LocalDate(2015, 10, 15),
     exposeClientSide = true
   )
 
