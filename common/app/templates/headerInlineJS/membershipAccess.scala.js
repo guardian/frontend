@@ -1,14 +1,13 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
 @import conf.Configuration
 
+/**
+ * Membership access
+ * Items with either of the following fields require Membership access
+ * - membershipAccess=members-only
+ * - membershipAccess=paid-members-only
+ */
 @for(membershipAccess <- item.membershipAccess if item.requiresMembershipAccess) {
-    /**
-     * Membership access
-     * Items with either of the following fields require Membership access
-     * - membershipAccess=members-only
-     * - membershipAccess=paid-members-only
-     */
-
     (function (window) {
         // Authenticating requires CORS and withCredentials. If we don't cut the mustard then pass through.
         if(!window.guardian.isModernBrowser) { return; }

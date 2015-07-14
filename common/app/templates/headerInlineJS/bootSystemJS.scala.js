@@ -95,7 +95,7 @@ System['import']('core').then(function () {
                     }
                 });
             });
-            @Html(templates.headerInlineJS.js.membershipAccess(item).toString)
+            @JavaScript(templates.headerInlineJS.js.membershipAccess(item).body)
         });
     });
 });
