@@ -14,8 +14,7 @@ define([
     'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/tests/pintrest',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/membership-message',
-    'common/modules/experiments/tests/viewability'
+    'common/modules/experiments/tests/membership-message'
 ], function (
     raven,
     _,
@@ -32,8 +31,7 @@ define([
     CookieRefresh,
     Pintrest,
     Headline,
-    MembershipMessage,
-    Viewability
+    MembershipMessage
 ) {
 
     var TESTS = _.flatten([
@@ -45,7 +43,6 @@ define([
         new CookieRefresh(),
         new Pintrest(),
         new MembershipMessage(),
-        new Viewability(),
         _.map(_.range(1, 10), function (n) {
             return new Headline(n);
         })

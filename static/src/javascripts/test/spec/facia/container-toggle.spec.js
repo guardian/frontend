@@ -2,7 +2,6 @@ import ContainerDisplayToggle from 'facia/modules/ui/container-toggle';
 import $ from 'common/utils/$';
 import mediator from 'common/utils/mediator';
 import bonzo from 'bonzo';
-import bean from 'bean';
 import fastdom from 'fastdom';
 import userPrefs from 'common/modules/user-prefs';
 import qwery from 'qwery';

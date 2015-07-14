@@ -7,6 +7,10 @@
         color: colour(external-main-1);
     }
 
+    .fc-save-for-later {
+        border-color: mix(#000000, colour(neutral-6), 10%);
+    }
+
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, colour(neutral-6), 10%);
     }

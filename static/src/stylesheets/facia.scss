@@ -28,3 +28,6 @@
 @import 'module/business/_stocks';
 @import 'module/live-pulse';
 @import 'module/facia/snaps/_facia';
+// This icon currently lives in global (aka "global - facia"). Add it to facia
+// for the test
+@import 'module/save-for-later-test';
