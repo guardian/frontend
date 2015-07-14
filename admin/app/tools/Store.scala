@@ -5,8 +5,10 @@ import conf.AdminConfiguration
 import conf.Configuration.commercial._
 import dfp._
 import implicits.Dates
+import model.admin.commercial.TakeoverWithEmptyMPUs
 import org.joda.time.DateTime
 import play.api.libs.json.Json
+import play.api.libs.json.Json.toJson
 import services.S3
 
 trait Store extends Logging with Dates {
@@ -64,6 +66,20 @@ trait Store extends Logging with Dates {
   } getOrElse InlineMerchandisingTargetedTagsReport(now, InlineMerchandisingTagSet())
 
   def getDfpLineItemsReport() = S3.get(dfpLineItemsKey)
+
+  object commercial {
+
+    def getTakeoversWithEmptyMPUs(): Seq[TakeoverWithEmptyMPUs] = {
+      S3.get(takeoversWithEmptyMPUsKey) map {
+        Json.parse(_).as[Seq[TakeoverWithEmptyMPUs]]
+      } getOrElse Nil
+    }
+
+    def putTakeoversWithEmptyMPUs(takeovers: Seq[TakeoverWithEmptyMPUs]): Unit = {
+      val content = Json.stringify(toJson(takeovers))
+      S3.putPrivate(takeoversWithEmptyMPUsKey, content, "application/json")
+    }
+  }
 }
 
 object Store extends Store
