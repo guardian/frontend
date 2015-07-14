@@ -16,6 +16,7 @@ window.guardian = {
                     || "XDomainRequest" in window
             )
             && !isOlderDevice
+            && !personPrefersCore
     ),
     css: {
         loaded: false

@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {
     "btoa": "1.1.2",
+    "eslint-plugin-react": "^2.7.0",
     "esprima": "1.2.2",
     "esprima-fb": "^15001.1.0-dev-harmony-fb",
     "glob": "4.0.6",

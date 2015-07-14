@@ -1,6 +1,14 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
 
+var personPrefersCore = (function(){
+    if (window.localStorage) {
+        var preference = window.localStorage.getItem('gu.prefs.force-core') || 'off';
+        return /"value":"on"/.test(preference);
+    }
+    return false;
+})();
+
 // Guess whether the device is too old, regardless of whether it cuts the mustard
 //
 // 'older' iOS normally indicates a device with lower power (they stop being upgradeable at some point).

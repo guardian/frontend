@@ -21,7 +21,7 @@ describe('Facebook Authorizer', function () {
                 api: sinon.spy(function (path, callback) {
                     callback(userData);
                 }),
-                login: sinon.spy(function (callback, permissions) {
+                login: sinon.spy(function (callback) {
                     callback(loginResponse);
                 }),
                 getLoginStatus: sinon.spy(function (callback) {
@@ -37,7 +37,6 @@ describe('Facebook Authorizer', function () {
 
     afterEach(function () {
         delete window.FB;
-        authorizer.destroy();
         bonzo('meta').remove();
         bonzo('.facebook-jssdk').remove();
     });
