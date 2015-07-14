@@ -13,7 +13,7 @@
         @if(article.isFeature && article.hasShowcaseMainPicture){has-feature-showcase-picture}"
         itemscope itemtype="@article.schemaType" role="main">
 
-        <a itemprop="mainEntityOfPage" href="@LinkTo(article.url)"/>
+        <meta itemprop="mainEntityOfPage" content="@LinkTo(article.url)">
 
         @fragments.headTonal(article)
 
