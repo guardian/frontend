@@ -253,6 +253,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val Viewability = Switch(
+    "Performance",
+    "viewability",
+    "Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   // Commercial
   val OphanViewIdSwitch = Switch("Commercial",
     "ophan-view-id",
@@ -952,15 +961,6 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
-  )
-
-  val ABViewability = Switch(
-    "A/B Tests",
-    "ab-viewability",
-    "Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
-    exposeClientSide = true
   )
 
   val ABSaveForLaterSwitch = Switch(
