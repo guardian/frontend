@@ -69,7 +69,7 @@ object Us extends Edition(
       NavItem(environment, environmentLocalNav),
       NavItem(science),
       NavItem(media),
-      NavItem(crosswords),
+      NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)
     )
   }

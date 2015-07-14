@@ -203,6 +203,16 @@ trait Navigation {
 
   //Games
   val crosswords = SectionLink("crosswords", "crosswords", "Crosswords", "/crosswords")
+  val crosswordBlog = SectionLink("crosswords", "blog", "Blog", "/crosswords/crossword-blog")
+  val crosswordEditorUpdate = SectionLink("crosswords", "editor", "Editor", "/crosswords/series/crossword-editor-update")
+  val quick = SectionLink("crosswords", "quick", "Quick", "/crosswords/series/quick")
+  val cryptic = SectionLink("crosswords", "cryptic", "Cryptic", "/crosswords/series/cryptic")
+  val prize = SectionLink("crosswords", "prize", "Prize", "/crosswords/series/prize")
+  val quiptic = SectionLink("crosswords", "quiptic", "Quiptic", "/crosswords/series/quiptic")
+  val genius = SectionLink("crosswords", "genius", "Genius", "/crosswords/series/genius")
+  val speedy = SectionLink("crosswords", "speedy", "Speedy", "/crosswords/series/speedy")
+  val everyman = SectionLink("crosswords", "everyman", "Everyman", "/crosswords/series/everyman")
+  val azed = SectionLink("crosswords", "azed", "Azed", "/crosswords/series/azed")
 
   // Today's paper
   val todaysPaper = SectionLink("todayspaper", "today's paper", "Today's Paper", "/theguardian")
