@@ -40,7 +40,7 @@ define([
         $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
 
         if (!config.switches.standardAdverts ||
-            !ab.shouldRunTest('Viewability', 'variant') ||
+            !config.switches.viewability ||
             !$adSlotContainer.length ||
             !config.switches.discussion ||
             !identityApi.isUserLoggedIn() ||
