@@ -38,6 +38,7 @@ define([
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
         this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
         this.isProfilePage = config.page.section === 'identity';
+        this.isAdblockInUse = detect.adblockInUse;
     }
 
     StickyHeader.prototype.init = function () {
@@ -75,7 +76,7 @@ define([
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePositionApple();
             }.bind(this), 10));
-        } else if (this.isProfilePage) {
+        } else if (this.isProfilePage || this.isAdblockInUse) {
             this.updatePositionProfile();
         } else {
             mediator.on('window:scroll', _.throttle(function () {
@@ -326,7 +327,12 @@ define([
 
     StickyHeader.prototype.updatePositionProfile = function () {
         fastdom.read(function () {
-            var headerHeight = this.$els.header.dim().height;
+            var headerHeight;
+
+            if (this.isAdblockInUse) {
+                this.$els.header.addClass('l-header--is-slim');
+            }
+            headerHeight = this.$els.header.dim().height;
             fastdom.write(function () {
                 this.$els.header.css({
                     position:  'fixed',
