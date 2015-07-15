@@ -25,17 +25,17 @@ define([
         })
         .then(function (res) {
             if (res && res.html) {
-                container = container || $(containerSelector);                
-                fastDom.write(function() {
+                container = container || $(containerSelector);
+                fastDom.write(function () {
                     container.prepend(res.html);
-                    mediator.emit('page:new-content', container);                    
+                    mediator.emit('page:new-content', container);
                 });
             }
         });
     }
 
     return function () {
-        tests.forEach(function(test) {
+        tests.forEach(function (test) {
             if (ab.shouldRunTest('FilmExtras', test.variant)) {
                 loadContainer(test.containerId);
             }
