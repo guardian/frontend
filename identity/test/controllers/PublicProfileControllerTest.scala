@@ -25,7 +25,6 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
   val userId: String = "123"
   val vanityUrl: String = "bobski"
   val user = User("test@example.com", userId,
-    password = Some("password"),
     publicFields = PublicFields(
       displayName = Some("John Smith"),
       aboutMe = Some("I read the Guardian"),
@@ -102,17 +101,6 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
 
     "with no display name for the specified user" - {
       val guestUser = user.copy(publicFields = user.publicFields.copy(displayName = None))
-      when(api.userFromVanityUrl(Matchers.anyString, Matchers.any[Auth])) thenReturn Future.successful(Left(Nil))
-      when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(guestUser))
-      val result = controller.renderProfileFromVanityUrl(vanityUrl, "discussions")(request)
-
-      "then should return status 404" in {
-        status(result) should be(404)
-      }
-    }
-
-    "with guest user" - {
-      val guestUser = user.copy(password = None)
       when(api.userFromVanityUrl(Matchers.anyString, Matchers.any[Auth])) thenReturn Future.successful(Left(Nil))
       when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(guestUser))
       val result = controller.renderProfileFromVanityUrl(vanityUrl, "discussions")(request)
