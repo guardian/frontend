@@ -8,7 +8,7 @@ resolvers ++= Seq(
   Resolver.url("sbt-plugin-snapshots", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-snapshots/"))(Resolver.ivyStylePatterns)
 )
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.3.7")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.0")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "0.7.6")
 
