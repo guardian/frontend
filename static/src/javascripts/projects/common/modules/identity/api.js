@@ -267,7 +267,7 @@ define([
                 data: JSON.stringify(data),
                 withCredentials: true,
                 headers: {
-                    'X-GU-ID-Client-Access-Token':  'Bearer frontend-dev-client-token'
+                    'X-GU-ID-Client-Access-Token':  'Bearer ' + config.page.idApiJsClientToken
                 }
             });
 
