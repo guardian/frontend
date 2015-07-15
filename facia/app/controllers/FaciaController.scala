@@ -15,7 +15,7 @@ import play.api.libs.json.{JsObject, Json}
 import play.api.mvc._
 import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
-import slices.Container
+import slices._
 import views.html.fragments.containers.facia_cards.container
 
 import scala.concurrent.Future
@@ -132,7 +132,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
           val containerDefinition = FaciaContainer(
             1,
-            Container.fromConfig(config),
+            Fixed(FixedContainers.fixedMediumFastXII),
             CollectionConfigWithId(id, config),
             CollectionEssentials.fromPressedCollection(collection)
           )

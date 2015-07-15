@@ -10,7 +10,7 @@ import model.facia.PressedCollection
 import model.meta.{ListItem, ItemList}
 import org.joda.time.DateTime
 import services.{CollectionConfigWithId, FaciaContentConvert}
-import slices.{MostPopular, _}
+import slices._
 import views.support.CutOut
 
 import scala.Function._
