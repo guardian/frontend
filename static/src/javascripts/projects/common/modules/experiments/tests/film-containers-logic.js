@@ -2,12 +2,14 @@ define([
     'fastdom',
     'common/utils/$',
     'common/utils/ajax',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/modules/experiments/ab'
 ], function (
     fastDom,
     $,
     ajax,
-    mediator
+    mediator,
+    ab
 ) {
     var tests = [
             {variant: 'curated', containerId: '1ce8-6c50-425f-9d32'},
