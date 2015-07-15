@@ -1,15 +1,12 @@
 package controllers
 
-import java.net.URLEncoder
-
 import common._
-import conf.Switches
-import play.api.mvc.{ Content => _, _ }
+import play.api.mvc._
 import model.diagnostics.javascript.JavaScript
 import model.diagnostics.abtests.AbTests
 import model.diagnostics.analytics.Analytics
 import model.diagnostics.css.Css
-import model.{NoCache, TinyResponse}
+import model.TinyResponse
 
 object DiagnosticsController extends Controller with Logging {
 

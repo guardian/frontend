@@ -46,6 +46,7 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
+    'common/modules/social/pinterest',
     'common/modules/save-for-later',
     'text!common/views/international-message.html',
     'text!common/views/international-control-message.html',
@@ -97,6 +98,7 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
+    pinterest,
     SaveForLater,
     internationalMessage,
     internationalControlMessage,
@@ -345,19 +347,27 @@ define([
                 }
             },
 
+            initPinterest: function () {
+                if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
+                    pinterest();
+                }
+            },
+
             saveForLater: function() {
-                if(config.switches.saveForLater ) {
+                if (config.switches.saveForLater) {
                     var saveForLater = new SaveForLater();
                     saveForLater.init();
                 }
             }
-
-
-        };
+    };
 
     return {
         init: function () {
             robusts([
+
+                // Analytics comes at the top. If you think your thing is more important then please think again...
+                ['c-analytics', modules.loadAnalytics],
+
                 ['c-fonts', fonts],
                 ['c-identity', identity],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
@@ -385,7 +395,6 @@ define([
                 ['c-smart-banner', smartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-log-stats', modules.logLiveStats],
-                ['c-analytics', modules.loadAnalytics],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-overlay', modules.initOpenOverlayOnClick],
                 ['c-css-logging', modules.runCssLogging],
@@ -395,6 +404,7 @@ define([
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-international-signposting', modules.internationalSignposting],
+                ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater]
             ]);
             if (window.console && window.console.log && !config.page.isDev) {
