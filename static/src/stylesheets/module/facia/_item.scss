@@ -550,23 +550,26 @@ $block-height: 71px;
         color: inherit;
     }
 
-    &:after {
-        content: 'save';
+
+    @include mq(tablet) {
+        &:after {
+            content: 'save';
+        }
+
+        &.fc-save-for-later--is-saved:after {
+            content: 'saved';
+        }
     }
 
     .inline-icon {
         float: right;
-        margin-left: $gs-gutter / 4;
         margin-right: 0;
 
         @include mq(tablet) {
             float: left;
+            margin-left: $gs-gutter / 4;
             margin-right: $gs-gutter / 4;
         }
-    }
-
-    &.fc-save-for-later--is-saved:after {
-        content: 'saved';
     }
 }
 
