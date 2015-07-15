@@ -1,21 +1,17 @@
 define([
     'fastdom',
     'common/utils/$',
-    'common/utils/_',
     'common/utils/ajax',
-    'common/utils/mediator',
-    'facia/modules/ui/container-show-more'
+    'common/utils/mediator'
 ], function (
     fastdom,
     $,
-    _,
     ajax,
-    mediator,
-    containerShowMore
+    mediator
 ) {
     var tests = [
-            {variant: 'curated', containerId: '1ce8-6c50-425f-9d32'}
-            {variant: 'news',    containerId: 'b073-c5d7-c8a9-1e32'}
+            {variant: 'curated', containerId: '1ce8-6c50-425f-9d32'},
+            {variant: 'news',    containerId: 'b073-c5d7-c8a9-1e32'},
             {variant: 'reviews', containerId: '5414-75a5-6df6-0503'}
         ],
         containerSelector = '.content-footer',
@@ -30,8 +26,10 @@ define([
         .then(function (res) {
             if (res && res.html) {
                 container = container || $(containerSelector);                
-                container.prepend(res.html);
-                mediator.emit('page:new-content', container);
+                fastDom.write(function() {
+                    container.prepend(res.html);
+                    mediator.emit('page:new-content', container);                    
+                });
             }
         });
     }
