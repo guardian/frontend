@@ -344,7 +344,7 @@ define([
             },
 
             initPinterest: function () {
-                if (config.page.contentType !== 'Network Front') {
+                if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
                     pinterest();
                 }
             }
