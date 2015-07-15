@@ -346,19 +346,10 @@ define([
             },
 
             saveForLater: function() {
-                var loadIdentityApi = new Promise(function (resolve) {
-                    mediator.on('module:identity:api:loaded', resolve);
-                });
-
-                var loadProfileNav = new Promise(function(resolve) {
-                    mediator.on('modules:profile:loded', resolve);
-                });
-
-                Promise.all([loadIdentityApi, loadProfileNav]).then( function() {
-                   console.log("Bonza");
-                   var saveForLater = new SaveForLater();
-                   saveForLater.init();
-                });
+                if(config.switches.saveForLater ) {
+                    var saveForLater = new SaveForLater();
+                    saveForLater.init();
+                }
             }
 
 
@@ -403,7 +394,8 @@ define([
                 ['c-tech-feedback', techFeedback],
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],
-                ['c-international-signposting', modules.internationalSignposting]
+                ['c-international-signposting', modules.internationalSignposting],
+                ['c-save-for-later', modules.saveForLater]
             ]);
             if (window.console && window.console.log && !config.page.isDev) {
                 window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');
