@@ -72,11 +72,15 @@ define([
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePositionMobile();
             }.bind(this), 10));
+        } else if (this.isAdblockInUse) {
+            mediator.on('window:scroll', _.throttle(function () {
+                this.updatePositionAdblock();
+            }.bind(this), 10));
         } else if (this.isAppleCampaign) {
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePositionApple();
             }.bind(this), 10));
-        } else if (this.isProfilePage || this.isAdblockInUse) {
+        } else if (this.isProfilePage) {
             this.updatePositionProfile();
         } else {
             mediator.on('window:scroll', _.throttle(function () {
@@ -327,12 +331,7 @@ define([
 
     StickyHeader.prototype.updatePositionProfile = function () {
         fastdom.read(function () {
-            var headerHeight;
-
-            if (this.isAdblockInUse) {
-                this.$els.header.addClass('l-header--is-slim');
-            }
-            headerHeight = this.$els.header.dim().height;
+            var headerHeight = this.$els.header.dim().height;
             fastdom.write(function () {
                 this.$els.header.css({
                     position:  'fixed',
@@ -344,6 +343,56 @@ define([
                 });
                 this.$els.main.css('padding-top', headerHeight);
             }.bind(this));
+        }.bind(this));
+    };
+
+    StickyHeader.prototype.updatePositionAdblock = function () {
+        fastdom.read(function () {
+            var headerHeight = this.$els.header.dim().height,
+                scrollY      = this.$els.window.scrollTop();
+
+            this.setScrollDirection(scrollY);
+            // Header is slim and navigation is shown on the scroll up
+            if (scrollY >= headerHeight) {
+                fastdom.write(function () {
+                    this.$els.header.css({
+                        position:  'fixed',
+                        top:       0,
+                        width:     '100%',
+                        'z-index': '1000',
+                        'margin-top': 0,
+                        '-webkit-transform': 'translateY(-100%)',
+                        '-ms-transform': 'translateY(-100%)',
+                        'transform': 'translateY(-100%)',
+                        'backface-visibility': 'hidden'
+                    });
+
+                    this.$els.header.addClass('l-header--is-slim');
+                    this.$els.header.css({
+                        '-webkit-transform': 'translateY(0%)',
+                        '-ms-transform': 'translateY(0%)',
+                        'transform': 'translateY(0%)'
+                    });
+                }.bind(this));
+                this.showNavigation(scrollY);
+            } else {
+                fastdom.write(function () {
+                    // Header is not slim yet
+                    this.$els.header.removeClass('l-header--is-slim');
+                    this.$els.header.css({
+                        position:  'static',
+                        width:     '100%',
+                        'margin-top': 0,
+                        '-webkit-transform': 'translateY(0%)',
+                        '-ms-transform': 'translateY(0%)',
+                        'transform': 'translateY(0%)',
+                        'z-index': '998'
+                    });
+                }.bind(this));
+
+                // Put navigation to its default state
+                this.setNavigationDefault();
+            }
         }.bind(this));
     };
 
