@@ -81,14 +81,6 @@ object FeedHttpRecorder extends HttpRecorder[WSResponse] {
   }
 }
 
-class StubFootballStatsPlugin(app: PlayApplication) extends FootballTestData {
-  def onStart() {
-    FootballClient.http = TestHttp
-    loadTestData()
-  }
-}
-
-
 // Stubs data for Football stats integration tests
 object TestHttp extends Http with ExecutionContexts {
 
