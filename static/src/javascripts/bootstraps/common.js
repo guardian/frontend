@@ -345,6 +345,10 @@ define([
     return {
         init: function () {
             robusts([
+
+                // Analytics comes at the top. If you think your thing is more important then please think again...
+                ['c-analytics', modules.loadAnalytics],
+
                 ['c-fonts', fonts],
                 ['c-identity', identity],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
@@ -372,7 +376,6 @@ define([
                 ['c-smart-banner', smartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-log-stats', modules.logLiveStats],
-                ['c-analytics', modules.loadAnalytics],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-overlay', modules.initOpenOverlayOnClick],
                 ['c-css-logging', modules.runCssLogging],
