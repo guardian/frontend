@@ -25,7 +25,7 @@ module.exports = function (grunt, options) {
                 expand: true,
                 cwd: 'static/src/jspm_packages',
                 src: [
-                    'system-csp-production.src.js',
+                    'system.src.js',
                     'system-polyfills.src.js'
                 ],
                 dest: 'common/conf/assets'
