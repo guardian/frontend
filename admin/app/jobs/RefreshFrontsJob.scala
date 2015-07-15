@@ -18,7 +18,7 @@ object HighFrequency extends FrontType {
 case class CronUpdate(path: String, frontType: FrontType)
 
 object RefreshFrontsJob extends Logging {
-  def getAllCronUpdates: Option[Seq[CronUpdate]] = {
+  def getCronUpdates: Option[Seq[CronUpdate]] = {
     val masterConfigJson: Option[JsValue] = S3FrontsApi.getMasterConfig.map(Json.parse)
     for (json <- masterConfigJson)
       yield
@@ -44,7 +44,7 @@ object RefreshFrontsJob extends Logging {
       log.info("Putting press jobs on Facia Cron (High Frequency)")
 
       for {
-        updates <- getAllCronUpdates
+        updates <- getCronUpdates
         update <- updates.filter(_.frontType == HighFrequency)
       } {
         log.info(s"Pressing $update")
@@ -60,7 +60,7 @@ object RefreshFrontsJob extends Logging {
       log.info("Putting press jobs on Facia Cron (Standard Frequency)")
 
       for {
-        updates <- getAllCronUpdates
+        updates <- getCronUpdates
         update <- updates.filter(_.frontType == StandardFrequency)
       } {
         log.info(s"Pressing $update")
@@ -76,7 +76,7 @@ object RefreshFrontsJob extends Logging {
       log.info("Putting press jobs on Facia Cron (Commercial Frequency)")
 
       for {
-        updates <- getAllCronUpdates
+        updates <- getCronUpdates
         update <- updates.filter(_.frontType == LowFrequency)
       } {
         log.info(s"Pressing $update")
@@ -85,17 +85,5 @@ object RefreshFrontsJob extends Logging {
     } else {
       log.info("Not pressing jobs to Facia cron - is either turned off or no queue is set")
     }
-  }
-
-  //This is used by a route in admin to push ALL paths to the facia-press SQS queue.
-  //The facia-press boxes will start to pick these off one by one, so there is no direct overloading of these boxes
-  def runAll(): Option[Seq[Unit]] = {
-    Configuration.aws.frontPressSns.map(Function.const {
-      log.info("Putting press jobs on Facia Cron (MANUAL REQUEST)")
-
-      for {update <- getAllCronUpdates.getOrElse(Nil)}
-        yield {
-        log.info(s"Pressing $update")
-        FrontPressNotification.sendWithoutSubject(update.path)}})
   }
 }

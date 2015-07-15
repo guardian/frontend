@@ -5,9 +5,9 @@ import scala.util._
 import play.api.data.Forms._
 import scala.util.Success
 import scala.util.Failure
-import play.api.i18n.{Messages, I18nSupport}
+import play.api.i18n.Messages
 
-trait DateMapping extends I18nSupport {
+trait DateMapping {
 
   val dateMapping = mapping(
     "year" -> optional(number(min = 1800, max = DateTime.now.getYear)),

@@ -14,7 +14,7 @@ object SentryReportJob extends ExecutionContexts with Logging with SentryDb {
 
   val dateFormatGeneration: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
 
-  implicit def rowToDateTime: Column[DateTime] = Column.nonNull1 { (value, meta) =>
+  implicit def rowToDateTime: Column[DateTime] = Column.nonNull { (value, meta) =>
     val MetaDataItem(qualified, nullable, clazz) = meta
     value match {
       case ts: java.sql.Timestamp => Right(new DateTime(ts.getTime))
@@ -43,9 +43,9 @@ object SentryReportJob extends ExecutionContexts with Logging with SentryDb {
              """
            )
 
-           val sentryErrorCounts : List[(DateTime, Long)] = sentryData.fold(List[(DateTime, Long)]()) { (list, error) =>
-             list :+(error[DateTime]("datetime"), error[Long]("count"))
-           }.right.get
+           val sentryErrorCounts = sentryData().map {
+              e => (e[DateTime]("datetime"), e[Long]("count"))
+           }.toList
 
            sentryReportAgent.send{
            old =>
