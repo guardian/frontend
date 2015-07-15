@@ -3,13 +3,13 @@ package form
 import play.api.data.Mapping
 import play.api.data.Forms._
 import play.api.data.format.Formats._
-import play.api.i18n.Messages
+import play.api.i18n.{Messages, I18nSupport}
 import model.Countries
 import org.scala_tools.time.Imports._
 import jobs.BlockedEmailDomainList
 import conf.Switches
 
-trait Mappings {
+trait Mappings extends I18nSupport {
 
   val textField = text(maxLength = 255)
   val textArea = text(maxLength = 1500)

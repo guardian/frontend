@@ -5,6 +5,8 @@ import sbt.Keys._
 import play.Play.autoImport._
 import PlayKeys._
 import play._
+import play.sbt._
+import play.sbt.routes.RoutesKeys
 import play.twirl.sbt.Import._
 import com.typesafe.sbt.web.Import._
 import Dependencies._
@@ -17,7 +19,6 @@ object Frontend extends Build with Prototypes {
       apacheCommonsMath3,
       awsSdk,
       contentApiClient,
-      crosswordsApiClient,
       faciaScalaClient,
       filters,
       flexibleContentBlockToText,
@@ -40,15 +41,11 @@ object Frontend extends Build with Prototypes {
       shadeMemcached,
       snappyJava,
       ws,
-      faciaFapiScalaClient
+      faciaFapiScalaClient,
+      dispatchTest
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
-  )
-
-  val crosswordsRouting: Seq[Def.Setting[_]] = Seq(
-    routesImport += "bindables._",
-    routesImport += "com.gu.crosswords.api.client.models.{Type => CrosswordType}"
   )
 
   private def filterAssets(testAssets: Seq[(File, String)]) = testAssets.filterNot{ case (file, fileName) =>
@@ -69,7 +66,6 @@ object Frontend extends Build with Prototypes {
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications")
     .dependsOn(commonWithTests)
-    .settings(crosswordsRouting: _*)
     .aggregate(common)
 
   val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
@@ -105,11 +101,11 @@ object Frontend extends Build with Prototypes {
       postgres,
       paClient,
       dfpAxis,
-      anorm,
+      anormModule,
       jdbc
     ),
-    routesImport += "bindables._",
-    routesImport += "org.joda.time.LocalDate"
+    RoutesKeys.routesImport += "bindables._",
+    RoutesKeys.routesImport += "org.joda.time.LocalDate"
   )
 
   val faciaTool = application("facia-tool").dependsOn(commonWithTests).aggregate(common).settings(
@@ -132,7 +128,8 @@ object Frontend extends Build with Prototypes {
       commonsHttpClient,
       slf4jExt,
       exactTargetClient,
-      nScalaTime
+      nScalaTime,
+      dispatch
     )
   )
 
@@ -154,7 +151,7 @@ object Frontend extends Build with Prototypes {
       admin,
       commercial,
       onward
-    ).settings(crosswordsRouting: _*)
+    )
 
   val faciaEndToEnd = application("facia-end-to-end")
     .dependsOn(commonWithTests)
@@ -173,11 +170,11 @@ object Frontend extends Build with Prototypes {
   )
 
   val preview = application("preview").dependsOn(withTests(common), standalone).settings(
-    routesImport += "scala.language.reflectiveCalls"
+    RoutesKeys.routesImport += "scala.language.reflectiveCalls"
   )
 
   val trainingPreview = application("training-preview").dependsOn(withTests(common), standalone).settings(
-    routesImport += "scala.language.reflectiveCalls"
+    RoutesKeys.routesImport += "scala.language.reflectiveCalls"
   )
 
   val integrationTests = Project("integrated-tests", file("integrated-tests"))

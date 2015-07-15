@@ -2,32 +2,33 @@ package conf
 
 import common.{AkkaAsync, Jobs, ExecutionContexts}
 import jobs.CricketStatsJob
-import play.api.{Application, Plugin}
-import scala.concurrent.duration._
+import play.api.GlobalSettings
 
-class CricketStatsPlugin(app: Application) extends Plugin with ExecutionContexts {
+trait CricketLifecycle extends GlobalSettings with ExecutionContexts {
 
-  def scheduleJobs() {
-
+  private def scheduleJobs() {
     Jobs.schedule("CricketAgentRefreshJob", "0 * * * * ?") {
       CricketStatsJob.run()
     }
   }
 
-  def descheduleJobs() {
+  private def descheduleJobs() {
     Jobs.deschedule("CricketAgentRefreshJob")
   }
 
-  override def onStart() {
+  override def onStart(app: play.api.Application) {
+    super.onStart(app)
     descheduleJobs()
     scheduleJobs()
 
-    AkkaAsync.after(5.seconds){
+    AkkaAsync {
       CricketStatsJob.run()
     }
   }
 
-  override def onStop() {
+  override def onStop(app: play.api.Application) {
     descheduleJobs()
+    super.onStop(app)
   }
+
 }
