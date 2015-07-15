@@ -55,6 +55,12 @@ define([
                 beacon.fire('/count/pva.gif');
             }
         }.bind(this));
+
+        mediator.on('module:analytics:omniture:pageview:sent', function () {
+            if (config.switches.noBounceIndicator) {
+                storage.session.remove('gu-bounce-test');
+            }
+        });
     };
 
     Omniture.prototype.logView = function () {

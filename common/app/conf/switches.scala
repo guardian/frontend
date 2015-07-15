@@ -253,6 +253,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val Viewability = Switch(
+    "Performance",
+    "viewability",
+    "Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   // Commercial
   val OphanViewIdSwitch = Switch("Commercial",
     "ophan-view-id",
@@ -640,7 +649,7 @@ object Switches {
     "international-edition",
     "International edition A/B test on",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 31),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
   )
 
@@ -658,7 +667,7 @@ object Switches {
     "notifications",
     "Notifications",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 15),
+    sellByDate = new LocalDate(2015, 10, 15),
     exposeClientSide = true
   )
 
@@ -954,15 +963,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABViewability = Switch(
-    "A/B Tests",
-    "ab-viewability",
-    "Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
-    exposeClientSide = true
-  )
-
   val ABSaveForLaterSwitch = Switch(
     "A/B Tests",
     "ab-save-for-later",
@@ -1136,6 +1136,15 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
+  )
+
+  val NoBounceIndicator = Switch(
+    "Performance",
+    "no-bounce-indicator",
+    "If this switch is on then some beacons will be dropped to gauge if people move onto a new piece of content before Omniture runs",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 8, 31),
+    exposeClientSide = true
   )
 
   val FaciaDynamoArchive = Switch(

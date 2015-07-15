@@ -78,7 +78,7 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                if (ab.shouldRunTest('Viewability', 'variant') && $adSlot.hasClass('ad-slot--right')) {
+                if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         // Hardcoded for sticky nav test. It will need some on time checking if this will go to PROD
                         new StickyMpu($adSlot, {top: 58}).create();
@@ -229,7 +229,7 @@ define([
 
             // We want to run lazy load if user is in the main test or if there is a switch on
             // We do not want lazy loading on pageskins because it messes up the roadblock
-            if ((ab.shouldRunTest('Viewability', 'variant') || config.switches.lzAds) && !(config.page.hasPageSkin)) {
+            if ((config.switches.viewability || config.switches.lzAds) && !(config.page.hasPageSkin)) {
                 window.googletag.cmd.push(displayLazyAds);
             } else {
                 window.googletag.cmd.push(displayAds);

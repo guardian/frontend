@@ -131,8 +131,7 @@ define([
             },
 
             initialiseStickyHeader: function () {
-                if (ab.shouldRunTest('Viewability', 'variant')
-                    && (config.page.isDev || (!config.page.isDev && config.page.contentType !== 'Interactive'))) {
+                if (config.switches.viewability && (config.page.isDev || (!config.page.isDev && config.page.contentType !== 'Interactive'))) {
                     sticky.init();
                 }
             },
