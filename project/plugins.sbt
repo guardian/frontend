@@ -10,7 +10,7 @@ resolvers ++= Seq(
 
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.0")
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "0.7.6")
+addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.0.3")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.1.8")
 
