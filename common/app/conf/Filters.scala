@@ -2,6 +2,7 @@ package conf
 
 import common.ExecutionContexts
 import filters.RequestLoggingFilter
+import org.apache.commons.codec.digest.DigestUtils
 import play.api.mvc.{EssentialFilter, Result, RequestHeader, Filter}
 import play.filters.gzip.GzipFilter
 import implicits.Responses._
@@ -50,6 +51,20 @@ object BackendHeaderFilter extends Filter with ExecutionContexts {
   }
 }
 
+// See https://www.fastly.com/blog/surrogate-keys-part-1/
+object SurrogateKeyFilter extends Filter with ExecutionContexts {
+
+  private val SurrogateKey = "Surrogate-Key"
+
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    val surrogateKey = DigestUtils.md5Hex(request.path)
+    nextFilter(request).map{ result =>
+      val key = result.header.headers.get(SurrogateKey).map(key => s"$key $surrogateKey").getOrElse(surrogateKey)
+      result.withHeaders(SurrogateKey -> key)
+    }
+  }
+}
+
 object Filters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
@@ -58,6 +73,7 @@ object Filters {
     Gzipper,
     BackendHeaderFilter,
     RequestLoggingFilter,
-    GNUFilter
+    GNUFilter,
+    SurrogateKeyFilter
   )
 }
