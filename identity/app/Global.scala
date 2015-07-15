@@ -8,12 +8,10 @@ import play.api.mvc._
 import play.api.mvc.Results._
 import scala.concurrent.Future
 import utils.SafeLogging
+import conf.{Configuration, Filters}
 
-object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurityHeaderFilter :: conf.Filters.common: _*)
-  with SafeLogging
-  with CloudWatchApplicationMetrics
-  with IdentityLifecycle
-  with SwitchboardLifecycle {
+object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurityHeaderFilter :: Filters.common: _*) with SafeLogging
+                                                                                    with CloudWatchApplicationMetrics {
 
   override lazy val applicationName = "frontend-identity"
 
@@ -21,7 +19,7 @@ object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurity
     val module =
       Play.mode match {
         case Mode.Prod => {
-          if (conf.Configuration.environment.isNonProd) new PreProdModule
+          if (Configuration.environment.isNonProd) new PreProdModule
           else new ProdModule
         }
         case Mode.Dev => new DevModule
@@ -29,6 +27,10 @@ object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurity
       }
 
     Guice.createInjector(module)
+  }
+
+  override def getControllerInstance[A](clazz: Class[A]) = {
+    injector.getInstance(clazz)
   }
 
   override def onError(request: RequestHeader, ex: Throwable) = {

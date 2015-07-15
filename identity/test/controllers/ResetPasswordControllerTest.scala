@@ -14,8 +14,6 @@ import scala.concurrent.Future
 import com.gu.identity.model.User
 import org.mockito.{ArgumentMatcher, Matchers}
 import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, AuthenticationService}
-import play.api.i18n.Messages.Implicits.applicationMessagesApi
-import play.api.Play.current
 
 class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
@@ -26,7 +24,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
   val authenticationService = mock[AuthenticationService]
   val identityRequest = IdentityRequest(trackingData, None, Some("123.456.789.10"), Some(false))
 
-  lazy val resetPasswordController = new ResetPasswordController(api, requestParser, idUrlBuilder, authenticationService, applicationMessagesApi)
+  val resetPasswordController = new ResetPasswordController(api, requestParser, idUrlBuilder, authenticationService)
   when(requestParser.apply(anyObject())).thenReturn(identityRequest)
 
   val userNotFound = List(Error("Not found", "Resource not found", 404))
