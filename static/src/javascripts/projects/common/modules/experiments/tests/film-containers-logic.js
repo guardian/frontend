@@ -4,7 +4,7 @@ define([
     'common/utils/ajax',
     'common/utils/mediator'
 ], function (
-    fastdom,
+    fastDom,
     $,
     ajax,
     mediator
