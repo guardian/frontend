@@ -25,6 +25,8 @@ import services.IdentityRequest
 import idapiclient.responses.CookiesResponse
 import play.api.test.Helpers._
 import play.api.mvc.RequestHeader
+import play.api.i18n.Messages.Implicits.applicationMessagesApi
+import play.api.Play.current
 
 
 class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -37,7 +39,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
   val identityRequest = IdentityRequest(trackingData, Some("http://example.com/return"), None, Some(false))
   val signInService = new PlaySigninService(conf)
 
-  val signinController = new SigninController(returnUrlVerifier, api, requestParser, idUrlBuilder, signInService)
+  lazy val signinController = new SigninController(returnUrlVerifier, api, requestParser, idUrlBuilder, signInService, applicationMessagesApi)
   when(requestParser.apply(anyObject())).thenReturn(identityRequest)
   when(returnUrlVerifier.getVerifiedReturnUrl(any[RequestHeader])).thenReturn(None)
 
