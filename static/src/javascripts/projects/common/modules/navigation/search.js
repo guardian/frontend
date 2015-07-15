@@ -5,8 +5,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator',
-    'common/modules/experiments/ab'
+    'common/utils/mediator'
 ], function (
     bean,
     fastdom,
@@ -14,8 +13,7 @@ define([
     $,
     config,
     detect,
-    mediator,
-    ab
+    mediator
 ) {
     var Search = function () {
 
@@ -74,7 +72,7 @@ define([
             if ($input.length > 0) {
                 $input.focus();
 
-                if (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') {
+                if (config.switches.viewability && config.page.contentType !== 'Interactive') {
                     clearInterval(checkInterval);
                     checkInterval = setInterval(self.checkResults, 250);
                 }
