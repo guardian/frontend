@@ -27,10 +27,12 @@ define([
         .then(function (res) {
             if (res && res.html) {
                 container = container || $(containerSelector);
-                fastDom.write(function () {
-                    container.prepend(res.html);
-                    mediator.emit('page:new-content', container);
-                });
+                if (container) {
+                    fastDom.write(function () {
+                        container.prepend(res.html);
+                        mediator.emit('page:new-content', container);
+                    });                    
+                }
             }
         });
     }
