@@ -142,6 +142,18 @@ import collection.JavaConversions._
     //   }
     // }
 
+    scenario("Display the article publication date", ArticleComponents) {
+
+      Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all'")
+      goTo("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
+        import browser._
+
+        Then("I should see the publication date of the article")
+        findFirst(".content__dateline-wpd").getText should be("Monday 6 August 2012 20.30 BST")
+        findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00+0100")
+      }
+    }
+
     scenario("Live blogs should have a coverage start and end date", ArticleComponents) {
 
       Given("I am on a dead live blog")
