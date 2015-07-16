@@ -351,7 +351,7 @@ define([
                 }
             },
 
-            saveForLater: function() {
+            saveForLater: function () {
                 if (config.switches.saveForLater) {
                     var saveForLater = new SaveForLater();
                     saveForLater.init();
