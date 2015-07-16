@@ -16,21 +16,21 @@ define([
     var keyPressHistory = [],
         cheatCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65],
         tones = _.map([
-            "special-report",
-            "live",
-            "dead",
-            "feature",
-            "editorial",
-            "comment",
-            "podcast",
-            "media",
-            "analysis",
-            "review",
-            "letters",
-            "external",
-            "news"
+            'special-report',
+            'live',
+            'dead',
+            'feature',
+            'editorial',
+            'comment',
+            'podcast',
+            'media',
+            'analysis',
+            'review',
+            'letters',
+            'external',
+            'news'
         ], function (tone) {
-            return "tone-" + tone + "--item";
+            return 'tone-' + tone + '--item';
         });
 
     function listenForCheatCode() {
@@ -62,8 +62,6 @@ define([
 
     function startToneDisco() {
         var $items = _.map(qwery('.js-fc-item'), bonzo);
-        console.log("PPPOOOOWWWWWEEEERRRRING UP!!!!");
-
         setInterval(function () {
             fastdom.write(function () {
                 $items.forEach(function ($item) {
