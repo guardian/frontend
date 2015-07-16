@@ -302,7 +302,7 @@ define([
                     if (overlay) {
                         bonzo(overlay).removeClass('overlay--open');
                     }
-                    bonzo(document.body).removeClass('has-overlay');
+                    bonzo(document.body).removeClass('has-overlay');                                                              4
                     if (offset) {
                         window.setTimeout(function () {
                             document.body.scrollTop = offset;
@@ -351,6 +351,7 @@ define([
                 }
             },
 
+
             saveForLater: function () {
                 if (config.switches.saveForLater) {
                     var saveForLater = new SaveForLater();
@@ -361,6 +362,7 @@ define([
 
     return {
         init: function () {
+            console.log("++ HITYA");
             robust.catchErrorsAndLogAll([
 
                 // Analytics comes at the top. If you think your thing is more important then please think again...
