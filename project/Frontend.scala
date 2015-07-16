@@ -151,6 +151,8 @@ object Frontend extends Build with Prototypes {
       admin,
       commercial,
       onward
+    ).settings(
+      RoutesKeys.routesImport += "bindables._"
     )
 
   val faciaEndToEnd = application("facia-end-to-end")
