@@ -3,7 +3,7 @@
 @import views.support.Format
 
 <aside class="fc-item__meta js-item__meta">
-    @if(conf.Switches.ABSaveForLaterSwitch.isSwitchedOn) {
+    @if(conf.Switches.SaveForLaterSwitch.isSwitchedOn) {
         @if(item.isSavedForLater) {
             <button class="button button--secondary button--medium saved-content__button js-saved-content__button"
                     data-link-name="Delete"
