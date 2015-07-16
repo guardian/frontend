@@ -49,8 +49,7 @@ define([
         this.$els.main           = $('#maincontent');
         this.$els.navHeader      = $('.js-navigation-header');
         this.$els.burgerIcon     = $('.js-navigation-toggle', this.$els.navHeader);
-        this.$els.logoWrapper    = $('.logo-wrapper', this.$els.navHeader);
-        this.$els.navigation     = $('.navigation', this.$els.navHeader);
+        this.$els.navigation     = $('.js-navigation', this.$els.navHeader);
         this.$els.window         = $(window);
 
         fastdom.read(function () {
