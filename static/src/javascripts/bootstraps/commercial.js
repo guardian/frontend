@@ -44,13 +44,11 @@ define([
                 !userPrefs.isOff('adverts') && !config.page.shouldHideAdverts &&
                 (!config.page.isSSL || config.page.section === 'admin') && !window.location.hash.match(/[#&]noads(&.*)?$/)
             ) {
-                robusts.catchErrorsAndLogAll(_.map(modules, function (pair) {
-                    var name = pair[0];
-                    var fn = pair[1];
-                    return [name, function () {
-                        modulePromises.push(fn());
-                    }];
-                }));
+                _.forEach(modules, function (pair) {
+                    robust.catchErrorsAndLog(pair[0], function () {
+                        modulePromises.push(pair[1].init());
+                    });
+                });
 
                 Promise.all(modulePromises).then(function () {
                     if (config.switches.commercial) {

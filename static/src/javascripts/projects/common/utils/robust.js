@@ -15,19 +15,22 @@ define([
             fn();
         } catch (e) {
             error = e;
-            console.warn('Caught error.', e.stack);
         }
         return error;
     };
 
-    var log = function (name, error) {
-        raven.captureException(e, { tags: { module: name } });
+    var log = function (name, error, reporter) {
+        console.warn('Caught error.', error.stack);
+        if (!reporter) {
+            reporter = raven.captureException;
+        }
+        reporter(error, { tags: { module: name } });
     };
 
-    var catchErrorsAndLog = function (name, fn) {
+    var catchErrorsAndLog = function (name, fn, reporter) {
         var error = catchErrors(fn);
         if (error) {
-            log(name, error);
+            log(name, error, reporter);
         }
     };
 
