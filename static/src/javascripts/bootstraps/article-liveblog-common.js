@@ -51,12 +51,12 @@ define([
     }
 
     return function () {
-        robust.catchErrorsAndLogAll(
+        robust.catchErrorsAndLogAll([
             ['trail-article', initOpenCta],
             ['trail-fence', initFence],
             ['trail-twitter', initTruncateAndTwitter],
             ['trail-sharing', selectionSharing.init],
             ['trail-last-modified', lastModified]
-        );
+        ]);
     };
 });

@@ -46,13 +46,13 @@ define([
             ) {
                 _.forEach(modules, function (pair) {
                     robust.catchErrorsAndLog(pair[0], function () {
-                        modulePromises.push(pair[1].init());
+                        modulePromises.push(pair[1]());
                     });
                 });
 
                 Promise.all(modulePromises).then(function () {
                     if (config.switches.commercial) {
-                        robusts.catchErrorsAndLogAll([
+                        robust.catchErrorsAndLogAll([
                             ['cm-dfp', dfp.init],
                             // TODO does dfp return a promise?
                             ['cm-ready', function () {
