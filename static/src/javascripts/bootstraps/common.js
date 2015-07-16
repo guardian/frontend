@@ -12,7 +12,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/url',
-    'common/utils/robusts',
+    'common/utils/robust',
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
@@ -62,7 +62,7 @@ define([
     mediator,
     template,
     url,
-    robusts,
+    robust,
     storage,
     Foresee,
     liveStats,
@@ -352,7 +352,7 @@ define([
 
     return {
         init: function () {
-            robusts([
+            robust.catchErrorsAndLogAll([
 
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
