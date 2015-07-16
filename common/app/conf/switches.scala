@@ -945,6 +945,15 @@ object Switches {
 
   // A/B Tests
 
+  val ABFilmContainers = Switch(
+    "A/B Tests",
+    "ab-film-containers",
+    "Film Containers on Film content",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 23),
+    exposeClientSide = true
+  )
+
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
     "ab-liveblog-notifications",

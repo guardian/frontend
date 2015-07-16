@@ -84,7 +84,9 @@ define([
             },
 
             initFilmTest: function () {
-                testFilmContainers();
+                if (config.page.section === 'film' && config.page.tones === 'News') {
+                    testFilmContainers();
+                }
             }
         },
 
