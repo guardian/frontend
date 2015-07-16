@@ -3,6 +3,8 @@ GET         /assets/*path                          dev.DevAssetsController.at(pa
 
 GET         /_healthcheck                          conf.HealthCheck.healthcheck()
 
+GET         /nameOfFile                             controllers.Assets.at(path = "/public", file = "google1ec7a89a27d60d47.html")
+
 GET         /reauthenticate                         @controllers.ReauthenticationController.renderForm(returnUrl : Option[String])
 POST        /reauthenticate                         @controllers.ReauthenticationController.processForm
 
