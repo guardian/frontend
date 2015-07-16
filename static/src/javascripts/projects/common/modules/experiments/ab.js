@@ -6,6 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/film-containers',
     'common/modules/experiments/tests/article-truncation',
     'common/modules/experiments/tests/facebook-most-viewed',
     'common/modules/experiments/tests/twitter-most-viewed',
@@ -23,6 +24,7 @@ define([
     mediator,
     store,
     mvtCookie,
+    FilmContainers,
     ArticleTruncation,
     FacebookMostViewed,
     TwitterMostViewed,
@@ -35,6 +37,7 @@ define([
 ) {
 
     var TESTS = _.flatten([
+        new FilmContainers(),
         new ArticleTruncation(),
         new FacebookMostViewed(),
         new TwitterMostViewed(),
