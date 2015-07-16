@@ -105,11 +105,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
   override lazy val isInappropriateForSponsorship: Boolean = fields.get("isInappropriateForSponsorship").exists(_.toBoolean)
 
-  lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
-    .map(_.id).map(Reference(_)).map(_._2)
+  lazy val references = delegate.references.map(ref => (ref.`type`, Reference(ref.id)._2)).toMap
 
-  lazy val isbn: Option[String] = delegate.references.find(_.`type` == "isbn")
-    .map(_.id).map(Reference(_)).map(_._2)
+  lazy val witnessAssignment = references.get("witness-assignment")
+  lazy val isbn: Option[String] = references.get("isbn")
+  lazy val imdb: Option[String] = references.get("imdb")
 
   lazy val seriesMeta = {
     series.filterNot{ tag => tag.id == "commentisfree/commentisfree"}.headOption.map( series =>
