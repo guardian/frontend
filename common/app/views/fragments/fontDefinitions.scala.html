@@ -1,0 +1,10 @@
+@List("GuardianEgyptianWeb", "GuardianTextEgyptianWeb", "GuardianSansWeb", "GuardianTextSansWeb").map { typeface =>
+    <style class="webfont" data-cache-name="@typeface"
+        @List("woff2", "woff", "ttf").map { font =>
+            data-cache-file-@font="@Static(s"fonts/${typeface}.${font}.json")"
+            @List("cleartype", "auto").map { hinting =>
+                data-cache-file-hinted-@hinting-@font="@Static(s"fonts/${typeface}${hinting.capitalize}Hinted.${font}.json")"
+            }
+        }
+    ></style>
+}

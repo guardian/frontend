@@ -45,6 +45,7 @@ define([
     'common/modules/ui/toggles',
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
+    'common/modules/social/pinterest',
     'text!common/views/international-message.html',
     'text!common/views/international-control-message.html',
     'text!common/views/donot-use-adblock.html',
@@ -94,6 +95,7 @@ define([
     Toggles,
     userPrefs,
     breakingNews,
+    pinterest,
     internationalMessage,
     internationalControlMessage,
     doNotUseAdblockTemplate,
@@ -339,12 +341,22 @@ define([
                         }).show(template(internationalControlMessage, {}));
                     }
                 }
+            },
+
+            initPinterest: function () {
+                if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
+                    pinterest();
+                }
             }
         };
 
     return {
         init: function () {
             robusts([
+
+                // Analytics comes at the top. If you think your thing is more important then please think again...
+                ['c-analytics', modules.loadAnalytics],
+
                 ['c-fonts', fonts],
                 ['c-identity', identity],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
@@ -372,7 +384,6 @@ define([
                 ['c-smart-banner', smartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-log-stats', modules.logLiveStats],
-                ['c-analytics', modules.loadAnalytics],
                 ['c-cookies', modules.cleanupCookies],
                 ['c-overlay', modules.initOpenOverlayOnClick],
                 ['c-css-logging', modules.runCssLogging],
@@ -381,7 +392,8 @@ define([
                 ['c-tech-feedback', techFeedback],
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],
-                ['c-international-signposting', modules.internationalSignposting]
+                ['c-international-signposting', modules.internationalSignposting],
+                ['c-pinterest', modules.initPinterest]
             ]);
             if (window.console && window.console.log && !config.page.isDev) {
                 window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');
