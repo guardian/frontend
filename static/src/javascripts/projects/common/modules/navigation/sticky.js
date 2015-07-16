@@ -42,11 +42,11 @@ define([
     }
 
     StickyHeader.prototype.init = function () {
-        this.$els.header         = $('#header');
+        this.$els.header         = $('.js-header');
         this.$els.bannerDesktop  = $('.top-banner-ad-container--above-nav');
         this.$els.bannerMobile   = $('.top-banner-ad-container--mobile');
         this.$els.bannerBelowNav = $('.top-banner-ad-container--below-nav');
-        this.$els.main           = $('#maincontent');
+        this.$els.main           = $('.js-maincontent');
         this.$els.navHeader      = $('.js-navigation-header');
         this.$els.burgerIcon     = $('.js-navigation-toggle', this.$els.navHeader);
         this.$els.navigation     = $('.js-navigation', this.$els.navHeader);
