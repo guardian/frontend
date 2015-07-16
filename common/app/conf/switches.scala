@@ -2,7 +2,7 @@ package conf
 
 import common._
 import conf.Configuration.environment
-import org.joda.time._
+import org.joda.time.{DateTime, Days, Interval, LocalDate}
 import play.api.{Application, Plugin}
 
 sealed trait SwitchState
@@ -253,6 +253,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val Viewability = Switch(
+    "Performance",
+    "viewability",
+    "Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   // Commercial
   val OphanViewIdSwitch = Switch("Commercial",
     "ophan-view-id",
@@ -496,12 +505,14 @@ object Switches {
     exposeClientSide = true
   )
 
+  private val topAboveNavSwitchesSellByDate = new LocalDate(2015, 8, 5)
+
   val FixedTopAboveNavAdSlotSwitch = Switch(
     "Commercial",
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 22),
+    sellByDate = topAboveNavSwitchesSellByDate,
     exposeClientSide = false
   )
 
@@ -510,7 +521,7 @@ object Switches {
     "fixed-top-above-nav-728-90",
     "Expect a 728 x 90 ad in top-above-nav slot on UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 22),
+    sellByDate = topAboveNavSwitchesSellByDate,
     exposeClientSide = false
   )
 
@@ -519,7 +530,7 @@ object Switches {
     "fixed-top-above-nav-88-70",
     "Expect an 88 x 70 ad in top-above-nav slot on UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 22),
+    sellByDate = topAboveNavSwitchesSellByDate,
     exposeClientSide = false
   )
 
@@ -528,7 +539,7 @@ object Switches {
     "fixed-top-above-nav-omit",
     "Leave top-above-nav ad slot out of page on UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 22),
+    sellByDate = topAboveNavSwitchesSellByDate,
     exposeClientSide = false
   )
 
@@ -640,7 +651,7 @@ object Switches {
     "international-edition",
     "International edition A/B test on",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 31),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
   )
 
@@ -658,7 +669,7 @@ object Switches {
     "notifications",
     "Notifications",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 15),
+    sellByDate = new LocalDate(2015, 10, 15),
     exposeClientSide = true
   )
 
@@ -954,15 +965,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABViewability = Switch(
-    "A/B Tests",
-    "ab-viewability",
-    "Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
-    exposeClientSide = true
-  )
-
   val ABSaveForLaterSwitch = Switch(
     "A/B Tests",
     "ab-save-for-later",
@@ -998,15 +1000,6 @@ object Switches {
     "Switch for the Membership message A/B variants test",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 20),
-    exposeClientSide = true
-  )
-
-  val ABPintrest = Switch(
-    "A/B Tests",
-    "ab-pintrest",
-    "Switch for the Pintrest on content pages A/B test.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 16),
     exposeClientSide = true
   )
 
@@ -1145,6 +1138,15 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
+  )
+
+  val NoBounceIndicator = Switch(
+    "Performance",
+    "no-bounce-indicator",
+    "If this switch is on then some beacons will be dropped to gauge if people move onto a new piece of content before Omniture runs",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 8, 31),
+    exposeClientSide = true
   )
 
   val FaciaDynamoArchive = Switch(

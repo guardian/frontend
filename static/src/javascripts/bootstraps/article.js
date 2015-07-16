@@ -14,7 +14,6 @@ define([
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/social-most-popular',
-    'common/modules/social/pinterest',
     'bootstraps/article-liveblog-common',
     'bootstraps/trail'
 ], function (
@@ -32,7 +31,6 @@ define([
     ab,
     geoMostPopular,
     SocialMostPopular,
-    pinterest,
     articleLiveblogCommon,
     trail
 ) {
@@ -71,12 +69,6 @@ define([
                 }
             },
 
-            initPinterest: function () {
-                if (ab.shouldRunTest('Pintrest', 'variant')) { // The test was misspelt! Keeping it, to not confuse the data.
-                    pinterest();
-                }
-            },
-
             initQuizListeners: function () {
                 require(['ophan/ng'], function (ophan) {
                     mediator.on('quiz/ophan-event', ophan.record);
@@ -97,7 +89,6 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
-            modules.initPinterest();
             modules.initTruncation();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
