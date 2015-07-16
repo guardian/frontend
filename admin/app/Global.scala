@@ -1,5 +1,5 @@
 import common.CloudWatchApplicationMetrics
-import conf.{SwitchboardLifecycle, Gzipper}
+import conf.Gzipper
 import dfp.{DfpAgentLifecycle, DfpDataCacheLifecycle}
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
@@ -8,7 +8,6 @@ import scala.concurrent.Future
 
 object Global extends WithFilters(Gzipper)
   with AdminLifecycle
-  with SwitchboardLifecycle
   with CloudWatchApplicationMetrics
   with Results
   with SurgingContentAgentLifecycle

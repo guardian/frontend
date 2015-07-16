@@ -22,8 +22,8 @@ OPTIONS     /accept-beacon                                                      
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: String, id: Int)
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id.svg       controllers.CrosswordsController.thumbnail(crosswordType: CrosswordType, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordsController.crossword(crosswordType: CrosswordType, id: Int)
 
 # Business data
 GET        /business-data/stocks.json                 controllers.StocksController.stocks

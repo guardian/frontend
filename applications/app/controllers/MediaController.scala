@@ -6,7 +6,7 @@ import conf.Configuration.commercial.expiredAdFeatureUrl
 import conf.LiveContentApi.getResponse
 import conf._
 import model._
-import play.api.mvc._
+import play.api.mvc.{Content => _, _}
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
