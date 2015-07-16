@@ -17,13 +17,6 @@ define([
 
         if (!params.url.match('^(https?:)?//')) {
             params.url = ajaxHost + params.url;
-
-            // Force relative protocol for old IE
-            // http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
-            if (/MSIE (8|9)\.0/.test(navigator.userAgent)) {
-                params.url = params.url.replace(/^https:/, '');
-            }
-
             params.crossOrigin = true;
         }
 
