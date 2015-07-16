@@ -69,25 +69,12 @@ define([
             }
         }
 
-        if (this.isMobile) {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionMobile();
-            }.bind(this), 10));
-        } else if (this.isAdblockInUse) {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionAdblock();
-            }.bind(this), 10));
-        } else if (this.isAppleCampaign) {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionApple();
-            }.bind(this), 10));
-        } else if (this.isProfilePage) {
-            this.updatePositionProfile();
-        } else {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePosition();
-            }.bind(this), 10));
-        }
+        // Get the name of the method to run after scroll
+        this.updateMethod = this.getUpdateMethod();
+
+        mediator.on('window:scroll', _.throttle(function () {
+            this[this.updateMethod]();
+        }.bind(this), 10));
 
         // Make sure header is locked when meganav is open
         mediator.on('modules:nav:open', function () {
@@ -106,6 +93,20 @@ define([
                 this.lockStickyNavigation();
             }
         }.bind(this));
+    };
+
+    StickyHeader.prototype.getUpdateMethod = function () {
+        if (this.isMobile) {
+            return "updatePositionMobile";
+        } else if (this.isAdblockInUse) {
+            return "updatePositionAdblock";
+        } else if (this.isAppleCampaign) {
+            return "updatePositionApple";
+        } else if (this.isProfilePage) {
+            return "updatePositionProfile";
+        } else {
+            return "updatePosition";
+        }
     };
 
     // Make sure meganav is always in the default state
