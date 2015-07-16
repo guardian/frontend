@@ -5,6 +5,7 @@ import sbt._
 import sbt.Keys._
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.typesafe.sbt.SbtNativePackager._
+import com.typesafe.sbt.packager.Keys._
 import play.twirl.sbt.Import._
 import Dependencies._
 
@@ -115,5 +116,6 @@ trait Prototypes {
       )
     )
     .settings(name in Universal := applicationName)
+    .settings(topLevelDirectory in Universal := Some(applicationName))
   }
 }

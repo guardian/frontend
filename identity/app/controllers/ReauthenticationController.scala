@@ -9,7 +9,7 @@ import implicits.Forms
 import model.{IdentityPage, NoCache}
 import play.api.data._
 import play.api.data.validation.Constraints
-import play.api.i18n.Messages
+import play.api.i18n.{MessagesApi, Messages}
 import play.api.mvc._
 import services.{IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
 import utils.SafeLogging
@@ -23,7 +23,8 @@ class ReauthenticationController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                  idRequestParser: IdRequestParser,
                                  idUrlBuilder: IdentityUrlBuilder,
                                  authenticatedActions: AuthenticatedActions,
-                                 signInService : PlaySigninService)
+                                 signInService : PlaySigninService,
+                                 val messagesApi: MessagesApi)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with Forms {
 
   val page = IdentityPage("/reauthenticate", "Re-authenticate", "reauthenticate")
