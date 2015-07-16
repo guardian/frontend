@@ -584,6 +584,17 @@ $block-height: 71px;
         }
     }
 
+    @include mq($from: tablet, $until: desktop) {
+        .fc-item--has-timestamp &:last-child {
+            border-left: 0;
+            padding-left: 0;
+
+            .inline-icon {
+                margin-left: 0;
+            }
+        }
+    }
+
     .inline-icon {
         float: right;
         margin-right: 0;
