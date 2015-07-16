@@ -10,15 +10,10 @@
     <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
 <![endif]-->
 
-@fragments.fontDefinitions()
-
 <script id="gu">
     @Html(templates.headerInlineJS.js.polyfills().body)
-
     @Html(templates.headerInlineJS.js.shouldEnhance(item).body)
-
     @Html(templates.headerInlineJS.js.config(item).body)
-
     @Html(templates.headerInlineJS.js.featureDetection().body)
 
     @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
