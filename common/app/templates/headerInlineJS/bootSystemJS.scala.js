@@ -34,14 +34,17 @@ System['import']('core').then(function () {
                     },
                     shouldSendCallback: function(data) {
                         @if(play.Play.isDev()) {
-                            console.error(data);
+                            console.warn('Raven captured error.', data);
                         }
                         return @conf.Switches.DiagnosticsLogging.isSwitchedOn &&
                             Math.random() < 0.2 &&
                             @{!play.Play.isDev()}; @* don't actually notify sentry in dev mode*@
                     }
                 }
-            ).install();
+            );
+
+            // Uncaught exceptions
+            raven.install();
 
             // Safe to depend on Lodash because it's part of core
             System['import']('common/utils/_').then(function (_) {

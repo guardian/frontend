@@ -4,10 +4,6 @@
 @import conf.Configuration
 
 <script>
-    @if(FontSwitch.isSwitchedOn) {
-        @Html(templates.headerInlineJS.js.loadFonts().body)
-    }
-
     @if(mvt.JspmTest.isParticipating || item.section == "crosswords") {
         @Html(templates.headerInlineJS.js.bootSystemJS(item).body)
     } else {

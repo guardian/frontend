@@ -2,6 +2,7 @@ package test
 
 import conf.Configuration
 import conf.Switches._
+import org.openqa.selenium.By
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 import org.fluentlenium.core.filter.FilterConstructor._
 import collection.JavaConversions._
@@ -150,6 +151,21 @@ import collection.JavaConversions._
         Then("I should see the publication date of the article")
         findFirst(".content__dateline-wpd").getText should be("Monday 6 August 2012 20.30 BST")
         findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00+0100")
+      }
+    }
+
+    scenario("Live blogs should have a coverage start and end date", ArticleComponents) {
+
+      Given("I am on a dead live blog")
+      goTo("/books/live/2015/jul/13/go-set-a-watchman-launch-follow-it-live") { browser =>
+        import browser._
+
+        Then("I should see the start and end date of coverage")
+        val liveBlogPosting = findFirst("[itemtype='http://schema.org/LiveBlogPosting']").getElement
+        val woo = liveBlogPosting.findElements(By.xpath(".//*"))
+        println(s"text is $woo ${woo.length}");
+        liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageStartTime']")).getAttribute("content") should be("2015-07-14T11:20:37+0100")
+        liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageEndTime']")).getAttribute("content") should be("2015-07-14T11:21:27+0100")
       }
     }
 
@@ -402,14 +418,6 @@ import collection.JavaConversions._
         import browser._
         Then("I should see the embedded video")
         $(".element-video").size should be(4)
-      }
-    }
-
-    scenario("Do not show 'classic' link on Football live blogs") {
-      goTo("/football/live/2014/aug/03/arsenal-v-monaco-emirates-cup-live") { browser =>
-        withClue("There should be no 'classic version' link") {
-          browser.find(".js-main-site-link") should be(empty)
-        }
       }
     }
 

@@ -358,10 +358,10 @@ define([
 
         fastdom.write(function () {
             if (count > 0) {
-                $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
+                $('.save-for-later__icon', profile).attr('data-saved-content-count', count);
                 saveForLaterProfileLink.html('Saved for later (' + count + ')');
             } else {
-                $('.control__icon-wrapper', profile).removeAttr('data-saved-content-count');
+                $('.save-for-later__icon', profile).removeAttr('data-saved-content-count');
                 saveForLaterProfileLink.html('Saved for later');
             }
         });
