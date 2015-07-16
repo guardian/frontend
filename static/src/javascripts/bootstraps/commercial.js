@@ -28,12 +28,12 @@ define([
     userPrefs
 ) {
     var modules = [
-        ['cm-articleAsideAdverts', articleAsideAdverts],
-        ['cm-articleBodyAdverts', articleBodyAdverts],
-        ['cm-sliceAdverts', sliceAdverts],
-        ['cm-frontCommercialComponents', frontCommercialComponents],
-        ['cm-thirdPartyTags', thirdPartyTags],
-        ['cm-badges', badges]
+        ['cm-articleAsideAdverts', articleAsideAdverts.init],
+        ['cm-articleBodyAdverts', articleBodyAdverts.init],
+        ['cm-sliceAdverts', sliceAdverts.init],
+        ['cm-frontCommercialComponents', frontCommercialComponents.init],
+        ['cm-thirdPartyTags', thirdPartyTags.init],
+        ['cm-badges', badges.init]
     ];
 
     return {
@@ -44,21 +44,23 @@ define([
                 !userPrefs.isOff('adverts') && !config.page.shouldHideAdverts &&
                 (!config.page.isSSL || config.page.section === 'admin') && !window.location.hash.match(/[#&]noads(&.*)?$/)
             ) {
-                _.forEach(modules, function (pair) {
-                    robust(pair[0], function () {
-                        modulePromises.push(pair[1].init());
-                    });
-                });
+                robusts.catchErrorsAndLogAll(_.map(modules, function (pair) {
+                    var name = pair[0];
+                    var fn = pair[1];
+                    return [name, function () {
+                        modulePromises.push(fn());
+                    }];
+                }));
 
                 Promise.all(modulePromises).then(function () {
                     if (config.switches.commercial) {
-                        robust('cm-dfp', function () {
-                            dfp.init();
-                        });
-                        // TODO does dfp return a promise?
-                        robust('cm-ready', function () {
-                            mediator.emit('page:commercial:ready');
-                        });
+                        robusts.catchErrorsAndLogAll([
+                            ['cm-dfp', dfp.init],
+                            // TODO does dfp return a promise?
+                            ['cm-ready', function () {
+                                mediator.emit('page:commercial:ready');
+                            }]
+                        ]);
                     }
                 });
 
