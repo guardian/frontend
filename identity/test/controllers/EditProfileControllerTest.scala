@@ -14,10 +14,9 @@ import play.api.mvc._
 import play.api.test.Helpers._
 import services._
 import test.{Fake, FakeCSRFRequest}
+
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-import play.api.i18n.Messages.Implicits.applicationMessagesApi
-import play.api.Play.current
 
 //TODO test form validation and population of form fields.
 class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar with OptionValues {
@@ -42,7 +41,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
   when(idRequest.trackingData) thenReturn trackingData
   when(idRequest.returnUrl) thenReturn None
 
-  lazy val controller = new EditProfileController(idUrlBuilder, authenticatedActions, api, idRequestParser, applicationMessagesApi)
+  val controller = new EditProfileController(idUrlBuilder, authenticatedActions, api, idRequestParser)
 
   "Given the submitPublicProfileForm method is called" - {
     val location = "Test location"
