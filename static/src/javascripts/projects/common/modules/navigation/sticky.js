@@ -42,15 +42,17 @@ define([
     }
 
     StickyHeader.prototype.init = function () {
-        this.$els.header         = $('.js-header');
-        this.$els.bannerDesktop  = $('.top-banner-ad-container--above-nav');
-        this.$els.bannerMobile   = $('.top-banner-ad-container--mobile');
-        this.$els.bannerBelowNav = $('.top-banner-ad-container--below-nav');
-        this.$els.main           = $('.js-maincontent');
-        this.$els.navHeader      = $('.js-navigation-header');
-        this.$els.burgerIcon     = $('.js-navigation-toggle', this.$els.navHeader);
-        this.$els.navigation     = $('.js-navigation', this.$els.navHeader);
-        this.$els.window         = $(window);
+        this.$els.header           = $('.js-header');
+        this.$els.bannerDesktop    = $('.top-banner-ad-container--above-nav');
+        this.$els.bannerMobile     = $('.top-banner-ad-container--mobile');
+        this.$els.bannerBelowNav   = $('.top-banner-ad-container--below-nav');
+        this.$els.main             = $('.js-maincontent');
+        this.$els.navHeader        = $('.js-navigation-header');
+        this.$els.burgerIcon       = $('.js-navigation-toggle', this.$els.navHeader);
+        this.$els.navigation       = $('.js-navigation', this.$els.navHeader);
+        this.$els.navigationGlobal = $('.js-global-navigation');
+        this.$els.popupSearch      = $('.js-popup--search');
+        this.$els.window           = $(window);
 
         fastdom.read(function () {
             this.headerBigHeight     = this.$els.navHeader.dim().height;
@@ -98,7 +100,7 @@ define([
 
         // Make sure header is locked when search is open
         mediator.on('modules:search', function () {
-            if ($('.js-popup--search').hasClass('is-off')) {
+            if (this.$els.popupSearch.hasClass('is-off')) {
                 this.unlockStickyNavigation();
             } else {
                 this.lockStickyNavigation();
@@ -111,10 +113,10 @@ define([
         this.config.isNavigationLocked = false;
 
         fastdom.write(function () {
-            $('.js-global-navigation')
+            this.$els.navigationGlobal
                 .removeClass('navigation__expandable--sticky')
                 .attr('height', 'auto');
-        });
+        }.bind(this));
     };
 
     StickyHeader.prototype.lockStickyNavigation = function () {
@@ -128,7 +130,7 @@ define([
                 var height = window.innerHeight - $('.js-mega-nav-placeholder')[0].getBoundingClientRect().top;
 
                 fastdom.write(function () {
-                    $('.js-global-navigation')
+                    this.$els.navigationGlobal
                         .addClass('navigation__expandable--sticky')
                         .css('height', height);
                 });
