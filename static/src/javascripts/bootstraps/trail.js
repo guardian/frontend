@@ -9,7 +9,7 @@ define([
     'common/utils/config',
     'common/utils/contains',
     'common/utils/mediator',
-    'common/utils/robusts',
+    'common/utils/robust',
     'common/utils/proximity-loader',
     'common/modules/commercial/comment-adverts',
     'common/modules/discussion/loader',
@@ -28,7 +28,7 @@ define([
     config,
     contains,
     mediator,
-    robusts,
+    robust,
     proximityLoader,
     commentAdverts,
     DiscussionLoader,
@@ -118,7 +118,7 @@ define([
     }
 
     return function () {
-        robusts([
+        robust.catchErrorsAndLogAll([
             ['c-discussion', initDiscussion],
             ['c-comments', repositionComments],
             ['c-enhance', augmentInteractive],

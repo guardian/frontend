@@ -6,6 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/film-containers',
     'common/modules/experiments/tests/article-truncation',
     'common/modules/experiments/tests/facebook-most-viewed',
     'common/modules/experiments/tests/twitter-most-viewed',
@@ -13,7 +14,6 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
-    'common/modules/experiments/tests/pintrest',
     'common/modules/experiments/headlines',
     'common/modules/experiments/tests/membership-message'
 ], function (
@@ -24,6 +24,7 @@ define([
     mediator,
     store,
     mvtCookie,
+    FilmContainers,
     ArticleTruncation,
     FacebookMostViewed,
     TwitterMostViewed,
@@ -31,12 +32,12 @@ define([
     HighCommercialComponent,
     SaveForLater,
     CookieRefresh,
-    Pintrest,
     Headline,
     MembershipMessage
 ) {
 
     var TESTS = _.flatten([
+        new FilmContainers(),
         new ArticleTruncation(),
         new FacebookMostViewed(),
         new TwitterMostViewed(),
@@ -44,7 +45,6 @@ define([
         new HighCommercialComponent(),
         new SaveForLater(),
         new CookieRefresh(),
-        new Pintrest(),
         new MembershipMessage(),
         _.map(_.range(1, 10), function (n) {
             return new Headline(n);

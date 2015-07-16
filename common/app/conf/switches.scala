@@ -2,7 +2,7 @@ package conf
 
 import common._
 import conf.Configuration.environment
-import org.joda.time._
+import org.joda.time.{DateTime, Days, Interval, LocalDate}
 import play.api.{Application, Plugin}
 
 sealed trait SwitchState
@@ -505,12 +505,14 @@ object Switches {
     exposeClientSide = true
   )
 
+  private val topAboveNavSwitchesSellByDate = new LocalDate(2015, 8, 5)
+
   val FixedTopAboveNavAdSlotSwitch = Switch(
     "Commercial",
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 22),
+    sellByDate = topAboveNavSwitchesSellByDate,
     exposeClientSide = false
   )
 
@@ -519,7 +521,7 @@ object Switches {
     "fixed-top-above-nav-728-90",
     "Expect a 728 x 90 ad in top-above-nav slot on UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 22),
+    sellByDate = topAboveNavSwitchesSellByDate,
     exposeClientSide = false
   )
 
@@ -528,7 +530,7 @@ object Switches {
     "fixed-top-above-nav-88-70",
     "Expect an 88 x 70 ad in top-above-nav slot on UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 22),
+    sellByDate = topAboveNavSwitchesSellByDate,
     exposeClientSide = false
   )
 
@@ -537,7 +539,7 @@ object Switches {
     "fixed-top-above-nav-omit",
     "Leave top-above-nav ad slot out of page on UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 22),
+    sellByDate = topAboveNavSwitchesSellByDate,
     exposeClientSide = false
   )
 
@@ -945,6 +947,15 @@ object Switches {
 
   // A/B Tests
 
+  val ABFilmContainers = Switch(
+    "A/B Tests",
+    "ab-film-containers",
+    "Film Containers on Film content",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 7, 23),
+    exposeClientSide = true
+  )
+
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
     "ab-liveblog-notifications",
@@ -998,15 +1009,6 @@ object Switches {
     "Switch for the Membership message A/B variants test",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 20),
-    exposeClientSide = true
-  )
-
-  val ABPintrest = Switch(
-    "A/B Tests",
-    "ab-pintrest",
-    "Switch for the Pintrest on content pages A/B test.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 16),
     exposeClientSide = true
   )
 
