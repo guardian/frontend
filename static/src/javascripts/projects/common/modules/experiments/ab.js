@@ -363,7 +363,8 @@ define([
             if (typeof test === 'string') {
                 return testCanBeRun(_.find(TESTS, function (t) {
                     return t.id === test;
-                })); }
+                }));
+            }
 
             return test.id && test.expiry && testCanBeRun(test);
         },

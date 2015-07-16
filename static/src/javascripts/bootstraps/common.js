@@ -5,7 +5,6 @@ define([
     'bonzo',
     'fastclick',
     'qwery',
-    'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/cookies',
@@ -57,7 +56,6 @@ define([
     bonzo,
     FastClick,
     qwery,
-    Promise,
     $,
     config,
     cookies,
@@ -359,7 +357,7 @@ define([
                     saveForLater.init();
                 }
             }
-    };
+        };
 
     return {
         init: function () {
