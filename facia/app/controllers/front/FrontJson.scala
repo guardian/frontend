@@ -14,7 +14,7 @@ import scala.concurrent.Future
 trait FrontJsonLite extends ExecutionContexts{
   def get(json: JsValue): JsObject = {
     Json.obj(
-      "webTitle" -> (json \ "seoData" \ "webTitle").getOrElse(JsString("")),
+      "webTitle" -> (json \ "seoData" \ "webTitle"),
       "collections" -> getCollections(json)
     )
   }
@@ -25,8 +25,8 @@ trait FrontJsonLite extends ExecutionContexts{
 
   private def getCollection(json: JsValue): JsValue = {
     Json.obj(
-        "displayName" -> (json \ "displayName").getOrElse(JsString("")),
-        "href" -> (json \ "href").getOrElse(JsString("")),
+        "displayName" -> (json \ "displayName"),
+        "href" -> (json \ "href"),
         "content" -> getContent(json)
     )
   }
@@ -42,11 +42,11 @@ trait FrontJsonLite extends ExecutionContexts{
      }
     .map{ j =>
       Json.obj(
-        "headline" -> (j \ "meta" \ "headline").asOpt[JsString].orElse((j \ "safeFields" \ "headline").asOpt[JsString]),
-        "trailText" -> (j \ "meta" \ "trailText").asOpt[JsString].orElse((j \ "safeFields" \ "trailText").asOpt[JsString]),
-        "thumbnail" -> (j \ "safeFields" \ "thumbnail").asOpt[JsString],
-        "shortUrl" -> (j \ "safeFields" \ "shortUrl").asOpt[JsString],
-        "id" -> (j \ "id").asOpt[JsString]
+        "headline" -> ((j \ "meta" \ "headline").asOpt[JsString].getOrElse(j \ "safeFields" \ "headline"): JsValue),
+        "trailText" -> ((j \ "meta" \ "trailText").asOpt[JsString].getOrElse(j \ "safeFields" \ "trailText"): JsValue),
+        "thumbnail" -> (j \ "safeFields" \ "thumbnail"),
+        "shortUrl" -> (j \ "safeFields" \ "shortUrl"),
+        "id" -> (j \ "id")
       )
     }
   }
