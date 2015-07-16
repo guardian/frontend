@@ -32,7 +32,7 @@ define([
     profileLinkTmp
 ) {
 
-    function SaveForLater() {
+    function SaveForLater(message) {
         this.classes = {
             saveThisArticle: '.js-save-for-later',
             saveThisVideo: '.js-save-for-later-video',
@@ -73,8 +73,10 @@ define([
         return { prop74: prefix + 'ContainerSave:' + contentId };
     };
 
-    SaveForLater.prototype.init = function () {
+    SaveForLater.prototype.init = function (message) {
         var userLoggedIn = identity.isUserLoggedIn();
+
+        console.log("++ hello: " + message)
 
         if (userLoggedIn) {
             identity.getSavedArticles()
@@ -114,7 +116,7 @@ define([
         } else {
             this.renderArticleSaveButton({ isSaved: false });
         }
-    };
+    };                                                                                                                            x
 
     SaveForLater.prototype.renderArticleSaveButton = function (options) {
         var $savers = bonzo(qwery(this.classes.saveThisArticle));
@@ -186,6 +188,7 @@ define([
             if (signedIn) {
                 this[isSaved ? 'createDeleteFaciaItemHandler' : 'createSaveFaciaItemHandler']($itemSaveLink[0], id, shortUrl);
             }
+
 
             fastdom.write(function () {
                 if (isSaved) {

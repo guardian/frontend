@@ -355,14 +355,14 @@ define([
             saveForLater: function () {
                 if (config.switches.saveForLater) {
                     var saveForLater = new SaveForLater();
-                    saveForLater.init();
+                    saveForLater.init("++ Hello");
                 }
             }
         };
 
     return {
         init: function () {
-            console.log("++ HITYA");
+            console.log("++ HITYA WOT");
             robust.catchErrorsAndLogAll([
 
                 // Analytics comes at the top. If you think your thing is more important then please think again...
