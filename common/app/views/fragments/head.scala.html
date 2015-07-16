@@ -17,11 +17,11 @@
 @* get the stylesheets downloading ASAP *@
 @fragments.stylesheetLinks(projectName)
 
-@* try and load fonts before we use the stylesheets *@
-@fragments.fonts()
-
 @* polyfill, feature detect etc before we try and use the stylesheets *@
 @fragments.javaScriptPreFlight(metaData)
+
+@* try and load fonts before we use the stylesheets *@
+@fragments.fonts()
 
 @* start trying to use the stylesheets *@
 @fragments.stylesheetLinksEnable(projectName)
