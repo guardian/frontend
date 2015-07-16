@@ -31,7 +31,7 @@ define([
                     fastDom.write(function () {
                         container.prepend(res.html);
                         mediator.emit('page:new-content', container);
-                    });                    
+                    });
                 }
             }
         });
