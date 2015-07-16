@@ -19,7 +19,7 @@ define([
     return function () {
         this.id = 'CookieRefresh';
         this.start = '2015-05-14';
-        this.expiry = '2015-06-14';
+        this.expiry = '2015-07-31';
         this.author = 'Mark Butler';
         this.description = 'Measured roll out of Identity session refresh';
         this.audience = 0.01;
