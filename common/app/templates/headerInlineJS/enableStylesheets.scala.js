@@ -62,15 +62,15 @@
             });
         }
     } else {
-    function setMedia (styleSheet) {
-        for (var i = 0, totalSheets = documentStyleSheets.length; i < totalSheets ; i++) {
-            var sheet = documentStyleSheets[i];
-            if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1) {
-                styleSheet.media = "screen";
-                return true;
+        function setMedia (styleSheet) {
+            for (var i = 0, totalSheets = documentStyleSheets.length; i < totalSheets ; i++) {
+                var sheet = documentStyleSheets[i];
+                if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1) {
+                    styleSheet.media = "screen";
+                    return true;
+                }
             }
-        }
-        setTimeout(setMedia, null, styleSheet);
+            setTimeout(setMedia, null, styleSheet);
         }
     }
 
