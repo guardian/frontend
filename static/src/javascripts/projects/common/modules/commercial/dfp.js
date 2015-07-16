@@ -15,9 +15,11 @@ define([
     'common/utils/user-timing',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
+    'common/modules/commercial/sha1',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
-    'common/modules/analytics/beacon'
+    'common/modules/analytics/beacon',
+    'common/modules/identity/api'
 ], function (
     bean,
     bonzo,
@@ -34,9 +36,11 @@ define([
     userTiming,
     StickyMpu,
     buildPageTargeting,
+    sha1,
     geoMostPopular,
     ab,
-    beacon
+    beacon,
+    id
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -178,9 +182,19 @@ define([
                 .zipObject()
                 .valueOf();
         },
+        setPublisherProvidedId = function () {
+            if (config.switches.dfpUserId) {
+                var user = id.getUserFromCookie();
+                if (user) {
+                    var hashedId = sha1.hash(user.id);
+                    googletag.pubads().setPublisherProvidedId(hashedId);
+                }
+            }
+        },
         displayAds = function () {
             googletag.pubads().enableSingleRequest();
             googletag.pubads().collapseEmptyDivs();
+            setPublisherProvidedId();
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
@@ -189,6 +203,7 @@ define([
         },
         displayLazyAds = function () {
             googletag.pubads().collapseEmptyDivs();
+            setPublisherProvidedId();
             googletag.enableServices();
             mediator.on('window:scroll', _.throttle(lazyLoad, 10));
             lazyLoad();
