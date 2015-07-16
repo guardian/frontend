@@ -4,7 +4,7 @@ import common._
 import conf.Switches
 import model.diagnostics.quizzes.Quizzes
 import model.{TinyResponse, Cached, NoCache, Cors}
-import play.api.mvc.{Content => _, _}
+import play.api.mvc._
 
 import scala.concurrent.ExecutionContext.Implicits
 import scala.concurrent.Future

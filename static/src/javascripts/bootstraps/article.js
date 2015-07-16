@@ -14,6 +14,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/social-most-popular',
+    'common/modules/experiments/film-containers-logic',
     'bootstraps/article-liveblog-common',
     'bootstraps/trail'
 ], function (
@@ -31,6 +32,7 @@ define([
     ab,
     geoMostPopular,
     SocialMostPopular,
+    testFilmContainers,
     articleLiveblogCommon,
     trail
 ) {
@@ -79,6 +81,12 @@ define([
                 if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
                     truncation();
                 }
+            },
+
+            initFilmTest: function () {
+                if (/film/.test(config.page.section) && /News/.test(config.page.tones)) {
+                    testFilmContainers();
+                }
             }
         },
 
@@ -90,6 +98,7 @@ define([
             modules.initSocialMostPopular();
             modules.initQuizListeners();
             modules.initTruncation();
+            modules.initFilmTest();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();

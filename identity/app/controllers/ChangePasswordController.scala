@@ -13,7 +13,7 @@ import form.Mappings
 import idapiclient.IdApiClient
 import play.filters.csrf.{CSRFCheck, CSRFAddToken}
 import actions.AuthenticatedActions
-import play.api.i18n.Messages
+import play.api.i18n.{MessagesApi, Messages, I18nSupport}
 import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
 
@@ -22,8 +22,9 @@ class ChangePasswordController @Inject()( api: IdApiClient,
                                           authenticatedActions: AuthenticatedActions,
                                           authenticationService: AuthenticationService,
                                           idRequestParser: IdRequestParser,
-                                          idUrlBuilder: IdentityUrlBuilder)
-  extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
+                                          idUrlBuilder: IdentityUrlBuilder,
+                                          val messagesApi: MessagesApi)
+  extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms with I18nSupport{
 
   import authenticatedActions.authAction
 

@@ -3,7 +3,6 @@
 @import common.LinkTo
 @import play.api.libs.json._
 @import views.html.fragments.crosswordEntries
-@import com.gu.crosswords.api.client.models.{Across, Down}
 
 @main(crosswordPage) { } {
     <div class="l-side-margins">
@@ -38,12 +37,12 @@
                                 <div class="crossword__clues">
                                     <div class="crossword__clues--across">
                                         <h3 class="crossword__clues-header">Across</h3>
-                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Across))
+                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
                                     </div>
 
                                     <div class="crossword__clues--down">
                                         <h3 class="crossword__clues-header">Down</h3>
-                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == Down))
+                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
                                     </div>
                                 </div>
                                 </noscript>
