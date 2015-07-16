@@ -138,7 +138,9 @@ define([
                     this.renderForecast(response);
                 }.bind(this))
                 .fail(function (err, msg) {
-                    raven.captureException(new Error('Error retrieving forecast data (' + msg + ')'), {
+                    var statusText = (err && err.statusText) || '';
+                    var statusCode = (err && err.status) || '';
+                    raven.captureException(new Error('Error retrieving forecast data (' + msg + ') (Status: ' + statusCode + ') (StatusText: ' + statusText + ')'), {
                         tags: {
                             feature: 'weather'
                         }

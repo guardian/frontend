@@ -14,6 +14,6 @@ define([
                 feature: 'fastdom'
             }
         });
-        window.console.error(error);
+        window.console.warn('Caught FastDom error.', error.stack);
     };
 });
