@@ -20,7 +20,7 @@ define([
     };
 
     var log = function (name, error, reporter) {
-        console.warn('Caught error.', error.stack);
+        window.console.warn('Caught error.', error.stack);
         if (!reporter) {
             reporter = raven.captureException;
         }
@@ -39,7 +39,7 @@ define([
             var name = pair[0];
             var fn = pair[1];
             catchErrorsAndLog(name, fn);
-        })
+        });
     };
 
     return {
