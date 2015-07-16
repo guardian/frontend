@@ -949,7 +949,7 @@ object Switches {
     "A/B Tests",
     "ab-film-containers",
     "Film Containers on Film content",
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2015, 7, 23),
     exposeClientSide = true
   )
