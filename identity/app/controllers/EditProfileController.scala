@@ -10,7 +10,6 @@ import form._
 import idapiclient.IdApiClient
 import model._
 import play.api.data.Form
-import play.api.i18n.{MessagesApi, I18nSupport}
 import play.api.mvc.{AnyContent, Controller, Request}
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdentityRequest, _}
@@ -23,9 +22,10 @@ import scala.concurrent.Future
 class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
                                       authenticatedActions: AuthenticatedActions,
                                       identityApiClient: IdApiClient,
-                                      idRequestParser: IdRequestParser,
-                                      val messagesApi: MessagesApi)
-  extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
+                                      idRequestParser: IdRequestParser)
+  extends Controller
+  with ExecutionContexts
+  with SafeLogging{
 
   import authenticatedActions._
 

@@ -19,7 +19,7 @@ object BlockingExceptions {
 }
 
 trait FrontPress extends Logging {
-  private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("akka.actor.front-press")
+  private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
   def pressDraftByPathId(id: String): Future[JsObject] = generateJson(id, DraftCollections).map { json =>
     (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
