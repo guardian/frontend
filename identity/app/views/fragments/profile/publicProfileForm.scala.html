@@ -3,7 +3,7 @@
   user: com.gu.identity.model.User,
   publicProfileForm: Form[form.ProfileFormData],
   avatarUploadDataOpt: Option[model.AvatarUploadData],
-  avatarUploadStatus: Option[Either[String, Boolean]])(implicit request: RequestHeader)
+  avatarUploadStatus: Option[Either[String, Boolean]])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @import views.html.fragments.form.{inputField, textareaField}
 @import form.IdFormHelpers._

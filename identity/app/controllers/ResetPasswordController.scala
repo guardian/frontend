@@ -7,7 +7,7 @@ import play.api.mvc._
 import com.google.inject.{Inject, Singleton}
 import idapiclient.IdApiClient
 import services.{AuthenticationService, IdentityUrlBuilder, IdRequestParser}
-import play.api.i18n.Messages
+import play.api.i18n.{MessagesApi, Messages}
 import play.api.data.validation._
 import play.api.data.Forms._
 import play.api.data.format.Formats._
@@ -20,7 +20,8 @@ import scala.concurrent.Future
 class ResetPasswordController @Inject()(  api : IdApiClient,
                                           idRequestParser: IdRequestParser,
                                           idUrlBuilder: IdentityUrlBuilder,
-                                          authenticationService: AuthenticationService)
+                                          authenticationService: AuthenticationService,
+                                          val messagesApi: MessagesApi)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
   val page = IdentityPage("/reset-password", "Reset Password", "reset-password")
