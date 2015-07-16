@@ -1,4 +1,4 @@
-@()
+@()(implicit request: RequestHeader)
 
 @* It's faster to pass arguments in setTimeout than to use an anon function, but IE <10 can't do that. *@
 // Polyfill setTimeout args: https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers.setTimeout.
