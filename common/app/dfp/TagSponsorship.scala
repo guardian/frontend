@@ -61,7 +61,7 @@ object InlineMerchandisingTargetedTagsReportParser extends Logging {
     val json = Json.parse(jsonString)
     json.validate[InlineMerchandisingTargetedTagsReport] match {
       case s: JsSuccess[InlineMerchandisingTargetedTagsReport] => Some(s.get)
-      case e: JsError => log.error("Errors: " + JsError.toJson(e).toString()); None
+      case e: JsError => log.error("Errors: " + JsError.toFlatJson(e).toString()); None
     }
   }
 }

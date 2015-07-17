@@ -34,3 +34,13 @@ case class RealTag(
     podcast
   )
 }
+
+object ApiContentReads {
+  implicit val assetReads = Json.reads[Asset]
+  implicit val podcastReads = Json.reads[Podcast]
+  implicit val mediaEncodingReads = Json.reads[MediaEncoding]
+  implicit val referenceReads = Json.reads[Reference]
+  implicit val elementReads = Json.reads[Element]
+  implicit val tagReads = Json.reads[RealTag].map(_.toTag)
+  implicit val contentReads = Json.reads[Content]
+}

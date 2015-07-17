@@ -5,14 +5,14 @@ import common._
 import feed.Competitions
 import model.{TeamMap, LiveBlogAgent}
 import pa.{Http, PaClient}
-import play.api.GlobalSettings
+import play.api.{Application => PlayApp, Plugin}
 import play.api.libs.ws.WS
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-trait FootballLifecycle extends GlobalSettings with ExecutionContexts {
+class FootballStatsPlugin(app: PlayApp) extends Plugin with ExecutionContexts {
 
-  private def scheduleJobs() {
+  def scheduleJobs() {
     Competitions.competitionIds.zipWithIndex map { case (id, index) =>
       //stagger fixtures and results refreshes to avoid timeouts
       val seconds = index * 5 % 60
@@ -39,9 +39,18 @@ trait FootballLifecycle extends GlobalSettings with ExecutionContexts {
     Jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
       TeamMap.refresh()
     }
+
+    // Have all these run once at load, then on the scheduled times
+    AkkaAsync.after(5.seconds){
+      val competitionUpdate = Competitions.refreshCompetitionData()
+      competitionUpdate.onSuccess { case _ => Competitions.competitionIds.foreach(Competitions.refreshCompetitionAgent) }
+      Competitions.refreshMatchDay()
+      LiveBlogAgent.refresh()
+      TeamMap.refresh()
+    }
   }
 
-  private def descheduleJobs() {
+  def descheduleJobs() {
     Competitions.competitionIds map { id =>
       Jobs.deschedule(s"CompetitionAgentRefreshJob_$id")
     }
@@ -51,25 +60,14 @@ trait FootballLifecycle extends GlobalSettings with ExecutionContexts {
     Jobs.deschedule("TeamMapRefreshJob")
   }
 
-  override def onStart(app: play.api.Application) {
-    super.onStart(app)
+  override def onStart() {
     descheduleJobs()
     scheduleJobs()
-
-    AkkaAsync {
-      val competitionUpdate = Competitions.refreshCompetitionData()
-      competitionUpdate.onSuccess { case _ => Competitions.competitionIds.foreach(Competitions.refreshCompetitionAgent) }
-      Competitions.refreshMatchDay()
-      LiveBlogAgent.refresh()
-      TeamMap.refresh()
-    }
   }
 
-  override def onStop(app: play.api.Application) {
+  override def onStop() {
     descheduleJobs()
-    super.onStop(app)
   }
-
 }
 
 object FootballClient extends PaClient with Http with Logging with ExecutionContexts {

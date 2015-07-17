@@ -1,7 +1,6 @@
 import com.gu.googleauth.{UserIdentity, FilterExemption, GoogleAuthFilters}
 import common.ExecutionContexts
-import conf.Filters
-import conf._
+import conf.{Switches, Filters}
 import controllers.AuthCookie
 import dfp.DfpAgentLifecycle
 import feed.OnwardJourneyLifecycle
@@ -57,13 +56,9 @@ object PreviewAuthFilters {
 }
 
 object Global extends WithFilters(
-    new PreviewAuthFilters.AuthFilterWithExemptions(
+  new PreviewAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
-    FilterExemptions.exemptions):: NoCacheFilter :: conf.Filters.common: _*)
-  with CommercialLifecycle
-  with OnwardJourneyLifecycle
-  with ConfigAgentLifecycle
-  with DfpAgentLifecycle
-  with SwitchboardLifecycle
-  with FootballLifecycle
-  with CricketLifecycle
+    FilterExemptions.exemptions):: NoCacheFilter :: Filters.common: _*) with CommercialLifecycle
+                                                        with OnwardJourneyLifecycle
+                                                        with ConfigAgentLifecycle
+                                                        with DfpAgentLifecycle
