@@ -2,14 +2,14 @@ define([
     'bonzo',
     'common/utils/_',
     'common/utils/$',
-    'common/utils/mediator',
-    'common/modules/experiments/ab'
+    'common/utils/config',
+    'common/utils/mediator'
 ], function (
     bonzo,
     _,
     $,
-    mediator,
-    ab
+    config,
+    mediator
 ) {
     /**
      * @todo: check if browser natively supports "position: sticky"
@@ -31,7 +31,7 @@ define([
     Sticky.prototype.updatePosition = function () {
         var fixedTop, css, stickyHeaderHeight;
 
-        stickyHeaderHeight = ab.shouldRunTest('Viewability', 'variant') ? $('.navigation').dim().height : 0;
+        stickyHeaderHeight = config.switches.viewability ? $('.navigation').dim().height : 0;
 
         // have we scrolled past the element
         if (window.scrollY >= this.$parent.offset().top - this.opts.top - stickyHeaderHeight) {

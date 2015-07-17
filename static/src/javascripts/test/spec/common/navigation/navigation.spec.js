@@ -1,4 +1,3 @@
-import bonzo from 'bonzo';
 import bean from 'bean';
 import fastdom from 'fastdom';
 import $ from 'common/utils/$';

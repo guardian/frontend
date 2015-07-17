@@ -14,7 +14,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/social-most-popular',
-    'common/modules/social/pinterest',
+    'common/modules/experiments/film-containers-logic',
     'bootstraps/article-liveblog-common',
     'bootstraps/trail'
 ], function (
@@ -32,7 +32,7 @@ define([
     ab,
     geoMostPopular,
     SocialMostPopular,
-    pinterest,
+    testFilmContainers,
     articleLiveblogCommon,
     trail
 ) {
@@ -71,12 +71,6 @@ define([
                 }
             },
 
-            initPinterest: function () {
-                if (ab.shouldRunTest('Pintrest', 'variant')) { // The test was misspelt! Keeping it, to not confuse the data.
-                    pinterest();
-                }
-            },
-
             initQuizListeners: function () {
                 require(['ophan/ng'], function (ophan) {
                     mediator.on('quiz/ophan-event', ophan.record);
@@ -86,6 +80,12 @@ define([
             initTruncation: function () {
                 if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
                     truncation();
+                }
+            },
+
+            initFilmTest: function () {
+                if (/film/.test(config.page.section) && /News/.test(config.page.tones)) {
+                    testFilmContainers();
                 }
             }
         },
@@ -97,8 +97,8 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
-            modules.initPinterest();
             modules.initTruncation();
+            modules.initFilmTest();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();

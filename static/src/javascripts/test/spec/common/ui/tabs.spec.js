@@ -8,7 +8,6 @@ var t,
     tab1panel,
     tab2panel,
     independentTabPanel,
-    allTabs,
     fakeTab;
 
 describe('Tabs', function () {
@@ -52,7 +51,6 @@ describe('Tabs', function () {
         tab2panel = document.getElementById('tab2panel');
 
         independentTabPanel = document.getElementById('tab2panel_2');
-        allTabs = document.querySelectorAll('ol.js-tabs a');
         fakeTab = document.getElementById('fake-tab');
 
         // only way i can think of to test if a valid URL would actually execute

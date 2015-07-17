@@ -91,6 +91,7 @@ trait FapiFrontPress extends QueryDefaults with Logging with ExecutionContexts {
       .showElements("all")
       .showTags("all")
       .showReferences(references)
+      .pageSize(20)
 
   val itemApiQuery: AdjustItemQuery = (itemQuery: ItemQuery) =>
     itemQuery

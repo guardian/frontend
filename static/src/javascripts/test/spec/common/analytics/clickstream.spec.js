@@ -1,9 +1,12 @@
+/*eslint-disable no-new*/
 import Clickstream from 'common/modules/ui/clickstream';
 import bean from 'bean';
 import mediator from 'common/utils/mediator';
 import fixtures from 'helpers/fixtures';
 import sinon from 'sinonjs';
+/*eslint-disable no-unused-vars*/
 import jasmineSinon from 'jasmine-sinon';
+/*eslint-enable no-unused-vars*/
 
 describe('Clickstream', function () {
 
@@ -70,16 +73,15 @@ describe('Clickstream', function () {
 
     it('should report the ancestor \'clickable\' element, not the element that actually received the click', function (done) {
 
-        var cs  = new Clickstream({ filter: ['a'], withEvent: false }),
-            object = { method: function (p) {
+        new Clickstream({ filter: ['a'], withEvent: false });
+
+        var object = { method: function (p) {
                 clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
             }},
             spy = sinon.spy(object, 'method'),
             el = document.getElementById('click-me-descendant'),
-
-            elAncestor = document.getElementById('click-me-ancestor'),
             clickSpec = {
                 samePage: false,
                 sameHost: true,
@@ -95,8 +97,9 @@ describe('Clickstream', function () {
 
     it('should return clickspec with false validTarget when clicked element is *not* in the filter list of given element sources', function (done) {
 
-        var cs  = new Clickstream({ filter: ['a'], withEvent: false }), // only log events on [a]nchor elements
-            object = { method: function (p) {
+        new Clickstream({ filter: ['a'], withEvent: false }); // only log events on [a]nchor elements
+
+        var object = { method: function (p) {
                 clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
@@ -115,8 +118,9 @@ describe('Clickstream', function () {
 
     it('should indicate if a click emanates from a internal anchor', function (done) {
 
-        var cs  = new Clickstream({ filter: ['p'], withEvent: false }),
-            object = { method: function (p) {
+        new Clickstream({ filter: ['p'], withEvent: false });
+
+        var object = { method: function (p) {
                 clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
@@ -138,8 +142,9 @@ describe('Clickstream', function () {
 
     it('should indicate if a click emanates from a same-host link', function (done) {
 
-        var cs  = new Clickstream({ filter: ['a'], withEvent: false }),
-            object = { method: function (p) {
+        new Clickstream({ filter: ['a'], withEvent: false });
+
+        var object = { method: function (p) {
                 clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
@@ -161,8 +166,9 @@ describe('Clickstream', function () {
 
     it('should indicate if a click emanates from an other-host link', function (done) {
 
-        var cs  = new Clickstream({ filter: ['a'], withEvent: false }),
-            object = { method: function (p) {
+        new Clickstream({ filter: ['a'], withEvent: false });
+
+        var object = { method: function (p) {
                 clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
@@ -184,8 +190,9 @@ describe('Clickstream', function () {
 
     it('should not fire clicks when instantiated without the listener', function () {
 
-        var cs  = new Clickstream({ filter: ['a'], addListener: false, withEvent: false }), // disable the listener on the body
-            object = { method: function (tag) {} },
+        new Clickstream({ filter: ['a'], addListener: false, withEvent: false }); // disable the listener on the body
+
+        var object = { method: function () {} },
             spy = sinon.spy(object, 'method');
 
         mediator.on('module:clickstream:click', spy);
@@ -198,8 +205,9 @@ describe('Clickstream', function () {
 
     it('should pick up the closest data-link-context attribute (only)', function (done) {
 
-        var cs  = new Clickstream({ filter: ['button'], withEvent: false }),
-            object = { method: function (p) {
+        new Clickstream({ filter: ['button'], withEvent: false });
+
+        var object = { method: function (p) {
                 clickSpec.target = p.target;
                 expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
                 done();
@@ -222,7 +230,7 @@ describe('Clickstream', function () {
     });
 
     it('should get custom event properties recursively', function (done) {
-        var cs = new Clickstream({ filter: ['button'], withEvent: false });
+        new Clickstream({ filter: ['button'], withEvent: false });
 
         var spy = sinon.spy({ method: function (p) {
             var clickSpec = {

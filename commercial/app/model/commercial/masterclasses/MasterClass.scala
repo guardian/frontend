@@ -6,7 +6,7 @@ import org.joda.time.DateTime
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsNull, JsLookupResult, JsValue}
 
 
 case class MasterClass(eventBriteEvent: EventbriteMasterClass, mainPicture: Option[ImageContainer])
@@ -59,7 +59,7 @@ object EventbriteMasterClass {
         url,
         description,
         status,
-        Venue(block \ "venue"),
+        Venue((block \ "venue").getOrElse(JsNull)),
         tickets.toList,
         capacity,
         element.attr("href"),
@@ -106,7 +106,7 @@ object Venue {
 
   def apply(json: JsValue): Venue = {
 
-    def eval(jsonField: JsValue) = jsonField.asOpt[String].filterNot(_.length == 0)
+    def eval(jsonField: JsLookupResult) = jsonField.asOpt[String].filterNot(_.length == 0)
 
     Venue(
       name = eval(json \ "name"),

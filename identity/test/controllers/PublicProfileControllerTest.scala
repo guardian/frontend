@@ -98,6 +98,17 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
         status(result) should be(404)
       }
     }
+
+    "with no display name for the specified user" - {
+      val guestUser = user.copy(publicFields = user.publicFields.copy(displayName = None))
+      when(api.userFromVanityUrl(Matchers.anyString, Matchers.any[Auth])) thenReturn Future.successful(Left(Nil))
+      when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(guestUser))
+      val result = controller.renderProfileFromVanityUrl(vanityUrl, "discussions")(request)
+
+      "then should return status 404" in {
+        status(result) should be(404)
+      }
+    }
   }
 
 }

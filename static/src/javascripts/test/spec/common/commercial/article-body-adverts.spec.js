@@ -1,4 +1,3 @@
-import fastdom from 'fastdom';
 import qwery from 'qwery';
 import sinon from 'sinonjs';
 import Promise from 'Promise';
@@ -17,8 +16,7 @@ describe('Article Body Adverts', function () {
             ]
         },
         injector = new Injector(),
-        articleBodyAdverts, config, detect, spacefinder, ab, getParticipationsStub,
-        testCanBeRunStub;
+        articleBodyAdverts, config, detect, spacefinder;
 
     beforeEach(function (done) {
 
@@ -26,26 +24,12 @@ describe('Article Body Adverts', function () {
             'common/modules/commercial/article-body-adverts',
             'common/utils/config',
             'common/utils/detect',
-            'common/modules/article/spacefinder',
-            'common/modules/experiments/ab'], function () {
+            'common/modules/article/spacefinder'], function () {
 
                 articleBodyAdverts = arguments[0];
                 config = arguments[1];
                 detect = arguments[2];
                 spacefinder = arguments[3];
-                ab = arguments[4];
-
-                getParticipationsStub = sinon.stub();
-                getParticipationsStub.returns({
-                    'Viewability': {
-                        'variant': 'variant'
-                    }
-                });
-                ab.getParticipations = getParticipationsStub;
-
-                testCanBeRunStub = sinon.stub();
-                testCanBeRunStub.returns(true);
-                ab.shouldRunTest = testCanBeRunStub;
 
                 $fixturesContainer = fixtures.render(fixturesConfig);
                 $style = $.create('<style type="text/css"></style>')
@@ -58,7 +42,8 @@ describe('Article Body Adverts', function () {
                     hasInlineMerchandise: false
                 };
                 config.switches = {
-                    standardAdverts: true
+                    standardAdverts: true,
+                    viewability: true
                 };
                 detect.getBreakpoint = function () {
                     return 'desktop';
@@ -91,6 +76,8 @@ describe('Article Body Adverts', function () {
             return false;
         };
 
+        config.switches.viewability = false;
+
         articleBodyAdverts.init()
             .then(function () {
                 expect(getParaWithSpaceStub).toHaveBeenCalledWith({
@@ -108,6 +95,7 @@ describe('Article Body Adverts', function () {
 
     it('should call "getParaWithSpace" with correct arguments multiple times - in test', function (done) {
         config.switches.commercialExtraAds = true;
+        config.switches.viewability = true;
 
         articleBodyAdverts.init()
             .then(function () {

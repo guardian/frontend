@@ -1,14 +1,16 @@
 package layout
 
-import com.gu.facia.api.models.{CollectionConfig, CuratedContent, FaciaContent}
-import conf.{Configuration, Switches}
+import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
+import common.LinkTo
+import conf.Switches
 import dfp.{DfpAgent, SponsorshipTag}
 import implicits.FaciaContentFrontendHelpers._
 import implicits.FaciaContentImplicits._
 import model.PressedPage
 import model.facia.PressedCollection
-import model.meta.{ListItem, ItemList}
+import model.meta.{ItemList, ListItem}
 import org.joda.time.DateTime
+import play.api.mvc.RequestHeader
 import services.{CollectionConfigWithId, FaciaContentConvert}
 import slices.{MostPopular, _}
 import views.support.CutOut
@@ -426,17 +428,17 @@ object Front extends implicits.Collections {
 
   }
 
-  def makeLinkedData(collections: Seq[FaciaContainer]): ItemList = {
+  def makeLinkedData(url: String, collections: Seq[FaciaContainer])(implicit request: RequestHeader): ItemList = {
     ItemList(
-      "", // relative iri so just resolves to the base
+      LinkTo(url),
       collections.zipWithIndex.map {
         case (collection, index) =>
           ListItem(position = index, item = Some(
             ItemList(
-              "", // don't have a uri for each container
+              LinkTo(url), // don't have a uri for each container
               collection.items.zipWithIndex.map {
                 case (item, index) =>
-                  ListItem(position = index, url = Some(Configuration.site.host + item.url))
+                  ListItem(position = index, url = Some(LinkTo(item.url)))
               }
             )
           ))

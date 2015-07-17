@@ -1,8 +1,6 @@
 import RelativeDates from 'common/modules/ui/relativedates';
 import sinon from 'sinonjs';
-import bonzo from 'bonzo';
 import fixtures from 'helpers/fixtures';
-import qwery from 'qwery';
 
 var conf =  {
     id: 'relative-dates',

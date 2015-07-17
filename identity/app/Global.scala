@@ -1,17 +1,19 @@
 import com.google.inject.Guice
 import common.CloudWatchApplicationMetrics
 import conf._
-import filters.HeaderLoggingFilter
+import filters.{StrictTransportSecurityHeaderFilter, HeaderLoggingFilter}
 import play.api.Play.current
 import play.api._
 import play.api.mvc._
 import play.api.mvc.Results._
 import scala.concurrent.Future
 import utils.SafeLogging
-import conf.{Configuration, Filters}
 
-object Global extends WithFilters(HeaderLoggingFilter :: Filters.common: _*) with SafeLogging
-                                                                                    with CloudWatchApplicationMetrics {
+object Global extends WithFilters(HeaderLoggingFilter :: StrictTransportSecurityHeaderFilter :: conf.Filters.common: _*)
+  with SafeLogging
+  with CloudWatchApplicationMetrics
+  with IdentityLifecycle
+  with SwitchboardLifecycle {
 
   override lazy val applicationName = "frontend-identity"
 
@@ -19,7 +21,7 @@ object Global extends WithFilters(HeaderLoggingFilter :: Filters.common: _*) wit
     val module =
       Play.mode match {
         case Mode.Prod => {
-          if (Configuration.environment.isNonProd) new PreProdModule
+          if (conf.Configuration.environment.isNonProd) new PreProdModule
           else new ProdModule
         }
         case Mode.Dev => new DevModule
@@ -27,10 +29,6 @@ object Global extends WithFilters(HeaderLoggingFilter :: Filters.common: _*) wit
       }
 
     Guice.createInjector(module)
-  }
-
-  override def getControllerInstance[A](clazz: Class[A]) = {
-    injector.getInstance(clazz)
   }
 
   override def onError(request: RequestHeader, ex: Throwable) = {

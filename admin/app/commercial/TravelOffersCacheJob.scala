@@ -14,8 +14,6 @@ import scala.concurrent.{Future, future}
 object TravelOffersCacheJob extends ExecutionContexts with Dates with Logging {
 
   protected val url = traveloffers_url
-  // following RFC-2616#3.7.1
-  protected val characterEncoding: String = AsyncHttpProviderUtils.DEFAULT_CHARSET
 
   protected val loadTimeout: Int = 60000
 
