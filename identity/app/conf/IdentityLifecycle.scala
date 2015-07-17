@@ -1,16 +1,12 @@
 package conf
 
 import common.{AkkaAsync, Jobs, ExecutionContexts}
-import play.api.{Plugin, Application}
 import jobs.{TorExitNodeList, BlockedEmailDomainList}
-import scala.concurrent.duration._
+import play.api.GlobalSettings
 
-/**
- * Created by nbennett on 21/10/14.
- */
-class IdentityJobsPlugin(app: Application) extends Plugin with ExecutionContexts {
+trait IdentityLifecycle extends GlobalSettings with ExecutionContexts {
 
-  def scheduleJobs() {
+  private def scheduleJobs() {
       Jobs.schedule("BlockedEmailsRefreshJobs", "0 0/30 * * * ?") {
          BlockedEmailDomainList.run()
       }
@@ -20,23 +16,25 @@ class IdentityJobsPlugin(app: Application) extends Plugin with ExecutionContexts
       }
   }
 
-  def descheduleJobs() {
+  private def descheduleJobs() {
     Jobs.deschedule("BlockedEmailsRefreshJobs")
     Jobs.deschedule("TorExitNodeRefeshJob")
   }
 
-  override def onStart() {
+  override def onStart(app: play.api.Application) {
+    super.onStart(app)
     descheduleJobs()
     scheduleJobs()
 
-    AkkaAsync.after(5.seconds) {
+    AkkaAsync {
       BlockedEmailDomainList.run()
       TorExitNodeList.run()
     }
   }
 
-  override def onStop() {
+  override def onStop(app: play.api.Application) {
     descheduleJobs()
+    super.onStop(app)
   }
 
 }

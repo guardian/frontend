@@ -1,13 +1,36 @@
 package conf
 
+import java.util.concurrent.TimeoutException
 import common._
 import conf.Configuration.environment
 import org.joda.time.{DateTime, Days, Interval, LocalDate}
-import play.api.{Application, Plugin}
+import play.api.Play
+import scala.concurrent.{Future, Promise}
+import scala.concurrent.duration._
 
 sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
+
+trait Initializable[T] extends ExecutionContexts with Logging {
+
+  private val initialized = Promise[T]()
+
+  protected val initializationTimeout: FiniteDuration = 2.minutes
+
+  if (Play.maybeApplication.isDefined) {
+    AkkaAsync.after(initializationTimeout) {
+      initialized.tryFailure {
+        new TimeoutException(s"Initialization timed out after $initializationTimeout")
+      }
+    }
+  }
+
+  def initialized(t: T): Unit = initialized.trySuccess(t)
+
+  def onInitialized: Future[T] = initialized.future
+}
+
 
 trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
   val group: String
@@ -1012,6 +1035,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ABSignedOutSaveForLaterSwitch = Switch(
+    "A/B Tests",
+    "ab-signed-out-save-for-later",
+    "It this switch is turned on, user are able to save articles. Turn off if this causes overload on then identity api" ,
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val FootballFeedRecorderSwitch = Switch(
     "Feature",
     "football-feed-recorder",
@@ -1186,6 +1218,8 @@ object Switches {
     exposeClientSide = false
   )
 
+
+
   // Server-side A/B Tests
   val ServerSideTests = {
     // It's for the side effect. Blame agents.
@@ -1206,40 +1240,5 @@ object Switches {
   def grouped: List[(String, Seq[SwitchTrait])] = {
     val sortedSwitches = all.groupBy(_.group).map { case (key, value) => (key, value.sortBy(_.name)) }
     sortedSwitches.toList.sortBy(_._1)
-  }
-}
-
-class SwitchBoardPlugin(app: Application) extends SwitchBoardAgent(Configuration)
-class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts with Logging {
-
-  def refresh() {
-    log.info("Refreshing switches")
-    services.S3.get(config.switches.key) foreach { response =>
-
-      val nextState = Properties(response)
-
-      for (switch <- Switches.all) {
-        nextState.get(switch.name) foreach {
-          case "on" => switch.switchOn()
-          case "off" => switch.switchOff()
-          case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
-        }
-      }
-    }
-  }
-
-  override def onStart() {
-    Jobs.deschedule("SwitchBoardRefreshJob")
-    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?") {
-      refresh()
-    }
-
-    AkkaAsync {
-      refresh()
-    }
-  }
-
-  override def onStop() {
-    Jobs.deschedule("SwitchBoardRefreshJob")
   }
 }

@@ -60,7 +60,8 @@ define([
             'onSaveArticle',
             'onDeleteArticle',
             'createSaveFaciaItemHandler',
-            'createDeleteFaciaItemHandler'
+            'createDeleteFaciaItemHandler',
+            'createSignInSaveFaciaItemHandler'
         );
     }
 
@@ -73,10 +74,10 @@ define([
         return { prop74: prefix + 'ContainerSave:' + contentId };
     };
 
-    SaveForLater.prototype.init = function (message) {
+    SaveForLater.prototype.init = function (showNotSignedIn) {
         var userLoggedIn = identity.isUserLoggedIn();
 
-        console.log("++ hello: " + message)
+        console.log("++ hello: " + showNotSignedIn)
 
         if (userLoggedIn) {
             identity.getSavedArticles()
@@ -107,8 +108,23 @@ define([
                         this.renderSaveButtonsInArticle();
                     }
                 }.bind(this));
+        } else {
+            if (showNotSignedIn) {
+                if(this.isContent) {
+                    var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>', {
+                        idUrl: config.page.idUrl,
+                        returnUrl: encodeURIComponent(document.location.href),
+                        shortUrl: shortUrl,
+                        platform: savedPlatformAnalytics
+                    });
+                    this.renderArticleSaveButton({ url: url, isSaved: false });
+                }
+                this.prepareFaciaItemLinks(false);
+            }
         }
+
     };
+
 
     SaveForLater.prototype.renderSaveButtonsInArticle = function () {
         if (this.getSavedArticle(shortUrl)) {
@@ -116,7 +132,7 @@ define([
         } else {
             this.renderArticleSaveButton({ isSaved: false });
         }
-    };                                                                                                                            x
+    };
 
     SaveForLater.prototype.renderArticleSaveButton = function (options) {
         var $savers = bonzo(qwery(this.classes.saveThisArticle));
@@ -187,6 +203,10 @@ define([
 
             if (signedIn) {
                 this[isSaved ? 'createDeleteFaciaItemHandler' : 'createSaveFaciaItemHandler']($itemSaveLink[0], id, shortUrl);
+            }
+            else {
+                console.log("Wotcher");
+                this.createSignInSaveFaciaItemHandler($itemSaveLink[0], id, shortUrl)
             }
 
 
@@ -324,6 +344,20 @@ define([
                 shortUrl,
                 this.onSaveFaciaItem.bind(this, link, id, shortUrl)
             )
+        );
+    };
+
+    SaveForLater.prototype.createSignInSaveFaciaItemHandler = function (link, id, shortUrl) {
+        bean.one(link, 'click', function () {
+                var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&articleId=<% articleId %>', {
+                    idUrl: config.page.idUrl,
+                    returnUrl: encodeURIComponent(document.location.href),
+                    shortUrl: shortUrl,
+                    platform: savedPlatformAnalytics,
+                    articleId: id
+                });
+                window.location = url
+            }
         );
     };
 

@@ -7,6 +7,7 @@ import com.gu.identity.model.User
 import idapiclient.{ IdApiClient, EmailPassword }
 import javax.inject.Singleton
 import model.{NoCache, IdentityPage}
+import play.api.i18n.MessagesApi
 import play.api.mvc._
 import play.api.data._
 import play.api.mvc.Result
@@ -21,7 +22,8 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
                                      api: IdApiClient,
                                      idRequestParser : TorNodeLoggingIdRequestParser,
                                      idUrlBuilder : IdentityUrlBuilder,
-                                     signinService : PlaySigninService  )
+                                     signinService : PlaySigninService,
+                                     val messagesApi: MessagesApi )
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
   val page = IdentityPage("/register", "Register", "register")

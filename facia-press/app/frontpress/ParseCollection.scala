@@ -12,10 +12,13 @@ import model.{Collection, _}
 import org.apache.commons.codec.digest.DigestUtils._
 import org.joda.time.DateTime
 import performance._
-import services.ParseCollectionJsonImplicits._
+import model.facia.FapiJsonFormats._
+import play.api.libs.json.Json
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.Try
+
+
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -39,6 +42,7 @@ case class Result(
 
 object Result {
   val empty: Result = Result(Nil, Nil, Nil, Nil)
+  implicit val resultFormats = Json.format[Result]
 }
 
 case class TrailId(get: String) extends AnyVal
@@ -251,6 +255,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     collectionItem.meta.flatMap(_.supporting).getOrElse(Nil)
 
   def executeContentApiQueryViaCache(queryString: String, edition: Edition): Future[Result] = {
+
     lazy val contentApiQuery = executeContentApiQuery(queryString, edition)
     if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
       MemcachedFallback.withMemcachedFallBack(
