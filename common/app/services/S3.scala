@@ -11,7 +11,7 @@ import com.amazonaws.util.StringInputStream
 import scala.io.{Codec, Source}
 import org.joda.time.DateTime
 import play.Play
-import play.api.libs.ws.{WSRequest, WS}
+import play.api.libs.ws.{WSRequestHolder, WS}
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import sun.misc.BASE64Encoder
@@ -218,9 +218,9 @@ trait SecureS3Request extends implicits.Dates with Logging {
   val frontendBucket: String = Configuration.aws.bucket
   val frontendStore: String = Configuration.frontend.store
 
-  def urlGet(id: String): WSRequest = url("GET", id)
+  def urlGet(id: String): WSRequestHolder = url("GET", id)
 
-  private def url(httpVerb: String, id: String): WSRequest = {
+  private def url(httpVerb: String, id: String): WSRequestHolder = {
 
     val headers = Configuration.aws.credentials.map(_.getCredentials).map{ credentials =>
       val sessionTokenHeaders: Seq[(String, String)] = credentials match {

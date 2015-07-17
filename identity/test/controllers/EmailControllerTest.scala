@@ -24,8 +24,6 @@ import services.IdentityRequest
 import client.{Auth, Error}
 import idapiclient.TrackingData
 import actions.AuthenticatedActions
-import play.api.i18n.Messages.Implicits.applicationMessagesApi
-import play.api.Play.current
 
 class EmailControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
@@ -53,7 +51,7 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
   when(idRequest.trackingData) thenReturn trackingData
 
   when(idUrlBuilder.buildUrl(any[String], any[IdentityRequest], any[(String, String)])) thenReturn "/email-prefs"
-  lazy val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authenticatedActions, applicationMessagesApi)
+  val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authenticatedActions)
 
   "The preferences method" - Fake {
     val testRequest = TestRequest()
