@@ -108,7 +108,7 @@ define([
                 }.bind(this));
         } else {
             if (showNotSignedIn) {
-                if(this.isContent) {
+                if (this.isContent) {
                     var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>', {
                         idUrl: config.page.idUrl,
                         returnUrl: encodeURIComponent(document.location.href),
@@ -201,11 +201,10 @@ define([
 
             if (signedIn) {
                 this[isSaved ? 'createDeleteFaciaItemHandler' : 'createSaveFaciaItemHandler']($itemSaveLink[0], id, shortUrl);
-            }
-            else {
-                bean.one($itemSaveLink[0], 'click', function(id, shortUrl) {
-                    this.signUserInToSaveArticle(id, shortUrl)
-                }.bind(this, id,shortUrl));
+            } else {
+                bean.one($itemSaveLink[0], 'click', function (id, shortUrl) {
+                    this.signUserInToSaveArticle(id, shortUrl);
+                }.bind(this, id, shortUrl));
             }
 
 
@@ -346,7 +345,7 @@ define([
         );
     };
 
-    SaveForLater.prototype.signUserInToSaveArticle = function ( id, shortUrl) {
+    SaveForLater.prototype.signUserInToSaveArticle = function (id, shortUrl) {
         var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&articleId=<%= articleId %>', {
             idUrl: config.page.idUrl,
             returnUrl: encodeURIComponent(document.location.href),
@@ -354,7 +353,7 @@ define([
             platform: savedPlatformAnalytics,
             articleId: id
         });
-        window.location = url
+        window.location = url;
     };
 
     SaveForLater.prototype.createDeleteFaciaItemHandler = function (link, id, shortUrl) {

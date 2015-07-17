@@ -302,7 +302,7 @@ define([
                     if (overlay) {
                         bonzo(overlay).removeClass('overlay--open');
                     }
-                    bonzo(document.body).removeClass('has-overlay');                                                              4
+                    bonzo(document.body).removeClass('has-overlay');
                     if (offset) {
                         window.setTimeout(function () {
                             document.body.scrollTop = offset;
