@@ -223,9 +223,6 @@ define([
                         width:     '100%',
                         'z-index': '1000',
                         'margin-top': 0,
-                        '-webkit-transform': 'translateY(-100%)',
-                        '-ms-transform': 'translateY(-100%)',
-                        'transform': 'translateY(-100%)',
                         'backface-visibility': 'hidden'
                     });
 
