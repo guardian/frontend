@@ -989,7 +989,7 @@ object Switches {
     "It this switch is turned on, users cookies will be refreshed. Turn off if the identity API barfs" ,
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>
