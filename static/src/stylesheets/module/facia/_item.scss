@@ -514,6 +514,7 @@ $block-height: 71px;
 
         @include mq(desktop) {
             position: absolute;
+            top: initial;
             bottom: 0;
         }
     }
