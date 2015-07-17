@@ -1,5 +1,6 @@
 package dfp
 
+import common.dfp.{PaidForTag, PaidForTagsReport}
 import common.{ExecutionContexts, Logging}
 import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}

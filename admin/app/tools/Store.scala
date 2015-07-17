@@ -1,16 +1,14 @@
 package tools
 
 import common.Logging
-import conf.AdminConfiguration
+import common.dfp._
 import conf.Configuration.commercial._
-import dfp._
+import conf.{AdminConfiguration, Configuration}
 import implicits.Dates
-import model.admin.commercial.TakeoverWithEmptyMPUs
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.libs.json.Json.toJson
 import services.S3
-import conf.Configuration
 
 trait Store extends Logging with Dates {
   lazy val switchesKey = Configuration.switches.key

@@ -1,5 +1,6 @@
-@(env: String, takeovers: Seq[model.admin.commercial.TakeoverWithEmptyMPUs])
-@import model.admin.commercial.TakeoverWithEmptyMPUs.timeViewFormatter
+@import common.dfp.TakeoverWithEmptyMPUs
+@(env: String, takeovers: Seq[TakeoverWithEmptyMPUs])
+@import TakeoverWithEmptyMPUs.timeViewFormatter
 
 @admin_main("Takeovers with Empty MPUs", env, isAuthed = true) {
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">

@@ -1,8 +1,7 @@
 import business.StocksDataLifecycle
-import common.{CanonicalLink, WeatherMetrics, ContentApiMetrics, CloudWatchApplicationMetrics}
+import common.{CloudWatchApplicationMetrics, ContentApiMetrics, WeatherMetrics}
 import conf.Filters
 import dev.DevParametersLifecycle
-import dfp.DfpAgentLifecycle
 import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
 import metrics.FrontendMetric
 import play.api.mvc.WithFilters
@@ -11,7 +10,6 @@ object Global extends WithFilters(Filters.common: _*)
   with OnwardJourneyLifecycle
   with DevParametersLifecycle
   with CloudWatchApplicationMetrics
-  with DfpAgentLifecycle
   with MostReadLifecycle
   with StocksDataLifecycle
   with MostPopularFacebookAutoRefreshLifecycle

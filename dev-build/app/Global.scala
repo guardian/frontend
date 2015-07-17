@@ -1,9 +1,10 @@
 import ab_headlines.ABTHeadlinesLifecycle
+import common.dfp.FaciaDfpAgentLifecycle
 import common.{CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
 import conf.Filters
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
-import dfp.{DfpDataCacheLifecycle, FaciaDfpAgentLifecycle}
+import dfp.DfpDataCacheLifecycle
 import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
 import implicits.Requests
 import model.AdminLifecycle

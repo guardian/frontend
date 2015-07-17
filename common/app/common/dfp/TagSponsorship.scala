@@ -1,4 +1,4 @@
-package dfp
+package common.dfp
 
 import common.Logging
 import model.Tag

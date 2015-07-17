@@ -1,14 +1,16 @@
-package model.admin.commercial
+package common.dfp
 
 import common.Edition
+import conf.Configuration.commercial._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.data.Forms._
 import play.api.data.format.Formatter
 import play.api.data.{Form, FormError}
 import play.api.libs.functional.syntax._
+import play.api.libs.json.Json._
 import play.api.libs.json._
-import tools.Store
+import services.S3
 
 case class TakeoverWithEmptyMPUs(url: String,
                                  editions: Seq[Edition],
@@ -59,19 +61,31 @@ object TakeoverWithEmptyMPUs {
     )(TakeoverWithEmptyMPUs.apply)(TakeoverWithEmptyMPUs.unapply)
   )
 
-  def fetch(): Seq[TakeoverWithEmptyMPUs] = {
-    Store.commercial.getTakeoversWithEmptyMPUs() sortBy { takeover =>
+  private def fetch(): Seq[TakeoverWithEmptyMPUs] = {
+    val takeovers = S3.get(takeoversWithEmptyMPUsKey) map {
+      Json.parse(_).as[Seq[TakeoverWithEmptyMPUs]]
+    } getOrElse Nil
+    takeovers
+  }
+
+  def fetchSorted(): Seq[TakeoverWithEmptyMPUs] = {
+    fetch() sortBy { takeover =>
       (takeover.url, takeover.startTime.getMillis)
     }
   }
 
+  private def put(takeovers: Seq[TakeoverWithEmptyMPUs]): Unit = {
+    val content = Json.stringify(toJson(takeovers))
+    S3.putPrivate(takeoversWithEmptyMPUsKey, content, "application/json")
+  }
+
   def create(takeover: TakeoverWithEmptyMPUs): Unit = {
-    val takeovers = Store.commercial.getTakeoversWithEmptyMPUs() :+ takeover
-    Store.commercial.putTakeoversWithEmptyMPUs(takeovers)
+    val takeovers = fetch() :+ takeover
+    put(takeovers)
   }
 
   def remove(url: String): Unit = {
-    val takeovers = Store.commercial.getTakeoversWithEmptyMPUs() filterNot (_.url == url)
-    Store.commercial.putTakeoversWithEmptyMPUs(takeovers)
+    val takeovers = fetch() filterNot (_.url == url)
+    put(takeovers)
   }
 }

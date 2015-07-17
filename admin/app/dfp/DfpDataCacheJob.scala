@@ -1,5 +1,6 @@
 package dfp
 
+import common.dfp._
 import common.{ExecutionContexts, Logging}
 import conf.Switches.DfpCachingSwitch
 import org.joda.time.DateTime

@@ -1,4 +1,5 @@
-@(env: String, takeoverForm: Form[model.admin.commercial.TakeoverWithEmptyMPUs])
+@import common.dfp.TakeoverWithEmptyMPUs
+@(env: String, takeoverForm: Form[TakeoverWithEmptyMPUs])
 @import helper._
 
 @admin_main("Create takeover with Empty MPUs", env, isAuthed = true) {

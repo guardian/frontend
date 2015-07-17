@@ -1,4 +1,4 @@
-package dfp
+package common.dfp
 
 import common.{AkkaAsync, Jobs}
 import play.api.{Application, GlobalSettings}

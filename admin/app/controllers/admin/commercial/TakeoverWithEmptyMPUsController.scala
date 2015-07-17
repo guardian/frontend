@@ -1,15 +1,15 @@
 package controllers.admin.commercial
 
+import common.dfp.TakeoverWithEmptyMPUs
 import conf.Configuration.environment
 import controllers.admin.AuthActions
-import model.admin.commercial.TakeoverWithEmptyMPUs
 import play.api.mvc.Controller
 
 object TakeoverWithEmptyMPUsController extends Controller {
 
   def viewList() = AuthActions.AuthActionTest {
     Ok(views.html.commercial.takeoverWithEmptyMPUs(
-      environment.stage, TakeoverWithEmptyMPUs.fetch())
+      environment.stage, TakeoverWithEmptyMPUs.fetchSorted())
     )
   }
 

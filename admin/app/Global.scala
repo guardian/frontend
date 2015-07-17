@@ -1,9 +1,11 @@
 import common.CloudWatchApplicationMetrics
+import common.dfp.DfpAgentLifecycle
 import conf.Gzipper
-import dfp.{DfpAgentLifecycle, DfpDataCacheLifecycle}
+import dfp.DfpDataCacheLifecycle
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
-import play.api.mvc.{WithFilters, Results, RequestHeader}
+import play.api.mvc.{RequestHeader, Results, WithFilters}
+
 import scala.concurrent.Future
 
 object Global extends WithFilters(Gzipper)

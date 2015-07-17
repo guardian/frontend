@@ -1,11 +1,12 @@
 package controllers.admin
 
+import common.dfp.LineItemReport
 import common.{Edition, ExecutionContexts, Logging}
 import conf.Configuration.environment
 import conf.LiveContentApi.getResponse
 import conf.{Configuration, LiveContentApi}
 import controllers.AuthLogging
-import dfp.{DfpDataHydrator, LineItemReport}
+import dfp.DfpDataHydrator
 import model.{Content, NoCache, Page}
 import ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, JsValue, Json}
