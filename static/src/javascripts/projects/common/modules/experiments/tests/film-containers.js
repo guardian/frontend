@@ -4,7 +4,7 @@ define([], function () {
     return function () {
         this.id = 'FilmContainers';
         this.start = '2015-07-16';
-        this.expiry = '2015-07-23';
+        this.expiry = '2015-07-30';
         this.author = 'Stephan Fowler';
         this.description = 'Extra containers on Film content';
         this.audience = 0.45;
