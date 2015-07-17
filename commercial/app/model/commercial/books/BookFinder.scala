@@ -10,7 +10,6 @@ import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
-import play.api.libs.ws.WSSignatureCalculator
 import shade.memcached.{Configuration => MemcachedConfiguration, Memcached, MemcachedCodecs}
 
 import scala.concurrent.duration._
@@ -31,7 +30,7 @@ object BookFinder extends ExecutionContexts with Logging {
           case _ =>
             bookData.validate[Book] fold(
               invalid => {
-                log.error(Json.stringify(JsError.toJson(invalid)))
+                log.error(Json.stringify(JsError.toFlatJson(invalid)))
                 None
               },
               book => Some(book))
@@ -62,7 +61,7 @@ object BookFinder extends ExecutionContexts with Logging {
 
 object MagentoService extends Logging {
 
-  private case class MagentoProperties(oauth: WSSignatureCalculator, urlPrefix: String)
+  private case class MagentoProperties(oauth: OAuthCalculator, urlPrefix: String)
 
   private val magentoProperties = {
     for {
@@ -82,7 +81,7 @@ object MagentoService extends Logging {
   }
 
   private implicit val bookLookupExecutionContext: ExecutionContext =
-    Akka.system.dispatchers.lookup("akka.actor.book-lookup")
+    Akka.system.dispatchers.lookup("play.akka.actor.book-lookup")
 
   private final val circuitBreaker = new CircuitBreaker(
     scheduler = Akka.system.scheduler,
@@ -130,7 +129,7 @@ object MagentoService extends Logging {
                 case Some(me) =>
                   throw FeedReadException(request, me.code, me.message)
                 case None =>
-                  val jsonErr = JsError.toJson(e).toString()
+                  val jsonErr = JsError.toFlatJson(e).toString()
                   throw FeedParseException(request, jsonErr)
               }
             case JsSuccess(book, _) => Some(bookJson)

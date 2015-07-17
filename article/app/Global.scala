@@ -1,5 +1,5 @@
 import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
-import conf.{CorsErrorHandler, SwitchboardLifecycle, Filters}
+import conf.{Configuration, Filters}
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
 import metrics.FrontendMetric
@@ -12,8 +12,7 @@ object Global
   with DfpAgentLifecycle
   with CloudWatchApplicationMetrics
   with SurgingContentAgentLifecycle
-  with CorsErrorHandler
-  with SwitchboardLifecycle {
+  with CorsErrorHandler {
   override lazy val applicationName = "frontend-article"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(
