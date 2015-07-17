@@ -105,17 +105,6 @@ define([
                         this.renderSaveButtonsInArticle();
                     }
                 }.bind(this));
-        } else {
-            if (this.isContent) {
-                var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>', {
-                    idUrl: config.page.idUrl,
-                    returnUrl: encodeURIComponent(document.location.href),
-                    shortUrl: shortUrl,
-                    platform: savedPlatformAnalytics
-                });
-                this.renderArticleSaveButton({ url: url, isSaved: false });
-            }
-            this.prepareFaciaItemLinks(false);
         }
     };
 

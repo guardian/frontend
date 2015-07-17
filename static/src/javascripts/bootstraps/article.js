@@ -84,7 +84,7 @@ define([
             },
 
             initFilmTest: function () {
-                if (/film/.test(config.page.section) && /News/.test(config.page.tones)) {
+                if (config.page.section === 'film') {
                     testFilmContainers();
                 }
             }

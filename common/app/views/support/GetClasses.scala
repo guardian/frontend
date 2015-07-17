@@ -1,7 +1,6 @@
 package views.support
 
 import ab_headlines.ABTestHeadlines
-import conf.Switches.ABSaveForLaterSwitch
 import com.gu.facia.api.utils.{Audio, Video, Gallery}
 import layout._
 

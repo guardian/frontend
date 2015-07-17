@@ -509,8 +509,10 @@ $block-height: 71px;
     margin-right: 1em;
 
     .saved-contents & {
-        position: absolute;
-        bottom: 0;
+        @include mq(desktop) {
+            position: absolute;
+            bottom: 0;
+        }
     }
 }
 

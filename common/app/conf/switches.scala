@@ -262,6 +262,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val SaveForLaterSwitch = Switch(
+    "Performance",
+    "save-for-later",
+    "It this switch is turned on, user are able to save articles. Turn off if this causes overload on then identity api" ,
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   // Commercial
   val OphanViewIdSwitch = Switch("Commercial",
     "ophan-view-id",
@@ -961,7 +970,7 @@ object Switches {
     "ab-film-containers",
     "Film Containers on Film content",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 23),
+    sellByDate = new LocalDate(2015, 7, 30),
     exposeClientSide = true
   )
 
@@ -983,22 +992,13 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABSaveForLaterSwitch = Switch(
-    "A/B Tests",
-    "ab-save-for-later",
-    "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val ABIdentityCookieRefresh = Switch(
     "A/B Tests",
     "ab-cookie-refresh",
     "It this switch is turned on, users cookies will be refreshed. Turn off if the identity API barfs" ,
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>
