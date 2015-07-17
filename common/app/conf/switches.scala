@@ -552,6 +552,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val DfpUserIdSwitch = Switch(
+    "Commercial",
+    "dfp-user-id",
+    "Include user ID in ad call.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 5),
+    exposeClientSide = true
+  )
+
 
   // Monitoring
 
@@ -961,7 +970,7 @@ object Switches {
     "ab-film-containers",
     "Film Containers on Film content",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 23),
+    sellByDate = new LocalDate(2015, 7, 30),
     exposeClientSide = true
   )
 

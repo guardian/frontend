@@ -509,8 +509,13 @@ $block-height: 71px;
     margin-right: 1em;
 
     .saved-contents & {
-        position: absolute;
-        bottom: 0;
+        position: relative;
+        top: $gs-baseline;
+
+        @include mq(desktop) {
+            position: absolute;
+            bottom: 0;
+        }
     }
 }
 
@@ -561,11 +566,6 @@ $block-height: 71px;
     padding-left: $gs-gutter / 4;
     transition: color 100ms;
 
-    @include mq($until: tablet) {
-        border-left: 0;
-        float: right;
-    }
-
     &:hover,
     &:focus,
     &:active {
@@ -574,13 +574,23 @@ $block-height: 71px;
     }
 
 
-    @include mq(tablet) {
-        &:after {
-            content: 'save';
-        }
+    &:after {
+        content: 'save';
+    }
 
-        &.fc-save-for-later--is-saved:after {
-            content: 'saved';
+    &.fc-save-for-later--is-saved:after {
+        content: 'saved';
+    }
+
+    @include mq($until: tablet) {
+        border-left: 0;
+        float: right;
+
+        .fc-item--has-timestamp & {
+            &:after,
+            &.fc-save-for-later--is-saved:after {
+                content: '';
+            }
         }
     }
 
@@ -597,11 +607,11 @@ $block-height: 71px;
 
     .inline-icon {
         float: right;
+        margin-left: $gs-gutter / 4;
         margin-right: 0;
 
         @include mq(tablet) {
             float: left;
-            margin-left: $gs-gutter / 4;
             margin-right: $gs-gutter / 4;
         }
     }
