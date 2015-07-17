@@ -49,8 +49,13 @@ define([
                 id: 'variant',
                 test: function () {
                     console.log("Variant");
-                    var saveForLater = new SaveForLater();
-                    saveForLater.init(true);
+                    if (config.switches.saveForLater) {
+                        console.log("++ Sally in suspenders");
+                        var saveForLater = new SaveForLater();
+                        saveForLater.init(true);
+                    } else {
+                        console.log("++ Off");
+                    }
                 }
             }
         ];

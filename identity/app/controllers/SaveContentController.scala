@@ -60,6 +60,7 @@ class SaveContentController @Inject() ( api: IdApiClient,
     } yield {
         savedArticleService.getOrCreateArticlesList(request.user.auth).onComplete {
           case Success(prefs) =>
+            println("++ Fuck")
             if (!prefs.contains(shortUrl)) {
               val articleId = idRequest.articleId match {
                 case Some(id) => id
