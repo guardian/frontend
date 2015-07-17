@@ -219,7 +219,7 @@ define([
                         position:  'fixed',
                         top:       0,
                         width:     '100%',
-                        'z-index': '1000',
+                        'z-index': '1020',
                         'margin-top': 0,
                         '-webkit-transform': 'translateY(-100%)',
                         '-ms-transform': 'translateY(-100%)',
@@ -254,7 +254,7 @@ define([
                         position: 'absolute',
                         width: '100%',
                         top: this.headerBigHeight,
-                        'z-index': '999' // Sticky z-index +1 so banner is over sticky header
+                        'z-index': '1019' // Sticky z-index +1 so banner is over sticky header
                     });
 
                     if (!this.config.isNavigationLocked) {
@@ -279,7 +279,7 @@ define([
                                 '-webkit-transform': 'translateY(-500%)',
                                 '-ms-transform': 'translateY(-500%)',
                                 'transform': 'translateY(-500%)',
-                                'z-index': '998'
+                                'z-index': '1018'
                             });
 
                             this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
@@ -293,7 +293,7 @@ define([
                         position:  'fixed',
                         top:       0,
                         width:     '100%',
-                        'z-index': '999',
+                        'z-index': '1019',
                         'backface-visibility': 'hidden'
                     });
                     //Header is slim only on interactives page
@@ -308,7 +308,7 @@ define([
                         '-webkit-transform': 'translateY(0%)',
                         '-ms-transform': 'translateY(0%)',
                         'transform': 'translateY(0%)',
-                        'z-index': '998'
+                        'z-index': '1018'
                     });
 
                     this.$els.main.css('margin-top', 0);
@@ -337,7 +337,7 @@ define([
                     position:  'fixed',
                     top:       0,
                     width:     '100%',
-                    'z-index': '1000',
+                    'z-index': '1020',
                     'margin-top': 0,
                     'backface-visibility': 'hidden'
                 });
@@ -410,7 +410,7 @@ define([
                         position:  'fixed',
                         top:       0,
                         width:     '100%',
-                        'z-index': '1000',
+                        'z-index': '1020',
                         'margin-top': 0,
                         '-webkit-transform': 'translateY(-100%)',
                         '-ms-transform': 'translateY(-100%)',
@@ -423,7 +423,7 @@ define([
                         position:  'static',
                         top:       null,
                         width:     '100%',
-                        'z-index': '999'
+                        'z-index': '1019'
                     });
                     this.$els.header.addClass('l-header--is-slim');
                     this.$els.header.css({
@@ -444,7 +444,7 @@ define([
                         '-webkit-transform': 'translateY(0%)',
                         '-ms-transform': 'translateY(0%)',
                         'transform': 'translateY(0%)',
-                        'z-index': '998'
+                        'z-index': '1018'
                     });
                 }.bind(this));
 
@@ -460,7 +460,7 @@ define([
                 position: 'fixed',
                 top: headerTop,
                 width: '100%',
-                'z-index': '1001',
+                'z-index': '1021',
                 'margin-top': 0,
                 'backface-visibility': 'hidden'
             });
@@ -468,7 +468,7 @@ define([
                 position: 'fixed',
                 top: this.headerBigHeight + headerTop,
                 width: '100%',
-                'z-index': '999', // Sticky z-index -1 as it should be sticky but should go below the sticky header,
+                'z-index': '1019', // Sticky z-index -1 as it should be sticky but should go below the sticky header,
                 'backface-visibility': 'hidden'
             });
             this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
@@ -491,14 +491,14 @@ define([
                                 position: 'static',
                                 top: null,
                                 width: '100%',
-                                'z-index': '1001',
+                                'z-index': '1021',
                                 'margin-top': 0
                             });
                             this.$els.bannerMobile.css({
                                 position: 'static',
                                 top: null,
                                 width: '100%',
-                                'z-index': '999' // Sticky z-index -1 as it should be sticky but should go below the sticky header
+                                'z-index': '1019' // Sticky z-index -1 as it should be sticky but should go below the sticky header
                             });
                             this.$els.main.css('margin-top', 0);
                         }.bind(this));
