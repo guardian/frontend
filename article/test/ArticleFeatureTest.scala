@@ -240,16 +240,21 @@ import collection.JavaConversions._
 
     scenario("Review stars", ArticleComponents) {
 
-      Given("I am on a review entitled 'Phill Jupitus is Porky the Poet in 27 Years On - Edinburgh festival review'")
-      goTo("/culture/2012/aug/07/phill-jupitus-edinburgh-review") { browser =>
+      Given("I am on a review entitled 'Slow West review – a lyrical ode to love on the wild frontier'")
+      goTo("/film/2015/jun/28/slow-west-review-mark-kermode") { browser =>
         import browser._
 
         Then("I should see the star rating of the festival")
         And("The review is marked up with the correct schema")
         val review = findFirst("article[itemtype='http://schema.org/Review']")
 
-        review.findFirst("[itemprop=reviewRating]").getText should be("3 / 5 stars")
-        review.findFirst("[itemprop=ratingValue]").getText should be("3")
+        review.findFirst("[itemprop=reviewRating]").getText should be("4 / 5 stars")
+        review.findFirst("[itemprop=ratingValue]").getText should be("4")
+
+        val reviewed = review.findFirst("[itemprop=itemReviewed]")
+
+        reviewed.getAttribute("itemtype") should be("http://schema.org/Movie")
+        reviewed.findFirst("[itemprop=sameAs]").getAttribute("href") should be("http://www.imdb.com/title/tt3205376/")
       }
     }
 

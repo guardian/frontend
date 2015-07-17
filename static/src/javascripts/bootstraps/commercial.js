@@ -46,7 +46,7 @@ define([
             ) {
                 _.forEach(modules, function (pair) {
                     robust.catchErrorsAndLog(pair[0], function () {
-                        modulePromises.push(pair[1].init());
+                        modulePromises.push(pair[1]());
                     });
                 });
 

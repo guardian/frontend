@@ -20,7 +20,9 @@ define([
     };
 
     var log = function (name, error, reporter) {
-        window.console.warn('Caught error.', error.stack);
+        if (window.console && window.console.warn) {
+            window.console.warn('Caught error.', error.stack);
+        }
         if (!reporter) {
             reporter = raven.captureException;
         }
