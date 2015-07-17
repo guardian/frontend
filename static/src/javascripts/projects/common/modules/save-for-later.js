@@ -61,7 +61,9 @@ define([
             'onDeleteArticle',
             'createSaveFaciaItemHandler',
             'createDeleteFaciaItemHandler',
-            'createSignInSaveFaciaItemHandler'
+            'createSignInSaveFaciaItemHandler',
+            'signUserInToSaveArticle'
+
         );
     }
 
@@ -360,6 +362,11 @@ define([
             }
         );
     };
+
+    SaveForLater.prototype.signUserInToSaveArticle = function (l) {
+
+    }
+
 
     SaveForLater.prototype.createDeleteFaciaItemHandler = function (link, id, shortUrl) {
         bean.one(link, 'click',
