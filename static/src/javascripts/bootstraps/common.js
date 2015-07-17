@@ -362,7 +362,6 @@ define([
 
     return {
         init: function () {
-            console.log("++ HITYA WOT");
             robust.catchErrorsAndLogAll([
 
                 // Analytics comes at the top. If you think your thing is more important then please think again...

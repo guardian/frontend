@@ -32,7 +32,7 @@ define([
     profileLinkTmp
 ) {
 
-    function SaveForLater(message) {
+    function SaveForLater() {
         this.classes = {
             saveThisArticle: '.js-save-for-later',
             saveThisVideo: '.js-save-for-later-video',
@@ -76,8 +76,6 @@ define([
 
     SaveForLater.prototype.init = function (showNotSignedIn) {
         var userLoggedIn = identity.isUserLoggedIn();
-
-        console.log("++ hello: " + showNotSignedIn)
 
         if (userLoggedIn) {
             identity.getSavedArticles()
@@ -201,15 +199,11 @@ define([
                 id = item.getAttribute(this.attributes.containerItemDataId),
                 isSaved = signedIn ? this.getSavedArticle(shortUrl) : false;
 
-            console
-
             if (signedIn) {
                 this[isSaved ? 'createDeleteFaciaItemHandler' : 'createSaveFaciaItemHandler']($itemSaveLink[0], id, shortUrl);
             }
             else {
-                console.log("Wotchera" + id);
                 bean.one($itemSaveLink[0], 'click', function(id, shortUrl) {
-                    console.log("++ ID" + id + "s " + shortUrl);
                     this.signUserInToSaveArticle(id, shortUrl)
                 }.bind(this, id,shortUrl));
             }
@@ -360,7 +354,6 @@ define([
             platform: savedPlatformAnalytics,
             articleId: id
         });
-        console.log("++ " + url + "ID: " + id)
         window.location = url
     };
 

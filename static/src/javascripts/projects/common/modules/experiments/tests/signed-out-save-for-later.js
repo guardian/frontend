@@ -27,8 +27,8 @@ define([
         this.start = '2015-04-09';
         this.expiry = '2015-09-31';
         this.author = 'Nathaniel Bennett';
-        this.description = 'Internal test of save for later functionality';
-        this.audience = 0.2;
+        this.description = 'Allow signed out users to save articles via signin';
+        this.audience = 0.1;
         this.audienceOffset = 0;
         this.successMeasure = 'More user registrations';
         this.audienceCriteria = '';
@@ -48,13 +48,9 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    console.log("Variant");
                     if (config.switches.saveForLater) {
-                        console.log("++ Sally in suspenders");
                         var saveForLater = new SaveForLater();
                         saveForLater.init(true);
-                    } else {
-                        console.log("++ Off");
                     }
                 }
             }

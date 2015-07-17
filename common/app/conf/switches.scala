@@ -1024,7 +1024,7 @@ object Switches {
   val ABSignedOutSaveForLaterSwitch = Switch(
     "A/B Tests",
     "ab-signed-out-save-for-later",
-    "It this switch is turned on, user are able to save articles. Turn off if this causes overload on then identity api" ,
+    "Switch off the signed out save for later test",
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -1203,8 +1203,6 @@ object Switches {
     sellByDate = new LocalDate(2015, 7, 30),
     exposeClientSide = false
   )
-
-
 
   // Server-side A/B Tests
   val ServerSideTests = {
