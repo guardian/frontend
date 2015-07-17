@@ -509,12 +509,8 @@ $block-height: 71px;
     margin-right: 1em;
 
     .saved-contents & {
-        position: relative;
-        top: $gs-baseline;
-
         @include mq(desktop) {
             position: absolute;
-            top: initial;
             bottom: 0;
         }
     }
