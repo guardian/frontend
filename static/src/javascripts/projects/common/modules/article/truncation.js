@@ -12,7 +12,7 @@ define([
     return function () {
         fastdom.write(function () {
             var button = bonzo.create('<button class="button button--large button--primary button--show-more content__read-more-button" data-link-name="more">' +
-                    '<i class="i i-plus-white"></i> Read more'
+                    '<i class="i i-plus-white"></i> Continue reading...'
                     + '</button>')[0],
                 $articleBody = $('.js-article__body'),
                 cls = 'content__article-body--truncated';
