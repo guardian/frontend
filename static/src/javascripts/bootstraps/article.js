@@ -78,7 +78,7 @@ define([
             },
 
             initTruncation: function () {
-                if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
+                if (ab.shouldRunTest('ArticleTruncation', 'variant') && detect.socialContext()) {
                     truncation();
                 }
             },

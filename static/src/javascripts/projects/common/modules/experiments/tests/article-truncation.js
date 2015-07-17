@@ -1,8 +1,4 @@
-define([
-    'common/utils/detect'
-], function (
-    detect
-) {
+define([], function () {
     function noop() {}
 
     return function () {
@@ -19,7 +15,7 @@ define([
         this.idealOutcome = '';
 
         this.canRun = function () {
-            return !!detect.socialContext();
+            return true;
         };
 
         this.variants = [
