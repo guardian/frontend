@@ -15,7 +15,7 @@ import client.{Error}
 import net.liftweb.json.JsonDSL._
 import com.gu.identity.model.{EmailList, Subscriber}
 import play.filters.csrf._
-import play.api.i18n.{MessagesApi, I18nSupport}
+
 
 @Singleton
 class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
@@ -23,9 +23,8 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                 api: IdApiClient,
                                 idRequestParser: IdRequestParser,
                                 idUrlBuilder: IdentityUrlBuilder,
-                                authenticatedActions: AuthenticatedActions,
-                                val messagesApi: MessagesApi)
-  extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
+                                authenticatedActions: AuthenticatedActions)
+  extends Controller with ExecutionContexts with SafeLogging {
   import EmailPrefsData._
   import authenticatedActions.authAction
 
@@ -71,7 +70,7 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
   def savePreferences = CSRFCheck {
     authAction.async { implicit request =>
-
+      
       val idRequest = idRequestParser(request)
       val userId = request.user.getId()
       val auth = request.user.auth

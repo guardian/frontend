@@ -26,6 +26,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       .getOrElse(throw new BadConfigurationException(s"$property not configured"))
   }
 
+  object crosswords {
+    lazy val apiKey = configuration.getStringProperty("crosswords_api.key")
+  }
+
   object business {
     lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
   }
