@@ -13,20 +13,19 @@ object Metric extends Logging {
 
   lazy val namespace = "Diagnostics"
 
+  // TODO delete bounce-test-present when this goes
+  import conf.Switches.NoBounceIndicator
+
   lazy val metrics = Map(
 
     // page views
     ("pv", CountMetric("kpis-page-views")),            // raw page views - simple <img> in body, no javascript involved
     ("pva", CountMetric("kpis-analytics-page-views")), // page view fires after analytics
+    ("user-navigated-early", CountMetric("user-navigated-early")),
 
     ("ads-blocked", CountMetric("ads-blocked")),
     ("ad-render", CountMetric("first-ad-rendered")),
     ("ad-wrapper", CountMetric("dfp-served-ad")),
-
-    // Investigating MSIE ad blocking
-    ("msie-adblock", CountMetric("msie-ad-block")),
-    ("msie-browser", CountMetric("msie-browser")),
-
 
     // error pages
     ("50x", CountMetric("kpis-user-50x")),             // beacon on the 50x page that tells us that real users are getting 500 errors

@@ -1,4 +1,4 @@
-/* global videojs, guardian */
+/* global guardian */
 define([
     'bean',
     'bonzo',

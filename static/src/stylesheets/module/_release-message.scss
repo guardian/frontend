@@ -13,7 +13,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    z-index: 9999999;
+    z-index: $zindex-popover;
 }
 
 .site-message__inner {
@@ -406,7 +406,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .site-message--adblock {
     background: colour(news-support-2);
 }
-
-.site-message--membership-message {
+/**
+ * Membership message A/B test
+ */
+.site-message--membership-message,
+.site-message--membership-message-variants {
     background: colour(news-main-2);
 }

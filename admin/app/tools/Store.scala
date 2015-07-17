@@ -10,16 +10,13 @@ import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.libs.json.Json.toJson
 import services.S3
+import conf.Configuration
 
 trait Store extends Logging with Dates {
-  lazy val configKey = AdminConfiguration.configKey
-  lazy val switchesKey = AdminConfiguration.switchesKey
+  lazy val switchesKey = Configuration.switches.key
   lazy val topStoriesKey = AdminConfiguration.topStoriesKey
 
   final val defaultJsonEncoding: String = "application/json;charset=utf-8"
-
-  def getConfig = S3.get(configKey)
-  def putConfig(config: String) { S3.putPublic(configKey, config, "application/json") }
 
   def getSwitches = S3.get(switchesKey)
   def getSwitchesWithLastModified = S3.getWithLastModified(switchesKey)

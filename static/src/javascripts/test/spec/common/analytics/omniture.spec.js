@@ -1,6 +1,8 @@
 import Injector from 'helpers/injector';
 import sinon from 'sinonjs';
+/*eslint-disable no-unused-vars*/
 import jasmineSinon from 'jasmine-sinon';
+/*eslint-enable no-unused-vars*/
 
 describe('omniture', function () {
 

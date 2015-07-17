@@ -75,6 +75,7 @@ define([
                 jobs:           buildComponentUrl('jobs', _.merge({}, this.params, { t: this.params.jobIds ? this.params.jobIds.split(',') : [] }, getKeywords())),
                 masterclasses:  buildComponentUrl('masterclasses', _.merge({}, this.params, { t: this.params.ids ? this.params.ids.split(',') : [] }, getKeywords())),
                 soulmates:      buildComponentUrl('soulmates/mixed', this.params),
+                soulmatesTest:  buildComponentUrl('soulmates-test/mixed', this.params),
                 soulmatesGroup: buildComponentUrl('soulmates/' + this.params.soulmatesFeedName, this.params),
                 travel:         buildComponentUrl('travel/offers', _.merge({}, this.params, getKeywords())),
                 multi:          buildComponentUrl('multi', _.merge({}, this.params, getKeywords())),

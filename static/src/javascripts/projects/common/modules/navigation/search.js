@@ -5,8 +5,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator',
-    'common/modules/experiments/ab'
+    'common/utils/mediator'
 ], function (
     bean,
     fastdom,
@@ -14,13 +13,11 @@ define([
     $,
     config,
     detect,
-    mediator,
-    ab
+    mediator
 ) {
     var Search = function () {
 
         var searchLoader,
-            enabled,
             gcsUrl,
             resultSetSize,
             container,
@@ -29,7 +26,6 @@ define([
 
         if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
 
-            enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
             resultSetSize = config.page.section === 'identity' ? 3 : 10;
 
@@ -47,6 +43,21 @@ define([
                 mediator.emit('modules:search');
             });
 
+            bean.on(document, 'keydown', '.gsc-input', function () {
+                fastdom.read(function () {
+                    var $autoCompleteObject = $('.gssb_c'),
+                        searchFromTop       = $autoCompleteObject.css('top'),
+                        windowOffset        = $(window).scrollTop();
+
+                    fastdom.write(function () {
+                        $autoCompleteObject.css({
+                            'top': parseInt(searchFromTop, 10) + windowOffset,
+                            'z-index': '1000'
+                        });
+                    });
+                });
+            });
+
             bean.on(document, 'click', '.search-results', function (e) {
                 var targetEl = e.target;
                 if (targetEl.nodeName.toLowerCase() === 'a') {
@@ -61,7 +72,7 @@ define([
             if ($input.length > 0) {
                 $input.focus();
 
-                if (ab.shouldRunTest('Viewability', 'variant') && config.page.contentType !== 'Interactive') {
+                if (config.switches.viewability && config.page.contentType !== 'Interactive') {
                     clearInterval(checkInterval);
                     checkInterval = setInterval(self.checkResults, 250);
                 }
@@ -125,15 +136,13 @@ define([
             // Load the Google search monolith, if not already present in this context.
             // We have to re-run their script each time we do this.
             if (!container.innerHTML) {
-                var autoComplete = !ab.shouldRunTest('Viewability', 'variant') || config.page.contentType === 'Interactive';
-
                 fastdom.write(function () {
                     container.innerHTML = '' +
                         '<div class="search-box" role="search">' +
-                            '<gcse:searchbox enableAutoComplete="' + autoComplete + '"></gcse:searchbox>' +
+                            '<gcse:searchbox></gcse:searchbox>' +
                         '</div>' +
                         '<div class="search-results" data-link-name="search">' +
-                            '<gcse:searchresults webSearchResultSetSize="' + resultSetSize + '"></gcse:searchresults>' +
+                            '<gcse:searchresults webSearchResultSetSize="' + resultSetSize + '" linkTarget="_self"></gcse:searchresults>' +
                         '</div>';
                 });
 

@@ -142,12 +142,8 @@ trait CircuitBreakingContentApiClient extends ContentApiClient {
   }
 }
 
-class ElasticSearchLiveContentApiClient extends CircuitBreakingContentApiClient {
+class LiveContentApiClient extends CircuitBreakingContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = contentApi.contentApiLiveHost
-}
-
-class ElasticSearchPreviewContentApiClient extends ElasticSearchLiveContentApiClient {
-  override val targetUrl = contentApi.contentApiPreviewHost
 }

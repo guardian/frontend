@@ -4,7 +4,6 @@ import akka.agent.Agent
 import common._
 import conf.Configuration.commercial._
 import conf.Configuration.environment
-import conf.Switches.ExposeHasTopBelowNavAdSlotFlagSwitch
 import play.api.Play
 import play.api.libs.json.Json
 import services.S3
@@ -124,11 +123,9 @@ object DfpAgent
   }
 
   def refreshFaciaSpecificData(): Unit = {
-    if (ExposeHasTopBelowNavAdSlotFlagSwitch.isSwitchedOn) {
-      val topBelowNavLineItems = grabCurrentLineItemsFromStore(dfpLineItemsKey) filter {
-        _.targeting.customTargetSets.exists(_.targets.exists(_.isSlot("top-below-nav")))
-      }
-      update(lineItemAgent, topBelowNavLineItems)
+    val topBelowNavLineItems = grabCurrentLineItemsFromStore(dfpLineItemsKey) filter {
+      _.targeting.customTargetSets.exists(_.targets.exists(_.isSlot("top-below-nav")))
     }
+    update(lineItemAgent, topBelowNavLineItems)
   }
 }

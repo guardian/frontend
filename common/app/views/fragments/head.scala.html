@@ -1,4 +1,8 @@
 @(metaData: model.MetaData, projectName: Option[String] = None, head: Html, curlPaths: Map[String, String] = Map())(implicit request: RequestHeader)
+@import conf.Switches._
+@import conf.Static
+@import conf.Configuration
+@import views.support.OmnitureAnalyticsData
 
 <meta charset="utf-8" />
 <title>@views.support.Title(metaData)</title>
@@ -6,10 +10,21 @@
 @fragments.metaData(metaData)
 @head
 
-@fragments.javaScriptFirstSteps(metaData)
+<!--[if lt IE 9]>
+    <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
+<![endif]-->
 
-@fragments.stylesheetsLoad(projectName)
+@* get the stylesheets downloading ASAP *@
+@fragments.stylesheetLinks(projectName)
 
-@fragments.stylesheetsUse()
+@* polyfill, feature detect etc before we try and use the stylesheets *@
+@fragments.javaScriptPreFlight(metaData)
 
-@fragments.javaScriptLaterSteps(metaData, curlPaths)
+@* try and load fonts before we use the stylesheets *@
+@fragments.fonts()
+
+@* start trying to use the stylesheets *@
+@fragments.stylesheetLinksEnable(projectName)
+
+@* load the app *@
+@fragments.javaScriptBootstraps(metaData, curlPaths)

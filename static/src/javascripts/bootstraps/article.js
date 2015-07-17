@@ -1,6 +1,7 @@
 /*eslint-disable no-new*/
 define([
     'qwery',
+    'bean',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
@@ -9,13 +10,16 @@ define([
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
+    'common/modules/article/truncation',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/social-most-popular',
+    'common/modules/experiments/film-containers-logic',
     'bootstraps/article-liveblog-common',
     'bootstraps/trail'
 ], function (
     qwery,
+    bean,
     $,
     config,
     detect,
@@ -24,9 +28,11 @@ define([
     richLinks,
     membershipEvents,
     openModule,
+    truncation,
     ab,
     geoMostPopular,
     SocialMostPopular,
+    testFilmContainers,
     articleLiveblogCommon,
     trail
 ) {
@@ -52,19 +58,35 @@ define([
             initSocialMostPopular: function () {
                 var el = qwery('.js-social-most-popular');
 
-                ['Twitter', 'Facebook'].forEach(function (socialContext) {
-                    if (ab.shouldRunTest(socialContext + 'MostViewed', 'variant')) {
-                        if (el) {
-                            new SocialMostPopular(el, socialContext.toLowerCase());
-                        }
+                if (el) {
+                    if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
+                        new SocialMostPopular(el, detect.socialContext());
+                    } else {
+                        ['Twitter', 'Facebook'].forEach(function (socialContext) {
+                            if (ab.shouldRunTest(socialContext + 'MostViewed', 'variant')) {
+                                new SocialMostPopular(el, socialContext.toLowerCase());
+                            }
+                        });
                     }
-                });
+                }
             },
 
             initQuizListeners: function () {
                 require(['ophan/ng'], function (ophan) {
                     mediator.on('quiz/ophan-event', ophan.record);
                 });
+            },
+
+            initTruncation: function () {
+                if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
+                    truncation();
+                }
+            },
+
+            initFilmTest: function () {
+                if (config.page.section === 'film') {
+                    testFilmContainers();
+                }
             }
         },
 
@@ -75,6 +97,8 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
+            modules.initTruncation();
+            modules.initFilmTest();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
