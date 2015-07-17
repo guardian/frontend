@@ -961,7 +961,7 @@ object Switches {
     "ab-film-containers",
     "Film Containers on Film content",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 23),
+    sellByDate = new LocalDate(2015, 7, 30),
     exposeClientSide = true
   )
 
