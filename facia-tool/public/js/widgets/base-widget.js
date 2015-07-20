@@ -1,22 +1,13 @@
-var allListenersMap = new Map();
+import Promise from 'Promise';
+import mediator from 'utils/mediator';
+import BaseClass from 'modules/class';
 
-class BaseWidget {
-    subscribeOn(observable, callback) {
-        var listeners = allListenersMap.get(this);
-        if (!listeners) {
-            listeners = [];
-        }
-        listeners.push(observable.subscribe(callback.bind(this)));
-        allListenersMap.set(this, listeners);
-    }
-
-    dispose() {
-        var listeners = allListenersMap.get(this);
-        if (listeners && listeners.length) {
-            listeners.forEach(function (subscriber) {
-                subscriber.dispose();
-            });
-        }
+class BaseWidget extends BaseClass {
+    constructor() {
+        super();
+        Promise.resolve().then(() => {
+            mediator.emit('widget:load', this);
+        });
     }
 }
 

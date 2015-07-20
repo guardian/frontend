@@ -78,6 +78,10 @@ var register = _.once(() => {
         },
         template: { text: 'widgets/select_snap_type.html' }
     });
+    ko.components.register('autocomplete', {
+        viewModel: { jspm: 'widgets/autocomplete' },
+        template: { text: 'widgets/autocomplete.html' }
+    });
     ko.bindingHandlers.ownerClass = {
         init: function (element, valueAccessor) {
             var owner = valueAccessor();

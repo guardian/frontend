@@ -1,5 +1,6 @@
 import CONST from 'constants/defaults';
 import _ from 'underscore';
+import mediator from 'utils/mediator';
 
 export const priority = (function (pathname) {
     let priority = pathname.match(/^\/?([^\/]+)/);
@@ -26,8 +27,9 @@ export let state = {
 export function update (res) {
     currentRes = res;
     state.config = res.config;
-    if (model) {
+    if (model && !_.isEqual(res.switches, model.switches())) {
         model.switches(res.switches);
+        mediator.emit('switches:change', res.switches);
     }
 }
 
