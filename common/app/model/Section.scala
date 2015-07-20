@@ -31,4 +31,7 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
     "keywordIds" -> JsString(keywordIds.mkString(",")),
     "contentType" -> JsString("Section")
   )
+
+  override def iosType = "front"
+
 }
