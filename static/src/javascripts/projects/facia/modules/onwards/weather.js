@@ -18,7 +18,7 @@ define([
     'raven',
     'common/utils/_',
     'common/utils/$',
-    'common/utils/ajax',
+    'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -32,7 +32,7 @@ define([
     raven,
     _,
     $,
-    ajax,
+    ajaxPromise,
     config,
     detect,
     mediator,
@@ -74,7 +74,7 @@ define([
         },
 
         getWeatherData: function (url) {
-            return ajax({
+            return ajaxPromise({
                 url: url,
                 type: 'json',
                 method: 'get',
