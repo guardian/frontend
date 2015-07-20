@@ -15,8 +15,8 @@ class TrainingHttp extends contentapi.Http with ExecutionContexts {
   // https://groups.google.com/forum/#!topic/play-framework/2xxg_n55wD8
   val http = Http.configure { _
     .setAllowPoolingConnections(true)
-    .setMaxConnectionsPerHost(10)
-    .setMaxConnections(10)
+    .setMaxConnectionsPerHost(100)
+    .setMaxConnections(100)
     .setConnectTimeout(1000)
     .setRequestTimeout(2000)
     .setCompressionEnforced(true)
