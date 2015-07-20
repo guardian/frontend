@@ -42,7 +42,7 @@ define([
             itemMeta: '.js-item__meta',
             itemSaveLink: '.js-save-for-later-link',
             itemSaveLinkHeading: '.save-for-later-link__heading',
-            profileDropdownLink: '.brand-bar__item--saved-for-later',
+            profileDropdownCount: '.brand-bar__item--saved-for-later-count',
             fcItemIsSaved: 'fc-save-for-later--is-saved'
         };
         this.attributes = {
@@ -341,17 +341,17 @@ define([
     };
 
     SaveForLater.prototype.updateSavedCount = function () {
-        var saveForLaterProfileLink = $(this.classes.profileDropdownLink);
+        var saveForLaterProfileCount = $(this.classes.profileDropdownCount);
         var profile = $('.brand-bar__item--profile');
         var count = this.userData.articles.length;
 
         fastdom.write(function () {
             if (count > 0) {
                 $('.save-for-later__icon', profile).attr('data-saved-content-count', count);
-                saveForLaterProfileLink.html('Saved for later (' + count + ')');
+                saveForLaterProfileCount.text(count);
             } else {
                 $('.save-for-later__icon', profile).removeAttr('data-saved-content-count');
-                saveForLaterProfileLink.html('Saved for later');
+                saveForLaterProfileCount.text('');
             }
         });
     };
