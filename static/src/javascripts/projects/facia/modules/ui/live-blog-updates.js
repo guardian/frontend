@@ -64,8 +64,7 @@ define([
     }
 
     function showBlocks(articleId, targets, blocks, oldBlockDate) {
-        var self = this,
-            fakeUpdate = _.isUndefined(oldBlockDate);
+        var fakeUpdate = _.isUndefined(oldBlockDate);
 
         _.forEach(targets, function (element) {
             var hasNewBlock = false,
@@ -125,7 +124,7 @@ define([
         return fastdomPromise.read(function () {
             return el.getBoundingClientRect().top;
         })
-        .then(function (vPosition, ID) {
+        .then(function (vPosition) {
             if (vPosition > 0 && vPosition < veiwportHeightPx) {
                 setTimeout(function () {
                     var $el = bonzo(el);
@@ -159,7 +158,7 @@ define([
             });
             return elementsById;
         })
-        .then(function (elementsById, ID) {
+        .then(function (elementsById) {
             var oldBlockDates;
 
             if (!_.isEmpty(elementsById)) {

@@ -1,16 +1,28 @@
 import $ from 'jquery';
-import sandbox from 'test/utils/async-test';
 import drag from 'test/utils/drag';
 import configAction from 'test/utils/config-actions';
 import * as dom from 'test/utils/dom-nodes';
+import ConfigLoader from 'test/utils/config-loader';
+import ko from 'knockout';
+import listManager from 'modules/list-manager';
+import mediator from 'utils/mediator';
 
 describe('Config', function () {
-    var test = sandbox('config');
+    beforeEach(function () {
+        this.testInstance = new ConfigLoader();
+    });
+    afterEach(function () {
+        this.testInstance.dispose();
+        ko.cleanNode(window.document.body);
+        mediator.removeAllListeners();
+        listManager.reset();
+    });
 
-    test('/config/fronts', function (done) {
-        var mockConfig = test.context().mockConfig;
+    it('/config/fronts', function (done) {
+        var mockConfig = this.testInstance.mockConfig;
 
-        createFrontWithCollection()
+        this.testInstance.load()
+        .then(createFrontWithCollection)
         .then(function (request) {
             var data = request.data;
             expect(data.id).toEqual('test/front');

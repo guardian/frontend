@@ -1,9 +1,8 @@
-import Promise from 'Promise';
 import robust from 'common/utils/robust';
 
 describe('Robust', function () {
     it('should complete successfully', function (success) {
-        robust('test', function () { success(); });
+        robust.catchErrorsAndLog('test', function () { success(); });
     });
 
     it('should log and swallow exceptions', function (success) {
@@ -14,7 +13,7 @@ describe('Robust', function () {
             success();
         };
 
-        robust('test',
+        robust.catchErrorsAndLog('test',
             function () { throw new Error('fail'); },
             reporter
         );

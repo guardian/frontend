@@ -13,20 +13,19 @@ object Metric extends Logging {
 
   lazy val namespace = "Diagnostics"
 
+  // TODO delete bounce-test-present when this goes
+  import conf.Switches.NoBounceIndicator
+
   lazy val metrics = Map(
 
     // page views
     ("pv", CountMetric("kpis-page-views")),            // raw page views - simple <img> in body, no javascript involved
     ("pva", CountMetric("kpis-analytics-page-views")), // page view fires after analytics
+    ("user-navigated-early", CountMetric("user-navigated-early")),
 
     ("ads-blocked", CountMetric("ads-blocked")),
     ("ad-render", CountMetric("first-ad-rendered")),
     ("ad-wrapper", CountMetric("dfp-served-ad")),
-
-    // Investigating MSIE ad blocking
-    ("msie-adblock", CountMetric("msie-ad-block")),
-    ("msie-browser", CountMetric("msie-browser")),
-
 
     // error pages
     ("50x", CountMetric("kpis-user-50x")),             // beacon on the 50x page that tells us that real users are getting 500 errors
@@ -57,6 +56,22 @@ object Metric extends Logging {
     ("android-sgs4-after-5", CountMetric(s"android-sgs4-after-5")),
     ("android-sgs3-start", CountMetric(s"android-sgs3-start")),
     ("android-sgs3-after-5", CountMetric(s"android-sgs3-after-5")),
+
+    // temporarily count use of RAF for LoadCSSRafTest
+    ("ipad-old-start-raf", CountMetric(s"ipad-old-start-raf")),
+    ("ipad-old-after-5-raf", CountMetric(s"ipad-old-after-5-raf")),
+    ("ipad-2orMini-start-raf", CountMetric(s"ipad-2orMini-start-raf")),
+    ("ipad-2orMini-after-5-raf", CountMetric(s"ipad-2orMini-after-5-raf")),
+    ("ipad-3orLater-start-raf", CountMetric(s"ipad-3orLater-start-raf")),
+    ("ipad-3orLater-after-5-raf", CountMetric(s"ipad-3orLater-after-5-raf")),
+    ("android-nexus5-start-raf", CountMetric(s"android-nexus5-start-raf")),
+    ("android-nexus5-after-5-raf", CountMetric(s"android-nexus5-after-5-raf")),
+    ("android-nexus7-start-raf", CountMetric(s"android-nexus7-start-raf")),
+    ("android-nexus7-after-5-raf", CountMetric(s"android-nexus7-after-5-raf")),
+    ("android-sgs4-start-raf", CountMetric(s"android-sgs4-start-raf")),
+    ("android-sgs4-after-5-raf", CountMetric(s"android-sgs4-after-5-raf")),
+    ("android-sgs3-start-raf", CountMetric(s"android-sgs3-start-raf")),
+    ("android-sgs3-after-5-raf", CountMetric(s"android-sgs3-after-5-raf")),
 
 
     ("tech-feedback", CountMetric("tech-feedback")),

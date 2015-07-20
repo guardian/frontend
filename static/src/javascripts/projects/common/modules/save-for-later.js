@@ -42,7 +42,7 @@ define([
             itemMeta: '.js-item__meta',
             itemSaveLink: '.js-save-for-later-link',
             itemSaveLinkHeading: '.save-for-later-link__heading',
-            profileDropdownLink: '.brand-bar__item--saved-for-later',
+            profileDropdownCount: '.brand-bar__item--saved-for-later-count',
             fcItemIsSaved: 'fc-save-for-later--is-saved'
         };
         this.attributes = {
@@ -105,17 +105,6 @@ define([
                         this.renderSaveButtonsInArticle();
                     }
                 }.bind(this));
-        } else {
-            if (this.isContent) {
-                var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>', {
-                    idUrl: config.page.idUrl,
-                    returnUrl: encodeURIComponent(document.location.href),
-                    shortUrl: shortUrl,
-                    platform: savedPlatformAnalytics
-                });
-                this.renderArticleSaveButton({ url: url, isSaved: false });
-            }
-            this.prepareFaciaItemLinks(false);
         }
     };
 
@@ -352,17 +341,17 @@ define([
     };
 
     SaveForLater.prototype.updateSavedCount = function () {
-        var saveForLaterProfileLink = $(this.classes.profileDropdownLink);
+        var saveForLaterProfileCount = $(this.classes.profileDropdownCount);
         var profile = $('.brand-bar__item--profile');
         var count = this.userData.articles.length;
 
         fastdom.write(function () {
             if (count > 0) {
-                $('.control__icon-wrapper', profile).attr('data-saved-content-count', count);
-                saveForLaterProfileLink.html('Saved for later (' + count + ')');
+                $('.save-for-later__icon', profile).attr('data-saved-content-count', count);
+                saveForLaterProfileCount.text(count);
             } else {
-                $('.control__icon-wrapper', profile).removeAttr('data-saved-content-count');
-                saveForLaterProfileLink.html('Saved for later');
+                $('.save-for-later__icon', profile).removeAttr('data-saved-content-count');
+                saveForLaterProfileCount.text('');
             }
         });
     };

@@ -4,7 +4,6 @@ import helpers from 'common/modules/accessibility/helpers';
 import storage from 'common/utils/storage';
 import qwery from 'qwery';
 import bonzo from 'bonzo';
-import React from 'react';
 
 describe('Accessibility', function () {
     beforeEach(function () {

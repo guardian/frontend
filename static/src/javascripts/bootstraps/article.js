@@ -14,6 +14,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/social-most-popular',
+    'common/modules/experiments/film-containers-logic',
     'bootstraps/article-liveblog-common',
     'bootstraps/trail'
 ], function (
@@ -31,6 +32,7 @@ define([
     ab,
     geoMostPopular,
     SocialMostPopular,
+    testFilmContainers,
     articleLiveblogCommon,
     trail
 ) {
@@ -56,24 +58,16 @@ define([
             initSocialMostPopular: function () {
                 var el = qwery('.js-social-most-popular');
 
-                ['Twitter', 'Facebook'].forEach(function (socialContext) {
-                    if (ab.shouldRunTest(socialContext + 'MostViewed', 'variant')) {
-                        if (el) {
-                            new SocialMostPopular(el, socialContext.toLowerCase());
-                        }
-                    }
-                });
-            },
-
-            initPintrest: function () {
-                if (ab.shouldRunTest('Pintrest', 'variant')) {
-                    $('.social__item--pinterest').each(function (el) {
-                        $(el).css('display', 'block');
-                        bean.on(el, 'click', function (event) {
-                            event.preventDefault();
-                            require(['js!https://assets.pinterest.com/js/pinmarklet.js?r=' + new Date().getTime()]);
+                if (el) {
+                    if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
+                        new SocialMostPopular(el, detect.socialContext());
+                    } else {
+                        ['Twitter', 'Facebook'].forEach(function (socialContext) {
+                            if (ab.shouldRunTest(socialContext + 'MostViewed', 'variant')) {
+                                new SocialMostPopular(el, socialContext.toLowerCase());
+                            }
                         });
-                    });
+                    }
                 }
             },
 
@@ -87,6 +81,12 @@ define([
                 if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
                     truncation();
                 }
+            },
+
+            initFilmTest: function () {
+                if (config.page.section === 'film') {
+                    testFilmContainers();
+                }
             }
         },
 
@@ -97,8 +97,8 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
-            modules.initPintrest();
             modules.initTruncation();
+            modules.initFilmTest();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();

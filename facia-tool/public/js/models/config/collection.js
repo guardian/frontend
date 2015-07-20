@@ -55,6 +55,7 @@ define([
             'hideKickers',
             'showDateHeader',
             'showLatestUpdate',
+            'showTimestamps',
             'excludeFromRss',
             'apiQuery',
             'description']);

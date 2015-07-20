@@ -1372,6 +1372,11 @@ button {
     padding: 0 10px;
 }
 
+.suggestions--more {
+    text-align: center;
+    line-height: 200%;
+}
+
 .search-submit {
     position: absolute;
     right: 0;

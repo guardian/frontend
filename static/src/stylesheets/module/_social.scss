@@ -221,12 +221,14 @@ category: Common
     padding-right: 145px; // logo width
 }
 
-// Pintrest test
+// Pintrest is inappropriate in certain sections
 
 .social__item--pinterest {
-    display: none;
-
-    .content--gallery & {
-        display: block;
+    .content[class*="-network"] &,
+    .content[class*="-leadership"] &,
+    .content[class*="-careers"] &,
+    .content[class*="-advertisement-feature"] &,
+    .content[class*="-partner-zone"] & {
+        display: none;
     }
 }

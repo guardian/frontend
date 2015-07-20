@@ -2,16 +2,16 @@ define(function () {
 
     return function () {
         this.id = 'ViewabilitySocial';
-        this.start = '2015-06-23';
-        this.expiry = '2015-08-01';
+        this.start = '2015-07-20';
+        this.expiry = '2015-07-30';
         this.author = 'Stephan Fowler';
-        this.description = 'Viewability - Adds social buttons to the sticky nav; requires Viewability to be running.';
+        this.description = 'Adds social buttons to the sticky nav';
         this.audience = 0;
         this.audienceOffset = 0;
         this.successMeasure = 'Increased shares on content pages';
         this.audienceCriteria = '';
         this.dataLinkNames = '';
-        this.idealOutcome = 'More page views';
+        this.idealOutcome = 'More page views due to increased shares';
 
         this.canRun = function () {
             return true;

@@ -69,11 +69,7 @@ object FaciaContentFrontendHelpers {
       isAdvertisementFeature && faciaContent.webPublicationDateOption.exists(_.isOlderThan(2.weeks))
     }
 
-    def url: String = fold(faciaContent)(
-      curatedContent => SupportedUrl(curatedContent.content),
-      supportingCuratedContent => SupportedUrl(supportingCuratedContent.content),
-      linkSnap => linkSnap.id,
-      latestSnap => latestSnap.latestContent.map(SupportedUrl(_)).getOrElse(latestSnap.id))
+    def url: String = faciaContent.maybeContent.map(SupportedUrl(_)).getOrElse(faciaContent.id)
 
     def slideshow: Option[List[FaciaImageElement]] = faciaContent.image match {
       case Some(ImageSlideshow(assets)) =>

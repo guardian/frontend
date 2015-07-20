@@ -24,17 +24,7 @@
             }
             >
 
-            @contentCard(article.contentCard, 0, 0, "all",  false, false )
-
-            <div class="saved-content__meta u-cf">
-                <button class="button button--secondary button--medium saved-content__button js-saved-content__button"
-                    data-link-name="Delete"
-                    name="deleteArticle"
-                    type="submit"
-                    value="@article.savedArticle.shortUrl">
-                    @fragments.inlineSvg("cross", "icon") Remove
-                </button>
-            </div>
+            @contentCard(article.contentCard, 0, 0, "all",  false, false)
         </div>
     }
 }

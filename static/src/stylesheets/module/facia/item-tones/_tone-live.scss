@@ -36,6 +36,10 @@
         color: colour(live-mute);
     }
 
+    .fc-save-for-later {
+        border-color: mix($c-headline, colour(live-default), 20%);
+    }
+
     .rich-link__arrow-icon {
         fill: colour(live-mute);
     }

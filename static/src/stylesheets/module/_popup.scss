@@ -213,25 +213,37 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
-.brand-bar__item--profile .control__icon-wrapper[data-saved-content-count]:before {
-    content: attr(data-saved-content-count);
-    background: colour(news-main-2);
-    display: block;
+.brand-bar__item--profile .save-for-later__icon {
     position: absolute;
-    bottom: -4px;
-    left: 20px;
+    top: 20px;
+    left: 30px;
+    display: none;
+    fill: colour(news-main-2);
+
+    &[data-saved-content-count] {
+        display: inline;
+    }
+}
+
+.brand-bar__item--saved-for-later-count {
+    display: inline-block;
+    position: relative;
+    top: -1px;
+    width: $gs-gutter;
+    line-height: $gs-baseline;
     font-size: 11px;
-    line-height: 1;
-    padding: 2px 5px;
+    margin-left: $gs-gutter / 2;
     border-radius: 30px;
-    font-family: $f-sans-serif-text;
+    text-align: center;
+    background: colour(news-main-2);
+    color: #ffffff;
 }
 
 /* Search Menu
    ========================================================================== */
 
 .popup--search {
-    z-index: 300;
+    z-index: $zindex-modal;
     padding: 0;
     right: 0;
     padding-top: 5px; // manual amount, determined by google, not guss-grid-system

@@ -14,6 +14,9 @@ define([
                 feature: 'fastdom'
             }
         });
-        window.console.error(error);
+        // Some environments don't support or don't always expose the console object
+        if (window.console && window.console.warn) {
+            window.console.warn('Caught FastDom error.', error.stack);
+        }
     };
 });

@@ -1,13 +1,14 @@
 package controllers.admin
 
+import contentapi.CircuitBreakingContentApiClient
 import play.api.mvc.Controller
-import common.{ExecutionContexts, Logging}
+import common.{ContentApiMetrics, ExecutionContexts, Logging}
 import model.NoCache
 import controllers.AuthLogging
 import tools.LoadBalancer
 import play.api.libs.ws.WS
 import scala.concurrent.Future
-import conf.{PreviewContentApi, LiveContentApi}
+import conf.{AdminConfiguration, LiveContentApi}
 import LiveContentApi.getResponse
 
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
@@ -17,6 +18,12 @@ object TestPassed{
 }
 object TestFailed{
   def apply(name: String, messages: String*) = EndpointStatus(name, false, messages:_*)
+}
+
+object PreviewContentApi extends CircuitBreakingContentApiClient {
+  lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
+  lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
+  override val targetUrl = AdminConfiguration.contentapi.previewHost
 }
 
 object TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {
