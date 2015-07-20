@@ -13,26 +13,26 @@ describe('Sticky Header', function () {
 
         it('should return updatePositionMobile for mobile', function () {
             sut.isMobile = true;
-            expect(sut.getUpdateMethod()).toEqual("updatePositionMobile");
+            expect(sut.getUpdateMethod()).toEqual('updatePositionMobile');
         });
 
         it('should return updatePositionAdblock for adblock', function () {
             sut.isAdblockInUse = true;
-            expect(sut.getUpdateMethod()).toEqual("updatePositionAdblock");
+            expect(sut.getUpdateMethod()).toEqual('updatePositionAdblock');
         });
 
         it('should return updatePositionApple for when Apple campaing is on', function () {
             sut.isAppleCampaign = true;
-            expect(sut.getUpdateMethod()).toEqual("updatePositionApple");
+            expect(sut.getUpdateMethod()).toEqual('updatePositionApple');
         });
 
         it('should return updatePositionProfile for identity pages', function () {
             sut.isProfilePage = true;
-            expect(sut.getUpdateMethod()).toEqual("updatePositionProfile");
+            expect(sut.getUpdateMethod()).toEqual('updatePositionProfile');
         });
 
         it('should return updatePosition for all other pages', function () {
-            expect(sut.getUpdateMethod()).toEqual("updatePosition");
+            expect(sut.getUpdateMethod()).toEqual('updatePosition');
         });
     });
 });

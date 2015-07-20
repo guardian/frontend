@@ -97,15 +97,15 @@ define([
 
     StickyHeader.prototype.getUpdateMethod = function () {
         if (this.isMobile) {
-            return "updatePositionMobile";
+            return 'updatePositionMobile';
         } else if (this.isAdblockInUse) {
-            return "updatePositionAdblock";
+            return 'updatePositionAdblock';
         } else if (this.isAppleCampaign) {
-            return "updatePositionApple";
+            return 'updatePositionApple';
         } else if (this.isProfilePage) {
-            return "updatePositionProfile";
+            return 'updatePositionProfile';
         } else {
-            return "updatePosition";
+            return 'updatePosition';
         }
     };
 
