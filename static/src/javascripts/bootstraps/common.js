@@ -12,7 +12,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/url',
-    'common/utils/robusts',
+    'common/utils/robust',
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
@@ -46,6 +46,7 @@ define([
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
     'common/modules/social/pinterest',
+    'common/modules/save-for-later',
     'text!common/views/international-message.html',
     'text!common/views/international-control-message.html',
     'text!common/views/donot-use-adblock.html',
@@ -62,7 +63,7 @@ define([
     mediator,
     template,
     url,
-    robusts,
+    robust,
     storage,
     Foresee,
     liveStats,
@@ -96,6 +97,7 @@ define([
     userPrefs,
     breakingNews,
     pinterest,
+    SaveForLater,
     internationalMessage,
     internationalControlMessage,
     doNotUseAdblockTemplate,
@@ -347,12 +349,19 @@ define([
                 if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
                     pinterest();
                 }
+            },
+
+            saveForLater: function () {
+                if (config.switches.saveForLater) {
+                    var saveForLater = new SaveForLater();
+                    saveForLater.init();
+                }
             }
         };
 
     return {
         init: function () {
-            robusts([
+            robust.catchErrorsAndLogAll([
 
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
@@ -393,7 +402,8 @@ define([
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-international-signposting', modules.internationalSignposting],
-                ['c-pinterest', modules.initPinterest]
+                ['c-pinterest', modules.initPinterest],
+                ['c-save-for-later', modules.saveForLater]
             ]);
             if (window.console && window.console.log && !config.page.isDev) {
                 window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');

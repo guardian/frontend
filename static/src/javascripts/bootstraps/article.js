@@ -14,7 +14,7 @@ define([
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/social-most-popular',
-    'common/modules/experiments/tests/film-containers-logic',
+    'common/modules/experiments/film-containers-logic',
     'bootstraps/article-liveblog-common',
     'bootstraps/trail'
 ], function (
@@ -84,7 +84,7 @@ define([
             },
 
             initFilmTest: function () {
-                if (/film/.test(config.page.section) && /News/.test(config.page.tones)) {
+                if (config.page.section === 'film') {
                     testFilmContainers();
                 }
             }

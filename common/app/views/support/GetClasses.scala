@@ -1,7 +1,6 @@
 package views.support
 
 import ab_headlines.ABTestHeadlines
-import conf.Switches.ABSaveForLaterSwitch
 import com.gu.facia.api.utils.{Audio, Video, Gallery}
 import layout._
 
@@ -28,7 +27,9 @@ object GetClasses {
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
       ("fc-item--live", item.isLive),
-      ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable)
+      ("fc-item--has-metadata", item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable),
+      ("fc-item--has-timestamp", item.timeStampDisplay.isDefined),
+      ("fc-item--is-commentable", item.discussionSettings.isCommentable)
     ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
       ++ mediaTypeClass(item).map(_ -> true)
       ++ abHeadlineClass.map(_ -> true)

@@ -15,8 +15,7 @@ define([
             {variant: 'curated', containerId: '1ce8-6c50-425f-9d32'},
             {variant: 'news',    containerId: 'b073-c5d7-c8a9-1e32'}
         ],
-        containerSelector = '.content-footer',
-        container;
+        containerSelector = '.content-footer';
 
     function loadContainer(id) {
         ajax({
@@ -25,14 +24,18 @@ define([
             crossOrigin: true
         })
         .then(function (res) {
+            var el;
+
             if (res && res.html) {
-                container = container || $(containerSelector);
-                if (container) {
-                    fastDom.write(function () {
-                        container.prepend(res.html);
-                        mediator.emit('page:new-content', container);
-                    });
-                }
+                el = $.create(res.html);
+
+                $('.fc-container__header__title', el).html('more');
+                $('.js-show-more-button', el).remove();
+
+                fastDom.write(function () {
+                    $(containerSelector).prepend(el);
+                    mediator.emit('page:new-content', el);
+                });
             }
         });
     }
