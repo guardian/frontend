@@ -26,11 +26,6 @@ System.config({
     "bower:*": "jspm_packages/bower/*",
     "facebook.js": "//connect.facebook.net/en_US/all",
     "foresee.js": "javascripts/vendor/foresee/20150703/foresee-trigger"
-  },
-  "shim": {
-    "omniture": {
-      "exports": "s"
-    }
   }
 });
 
