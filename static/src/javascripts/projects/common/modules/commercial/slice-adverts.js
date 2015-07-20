@@ -48,7 +48,7 @@ define([
                 // don't display ad in the first container on the fronts
                 isFrontFirst = _.contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
 
-                if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed')) {
+                if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed') && !config.page.omitMPUs) {
                     adSlices.push($adSlice.first());
                     index += (containerGap + 1);
                 } else {
