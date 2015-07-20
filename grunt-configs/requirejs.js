@@ -301,6 +301,7 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
+                    'bootstraps/facia',
                     'text',
                     'inlineSvg'
                 ]
