@@ -41,6 +41,7 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
       ("assetsPath", JsString(Configuration.assets.path)),
       ("hasPageSkin", JsBoolean(metaData.hasPageSkin(edition))),
       ("hasBelowTopNavSlot", JsBoolean(metaData.hasAdInBelowTopNavSlot(edition))),
+      ("omitMPUs", JsBoolean(metaData.omitMPUsFromContainers(edition))),
       ("shouldHideAdverts", JsBoolean(metaData match {
         case c: Content if c.shouldHideAdverts => true
         case _ => false
