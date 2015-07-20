@@ -61,7 +61,7 @@ object TakeoverWithEmptyMPUs {
     )(TakeoverWithEmptyMPUs.apply)(TakeoverWithEmptyMPUs.unapply)
   )
 
-  private def fetch(): Seq[TakeoverWithEmptyMPUs] = {
+  def fetch(): Seq[TakeoverWithEmptyMPUs] = {
     val takeovers = S3.get(takeoversWithEmptyMPUsKey) map {
       Json.parse(_).as[Seq[TakeoverWithEmptyMPUs]]
     } getOrElse Nil
