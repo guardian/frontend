@@ -86,6 +86,8 @@ object Metric extends Logging {
     Seq(
       s"iphone-$model-start" -> CountMetric(s"iphone-$model-start"),
       s"iphone-$model-after-5" -> CountMetric(s"iphone-$model-after-5")
+      s"iphone-$model-start-raf" -> CountMetric(s"iphone-$model-start-raf"),
+      s"iphone-$model-after-5-raf" -> CountMetric(s"iphone-$model-after-5-raf")
     )
   )
 
