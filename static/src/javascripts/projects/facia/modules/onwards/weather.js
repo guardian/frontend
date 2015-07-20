@@ -18,7 +18,7 @@ define([
     'raven',
     'common/utils/_',
     'common/utils/$',
-    'common/utils/ajax-promise',
+    'common/utils/ajax',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -32,7 +32,7 @@ define([
     raven,
     _,
     $,
-    ajaxPromise,
+    ajax,
     config,
     detect,
     mediator,
@@ -102,13 +102,13 @@ define([
                     .then(function (response) {
                         this.fetchWeatherData(response);
                         omniture.trackLinkImmediate(true, 'o', 'weather location set by fastly');
-                    }.fail(function (err) {
+                    }.bind(this)).fail(function (err) {
                         raven.captureException(err, {
                             tags: {
                                 feature: 'weather'
                             }
                         });
-                    }).bind(this));
+                    });
             }
         },
 
@@ -117,13 +117,13 @@ define([
                 .then(function (response) {
                     this.render(response, location.city);
                     this.fetchForecastData(location);
-                }.fail(function (err) {
+                }.bind(this)).fail(function (err) {
                     raven.captureException(err, {
                         tags: {
                             feature: 'weather'
                         }
                     });
-                }).bind(this));
+                });
         },
 
         clearLocation: function () {
@@ -135,13 +135,13 @@ define([
             return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json?_edition=' + config.page.edition.toLowerCase())
                 .then(function (response) {
                     this.renderForecast(response);
-                }.fail(function (err) {
+                }.bind(this)).fail(function (err) {
                     raven.captureException(err, {
                         tags: {
                             feature: 'weather'
                         }
                     });
-                }).bind(this));
+                });
         },
 
         saveDeleteLocalStorage: function (response) {
