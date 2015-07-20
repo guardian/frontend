@@ -32,7 +32,7 @@ object JspmControlTest extends TestDefinition(
 )
 
 object LoadCSSRafTest extends TestDefinition(
-  List(Variant8),
+  List(Variant1, Variant2, Variant3, Variant4, Variant8),
   "load-css-with-raf",
   "Tests weather using RAF in LoadCSS improves iPad crashes",
   new LocalDate(2015, 8, 30)
