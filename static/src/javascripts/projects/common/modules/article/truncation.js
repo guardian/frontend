@@ -17,23 +17,26 @@ define([
 
     return function () {
         if (storage.session.get(storageKey) !== config.page.pageId) {
-            fastdom.write(function () {
-                var button = bonzo.create('<button class="button button--large button--primary button--show-more content__read-more-button" data-link-name="more">' +
-                        '<i class="i i-plus-white"></i> Continue reading...'
-                        + '</button>')[0],
-                    $articleBody = $('.js-article__body'),
-                    cls = 'content__article-body--truncated';
+            var overlay = bonzo.create(
+                '<div class="content__truncation-overlay">' +
+                    '<button class="button button--large button--primary button--show-more" data-link-name="more">' +
+                        '<i class="i i-plus-white"></i> Continue reading...' +
+                    '</button>' +
+                '</div>'),
+                $articleBody = $('.js-article__body'),
+                truncatorClass = 'content__article-body--truncated';
 
-                bean.on(button, 'click', function () {
-                    fastdom.write(function () {
-                        $articleBody.removeClass(cls);
-                    });
-                    storage.session.set(storageKey, config.page.pageId);
+            bean.on($('button', overlay)[0], 'click', function () {
+                fastdom.write(function () {
+                    $articleBody.removeClass(truncatorClass);
                 });
+                storage.session.set(storageKey, config.page.pageId);
+            });
 
-                $articleBody.addClass(cls)
-                    .append('<div class="content__truncation-overlay"></div>')
-                    .append(button);
+            fastdom.write(function () {
+                $articleBody
+                    .addClass(truncatorClass)
+                    .append(overlay);
             });
         }
     };

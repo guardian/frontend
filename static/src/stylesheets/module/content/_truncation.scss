@@ -11,19 +11,9 @@
         display: block;
         position: absolute;
         bottom: 0;
-        height: 0;
-        box-shadow: 0 0 120px 60px #ffffff;
         width: 100%;
-        border-bottom: solid 40px #ffffff;
-    }
-}
-
-.content__read-more-button {
-    display: none;
-
-    .content__article-body--truncated & {
-        display: block;
-        position: absolute;
-        bottom: 0;
+        height: 40px;
+        background-color: #ffffff;
+        box-shadow: 0 0 120px 60px #ffffff;
     }
 }
