@@ -57,6 +57,22 @@ object Metric extends Logging {
     ("android-sgs3-start", CountMetric(s"android-sgs3-start")),
     ("android-sgs3-after-5", CountMetric(s"android-sgs3-after-5")),
 
+    // temporarily count use of RAF for LoadCSSRafTest
+    ("ipad-old-start-raf", CountMetric(s"ipad-old-start-raf")),
+    ("ipad-old-after-5-raf", CountMetric(s"ipad-old-after-5-raf")),
+    ("ipad-2orMini-start-raf", CountMetric(s"ipad-2orMini-start-raf")),
+    ("ipad-2orMini-after-5-raf", CountMetric(s"ipad-2orMini-after-5-raf")),
+    ("ipad-3orLater-start-raf", CountMetric(s"ipad-3orLater-start-raf")),
+    ("ipad-3orLater-after-5-raf", CountMetric(s"ipad-3orLater-after-5-raf")),
+    ("android-nexus5-start-raf", CountMetric(s"android-nexus5-start-raf")),
+    ("android-nexus5-after-5-raf", CountMetric(s"android-nexus5-after-5-raf")),
+    ("android-nexus7-start-raf", CountMetric(s"android-nexus7-start-raf")),
+    ("android-nexus7-after-5-raf", CountMetric(s"android-nexus7-after-5-raf")),
+    ("android-sgs4-start-raf", CountMetric(s"android-sgs4-start-raf")),
+    ("android-sgs4-after-5-raf", CountMetric(s"android-sgs4-after-5-raf")),
+    ("android-sgs3-start-raf", CountMetric(s"android-sgs3-start-raf")),
+    ("android-sgs3-after-5-raf", CountMetric(s"android-sgs3-after-5-raf")),
+
 
     ("tech-feedback", CountMetric("tech-feedback")),
 

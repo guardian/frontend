@@ -6,6 +6,11 @@
     (function (window, navigator) {
         function logDevice(model, device) {
             var identifier = device + '-' + model;
+            @*
+                remove the RAF metrics in
+                diagnostics/app/model/diagnostics/analytics/Metric.scala
+                when removing this too
+            *@
             @if(mvt.LoadCSSRafTest.isParticipating) {
                 var cssLoader = '-raf';
             } else {
