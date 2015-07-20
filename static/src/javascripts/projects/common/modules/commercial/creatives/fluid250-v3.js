@@ -41,8 +41,7 @@ define([
                     this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
                     if (this.scrollAmount >= -80 && this.scrollAmount < 0) {
                         this.scrollAmountP = this.scrollAmount + '%';
-                    }
-                    else {
+                    } else {
                         this.scrollAmountP = '20%';
                     }
                 }.bind(this));
