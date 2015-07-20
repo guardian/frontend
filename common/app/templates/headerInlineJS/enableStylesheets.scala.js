@@ -21,30 +21,22 @@
 (function (styleSheetLinks, documentStyleSheets) {
 
     // Check the stylesheet has downloaded, then set media to `screen`. If not, go again.
-    @if(mvt.LoadCSSRafTest.isParticipating) {
-        function setMedia (styleSheet) {
-            for (var i = 0, totalSheets = documentStyleSheets.length; i < totalSheets ; i++) {
-                var sheet = documentStyleSheets[i];
-                if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1) {
-                    styleSheet.media = "screen";
-                    return true;
-                }
+    function setMedia (styleSheet) {
+        for (var i = 0, totalSheets = documentStyleSheets.length; i < totalSheets ; i++) {
+            var sheet = documentStyleSheets[i];
+            if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1) {
+                styleSheet.media = "screen";
+                return true;
             }
+        }
+        @if(mvt.LoadCSSRafTest.isParticipating) {
             requestAnimationFrame(function () {
                 setMedia(styleSheet);
             });
-        }
-    } else {
-        function setMedia (styleSheet) {
-            for (var i = 0, totalSheets = documentStyleSheets.length; i < totalSheets ; i++) {
-                var sheet = documentStyleSheets[i];
-                if (sheet.href && sheet.href.indexOf(styleSheet.href) > -1) {
-                    styleSheet.media = "screen";
-                    return true;
-                }
-            }
+        } else {
             setTimeout(setMedia, null, styleSheet);
         }
+
     }
 
     // Watch for load on all `link` elements with media of `only x`
