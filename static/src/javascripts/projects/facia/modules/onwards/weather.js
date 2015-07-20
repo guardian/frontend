@@ -74,7 +74,7 @@ define([
         },
 
         getWeatherData: function (url) {
-            return ajax({
+            return ajaxPromise({
                 url: url,
                 type: 'json',
                 method: 'get',
@@ -102,13 +102,13 @@ define([
                     .then(function (response) {
                         this.fetchWeatherData(response);
                         omniture.trackLinkImmediate(true, 'o', 'weather location set by fastly');
-                    }).catch(function (err) {
+                    }.bind(this)).fail(function (err) {
                         raven.captureException(err, {
                             tags: {
                                 feature: 'weather'
                             }
                         });
-                    }).bind(this);
+                    });
             }
         },
 
@@ -117,13 +117,13 @@ define([
                 .then(function (response) {
                     this.render(response, location.city);
                     this.fetchForecastData(location);
-                }).catch(function (err) {
+                }.bind(this)).fail(function (err) {
                     raven.captureException(err, {
                         tags: {
                             feature: 'weather'
                         }
                     });
-                }).bind(this);
+                });
         },
 
         clearLocation: function () {
@@ -135,13 +135,13 @@ define([
             return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json?_edition=' + config.page.edition.toLowerCase())
                 .then(function (response) {
                     this.renderForecast(response);
-                }).catch(function (err) {
+                }.bind(this)).fail(function (err) {
                     raven.captureException(err, {
                         tags: {
                             feature: 'weather'
                         }
                     });
-                }).bind(this);
+                });
         },
 
         saveDeleteLocalStorage: function (response) {
