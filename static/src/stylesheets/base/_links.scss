@@ -13,3 +13,9 @@ a,
         text-decoration: none;
     }
 }
+a[name] {
+    padding-top: gs-height(2);
+    margin-top: gs-height(-2);
+    display: inline-block;
+    width: 0px;
+}
