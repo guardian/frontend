@@ -225,6 +225,20 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
+.brand-bar__item--saved-for-later-count {
+    display: inline-block;
+    position: relative;
+    top: -1px;
+    width: $gs-gutter;
+    line-height: $gs-baseline;
+    font-size: 11px;
+    margin-left: $gs-gutter / 2;
+    border-radius: 30px;
+    text-align: center;
+    background: colour(news-main-2);
+    color: #ffffff;
+}
+
 /* Search Menu
    ========================================================================== */
 

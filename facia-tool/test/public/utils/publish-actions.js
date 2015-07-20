@@ -1,6 +1,5 @@
 import Promise from 'Promise';
 import mockjax from 'test/utils/mockjax';
-import tick from 'test/utils/tick';
 
 export default function(action) {
     return new Promise(function (resolve) {
@@ -15,10 +14,11 @@ export default function(action) {
             },
             onAfterComplete: function () {
                 mockjax.clear(publishInterceptor);
-                resolve(publishedCollection);
+                setTimeout(() => {
+                    resolve(publishedCollection);
+                }, 20);
             }
         });
         action();
-        tick(100).then(() => tick(100));
     });
 }

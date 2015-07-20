@@ -25,7 +25,8 @@
         "templateStrings": true,
         "unicodeCodePointEscapes": true,
         "globalReturn": true,
-        "jsx": true
+        "jsx": true,
+        "restParams": true
     },
     "rules": {
         // Overrides old
