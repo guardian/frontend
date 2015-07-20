@@ -30,6 +30,7 @@ object DfpAgent
   private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
   private lazy val lineItemAgent = AkkaAgent[Seq[GuLineItem]](Nil)
+  private lazy val takeoverWithEmptyMPUsAgent = AkkaAgent[Seq[TakeoverWithEmptyMPUs]](Nil)
 
   protected def currentPaidForTags: Seq[PaidForTag] = currentPaidForTagsAgent get()
   protected def allAdFeatureTags: Seq[PaidForTag] = allAdFeatureTagsAgent get()
@@ -38,6 +39,8 @@ object DfpAgent
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
   protected def lineItems: Seq[GuLineItem] = lineItemAgent get()
+  protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs] =
+    takeoverWithEmptyMPUsAgent get()
 
   def generateTagToSponsorsMap(paidForTags: Seq[PaidForTag]): Map[String, Set[String]] = {
     paidForTags.foldLeft(Map.empty[String, Set[String]]) { (soFar, tag) =>
@@ -60,7 +63,7 @@ object DfpAgent
     maybeLineItems getOrElse Nil
   }
 
-  private def update[T](agent: Agent[Seq[T]], freshData: Seq[T]) {
+  private def update[T](agent: Agent[Seq[T]])(freshData: => Seq[T]) {
     if (freshData.nonEmpty) {
       agent send freshData
     }
@@ -94,7 +97,7 @@ object DfpAgent
       maybeTagSet getOrElse InlineMerchandisingTagSet()
     }
 
-    def updateMap(agent: Agent[Map[String, Set[String]]], freshData: Map[String, Set[String]]) {
+    def updateMap(agent: Agent[Map[String, Set[String]]])(freshData: => Map[String, Set[String]]) {
       if (freshData.nonEmpty) {
         agent send freshData
       }
@@ -107,25 +110,31 @@ object DfpAgent
     }
 
     val paidForTags: Seq[PaidForTag] = grabPaidForTagsFromStore(dfpPaidForTagsDataKey)
-    update(currentPaidForTagsAgent, paidForTags)
+    update(currentPaidForTagsAgent)(paidForTags)
 
-    val allAdFeatureTags: Seq[PaidForTag] = grabPaidForTagsFromStore(dfpAdFeatureReportKey)
-    update(allAdFeatureTagsAgent, allAdFeatureTags)
+    update(allAdFeatureTagsAgent)(grabPaidForTagsFromStore(dfpAdFeatureReportKey))
 
-    val sponsoredTags: Seq[PaidForTag] = paidForTags filter (_.paidForType == Sponsored)
-    updateMap(tagToSponsorsMapAgent, generateTagToSponsorsMap(sponsoredTags))
+    updateMap(tagToSponsorsMapAgent) {
+      generateTagToSponsorsMap(paidForTags filter (_.paidForType == Sponsored))
+    }
 
-    val advertisementFeatures: Seq[PaidForTag] = paidForTags filter(_.paidForType == AdvertisementFeature)
-    updateMap(tagToAdvertisementFeatureSponsorsMapAgent, generateTagToSponsorsMap(advertisementFeatures))
+    updateMap(tagToAdvertisementFeatureSponsorsMapAgent) {
+      generateTagToSponsorsMap(paidForTags filter (_.paidForType == AdvertisementFeature))
+    }
 
-    update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
+    update(pageskinnedAdUnitAgent)(grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
+
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
   }
 
   def refreshFaciaSpecificData(): Unit = {
-    val topBelowNavLineItems = grabCurrentLineItemsFromStore(dfpLineItemsKey) filter {
-      _.targeting.customTargetSets.exists(_.targets.exists(_.isSlot("top-below-nav")))
+
+    update(lineItemAgent) {
+      grabCurrentLineItemsFromStore(dfpLineItemsKey) filter {
+        _.targeting.customTargetSets.exists(_.targets.exists(_.isSlot("top-below-nav")))
+      }
     }
-    update(lineItemAgent, topBelowNavLineItems)
+
+    update(takeoverWithEmptyMPUsAgent)(TakeoverWithEmptyMPUs.fetch())
   }
 }
