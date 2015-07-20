@@ -133,7 +133,6 @@ define([
             },
 
             initialiseStickyHeader: function () {
-                debugger;
                 if (config.switches.viewability && !(config.page.isProd && config.page.contentType === 'Interactive')) {
                     sticky.init();
                 }
