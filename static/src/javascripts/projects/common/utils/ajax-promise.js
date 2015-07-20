@@ -14,11 +14,11 @@ define([
                 resolve(value);
             })
             .fail(function (request, text, err) {
-                var error = err ? err : new Error(text);
-
                 var statusText = (err && err.statusText) || '';
                 var statusCode = (err && err.status) || '';
-                raven.captureException('Error retrieving data (' + text + ') (Status: ' + statusCode + ') (StatusText: ' + statusText + ')');
+                var errorText = text ? text : 'Error retrieving data (' + text + ') (Status: ' + statusCode + ') (StatusText: ' + statusText + ')';
+
+                var error = err ? err : new Error(errorText);
 
                 error.request = request;
                 reject(error);
