@@ -287,6 +287,11 @@ GET         /admin/commercial/dfp/flush/view                                    
 GET         /admin/commercial/dfp/flush                                                                              controllers.admin.commercial.DfpDataController.flushCache()
 GET         /admin/commercial/radiator                                                                               controllers.admin.CommercialController.renderCommercialRadiator()
 
+GET         /admin/commercial/adops/takeovers-empty-mpus                                                             controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
+GET         /admin/commercial/adops/takeovers-empty-mpus/create                                                      controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
+POST        /admin/commercial/adops/takeovers-empty-mpus/create                                                      controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
+POST        /admin/commercial/adops/takeovers-empty-mpus/remove                                                      controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(url)
+
 
 # dev-build only
 GET         /commercial/magento/token                                                                                controllers.commercial.magento.AccessTokenGenerator.generate
