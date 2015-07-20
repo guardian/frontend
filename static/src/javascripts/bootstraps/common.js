@@ -133,7 +133,9 @@ define([
             },
 
             initialiseStickyHeader: function () {
-                if (config.switches.viewability && (config.page.host.match('code') || config.page.contentType !== 'Interactive')) {
+                var isCode = (config.page.host) ? config.page.host.match('code') : false;
+                
+                if (config.switches.viewability && (isCode || config.page.contentType !== 'Interactive')) {
                     sticky.init();
                 }
             },
