@@ -102,7 +102,7 @@ define([
                     .then(function (response) {
                         this.fetchWeatherData(response);
                         omniture.trackLinkImmediate(true, 'o', 'weather location set by fastly');
-                    }).fail(function (err) {
+                    }).catch(function (err) {
                         raven.captureException(err, {
                             tags: {
                                 feature: 'weather'
@@ -117,7 +117,7 @@ define([
                 .then(function (response) {
                     this.render(response, location.city);
                     this.fetchForecastData(location);
-                }).fail(function (err) {
+                }).catch(function (err) {
                     raven.captureException(err, {
                         tags: {
                             feature: 'weather'
@@ -135,7 +135,7 @@ define([
             return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json?_edition=' + config.page.edition.toLowerCase())
                 .then(function (response) {
                     this.renderForecast(response);
-                }).fail(function (err) {
+                }).catch(function (err) {
                     raven.captureException(err, {
                         tags: {
                             feature: 'weather'
