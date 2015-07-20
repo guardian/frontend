@@ -9,7 +9,7 @@ import common.ExecutionContexts
 import services.{PlaySigninService, IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
 import com.google.inject.{Inject, Singleton}
 import idapiclient.IdApiClient
-import play.api.i18n.Messages
+import play.api.i18n.{MessagesApi, Messages}
 import idapiclient.EmailPassword
 import utils.SafeLogging
 import form.Mappings
@@ -21,7 +21,8 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                  api: IdApiClient,
                                  idRequestParser: IdRequestParser,
                                  idUrlBuilder: IdentityUrlBuilder,
-                                 signInService : PlaySigninService)
+                                 signInService : PlaySigninService,
+                                 val messagesApi: MessagesApi)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with Forms {
 
   val page = IdentityPage("/signin", "Sign in", "signin")

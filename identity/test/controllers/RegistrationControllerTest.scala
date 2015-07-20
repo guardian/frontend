@@ -17,6 +17,8 @@ import idapiclient.responses.{CookieResponse, CookiesResponse}
 import org.joda.time.DateTime
 import play.api.mvc.Cookies
 import conf.IdentityConfiguration
+import play.api.i18n.Messages.Implicits.applicationMessagesApi
+import play.api.Play.current
 
 class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar  {
 
@@ -40,7 +42,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
   when(requestParser.apply(Matchers.anyObject(), Matchers.anyString())).thenReturn(identityRequest)
   when(trackingData.ipAddress).thenReturn(Some("123.456.789.12"))
 
-  val registrationController = new RegistrationController(returnUrlVerifier, userCreationService, api, requestParser, urlBuilder, signinService)
+  lazy val registrationController = new RegistrationController(returnUrlVerifier, userCreationService, api, requestParser, urlBuilder, signinService, applicationMessagesApi)
 
   "the renderRegistrationForm" - {
     "should render the registration form" in Fake {
