@@ -1,8 +1,8 @@
 import com.gu.googleauth.{FilterExemption, UserIdentity}
 import common.ExecutionContexts
+import common.dfp.FaciaDfpAgentLifecycle
 import conf.Filters
 import controllers.AuthCookie
-import dfp.FaciaDfpAgentLifecycle
 import feed.OnwardJourneyLifecycle
 import play.Play
 import play.api.mvc.Results._
