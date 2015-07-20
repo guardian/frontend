@@ -136,11 +136,11 @@ define([
                 .then(function (response) {
                     this.renderForecast(response);
                 }.fail(function (err) {
-                    raven.captureException(err, {
-                        tags: {
-                            feature: 'weather'
-                        }
-                    });
+                 raven.captureException(err, {
+                    tags: {
+                        feature: 'weather'
+                    }
+                 });
                 }).bind(this));
         },
 
