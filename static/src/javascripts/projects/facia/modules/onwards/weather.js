@@ -18,7 +18,7 @@ define([
     'raven',
     'common/utils/_',
     'common/utils/$',
-    'common/utils/ajax',
+    'common/utils/ajax-promise',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -32,7 +32,7 @@ define([
     raven,
     _,
     $,
-    ajax,
+    ajaxPromise,
     config,
     detect,
     mediator,
@@ -74,7 +74,7 @@ define([
         },
 
         getWeatherData: function (url) {
-            return ajax({
+            return ajaxPromise({
                 url: url,
                 type: 'json',
                 method: 'get',
@@ -102,14 +102,13 @@ define([
                     .then(function (response) {
                         this.fetchWeatherData(response);
                         omniture.trackLinkImmediate(true, 'o', 'weather location set by fastly');
-                    }.bind(this))
-                    .fail(function (err, msg) {
-                        raven.captureException(new Error('Error retrieving city data (' + msg + ')'), {
+                    }.fail(function (err) {
+                        raven.captureException(err, {
                             tags: {
                                 feature: 'weather'
                             }
                         });
-                    });
+                    }).bind(this));
             }
         },
 
@@ -118,13 +117,13 @@ define([
                 .then(function (response) {
                     this.render(response, location.city);
                     this.fetchForecastData(location);
-                }.bind(this)).fail(function (err, msg) {
-                    raven.captureException(new Error('Error retrieving weather data (' + msg + ')'), {
+                }.fail(function (err) {
+                    raven.captureException(err, {
                         tags: {
                             feature: 'weather'
                         }
                     });
-                });
+                }).bind(this));
         },
 
         clearLocation: function () {
@@ -136,16 +135,13 @@ define([
             return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json?_edition=' + config.page.edition.toLowerCase())
                 .then(function (response) {
                     this.renderForecast(response);
-                }.bind(this))
-                .fail(function (err, msg) {
-                    var statusText = (err && err.statusText) || '';
-                    var statusCode = (err && err.status) || '';
-                    raven.captureException(new Error('Error retrieving forecast data (' + msg + ') (Status: ' + statusCode + ') (StatusText: ' + statusText + ')'), {
-                        tags: {
-                            feature: 'weather'
-                        }
-                    });
-                });
+                }.fail(function (err) {
+                 raven.captureException(err, {
+                    tags: {
+                        feature: 'weather'
+                    }
+                 });
+                }).bind(this));
         },
 
         saveDeleteLocalStorage: function (response) {
