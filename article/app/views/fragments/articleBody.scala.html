@@ -1,6 +1,7 @@
+
 @(model: ArticlePage)(implicit request: RequestHeader)
 
-@import conf.Switches._
+@import common.LinkTo
 @import views.BodyCleaner
 @import views.support.TrailCssClasses.articleToneClass
 
@@ -11,6 +12,8 @@
         @if(article.isAdvertisementFeature){content--advertisement-feature}
         @if(article.isFeature && article.hasShowcaseMainPicture){has-feature-showcase-picture}"
         itemscope itemtype="@article.schemaType" role="main">
+
+        <meta itemprop="mainEntityOfPage" content="@LinkTo(article.url)">
 
         @fragments.headTonal(article)
 

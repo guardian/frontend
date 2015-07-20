@@ -4,11 +4,12 @@
 (function (navigator, window) {
     // Enable manual optin to core functionality/optout of enhancement
     var personPrefersCore = function () {
-        if (window.localStorage) {
+        try {
             var preference = window.localStorage.getItem('gu.prefs.force-core') || 'off';
             return /"value":"on"/.test(preference);
+        } catch (e) {
+            return false;
         }
-        return false;
     };
 
     // Guess whether the device is too old, regardless of whether it cuts the mustard

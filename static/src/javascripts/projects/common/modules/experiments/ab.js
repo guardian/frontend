@@ -6,12 +6,12 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/film-containers',
     'common/modules/experiments/tests/article-truncation',
     'common/modules/experiments/tests/facebook-most-viewed',
     'common/modules/experiments/tests/twitter-most-viewed',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/headlines',
     'common/modules/experiments/tests/membership-message'
@@ -23,24 +23,24 @@ define([
     mediator,
     store,
     mvtCookie,
+    FilmContainers,
     ArticleTruncation,
     FacebookMostViewed,
     TwitterMostViewed,
     LiveblogNotifications,
     HighCommercialComponent,
-    SaveForLater,
     CookieRefresh,
     Headline,
     MembershipMessage
 ) {
 
     var TESTS = _.flatten([
+        new FilmContainers(),
         new ArticleTruncation(),
         new FacebookMostViewed(),
         new TwitterMostViewed(),
         new LiveblogNotifications(),
         new HighCommercialComponent(),
-        new SaveForLater(),
         new CookieRefresh(),
         new MembershipMessage(),
         _.map(_.range(1, 10), function (n) {

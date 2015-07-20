@@ -223,7 +223,7 @@ object FaciaCard {
       MediaType.fromFaciaContent(faciaContent),
       DisplaySettings.fromTrail(faciaContent),
       faciaContent.isLive,
-      None,
+      if (config.showTimestamps) Option(DateTimestamp) else None,
       faciaContent.shortUrlPath,
       useShortByline = false,
       faciaContent.group

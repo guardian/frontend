@@ -10,15 +10,10 @@
     <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
 <![endif]-->
 
-@fragments.fontDefinitions()
-
 <script id="gu">
     @Html(templates.headerInlineJS.js.polyfills().body)
-
     @Html(templates.headerInlineJS.js.shouldEnhance(item).body)
-
     @Html(templates.headerInlineJS.js.config(item).body)
-
     @Html(templates.headerInlineJS.js.featureDetection().body)
 
     @* Not the usual type of thing we do, but I want this separate to our "normal" javascript. *@
@@ -28,3 +23,12 @@
     @* must always be set before the Omniture file is parsed *@
     window.s_account = "@OmnitureAnalyticsAccount(item)"; //omniture
 </script>
+
+@*
+    http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
+*@
+<!--[if lte IE 9]>
+    <script>
+      guardian.config.page.ajaxUrl = guardian.config.page.ajaxUrl.replace(/^https:/, '');
+    </script>
+<![endif]-->

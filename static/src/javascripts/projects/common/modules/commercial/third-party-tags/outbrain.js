@@ -7,7 +7,7 @@ define([
     config,
     detect
 ) {
-    var outbrainUrl = 'http://widgets.outbrain.com/outbrain.js';
+    var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
 
     function load() {
         // outbrain leaks the URL of preview content so we don't show it there.

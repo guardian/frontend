@@ -20,6 +20,7 @@ define([
     'facia/modules/ui/live-blog-updates',
     'facia/modules/ui/slideshow/controller',
     'facia/modules/ui/snaps',
+    'facia/modules/ui/sponsorship',
     'facia/modules/onwards/weather'
 ], function (
     bonzo,
@@ -41,6 +42,7 @@ define([
     liveblogUpdates,
     slideshow,
     snaps,
+    sponsorship,
     weather
 ) {
 
@@ -119,6 +121,7 @@ define([
                 modules.upgradeMostPopularToGeo();
                 lazyLoadContainers();
                 stocks();
+                sponsorship();
                 modules.showWeather();
                 modules.showLiveblogUpdates();
                 modules.startSlideshow();
@@ -129,5 +132,4 @@ define([
     return {
         init: ready
     };
-
 });
