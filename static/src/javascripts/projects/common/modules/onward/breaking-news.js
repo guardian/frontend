@@ -78,7 +78,7 @@ define([
                         collections.filter(function (c) { return c.href === edition;  }).map(function (c) { return c.content; }),
                         collections.filter(function (c) { return section && c.href === section; }).map(function (c) { return c.content; })
                     ])
-                    .flattenDeep()
+                    .flatten()
                     .filter(function (article) {
                         var alertTime = article.frontPublicationDate;
                         return alertTime && relativeDates.isWithinSeconds(new Date(alertTime), alertWithinSeconds);
@@ -99,7 +99,7 @@ define([
 
                 alerts = _.chain(articles)
                     .filter(function (article) { return hiddenIds[article.id] !== true; })
-                    .take(maxSimultaneousAlerts)
+                    .first(maxSimultaneousAlerts)
                     .value();
 
                 if (alerts.length) {
