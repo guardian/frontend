@@ -1044,6 +1044,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val ABSignedOutSaveForLaterSwitch = Switch(
+    "A/B Tests",
+    "ab-signed-out-save-for-later",
+    "Switch off the signed out save for later test",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val FootballFeedRecorderSwitch = Switch(
     "Feature",
     "football-feed-recorder",

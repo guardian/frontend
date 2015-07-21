@@ -225,7 +225,7 @@ define([
                 var docFragment   = document.createDocumentFragment(),
                     resultsToShow = results.length - numOfResults;
 
-                _(results).initial(resultsToShow).each(function (item, index) {
+                _(results).dropRight(resultsToShow).each(function (item, index) {
                     var li = document.createElement('li');
 
                     li.className = 'search-tool__item';
