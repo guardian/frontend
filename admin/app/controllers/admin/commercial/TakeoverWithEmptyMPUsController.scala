@@ -3,6 +3,8 @@ package controllers.admin.commercial
 import common.dfp.TakeoverWithEmptyMPUs
 import conf.Configuration.environment
 import controllers.admin.AuthActions
+import play.api.Play.current
+import play.api.i18n.Messages.Implicits._
 import play.api.mvc.Controller
 
 object TakeoverWithEmptyMPUsController extends Controller {
