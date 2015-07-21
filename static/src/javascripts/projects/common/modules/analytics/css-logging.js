@@ -53,11 +53,11 @@ define([
             len,
             rules = _.chain(getInlineStylesheets())
                 .map(getRules)
-                .flatten()
+                .flattenDeep()
                 .map(getRules) // 2nd pass for rules nested in media queries
-                .flatten()
+                .flattenDeep()
                 .map(getSplitSelectors)
-                .flatten()
+                .flattenDeep()
                 .compact()
                 .uniq()
                 .map(canonicalise)

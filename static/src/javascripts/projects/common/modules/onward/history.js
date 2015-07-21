@@ -176,7 +176,7 @@ define([
             })
             .compact()
             .sortBy('rank')
-            .last(op.number)
+            .takeRight(op.number)
             .reverse()
             .pluck('idAndName')
             .value();
@@ -301,7 +301,8 @@ define([
                 }
 
                 summary.tags[tid] = record;
-            });
+            })
+            .value();
 
         saveSummary(summary);
     }

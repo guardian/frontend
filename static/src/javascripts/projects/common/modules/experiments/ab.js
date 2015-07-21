@@ -36,7 +36,7 @@ define([
     MembershipMessage
 ) {
 
-    var TESTS = _.flatten([
+    var TESTS = _.flattenDeep([
         new FilmContainers(),
         new ArticleTruncation(),
         new FacebookMostViewed(),

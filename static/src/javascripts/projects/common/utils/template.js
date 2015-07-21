@@ -4,6 +4,8 @@ define([
     _
 ) {
 
-    return _.template.bind(_);
+    return function (string, data, options) {
+        return _.template(string, options)(data);
+    };
 
 });
