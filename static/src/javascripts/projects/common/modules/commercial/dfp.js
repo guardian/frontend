@@ -272,7 +272,7 @@ define([
                             slots = _(slots).omit(slot).value();
                             displayed = true;
                         }
-                    });
+                    }).value();
                 });
             }
         },
@@ -319,9 +319,9 @@ define([
                 sizeMapping    = defineSlotSizes($adSlot),
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
                 size           = _.uniq(
-                    _.flatten(sizeMapping, true, function (map) {
+                    _.flatten(_.map(sizeMapping, function (map) {
                         return map[1];
-                    }),
+                    })),
                     function (size) {
                         return size[0] + '-' + size[1];
                     }
@@ -513,7 +513,7 @@ define([
         },
         getSlotsBreakpoint = function (breakpoint, slotBreakpoints) {
             return _(detect.breakpoints)
-                .initial(function (breakpointInfo) {
+                .dropRightWhile(function (breakpointInfo) {
                     return breakpointInfo.name !== breakpoint;
                 })
                 .intersection(slotBreakpoints)

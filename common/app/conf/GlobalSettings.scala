@@ -1,6 +1,10 @@
+package conf
+
+import common._
 import model.Cors
-import play.api.GlobalSettings
-import play.api.mvc.{Results, Result, RequestHeader}
+import play.api.{Application, GlobalSettings}
+import play.api.mvc.{Result, RequestHeader, Results}
+
 import scala.concurrent.Future
 
 trait CorsErrorHandler extends GlobalSettings with Results with common.ExecutionContexts {
@@ -27,5 +31,41 @@ trait CorsErrorHandler extends GlobalSettings with Results with common.Execution
   }
   override def onBadRequest(request : RequestHeader, error : String) : Future[Result] = {
     super.onBadRequest(request, error).map { Cors(_)(request) };
+  }
+}
+
+trait SwitchboardLifecycle extends GlobalSettings with ExecutionContexts with Logging {
+
+  override def onStart(app: Application) {
+    super.onStart(app)
+    Jobs.deschedule("SwitchBoardRefreshJob")
+    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?") {
+      refresh()
+    }
+
+    AkkaAsync {
+      refresh()
+    }
+  }
+
+  override def onStop(app: Application) {
+    Jobs.deschedule("SwitchBoardRefreshJob")
+    super.onStop(app)
+  }
+
+  def refresh() {
+    log.info("Refreshing switches")
+    services.S3.get(Configuration.switches.key) map { response =>
+
+      val nextState = Properties(response)
+
+      for (switch <- Switches.all) {
+        nextState.get(switch.name) foreach {
+          case "on" => switch.switchOn()
+          case "off" => switch.switchOff()
+          case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
+        }
+      }
+    }
   }
 }

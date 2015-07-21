@@ -1,6 +1,7 @@
 package controllers
 
-import com.gu.crosswords.api.client.models.{Crossword, Type => CrosswordType}
+import com.gu.contentapi.client.model.Crossword
+import conf.LiveContentApi
 import common.ExecutionContexts
 import conf.Static
 import model.Cached
@@ -11,17 +12,17 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 
 object CrosswordsController extends Controller with ExecutionContexts {
-  protected def withCrossword(crosswordType: CrosswordType, id: Int)(f: Crossword => Result): Future[Result] = {
-    maybeApi match {
-      case Some(apiClient) =>
-        apiClient.getCrossword(crosswordType, id).map(f)
-
-      case None =>
-        Future.successful(InternalServerError("Crossword API credentials not set up."))
-    }
+  protected def withCrossword(crosswordType: String, id: Int)(f: Crossword => Result): Future[Result] = {
+    LiveContentApi.getResponse(LiveContentApi.item(s"$crosswordType/$id")).map { response =>
+       val maybeCrossword = for {
+        content <- response.content
+        crossword <- content.crossword }
+       yield f(crossword)
+       maybeCrossword getOrElse InternalServerError("Crossword response from Content API invalid.")
+    } recover { case _ => InternalServerError("Content API query returned an error.") }
   }
 
-  def crossword(crosswordType: CrosswordType, id: Int) = Action.async { implicit request =>
+  def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { crossword =>
       Cached(60)(Ok(views.html.crossword(
         new CrosswordPage(CrosswordData.fromCrossword(crossword)),
@@ -30,7 +31,7 @@ object CrosswordsController extends Controller with ExecutionContexts {
     }
   }
 
-  def thumbnail(crosswordType: CrosswordType, id: Int) = Action.async { implicit request =>
+  def thumbnail(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { crossword =>
       val xml = CrosswordSvg(crossword, Some("100%"), Some("100%"), trim = true)
 

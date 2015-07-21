@@ -207,7 +207,7 @@ object Omniture extends ExecutionContexts with Logging {
           val segments = Json.parse(response.body).asInstanceOf[JsArray](0) \ "segments"
           segments.validate[Seq[OmnitureSegment]] match {
             case JsSuccess(segments, _) => segments
-            case JsError(e) => throw OmnitureException(JsError.toFlatJson(e).toString())
+            case JsError(e) => throw OmnitureException(JsError.toJson(e).toString())
           }
         }
         case _ => throw OmnitureException(s"Omniture returned: ${response.status}, body:${response.body}")
