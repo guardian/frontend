@@ -2,14 +2,12 @@ define([
     'bean',
     'bonzo',
     'common/utils/_',
-    'common/utils/mediator',
-    'common/utils/request-animation-frame'
+    'common/utils/mediator'
 ], function (
     bean,
     bonzo,
     _,
-    mediator,
-    raf
+    mediator
 ) {
 
     var Affix = function (options) {
@@ -40,7 +38,7 @@ define([
     };
 
     Affix.prototype.checkPositionWithEventLoop = function () {
-        raf(this.checkPosition.bind(this));
+        requestAnimationFrame(this.checkPosition.bind(this));
     };
 
     Affix.prototype.getPixels = function (top) {
