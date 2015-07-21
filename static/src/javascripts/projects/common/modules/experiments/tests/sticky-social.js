@@ -1,7 +1,7 @@
 define(function () {
 
     return function () {
-        this.id = 'ViewabilitySocial';
+        this.id = 'StickySocial';
         this.start = '2015-07-20';
         this.expiry = '2015-07-30';
         this.author = 'Stephan Fowler';

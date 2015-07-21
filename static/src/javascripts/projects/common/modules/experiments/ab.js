@@ -14,9 +14,9 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/signed-out-save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
+    'common/modules/experiments/tests/sticky-social',
     'common/modules/experiments/headlines',
-    'common/modules/experiments/tests/membership-message',
-    'common/modules/experiments/tests/viewability-social'
+    'common/modules/experiments/tests/membership-message'
 ], function (
     raven,
     _,
@@ -33,9 +33,9 @@ define([
     HighCommercialComponent,
     SignedOutSaveForLater,
     CookieRefresh,
+    StickySocial,
     Headline,
-    MembershipMessage,
-    ViewabilitySocial
+    MembershipMessage
 ) {
 
     var TESTS = _.flattenDeep([
@@ -47,8 +47,8 @@ define([
         new HighCommercialComponent(),
         new SignedOutSaveForLater(),
         new CookieRefresh(),
+        new StickySocial(),
         new MembershipMessage(),
-        new ViewabilitySocial(),
         _.map(_.range(1, 10), function (n) {
             return new Headline(n);
         })

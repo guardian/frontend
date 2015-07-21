@@ -1015,11 +1015,11 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABViewabilitySocial = Switch(
+  val ABStickySocial = Switch(
     "A/B Tests",
-    "ab-viewability-social",
+    "ab-sticky-social",
     "Adds social share buttons to the sticky nav",
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2015, 7, 30),
     exposeClientSide = true
   )

@@ -215,9 +215,9 @@ category: Common
 
 .social--stickynav {
     position: fixed;
-    top: $gs-baseline / 6;
+    top: 0;
     margin-left: -7px;
-    z-index: 1000;
+    z-index: 9999;
     padding-right: 145px; // logo width
 }
 
