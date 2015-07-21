@@ -5,18 +5,18 @@ import play.api.{Application, GlobalSettings}
 
 trait DfpAgentLifecycle extends GlobalSettings {
 
-  def refresh(): Unit = DfpAgent.refresh()
+  def refreshDfpAgent(): Unit = DfpAgent.refresh()
 
   override def onStart(app: Application) {
     super.onStart(app)
 
     Jobs.deschedule("DfpDataRefreshJob")
     Jobs.scheduleEveryNMinutes("DfpDataRefreshJob", 1) {
-      refresh()
+      refreshDfpAgent()
     }
 
     AkkaAsync {
-      refresh()
+      refreshDfpAgent()
     }
   }
 
@@ -27,7 +27,7 @@ trait DfpAgentLifecycle extends GlobalSettings {
 }
 
 trait FaciaDfpAgentLifecycle extends DfpAgentLifecycle {
-  override def refresh(): Unit = {
+  override def refreshDfpAgent(): Unit = {
     DfpAgent.refresh()
     DfpAgent.refreshFaciaSpecificData()
   }
