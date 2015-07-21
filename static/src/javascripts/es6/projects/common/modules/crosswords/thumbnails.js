@@ -7,8 +7,8 @@ import fastdom from 'fastdom';
 import helpers from './helpers';
 import persistence from './persistence';
 
-const textXOffset = 15;
-const textYOffset = 16;
+const textXOffset = 10;
+const textYOffset = 21;
 
 function makeTextCells(savedState) {
     const columns = savedState.length;
