@@ -45,7 +45,7 @@ System.config({
     "fastdom": "github:wilsonpage/fastdom@0.8.6",
     "fence": "github:guardian/fence@0.2.11",
     "jasmine-sinon": "bower:jasmine-sinon@0.4.0",
-    "lodash": "npm:lodash@3.0.1",
+    "lodash": "npm:lodash@2.4.1",
     "omniture": "vendor/omniture",
     "picturefill": "common/utils/picturefill",
     "qwery": "npm:qwery@3.4.2",
@@ -198,7 +198,7 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.1",
       "source-map": "npm:source-map@0.1.31"
     },
-    "npm:lodash@3.0.1": {
+    "npm:lodash@2.4.1": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:os-browserify@0.1.2": {

@@ -112,7 +112,7 @@ define([
         }).then(
             function(data) {
 
-                var todayData = _.groupBy(_.flattenDeep(_.pluck(data.seriesData, 'data')),
+                var todayData = _.groupBy(_.flatten(_.pluck(data.seriesData, 'data')),
                     function(entry) { return entry.dateTime; }
                 );
 

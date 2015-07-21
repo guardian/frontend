@@ -15,7 +15,7 @@ function makeTextCells(savedState) {
     const columns = savedState.length;
     const rows = savedState[0].length;
 
-    return _.flattenDeep(_.map(_.range(columns), (column) => _.map(_.range(rows), (row) => {
+    return _.flatten(_.map(_.range(columns), (column) => _.map(_.range(rows), (row) => {
         const enteredText = savedState[column][row];
 
         if (enteredText) {
