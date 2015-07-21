@@ -14,6 +14,11 @@
     <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
 <![endif]-->
 
+@* temporarily open up CSS loading to half of our browsers *@
+<script>
+    window.useRAFforCSS = Math.random() > .5;
+</script>
+
 @* get the stylesheets downloading ASAP *@
 @fragments.stylesheetLinks(projectName)
 

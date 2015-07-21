@@ -13,7 +13,7 @@
                 return true;
             }
         }
-        @if(mvt.LoadCSSRafTest.isParticipating) {
+        if(window.useRAFforCSS) {
             requestAnimationFrame(function () {
                 setMedia(styleSheet);
             });
