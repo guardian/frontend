@@ -22,10 +22,10 @@ define([
     var body = qwery('.js-liveblog-body');
 
     function bootstrap() {
-        mediator.on('window:scroll', _.debounce(enhanceTweets, 200));
+        mediator.on('window:throttledScroll', enhanceTweets);
     }
 
-    function enhanceTweets() {
+    function enhanceTweets(scrollY) {
         if (detect.getBreakpoint() === 'mobile' || !config.switches.enhanceTweets) {
             return;
         }
@@ -38,7 +38,7 @@ define([
 
         tweetElements.forEach(function (element) {
             var $el = bonzo(element);
-            if (((bonzo(document.body).scrollTop() + (viewportHeight * 2.5)) > $el.offset().top) && (bonzo(document.body).scrollTop() < ($el.offset().top + $el.offset().height))) {
+            if (((scrollY + (viewportHeight * 2.5)) > $el.offset().top) && (scrollY < ($el.offset().top + $el.offset().height))) {
                 $(element).removeClass('js-tweet').addClass('twitter-tweet');
             }
         });

@@ -18,13 +18,12 @@ define([
     return function () {
         var $frontBottom = bonzo(qwery('.js-front-bottom')),
             containers = qwery('.js-container--lazy-load'),
-            lazyLoad = function () {
+            lazyLoad = function (scrollTop) {
                 if (containers.length === 0) {
-                    mediator.off('window:scroll', lazyLoad);
+                    mediator.off('window:throttledScroll', lazyLoad);
                 } else {
                     fastdom.read(function () {
-                        var scrollTop = bonzo(document.body).scrollTop(),
-                            scrollBottom = scrollTop + bonzo.viewport().height,
+                        var scrollBottom = scrollTop + bonzo.viewport().height,
                             bottomOffset = $frontBottom.offset().top,
                             $container;
 
@@ -39,7 +38,7 @@ define([
                 }
             };
 
-        mediator.on('window:scroll', lazyLoad);
-        lazyLoad();
+        mediator.on('window:throttledScroll', lazyLoad);
+        lazyLoad(0);
     };
 });

@@ -84,7 +84,7 @@ define([
 
         function unselectOnScroll() {
             bean.off(curBinding);
-            curBinding = mediator.once('window:scroll', function () { unselect(); });
+            curBinding = mediator.once('window:throttledScroll', function () { unselect(); });
         }
 
         bean.on(document.body, 'click', 'a', function (e) {
