@@ -69,23 +69,15 @@ define([
         }
 
         if (this.isMobile) {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionMobile();
-            }.bind(this), 10));
+            mediator.on('window:throttledScroll', this.updatePositionMobile.bind(this));
         } else if (this.isAdblockInUse) {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionAdblock();
-            }.bind(this), 10));
+            mediator.on('window:throttledScroll', this.updatePositionAdblock.bind(this));
         } else if (this.isAppleCampaign) {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionApple();
-            }.bind(this), 10));
+            mediator.on('window:throttledScroll', this.updatePositionApple.bind(this));
         } else if (this.isProfilePage) {
             this.updatePositionProfile();
         } else {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePosition();
-            }.bind(this), 10));
+            mediator.on('window:throttledScroll', this.updatePosition.bind(this));
         }
 
         // Make sure header is locked when meganav is open
@@ -137,9 +129,8 @@ define([
         }.bind(this));
     };
 
-    StickyHeader.prototype.setScrollDirection = function (scrollY) {
-        this.config.direction = (scrollY > this.config.prevScroll) ? 'down' : 'up';
-        this.config.prevScroll = scrollY;
+    StickyHeader.prototype.setScrollDirection = function (scrolledDown) {
+        this.config.direction = scrolledDown ? 'down' : 'up';
     };
 
     StickyHeader.prototype.shouldShowNavigation = function (scrollY) {
@@ -200,16 +191,15 @@ define([
         }.bind(this));
     };
 
-    StickyHeader.prototype.updatePosition = function () {
+    StickyHeader.prototype.updatePosition = function (scrollY, scrolledDown) {
         fastdom.read(function () {
-            var bannerHeight = 0,
-                scrollY = this.$els.window.scrollTop();
+            var bannerHeight = 0;
 
             if (!this.isSensitivePage) {
                 bannerHeight = this.$els.bannerDesktop.dim().height || 128;
             }
 
-            this.setScrollDirection(scrollY);
+            this.setScrollDirection(scrolledDown);
 
             // Header is slim and navigation is shown on the scroll up
             // Unless meganav is opened
@@ -346,12 +336,11 @@ define([
         }.bind(this));
     };
 
-    StickyHeader.prototype.updatePositionAdblock = function () {
+    StickyHeader.prototype.updatePositionAdblock = function (scrollY, scrolledDown) {
         fastdom.read(function () {
-            var headerHeight = this.$els.header.dim().height,
-                scrollY      = this.$els.window.scrollTop();
+            var headerHeight = this.$els.header.dim().height;
 
-            this.setScrollDirection(scrollY);
+            this.setScrollDirection(scrolledDown);
             // Header is slim and navigation is shown on the scroll up
             if (scrollY >= headerHeight) {
                 fastdom.write(function () {
@@ -396,12 +385,11 @@ define([
         }.bind(this));
     };
 
-    StickyHeader.prototype.updatePositionApple = function () {
+    StickyHeader.prototype.updatePositionApple = function (scrollY, scrolledDown) {
         fastdom.read(function () {
-            var bannerHeight = this.$els.bannerBelowNav.dim().height || 336,
-                scrollY      = this.$els.window.scrollTop();
+            var bannerHeight = this.$els.bannerBelowNav.dim().height || 336;
 
-            this.setScrollDirection(scrollY);
+            this.setScrollDirection(scrolledDown);
 
             // Header is slim and navigation is shown on the scroll up
             if (scrollY >= bannerHeight * this.config.showHeaderAppleDepth) {
@@ -475,14 +463,13 @@ define([
         }.bind(this));
     };
 
-    StickyHeader.prototype.updatePositionMobile = function () {
+    StickyHeader.prototype.updatePositionMobile = function (scrollY, scrolledDown) {
         fastdom.read(function () {
             var bannerHeight      = this.$els.bannerMobile.dim().height,
-                scrollY           = this.$els.window.scrollTop(),
                 smartBannerHeight = smartAppBanner.getMessageHeight();
 
             fastdom.write(function () {
-                this.setScrollDirection(scrollY);
+                this.setScrollDirection(scrolledDown);
 
                 if (smartAppBanner.isMessageShown()) {
                     if (scrollY < smartBannerHeight) {
