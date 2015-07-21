@@ -294,6 +294,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val RafCSSLoaderSwitch = Switch(
+    "Performance",
+    "raf-css-loader",
+    "It this switch is turned on, 50% of CSS load-polling will use RAF instead of setTimeout" ,
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 28),
+    exposeClientSide = false
+  )
+
   // Commercial
   val OphanViewIdSwitch = Switch("Commercial",
     "ophan-view-id",

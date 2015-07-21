@@ -13,10 +13,14 @@
                 return true;
             }
         }
-        if(window.useRAFforCSS) {
-            requestAnimationFrame(function () {
-                setMedia(styleSheet);
-            });
+        @if(RafCSSLoaderSwitch.isSwitchedOn) {
+            if(window.useRAFforCSS) {
+                requestAnimationFrame(function () {
+                    setMedia(styleSheet);
+                });
+            } else {
+                setTimeout(setMedia, null, styleSheet);
+            }
         } else {
             setTimeout(setMedia, null, styleSheet);
         }
