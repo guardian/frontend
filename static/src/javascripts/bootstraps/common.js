@@ -4,6 +4,7 @@ define([
     'bean',
     'bonzo',
     'fastclick',
+    'fastdom',
     'qwery',
     'common/utils/$',
     'common/utils/config',
@@ -55,6 +56,7 @@ define([
     bean,
     bonzo,
     FastClick,
+    fastdom,
     qwery,
     $,
     config,
@@ -241,6 +243,24 @@ define([
                 ['resize', 'scroll', 'orientationchange'].forEach(function (event) {
                     bean.on(window, event, mediator.emit.bind(mediator, 'window:' + event));
                 });
+                (function () {
+                    var running = false;
+                    var lastScrollY = window.pageYOffset;
+                    bean.on(window, 'scroll', function () {
+                        if (!running) {
+                            running = true;
+                            // fastdom is a handy replacement for simply throttling with
+                            // `requestAnimationFrame` (since we're calling `window.pageYOffset`)
+                            fastdom.read(function () {
+                                var scrollY = window.pageYOffset,
+                                    scrolledDown = lastScrollY < scrollY;
+                                lastScrollY = scrollY;
+                                mediator.emitEvent('window:throttledScroll', [scrollY, scrolledDown]);
+                                running = false;
+                            });
+                        }
+                    });
+                })();
             },
 
             checkIframe: function () {
