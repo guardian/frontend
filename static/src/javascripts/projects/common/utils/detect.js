@@ -326,7 +326,7 @@ define([
                 return b.name === breakpoint;
             });
             breakpoint = _(breakpoints)
-                .first(index + 1)
+                .take(index + 1)
                 .findLast(function (b) {
                     return !b.isTweakpoint;
                 })
@@ -347,10 +347,10 @@ define([
             ),
             currentBreakpoint = getBreakpoint(true);
         return _(breakpoints)
-            .rest(function (breakpoint) {
+            .dropWhile(function (breakpoint) {
                 return breakpoint.name !== c.min;
             })
-            .initial(function (breakpoint) {
+            .dropRightWhile(function (breakpoint) {
                 return breakpoint.name !== c.max;
             })
             .pluck('name')

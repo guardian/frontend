@@ -243,7 +243,8 @@ define([
                     });
 
                 }
-            }.bind(this));
+            }.bind(this))
+            .value();
 
     };
 
