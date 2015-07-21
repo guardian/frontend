@@ -1,10 +1,11 @@
 package sudoku
 
-import play.api.libs.json.{JsString, JsObject, Json}
-
+import play.api.libs.json._
 import scala.concurrent.Future
 
 object Sudoku {
+  implicit val jsonIntReads: Reads[Option[Int]] = JsPath.readNullable[Int]
+  implicit val jsonIntWrites: Writes[Option[Int]] = JsPath.writeNullable[Int]
   implicit val jsonFormat = Json.format[Sudoku]
 }
 
@@ -15,6 +16,7 @@ case class Sudoku(
 )
 
 object SudokuApi {
+
   def getData(id: String) = {
     /** Here's one I prepared earlier ...
       *

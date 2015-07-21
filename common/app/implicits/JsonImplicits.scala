@@ -18,7 +18,7 @@ object JsonImplicits {
       case JsNumber(n) => jsNumber(n)
       case JsString(s) => jsString(s)
       case JsArray(a) => jsArray(a)
-      case JsObject(o) => jsObject(o)
+      case JsObject(o) => jsObject(o.toSeq)
       case JsUndefined() => jsUndefined
     }
   }

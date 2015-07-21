@@ -12,6 +12,7 @@ define([
     'common/modules/experiments/tests/twitter-most-viewed',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
+    'common/modules/experiments/tests/signed-out-save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/headlines',
     'common/modules/experiments/tests/membership-message'
@@ -29,6 +30,7 @@ define([
     TwitterMostViewed,
     LiveblogNotifications,
     HighCommercialComponent,
+    SignedOutSaveForLater,
     CookieRefresh,
     Headline,
     MembershipMessage
@@ -41,6 +43,7 @@ define([
         new TwitterMostViewed(),
         new LiveblogNotifications(),
         new HighCommercialComponent(),
+        new SignedOutSaveForLater(),
         new CookieRefresh(),
         new MembershipMessage(),
         _.map(_.range(1, 10), function (n) {

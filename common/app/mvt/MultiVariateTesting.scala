@@ -31,15 +31,8 @@ object JspmControlTest extends TestDefinition(
   new LocalDate(2015, 7, 30)
 )
 
-object LoadCSSRafTest extends TestDefinition(
-  List(Variant8),
-  "load-css-with-raf",
-  "Tests weather using RAF in LoadCSS improves iPad crashes",
-  new LocalDate(2015, 8, 30)
-)
-
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, LoadCSSRafTest)
+  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++

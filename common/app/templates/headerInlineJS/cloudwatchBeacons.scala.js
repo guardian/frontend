@@ -6,11 +6,12 @@
     (function (window, navigator) {
         function logDevice(model, device) {
             var identifier = device + '-' + model;
-            @if(mvt.LoadCSSRafTest.isParticipating) {
-                var cssLoader = '-raf';
-            } else {
-                var cssLoader = '';
-            }
+            @*
+                remove the RAF metrics in
+                diagnostics/app/model/diagnostics/analytics/Metric.scala
+                when removing this too
+            *@
+            var cssLoader = window.useRAFforCSS ? '-raf' : '';
 
             // send immediate beacon
             (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + identifier + '-start' + cssLoader + '.gif';

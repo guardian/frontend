@@ -15,10 +15,6 @@ import com.gargoylesoftware.htmlunit.BrowserVersion
 
 trait TestSettings {
   def globalSettingsOverride: Option[GlobalSettings] = None
-  def testPlugins: Seq[String] = Nil
-  def disabledPlugins: Seq[String] = Seq(
-    "conf.SwitchBoardPlugin"
-  )
 
   val recorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
@@ -97,9 +93,7 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
   BrowserVersion.setDefault(BrowserVersion.CHROME)
 
   implicit override lazy val app = FakeApplication(
-    withoutPlugins = disabledPlugins,
       withGlobal = globalSettingsOverride,
-      additionalPlugins = testPlugins,
       additionalConfiguration = Map(
         ("application.secret", "this_is_not_a_real_secret_just_for_tests"),
         ("guardian.projectName", "test-project"),

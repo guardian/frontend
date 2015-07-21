@@ -1,37 +1,23 @@
 import testConfig from 'test-config';
-import _ from 'underscore';
-import Promise from 'Promise';
 import CollectionsEditor from 'models/collections/main';
 import MockConfig from 'mock/config';
 import MockSwitches from 'mock/switches';
 import MockCollections from 'mock/collection';
 import fixCollections from 'test/fixtures/some-collections';
 import MockSearch from 'mock/search';
+import MockLastModified from 'mock/lastmodified';
 import fixArticles from 'test/fixtures/articles';
 import * as layoutFromURL from 'utils/layout-from-url';
 import templateCollections from 'views/collections.scala.html!text';
 import verticalLayout from 'views/templates/vertical_layout.scala.html!text';
-import mediator from 'utils/mediator';
 import 'widgets/collection.html!text';
-import tick from 'test/utils/tick';
+import inject from 'test/utils/inject';
+import * as wait from 'test/utils/wait';
+import * as vars from 'modules/vars';
 
-export default function() {
-    var mockConfig, mockSwitches, mockCollections, mockSearch;
-
-    var loader = new Promise(function (resolve) {
-        document.body.innerHTML += '<div id="_test_container_collections">' +
-            verticalLayout +
-            templateCollections.replace(/\@[^\n]+\n/g, '') +
-            '</div>';
-
-        layoutFromURL.get = function () {
-            return [{
-                type: 'latest'
-            }, {
-                type: 'front',
-                config: 'uk'
-            }];
-        };
+export default class Loader {
+    constructor() {
+        var mockConfig, mockSwitches, mockCollections, mockSearch, mockLastModified;
 
         mockConfig = new MockConfig();
         mockConfig.set(testConfig.config);
@@ -42,39 +28,43 @@ export default function() {
         mockSearch = new MockSearch();
         mockSearch.set(fixArticles.articlesData);
         mockSearch.latest(fixArticles.allArticles);
+        mockLastModified = new MockLastModified();
 
-        // Mock the time
-        jasmine.clock().install();
+        this.mockConfig = mockConfig;
+        this.mockSwitches = mockSwitches;
+        this.mockCollections = mockCollections;
+        this.mockSearch = mockSearch;
+        this.mockLastModified = mockLastModified;
 
-        // After 2 because we are waiting for latest feed and front widget
-        var pageLoaded = _.after(2, _.once(resolve));
+        this.ko = inject(`
+            ${verticalLayout}
+            ${templateCollections.replace(/\@[^\n]+\n/g, '')}
+        `);
 
-        mediator.on('latest:loaded', pageLoaded);
-        mockSearch.on('complete', pageLoaded);
+        layoutFromURL.get = function () {
+            return [{
+                type: 'latest'
+            }, {
+                type: 'front',
+                config: 'uk'
+            }];
+        };
 
-        new CollectionsEditor().init({}, testConfig);
-
-        // The first 3 ticks are for the 3 initial configuration requests
-        tick(50).then(() => tick(50)).then(() => tick(50))
-        // These 2 other ticks are for the article search and lastmodified
-        .then(() => tick(50)).then(() => tick(50))
-        // The remaining ticks are for the latest feed to load
-        .then(() => tick(350)).then(() => tick(50));
-    });
-
-    function unload () {
-        jasmine.clock().uninstall();
-        var container = document.getElementById('_test_container_collections');
-        document.body.removeChild(container);
-        mockConfig.dispose();
-        mockSwitches.dispose();
-        mockCollections.dispose();
-        mockSearch.dispose();
+        vars.priority = testConfig.defaults.priority;
     }
 
-    return {
-        loader,
-        unload,
-        mockCollections
-    };
+    load() {
+        new CollectionsEditor().init({}, testConfig);
+        vars.update(testConfig);
+        return wait.event('latest:loaded');
+    }
+
+    dispose() {
+        this.ko.dispose();
+        this.mockConfig.dispose();
+        this.mockSwitches.dispose();
+        this.mockCollections.dispose();
+        this.mockSearch.dispose();
+        this.mockLastModified.dispose();
+    }
 }

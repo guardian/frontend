@@ -30,6 +30,7 @@ case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
       ("isDev", JsBoolean(Play.isDev)),
+      ("isProd", JsBoolean(Configuration.environment.isProd)),
       ("oasHost", JsString("oas.theguardian.com")),
       ("oasUrl", JsString(Configuration.oas.url)),
       ("oasSiteIdHost", JsString("www.theguardian-alpha.com")),
