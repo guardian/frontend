@@ -1,7 +1,7 @@
 import ab_headlines.ABTHeadlinesLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import common.{CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
-import conf.Filters
+import conf._
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
 import dfp.DfpDataCacheLifecycle
@@ -55,23 +55,24 @@ object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts wit
 }
 
 
-object Global extends WithFilters(
-  DevJsonExtensionFilter :: DevCacheWarningFilter :: Filters.common: _*
-)
-with DevParametersLifecycle
-with AdminLifecycle
-with DiagnosticsLifecycle
-with OnwardJourneyLifecycle
-with CommercialLifecycle
-with MostReadLifecycle
-with DfpDataCacheLifecycle
-with FaciaDfpAgentLifecycle
-with ConfigAgentLifecycle
-with SurgingContentAgentLifecycle
-with SectionsLookUpLifecycle
-with ABTHeadlinesLifecycle
-with MostPopularFacebookAutoRefreshLifecycle
-with CorsErrorHandler {
+object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilter :: Filters.common: _*)
+  with DevParametersLifecycle
+  with AdminLifecycle
+  with DiagnosticsLifecycle
+  with OnwardJourneyLifecycle
+  with CommercialLifecycle
+  with MostReadLifecycle
+  with DfpDataCacheLifecycle
+  with FaciaDfpAgentLifecycle
+  with ConfigAgentLifecycle
+  with SurgingContentAgentLifecycle
+  with SectionsLookUpLifecycle
+  with ABTHeadlinesLifecycle
+  with MostPopularFacebookAutoRefreshLifecycle
+  with SwitchboardLifecycle
+  with FootballLifecycle
+  with CricketLifecycle
+  with CorsErrorHandler {
   override val allowedParams: Seq[String] =
     CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")
 }

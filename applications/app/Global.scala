@@ -1,7 +1,7 @@
 import ab_headlines.ABTHeadlinesLifecycle
 import common.dfp.DfpAgentLifecycle
 import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
-import conf.Filters
+import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
 import metrics.FrontendMetric
@@ -18,6 +18,7 @@ object Global extends WithFilters(Filters.common: _*)
   with IndexListingsLifecycle
   with SectionsLookUpLifecycle
   with ABTHeadlinesLifecycle
+  with SwitchboardLifecycle
   with CorsErrorHandler {
   override lazy val applicationName = "frontend-applications"
 

@@ -1,4 +1,4 @@
-@(field: Field, valueAndLabel: List[(String, String)], args: (Symbol, Any)*)(implicit handler: views.html.helper.FieldConstructor)
+@(field: Field, valueAndLabel: List[(String, String)], args: (Symbol, Any)*)(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
 
 @*
  * This input helper should be used with the multiInputFieldConstructor

@@ -1,10 +1,8 @@
 define([
     'common/utils/ajax',
-    'raven',
     'Promise'
 ], function (
     ajax,
-    raven,
     Promise
 ) {
     return function wrappedAjax(params) {
@@ -14,12 +12,7 @@ define([
                 resolve(value);
             })
             .fail(function (request, text, err) {
-                var statusText = (err && err.statusText) || '';
-                var statusCode = (err && err.status) || '';
-                var errorText = 'Error retrieving data (' + text + ') (Status: ' + statusCode + ') (StatusText: ' + statusText + ')';
-
-                var error = err ? err : new Error(errorText);
-
+                var error = err ? err : new Error(text);
                 error.request = request;
                 reject(error);
             });

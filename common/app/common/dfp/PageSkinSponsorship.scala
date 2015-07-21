@@ -79,7 +79,7 @@ object PageSkinSponsorshipReportParser extends Logging {
     val result: JsResult[PageSkinSponsorshipReport] = Json.parse(jsonString).validate[PageSkinSponsorshipReport]
     result match {
       case s: JsSuccess[PageSkinSponsorshipReport] => Some(s.get)
-      case e: JsError => log.error("Errors: " + JsError.toFlatJson(e).toString()); None
+      case e: JsError => log.error("Errors: " + JsError.toJson(e).toString()); None
     }
   }
 }

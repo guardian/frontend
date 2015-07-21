@@ -1,7 +1,7 @@
 import com.gu.googleauth.{FilterExemption, UserIdentity}
 import common.ExecutionContexts
 import common.dfp.FaciaDfpAgentLifecycle
-import conf.Filters
+import conf._
 import controllers.AuthCookie
 import feed.OnwardJourneyLifecycle
 import play.Play
@@ -57,9 +57,13 @@ object PreviewAuthFilters {
 }
 
 object Global extends WithFilters(
-  new PreviewAuthFilters.AuthFilterWithExemptions(
+    new PreviewAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
-    FilterExemptions.exemptions):: NoCacheFilter :: Filters.common: _*) with CommercialLifecycle
-                                                        with OnwardJourneyLifecycle
-                                                        with ConfigAgentLifecycle
-                                                        with FaciaDfpAgentLifecycle
+    FilterExemptions.exemptions):: NoCacheFilter :: conf.Filters.common: _*)
+  with CommercialLifecycle
+  with OnwardJourneyLifecycle
+  with ConfigAgentLifecycle
+  with FaciaDfpAgentLifecycle
+  with SwitchboardLifecycle
+  with FootballLifecycle
+  with CricketLifecycle

@@ -1,6 +1,6 @@
 import common.dfp.DfpAgentLifecycle
 import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
-import conf.Filters
+import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import dev.DevParametersLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
@@ -12,7 +12,8 @@ object Global
   with DfpAgentLifecycle
   with CloudWatchApplicationMetrics
   with SurgingContentAgentLifecycle
-  with CorsErrorHandler {
+  with CorsErrorHandler
+  with SwitchboardLifecycle {
   override lazy val applicationName = "frontend-article"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(

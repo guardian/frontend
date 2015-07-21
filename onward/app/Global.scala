@@ -1,6 +1,6 @@
 import business.StocksDataLifecycle
 import common.{CloudWatchApplicationMetrics, ContentApiMetrics, WeatherMetrics}
-import conf.Filters
+import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import dev.DevParametersLifecycle
 import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
 import metrics.FrontendMetric
@@ -13,6 +13,7 @@ object Global extends WithFilters(Filters.common: _*)
   with MostReadLifecycle
   with StocksDataLifecycle
   with MostPopularFacebookAutoRefreshLifecycle
+  with SwitchboardLifecycle
   with CorsErrorHandler {
   override lazy val applicationName = "frontend-onward"
 
