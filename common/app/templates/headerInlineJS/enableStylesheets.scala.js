@@ -1,4 +1,5 @@
 @()(implicit request: RequestHeader)
+@import conf.Switches._
 
 // CSS is already loading, tell the browser to use it.
 // Borrows heavily from https://github.com/filamentgroup/loadCSS.
