@@ -27,7 +27,7 @@ define([
     ScrollableMpu.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
     ScrollableMpu.prototype.updateBgPosition = function () {
-        $('.creative--scrollable-mpu-image').css('background-position', '100%' + (window.pageYOffset - this.$scrollableMpu.offset().top) + 'px');
+        $('.creative--scrollable-mpu-image').css('background-position', '100%' + (scrollY - this.$scrollableMpu.offset().top) + 'px');
     };
 
     ScrollableMpu.prototype.create = function () {
@@ -46,7 +46,7 @@ define([
             // update bg position
             this.updateBgPosition();
 
-            mediator.on('window:scroll', this.updateBgPosition.bind(this));
+            mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
             // to be safe, also update on window resize
             mediator.on('window:resize', this.updateBgPosition.bind(this));
         }
