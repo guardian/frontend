@@ -346,7 +346,7 @@ define([
     };
 
     SaveForLater.prototype.signUserInToSaveArticle = function (id, shortUrl) {
-        var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&articleId=<%= articleId %>', {
+        var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&articleId=<%= articleId %>&INTCMP=SFL-SO', {
             idUrl: config.page.idUrl,
             returnUrl: encodeURIComponent(document.location.href),
             shortUrl: shortUrl,

@@ -22,8 +22,8 @@ define([
 
     return function () {
         this.id = 'SignedOutSaveForLater';
-        this.start = '2015-04-09';
-        this.expiry = '2015-09-31';
+        this.start = '2015-07-21';
+        this.expiry = '2015-08-31';
         this.author = 'Nathaniel Bennett';
         this.description = 'Allow signed out users to save articles via signin';
         this.audience = 0.1;
