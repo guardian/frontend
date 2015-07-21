@@ -24,19 +24,18 @@
 
 .crossword__cell-text {
     display: inline-block;
-    font-family: 'Rock Salt', cursive;
     opacity: 1;
     -webkit-font-smoothing: subpixel-antialiased;
     font-weight: bold;
-    fill: #3f4ac3; // biro blue
+    fill: colour(neutral-1); // r.i.p biro blue #3f4ac3
     transition: opacity .15s ease-in;
 
     @each $xword, $cells in $xword-grid-sizes {
         .crossword__container--#{$xword} & {
-            font-size: ceil(1.13px * $cells);
+            font-size: ceil(1.2px * $cells);
 
             @include mq(tablet) {
-                font-size: 1px * $cells;
+                font-size: 1.1px * $cells;
             }
         }
     }

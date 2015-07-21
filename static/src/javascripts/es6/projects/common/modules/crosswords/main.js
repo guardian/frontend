@@ -14,7 +14,6 @@ import Grid from './grid';
 import helpers from './helpers';
 import keycodes from './keycodes';
 import persistence from './persistence';
-import loadFont from './font';
 
 class Crossword extends React.Component {
 
@@ -41,8 +40,6 @@ class Crossword extends React.Component {
             'setReturnPosition',
             'goToReturnPosition'
         );
-
-        loadFont();
 
         this.state = {
             grid: helpers.buildGrid(

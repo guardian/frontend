@@ -37,8 +37,8 @@ export default class Cell extends React.Component {
         if (this.props.value !== undefined) {
             cellValue = (
                 <text
-                    x={left + (constants.cellSize * .25)}
-                    y={top + (constants.cellSize * .65)}
+                    x={left + (constants.cellSize * .315)}
+                    y={top + (constants.cellSize * .675)}
                     key='entry'
                     className={classNames({
                         'crossword__cell-text': true,

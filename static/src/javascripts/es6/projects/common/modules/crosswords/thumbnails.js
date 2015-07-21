@@ -6,7 +6,6 @@ import fastdom from 'fastdom';
 
 import helpers from './helpers';
 import persistence from './persistence';
-import loadFont from './font';
 
 const textXOffset = 15;
 const textYOffset = 16;
@@ -40,7 +39,6 @@ function init() {
     const thumbnails = qwery('.js-crossword-thumbnail');
 
     if (thumbnails.length) {
-        loadFont();
         _.forEach(thumbnails, (elem) => {
             const $elem = bonzo(elem);
             const savedState = persistence.loadGridState($elem.attr('data-crossword-id'));
