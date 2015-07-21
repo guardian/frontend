@@ -2,18 +2,18 @@ package controllers
 
 import com.gu.contentapi.client.model.Crossword
 import conf.LiveContentApi
-import common.ExecutionContexts
+import common.{Edition, ExecutionContexts}
 import conf.Static
 import model.Cached
-import play.api.mvc.{Result, Action, Controller}
+import play.api.mvc.{Result, Action, Controller, RequestHeader}
 import crosswords._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
 object CrosswordsController extends Controller with ExecutionContexts {
-  protected def withCrossword(crosswordType: String, id: Int)(f: Crossword => Result): Future[Result] = {
-    LiveContentApi.getResponse(LiveContentApi.item(s"$crosswordType/$id")).map { response =>
+  protected def withCrossword(crosswordType: String, id: Int)(f: Crossword => Result)(implicit request: RequestHeader): Future[Result] = {
+    LiveContentApi.getResponse(LiveContentApi.item(s"crosswords/$crosswordType/$id", Edition(request))).map { response =>
        val maybeCrossword = for {
         content <- response.content
         crossword <- content.crossword }
