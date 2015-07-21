@@ -1,5 +1,4 @@
 @()(implicit request: RequestHeader)
-@import conf.Switches._
 
 // CSS is already loading, tell the browser to use it.
 // Borrows heavily from https://github.com/filamentgroup/loadCSS.
@@ -14,14 +13,10 @@
                 return true;
             }
         }
-        @if(RafCSSLoaderSwitch.isSwitchedOn) {
-            if(window.useRAFforCSS) {
-                requestAnimationFrame(function () {
-                    setMedia(styleSheet);
-                });
-            } else {
-                setTimeout(setMedia, null, styleSheet);
-            }
+        if(window.useRAFforCSS) {
+            requestAnimationFrame(function () {
+                setMedia(styleSheet);
+            });
         } else {
             setTimeout(setMedia, null, styleSheet);
         }

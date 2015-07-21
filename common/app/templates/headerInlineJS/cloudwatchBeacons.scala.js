@@ -11,11 +11,7 @@
                 diagnostics/app/model/diagnostics/analytics/Metric.scala
                 when removing this too
             *@
-            @if(RafCSSLoaderSwitch.isSwitchedOn) {
-                var cssLoader = window.useRAFforCSS ? '-raf' : '';
-            } else {
-                var cssLoader = '';
-            }
+            var cssLoader = window.useRAFforCSS ? '-raf' : '';
 
             // send immediate beacon
             (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + identifier + '-start' + cssLoader + '.gif';
