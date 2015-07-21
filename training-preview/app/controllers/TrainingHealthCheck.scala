@@ -49,10 +49,10 @@ object TrainingHealthCheck extends AllGoodHealthcheckController(
     ()=>()
   }
 
-  override def healthcheck() = if (!isOk) {
-    init()
-    Action(InternalServerError("Training healthcheck has not passed using the current https client"))
-  } else {
+  override def healthcheck() = {
+    if (!isOk) {
+      init()
+    }
     super.healthcheck()
   }
 }
