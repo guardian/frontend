@@ -75,7 +75,7 @@ define([
                 });
             },
 
-            initFilmTest: function () {
+            initFilmTruncationTest: function () {
                 if (config.page.section === 'film' && ab.shouldRunTest('ArticleTruncation', 'variant') && !detect.isGuardianReferral()) {
                     truncation();
                 }
@@ -89,7 +89,7 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
-            modules.initFilmTest();
+            modules.initFilmTruncationTest();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();

@@ -17,10 +17,11 @@ define([
 
     return function () {
         if (storage.session.get(storageKey) !== config.page.pageId) {
-            var overlay = bonzo.create('<div class="content__truncation-overlay"></div>')[0],
-                button = bonzo.create('<button class="button button--large button--primary button--show-more" data-link-name="more">' +
-                    '<i class="i i-plus-white"></i> Continue reading...' +
-                '</button>')[0],
+            var button = bonzo.create(
+                    '<button class="button button--large button--primary button--show-more" data-link-name="more">' +
+                        '<i class="i i-plus-white"></i> Continue reading...' +
+                    '</button>'
+                )[0],
                 $articleBody = $('.js-article__body'),
                 truncatorClass = 'content__article-body--truncated';
 
@@ -35,7 +36,7 @@ define([
             fastdom.write(function () {
                 $articleBody
                     .addClass(truncatorClass)
-                    .append(overlay)
+                    .append('<div class="content__truncation-overlay"></div>')
                     .after(button);
             });
         }
