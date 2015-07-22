@@ -28,6 +28,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/navigation/navigation',
     'common/modules/navigation/sticky',
+    'common/modules/navigation/sticky-social-buttons',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/onward/history',
@@ -79,6 +80,7 @@ define([
     AutoSignin,
     navigation,
     sticky,
+    stickySocial,
     Profile,
     Search,
     history,
@@ -103,6 +105,14 @@ define([
     doNotUseAdblockTemplate,
     identity
 ) {
+    function isContent() {
+        return /Article|LiveBlog/.test(config.page.contentType);
+    }
+
+    function isAnyContent() {
+        return /Article|LiveBlog|Gallery|Video/.test(config.page.contentType);
+    }
+
     var modules = {
             initFastClick: function () {
                 // Unfortunately FastClick’s UMD exports are not consistent for
@@ -135,6 +145,10 @@ define([
             initialiseStickyHeader: function () {
                 if (config.switches.viewability && !(config.page.isProd && config.page.contentType === 'Interactive')) {
                     sticky.init();
+
+                    if (ab.shouldRunTest('StickySocial', 'variant') && isAnyContent()) {
+                        stickySocial();
+                    }
                 }
             },
 
@@ -202,7 +216,7 @@ define([
                             mediator.on('scrolldepth:data', ophan.record);
 
                             new ScrollDepth({
-                                isContent: /Article|LiveBlog/.test(config.page.contentType)
+                                isContent: isContent()
                             });
                         }
                     });
@@ -346,7 +360,7 @@ define([
             },
 
             initPinterest: function () {
-                if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
+                if (isAnyContent()) {
                     pinterest();
                 }
             },

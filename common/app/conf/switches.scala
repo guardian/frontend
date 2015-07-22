@@ -1024,6 +1024,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val ABStickySocial = Switch(
+    "A/B Tests",
+    "ab-sticky-social",
+    "Adds social share buttons to the sticky nav",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 30),
+    exposeClientSide = true
+  )
+
   val ABIdentityCookieRefresh = Switch(
     "A/B Tests",
     "ab-cookie-refresh",

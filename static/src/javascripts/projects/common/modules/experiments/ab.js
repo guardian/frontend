@@ -14,6 +14,7 @@ define([
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/signed-out-save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
+    'common/modules/experiments/tests/sticky-social',
     'common/modules/experiments/headlines',
     'common/modules/experiments/tests/membership-message'
 ], function (
@@ -32,6 +33,7 @@ define([
     HighCommercialComponent,
     SignedOutSaveForLater,
     CookieRefresh,
+    StickySocial,
     Headline,
     MembershipMessage
 ) {
@@ -45,6 +47,7 @@ define([
         new HighCommercialComponent(),
         new SignedOutSaveForLater(),
         new CookieRefresh(),
+        new StickySocial(),
         new MembershipMessage(),
         _.map(_.range(1, 10), function (n) {
             return new Headline(n);
