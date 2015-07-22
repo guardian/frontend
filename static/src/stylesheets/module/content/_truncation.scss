@@ -11,9 +11,9 @@
         display: block;
         position: absolute;
         bottom: 0;
-        width: 100%;
+        background: linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
         height: 40px;
-        background-color: #ffffff;
-        box-shadow: 0 0 120px 60px #ffffff;
+        width: 100%;
+        border-bottom: solid 10px #ffffff;
     }
 }

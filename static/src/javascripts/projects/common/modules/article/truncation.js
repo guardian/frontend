@@ -17,18 +17,17 @@ define([
 
     return function () {
         if (storage.session.get(storageKey) !== config.page.pageId) {
-            var overlay = bonzo.create(
-                '<div class="content__truncation-overlay">' +
-                    '<button class="button button--large button--primary button--show-more" data-link-name="more">' +
-                        '<i class="i i-plus-white"></i> Continue reading...' +
-                    '</button>' +
-                '</div>'),
+            var overlay = bonzo.create('<div class="content__truncation-overlay"></div>')[0],
+                button = bonzo.create('<button class="button button--large button--primary button--show-more" data-link-name="more">' +
+                    '<i class="i i-plus-white"></i> Continue reading...' +
+                '</button>')[0],
                 $articleBody = $('.js-article__body'),
                 truncatorClass = 'content__article-body--truncated';
 
-            bean.on($('button', overlay)[0], 'click', function () {
+            bean.on(button, 'click', function (event) {
                 fastdom.write(function () {
                     $articleBody.removeClass(truncatorClass);
+                    $(button).remove();
                 });
                 storage.session.set(storageKey, config.page.pageId);
             });
@@ -36,7 +35,8 @@ define([
             fastdom.write(function () {
                 $articleBody
                     .addClass(truncatorClass)
-                    .append(overlay);
+                    .append(overlay)
+                    .after(button);
             });
         }
     };
