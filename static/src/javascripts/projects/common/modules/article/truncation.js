@@ -24,7 +24,7 @@ define([
                 $articleBody = $('.js-article__body'),
                 truncatorClass = 'content__article-body--truncated';
 
-            bean.on(button, 'click', function (event) {
+            bean.on(button, 'click', function () {
                 fastdom.write(function () {
                     $articleBody.removeClass(truncatorClass);
                     $(button).remove();
