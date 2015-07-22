@@ -1,6 +1,7 @@
 package dfp
 
 import common.Edition
+import common.dfp.{GeoTarget, GuLineItem, InlineMerchandisingTagSet, PageSkinSponsorship}
 
 case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
 

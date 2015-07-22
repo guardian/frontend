@@ -1,4 +1,4 @@
-package dfp
+package common.dfp
 
 import common.Edition
 import conf.Configuration.commercial._

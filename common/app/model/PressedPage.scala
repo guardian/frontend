@@ -1,14 +1,12 @@
 package model
 
 import com.gu.facia.api.models._
+import common.dfp.DfpAgent
 import common.{Edition, NavItem}
 import conf.Configuration
 import contentapi.Paths
-import dfp.DfpAgent
 import model.facia.PressedCollection
-import org.joda.time.DateTime
 import play.api.libs.json.{JsString, JsValue, Json}
-import services.FaciaContentConvert
 
 import scala.language.postfixOps
 
@@ -89,6 +87,9 @@ case class PressedPage(id: String,
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
   override def hasAdInBelowTopNavSlot(edition: Edition): Boolean = {
     DfpAgent.hasAdInTopBelowNavSlot(adUnitSuffix, edition)
+  }
+  override def omitMPUsFromContainers(edition: Edition): Boolean = {
+    DfpAgent.omitMPUsFromContainers(id, edition)
   }
 
   def allItems = collections.flatMap(_.all).distinct
