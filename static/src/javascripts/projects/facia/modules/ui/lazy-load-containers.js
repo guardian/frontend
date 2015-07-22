@@ -39,6 +39,6 @@ define([
             };
 
         mediator.on('window:throttledScroll', lazyLoad);
-        lazyLoad(0);
+        lazyLoad(window.pageYOffset);
     };
 });
