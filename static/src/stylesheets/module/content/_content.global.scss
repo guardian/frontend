@@ -117,14 +117,15 @@
     @include mq(leftCol, wide) {
         padding-right: 6px;
     }
-    &:last-child {
-        padding-right: 0;
-    }
 
     .meta__extras--crossword & {
         @include mq(tablet) {
             float: right;
         }
+    }
+
+    &:last-child {
+        padding-right: 0;
     }
 }
 
@@ -174,6 +175,13 @@
             border-top: 1px dotted colour(neutral-5);
         }
     }
+
+    .meta__extras--crossword & {
+        @include mq(tablet) {
+            float: left;
+        }
+    }
+
 }
 
 .meta__number:not(.u-h) + .meta__number {

@@ -18,20 +18,18 @@
                         </div>
                         <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.crossword.name)</h1>
                         <div class="meta__extras meta__extras--crossword">
-
-
                             <div class="meta__social" data-component="share">
-                            @fragments.social(content, "top")
-                            </div>
-                            <div class="meta__numbers modern-visible">
-                                <div class="u-h meta__number js-sharecount">
-                                </div>
-                                <div class="u-h meta__number" data-discussion-id="@content.discussionId" data-commentcount-format="content" data-discussion-closed="@{!content.isCommentable}">
-                                </div>
+                                @fragments.social(content, "top")
                             </div>
                             @if(SaveForLaterSwitch.isSwitchedOn) {
                                 <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
                             }
+                            <div class="meta__numbers modern-visible">
+                                <div class="u-h meta__number" data-discussion-id="@content.discussionId" data-commentcount-format="content" data-discussion-closed="@{!content.isCommentable}">
+                                </div>
+                                <div class="u-h meta__number js-sharecount">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
