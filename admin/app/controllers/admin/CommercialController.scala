@@ -14,6 +14,11 @@ import play.api.mvc.Controller
 import tools._
 
 object CommercialController extends Controller with Logging with AuthLogging with ExecutionContexts {
+
+  def renderCommercialMenu() = AuthActions.AuthActionTest { request =>
+    NoCache(Ok(views.html.commercial.commercialMenu(environment.stage)))
+  }
+
   def renderCommercial = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.commercial.commercial(environment.stage)))
   }
