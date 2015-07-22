@@ -81,7 +81,7 @@ define([
                 if (config.page.section === 'film') {
                     testFilmContainers();
 
-                    if (ab.shouldRunTest('ArticleTruncation', 'variant') && !/theguardian\.com/.test(document.referrer)) {
+                    if (ab.shouldRunTest('ArticleTruncation', 'variant') && !detect.isGuardianReferral()) {
                         truncation();
                     }
                 }
