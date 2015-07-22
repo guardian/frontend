@@ -230,7 +230,6 @@
     }
     .i-right {
         @include mq($until: mobileLandscape) {
-            margin: -1px -13px;
             float: none;
         }
     }

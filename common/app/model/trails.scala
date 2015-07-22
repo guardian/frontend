@@ -1,7 +1,7 @@
 package model
 
 import common.Edition
-import dfp.DfpAgent
+import common.dfp.DfpAgent
 import implicits.Dates
 import org.scala_tools.time.Imports._
 import views.support.CardStyleForFrontend

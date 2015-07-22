@@ -1,4 +1,4 @@
-package dfp
+package common.dfp
 
 import com.gu.contentapi.client.model.{Tag => ApiTag}
 import com.gu.facia.api.models.CollectionConfig

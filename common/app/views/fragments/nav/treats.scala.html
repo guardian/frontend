@@ -1,10 +1,10 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit request: RequestHeader)
 
-@import common.LinkTo
 @import implicits.FaciaContentImplicits._
 @import crosswords.{CrosswordGrid, CrosswordPreview, TodaysCrosswordGrid}
 @import views.support.{Treat, CrosswordTreat, SnappableTreat, ClimateTreat, NormalTreat}
 @import model.SupportedUrl
+@import implicits.Requests.RichRequestHeader
 
 @if(containerDefinition.collectionEssentials.treats.nonEmpty) {
     <ul class="treats__container">
@@ -14,7 +14,9 @@
                 @Treat.fromUrl(link) match {
                     case CrosswordTreat => {
                         <a class="treats__crossword-link" data-link-name="treat | @{index + 1}" href="@link">
-                            @CrosswordPreview.fromCrosswordGrid(TodaysCrosswordGrid.get.getOrElse(CrosswordGrid.DefaultTreat))
+                            @if(!RichRequestHeader(request).isCrosswordFront) {
+                                @CrosswordPreview.fromCrosswordGrid(TodaysCrosswordGrid.get.getOrElse(CrosswordGrid.DefaultTreat))
+                            }
                             <span class="treats__treat">@treat.headline</span>
                         </a>
                     }
