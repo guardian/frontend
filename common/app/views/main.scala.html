@@ -55,7 +55,7 @@ http://developers.theguardian.com/join-the-team.html
             @fragments.commercial.topBannerBelowNav()
         }
 
-        @if(showAdverts) {
+        @if(showAdverts && !mvt.MobileTopBannerRemoveTest.isParticipating) {
             @fragments.commercial.topBannerMobile()
         }
 
