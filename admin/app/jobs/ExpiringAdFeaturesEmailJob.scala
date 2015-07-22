@@ -1,8 +1,8 @@
 package jobs
 
 import common.Logging
+import common.dfp.GuLineItem
 import conf.Configuration.commercial.{adOpsTeam, adTechTeam, dfpAdFeatureReportKey, gLabsTeam}
-import dfp.GuLineItem
 import services.EmailService
 import tools.Store
 

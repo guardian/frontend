@@ -1,4 +1,4 @@
-package dfp
+package common.dfp
 
 import common.{Edition, Logging}
 import play.api.libs.functional.syntax._

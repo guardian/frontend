@@ -1,15 +1,15 @@
-import com.gu.googleauth.{UserIdentity, FilterExemption, GoogleAuthFilters}
+import com.gu.googleauth.{FilterExemption, UserIdentity}
 import common.ExecutionContexts
-import conf.Filters
+import common.dfp.FaciaDfpAgentLifecycle
 import conf._
 import controllers.AuthCookie
-import dfp.DfpAgentLifecycle
 import feed.OnwardJourneyLifecycle
 import play.Play
 import play.api.mvc.Results._
 import play.api.mvc._
-import scala.concurrent.Future
 import services.ConfigAgentLifecycle
+
+import scala.concurrent.Future
 
 // OBVIOUSLY this is only for the preview server
 // NOT to be used elsewhere...
@@ -63,7 +63,7 @@ object Global extends WithFilters(
   with CommercialLifecycle
   with OnwardJourneyLifecycle
   with ConfigAgentLifecycle
-  with DfpAgentLifecycle
+  with FaciaDfpAgentLifecycle
   with SwitchboardLifecycle
   with FootballLifecycle
   with CricketLifecycle
