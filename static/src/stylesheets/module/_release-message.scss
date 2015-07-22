@@ -85,9 +85,13 @@
         display: table-cell;
         vertical-align: middle;
         max-width: none;
-        .site-message--adblock & {
+    }
+
+    .site-message--adblock & {
+        @include mq($from: tablet, $until: desktop) {
             //position based on viewport, padding, margin and close button
-            max-width: 475px;
+            //max-width: 462px;
+            max-width: gs-span(6);
         }
     }
 
