@@ -4,7 +4,6 @@ define([
     'bean',
     'bonzo',
     'fastclick',
-    'fastdom',
     'qwery',
     'common/utils/$',
     'common/utils/config',
@@ -56,7 +55,6 @@ define([
     bean,
     bonzo,
     FastClick,
-    fastdom,
     qwery,
     $,
     config,
@@ -249,9 +247,7 @@ define([
                     bean.on(window, 'scroll', function () {
                         if (!running) {
                             running = true;
-                            // fastdom is a handy replacement for simply throttling with
-                            // `requestAnimationFrame` (since we're calling `window.pageYOffset`)
-                            fastdom.read(function () {
+                            requestAnimationFrame(function () {
                                 var scrollY = window.pageYOffset,
                                     scrolledDown = lastScrollY < scrollY;
                                 lastScrollY = scrollY;
