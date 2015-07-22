@@ -18,7 +18,8 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
-    'common/modules/social/share-count'
+    'common/modules/social/share-count',
+    'common/modules/experiments/film-containers-logic'
 ], function (
     enhancer,
     fastdom,
@@ -37,7 +38,8 @@ define([
     Popular,
     Related,
     TonalComponent,
-    shareCount
+    shareCount,
+    testFilmContainers
 ) {
     function insertOrProximity(selector, insert) {
         if (window.location.hash) {
@@ -74,7 +76,11 @@ define([
                 contains(['video', 'interactive'], config.page.contentType.toLowerCase())) {
                 opts.excludeTags.push('guardian-professional/guardian-professional');
             }
-            new Related(opts).renderRelatedComponent();
+
+            // Remove this condition when the film containers test is complete
+            if (!testFilmContainers()) {
+                new Related(opts).renderRelatedComponent();
+            }
         });
     }
 
