@@ -4,7 +4,7 @@ define([
     'common/utils/template',
     'common/modules/ui/message',
     'common/modules/navigation/navigation',
-    'text!common/views/donot-use-adblock.html',
+    'text!common/views/membership-message.html',
     'common/views/svgs'
 ], function (
     detect,
@@ -12,22 +12,22 @@ define([
     template,
     Message,
     navigation,
-    doNotUseAdblockTemplate,
+    messageTemplate,
     svgs
 ) {
     function init() {
         var alreadyVisted = storage.local.get('alreadyVisited') || 0,
             adblockLink = 'https://membership.theguardian.com/about/supporter?INTCMP=adb-mv';
 
-        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && alreadyVisted) {
+        if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted) {
             new Message('adblock', {
                 pinOnHide: false,
                 siteMessageLinkName: 'adblock message variant',
                 siteMessageCloseBtn: 'hide'
             }).show(template(
-                    doNotUseAdblockTemplate,
+                    messageTemplate,
                     {
-                        adblockLink: adblockLink,
+                        supporterLink: adblockLink,
                         messageText: 'We notice you\'ve got an ad-blocker switched on. Perhaps you\'d like to support the Guardian another way?',
                         linkText: 'Become a supporter today',
                         arrowWhiteRight: svgs('arrowWhiteRight')
