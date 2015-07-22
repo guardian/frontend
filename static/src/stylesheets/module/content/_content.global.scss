@@ -120,6 +120,12 @@
     &:last-child {
         padding-right: 0;
     }
+
+    .meta__extras--crossword & {
+        @include mq(tablet) {
+            float: right;
+        }
+    }
 }
 
 .meta__save-for-later {

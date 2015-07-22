@@ -103,6 +103,7 @@ define([
                     this.prepareFaciaItemLinks(true);
 
                     if (this.isContent) {
+
                         this.renderSaveButtonsInArticle();
                     }
                 }.bind(this));

@@ -678,6 +678,14 @@
     border-top: 1px dotted colour(neutral-5);
     padding: 0;
     box-sizing: border-box;
+
+    .meta__extras--crossword & {
+        @include mq(tablet) {
+            float: left;
+        }
+    }
+
+
 }
 
 .meta__social--sticky {
@@ -689,12 +697,12 @@
 
     @include mq(leftCol, $until: wide) {
         margin-left: $gs-gutter * -8;
- 
+
         .social__item--gplus {
             display: none;
         }
     }
- 
+
     @include mq(wide) {
         margin-left: $gs-gutter * -12;
     }
@@ -829,6 +837,7 @@
     }
 }
 
+.content-footer .button--show-more,
 .related .button--show-more {
     display: none;
 }
