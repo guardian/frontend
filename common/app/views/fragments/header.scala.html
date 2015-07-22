@@ -39,6 +39,9 @@
                                data-test-id="sign-in-link"
                                aria-haspopup="true">
                                 @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                                @if(conf.Switches.SaveForLaterSwitch.isSwitchedOn) {
+                                    @fragments.inlineSvg("bookmark", "icon", List("save-for-later__icon"))
+                                }
                                 <span class="js-profile-info control__info"
                                       data-test-id="sign-in-name">sign in</span>
                             </a>
@@ -70,7 +73,7 @@
                 </div>
             </div>
 
-            <div class="popup popup--search is-off"><div class="js-search-placeholder"></div></div>
+            <div class="popup popup--search is-off js-popup--search"><div class="js-search-placeholder"></div></div>
 
             <div class="l-header-main">
                 @if(metaData.section == "observer" && metaData.isFront) {
@@ -100,7 +103,6 @@
                             <!--[if (lt IE 9)&(!IEMobile)]>
                                 <span class="inline-logo inline-guardian-logo-320"></span>
                             <![endif]-->
-                            <span class="logo__tagline hide-on-mobile">Winner of the Pulitzer prize 2014</span>
                         }
                     </a>
                 }

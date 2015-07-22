@@ -25,12 +25,7 @@ System.config({
     "npm:*": "jspm_packages/npm/*",
     "bower:*": "jspm_packages/bower/*",
     "facebook.js": "//connect.facebook.net/en_US/all",
-    "foresee.js": "javascripts/vendor/foresee/20141107/foresee-trigger"
-  },
-  "shim": {
-    "omniture": {
-      "exports": "s"
-    }
+    "foresee.js": "javascripts/vendor/foresee/20150703/foresee-trigger"
   }
 });
 
@@ -38,8 +33,8 @@ System.config({
   "map": {
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
     "Promise": "github:guardian/native-promise-only@0.7.6-e",
-    "babel": "npm:babel-core@5.6.5",
-    "babel-runtime": "npm:babel-runtime@5.6.5",
+    "babel": "npm:babel-core@5.7.4",
+    "babel-runtime": "npm:babel-runtime@5.7.0",
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@1.4.0",
     "classnames": "npm:classnames@1.2.0",
@@ -132,7 +127,7 @@ System.config({
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"
     },
-    "npm:babel-runtime@5.6.5": {
+    "npm:babel-runtime@5.7.0": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:bean@1.0.15": {

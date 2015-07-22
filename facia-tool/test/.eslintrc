@@ -1,6 +1,7 @@
 {
     "env": {
-        "jasmine": true
+        "jasmine": true,
+        "browser": true
     },
     "ecmaFeatures": {
         "arrowFunctions": true,
@@ -24,12 +25,14 @@
         "templateStrings": true,
         "unicodeCodePointEscapes": true,
         "globalReturn": true,
-        "jsx": true
+        "jsx": true,
+        "restParams": true
     },
     "rules": {
         // Overrides old
         "camelcase": 2,
         "no-shadow": 2,
-        "strict": 2
+        "strict": 2,
+        "no-unused-vars": 1
     }
 }

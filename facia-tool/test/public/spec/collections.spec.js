@@ -1,32 +1,44 @@
 import $ from 'jquery';
-import sandbox from 'test/utils/async-test';
+import CollectionsLoader from 'test/utils/collections-loader';
 import drag from 'test/utils/drag';
 import MockVisible from 'mock/stories-visible';
 import editAction from 'test/utils/edit-actions';
 import publishAction from 'test/utils/publish-actions';
 import * as dom from 'test/utils/dom-nodes';
+import * as wait from 'test/utils/wait';
+import ko from 'knockout';
+import listManager from 'modules/list-manager';
+import mediator from 'utils/mediator';
 
 describe('Collections', function () {
-    var test = sandbox('collections');
-
     beforeEach(function () {
+        this.testInstance = new CollectionsLoader();
         this.mockVisible = new MockVisible();
     });
     afterEach(function () {
+        this.testInstance.dispose();
+        ko.cleanNode(window.document.body);
         this.mockVisible.dispose();
+        mediator.removeAllListeners();
+        listManager.reset();
     });
 
-    test('displays the correct timing', function (done) {
-        expect(
-            $('.list-header__timings').text().replace(/\s+/g, ' ')
-        ).toMatch('1 day ago by Test');
-        done();
+    it('displays the correct timing', function (done) {
+        this.testInstance.load()
+        .then(() => {
+            expect(
+                $('.list-header__timings').text().replace(/\s+/g, ' ')
+            ).toMatch('1 day ago by Test');
+        })
+        .then(done)
+        .catch(done.fail);
     });
 
-    test('/edits', function (done) {
-        var mockCollection = test.context().mockCollections;
+    it('/edits', function (done) {
+        var mockCollection = this.testInstance.mockCollections;
 
-        insertInEmptyGroup()
+        this.testInstance.load()
+        .then(insertInEmptyGroup)
         .then(function (request) {
             expect(request.url).toEqual('/edits');
             expect(request.data.type).toEqual('Update');
@@ -34,7 +46,7 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('sport');
-            expect(request.data.update.item).toEqual('internal-code/content/1');
+            expect(request.data.update.item).toEqual('internal-code/page/1');
             expect(request.data.update.itemMeta.group).toEqual('3');
 
             return insertAfterAnArticle();
@@ -46,9 +58,9 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('latest');
-            expect(request.data.update.item).toEqual('internal-code/content/2');
+            expect(request.data.update.item).toEqual('internal-code/page/2');
             expect(!!request.data.update.itemMeta).toEqual(false);
-            expect(request.data.update.position).toEqual('internal-code/content/1');
+            expect(request.data.update.position).toEqual('internal-code/page/1');
 
             return insertOnTopOfTheList();
         })
@@ -59,9 +71,9 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('latest');
-            expect(request.data.update.item).toEqual('internal-code/content/3');
+            expect(request.data.update.item).toEqual('internal-code/page/3');
             expect(!!request.data.update.itemMeta).toEqual(false);
-            expect(request.data.update.position).toEqual('internal-code/content/1');
+            expect(request.data.update.position).toEqual('internal-code/page/1');
 
             return insertMetadataOnTopOfTheList();
         })
@@ -72,9 +84,9 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('latest');
-            expect(request.data.update.item).toEqual('internal-code/content/3');
+            expect(request.data.update.item).toEqual('internal-code/page/3');
             expect(request.data.update.itemMeta.isBreaking).toEqual(true);
-            expect(request.data.update.position).toEqual('internal-code/content/3');
+            expect(request.data.update.position).toEqual('internal-code/page/3');
 
             return moveFirstItemBelow();
         })
@@ -85,9 +97,9 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('latest');
-            expect(request.data.update.item).toEqual('internal-code/content/3');
+            expect(request.data.update.item).toEqual('internal-code/page/3');
             expect(request.data.update.itemMeta.isBreaking).toEqual(true);
-            expect(request.data.update.position).toEqual('internal-code/content/2');
+            expect(request.data.update.position).toEqual('internal-code/page/2');
 
             return moveToAnotherCollections();
         })
@@ -98,14 +110,14 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('sport');
-            expect(request.data.update.item).toEqual('internal-code/content/3');
+            expect(request.data.update.item).toEqual('internal-code/page/3');
             expect(request.data.update.itemMeta.isBreaking).toEqual(true);
             expect(request.data.update.itemMeta.group).toEqual('3');
-            expect(request.data.update.position).toEqual('internal-code/content/1');
+            expect(request.data.update.position).toEqual('internal-code/page/1');
             expect(request.data.remove.draft).toEqual(true);
             expect(request.data.remove.live).toEqual(false);
             expect(request.data.remove.id).toEqual('latest');
-            expect(request.data.remove.item).toEqual('internal-code/content/3');
+            expect(request.data.remove.item).toEqual('internal-code/page/3');
 
             return removeItemFromGroup();
         })
@@ -115,7 +127,7 @@ describe('Collections', function () {
             expect(request.data.remove.draft).toEqual(true);
             expect(request.data.remove.live).toEqual(false);
             expect(request.data.remove.id).toEqual('sport');
-            expect(request.data.remove.item).toEqual('internal-code/content/1');
+            expect(request.data.remove.item).toEqual('internal-code/page/1');
 
             return addSublinkInArticle();
         })
@@ -125,8 +137,8 @@ describe('Collections', function () {
             expect(request.data.update.draft).toEqual(true);
             expect(request.data.update.live).toEqual(false);
             expect(request.data.update.id).toEqual('latest');
-            expect(request.data.update.item).toEqual('internal-code/content/2');
-            expect(request.data.update.itemMeta.supporting[0].id).toEqual('internal-code/content/5');
+            expect(request.data.update.item).toEqual('internal-code/page/2');
+            expect(request.data.update.itemMeta.supporting[0].id).toEqual('internal-code/page/5');
 
             return publishLatestChanges();
         })
@@ -143,7 +155,7 @@ describe('Collections', function () {
                 return {
                     sport: {
                         draft: [{
-                            id: 'internal-code/content/1',
+                            id: 'internal-code/page/1',
                             meta: {
                                 group: 3
                             }
@@ -165,9 +177,9 @@ describe('Collections', function () {
                 return {
                     latest: {
                         draft: [{
-                            id: 'internal-code/content/1'
+                            id: 'internal-code/page/1'
                         }, {
-                            id: 'internal-code/content/2'
+                            id: 'internal-code/page/2'
                         }]
                     }
                 };
@@ -188,11 +200,11 @@ describe('Collections', function () {
                 return {
                     latest: {
                         draft: [{
-                            id: 'internal-code/content/3'
+                            id: 'internal-code/page/3'
                         }, {
-                            id: 'internal-code/content/1'
+                            id: 'internal-code/page/1'
                         }, {
-                            id: 'internal-code/content/2'
+                            id: 'internal-code/page/2'
                         }]
                     }
                 };
@@ -211,14 +223,14 @@ describe('Collections', function () {
                 return {
                     latest: {
                         draft: [{
-                            id: 'internal-code/content/3',
+                            id: 'internal-code/page/3',
                             meta: {
                                 isBreaking: true
                             }
                         }, {
-                            id: 'internal-code/content/1'
+                            id: 'internal-code/page/1'
                         }, {
-                            id: 'internal-code/content/2'
+                            id: 'internal-code/page/2'
                         }]
                     }
                 };
@@ -241,14 +253,14 @@ describe('Collections', function () {
                 return {
                     latest: {
                         draft: [{
-                            id: 'internal-code/content/1'
+                            id: 'internal-code/page/1'
                         }, {
-                            id: 'internal-code/content/3',
+                            id: 'internal-code/page/3',
                             meta: {
                                 isBreaking: true
                             }
                         }, {
-                            id: 'internal-code/content/2'
+                            id: 'internal-code/page/2'
                         }]
                     }
                 };
@@ -274,20 +286,20 @@ describe('Collections', function () {
                 return {
                     latest: {
                         draft: [{
-                            id: 'internal-code/content/1'
+                            id: 'internal-code/page/1'
                         }, {
-                            id: 'internal-code/content/2'
+                            id: 'internal-code/page/2'
                         }]
                     },
                     sport: {
                         draft: [{
-                            id: 'internal-code/content/3',
+                            id: 'internal-code/page/3',
                             meta: {
                                 isBreaking: true,
                                 group: 3
                             }
                         }, {
-                            id: 'internal-code/content/1',
+                            id: 'internal-code/page/1',
                             meta: {
                                 group: 3
                             }
@@ -307,7 +319,7 @@ describe('Collections', function () {
                 return {
                     sport: {
                         draft: [{
-                            id: 'internal-code/content/3',
+                            id: 'internal-code/page/3',
                             meta: {
                                 isBreaking: true,
                                 group: 3
@@ -334,12 +346,12 @@ describe('Collections', function () {
                 return {
                     latest: {
                         draft: [{
-                            id: 'internal-code/content/1'
+                            id: 'internal-code/page/1'
                         }, {
-                            id: 'internal-code/content/2',
+                            id: 'internal-code/page/2',
                             meta: {
                                 supporting: [{
-                                    id: 'internal-code/content/5'
+                                    id: 'internal-code/page/5'
                                 }]
                             }
                         }]
@@ -356,8 +368,8 @@ describe('Collections', function () {
         }
     });
 
-    test('stories visible', function (done) {
-        var mockCollection = test.context().mockCollections;
+    it('stories visible', function (done) {
+        var mockCollection = this.testInstance.mockCollections;
 
         this.mockVisible.set({
             'slow/slower/slowest': {
@@ -365,21 +377,25 @@ describe('Collections', function () {
                 mobile: 1
             }
         });
-        editAction(mockCollection, function () {
-            var lastGroup = dom.droppableGroup(2, 4);
-            drag.droppable(lastGroup).drop(lastGroup, new drag.Article(dom.latestArticle(5)));
+        this.testInstance.load()
+        .then(() => {
+            return editAction(mockCollection, function () {
+                var lastGroup = dom.droppableGroup(2, 4);
+                drag.droppable(lastGroup).drop(lastGroup, new drag.Article(dom.latestArticle(5)));
 
-            return {
-                sport: {
-                    draft: [{
-                        id: 'internal-code/content/5',
-                        meta: {
-                            group: 0
-                        }
-                    }]
-                }
-            };
+                return {
+                    sport: {
+                        draft: [{
+                            id: 'internal-code/page/5',
+                            meta: {
+                                group: 0
+                            }
+                        }]
+                    }
+                };
+            });
         })
+        .then(() => wait.event('visible:stories:fetch'))
         .then(function () {
             expect($('.desktop-indicator .indicator')[0].clientHeight > 100).toBe(true);
             done();

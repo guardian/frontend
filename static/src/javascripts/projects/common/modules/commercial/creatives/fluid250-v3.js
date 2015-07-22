@@ -39,7 +39,11 @@ define([
             case 'parallax':
                 fastdom.read(function () {
                     this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
-                    this.scrollAmountP = this.scrollAmount + '%';
+                    if (this.scrollAmount >= -80 && this.scrollAmount < 0) {
+                        this.scrollAmountP = this.scrollAmount + '%';
+                    } else {
+                        this.scrollAmountP = '20%';
+                    }
                 }.bind(this));
                 fastdom.write(function () {
                     $('.ad-scrolling-bg', $(this.$adSlot)).addClass('ad-scrolling-bg-parallax').css('background-position', '50%' + this.scrollAmountP);
@@ -93,6 +97,7 @@ define([
         if (this.params.trackingPixel) {
             this.$adSlot.before('<img src="' + this.params.trackingPixel + this.params.cacheBuster + '" class="creative__tracking-pixel" height="1px" width="1px"/>');
         }
+
         if (Fluid250.hasScrollEnabled) {
             // update bg position
             this.updateBgPosition();

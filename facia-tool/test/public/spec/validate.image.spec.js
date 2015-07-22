@@ -86,10 +86,7 @@ describe('Validate images', function () {
             expect(image.height).toBe(140);
             expect(image.src).toMatch(/square\.png/);
             done();
-        }, function (err) {
-            expect(NaN).toBe(err);
-            done();
-        });
+        }, done.fail);
     });
 
     it('works with if all criteria are met', function (done) {
@@ -107,9 +104,19 @@ describe('Validate images', function () {
             expect(image.height).toBe(140);
             expect(image.src).toMatch(/square\.png/);
             done();
-        }, function (err) {
-            expect(NaN).toBe(err);
+        }, done.fail);
+    });
+
+    it('strips unnecessary parameters', function (done) {
+        CONST.imageCdnDomain = window.location.host;
+
+        validate('http://' + CONST.imageCdnDomain + CONST.imgIXBasePath +
+            'base/test/public/fixtures/square.png?s=82a57a91afadd159bb4639d6b798f6c5&other=params')
+        .then(function (image) {
+            expect(image.width).toBe(140);
+            expect(image.height).toBe(140);
+            expect(image.src).toMatch(/square\.png$/);
             done();
-        });
+        }, done.fail);
     });
 });

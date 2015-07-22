@@ -24,7 +24,7 @@ object Css extends common.Logging {
       case JsSuccess(report, _) =>
         log.info("\n" + report.toString)
         DynamoDbReport.report(report)
-      case JsError(e) => throw new Exception(JsError.toFlatJson(e).toString())
+      case JsError(e) => throw new Exception(JsError.toJson(e).toString())
     }
   }
 }

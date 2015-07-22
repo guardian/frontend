@@ -2,13 +2,12 @@ import Injector from 'helpers/injector';
 
 describe('Audience Science Gateway', function () {
 
-    var getParaWithSpaceStub, $fixturesContainer,
-        injector = new Injector(),
+    var injector = new Injector(),
         audienceScienceGateway, config, storage;
 
     beforeEach(function (done) {
         injector.test([
-            'common/modules/commercial/third-party-tags/audience-science-gateway',
+            'common/modules/commercial/third-party-tags/audience-science-pql',
             'common/utils/config',
             'common/utils/storage'], function () {
 
@@ -17,19 +16,20 @@ describe('Audience Science Gateway', function () {
                 storage = arguments[2];
 
                 config.page = {
-                section: 'news'
-            };
+                    section: 'news'
+                };
                 config.switches = {
-                audienceScienceGateway: true
-            };
+                    audienceScienceGateway: true
+                };
 
                 done();
-            });
+            }
+        );
     });
 
     it('should be able to get segments', function () {
         audienceScienceGateway.init();
-        var stored      = {},
+        var stored = {},
             storedValue = {
                 Y1C40a: {
                     'default': {

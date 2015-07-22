@@ -41,6 +41,10 @@
         color: colour(media-default);
     }
 
+    .fc-save-for-later {
+        border-color: mix($c-headline, colour(media-background), 20%);
+    }
+
     .fc-item__kicker:after,
     .rich-link__kicker:after,
     .fc-sublink__kicker:after {

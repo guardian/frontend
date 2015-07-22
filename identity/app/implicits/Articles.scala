@@ -11,18 +11,19 @@ trait Articles {
 
     lazy val href = "%s/%s".format(conf.Configuration.site.host, savedArticle.id)
     lazy val savedAt = fmt.print(savedArticle.date)
+    implicit val dateOrdering: Ordering[DateTime] = Ordering[Long] on { _.getMillis }
   }
 
   implicit class RichSavedArticles(savedArticles: SavedArticles) {
     val fmt = ISODateTimeFormat.dateTimeNoMillis()
-    private val itemsPerPage = 4
 
-    val pages = savedArticles.articles.grouped(itemsPerPage).toList
+    private val itemsPerPage = 10
+    val newestFirst = savedArticles.articles.reverse
+
+    val pages = newestFirst.grouped(itemsPerPage).toList
 
     val numPages = pages.length
-
     val totalSaved = savedArticles.articles.length
-    def newestFirst = savedArticles.articles.reverse
     def contains(shortUrl: String) : Boolean = savedArticles.articles.exists( sa => sa.shortUrl == shortUrl)
 
     def addArticle(id: String, shortUrl: String, platform: String): SavedArticles = {

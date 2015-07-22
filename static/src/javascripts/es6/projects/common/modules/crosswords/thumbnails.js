@@ -1,5 +1,4 @@
 import _ from 'common/utils/_';
-import $ from 'common/utils/$';
 import bonzo from 'bonzo';
 import qwery from 'qwery';
 import ajax from 'common/utils/ajax';

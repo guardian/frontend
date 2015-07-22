@@ -26,7 +26,8 @@ object PA extends Collections {
     ("635", "Serie A"),
     ("650", "La Liga"),
     ("700", "World Cup 2014"),
-    ("721", "International friendlies")
+    ("721", "International friendlies"),
+    ("870", "Women's World Cup 2015")
   )
   def competitionName(season: Season): String = {
     competitionNames.get(season.id).getOrElse(season.name)
@@ -35,7 +36,8 @@ object PA extends Collections {
   val approvedCompetitions = List(
     "100", "500", "510", "300", "301", "101", "102",
     "103", "400", "120", "121", "122", "123", "320",
-    "321", "700", "721", "650", "620", "625", "635"
+    "321", "700", "721", "650", "620", "625", "635",
+    "870"
   )
 
   def filterCompetitions(competitions: List[Season]): List[Season] = {

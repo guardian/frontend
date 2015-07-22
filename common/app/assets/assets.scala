@@ -71,10 +71,10 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
     private val memoizedCss: ConcurrentMap[java.net.URL, String] = TrieMap()
 
-    def projectCss(projectOverride: Option[String] = None) = project(projectOverride.getOrElse(Configuration.environment.projectName))
-    def head(projectOverride: Option[String] = None) = css(projectOverride.getOrElse(Configuration.environment.projectName))
-    def headOldIE(projectOverride: Option[String] = None) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
-    def headIE9(projectOverride: Option[String] = None) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
+    def projectCss(projectOverride: Option[String]) = project(projectOverride.getOrElse(Configuration.environment.projectName))
+    def head(projectOverride: Option[String]) = css(projectOverride.getOrElse(Configuration.environment.projectName))
+    def headOldIE(projectOverride: Option[String]) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
+    def headIE9(projectOverride: Option[String]) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
 
 
     private def css(project: String): String = {
@@ -104,7 +104,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
     private def project(project: String): String = {
       project match {
         case "facia" => "stylesheets/facia.css"
-        case _ => "stylesheets/global.css"
+        case _ => "stylesheets/content.css"
       }
     }
 
@@ -129,19 +129,14 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
   }
 
   object js {
-
      private def inlineJs(path: String): String = IOUtils.toString(AssetFinder(path))
 
      val curl: String = RelativePathEscaper.escapeLeadingDotPaths(inlineJs("assets/curl-domReady.js"))
 
      val systemJsPolyfills: String = inlineJs("assets/system-polyfills.src.js")
-
      val systemJs: String = inlineJs("assets/system.src.js")
-
      val systemJsAppConfig: String = inlineJs("assets/systemjs-config.js")
-
      val systemJsNormalize: String = inlineJs("assets/systemjs-normalize.js")
-
      val systemJsBundleConfig: String = inlineJs("assets/systemjs-bundle-config.js")
 
      lazy val systemJsSetupFragment: String = templates.js.systemJsSetup().body

@@ -30,6 +30,7 @@ define([
     populateObservables = populateObservables.default;
     validateImageSrc = validateImageSrc.default;
     frontCount = frontCount.default;
+    persistence = persistence.default;
 
     function Front(opts) {
         var self = this;

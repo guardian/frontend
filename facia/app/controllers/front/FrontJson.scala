@@ -14,7 +14,7 @@ import scala.concurrent.Future
 trait FrontJsonLite extends ExecutionContexts{
   def get(json: JsValue): JsObject = {
     Json.obj(
-      "webTitle" -> (json \ "seoData" \ "webTitle"),
+      "webTitle" -> (json \ "seoData" \ "webTitle").getOrElse(JsString("")),
       "collections" -> getCollections(json)
     )
   }
@@ -25,8 +25,8 @@ trait FrontJsonLite extends ExecutionContexts{
 
   private def getCollection(json: JsValue): JsValue = {
     Json.obj(
-        "displayName" -> (json \ "displayName"),
-        "href" -> (json \ "href"),
+        "displayName" -> (json \ "displayName").getOrElse(JsString("")),
+        "href" -> (json \ "href").getOrElse(JsString("")),
         "content" -> getContent(json)
     )
   }
@@ -42,11 +42,11 @@ trait FrontJsonLite extends ExecutionContexts{
      }
     .map{ j =>
       Json.obj(
-        "headline" -> ((j \ "meta" \ "headline").asOpt[JsString].getOrElse(j \ "safeFields" \ "headline"): JsValue),
-        "trailText" -> ((j \ "meta" \ "trailText").asOpt[JsString].getOrElse(j \ "safeFields" \ "trailText"): JsValue),
-        "thumbnail" -> (j \ "safeFields" \ "thumbnail"),
-        "shortUrl" -> (j \ "safeFields" \ "shortUrl"),
-        "id" -> (j \ "id")
+        "headline" -> (j \ "meta" \ "headline").asOpt[JsString].orElse((j \ "safeFields" \ "headline").asOpt[JsString]),
+        "trailText" -> (j \ "meta" \ "trailText").asOpt[JsString].orElse((j \ "safeFields" \ "trailText").asOpt[JsString]),
+        "thumbnail" -> (j \ "safeFields" \ "thumbnail").asOpt[JsString],
+        "shortUrl" -> (j \ "safeFields" \ "shortUrl").asOpt[JsString],
+        "id" -> (j \ "id").asOpt[JsString]
       )
     }
   }
@@ -140,6 +140,7 @@ trait FrontJson extends ExecutionContexts with Logging {
   private def parseCollection(json: JsValue): Collection = {
     val displayName: Option[String] = (json \ "displayName").asOpt[String]
     val href: Option[String] = (json \ "href").asOpt[String]
+    val description: Option[String] = (json \ "description").asOpt[String]
     val curated =      (json \ "curated").asOpt[List[JsValue]].getOrElse(Nil)
       .flatMap(Content.fromPressedJson)
     val editorsPicks = (json \ "editorsPicks").asOpt[List[JsValue]].getOrElse(Nil)
@@ -182,6 +183,7 @@ trait FrontJson extends ExecutionContexts with Logging {
       apiQuery        = (json \ "apiQuery").asOpt[String],
       displayName     = (json \ "displayName").asOpt[String],
       href            = (json \ "href").asOpt[String],
+      description     = (json \ "description").asOpt[String],
       groups          = (json \ "groups").asOpt[List[String]].map(Groups.apply),
       collectionType  = (json \ "type").asOpt[String].getOrElse(CollectionConfig.DefaultCollectionType),
       showTags        = (json \ "showTags").asOpt[Boolean].exists(identity),

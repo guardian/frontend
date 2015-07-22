@@ -6,3 +6,4 @@
 **/javascripts/components/**/*.js
 **/javascripts/vendor/**/*.js
 **/javascripts/projects/common/utils/atob.js
+**/javascripts/projects/common/utils/picturefill.js

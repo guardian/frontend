@@ -1,10 +1,10 @@
 package model
 
-import common.{NavItem, Edition, ManifestData, Pagination}
+import common.dfp.DfpAgent
+import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
-import dfp.DfpAgent
-import model.meta.{PotentialAction, WebPage, LinkedData, Guardian}
-import play.api.libs.json.{JsBoolean, JsValue, JsString}
+import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
+import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
 /**
  * MetaData represents a page on the site, whether facia or content
@@ -46,6 +46,8 @@ trait MetaData extends Tags {
   def adUnitSuffix = section
 
   def hasPageSkin(edition: Edition) = false
+  def hasAdInBelowTopNavSlot(edition: Edition) = false
+  def omitMPUsFromContainers(edition: Edition) = false
   lazy val isInappropriateForSponsorship: Boolean = false
 
   lazy val membershipAccess: Option[String] = None

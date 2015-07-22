@@ -49,7 +49,7 @@ object Au extends Edition(
       NavItem(media),
       NavItem(environment, Seq(cities, globalDevelopment)),
       NavItem(science),
-      NavItem(crosswords),
+      NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)
     )
   }

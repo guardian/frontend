@@ -87,7 +87,7 @@ object CloudWatch extends Logging with ExecutionContexts {
     "app.js",
     "commercial.js",
     "facia.js",
-    "global.css",
+    "content.css",
     "head.commercial.css",
     "head.content.css",
     "head.facia.css",

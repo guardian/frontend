@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {
     "btoa": "1.1.2",
+    "eslint-plugin-react": "^2.7.0",
     "esprima": "1.2.2",
     "esprima-fb": "^15001.1.0-dev-harmony-fb",
     "glob": "4.0.6",
@@ -73,7 +74,7 @@
     },
     "configFile": "static/src/systemjs-config.js",
     "dependencies": {
-      "EventEmitter": "github:Wolfy87/EventEmitter@~4.2.6",
+      "EventEmitter": "github:Olical/EventEmitter@~4.2.6",
       "Promise": "github:guardian/native-promise-only@0.7.6-e",
       "bean": "npm:bean@^1.0.15",
       "bonzo": "npm:bonzo@^1.4.0",

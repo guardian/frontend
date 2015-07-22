@@ -13,11 +13,13 @@ define([
     'common/utils/mediator',
     'common/utils/url',
     'common/utils/user-timing',
+    'common/utils/sha1',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
-    'common/modules/analytics/beacon'
+    'common/modules/analytics/beacon',
+    'common/modules/identity/api'
 ], function (
     bean,
     bonzo,
@@ -32,11 +34,13 @@ define([
     mediator,
     urlUtils,
     userTiming,
+    sha1,
     StickyMpu,
     buildPageTargeting,
     geoMostPopular,
     ab,
-    beacon
+    beacon,
+    id
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -78,7 +82,7 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                if (ab.shouldRunTest('Viewability', 'variant') && $adSlot.hasClass('ad-slot--right')) {
+                if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
                         // Hardcoded for sticky nav test. It will need some on time checking if this will go to PROD
                         new StickyMpu($adSlot, {top: 58}).create();
@@ -178,9 +182,19 @@ define([
                 .zipObject()
                 .valueOf();
         },
+        setPublisherProvidedId = function () {
+            if (config.switches.dfpUserId) {
+                var user = id.getUserFromCookie();
+                if (user) {
+                    var hashedId = sha1.hash(user.id);
+                    googletag.pubads().setPublisherProvidedId(hashedId);
+                }
+            }
+        },
         displayAds = function () {
             googletag.pubads().enableSingleRequest();
             googletag.pubads().collapseEmptyDivs();
+            setPublisherProvidedId();
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
@@ -189,6 +203,7 @@ define([
         },
         displayLazyAds = function () {
             googletag.pubads().collapseEmptyDivs();
+            setPublisherProvidedId();
             googletag.enableServices();
             mediator.on('window:scroll', _.throttle(lazyLoad, 10));
             lazyLoad();
@@ -201,10 +216,6 @@ define([
         ),
         postDisplay = function () {
             mediator.on('window:resize', windowResize);
-        },
-
-        isLzAdsSwitchOn = function () {
-            return config.switches.lzAds;
         },
 
         /**
@@ -232,7 +243,8 @@ define([
             window.googletag.cmd.push(defineSlots);
 
             // We want to run lazy load if user is in the main test or if there is a switch on
-            if (ab.shouldRunTest('Viewability', 'variant') || isLzAdsSwitchOn()) {
+            // We do not want lazy loading on pageskins because it messes up the roadblock
+            if ((config.switches.viewability || config.switches.lzAds) && !(config.page.hasPageSkin)) {
                 window.googletag.cmd.push(displayLazyAds);
             } else {
                 window.googletag.cmd.push(displayAds);

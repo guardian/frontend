@@ -21,9 +21,11 @@ object AdminConfiguration {
     lazy val cricketExplorer = "http://developer.press.net/io-docs"
   }
 
-  lazy val configKey = configuration.getStringProperty("admin.config.file").getOrElse(throw new RuntimeException("Config file name is not setup"))
-  lazy val switchesKey = configuration.getStringProperty("switches.file").getOrElse(throw new RuntimeException("Switches file name is not setup"))
   lazy val topStoriesKey = configuration.getStringProperty("top-stories.config").getOrElse(throw new RuntimeException("Top Stories file name is not setup"))
+
+  object contentapi {
+    val previewHost: String = configuration.getStringProperty("content.api.preview.host").getOrElse(throw new RuntimeException("Preview host is not configured"))
+  }
 
   object fastly {
     lazy val key = configuration.getStringProperty("fastly.key").getOrElse(throw new RuntimeException("Fastly key not configured"))

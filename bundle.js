@@ -1,8 +1,7 @@
 /*eslint-env node*/
+'use strict';
 
 var path = require('path');
-
-var System = require('jspm/node_modules/systemjs');
 
 var jspm = require('jspm');
 var builder = new jspm.Builder();
@@ -19,9 +18,9 @@ var jspmBaseUrl = 'static/src';
 var prefixPath = 'static/hash';
 var bundlesUri = 'bundles';
 var bundleConfigs = [
-    ['core + system-script', 'core'],
+    ['core + system-script + domready', 'core'],
     ['es6/bootstraps/crosswords - core', 'crosswords'],
-    ['bootstraps/accessibility - core', 'accessibility'],
+    ['bootstraps/accessibility - core - bootstraps/app - bootstraps/facia', 'accessibility'],
     ['bootstraps/app - core', 'app'],
     ['bootstraps/commercial - core', 'commercial'],
     ['bootstraps/sudoku - core - bootstraps/app', 'sudoku'],
@@ -30,6 +29,11 @@ var bundleConfigs = [
     ['bootstraps/football - core - bootstraps/app', 'football'],
     ['bootstraps/preferences - core - bootstraps/app', 'preferences'],
     ['bootstraps/membership - core - bootstraps/app', 'membership'],
+    ['bootstraps/article - core - bootstraps/app', 'article'],
+    ['bootstraps/liveblog - core - bootstraps/app', 'liveblog'],
+    ['bootstraps/gallery - core - bootstraps/app', 'gallery'],
+    ['bootstraps/trail - core - bootstraps/app', 'trail'],
+    ['bootstraps/profile - core - bootstraps/app', 'profile'],
     ['bootstraps/ophan - core', 'ophan'],
     ['bootstraps/admin - core', 'admin'],
     // Odd issue when bundling admin with core: https://github.com/jspm/jspm-cli/issues/806
@@ -54,7 +58,8 @@ var createBundle = function (bundleConfig) {
     var outName = bundleConfig[1];
     return builder.build(moduleExpression, null, {
             minify: true,
-            sourceMaps: true })
+            sourceMaps: true,
+            sourceMapContents: true })
         // Attach URI
         .then(function (output) {
             var hash = getHash(output.source);
@@ -72,8 +77,9 @@ var writeBundlesToDisk = function (bundles) {
         var bundleMapFileName = bundleFileName + '.map';
 
         mkdirp.sync(path.dirname(bundleFileName));
+
         console.log('writing to %s', bundleFileName);
-        fs.writeFileSync(bundleFileName, bundle.source);
+        fs.writeFileSync(bundleFileName, bundle.source + '\n//# sourceMappingURL=' + path.basename(bundleFileName) + '.map');
         console.log('writing to %s', bundleMapFileName);
         fs.writeFileSync(bundleMapFileName, bundle.sourceMap);
     });

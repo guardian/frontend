@@ -2,7 +2,6 @@ import sinon from 'sinonjs';
 import asyncCallMerger from 'common/modules/asyncCallMerger';
 
 describe('AsyncCallMerger', function () {
-    var targetCallCount;
     var targetFn;
     var targetFnWithMerging;
 
