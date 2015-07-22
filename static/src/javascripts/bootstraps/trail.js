@@ -67,6 +67,11 @@ define([
                 excludeTags: []
             };
 
+            // Remove this when the film containers test is complete
+            if (testFilmContainers()) {
+                return;
+            }
+
             // exclude ad features from non-ad feature content
             if (config.page.sponsorshipType !== 'advertisement-features') {
                 opts.excludeTags.push('tone/advertisement-features');
@@ -76,11 +81,7 @@ define([
                 contains(['video', 'interactive'], config.page.contentType.toLowerCase())) {
                 opts.excludeTags.push('guardian-professional/guardian-professional');
             }
-
-            // Remove this condition when the film containers test is complete
-            if (!testFilmContainers()) {
-                new Related(opts).renderRelatedComponent();
-            }
+            new Related(opts).renderRelatedComponent();
         });
     }
 
