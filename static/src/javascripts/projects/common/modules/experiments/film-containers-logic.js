@@ -1,14 +1,18 @@
 define([
     'fastdom',
     'common/utils/$',
+    'common/utils/_',
     'common/utils/ajax',
     'common/utils/mediator',
+    'common/utils/config',
     'common/modules/experiments/ab'
 ], function (
     fastDom,
     $,
+    _,
     ajax,
     mediator,
+    config,
     ab
 ) {
     var tests = [
@@ -41,10 +45,18 @@ define([
     }
 
     return function () {
-        tests.forEach(function (test) {
-            if (ab.shouldRunTest('FilmContainers', test.variant)) {
+        var test;
+
+        if (config.page.section === 'film') {
+            test = _.find(tests, function (test) {
+                return ab.shouldRunTest('FilmContainers', test.variant);
+            });
+
+            if (test) {
                 loadContainer(test.containerId);
             }
-        });
+        }
+
+        return !!test;
     };
 });
