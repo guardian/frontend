@@ -75,7 +75,6 @@ function s_doPlugins(s) {
     newDiary=newDiary.join(",");
     dtmNow.setFullYear(dtmNow.getFullYear()+5);
     s.c_w("s_daily_habit",newDiary,dtmNow);
-    if (s.getVisitStart()==1) s.events = s.apl(s.events, 'event89='+vC, ',');
     s.eVar64=vC;
 
     /* Campaign stacking */
@@ -314,14 +313,6 @@ s.apl=new Function("l","v","d","u",""
     +"var s=this,m=0;if(!l)l='';if(u){var i,n,a=s.split(l,d);for(i=0;i<a."
     +"length;i++){n=a[i];m=m||(u==1?(n==v):(n.toLowerCase()==v.toLowerCas"
     +"e()));}}if(!m)l=l?l+d+v:v;return l");
-
-/*
- * Plugin: getVisitStart v2.1 - return 1 on start of visit, else 0
- */
-s.getVisitStart=new Function("c",""
-    +"var s=this,n,t=new Date;if(typeof s.callType=='function'&&s.callTyp"
-    +"e()=='+')return 0;if(!c)c='s_visit';t.setTime(t.getTime()+18e5);n=s"
-    +".c_r(c)?0:1;if(!s.c_w(c,1,t))s.c_w(c,1,0);if(!s.c_r(c))n=0;return n");
 
 /*
  * Utility Function: split v1.5 (JS 1.0 compatible)
