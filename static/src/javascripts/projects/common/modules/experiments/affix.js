@@ -2,18 +2,20 @@ define([
     'bean',
     'bonzo',
     'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'fastdom'
 ], function (
     bean,
     bonzo,
     _,
-    mediator
+    mediator,
+    fastdom
 ) {
 
     var Affix = function (options) {
 
         bean.on(window, 'click', this.checkPositionWithEventLoop.bind(this));
-        mediator.addListener('window:scroll', _.debounce(this.checkPositionWithEventLoop.bind(this), 10));
+        mediator.addListener('window:throttledScroll', _.debounce(this.checkPositionWithEventLoop.bind(this), 10));
         mediator.addListener('window:resize', _.debounce(this.calculateContainerPositioning.bind(this), 200));
 
         this.affixed  = null;
@@ -37,18 +39,18 @@ define([
         this.$container.css('top', containerTop + 'px');
     };
 
-    Affix.prototype.checkPositionWithEventLoop = function () {
-        requestAnimationFrame(this.checkPosition.bind(this));
+    Affix.prototype.checkPositionWithEventLoop = function (scrollY) {
+        fastdom.read(this.checkPosition.bind(this, scrollY));
     };
 
     Affix.prototype.getPixels = function (top) {
         return top !== 'auto' ? parseInt(top, 10) : 0;
     };
 
-    Affix.prototype.checkPosition = function () {
+    Affix.prototype.checkPosition = function (scrollY) {
         var oldContainerStyling, topStyle,
-            topCheck      = this.$window.scrollTop() >= this.$markerTop.offset().top,
-            bottomCheck   = this.$window.scrollTop() + this.$element.dim().height < this.$markerBottom.offset().top,
+            topCheck      = scrollY >= this.$markerTop.offset().top,
+            bottomCheck   = scrollY + this.$element.dim().height < this.$markerBottom.offset().top,
             viewportCheck = this.$element.dim().height < bonzo.viewport().height,
             // This is true when the element is positioned below the top threshold and above the bottom threshold.
             affix         = bottomCheck && topCheck && viewportCheck;

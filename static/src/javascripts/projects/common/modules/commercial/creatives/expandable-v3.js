@@ -48,23 +48,23 @@ define([
      */
     ExpandableV3.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
-    ExpandableV3.prototype.updateBgPosition = function () {
+    ExpandableV3.prototype.updateBgPosition = function (scrollY) {
         var adHeight, inViewB, inViewT, topCusp, bottomCusp, bottomScroll, topScroll;
         fastdom.read(function () {
             adHeight = (this.isClosed) ?
                 this.closedHeight : this.openedHeight;
-            inViewB = ((window.pageYOffset + bonzo.viewport().height) > this.$adSlot.offset().top);
-            inViewT = ((window.pageYOffset - (adHeight * 2)) < this.$adSlot.offset().top + 20);
+            inViewB = ((scrollY + bonzo.viewport().height) > this.$adSlot.offset().top);
+            inViewT = ((scrollY - (adHeight * 2)) < this.$adSlot.offset().top + 20);
             topCusp = (inViewT &&
-                ((window.pageYOffset + (bonzo.viewport().height * 0.4) - adHeight) > this.$adSlot.offset().top)) ?
+                ((scrollY + (bonzo.viewport().height * 0.4) - adHeight) > this.$adSlot.offset().top)) ?
                 'true' : 'false';
             bottomCusp = (inViewB &&
-                (window.pageYOffset + (bonzo.viewport().height * 0.5)) < this.$adSlot.offset().top) ?
+                (scrollY + (bonzo.viewport().height * 0.5)) < this.$adSlot.offset().top) ?
                 'true' : 'false';
             bottomScroll = (bottomCusp === 'true') ?
-                50 - ((window.pageYOffset + (bonzo.viewport().height * 0.5) - this.$adSlot.offset().top) * -0.2) : 50;
+                50 - ((scrollY + (bonzo.viewport().height * 0.5) - this.$adSlot.offset().top) * -0.2) : 50;
             topScroll = (topCusp === 'true') ?
-                ((window.pageYOffset + (bonzo.viewport().height * 0.4) - this.$adSlot.offset().top - adHeight) * 0.2) : 0;
+                ((scrollY + (bonzo.viewport().height * 0.4) - this.$adSlot.offset().top - adHeight) * 0.2) : 0;
         }.bind(this));
 
         switch (this.params.backgroundImagePType) {
@@ -79,7 +79,7 @@ define([
                 break;
             case 'fixed':
                 fastdom.read(function () {
-                    this.scrollAmount = (window.pageYOffset - this.$adSlot.offset().top) + 'px';
+                    this.scrollAmount = (scrollY - this.$adSlot.offset().top) + 'px';
                 }.bind(this));
                 fastdom.write(function () {
                     $('.ad-exp--expand-scrolling-bg', $(this.$adSlot)).css('background-position', '50%' + this.scrollAmount);
@@ -92,7 +92,7 @@ define([
                 break;
             case 'parallax':
                 fastdom.read(function () {
-                    this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
+                    this.scrollAmount = Math.ceil((scrollY - this.$adSlot.offset().top) * 0.3 * -1) + 20;
                     this.scrollAmountP = this.scrollAmount + '%';
                 }.bind(this));
                 fastdom.write(function () {
@@ -103,9 +103,9 @@ define([
         }
     };
 
-    ExpandableV3.prototype.listener = function () {
+    ExpandableV3.prototype.listener = function (scrollY) {
         fastdom.read(function () {
-            if (!this.initialExpandCounter && (window.pageYOffset + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
+            if (!this.initialExpandCounter && (scrollY + bonzo.viewport().height) > (this.$adSlot.offset().top + this.openedHeight)) {
                 fastdom.write(function () {
                     if (!storage.local.get('gu.commercial.expandable.' + this.params.ecid)) {
                         // expires in 1 week
@@ -172,7 +172,7 @@ define([
             }.bind(this));
         }.bind(this));
 
-        mediator.on('window:scroll', this.listener.bind(this));
+        mediator.on('window:throttledScroll', this.listener.bind(this));
 
         bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
             fastdom.write(function () {
@@ -188,7 +188,7 @@ define([
             // update bg position
             this.updateBgPosition();
 
-            mediator.on('window:scroll', this.updateBgPosition.bind(this));
+            mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
             // to be safe, also update on window resize
             mediator.on('window:resize', this.updateBgPosition.bind(this));
         }

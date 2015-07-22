@@ -23,18 +23,18 @@ define([
     };
 
     Sticky.prototype.init = function () {
-        mediator.on('window:scroll', _.throttle(this.updatePosition.bind(this), 10));
+        mediator.on('window:throttledScroll', this.updatePosition.bind(this));
         // kick off an initial position update
         this.updatePosition();
     };
 
-    Sticky.prototype.updatePosition = function () {
+    Sticky.prototype.updatePosition = function (scrollY) {
         var fixedTop, css, stickyHeaderHeight;
 
         stickyHeaderHeight = config.switches.viewability ? $('.navigation').dim().height : 0;
 
         // have we scrolled past the element
-        if (window.scrollY >= this.$parent.offset().top - this.opts.top - stickyHeaderHeight) {
+        if (scrollY >= this.$parent.offset().top - this.opts.top - stickyHeaderHeight) {
             // make sure the element stays within its parent
             fixedTop = Math.min(this.opts.top, this.$parent[0].getBoundingClientRect().bottom - this.$element.dim().height) + stickyHeaderHeight;
 

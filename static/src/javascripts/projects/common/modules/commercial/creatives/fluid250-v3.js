@@ -32,13 +32,13 @@ define([
 
     Fluid250.isIE9OrLess = detect.getUserAgent.browser === 'MSIE' && (detect.getUserAgent.version === '9' || detect.getUserAgent.version === '8');
 
-    Fluid250.prototype.updateBgPosition = function () {
+    Fluid250.prototype.updateBgPosition = function (scrollY) {
         switch (this.params.backgroundImagePType) {
             case 'fixed':
                 break;
             case 'parallax':
                 fastdom.read(function () {
-                    this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
+                    this.scrollAmount = Math.ceil((scrollY - this.$adSlot.offset().top) * 0.3 * -1) + 20;
                     if (this.scrollAmount >= -80 && this.scrollAmount < 0) {
                         this.scrollAmountP = this.scrollAmount + '%';
                     } else {
@@ -101,7 +101,7 @@ define([
         if (Fluid250.hasScrollEnabled) {
             // update bg position
             this.updateBgPosition();
-            mediator.on('window:scroll', this.updateBgPosition.bind(this));
+            mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
             // to be safe, also update on window resize
             mediator.on('window:resize', this.updateBgPosition.bind(this));
         }

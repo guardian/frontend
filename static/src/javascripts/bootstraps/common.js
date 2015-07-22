@@ -243,6 +243,23 @@ define([
                 });
             },
 
+            throttledScrollEvent: function () {
+                var running = false;
+                var lastScrollY = window.pageYOffset;
+                window.addEventListener('scroll', function () {
+                    if (!running) {
+                        running = true;
+                        requestAnimationFrame(function () {
+                            var scrollY = window.pageYOffset,
+                                scrolledDown = lastScrollY < scrollY;
+                            lastScrollY = scrollY;
+                            mediator.emitEvent('window:throttledScroll', [scrollY, scrolledDown]);
+                            running = false;
+                        });
+                    }
+                });
+            },
+
             checkIframe: function () {
                 if (window.self !== window.top) {
                     $('html').addClass('iframed');
@@ -375,6 +392,7 @@ define([
                 ['c-test-cookie', modules.testCookie],
                 ['c-ad-cookie', modules.adTestCookie],
                 ['c-event-listeners', modules.windowEventListeners],
+                ['c-throttled-scroll-event', modules.throttledScrollEvent],
                 ['c-breaking-news', modules.loadBreakingNews],
                 ['c-block-link', fauxBlockLink],
                 ['c-iframe', modules.checkIframe],

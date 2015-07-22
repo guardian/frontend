@@ -1,5 +1,4 @@
 define([
-    'bean',
     'bonzo',
     'fastdom',
     'qwery',
@@ -7,7 +6,6 @@ define([
     'common/utils/detect',
     'common/utils/mediator'
 ], function (
-    bean,
     bonzo,
     fastdom,
     qwery,
@@ -34,7 +32,7 @@ define([
 
         distanceBeforeLoad = distanceBeforeLoad || detect.getViewport().height;
 
-        lazyLoad = _.throttle(function () {
+        lazyLoad = function (scrollY) {
             fastdom.read(function () {
                 var scrollTop,
                     scrollBottom,
@@ -42,9 +40,9 @@ define([
                     $nextImages = [];
 
                 if ($images.length === 0) {
-                    bean.off(window, 'scroll', lazyLoad);
+                    mediator.off('window:throttledScroll', lazyLoad);
                 } else {
-                    scrollTop = bonzo(document.body).scrollTop();
+                    scrollTop = scrollY;
                     scrollBottom = scrollTop + detect.getViewport().height;
                     threshold = scrollBottom + distanceBeforeLoad;
 
@@ -60,10 +58,10 @@ define([
                     $images = $nextImages;
                 }
             });
-        }, 100);
+        };
 
-        bean.on(window, 'scroll', lazyLoad);
-        lazyLoad();
+        mediator.on('window:throttledScroll', lazyLoad);
+        lazyLoad(window.pageYOffset);
     }
 
     function init() {

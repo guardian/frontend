@@ -27,8 +27,8 @@ define([
         this.openedHeight = Math.min(bonzo.viewport().height * 2 / 3, 600);
     };
 
-    Expandable.prototype.listener = function () {
-        if ((window.pageYOffset + bonzo.viewport().height) > (this.$ad.offset().top + this.openedHeight)) {
+    Expandable.prototype.listener = function (scrollY) {
+        if ((scrollY + bonzo.viewport().height) > (this.$ad.offset().top + this.openedHeight)) {
             // expires in 1 week
             var week = 1000 * 60 * 60 * 24 * 7;
 
@@ -57,7 +57,7 @@ define([
         $expandable.appendTo(this.$adSlot);
 
         if (!storage.local.get('gu.commercial.expandable.an-expandable')) {
-            mediator.on('window:scroll', this.listener.bind(this));
+            mediator.on('window:throttledScroll', this.listener.bind(this));
         }
 
         bean.on(this.$button[0], 'click', function () {

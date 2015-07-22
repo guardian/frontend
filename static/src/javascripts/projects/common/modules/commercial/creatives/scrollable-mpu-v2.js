@@ -28,7 +28,7 @@ define([
      */
     ScrollableMpu.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
 
-    ScrollableMpu.prototype.updateBgPosition = function () {
+    ScrollableMpu.prototype.updateBgPosition = function (scrollY) {
 
         switch (this.params.backgroundImagePType) {
             case 'fixed matching fluid250':
@@ -38,7 +38,7 @@ define([
                 break;
             case 'parallax':
                 fastdom.read(function () {
-                    this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
+                    this.scrollAmount = Math.ceil((scrollY - this.$adSlot.offset().top) * 0.3 * -1) + 20;
                     this.scrollAmountP = this.scrollAmount + '%';
                 }.bind(this));
                 fastdom.write(function () {
@@ -47,7 +47,7 @@ define([
                 break;
             default:
                 fastdom.write(function () {
-                    $('.creative--scrollable-mpu-image', $(this.$adSlot)).css('background-position', '100%' + (window.pageYOffset - this.$scrollableMpu.offset().top) + 'px');
+                    $('.creative--scrollable-mpu-image', $(this.$adSlot)).css('background-position', '100%' + (scrollY - this.$scrollableMpu.offset().top) + 'px');
                 }.bind(this));
         }
     };
@@ -68,7 +68,7 @@ define([
             // update bg position
             this.updateBgPosition();
 
-            mediator.on('window:scroll', this.updateBgPosition.bind(this));
+            mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
             // to be safe, also update on window resize
             mediator.on('window:resize', this.updateBgPosition.bind(this));
         }

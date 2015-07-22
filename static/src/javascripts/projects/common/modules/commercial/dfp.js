@@ -205,7 +205,7 @@ define([
             googletag.pubads().collapseEmptyDivs();
             setPublisherProvidedId();
             googletag.enableServices();
-            mediator.on('window:scroll', _.throttle(lazyLoad, 10));
+            mediator.on('window:throttledScroll', lazyLoad);
             lazyLoad();
         },
         windowResize = _.debounce(
@@ -254,13 +254,12 @@ define([
 
             return dfp;
         },
-        lazyLoad = function () {
+        lazyLoad = function (scrollTop) {
             if (slots.length === 0) {
-                mediator.off('window:scroll');
+                mediator.off('window:throttledScroll');
             } else {
                 fastdom.read(function () {
-                    var scrollTop    = bonzo(document.body).scrollTop(),
-                        scrollBottom = scrollTop + bonzo.viewport().height,
+                    var scrollBottom = scrollTop + bonzo.viewport().height,
                         depth = 0.5;
 
                     _(slots).keys().forEach(function (slot) {
