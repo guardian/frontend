@@ -1,6 +1,7 @@
 import Promise from 'Promise';
 import _ from 'underscore';
 import {request} from 'modules/authed-ajax';
+import mediator from 'utils/mediator';
 
 export default function(type, groups) {
     var stories = [];
@@ -23,6 +24,10 @@ export default function(type, groups) {
                 stories: stories
             }),
             dataType: 'json'
+        })
+        .then(result => {
+            setTimeout(() => mediator.emit('visible:stories:fetch', result), 10);
+            return result;
         })
         .catch(function (error) {
             throw new Error(error.statusText);

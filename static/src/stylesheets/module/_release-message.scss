@@ -13,7 +13,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    z-index: 9999999;
+    z-index: $zindex-popover;
 }
 
 .site-message__inner {

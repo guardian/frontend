@@ -1,13 +1,36 @@
 package conf
 
+import java.util.concurrent.TimeoutException
 import common._
 import conf.Configuration.environment
 import org.joda.time.{DateTime, Days, Interval, LocalDate}
-import play.api.{Application, Plugin}
+import play.api.Play
+import scala.concurrent.{Future, Promise}
+import scala.concurrent.duration._
 
 sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
+
+trait Initializable[T] extends ExecutionContexts with Logging {
+
+  private val initialized = Promise[T]()
+
+  protected val initializationTimeout: FiniteDuration = 2.minutes
+
+  if (Play.maybeApplication.isDefined) {
+    AkkaAsync.after(initializationTimeout) {
+      initialized.tryFailure {
+        new TimeoutException(s"Initialization timed out after $initializationTimeout")
+      }
+    }
+  }
+
+  def initialized(t: T): Unit = initialized.trySuccess(t)
+
+  def onInitialized: Future[T] = initialized.future
+}
+
 
 trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
   val group: String
@@ -260,6 +283,24 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val SaveForLaterSwitch = Switch(
+    "Performance",
+    "save-for-later",
+    "It this switch is turned on, user are able to save articles. Turn off if this causes overload on then identity api" ,
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val RafCSSLoaderSwitch = Switch(
+    "Performance",
+    "raf-css-loader",
+    "It this switch is turned on, 50% of CSS load-polling will use RAF instead of setTimeout" ,
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 28),
+    exposeClientSide = false
   )
 
   // Commercial
@@ -541,6 +582,15 @@ object Switches {
     safeState = Off,
     sellByDate = topAboveNavSwitchesSellByDate,
     exposeClientSide = false
+  )
+
+  val DfpUserIdSwitch = Switch(
+    "Commercial",
+    "dfp-user-id",
+    "Include user ID in ad call.",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 5),
+    exposeClientSide = true
   )
 
 
@@ -947,6 +997,15 @@ object Switches {
 
   // A/B Tests
 
+  val ABFilmContainers = Switch(
+    "A/B Tests",
+    "ab-film-containers",
+    "Film Containers on Film content",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 30),
+    exposeClientSide = true
+  )
+
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
     "ab-liveblog-notifications",
@@ -965,22 +1024,13 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABSaveForLaterSwitch = Switch(
-    "A/B Tests",
-    "ab-save-for-later",
-    "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val ABIdentityCookieRefresh = Switch(
     "A/B Tests",
     "ab-cookie-refresh",
     "It this switch is turned on, users cookies will be refreshed. Turn off if the identity API barfs" ,
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val ABHeadlineSwitches = (1 to 10) map { n =>
@@ -1000,6 +1050,15 @@ object Switches {
     "Switch for the Membership message A/B variants test",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 20),
+    exposeClientSide = true
+  )
+
+  val ABSignedOutSaveForLaterSwitch = Switch(
+    "A/B Tests",
+    "ab-signed-out-save-for-later",
+    "Switch off the signed out save for later test",
+    safeState = Off,
+    sellByDate = never,
     exposeClientSide = true
   )
 
@@ -1197,40 +1256,5 @@ object Switches {
   def grouped: List[(String, Seq[SwitchTrait])] = {
     val sortedSwitches = all.groupBy(_.group).map { case (key, value) => (key, value.sortBy(_.name)) }
     sortedSwitches.toList.sortBy(_._1)
-  }
-}
-
-class SwitchBoardPlugin(app: Application) extends SwitchBoardAgent(Configuration)
-class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts with Logging {
-
-  def refresh() {
-    log.info("Refreshing switches")
-    services.S3.get(config.switches.key) foreach { response =>
-
-      val nextState = Properties(response)
-
-      for (switch <- Switches.all) {
-        nextState.get(switch.name) foreach {
-          case "on" => switch.switchOn()
-          case "off" => switch.switchOff()
-          case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
-        }
-      }
-    }
-  }
-
-  override def onStart() {
-    Jobs.deschedule("SwitchBoardRefreshJob")
-    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?") {
-      refresh()
-    }
-
-    AkkaAsync {
-      refresh()
-    }
-  }
-
-  override def onStop() {
-    Jobs.deschedule("SwitchBoardRefreshJob")
   }
 }

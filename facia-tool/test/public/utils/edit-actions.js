@@ -1,6 +1,5 @@
 import Promise from 'Promise';
 import mockjax from 'test/utils/mockjax';
-import tick from 'test/utils/tick';
 
 export default function(mockCollection, action) {
     return new Promise(function (resolve) {
@@ -14,9 +13,9 @@ export default function(mockCollection, action) {
             },
             onAfterComplete: function () {
                 mockjax.clear(interceptor);
-                tick(100).then(() => tick(100)).then(() => {
+                setTimeout(() => {
                     resolve(lastRequest);
-                });
+                }, 20);
             }
         });
         desiredAnswer = action();
@@ -26,8 +25,5 @@ export default function(mockCollection, action) {
             desiredAnswer[name].lastUpdated = (new Date()).toISOString();
         }
         mockCollection.set(desiredAnswer);
-
-        // This action triggers a network request, advance time
-        tick(100).then(() => tick(100));
     });
 }

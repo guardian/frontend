@@ -73,7 +73,10 @@ require([
             },
             shouldSendCallback: function(data) {
                 @if(play.Play.isDev()) {
-                    console.error(data);
+                    // Some environments don't support or don't always expose the console object
+                    if (window.console && window.console.warn) {
+                        console.warn('Raven captured error.', data);
+                    }
                 }
 
                 return @conf.Switches.DiagnosticsLogging.isSwitchedOn &&
@@ -81,7 +84,10 @@ require([
                     @{!play.Play.isDev()}; @* don't actually notify sentry in dev mode*@
             }
         }
-    ).install();
+    );
+
+    // Uncaught exceptions
+    raven.install();
 
     require([
         'common/utils/config',

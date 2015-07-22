@@ -39,6 +39,9 @@
                                data-test-id="sign-in-link"
                                aria-haspopup="true">
                                 @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"))
+                                @if(conf.Switches.SaveForLaterSwitch.isSwitchedOn) {
+                                    @fragments.inlineSvg("bookmark", "icon", List("save-for-later__icon"))
+                                }
                                 <span class="js-profile-info control__info"
                                       data-test-id="sign-in-name">sign in</span>
                             </a>

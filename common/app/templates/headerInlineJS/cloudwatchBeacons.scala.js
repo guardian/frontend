@@ -6,13 +6,19 @@
     (function (window, navigator) {
         function logDevice(model, device) {
             var identifier = device + '-' + model;
+            @*
+                remove the RAF metrics in
+                diagnostics/app/model/diagnostics/analytics/Metric.scala
+                when removing this too
+            *@
+            var cssLoader = window.useRAFforCSS ? '-raf' : '';
 
             // send immediate beacon
-            (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + identifier + '-start.gif';
+            (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + identifier + '-start' + cssLoader + '.gif';
 
             // send second after 5 seconds, if we're still around
             window.setTimeout(function () {
-                (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + identifier + '-after-5.gif';
+                (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + identifier + '-after-5' + cssLoader + '.gif';
             }, 5000);
         }
 

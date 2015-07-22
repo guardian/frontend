@@ -7,8 +7,7 @@ define([
     'common/utils/user-timing',
     'bootstraps/common',
     'bootstraps/media',
-    'bootstraps/sport',
-    'common/modules/experiments/tests/save-for-later'
+    'bootstraps/sport'
 ], function (
     qwery,
     raven,
@@ -18,8 +17,7 @@ define([
     userTiming,
     common,
     media,
-    sport,
-    SaveForLaterTest
+    sport
 ) {
 
     var bootstrapContext = function (featureName, bootstrap) {
@@ -32,13 +30,6 @@ define([
 
         routes = function () {
             userTiming.mark('App Begin');
-
-            if (config.switches.abSaveForLater
-                && config.page.section === 'identity'
-                && config.page.pageId === '/saved-for-later') {
-                new SaveForLaterTest().variants[0].test();
-            }
-
             bootstrapContext('common', common);
 
             // Front

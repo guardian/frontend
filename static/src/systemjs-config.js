@@ -26,11 +26,6 @@ System.config({
     "bower:*": "jspm_packages/bower/*",
     "facebook.js": "//connect.facebook.net/en_US/all",
     "foresee.js": "javascripts/vendor/foresee/20150703/foresee-trigger"
-  },
-  "shim": {
-    "omniture": {
-      "exports": "s"
-    }
   }
 });
 
@@ -38,7 +33,7 @@ System.config({
   "map": {
     "EventEmitter": "github:Wolfy87/EventEmitter@4.2.11",
     "Promise": "github:guardian/native-promise-only@0.7.6-e",
-    "babel": "npm:babel-core@5.7.2",
+    "babel": "npm:babel-core@5.7.4",
     "babel-runtime": "npm:babel-runtime@5.7.0",
     "bean": "npm:bean@1.0.15",
     "bonzo": "npm:bonzo@1.4.0",
