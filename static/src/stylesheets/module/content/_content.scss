@@ -695,12 +695,10 @@
 
     @include mq(leftCol, $until: wide) {
         margin-left: $gs-gutter * -8;
-
         .social__item--gplus {
             display: none;
         }
     }
-
     @include mq(wide) {
         margin-left: $gs-gutter * -12;
     }
