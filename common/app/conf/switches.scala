@@ -664,7 +664,7 @@ object Switches {
     "Feature",
     "ab-article-truncation",
     "Article truncation",
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2015, 7, 30),
     exposeClientSide = true
   )

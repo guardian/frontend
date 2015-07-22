@@ -77,15 +77,13 @@ define([
                 });
             },
 
-            initTruncation: function () {
-                if (ab.shouldRunTest('ArticleTruncation', 'variant') && detect.socialContext()) {
-                    truncation();
-                }
-            },
-
             initFilmTest: function () {
                 if (config.page.section === 'film') {
                     testFilmContainers();
+
+                    if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
+                        truncation();
+                    }
                 }
             }
         },
@@ -97,7 +95,6 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
-            modules.initTruncation();
             modules.initFilmTest();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
