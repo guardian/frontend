@@ -89,8 +89,6 @@
 
     .site-message--adblock & {
         @include mq($from: tablet, $until: desktop) {
-            //position based on viewport, padding, margin and close button
-            //max-width: 462px;
             max-width: gs-span(6);
         }
     }
