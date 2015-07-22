@@ -114,7 +114,7 @@ define([
             };
 
         if (!track.seen) {
-            mediator.off('window:throttledScroll', _.debounce(scroll, 200));
+            mediator.on('window:throttledScroll', _.debounce(scroll, 200));
         }
     };
 
