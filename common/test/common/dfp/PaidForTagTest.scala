@@ -1,4 +1,4 @@
-package dfp
+package common.dfp
 
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json._

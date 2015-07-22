@@ -1,9 +1,9 @@
 import ab_headlines.ABTHeadlinesLifecycle
-import common.{ContentApiMetrics, CloudWatchApplicationMetrics}
-import conf.{SwitchboardLifecycle, CorsErrorHandler, Filters}
+import common.dfp.DfpAgentLifecycle
+import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
+import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
-import dfp.DfpAgentLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters

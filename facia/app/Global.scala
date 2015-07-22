@@ -1,19 +1,19 @@
 import ab_headlines.ABTHeadlinesLifecycle
 import common._
-import conf.{SwitchboardLifecycle, Filters}
+import common.dfp.FaciaDfpAgentLifecycle
+import conf.{Filters, SwitchboardLifecycle}
 import crosswords.TodaysCrosswordGridLifecycle
 import dev.DevParametersLifecycle
-import dfp.DfpAgentLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
-import services.{IndexListingsLifecycle, ConfigAgentLifecycle}
+import services.{ConfigAgentLifecycle, IndexListingsLifecycle}
 
 object Global extends WithFilters(Filters.common: _*)
   with ConfigAgentLifecycle
   with DevParametersLifecycle
   with CloudWatchApplicationMetrics
-  with DfpAgentLifecycle
+  with FaciaDfpAgentLifecycle
   with SurgingContentAgentLifecycle
   with IndexListingsLifecycle
   with ABTHeadlinesLifecycle

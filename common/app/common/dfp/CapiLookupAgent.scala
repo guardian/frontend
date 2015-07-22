@@ -1,8 +1,8 @@
-package dfp
+package common.dfp
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.LiveContentApi
-import LiveContentApi.getResponse
+import conf.LiveContentApi.getResponse
 
 import scala.concurrent.Future
 
@@ -38,11 +38,11 @@ object CapiLookupAgent extends ExecutionContexts with Logging {
       }
     }
 
-    val lookupResults = paidForTags.groupBy(_.tagType).map { case (tagType, tags) =>
+    val lookupResults = paidForTags.groupBy(_.tagType).flatMap { case (tagType, tags) =>
       tags map { tag =>
         lookup(tagType, tag.targetedName)
       }
-    }.flatten
+    }
 
     Future.sequence(lookupResults) map (_.toMap)
   }
