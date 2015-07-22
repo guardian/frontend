@@ -109,12 +109,12 @@ define([
             scroll = function (scrollY) {
                 if (!track.seen && !timer && track.areCommentsVisible(scrollY)) {
                     track.scrolledToComments();
-                    mediator.off('window:throttledScroll', scroll);
+                    mediator.off('window:throttledScroll', _.debounce(scroll, 200));
                 }
             };
 
         if (!track.seen) {
-            mediator.on('window:throttledScroll', scroll);
+            mediator.off('window:throttledScroll', _.debounce(scroll, 200));
         }
     };
 

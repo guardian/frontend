@@ -24,6 +24,7 @@ define([
     blockTemplate
 ) {
     var animateDelayMs = 2000,
+        animateAfterScrollDelayMs = 500,
         refreshSecs = 30,
         refreshDecay = 1,
         refreshMaxTimes = 5,
@@ -106,13 +107,13 @@ define([
             var animateOnScroll;
 
             if (!didAnimate) {
-                animateOnScroll = function () {
+                animateOnScroll = _.debounce(function () {
                     maybeAnimateBlocks(el, true).then(function (didAnimate) {
                         if (didAnimate) {
                             mediator.off('window:throttledScroll', animateOnScroll);
                         }
                     });
-                };
+                }, animateAfterScrollDelayMs);
 
                 mediator.on('window:throttledScroll', animateOnScroll);
             }

@@ -15,7 +15,7 @@ define([
     var Affix = function (options) {
 
         bean.on(window, 'click', this.checkPositionWithEventLoop.bind(this));
-        mediator.addListener('window:throttledScroll', this.checkPositionWithEventLoop.bind(this));
+        mediator.addListener('window:throttledScroll', _.debounce(this.checkPositionWithEventLoop.bind(this), 10));
         mediator.addListener('window:resize', _.debounce(this.calculateContainerPositioning.bind(this), 200));
 
         this.affixed  = null;

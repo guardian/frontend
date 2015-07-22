@@ -22,7 +22,7 @@ define([
     var body = qwery('.js-liveblog-body');
 
     function bootstrap() {
-        mediator.on('window:throttledScroll', enhanceTweets);
+        mediator.on('window:throttledScroll', _.debounce(enhanceTweets, 200));
     }
 
     function enhanceTweets(scrollY) {
