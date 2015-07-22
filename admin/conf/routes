@@ -52,6 +52,7 @@ GET         /analytics/omniture/segments/:rsid                                  
 GET         /analytics/omniture/*reportName                                                         controllers.admin.OmnitureReportController.getReport(reportName)
 
 # Commercial
+GET         /admin/commercial                                                                       controllers.admin.CommercialController.renderCommercialMenu()
 GET         /analytics/commercial                                                                   controllers.admin.CommercialController.renderCommercial()
 GET         /analytics/commercial/specialadunits                                                    controllers.admin.CommercialController.renderSpecialAdUnits()
 GET         /analytics/commercial/sponsorships                                                      controllers.admin.CommercialController.renderPaidForTags()
