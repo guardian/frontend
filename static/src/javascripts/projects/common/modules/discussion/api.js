@@ -108,7 +108,7 @@ define([
      */
     Api.reportComment = function (id, report) {
         var endpoint = '/comment/' + id + '/reportAbuse';
-        return Api.send(endpoint, 'post', report);
+        return Api.send(endpoint, 'post', report, true);
     };
 
     /**
