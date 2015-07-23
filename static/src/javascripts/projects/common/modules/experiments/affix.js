@@ -14,9 +14,11 @@ define([
 
     var Affix = function (options) {
 
-        bean.on(window, 'click', this.checkPosition.bind(this));
-        mediator.addListener('window:scroll', _.debounce(this.checkPosition.bind(this), 10));
-        mediator.addListener('window:resize', _.debounce(this.calculateContainerPositioning.bind(this), 200));
+        _.bindAll(this, 'checkPosition', 'calculateContainerPositioning');
+
+        bean.on(window, 'click', this.checkPosition);
+        mediator.addListener('window:scroll', _.debounce(this.checkPosition, 10));
+        mediator.addListener('window:resize', _.debounce(this.calculateContainerPositioning, 200));
 
         this.affixed  = null;
         this.$markerTop = bonzo(options.topMarker);
