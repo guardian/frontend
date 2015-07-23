@@ -30,6 +30,7 @@ define([
     };
 
     var catchErrorsAndLog = function (name, fn, reporter) {
+        console.log('JD running', name);
         var error = catchErrors(fn);
         if (error) {
             log(name, error, reporter);
@@ -37,15 +38,29 @@ define([
     };
 
     var catchErrorsAndLogAll = function (modules) {
-        _.forEach(modules, function (pair) {
-            var name = pair[0];
-            var fn = pair[1];
-            catchErrorsAndLog(name, fn);
-        });
+        var pair = _.head(modules);
+        if (pair) {
+            requestAnimationFrame(function () {
+                var name = pair[0];
+                var fn = pair[1];
+                catchErrorsAndLog(name, function () {
+                    fn();
+                    catchErrorsAndLogAll(_.tail(modules))
+                });
+            });
+        }
     };
+
+    function makeBlocks(codeBlocks) {
+        return _.map(codeBlocks, function (record) {
+            console.log('JD adding block', record[0]);
+            return catchErrorsAndLog.bind(this, record[0], record[1]);
+        });
+    }
 
     return {
         catchErrorsAndLog: catchErrorsAndLog,
-        catchErrorsAndLogAll: catchErrorsAndLogAll
+        catchErrorsAndLogAll: catchErrorsAndLogAll,
+        makeBlocks: makeBlocks
     };
 });

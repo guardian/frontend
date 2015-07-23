@@ -4,9 +4,11 @@ define([
     // Common libraries
     'common/utils/_',
     'common/utils/$',
+    'common/utils/background',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/robust',
     'common/utils/storage',
     'common/utils/to-array',
     // Modules
@@ -27,9 +29,11 @@ define([
     qwery,
     _,
     $,
+    background,
     config,
     detect,
     mediator,
+    robust,
     storage,
     toArray,
     accessibility,
@@ -114,17 +118,20 @@ define([
         ready = function () {
             if (!this.initialised) {
                 this.initialised = true;
-                accessibility.shouldHideFlashingElements();
-                modules.showSnaps();
-                modules.showContainerShowMore();
-                modules.showContainerToggle();
-                modules.upgradeMostPopularToGeo();
-                lazyLoadContainers();
-                stocks();
-                sponsorship();
-                modules.showWeather();
-                modules.showLiveblogUpdates();
-                modules.startSlideshow();
+                var codeBlocks = [
+                    ['f-accessibility', accessibility.shouldHideFlashingElements],
+                    ['f-snaps', modules.showSnaps],
+                    ['f-show-more', modules.showContainerShowMore],
+                    ['f-container-toggle', modules.showContainerToggle],
+                    ['f-geo-most-popular', modules.upgradeMostPopularToGeo],
+                    ['f-lazy-load-containers', lazyLoadContainers],
+                    ['f-stocks', stocks],
+                    ['f-sponsorship', sponsorship],
+                    ['f-weather', modules.showWeather],
+                    ['f-live-blog-updates', modules.showLiveblogUpdates],
+                    ['f-slideshow', modules.startSlideshow],
+                ];
+                background(robust.makeBlocks(codeBlocks))();
             }
             mediator.emit('page:front:ready');
         };

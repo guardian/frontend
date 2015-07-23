@@ -1,26 +1,1722 @@
-(function(){/*
- MIT License (c) copyright 2010-2013 B Cavalier & J Hann */
-(function(l){function p(){}function v(a,b){return 0==T.call(a).indexOf("[object "+b)}function x(a){return a&&"/"==a.charAt(a.length-1)?a.substr(0,a.length-1):a}function D(a,b){var d,c,f,g;d=1;c=a;"."==c.charAt(0)&&(f=!0,c=c.replace(U,function(a,b,c,f){c&&d++;return f||""}));if(f){f=b.split("/");g=f.length-d;if(0>g)return a;f.splice(g,d);return f.concat(c||[]).join("/")}return c}function C(a){var b=a.indexOf("!");return{g:a.substr(b+1),d:0<=b&&a.substr(0,b)}}function A(){}function y(a,b){A.prototype=
-a||N;var d=new A;A.prototype=N;for(var c in b)d[c]=b[c];return d}function E(){function a(a,b,d){c.push([a,b,d])}function b(a,b){for(var d,f=0;d=c[f++];)(d=d[a])&&d(b)}var d,c,f;d=this;c=[];f=function(d,n){a=d?function(a){a&&a(n)}:function(a,b){b&&b(n)};f=p;b(d?0:1,n);b=p;c=s};this.then=function(b,c,f){a(b,c,f);return d};this.h=function(a){d.B=a;f(!0,a)};this.f=function(a){d.pa=a;f(!1,a)};this.v=function(a){b(2,a)}}function z(a){return a instanceof E||a instanceof h}function t(a,b,d,c){z(a)?a.then(b,
-d,c):b(a)}function B(a,b,d){var c;return function(){0<=--a&&b&&(c=b.apply(s,arguments));0==a&&d&&d(c);return c}}function e(){var a,b;r="";a=[].slice.call(arguments);v(a[0],"Object")&&(b=a.shift(),b=w(b));return new h(a[0],a[1],a[2],b)}function w(a,b,d){var c;r="";if(a&&(k.Q(a),q=k.b(a),"preloads"in a&&(c=new h(a.preloads,s,d,I,!0),k.l(function(){I=c})),a=a.main))return new h(a,b,d)}function h(a,b,d,c,f){var g;g=k.k(q,s,[].concat(a),f);this.then=this.then=a=function(a,b){t(g,function(b){a&&a.apply(s,
-b)},function(a){if(b)b(a);else throw a;});return this};this.next=function(a,b,c){return new h(a,b,c,g)};this.config=w;(b||d)&&a(b,d);k.l(function(){t(f||I,function(){t(c,function(){k.q(g)},d)})})}function K(a){var b,d;b=a.id;b==s&&(J!==s?J={H:"Multiple anonymous defines encountered"}:(b=k.ca())||(J=a));if(b!=s){d=u[b];b in u||(d=k.j(b,q),d=k.D(d.b,b),u[b]=d);if(!z(d))throw Error("duplicate define: "+b);d.ga=!1;k.F(d,a)}}function F(){var a=k.$(arguments);K(a)}var r,q,G,H,m=l.document,O=m&&(m.head||
-m.getElementsByTagName("head")[0]),V=O&&O.getElementsByTagName("base")[0]||null,Q={},R={},L={},W="addEventListener"in l?{}:{loaded:1,complete:1},N={},T=N.toString,s,u={},M={},I=!1,J,S=/^\/|^[^:]+:\/\//,U=/(\.)(\.?)(?:$|\/([^\.\/]+.*)?)/g,X=/\/\*[\s\S]*?\*\/|\/\/.*?[\n\r]/g,Y=/require\s*\(\s*(["'])(.*?[^\\])\1\s*\)|[^\\]?(["'])/g,Z=/\s*,\s*/,P,k;k={m:function(a,b,d){var c;a=D(a,b);if("."==a.charAt(0))return a;c=C(a);a=(b=c.d)||c.g;a in d.c&&(a=d.c[a].L||a);b&&(0>b.indexOf("/")&&!(b in d.c)&&(a=x(d.O)+
-"/"+b),a=a+"!"+c.g);return a},k:function(a,b,d,c){function f(b,c){var d,g;d=k.m(b,n.id,a);if(!c)return d;g=C(d);if(!g.d)return d;d=u[g.d];g.g="normalize"in d?d.normalize(g.g,f,n.b)||"":f(g.g);return g.d+"!"+g.g}function g(b,d,g){var e;e=d&&function(a){d.apply(s,a)};if(v(b,"String")){if(e)throw Error("require(id, callback) not allowed");g=f(b,!0);b=u[g];if(!(g in u))throw Error("Module not resolved: "+g);return(g=z(b)&&b.a)||b}t(k.q(k.k(a,n.id,b,c)),e,g)}var n;n=new E;n.id=b||"";n.da=c;n.G=d;n.b=a;
-n.w=g;g.toUrl=function(b){return k.j(f(b,!0),a).url};n.m=f;return n},D:function(a,b,d){var c,f,g;c=k.k(a,b,s,d);f=c.h;g=B(1,function(a){c.p=a;try{return k.U(c)}catch(b){c.f(b)}});c.h=function(a){t(d||I,function(){f(u[c.id]=M[c.url]=g(a))})};c.I=function(a){t(d||I,function(){c.a&&(g(a),c.v(R))})};return c},T:function(a,b,d,c){return k.k(a,d,s,c)},ba:function(a){return a.w},J:function(a){return a.a||(a.a={})},aa:function(a){var b=a.s;b||(b=a.s={id:a.id,uri:k.K(a),exports:k.J(a),config:function(){return a.b}},
-b.a=b.exports);return b},K:function(a){return a.url||(a.url=k.C(a.w.toUrl(a.id),a.b))},Q:function(a){var b,d,c,f,g;b="curl";d="define";c=f=l;if(a&&(g=a.overwriteApi||a.na,b=a.apiName||a.ia||b,c=a.apiContext||a.ha||c,d=a.defineName||a.ka||d,f=a.defineContext||a.ja||f,G&&v(G,"Function")&&(l.curl=G),G=null,H&&v(H,"Function")&&(l.define=H),H=null,!g)){if(c[b]&&c[b]!=e)throw Error(b+" already exists");if(f[d]&&f[d]!=F)throw Error(d+" already exists");}c[b]=e;f[d]=F},b:function(a){function b(a,b){var d,
-c,n,e,q;for(q in a){n=a[q];v(n,"String")&&(n={path:a[q]});n.name=n.name||q;e=f;c=C(x(n.name));d=c.g;if(c=c.d)e=g[c],e||(e=g[c]=y(f),e.c=y(f.c),e.e=[]),delete a[q];c=n;var r=b,h=void 0;c.path=x(c.path||c.location||"");r&&(h=c.main||"./main","."==h.charAt(0)||(h="./"+h),c.L=D(h,c.name+"/"));c.b=c.config;c.b&&(c.b=y(f,c.b));c.R=d.split("/").length;d?(e.c[d]=c,e.e.push(d)):e.n=k.P(n.path,f)}}function d(a){var b=a.c;a.N=RegExp("^("+a.e.sort(function(a,c){return b[c].R-b[a].R}).join("|").replace(/\/|\./g,
-"\\$&")+")(?=\\/|$)");delete a.e}var c,f,g,n;"baseUrl"in a&&(a.n=a.baseUrl);"main"in a&&(a.L=a.main);"preloads"in a&&(a.oa=a.preloads);"pluginPath"in a&&(a.O=a.pluginPath);if("dontAddFileExt"in a||a.i)a.i=RegExp(a.dontAddFileExt||a.i);c=q;f=y(c,a);f.c=y(c.c);g=a.plugins||{};f.plugins=y(c.plugins);f.u=y(c.u,a.u);f.t=y(c.t,a.t);f.e=[];b(a.packages,!0);b(a.paths,!1);for(n in g)a=k.m(n+"!","",f),f.plugins[a.substr(0,a.length-1)]=g[n];g=f.plugins;for(n in g)if(g[n]=y(f,g[n]),a=g[n].e)g[n].e=a.concat(f.e),
-d(g[n]);for(n in c.c)f.c.hasOwnProperty(n)||f.e.push(n);d(f);return f},j:function(a,b){var d,c,f,g;d=b.c;f=S.test(a)?a:a.replace(b.N,function(a){c=d[a]||{};g=c.b;return c.path||""});return{b:g||q,url:k.P(f,b)}},P:function(a,b){var d=b.n;return d&&!S.test(a)?x(d)+"/"+a:a},C:function(a,b){return a+((b||q).i.test(a)?"":".js")},r:function(a,b,d){var c=m.createElement("script");c.onload=c.onreadystatechange=function(d){d=d||l.event;if("load"==d.type||W[c.readyState])delete L[a.id],c.onload=c.onreadystatechange=
-c.onerror="",b()};c.onerror=function(){d(Error("Syntax or http error: "+a.url))};c.type=a.M||"text/javascript";c.charset="utf-8";c.async=!a.ea;c.src=a.url;L[a.id]=c;O.insertBefore(c,V);return c},V:function(a){var b=[],d;("string"==typeof a?a:a.toSource?a.toSource():a.toString()).replace(X,"").replace(Y,function(a,f,g,e){e?d=d==e?s:d:d||b.push(g);return""});return b},$:function(a){var b,d,c,f,g,e;g=a.length;c=a[g-1];f=v(c,"Function")?c.length:-1;2==g?v(a[0],"Array")?d=a[0]:b=a[0]:3==g&&(b=a[0],d=a[1]);
-!d&&0<f&&(e=!0,d=["require","exports","module"].slice(0,f).concat(k.V(c)));return{id:b,p:d||[],A:0<=f?c:function(){return c},o:e}},U:function(a){var b;b=a.A.apply(a.o?a.a:s,a.p);b===s&&a.a&&(b=a.s?a.a=a.s.exports:a.a);return b},F:function(a,b){a.A=b.A;a.o=b.o;a.G=b.p;k.q(a)},q:function(a){function b(a,b,c){e[b]=a;c&&r(a,b)}function d(b,c){var d,f,g,e;d=B(1,function(a){f(a);m(a,c)});f=B(1,function(a){r(a,c)});g=k.X(b,a);(e=z(g)&&g.a)&&f(e);t(g,d,a.f,a.a&&function(a){g.a&&(a==Q?f(g.a):a==R&&d(g.a))})}
-function c(){a.h(e)}var f,g,e,q,h,r,m;e=[];g=a.G;q=g.length;0==g.length&&c();r=B(q,b,function(){a.I&&a.I(e)});m=B(q,b,c);for(f=0;f<q;f++)h=g[f],h in P?(m(P[h](a),f,!0),a.a&&a.v(Q)):h?d(h,f):m(s,f,!0);return a},Y:function(a){k.K(a);k.r(a,function(){var b=J;J=s;!1!==a.ga&&(!b||b.H?a.f(Error(b&&b.H||"define() missing or duplicated: "+a.url)):k.F(a,b))},a.f);return a},X:function(a,b){var d,c,f,g,e,h,r,m,w,l,p,s;d=b.m;c=b.da;f=b.b||q;e=d(a);e in u?h=e:(g=C(e),m=g.g,h=g.d||m,w=k.j(h,f));if(!(e in u))if(s=
-k.j(m,f).b,g.d)r=h;else if(r=s.moduleLoader||s.ma||s.loader||s.la)m=h,h=r,w=k.j(r,f);h in u?l=u[h]:w.url in M?l=u[h]=M[w.url]:(l=k.D(s,h,c),l.url=k.C(w.url,w.b),u[h]=M[w.url]=l,k.Y(l));h==r&&(g.d&&f.plugins[g.d]&&(s=f.plugins[g.d]),p=new E,t(l,function(a){var b,f,g;g=a.dynamic;m="normalize"in a?a.normalize(m,d,l.b)||"":d(m);f=r+"!"+m;b=u[f];if(!(f in u)){b=k.T(s,f,m,c);g||(u[f]=b);var e=function(a){g||(u[f]=a);b.h(a)};e.resolve=e;e.reject=e.error=b.f;a.load(m,b.w,e,s)}p!=b&&t(b,p.h,p.f,p.v)},p.f));
-return p||l},ca:function(){var a;if(!v(l.opera,"Opera"))for(var b in L)if("interactive"==L[b].readyState){a=b;break}return a},Z:function(a){var b=0,d,c;for(d=m&&(m.scripts||m.getElementsByTagName("script"));d&&(c=d[b++]);)if(a(c))return c},W:function(){var a,b="";(a=k.Z(function(a){(a=a.getAttribute("data-curl-run"))&&(b=a);return a}))&&a.setAttribute("data-curl-run","");return b},S:function(){function a(){k.r({url:c.shift()},b,b)}function b(){r&&(c.length?(k.l(d),a()):d("run.js script did not run."))}
-function d(a){throw Error(a||"Primary run.js failed. Trying fallback.");}var c=r.split(Z);c.length&&a()},l:function(a){setTimeout(a,0)}};P={require:k.ba,exports:k.J,module:k.aa};e.version="0.8.10";e.config=w;F.amd={plugins:!0,jQuery:!0,curl:"0.8.10"};q={n:"",O:"curl/plugin",i:/\?|\.js\b/,u:{},t:{},plugins:{},c:{},N:/$^/};G=l.curl;H=l.define;G&&v(G,"Object")?(l.curl=s,w(G)):k.Q();(r=k.W())&&k.l(k.S);u.curl=e;u["curl/_privileged"]={core:k,cache:u,config:function(){return q},_define:K,_curl:e,Promise:E}})(this.window||
-"undefined"!=typeof global&&global||this);
-(function(l,p){function v(){if(!p.body)return!1;F||(F=p.createTextNode(""));try{return p.body.removeChild(p.body.appendChild(F)),F=K,!0}catch(e){return!1}}function x(){var r;r=A[p[C]]&&v();if(!z&&r){z=!0;for(clearTimeout(h);e=w.pop();)e();E&&(p[C]="complete");for(var q;q=y.shift();)q()}return r}function D(){x();z||(h=setTimeout(D,t))}var C="readyState",A={loaded:1,interactive:1,complete:1},y=[],E=p&&"string"!=typeof p[C],z=!1,t=10,B,e,w=[],h,K,F;B="addEventListener"in l?function(e,h){e.addEventListener(h,
-x,!1);return function(){e.removeEventListener(h,x,!1)}}:function(e,h){e.attachEvent("on"+h,x);return function(){e.detachEvent(h,x)}};p&&!x()&&(w=[B(l,"load"),B(p,"readystatechange"),B(l,"DOMContentLoaded")],h=setTimeout(D,t));define("curl/domReady",function(){function e(h){z?h():y.push(h)}e.then=e;e.amd=!0;return e})})(this,this.document);
-(function(l,p,v){define("curl/plugin/js",["curl/_privileged"],function(l){function D(e,w,h){function p(){r||(t<new Date?h():setTimeout(p,10))}var t,r,q;t=(new Date).valueOf()+(e.fa||3E5);h&&e.a&&setTimeout(p,10);q=l.core.r(e,function(){r=!0;e.a&&(e.B=v(e.a));!e.a||e.B?w(q):h()},function(e){r=!0;h(e)})}function C(e,l){D(e,function(){var h=y.shift();t=0<y.length;h&&C.apply(null,h);l.h(e.B||!0)},function(e){l.f(e)})}var A={},y=[],E=p&&!0==p.createElement("script").async,z,t,B=/\?|\.js\b/;z=l.Promise;
-return{dynamic:!0,normalize:function(e,l){var h=e.indexOf("!");return 0<=h?l(e.substr(0,h))+e.substr(h):l(e)},load:function(e,l,h,p){function v(e){(h.error||function(e){throw e;})(e)}var r,q,x,H,m;r=0<e.indexOf("!order");q=e.indexOf("!exports=");x=0<q?e.substr(q+9):p.a;H="prefetch"in p?p.prefetch:!0;e=r||0<q?e.substr(0,e.indexOf("!")):e;q=(q=p.dontAddFileExt||p.i)?RegExp(q):B;m=l.toUrl(e);q.test(m)||(m=m.lastIndexOf(".")<=m.lastIndexOf("/")?m+".js":m);m in A?A[m]instanceof z?A[m].then(h,v):h(A[m]):
-(e={name:e,url:m,ea:r,a:x,fa:p.timeout},A[m]=l=new z,l.then(function(e){A[m]=e;h(e)},v),r&&!E&&t?(y.push([e,l]),H&&(e.M="text/cache",D(e,function(e){e&&e.parentNode.removeChild(e)},function(){}),e.M="")):(t=t||r,C(e,l)))},cramPlugin:"../cram/js"}})})(this,this.document,function(l){try{return eval(l)}catch(p){}});define("curl/plugin/domReady",["../domReady"],function(l){return{load:function(p,v,x){l(x)}}});
-}).call(this);
+/* version: 0.8.11 */
+/** @license MIT License (c) copyright 2010-2013 B Cavalier & J Hann */
+
+/**
+ * curl (cujo resource loader)
+ * An AMD-compliant javascript module and resource loader
+ *
+ * curl is part of the cujo.js family of libraries (http://cujojs.com/)
+ *
+ * Licensed under the MIT License at:
+ * 		http://www.opensource.org/licenses/mit-license.php
+ *
+ */
+(function (global) {
+//"use strict"; don't restore this until the config routine is refactored
+	var
+		version = '0.8.11',
+		curlName = 'curl',
+		defineName = 'define',
+		bootScriptAttr = 'data-curl-run',
+		bootScript,
+		userCfg,
+		prevCurl,
+		prevDefine,
+		doc = global.document,
+		head = doc && (doc['head'] || doc.getElementsByTagName('head')[0]),
+		// to keep IE from crying, we need to put scripts before any
+		// <base> elements, but after any <meta>. this should do it:
+		insertBeforeEl = head && head.getElementsByTagName('base')[0] || null,
+		// constants / flags
+		msgUsingExports = {},
+		msgFactoryExecuted = {},
+		// this is the list of scripts that IE is loading. one of these will
+		// be the "interactive" script. too bad IE doesn't send a readystatechange
+		// event to tell us exactly which one.
+		activeScripts = {},
+		// readyStates for IE6-9
+		readyStates = 'addEventListener' in global ? {} : { 'loaded': 1, 'complete': 1 },
+		// these are always handy :)
+		cleanPrototype = {},
+		toString = cleanPrototype.toString,
+		undef,
+		// local cache of resource definitions (lightweight promises)
+		cache = {},
+		// local url cache
+		urlCache = {},
+		// preload are files that must be loaded before any others
+		preload = false,
+		// net to catch anonymous define calls' arguments (non-IE browsers)
+		argsNet,
+		// RegExp's used later, pre-compiled here
+		dontAddExtRx = /\?|\.js\b/,
+		absUrlRx = /^\/|^[^:]+:\/\/|^[A-Za-z]:[\\/]/,
+		findDotsRx = /(\.)(\.?)(?:$|\/([^\.\/]+.*)?)/g,
+		removeCommentsRx = /\/\*[\s\S]*?\*\/|\/\/.*?[\n\r]/g,
+		findRValueRequiresRx = /require\s*\(\s*(["'])(.*?[^\\])\1\s*\)|[^\\]?(["'])/g,
+		splitCommaSepRx = /\s*,\s*/,
+		cjsGetters,
+		core;
+
+	function noop () {}
+
+	function isType (obj, type) {
+		return toString.call(obj).indexOf('[object ' + type) == 0;
+	}
+
+	function normalizePkgDescriptor (descriptor, isPkg) {
+		var main;
+
+		descriptor.path = removeEndSlash(descriptor['path'] || descriptor['location'] || '');
+		if (isPkg) {
+			main = descriptor['main'] || './main';
+			if (!isRelUrl(main)) main = './' + main;
+			// trailing slashes trick reduceLeadingDots to see them as base ids
+			descriptor.main = reduceLeadingDots(main, descriptor.name + '/');
+		}
+		descriptor.config = descriptor['config'];
+
+		return descriptor;
+	}
+
+	function isRelUrl (it) {
+		return it.charAt(0) == '.';
+	}
+
+	function isAbsUrl (it) {
+		return absUrlRx.test(it);
+	}
+
+	function joinPath (path, file) {
+		return removeEndSlash(path) + '/' + file;
+	}
+
+	function removeEndSlash (path) {
+		return path && path.charAt(path.length - 1) == '/' ? path.substr(0, path.length - 1) : path;
+	}
+
+	function reduceLeadingDots (childId, baseId) {
+		// this algorithm is similar to dojo's compactPath, which interprets
+		// module ids of "." and ".." as meaning "grab the module whose name is
+		// the same as my folder or parent folder".  These special module ids
+		// are not included in the AMD spec but seem to work in node.js, too.
+		var removeLevels, normId, levels, isRelative, diff;
+
+		removeLevels = 1;
+		normId = childId;
+
+		// remove leading dots and count levels
+		if (isRelUrl(normId)) {
+			isRelative = true;
+			normId = normId.replace(findDotsRx, function (m, dot, doubleDot, remainder) {
+				if (doubleDot) removeLevels++;
+				return remainder || '';
+			});
+		}
+
+		if (isRelative) {
+			levels = baseId.split('/');
+			diff = levels.length - removeLevels;
+			if (diff < 0) {
+				// this is an attempt to navigate above parent module.
+				// maybe dev wants a url or something. punt and return url;
+				return childId;
+			}
+			levels.splice(diff, removeLevels);
+			// normId || [] prevents concat from adding extra "/" when
+			// normId is reduced to a blank string
+			return levels.concat(normId || []).join('/');
+		}
+		else {
+			return normId;
+		}
+	}
+
+	function pluginParts (id) {
+		var delPos = id.indexOf('!');
+		return {
+			resourceId: id.substr(delPos + 1),
+			// resourceId can be zero length
+			pluginId: delPos >= 0 && id.substr(0, delPos)
+		};
+	}
+
+	function Begetter () {}
+
+	function beget (parent, mixin) {
+		Begetter.prototype = parent || cleanPrototype;
+		var child = new Begetter();
+		Begetter.prototype = cleanPrototype;
+		for (var p in mixin) child[p] = mixin[p];
+		return child;
+	}
+
+	function Promise () {
+
+		var self, thens, complete;
+
+		self = this;
+		thens = [];
+
+		function then (resolved, rejected, progressed) {
+			// capture calls to callbacks
+			thens.push([resolved, rejected, progressed]);
+		}
+
+		function notify (which, arg) {
+			// complete all callbacks
+			var aThen, cb, i = 0;
+			while ((aThen = thens[i++])) {
+				cb = aThen[which];
+				if (cb) cb(arg);
+			}
+		}
+
+		complete = function promiseComplete (success, arg) {
+			// switch over to sync then()
+			then = success ?
+				function (resolved, rejected) { resolved && resolved(arg); } :
+				function (resolved, rejected) { rejected && rejected(arg); };
+			// we no longer throw during multiple calls to resolve or reject
+			// since we don't really provide useful information anyways.
+			complete = noop;
+			// complete all callbacks
+			notify(success ? 0 : 1, arg);
+			// no more notifications
+			notify = noop;
+			// release memory
+			thens = undef;
+		};
+
+		this.then = function (resolved, rejected, progressed) {
+			then(resolved, rejected, progressed);
+			return self;
+		};
+		this.resolve = function (val) {
+			self.resolved = val;
+			complete(true, val);
+		};
+		this.reject = function (ex) {
+			self.rejected = ex;
+			complete(false, ex);
+		};
+		this.progress = function (msg) {
+			notify(2, msg);
+		}
+
+	}
+
+	function isPromise (o) {
+		return o instanceof Promise || o instanceof CurlApi;
+	}
+
+	function when (promiseOrValue, callback, errback, progback) {
+		// we can't just sniff for then(). if we do, resources that have a
+		// then() method will make dependencies wait!
+		if (isPromise(promiseOrValue)) {
+			return promiseOrValue.then(callback, errback, progback);
+		}
+		else {
+			return callback(promiseOrValue);
+		}
+	}
+
+	/**
+	 * Returns a function that when executed, executes a lambda function,
+	 * but only executes it the number of times stated by howMany.
+	 * When done executing, it executes the completed function. Each callback
+	 * function receives the same parameters that are supplied to the
+	 * returned function each time it executes.  In other words, they
+	 * are passed through.
+	 * @private
+	 * @param howMany {Number} must be greater than zero
+	 * @param lambda {Function} executed each time
+	 * @param completed {Function} only executes once when the counter
+	 *   reaches zero
+	 * @returns {Function}
+	 */
+	function countdown (howMany, lambda, completed) {
+		var result;
+		return function () {
+			if (--howMany >= 0 && lambda) result = lambda.apply(undef, arguments);
+			// we want ==, not <=, since some callers expect call-once functionality
+			if (howMany == 0 && completed) completed(result);
+			return result;
+		}
+	}
+
+	core = {
+
+		/**
+		 * * reduceLeadingDots of id against parentId
+		 *		- if there are too many dots (path goes beyond parent), it's a url
+		 *			- return reduceLeadingDots of id against baseUrl + parentId;
+		 *	* if id is a url (starts with dots or slash or protocol)
+		 *		- pathInfo = { config: userCfg, url: url }
+		 *	* if not a url, id-to-id transform here.
+		 *		- main module expansion
+		 *		- plugin prefix expansion
+		 *		- coordinate main module expansion with plugin expansion
+		 *			- main module expansion happens first
+		 *		- future: other transforms?
+		 * @param id
+		 * @param parentId
+		 * @param cfg
+		 * @return {*}
+		 */
+		toAbsId: function (id, parentId, cfg) {
+			var absId, pluginId, parts;
+
+			absId = reduceLeadingDots(id, parentId);
+
+			// if this is still a relative path, it must be a url
+			// so just punt, otherwise...
+			if (isRelUrl(absId)) return absId;
+
+			// plugin id split
+			parts = pluginParts(absId);
+			pluginId = parts.pluginId;
+			absId = pluginId || parts.resourceId;
+
+			// main id expansion
+			if (absId in cfg.pathMap) {
+				absId = cfg.pathMap[absId].main || absId;
+			}
+
+			// plugin id expansion
+			if (pluginId) {
+				if (pluginId.indexOf('/') < 0 && !(pluginId in cfg.pathMap)) {
+					absId = joinPath(cfg.pluginPath, pluginId);
+				}
+				absId = absId + '!' + parts.resourceId;
+			}
+
+			return absId;
+		},
+
+		createContext: function (cfg, baseId, depNames, isPreload) {
+
+			var def;
+
+			def = new Promise();
+			def.id = baseId || ''; // '' == global
+			def.isPreload = isPreload;
+			def.depNames = depNames;
+			def.config = cfg;
+
+			// functions that dependencies will use:
+
+			function toAbsId (childId, checkPlugins) {
+				var absId, parts, plugin;
+
+				absId = core.toAbsId(childId, def.id, cfg);
+				if (!checkPlugins) return absId;
+
+				parts = pluginParts(absId);
+				if (!parts.pluginId) return absId;
+
+				plugin = cache[parts.pluginId];
+				// check if plugin supports the normalize method
+				if ('normalize' in plugin) {
+					// note: dojo/has may return falsey values (0, actually)
+					parts.resourceId = plugin['normalize'](parts.resourceId, toAbsId, def.config) || '';
+				}
+				else {
+					parts.resourceId = toAbsId(parts.resourceId);
+				}
+				return parts.pluginId + '!' + parts.resourceId;
+			}
+
+			function toUrl (n) {
+				// the AMD spec states that we should not append an extension
+				// in this function since it could already be appended.
+				// we need to use toAbsId in case this is a module id.
+				return core.resolvePathInfo(toAbsId(n, true), cfg).url;
+			}
+
+			function localRequire (ids, callback, errback) {
+				var cb, rvid, childDef, earlyExport;
+
+				// this is public, so send pure function
+				// also fixes issue #41
+				cb = callback && function () { callback.apply(undef, arguments[0]); };
+
+				// RValue require (CommonJS)
+				if (isType(ids, 'String')) {
+					if (cb) {
+						throw new Error('require(id, callback) not allowed');
+					}
+					// return resource
+					rvid = toAbsId(ids, true);
+					childDef = cache[rvid];
+					if (!(rvid in cache)) {
+						// this should only happen when devs attempt their own
+						// manual wrapping of cjs modules or get confused with
+						// the callback syntax:
+						throw new Error('Module not resolved: '  + rvid);
+					}
+					earlyExport = isPromise(childDef) && childDef.exports;
+					return earlyExport || childDef;
+				}
+				else {
+					when(core.getDeps(core.createContext(cfg, def.id, ids, isPreload)), cb, errback);
+				}
+			}
+
+			def.require = localRequire;
+			localRequire['toUrl'] = toUrl;
+			def.toAbsId = toAbsId;
+
+			return def;
+		},
+
+		createResourceDef: function (cfg, id, isPreload) {
+			var def, origResolve, execute;
+
+			def = core.createContext(cfg, id, undef, isPreload);
+			origResolve = def.resolve;
+
+			// using countdown to only execute definition function once
+			execute = countdown(1, function (deps) {
+				def.deps = deps;
+				try {
+					return core.executeDefFunc(def);
+				}
+				catch (ex) {
+					def.reject(ex);
+				}
+			});
+
+			// intercept resolve function to execute definition function
+			// before resolving
+			def.resolve = function resolve (deps) {
+				when(isPreload || preload, function () {
+					origResolve((cache[def.id] = urlCache[def.url] = execute(deps)));
+				});
+			};
+
+			// track exports
+			def.exportsReady = function executeFactory (deps) {
+				when(isPreload || preload, function () {
+					// only resolve early if we also use exports (to avoid
+					// circular dependencies). def.exports will have already
+					// been set by the getDeps loop before we get here.
+					if (def.exports) {
+						execute(deps);
+						def.progress(msgFactoryExecuted);
+					}
+				});
+			};
+
+			return def;
+		},
+
+		createPluginDef: function (cfg, id, resId, isPreload) {
+			var def;
+
+			// use resource id for local require and toAbsId
+			def = core.createContext(cfg, resId, undef, isPreload);
+
+			return def;
+		},
+
+		getCjsRequire: function (def) {
+			return def.require;
+		},
+
+		getCjsExports: function (def) {
+			return def.exports || (def.exports = {});
+		},
+
+		getCjsModule: function (def) {
+			var module = def.module;
+			if (!module) {
+				module = def.module = {
+					'id': def.id,
+					'uri': core.getDefUrl(def),
+					'exports': core.getCjsExports(def),
+					'config': function () { return def.config; }
+				};
+				module.exports = module['exports']; // oh closure compiler!
+			}
+			return module;
+		},
+
+		getDefUrl: function (def) {
+			// note: this is used by cjs module.uri
+			return def.url || (def.url = core.checkToAddJsExt(def.require['toUrl'](def.id), def.config));
+		},
+
+		/**
+		 * Sets the curl() and define() APIs.
+		 * @param [cfg] {Object|Null} set of config params. If missing or null,
+		 *   this function will set the default API!
+		 */
+		setApi: function (cfg) {
+			/*
+			scenarios:
+			1. global config sets apiName: "require"
+				- first call to config sets api
+				- second and later calls are ignored
+				- prevCurl cannot exist
+			2. no global config, first call to config() sets api
+				- first call to config has no api info
+				- second call to config sets api
+				- third and later calls must be ignored
+			3. global config that doesn't set api, first call does though
+				- same as #2
+			4. api info is never set
+				- how to know when to stop ignoring?
+
+			objectives:
+			1. fail before mistakenly overwriting global[curlName]
+			2. allow rename/relocate of curl() and define()
+			3. restore curl() if we overwrote it
+			 */
+
+			var apiName, defName, apiObj, defObj,
+				failMsg, okToOverwrite;
+
+			apiName = curlName;
+			defName = defineName;
+			apiObj = defObj = global;
+			failMsg = ' already exists';
+
+			// if we're not setting defaults
+			if (cfg) {
+				// is it ok to overwrite existing api functions?
+				okToOverwrite = cfg['overwriteApi'] || cfg.overwriteApi;
+				// allow dev to rename/relocate curl() to another object
+				apiName = cfg['apiName'] || cfg.apiName || apiName;
+				apiObj = cfg['apiContext'] || cfg.apiContext || apiObj;
+				// define() too
+				defName = cfg['defineName'] || cfg.defineName || defName;
+				defObj = cfg['defineContext'] || cfg.defineContext || defObj;
+
+				// curl() already existed, restore it if this is not a
+				// setDefaults pass. dev must be a good citizen and set
+				// apiName/apiContext (see below).
+				if (prevCurl && isType(prevCurl, 'Function')) {
+					// restore previous curl()
+					global[curlName] = prevCurl;
+				}
+				prevCurl = null; // don't check ever again
+				// ditto for define()
+				if (prevDefine && isType(prevDefine, 'Function')) {
+					// restore previous curl()
+					global[defineName] = prevDefine;
+				}
+				prevDefine = null; // don't check ever again
+
+				// check if we're mistakenly overwriting either api
+				// if we're configuring, and there's a curl(), and it's not
+				// ours -- and we're not explicitly overwriting -- throw!
+				// Note: if we're setting defaults, we *must* overwrite curl
+				// so that dev can configure it.  This is no different than
+				// noConflict()-type methods.
+				if (!okToOverwrite) {
+					if (apiObj[apiName] && apiObj[apiName] != _curl) {
+						throw new Error(apiName + failMsg);
+					}
+					// check if we're overwriting amd api
+					if (defObj[defName] && defObj[defName] != define) {
+						throw new Error(defName + failMsg);
+					}
+				}
+
+			}
+
+			// set curl api
+			apiObj[apiName] = _curl;
+
+			// set AMD public api: define()
+			defObj[defName] = define;
+
+		},
+
+		config: function (cfg) {
+			var prevCfg, newCfg, pluginCfgs, p;
+
+			// convert from closure-safe names
+			if ('baseUrl' in cfg) cfg.baseUrl = cfg['baseUrl'];
+			if ('main' in cfg) cfg.main = cfg['main'];
+			if ('preloads' in cfg) cfg.preloads = cfg['preloads'];
+			if ('pluginPath' in cfg) cfg.pluginPath = cfg['pluginPath'];
+			if ('dontAddFileExt' in cfg || cfg.dontAddFileExt) {
+				cfg.dontAddFileExt = new RegExp(cfg['dontAddFileExt'] || cfg.dontAddFileExt);
+			}
+
+			prevCfg = userCfg;
+			newCfg = beget(prevCfg, cfg);
+
+			// create object to hold path map.
+			// each plugin and package will have its own pathMap, too.
+			newCfg.pathMap = beget(prevCfg.pathMap);
+			pluginCfgs = cfg['plugins'] || {};
+			newCfg.plugins = beget(prevCfg.plugins);
+			newCfg.paths = beget(prevCfg.paths, cfg.paths);
+			newCfg.packages = beget(prevCfg.packages, cfg.packages);
+
+			// temporary arrays of paths. this will be converted to
+			// a regexp for fast path parsing.
+			newCfg.pathList = [];
+
+			// normalizes path/package info and places info on either
+			// the global cfg.pathMap or on a plugin-specific altCfg.pathMap.
+			// also populates a pathList on cfg or plugin configs.
+			function fixAndPushPaths (coll, isPkg) {
+				var id, pluginId, data, parts, currCfg, info;
+				for (var name in coll) {
+					data = coll[name];
+					if (isType(data, 'String')) data = {
+						path: coll[name]
+					};
+					// grab the package id, if specified. default to
+					// property name, if missing.
+					data.name = data.name || name;
+					currCfg = newCfg;
+					// check if this is a plugin-specific path
+					parts = pluginParts(removeEndSlash(data.name));
+					id = parts.resourceId;
+					pluginId = parts.pluginId;
+					if (pluginId) {
+						// plugin-specific path
+						currCfg = pluginCfgs[pluginId];
+						if (!currCfg) {
+							currCfg = pluginCfgs[pluginId] = beget(newCfg);
+							currCfg.pathMap = beget(newCfg.pathMap);
+							currCfg.pathList = [];
+						}
+						// remove plugin-specific path from coll
+						delete coll[name];
+					}
+					info = normalizePkgDescriptor(data, isPkg);
+					if (info.config) info.config = beget(newCfg, info.config);
+					info.specificity = id.split('/').length;
+					if (id) {
+						currCfg.pathMap[id] = info;
+						currCfg.pathList.push(id);
+					}
+					else {
+						// naked plugin name signifies baseUrl for plugin
+						// resources. baseUrl could be relative to global
+						// baseUrl.
+						currCfg.baseUrl = core.resolveUrl(data.path, newCfg);
+					}
+				}
+			}
+
+			// adds the path matching regexp onto the cfg or plugin cfgs.
+			function convertPathMatcher (cfg) {
+				var pathMap = cfg.pathMap;
+				cfg.pathRx = new RegExp('^(' +
+					cfg.pathList.sort(function (a, b) { return pathMap[b].specificity - pathMap[a].specificity; } )
+						.join('|')
+						.replace(/\/|\./g, '\\$&') +
+					')(?=\\/|$)'
+				);
+				delete cfg.pathList;
+			}
+
+			// fix all new packages, then paths (in case there are
+			// plugin-specific paths for a main module, such as wire!)
+			fixAndPushPaths(cfg['packages'], true);
+			fixAndPushPaths(cfg['paths'], false);
+
+			// process plugins after packages in case we already perform an
+			// id transform on a plugin (i.e. it's a package.main)
+			for (p in pluginCfgs) {
+				var absId = core.toAbsId(p + '!', '', newCfg);
+				newCfg.plugins[absId.substr(0, absId.length - 1)] = pluginCfgs[p];
+			}
+			pluginCfgs = newCfg.plugins;
+
+			// create search regex for each path map
+			for (p in pluginCfgs) {
+				// inherit full config
+				pluginCfgs[p] = beget(newCfg, pluginCfgs[p]);
+				var pathList = pluginCfgs[p].pathList;
+				if (pathList) {
+					pluginCfgs[p].pathList = pathList.concat(newCfg.pathList);
+					convertPathMatcher(pluginCfgs[p]);
+				}
+			}
+
+			// ugh, this is ugly, but necessary until we refactor this function
+			// copy previous pathMap items onto pathList
+			for (p in prevCfg.pathMap) {
+				if (!newCfg.pathMap.hasOwnProperty(p)) newCfg.pathList.push(p);
+			}
+
+			convertPathMatcher(newCfg);
+
+			return newCfg;
+
+		},
+
+		resolvePathInfo: function (absId, cfg) {
+			// searches through the configured path mappings and packages
+			var pathMap, pathInfo, path, pkgCfg;
+
+			pathMap = cfg.pathMap;
+
+			if (!isAbsUrl(absId)) {
+				path = absId.replace(cfg.pathRx, function (match) {
+					// TODO: remove fallbacks here since they should never need to happen
+					pathInfo = pathMap[match] || {};
+					pkgCfg = pathInfo.config;
+					return pathInfo.path || '';
+				});
+			}
+			else {
+				path = absId;
+			}
+
+			return {
+				config: pkgCfg || userCfg,
+				url: core.resolveUrl(path, cfg)
+			};
+		},
+
+		resolveUrl: function (path, cfg) {
+			var baseUrl = cfg.baseUrl;
+			return baseUrl && !isAbsUrl(path) ? joinPath(baseUrl, path) : path;
+		},
+
+		checkToAddJsExt: function (url, cfg) {
+			// don't add extension if a ? is found in the url (query params)
+			// i'd like to move this feature to a moduleLoader
+			return url + ((cfg || userCfg).dontAddFileExt.test(url) ? '' : '.js');
+		},
+
+		loadScript: function (def, success, failure) {
+			// script processing rules learned from RequireJS
+			// TODO: pass a validate function into loadScript to check if a success really is a success
+
+			// insert script
+			var el = doc.createElement('script');
+
+			// initial script processing
+			function process (ev) {
+				ev = ev || global.event;
+				// detect when it's done loading
+				// ev.type == 'load' is for all browsers except IE6-9
+				// IE6-9 need to use onreadystatechange and look for
+				// el.readyState in {loaded, complete} (yes, we need both)
+				if (ev.type == 'load' || readyStates[el.readyState]) {
+					delete activeScripts[def.id];
+					// release event listeners
+					el.onload = el.onreadystatechange = el.onerror = ''; // ie cries if we use undefined
+					success();
+				}
+			}
+
+			function fail (e) {
+				// some browsers send an event, others send a string,
+				// but none of them send anything useful, so just say we failed:
+				failure(new Error('Syntax or http error: ' + def.url));
+			}
+
+			// set type first since setting other properties could
+			// prevent us from setting this later
+			// actually, we don't even need to set this at all
+			//el.type = 'text/javascript';
+			// using dom0 event handlers instead of wordy w3c/ms
+			el.onload = el.onreadystatechange = process;
+			el.onerror = fail;
+			// js! plugin uses alternate mimetypes
+			el.type = def.mimetype || 'text/javascript';
+			// TODO: support other charsets?
+			el.charset = 'utf-8';
+			el.async = !def.order;
+			el.src = def.url;
+
+			// loading will start when the script is inserted into the dom.
+			// IE will load the script sync if it's in the cache, so
+			// indicate the current resource definition if this happens.
+			activeScripts[def.id] = el;
+
+			head.insertBefore(el, insertBeforeEl);
+
+			// the js! plugin uses this
+			return el;
+		},
+
+		extractCjsDeps: function (defFunc) {
+			// Note: ignores require() inside strings and comments
+			var source, ids = [], currQuote;
+			// prefer toSource (FF) since it strips comments
+			source = typeof defFunc == 'string' ?
+					 defFunc :
+					 defFunc.toSource ? defFunc.toSource() : defFunc.toString();
+			// remove comments, then look for require() or quotes
+			source.replace(removeCommentsRx, '').replace(findRValueRequiresRx, function (m, rq, id, qq) {
+				// if we encounter a string in the source, don't look for require()
+				if (qq) {
+					currQuote = currQuote == qq ? undef : currQuote;
+				}
+				// if we're not inside a quoted string
+				else if (!currQuote) {
+					ids.push(id);
+				}
+				return ''; // uses least RAM/CPU
+			});
+			return ids;
+		},
+
+		fixArgs: function (args) {
+			// resolve args
+			// valid combinations for define:
+			// (string, array, object|function) sax|saf
+			// (array, object|function) ax|af
+			// (string, object|function) sx|sf
+			// (object|function) x|f
+
+			var id, deps, defFunc, defFuncArity, len, cjs;
+
+			len = args.length;
+
+			defFunc = args[len - 1];
+			defFuncArity = isType(defFunc, 'Function') ? defFunc.length : -1;
+
+			if (len == 2) {
+				if (isType(args[0], 'Array')) {
+					deps = args[0];
+				}
+				else {
+					id = args[0];
+				}
+			}
+			else if (len == 3) {
+				id = args[0];
+				deps = args[1];
+			}
+
+			// Hybrid format: assume that a definition function with zero
+			// dependencies and non-zero arity is a wrapped CommonJS module
+			if (!deps && defFuncArity > 0) {
+				cjs = true;
+				deps = ['require', 'exports', 'module'].slice(0, defFuncArity).concat(core.extractCjsDeps(defFunc));
+			}
+
+			return {
+				id: id,
+				deps: deps || [],
+				res: defFuncArity >= 0 ? defFunc : function () { return defFunc; },
+				cjs: cjs
+			};
+		},
+
+		executeDefFunc: function (def) {
+			var resource, moduleThis;
+			// the force of AMD is strong so anything returned
+			// overrides exports.
+			// node.js assumes `this` === `exports` so we do that
+			// for all cjs-wrapped modules, just in case.
+			// also, use module.exports if that was set
+			// (node.js convention).
+			// note: if .module exists, .exports exists.
+			moduleThis = def.cjs ? def.exports : undef;
+			resource = def.res.apply(moduleThis, def.deps);
+			if (resource === undef && def.exports) {
+				// note: exports will equal module.exports unless
+				// module.exports was reassigned inside module.
+				resource = def.module
+					? (def.exports = def.module['exports'])
+					: def.exports;
+			}
+			return resource;
+		},
+
+		defineResource: function (def, args) {
+
+			def.res = args.res;
+			def.cjs = args.cjs;
+			def.depNames = args.deps;
+			core.getDeps(def);
+
+		},
+
+		getDeps: function (parentDef) {
+
+			var i, names, deps, len, dep, completed, name,
+				exportCollector, resolveCollector;
+
+			deps = [];
+			names = parentDef.depNames;
+			len = names.length;
+
+			if (names.length == 0) allResolved();
+
+			function collect (dep, index, alsoExport) {
+				deps[index] = dep;
+				if (alsoExport) exportCollector(dep, index);
+			}
+
+			// reducer-collectors
+			exportCollector = countdown(len, collect, allExportsReady);
+			resolveCollector = countdown(len, collect, allResolved);
+
+			// initiate the resolution of all dependencies
+			// Note: the correct handling of early exports relies on the
+			// fact that the exports pseudo-dependency is always listed
+			// before other module dependencies.
+			for (i = 0; i < len; i++) {
+				name = names[i];
+				// is this "require", "exports", or "module"?
+				if (name in cjsGetters) {
+					// a side-effect of cjsGetters is that the cjs
+					// property is also set on the def.
+					resolveCollector(cjsGetters[name](parentDef), i, true);
+					// if we are using the `module` or `exports` cjs variables,
+					// signal any waiters/parents that we can export
+					// early (see progress callback in getDep below).
+					// note: this may fire for `require` as well, if it
+					// is listed after `module` or `exports` in the deps list,
+					// but that is okay since all waiters will only record
+					// it once.
+					if (parentDef.exports) {
+						parentDef.progress(msgUsingExports);
+					}
+				}
+				// check for blanks. fixes #32.
+				// this helps support yepnope.js, has.js, and the has! plugin
+				else if (!name) {
+					resolveCollector(undef, i, true);
+				}
+				// normal module or plugin resource
+				else {
+					getDep(name, i);
+				}
+			}
+
+			return parentDef;
+
+			function getDep (name, index) {
+				var resolveOnce, exportOnce, childDef, earlyExport;
+
+				resolveOnce = countdown(1, function (dep) {
+					exportOnce(dep);
+					resolveCollector(dep, index);
+				});
+				exportOnce = countdown(1, function (dep) {
+					exportCollector(dep, index);
+				});
+
+				// get child def / dep
+				childDef = core.fetchDep(name, parentDef);
+
+				// check if childDef can export. if it can, then
+				// we missed the notification and it will never fire in the
+				// when() below.
+				earlyExport = isPromise(childDef) && childDef.exports;
+				if (earlyExport) {
+					exportOnce(earlyExport);
+				}
+
+				when(childDef,
+					resolveOnce,
+					parentDef.reject,
+					parentDef.exports && function (msg) {
+						// messages are only sent from childDefs that support
+						// exports, and we only notify parents that understand
+						// exports too.
+						if (childDef.exports) {
+							if (msg == msgUsingExports) {
+								// if we're using exports cjs variable on both sides
+								exportOnce(childDef.exports);
+							}
+							else if (msg == msgFactoryExecuted) {
+								resolveOnce(childDef.exports);
+							}
+						}
+					}
+				);
+			}
+
+			function allResolved () {
+				parentDef.resolve(deps);
+			}
+
+			function allExportsReady () {
+				parentDef.exportsReady && parentDef.exportsReady(deps);
+			}
+
+		},
+
+		fetchResDef: function (def) {
+
+			// ensure url is computed
+			core.getDefUrl(def);
+
+			core.loadScript(def,
+
+				function () {
+					var args = argsNet;
+					argsNet = undef; // reset it before we get deps
+
+					// if our resource was not explicitly defined with an id (anonymous)
+					// Note: if it did have an id, it will be resolved in the define()
+					if (def.useNet !== false) {
+
+						// if !args, nothing was added to the argsNet
+						if (!args || args.ex) {
+							def.reject(new Error(((args && args.ex) || 'define() missing or duplicated: ' + def.url)));
+						}
+						else {
+							core.defineResource(def, args);
+						}
+					}
+
+				},
+
+				def.reject
+
+			);
+
+			return def;
+
+		},
+
+		fetchDep: function (depName, parentDef) {
+			var toAbsId, isPreload, parentCfg, parts, absId, mainId, loaderId, pluginId,
+				resId, pathInfo, def, tempDef, resCfg;
+
+			toAbsId = parentDef.toAbsId;
+			isPreload = parentDef.isPreload;
+			parentCfg = parentDef.config || userCfg; // is this fallback necessary?
+
+			absId = toAbsId(depName);
+
+			if (absId in cache) {
+				// module already exists in cache
+				mainId = absId;
+			}
+			else {
+				// check for plugin loaderId
+				parts = pluginParts(absId);
+				resId = parts.resourceId;
+				// get id of first resource to load (which could be a plugin)
+				mainId = parts.pluginId || resId;
+				pathInfo = core.resolvePathInfo(mainId, parentCfg);
+			}
+
+			if (!(absId in cache)) {
+				resCfg = core.resolvePathInfo(resId, parentCfg).config;
+				if (parts.pluginId) {
+					loaderId = mainId;
+				}
+				else {
+					// get custom module loader from package config if not a plugin
+					// TODO: move config.moduleLoader to config.loader
+					loaderId = resCfg['moduleLoader'] || resCfg.moduleLoader
+						|| resCfg['loader'] || resCfg.loader;
+					if (loaderId) {
+						// TODO: allow transforms to have relative module ids?
+						// (we could do this by returning package location from
+						// resolvePathInfo. why not return all package info?)
+						resId = mainId;
+						mainId = loaderId;
+						pathInfo = core.resolvePathInfo(loaderId, parentCfg);
+					}
+				}
+			}
+
+			if (mainId in cache) {
+				def = cache[mainId];
+			}
+			else if (pathInfo.url in urlCache) {
+				def = cache[mainId] = urlCache[pathInfo.url];
+			}
+			else {
+				def = core.createResourceDef(resCfg, mainId, isPreload);
+				// TODO: can this go inside createResourceDef?
+				// TODO: can we pass pathInfo.url to createResourceDef instead?
+				def.url = core.checkToAddJsExt(pathInfo.url, pathInfo.config);
+				cache[mainId] = urlCache[pathInfo.url] = def;
+				core.fetchResDef(def);
+			}
+
+			// plugin or transformer
+			if (mainId == loaderId) {
+
+				// use plugin's config if specified
+				if (parts.pluginId && parentCfg.plugins[parts.pluginId]) {
+					resCfg = parentCfg.plugins[parts.pluginId];
+				}
+				// we need to use an anonymous promise until plugin tells
+				// us normalized id. then, we need to consolidate the promises
+				// below. Note: exports objects will be different between
+				// pre-normalized and post-normalized defs! does this matter?
+				// don't put this resource def in the cache because if the
+				// resId doesn't change, the check if this is a new
+				// normalizedDef (below) will think it's already being loaded.
+				tempDef = new Promise();
+
+				// wait for plugin resource def
+				when(def, function(plugin) {
+					var normalizedDef, fullId, dynamic;
+
+					dynamic = plugin['dynamic'];
+					// check if plugin supports the normalize method
+					if ('normalize' in plugin) {
+						// note: dojo/has may return falsey values (0, actually)
+						resId = plugin['normalize'](resId, toAbsId, def.config) || '';
+					}
+					else {
+						resId = toAbsId(resId);
+					}
+
+					// use the full id (loaderId + id) to id plugin resources
+					// so multiple plugins may each process the same resource
+					// resId could be blank if the plugin doesn't require any (e.g. "domReady!")
+					fullId = loaderId + '!' + resId;
+					normalizedDef = cache[fullId];
+
+					// if this is our first time fetching this (normalized) def
+					if (!(fullId in cache)) {
+
+						// because we're using resId, plugins, such as wire!,
+						// can use paths relative to the resource
+						normalizedDef = core.createPluginDef(resCfg, fullId, resId, isPreload);
+
+						// don't cache non-determinate "dynamic" resources
+						if (!dynamic) {
+							cache[fullId] = normalizedDef;
+						}
+
+						// curl's plugins prefer to receive a deferred,
+						// but to be compatible with AMD spec, we have to
+						// piggy-back on the callback function parameter:
+						var loaded = function (res) {
+							if (!dynamic) cache[fullId] = res;
+							normalizedDef.resolve(res);
+						};
+						loaded['resolve'] = loaded;
+						loaded['reject'] = loaded['error'] = normalizedDef.reject;
+
+						// load the resource!
+						plugin.load(resId, normalizedDef.require, loaded, resCfg);
+
+					}
+
+					// chain defs (resolve when plugin.load executes)
+					if (tempDef != normalizedDef) {
+						when(normalizedDef, tempDef.resolve, tempDef.reject, tempDef.progress);
+					}
+
+				}, tempDef.reject);
+
+			}
+
+			// return tempDef if this is a plugin-based resource
+			return tempDef || def;
+		},
+
+		getCurrentDefName: function () {
+			// IE6-9 mark the currently executing thread as "interactive"
+			// Note: Opera lies about which scripts are "interactive", so we
+			// just have to test for it. Opera provides a true browser test, not
+			// a UA sniff, thankfully.
+			// learned this trick from James Burke's RequireJS
+			var def;
+			if (!isType(global.opera, 'Opera')) {
+				for (var d in activeScripts) {
+					if (activeScripts[d].readyState == 'interactive') {
+						def = d;
+						break;
+					}
+				}
+			}
+			return def;
+		},
+
+		findScript: function (predicate) {
+			var i = 0, scripts, script;
+			scripts = doc && (doc.scripts || doc.getElementsByTagName('script'));
+			while (scripts && (script = scripts[i++])) {
+				if (predicate(script)) return script;
+			}
+		},
+
+		extractDataAttrConfig: function () {
+			var script, attr = '';
+			script = core.findScript(function (script) {
+				var run;
+				// find data-curl-run attr on script element
+				run = script.getAttribute(bootScriptAttr);
+				if (run) attr = run;
+				return run;
+			});
+			// removeAttribute is wonky (in IE6?) but this works
+			if (script) {
+				script.setAttribute(bootScriptAttr, '');
+			}
+			return attr;
+		},
+
+		bootScript: function () {
+			var urls = bootScript.split(splitCommaSepRx);
+			if (urls.length) {
+				load();
+			}
+			function load () {
+				// Note: IE calls success handler if it gets a 400+.
+				core.loadScript({ url: urls.shift() }, check, check);
+			}
+			function check () {
+				// check if run.js called curl() or curl.config()
+				if (bootScript) {
+					if (urls.length) {
+						// show an error message
+						core.nextTurn(fail);
+						// try next
+						load();
+					}
+					else fail('run.js script did not run.');
+				}
+			}
+			function fail (msg) {
+				throw new Error(msg || 'Primary run.js failed. Trying fallback.');
+			}
+		},
+
+		nextTurn: function (task) {
+			setTimeout(task, 0);
+		}
+
+	};
+
+	// hook-up cjs free variable getters
+	cjsGetters = {'require': core.getCjsRequire, 'exports': core.getCjsExports, 'module': core.getCjsModule};
+
+	function _curl (/* various */) {
+		var args, promise, cfg;
+
+		// indicate we're no longer waiting for a boot script
+		bootScript = '';
+
+		args = [].slice.call(arguments);
+
+		// extract config, if it's specified
+		if (isType(args[0], 'Object')) {
+			cfg = args.shift();
+			promise = _config(cfg);
+		}
+
+		return new CurlApi(args[0], args[1], args[2], promise);
+	}
+
+	function _config (cfg, callback, errback) {
+		var pPromise, main, fallback;
+
+		// indicate we're no longer waiting for a boot script
+		bootScript = '';
+
+		if (cfg) {
+			core.setApi(cfg);
+			userCfg = core.config(cfg);
+			// check for preloads
+			if ('preloads' in cfg) {
+				pPromise = new CurlApi(cfg['preloads'], undef, errback, preload, true);
+				// yes, this is hacky and embarrassing. now that we've got that
+				// settled... until curl has deferred factory execution, this
+				// is the only way to stop preloads from dead-locking when
+				// they have dependencies inside a bundle.
+				core.nextTurn(function () { preload = pPromise; });
+			}
+			// check for main module(s). all modules wait for preloads implicitly.
+			main = cfg['main'];
+			if (main) {
+				return new CurlApi(main, callback, errback);
+			}
+		}
+	}
+
+	// thanks to Joop Ringelberg for helping troubleshoot the API
+	function CurlApi (ids, callback, errback, waitFor, isPreload) {
+		var then, ctx;
+
+		ctx = core.createContext(userCfg, undef, [].concat(ids), isPreload);
+
+		this['then'] = this.then = then = function (resolved, rejected) {
+			when(ctx,
+				// return the dependencies as arguments, not an array
+				function (deps) {
+					if (resolved) resolved.apply(undef, deps);
+				},
+				// just throw if the dev didn't specify an error handler
+				function (ex) {
+					if (rejected) rejected(ex); else throw ex;
+				}
+			);
+			return this;
+		};
+
+		this['next'] = function (ids, cb, eb) {
+			// chain api
+			return new CurlApi(ids, cb, eb, ctx);
+		};
+
+		this['config'] = _config;
+
+		if (callback || errback) then(callback, errback);
+
+		// ensure next-turn so inline code can execute first
+		core.nextTurn(function () {
+			when(isPreload || preload, function () {
+				when(waitFor, function () { core.getDeps(ctx); }, errback);
+			});
+		});
+	}
+
+	_curl['version'] = version;
+	_curl['config'] = _config;
+
+	function _define (args) {
+
+		var id, def, pathInfo;
+
+		id = args.id;
+
+		if (id == undef) {
+			if (argsNet !== undef) {
+				argsNet = { ex: 'Multiple anonymous defines encountered' };
+			}
+			else if (!(id = core.getCurrentDefName())/* intentional assignment */) {
+				// anonymous define(), defer processing until after script loads
+				argsNet = args;
+			}
+		}
+		if (id != undef) {
+			// named define(), it is in the cache if we are loading a dependency
+			// (could also be a secondary define() appearing in a built file, etc.)
+			def = cache[id];
+			if (!(id in cache)) {
+				// id is an absolute id in this case, so we can get the config.
+				pathInfo = core.resolvePathInfo(id, userCfg);
+				def = core.createResourceDef(pathInfo.config, id);
+				cache[id] = def;
+			}
+			if (!isPromise(def)) throw new Error('duplicate define: ' + id);
+			// check if this resource has already been resolved
+			def.useNet = false;
+			core.defineResource(def, args);
+		}
+
+	}
+
+	function define () {
+		// wrap inner _define so it can be replaced without losing define.amd
+		var args = core.fixArgs(arguments);
+		_define(args);
+	}
+
+	// indicate our capabilities:
+	define['amd'] = { 'plugins': true, 'jQuery': true, 'curl': version };
+
+	// default configs
+	userCfg = {
+		baseUrl: '',
+		pluginPath: 'curl/plugin',
+		dontAddFileExt: dontAddExtRx,
+		paths: {},
+		packages: {},
+		plugins: {},
+		pathMap: {},
+		pathRx: /$^/
+	};
+
+	// handle pre-existing global
+	prevCurl = global[curlName];
+	prevDefine = global[defineName];
+
+	// only run config if there is something to config (perf saver?)
+	if (prevCurl && isType(prevCurl, 'Object')) {
+		// remove global curl object
+		global[curlName] = undef; // can't use delete in IE 6-8
+		// configure curl
+		_config(prevCurl);
+	}
+	else {
+		// set default api
+		core.setApi();
+	}
+
+	// look for "data-curl-run" directive
+	bootScript = core.extractDataAttrConfig();
+	// wait a bit in case curl.js is bundled into the boot script
+	if (bootScript) core.nextTurn(core.bootScript);
+
+	// allow curl to be a dependency
+	cache[curlName] = _curl;
+
+	// expose curl core for special plugins and modules
+	// Note: core overrides will only work in either of two scenarios:
+	// 1. the files are running un-compressed (Google Closure or Uglify)
+	// 2. the overriding module was compressed into the same file as curl.js
+	// Compiling curl and the overriding module separately won't work.
+	cache['curl/_privileged'] = {
+		'core': core,
+		'cache': cache,
+		'config': function () { return userCfg; },
+		'_define': _define,
+		'_curl': _curl,
+		'Promise': Promise
+	};
+
+}(this.window || (typeof global != 'undefined' && global) || this));
+/** MIT License (c) copyright 2010-2013 B Cavalier & J Hann */
+
+/**
+ * curl js! plugin
+ *
+ * Licensed under the MIT License at:
+ * 		http://www.opensource.org/licenses/mit-license.php
+ *
+ */
+
+/**
+ * usage:
+ *  require(['ModuleA', 'js!myNonAMDFile.js!order', 'js!anotherFile.js!order], function (ModuleA) {
+ * 		var a = new ModuleA();
+ * 		document.body.appendChild(a.domNode);
+ * 	});
+ *
+ * Specify the !order suffix for files that must be evaluated in order.
+ * Using the !order option and requiring js files more than once doesn't make
+ * much sense since files are loaded exactly once.
+ *
+ * Specify the !exports=someGlobalVar option to return a global variable to
+ * the module depending on the javascript file. Using this option also allows
+ * positive error feedback to the loader since it can now detect if the
+ * javascript file failed to load correctly.
+ *
+ * Async=false rules learned from @getify's LABjs!
+ * http://wiki.whatwg.org/wiki/Dynamic_Script_Execution_Order
+ *
+ */
+(function (global, doc, testGlobalVar) {
+define('curl/plugin/js', ['curl/_privileged'], function (priv) {
+"use strict";
+	var cache = {},
+		queue = [],
+		supportsAsyncFalse = doc && doc.createElement('script').async == true,
+		Promise,
+		waitForOrderedScript,
+		dontAddExtRx = /\?|\.js\b/;
+
+	Promise = priv['Promise'];
+
+	function nameWithExt (name, defaultExt) {
+		return name.lastIndexOf('.') <= name.lastIndexOf('/') ?
+			name + '.' + defaultExt : name;
+	}
+
+	function loadScript (def, success, failure) {
+		// script processing rules learned from RequireJS
+
+		var deadline, completed, el;
+
+		// default deadline is very far in the future (5 min)
+		// devs should set something reasonable if they want to use it
+		deadline = new Date().valueOf() + (def.timeoutMsec || 300000);
+
+		// initial script processing
+		function process () {
+			completed = true;
+			if (def.exports) def.resolved = testGlobalVar(def.exports);
+			if (!def.exports || def.resolved) {
+				success(el); // pass el so it can be removed (text/cache)
+			}
+			else {
+				failure();
+			}
+		}
+
+		function fail (ex) {
+			// Exception is squashed by curl.js unfortunately
+			completed = true;
+			failure(ex);
+		}
+
+		// some browsers (Opera and IE6-8) don't support onerror and don't fire
+		// readystatechange if the script fails to load so we need to poll.
+		// this poller only runs if def.exports is specified and failure callback
+		// is defined (see below)
+		function poller () {
+			// if the script loaded
+			if (!completed) {
+				// if neither process or fail as run and our deadline is in the past
+				if (deadline < new Date()) {
+					failure();
+				}
+				else {
+					setTimeout(poller, 10);
+				}
+			}
+		}
+		if (failure && def.exports) setTimeout(poller, 10);
+
+		el = priv['core'].loadScript(def, process, fail);
+
+	}
+
+	function fetch (def, promise) {
+
+		loadScript(def,
+			function () {
+				// if there's another queued script
+				var next = queue.shift();
+				waitForOrderedScript = queue.length > 0;
+				if (next) {
+					// go get it (from cache hopefully)
+					fetch.apply(null, next);
+				}
+				promise.resolve(def.resolved || true);
+			},
+			function (ex) {
+				promise.reject(ex);
+			}
+		);
+
+	}
+
+	return {
+
+		// the !options force us to cache ids in the plugin and provide normalize
+		'dynamic': true,
+
+		'normalize': function (id, toAbsId, config) {
+			var end = id.indexOf('!');
+			return end >= 0 ? toAbsId(id.substr(0, end)) + id.substr(end) : toAbsId(id);
+		},
+
+		'load': function (resId, require, callback, config) {
+
+			var order, exportsPos, exports, prefetch, dontAddFileExt,
+				url, def, promise;
+
+			order = resId.indexOf('!order') > 0; // can't be zero
+			exportsPos = resId.indexOf('!exports=');
+			exports = exportsPos > 0
+				? resId.substr(exportsPos + 9) // must be last option!
+				: config.exports;
+			prefetch = 'prefetch' in config ? config['prefetch'] : true;
+			resId = order || exportsPos > 0
+				? resId.substr(0, resId.indexOf('!'))
+				: resId;
+			// add extension afterwards so js!-specific path mappings don't
+			// need extension, too.
+			dontAddFileExt = config['dontAddFileExt'] || config.dontAddFileExt;
+			dontAddFileExt = dontAddFileExt
+				? new RegExp(dontAddFileExt)
+				: dontAddExtRx;
+
+			url = require['toUrl'](resId);
+			if (!dontAddFileExt.test(url)) {
+				url = nameWithExt(url, 'js');
+			}
+
+			function reject (ex) {
+				(callback['error'] || function (ex) { throw ex; })(ex);
+			}
+
+			// if we've already fetched this resource, get it out of the cache
+			if (url in cache) {
+				if (cache[url] instanceof Promise) {
+					cache[url].then(callback, reject);
+				}
+				else {
+					callback(cache[url]);
+				}
+			}
+			else {
+				def = {
+					name: resId,
+					url: url,
+					order: order,
+					exports: exports,
+					timeoutMsec: config['timeout']
+				};
+				cache[url] = promise = new Promise();
+				promise.then(
+					function (o) {
+						cache[url] = o;
+						callback(o);
+					},
+					reject
+				);
+
+				// if this script has to wait for another
+				// or if we're loading, but not executing it
+				if (order && !supportsAsyncFalse && waitForOrderedScript) {
+					// push onto the stack of scripts that will be fetched
+					// from cache. do this before fetch in case IE has file cached.
+					queue.push([def, promise]);
+					// if we're prefetching
+					if (prefetch) {
+						// go get the file under an unknown mime type
+						def.mimetype = 'text/cache';
+						loadScript(def,
+							// remove the fake script when loaded
+							function (el) { el && el.parentNode.removeChild(el); },
+							function () {}
+						);
+						def.mimetype = '';
+					}
+				}
+				// otherwise, just go get it
+				else {
+					waitForOrderedScript = waitForOrderedScript || order;
+					fetch(def, promise);
+				}
+			}
+
+		},
+
+		'cramPlugin': '../cram/js'
+
+	};
+});
+}(
+	this,
+	this.document,
+	function () { try { return eval(arguments[0]); } catch (ex) { return; } }
+));
+/** MIT License (c) copyright 2010-2013 B Cavalier & J Hann */
+
+/**
+ * curl domReady
+ *
+ * Licensed under the MIT License at:
+ * 		http://www.opensource.org/licenses/mit-license.php
+ */
+
+/**
+ * usage:
+ *  require(['ModuleA', 'curl/domReady'], function (ModuleA, domReady) {
+ * 		var a = new ModuleA();
+ * 		domReady(function () {
+ * 			document.body.appendChild(a.domNode);
+ * 		});
+ * 	});
+ *
+ * also: check out curl's domReady! plugin
+ *
+ * HT to Bryan Forbes who wrote the initial domReady code:
+ * http://www.reigndropsfall.net/
+ *
+ */
+(function (global, doc) {
+
+	var
+		readyState = 'readyState',
+		// keep these quoted so closure compiler doesn't squash them
+		readyStates = { 'loaded': 1, 'interactive': 1, 'complete': 1 },
+		callbacks = [],
+		fixReadyState = doc && typeof doc[readyState] != "string",
+		// IE needs this cuz it won't stop setTimeout if it's already queued up
+		completed = false,
+		pollerTime = 10,
+		addEvent,
+		remover,
+		removers = [],
+		pollerHandle,
+		undef;
+
+	function ready () {
+		completed = true;
+		clearTimeout(pollerHandle);
+		while (remover = removers.pop()) remover();
+		if (fixReadyState) {
+			doc[readyState] = "complete";
+		}
+		// callback all queued callbacks
+		var cb;
+		while ((cb = callbacks.shift())) {
+			cb();
+		}
+	}
+
+	var testEl;
+	function isDomManipulable () {
+		// question: implement Diego Perini's IEContentLoaded instead?
+		// answer: The current impl seems more future-proof rather than a
+		// non-standard method (doScroll). i don't care if the rest of the js
+		// world is using doScroll! They can have fun repairing their libs when
+		// the IE team removes doScroll in IE 13. :)
+		if (!doc.body) return false; // no body? we're definitely not ready!
+		if (!testEl) testEl = doc.createTextNode('');
+		try {
+			// webkit needs to use body. doc
+			doc.body.removeChild(doc.body.appendChild(testEl));
+			testEl = undef;
+			return true;
+		}
+		catch (ex) {
+			return false;
+		}
+	}
+
+	function checkDOMReady (e) {
+		var isReady;
+		// all browsers except IE will be ready when readyState == 'interactive'
+		// so we also must check for document.body
+		isReady = readyStates[doc[readyState]] && isDomManipulable();
+		if (!completed && isReady) {
+			ready();
+		}
+		return isReady;
+	}
+
+	function poller () {
+		checkDOMReady();
+		if (!completed) {
+			pollerHandle = setTimeout(poller, pollerTime);
+		}
+	}
+
+	// select the correct event listener function. all of our supported
+	// browsers will use one of these
+	if ('addEventListener' in global) {
+		addEvent = function (node, event) {
+			node.addEventListener(event, checkDOMReady, false);
+			return function () { node.removeEventListener(event, checkDOMReady, false); };
+		};
+	}
+	else {
+		addEvent = function (node, event) {
+			var onName = 'on' + event;
+			node.attachEvent(onName, checkDOMReady);
+			return function () { node.detachEvent(onName, checkDOMReady); };
+		};
+	}
+
+	if (doc) {
+		if (!checkDOMReady()) {
+			// add event listeners and collect remover functions
+			removers = [
+				addEvent(global, 'load'),
+				addEvent(doc, 'readystatechange'),
+				addEvent(global, 'DOMContentLoaded')
+			];
+			// additionally, poll for readystate
+			pollerHandle = setTimeout(poller, pollerTime);
+		}
+	}
+
+	define('curl/domReady', function () {
+
+		// this is simply a callback, but make it look like a promise
+		function domReady (cb) {
+			if (completed) cb(); else callbacks.push(cb);
+		}
+		domReady['then'] = domReady;
+		domReady['amd'] = true;
+
+		return domReady;
+
+	});
+
+}(this, this.document));

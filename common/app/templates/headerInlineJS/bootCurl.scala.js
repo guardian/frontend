@@ -39,6 +39,8 @@ var curl = {
     }
 };
 
+var john = 'hi';
+
 @JavaScript(Static.js.curl)
 
 require([
