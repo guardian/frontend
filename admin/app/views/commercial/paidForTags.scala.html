@@ -1,5 +1,7 @@
-@(env: String, report: dfp.PaidForTagsReport)
-@import dfp.{GuLineItem, PaidForTag, printDate}
+@import common.dfp.PaidForTagsReport
+@(env: String, report: PaidForTagsReport)
+@import _root_.dfp.printDate
+@import common.dfp.{GuLineItem, PaidForTag}
 @import tools.{DfpLink, SiteLink}
 
 @buildRef(s: String) = {@{s.toLowerCase.replaceAll("\\s+", "-")}}

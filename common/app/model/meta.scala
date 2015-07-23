@@ -1,8 +1,8 @@
 package model
 
+import common.dfp.DfpAgent
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
-import dfp.DfpAgent
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
@@ -47,6 +47,7 @@ trait MetaData extends Tags {
 
   def hasPageSkin(edition: Edition) = false
   def hasAdInBelowTopNavSlot(edition: Edition) = false
+  def omitMPUsFromContainers(edition: Edition) = false
   lazy val isInappropriateForSponsorship: Boolean = false
 
   lazy val membershipAccess: Option[String] = None

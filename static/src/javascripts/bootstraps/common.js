@@ -133,7 +133,7 @@ define([
             },
 
             initialiseStickyHeader: function () {
-                if (config.switches.viewability && (config.page.isDev || (!config.page.isDev && config.page.contentType !== 'Interactive'))) {
+                if (config.switches.viewability && !(config.page.isProd && config.page.contentType === 'Interactive')) {
                     sticky.init();
                 }
             },
@@ -351,10 +351,11 @@ define([
                 }
             },
 
+
             saveForLater: function () {
                 if (config.switches.saveForLater) {
                     var saveForLater = new SaveForLater();
-                    saveForLater.init();
+                    saveForLater.init(false);
                 }
             }
         };

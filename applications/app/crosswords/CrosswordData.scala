@@ -1,58 +1,52 @@
 package crosswords
 
-import com.gu.crosswords.api.client.models._
-import org.joda.time.LocalDate
+import com.gu.contentapi.client.model.{CrosswordEntry, CrosswordPosition, CrosswordCreator, CrosswordDimensions, Crossword}
+import org.joda.time.{DateTimeZone, DateTime}
+import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.json._
 
-object CrosswordEntry {
-  implicit val directionWrites = new Writes[Direction] {
-    override def writes(o: Direction): JsValue = o match {
-      case Across => JsString("across")
-      case Down => JsString("down")
-    }
-  }
+object Entry {
 
-  implicit val positionWrites = Json.writes[Position]
+  implicit val positionWrites = Json.writes[CrosswordPosition]
 
-  implicit val jsonWrites = Json.writes[CrosswordEntry]
+  implicit val jsonWrites = Json.writes[Entry]
 
-  def fromEntry(entry: Entry): CrosswordEntry = CrosswordEntry(
-    entry.number,
-    entry.clue,
-    entry.direction,
-    entry.length,
-    entry.position,
+  def fromCrosswordEntry(entry: CrosswordEntry): Entry = Entry(
+    entry.number.getOrElse(0),
+    entry.clue.getOrElse(""),
+    entry.direction.getOrElse(""),
+    entry.length.getOrElse(0),
+    entry.position.getOrElse(CrosswordPosition(0,0)),
     entry.solution
   )
 }
 
-case class CrosswordEntry(
+case class Entry(
   number: Int,
   clue: String,
-  direction: Direction,
+  direction: String,
   length: Int,
-  position: Position,
+  position: CrosswordPosition,
   solution: Option[String]
 )
 
 object CrosswordData {
-  implicit val creatorWrites = Json.writes[Creator]
 
-  implicit val dimensionsWrites = Json.writes[Dimensions]
+  private val dateFormatUTC = ISODateTimeFormat.dateParser().withZone(DateTimeZone.UTC)
 
-  implicit val typeWrites = new Writes[Type] {
-    override def writes(o: Type): JsValue = JsString(Type.byType(o))
-  }
+  implicit val creatorWrites = Json.writes[CrosswordCreator]
+
+  implicit val dimensionsWrites = Json.writes[CrosswordDimensions]
 
   implicit val jsonWrites = Json.writes[CrosswordData]
 
   def fromCrossword(crossword: Crossword) = CrosswordData(
-    s"${Type.byType(crossword.`type`)}/${crossword.number.toString}",
+    s"${crossword.`type`}/${crossword.number.toString}",
     crossword.number,
     crossword.name,
     crossword.creator,
-    crossword.date,
-    crossword.entries.map(CrosswordEntry.fromEntry),
+    dateFormatUTC.parseDateTime(crossword.date),
+    crossword.entries.map(Entry.fromCrosswordEntry),
     crossword.dimensions,
     crossword.`type`
   )
@@ -62,9 +56,9 @@ case class CrosswordData(
   id: String,
   number: Int,
   name: String,
-  creator: Option[Creator],
-  date: LocalDate,
-  entries: Seq[CrosswordEntry],
-  dimensions: Dimensions,
-  crosswordType: Type
+  creator: Option[CrosswordCreator],
+  date: DateTime,
+  entries: Seq[Entry],
+  dimensions: CrosswordDimensions,
+  crosswordType: String
 )

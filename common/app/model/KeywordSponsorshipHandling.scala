@@ -1,8 +1,7 @@
 package model
 
-import com.gu.contentapi.client.model.{Tag => ApiTag}
 import common.Edition
-import dfp.DfpAgent
+import common.dfp.DfpAgent
 
 trait KeywordSponsorshipHandling { self: AdSuffixHandlingForFronts =>
   val keywordIds: Seq[String]

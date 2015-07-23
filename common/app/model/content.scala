@@ -5,11 +5,11 @@ import java.net.URL
 import com.gu.contentapi.client.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
 import com.gu.facia.api.utils._
 import com.gu.facia.client.models.TrailMetaData
-import com.gu.util.liveblogs.{Block, BlockToText, Parser => LiveBlogParser}
+import com.gu.util.liveblogs.{Parser => LiveBlogParser}
+import common.dfp.DfpAgent
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
 import conf.Switches.FacebookShareUseTrailPicFirstSwitch
-import dfp.DfpAgent
 import layout.ContentWidths.GalleryMedia
 import ophan.SurgingContentAgent
 import org.joda.time.DateTime
@@ -17,7 +17,7 @@ import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
-import views.support.{ImgSrc, Naked, Item700, StripHtmlTagsAndUnescapeEntities}
+import views.support.{ImgSrc, Item700, Naked, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
