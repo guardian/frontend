@@ -53,9 +53,7 @@ define([
         },
         mostpop: {
             sizeMappings: {
-                mobile:             '1,1|300,50',
-                'mobile-landscape': '1,1|300,50|320,50',
-                tablet:             '1,1|300,250'
+                mobile: '1,1|300,250'
             }
         },
         'merchandising-high': {
