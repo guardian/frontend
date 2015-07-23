@@ -27,11 +27,10 @@ define([
      * @param {string} endpoint
      * @param {string} method
      * @param {Object.<string.*>} data
-     * @param {boolean} proxy use a non cross domain proxy to avoid needing CORS which is blocked by http1 proxies
      * @return {Reqwest} a promise
      */
-    Api.send = function (endpoint, method, data, proxy) {
-        var root = (proxy || false) ? Api.proxyRoot : Api.root;
+    Api.send = function (endpoint, method, data) {
+        var root = (method === 'post') ? Api.proxyRoot : Api.root;
         data = data || {};
         if (cookies.get('GU_U')) {
             data.GU_U = cookies.get('GU_U');
@@ -61,7 +60,7 @@ define([
         var endpoint = '/discussion/' + discussionId + '/comment' +
             (comment.replyTo ? '/' + comment.replyTo.commentId + '/reply' : '');
 
-        return Api.send(endpoint, 'post', comment, true);
+        return Api.send(endpoint, 'post', comment);
     };
 
     /**
@@ -108,7 +107,7 @@ define([
      */
     Api.reportComment = function (id, report) {
         var endpoint = '/comment/' + id + '/reportAbuse';
-        return Api.send(endpoint, 'post', report, true);
+        return Api.send(endpoint, 'post', report);
     };
 
     /**
