@@ -1,6 +1,6 @@
 package model
 
-import common.dfp.DfpAgent
+import common.dfp.{DfpAgent, Size}
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
@@ -46,6 +46,7 @@ trait MetaData extends Tags {
   def adUnitSuffix = section
 
   def hasPageSkin(edition: Edition) = false
+  def sizesOfAdInTopAboveNavSlot(edition: Edition): Option[Seq[Size]] = None
   def hasAdInBelowTopNavSlot(edition: Edition) = false
   def omitMPUsFromContainers(edition: Edition) = false
   lazy val isInappropriateForSponsorship: Boolean = false

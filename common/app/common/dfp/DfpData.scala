@@ -194,6 +194,27 @@ object GuTargeting {
 }
 
 
+case class Size(width: Int, height: Int)
+
+object Size {
+
+  implicit val writes = new Writes[Size] {
+    def writes(size: Size): JsValue = {
+      Json.obj(
+        "width" -> size.width,
+        "height" -> size.height
+      )
+    }
+  }
+
+  implicit val reads: Reads[Size] = (
+    (JsPath \ "width").read[Int] and
+      (JsPath \ "height").read[Int]
+    )(Size.apply _)
+
+}
+
+
 case class GuLineItem(id: Long,
                       name: String,
                       startTime: DateTime,
@@ -201,6 +222,8 @@ case class GuLineItem(id: Long,
                       isPageSkin: Boolean,
                       sponsor: Option[String],
                       status: String,
+                      costType: String,
+                      creativeSizes: Seq[Size],
                       targeting: GuTargeting,
                       lastModified: DateTime) {
 
@@ -238,6 +261,8 @@ object GuLineItem {
         "isPageSkin" -> lineItem.isPageSkin,
         "sponsor" -> lineItem.sponsor,
         "status" -> lineItem.status,
+        "costType" -> lineItem.costType,
+        "sizes" -> lineItem.creativeSizes,
         "targeting" -> lineItem.targeting,
         "lastModified" -> timeFormatter.print(lineItem.lastModified)
       )
@@ -252,6 +277,8 @@ object GuLineItem {
       (JsPath \ "isPageSkin").read[Boolean] and
       (JsPath \ "sponsor").readNullable[String] and
       (JsPath \ "status").read[String] and
+      (JsPath \ "costType").read[String] and
+      (JsPath \ "sizes").read[Seq[Size]] and
       (JsPath \ "targeting").read[GuTargeting] and
       (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
     )(GuLineItem.apply _)

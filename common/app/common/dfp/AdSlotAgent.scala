@@ -3,25 +3,72 @@ package common.dfp
 import java.net.URI
 
 import common.Edition
+import common.editions.{Au, Uk, Us}
 import conf.Configuration.commercial.dfpAdUnitRoot
 
 trait AdSlotAgent {
 
   protected val isProd: Boolean
 
-  protected def lineItems: Seq[GuLineItem]
+  protected def topAboveNavLineItems: Seq[GuLineItem]
+  protected def topBelowNavLineItems: Seq[GuLineItem]
 
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs]
 
   private def fullAdUnit(adUnitWithoutRoot: String) = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
 
-  def hasAdInTopBelowNavSlot(adUnitWithoutRoot: String, edition: Edition): Boolean = {
+  private def isCurrent(lineItem: GuLineItem) = {
+    lineItem.startTime.isBeforeNow && (
+      lineItem.endTime.isEmpty || lineItem.endTime.exists(_.isAfterNow)
+      )
+  }
 
-    def isCurrent(lineItem: GuLineItem) = {
-      lineItem.startTime.isBeforeNow && (
-        lineItem.endTime.isEmpty || lineItem.endTime.exists(_.isAfterNow)
-        )
+  private def targetsAdUnit(lineItem: GuLineItem, adUnitWithoutRoot: String) = {
+    val adUnits = for (adUnit <- lineItem.targeting.adUnits) yield {
+      adUnit.path.mkString("/").stripSuffix("/ng")
     }
+    adUnits.contains(fullAdUnit(adUnitWithoutRoot))
+  }
+
+  private def targetsAdTest(lineItem: GuLineItem) = lineItem.targeting.hasAdTestTargetting
+
+  def sizesOfAdInTopAboveNavSlot(adUnitWithoutRoot: String,
+                                 edition: Edition): Option[Seq[Size]] = {
+
+    val isNetworkFront = {
+      val prefix = adUnitWithoutRoot.stripSuffix("/ng").stripSuffix("/front")
+      prefix == "uk" || prefix == "us" || prefix == "au"
+    }
+
+    def targetsRelevantSizes(lineItem: GuLineItem): Boolean = {
+      val creativeSizes = lineItem.creativeSizes
+      creativeSizes.contains(Size(728, 90)) || creativeSizes.contains(Size(88, 70))
+    }
+
+    def deriveEditionFromGeotargeting(lineItem: GuLineItem): Option[Edition] = {
+      lineItem.targeting.geoTargetsIncluded.headOption flatMap {
+        case GeoTarget(_, _, "COUNTRY", "United Kingdom") => Some(Uk)
+        case GeoTarget(_, _, "COUNTRY", "United States") => Some(Us)
+        case GeoTarget(_, _, "COUNTRY", "Australia") => Some(Au)
+        case _ => None
+      }
+    }
+
+    val lineItems = if (isNetworkFront) {
+      topAboveNavLineItems.filter { lineItem =>
+        isCurrent(lineItem) &&
+          lineItem.costType == "CPD" &&
+          targetsRelevantSizes(lineItem) &&
+          targetsAdUnit(lineItem, adUnitWithoutRoot) &&
+          deriveEditionFromGeotargeting(lineItem).contains(edition) &&
+          !(isProd && targetsAdTest(lineItem))
+      }
+    } else Nil
+
+    if (lineItems.isEmpty) None else Some(lineItems flatMap (_.creativeSizes))
+  }
+
+  def hasAdInTopBelowNavSlot(adUnitWithoutRoot: String, edition: Edition): Boolean = {
 
     def targetsTopBelowNavSlot(lineItem: GuLineItem) = {
       lineItem.targeting.customTargetSets exists { targetSet =>
@@ -29,27 +76,18 @@ trait AdSlotAgent {
       }
     }
 
-    def targetsEdition(lineItem: GuLineItem) = {
+    def targetsEdition(lineItem: GuLineItem, edition: Edition) = {
       val editions = lineItem.targeting.editions
       editions.isEmpty || editions.contains(edition)
     }
 
-    def targetsAdUnit(lineItem: GuLineItem) = {
-      val adUnits = for (adUnit <- lineItem.targeting.adUnits) yield {
-        adUnit.path.mkString("/").stripSuffix("/ng")
-      }
-      adUnits.contains(fullAdUnit(adUnitWithoutRoot))
-    }
-
-    def targetsAdTest(lineItem: GuLineItem) = lineItem.targeting.hasAdTestTargetting
-
     val isFront = adUnitWithoutRoot.endsWith("/front") || adUnitWithoutRoot.endsWith("/front/ng")
 
-    isFront && lineItems.exists { lineItem =>
+    isFront && topBelowNavLineItems.exists { lineItem =>
       isCurrent(lineItem) &&
         targetsTopBelowNavSlot(lineItem) &&
-        targetsEdition(lineItem) &&
-        targetsAdUnit(lineItem) &&
+        targetsEdition(lineItem, edition) &&
+        targetsAdUnit(lineItem, adUnitWithoutRoot) &&
         !(isProd && targetsAdTest(lineItem))
     }
   }
