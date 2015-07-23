@@ -25,7 +25,7 @@ import scala.collection.JavaConversions._
     import browser._
 
     val alternateLinks = $("link[rel='alternate']").filterNot(_.getAttribute("type") == "application/rss+xml")
-    alternateLinks.size should be (2)
+    alternateLinks.size should be (3)
     alternateLinks.exists(link => toPath(link.getAttribute("href")) == "/us/culture" && link.getAttribute("hreflang") == "en-us") should be (true)
     alternateLinks.exists(link => toPath(link.getAttribute("href")) == "/uk/culture" && link.getAttribute("hreflang") == "en-gb") should be (true)
   }
