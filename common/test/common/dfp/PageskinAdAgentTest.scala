@@ -1,4 +1,4 @@
-package dfp
+package common.dfp
 
 import common.Edition.defaultEdition
 import common.editions.{Au, Uk, Us}

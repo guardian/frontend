@@ -294,6 +294,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val RafCSSLoaderSwitch = Switch(
+    "Performance",
+    "raf-css-loader",
+    "It this switch is turned on, 50% of CSS load-polling will use RAF instead of setTimeout" ,
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 28),
+    exposeClientSide = false
+  )
+
   // Commercial
   val OphanViewIdSwitch = Switch("Commercial",
     "ophan-view-id",
@@ -678,15 +687,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ABTestHeadlines = Switch(
-    "Feature",
-    "a-b-test-headlines",
-    "A/B test headlines",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
   val InternationalEditionSwitch = Switch(
     "Feature",
     "international-edition",
@@ -1023,17 +1023,6 @@ object Switches {
     sellByDate = never,
     exposeClientSide = true
   )
-
-  val ABHeadlineSwitches = (1 to 10) map { n =>
-    Switch(
-      "A/B Tests",
-      s"ab-headline$n",
-      s"Switch for headline $n",
-      safeState = On,
-      sellByDate = new LocalDate(2015, 7, 17),
-      exposeClientSide = true
-    )
-  }
 
   val ABMembershipMessageVariants = Switch(
     "A/B Tests",

@@ -1,6 +1,7 @@
-package dfp
+package common.dfp
 
 import java.net.URLDecoder
+
 import com.gu.facia.api.models.CollectionConfig
 import common.Edition
 import model.Tag
@@ -215,9 +216,9 @@ trait PaidForTagAgent {
 
   private def hasMultiplesOfAPaidForType(capiTags: Seq[Tag],
                                          tagMap: Map[String, Set[String]]): Boolean = {
-    capiTags.map { capiTag =>
+    capiTags.flatMap { capiTag =>
       tagMap.getOrElse(capiTag.id.split("/").last, Seq[String]())
-    }.flatten.toSeq.size > 1
+    }.size > 1
   }
 
   def hasMultipleSponsors(capiTags: Seq[Tag]): Boolean = {

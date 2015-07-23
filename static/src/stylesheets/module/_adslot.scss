@@ -11,6 +11,9 @@
         }
     }
 }
+.ad-slot-container {
+    margin-bottom: $gs-baseline * 2;
+}
 .ad-slot--dark {
     background-color: lighten(colour(media-background), 2.5%);
 }

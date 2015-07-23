@@ -22,12 +22,12 @@ define([
         this.expiry = '2015-07-31';
         this.author = 'Mark Butler';
         this.description = 'Measured roll out of Identity session refresh';
-        this.audience = 0.01;
+        this.audience = 0.25;
         this.audienceOffset = 0;
         this.successMeasure = '';
-        this.audienceCriteria = '1% of users.';
+        this.audienceCriteria = '25% of users.';
         this.dataLinkNames = '';
-        this.idealOutcome = '1% of users have their signed in session extended. If they are signed-in and their session is over one month old.';
+        this.idealOutcome = '25% of users have their signed in session extended. If they are signed-in and their session is over one month old.';
         this.showForSensitive = true;
 
         this.canRun = function () {

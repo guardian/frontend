@@ -93,9 +93,13 @@ define([
                     }.bind(this));
 
                     if (resp.status === 'error' && resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
-                        //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
+                        // this user has never saved anything, so create a new
+                        // data object and save an introductory article for them
+
+                        // Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
                         var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
                         this.userData = {version: date, articles: []};
+                        this.saveIntroArticle();
                     } else {
                         this.userData = resp.savedArticles;
                     }
@@ -346,7 +350,7 @@ define([
     };
 
     SaveForLater.prototype.signUserInToSaveArticle = function (id, shortUrl) {
-        var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&articleId=<%= articleId %>', {
+        var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&articleId=<%= articleId %>&INTCMP=SFL-SO', {
             idUrl: config.page.idUrl,
             returnUrl: encodeURIComponent(document.location.href),
             shortUrl: shortUrl,
@@ -386,6 +390,13 @@ define([
                 saveForLaterProfileCount.text('');
             }
         });
+    };
+
+    SaveForLater.prototype.saveIntroArticle = function () {
+        var pageId = 'help/insideguardian/2015/jul/21/introducing-save-for-later';
+        var shortUrl = '/p/4ab7x';
+
+        this.saveArticle(pageId, shortUrl);
     };
 
     return SaveForLater;
