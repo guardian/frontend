@@ -5,7 +5,7 @@ import conf.LiveContentApi
 import common.{Edition, ExecutionContexts}
 import conf.Static
 import model.{Content, Cached}
-import play.api.mvc.{Result, Action, Controller, RequestHeader}
+import play.api.mvc._
 import crosswords._
 
 import scala.concurrent.Future
@@ -40,5 +40,15 @@ object CrosswordsController extends Controller with ExecutionContexts {
 
       Cached(60)(Ok(s"""<?xml-stylesheet type="text/css" href="$globalStylesheet" ?>$xml""").as("image/svg+xml"))
     }
+  }
+
+  private val CrosswordOptIn = "crossword-opt-in"
+
+  def crosswordsOptIn = Action { implicit request =>
+    SeeOther("/crosswords").withCookies(Cookie(CrosswordOptIn, "true"))
+  }
+
+  def crosswordsOptOut = Action { implicit request =>
+    SeeOther("/crosswords").discardingCookies(DiscardingCookie(CrosswordOptIn))
   }
 }
