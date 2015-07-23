@@ -8,7 +8,7 @@ define([
     _
 ) {
 
-    function (codeBlocks) {
+    (function (codeBlocks) {
         return _.reduceRight(codeBlocks, function (restFunctions, fn) {
             return function () {
                 requestAnimationFrame(function () {
@@ -16,7 +16,7 @@ define([
                     restFunctions();
                 });
             };
-        }, function () {})();
-    };
+        }, function () {});
+    })();
 
 });
