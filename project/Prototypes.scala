@@ -50,6 +50,7 @@ trait Prototypes {
       </dependencies>,
 
     resolvers ++= Seq(
+      Resolver.typesafeRepo("releases"),
       Resolver.sonatypeRepo("releases"),
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       "Spy" at "https://files.couchbase.com/maven2/"

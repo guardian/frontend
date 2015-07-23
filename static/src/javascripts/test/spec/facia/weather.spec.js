@@ -136,7 +136,7 @@ describe('Weather component', function () {
         spyOn(sut, 'getWeatherData').and.returnValue({
             then: function () {
                 return {
-                    fail: function () {
+                    catch: function () {
                     }
                 };
             }
@@ -152,7 +152,7 @@ describe('Weather component', function () {
         spyOn(sut, 'getWeatherData').and.returnValue({
             then: function () {
                 return {
-                    fail: function () {
+                    catch: function () {
                     }
                 };
             }
@@ -187,7 +187,7 @@ describe('Weather component', function () {
         spyOn(sut, 'getWeatherData').and.returnValue({
             then: function () {
                 return {
-                    fail: function () {
+                    catch: function () {
                     }
                 };
             }
@@ -268,7 +268,7 @@ describe('Weather component', function () {
         spyOn(sut, 'getWeatherData').and.returnValue({
             then: function () {
                 return {
-                    fail: function () {
+                    catch: function () {
                     }
                 };
             }
