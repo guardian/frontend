@@ -1,4 +1,5 @@
 define([
+    'common/utils/config',
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/template',
@@ -7,6 +8,7 @@ define([
     'text!common/views/membership-message.html',
     'common/views/svgs'
 ], function (
+    config,
     detect,
     storage,
     template,
