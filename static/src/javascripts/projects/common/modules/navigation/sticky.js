@@ -64,9 +64,9 @@ define([
         // start updating position only if the viewport is 'firstLoadDepth' scrolled down on page load
         if (this.$els.window.scrollTop() > this.config.firstLoadDepth) {
             if (this.isAppleCampaign) {
-                this.updatePositionApple();
+                fastdom.read(this.updatePositionApple);
             } else {
-                this.updatePosition();
+                fastdom.read(this.updatePosition);
             }
         }
 
