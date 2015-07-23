@@ -195,7 +195,6 @@ define([
             },
 
             loadAnalytics: function () {
-                console.log("go!");
                 omniture.go();
 
                 if (config.switches.ophan) {

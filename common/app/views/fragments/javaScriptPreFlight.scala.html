@@ -11,18 +11,6 @@
 <![endif]-->
 
 <script id="gu">
-var last = (new Date()).getTime();
-var framesLeft = 200;
-var poll = function () {
-var next = (new Date()).getTime();
-console.log('frame time: ', next - last);
-last = next;
-if (framesLeft > 0) {
-framesLeft--;
-requestAnimationFrame(poll);
-}
-};
-requestAnimationFrame(poll);
     @Html(templates.headerInlineJS.js.polyfills().body)
     @Html(templates.headerInlineJS.js.shouldEnhance(item).body)
     @Html(templates.headerInlineJS.js.config(item).body)

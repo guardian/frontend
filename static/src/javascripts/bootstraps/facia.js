@@ -129,7 +129,7 @@ define([
                     ['f-sponsorship', sponsorship],
                     ['f-weather', modules.showWeather],
                     ['f-live-blog-updates', modules.showLiveblogUpdates],
-                    ['f-slideshow', modules.startSlideshow],
+                    ['f-slideshow', modules.startSlideshow]
                 ];
                 background(robust.makeBlocks(codeBlocks))();
             }

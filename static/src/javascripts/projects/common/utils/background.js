@@ -14,7 +14,7 @@ define([
                 requestAnimationFrame(function () {
                     fn();
                     restFunctions();
-                })
+                });
             };
         }, function () {});
     };

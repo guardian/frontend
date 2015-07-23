@@ -30,7 +30,7 @@ define([
     };
 
     var catchErrorsAndLog = function (name, fn, reporter) {
-        console.log('JD running', name);
+        //console.log('JD running', name);
         var error = catchErrors(fn);
         if (error) {
             log(name, error, reporter);
