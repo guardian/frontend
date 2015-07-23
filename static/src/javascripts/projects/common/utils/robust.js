@@ -30,7 +30,6 @@ define([
     };
 
     var catchErrorsAndLog = function (name, fn, reporter) {
-        //console.log('JD running', name);
         var error = catchErrors(fn);
         if (error) {
             log(name, error, reporter);
@@ -38,17 +37,11 @@ define([
     };
 
     var catchErrorsAndLogAll = function (modules) {
-        var pair = _.head(modules);
-        if (pair) {
-            requestAnimationFrame(function () {
-                var name = pair[0];
-                var fn = pair[1];
-                catchErrorsAndLog(name, function () {
-                    fn();
-                    catchErrorsAndLogAll(_.tail(modules));
-                });
-            });
-        }
+        _.forEach(modules, function (pair) {
+            var name = pair[0];
+            var fn = pair[1];
+            catchErrorsAndLog(name, fn);
+        });
     };
 
     function makeBlocks(codeBlocks) {

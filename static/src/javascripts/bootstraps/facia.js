@@ -118,7 +118,7 @@ define([
         ready = function () {
             if (!this.initialised) {
                 this.initialised = true;
-                var codeBlocks = [
+                background(robust.makeBlocks([
                     ['f-accessibility', accessibility.shouldHideFlashingElements],
                     ['f-snaps', modules.showSnaps],
                     ['f-show-more', modules.showContainerShowMore],
@@ -130,8 +130,7 @@ define([
                     ['f-weather', modules.showWeather],
                     ['f-live-blog-updates', modules.showLiveblogUpdates],
                     ['f-slideshow', modules.startSlideshow]
-                ];
-                background(robust.makeBlocks(codeBlocks))();
+                ]));
             }
             mediator.emit('page:front:ready');
         };

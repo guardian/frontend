@@ -18,8 +18,10 @@ object DevAssetsController extends Controller with ExecutionContexts {
 
     val resolved = if (mvt.JspmTest.isParticipating && path.startsWith("javascripts")) {
       new File(s"static/src/$path").toURI.toURL
-    } else {
+    } else if (hashFile.exists()) {
       hashFile.toURI.toURL
+    } else {
+      new File(s"static/src/$path").toURI.toURL
     }
 
     Result(
