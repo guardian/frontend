@@ -60,7 +60,8 @@ define([
             'onSaveArticle',
             'onDeleteArticle',
             'createSaveFaciaItemHandler',
-            'createDeleteFaciaItemHandler'
+            'createDeleteFaciaItemHandler',
+            'signUserInToSaveArticle'
         );
     }
 
@@ -73,7 +74,7 @@ define([
         return { prop74: prefix + 'ContainerSave:' + contentId };
     };
 
-    SaveForLater.prototype.init = function () {
+    SaveForLater.prototype.init = function (showNotSignedIn) {
         var userLoggedIn = identity.isUserLoggedIn();
 
         if (userLoggedIn) {
@@ -92,9 +93,13 @@ define([
                     }.bind(this));
 
                     if (resp.status === 'error' && resp.errors[0].message === notFound.message && resp.errors[0].description === notFound.description) {
-                        //Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
+                        // this user has never saved anything, so create a new
+                        // data object and save an introductory article for them
+
+                        // Identity api needs a string in the format yyyy-mm-ddThh:mm:ss+hh:mm  otherwise it barfs
                         var date = new Date().toISOString().replace(/\.[0-9]+Z/, '+00:00');
                         this.userData = {version: date, articles: []};
+                        this.saveIntroArticle();
                     } else {
                         this.userData = resp.savedArticles;
                     }
@@ -105,8 +110,23 @@ define([
                         this.renderSaveButtonsInArticle();
                     }
                 }.bind(this));
+        } else {
+            if (showNotSignedIn) {
+                if (this.isContent) {
+                    var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>', {
+                        idUrl: config.page.idUrl,
+                        returnUrl: encodeURIComponent(document.location.href),
+                        shortUrl: shortUrl,
+                        platform: savedPlatformAnalytics
+                    });
+                    this.renderArticleSaveButton({ url: url, isSaved: false });
+                }
+                this.prepareFaciaItemLinks(false);
+            }
         }
+
     };
+
 
     SaveForLater.prototype.renderSaveButtonsInArticle = function () {
         if (this.getSavedArticle(shortUrl)) {
@@ -185,7 +205,12 @@ define([
 
             if (signedIn) {
                 this[isSaved ? 'createDeleteFaciaItemHandler' : 'createSaveFaciaItemHandler']($itemSaveLink[0], id, shortUrl);
+            } else {
+                bean.one($itemSaveLink[0], 'click', function (id, shortUrl) {
+                    this.signUserInToSaveArticle(id, shortUrl);
+                }.bind(this, id, shortUrl));
             }
+
 
             fastdom.write(function () {
                 if (isSaved) {
@@ -324,6 +349,17 @@ define([
         );
     };
 
+    SaveForLater.prototype.signUserInToSaveArticle = function (id, shortUrl) {
+        var url = template('<%= idUrl%>/save-content?returnUrl=<%= returnUrl%>&shortUrl=<%= shortUrl%>&platform=<%= platform%>&articleId=<%= articleId %>&INTCMP=SFL-SO', {
+            idUrl: config.page.idUrl,
+            returnUrl: encodeURIComponent(document.location.href),
+            shortUrl: shortUrl,
+            platform: savedPlatformAnalytics,
+            articleId: id
+        });
+        window.location = url;
+    };
+
     SaveForLater.prototype.createDeleteFaciaItemHandler = function (link, id, shortUrl) {
         bean.one(link, 'click',
             this.delete.bind(this,
@@ -354,6 +390,13 @@ define([
                 saveForLaterProfileCount.text('');
             }
         });
+    };
+
+    SaveForLater.prototype.saveIntroArticle = function () {
+        var pageId = 'help/insideguardian/2015/jul/21/introducing-save-for-later';
+        var shortUrl = '/p/4ab7x';
+
+        this.saveArticle(pageId, shortUrl);
     };
 
     return SaveForLater;

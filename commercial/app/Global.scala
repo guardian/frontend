@@ -1,5 +1,5 @@
 import common._
-import conf.Filters
+import conf.{SwitchboardLifecycle, CorsErrorHandler, Filters}
 import dev.DevParametersLifecycle
 import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.{Industries, JobsAgent}
@@ -73,6 +73,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 object Global extends WithFilters(Filters.common: _*)
   with CommercialLifecycle
   with DevParametersLifecycle
+  with SwitchboardLifecycle
   with CloudWatchApplicationMetrics
   with CorsErrorHandler {
   override lazy val applicationName = "frontend-commercial"

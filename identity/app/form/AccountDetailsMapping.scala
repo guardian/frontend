@@ -3,8 +3,11 @@ package form
 import play.api.data.Forms._
 import com.gu.identity.model.{UserDates, PrivateFields, User}
 import idapiclient.UserUpdate
+import play.api.i18n.Messages.Implicits.applicationMessagesApi
+import play.api.Play.current
 
 object AccountDetailsMapping extends UserFormMapping[AccountFormData] with AddressMapping with DateMapping {
+  override val messagesApi = applicationMessagesApi
 
   private val genders = List("Male", "Female", "Transgender", "unknown", "")
 

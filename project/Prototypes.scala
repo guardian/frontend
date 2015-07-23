@@ -5,6 +5,7 @@ import sbt._
 import sbt.Keys._
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.typesafe.sbt.SbtNativePackager._
+import com.typesafe.sbt.packager.Keys._
 import play.twirl.sbt.Import._
 import Dependencies._
 
@@ -49,6 +50,7 @@ trait Prototypes {
       </dependencies>,
 
     resolvers ++= Seq(
+      Resolver.typesafeRepo("releases"),
       Resolver.sonatypeRepo("releases"),
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       "Spy" at "https://files.couchbase.com/maven2/"
@@ -115,5 +117,6 @@ trait Prototypes {
       )
     )
     .settings(name in Universal := applicationName)
+    .settings(topLevelDirectory in Universal := Some(applicationName))
   }
 }
