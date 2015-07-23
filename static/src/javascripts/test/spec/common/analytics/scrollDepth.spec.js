@@ -18,6 +18,6 @@ describe('Scroll depth', function () {
         });
 
         window.scrollTo(0, 50);
-        mediator.emit('window:scroll');
+        mediator.emit('window:throttledScroll');
     });
 });

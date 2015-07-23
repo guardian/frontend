@@ -20,26 +20,24 @@ define([
             containers = qwery('.js-container--lazy-load'),
             lazyLoad = function () {
                 if (containers.length === 0) {
-                    mediator.off('window:scroll', lazyLoad);
+                    mediator.off('window:throttledScroll', lazyLoad);
                 } else {
-                    fastdom.read(function () {
-                        var scrollTop = bonzo(document.body).scrollTop(),
-                            scrollBottom = scrollTop + bonzo.viewport().height,
-                            bottomOffset = $frontBottom.offset().top,
-                            $container;
+                    var scrollTop = window.pageYOffset,
+                        scrollBottom = scrollTop + bonzo.viewport().height,
+                        bottomOffset = $frontBottom.offset().top,
+                        $container;
 
-                        if (scrollBottom > bottomOffset - distanceBeforeLoad) {
-                            $container = bonzo(containers.shift());
+                    if (scrollBottom > bottomOffset - distanceBeforeLoad) {
+                        $container = bonzo(containers.shift());
 
-                            fastdom.write(function () {
-                                $container.removeClass('fc-container--lazy-load');
-                            });
-                        }
-                    });
+                        fastdom.write(function () {
+                            $container.removeClass('fc-container--lazy-load');
+                        });
+                    }
                 }
             };
 
-        mediator.on('window:scroll', lazyLoad);
+        mediator.on('window:throttledScroll', lazyLoad);
         lazyLoad();
     };
 });
