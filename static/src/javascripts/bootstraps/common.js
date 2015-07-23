@@ -243,6 +243,25 @@ define([
                 });
             },
 
+            // Adds a global window:throttledScroll event to mediator, which throttles
+            // scroll events until there's a spare animationFrame.
+            // Callbacks of all listeners to window:throttledScroll are run in the
+            // same animationFrame, meaning they can all perform DOM reads for free
+            // (after the first one that needs layout triggers it).
+            // However, this means it's VITAL that all writes in callbacks are delegated to fastdom
+            throttledScrollEvent: function () {
+                var running = false;
+                window.addEventListener('scroll', function () {
+                    if (!running) {
+                        running = true;
+                        requestAnimationFrame(function () {
+                            mediator.emitEvent('window:throttledScroll');
+                            running = false;
+                        });
+                    }
+                });
+            },
+
             checkIframe: function () {
                 if (window.self !== window.top) {
                     $('html').addClass('iframed');
@@ -375,6 +394,7 @@ define([
                 ['c-test-cookie', modules.testCookie],
                 ['c-ad-cookie', modules.adTestCookie],
                 ['c-event-listeners', modules.windowEventListeners],
+                ['c-throttled-scroll-event', modules.throttledScrollEvent],
                 ['c-breaking-news', modules.loadBreakingNews],
                 ['c-block-link', fauxBlockLink],
                 ['c-iframe', modules.checkIframe],
