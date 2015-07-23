@@ -7,6 +7,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/modules/adblock-banner',
     'common/modules/ui/smartAppBanner'
 ], function (
     bean,
@@ -17,6 +18,7 @@ define([
     config,
     detect,
     mediator,
+    AdblockBanner,
     smartAppBanner
 ) {
     function StickyHeader() {
@@ -68,15 +70,19 @@ define([
             }
         }
 
+        if (this.isAdblockInUse) {
+            this.showAdblockBanner();
+        }
+
         if (this.isMobile) {
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePositionMobile();
             }.bind(this), 10));
-        } else if (this.isAdblockInUse) {
+        } /*else if (this.isAdblockInUse) {
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePositionAdblock();
             }.bind(this), 10));
-        } else if (this.isAppleCampaign) {
+        } */else if (this.isAppleCampaign) {
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePositionApple();
             }.bind(this), 10));
@@ -105,6 +111,14 @@ define([
                 this.lockStickyNavigation();
             }
         }.bind(this));
+    };
+
+    StickyHeader.prototype.showAdblockBanner = function () {
+        new AdblockBanner({
+            supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=adb-mban',
+            messageText: 'We notice you\'ve got an ad-blocker switched on. Perhaps you\'d like to support the Guardian another way?',
+            linkText: 'Become a supporter today'
+        }).show();
     };
 
     // Make sure meganav is always in the default state
