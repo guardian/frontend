@@ -123,7 +123,7 @@ define([
                 });
             }
             return true;
-        };
+        }
     };
 
     ExpandableV3.prototype.create = function () {

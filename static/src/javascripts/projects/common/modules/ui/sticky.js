@@ -55,7 +55,7 @@ define([
 
         fastdom.write(function () {
             that.$element.css(css);
-        });;
+        });
     };
 
     return Sticky;

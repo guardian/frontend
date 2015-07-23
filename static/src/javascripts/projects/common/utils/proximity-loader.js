@@ -45,10 +45,10 @@ define([
         fastdom.read(function () {
             var $el = bonzo(el),
                 conditionFn = function () {
-                var elOffset = $el.offset(),
-                    loadAfter = elOffset.top - distanceThreshold,
-                    loadBefore = elOffset.top + elOffset.height + distanceThreshold;
-                return scroll.top > loadAfter && scroll.bottom < loadBefore;
+                    var elOffset = $el.offset(),
+                        loadAfter = elOffset.top - distanceThreshold,
+                        loadBefore = elOffset.top + elOffset.height + distanceThreshold;
+                    return scroll.top > loadAfter && scroll.bottom < loadBefore;
                 };
             addItem(conditionFn, loadFn);
         });
