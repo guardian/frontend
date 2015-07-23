@@ -2,18 +2,20 @@ define([
     'bean',
     'bonzo',
     'common/utils/_',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'fastdom'
 ], function (
     bean,
     bonzo,
     _,
-    mediator
+    mediator,
+    fastdom
 ) {
 
     var Affix = function (options) {
 
-        bean.on(window, 'click', this.checkPositionWithEventLoop.bind(this));
-        mediator.addListener('window:scroll', _.debounce(this.checkPositionWithEventLoop.bind(this), 10));
+        bean.on(window, 'click', this.checkPosition.bind(this));
+        mediator.addListener('window:scroll', _.debounce(this.checkPosition.bind(this), 10));
         mediator.addListener('window:resize', _.debounce(this.calculateContainerPositioning.bind(this), 200));
 
         this.affixed  = null;
@@ -30,15 +32,17 @@ define([
     Affix.CLASSY_BOTTOM = 'affix-bottom';
 
     Affix.prototype.calculateContainerPositioning = function () {
-
         // The container defines the static positioning of the affix element.
-        this.$container.css('top', '0');
-        var containerTop = this.$markerTop.offset().top - this.$container.offset().top;
-        this.$container.css('top', containerTop + 'px');
-    };
-
-    Affix.prototype.checkPositionWithEventLoop = function () {
-        requestAnimationFrame(this.checkPosition.bind(this));
+        var _this = this;
+        fastdom.write(function () {
+            _this.$container.css('top', '0');
+            fastdom.read(function () {
+                var containerTop = _this.$markerTop.offset().top - _this.$container.offset().top;
+                fastdom.write(function () {
+                    _this.$container.css('top', containerTop + 'px');
+                });
+            });
+        });
     };
 
     Affix.prototype.getPixels = function (top) {
@@ -46,34 +50,50 @@ define([
     };
 
     Affix.prototype.checkPosition = function () {
-        var oldContainerStyling, topStyle,
-            topCheck      = this.$window.scrollTop() >= this.$markerTop.offset().top,
-            bottomCheck   = this.$window.scrollTop() + this.$element.dim().height < this.$markerBottom.offset().top,
-            viewportCheck = this.$element.dim().height < bonzo.viewport().height,
-            // This is true when the element is positioned below the top threshold and above the bottom threshold.
-            affix         = bottomCheck && topCheck && viewportCheck;
+        var _this = this;
+        fastdom.read(function () {
+            var oldContainerStyling, topStyle,
 
-        if (this.affixed !== affix) {
-            this.affixed = affix;
+                scrollTop     = _this.$window.scrollTop(),
+                markerTopTop  = _this.$markerTop.offset().top,
+                markerBottomTop = _this.$markerBottom.offset().top,
+                elHeight      = _this.$element.dim().height,
 
-            // Lock the affix container to the bottom marker.
-            if (bottomCheck) {
-                this.$container.removeClass(Affix.CLASSY_BOTTOM);
-                this.calculateContainerPositioning();
-            } else {
-                // Store the container top, which needs to be re-applied when affixed to bottom.
-                oldContainerStyling = this.getPixels(this.$container.css('top'));
-                topStyle            = this.$markerBottom.offset().top - this.$markerTop.offset().top - this.$element.dim().height + oldContainerStyling;
-                this.$container.css('top',  topStyle + 'px');
-                this.$container.addClass(Affix.CLASSY_BOTTOM);
+                topCheck      = scrollTop >= markerTopTop,
+                bottomCheck   = scrollTop + elHeight < markerBottomTop,
+                viewportCheck = elHeight < bonzo.viewport().height,
+
+                // This is true when the element is positioned below the top threshold and above the bottom threshold.
+                affix         = bottomCheck && topCheck && viewportCheck;
+
+            if (_this.affixed !== affix) {
+                _this.affixed = affix;
+
+                // Lock the affix container to the bottom marker.
+                if (bottomCheck) {
+                    fastdom.write(function () {
+                        _this.$container.removeClass(Affix.CLASSY_BOTTOM);
+                        _this.calculateContainerPositioning();
+                    });
+                } else {
+                    // Store the container top, which needs to be re-applied when affixed to bottom.
+                    oldContainerStyling = _this.getPixels(_this.$container.css('top'));
+                    topStyle            = markerBottomTop - markerTopTop - elHeight + oldContainerStyling;
+                    fastdom.write(function () {
+                        _this.$container.css('top',  topStyle + 'px');
+                        _this.$container.addClass(Affix.CLASSY_BOTTOM);
+                    });
+                }
+
+                fastdom.write(function () {
+                    if (affix) {
+                        _this.$element.addClass(Affix.CLASS);
+                    } else {
+                        _this.$element.removeClass(Affix.CLASS);
+                    }
+                });
             }
-
-            if (affix) {
-                this.$element.addClass(Affix.CLASS);
-            } else {
-                this.$element.removeClass(Affix.CLASS);
-            }
-        }
+        });
     };
     return Affix;
 });
