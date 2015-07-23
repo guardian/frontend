@@ -53,7 +53,6 @@ define([
 
     function makeBlocks(codeBlocks) {
         return _.map(codeBlocks, function (record) {
-            console.log('JD adding block', record[0]);
             return catchErrorsAndLog.bind(this, record[0], record[1]);
         });
     }
