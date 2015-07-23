@@ -29,9 +29,7 @@ define([
     Sticky.prototype.init = function () {
         mediator.on('window:throttledScroll', this.updatePosition);
         // kick off an initial position update
-        fastdom.read(function () {
-            this.updatePosition();
-        }.bind(this));
+        fastdom.read(this.updatePosition);
     };
 
     Sticky.prototype.updatePosition = function () {
