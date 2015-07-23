@@ -1,6 +1,5 @@
 /*
-    Swallows (and reports) exceptions. Designed to wrap around modules at the "bootstrap" level.
-    For example "comments throwing an exception should not stop auto refresh"
+    runs each block on a separate animation frame to prevent excessive lumpiness
  */
 define([
     'common/utils/_'
@@ -8,15 +7,15 @@ define([
     _
 ) {
 
-    (function (codeBlocks) {
-        return _.reduceRight(codeBlocks, function (restFunctions, fn) {
+    return function (codeBlocks) {
+        return (_.reduceRight(codeBlocks, function (restFunctions, fn) {
             return function () {
                 requestAnimationFrame(function () {
                     fn();
                     restFunctions();
                 });
             };
-        }, function () {});
-    })();
+        }, function () {}))();
+    };
 
 });
