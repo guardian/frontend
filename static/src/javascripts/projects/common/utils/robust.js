@@ -45,7 +45,7 @@ define([
                 var fn = pair[1];
                 catchErrorsAndLog(name, function () {
                     fn();
-                    catchErrorsAndLogAll(_.tail(modules))
+                    catchErrorsAndLogAll(_.tail(modules));
                 });
             });
         }
