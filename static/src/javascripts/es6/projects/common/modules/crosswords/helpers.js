@@ -73,6 +73,12 @@ const entryHasCell = (entry, x, y) => _.any(cellsForEntry(entry), (cell) => cell
 /** Can be used for width or height, as the cell height == cell width */
 const gridSize = (cells) => cells * (constants.cellSize + constants.borderSize) + constants.borderSize;
 
+const mapGrid = (grid, f) => _.map(grid, (row, x) => {
+    return _.map(row, (cell, y) => {
+        return f(cell, x, y);
+    });
+});
+
 export default {
     isAcross: isAcross,
     otherDirection: otherDirection,
@@ -81,5 +87,6 @@ export default {
     buildClueMap: buildClueMap,
     cellsForEntry: cellsForEntry,
     entryHasCell: entryHasCell,
-    gridSize: gridSize
+    gridSize: gridSize,
+    mapGrid: mapGrid
 };
