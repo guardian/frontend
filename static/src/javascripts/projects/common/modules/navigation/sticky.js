@@ -39,6 +39,8 @@ define([
         this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
         this.isProfilePage = config.page.section === 'identity';
         this.isAdblockInUse = detect.adblockInUse;
+
+        _.bindAll(this, 'updatePositionMobile', 'updatePositionAdblock', 'updatePositionApple', 'updatePosition');
     }
 
     StickyHeader.prototype.init = function () {
@@ -69,23 +71,15 @@ define([
         }
 
         if (this.isMobile) {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionMobile();
-            }.bind(this), 10));
+            mediator.on('window:throttledScroll', this.updatePositionMobile);
         } else if (this.isAdblockInUse) {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionAdblock();
-            }.bind(this), 10));
+            mediator.on('window:throttledScroll', this.updatePositionAdblock);
         } else if (this.isAppleCampaign) {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionApple();
-            }.bind(this), 10));
+            mediator.on('window:throttledScroll', this.updatePositionApple);
         } else if (this.isProfilePage) {
             this.updatePositionProfile();
         } else {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePosition();
-            }.bind(this), 10));
+            mediator.on('window:throttledScroll', this.updatePosition);
         }
 
         // Make sure header is locked when meganav is open
@@ -201,137 +195,18 @@ define([
     };
 
     StickyHeader.prototype.updatePosition = function () {
-        fastdom.read(function () {
-            var bannerHeight = 0,
-                scrollY = this.$els.window.scrollTop();
+        var bannerHeight = 0,
+            scrollY = window.pageYOffset;
 
-            if (!this.isSensitivePage) {
-                bannerHeight = this.$els.bannerDesktop.dim().height || 128;
-            }
+        if (!this.isSensitivePage) {
+            bannerHeight = this.$els.bannerDesktop.dim().height || 128;
+        }
 
-            this.setScrollDirection(scrollY);
+        this.setScrollDirection(scrollY);
 
-            // Header is slim and navigation is shown on the scroll up
-            // Unless meganav is opened
-            if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth) && !this.config.isNavigationLocked) {
-                fastdom.write(function () {
-                    this.$els.header.css({
-                        position:  'fixed',
-                        top:       0,
-                        width:     '100%',
-                        'z-index': '1020',
-                        'margin-top': 0,
-                        '-webkit-transform': 'translateY(-100%)',
-                        '-ms-transform': 'translateY(-100%)',
-                        'transform': 'translateY(-100%)',
-                        'backface-visibility': 'hidden'
-                    });
-
-                    // Make sure banner is outside of the view
-                    this.$els.bannerDesktop.css({
-                        position: 'absolute',
-                        width: '100%',
-                        top: this.headerBigHeight
-                    });
-
-                    this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
-                    this.$els.header.addClass('l-header--is-slim');
-                    this.$els.header.css({
-                        '-webkit-transform': 'translateY(0%)',
-                        '-ms-transform': 'translateY(0%)',
-                        'transform': 'translateY(0%)'
-                    });
-                }.bind(this));
-
-                // If meganav is open we don't want to touch the navigation state
-                if (!this.config.isNavigationLocked && config.page.contentType !== 'Interactive') {
-                    this.showNavigation(scrollY);
-                }
-            } else if (scrollY >= this.headerBigHeight) {
-                fastdom.write(function () {
-                    // Add is not sticky anymore
-                    this.$els.bannerDesktop.css({
-                        position: 'absolute',
-                        width: '100%',
-                        top: this.headerBigHeight,
-                        'z-index': '1019' // Sticky z-index +1 so banner is over sticky header
-                    });
-
-                    if (!this.config.isNavigationLocked) {
-                        //header is slim from now on
-                        this.$els.header.addClass('l-header--is-slim');
-                    }
-                }.bind(this));
-                if (!this.config.isNavigationLocked) {
-                    if (this.config.direction === 'up') {
-                        fastdom.write(function () {
-                            this.$els.header.css({
-                                '-webkit-transform': 'translateY(-100%)',
-                                '-ms-transform': 'translateY(-100%)',
-                                'transform': 'translateY(-100%)'
-                            });
-                        }.bind(this));
-                    } else {
-                        fastdom.write(function () {
-                            this.$els.header.css({
-                                position: 'absolute',
-                                'margin-top': bannerHeight,
-                                '-webkit-transform': 'translateY(-500%)',
-                                '-ms-transform': 'translateY(-500%)',
-                                'transform': 'translateY(-500%)',
-                                'z-index': '1018'
-                            });
-
-                            this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
-                        }.bind(this));
-                    }
-                }
-            } else {
-                fastdom.write(function () {
-                    // Make sure that we show slim nav when page loaded with anchor
-                    this.$els.bannerDesktop.css({
-                        position:  'fixed',
-                        top:       0,
-                        width:     '100%',
-                        'z-index': '1019',
-                        'backface-visibility': 'hidden'
-                    });
-                    //Header is slim only on interactives page
-                    if (config.page.contentType !== 'Interactive') {
-                        this.$els.header.removeClass('l-header--is-slim');
-                    }
-
-                    this.$els.header.css({
-                        position:  'relative',
-                        width:     '100%',
-                        'margin-top': bannerHeight,
-                        '-webkit-transform': 'translateY(0%)',
-                        '-ms-transform': 'translateY(0%)',
-                        'transform': 'translateY(0%)',
-                        'z-index': '1018'
-                    });
-
-                    this.$els.main.css('margin-top', 0);
-                    if (this.isSensitivePage) {
-                        this.$els.navigation.css('display', 'block');
-                    }
-                }.bind(this));
-
-                // Put navigation to its default state
-                this.setNavigationDefault();
-            }
-
-            if ($('.gssb_c').length > 0) {
-                fastdom.write(function () {
-                    $('.gssb_c').hide();
-                });
-            }
-        }.bind(this));
-    };
-
-    StickyHeader.prototype.updatePositionProfile = function () {
-        fastdom.read(function () {
-            var headerHeight = this.$els.header.dim().height;
+        // Header is slim and navigation is shown on the scroll up
+        // Unless meganav is opened
+        if (scrollY >= this.headerBigHeight + (bannerHeight * this.config.showHeaderDepth) && !this.config.isNavigationLocked) {
             fastdom.write(function () {
                 this.$els.header.css({
                     position:  'fixed',
@@ -339,119 +214,230 @@ define([
                     width:     '100%',
                     'z-index': '1020',
                     'margin-top': 0,
+                    '-webkit-transform': 'translateY(-100%)',
+                    '-ms-transform': 'translateY(-100%)',
+                    'transform': 'translateY(-100%)',
                     'backface-visibility': 'hidden'
                 });
-                this.$els.main.css('padding-top', headerHeight);
+
+                // Make sure banner is outside of the view
+                this.$els.bannerDesktop.css({
+                    position: 'absolute',
+                    width: '100%',
+                    top: this.headerBigHeight
+                });
+
+                this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
+                this.$els.header.addClass('l-header--is-slim');
+                this.$els.header.css({
+                    '-webkit-transform': 'translateY(0%)',
+                    '-ms-transform': 'translateY(0%)',
+                    'transform': 'translateY(0%)'
+                });
             }.bind(this));
+
+            // If meganav is open we don't want to touch the navigation state
+            if (!this.config.isNavigationLocked && config.page.contentType !== 'Interactive') {
+                this.showNavigation(scrollY);
+            }
+        } else if (scrollY >= this.headerBigHeight) {
+            fastdom.write(function () {
+                // Add is not sticky anymore
+                this.$els.bannerDesktop.css({
+                    position: 'absolute',
+                    width: '100%',
+                    top: this.headerBigHeight,
+                    'z-index': '1019' // Sticky z-index +1 so banner is over sticky header
+                });
+
+                if (!this.config.isNavigationLocked) {
+                    //header is slim from now on
+                    this.$els.header.addClass('l-header--is-slim');
+                }
+            }.bind(this));
+            if (!this.config.isNavigationLocked) {
+                if (this.config.direction === 'up') {
+                    fastdom.write(function () {
+                        this.$els.header.css({
+                            '-webkit-transform': 'translateY(-100%)',
+                            '-ms-transform': 'translateY(-100%)',
+                            'transform': 'translateY(-100%)'
+                        });
+                    }.bind(this));
+                } else {
+                    fastdom.write(function () {
+                        this.$els.header.css({
+                            position: 'absolute',
+                            'margin-top': bannerHeight,
+                            '-webkit-transform': 'translateY(-500%)',
+                            '-ms-transform': 'translateY(-500%)',
+                            'transform': 'translateY(-500%)',
+                            'z-index': '1018'
+                        });
+
+                        this.$els.main.css('margin-top', this.headerBigHeight + bannerHeight);
+                    }.bind(this));
+                }
+            }
+        } else {
+            fastdom.write(function () {
+                // Make sure that we show slim nav when page loaded with anchor
+                this.$els.bannerDesktop.css({
+                    position:  'fixed',
+                    top:       0,
+                    width:     '100%',
+                    'z-index': '1019',
+                    'backface-visibility': 'hidden'
+                });
+                //Header is slim only on interactives page
+                if (config.page.contentType !== 'Interactive') {
+                    this.$els.header.removeClass('l-header--is-slim');
+                }
+
+                this.$els.header.css({
+                    position:  'relative',
+                    width:     '100%',
+                    'margin-top': bannerHeight,
+                    '-webkit-transform': 'translateY(0%)',
+                    '-ms-transform': 'translateY(0%)',
+                    'transform': 'translateY(0%)',
+                    'z-index': '1018'
+                });
+
+                this.$els.main.css('margin-top', 0);
+                if (this.isSensitivePage) {
+                    this.$els.navigation.css('display', 'block');
+                }
+            }.bind(this));
+
+            // Put navigation to its default state
+            this.setNavigationDefault();
+        }
+
+        if ($('.gssb_c').length > 0) {
+            fastdom.write(function () {
+                $('.gssb_c').hide();
+            });
+        }
+    };
+
+    StickyHeader.prototype.updatePositionProfile = function () {
+        var headerHeight = this.$els.header.dim().height;
+        fastdom.write(function () {
+            this.$els.header.css({
+                position:  'fixed',
+                top:       0,
+                width:     '100%',
+                'z-index': '1020',
+                'margin-top': 0,
+                'backface-visibility': 'hidden'
+            });
+            this.$els.main.css('padding-top', headerHeight);
         }.bind(this));
     };
 
     StickyHeader.prototype.updatePositionAdblock = function () {
-        fastdom.read(function () {
-            var headerHeight = this.$els.header.dim().height,
-                scrollY      = this.$els.window.scrollTop();
+        var headerHeight = this.$els.header.dim().height,
+            scrollY      = window.pageYOffset;
 
-            this.setScrollDirection(scrollY);
-            // Header is slim and navigation is shown on the scroll up
-            if (scrollY >= headerHeight) {
-                fastdom.write(function () {
-                    this.$els.header.css({
-                        position:  'fixed',
-                        top:       0,
-                        width:     '100%',
-                        'z-index': '1000',
-                        'margin-top': 0,
-                        '-webkit-transform': 'translateY(-100%)',
-                        '-ms-transform': 'translateY(-100%)',
-                        'transform': 'translateY(-100%)',
-                        'backface-visibility': 'hidden'
-                    });
+        this.setScrollDirection(scrollY);
+        // Header is slim and navigation is shown on the scroll up
+        if (scrollY >= headerHeight) {
+            fastdom.write(function () {
+                this.$els.header.css({
+                    position:  'fixed',
+                    top:       0,
+                    width:     '100%',
+                    'z-index': '1000',
+                    'margin-top': 0,
+                    '-webkit-transform': 'translateY(-100%)',
+                    '-ms-transform': 'translateY(-100%)',
+                    'transform': 'translateY(-100%)',
+                    'backface-visibility': 'hidden'
+                });
 
-                    this.$els.header.addClass('l-header--is-slim');
-                    this.$els.header.css({
-                        '-webkit-transform': 'translateY(0%)',
-                        '-ms-transform': 'translateY(0%)',
-                        'transform': 'translateY(0%)'
-                    });
-                }.bind(this));
-                this.showNavigation(scrollY);
-            } else {
-                fastdom.write(function () {
-                    // Header is not slim yet
-                    this.$els.header.removeClass('l-header--is-slim');
-                    this.$els.header.css({
-                        position:  'static',
-                        width:     '100%',
-                        'margin-top': 0,
-                        '-webkit-transform': 'translateY(0%)',
-                        '-ms-transform': 'translateY(0%)',
-                        'transform': 'translateY(0%)',
-                        'z-index': '998'
-                    });
-                }.bind(this));
+                this.$els.header.addClass('l-header--is-slim');
+                this.$els.header.css({
+                    '-webkit-transform': 'translateY(0%)',
+                    '-ms-transform': 'translateY(0%)',
+                    'transform': 'translateY(0%)'
+                });
+            }.bind(this));
+            this.showNavigation(scrollY);
+        } else {
+            fastdom.write(function () {
+                // Header is not slim yet
+                this.$els.header.removeClass('l-header--is-slim');
+                this.$els.header.css({
+                    position:  'static',
+                    width:     '100%',
+                    'margin-top': 0,
+                    '-webkit-transform': 'translateY(0%)',
+                    '-ms-transform': 'translateY(0%)',
+                    'transform': 'translateY(0%)',
+                    'z-index': '998'
+                });
+            }.bind(this));
 
-                // Put navigation to its default state
-                this.setNavigationDefault();
-            }
-        }.bind(this));
+            // Put navigation to its default state
+            this.setNavigationDefault();
+        }
     };
 
     StickyHeader.prototype.updatePositionApple = function () {
-        fastdom.read(function () {
-            var bannerHeight = this.$els.bannerBelowNav.dim().height || 336,
-                scrollY      = this.$els.window.scrollTop();
+        var bannerHeight = this.$els.bannerBelowNav.dim().height || 336,
+            scrollY      = window.pageYOffset;
 
-            this.setScrollDirection(scrollY);
+        this.setScrollDirection(scrollY);
 
-            // Header is slim and navigation is shown on the scroll up
-            if (scrollY >= bannerHeight * this.config.showHeaderAppleDepth) {
-                fastdom.write(function () {
-                    this.$els.header.css({
-                        position:  'fixed',
-                        top:       0,
-                        width:     '100%',
-                        'z-index': '1020',
-                        'margin-top': 0,
-                        '-webkit-transform': 'translateY(-100%)',
-                        '-ms-transform': 'translateY(-100%)',
-                        'transform': 'translateY(-100%)',
-                        'backface-visibility': 'hidden'
-                    });
+        // Header is slim and navigation is shown on the scroll up
+        if (scrollY >= bannerHeight * this.config.showHeaderAppleDepth) {
+            fastdom.write(function () {
+                this.$els.header.css({
+                    position:  'fixed',
+                    top:       0,
+                    width:     '100%',
+                    'z-index': '1020',
+                    'margin-top': 0,
+                    '-webkit-transform': 'translateY(-100%)',
+                    '-ms-transform': 'translateY(-100%)',
+                    'transform': 'translateY(-100%)',
+                    'backface-visibility': 'hidden'
+                });
 
-                    // Make sure banner is outside of the view
-                    this.$els.bannerBelowNav.css({
-                        position:  'static',
-                        top:       null,
-                        width:     '100%',
-                        'z-index': '1019'
-                    });
-                    this.$els.header.addClass('l-header--is-slim');
-                    this.$els.header.css({
-                        '-webkit-transform': 'translateY(0%)',
-                        '-ms-transform': 'translateY(0%)',
-                        'transform': 'translateY(0%)'
-                    });
-                }.bind(this));
-                this.showNavigation(scrollY);
-            } else {
-                fastdom.write(function () {
-                    // Header is not slim yet
-                    this.$els.header.removeClass('l-header--is-slim');
-                    this.$els.header.css({
-                        position:  'static',
-                        width:     '100%',
-                        'margin-top': 0,
-                        '-webkit-transform': 'translateY(0%)',
-                        '-ms-transform': 'translateY(0%)',
-                        'transform': 'translateY(0%)',
-                        'z-index': '1018'
-                    });
-                }.bind(this));
+                // Make sure banner is outside of the view
+                this.$els.bannerBelowNav.css({
+                    position:  'static',
+                    top:       null,
+                    width:     '100%',
+                    'z-index': '1019'
+                });
+                this.$els.header.addClass('l-header--is-slim');
+                this.$els.header.css({
+                    '-webkit-transform': 'translateY(0%)',
+                    '-ms-transform': 'translateY(0%)',
+                    'transform': 'translateY(0%)'
+                });
+            }.bind(this));
+            this.showNavigation(scrollY);
+        } else {
+            fastdom.write(function () {
+                // Header is not slim yet
+                this.$els.header.removeClass('l-header--is-slim');
+                this.$els.header.css({
+                    position:  'static',
+                    width:     '100%',
+                    'margin-top': 0,
+                    '-webkit-transform': 'translateY(0%)',
+                    '-ms-transform': 'translateY(0%)',
+                    'transform': 'translateY(0%)',
+                    'z-index': '1018'
+                });
+            }.bind(this));
 
-                // Put navigation to its default state
-                this.setNavigationDefault();
-            }
-        }.bind(this));
+            // Put navigation to its default state
+            this.setNavigationDefault();
+        }
     };
 
     StickyHeader.prototype.fixedBannerMobile = function (headerTop, bannerHeight) {
@@ -476,70 +462,68 @@ define([
     };
 
     StickyHeader.prototype.updatePositionMobile = function () {
-        fastdom.read(function () {
-            var bannerHeight      = this.$els.bannerMobile.dim().height,
-                scrollY           = this.$els.window.scrollTop(),
-                smartBannerHeight = smartAppBanner.getMessageHeight();
+        var bannerHeight      = this.$els.bannerMobile.dim().height,
+            scrollY           = window.pageYOffset,
+            smartBannerHeight = smartAppBanner.getMessageHeight();
 
-            fastdom.write(function () {
-                this.setScrollDirection(scrollY);
+        fastdom.write(function () {
+            this.setScrollDirection(scrollY);
 
-                if (smartAppBanner.isMessageShown()) {
-                    if (scrollY < smartBannerHeight) {
-                        fastdom.write(function () {
-                            this.$els.header.css({
-                                position: 'static',
-                                top: null,
-                                width: '100%',
-                                'z-index': '1021',
-                                'margin-top': 0
-                            });
-                            this.$els.bannerMobile.css({
-                                position: 'static',
-                                top: null,
-                                width: '100%',
-                                'z-index': '1019' // Sticky z-index -1 as it should be sticky but should go below the sticky header
-                            });
-                            this.$els.main.css('margin-top', 0);
-                        }.bind(this));
-                    } else if (scrollY > smartBannerHeight && scrollY < this.config.thresholdMobile) {
-                        fastdom.write(function () {
-                            this.fixedBannerMobile(0, bannerHeight);
-                        }.bind(this));
-                        // Put navigation to its default state
-                        this.setNavigationDefault();
-                    } else if (scrollY > this.config.thresholdMobile) {
-                        fastdom.write(function () {
-                            //after this.thresholdMobile px of scrolling 'release' banner and navigation
-                            this.$els.bannerMobile.css({
-                                position: 'absolute',
-                                top: this.config.thresholdMobile + this.headerBigHeight
-                            });
-                        }.bind(this));
+            if (smartAppBanner.isMessageShown()) {
+                if (scrollY < smartBannerHeight) {
+                    fastdom.write(function () {
+                        this.$els.header.css({
+                            position: 'static',
+                            top: null,
+                            width: '100%',
+                            'z-index': '1021',
+                            'margin-top': 0
+                        });
+                        this.$els.bannerMobile.css({
+                            position: 'static',
+                            top: null,
+                            width: '100%',
+                            'z-index': '1019' // Sticky z-index -1 as it should be sticky but should go below the sticky header
+                        });
+                        this.$els.main.css('margin-top', 0);
+                    }.bind(this));
+                } else if (scrollY > smartBannerHeight && scrollY < this.config.thresholdMobile) {
+                    fastdom.write(function () {
+                        this.fixedBannerMobile(0, bannerHeight);
+                    }.bind(this));
+                    // Put navigation to its default state
+                    this.setNavigationDefault();
+                } else if (scrollY > this.config.thresholdMobile) {
+                    fastdom.write(function () {
+                        //after this.thresholdMobile px of scrolling 'release' banner and navigation
+                        this.$els.bannerMobile.css({
+                            position: 'absolute',
+                            top: this.config.thresholdMobile + this.headerBigHeight
+                        });
+                    }.bind(this));
 
-                        this.showNavigation(scrollY);
-                    }
-                } else {
-                    //header, navigation and banner are sticky from the beginning
-                    if (scrollY < this.config.thresholdMobile) {
-                        fastdom.write(function () {
-                            this.fixedBannerMobile(0, bannerHeight);
-                        }.bind(this));
-                        // Put navigation to its default state
-                        this.setNavigationDefault();
-                    } else {
-                        fastdom.write(function () {
-                            //after this.thresholdMobile px of scrolling 'release' banner and navigation
-                            this.$els.bannerMobile.css({
-                                position: 'absolute',
-                                top: this.config.thresholdMobile + this.headerBigHeight
-                            });
-                        }.bind(this));
-
-                        this.showNavigation(scrollY);
-                    }
+                    this.showNavigation(scrollY);
                 }
-            }.bind(this));
+            } else {
+                //header, navigation and banner are sticky from the beginning
+                if (scrollY < this.config.thresholdMobile) {
+                    fastdom.write(function () {
+                        this.fixedBannerMobile(0, bannerHeight);
+                    }.bind(this));
+                    // Put navigation to its default state
+                    this.setNavigationDefault();
+                } else {
+                    fastdom.write(function () {
+                        //after this.thresholdMobile px of scrolling 'release' banner and navigation
+                        this.$els.bannerMobile.css({
+                            position: 'absolute',
+                            top: this.config.thresholdMobile + this.headerBigHeight
+                        });
+                    }.bind(this));
+
+                    this.showNavigation(scrollY);
+                }
+            }
         }.bind(this));
     };
 
