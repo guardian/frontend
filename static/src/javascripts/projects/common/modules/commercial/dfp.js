@@ -205,7 +205,7 @@ define([
             googletag.pubads().collapseEmptyDivs();
             setPublisherProvidedId();
             googletag.enableServices();
-            mediator.on('window:scroll', _.throttle(lazyLoad, 10));
+            mediator.on('window:throttledScroll', lazyLoad);
             lazyLoad();
         },
         windowResize = _.debounce(
@@ -256,23 +256,22 @@ define([
         },
         lazyLoad = function () {
             if (slots.length === 0) {
-                mediator.off('window:scroll');
+                mediator.off('window:throttledScroll');
             } else {
-                fastdom.read(function () {
-                    var scrollTop    = bonzo(document.body).scrollTop(),
-                        scrollBottom = scrollTop + bonzo.viewport().height,
-                        depth = 0.5;
+                var scrollTop    = window.pageYOffset,
+                    viewportHeight = bonzo.viewport().height,
+                    scrollBottom = scrollTop + viewportHeight,
+                    depth = 0.5;
 
-                    _(slots).keys().forEach(function (slot) {
-                        // if the position of the ad is above the viewport - offset (half screen size)
-                        // Make sure page skin is loaded first
-                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth || slot === 'dfp-ad--pageskin-inread') {
-                            googletag.display(slot);
+                _(slots).keys().forEach(function (slot) {
+                    // if the position of the ad is above the viewport - offset (half screen size)
+                    // Make sure page skin is loaded first
+                    if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - viewportHeight * depth || slot === 'dfp-ad--pageskin-inread') {
+                        googletag.display(slot);
 
-                            slots = _(slots).omit(slot).value();
-                            displayed = true;
-                        }
-                    });
+                        slots = _(slots).omit(slot).value();
+                        displayed = true;
+                    }
                 });
             }
         },
