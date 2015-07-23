@@ -23,13 +23,9 @@
 }
 .commercial__inner {
     position: relative;
-    overflow: hidden;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 
     @include mq(leftCol) {
-        padding-left: 0;
-        padding-right: 0;
         max-width: gs-span(14) + $gs-gutter*2;
     }
     @include mq(wide) {
@@ -43,12 +39,10 @@
     @include fs-header(2);
 
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        padding: 0 $gs-gutter;
     }
     @include mq(leftCol) {
         width: $left-column + $gs-gutter;
-        height: 100%;
         position: absolute;
         top: 0;
         bottom: 0;
