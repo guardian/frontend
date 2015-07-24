@@ -194,27 +194,6 @@ object GuTargeting {
 }
 
 
-case class Size(width: Int, height: Int)
-
-object Size {
-
-  implicit val writes = new Writes[Size] {
-    def writes(size: Size): JsValue = {
-      Json.obj(
-        "width" -> size.width,
-        "height" -> size.height
-      )
-    }
-  }
-
-  implicit val reads: Reads[Size] = (
-    (JsPath \ "width").read[Int] and
-      (JsPath \ "height").read[Int]
-    )(Size.apply _)
-
-}
-
-
 case class GuLineItem(id: Long,
                       name: String,
                       startTime: DateTime,
@@ -223,7 +202,7 @@ case class GuLineItem(id: Long,
                       sponsor: Option[String],
                       status: String,
                       costType: String,
-                      creativeSizes: Seq[Size],
+                      creativeSizes: Seq[AdSize],
                       targeting: GuTargeting,
                       lastModified: DateTime) {
 
@@ -278,7 +257,7 @@ object GuLineItem {
       (JsPath \ "sponsor").readNullable[String] and
       (JsPath \ "status").read[String] and
       (JsPath \ "costType").read[String] and
-      (JsPath \ "sizes").read[Seq[Size]] and
+      (JsPath \ "sizes").read[Seq[AdSize]] and
       (JsPath \ "targeting").read[GuTargeting] and
       (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
     )(GuLineItem.apply _)

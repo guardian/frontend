@@ -1,7 +1,8 @@
 package views.support
 
 import common.Edition
-import common.dfp.Size
+import common.dfp.AdSize
+import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import conf.Switches._
 import model.MetaData
 
@@ -19,16 +20,16 @@ object Commercial {
       metaData.id == "uk" || metaData.id == "us" || metaData.id == "au"
     }
 
-    private def hasAdOfSize(size: Size, metaData: MetaData, edition: Edition): Boolean = {
-      metaData.sizesOfAdInTopAboveNavSlot(edition).exists(_ contains size)
+    private def hasAdOfSize(size: AdSize, metaData: MetaData, edition: Edition): Boolean = {
+      metaData.sizesOfAdInTopAboveNavSlot(edition) contains size
     }
 
     private def hasSmallAd(metaData: MetaData, edition: Edition): Boolean = {
-      hasAdOfSize(Size(728, 90), metaData, edition)
+      hasAdOfSize(leaderboardSize, metaData, edition)
     }
 
     private def hasResponsiveAd(metaData: MetaData, edition: Edition): Boolean = {
-      hasAdOfSize(Size(88, 70), metaData, edition)
+      hasAdOfSize(responsiveSize, metaData, edition)
     }
 
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {

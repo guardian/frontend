@@ -1,7 +1,7 @@
 package model
 
 import com.gu.facia.api.models._
-import common.dfp.{DfpAgent, Size}
+import common.dfp.{AdSize, DfpAgent}
 import common.{Edition, NavItem}
 import conf.Configuration
 import contentapi.Paths
@@ -85,7 +85,7 @@ case class PressedPage(id: String,
       Some(section)))
   override def sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
-  override def sizesOfAdInTopAboveNavSlot(edition: Edition): Option[Seq[Size]] = {
+  override def sizesOfAdInTopAboveNavSlot(edition: Edition): Seq[AdSize] = {
     DfpAgent.sizesOfAdInTopAboveNavSlot(adUnitSuffix, edition)
   }
   override def hasAdInBelowTopNavSlot(edition: Edition): Boolean = {

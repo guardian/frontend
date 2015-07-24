@@ -2,6 +2,7 @@ package common.dfp
 
 import akka.agent.Agent
 import common._
+import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import conf.Configuration.commercial._
 import conf.Configuration.environment
 import play.api.Play
@@ -146,7 +147,7 @@ object DfpAgent
               )
           } &&
           lineItem.creativeSizes.exists { size =>
-            size == Size(728, 90) || size == Size(88, 70)
+            size == leaderboardSize || size == responsiveSize
           }
       }
     }

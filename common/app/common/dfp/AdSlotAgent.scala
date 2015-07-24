@@ -3,6 +3,7 @@ package common.dfp
 import java.net.URI
 
 import common.Edition
+import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.editions.{Au, Uk, Us}
 import conf.Configuration.commercial.dfpAdUnitRoot
 
@@ -32,8 +33,7 @@ trait AdSlotAgent {
 
   private def targetsAdTest(lineItem: GuLineItem) = lineItem.targeting.hasAdTestTargetting
 
-  def sizesOfAdInTopAboveNavSlot(adUnitWithoutRoot: String,
-                                 edition: Edition): Option[Seq[Size]] = {
+  def sizesOfAdInTopAboveNavSlot(adUnitWithoutRoot: String, edition: Edition): Seq[AdSize] = {
 
     val isNetworkFront = {
       val prefix = adUnitWithoutRoot.stripSuffix("/ng").stripSuffix("/front")
@@ -42,7 +42,7 @@ trait AdSlotAgent {
 
     def targetsRelevantSizes(lineItem: GuLineItem): Boolean = {
       val creativeSizes = lineItem.creativeSizes
-      creativeSizes.contains(Size(728, 90)) || creativeSizes.contains(Size(88, 70))
+      creativeSizes.contains(leaderboardSize) || creativeSizes.contains(responsiveSize)
     }
 
     def deriveEditionFromGeotargeting(lineItem: GuLineItem): Option[Edition] = {
@@ -65,7 +65,7 @@ trait AdSlotAgent {
       }
     } else Nil
 
-    if (lineItems.isEmpty) None else Some(lineItems flatMap (_.creativeSizes))
+    lineItems flatMap (_.creativeSizes)
   }
 
   def hasAdInTopBelowNavSlot(adUnitWithoutRoot: String, edition: Edition): Boolean = {
