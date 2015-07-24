@@ -17,7 +17,7 @@ define([
         _.bindAll(this, 'checkPosition', 'calculateContainerPositioning');
 
         bean.on(window, 'click', this.checkPosition);
-        mediator.addListener('window:throttledScroll', _.debounce(this.checkPosition, 10));
+        mediator.addListener('window:throttledScroll', this.checkPosition);
         mediator.addListener('window:resize', _.debounce(this.calculateContainerPositioning, 200));
 
         this.affixed  = null;
