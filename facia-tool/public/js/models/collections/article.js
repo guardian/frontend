@@ -207,7 +207,7 @@ define([
                     editable: true,
                     omitForSupporting: true,
                     ifState: 'isLiveBlog',
-                    label: 'playable live',
+                    label: 'show updates',
                     type: 'boolean'
                 },
                 {
