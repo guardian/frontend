@@ -54,21 +54,21 @@ define([
         var scrollY = window.pageYOffset,
             viewportHeight = bonzo.viewport().height,
             adSlotTop = this.$adSlot.offset().top,
-            that = this;
+            that = this,
 
-        var adHeight = (this.isClosed) ?
-                this.closedHeight : this.openedHeight;
-        var inViewB = ((scrollY + viewportHeight) > adSlotTop);
-        var inViewT = ((scrollY - (adHeight * 2)) < adSlotTop + 20);
-        var topCusp = (inViewT &&
+            adHeight = (this.isClosed) ?
+                this.closedHeight : this.openedHeight,
+            inViewB = ((scrollY + viewportHeight) > adSlotTop),
+            inViewT = ((scrollY - (adHeight * 2)) < adSlotTop + 20),
+            topCusp = (inViewT &&
                 ((scrollY + (viewportHeight * 0.4) - adHeight) > adSlotTop)) ?
-                'true' : 'false';
-        var bottomCusp = (inViewB &&
+                'true' : 'false',
+            bottomCusp = (inViewB &&
                 (scrollY + (viewportHeight * 0.5)) < adSlotTop) ?
-                'true' : 'false';
-        var bottomScroll = (bottomCusp === 'true') ?
-                50 - ((scrollY + (viewportHeight * 0.5) - adSlotTop) * -0.2) : 50;
-        var topScroll = (topCusp === 'true') ?
+                'true' : 'false',
+            bottomScroll = (bottomCusp === 'true') ?
+                50 - ((scrollY + (viewportHeight * 0.5) - adSlotTop) * -0.2) : 50,
+            topScroll = (topCusp === 'true') ?
                 ((scrollY + (viewportHeight * 0.4) - adSlotTop - adHeight) * 0.2) : 0;
 
         switch (this.params.backgroundImagePType) {
