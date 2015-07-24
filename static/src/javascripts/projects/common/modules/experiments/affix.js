@@ -18,7 +18,9 @@ define([
 
         bean.on(window, 'click', this.checkPosition);
         mediator.addListener('window:throttledScroll', this.checkPosition);
-        mediator.addListener('window:resize', _.debounce(this.calculateContainerPositioning, 200));
+        mediator.addListener('window:resize', _.debounce(function () {
+            fastdom.write(this.calculateContainerPositioning);
+        }, 200));
 
         this.affixed  = null;
         this.$markerTop = bonzo(options.topMarker);
@@ -27,7 +29,7 @@ define([
         this.$element = bonzo(options.element);
         this.$window = bonzo(document.body);
 
-        this.calculateContainerPositioning();
+        fastdom.write(this.calculateContainerPositioning);
     };
 
     Affix.CLASS = 'affix';
@@ -36,13 +38,13 @@ define([
     Affix.prototype.calculateContainerPositioning = function () {
         // The container defines the static positioning of the affix element.
         var that = this;
-        fastdom.write(function () {
-            that.$container.css('top', '0');
-            fastdom.read(function () {
-                var containerTop = that.$markerTop.offset().top - that.$container.offset().top;
-                fastdom.write(function () {
-                    that.$container.css('top', containerTop + 'px');
-                });
+
+        // aleady called from inside a fastdom.write cb...
+        this.$container.css('top', '0');
+        fastdom.read(function () {
+            var containerTop = that.$markerTop.offset().top - that.$container.offset().top;
+            fastdom.write(function () {
+                that.$container.css('top', containerTop + 'px');
             });
         });
     };
