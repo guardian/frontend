@@ -1,4 +1,3 @@
-import ab_headlines.ABTHeadlinesLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import common.{CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
 import conf._
@@ -67,7 +66,6 @@ object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilte
   with ConfigAgentLifecycle
   with SurgingContentAgentLifecycle
   with SectionsLookUpLifecycle
-  with ABTHeadlinesLifecycle
   with MostPopularFacebookAutoRefreshLifecycle
   with SwitchboardLifecycle
   with FootballLifecycle

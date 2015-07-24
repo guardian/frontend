@@ -201,6 +201,8 @@ case class GuLineItem(id: Long,
                       isPageSkin: Boolean,
                       sponsor: Option[String],
                       status: String,
+                      costType: String,
+                      creativeSizes: Seq[AdSize],
                       targeting: GuTargeting,
                       lastModified: DateTime) {
 
@@ -238,6 +240,8 @@ object GuLineItem {
         "isPageSkin" -> lineItem.isPageSkin,
         "sponsor" -> lineItem.sponsor,
         "status" -> lineItem.status,
+        "costType" -> lineItem.costType,
+        "sizes" -> lineItem.creativeSizes,
         "targeting" -> lineItem.targeting,
         "lastModified" -> timeFormatter.print(lineItem.lastModified)
       )
@@ -252,6 +256,8 @@ object GuLineItem {
       (JsPath \ "isPageSkin").read[Boolean] and
       (JsPath \ "sponsor").readNullable[String] and
       (JsPath \ "status").read[String] and
+      (JsPath \ "costType").read[String] and
+      (JsPath \ "sizes").read[Seq[AdSize]] and
       (JsPath \ "targeting").read[GuTargeting] and
       (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
     )(GuLineItem.apply _)

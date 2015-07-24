@@ -255,8 +255,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v3.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v2.json"
-    lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v2.json"
+    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v3.json"
+    lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v3.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
 
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
@@ -322,8 +322,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object facia {
-    lazy val spreadsheetKey = configuration.getStringProperty("ab_headlines.spreadsheet_key")
-
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
     lazy val collectionCap: Int = 35
   }

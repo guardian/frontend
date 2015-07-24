@@ -1,19 +1,21 @@
 package crosswords
 
-import model.MetaData
+import com.gu.contentapi.client.model.{Content => ApiContent}
+import model.{ApiContentWithMeta, Content}
 
 case class SvgDimensions(width: Int, height: Int) {
   def styleString = s"width: $width; height: $height"
 }
 
-class CrosswordPage(val crossword: CrosswordData) extends MetaData {
-  override def id: String = s"crosswords/${crossword.crosswordType}/${crossword.number}"
+class CrosswordPage(val crossword: CrosswordData, content: ApiContentWithMeta) extends Content(content) {
 
-  override def section: String = "crosswords"
+  override lazy val id: String = crossword.id
 
-  override def analyticsName: String = id
+  override lazy val section: String = "crosswords"
 
-  override def webTitle: String = crossword.name
+  override lazy val analyticsName: String = id
+
+  override lazy val webTitle: String = crossword.name
 
   import CrosswordSvg.{BorderSize, CellSize}
 
