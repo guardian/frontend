@@ -235,7 +235,7 @@ define([
                         item.city + ' <span class="search-tool__meta">' + item.country + '</span></a>';
 
                     docFragment.appendChild(li);
-                });
+                }).value();
 
                 this.clear().append(docFragment);
             },

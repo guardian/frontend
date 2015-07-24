@@ -104,7 +104,7 @@ define([
                 }
                 return valid;
             });
-        });
+        }).value();
         return filtered.valueOf();
     }
 
