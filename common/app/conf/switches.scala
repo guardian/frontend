@@ -665,7 +665,7 @@ object Switches {
     "ab-article-truncation",
     "Article truncation",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
+    sellByDate = new LocalDate(2015, 7, 30),
     exposeClientSide = true
   )
 
@@ -682,15 +682,6 @@ object Switches {
     "Feature",
     "ab-twitter-most-viewed",
     "Twitter most viewed",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val ABTestHeadlines = Switch(
-    "Feature",
-    "a-b-test-headlines",
-    "A/B test headlines",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 17),
     exposeClientSide = true
@@ -1032,17 +1023,6 @@ object Switches {
     sellByDate = never,
     exposeClientSide = true
   )
-
-  val ABHeadlineSwitches = (1 to 10) map { n =>
-    Switch(
-      "A/B Tests",
-      s"ab-headline$n",
-      s"Switch for headline $n",
-      safeState = On,
-      sellByDate = new LocalDate(2015, 7, 17),
-      exposeClientSide = true
-    )
-  }
 
   val ABMembershipMessageVariants = Switch(
     "A/B Tests",
