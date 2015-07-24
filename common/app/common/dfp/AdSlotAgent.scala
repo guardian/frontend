@@ -35,11 +35,6 @@ trait AdSlotAgent {
 
   def sizesOfAdInTopAboveNavSlot(adUnitWithoutRoot: String, edition: Edition): Seq[AdSize] = {
 
-    val isNetworkFront = {
-      val prefix = adUnitWithoutRoot.stripSuffix("/ng").stripSuffix("/front")
-      prefix == "uk" || prefix == "us" || prefix == "au"
-    }
-
     def targetsRelevantSizes(lineItem: GuLineItem): Boolean = {
       val creativeSizes = lineItem.creativeSizes
       creativeSizes.contains(leaderboardSize) || creativeSizes.contains(responsiveSize)
@@ -54,16 +49,14 @@ trait AdSlotAgent {
       }
     }
 
-    val lineItems = if (isNetworkFront) {
-      topAboveNavLineItems.filter { lineItem =>
-        isCurrent(lineItem) &&
-          lineItem.costType == "CPD" &&
-          targetsRelevantSizes(lineItem) &&
-          targetsAdUnit(lineItem, adUnitWithoutRoot) &&
-          deriveEditionFromGeotargeting(lineItem).contains(edition) &&
-          !(isProd && targetsAdTest(lineItem))
-      }
-    } else Nil
+    val lineItems = topAboveNavLineItems.filter { lineItem =>
+      isCurrent(lineItem) &&
+        lineItem.costType == "CPD" &&
+        targetsRelevantSizes(lineItem) &&
+        targetsAdUnit(lineItem, adUnitWithoutRoot) &&
+        deriveEditionFromGeotargeting(lineItem).contains(edition) &&
+        !(isProd && targetsAdTest(lineItem))
+    }
 
     lineItems flatMap (_.creativeSizes)
   }
