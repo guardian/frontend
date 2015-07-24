@@ -731,6 +731,8 @@
     .button {
         padding-top: 1px;
         margin-right: 0;
+        // Force content to fit inside button
+        white-space: nowrap;
 
         .tonal--tone-media & {
             border: 0;
