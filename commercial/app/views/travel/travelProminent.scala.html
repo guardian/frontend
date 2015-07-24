@@ -6,31 +6,29 @@
     <div class="commercial commercial--travel commercial--tone-travel commercial--high commercial--prominent" data-link-name="commercial-high | travel | @omnitureId">
         <div class="commercial__inner">
             <div class="commercial__header">
-                <div class="commercial__header__inner">
-                    <h3 class="commercial__title">
-                        <a href="@clickMacro@Configuration.commercial.travel_url/" data-link-name="merchandising-travel-v@{version}_@{date}-high-title">
-                            @fragments.inlineSvg("marque-54", "icon")
-                            @fragments.inlineSvg("logo-guardian", "logo")
-                            @fragments.inlineSvg("logo-holidayoffers", "commercial", List("inline-commercial-brand"))
-                            <span class="u-h">The Guardian</span> <span class="u-h">Holiday Offers</span>
-                        </a>
-                    </h3>
-                    <form class="commercial__search" action="@Configuration.commercial.travel_url/Search">
-                        <div class="commercial__search__inner">
-                            <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
-                            <input id="traveloffer" name="search" class="commercial__search__input" type="text" placeholder="Find your perfect holiday" />
-                            <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-travel-v@{version}_@{date}-high-search">
-                                @fragments.inlineSvg("search-36", "icon")
-                                <span class="u-h">Find your perfect holiday</span>
-                            </button>
-                            <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
-                        </div>
-                    </form>
-                    <a class="commercial__cta button button--tertiary button--large" href="@clickMacro@Configuration.commercial.travel_url" data-link-name="merchandising-travel-v@{version}_@{date}-high-visit-shop">
-                        @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
-                        <span class="commercial__cta__label">View <span class="hide-on-mobile-inline">more great</span> deals</span>
+                <h3 class="commercial__title">
+                    <a href="@clickMacro@Configuration.commercial.travel_url/" data-link-name="merchandising-travel-v@{version}_@{date}-high-title">
+                        @fragments.inlineSvg("marque-54", "icon")
+                        @fragments.inlineSvg("logo-guardian", "logo")
+                        @fragments.inlineSvg("logo-holidayoffers", "commercial", List("inline-commercial-brand"))
+                        <span class="u-h">The Guardian</span> <span class="u-h">Holiday Offers</span>
                     </a>
-                </div>
+                </h3>
+                <form class="commercial__search" action="@Configuration.commercial.travel_url/Search">
+                    <div class="commercial__search__inner">
+                        <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
+                        <input id="traveloffer" name="search" class="commercial__search__input" type="text" placeholder="Find your perfect holiday" />
+                        <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-travel-v@{version}_@{date}-high-search">
+                            @fragments.inlineSvg("search-36", "icon")
+                            <span class="u-h">Find your perfect holiday</span>
+                        </button>
+                        <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+                    </div>
+                </form>
+                <a class="commercial__cta button button--tertiary button--large" href="@clickMacro@Configuration.commercial.travel_url" data-link-name="merchandising-travel-v@{version}_@{date}-high-visit-shop">
+                    @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+                    <span class="commercial__cta__label">View <span class="hide-on-mobile-inline">more great</span> deals</span>
+                </a>
             </div>
             <div class="commercial__body">
                 <div class="commercial__relevance commercial__relevance--high">
