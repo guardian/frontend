@@ -44,15 +44,8 @@ define([
         });
     };
 
-    function makeBlocks(codeBlocks) {
-        return _.map(codeBlocks, function (record) {
-            return catchErrorsAndLog.bind(this, record[0], record[1]);
-        });
-    }
-
     return {
         catchErrorsAndLog: catchErrorsAndLog,
-        catchErrorsAndLogAll: catchErrorsAndLogAll,
-        makeBlocks: makeBlocks
+        catchErrorsAndLogAll: catchErrorsAndLogAll
     };
 });

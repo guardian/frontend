@@ -11,8 +11,8 @@ define([
         return (_.reduceRight(codeBlocks, function (restFunctions, fn) {
             return function () {
                 requestAnimationFrame(function () {
-                    fn();
                     restFunctions();
+                    fn();
                 });
             };
         }, function () {}))();
