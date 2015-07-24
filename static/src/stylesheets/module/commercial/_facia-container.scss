@@ -24,12 +24,9 @@
 .commercial__inner {
     position: relative;
     overflow: hidden;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 
     @include mq(leftCol) {
-        padding-left: 0;
-        padding-right: 0;
         max-width: gs-span(14) + $gs-gutter*2;
     }
     @include mq(wide) {
@@ -40,13 +37,15 @@
 .commercial__header,
 .commercial__body {
     position: relative;
+    overflow: hidden;
+    padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
 
     @include mq($until: leftCol) {
-        margin-left: auto;
-        margin-right: auto;
+        margin: 0 auto;
     }
     @include mq(mobileLandscape) {
         max-width: gs-span(8);
+        padding: $gs-baseline/2 $gs-gutter $gs-baseline;
     }
     @include mq(tablet) {
         max-width: gs-span(9);
@@ -56,12 +55,10 @@
     }
 }
 .commercial__header {
-    height: 100%;
-    padding: $gs-baseline/2 $gs-gutter/2;
     @include fs-header(2);
 
-    @include mq(mobileLandscape) {
-        padding: $gs-baseline/2 $gs-gutter;
+    @include mq($until: leftCol) {
+        padding-bottom: $gs-baseline/2;
     }
     @include mq(leftCol) {
         width: $left-column + $gs-gutter;
@@ -75,12 +72,6 @@
     }
 }
 .commercial__body {
-    padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
-
-    @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
     @include mq(leftCol) {
         margin-left: $left-column + $gs-gutter;
     }
@@ -221,7 +212,6 @@
     }
     .i-right {
         @include mq($until: mobileLandscape) {
-            margin: -1px -13px;
             float: none;
         }
     }
