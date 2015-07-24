@@ -7,6 +7,7 @@ import _ from 'common/utils/_';
 import detect from 'common/utils/detect';
 import scroller from 'common/utils/scroller';
 
+import AnagramHelper from './anagram-helper';
 import Clues from './clues';
 import Controls from './controls';
 import HiddenInput from './hidden-input';
@@ -33,6 +34,7 @@ class Crossword extends React.Component {
             'onCheck',
             'onCheckAll',
             'onClearAll',
+            'onToggleAnagramHelper',
             'onSelect',
             'onKeyDown',
             'onClickHiddenInput',
@@ -52,7 +54,8 @@ class Crossword extends React.Component {
                 persistence.loadGridState(this.props.data.id)
             ),
             cellInFocus: null,
-            directionOfEntry: null
+            directionOfEntry: null,
+            showAnagramHelper: false
         };
     }
 
@@ -413,6 +416,12 @@ class Crossword extends React.Component {
         this.save();
     }
 
+    onToggleAnagramHelper () {
+        this.setState({
+            showAnagramHelper: !this.state.showAnagramHelper
+        });
+    }
+
     hiddenInputValue () {
         const cell = this.state.cellInFocus;
 
@@ -461,6 +470,9 @@ class Crossword extends React.Component {
                         ref='hiddenInputComponent'
                     />
                 </div>
+
+                {this.state.showAnagramHelper && <AnagramHelper />}
+
                 <Controls
                     hasSolutions={this.hasSolutions()}
                     clueInFocus={focussed}
@@ -469,6 +481,7 @@ class Crossword extends React.Component {
                     onCheck={this.onCheck}
                     onCheckAll={this.onCheckAll}
                     onClearAll={this.onClearAll}
+                    onToggleAnagramHelper={this.onToggleAnagramHelper}
                 />
                 <Clues
                     clues={this.cluesData()}
