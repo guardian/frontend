@@ -70,7 +70,7 @@ define([
      */
     Api.previewComment = function (comment) {
         var endpoint = '/comment/preview';
-        return Api.send(endpoint, 'post', comment);
+        return Api.send(endpoint, 'post', comment, true);
     };
 
     /**
