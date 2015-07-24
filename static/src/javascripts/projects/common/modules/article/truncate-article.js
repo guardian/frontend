@@ -15,14 +15,14 @@ define([
 ) {
     var minChildren = 8,
         articleBodySelector = '.js-article__body',
-        storageKey = 'gu.expanded-article',
-        truncatorClass = 'content__article-body--truncated';
+        truncatorClass = 'content__article-body--truncated',
+        storageKey = 'gu.expanded-article';
 
-    function truncate () {
+    function truncate() {
         var $articleBody = $(articleBodySelector),
             button;
 
-        if ($articleBody && $('> *', $articleBody).length > minChildren) {
+        if ($articleBody && $('> *', $articleBody).length >= minChildren) {
             button = bonzo.create(
                 '<button class="button button--large button--primary button--show-more" data-link-name="more">' +
                     '<i class="i i-plus-white"></i> Continue reading...' +
@@ -44,7 +44,7 @@ define([
                     .after(button);
             });
         }
-    };
+    }
 
     return function () {
         if (storage.session.get(storageKey) !== config.page.pageId) {
