@@ -151,8 +151,8 @@ data-test-id="facia-card"
             <div class="fc-item__standfirst">@Html(text)</div>
         }
 
-        @if(item.isLive) {
-            <div class="js-liveblog-blocks" data-article-id="@item.id"></div>
+        @if(item.isLive && item.displaySettings.showLivePlayable) {
+            <div class="js-liveblog-blocks fc-item__liveblog-blocks" data-article-id="@item.id"></div>
         }
 
         @if(item.sublinks.nonEmpty) {
