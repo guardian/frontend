@@ -32,34 +32,32 @@ define([
 
         distanceBeforeLoad = distanceBeforeLoad || detect.getViewport().height;
 
-        lazyLoad = function () {
-            var scrollTop,
-                scrollBottom,
-                threshold,
-                $nextImages = [];
-
+        lazyLoad = _.throttle(function () {
             if ($images.length === 0) {
                 mediator.off('window:throttledScroll', lazyLoad);
             } else {
-                scrollTop = window.pageYOffset;
-                scrollBottom = scrollTop + detect.getViewport().height;
-                threshold = scrollBottom + distanceBeforeLoad;
+                fastdom.read(function () {
+                    var scrollTop = window.pageYOffset,
+                        scrollBottom = scrollTop + detect.getViewport().height,
+                        threshold = scrollBottom + distanceBeforeLoad,
+                        $nextImages = [];
 
-                _.forEach($images, function ($image) {
-                    // offsetParent is fast to check, but it won't work for fixed elements.
-                    // see http://stackoverflow.com/questions/19669786/check-if-element-is-visible-in-dom
-                    if ($image.offset().top < threshold && $image[0].offsetParent !== null) {
-                        reveal($image);
-                    } else {
-                        $nextImages.push($image);
-                    }
+                    _.forEach($images, function ($image) {
+                        // offsetParent is fast to check, but it won't work for fixed elements.
+                        // see http://stackoverflow.com/questions/19669786/check-if-element-is-visible-in-dom
+                        if ($image.offset().top < threshold && $image[0].offsetParent !== null) {
+                            reveal($image);
+                        } else {
+                            $nextImages.push($image);
+                        }
+                    });
+                    $images = $nextImages;
                 });
-                $images = $nextImages;
             }
-        };
+        }, 250);
 
         mediator.on('window:throttledScroll', lazyLoad);
-        fastdom.read(lazyLoad);
+        lazyLoad();
     }
 
     function init() {
