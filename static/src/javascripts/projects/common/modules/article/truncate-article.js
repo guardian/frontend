@@ -13,17 +13,21 @@ define([
     storage,
     $
 ) {
-    var storageKey = 'gu.expanded-article';
+    var minChildren = 8,
+        articleBodySelector = '.js-article__body',
+        storageKey = 'gu.expanded-article',
+        truncatorClass = 'content__article-body--truncated';
 
-    return function () {
-        if (storage.session.get(storageKey) !== config.page.pageId) {
-            var button = bonzo.create(
-                    '<button class="button button--large button--primary button--show-more" data-link-name="more">' +
-                        '<i class="i i-plus-white"></i> Continue reading...' +
-                    '</button>'
-                )[0],
-                $articleBody = $('.js-article__body'),
-                truncatorClass = 'content__article-body--truncated';
+    function truncate () {
+        var $articleBody = $(articleBodySelector),
+            button;
+
+        if ($articleBody && $('> *', $articleBody).length > minChildren) {
+            button = bonzo.create(
+                '<button class="button button--large button--primary button--show-more" data-link-name="more">' +
+                    '<i class="i i-plus-white"></i> Continue reading...' +
+                '</button>'
+            )[0];
 
             bean.on(button, 'click', function () {
                 fastdom.write(function () {
@@ -39,6 +43,12 @@ define([
                     .append('<div class="content__truncation-overlay"></div>')
                     .after(button);
             });
+        }
+    };
+
+    return function () {
+        if (storage.session.get(storageKey) !== config.page.pageId) {
+            truncate();
         }
     };
 });

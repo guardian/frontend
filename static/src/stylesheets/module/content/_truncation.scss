@@ -1,7 +1,11 @@
 .content__article-body--truncated {
     position: relative;
 
-    & > *:nth-child(n+4) {
+    & > *:nth-child(n+6) {
+        display: none;
+    }
+
+    & .element-rich-link {
         display: none;
     }
 
