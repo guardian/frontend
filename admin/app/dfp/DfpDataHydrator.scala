@@ -3,7 +3,7 @@ package dfp
 import com.google.api.ads.dfp.axis.utils.v201411.StatementBuilder
 import com.google.api.ads.dfp.axis.v201411._
 import common.Logging
-import common.dfp.{Size, _}
+import common.dfp._
 import conf.Configuration.commercial.guMerchandisingAdvertiserId
 import dfp.DfpApiWrapper.DfpSessionException
 import org.apache.commons.lang.exception.ExceptionUtils
@@ -102,7 +102,7 @@ class DfpDataHydrator extends Logging {
             isPageSkin = isPageSkin(dfpLineItem),
             sponsor = sponsor,
             creativeSizes = dfpLineItem.getCreativePlaceholders.map { placeholder =>
-              Size(placeholder.getSize.getWidth.toInt, placeholder.getSize.getHeight.toInt)
+              AdSize(placeholder.getSize.getWidth.toInt, placeholder.getSize.getHeight.toInt)
             }.toSeq,
             targeting = GuTargeting(adUnits,
               geoTargetsIncluded,
