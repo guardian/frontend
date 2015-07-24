@@ -73,8 +73,8 @@ const entryHasCell = (entry, x, y) => _.any(cellsForEntry(entry), (cell) => cell
 /** Can be used for width or height, as the cell height == cell width */
 const gridSize = (cells) => cells * (constants.cellSize + constants.borderSize) + constants.borderSize;
 
-const mapGrid = (grid, f) => _.map(grid, (row, x) => {
-    return _.map(row, (cell, y) => {
+const mapGrid = (grid, f) => _.map(grid, (col, x) => {
+    return _.map(col, (cell, y) => {
         return f(cell, x, y);
     });
 });

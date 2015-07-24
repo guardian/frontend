@@ -73,7 +73,7 @@ class Crossword extends React.Component {
     setCellValue (x, y, value) {
         this.setState({
             grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
-                if (x === gridX && y === gridY) {
+                if (gridX === x && gridY === y) {
                     cell.value = value;
                     cell.isError = false;
                 }
