@@ -9,8 +9,6 @@ case class SvgDimensions(width: Int, height: Int) {
 
 class CrosswordPage(val crossword: CrosswordData, content: ApiContentWithMeta) extends Content(content) {
 
-  val pageId =  s"crosswords/${crossword.crosswordType}/${crossword.number}"
-
   override lazy val id: String = crossword.id
 
   override lazy val section: String = "crosswords"
