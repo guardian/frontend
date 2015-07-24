@@ -93,10 +93,13 @@ define([
         }
     };
 
-    if (config.switches.mobileTopBannerRemove) {
-        adSlotDefinitions.inline = {
+    if (config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0) {
+        adSlotDefinitions.inline1.sizeMappings = {
             mobile: '1,1|300,250'
-        }
+        };
+        adSlotDefinitions.inline.sizeMappings = {
+            mobile: '1,1|300,250'
+        };
     }
 
     return function (name, types, series, keywords, slotTarget) {

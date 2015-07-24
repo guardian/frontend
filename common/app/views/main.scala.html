@@ -55,8 +55,8 @@ http://developers.theguardian.com/join-the-team.html
             @fragments.commercial.topBannerBelowNav()
         }
 
-        @if(showAdverts && !mvt.MobileTopBannerRemoveTest.isParticipating) {
-            @fragments.commercial.topBannerMobile()
+        @if(showAdverts) {
+            @fragments.commercial.topBannerMobile(metaData)
         }
 
         <div id="maincontent" tabindex="0"></div>
