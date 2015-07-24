@@ -132,8 +132,10 @@ object DfpAgent
 
   def refreshFaciaSpecificData(): Unit = {
 
+    val currentLineItemsFromStore: Seq[GuLineItem] = grabCurrentLineItemsFromStore(dfpLineItemsKey)
+
     update(topAboveNavLineItemAgent) {
-      grabCurrentLineItemsFromStore(dfpLineItemsKey) filter { lineItem =>
+      currentLineItemsFromStore filter { lineItem =>
         lineItem.costType == "CPD" &&
           lineItem.targeting.adUnits.exists { adUnit =>
             val prefix = adUnit.path.mkString("/").stripSuffix("/ng").stripSuffix("/front")
@@ -153,7 +155,7 @@ object DfpAgent
     }
 
     update(topBelowNavLineItemAgent) {
-      grabCurrentLineItemsFromStore(dfpLineItemsKey) filter {
+      currentLineItemsFromStore filter {
         _.targeting.customTargetSets.exists(_.targets.exists(_.isSlot("top-below-nav")))
       }
     }
