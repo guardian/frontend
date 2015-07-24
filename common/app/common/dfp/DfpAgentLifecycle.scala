@@ -7,11 +7,13 @@ trait DfpAgentLifecycle extends GlobalSettings {
 
   def refreshDfpAgent(): Unit = DfpAgent.refresh()
 
+  val refreshInterval: Int = 1
+
   override def onStart(app: Application) {
     super.onStart(app)
 
     Jobs.deschedule("DfpDataRefreshJob")
-    Jobs.scheduleEveryNMinutes("DfpDataRefreshJob", 1) {
+    Jobs.scheduleEveryNMinutes("DfpDataRefreshJob", refreshInterval) {
       refreshDfpAgent()
     }
 
@@ -27,6 +29,9 @@ trait DfpAgentLifecycle extends GlobalSettings {
 }
 
 trait FaciaDfpAgentLifecycle extends DfpAgentLifecycle {
+
+  override val refreshInterval: Int = 2
+
   override def refreshDfpAgent(): Unit = {
     DfpAgent.refresh()
     DfpAgent.refreshFaciaSpecificData()

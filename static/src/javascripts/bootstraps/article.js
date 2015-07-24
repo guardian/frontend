@@ -10,7 +10,7 @@ define([
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
-    'common/modules/article/truncation',
+    'common/modules/article/truncate-article',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/onward/social-most-popular',
@@ -75,8 +75,8 @@ define([
                 });
             },
 
-            initTruncation: function () {
-                if (ab.shouldRunTest('ArticleTruncation', 'variant')) {
+            initFilmTruncationTest: function () {
+                if (config.page.section === 'film' && ab.shouldRunTest('ArticleTruncation', 'variant') && !detect.isGuardianReferral()) {
                     truncation();
                 }
             }
@@ -89,7 +89,7 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
-            modules.initTruncation();
+            modules.initFilmTruncationTest();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
             membershipEvents.upgradeEvents();
