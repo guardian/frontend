@@ -3,7 +3,7 @@ define([
     'common/utils/_',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/commercial/adblock-sticky-message.html',
+    'text!common/views/commercial/adblock-sticky-message.html'
 ], function (
     $,
     _,
@@ -26,13 +26,16 @@ define([
     };
 
     AdblockBanner.prototype.show = function () {
-        template(adblockStickyMessage,
+        var bannerTmpl = template(adblockStickyMessage,
             {
                 supporterLink: this.supporterLink,
                 messageText: this.messageText,
                 linkText: this.linkText,
-                arrowWhiteRight: svgs('arrowWhiteRight')
+                arrowWhiteRight: svgs('arrowWhiteRight'),
+                marque36: svgs('marque36icon')
             });
+
+        $('.top-banner-ad-container--desktop').after(bannerTmpl);
     };
 
     return AdblockBanner;

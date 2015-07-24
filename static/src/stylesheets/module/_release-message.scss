@@ -35,7 +35,8 @@
     }
 }
 
-.site-message__media {
+.site-message__media,
+.adblock-sticky__media {
     display: none;
     width: 36px; // Icon size
     height: $gs-baseline*3;
@@ -412,4 +413,32 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .site-message--membership-message,
 .site-message--membership-message-variants {
     background: colour(news-main-2);
+}
+
+/**
+ * Adblock banner in sticky nav
+ */
+.adblock-sticky__message {
+    height: 128px;
+    @include fs-headline(1);
+    background: colour(news-main-2);
+    display: block;
+    color: #ffffff;
+
+    @include mq(desktop) {
+        @include fs-headline(2, true);
+    }
+
+    .adblock-sticky__media {
+        float: left;
+    }
+
+    .adblock-sticky__text {
+        float: left;
+        @include clearfix;
+    }
+
+    .adblock-sticky__link {
+
+    }
 }

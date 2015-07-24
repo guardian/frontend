@@ -70,8 +70,9 @@ define([
             }
         }
 
-        if (this.isAdblockInUse) {
+        if (this.isAdblockInUse && !this.isMobile) {
             this.showAdblockBanner();
+            this.$els.bannerDesktop = $('.js-adblock-sticky');
         }
 
         if (this.isMobile) {
