@@ -14,7 +14,7 @@ import Grid from './grid';
 import helpers from './helpers';
 import keycodes from './keycodes';
 import persistence from './persistence';
-import comments from './comments';
+import loadComments from './comments';
 import loadFont from './font';
 
 class Crossword extends React.Component {
@@ -44,7 +44,7 @@ class Crossword extends React.Component {
         );
 
         loadFont();
-        comments.loadComments();
+        loadComments();
 
         this.state = {
             grid: helpers.buildGrid(

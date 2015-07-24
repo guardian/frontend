@@ -2,7 +2,7 @@ import config from 'common/utils/config';
 import DiscussionLoader from 'common/modules/discussion/loader';
 import qwery from 'qwery';
 
-function loadComments() {
+export default () => {
 
     if (config.switches.discussion && config.page.commentable) {
         const el = qwery('.discussion')[0];
@@ -10,6 +10,4 @@ function loadComments() {
             new DiscussionLoader().attachTo(el);
         }
     }
-}
-
-export default { 'loadComments' : loadComments };
+};
