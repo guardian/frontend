@@ -6,6 +6,7 @@ import $ from 'common/utils/$';
 import _ from 'common/utils/_';
 import detect from 'common/utils/detect';
 import scroller from 'common/utils/scroller';
+import config from 'common/utils/config';
 
 import Clues from './clues';
 import Controls from './controls';
@@ -14,6 +15,7 @@ import Grid from './grid';
 import helpers from './helpers';
 import keycodes from './keycodes';
 import persistence from './persistence';
+import comments from './comments'
 import loadFont from './font';
 
 class Crossword extends React.Component {
@@ -43,6 +45,7 @@ class Crossword extends React.Component {
         );
 
         loadFont();
+        comments.loadComments();
 
         this.state = {
             grid: helpers.buildGrid(
