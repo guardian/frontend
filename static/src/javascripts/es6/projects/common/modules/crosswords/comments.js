@@ -5,11 +5,11 @@ import qwery from 'qwery';
 function loadComments() {
 
     if (config.switches.discussion && config.page.commentable) {
-        var el = qwery('.discussion')[0];
+        const el = qwery('.discussion')[0];
         if (el) {
             new DiscussionLoader().attachTo(el);
         }
     }
 }
 
-export default { 'loadComments' : loadComments }
+export default { 'loadComments' : loadComments };
