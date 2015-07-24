@@ -59,9 +59,7 @@ define([
         };
 
         mediator.on('window:throttledScroll', lazyLoad);
-        fastdom.read(function () {
-            lazyLoad(window.pageYOffset);
-        });
+        fastdom.read(lazyLoad);
     }
 
     function init() {
