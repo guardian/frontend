@@ -109,8 +109,8 @@ define([
             if (!storage.local.get('gu.commercial.expandable.' + this.params.ecid)) {
                 // expires in 1 week
                 var week = 1000 * 60 * 60 * 24 * 7;
-                storage.local.set('gu.commercial.expandable.' + this.params.ecid, true, { expires: Date.now() + week });
                 fastdom.write(function () {
+                    storage.local.set('gu.commercial.expandable.' + this.params.ecid, true, { expires: Date.now() + week });
                     that.$button.addClass('button-spin');
                     $('.ad-exp__open-chevron').removeClass('chevron-up').addClass('chevron-down');
                     that.$ad.css('height', that.openedHeight);
