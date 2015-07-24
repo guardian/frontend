@@ -46,6 +46,8 @@ class PaidForTagAgentTest extends FlatSpec with Matchers {
       isPageSkin = false,
       sponsor,
       state,
+      "CPM",
+      Nil,
       GuTargeting(adUnits, Nil, Nil, customTargetSets),
       DateTime.now()
     )
