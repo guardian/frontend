@@ -14,5 +14,5 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.0.3")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.1.8")
 
-addSbtPlugin("org.jetbrains" % "sbt-teamcity-logger" % "0.1.0-SNAPSHOT")
+addSbtPlugin("org.jetbrains.teamcity.plugins" % "sbt-teamcity-logger" % "0.2.0")
 
