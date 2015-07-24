@@ -42,7 +42,8 @@
     position: relative;
 
     @include mq($until: leftCol) {
-        margin: 0 auto
+        margin-left: auto;
+        margin-right: auto;
     }
     @include mq(mobileLandscape) {
         max-width: gs-span(8);
@@ -69,9 +70,23 @@
         bottom: 0;
         box-sizing: border-box;
     }
-
     @include mq(wide) {
         width: $left-column-wide + $gs-gutter;
+    }
+}
+.commercial__body {
+    padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+    @include mq(leftCol) {
+        margin-left: $left-column + $gs-gutter;
+    }
+    @include mq(wide) {
+        margin-left: $left-column-wide + $gs-gutter;
+        margin-right: 0;
     }
 }
 .commercial__title {
@@ -106,21 +121,6 @@
         @include mq($until: leftCol) {
             opacity: .8;
         }
-    }
-}
-.commercial__body {
-    padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
-
-    @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
-    @include mq(leftCol) {
-        margin-left: $left-column + $gs-gutter;
-    }
-    @include mq(wide) {
-        margin-left: $left-column-wide + $gs-gutter;
-        margin-right: 0;
     }
 }
 .commercial__title__logo {
