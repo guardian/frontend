@@ -1,14 +1,12 @@
 .content__article-body--truncated {
-    max-height: 550px;
-    overflow: hidden;
     position: relative;
-}
 
-.content__truncation-overlay {
-    display: none;
+    & > *:nth-child(n+4) {
+        display: none;
+    }
 
-    .content__article-body--truncated & {
-        display: block;
+    & .content__truncation-overlay {
+        display: block !important;
         position: absolute;
         bottom: 0;
         background: linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
