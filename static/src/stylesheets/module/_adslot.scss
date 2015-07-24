@@ -85,11 +85,14 @@
         }
     }
 }
+.top-banner-ad-container--small {
+    min-height: ($gs-row-height * 3) + 18;
+}
 .top-banner-ad-container--large {
     min-height: ($gs-row-height * 7) + 34;
 }
-.top-banner-ad-container--medium {
-    min-height: ($gs-row-height * 3) + 18;
+.top-banner-ad-container--responsive {
+    min-height: ($gs-row-height * 7) + 16;
 }
 .top-banner-ad-container--reveal iframe {
     transform: translateZ(0);
