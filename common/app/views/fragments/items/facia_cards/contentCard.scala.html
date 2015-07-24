@@ -1,6 +1,5 @@
 @(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
 
-@import ab_headlines.ABTestHeadlines.headlinesJsonString
 @import model.InlineImage
 @import model.{InlineVideo, InlineSlideshow, VideoPlayer, CrosswordSvg, LiveBlog}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
@@ -20,10 +19,6 @@
         }
         data-discussion-closed="@item.discussionSettings.isClosedForComments"
         data-discussion-url="@item.header.url.get(request)#comments"
-    }
-
-    @for(id <- item.id; headlines <- headlinesJsonString(id)) {
-        data-headline-variants="@headlines"
     }
 
 data-link-name="@item.analyticsPrefix | card-@{index + 1}"

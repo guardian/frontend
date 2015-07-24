@@ -1,6 +1,5 @@
 package views.support
 
-import ab_headlines.ABTestHeadlines
 import com.gu.facia.api.utils.{Audio, Video, Gallery}
 import layout._
 
@@ -14,8 +13,6 @@ object GetClasses {
   }
 
   def forItem(item: ContentCard, isFirstContainer: Boolean) = {
-    val abHeadlineClass = item.id.flatMap(ABTestHeadlines.abTestId).map(n => s"js-a-b-headline-$n")
-
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
@@ -32,7 +29,6 @@ object GetClasses {
       ("fc-item--is-commentable", item.discussionSettings.isCommentable)
     ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
       ++ mediaTypeClass(item).map(_ -> true)
-      ++ abHeadlineClass.map(_ -> true)
     )
   }
 

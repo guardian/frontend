@@ -152,7 +152,8 @@ object Frontend extends Build with Prototypes {
       commercial,
       onward
     ).settings(
-      RoutesKeys.routesImport += "bindables._"
+      RoutesKeys.routesImport += "bindables._",
+      javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
     )
 
   val faciaEndToEnd = application("facia-end-to-end")

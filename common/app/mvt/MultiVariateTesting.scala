@@ -31,8 +31,15 @@ object JspmControlTest extends TestDefinition(
   new LocalDate(2015, 7, 30)
 )
 
+object MobileTopBannerRemoveTest extends TestDefinition(
+  List(Variant1),
+  "mobile-top-banner-remove",
+  "To test the effect of top banner removal on mobile",
+  new LocalDate(2015, 8, 30)
+)
+
 object ActiveTests extends Tests {
-  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest)
+  val tests: Seq[TestDefinition] = List(JspmTest, JspmControlTest, MobileTopBannerRemoveTest)
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     val configEntries = List(InternationalEditionVariant(request).map{ international => s""""internationalEditionVariant" : "$international" """}) ++

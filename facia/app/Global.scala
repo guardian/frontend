@@ -1,4 +1,3 @@
-import ab_headlines.ABTHeadlinesLifecycle
 import common._
 import common.dfp.FaciaDfpAgentLifecycle
 import conf.{Filters, SwitchboardLifecycle}
@@ -16,7 +15,6 @@ object Global extends WithFilters(Filters.common: _*)
   with FaciaDfpAgentLifecycle
   with SurgingContentAgentLifecycle
   with IndexListingsLifecycle
-  with ABTHeadlinesLifecycle
   with TodaysCrosswordGridLifecycle
   with SwitchboardLifecycle {
   override lazy val applicationName = "frontend-facia"

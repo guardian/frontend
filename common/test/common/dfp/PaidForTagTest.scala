@@ -1,9 +1,9 @@
 package common.dfp
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{FlatSpec, Matchers, OptionValues}
 import play.api.libs.json._
 
-class PaidForTagTest extends FlatSpec with Matchers {
+class PaidForTagTest extends FlatSpec with Matchers with OptionValues {
 
   val jsonString =
     """{
@@ -26,6 +26,8 @@ class PaidForTagTest extends FlatSpec with Matchers {
       |          "isPageSkin": false,
       |          "sponsor": "KIA",
       |          "status": "OK",
+      |          "costType": "CPM",
+      |          "sizes":[{"width":300,"height":600}],
       |          "targeting": {
       |            "adUnits": [
       |              {
@@ -89,6 +91,8 @@ class PaidForTagTest extends FlatSpec with Matchers {
       |          "isPageSkin": false,
       |          "sponsor": "Unilever",
       |          "status": "OK",
+      |          "costType": "CPM",
+      |          "sizes":[{"width":300,"height":600}],
       |          "targeting": {
       |            "adUnits": [
       |
@@ -141,6 +145,8 @@ class PaidForTagTest extends FlatSpec with Matchers {
       |          "isPageSkin": false,
       |          "sponsor": "Unilever",
       |          "status": "OK",
+      |          "costType": "CPM",
+      |          "sizes":[{"width":300,"height":600}],
       |          "targeting": {
       |            "adUnits": [
       |              {
@@ -198,6 +204,8 @@ class PaidForTagTest extends FlatSpec with Matchers {
       |          "isPageSkin": false,
       |          "sponsor": "Arizona State University",
       |          "status": "OK",
+      |          "costType": "CPM",
+      |          "sizes":[{"width":300,"height":600}],
       |          "targeting": {
       |            "adUnits": [
       |              {
@@ -256,6 +264,8 @@ class PaidForTagTest extends FlatSpec with Matchers {
       |          "isPageSkin": false,
       |          "sponsor": "Fujitsu & Symantec",
       |          "status": "OK",
+      |          "costType": "CPM",
+      |          "sizes":[{"width":300,"height":600}],
       |          "targeting": {
       |            "adUnits": [
       |
@@ -308,6 +318,8 @@ class PaidForTagTest extends FlatSpec with Matchers {
       |          "isPageSkin": false,
       |          "sponsor": "SHELTER LONDON",
       |          "status": "OK",
+      |          "costType": "CPM",
+      |          "sizes":[{"width":300,"height":600}],
       |          "targeting": {
       |            "adUnits": [
       |              {
@@ -354,9 +366,7 @@ class PaidForTagTest extends FlatSpec with Matchers {
       .stripMargin
 
   "SponsorshipReports object" should "be able to hydrate proper SponsorshipReports object" in {
-    val result: Option[PaidForTagsReport] = Json.parse(jsonString).asOpt[PaidForTagsReport]
-    result.isDefined shouldEqual true
-    val report: PaidForTagsReport = result.get
+    val report: PaidForTagsReport = Json.parse(jsonString).asOpt[PaidForTagsReport].value
 
     report.updatedTimeStamp shouldEqual "December 30, 2014 10:37:28 AM GMT"
     report.sponsoredKeywords.size shouldEqual 2

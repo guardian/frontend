@@ -149,6 +149,10 @@ define([
         return /\.facebook\.com/.test(document.referrer);
     }
 
+    function isGuardianReferral() {
+        return /\.theguardian\.com/.test(document.referrer);
+    }
+
     function socialContext() {
         var override = /socialContext=(facebook|twitter)/.exec(window.location.hash);
 
@@ -469,6 +473,7 @@ define([
         isTwitterApp: isTwitterApp,
         isFacebookReferral: isFacebookReferral,
         isTwitterReferral: isTwitterReferral,
+        isGuardianReferral: isGuardianReferral,
         socialContext: socialContext,
         isBreakpoint: isBreakpoint,
         isReload:  isReload,
