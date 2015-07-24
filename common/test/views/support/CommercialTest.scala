@@ -17,7 +17,7 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
     override def analyticsName: String = "analyticsName"
     override def webTitle: String = "webTitle"
 
-    override def sizesOfAdInTopAboveNavSlot(edition: Edition): Seq[AdSize] = adSizes
+    override def sizeOfTakeoverAdsInTopAboveNavSlot(edition: Edition): Seq[AdSize] = adSizes
   }
 
   def pageShouldRequestAdSizes(pageId: String, sizesAvailableForSlot: Seq[AdSize])

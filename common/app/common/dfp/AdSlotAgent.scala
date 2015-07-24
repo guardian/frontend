@@ -33,7 +33,8 @@ trait AdSlotAgent {
 
   private def targetsAdTest(lineItem: GuLineItem) = lineItem.targeting.hasAdTestTargetting
 
-  def sizesOfAdInTopAboveNavSlot(adUnitWithoutRoot: String, edition: Edition): Seq[AdSize] = {
+  def sizeOfTakeoverAdsInTopAboveNavSlot(adUnitWithoutRoot: String,
+                                         edition: Edition): Seq[AdSize] = {
 
     def targetsRelevantSizes(lineItem: GuLineItem): Boolean = {
       val creativeSizes = lineItem.creativeSizes

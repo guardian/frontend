@@ -21,7 +21,7 @@ object Commercial {
     }
 
     private def hasAdOfSize(size: AdSize, metaData: MetaData, edition: Edition): Boolean = {
-      metaData.sizesOfAdInTopAboveNavSlot(edition) contains size
+      metaData.sizeOfTakeoverAdsInTopAboveNavSlot(edition) contains size
     }
 
     private def hasSmallAd(metaData: MetaData, edition: Edition): Boolean = {

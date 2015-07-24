@@ -85,9 +85,9 @@ case class PressedPage(id: String,
       Some(section)))
   override def sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
-  override def sizesOfAdInTopAboveNavSlot(edition: Edition): Seq[AdSize] = {
-    if (isNetworkFront) DfpAgent.sizesOfAdInTopAboveNavSlot(adUnitSuffix, edition)
-    else super.sizesOfAdInTopAboveNavSlot(edition)
+  override def sizeOfTakeoverAdsInTopAboveNavSlot(edition: Edition): Seq[AdSize] = {
+    if (isNetworkFront) DfpAgent.sizeOfTakeoverAdsInTopAboveNavSlot(adUnitSuffix, edition)
+    else Nil
   }
   override def hasAdInBelowTopNavSlot(edition: Edition): Boolean = {
     DfpAgent.hasAdInTopBelowNavSlot(adUnitSuffix, edition)
