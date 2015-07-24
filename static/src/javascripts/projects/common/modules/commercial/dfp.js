@@ -153,6 +153,10 @@ define([
             });
         },
 
+        isMobileBannerTest = function () {
+            return config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile';
+        },
+
         /**
          * Loop through each slot detected on the page and define it based on the data
          * attributes on the element.
@@ -164,8 +168,8 @@ define([
                 })
                 // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
-                    if ($css($adSlot, 'display') === 'none' ||
-                        (config.switches.mobileTopBannerRemove && $adSlot.hasClass('top-banner-ad-container--ab-mobile'))) {
+                    console.log(config.switches.mobileTopBannerRemove, $('.top-banner-ad-container--ab-mobile').length > 0);
+                    if ($css($adSlot, 'display') === 'none' || (isMobileBannerTest() && $adSlot.hasClass('ad-slot--top'))) {
                         fastdom.write(function () {
                             $adSlot.remove();
                         });

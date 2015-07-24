@@ -2,16 +2,17 @@ define([
     'common/utils/_',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/detect',
     'common/utils/template',
     'text!common/views/commercial/ad-slot.html'
 ], function (
     _,
     $,
     config,
+    detect,
     template,
     adSlotTpl
 ) {
-
     var adSlotDefinitions = {
         right: {
             sizeMappings: {
@@ -93,7 +94,7 @@ define([
         }
     };
 
-    if (config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0) {
+    if (config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile') {
         adSlotDefinitions.inline1.sizeMappings = {
             mobile: '1,1|300,250'
         };
