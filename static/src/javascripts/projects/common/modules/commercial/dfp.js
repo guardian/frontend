@@ -168,7 +168,6 @@ define([
                 })
                 // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
-                    console.log(config.switches.mobileTopBannerRemove, $('.top-banner-ad-container--ab-mobile').length > 0);
                     if ($css($adSlot, 'display') === 'none' || (isMobileBannerTest() && $adSlot.hasClass('ad-slot--top'))) {
                         fastdom.write(function () {
                             $adSlot.remove();
