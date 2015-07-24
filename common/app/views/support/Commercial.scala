@@ -35,19 +35,7 @@ object Commercial {
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
       Map(
         "mobile" -> Seq("1,1", "88,70", "728,90"),
-        "desktop" -> {
-          if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isNetworkFront(metaData)) {
-            if (hasSmallAd(metaData, edition)) {
-              Seq("728,90")
-            } else if (hasResponsiveAd(metaData, edition)) {
-              Seq("88,70")
-            } else {
-              Seq("1,1", "900,250", "970,250")
-            }
-          } else {
-            Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
-          }
-        }
+        "desktop" -> Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
       )
     }
 
