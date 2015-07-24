@@ -121,20 +121,20 @@ define([
         },
 
         ready = function () {
-                background([
-                    accessibility.shouldHideFlashingElements,
-                    modules.showSnaps,
-                    modules.showContainerShowMore,
-                    modules.showContainerToggle,
-                    modules.upgradeMostPopularToGeo,
-                    lazyLoadContainers,
-                    stocks,
-                    sponsorship,
-                    modules.showWeather,
-                    modules.showLiveblogUpdates,
-                    modules.startSlideshow,
-                    modules.finished
-                ]);
+            background([
+                accessibility.shouldHideFlashingElements,
+                modules.showSnaps,
+                modules.showContainerShowMore,
+                modules.showContainerToggle,
+                modules.upgradeMostPopularToGeo,
+                lazyLoadContainers,
+                stocks,
+                sponsorship,
+                modules.showWeather,
+                modules.showLiveblogUpdates,
+                modules.startSlideshow,
+                modules.finished
+            ]);
         };
 
     return {
