@@ -1,4 +1,4 @@
-@(crosswordPage: crosswords.CrosswordPage, content: model.Content, svg: Seq[scala.xml.Node])(implicit request: RequestHeader)
+@(crosswordPage: crosswords.CrosswordPage, svg: Seq[scala.xml.Node])(implicit request: RequestHeader)
 
 @import common.LinkTo
 
@@ -35,13 +35,13 @@
 
                         <div class="meta__extras meta__extras--crossword">
                             <div class="meta__social" data-component="share">
-                                @fragments.social(content, "top")
+                                @fragments.social(crosswordPage, "top")
                             </div>
                             @if(SaveForLaterSwitch.isSwitchedOn) {
                                 <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
                             }
                             <div class="meta__numbers modern-visible">
-                                <div class="u-h meta__number" data-discussion-id="@content.discussionId" data-commentcount-format="content" data-discussion-closed="@{!content.isCommentable}">
+                                <div class="u-h meta__number" data-discussion-id="@crosswordPage.discussionId" data-commentcount-format="content" data-discussion-closed="@{crosswordPage.isCommentable}">
                                 </div>
                                 <div class="u-h meta__number js-sharecount">
                                 </div>
@@ -83,5 +83,15 @@
                 </div>
             </div>
         </article>
+
+        <div class="content-footer">
+
+            @fragments.discussionFooter(crosswordPage.isCommentable, crosswordPage.isClosedForComments, crosswordPage.shortUrlId)
+
+
+            @if(crosswordPage.isCommentable) {
+                <div class="js-repositioned-comments content__repositioned-comments"></div>
+            }
+        </div>
     </div>
 }
