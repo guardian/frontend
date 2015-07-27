@@ -73,11 +73,16 @@ class Crossword extends React.Component {
     }
 
     setCellValue (x, y, value) {
-        const cell = this.state.grid[x][y];
+        this.setState({
+            grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
+                if (gridX === x && gridY === y) {
+                    cell.value = value;
+                    cell.isError = false;
+                }
 
-        cell.value = value;
-        cell.isError = false;
-        this.forceUpdate();
+                return cell;
+            })
+        });
     }
 
     getCellValue (x, y) {
@@ -282,9 +287,11 @@ class Crossword extends React.Component {
 
         if (clues && clues[direction]) {
             this.focusHiddenInput(x, y);
-            this.state.cellInFocus = {x: x, y: y};
-            this.state.directionOfEntry = direction;
-            this.forceUpdate();
+
+            this.setState({
+                cellInFocus: { x: x, y: y },
+                directionOfEntry: direction
+            });
         }
     }
 
@@ -319,36 +326,56 @@ class Crossword extends React.Component {
         const cells = helpers.cellsForEntry(entry);
 
         if (entry.solution) {
-            _.forEach(cells, (cell, n) => {
-                this.state.grid[cell.x][cell.y].value = entry.solution[n];
-            });
+            this.setState({
+                grid: helpers.mapGrid(this.state.grid, (cell, x, y) => {
+                    if (_.some(cells, c => c.x === x && c.y === y)) {
+                        const n = entry.direction === 'across' ?
+                            x - entry.position.x :
+                            y - entry.position.y;
 
-            this.forceUpdate();
+                        cell.value = entry.solution[n];
+                    }
+
+                    return cell;
+                })
+            });
         }
     }
 
     check (entry) {
-        const cells = _.map(helpers.cellsForEntry(entry), (cell) => this.state.grid[cell.x][cell.y]);
+        const cells = helpers.cellsForEntry(entry);
 
         if (entry.solution) {
             const badCells = _.map(_.filter(_.zip(cells, entry.solution), (cellAndSolution) => {
-                const cell = cellAndSolution[0];
+                const coords = cellAndSolution[0];
+                const cell = this.state.grid[coords.x][coords.y];
                 const solution = cellAndSolution[1];
                 return /^[A-Z]$/.test(cell.value) && cell.value !== solution;
-            }), (cellAndSolution) => cellAndSolution[0]);
-
-            _.forEach(badCells, (cell) => {
-                cell.isError = true;
+            }), cellAndSolution => {
+                return cellAndSolution[0];
             });
 
-            this.forceUpdate();
+            this.setState({
+                grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
+                    if (_.some(badCells, bad => bad.x === gridX && bad.y === gridY)) {
+                        cell.isError = true;
+                    }
+
+                    return cell;
+                })
+            });
 
             setTimeout(() => {
-                _.forEach(badCells, (cell) => {
-                    cell.isError = false;
-                    cell.value = '';
+                this.setState({
+                    grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
+                        if (_.some(badCells, bad => bad.x === gridX && bad.y === gridY)) {
+                            cell.isError = false;
+                            cell.value = '';
+                        }
+
+                        return cell;
+                    })
                 });
-                this.forceUpdate();
             }, 150);
         }
     }
@@ -378,12 +405,13 @@ class Crossword extends React.Component {
     }
 
     onClearAll () {
-        _.forEach(this.state.grid, function (row) {
-            _.forEach(row, function (cell) {
+        this.setState({
+            grid: helpers.mapGrid(this.state.grid, cell => {
                 cell.value = '';
-            });
+                return cell;
+            })
         });
-        this.forceUpdate();
+
         this.save();
     }
 
