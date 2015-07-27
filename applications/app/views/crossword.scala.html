@@ -52,8 +52,7 @@
             </header>
 
             <div class="content__main tonal__main tonal__main--tone-news">
-                <div class="gs-container">
-                    <div class="js-content-main-column">
+                <div class="gs-container"> <div class="js-content-main-column">
 
                         <div class="js-crossword"
                              data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
@@ -86,8 +85,9 @@
 
         <div class="content-footer">
 
-            @fragments.discussionFooter(crosswordPage.isCommentable, crosswordPage.isClosedForComments, crosswordPage.shortUrlId)
+            @fragments.onwardPlaceholder()
 
+            @fragments.discussionFooter(crosswordPage.isCommentable, crosswordPage.isClosedForComments, crosswordPage.shortUrlId)
 
             @if(crosswordPage.isCommentable) {
                 <div class="js-repositioned-comments content__repositioned-comments"></div>
