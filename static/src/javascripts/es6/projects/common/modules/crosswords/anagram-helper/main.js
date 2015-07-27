@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'common/utils/_';
 
 import ClueInput from './clue-input';
+import CluePreview from './clue-preview';
 import Shuffler from './shuffler';
 import helpers from '../helpers';
 
@@ -21,12 +22,6 @@ export default class AnagramHelper extends React.Component {
         };
     }
 
-    getEntries () {
-        return _.map(helpers.cellsForEntry(this.props.clue), coords => {
-            return this.props.grid[coords.x][coords.y];
-        });
-    }
-
     reset () {
         this.setState({
             clueInput: '',
@@ -43,6 +38,10 @@ export default class AnagramHelper extends React.Component {
     }
 
     render () {
+        const entries = _.map(helpers.cellsForEntry(this.props.clue), coords => {
+            return this.props.grid[coords.x][coords.y];
+        });
+
         const inner = this.state.showInput ?
             <ClueInput
                 value={this.state.clueInput}
@@ -66,6 +65,8 @@ export default class AnagramHelper extends React.Component {
                     onClick={this.shuffle}>
                     shuffle
                 </button>
+
+                <CluePreview clue={this.props.clue} entries={entries} />
             </div>
         );
     }

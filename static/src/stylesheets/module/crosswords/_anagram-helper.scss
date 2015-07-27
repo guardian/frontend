@@ -21,3 +21,31 @@
     font-size: 36px;
     text-align: center;
 }
+
+.crossword__anagram-helper__clue-preview {
+    margin-top: 5%;
+    font-size: 14px;
+}
+
+.crossword__anagram-helper__direction {
+    text-transform: capitalize;
+}
+
+.crossword__anagram-helper__cell {
+    display: inline-block;
+    vertical-align: middle;
+    width: $xword-cell-width;
+    height: $xword-cell-width;
+    line-height: $xword-cell-width;
+    border: 1px solid colour(neutral-3);
+    border-left: 0;
+
+    &:first-of-type {
+        border-left: 1px solid colour(neutral-3);
+    }
+
+    &.has-value {
+        background: colour(neutral-4);
+        color: colour(neutral-3);
+    }
+}
