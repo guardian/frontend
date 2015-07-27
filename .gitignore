@@ -23,10 +23,13 @@ frontend-applications.properties
 .tm_properties
 .vagrant
 .node-version
+.sbt
+.sbt.*
 
 log
 logs
 
+ivy-sbt
 tmp
 old
 target
