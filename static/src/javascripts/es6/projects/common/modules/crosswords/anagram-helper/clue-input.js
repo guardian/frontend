@@ -20,7 +20,7 @@ export default class ClueInput extends React.Component {
     render() {
         return (
             <input type='text'
-                className='crossword__anagram-helper__input'
+                className='crossword__anagram-helper__clue-input'
                 placeholder='Enter letters'
                 maxLength={this.props.clue.length}
                 value={this.props.value}
