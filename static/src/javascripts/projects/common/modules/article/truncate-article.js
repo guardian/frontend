@@ -22,7 +22,7 @@ define([
         var $articleBody = $(articleBodySelector),
             truncator;
 
-        if ($articleBody && $('> *', $articleBody).length >= minChildren) {
+        if ($articleBody && $articleBody[0].children.length >= minChildren) {
             truncator = bonzo.create(
                 '<div class="content__truncator">' +
                     '<div class="content__truncator__overlay"></div>' +

@@ -1,3 +1,5 @@
+$truncationOverlayheight: 80px;
+
 .content__article-body--truncated {
     position: relative;
 
@@ -16,8 +18,8 @@
             position: absolute;
             background: linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
             width: 100%;
-            height: 80px;
-            margin-top: -80px;
+            height: $truncationOverlayheight;
+            margin-top: -1 * $truncationOverlayheight;
         }
     }
 }
