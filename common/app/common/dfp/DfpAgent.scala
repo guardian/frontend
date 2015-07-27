@@ -16,7 +16,8 @@ object DfpAgent
   with PageskinAdAgent
   with InlineMerchandiseComponentAgent
   with AdSlotAgent
-  with ExecutionContexts {
+  with ExecutionContexts
+  with Logging {
 
   override protected val isProd: Boolean = environment.isProd
   override protected val isPreview: Boolean = {
@@ -135,7 +136,7 @@ object DfpAgent
     val currentLineItemsFromStore: Seq[GuLineItem] = grabCurrentLineItemsFromStore(dfpLineItemsKey)
 
     update(topAboveNavLineItemAgent) {
-      currentLineItemsFromStore filter { lineItem =>
+      val lineItems = currentLineItemsFromStore filter { lineItem =>
         lineItem.costType == "CPD" &&
           lineItem.targeting.adUnits.exists { adUnit =>
             val prefix = adUnit.path.mkString("/").stripSuffix("/ng").stripSuffix("/front")
@@ -152,6 +153,12 @@ object DfpAgent
             size == leaderboardSize || size == responsiveSize
           }
       }
+
+      log.info(s"Fetched line items for network front top-above-nav ad slots: ${
+        lineItems.map(_.id).mkString(", ")
+      }")
+
+      lineItems
     }
 
     update(topBelowNavLineItemAgent) {
