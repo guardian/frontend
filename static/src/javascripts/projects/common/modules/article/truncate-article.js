@@ -20,28 +20,27 @@ define([
 
     function truncate() {
         var $articleBody = $(articleBodySelector),
-            button;
+            truncator;
 
         if ($articleBody && $('> *', $articleBody).length >= minChildren) {
-            button = bonzo.create(
-                '<button class="button button--large button--primary button--show-more" data-link-name="more">' +
-                    '<i class="i i-plus-white"></i> Continue reading...' +
-                '</button>'
+            truncator = bonzo.create(
+                '<div class="content__truncator">' +
+                    '<div class="content__truncator__overlay"></div>' +
+                    '<button class="button button--large button--primary button--show-more" data-link-name="more">' +
+                        '<i class="i i-plus-white"></i> Continue reading...' +
+                    '</button>' +
+                '</div>'
             )[0];
 
-            bean.on(button, 'click', function () {
+            bean.on(truncator, 'click', function () {
                 fastdom.write(function () {
                     $articleBody.removeClass(truncatorClass);
-                    $(button).remove();
                 });
                 storage.session.set(storageKey, config.page.pageId);
             });
 
             fastdom.write(function () {
-                $articleBody
-                    .addClass(truncatorClass)
-                    .append('<div class="content__truncation-overlay"></div>')
-                    .after(button);
+                $articleBody.addClass(truncatorClass).append(truncator);
             });
         }
     }
