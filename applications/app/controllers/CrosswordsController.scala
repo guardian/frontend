@@ -2,11 +2,11 @@ package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, Crossword}
 import common.{Edition, ExecutionContexts}
-import conf.{LiveContentApi, Static}
+import conf.{Configuration, LiveContentApi, Static}
 import crosswords._
 import model.{ApiContentWithMeta, Cached, Cors}
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
-
+import scala.concurrent.duration._
 import scala.concurrent.Future
 
 object CrosswordsController extends Controller with ExecutionContexts {
@@ -44,12 +44,23 @@ object CrosswordsController extends Controller with ExecutionContexts {
   }
 
   private val CrosswordOptIn = "crossword_opt_in"
+  private val CrosswordOptInPath= "/crosswords"
+  private val CrosswordOptInMaxAge = 14.days.toSeconds.toInt
 
   def crosswordsOptIn = Action { implicit request =>
-    Cached(60)(SeeOther("/crosswords").withCookies(Cookie(CrosswordOptIn, "true")))
+    Cached(60)(SeeOther("/crosswords").withCookies(
+      Cookie(
+        CrosswordOptIn, "true",
+        path = CrosswordOptInPath,
+        maxAge = Some(CrosswordOptInMaxAge),
+        domain = Some(Configuration.id.domain))))
   }
 
   def crosswordsOptOut = Action { implicit request =>
-    Cached(60)(SeeOther("/crosswords").discardingCookies(DiscardingCookie(CrosswordOptIn)))
+    Cached(60)(SeeOther("/crosswords").discardingCookies(
+      DiscardingCookie(
+        CrosswordOptIn,
+        path = CrosswordOptInPath,
+        domain = Some(Configuration.id.domain))))
   }
 }
