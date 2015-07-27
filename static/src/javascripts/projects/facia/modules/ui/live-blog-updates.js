@@ -29,7 +29,7 @@ define([
         refreshDecay = 1,
         refreshMaxTimes = 5,
 
-        selector = '.js-snappable .js-liveblog-blocks',
+        selector = '.js-liveblog-blocks',
         articleIdAttribute = 'data-article-id',
         sessionStorageKey = 'gu.liveblog.block-dates',
 
