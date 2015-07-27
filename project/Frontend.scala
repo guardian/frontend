@@ -102,7 +102,12 @@ object Frontend extends Build with Prototypes {
       paClient,
       dfpAxis,
       anormModule,
-      jdbc
+      jdbc,
+      bootstrap,
+      jquery,
+      jqueryui,
+      lodash,
+      react
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate"

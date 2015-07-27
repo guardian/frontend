@@ -5,7 +5,7 @@ set -o nounset
 set -o errexit
 
 ./grunt-tc clean install validate:sass validate:js test:unit compile emitAbTestInfo
-./sbt-tc "project root" compile test dist
+./sbt-tc "project root" compile test assets dist
 
 echo "Disting everything."
 rm -rf "dist"
