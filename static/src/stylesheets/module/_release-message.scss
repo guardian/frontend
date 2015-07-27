@@ -432,7 +432,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         float: left;
         width: 36px; // Icon size
         height: $gs-baseline*3;
-        padding: $gs-gutter*0.75 $gs-gutter/2 0 0;
+        padding: $gs-gutter*.75 $gs-gutter/2 0 0;
     }
 
     .adblock-sticky__text {

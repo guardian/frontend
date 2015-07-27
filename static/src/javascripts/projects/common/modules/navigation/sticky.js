@@ -79,11 +79,7 @@ define([
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePositionMobile();
             }.bind(this), 10));
-        } /*else if (this.isAdblockInUse) {
-            mediator.on('window:scroll', _.throttle(function () {
-                this.updatePositionAdblock();
-            }.bind(this), 10));
-        } */else if (this.isAppleCampaign) {
+        } else if (this.isAppleCampaign) {
             mediator.on('window:scroll', _.throttle(function () {
                 this.updatePositionApple();
             }.bind(this), 10));
