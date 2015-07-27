@@ -1,5 +1,6 @@
 package controllers.commercial
 
+import model.commercial.soulmates.SoulmatesAgent.{menAgent, newMenAgent, newWomenAgent, womenAgent}
 import model.commercial.soulmates._
 import model.{Cached, NoCache}
 import play.api.mvc._
@@ -12,9 +13,12 @@ object SoulmatesController extends Controller with implicits.Requests {
                     (implicit request: Request[AnyContent]): Result = {
 
     val sample = {
+      def take3(agent: SoulmatesAgent) = agent.sample().take(3)
       if (groupName == "mixed") {
-        def take3(agent: SoulmatesAgent) = agent.sample().take(3)
-        val members = take3(SoulmatesAgent.womenAgent) ++ take3(SoulmatesAgent.menAgent)
+        val members = take3(womenAgent) ++ take3(menAgent)
+        Sample.default(members)
+      } else if (groupName == "mixednew") {
+        val members = take3(newWomenAgent) ++ take3(newMenAgent)
         Sample.default(members)
       } else SoulmatesAgent.sample(groupName)
     }
