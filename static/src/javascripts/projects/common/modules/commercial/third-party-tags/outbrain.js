@@ -36,10 +36,6 @@ define([
         });
     }
 
-    function shouldLoadOutbrain() {
-
-    }
-
     return {
         init: init,
         load: load
