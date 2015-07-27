@@ -41,10 +41,10 @@ object CrosswordsController extends Controller with ExecutionContexts {
   private val CrosswordOptIn = "crossword_opt_in"
 
   def crosswordsOptIn = Action { implicit request =>
-    SeeOther("/crosswords").withCookies(Cookie(CrosswordOptIn, "true"))
+    Cached(60)(SeeOther("/crosswords").withCookies(Cookie(CrosswordOptIn, "true")))
   }
 
   def crosswordsOptOut = Action { implicit request =>
-    SeeOther("/crosswords").discardingCookies(DiscardingCookie(CrosswordOptIn))
+    Cached(60)(SeeOther("/crosswords").discardingCookies(DiscardingCookie(CrosswordOptIn)))
   }
 }
