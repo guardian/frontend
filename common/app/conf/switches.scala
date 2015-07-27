@@ -633,33 +633,6 @@ object Switches {
   )
 
   // Features
-  val ArticleTruncation = Switch(
-    "Feature",
-    "ab-article-truncation",
-    "Article truncation",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 30),
-    exposeClientSide = true
-  )
-
-  val FacebookMostViewed = Switch(
-    "Feature",
-    "ab-facebook-most-viewed",
-    "Facebook most viewed",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val TwitterMostViewed = Switch(
-    "Feature",
-    "ab-twitter-most-viewed",
-    "Twitter most viewed",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
   val InternationalEditionSwitch = Switch(
     "Feature",
     "international-edition",
@@ -960,6 +933,33 @@ object Switches {
   )
 
   // A/B Tests
+
+  val ArticleTruncation = Switch(
+    "A/B Tests",
+    "ab-article-truncation",
+    "Article truncation",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 30),
+    exposeClientSide = true
+  )
+
+  val FacebookMostViewed = Switch(
+    "A/B Tests",
+    "ab-facebook-most-viewed",
+    "Facebook most viewed",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
+
+  val TwitterMostViewed = Switch(
+    "A/B Tests",
+    "ab-twitter-most-viewed",
+    "Twitter most viewed",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
 
   val ABFilmContainers = Switch(
     "A/B Tests",
