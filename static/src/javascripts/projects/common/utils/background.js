@@ -2,10 +2,12 @@
     runs each block on a separate animation frame to prevent excessive lumpiness
  */
 define([
+    'fastdom',
     'common/utils/_',
     'common/utils/config',
     'common/utils/robust'
 ], function (
+    fastdom,
     _,
     config,
     robust
@@ -16,10 +18,10 @@ define([
         return (_.reduceRight(codeBlocks, function (restFunctions, fn) {
             return function () {
                 if (background) {
-                    requestAnimationFrame(function () {
+                    setTimeout(function () {
                         restFunctions();
                         fn();
-                    });
+                    }, 1);
                 } else {
                     robust.catchErrorsAndLog('background', fn);// don't know the real name
                     restFunctions();

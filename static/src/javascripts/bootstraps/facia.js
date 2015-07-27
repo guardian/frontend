@@ -121,20 +121,20 @@ define([
         },
 
         ready = function () {
-            background([
-                accessibility.shouldHideFlashingElements,
-                modules.showSnaps,
-                modules.showContainerShowMore,
-                modules.showContainerToggle,
-                modules.upgradeMostPopularToGeo,
-                lazyLoadContainers,
-                stocks,
-                sponsorship,
-                modules.showWeather,
-                modules.showLiveblogUpdates,
-                modules.startSlideshow,
-                modules.finished
-            ]);
+            background(robust.makeBlocks([
+                ['f-accessibility', accessibility.shouldHideFlashingElements],
+                ['f-snaps', modules.showSnaps],
+                ['f-show-more', modules.showContainerShowMore],
+                ['f-container-toggle', modules.showContainerToggle],
+                ['f-geo-most-popular', modules.upgradeMostPopularToGeo],
+                ['f-lazy-load-containers', lazyLoadContainers],
+                ['f-stocks', stocks],
+                ['f-sponsorship', sponsorship],
+                ['f-weather', modules.showWeather],
+                ['f-live-blog-updates', modules.showLiveblogUpdates],
+                ['f-slideshow', modules.startSlideshow],
+                ['f-finished', modules.finished]
+            ]));
         };
 
     return {
