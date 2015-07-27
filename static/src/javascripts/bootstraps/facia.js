@@ -86,16 +86,7 @@ define([
             },
 
             showLiveblogUpdates: function () {
-                var pageId = config.page.pageId,
-                    isNetFront = _.contains(['uk', 'us', 'au'], pageId),
-                    isSport = _.contains(['sport', 'football'], config.page.section);
-
-                if (detect.isBreakpoint({ max: 'tablet' })) {
-                    return;
-                } else if (config.switches.liveblogFrontUpdatesOther && !isSport && !isNetFront ||
-                    config.switches.liveblogFrontUpdatesUk && pageId === 'uk' ||
-                    config.switches.liveblogFrontUpdatesUs && pageId === 'us' ||
-                    config.switches.liveblogFrontUpdatesAu && pageId === 'au') {
+                if (detect.isBreakpoint({ min: 'desktop' })) {
                     mediator.on('page:front:ready', function () {
                         liveblogUpdates.show();
                     });
