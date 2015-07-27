@@ -22,7 +22,7 @@ GET         /assets/facia-tool/*file                                        cont
 
 # static files
 GET         /humans.txt                                                     controllers.Assets.at(path="/public", file="humans.txt")
-GET         /assets/*file                                                   controllers.Assets.at(path="/public", file)
+GET         /assets/*file                                                   dev.DevAssetsController.at(file)
 
 ##################### NOTE ############################
 #all endpoints below this line should be authenticated#
