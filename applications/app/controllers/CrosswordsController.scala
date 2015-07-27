@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.{Content => ApiContent, Crossword}
 import conf.LiveContentApi
 import common.{Edition, ExecutionContexts}
 import conf.Static
-import model.{ApiContentWithMeta, Cached}
+import model.{Cors, ApiContentWithMeta, Cached}
 import play.api.mvc.{Result, Action, Controller, RequestHeader}
 import crosswords._
 
@@ -37,7 +37,11 @@ object CrosswordsController extends Controller with ExecutionContexts {
 
       val globalStylesheet = Static("stylesheets/content.css")
 
-      Cached(60)(Ok(s"""<?xml-stylesheet type="text/css" href="$globalStylesheet" ?>$xml""").as("image/svg+xml"))
+      Cached(60) {
+        Cors {
+          Ok( s"""<?xml-stylesheet type="text/css" href="$globalStylesheet" ?>$xml""").as("image/svg+xml")
+        }
+      }
     }
   }
 }
