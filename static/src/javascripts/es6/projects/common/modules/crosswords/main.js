@@ -7,7 +7,7 @@ import _ from 'common/utils/_';
 import detect from 'common/utils/detect';
 import scroller from 'common/utils/scroller';
 
-import AnagramHelper from './anagram-helper';
+import AnagramHelper from './anagram-helper/main';
 import Clues from './clues';
 import Controls from './controls';
 import HiddenInput from './hidden-input';
@@ -448,6 +448,10 @@ class Crossword extends React.Component {
         const focussed = this.clueInFocus();
         const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
 
+        const anagramHelper = this.state.showAnagramHelper && (
+            <AnagramHelper clue={focussed} grid={this.state.grid}/>
+        );
+
         return (
             <div className={`crossword__container crossword__container--${this.props.data.crosswordType}`}>
                 <div className='crossword__grid-wrapper'>
@@ -469,9 +473,9 @@ class Crossword extends React.Component {
                         value={this.hiddenInputValue()}
                         ref='hiddenInputComponent'
                     />
-                </div>
 
-                {this.state.showAnagramHelper && <AnagramHelper />}
+                    {anagramHelper}
+                </div>
 
                 <Controls
                     hasSolutions={this.hasSolutions()}

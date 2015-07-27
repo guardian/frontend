@@ -57,6 +57,7 @@ export default class Controls extends React.Component {
                 </button>
             );
         }
+
         // anagram helper
         controls.clue.push(
             <button className={`${buttonClassName} ${buttonCurrentClassName}`}
