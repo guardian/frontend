@@ -1,6 +1,8 @@
 package views.support
 
 import common.Edition
+import common.dfp.AdSize
+import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import conf.Switches._
 import model.MetaData
 
@@ -14,43 +16,41 @@ object Commercial {
 
   object topAboveNavSlot {
 
-    private def isUKNetworkFront(metaData: MetaData) = metaData.id == "uk"
-
-    def hasAd(metaData: MetaData): Boolean = {
-      FixedTopAboveNavAdSlotSwitch.isSwitchedOff ||
-        TopAboveNavAdSlotOmitSwitch.isSwitchedOff ||
-        !isUKNetworkFront(metaData)
+    private def isNetworkFront(metaData: MetaData) = {
+      metaData.id == "uk" || metaData.id == "us" || metaData.id == "au"
     }
 
-    def adSizes(metaData: MetaData): Map[String, Seq[String]] = {
+    private def hasAdOfSize(size: AdSize, metaData: MetaData, edition: Edition): Boolean = {
+      metaData.sizeOfTakeoverAdsInTopAboveNavSlot(edition) contains size
+    }
+
+    private def hasSmallAd(metaData: MetaData, edition: Edition): Boolean = {
+      hasAdOfSize(leaderboardSize, metaData, edition)
+    }
+
+    private def hasResponsiveAd(metaData: MetaData, edition: Edition): Boolean = {
+      hasAdOfSize(responsiveSize, metaData, edition)
+    }
+
+    def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
       Map(
         "mobile" -> Seq("1,1", "88,70", "728,90"),
-        "desktop" -> {
-          if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isUKNetworkFront(metaData)) {
-            if (TopAboveNavAdSlot728x90Switch.isSwitchedOn) {
-              Seq("728,90")
-            } else if (TopAboveNavAdSlot88x70Switch.isSwitchedOn) {
-              Seq("88,70")
-            } else {
-              Seq("1,1", "900,250", "970,250")
-            }
-          } else {
-            Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
-          }
-        }
+        "desktop" -> Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250")
       )
     }
 
-    def cssClasses(metaData: MetaData): String = {
+    def cssClasses(metaData: MetaData, edition: Edition): String = {
       val classes = Seq(
         "top-banner-ad-container",
         "top-banner-ad-container--desktop",
         "top-banner-ad-container--above-nav")
 
       val sizeSpecificClass = {
-        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isUKNetworkFront(metaData)) {
-          if (TopAboveNavAdSlot728x90Switch.isSwitchedOn) {
-            "top-banner-ad-container--medium"
+        if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isNetworkFront(metaData)) {
+          if (hasSmallAd(metaData, edition)) {
+            "top-banner-ad-container--small"
+          } else if (hasResponsiveAd(metaData, edition)) {
+            "top-banner-ad-container--responsive"
           } else {
             "top-banner-ad-container--large"
           }

@@ -101,7 +101,6 @@ define([
                 return this.getWeatherData(config.page.weatherapiurl + '.json')
                     .then(function (response) {
                         this.fetchWeatherData(response);
-                        omniture.trackLinkImmediate(true, 'o', 'weather location set by fastly');
                     }.bind(this)).catch(function (err) {
                         raven.captureException(err, {
                             tags: {

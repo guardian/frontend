@@ -1,4 +1,10 @@
+@(metaData: model.MetaData)(implicit request: RequestHeader)
+
+@if(mvt.MobileTopBannerRemoveTest.isParticipating) {
+<div class="top-banner-ad-container top-banner-ad-container--mobile top-banner-ad-container--ab-mobile">
+} else {
 <div class="top-banner-ad-container top-banner-ad-container--mobile">
+}
     @fragments.commercial.standardAd(
         "top",
         Seq("top-banner-ad"),

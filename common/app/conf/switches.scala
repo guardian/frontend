@@ -1,12 +1,14 @@
 package conf
 
 import java.util.concurrent.TimeoutException
+
 import common._
 import conf.Configuration.environment
 import org.joda.time.{DateTime, Days, Interval, LocalDate}
 import play.api.Play
-import scala.concurrent.{Future, Promise}
+
 import scala.concurrent.duration._
+import scala.concurrent.{Future, Promise}
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -546,41 +548,12 @@ object Switches {
     exposeClientSide = true
   )
 
-  private val topAboveNavSwitchesSellByDate = new LocalDate(2015, 8, 5)
-
   val FixedTopAboveNavAdSlotSwitch = Switch(
     "Commercial",
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on UK network front.",
     safeState = Off,
-    sellByDate = topAboveNavSwitchesSellByDate,
-    exposeClientSide = false
-  )
-
-  val TopAboveNavAdSlot728x90Switch = Switch(
-    "Commercial",
-    "fixed-top-above-nav-728-90",
-    "Expect a 728 x 90 ad in top-above-nav slot on UK network front.",
-    safeState = Off,
-    sellByDate = topAboveNavSwitchesSellByDate,
-    exposeClientSide = false
-  )
-
-  val TopAboveNavAdSlot88x70Switch = Switch(
-    "Commercial",
-    "fixed-top-above-nav-88-70",
-    "Expect an 88 x 70 ad in top-above-nav slot on UK network front.",
-    safeState = Off,
-    sellByDate = topAboveNavSwitchesSellByDate,
-    exposeClientSide = false
-  )
-
-  val TopAboveNavAdSlotOmitSwitch = Switch(
-    "Commercial",
-    "fixed-top-above-nav-omit",
-    "Leave top-above-nav ad slot out of page on UK network front.",
-    safeState = Off,
-    sellByDate = topAboveNavSwitchesSellByDate,
+    sellByDate = new LocalDate(2015, 8, 12),
     exposeClientSide = false
   )
 
@@ -660,33 +633,6 @@ object Switches {
   )
 
   // Features
-  val ArticleTruncation = Switch(
-    "Feature",
-    "ab-article-truncation",
-    "Article truncation",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 30),
-    exposeClientSide = true
-  )
-
-  val FacebookMostViewed = Switch(
-    "Feature",
-    "ab-facebook-most-viewed",
-    "Facebook most viewed",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val TwitterMostViewed = Switch(
-    "Feature",
-    "ab-twitter-most-viewed",
-    "Twitter most viewed",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
   val InternationalEditionSwitch = Switch(
     "Feature",
     "international-edition",
@@ -987,6 +933,33 @@ object Switches {
   )
 
   // A/B Tests
+
+  val ArticleTruncation = Switch(
+    "A/B Tests",
+    "ab-article-truncation",
+    "Article truncation",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 30),
+    exposeClientSide = true
+  )
+
+  val FacebookMostViewed = Switch(
+    "A/B Tests",
+    "ab-facebook-most-viewed",
+    "Facebook most viewed",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
+
+  val TwitterMostViewed = Switch(
+    "A/B Tests",
+    "ab-twitter-most-viewed",
+    "Twitter most viewed",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
 
   val ABFilmContainers = Switch(
     "A/B Tests",

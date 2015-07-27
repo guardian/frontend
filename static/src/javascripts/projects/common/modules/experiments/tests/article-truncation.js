@@ -6,7 +6,7 @@ define([], function () {
         this.start = '2015-07-20';
         this.expiry = '2015-07-30';
         this.author = 'Stephan Fowler';
-        this.description = 'Article truncation when in for Film content';
+        this.description = 'Article truncation of Film content, when visit is a non-guardian referral';
         this.audience = 0.5;
         this.audienceOffset = 0;
         this.successMeasure = 'Page views per visit';
