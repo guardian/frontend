@@ -83,6 +83,11 @@ object NorthwestSoulmatesFeed extends SoulmatesFeed {
   protected lazy val path = "popular/northwest"
 }
 
+object NewNorthwestSoulmatesFeed extends SoulmatesFeed {
+  protected val adTypeName = "New Variant Northwest Soulmates"
+  protected lazy val path = "popular/northwest?is_new=1"
+}
+
 object ScotlandSoulmatesFeed extends SoulmatesFeed {
   protected val adTypeName = "Scotland Soulmates"
   protected lazy val path = "popular/scotland"

@@ -40,6 +40,7 @@ object SoulmatesAgent {
     newMenAgent,
     SoulmatesAgent("brighton", BrightonSoulmatesFeed, Sample.default),
     SoulmatesAgent("northwest", NorthwestSoulmatesFeed, Sample.default),
+    SoulmatesAgent("northwestnew", NewNorthwestSoulmatesFeed, Sample.default),
     SoulmatesAgent("scotland", ScotlandSoulmatesFeed, Sample.default),
     SoulmatesAgent("young", YoungSoulmatesFeed, Sample.default),
     SoulmatesAgent("mature", MatureSoulmatesFeed, Sample.default),
