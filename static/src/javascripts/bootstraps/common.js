@@ -23,6 +23,7 @@ define([
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
+    'common/modules/commercial/donot-use-adblock',
     'common/modules/discussion/comment-count',
     'common/modules/experiments/ab',
     'common/modules/identity/autosignin',
@@ -49,7 +50,6 @@ define([
     'common/modules/save-for-later',
     'text!common/views/international-message.html',
     'text!common/views/international-control-message.html',
-    'text!common/views/donot-use-adblock.html',
     'bootstraps/identity-common'
 ], function (
     bean,
@@ -74,6 +74,7 @@ define([
     logCss,
     simpleMetrics,
     userAdTargeting,
+    donotUseAdblock,
     CommentCount,
     ab,
     AutoSignin,
@@ -167,25 +168,7 @@ define([
             },
 
             showAdblockMessage: function () {
-                var alreadyVisted = storage.local.get('alreadyVisited') || 0,
-                    adblockLink = 'https://membership.theguardian.com/about/supporter?INTCMP=adb-mv';
-
-                if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted) {
-                    new Message('adblock', {
-                        pinOnHide: false,
-                        siteMessageLinkName: 'adblock message variant',
-                        siteMessageCloseBtn: 'hide'
-                    }).show(template(
-                            doNotUseAdblockTemplate,
-                            {
-                                adblockLink: adblockLink,
-                                messageText: 'We notice you\'ve got an ad-blocker switched on. Perhaps you\'d like to support the Guardian another way?',
-                                linkText: 'Become a supporter today'
-                            }
-                        ));
-                }
-
-                storage.local.set('alreadyVisited', alreadyVisted + 1);
+                donotUseAdblock.init();
             },
 
             logLiveStats: function () {
