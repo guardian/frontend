@@ -203,6 +203,14 @@ define([
                     type: 'boolean'
                 },
                 {
+                    key: 'showLivePlayable',
+                    editable: true,
+                    omitForSupporting: true,
+                    ifState: 'isLiveBlog',
+                    label: 'show updates',
+                    type: 'boolean'
+                },
+                {
                     key: 'showMainVideo',
                     editable: true,
                     omitForSupporting: true,
@@ -365,6 +373,7 @@ define([
                 'underDrag',
                 'underControlDrag',
                 'isOpen',
+                'isLiveBlog',
                 'isLoaded',
                 'isEmpty',
                 'inDynamicCollection',
@@ -674,6 +683,9 @@ define([
                 this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
                 this.state.ophanUrl(vars.CONST.ophanBase + '?path=/' + urlAbsPath(opts.webUrl));
                 this.state.premium(isPremium(opts));
+                if (deepGet(opts, '.fields.liveBloggingNow') === 'true') {
+                    this.state.isLiveBlog(true);
+                }
 
                 this.metaDefaults = _.extend(deepGet(opts, '.frontsMeta.defaults') || {}, this.collectionMetaDefaults);
 

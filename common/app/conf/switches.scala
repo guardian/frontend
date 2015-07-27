@@ -878,42 +878,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val LiveblogFrontUpdatesUk = Switch(
-    "Feature",
-    "liveblog-front-updates-uk",
-    "Switch for the latest liveblog updates on the UK network front",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val LiveblogFrontUpdatesUs = Switch(
-    "Feature",
-    "liveblog-front-updates-us",
-    "Switch for the latest liveblog updates on the US network front",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val LiveblogFrontUpdatesAu = Switch(
-    "Feature",
-    "liveblog-front-updates-au",
-    "Switch for the latest liveblog updates on the AU network front",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val LiveblogFrontUpdatesOther = Switch(
-    "Feature",
-    "liveblog-front-updates-other",
-    "Switch for the latest liveblog updates on non-network fronts",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val IPadNothrasherSwitch = Switch(
     "Feature",
     "ipad-no-thrashers",
