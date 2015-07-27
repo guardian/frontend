@@ -222,7 +222,7 @@ class Crossword extends React.Component {
     }
 
     focusHiddenInput (x, y) {
-        const wrapper = this.refs.hiddenInputComponent.refs.wrapper.getDOMNode();
+        const wrapper = React.findDOMNode(this.refs.hiddenInputComponent.refs.wrapper);
         const left = helpers.gridSize(x);
         const top = helpers.gridSize(y);
         const position = this.asPercentage(left, top);
@@ -231,7 +231,7 @@ class Crossword extends React.Component {
         wrapper.style.left = position.x + '%';
         wrapper.style.top = position.y + '%';
 
-        const hiddenInputNode = this.refs.hiddenInputComponent.refs.input.getDOMNode();
+        const hiddenInputNode = React.findDOMNode(this.refs.hiddenInputComponent.refs.input);
 
         if (document.activeElement !== hiddenInputNode) {
             hiddenInputNode.focus();
