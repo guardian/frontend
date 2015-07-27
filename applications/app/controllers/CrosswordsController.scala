@@ -3,12 +3,10 @@ package controllers
 import com.gu.contentapi.client.model.{Content => ApiContent, Crossword}
 import common.{Edition, ExecutionContexts}
 import conf.{LiveContentApi, Static}
-import conf.Static
-import model.{Cors, ApiContentWithMeta, Cached}
-import play.api.mvc.{Result, Action, Controller, RequestHeader}
 import crosswords._
-import model.{ApiContentWithMeta, Cached}
+import model.{ApiContentWithMeta, Cached, Cors}
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
+
 import scala.concurrent.Future
 
 object CrosswordsController extends Controller with ExecutionContexts {
