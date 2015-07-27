@@ -1,6 +1,5 @@
 package dfp
 
-import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp._
 import common.{ExecutionContexts, Logging}
 import conf.Switches.DfpCachingSwitch
@@ -68,32 +67,11 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
 
       Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems))))
 
-      val topAboveNavSlotTakeovers = data.lineItems filter { lineItem =>
-        lineItem.costType == "CPD" &&
-          lineItem.targeting.adUnits.exists { adUnit =>
-            val prefix = adUnit.path.mkString("/").stripSuffix("/ng").stripSuffix("/front")
-            prefix.endsWith("/uk") || prefix.endsWith("/us") || prefix.endsWith("/au")
-          } &&
-          lineItem.targeting.geoTargetsIncluded.exists { geoTarget =>
-            geoTarget.locationType == "COUNTRY" && (
-              geoTarget.name == "United Kingdom" ||
-                geoTarget.name == "United States" ||
-                geoTarget.name == "Australia"
-              )
-          } &&
-          lineItem.creativeSizes.exists { size =>
-            size == leaderboardSize || size == responsiveSize
-          }
-      }
-      Store.putTopAboveNavSlotTakeovers(stringify(toJson(topAboveNavSlotTakeovers)))
-
-      val topBelowNavSlotTakeovers = data.lineItems filter {
-        _.targeting.customTargetSets.exists(_.targets.exists(_.isSlot("top-below-nav")))
-      }
-      Store.putTopBelowNavSlotTakeovers(stringify(toJson(topBelowNavSlotTakeovers)))
-
-      val topSlotTakeovers = topAboveNavSlotTakeovers
-      Store.putTopSlotTakeovers(stringify(toJson(topSlotTakeovers)))
+      Store.putTopAboveNavSlotTakeovers(stringify(toJson(LineItemReport(now,
+        data.topAboveNavSlotTakeovers))))
+      Store.putTopBelowNavSlotTakeovers(stringify(toJson(LineItemReport(now,
+        data.topBelowNavSlotTakeovers))))
+      Store.putTopSlotTakeovers(stringify(toJson(LineItemReport(now, data.topSlotTakeovers))))
     }
   }
 }
