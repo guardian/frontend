@@ -5,8 +5,7 @@ define([
     'common/utils/template',
     'common/modules/identity/api',
     'common/modules/ui/message',
-    'text!common/views/membership-message.html',
-    'common/views/svgs'
+    'text!common/views/membership-message.html'
 ], function (
     config,
     detect,
@@ -14,8 +13,7 @@ define([
     template,
     idApi,
     Message,
-    messageTemplate,
-    svgs
+    messageTemplate
 ) {
 
     return function () {
@@ -54,8 +52,7 @@ define([
                 }).show(template(messageTemplate, {
                     supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_SUBSCRIBER_LOYALTY_BANNER_A',
                     messageText: 'Become a Guardian Member and support fearless investigative journalism',
-                    linkText: 'Become a supporter',
-                    arrowWhiteRight: svgs('arrowWhiteRight')
+                    linkText: 'Become a supporter'
                 }));
             }
         },
@@ -69,8 +66,7 @@ define([
                 }).show(template(messageTemplate, {
                     supporterLink: 'https://membership.theguardian.com/about/supporter?INTCMP=MEMBERSHIP_SUBSCRIBER_LOYALTY_BANNER_B',
                     messageText: '"If you read the Guardian, join the Guardian" Polly Toynbee.',
-                    linkText: 'Find out more',
-                    arrowWhiteRight: svgs('arrowWhiteRight')
+                    linkText: 'Find out more'
                 }));
             }
         }];
