@@ -185,9 +185,11 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
   }
 
   def forcesDayView = page match {
-    case tag: Tag => Set("series", "blog") contains tag.tagType
+
+    case tag: Tag => tag.isSeriesOrBlog
     case _ => false
   }
+
 
   def idWithoutEdition = page match {
     case section: Section if section.isEditionalised => Paths.stripEditionIfPresent(section.id)

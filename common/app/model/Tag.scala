@@ -54,6 +54,8 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val isFootballTeam = delegate.references.exists(_.`type` == "pa-football-team")
 
+  lazy val isSeriesOrBlog = section != "crosswords" && Set("series", "blog").contains(tagType)
+
   lazy val isFootballCompetition = delegate.references.exists(_.`type` == "pa-football-competition")
 
   lazy val getFootballBadgeUrl: Option[String] = delegate.references.find(_.`type` == "pa-football-team")
