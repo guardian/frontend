@@ -69,14 +69,9 @@ define([
                 }
             },
 
-            initQuizListeners: function () {
+            initOphanListeners: function () {
                 require(['ophan/ng'], function (ophan) {
                     mediator.on('quiz/ophan-event', ophan.record);
-                });
-            },
-
-            initTrailerListeners: function () {
-                require(['ophan/ng'], function (ophan) {
                     mediator.on('trailer/ophan-event', ophan.record);
                 });
             },
@@ -94,8 +89,7 @@ define([
             modules.initRightHandComponent();
             modules.initCmpParam();
             modules.initSocialMostPopular();
-            modules.initQuizListeners();
-            modules.initTrailerListeners();
+            modules.initOphanListeners();
             modules.initFilmTruncationTest();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
