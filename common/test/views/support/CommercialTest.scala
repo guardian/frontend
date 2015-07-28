@@ -2,8 +2,8 @@ package views.support
 
 import common.Edition
 import common.Edition.defaultEdition
-import common.dfp.AdSize
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
+import common.dfp.{AdSize, AdSlot}
 import conf.Switches._
 import model.MetaData
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers, OptionValues}
@@ -17,7 +17,7 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
     override def analyticsName: String = "analyticsName"
     override def webTitle: String = "webTitle"
 
-    override def sizeOfTakeoverAdsInTopAboveNavSlot(edition: Edition): Seq[AdSize] = adSizes
+    override def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = adSizes
   }
 
   def pageShouldRequestAdSizes(pageId: String, sizesAvailableForSlot: Seq[AdSize])
