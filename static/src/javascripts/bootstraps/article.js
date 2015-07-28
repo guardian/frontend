@@ -75,6 +75,12 @@ define([
                 });
             },
 
+            initTrailerListeners: function () {
+                require(['ophan/ng'], function (ophan) {
+                    mediator.on('trailer/ophan-event', ophan.record);
+                });
+            },
+
             initFilmTruncationTest: function () {
                 if (config.page.section === 'film' && ab.shouldRunTest('ArticleTruncation', 'variant') && !detect.isGuardianReferral()) {
                     truncation();
@@ -89,6 +95,7 @@ define([
             modules.initCmpParam();
             modules.initSocialMostPopular();
             modules.initQuizListeners();
+            modules.initTrailerListeners();
             modules.initFilmTruncationTest();
             richLinks.upgradeRichLinks();
             richLinks.insertTagRichLink();
