@@ -1149,7 +1149,7 @@ object Switches {
     "facia-tool-put-private",
     "If this is switched on, facia tool will put collections to S3 as private",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 30),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 
