@@ -633,33 +633,6 @@ object Switches {
   )
 
   // Features
-  val ArticleTruncation = Switch(
-    "Feature",
-    "ab-article-truncation",
-    "Article truncation",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 30),
-    exposeClientSide = true
-  )
-
-  val FacebookMostViewed = Switch(
-    "Feature",
-    "ab-facebook-most-viewed",
-    "Facebook most viewed",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val TwitterMostViewed = Switch(
-    "Feature",
-    "ab-twitter-most-viewed",
-    "Twitter most viewed",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
   val InternationalEditionSwitch = Switch(
     "Feature",
     "international-edition",
@@ -905,42 +878,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val LiveblogFrontUpdatesUk = Switch(
-    "Feature",
-    "liveblog-front-updates-uk",
-    "Switch for the latest liveblog updates on the UK network front",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val LiveblogFrontUpdatesUs = Switch(
-    "Feature",
-    "liveblog-front-updates-us",
-    "Switch for the latest liveblog updates on the US network front",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val LiveblogFrontUpdatesAu = Switch(
-    "Feature",
-    "liveblog-front-updates-au",
-    "Switch for the latest liveblog updates on the AU network front",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val LiveblogFrontUpdatesOther = Switch(
-    "Feature",
-    "liveblog-front-updates-other",
-    "Switch for the latest liveblog updates on non-network fronts",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val IPadNothrasherSwitch = Switch(
     "Feature",
     "ipad-no-thrashers",
@@ -960,6 +897,33 @@ object Switches {
   )
 
   // A/B Tests
+
+  val ArticleTruncation = Switch(
+    "A/B Tests",
+    "ab-article-truncation",
+    "Article truncation",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 7, 30),
+    exposeClientSide = true
+  )
+
+  val FacebookMostViewed = Switch(
+    "A/B Tests",
+    "ab-facebook-most-viewed",
+    "Facebook most viewed",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
+
+  val TwitterMostViewed = Switch(
+    "A/B Tests",
+    "ab-twitter-most-viewed",
+    "Twitter most viewed",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
 
   val ABFilmContainers = Switch(
     "A/B Tests",

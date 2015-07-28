@@ -80,21 +80,25 @@ class AutoComplete extends BaseWidget {
     }
 
     type() {
-        this.alertMessage('searching for ' + this.filter() + '...');
-        this[typeBounceSym]().then(res => {
-            this.alertMessage(false);
-            if (res && res.results && res.results.length) {
-                this.currentPage(res.currentPage || 1);
-                this.totalPages(res.pages || 1);
-                this.suggestions(res.results);
-            } else {
-                this.alertMessage('...sorry, no ' + this.getPath() + ' found.');
-            }
-        })
-        .catch(ex => {
-            this.alertMessage(ex.message);
-        })
-        .then(() => this.emit('update'));
+        if (this.filter()) {
+            this.alertMessage('searching for ' + this.filter() + '...');
+            this[typeBounceSym]().then(res => {
+                this.alertMessage(false);
+                if (res && res.results && res.results.length) {
+                    this.currentPage(res.currentPage || 1);
+                    this.totalPages(res.pages || 1);
+                    this.suggestions(res.results);
+                } else {
+                    this.alertMessage('...sorry, no ' + this.getPath() + ' found.');
+                }
+            })
+            .catch(ex => {
+                this.alertMessage(ex.message);
+            })
+            .then(() => this.emit('update'));
+        } else {
+            this.select('');
+        }
     }
 
     nextPage() {
