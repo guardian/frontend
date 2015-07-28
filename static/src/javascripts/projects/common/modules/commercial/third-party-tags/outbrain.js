@@ -13,13 +13,13 @@ define([
     detect,
     mediator
 ) {
-    var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
+    var outbrainUrl = '//widgets.outbrain.com/outbrain.js',
+        $outbrain = $('.js-outbrain');
 
     function load() {
         // outbrain leaks the URL of preview content so we don't show it there.
-        if (config.switches.outbrain && !config.page.isPreview) {
+        if (config.switches.outbrain && !config.page.isPreview && $outbrain.length > 0) {
             var widgetIds = {},
-                $outbrain = $('.js-outbrain'),
                 widgetCode;
 
             widgetIds = {
