@@ -3,7 +3,7 @@ define([
     'common/utils/config',
     'common/utils/contains',
     'common/utils/detect',
-    'common/utils/mediator',
+    'common/utils/mediator'
 ], function (
     $,
     config,
@@ -36,7 +36,7 @@ define([
                     },
                     desktop: {
                         sections: 'AR_14',
-                        all     : 'AR_15'  
+                        all     : 'AR_15'
                     },
                     tablet: {
                         sections: 'MB_8',
@@ -59,7 +59,7 @@ define([
     }
 
     function getSection() {
-        return contains(['uk', 'us', 'au', 'international'], config.page.pageId.toLowerCase()) 
+        return contains(['uk', 'us', 'au', 'international'], config.page.pageId.toLowerCase())
             || contains(['politics', 'world'], config.page.section.toLowerCase()) ? 'sections' : 'all';
     }
 
