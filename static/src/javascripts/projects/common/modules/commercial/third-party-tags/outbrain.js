@@ -16,37 +16,45 @@ define([
     function load() {
         // outbrain leaks the URL of preview content so we don't show it there.
         if (config.switches.outbrain && !config.page.isPreview) {
-            var widgetIds = {
+            var widgetIds = {},
+                widgetCode;
+
+            widgetIds = {
                 mobile: 'MB_2',
                 tablet: 'MB_1',
                 desktop: 'AR_11',
                 wide: 'AR_11'
             };
 
-            var newWidgetIds = {
-                wide: {
-                    sections: 'AR_12',
-                    all     : 'AR_13'
-                },
-                desktop: {
-                    sections: 'AR_14',
-                    all     : 'AR_15'  
-                },
-                tablet: {
-                    sections: 'MB_8',
-                    all     : 'MB_9'
-                },
-                mobile: {
-                    sections: 'MB_4',
-                    all     : 'MB_5'
-                }
-            };
+            widgetCode = widgetIds[detect.getBreakpoint()];
 
-            console.log(getSection(), newWidgetIds[detect.getBreakpoint()][getSection()]);
+            if (config.switches.NewOutbrainSwitch) {
+                widgetIds = {
+                    wide: {
+                        sections: 'AR_12',
+                        all     : 'AR_13'
+                    },
+                    desktop: {
+                        sections: 'AR_14',
+                        all     : 'AR_15'  
+                    },
+                    tablet: {
+                        sections: 'MB_8',
+                        all     : 'MB_9'
+                    },
+                    mobile: {
+                        sections: 'MB_4',
+                        all     : 'MB_5'
+                    }
+                };
 
+                widgetCode = widgetIds[detect.getBreakpoint()][getSection()];
+            }
+
+            console.log(widgetCode);
             $('.OUTBRAIN')
                 .first()
-                .attr('data-widget-id', widgetIds[detect.getBreakpoint()]);
+                .attr('data-widget-id', widgetCode);
             return require(['js!' + outbrainUrl]);
         }
     }

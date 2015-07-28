@@ -306,6 +306,15 @@ object Switches {
   )
 
   // Commercial
+  val NewOutbrainSwitch = Switch(
+    "Commercial",
+    "new-outbrain",
+    "Allowing to show new outbrain logic for facelift",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 8, 30),
+    exposeClientSide = true
+  )
+
   val OphanViewIdSwitch = Switch("Commercial",
     "ophan-view-id",
     "Depending on ophan to pass view ID to the gpt targeting",
