@@ -70,7 +70,7 @@ define([
             },
 
             initOphanListeners: function () {
-                if (config.page.contentType === "Interactive") {
+                if (config.page.contentType === 'Interactive') {
                     require(['ophan/ng'], function (ophan) {
                         mediator.on('quiz/ophan-event', ophan.record);
                         mediator.on('trailer/ophan-event', ophan.record);
