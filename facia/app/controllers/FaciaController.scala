@@ -126,15 +126,27 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderContainer(id: String) = MemcachedAction { implicit request =>
     log.info(s"Serving collection ID: $id")
-    getPressedCollection(id).map { collectionOption =>
+    renderContainerView(id)
+  }
+
+  def renderCanonicalContainer(frontId: String) = MemcachedAction { implicit request =>
+    log.info(s"Serving canonical collection for frontID : $frontId")
+
+    ConfigAgent.getCanonicalIdForFront(frontId).map { collectionId =>
+      renderContainerView(collectionId)
+    }.getOrElse(Future.successful(NotFound))
+  }
+
+  private def renderContainerView(collectionId: String)(implicit request: RequestHeader): Future[Result] = {
+    getPressedCollection(collectionId).map { collectionOption =>
       collectionOption.map { collection =>
         Cached(60) {
-          val config = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
+          val config = ConfigAgent.getConfig(collectionId).getOrElse(CollectionConfig.empty)
 
           val containerDefinition = FaciaContainer(
             1,
             Fixed(FixedContainers.fixedMediumFastXII),
-            CollectionConfigWithId(id, config),
+            CollectionConfigWithId(collectionId, config),
             CollectionEssentials.fromPressedCollection(collection)
           )
 
@@ -144,40 +156,9 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           else
             NotFound
         }
-      }.getOrElse(ServiceUnavailable)}
+      }.getOrElse(ServiceUnavailable)
+    }
   }
-
-  def renderCanonicalContainer(frontId: String) = MemcachedAction { implicit request =>
-    log.info(s"Serving canonical collection for frontID : $frontId")
-
-    val canonicalCollectionIdForFrontOption: Option[String] = ConfigAgent.getCanonicalIdForFront(frontId)
-
-
-    canonicalCollectionIdForFrontOption.map { collectionId =>
-      getPressedCollection(collectionId).map { collectionOption =>
-        collectionOption.map { collection =>
-          Cached(60) {
-            val config = ConfigAgent.getConfig(collectionId).getOrElse(CollectionConfig.empty)
-
-            val containerDefinition = FaciaContainer(
-              1,
-              Fixed(FixedContainers.fixedMediumFastXII),
-              CollectionConfigWithId(collectionId, config),
-              CollectionEssentials.fromPressedCollection(collection)
-            )
-
-            val html = container(containerDefinition, FaciaPage.defaultFaciaPage.frontProperties)
-            if (request.isJson)
-              JsonCollection(html, collection)
-            else
-              NotFound
-          }
-        }.getOrElse(ServiceUnavailable)}
-    }.getOrElse(Future.successful(NotFound))
-
-  }
-
-
 
   def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
     frontJsonFapi.get(path).flatMap {
