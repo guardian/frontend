@@ -101,7 +101,6 @@ define([
     SaveForLater,
     internationalMessage,
     internationalControlMessage,
-    doNotUseAdblockTemplate,
     identity
 ) {
     var modules = {
