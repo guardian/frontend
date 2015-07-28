@@ -124,7 +124,7 @@ define([
                 require(['ophan/ng'], function (ophan) {
                     var lineItemIdOrEmpty = function (event) {
                         if (event.isEmpty) {
-                            return "__empty__";
+                            return '__empty__';
                         } else {
                             return event.lineItemId;
                         }
