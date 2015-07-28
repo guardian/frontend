@@ -17,6 +17,11 @@
             @fragments.commercial.commercialComponentHigh()
             </div>
         }
+        @if(content.showFooterContainers && Switches.NewOutbrainSwitch.isSwitchedOn) {
+            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
+            @fragments.outbrainPlaceholder()
+            </div>
+        }
 
         @fragments.storyPackagePlaceholder(content, related)
         @fragments.onwardPlaceholder()
@@ -27,7 +32,7 @@
 
         @fragments.mostPopularPlaceholder(content.section)
 
-        @if(content.showFooterContainers) {
+        @if(content.showFooterContainers && !Switches.NewOutbrainSwitch.isSwitchedOn) {
             <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
             @fragments.outbrainPlaceholder()
             </div>
