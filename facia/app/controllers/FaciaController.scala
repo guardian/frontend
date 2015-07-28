@@ -200,16 +200,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       })
     }.getOrElse(Future.successful(None))
 
-//  private def getCanonicalPressedCollection(path: String): Future[Option[PressedCollection]] = {
-//    ConfigAgent.getCanonicalIdForFront(path).map { collectionId =>
-//      getPressedCollection(collectionId)
-//
-//    }.getOrElse(Future.successful(None))
-//  }
-
-
-
-
 
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
