@@ -51,7 +51,7 @@ define([
     function loadOther() {
         imrWorldwide.load();
         remarketing.load();
-        (config.switches.NewOutbrainSwitch) ? outbrain.init() : outbrain.load();
+        (config.switches.newOutbrain) ? outbrain.init() : outbrain.load();
         krux.load();
     }
 

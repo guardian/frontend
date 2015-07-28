@@ -28,7 +28,7 @@ define([
 
             widgetCode = widgetIds[detect.getBreakpoint()];
 
-            if (config.switches.NewOutbrainSwitch) {
+            if (config.switches.newOutbrain) {
                 widgetIds = {
                     wide: {
                         sections: 'AR_12',
@@ -51,7 +51,6 @@ define([
                 widgetCode = widgetIds[detect.getBreakpoint()][getSection()];
             }
 
-            console.log(widgetCode);
             $('.OUTBRAIN')
                 .first()
                 .attr('data-widget-id', widgetCode);
