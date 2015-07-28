@@ -1,12 +1,12 @@
-@(date: org.joda.time.DateTime)(implicit requestHeader: RequestHeader)
+@(date: org.joda.time.DateTime, tzOverride: Option[org.joda.time.DateTimeZone] = None)(implicit requestHeader: RequestHeader)
 
 @import views.support.Format
 
 <div class="fc-today">
-    <span class="fc-today__dayofweek js-dayofweek">@Format(date, "EEEE")</span>
+    <span class="fc-today__dayofweek js-dayofweek">@Format(date, "EEEE", tzOverride)</span>
     <span class="u-nobr fc-today__sub">
-        <span class="fc-today__dayofmonth js-dayofmonth">@Format(date, "d")</span>
-        <span class="fc-today__month">@Format(date, "MMMM")</span>
-        <span class="fc-today__year">@Format(date, "yyyy")</span>
+        <span class="fc-today__dayofmonth js-dayofmonth">@Format(date, "d", tzOverride)</span>
+        <span class="fc-today__month">@Format(date, "MMMM", tzOverride)</span>
+        <span class="fc-today__year">@Format(date, "yyyy", tzOverride)</span>
     </span>
 </div>

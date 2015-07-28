@@ -23,7 +23,7 @@ import play.api.test.Helpers._
   }
 
   it should "redirect to the first earlier page for the given date" in {
-    val result = controllers.AllIndexController.newer("sport/cycling", "25", "dec", "2013")(TestRequest())
+    val result = controllers.AllIndexController.altDate("sport/cycling", "25", "dec", "2013")(TestRequest())
     status(result) should be(TemporaryRedirect)
     header("Location", result).head should endWith ("/sport/cycling/2013/dec/26/all")
   }
@@ -57,4 +57,14 @@ import play.api.test.Helpers._
       DateTimeZone.setDefault(oldTimezone)
     }
   }
+
+  it should "render an /all page with the UTC timestamp for the UK edition" in UK("/sport/lawrence-donegan-golf-blog/2009/jun/11/all") { browser =>
+    import browser._
+    url() should endWith("/sport/lawrence-donegan-golf-blog/2009/jun/11/all")
+    $("[js-dayofweek]").first.getText should contain ("Wednesday")
+    $("[js-dayofmonth]").first.getText should contain ("10")
+    $("[fc-today__month]").first.getText should contain ("June")
+    $("[fc-today__year]").first.getText should contain ("2009")
+  }
+
 }
