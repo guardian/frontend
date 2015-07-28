@@ -2,7 +2,7 @@
 @import views.support.Commercial.topSlot
 
 @if(mvt.MobileTopBannerRemoveTest.isParticipating) {
-    @if(topSlot.hasResponsiveAd(metaData,edition)) {
+    @if(topSlot.hasResponsiveAd(metaData, edition)) {
         <div class="top-banner-ad-container top-banner-ad-container--mobile top-banner-ad-container--ab-mobile">
         @fragments.commercial.standardAd(
             "top",
@@ -10,9 +10,6 @@
             Map("mobile" -> Seq("1,1", "300,50", "320,50", "88,70")),
             showLabel = false
         )
-        </div>
-    } else {
-        <div class="top-banner-ad-container top-banner-ad-container--mobile top-banner-ad-container--ab-mobile">
         </div>
     }
 } else {
