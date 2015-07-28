@@ -136,7 +136,7 @@ define([
                             campaignId: lineItemIdOrEmpty(event),
                             creativeId: event.creativeId,
                             timeToRenderEnded: new Date().getTime() - start,
-                            adServer: "DFP"
+                            adServer: 'DFP'
                         }]
                     });
                 });
