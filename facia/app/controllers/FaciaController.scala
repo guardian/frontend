@@ -69,6 +69,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
   def renderContainerJson(id: String) = renderContainer(id)
+  def renderCanonicalContainerJson(frontId: String) = renderCanonicalContainer(frontId)
 
   def renderFrontRss(path: String) = MemcachedAction { implicit  request =>
     log.info(s"Serving RSS Path: $path")
@@ -146,6 +147,38 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       }.getOrElse(ServiceUnavailable)}
   }
 
+  def renderCanonicalContainer(frontId: String) = MemcachedAction { implicit request =>
+    log.info(s"Serving canonical collection for frontID : $frontId")
+
+    val canonicalCollectionIdForFrontOption: Option[String] = ConfigAgent.getCanonicalIdForFront(frontId)
+
+
+    canonicalCollectionIdForFrontOption.map { collectionId =>
+      getPressedCollection(collectionId).map { collectionOption =>
+        collectionOption.map { collection =>
+          Cached(60) {
+            val config = ConfigAgent.getConfig(collectionId).getOrElse(CollectionConfig.empty)
+
+            val containerDefinition = FaciaContainer(
+              1,
+              Fixed(FixedContainers.fixedMediumFastXII),
+              CollectionConfigWithId(collectionId, config),
+              CollectionEssentials.fromPressedCollection(collection)
+            )
+
+            val html = container(containerDefinition, FaciaPage.defaultFaciaPage.frontProperties)
+            if (request.isJson)
+              JsonCollection(html, collection)
+            else
+              NotFound
+          }
+        }.getOrElse(ServiceUnavailable)}
+    }.getOrElse(Future.successful(NotFound))
+
+  }
+
+
+
   def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
     frontJsonFapi.get(path).flatMap {
       case Some(pressedPage) =>
@@ -185,6 +218,17 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         faciaPage.collections.find{ c => c.id == collectionId}
       })
     }.getOrElse(Future.successful(None))
+
+//  private def getCanonicalPressedCollection(path: String): Future[Option[PressedCollection]] = {
+//    ConfigAgent.getCanonicalIdForFront(path).map { collectionId =>
+//      getPressedCollection(collectionId)
+//
+//    }.getOrElse(Future.successful(None))
+//  }
+
+
+
+
 
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
