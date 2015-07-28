@@ -2,7 +2,6 @@ package common.dfp
 
 import akka.agent.Agent
 import common._
-import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import conf.Configuration.commercial._
 import conf.Configuration.environment
 import play.api.Play
@@ -132,33 +131,17 @@ object DfpAgent
 
   def refreshFaciaSpecificData(): Unit = {
 
-    val currentLineItemsFromStore: Seq[GuLineItem] = grabCurrentLineItemsFromStore(dfpLineItemsKey)
-
-    update(topAboveNavLineItemAgent) {
-      currentLineItemsFromStore filter { lineItem =>
-        lineItem.costType == "CPD" &&
-          lineItem.targeting.adUnits.exists { adUnit =>
-            val prefix = adUnit.path.mkString("/").stripSuffix("/ng").stripSuffix("/front")
-            prefix.endsWith("/uk") || prefix.endsWith("/us") || prefix.endsWith("/au")
-          } &&
-          lineItem.targeting.geoTargetsIncluded.exists { geoTarget =>
-            geoTarget.locationType == "COUNTRY" && (
-              geoTarget.name == "United Kingdom" ||
-                geoTarget.name == "United States" ||
-                geoTarget.name == "Australia"
-              )
-          } &&
-          lineItem.creativeSizes.exists { size =>
-            size == leaderboardSize || size == responsiveSize
-          }
+    def updateLineItems(agent: Agent[Seq[GuLineItem]], key: String): Unit = {
+      agent sendOff { oldData =>
+        val takeovers = grabCurrentLineItemsFromStore(key)
+        if (takeovers.nonEmpty) takeovers
+        else oldData
       }
     }
 
-    update(topBelowNavLineItemAgent) {
-      currentLineItemsFromStore filter {
-        _.targeting.customTargetSets.exists(_.targets.exists(_.isSlot("top-below-nav")))
-      }
-    }
+    updateLineItems(topAboveNavLineItemAgent, topAboveNavSlotTakeoversKey)
+
+    updateLineItems(topBelowNavLineItemAgent, topBelowNavSlotTakeoversKey)
 
     update(takeoverWithEmptyMPUsAgent)(TakeoverWithEmptyMPUs.fetch())
   }
