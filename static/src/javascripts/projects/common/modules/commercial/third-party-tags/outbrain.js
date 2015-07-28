@@ -1,13 +1,15 @@
 define([
+    'fastdom',
     'common/utils/$',
+    'common/utils/_',
     'common/utils/config',
-    'common/utils/contains',
     'common/utils/detect',
     'common/utils/mediator'
 ], function (
+    fastdom,
     $,
+    _,
     config,
-    contains,
     detect,
     mediator
 ) {
@@ -17,6 +19,7 @@ define([
         // outbrain leaks the URL of preview content so we don't show it there.
         if (config.switches.outbrain && !config.page.isPreview) {
             var widgetIds = {},
+                $outbrain = $('.js-outbrain'),
                 widgetCode;
 
             widgetIds = {
@@ -51,6 +54,10 @@ define([
                 widgetCode = widgetIds[detect.getBreakpoint()][getSection()];
             }
 
+            fastdom.write(function () {
+                $outbrain.css('display', 'block');
+            });
+
             $('.OUTBRAIN')
                 .first()
                 .attr('data-widget-id', widgetCode);
@@ -59,13 +66,14 @@ define([
     }
 
     function getSection() {
-        return contains(['uk', 'us', 'au', 'international'], config.page.pageId.toLowerCase())
-            || contains(['politics', 'world'], config.page.section.toLowerCase()) ? 'sections' : 'all';
+        return _.contains(['uk', 'us', 'au', 'international'], config.page.pageId.toLowerCase())
+            || _.contains(['politics', 'world'], config.page.section.toLowerCase()) ? 'sections' : 'all';
     }
 
     function init() {
         mediator.on('modules:commercial:dfp:rendered', function (event) {
-            if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high' && event.isEmpty) {
+            if (event.slot.getSlotId().getDomId() === 'dfp-ad--merchandising-high'
+                && event.isEmpty && config.page.section !== 'childrens-books-site') {
                 load();
             }
         });
