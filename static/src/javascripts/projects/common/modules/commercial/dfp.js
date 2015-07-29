@@ -150,11 +150,12 @@ define([
         },
 
         setPageTargeting = function () {
+            var additionalTargeting = {};
+
             if (config.switches.ophan && config.switches.ophanViewId) {
                 require(['ophan/ng'],
                     function (ophan) {
-                        var viewId = (ophan || {}).viewId;
-                        setTarget({viewId: viewId});
+                        additionalTargeting.viewId = (ophan || {}).viewId
                     },
                     function (err) {
                         raven.captureException(new Error('Error retrieving ophan (' + err + ')'), {
@@ -162,13 +163,11 @@ define([
                                 feature: 'DFP'
                             }
                         });
-
-                        setTarget();
                     }
                 );
-            } else {
-                setTarget();
             }
+
+            setTarget(additionalTargeting);
         },
 
         setTarget = function (opts) {
