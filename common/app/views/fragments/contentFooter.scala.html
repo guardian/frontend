@@ -15,6 +15,11 @@
         }
 
         @fragments.storyPackagePlaceholder(content, related)
+        @if(content.showFooterContainers && Switches.NewOutbrainSwitch.isSwitchedOn) {
+            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site js-outbrain">
+            @fragments.outbrainPlaceholder()
+            </div>
+        }
         @fragments.onwardPlaceholder()
 
         @if(content.isCommentable) {
@@ -23,8 +28,8 @@
 
         @fragments.mostPopularPlaceholder(content.section)
 
-        @if(content.showFooterContainers) {
-            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site">
+        @if(content.showFooterContainers && !Switches.NewOutbrainSwitch.isSwitchedOn) {
+            <div class="fc-container fc-container--outbrain hide-on-childrens-books-site js-outbrain">
             @fragments.outbrainPlaceholder()
             </div>
         }

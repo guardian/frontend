@@ -86,13 +86,13 @@
 
         <div class="content-footer">
 
-            @fragments.onwardPlaceholder()
-
             @fragments.discussionFooter(crosswordPage.isCommentable, crosswordPage.isClosedForComments, crosswordPage.shortUrlId)
 
             @if(crosswordPage.isCommentable) {
                 <div class="js-repositioned-comments content__repositioned-comments"></div>
             }
+
+            @fragments.onwardPlaceholder()
         </div>
     </div>
 }
