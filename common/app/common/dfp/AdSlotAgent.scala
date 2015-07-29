@@ -11,8 +11,7 @@ trait AdSlotAgent {
 
   protected val isProd: Boolean
 
-  protected def topAboveNavLineItems: Seq[GuLineItem]
-  protected def topBelowNavLineItems: Seq[GuLineItem]
+  protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]]
 
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs]
 
@@ -33,8 +32,9 @@ trait AdSlotAgent {
 
   private def targetsAdTest(lineItem: GuLineItem) = lineItem.targeting.hasAdTestTargetting
 
-  def sizeOfTakeoverAdsInTopAboveNavSlot(adUnitWithoutRoot: String,
-                                         edition: Edition): Seq[AdSize] = {
+  def sizeOfTakeoverAdsInSlot(slot: AdSlot,
+                              adUnitWithoutRoot: String,
+                              edition: Edition): Seq[AdSize] = {
 
     def targetsRelevantSizes(lineItem: GuLineItem): Boolean = {
       val creativeSizes = lineItem.creativeSizes
@@ -50,7 +50,7 @@ trait AdSlotAgent {
       }
     }
 
-    val lineItems = topAboveNavLineItems.filter { lineItem =>
+    val lineItems = lineItemsBySlot.getOrElse(slot, Nil).filter { lineItem =>
       isCurrent(lineItem) &&
         lineItem.costType == "CPD" &&
         targetsRelevantSizes(lineItem) &&
@@ -77,7 +77,7 @@ trait AdSlotAgent {
 
     val isFront = adUnitWithoutRoot.endsWith("/front") || adUnitWithoutRoot.endsWith("/front/ng")
 
-    isFront && topBelowNavLineItems.exists { lineItem =>
+    isFront && lineItemsBySlot.getOrElse(TopBelowNavSlot, Nil).exists { lineItem =>
       isCurrent(lineItem) &&
         targetsTopBelowNavSlot(lineItem) &&
         targetsEdition(lineItem, edition) &&
@@ -99,3 +99,12 @@ trait AdSlotAgent {
     }
   }
 }
+
+
+sealed abstract class AdSlot(val name: String)
+
+case object TopAboveNavSlot extends AdSlot("top-above-nav")
+
+case object TopBelowNavSlot extends AdSlot("top-below-nav")
+
+case object TopSlot extends AdSlot("top")
