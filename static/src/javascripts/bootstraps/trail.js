@@ -75,13 +75,13 @@ define([
             // TODO article only??
             if (!detect.isGuardianReferral() && articleContainersTest([
                     {
-                        testId: 'TruncationWithFacebook',
+                        id: 'TruncationWithFacebook',
                         variant: 'variant',
                         endpoint: '/most-read-facebook.json',
                         title: 'Trending on Facebook'
                     },
                     {
-                        testId: 'TruncationWithRelevant',
+                        id: 'TruncationWithRelevant',
                         variant: 'variant',
                         endpoint: '/relevant-container/' + (config.page.edition + '/' + config.page.section).toLowerCase() + '.json',
                         title: 'More from ' + config.page.sectionName
