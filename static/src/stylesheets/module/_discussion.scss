@@ -900,7 +900,7 @@ $comment-recommend-button-size: 19px;
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 3;
+    z-index: $zindex-content;
     width: gs-span(4);
     color: colour(neutral-1);
     padding: $gs-baseline / 2 $gs-gutter / 2;
