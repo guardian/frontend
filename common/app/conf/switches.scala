@@ -907,19 +907,19 @@ object Switches {
     exposeClientSide = true
   )
 
-  val FacebookMostViewed = Switch(
+  val TruncationWithFacebook = Switch(
     "A/B Tests",
-    "ab-facebook-most-viewed",
-    "Facebook most viewed",
+    "ab-truncation-with-facebook",
+    "Truncation, with facebook most-viewed container",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 17),
     exposeClientSide = true
   )
 
-  val TwitterMostViewed = Switch(
+  val TruncationWithRelevant = Switch(
     "A/B Tests",
-    "ab-twitter-most-viewed",
-    "Twitter most viewed",
+    "ab-truncation-with-relevant",
+    "Truncation, with relevant section-front container",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 17),
     exposeClientSide = true

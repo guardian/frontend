@@ -11,6 +11,7 @@ define([
     'common/utils/mediator',
     'common/utils/robust',
     'common/utils/proximity-loader',
+    'common/utils/detect',
     'common/modules/commercial/comment-adverts',
     'common/modules/discussion/loader',
     'common/modules/identity/api',
@@ -18,8 +19,9 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
+    'common/modules/article/truncate-article',
     'common/modules/social/share-count',
-    'common/modules/experiments/film-containers-logic'
+    'common/modules/experiments/article-containers-test'
 ], function (
     enhancer,
     fastdom,
@@ -31,6 +33,7 @@ define([
     mediator,
     robust,
     proximityLoader,
+    detect,
     commentAdverts,
     DiscussionLoader,
     identityApi,
@@ -38,8 +41,9 @@ define([
     Popular,
     Related,
     TonalComponent,
+    truncate,
     shareCount,
-    testFilmContainers
+    articleContainersTest
 ) {
     function insertOrProximity(selector, insert) {
         if (window.location.hash) {
@@ -67,8 +71,23 @@ define([
                 excludeTags: []
             };
 
-            // Remove this when the film containers test is complete
-            if (testFilmContainers()) {
+            // Remove this when the article containers tests are complete
+            // TODO article only??
+            if (!detect.isGuardianReferral() && articleContainersTest([
+                    {
+                        testId: 'TruncationWithFacebook',
+                        variant: 'variant',
+                        endpoint: '/most-read-facebook.json',
+                        title: 'Trending on Facebook'
+                    },
+                    {
+                        testId: 'TruncationWithRelevant',
+                        variant: 'variant',
+                        endpoint: '/relevant-container/' + (config.page.edition + '/' + config.page.section).toLowerCase() + '.json',
+                        title: 'More from ' + config.page.sectionName
+                    }
+                ])) {
+                truncate();
                 return;
             }
 
