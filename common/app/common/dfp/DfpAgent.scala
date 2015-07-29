@@ -29,8 +29,7 @@ object DfpAgent
   private lazy val tagToAdvertisementFeatureSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
-  private lazy val topAboveNavLineItemAgent = AkkaAgent[Seq[GuLineItem]](Nil)
-  private lazy val topBelowNavLineItemAgent = AkkaAgent[Seq[GuLineItem]](Nil)
+  private lazy val lineItemAgent = AkkaAgent[Map[AdSlot, Seq[GuLineItem]]](Map.empty)
   private lazy val takeoverWithEmptyMPUsAgent = AkkaAgent[Seq[TakeoverWithEmptyMPUs]](Nil)
 
   protected def currentPaidForTags: Seq[PaidForTag] = currentPaidForTagsAgent get()
@@ -39,8 +38,7 @@ object DfpAgent
   protected def tagToAdvertisementFeatureSponsorsMap = tagToAdvertisementFeatureSponsorsMapAgent get()
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
-  protected def topAboveNavLineItems: Seq[GuLineItem] = topAboveNavLineItemAgent get()
-  protected def topBelowNavLineItems: Seq[GuLineItem] = topBelowNavLineItemAgent get()
+  protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent get()
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs] =
     takeoverWithEmptyMPUsAgent get()
 
@@ -131,17 +129,17 @@ object DfpAgent
 
   def refreshFaciaSpecificData(): Unit = {
 
-    def updateLineItems(agent: Agent[Seq[GuLineItem]], key: String): Unit = {
-      agent sendOff { oldData =>
+    def updateLineItems(slot:AdSlot,key: String): Unit = {
+      lineItemAgent sendOff { oldData =>
         val takeovers = grabCurrentLineItemsFromStore(key)
-        if (takeovers.nonEmpty) takeovers
+        if (takeovers.nonEmpty) oldData + (slot -> takeovers)
         else oldData
       }
     }
 
-    updateLineItems(topAboveNavLineItemAgent, topAboveNavSlotTakeoversKey)
-
-    updateLineItems(topBelowNavLineItemAgent, topBelowNavSlotTakeoversKey)
+    updateLineItems(TopAboveNavSlot, topAboveNavSlotTakeoversKey)
+    updateLineItems(TopBelowNavSlot, topBelowNavSlotTakeoversKey)
+    updateLineItems(TopSlot, topSlotTakeoversKey)
 
     update(takeoverWithEmptyMPUsAgent)(TakeoverWithEmptyMPUs.fetch())
   }
