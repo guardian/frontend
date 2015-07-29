@@ -50,6 +50,7 @@ GET         /front/lastmodified/*path                                       cont
 
 #Facia Press
 GET         /container/*id.json                                             controllers.FaciaController.renderContainerJson(id)
+GET         /most-relevant-container/*frontId.json                          controllers.FaciaController.renderMostRelevantContainerJson(frontId)
 GET         /collection/*id/rss                                             controllers.FaciaController.renderCollectionRss(id)
 
 GET         /collection/*id                                                 controllers.FaciaToolController.getCollection(id)

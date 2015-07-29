@@ -69,7 +69,6 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
   def renderContainerJson(id: String) = renderContainer(id)
-  def renderCanonicalContainerJson(frontId: String) = renderCanonicalContainer(frontId)
 
   def renderFrontRss(path: String) = MemcachedAction { implicit  request =>
     log.info(s"Serving RSS Path: $path")
@@ -129,8 +128,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     renderContainerView(id)
   }
 
-  def renderCanonicalContainer(frontId: String) = MemcachedAction { implicit request =>
-    log.info(s"Serving canonical collection for frontID : $frontId")
+  def renderMostRelevantContainerJson(frontId: String) = MemcachedAction { implicit request =>
+    log.info(s"Serving most relevant container for front id : $frontId")
 
     ConfigAgent.getCanonicalIdForFront(frontId).map { collectionId =>
       renderContainerView(collectionId)
