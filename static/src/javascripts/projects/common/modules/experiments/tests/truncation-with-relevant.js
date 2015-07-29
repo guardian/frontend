@@ -1,8 +1,4 @@
-define([
-    'common/utils/detect'
-], function (
-    detect
-) {
+define([], function () {
     function noop() {}
 
     return function () {
@@ -11,15 +7,15 @@ define([
         this.expiry = '2015-08-17';
         this.author = 'Stephan Fowler';
         this.description = 'Truncation, with relevant section-front container';
-        this.audience = 0.1;
-        this.audienceOffset = 0.25;
+        this.audience = 0.25;
+        this.audienceOffset = 0.75;
         this.successMeasure = 'Page views per visit';
         this.audienceCriteria = '';
         this.dataLinkNames = '';
         this.idealOutcome = 'More page views per visit';
 
         this.canRun = function () {
-            return !detect.isGuardianReferral;
+            return true;
         };
 
         this.variants = [

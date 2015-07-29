@@ -7,6 +7,7 @@ define([
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/truncation-with-facebook',
+    'common/modules/experiments/tests/truncation-with-relevant',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/signed-out-save-for-later',
@@ -21,6 +22,7 @@ define([
     store,
     mvtCookie,
     TruncationWithFacebook,
+    TruncationWithRelevant,
     LiveblogNotifications,
     HighCommercialComponent,
     SignedOutSaveForLater,
@@ -30,6 +32,7 @@ define([
 
     var TESTS = _.flatten([
         new TruncationWithFacebook(),
+        new TruncationWithRelevant(),
         new LiveblogNotifications(),
         new HighCommercialComponent(),
         new SignedOutSaveForLater(),

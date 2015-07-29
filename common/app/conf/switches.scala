@@ -898,15 +898,6 @@ object Switches {
 
   // A/B Tests
 
-  val ArticleTruncation = Switch(
-    "A/B Tests",
-    "ab-article-truncation",
-    "Article truncation",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 30),
-    exposeClientSide = true
-  )
-
   val TruncationWithFacebook = Switch(
     "A/B Tests",
     "ab-truncation-with-facebook",
@@ -922,15 +913,6 @@ object Switches {
     "Truncation, with relevant section-front container",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val ABFilmContainers = Switch(
-    "A/B Tests",
-    "ab-film-containers",
-    "Film Containers on Film content",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 30),
     exposeClientSide = true
   )
 
