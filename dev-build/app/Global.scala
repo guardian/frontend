@@ -1,14 +1,14 @@
-import ab_headlines.ABTHeadlinesLifecycle
+import common.dfp.FaciaDfpAgentLifecycle
 import common.{CanonicalLink, DiagnosticsLifecycle, ExecutionContexts}
 import conf._
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
-import dfp.{DfpDataCacheLifecycle, DfpAgentLifecycle}
-import feed.{OnwardJourneyLifecycle, MostReadLifecycle, MostPopularFacebookAutoRefreshLifecycle}
+import dfp.DfpDataCacheLifecycle
+import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
 import implicits.Requests
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
-import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
+import play.api.mvc.{EssentialAction, EssentialFilter, RequestHeader, WithFilters}
 import services.ConfigAgentLifecycle
 
 // obviously this is only for devbuild and should never end up in one of our
@@ -62,11 +62,10 @@ object Global extends WithFilters(DevJsonExtensionFilter :: DevCacheWarningFilte
   with CommercialLifecycle
   with MostReadLifecycle
   with DfpDataCacheLifecycle
-  with DfpAgentLifecycle
+  with FaciaDfpAgentLifecycle
   with ConfigAgentLifecycle
   with SurgingContentAgentLifecycle
   with SectionsLookUpLifecycle
-  with ABTHeadlinesLifecycle
   with MostPopularFacebookAutoRefreshLifecycle
   with SwitchboardLifecycle
   with FootballLifecycle

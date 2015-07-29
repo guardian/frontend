@@ -18,7 +18,8 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
-    'common/modules/social/share-count'
+    'common/modules/social/share-count',
+    'common/modules/experiments/film-containers-logic'
 ], function (
     enhancer,
     fastdom,
@@ -37,7 +38,8 @@ define([
     Popular,
     Related,
     TonalComponent,
-    shareCount
+    shareCount,
+    testFilmContainers
 ) {
     function insertOrProximity(selector, insert) {
         if (window.location.hash) {
@@ -64,6 +66,11 @@ define([
             var opts = {
                 excludeTags: []
             };
+
+            // Remove this when the film containers test is complete
+            if (testFilmContainers()) {
+                return;
+            }
 
             // exclude ad features from non-ad feature content
             if (config.page.sponsorshipType !== 'advertisement-features') {

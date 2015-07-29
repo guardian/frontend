@@ -95,9 +95,6 @@ System['import']('core').then(function () {
                         System['import']('es6/bootstraps/crosswords').then(function (crosswords) {
                             crosswords.default.init();
                         });
-                        System['import']('es6/projects/common/modules/crosswords/thumbnails').then(function (crosswordThumbnails) {
-                            crosswordThumbnails.default.init();
-                        });
                     }
                 });
             });

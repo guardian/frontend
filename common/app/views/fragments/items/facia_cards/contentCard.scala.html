@@ -1,6 +1,5 @@
 @(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
 
-@import ab_headlines.ABTestHeadlines.headlinesJsonString
 @import model.InlineImage
 @import model.{InlineVideo, InlineSlideshow, VideoPlayer, CrosswordSvg, LiveBlog}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, Video640, CutOut}
@@ -20,10 +19,6 @@
         }
         data-discussion-closed="@item.discussionSettings.isClosedForComments"
         data-discussion-url="@item.header.url.get(request)#comments"
-    }
-
-    @for(id <- item.id; headlines <- headlinesJsonString(id)) {
-        data-headline-variants="@headlines"
     }
 
 data-link-name="@item.analyticsPrefix | card-@{index + 1}"
@@ -151,8 +146,8 @@ data-test-id="facia-card"
             <div class="fc-item__standfirst">@Html(text)</div>
         }
 
-        @if(item.isLive) {
-            <div class="js-liveblog-blocks" data-article-id="@item.id"></div>
+        @if(item.isLive && item.displaySettings.showLivePlayable && !isList) {
+            <div class="js-liveblog-blocks fc-item__liveblog-blocks" data-article-id="@item.id"></div>
         }
 
         @if(item.sublinks.nonEmpty) {

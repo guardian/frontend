@@ -117,7 +117,31 @@ define([
          * Initial commands
          */
         setListeners = function () {
+            var start = detect.getTimeOfDomComplete();
+
+
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
+                require(['ophan/ng'], function (ophan) {
+                    var lineItemIdOrEmpty = function (event) {
+                        if (event.isEmpty) {
+                            return '__empty__';
+                        } else {
+                            return event.lineItemId;
+                        }
+                    };
+
+                    ophan.record({
+                        ads: [{
+                            slot: event.slot.getSlotId().getDomId(),
+                            campaignId: lineItemIdOrEmpty(event),
+                            creativeId: event.creativeId,
+                            timeToRenderEnded: new Date().getTime() - start,
+                            adServer: 'DFP'
+                        }]
+                    });
+                });
+
+
                 rendered = true;
                 recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
@@ -153,6 +177,10 @@ define([
             });
         },
 
+        isMobileBannerTest = function () {
+            return config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile';
+        },
+
         /**
          * Loop through each slot detected on the page and define it based on the data
          * attributes on the element.
@@ -164,7 +192,7 @@ define([
                 })
                 // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
-                    if ($css($adSlot, 'display') === 'none') {
+                    if ($css($adSlot, 'display') === 'none' || (isMobileBannerTest() && $adSlot.hasClass('ad-slot--top'))) {
                         fastdom.write(function () {
                             $adSlot.remove();
                         });
