@@ -155,7 +155,7 @@ define([
             if (config.switches.ophan && config.switches.ophanViewId) {
                 require(['ophan/ng'],
                     function (ophan) {
-                        additionalTargeting.viewId = (ophan || {}).viewId
+                        additionalTargeting.viewId = (ophan || {}).viewId;
                     },
                     function (err) {
                         raven.captureException(new Error('Error retrieving ophan (' + err + ')'), {
