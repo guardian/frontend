@@ -61,7 +61,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     val config = configAgent.get()
     val canonicalCollectionMap = config.map (_.fronts.mapValues(front => front.canonical.orElse(front.collections.headOption))).getOrElse(Map.empty)
 
-    canonicalCollectionMap(frontId)
+    canonicalCollectionMap.get(frontId).flatten
   }
 
   def getConfigForId(id: String): Option[List[CollectionConfigWithId]] = {
