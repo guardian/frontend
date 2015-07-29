@@ -269,7 +269,7 @@ define([
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
-                        // Make sure page skin is loaded first
+                        // Pageskin and Outbrain needs to be loaded at the page load - TODO: unit test
                         if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth
                             || slot === 'dfp-ad--pageskin-inread'
                             || slot === 'dfp-ad--merchandising-high') {
