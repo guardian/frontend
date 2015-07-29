@@ -6,6 +6,7 @@
     <ul class="d-thread d-thread--comments">
         @userMessageForLargeDiscussion
 
+        <div class="js-new-comments"></div>
         @page.comments.map { comment =>
             @fragments.comment(comment, page.isClosedForRecommendation, false)
         }
