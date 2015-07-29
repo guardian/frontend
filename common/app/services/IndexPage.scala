@@ -189,7 +189,6 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
     case _ => false
   }
 
-
   def idWithoutEdition = page match {
     case section: Section if section.isEditionalised => Paths.stripEditionIfPresent(section.id)
     case other => other.id
