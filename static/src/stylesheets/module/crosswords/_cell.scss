@@ -17,8 +17,12 @@
     }
 }
 
-.crossword__cell-number {
+.crossword__cell-number,
+.crossword__cell-text {
     font-family: $f-sans-serif-text;
+}
+
+.crossword__cell-number {
     font-size: 10px;
 }
 
@@ -26,7 +30,6 @@
     display: inline-block;
     opacity: 1;
     -webkit-font-smoothing: subpixel-antialiased;
-    font-weight: bold;
     fill: colour(neutral-1); // r.i.p biro blue #3f4ac3
     transition: opacity .15s ease-in;
 
