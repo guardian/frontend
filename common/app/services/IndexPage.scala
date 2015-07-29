@@ -185,7 +185,8 @@ case class IndexPage(page: MetaData, trails: Seq[Content],
   }
 
   def forcesDayView = page match {
-    case tag: Tag => (tag.section != "crosswords" && Set("series", "blog").contains(tag.tagType))
+    case tag: Tag if tag.section == "crosswords" => false
+    case tag: Tag => Set("series", "blog").contains(tag.tagType)
     case _ => false
   }
 
