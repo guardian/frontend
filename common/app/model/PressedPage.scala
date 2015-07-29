@@ -27,7 +27,7 @@ case class PressedPage(id: String,
   def allPath: Option[String] = {
     val tagAndSectionIds = for {
       pressedCollection <- collections
-      item <- pressedCollection.all
+      item <- pressedCollection.curatedPlusBackfillDeduplicated
       id <- {item match {
               case curatedContent: CuratedContent =>
                 curatedContent.content.sectionId ++ curatedContent.content.tags.map(_.id)
@@ -98,7 +98,7 @@ case class PressedPage(id: String,
     DfpAgent.omitMPUsFromContainers(id, edition)
   }
 
-  def allItems = collections.flatMap(_.all).distinct
+  def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
 
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:image" -> Configuration.facebook.imageFallback) ++

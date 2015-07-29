@@ -222,7 +222,7 @@ case class PressedCollection(
 
   lazy val collectionConfigWithId = CollectionConfigWithId(id, config)
 
-  lazy val all = (curated ++ backfill).distinctBy(c => c.maybeContentId.getOrElse(c.id))
+  lazy val curatedPlusBackfillDeduplicated = (curated ++ backfill).distinctBy(c => c.maybeContentId.getOrElse(c.id))
 }
 
 object PressedCollection {
