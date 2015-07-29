@@ -3,10 +3,12 @@ package model.facia
 
 import com.gu.facia.api.models.{CuratedContent, _}
 import com.gu.facia.api.utils._
+import implicits.CollectionsOps._
 import org.joda.time.DateTime
 import play.api.libs.json._
 import services.CollectionConfigWithId
 import com.gu.contentapi.client.model._
+import implicits.FaciaContentImplicits._
 
 object FapiJsonFormats {
   /* Content API Formats */
@@ -220,7 +222,7 @@ case class PressedCollection(
 
   lazy val collectionConfigWithId = CollectionConfigWithId(id, config)
 
-  lazy val all = curated ++ backfill
+  lazy val all = (curated ++ backfill).distinctBy(c => c.maybeContentId.getOrElse(c.id))
 }
 
 object PressedCollection {
