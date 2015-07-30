@@ -930,7 +930,7 @@ object Switches {
     "ab-liveblog-notifications",
     "Liveblog notifications",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
+    sellByDate = new LocalDate(2015, 10, 1),
     exposeClientSide = true
   )
 
