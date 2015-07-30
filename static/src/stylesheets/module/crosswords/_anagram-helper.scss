@@ -37,8 +37,12 @@
     background: none;
     border: 0;
     outline: none;
-    padding-top: 25%;
+    padding-top: 15%;
     text-align: center;
+
+    @include mq(tablet) {
+        padding-top: 25%;
+    }
 }
 
 .crossword__anagram-helper__clue-preview {
