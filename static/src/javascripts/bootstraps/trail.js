@@ -43,7 +43,7 @@ define([
     TonalComponent,
     truncate,
     shareCount,
-    articleContainersTest
+    articleTests
 ) {
     function insertOrProximity(selector, insert) {
         if (window.location.hash) {
@@ -66,27 +66,25 @@ define([
     }
 
     function initRelated() {
+        // Remove articleTest when the article containers tests are complete
+        var articleTest;
+
+        if (config.page.contentType === 'Article' && !detect.isGuardianReferral()) {
+            articleTest = articleTests.getTest();
+
+            if (articleTest) {
+                truncate();
+            }
+        }
+
         insertOrProximity('.js-related', function () {
             var opts = {
                 excludeTags: []
             };
 
             // Remove this when the article containers tests are complete
-            if (config.page.contentType === 'Article' && !detect.isGuardianReferral() && articleContainersTest([
-                    {
-                        id: 'TruncationWithFacebook',
-                        variant: 'variant',
-                        endpoint: '/most-read-facebook.json',
-                        title: 'Trending on Facebook'
-                    },
-                    {
-                        id: 'TruncationWithRelevant',
-                        variant: 'variant',
-                        endpoint: '/most-relevant-container/' + (config.page.edition + '/' + config.page.section).toLowerCase() + '.json',
-                        title: 'More from ' + config.page.sectionName
-                    }
-                ])) {
-                truncate();
+            if (articleTest) {
+                articleTests.applyTest(articleTest);
                 return;
             }
 
