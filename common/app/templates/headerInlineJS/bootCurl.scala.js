@@ -42,6 +42,7 @@ var curl = {
 @JavaScript(Static.js.curl)
 
 require([
+    'common/utils/config',
     'core',
     'domReady!'
 ]).next([
