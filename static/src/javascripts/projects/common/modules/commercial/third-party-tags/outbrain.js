@@ -66,7 +66,7 @@ define([
     }
 
     function getSection() {
-        return _.contains(['uk', 'us', 'au', 'international'], config.page.pageId.toLowerCase())
+        return _.contains(['uk'], config.page.pageId.toLowerCase())
             || _.contains(['politics', 'world', 'business', 'commentisfree'], config.page.section.toLowerCase()) ? 'sections' : 'all';
     }
 
