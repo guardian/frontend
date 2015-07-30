@@ -21,6 +21,6 @@ export default() => {
 
         mediator.once('modules:onward:loaded', function () {
             thumbnails.init();
-        }.bind(this));
+        });
     }
 };
