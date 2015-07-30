@@ -125,15 +125,34 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderContainer(id: String) = MemcachedAction { implicit request =>
     log.info(s"Serving collection ID: $id")
-    getPressedCollection(id).map { collectionOption =>
+    renderContainerView(id)
+  }
+
+  def renderMostRelevantContainerJson(path: String) = MemcachedAction { implicit request =>
+    log.info(s"Serving most relevant container for $path")
+
+    val canonicalId = ConfigAgent.getCanonicalIdForFront(path).orElse (
+      alternativeEndpoints(path).map(ConfigAgent.getCanonicalIdForFront).headOption.flatten
+    )
+
+    canonicalId.map { collectionId =>
+      renderContainerView(collectionId)
+    }.getOrElse(Future.successful(NotFound))
+  }
+
+  def alternativeEndpoints(path: String) = path.split("/").toList.take(2).reverse
+
+  private def renderContainerView(collectionId: String)(implicit request: RequestHeader): Future[Result] = {
+    log.info(s"Rendering container view for collection id $collectionId")
+    getPressedCollection(collectionId).map { collectionOption =>
       collectionOption.map { collection =>
         Cached(60) {
-          val config = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
+          val config = ConfigAgent.getConfig(collectionId).getOrElse(CollectionConfig.empty)
 
           val containerDefinition = FaciaContainer(
             1,
             Fixed(FixedContainers.fixedMediumFastXII),
-            CollectionConfigWithId(id, config),
+            CollectionConfigWithId(collectionId, config),
             CollectionEssentials.fromPressedCollection(collection)
           )
 
@@ -143,7 +162,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           else
             NotFound
         }
-      }.getOrElse(ServiceUnavailable)}
+      }.getOrElse(ServiceUnavailable)
+    }
   }
 
   def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
@@ -185,6 +205,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
         faciaPage.collections.find{ c => c.id == collectionId}
       })
     }.getOrElse(Future.successful(None))
+
 
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
