@@ -19,6 +19,10 @@ define([
         config.page.adUnit = ['/', config.page.dfpAccountId, '/', adUnitOverride].join('');
     }
 
+    config.ophan.pageViewId = new Date().getTime().toString(36) + 'xxxxxxxxxxxx'.replace(/x/g, function() {
+                                    return Math.floor(Math.random() * 36).toString(36);
+                                  });
+
     return _.extend({
         hasTone: function (name) {
             return (this.page.tones || '').indexOf(name) > -1;
