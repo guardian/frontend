@@ -4,13 +4,17 @@
     top: 0;
     width: 100%;
     height: 100%;
-    padding-top: 15%;
     background: #f7f7f7;
     text-align: center;
 }
 
 .crossword__anagram-helper-inner {
-    margin: 15% 0;
+    height: 50%;
+}
+
+.crossword__anagram-helper__clue-input,
+.crossword__anagram-helper-shuffler__letter {
+    font-size: 32px;
 }
 
 .crossword__anagram-helper__clue-input {
@@ -18,7 +22,7 @@
     background: none;
     border: none;
     outline: none;
-    font-size: 36px;
+    padding-top: 25%;
     text-align: center;
 }
 
@@ -46,6 +50,21 @@
 
     &.has-value {
         background: colour(neutral-4);
+        color: colour(neutral-3);
+    }
+}
+
+.crossword__anagram-helper-shuffler {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.crossword__anagram-helper-shuffler__letter {
+    position: absolute;
+
+    &.entered {
         color: colour(neutral-3);
     }
 }

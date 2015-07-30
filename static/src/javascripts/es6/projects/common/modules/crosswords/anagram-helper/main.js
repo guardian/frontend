@@ -30,7 +30,14 @@ export default class AnagramHelper extends React.Component {
     }
 
     shuffle () {
-        // todo
+        if (this.canShuffle()) {
+            this.setState({ showInput: false });
+        }
+    }
+
+    canShuffle () {
+        return this.state.clueInput &&
+               this.state.clueInput.length === this.props.clue.length;
     }
 
     onClueInput (text) {
@@ -43,12 +50,8 @@ export default class AnagramHelper extends React.Component {
         });
 
         const inner = this.state.showInput ?
-            <ClueInput
-                value={this.state.clueInput}
-                clue={this.props.clue}
-                onChange={this.onClueInput} /> :
-
-            <Shuffler clue={this.props.clue} />;
+            <ClueInput value={this.state.clueInput} clue={this.props.clue} onChange={this.onClueInput} /> :
+            <Shuffler entries={entries} word={this.state.clueInput.trim().split('')} />;
 
         return (
             <div className='crossword__anagram-helper-outer'>
@@ -61,7 +64,7 @@ export default class AnagramHelper extends React.Component {
                     start again
                 </button>
 
-                <button className='button button--large'
+                <button className={'button button--large '  + (!this.canShuffle() && 'button--tertiary')}
                     onClick={this.shuffle}>
                     shuffle
                 </button>
