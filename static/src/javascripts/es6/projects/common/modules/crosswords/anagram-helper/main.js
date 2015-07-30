@@ -57,7 +57,9 @@ export default class AnagramHelper extends React.Component {
     }
 
     render () {
+        /* jscs:disable disallowDanglingUnderscores */
         const closeIcon = { __html: svgs('closeCentralIcon') };
+        /* jscs:enable disallowDanglingUnderscores */
 
         const entries = _.map(helpers.cellsForEntry(this.props.clue), coords => {
             return this.props.grid[coords.x][coords.y];
