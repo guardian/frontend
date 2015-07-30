@@ -18,7 +18,8 @@
 
 .crossword__anagram-helper__clue-input,
 .crossword__anagram-helper-shuffler__letter {
-    font-size: 32px;
+    font-family: $f-sans-serif-text;
+    font-size: 24px;
 }
 
 .crossword__anagram-helper__clue-input {
@@ -60,6 +61,7 @@
 
 .crossword__anagram-helper-shuffler {
     position: relative;
+    left: 5%;
     width: 50%;
     height: 100%;
     margin: 0 auto;

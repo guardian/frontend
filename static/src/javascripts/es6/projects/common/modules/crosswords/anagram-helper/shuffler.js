@@ -1,6 +1,8 @@
 import React from 'react';
 import _ from 'common/utils/_';
 
+const round = x => Math.round(x * 100) / 100;
+
 export default class Shuffler extends React.Component {
     getLetters () {
         const entries = _.compact(_.map(this.props.entries, entry => entry.value.toLowerCase()));
@@ -15,19 +17,29 @@ export default class Shuffler extends React.Component {
         }, { letters: [], entries: entries.sort() }).letters);
     }
 
-    getPosition (phase, i) {
-        const radians = (phase * Math.PI / 180) * i;
-        const scale = 35;
+    /**
+     * Get coordinates for a letter as percentages.
+     *
+     * To get the diameter:
+     *   (width of .crossword__anagram-helper-shuffler) - (2 * desired padding)
+     *
+     * @param  {Number} angle   angle of letters on the circle
+     * @param  {Number} i       letter index
+     * @return {Object}         with 'left' and 'top' properties in percent
+     */
+    getPosition (angle, i) {
+        const diameter = 40;
+        const theta = (angle * Math.PI / 180) * i;
 
         return {
-            left: 45 + (Math.sin(radians) * scale) + '%',
-            top:  40 + (Math.cos(radians) * scale) + '%'
+            left: diameter + round(diameter * Math.sin(theta)) + '%',
+            top:  diameter + round(diameter * Math.cos(theta)) + '%'
         };
     }
 
     render () {
         const letters = this.getLetters();
-        const phase = 360 / letters.length;
+        const angle = 360 / letters.length;
 
         return (
             <div className='crossword__anagram-helper-shuffler'>
@@ -35,7 +47,7 @@ export default class Shuffler extends React.Component {
                     return (
                         <div
                             className={'crossword__anagram-helper-shuffler__letter ' + (letter.entered ? 'entered' : '')}
-                            style={this.getPosition(phase, i)}
+                            style={this.getPosition(angle, i)}
                             key={i}>
                             {letter.value}
                         </div>
