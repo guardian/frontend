@@ -38,8 +38,8 @@ define([
                         all     : 'AR_13'
                     },
                     desktop: {
-                        sections: 'AR_14',
-                        all     : 'AR_15'
+                        sections: 'AR_12',
+                        all     : 'AR_13'
                     },
                     tablet: {
                         sections: 'MB_8',
