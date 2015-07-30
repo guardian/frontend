@@ -22,11 +22,20 @@ export default class AnagramHelper extends React.Component {
         };
     }
 
+    componentWillReceiveProps (next) {
+        // reset on clue change
+        if (next.clue !== this.props.clue) {
+            this.reset();
+        }
+    }
+
     reset () {
-        this.setState({
-            clueInput: '',
-            showInput: true
-        });
+        if (this.state.clueInput) {
+            this.setState({
+                clueInput: '',
+                showInput: true
+            });
+        }
     }
 
     shuffle () {
