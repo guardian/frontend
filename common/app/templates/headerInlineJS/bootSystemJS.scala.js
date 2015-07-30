@@ -46,8 +46,14 @@ System['import']('core').then(function () {
                 }
             );
 
-            // Uncaught exceptions
+            // Report uncaught exceptions
             raven.install();
+
+            // Report unhandled promise rejections
+            // https://github.com/cujojs/when/blob/master/docs/debug-api.md#browser-window-events
+            window.addEventListener('unhandledRejection', function (event) {
+                raven.captureException(event.detail.reason);
+            });
 
             // Safe to depend on Lodash because it's part of core
             System['import']('common/utils/_').then(function (_) {

@@ -86,8 +86,14 @@ require([
         }
     );
 
-    // Uncaught exceptions
+    // Report uncaught exceptions
     raven.install();
+
+    // Report unhandled promise rejections
+    // https://github.com/cujojs/when/blob/master/docs/debug-api.md#browser-window-events
+    window.addEventListener('unhandledRejection', function (event) {
+        raven.captureException(event.detail.reason);
+    });
 
     require([
         'common/utils/config',
