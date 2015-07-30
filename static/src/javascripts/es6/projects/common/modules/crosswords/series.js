@@ -4,6 +4,9 @@ import qwery from 'qwery';
 import config from 'common/utils/config';
 import proximityLoader from 'common/utils/proximity-loader';
 import Series from 'common/modules/onward/onward-content';
+import mediator from 'common/utils/mediator';
+import thumbnails from 'es6/projects/common/modules/crosswords/thumbnails';
+
 
 export default() => {
 
@@ -14,6 +17,10 @@ export default() => {
             if (config.page.seriesId && config.page.showRelatedContent) {
                 new Series(qwery('.js-onward'));
             }
+        });
+
+        mediator.once('modules:onward:loaded', function () {
+            thumbnails.init();
         });
     }
 };
