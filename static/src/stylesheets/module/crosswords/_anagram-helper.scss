@@ -1,7 +1,8 @@
 .crossword__anagram-helper-outer {
-    position: absolute;
+    position: fixed;
     box-sizing: border-box;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     padding-top: 2.5%;
@@ -10,6 +11,14 @@
 
     .button:last-of-type {
         margin-right: 0;
+    }
+
+    @include mq($until: tablet) {
+        z-index: 1030;
+    }
+
+    @include mq(tablet) {
+        position: absolute;
     }
 }
 
@@ -75,10 +84,18 @@
 
 .crossword__anagram-helper-shuffler {
     position: relative;
-    left: 5%;
-    width: 50%;
-    height: 100%;
+    top: 25px;
+    left: 10px;
+    width: 175px;
+    height: 175px;
     margin: 0 auto;
+
+    @include mq(tablet) {
+        top: 0;
+        left: 5%;
+        width: 50%;
+        height: 100%;
+    }
 }
 
 .crossword__anagram-helper-shuffler__letter {
