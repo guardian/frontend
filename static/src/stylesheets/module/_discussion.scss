@@ -109,22 +109,14 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-discussion__size-message {
-    display: none;
-}
+    @include fs-textSans(2);
+    margin-bottom: $gs-baseline * 2 / 3;
+    border-top: 1px solid colour(neutral-4);
+    padding-top: $gs-baseline;
+    color: colour(neutral-2);
 
-.discussion--pagesize-msg-show {
-
-    .d-discussion__size-message {
-        @include fs-textSans(2);
-        margin-bottom: $gs-baseline * 2 / 3;
-        border-top: 1px solid colour(neutral-4);
-        padding-top: $gs-baseline;
-        color: colour(neutral-2);
-        display: block;
-
-        & + .d-comment {
-            border-top: 0;
-        }
+    & + .d-comment {
+        border-top: 0;
     }
 }
 
@@ -200,9 +192,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .discussion--empty {
-    .discussion__top-comments,
     .discussion__toolbar,
-    .discussion__main-comments,
     .discussion__show-button {
         display: none;
     }
