@@ -4,6 +4,7 @@
     top: 0;
     width: 100%;
     height: 100%;
+    padding-top: 2.5%;
     background: #f7f7f7;
     text-align: center;
 
@@ -48,6 +49,13 @@
     line-height: $xword-cell-width;
     border: 1px solid colour(neutral-3);
     border-left: 0;
+
+
+    @include mq($until: mobileLandscape) {
+        width: $xword-cell-width-small;
+        height: $xword-cell-width-small;
+        line-height: $xword-cell-width-small;
+    }
 
     &:first-of-type {
         border-left: 1px solid colour(neutral-3);
