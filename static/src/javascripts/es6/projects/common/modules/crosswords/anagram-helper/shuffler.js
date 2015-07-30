@@ -5,7 +5,11 @@ const round = x => Math.round(x * 100) / 100;
 
 export default class Shuffler extends React.Component {
     getLetters () {
-        const entries = _.compact(_.map(this.props.entries, entry => entry.value.toLowerCase()));
+        const entries = _.chain(this.props.entries)
+            .map(entry => entry.value.toLowerCase())
+            .filter(entry => _.contains(this.props.word.map(l => l.toLowerCase()), entry))
+            .compact()
+            .value();
 
         return _.shuffle(_.reduce(this.props.word.sort(), (acc, letter) => {
             const entered = acc.entries[0] === letter.toLowerCase();
