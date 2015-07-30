@@ -3,7 +3,7 @@ $truncationOverlayheight: 80px;
 .content__article-body--truncated {
     position: relative;
 
-    & > *:nth-child(n+4) {
+    & > *:nth-child(n+6) {
         display: none;
     }
 
