@@ -75,7 +75,7 @@ export default class AnagramHelper extends React.Component {
                     {inner}
                 </div>
 
-                <button className={'button button--large button--secondary crossword__anagram-helper-close'}
+                <button className={'button button--large button--tertiary crossword__anagram-helper-close'}
                     onClick={this.props.close.bind(this)}
                     dangerouslySetInnerHTML={closeIcon}>
                 </button>
