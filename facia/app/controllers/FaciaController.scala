@@ -128,15 +128,22 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     renderContainerView(id)
   }
 
-  def renderMostRelevantContainerJson(frontId: String) = MemcachedAction { implicit request =>
-    log.info(s"Serving most relevant container for front id : $frontId")
+  def renderMostRelevantContainerJson(path: String) = MemcachedAction { implicit request =>
+    log.info(s"Serving most relevant container for $path")
 
-    ConfigAgent.getCanonicalIdForFront(frontId).map { collectionId =>
+    val canonicalId = ConfigAgent.getCanonicalIdForFront(path).orElse (
+      alternativeEndpoints(path).map(ConfigAgent.getCanonicalIdForFront).headOption.flatten
+    )
+
+    canonicalId.map { collectionId =>
       renderContainerView(collectionId)
     }.getOrElse(Future.successful(NotFound))
   }
 
+  def alternativeEndpoints(path: String) = path.split("/").toList.take(2).reverse
+
   private def renderContainerView(collectionId: String)(implicit request: RequestHeader): Future[Result] = {
+    log.info(s"Rendering container view for collection id $collectionId")
     getPressedCollection(collectionId).map { collectionOption =>
       collectionOption.map { collection =>
         Cached(60) {
