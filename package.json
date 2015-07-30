@@ -75,7 +75,6 @@
     "configFile": "static/src/systemjs-config.js",
     "dependencies": {
       "EventEmitter": "github:Olical/EventEmitter@~4.2.6",
-      "Promise": "github:guardian/native-promise-only@0.7.6-e",
       "bean": "npm:bean@^1.0.15",
       "bonzo": "npm:bonzo@^1.4.0",
       "classnames": "npm:classnames@^1.2.0",
@@ -100,6 +99,7 @@
       "videojsima": "github:guardian/videojs-ima@0.1.2",
       "videojspersistvolume": "bower:videojs-persistvolume@~0.1.0",
       "videojsplaylist": "github:tim-peterson/videojs-playlist@master",
+      "when": "github:cujojs/when@^3.7.3",
       "zxcvbn": "github:dropbox/zxcvbn@v1.0"
     },
     "devDependencies": {
