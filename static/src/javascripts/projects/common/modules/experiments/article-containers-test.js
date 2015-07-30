@@ -32,6 +32,12 @@ define([
         targetEl = '.js-related';
 
     return {
+        getTest: function () {
+            return _.find(tests, function (test) {
+                return ab.shouldRunTest(test.id, test.variant);
+            });
+        },
+
         applyTest: function (test) {
             ajax({
                 url: test.endpoint,
@@ -55,12 +61,6 @@ define([
                         mediator.emit('page:new-content', el);
                     });
                 }
-            });
-        },
-
-        getTest: function () {
-            return _.find(tests, function (test) {
-                return ab.shouldRunTest(test.id, test.variant);
             });
         }
     };
