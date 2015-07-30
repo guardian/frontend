@@ -9,7 +9,8 @@ export default class Shuffler extends React.Component {
             .map(entry => entry.value.toLowerCase())
             .filter(entry => _.contains(this.props.word.map(l => l.toLowerCase()), entry))
             .compact()
-            .value();
+            .value()
+            .sort();
 
         return _.shuffle(_.reduce(this.props.word.sort(), (acc, letter) => {
             const entered = acc.entries[0] === letter.toLowerCase();
@@ -18,7 +19,7 @@ export default class Shuffler extends React.Component {
                 letters: acc.letters.concat({ value: letter, entered: entered }),
                 entries: entered ? _.rest(acc.entries) : acc.entries
             };
-        }, { letters: [], entries: entries.sort() }).letters);
+        }, { letters: [], entries: entries }).letters);
     }
 
     /**

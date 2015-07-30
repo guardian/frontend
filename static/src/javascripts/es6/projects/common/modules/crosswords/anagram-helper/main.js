@@ -66,7 +66,7 @@ export default class AnagramHelper extends React.Component {
         });
 
         const inner = this.state.showInput ?
-            <ClueInput value={this.state.clueInput} clue={this.props.clue} onChange={this.onClueInput} /> :
+            <ClueInput value={this.state.clueInput} clue={this.props.clue} onChange={this.onClueInput} onEnter={this.shuffle} /> :
             <Shuffler entries={entries} word={this.state.clueInput.trim().split('')} />;
 
         return (
