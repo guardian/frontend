@@ -6,6 +6,10 @@
     height: 100%;
     background: #f7f7f7;
     text-align: center;
+
+    .button:last-of-type {
+        margin-right: 0;
+    }
 }
 
 .crossword__anagram-helper-inner {

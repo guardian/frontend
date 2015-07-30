@@ -73,6 +73,11 @@ export default class AnagramHelper extends React.Component {
                     {inner}
                 </div>
 
+                <button className={'button button--large button--secondary crossword__anagram-helper-close'}
+                    onClick={this.props.close.bind(this)}
+                    dangerouslySetInnerHTML={closeIcon}>
+                </button>
+
                 <button className={'button button--large ' + (!this.state.clueInput && 'button--tertiary')}
                     onClick={this.reset}>
                     start again
@@ -81,11 +86,6 @@ export default class AnagramHelper extends React.Component {
                 <button className={'button button--large '  + (!this.canShuffle() && 'button--tertiary')}
                     onClick={this.shuffle}>
                     shuffle
-                </button>
-
-                <button className={'button button--large button--secondary crossword__anagram-helper-close'}
-                    onClick={this.props.close.bind(this)}
-                    dangerouslySetInnerHTML={closeIcon}>
                 </button>
 
                 <CluePreview clue={this.props.clue} entries={entries} />
