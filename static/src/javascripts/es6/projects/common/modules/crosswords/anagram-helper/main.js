@@ -50,7 +50,9 @@ export default class AnagramHelper extends React.Component {
     }
 
     onClueInput (text) {
-        this.setState({ clueInput: text });
+        if (!/\s|\d/g.test(text)) {
+            this.setState({ clueInput: text });
+        }
     }
 
     render () {
