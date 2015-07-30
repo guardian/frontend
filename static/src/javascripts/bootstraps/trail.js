@@ -72,8 +72,7 @@ define([
             };
 
             // Remove this when the article containers tests are complete
-            // TODO article only??
-            if (!detect.isGuardianReferral() && articleContainersTest([
+            if (config.page.contentType === 'Article' && !detect.isGuardianReferral() && articleContainersTest([
                     {
                         id: 'TruncationWithFacebook',
                         variant: 'variant',
