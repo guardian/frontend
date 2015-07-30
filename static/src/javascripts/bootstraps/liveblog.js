@@ -102,8 +102,9 @@ define([
                     eventId = $el.attr('data-event-id'),
                     title = $('.timeline__title', $el).text(),
                     targetEl = qwery('#' + eventId),
-                    dim = bonzo(targetEl).offset();
-                scroller.scrollTo(dim.top - 12, 500, 'easeOutQuint');
+                    dim = bonzo(targetEl).offset(),
+                    scrollAmount = config.switches.viewability ? dim.top - 52 : dim.top - 12;
+                scroller.scrollTo(scrollAmount, 500, 'easeOutQuint');
                 window.setTimeout(unselectOnScroll, 550);
                 bean.off(curBinding);
                 unselect();
