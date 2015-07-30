@@ -55,6 +55,12 @@
         width: $xword-cell-width-small;
         height: $xword-cell-width-small;
         line-height: $xword-cell-width-small;
+
+        .long & {
+            width: $xword-cell-width-xsmall;
+            height: $xword-cell-width-xsmall;
+            line-height: $xword-cell-width-xsmall;
+        }
     }
 
     &:first-of-type {
