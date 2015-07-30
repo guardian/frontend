@@ -15,7 +15,8 @@ import Grid from './grid';
 import helpers from './helpers';
 import keycodes from './keycodes';
 import persistence from './persistence';
-import loadFont from './font';
+import loadComments from './comments';
+import renderSeries from './series';
 
 class Crossword extends React.Component {
 
@@ -44,7 +45,8 @@ class Crossword extends React.Component {
             'goToReturnPosition'
         );
 
-        loadFont();
+        loadComments();
+        renderSeries();
 
         this.state = {
             grid: helpers.buildGrid(
