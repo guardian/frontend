@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'common/utils/_';
+import svgs from 'common/views/svgs';
 
 import ClueInput from './clue-input';
 import CluePreview from './clue-preview';
@@ -56,6 +57,8 @@ export default class AnagramHelper extends React.Component {
     }
 
     render () {
+        const closeIcon = { __html: svgs('closeCentralIcon') };
+
         const entries = _.map(helpers.cellsForEntry(this.props.clue), coords => {
             return this.props.grid[coords.x][coords.y];
         });
@@ -78,6 +81,11 @@ export default class AnagramHelper extends React.Component {
                 <button className={'button button--large '  + (!this.canShuffle() && 'button--tertiary')}
                     onClick={this.shuffle}>
                     shuffle
+                </button>
+
+                <button className={'button button--large button--secondary crossword__anagram-helper-close'}
+                    onClick={this.props.close.bind(this)}
+                    dangerouslySetInnerHTML={closeIcon}>
                 </button>
 
                 <CluePreview clue={this.props.clue} entries={entries} />

@@ -449,7 +449,7 @@ class Crossword extends React.Component {
         const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
 
         const anagramHelper = this.state.showAnagramHelper && (
-            <AnagramHelper clue={focussed} grid={this.state.grid}/>
+            <AnagramHelper clue={focussed} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
         );
 
         return (
