@@ -195,7 +195,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           Cached(60) {
             val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
             val webTitle = config.displayName.getOrElse("The Guardian")
-            Ok(TrailsToRss.fromFaciaContent(webTitle, collection.all, "", None)).as("text/xml; charset=utf8")}}
+            Ok(TrailsToRss.fromFaciaContent(webTitle, collection.curatedPlusBackfillDeduplicated, "", None)).as("text/xml; charset=utf8")}}
 
       case None => Future.successful(Cached(60)(NotFound))}
   }
