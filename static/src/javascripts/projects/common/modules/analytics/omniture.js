@@ -269,7 +269,7 @@ define([
         this.s.eVar70    = config.page.headline || '';
 
         // Set Page View Event
-        this.s.events=s.apl(s.events,'event4',',',2);
+        this.s.events    = this.s.apl(this.s.events, 'event4', ',', 2);
 
         this.s.prop67    = 'nextgen-served';
 
