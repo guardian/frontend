@@ -5,11 +5,10 @@ export default class ClueInput extends React.Component {
         React.findDOMNode(this).focus();
     }
 
-    componentWillReceiveProps (props) {
+    componentDidUpdate () {
         // focus on reset
-        if (props.value === '') {
-            const node = React.findDOMNode(this);
-            setTimeout(node.focus.bind(node), 4);
+        if (this.props.value === '') {
+            React.findDOMNode(this).focus();
         }
     }
 
