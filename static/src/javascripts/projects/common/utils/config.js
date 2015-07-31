@@ -19,10 +19,6 @@ define([
         config.page.adUnit = ['/', config.page.dfpAccountId, '/', adUnitOverride].join('');
     }
 
-    config.ophan.pageViewId = new Date().getTime().toString(36) + 'xxxxxxxxxxxx'.replace(/x/g, function() {
-                                    return Math.floor(Math.random() * 36).toString(36);
-                                  });
-
     return _.extend({
         hasTone: function (name) {
             return (this.page.tones || '').indexOf(name) > -1;
@@ -61,6 +57,15 @@ define([
             return s ? s[0] : null;
         },
 
-        isMedia: _.contains(['Video', 'Audio'], config.page.contentType)
-    }, config);
+        isMedia: _.contains(['Video', 'Audio'], config.page.contentType),
+
+        // This is duplicated from
+        // https://github.com/guardian/ophan/blob/master/tracker-js/assets/coffee/ophan/transmit.coffee
+        // Please do not change this without talking to the Ophan project first.
+        ophan: {pageViewId: new Date().getTime().toString(36) + 'xxxxxxxxxxxx'.replace(/x/g, function () {
+                return Math.floor(Math.random() * 36).toString(36);
+            })
+        }
+
+}, config);
 });
