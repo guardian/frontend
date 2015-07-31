@@ -79,7 +79,6 @@ define([
 
     return function (opts) {
         var win         = (opts || {}).window || window,
-            viewId      = (opts || {}).viewId,
             page        = config.page,
             contentType = formatTarget(page.contentType),
             pageTargets = _.merge({
