@@ -4,6 +4,7 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/template',
+    'common/modules/experiments/ab',
     'text!common/views/commercial/ad-slot.html'
 ], function (
     _,
@@ -11,6 +12,7 @@ define([
     config,
     detect,
     template,
+    ab,
     adSlotTpl
 ) {
     var adSlotDefinitions = {
@@ -94,11 +96,14 @@ define([
         }
     };
 
-    if (config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile') {
+    if (config.switches.mobileTopBannerRemove && !!config.tests.mobileTopBannerRemove && detect.getBreakpoint() === 'mobile') {
         adSlotDefinitions.inline1.sizeMappings = {
             mobile: '1,1|300,250'
         };
         adSlotDefinitions.inline.sizeMappings = {
+            mobile: '1,1|300,250'
+        };
+        adSlotDefinitions.mostpop.sizeMappings = {
             mobile: '1,1|300,250'
         };
     }
@@ -111,6 +116,7 @@ define([
             $adSlot;
 
         definition = (slotName.match(/^inline/) && slotName !== 'inline1') ? adSlotDefinitions.inline : adSlotDefinitions[slotName];
+        console.log(slotName, definition);
         if (config.page.hasPageSkin && slotName === 'merchandising-high') {
             definition.sizeMappings.wide = '1,1';
         }
