@@ -14,7 +14,7 @@ export default class ClueInput extends React.Component {
     }
 
     onInputChange (e) {
-        this.props.onChange(e.target.value);
+        this.props.onChange(e.target.value.toLowerCase());
     }
 
     onKeyDown (e) {
