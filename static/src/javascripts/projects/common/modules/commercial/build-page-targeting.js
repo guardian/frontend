@@ -81,7 +81,6 @@ define([
         var win         = (opts || {}).window || window,
             viewId      = (opts || {}).viewId,
             page        = config.page,
-            ophanHelper = config.ophan,
             contentType = formatTarget(page.contentType),
             pageTargets = _.merge({
                 url:     win.location.pathname,
@@ -92,7 +91,7 @@ define([
                 k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
                 x:       krux.getSegments(),
                 su:      page.isSurging,
-                pv:      ophanHelper.pageViewId,
+                pv:      config.ophan.pageViewId,
                 bp:      detect.getBreakpoint(),
                 at:      adtestParams(),
                 gdncrm:  userAdTargeting.getUserSegments(),
