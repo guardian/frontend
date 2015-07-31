@@ -36,7 +36,7 @@ describe('Config', function () {
     });
 
     it('should have "ophanPageViewId" property', function () {
-        expect(config.ophan.pageViewId()).toBeTruthy);
+        expect(config.ophan.pageViewId()).toBeTruthy();
     });
 
 
