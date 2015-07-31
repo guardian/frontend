@@ -27,8 +27,13 @@
 }
 
 .crossword__anagram-helper__clue-input,
-.crossword__anagram-helper-shuffler__letter {
+.crossword__anagram-helper-shuffler__letter,
+.crossword__anagram-helper__clue-preview {
     font-family: $f-sans-serif-text;
+}
+
+.crossword__anagram-helper__clue-input,
+.crossword__anagram-helper-shuffler__letter {
     font-size: 24px;
 }
 
