@@ -3,8 +3,16 @@ $truncationOverlayheight: 80px;
 .content__article-body--truncated {
     position: relative;
 
-    & > *:nth-child(n+6) {
-        display: none;
+    @include mq(mobile, $until: desktop) {
+        & > *:nth-child(n+4) {
+            display: none;
+        }
+    }
+
+    @include mq(desktop) {
+        & > *:nth-child(n+6) {
+            display: none;
+        }
     }
 
     & .element-rich-link {

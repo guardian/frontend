@@ -6,6 +6,7 @@ define([
     'fastclick',
     'qwery',
     'common/utils/$',
+    'common/utils/background',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
@@ -57,6 +58,7 @@ define([
     FastClick,
     qwery,
     $,
+    background,
     config,
     cookies,
     detect,
@@ -344,7 +346,7 @@ define([
 
     return {
         init: function () {
-            robust.catchErrorsAndLogAll([
+            background(robust.makeBlocks([
 
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
@@ -387,7 +389,8 @@ define([
                 ['c-international-signposting', modules.internationalSignposting],
                 ['c-pinterest', modules.initPinterest],
                 ['c-save-for-later', modules.saveForLater]
-            ]);
+            ]));
+
             if (window.console && window.console.log && !config.page.isDev) {
                 window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');
             }
