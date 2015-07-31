@@ -37,7 +37,7 @@ const fixtures = [
     }
 ];
 
-fdescribe('Anagram Helper', function () {
+describe('Anagram Helper', function () {
     it('marks the correct letters as entered', function () {
         const cases = fixtures.map(fixture => {
             return {
