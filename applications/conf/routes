@@ -24,6 +24,9 @@ GET        /embed/video/*path                                                   
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
 GET        /preferences/notifications                                           controllers.PreferencesController.notificationPrefs()
 
+GET        /crosswords/optin                                                    controllers.CrosswordsController.crosswordsOptIn
+GET        /crosswords/optout                                                   controllers.CrosswordsController.crosswordsOptOut
+
 # Web App paths
 GET        /2015-05-28-2-service-worker.js                                      controllers.WebAppController.serviceWorker()
 GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()

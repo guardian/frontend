@@ -907,39 +907,21 @@ object Switches {
 
   // A/B Tests
 
-  val ArticleTruncation = Switch(
+  val TruncationWithFacebook = Switch(
     "A/B Tests",
-    "ab-article-truncation",
-    "Article truncation",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 30),
-    exposeClientSide = true
-  )
-
-  val FacebookMostViewed = Switch(
-    "A/B Tests",
-    "ab-facebook-most-viewed",
-    "Facebook most viewed",
+    "ab-truncation-with-facebook",
+    "Truncation, with facebook most-viewed container",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 17),
     exposeClientSide = true
   )
 
-  val TwitterMostViewed = Switch(
+  val TruncationWithRelevant = Switch(
     "A/B Tests",
-    "ab-twitter-most-viewed",
-    "Twitter most viewed",
+    "ab-truncation-with-relevant",
+    "Truncation, with relevant section-front container",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val ABFilmContainers = Switch(
-    "A/B Tests",
-    "ab-film-containers",
-    "Film Containers on Film content",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 30),
     exposeClientSide = true
   )
 
@@ -948,7 +930,7 @@ object Switches {
     "ab-liveblog-notifications",
     "Liveblog notifications",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
+    sellByDate = new LocalDate(2015, 10, 1),
     exposeClientSide = true
   )
 
@@ -1158,7 +1140,7 @@ object Switches {
     "facia-tool-put-private",
     "If this is switched on, facia tool will put collections to S3 as private",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 30),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 
