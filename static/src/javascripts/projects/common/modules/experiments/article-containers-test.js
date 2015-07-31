@@ -15,43 +15,53 @@ define([
     config,
     ab
 ) {
-    var targetEl = '.js-related';
-
-    function loadContainer(test) {
-        ajax({
-            url: test.endpoint,
-            type: 'json',
-            crossOrigin: true
-        })
-        .then(function (res) {
-            var el;
-
-            if (res.html) {
-                el = $.create(res.html);
-
-                if (test.title) {
-                    $('.fc-container__header__title', el).html(test.title);
-                }
-
-                $('.js-show-more-button', el).remove();
-
-                fastDom.write(function () {
-                    $(targetEl).append(el);
-                    mediator.emit('page:new-content', el);
-                });
+    var tests = [
+            {
+                id: 'TruncationWithFacebook',
+                variant: 'variant',
+                endpoint: '/most-read-facebook.json',
+                title: 'Trending on Facebook'
+            },
+            {
+                id: 'TruncationWithRelevant',
+                variant: 'variant',
+                endpoint: '/most-relevant-container/' + (config.page.edition + '/' + config.page.section).toLowerCase() + '.json',
+                title: 'More from ' + config.page.sectionName
             }
-        });
-    }
+        ],
+        targetEl = '.js-related';
 
-    return function (tests) {
-        var test = _.find(tests, function (test) {
-            return ab.shouldRunTest(test.id, test.variant);
-        });
+    return {
+        getTest: function () {
+            return _.find(tests, function (test) {
+                return ab.shouldRunTest(test.id, test.variant);
+            });
+        },
 
-        if (test) {
-            loadContainer(test);
+        applyTest: function (test) {
+            ajax({
+                url: test.endpoint,
+                type: 'json',
+                crossOrigin: true
+            })
+            .then(function (res) {
+                var el;
+
+                if (res.html) {
+                    el = $.create(res.html);
+
+                    if (test.title) {
+                        $('.fc-container__header__title', el).html(test.title);
+                    }
+
+                    $('.js-show-more-button', el).remove();
+
+                    fastDom.write(function () {
+                        $(targetEl).append(el);
+                        mediator.emit('page:new-content', el);
+                    });
+                }
+            });
         }
-
-        return !!test;
     };
 });
