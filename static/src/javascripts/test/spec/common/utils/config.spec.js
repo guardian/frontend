@@ -35,9 +35,6 @@ describe('Config', function () {
         expect(config.webPublicationDateAsUrlPart()).toBe('2013/03/20');
     });
 
-    it('should have "ophanPageViewId" property', function () {
-        expect(config.ophan.pageViewId()).toBeTruthy();
-    });
 
 
 });
