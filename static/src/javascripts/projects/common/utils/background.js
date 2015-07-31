@@ -4,27 +4,25 @@
 define([
     'fastdom',
     'common/utils/_',
-    'common/utils/config',
-    'common/utils/robust'
+    'common/utils/config'
 ], function (
     fastdom,
     _,
-    config,
-    robust
+    config
 ) {
 
     return function (codeBlocks) {
         var background = config.switches.backgroundJs;
-        return (_.reduceRight(codeBlocks, function (restFunctions, fn) {
+        (_.reduceRight(codeBlocks, function (restFunctions, fn) {
             return function () {
-                if (background) {
-                    setTimeout(function () {
-                        restFunctions();
-                        fn();
-                    }, 1);
-                } else {
-                    robust.catchErrorsAndLog('background', fn);// don't know the real name
+                var link = function () {
+                    fn();
                     restFunctions();
+                };
+                if (background) {
+                    setTimeout(link, 1);
+                } else {
+                    link();
                 }
             };
         }, function () {}))();
