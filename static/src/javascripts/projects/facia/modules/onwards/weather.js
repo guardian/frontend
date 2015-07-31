@@ -102,6 +102,9 @@ define([
                     .then(function (response) {
                         this.fetchWeatherData(response);
                     }.bind(this)).catch(function (err) {
+                        if (window.console && window.console.warn) {
+                            window.console.warn('Caught error.', err.stack);
+                        }
                         raven.captureException(err, {
                             tags: {
                                 feature: 'weather'
@@ -117,6 +120,9 @@ define([
                     this.render(response, location.city);
                     this.fetchForecastData(location);
                 }.bind(this)).catch(function (err) {
+                    if (window.console && window.console.warn) {
+                        window.console.warn('Caught error.', err.stack);
+                    }
                     raven.captureException(err, {
                         tags: {
                             feature: 'weather'
@@ -135,6 +141,9 @@ define([
                 .then(function (response) {
                     this.renderForecast(response);
                 }.bind(this)).catch(function (err) {
+                    if (window.console && window.console.warn) {
+                        window.console.warn('Caught error.', err.stack);
+                    }
                     raven.captureException(err, {
                         tags: {
                             feature: 'weather'
