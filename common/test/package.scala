@@ -63,9 +63,13 @@ trait TestSettings {
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
   this: ConfiguredTestSuite with org.scalatest.Suite =>
 
-  lazy val host = s"http://localhost:${port}"
+  lazy val host = s"http://localhost:$port"
   lazy val htmlUnitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
   lazy val testBrowser = TestBrowser(webDriver, None)
+
+  protected def setJavascript() = {
+    htmlUnitDriver.setJavascriptEnabled(false)
+  }
 
   def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
 
@@ -78,7 +82,7 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
 
   protected def goTo[T](path: String)(block: TestBrowser => T): T = {
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-      htmlUnitDriver.setJavascriptEnabled(false)
+      setJavascript()
       testBrowser.goTo(host + path)
       block(testBrowser)
   }

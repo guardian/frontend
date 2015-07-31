@@ -1,14 +1,53 @@
 package test
 
+import java.util.concurrent.TimeUnit
+
+import common.Logging
+import org.fluentlenium.core.Fluent
 import org.joda.time.DateTimeZone
+import org.openqa.selenium.By
+import org.openqa.selenium.By.ByClassName
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import play.api.test.Helpers._
 
-@DoNotDiscover class AllIndexControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class AllIndexControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite with Logging {
 
   private val PermanentRedirect = 301
   private val TemporaryRedirect = 302
   private val OK = 200
+
+  override protected def setJavascript() = {
+    htmlUnitDriver.setJavascriptEnabled(true)
+  }
+
+  it should "render an /all tag page with a UTC timestamp for the UK edition" in goTo("/sport/lawrence-donegan-golf-blog/2009/jun/11/all") { browser =>
+    import browser._
+    println(s"###! JS enabled: ${htmlUnitDriver.isJavascriptEnabled}")
+    url() should endWith("/sport/lawrence-donegan-golf-blog/2009/jun/11/all")
+    await().atMost(30, TimeUnit.SECONDS).until(".fc-container__header__title").isPresent
+    //    await().atMost(5, TimeUnit.SECONDS).until(".js-dayofweek").isPresent
+    //    await().atMost(5, TimeUnit.SECONDS).until(".js-dayofmonth").isPresent
+    //    await().atMost(5, TimeUnit.SECONDS).until(".fc-today__month").isPresent
+    //    await().atMost(5, TimeUnit.SECONDS).until(".fc-today__year").isPresent
+
+    val fcContainerHeaderTitle = $(".fc-container__header__title").first().getElement
+
+    println(s"### .fc-container__header__title is a ${fcContainerHeaderTitle.getClass.getCanonicalName}")
+    println(s"    contains js-dayofweek: ${!fcContainerHeaderTitle.findElements(By.className("js-dayofweek")).isEmpty}")
+    val jsDayOfWeekElems = fcContainerHeaderTitle.findElements(By.className("js-dayofweek"))
+    println(s"    jsDayOfWeekElems is a ${jsDayOfWeekElems.getClass.getCanonicalName}")
+    println(s"    size: ${jsDayOfWeekElems.size()}")
+    println("    contents:")
+    for(i <- 0 to jsDayOfWeekElems.size() -1) {
+      println(s" elem($i) is a ${jsDayOfWeekElems.get(i).getClass.getCanonicalName}")
+      println(s" elem($i) text: ${jsDayOfWeekElems.get(i).getText}")
+    }
+
+    $(".js-dayofweek").getText should be("Thursday")
+    $(".js-dayofmonth").getText should be("10")
+    $(".fc-today__month").getText should be("June")
+    $(".fc-today__year").getText should be("2009")
+  }
 
   it should "redirect dated tag pages to the equivalent /all page" in {
     val result = controllers.AllIndexController.on("football/series/thefiver/2014/jan/23")(TestRequest())
@@ -57,14 +96,4 @@ import play.api.test.Helpers._
       DateTimeZone.setDefault(oldTimezone)
     }
   }
-
-  it should "render an /all page with the UTC timestamp for the UK edition" in UK("/sport/lawrence-donegan-golf-blog/2009/jun/11/all") { browser =>
-    import browser._
-    url() should endWith("/sport/lawrence-donegan-golf-blog/2009/jun/11/all")
-    $("[js-dayofweek]").first.getText should contain ("Wednesday")
-    $("[js-dayofmonth]").first.getText should contain ("10")
-    $("[fc-today__month]").first.getText should contain ("June")
-    $("[fc-today__year]").first.getText should contain ("2009")
-  }
-
 }
