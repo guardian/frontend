@@ -266,6 +266,7 @@ define([
         this.s.prop63    = detect.getPageSpeed();
 
         this.s.prop65    = config.page.headline || '';
+        this.s.eVar70    = config.page.headline || '';
 
         this.s.prop67    = 'nextgen-served';
 
