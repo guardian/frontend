@@ -7,7 +7,7 @@ export default class Shuffler extends React.Component {
     getLetters () {
         const entries = _.chain(this.props.entries)
             .map(entry => entry.value.toLowerCase())
-            .filter(entry => _.contains(this.props.word.map(l => l.toLowerCase()), entry))
+            .filter(entry => _.contains(this.props.word, entry))
             .compact()
             .value()
             .sort();
