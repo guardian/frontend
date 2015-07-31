@@ -93,7 +93,7 @@ describe('Build Page Targeting', function () {
         expect(pageTargeting.ms).toBe('itn');
         expect(pageTargeting.tn).toEqual(['advertisement-features', 'news']);
         expect(pageTargeting.vl).toEqual('90');
-        expect(pageTargeting.pv).toEqual('presetOphandPageViewId');
+        expect(pageTargeting.pv).toEqual('presetOphanPageViewId');
     });
 
     it('should set correct edition param', function () {
