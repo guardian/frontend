@@ -43,7 +43,7 @@ describe('Build Page Targeting', function () {
                     audienceScienceGateway: true
                 };
 
-                config.ophan.pageViewId = "presetOphanPageViewId";
+                config.ophan.pageViewId = 'presetOphanPageViewId';
 
                 cookies.get = function () {
                     return 'ng101';
@@ -137,7 +137,7 @@ describe('Build Page Targeting', function () {
 
     it('should remove empty values', function () {
         config.page = {};
-        config.ophan.pageViewId = "123456";
+        config.ophan.pageViewId = '123456';
         userAdTargeting.getUserSegments = function () {
             return [];
         };
@@ -162,7 +162,7 @@ describe('Build Page Targeting', function () {
             bp: 'mobile',
             at: 'ng101',
             ab: ['MtMaster-v'],
-            pv: "123456"
+            pv: '123456'
         });
     });
 });
