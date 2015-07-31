@@ -22,7 +22,6 @@ define([
     function load() {
         var $outbrain  = $('.js-outbrain'),
             $container = $('.js-outbrain-container');
-            
         // outbrain leaks the URL of preview content so we don't show it there.
         if (config.switches.outbrain && !config.page.isPreview && $outbrain.length > 0) {
             var widgetIds = {},
