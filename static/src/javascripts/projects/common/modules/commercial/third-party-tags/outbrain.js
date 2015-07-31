@@ -25,6 +25,7 @@ define([
         // outbrain leaks the URL of preview content so we don't show it there.
         if (config.switches.outbrain && !config.page.isPreview && $outbrain.length > 0) {
             var widgetIds = {},
+                widgetConfig = {},
                 widgetCode, widgetCodeImage, widgetCodeText;
 
             widgetIds = {
@@ -45,7 +46,7 @@ define([
                         },
                         text: {
                             sections: 'AR_14',
-                            all     : 'AR_15'  
+                            all     : 'AR_15'
                         }
                     },
                     tablet: {
@@ -67,9 +68,9 @@ define([
                 };
 
                 var breakpoint = detect.getBreakpoint();
-                    breakpoint = (_.contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
+                breakpoint = (_.contains(['wide', 'desktop'], breakpoint)) ? 'desktop' : breakpoint;
 
-                widgetCodeImage = widgetConfig[breakpoint]['image'][getSection()];
+                widgetCodeImage = widgetConfig[breakpoint].image[getSection()];
                 widgetCode = widgetCodeImage;
             }
 
@@ -85,7 +86,7 @@ define([
             });
 
             if (config.switches.newOutbrain && breakpoint !== 'mobile') {
-                widgetCodeText  = widgetConfig[breakpoint]['text'][getSection()];
+                widgetCodeText  = widgetConfig[breakpoint].text[getSection()];
 
                 fastdom.write(function () {
                     $container.append($.create(template(
