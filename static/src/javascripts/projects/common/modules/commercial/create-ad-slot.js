@@ -116,7 +116,7 @@ define([
             $adSlot;
 
         definition = (slotName.match(/^inline/) && slotName !== 'inline1') ? adSlotDefinitions.inline : adSlotDefinitions[slotName];
-        console.log(slotName, definition);
+
         if (config.page.hasPageSkin && slotName === 'merchandising-high') {
             definition.sizeMappings.wide = '1,1';
         }
