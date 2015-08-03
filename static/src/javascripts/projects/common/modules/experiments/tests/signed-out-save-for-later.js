@@ -22,7 +22,7 @@ define([
 
     return function () {
         this.id = 'SignedOutSaveForLaterAug';
-        this.start = '2015-08-03';
+        this.start = '2015-08-02';
         this.expiry = '2015-08-31';
         this.author = 'Nathaniel Bennett';
         this.description = 'Allow signed out users to save articles via signin';
