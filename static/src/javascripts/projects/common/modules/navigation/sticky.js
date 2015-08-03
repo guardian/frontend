@@ -36,7 +36,7 @@ define([
         this.isMobile = _.contains(this.breakpoint, 'mobile');
         this.isTablet = _.contains(this.breakpoint, 'tablet');
         this.isAppleCampaign = config.page.hasBelowTopNavSlot;
-        this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdverts;
+        this.isSensitivePage = config.page.section === 'childrens-books-site' || config.page.shouldHideAdvertss;
         this.isProfilePage = config.page.section === 'identity';
         this.isAdblockInUse = detect.adblockInUse;
     }
@@ -373,6 +373,7 @@ define([
                         '-ms-transform': 'translateY(0%)',
                         'transform': 'translateY(0%)'
                     });
+                    this.$els.main.css('margin-top', this.headerBigHeight);
                 }.bind(this));
                 this.showNavigation(scrollY);
             } else {
@@ -388,6 +389,7 @@ define([
                         'transform': 'translateY(0%)',
                         'z-index': '998'
                     });
+                    this.$els.main.css('margin-top', 0);
                 }.bind(this));
 
                 // Put navigation to its default state
