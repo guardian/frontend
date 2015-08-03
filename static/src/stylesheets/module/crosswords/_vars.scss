@@ -1,6 +1,8 @@
 // based on cellSize + borderSize from
 // projects/common/modules/crosswords/constants.js
 $xword-cell-width: 31px;
+$xword-cell-width-small: 24px; // only used in anagram helper preview cells
+$xword-cell-width-xsmall: 20px; // as above but for long (10+ letter) clues
 $xword-border-width: 1px;
 
 $xword-highlight: lighten(colour(crosswordAccent2), 30%);
