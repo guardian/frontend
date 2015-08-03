@@ -77,7 +77,7 @@ module.exports = function (grunt) {
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         } else {
-            grunt.task.run(['shell:updateCanIUse'])
+            grunt.task.run(['shell:updateCanIUse']);
         }
 
         grunt.task.run(['px_to_rem', 'autoprefixer']);
