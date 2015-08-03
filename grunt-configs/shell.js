@@ -62,15 +62,6 @@ module.exports = function(grunt, options) {
 
         updateCanIUse: {
           command: 'npm update caniuse-db'
-        },
-
-        nodeSassWatch: {
-            command: './node_modules/grunt-sass/node_modules/.bin/node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true',
-            options: {
-                execOptions: {
-                    cwd: './'
-                }
-            }
         }
     };
 };
