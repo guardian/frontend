@@ -1,8 +1,8 @@
 package jobs
 
 import common.Logging
+import common.dfp.{AdvertisementFeature, GuLineItem, PageSkinSponsorship}
 import conf.Configuration.commercial._
-import dfp.{AdvertisementFeature, GuLineItem, PageSkinSponsorship}
 import services.EmailService
 import tools.Store
 
@@ -61,10 +61,10 @@ object AdsStatusEmailJob extends Logging {
 
 }
 
-case class AdStatusReport(pageskinsWithoutEditions: Seq[dfp.PageSkinSponsorship],
-                          geotargetedAdFeatures: Seq[dfp.GuLineItem],
-                          sponsorshipsWithoutSponsors: Seq[dfp.GuLineItem],
-                          noSuchTargetedTags: Seq[dfp.GuLineItem]) {
+case class AdStatusReport(pageskinsWithoutEditions: Seq[PageSkinSponsorship],
+                          geotargetedAdFeatures: Seq[GuLineItem],
+                          sponsorshipsWithoutSponsors: Seq[GuLineItem],
+                          noSuchTargetedTags: Seq[GuLineItem]) {
 
   val isEmpty =
     pageskinsWithoutEditions.isEmpty &&

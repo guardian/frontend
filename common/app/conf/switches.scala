@@ -1,13 +1,38 @@
 package conf
 
+import java.util.concurrent.TimeoutException
+
 import common._
 import conf.Configuration.environment
-import org.joda.time._
-import play.api.{Application, Plugin}
+import org.joda.time.{DateTime, Days, Interval, LocalDate}
+import play.api.Play
+
+import scala.concurrent.duration._
+import scala.concurrent.{Future, Promise}
 
 sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
+
+trait Initializable[T] extends ExecutionContexts with Logging {
+
+  private val initialized = Promise[T]()
+
+  protected val initializationTimeout: FiniteDuration = 2.minutes
+
+  if (Play.maybeApplication.isDefined) {
+    AkkaAsync.after(initializationTimeout) {
+      initialized.tryFailure {
+        new TimeoutException(s"Initialization timed out after $initializationTimeout")
+      }
+    }
+  }
+
+  def initialized(t: T): Unit = initialized.trySuccess(t)
+
+  def onInitialized: Future[T] = initialized.future
+}
+
 
 trait SwitchTrait extends Switchable with Initializable[SwitchTrait] {
   val group: String
@@ -253,7 +278,52 @@ object Switches {
     exposeClientSide = false
   )
 
+  val Viewability = Switch(
+    "Performance",
+    "viewability",
+    "Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val SaveForLaterSwitch = Switch(
+    "Performance",
+    "save-for-later",
+    "It this switch is turned on, user are able to save articles. Turn off if this causes overload on then identity api" ,
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val RafCSSLoaderSwitch = Switch(
+    "Performance",
+    "raf-css-loader",
+    "It this switch is turned on, 50% of CSS load-polling will use RAF instead of setTimeout" ,
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 28),
+    exposeClientSide = false
+  )
+
+  val BackgroundJSSwitch = Switch(
+    "Performance",
+    "background-js",
+    "It this switch is turned on, bootstrap javascript will run in small chunks on timeouts",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 24),
+    exposeClientSide = true
+  )
+
   // Commercial
+  val NewOutbrainSwitch = Switch(
+    "Commercial",
+    "new-outbrain",
+    "Allowing to show new outbrain logic for facelift",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 8, 30),
+    exposeClientSide = true
+  )
+
   val OphanViewIdSwitch = Switch("Commercial",
     "ophan-view-id",
     "Depending on ophan to pass view ID to the gpt targeting",
@@ -501,35 +571,17 @@ object Switches {
     "fixed-top-above-nav",
     "Fixes size of top-above-nav ad slot on UK network front.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 22),
+    sellByDate = new LocalDate(2015, 8, 12),
     exposeClientSide = false
   )
 
-  val TopAboveNavAdSlot728x90Switch = Switch(
+  val DfpUserIdSwitch = Switch(
     "Commercial",
-    "fixed-top-above-nav-728-90",
-    "Expect a 728 x 90 ad in top-above-nav slot on UK network front.",
+    "dfp-user-id",
+    "Include user ID in ad call.",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 22),
-    exposeClientSide = false
-  )
-
-  val TopAboveNavAdSlot88x70Switch = Switch(
-    "Commercial",
-    "fixed-top-above-nav-88-70",
-    "Expect an 88 x 70 ad in top-above-nav slot on UK network front.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 22),
-    exposeClientSide = false
-  )
-
-  val TopAboveNavAdSlotOmitSwitch = Switch(
-    "Commercial",
-    "fixed-top-above-nav-omit",
-    "Leave top-above-nav ad slot out of page on UK network front.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 22),
-    exposeClientSide = false
+    sellByDate = new LocalDate(2015, 8, 5),
+    exposeClientSide = true
   )
 
 
@@ -599,48 +651,12 @@ object Switches {
   )
 
   // Features
-  val ArticleTruncation = Switch(
-    "Feature",
-    "ab-article-truncation",
-    "Article truncation",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val FacebookMostViewed = Switch(
-    "Feature",
-    "ab-facebook-most-viewed",
-    "Facebook most viewed",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val TwitterMostViewed = Switch(
-    "Feature",
-    "ab-twitter-most-viewed",
-    "Twitter most viewed",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val ABTestHeadlines = Switch(
-    "Feature",
-    "a-b-test-headlines",
-    "A/B test headlines",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
   val InternationalEditionSwitch = Switch(
     "Feature",
     "international-edition",
     "International edition A/B test on",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 31),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = true
   )
 
@@ -658,7 +674,7 @@ object Switches {
     "notifications",
     "Notifications",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 15),
+    sellByDate = new LocalDate(2015, 10, 15),
     exposeClientSide = true
   )
 
@@ -667,7 +683,7 @@ object Switches {
     "imgix",
     "If this switch is on, then images will be served via the third party image resizing service Imgix.com",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 31),
+    sellByDate = new LocalDate(2015, 8, 20),
     exposeClientSide = true
   )
 
@@ -795,7 +811,7 @@ object Switches {
     "id-use-avatar-api",
     "If switched on, avatars will be uploaded using the new Avatar API",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
+    sellByDate = new LocalDate(2015, 9, 1),
     exposeClientSide = true
   )
 
@@ -880,42 +896,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val LiveblogFrontUpdatesUk = Switch(
-    "Feature",
-    "liveblog-front-updates-uk",
-    "Switch for the latest liveblog updates on the UK network front",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val LiveblogFrontUpdatesUs = Switch(
-    "Feature",
-    "liveblog-front-updates-us",
-    "Switch for the latest liveblog updates on the US network front",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val LiveblogFrontUpdatesAu = Switch(
-    "Feature",
-    "liveblog-front-updates-au",
-    "Switch for the latest liveblog updates on the AU network front",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val LiveblogFrontUpdatesOther = Switch(
-    "Feature",
-    "liveblog-front-updates-other",
-    "Switch for the latest liveblog updates on non-network fronts",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val IPadNothrasherSwitch = Switch(
     "Feature",
     "ipad-no-thrashers",
@@ -936,12 +916,30 @@ object Switches {
 
   // A/B Tests
 
+  val TruncationWithFacebook = Switch(
+    "A/B Tests",
+    "ab-truncation-with-facebook",
+    "Truncation, with facebook most-viewed container",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
+
+  val TruncationWithRelevant = Switch(
+    "A/B Tests",
+    "ab-truncation-with-relevant",
+    "Truncation, with relevant section-front container",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 17),
+    exposeClientSide = true
+  )
+
   val ABLiveblogNotifications = Switch(
     "A/B Tests",
     "ab-liveblog-notifications",
     "Liveblog notifications",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
+    sellByDate = new LocalDate(2015, 10, 1),
     exposeClientSide = true
   )
 
@@ -954,43 +952,14 @@ object Switches {
     exposeClientSide = false
   )
 
-  val ABViewability = Switch(
-    "A/B Tests",
-    "ab-viewability",
-    "Viewability - Includes whole viewability package: ads lazy loading, sticky header, sticky MPU, spacefinder 2.0, dynamic ads, ad next to comments",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
-    exposeClientSide = true
-  )
-
-  val ABSaveForLaterSwitch = Switch(
-    "A/B Tests",
-    "ab-save-for-later",
-    "It this switch is turned on, user are able to save article. Turn off if the identity API barfs" ,
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val ABIdentityCookieRefresh = Switch(
     "A/B Tests",
     "ab-cookie-refresh",
     "It this switch is turned on, users cookies will be refreshed. Turn off if the identity API barfs" ,
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = true
   )
-
-  val ABHeadlineSwitches = (1 to 10) map { n =>
-    Switch(
-      "A/B Tests",
-      s"ab-headline$n",
-      s"Switch for headline $n",
-      safeState = On,
-      sellByDate = new LocalDate(2015, 7, 17),
-      exposeClientSide = true
-    )
-  }
 
   val ABMembershipMessageVariants = Switch(
     "A/B Tests",
@@ -1001,12 +970,12 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ABPintrest = Switch(
+  val ABSignedOutSaveForLaterAug = Switch(
     "A/B Tests",
-    "ab-pintrest",
-    "Switch for the Pintrest on content pages A/B test.",
+    "ab-signed-out-save-for-later-aug",
+    "Switch off the signed out save for later test",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 16),
+    sellByDate = never,
     exposeClientSide = true
   )
 
@@ -1147,6 +1116,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val NoBounceIndicator = Switch(
+    "Performance",
+    "no-bounce-indicator",
+    "If this switch is on then some beacons will be dropped to gauge if people move onto a new piece of content before Omniture runs",
+    safeState = On,
+    sellByDate = new LocalDate(2015, 8, 31),
+    exposeClientSide = true
+  )
+
   val FaciaDynamoArchive = Switch(
     "Facia",
     "facia-tool-dynamo-archive",
@@ -1171,7 +1149,7 @@ object Switches {
     "facia-tool-put-private",
     "If this is switched on, facia tool will put collections to S3 as private",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 30),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 
@@ -1195,40 +1173,5 @@ object Switches {
   def grouped: List[(String, Seq[SwitchTrait])] = {
     val sortedSwitches = all.groupBy(_.group).map { case (key, value) => (key, value.sortBy(_.name)) }
     sortedSwitches.toList.sortBy(_._1)
-  }
-}
-
-class SwitchBoardPlugin(app: Application) extends SwitchBoardAgent(Configuration)
-class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts with Logging {
-
-  def refresh() {
-    log.info("Refreshing switches")
-    services.S3.get(config.switches.key) foreach { response =>
-
-      val nextState = Properties(response)
-
-      for (switch <- Switches.all) {
-        nextState.get(switch.name) foreach {
-          case "on" => switch.switchOn()
-          case "off" => switch.switchOff()
-          case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
-        }
-      }
-    }
-  }
-
-  override def onStart() {
-    Jobs.deschedule("SwitchBoardRefreshJob")
-    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?") {
-      refresh()
-    }
-
-    AkkaAsync {
-      refresh()
-    }
-  }
-
-  override def onStop() {
-    Jobs.deschedule("SwitchBoardRefreshJob")
   }
 }

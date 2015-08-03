@@ -7,8 +7,8 @@ define([
     'bean',
     'Promise',
     'common/utils/_',
-    'common/utils/mediator',
-    'common/modules/experiments/ab'
+    'common/utils/config',
+    'common/utils/mediator'
 ], function (
     $,
     fastdom,
@@ -17,8 +17,8 @@ define([
     bean,
     Promise,
     _,
-    mediator,
-    ab
+    config,
+    mediator
 ) {
     // find spaces in articles for inserting ads and other inline content
     var bodySelector = '.js-article__body',
@@ -138,7 +138,7 @@ define([
     }
 
     function getReady() {
-        if (ab.shouldRunTest('Viewability', 'variant')) {
+        if (config.switches.viewability) {
             return Promise.all([onImagesLoaded(), onRichLinksUpgraded()]);
         }
 

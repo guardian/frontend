@@ -1,4 +1,5 @@
 /*global FB:false*/
+/*global guardian*/
 /* jscs:disable disallowDanglingUnderscores */
 define(function () {
 
@@ -100,7 +101,10 @@ define(function () {
     };
 
     FacebookAuthorizer.prototype._loadFacebookScript = function () {
-        require(['js!facebook.js'], this._handleScriptLoaded.bind(this));
+        // don't tell Facebook about pages that have not launched yet
+        if (!guardian.config.page.isPreview) {
+            require(['js!facebook.js'], this._handleScriptLoaded.bind(this));
+        }
     };
 
     FacebookAuthorizer.prototype._handleScriptLoaded = function () {

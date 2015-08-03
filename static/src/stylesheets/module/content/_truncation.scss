@@ -1,29 +1,37 @@
+$truncationOverlayheight: 80px;
+
 .content__article-body--truncated {
-    max-height: 550px;
-    overflow: hidden;
     position: relative;
-}
 
-.content__truncation-overlay {
-    display: none;
+    @include mq(mobile, $until: desktop) {
+        & > *:nth-child(n+4) {
+            display: none;
+        }
+    }
 
-    .content__article-body--truncated & {
+    @include mq(desktop) {
+        & > *:nth-child(n+6) {
+            display: none;
+        }
+    }
+
+    & .element-rich-link {
+        display: none;
+    }
+
+    & .content__truncator {
         display: block;
-        position: absolute;
-        bottom: 0;
-        background: linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-        height: 200px;
-        width: 100%;
-        border-bottom: solid 40px #ffffff;
+
+        & .content__truncator__overlay {
+            position: absolute;
+            background: linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+            width: 100%;
+            height: $truncationOverlayheight;
+            margin-top: -1 * $truncationOverlayheight;
+        }
     }
 }
 
-.content__read-more-button {
+.content__truncator {
     display: none;
-
-    .content__article-body--truncated & {
-        display: block;
-        position: absolute;
-        bottom: 0;
-    }
 }

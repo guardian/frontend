@@ -249,19 +249,21 @@ define([
     };
 
     function ready() {
-        robust('lb-a11y',       modules.accessibility);
-        robust('lb-adverts',    modules.initAdverts);
-        robust('lb-filter',     modules.createFilter);
-        robust('lb-timeline',   modules.createTimeline);
-        robust('lb-autoupdate', modules.createAutoUpdate);
-        robust('lb-timestamp',  modules.keepTimestampsCurrent);
-        robust('lb-updates',    modules.handleUpdates);
-        robust('lb-richlinks',  richLinks.upgradeRichLinks);
+        robust.catchErrorsAndLogAll([
+            ['lb-a11y',       modules.accessibility],
+            ['lb-adverts',    modules.initAdverts],
+            ['lb-filter',     modules.createFilter],
+            ['lb-timeline',   modules.createTimeline],
+            ['lb-autoupdate', modules.createAutoUpdate],
+            ['lb-timestamp',  modules.keepTimestampsCurrent],
+            ['lb-updates',    modules.handleUpdates],
+            ['lb-richlinks',  richLinks.upgradeRichLinks]
+        ]);
 
         trail();
         articleLiveblogCommon();
 
-        robust('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
+        robust.catchErrorsAndLog('lb-ready',   function () { mediator.emit('page:liveblog:ready'); });
     }
 
     return {

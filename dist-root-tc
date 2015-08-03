@@ -5,7 +5,7 @@ set -o nounset
 set -o errexit
 
 ./grunt-tc clean install validate:sass validate:js test:unit compile emitAbTestInfo
-./sbt-tc "project root" compile test dist
+./sbt-tc "project root" compile test assets dist
 
 echo "Disting everything."
 rm -rf "dist"
@@ -23,10 +23,10 @@ do
     mkdir -p "$app_folder/packages/frontend-static"
     mkdir -p "$app_folder/packages/$config"
 
-    mv "$config/target/universal/$config.zip"   "$app_folder/packages/$config/$config.zip"
-    cp "$config/conf/deploy.json"               "$app_folder"
-    cp -r static/hash/*                         "$app_folder/packages/frontend-static"
-    cp static/abtests.json                      "$app_folder/packages/frontend-abtests"
+    mv "$config/target/universal/$config-0.1-SNAPSHOT.zip"  "$app_folder/packages/$config/$config.zip"
+    cp "$config/conf/deploy.json"                           "$app_folder"
+    cp -r static/hash/*                                     "$app_folder/packages/frontend-static"
+    cp static/abtests.json                                  "$app_folder/packages/frontend-abtests"
 
     pushd $app_folder
     zip -r "../$config.zip" .

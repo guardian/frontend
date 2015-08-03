@@ -13,7 +13,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    z-index: 9999999;
+    z-index: $zindex-popover;
 }
 
 .site-message__inner {
@@ -87,6 +87,12 @@
         max-width: none;
     }
 
+    .site-message--adblock & {
+        @include mq($from: tablet, $until: desktop) {
+            max-width: gs-span(6);
+        }
+    }
+
     @include mq(desktop) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter/2;
@@ -101,20 +107,6 @@
     @include mq(wide) {
         max-width: none;
     }
-
-    .site-message--save-for-later & {
-        font-weight: bold;
-        padding-top: 10px;
-
-        @include mq(mobile) {
-            padding-left: 14px;
-        }
-    }
-}
-
-.site-message__description {
-    font-size: 14px;
-    font-weight: normal;
 }
 
 .site-message__message--tall {
@@ -130,12 +122,6 @@
         display: table-cell;
         vertical-align: middle;
         margin-top: 0;
-    }
-
-    .site-message--save-for-later & {
-        @include mq(mobile) {
-            padding-left: 14px;
-        }
     }
 }
 

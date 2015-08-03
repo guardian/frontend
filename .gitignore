@@ -61,8 +61,6 @@ static/src/bundles
 static/src/systemjs-bundle-config.js
 static/src/stylesheets/icons/*
 
-ivy-sbt
-
 # Eclipse #
 .project
 .classpath

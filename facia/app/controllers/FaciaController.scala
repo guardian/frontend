@@ -15,7 +15,7 @@ import play.api.libs.json.{JsObject, Json}
 import play.api.mvc._
 import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
-import slices.Container
+import slices._
 import views.html.fragments.containers.facia_cards.container
 
 import scala.concurrent.Future
@@ -125,15 +125,34 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderContainer(id: String) = MemcachedAction { implicit request =>
     log.info(s"Serving collection ID: $id")
-    getPressedCollection(id).map { collectionOption =>
+    renderContainerView(id)
+  }
+
+  def renderMostRelevantContainerJson(path: String) = MemcachedAction { implicit request =>
+    log.info(s"Serving most relevant container for $path")
+
+    val canonicalId = ConfigAgent.getCanonicalIdForFront(path).orElse (
+      alternativeEndpoints(path).map(ConfigAgent.getCanonicalIdForFront).headOption.flatten
+    )
+
+    canonicalId.map { collectionId =>
+      renderContainerView(collectionId)
+    }.getOrElse(Future.successful(NotFound))
+  }
+
+  def alternativeEndpoints(path: String) = path.split("/").toList.take(2).reverse
+
+  private def renderContainerView(collectionId: String)(implicit request: RequestHeader): Future[Result] = {
+    log.info(s"Rendering container view for collection id $collectionId")
+    getPressedCollection(collectionId).map { collectionOption =>
       collectionOption.map { collection =>
         Cached(60) {
-          val config = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
+          val config = ConfigAgent.getConfig(collectionId).getOrElse(CollectionConfig.empty)
 
           val containerDefinition = FaciaContainer(
             1,
-            Container.fromConfig(config),
-            CollectionConfigWithId(id, config),
+            Fixed(FixedContainers.fixedMediumFastXII),
+            CollectionConfigWithId(collectionId, config),
             CollectionEssentials.fromPressedCollection(collection)
           )
 
@@ -143,7 +162,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           else
             NotFound
         }
-      }.getOrElse(ServiceUnavailable)}
+      }.getOrElse(ServiceUnavailable)
+    }
   }
 
   def renderShowMore(path: String, collectionId: String) = MemcachedAction { implicit request =>
@@ -186,6 +206,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       })
     }.getOrElse(Future.successful(None))
 
+
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
     log.info(s"Serving collection ID: $id")
@@ -195,7 +216,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           Cached(60) {
             val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.empty)
             val webTitle = config.displayName.getOrElse("The Guardian")
-            Ok(TrailsToRss.fromFaciaContent(webTitle, collection.all, "", None)).as("text/xml; charset=utf8")}}
+            Ok(TrailsToRss.fromFaciaContent(webTitle, collection.curatedPlusBackfillDeduplicated, "", None)).as("text/xml; charset=utf8")}}
 
       case None => Future.successful(Cached(60)(NotFound))}
   }

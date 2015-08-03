@@ -1,8 +1,9 @@
 @(page: model.MetaData)( implicit request:RequestHeader)
 @import conf.Configuration
 @import common.AnalyticsHost
-@import views.support.OmnitureAnalyticsData
+@import views.support.{OmnitureAnalyticsData, OmnitureAnalyticsAccount}
 @import conf.{Static,Switches}
+@import conf.Switches.NoBounceIndicator
 
 @defining(s"${request.host}${request.path}") { path =>
 
@@ -61,3 +62,28 @@
 </noscript>
 
 <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
+
+@if(NoBounceIndicator.isSwitchedOn) {
+    @* NOTE for removal - there is a corresponding entry in omniture.js *@
+    <script type="text/javascript">
+
+        @* Limit to "modern browsers" *@
+        if (guardian.isModernBrowser) {
+            try {
+                @* sessionStorage is part of the isModernBrowser test *@
+                var session = window.sessionStorage;
+
+                @*
+                    If this key is still present then the user went to a new page before Omniture ran
+                    and we did not count the page view
+                *@
+                if (session.getItem('gu-bounce-test') === 'true') {
+                    var img = new Image();
+                    img.src = '@{Configuration.debug.beaconUrl}/count/user-navigated-early.gif';
+                }
+
+                session.setItem('gu-bounce-test', 'true');
+            } catch (e) {};
+        }
+    </script>
+}

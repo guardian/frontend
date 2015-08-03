@@ -5,7 +5,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/robust',
-    'common/modules/article/truncate',
+    'common/modules/article/truncate-liveblog',
     'common/modules/article/twitter',
     'common/modules/open/cta',
     'common/modules/ui/last-modified',
@@ -51,10 +51,12 @@ define([
     }
 
     return function () {
-        robust('trail-article', initOpenCta);
-        robust('trail-fence', initFence);
-        robust('trail-twitter', initTruncateAndTwitter);
-        robust('trail-sharing', selectionSharing.init);
-        robust('trail-last-modified', lastModified);
+        robust.catchErrorsAndLogAll([
+            ['trail-article', initOpenCta],
+            ['trail-fence', initFence],
+            ['trail-twitter', initTruncateAndTwitter],
+            ['trail-sharing', selectionSharing.init],
+            ['trail-last-modified', lastModified]
+        ]);
     };
 });

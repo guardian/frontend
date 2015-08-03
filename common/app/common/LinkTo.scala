@@ -1,16 +1,15 @@
 package common
 
-import com.gu.facia.api.models._
-import layout.ContentCard
-import play.twirl.api.Html
-import play.api.mvc.{Result, AnyContent, Request, RequestHeader}
 import conf.Configuration
-import model.{Snap, Trail, MetaData}
-import org.jsoup.Jsoup
-import scala.collection.JavaConversions._
 import conf.Configuration.environment
 import dev.HttpSwitch
-import implicits.FaciaContentImplicits._
+import layout.ContentCard
+import model.{MetaData, Snap, Trail}
+import org.jsoup.Jsoup
+import play.api.mvc.{AnyContent, Request, RequestHeader, Result}
+import play.twirl.api.Html
+
+import scala.collection.JavaConversions._
 
 /*
  * Builds absolute links to the core site (www.theguardian.com)
@@ -23,6 +22,8 @@ trait LinkTo extends Logging {
   private val AbsolutePath = "^/(.+)".r
   private val RssPath = "^/(.+)(/rss)".r
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
+
+  val httpsEnabledSections: Seq[String] = Seq("info")
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
@@ -56,7 +57,16 @@ trait LinkTo extends Logging {
   def apply(faciaCard: ContentCard)(implicit request: RequestHeader): String =
     faciaCard.url.get(request)
 
-  private def urlFor(path: String, edition: Edition, isInternationalEdition: Boolean = false) = s"$host/${Editionalise(clean(path), edition, isInternationalEdition)}"
+  private def urlFor(path: String, edition: Edition, isInternationalEdition: Boolean = false): String = {
+    val editionalisedPath = Editionalise(clean(path), edition, isInternationalEdition)
+    val url = s"$host/$editionalisedPath"
+    url match {
+      case AbsoluteGuardianUrl(_) if isHttpsEnabled(editionalisedPath) =>  url.replace("http://", "//")
+      case _ => url
+    }
+  }
+
+  private def isHttpsEnabled(editionalisedPath: String) = httpsEnabledSections.exists(editionalisedPath.startsWith)
 
   private def clean(path: String) = path match {
     case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books
@@ -97,7 +107,13 @@ object LinkTo extends LinkTo {
 
 class CanonicalLink {
 
-  lazy val scheme = if (environment.secure) "https" else "http"
+  import LinkTo.httpsEnabledSections
+
+  private def isHttpsSection(r: RequestHeader) = httpsEnabledSections.exists(section => r.path.startsWith(s"/$section"))
+
+  lazy val secureApp: Boolean = environment.secure
+
+  def scheme(r: RequestHeader) = if (secureApp || isHttpsSection(r)) "https" else "http"
 
   val significantParams: Seq[String] = Seq(
     "index",
@@ -110,7 +126,7 @@ class CanonicalLink {
         .sorted.mkString("&")
       if (q.isEmpty) "" else s"?$q"
     }
-    s"$scheme://${request.host}${request.path}$queryString"
+    s"${scheme(request)}://${request.host}${request.path}$queryString"
   }
 }
 

@@ -15,10 +15,6 @@ import com.gargoylesoftware.htmlunit.BrowserVersion
 
 trait TestSettings {
   def globalSettingsOverride: Option[GlobalSettings] = None
-  def testPlugins: Seq[String] = Nil
-  def disabledPlugins: Seq[String] = Seq(
-    "conf.SwitchBoardPlugin"
-  )
 
   val recorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
@@ -42,7 +38,7 @@ trait TestSettings {
 
     verify(
       Configuration.contentApi.contentApiLiveHost,
-      "d3656255055f439e9ac5818d8039ba1fd7ae456873600b2462b071a868b71f31",
+      "5f755b14e59810c1c7ed8a79dfe9bc132340d22ee255f3b41bd4f3e2af5e5393",
       "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH LIVE CONTENT API HOST"
     )
 
@@ -97,9 +93,7 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
   BrowserVersion.setDefault(BrowserVersion.CHROME)
 
   implicit override lazy val app = FakeApplication(
-    withoutPlugins = disabledPlugins,
       withGlobal = globalSettingsOverride,
-      additionalPlugins = testPlugins,
       additionalConfiguration = Map(
         ("application.secret", "this_is_not_a_real_secret_just_for_tests"),
         ("guardian.projectName", "test-project"),

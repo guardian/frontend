@@ -1,14 +1,12 @@
 package model
 
 import com.gu.facia.api.models._
+import common.dfp.{AdSize, AdSlot, DfpAgent}
 import common.{Edition, NavItem}
 import conf.Configuration
 import contentapi.Paths
-import dfp.DfpAgent
 import model.facia.PressedCollection
-import org.joda.time.DateTime
 import play.api.libs.json.{JsString, JsValue, Json}
-import services.FaciaContentConvert
 
 import scala.language.postfixOps
 
@@ -29,7 +27,7 @@ case class PressedPage(id: String,
   def allPath: Option[String] = {
     val tagAndSectionIds = for {
       pressedCollection <- collections
-      item <- pressedCollection.all
+      item <- pressedCollection.curatedPlusBackfillDeduplicated
       id <- {item match {
               case curatedContent: CuratedContent =>
                 curatedContent.content.sectionId ++ curatedContent.content.tags.map(_.id)
@@ -87,11 +85,20 @@ case class PressedPage(id: String,
       Some(section)))
   override def sponsor = keywordIds.flatMap(DfpAgent.getSponsor(_)).headOption
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
+
+  override def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = {
+    if (isNetworkFront) DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
+    else Nil
+  }
+
   override def hasAdInBelowTopNavSlot(edition: Edition): Boolean = {
     DfpAgent.hasAdInTopBelowNavSlot(adUnitSuffix, edition)
   }
+  override def omitMPUsFromContainers(edition: Edition): Boolean = {
+    DfpAgent.omitMPUsFromContainers(id, edition)
+  }
 
-  def allItems = collections.flatMap(_.all).distinct
+  def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
 
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:image" -> Configuration.facebook.imageFallback) ++
@@ -106,4 +113,7 @@ case class PressedPage(id: String,
 
   private def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
     o.map(value => Map(key -> value)).getOrElse(Map())
+
+  override def iosType = "front"
+
 }
