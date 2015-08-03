@@ -266,6 +266,10 @@ define([
         this.s.prop63    = detect.getPageSpeed();
 
         this.s.prop65    = config.page.headline || '';
+        this.s.eVar70    = config.page.headline || '';
+
+        // Set Page View Event
+        this.s.events    = this.s.apl(this.s.events, 'event4', ',', 2);
 
         this.s.prop67    = 'nextgen-served';
 

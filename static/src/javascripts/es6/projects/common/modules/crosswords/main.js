@@ -7,6 +7,7 @@ import _ from 'common/utils/_';
 import detect from 'common/utils/detect';
 import scroller from 'common/utils/scroller';
 
+import AnagramHelper from './anagram-helper/main';
 import Clues from './clues';
 import Controls from './controls';
 import HiddenInput from './hidden-input';
@@ -34,6 +35,7 @@ class Crossword extends React.Component {
             'onCheck',
             'onCheckAll',
             'onClearAll',
+            'onToggleAnagramHelper',
             'onSelect',
             'onKeyDown',
             'onClickHiddenInput',
@@ -54,7 +56,8 @@ class Crossword extends React.Component {
                 persistence.loadGridState(this.props.data.id)
             ),
             cellInFocus: null,
-            directionOfEntry: null
+            directionOfEntry: null,
+            showAnagramHelper: false
         };
     }
 
@@ -221,7 +224,7 @@ class Crossword extends React.Component {
     }
 
     focusHiddenInput (x, y) {
-        const wrapper = this.refs.hiddenInputComponent.refs.wrapper.getDOMNode();
+        const wrapper = React.findDOMNode(this.refs.hiddenInputComponent.refs.wrapper);
         const left = helpers.gridSize(x);
         const top = helpers.gridSize(y);
         const position = this.asPercentage(left, top);
@@ -230,7 +233,7 @@ class Crossword extends React.Component {
         wrapper.style.left = position.x + '%';
         wrapper.style.top = position.y + '%';
 
-        const hiddenInputNode = this.refs.hiddenInputComponent.refs.input.getDOMNode();
+        const hiddenInputNode = React.findDOMNode(this.refs.hiddenInputComponent.refs.input);
 
         if (document.activeElement !== hiddenInputNode) {
             hiddenInputNode.focus();
@@ -415,6 +418,12 @@ class Crossword extends React.Component {
         this.save();
     }
 
+    onToggleAnagramHelper () {
+        this.setState({
+            showAnagramHelper: !this.state.showAnagramHelper
+        });
+    }
+
     hiddenInputValue () {
         const cell = this.state.cellInFocus;
 
@@ -441,6 +450,10 @@ class Crossword extends React.Component {
         const focussed = this.clueInFocus();
         const isHighlighted = (x, y) => focussed ? helpers.entryHasCell(focussed, x, y) : false;
 
+        const anagramHelper = this.state.showAnagramHelper && (
+            <AnagramHelper clue={focussed} grid={this.state.grid} close={this.onToggleAnagramHelper}/>
+        );
+
         return (
             <div className={`crossword__container crossword__container--${this.props.data.crosswordType}`}>
                 <div className='crossword__grid-wrapper'>
@@ -462,7 +475,10 @@ class Crossword extends React.Component {
                         value={this.hiddenInputValue()}
                         ref='hiddenInputComponent'
                     />
+
+                    {anagramHelper}
                 </div>
+
                 <Controls
                     hasSolutions={this.hasSolutions()}
                     clueInFocus={focussed}
@@ -471,6 +487,7 @@ class Crossword extends React.Component {
                     onCheck={this.onCheck}
                     onCheckAll={this.onCheckAll}
                     onClearAll={this.onClearAll}
+                    onToggleAnagramHelper={this.onToggleAnagramHelper}
                 />
                 <Clues
                     clues={this.cluesData()}
