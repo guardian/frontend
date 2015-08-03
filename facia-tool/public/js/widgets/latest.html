@@ -38,7 +38,7 @@
 
         <search-controls params="context: $context"></search-controls>
 
-        <div class="latest-articles">
+        <div class="latest-articles" data-bind="makeDraggable: true">
             <div data-bind="template: {
                 name: 'template_article',
                 foreach: articles

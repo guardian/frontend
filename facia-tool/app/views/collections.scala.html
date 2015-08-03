@@ -134,9 +134,15 @@
                 slimEditor: slimEditor
             }">
 
-            <a class="thumb" data-bind="
-                style: {backgroundImage: thumbImage() ? 'url(' + thumbImage() + ')' : ''},
-                attr: {href: id}"></a>
+            <a target="_blank" data-bind="
+                css: {
+                    'thumb': true,
+                    'allow-default-click': thumbOrigin
+                },
+                style: {
+                    backgroundImage: thumbImage() ? 'url(' + thumbImage() + ')' : ''
+                },
+                attr: {href: thumbOrigin() || id()}"></a>
 
             <!-- ko if: state.imageCutoutSrcFromCapi() && !meta.imageCutoutReplace() -->
                 <a class="thumb--cutout" data-bind="

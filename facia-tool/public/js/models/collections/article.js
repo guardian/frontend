@@ -8,6 +8,7 @@ define([
     'utils/deep-get',
     'utils/draggable-element',
     'utils/full-trim',
+    'utils/get-media-main-image',
     'utils/human-time',
     'utils/identity',
     'utils/is-guardian-url',
@@ -34,6 +35,7 @@ define([
         deepGet,
         draggableElement,
         fullTrim,
+        getMediaMainImage,
         humanTime,
         identity,
         isGuardianUrl,
@@ -64,6 +66,7 @@ define([
         validateImageSrc = validateImageSrc.default;
         copiedArticle = copiedArticle.default;
         logger = logger.default;
+        getMediaMainImage = getMediaMainImage.default;
 
         var capiProps = [
                 'webUrl',
@@ -132,6 +135,7 @@ define([
                             src: 'imageSrc',
                             width: 'imageSrcWidth',
                             height: 'imageSrcHeight',
+                            origin: 'imageSrcOrigin',
                             options: {
                                 maxWidth: 1000,
                                 minWidth: 400,
@@ -152,6 +156,12 @@ define([
                     key: 'imageSrcHeight',
                     'if': 'imageReplace',
                     label: 'replacement image height',
+                    type: 'text'
+                },
+                {
+                    key: 'imageSrcOrigin',
+                    'if': 'imageReplace',
+                    label: 'replacement image origin',
                     type: 'text'
                 },
                 {
@@ -382,6 +392,7 @@ define([
                 'sectionName',
                 'hasMainVideo',
                 'imageCutoutSrcFromCapi',
+                'imageSrcFromCapi',
                 'ophanUrl',
                 'sparkUrl',
                 'premium']);
@@ -459,6 +470,20 @@ define([
                 this.updateEditorsDisplay();
             }
 
+            this.thumbOrigin = ko.pureComputed(function () {
+                var meta = this.meta,
+                    state = this.state;
+
+                if (meta.imageReplace() && meta.imageSrc()) {
+                    return meta.imageSrcOrigin();
+                } else if (meta.imageCutoutReplace()) {
+                    return false;
+                } else if (meta.imageSlideshowReplace && meta.imageSlideshowReplace() && meta.slideshow() && meta.slideshow()[0]) {
+                    return meta.slideshow()[0].origin;
+                } else {
+                    return state.imageSrcFromCapi();
+                }
+            }, this);
             this.thumbImage = ko.pureComputed(function () {
                 var meta = this.meta,
                     fields = this.fields,
@@ -678,6 +703,7 @@ define([
                 this.state.isLoaded(true);
                 this.state.sectionName(this.props.sectionName());
                 this.state.primaryTag(getPrimaryTag(opts));
+                this.state.imageSrcFromCapi(getMediaMainImage(opts));
                 this.state.imageCutoutSrcFromCapi(getContributorImage(opts));
                 this.state.hasMainVideo(getMainMediaType(opts) === 'video');
                 this.state.tone(opts.frontsMeta && opts.frontsMeta.tone);
@@ -863,6 +889,10 @@ define([
         };
 
         Article.prototype.open = function(article, evt) {
+            if ($(evt.target).hasClass('allow-default-click')) {
+                return true;
+            }
+
             if (this.uneditable) { return; }
 
             if (this.meta.supporting) { this.meta.supporting.items().forEach(function(sublink) { sublink.close(); }); }
@@ -884,10 +914,6 @@ define([
                 );
             } else {
                 mediator.emit('ui:open', null, null, this.front);
-            }
-
-            if ($(evt.target).hasClass('allow-default-click')) {
-                return true;
             }
         };
 
@@ -928,6 +954,7 @@ define([
             var imageSrc = this.meta[params.src],
                 imageSrcWidth = this.meta[params.width],
                 imageSrcHeight = this.meta[params.height],
+                imageSrcOrigin = this.meta[params.origin],
                 image = imageSrc(),
                 src,
                 opts = params.options;
@@ -940,6 +967,9 @@ define([
                         imageSrc(img.src);
                         imageSrcWidth(img.width);
                         imageSrcHeight(img.height);
+                        if (imageSrcOrigin && image.media && image.media.origin) {
+                            imageSrcOrigin(image.media.origin);
+                        }
                     }, function(err) {
                         undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
                         alert(err.message);
