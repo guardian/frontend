@@ -107,6 +107,8 @@ define([
                                 feature: 'weather'
                             }
                         });
+                        err.reported = true;
+                        throw err;
                     });
             }
         },
@@ -122,6 +124,8 @@ define([
                             feature: 'weather'
                         }
                     });
+                    err.reported = true;
+                    throw err;
                 });
         },
 
@@ -140,6 +144,8 @@ define([
                             feature: 'weather'
                         }
                     });
+                    err.reported = true;
+                    throw err;
                 });
         },
 
