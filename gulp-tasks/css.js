@@ -1,38 +1,26 @@
 import gulp from 'gulp';
-import sass from 'gulp-sass';
-import postcss from 'gulp-postcss';
-import sourcemaps from 'gulp-sourcemaps';
-import autoprefixer from 'autoprefixer-core';
-import pxtorem from 'postcss-pxtorem';
 import filter from 'gulp-filter';
 import del from 'del';
 import runSequence from 'run-sequence';
+import sourcemaps from 'gulp-sourcemaps';
 
-import {DIRECTORIES} from './config';
+import sass from 'gulp-sass';
+import postcss from 'gulp-postcss';
+import autoprefixer from 'autoprefixer-core';
+import pxtorem from 'postcss-pxtorem';
+
+import {DIRECTORIES, PRESETS} from './config';
 
 const SRC = `${DIRECTORIES.src}/stylesheets`;
 const DEST = `${DIRECTORIES.target}/stylesheets`;
 
-const PRESETS = {
-    sass: {
-        outputStyle: 'compressed',
-        precision: 5
-    },
-    pxtorem: {
-        replace: true,
-        root_value: 16,
-        unit_precision: 5,
-        prop_white_list: []
-    }
-}
-
-gulp.task('stylesheets:clean', (cb) =>
+gulp.task('css:clean', (done) =>
     del([
-        DIRECTORIES.target + 'stylesheets'
-    ], cb)
+        DIRECTORIES.target + 'css'
+    ], done)
 );
 
-gulp.task('stylesheets:compile:modern', () =>
+gulp.task('css:compile:modern', () =>
     gulp.src([
             `${SRC}/*.scss`,
             `!${SRC}/ie9.*.scss`,
@@ -42,37 +30,41 @@ gulp.task('stylesheets:compile:modern', () =>
         .pipe(sourcemaps.init())
         .pipe(sass(PRESETS.sass))
         .pipe(postcss([
-            autoprefixer(),
+            autoprefixer(), // uses ./browserslist by default
             pxtorem(PRESETS.pxtorem)
         ]))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(DEST))
 );
 
-gulp.task('stylesheets:compile:ie9', () =>
+gulp.task('css:compile:ie9', () =>
     gulp.src(`${SRC}/ie9.*.scss`)
         .pipe(sourcemaps.init())
         .pipe(sass(PRESETS.sass))
         .pipe(postcss([
-            autoprefixer(),
+            autoprefixer({
+                browsers: ['Explorer 9']
+            }),
             pxtorem(PRESETS.pxtorem)
         ]))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(DEST))
 );
 
-gulp.task('stylesheets:compile:oldIE', () =>
+gulp.task('css:compile:oldIE', () =>
     gulp.src(`${SRC}/old-ie.*.scss`)
         .pipe(sourcemaps.init())
         .pipe(sass(PRESETS.sass))
         .pipe(postcss([
-            autoprefixer()
+            autoprefixer({
+                browsers: ['Explorer 8']
+            })
         ]))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(DEST))
 );
 
-gulp.task('stylesheets:compile:fonts', () =>
+gulp.task('css:compile:fonts', () =>
     gulp.src(`${SRC}/webfonts-*.scss`)
         .pipe(sourcemaps.init())
         .pipe(sass(PRESETS.sass))
@@ -80,15 +72,15 @@ gulp.task('stylesheets:compile:fonts', () =>
         .pipe(gulp.dest(DEST))
 );
 
-gulp.task('stylesheets:compile', ['stylesheets:clean'], (cb) =>
+gulp.task('css:compile', ['css:clean'], (done) =>
     runSequence([
-        'stylesheets:compile:modern',
-        'stylesheets:compile:ie9',
-        'stylesheets:compile:oldIE',
-        'stylesheets:compile:fonts'
-    ], cb)
+        'css:compile:modern',
+        'css:compile:ie9',
+        'css:compile:oldIE',
+        'css:compile:fonts'
+    ], done)
 );
 
-gulp.task('stylesheets', ['images'], (cb) =>
-    runSequence('stylesheets:compile', cb)
+gulp.task('css', ['images'], (done) =>
+    runSequence('css:compile', done)
 );
