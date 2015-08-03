@@ -127,7 +127,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('install', ['install:npm', 'install:jspm']);
-    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool']);
+    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool', 'uglify:conf']);
     grunt.registerTask('install:npm', ['shell:npmInstall', 'shell:npmInstallFaciaTool']);
 
     grunt.registerTask('prepare', function() {
