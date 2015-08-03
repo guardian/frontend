@@ -135,7 +135,7 @@ define([
             },
 
             initialiseStickyHeader: function () {
-                if (config.switches.viewability && !(config.page.isProd && config.page.contentType === 'Interactive')) {
+                if (config.switches.viewability && !(config.page.isProd && config.page.contentType === 'Interactive') && config.page.contentType !== 'Crossword') {
                     sticky.init();
                 }
             },
