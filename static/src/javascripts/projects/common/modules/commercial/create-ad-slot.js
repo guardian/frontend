@@ -96,7 +96,7 @@ define([
         }
     };
 
-    if (config.switches.mobileTopBannerRemove && !!config.tests.mobileTopBannerRemove && detect.getBreakpoint() === 'mobile') {
+    if (!!config.tests.mobileTopBannerRemove && detect.getBreakpoint() === 'mobile') {
         adSlotDefinitions.inline1.sizeMappings = {
             mobile: '1,1|300,250'
         };
