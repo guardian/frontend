@@ -9,6 +9,6 @@ install:
 test:
 	grunt test --dev
 
-develop:
+watch:
 	grunt compile --dev
 	./node_modules/foreman/nf.js start
