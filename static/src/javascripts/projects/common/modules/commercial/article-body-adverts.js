@@ -107,7 +107,7 @@ define([
                 inlineMercPromise = Promise.resolve(null);
             }
 
-            if (config.switches.viewability && config.switches.commercialExtraAds) {
+            if (config.switches.viewability && config.switches.commercialExtraAds && !config.tests.mobileTopBannerRemove) {
                 return inlineMercPromise.then(function () {
                     return spacefinder.getParaWithSpace(rules).then(function (space) {
                         return insertAdAtP(space);

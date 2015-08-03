@@ -1,7 +1,8 @@
 window.guardian = {
     config: {
         switches: { },
-        page: { }
+        page: { },
+        tests: { }
     }
 };
 /*eslint-disable camelcase*/

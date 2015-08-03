@@ -10,6 +10,9 @@ var config = {
     },
     page: {
         contentType: 'Article'
+    },
+    tests: {
+        mobileTopBannerRemove: false
     }
 };
 
