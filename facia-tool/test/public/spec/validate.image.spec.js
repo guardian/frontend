@@ -4,9 +4,13 @@ import validate from 'utils/validate-image-src';
 describe('Validate images', function () {
     beforeEach(function () {
         this.originalCDNDomain = CONST.imageCdnDomain;
+        this.originalimgIXBaseDomain = CONST.imgIXBaseDomain;
+        this.originalstaticImageCdnDomain = CONST.staticImageCdnDomain;
     });
     afterEach(function () {
         CONST.imageCdnDomain = this.originalCDNDomain;
+        CONST.imgIXBaseDomain = this.originalimgIXBaseDomain;
+        CONST.staticImageCdnDomain = this.originalstaticImageCdnDomain;
     });
 
     it('fails on missing images', function (done) {
@@ -108,9 +112,11 @@ describe('Validate images', function () {
     });
 
     it('strips unnecessary parameters', function (done) {
+        CONST.imgIXBaseDomain = /https?:\/\/i.guim.co.uk\/img\/ix\//;
+        CONST.staticImageCdnDomain = 'http://' + window.location.host + '/';
         CONST.imageCdnDomain = window.location.host;
 
-        validate('http://' + CONST.imageCdnDomain + CONST.imgIXBasePath +
+        validate('http://i.guim.co.uk/img/ix/' +
             'base/test/public/fixtures/square.png?s=82a57a91afadd159bb4639d6b798f6c5&other=params')
         .then(function (image) {
             expect(image.width).toBe(140);
