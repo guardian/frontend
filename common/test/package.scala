@@ -1,17 +1,17 @@
 package test
 
-import common.ExecutionContexts
-import conf.{LiveContentApi, Configuration}
-import java.net.URLEncoder
-import contentapi.Http
-import org.scalatestplus.play._
-import play.api.test._
-import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import java.io.File
-import recorder.ContentApiHttpRecorder
-import play.api.GlobalSettings
-import org.apache.commons.codec.digest.DigestUtils
+
 import com.gargoylesoftware.htmlunit.BrowserVersion
+import common.ExecutionContexts
+import conf.{Configuration, LiveContentApi}
+import contentapi.Http
+import org.apache.commons.codec.digest.DigestUtils
+import org.openqa.selenium.htmlunit.HtmlUnitDriver
+import org.scalatestplus.play._
+import play.api.GlobalSettings
+import play.api.test._
+import recorder.ContentApiHttpRecorder
 
 trait TestSettings {
   def globalSettingsOverride: Option[GlobalSettings] = None
@@ -67,10 +67,6 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
   lazy val htmlUnitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
   lazy val testBrowser = TestBrowser(webDriver, None)
 
-  protected def setJavascript() = {
-    htmlUnitDriver.setJavascriptEnabled(false)
-  }
-
   def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
 
   def UK[T](path: String)(block: TestBrowser => T): T = goTo(path)(block)
@@ -80,9 +76,14 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
       goTo(editionPath)(block)
   }
 
+  def AU[T](path: String)(block: TestBrowser => T): T = {
+    val editionPath = if (path.contains("?")) s"$path&_edition=AU" else s"$path?_edition=AU"
+    goTo(editionPath)(block)
+  }
+
   protected def goTo[T](path: String)(block: TestBrowser => T): T = {
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-      setJavascript()
+      htmlUnitDriver.setJavascriptEnabled(false)
       testBrowser.goTo(host + path)
       block(testBrowser)
   }

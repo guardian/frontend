@@ -12,26 +12,26 @@ object `package` {
 }
 
 class ApplicationsTestSuite extends Suites (
-//  new services.ApplicationsHealthcheckTest,
-//  new common.CombinerControllerTest,
-//  new common.CombinerFeatureTest,
+  new services.ApplicationsHealthcheckTest,
+  new common.CombinerControllerTest,
+  new common.CombinerFeatureTest,
   new AllIndexControllerTest,
-  new AllIndexTemplateTest
-//  new GalleryControllerTest,
-//  new GalleryTemplateTest,
-//  new ImageContentControllerTest,
-//  new ImageContentTemplateTest,
-//  new IndexControllerTest,
-//  new IndexMetaDataTest,
-//  new InteractiveControllerTest,
-//  new InteractiveTemplateTest,
-//  new LatestIndexControllerTest,
-//  new MediaControllerTest,
-//  new MediaFeatureTest,
-//  new SectionTemplateTest,
-//  new TagFeatureTest,
-//  new TagTemplateTest,
-//  new ShareLinksTest
+  new AllIndexTemplateTest,
+  new GalleryControllerTest,
+  new GalleryTemplateTest,
+  new ImageContentControllerTest,
+  new ImageContentTemplateTest,
+  new IndexControllerTest,
+  new IndexMetaDataTest,
+  new InteractiveControllerTest,
+  new InteractiveTemplateTest,
+  new LatestIndexControllerTest,
+  new MediaControllerTest,
+  new MediaFeatureTest,
+  new SectionTemplateTest,
+  new TagFeatureTest,
+  new TagTemplateTest,
+  new ShareLinksTest
 ) with SingleServerSuite {
 
   override lazy val port: Int = conf.HealthCheck.testPort
