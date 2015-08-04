@@ -1,14 +1,27 @@
 define([
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/utils/storage',
 ],
 function (
-    id
+    Id,
+    storage
 ) {
     function CookieRefresh() {
 
         this.init = function () {
-            id.refreshCookie();
+            if (Id.isUserLoggedIn()) {
+                var lastRefresh = storage.local.get(Id.lastRefreshKey),
+                    currentTime = new Date().getTime();
+                if (this.shouldRefreshCookie(lastRefresh, currentTime)) {
+                    Id.getUserFromApiWithRefreshedCookie();
+                    storage.local.set(Id.lastRefreshKey, currentTime);
+                }
+            }
         }
+
+        CookieRefresh.prototype.shouldRefreshCookie = function(lastRefresh, currentTime) {
+            return (!lastRefresh) || (currentTime > (parseInt(lastRefresh, 10) + (1000 * 86400 * 30)));
+        };
     }
     return CookieRefresh;
 });
