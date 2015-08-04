@@ -26,7 +26,6 @@ define([
     LiveblogNotifications,
     HighCommercialComponent,
     SignedOutSaveForLater,
-    CookieRefresh,
     MembershipMessage
 ) {
 
@@ -36,7 +35,6 @@ define([
         new LiveblogNotifications(),
         new HighCommercialComponent(),
         new SignedOutSaveForLater(),
-        new CookieRefresh(),
         new MembershipMessage()
     ]);
 
