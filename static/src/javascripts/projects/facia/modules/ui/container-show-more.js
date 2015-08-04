@@ -129,7 +129,6 @@ define([
                 setButtonState(button, STATE_DISPLAYED);
                 updatePref(button.id, button.state);
                 mediator.emit("modules:show-more:loaded")
-
             });
             button.isLoaded = true;
         }).catch(function (err) {
