@@ -13,14 +13,6 @@ export default class Controls extends React.Component {
             grid: []
         };
 
-        const pdfButton = this.props.pdf && (
-            <a className={`${buttonClassName} ${buttonGenericClassName}`}
-                href={this.props.pdf}
-                key='pdf' download target="_blank">
-                PDF version
-            </a>
-        );
-
         // GRID CONTROLS
         controls.grid.unshift(
             <button className={`${buttonClassName} ${buttonGenericClassName}`}
@@ -78,7 +70,6 @@ export default class Controls extends React.Component {
             <div className='crossword__controls'>
                 <div className='crossword__controls__clue'>{controls.clue}</div>
                 <div className='crossword__controls__grid'>{controls.grid}</div>
-                {pdfButton}
             </div>
         );
     }

@@ -1,6 +1,8 @@
 /* eslint new-cap: 0 */
 
 import React from 'react';
+import bonzo from 'bonzo';
+import bean from 'bean';
 
 import $ from 'common/utils/$';
 import _ from 'common/utils/_';
@@ -480,7 +482,6 @@ class Crossword extends React.Component {
                 </div>
 
                 <Controls
-                    pdf={this.props.data.pdf}
                     hasSolutions={this.hasSolutions()}
                     clueInFocus={focussed}
                     onCheat={this.onCheat}
@@ -501,13 +502,18 @@ class Crossword extends React.Component {
 }
 
 export default function () {
-    $('.js-crossword').each(function (element) {
+    $('.js-crossword').each(element => {
         if (element.hasAttribute('data-crossword-data')) {
             const crosswordData = JSON.parse(element.getAttribute('data-crossword-data'));
             React.render(<Crossword data={crosswordData} />, element);
         } else {
             throw 'JavaScript crossword without associated data in data-crossword-data';
         }
+    });
+
+    $('.js-print-crossword').each(element => {
+        bean.on(element, 'click', window.print.bind(window));
+        bonzo(element).removeClass('js-print-crossword');
     });
 }
 

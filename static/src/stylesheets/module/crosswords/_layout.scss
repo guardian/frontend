@@ -73,3 +73,9 @@
         padding-left: $gs-gutter / 2;
     }
 }
+
+.crossword__links {
+    position: relative;
+    top: $gs-baseline * -3;
+    font-family: $f-sans-serif-text;
+}

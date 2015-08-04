@@ -22,6 +22,15 @@
                         </div>
 
                         <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.crossword.name)</h1>
+
+                        <div class="crossword__links">
+                            <a class="crossword__link js-print-crossword">Print</a>
+
+                            @crosswordPage.crossword.pdf.map { pdf =>
+                                | <a class="crossword__link" href="@pdf" target="_blank" download>PDF version</a>
+                            }
+                        </div>
+
                         <p class="content__dateline">
                         @crosswordPage.crossword.creator.map { creator =>
                            Set by: <a class="tone-colour" data-link-name="crossword-creator" href="@creator.webUrl">@creator.name</a>
@@ -76,10 +85,6 @@
                                             @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
                                         </div>
                                     </div>
-
-                                    @crosswordPage.crossword.pdf.map { pdf =>
-                                        <a class="button button--small button--secondary crossword__pdf-button" href="@pdf" target="_blank" download>PDF version</a>
-                                    }
                                 </noscript>
                             </div>
                         </div>
