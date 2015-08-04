@@ -192,7 +192,7 @@ define([
             this.renderFaciaItemLinks(signedIn, this.classes.relatedContainer);
         }.bind(this));
 
-        mediator.on('modules:show-more:loaded', function() {
+        mediator.on('modules:show-more:loaded', function () {
             this.renderFaciaItemLinks(signedIn, this.classes.showMoreContainer);
             $(this.classes.showMoreContainer).removeClass('js-show-more');
         }.bind(this))
