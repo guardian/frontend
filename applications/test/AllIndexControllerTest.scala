@@ -5,7 +5,7 @@ import org.joda.time.DateTimeZone
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 
-@DoNotDiscover class AllIndexControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite with Logging {
+@DoNotDiscover class AllIndexControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   private val PermanentRedirect = 301
   private val TemporaryRedirect = 302
