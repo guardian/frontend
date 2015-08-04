@@ -211,12 +211,10 @@ define([
                 .valueOf();
         },
         setPublisherProvidedId = function () {
-            if (config.switches.dfpUserId) {
-                var user = id.getUserFromCookie();
-                if (user) {
-                    var hashedId = sha1.hash(user.id);
-                    googletag.pubads().setPublisherProvidedId(hashedId);
-                }
+            var user = id.getUserFromCookie();
+            if (user) {
+                var hashedId = sha1.hash(user.id);
+                googletag.pubads().setPublisherProvidedId(hashedId);
             }
         },
         displayAds = function () {
