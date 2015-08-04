@@ -102,7 +102,12 @@ object Frontend extends Build with Prototypes {
       paClient,
       dfpAxis,
       anormModule,
-      jdbc
+      jdbc,
+      bootstrap,
+      jquery,
+      jqueryui,
+      lodash,
+      react
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate"
@@ -152,13 +157,16 @@ object Frontend extends Build with Prototypes {
       commercial,
       onward
     ).settings(
-      RoutesKeys.routesImport += "bindables._"
+      RoutesKeys.routesImport += "bindables._",
+      javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
     )
 
   val faciaEndToEnd = application("facia-end-to-end")
-    .dependsOn(commonWithTests)
-    .dependsOn(facia, faciaTool, faciaPress)
-    .aggregate(common, facia, faciaTool, faciaPress)
+    .dependsOn(faciaTool, facia, faciaPress)
+    .aggregate(faciaTool, facia, faciaPress)
+    .settings(
+      javaOptions in Runtime += "-Dconfig.file=facia-end-to-end/conf/facia-end-to-end.application.conf"
+    )
 
   // this app has a very limited set.
   // it is designed to get all other services (e.g. onwards) from PROD

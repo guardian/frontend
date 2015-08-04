@@ -66,12 +66,13 @@ module.exports = function(grunt, options) {
                 dest: options.staticTargetDir + 'flash'
             }]
         },
-        headCss: {
+        inlineCss: {
             files: [{
                 expand: true,
                 cwd: options.staticTargetDir + 'stylesheets',
-                src: ['**/head*.css'],
-                dest: 'common/conf/assets'
+                src: ['**/head*.css', 'inline/**/*.css'],
+                flatten: true,
+                dest: 'common/conf/assets/inline-stylesheets'
             }]
         },
         headJs: {

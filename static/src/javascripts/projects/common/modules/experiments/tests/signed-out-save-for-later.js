@@ -21,8 +21,8 @@ define([
 ) {
 
     return function () {
-        this.id = 'SignedOutSaveForLater';
-        this.start = '2015-07-21';
+        this.id = 'SignedOutSaveForLaterAug';
+        this.start = '2015-08-02';
         this.expiry = '2015-08-31';
         this.author = 'Nathaniel Bennett';
         this.description = 'Allow signed out users to save articles via signin';
@@ -35,7 +35,7 @@ define([
         this.showForSensitive = false;
 
         this.canRun = function () {
-            return !Id.isUserLoggedIn();
+            return true;
         };
 
         this.variants = [
@@ -46,7 +46,7 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    if (config.switches.saveForLater) {
+                    if (config.switches.saveForLater && !Id.isUserLoggedIn()) {
                         var saveForLater = new SaveForLater();
                         saveForLater.init(true);
                     }

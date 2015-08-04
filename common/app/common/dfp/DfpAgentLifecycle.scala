@@ -27,6 +27,7 @@ trait DfpAgentLifecycle extends GlobalSettings {
 }
 
 trait FaciaDfpAgentLifecycle extends DfpAgentLifecycle {
+
   override def refreshDfpAgent(): Unit = {
     DfpAgent.refresh()
     DfpAgent.refreshFaciaSpecificData()

@@ -5,7 +5,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/robust',
-    'common/modules/article/truncate',
+    'common/modules/article/truncate-liveblog',
     'common/modules/article/twitter',
     'common/modules/open/cta',
     'common/modules/ui/last-modified',

@@ -129,7 +129,7 @@ object TrailsToRss extends implicits.Collections {
     val faciaContentList: List[FaciaContent] =
       pressedPage.collections
         .filterNot(_.config.excludeFromRss)
-        .flatMap(_.all)
+        .flatMap(_.curatedPlusBackfillDeduplicated)
         .filter{
           case _: LinkSnap => false
           case _ => true}

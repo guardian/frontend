@@ -82,10 +82,11 @@ describe('Sparklines', function () {
         expect(onReject.called).toBe(false);
         front._resolveCollection('empty');
 
+        var resolvedObject;
         whenComplete(this.mockHistogram, () => {
             expect(onResolve.called).toBe(true);
             expect(onReject.called).toBe(false);
-            var resolvedObject = onResolve.args[0][0];
+            resolvedObject = onResolve.args[0][0];
             expect(resolvedObject['/article/one/web/url'].series[0].data[0].count = 50);
             expect(resolvedObject['/article/two/web/url'].series[0].data[0].count = 5000);
             expectSparklinesOn(['_article_one_web_url', '_article_two_web_url']);
@@ -112,7 +113,7 @@ describe('Sparklines', function () {
             whenComplete(this.mockHistogram, () => {
                 expect(onResolve.called).toBe(true);
                 expect(onReject.called).toBe(false);
-                var resolvedObject = onResolve.args[0][0];
+                resolvedObject = onResolve.args[0][0];
                 expect(resolvedObject['/article/one/web/url'].series[0].data[0].count = 100);
                 expect(resolvedObject['/article/one/web/url'].series[0].data[2].count = 2000);
                 expectSparklinesOn(['_article_one_web_url', '_fancy-url']);
@@ -295,8 +296,7 @@ describe('Sparklines', function () {
             }, 10); });
             this.mockHistogram.on('complete', afterInterval);
 
-            tick(3000);
-            tick(100);
+            tick(3000).then(() => tick(100));
         }, 10); });
         this.mockHistogram.on('complete', continueTest);
 

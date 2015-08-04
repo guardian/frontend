@@ -117,6 +117,12 @@
     @include mq(leftCol, wide) {
         padding-right: 6px;
     }
+
+    .meta__extras--crossword & {
+        @include mq(tablet) {
+            float: right;
+        }
+    }
     &:last-child {
         padding-right: 0;
     }
@@ -166,6 +172,12 @@
             left: 0;
             top: 0;
             border-top: 1px dotted colour(neutral-5);
+        }
+    }
+
+    .meta__extras--crossword & {
+        @include mq(tablet) {
+            float: left;
         }
     }
 }

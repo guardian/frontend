@@ -1,6 +1,6 @@
 package model
 
-import common.dfp.DfpAgent
+import common.dfp.{AdSize, AdSlot, DfpAgent}
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
@@ -46,6 +46,7 @@ trait MetaData extends Tags {
   def adUnitSuffix = section
 
   def hasPageSkin(edition: Edition) = false
+  def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = Nil
   def hasAdInBelowTopNavSlot(edition: Edition) = false
   def omitMPUsFromContainers(edition: Edition) = false
   lazy val isInappropriateForSponsorship: Boolean = false
@@ -74,7 +75,10 @@ trait MetaData extends Tags {
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId,
     "og:type"      -> "website",
-    "og:url"       -> webUrl
+    "og:url"       -> webUrl,
+    "al:ios:url" -> s"gnmguardian://${iosId("applinks")}",
+    "al:ios:app_store_id" -> "409128287",
+    "al:ios:app_name" -> "The Guardian"
   )
 
   def openGraphImages: Seq[String] = Seq()
@@ -83,6 +87,10 @@ trait MetaData extends Tags {
     "twitter:site" -> "@guardian",
     "twitter:app:name:iphone" -> "The Guardian",
     "twitter:app:id:iphone" -> "409128287",
+    "twitter:app:url:iphone" -> s"gnmguardian://${iosId("twitter")}",
+    "twitter:app:name:ipad" -> "The Guardian",
+    "twitter:app:id:ipad" -> "409128287",
+    "twitter:app:url:ipad" -> s"gnmguardian://${iosId("twitter")}",
     "twitter:app:name:googleplay" -> "The Guardian",
     "twitter:app:id:googleplay" -> "com.guardian"
   )
@@ -91,6 +99,11 @@ trait MetaData extends Tags {
     Guardian(),
     WebPage(webUrl, PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
   )
+
+  def iosId(referrer: String): String = s"$id?contenttype=$iosType&source=$referrer"
+
+  // this could be article/front/list, it's a hint to the ios app to start the right engine
+  def iosType: String = "article"
 
   def cacheSeconds = 60
 
