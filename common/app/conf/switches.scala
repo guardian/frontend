@@ -806,6 +806,15 @@ object Switches {
     exposeClientSide = true
   )
 
+  val IdentityCookieRefresh = Switch(
+    "Identity",
+    "id-cookie-refresh",
+    "If switched on, users cookies will be refreshed." ,
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val EnhanceTweetsSwitch = Switch(
     "Feature",
     "enhance-tweets",
@@ -941,15 +950,6 @@ object Switches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
-  )
-
-  val ABIdentityCookieRefresh = Switch(
-    "A/B Tests",
-    "ab-cookie-refresh",
-    "It this switch is turned on, users cookies will be refreshed. Turn off if the identity API barfs" ,
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
   )
 
   val ABMembershipMessageVariants = Switch(
