@@ -177,6 +177,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val JspmTestUniqueVisitorsBeacon = Switch(
+    "Performance",
+    "jspm-test-unique-visitors-beacon",
+    "Send beacon for unique visitors in JspmTest and JspmControl server-side test variants",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 18),
+    exposeClientSide = true
+  )
+
   val RelatedContentSwitch = Switch(
     "Performance",
     "related-content",
