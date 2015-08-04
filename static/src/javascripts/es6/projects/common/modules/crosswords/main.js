@@ -480,6 +480,7 @@ class Crossword extends React.Component {
                 </div>
 
                 <Controls
+                    pdf={this.props.data.pdf}
                     hasSolutions={this.hasSolutions()}
                     clueInFocus={focussed}
                     onCheat={this.onCheat}

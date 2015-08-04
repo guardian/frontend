@@ -59,23 +59,27 @@
                              data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
 
                             <div class="crossword__container crossword__container--@crosswordPage.crossword.crosswordType.toString.toLowerCase()">
-
                                 @* The following is a fallback for when JavaScript is not enabled *@
                                 <div class="crossword__grid-wrapper">
                                     <noscript>@svg</noscript>
                                 </div>
+
                                 <noscript>
-                                <div class="crossword__clues">
-                                    <div class="crossword__clues--across">
-                                        <h3 class="crossword__clues-header">Across</h3>
-                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
+                                    <div class="crossword__clues">
+                                        <div class="crossword__clues--across">
+                                            <h3 class="crossword__clues-header">Across</h3>
+                                            @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
+                                        </div>
+
+                                        <div class="crossword__clues--down">
+                                            <h3 class="crossword__clues-header">Down</h3>
+                                            @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
+                                        </div>
                                     </div>
 
-                                    <div class="crossword__clues--down">
-                                        <h3 class="crossword__clues-header">Down</h3>
-                                        @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
-                                    </div>
-                                </div>
+                                    @crosswordPage.crossword.pdf.map { pdf =>
+                                        <a class="button button--small button--secondary crossword__pdf-button" href="@pdf" target="_blank" download>PDF version</a>
+                                    }
                                 </noscript>
                             </div>
                         </div>

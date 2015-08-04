@@ -53,6 +53,10 @@
         display: table;
         table-layout: fixed;
         box-sizing: border-box;
+
+        noscript & {
+            width: 85%;
+        }
     }
 }
 

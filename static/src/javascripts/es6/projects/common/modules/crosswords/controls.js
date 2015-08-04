@@ -5,7 +5,6 @@ const buttonCurrentClassName = 'button--crossword--current';
 const buttonGenericClassName = 'button--secondary';
 
 export default class Controls extends React.Component {
-
     render () {
         const hasSolutions = this.props.hasSolutions;
         const hasFocus = this.props.clueInFocus;
@@ -13,6 +12,14 @@ export default class Controls extends React.Component {
             clue: [],
             grid: []
         };
+
+        const pdfButton = this.props.pdf && (
+            <a className={`${buttonClassName} ${buttonGenericClassName}`}
+                href={this.props.pdf}
+                key='pdf' download target="_blank">
+                PDF version
+            </a>
+        );
 
         // GRID CONTROLS
         controls.grid.unshift(
@@ -71,6 +78,7 @@ export default class Controls extends React.Component {
             <div className='crossword__controls'>
                 <div className='crossword__controls__clue'>{controls.clue}</div>
                 <div className='crossword__controls__grid'>{controls.grid}</div>
+                {pdfButton}
             </div>
         );
     }
