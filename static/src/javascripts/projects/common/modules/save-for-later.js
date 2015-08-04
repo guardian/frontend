@@ -39,6 +39,7 @@ define([
             saveThisArticleButton: '.js-save-for-later__button',
             onwardContainer: '.js-onward',
             relatedContainer: '.js-related',
+            showMoreContainer: '.js-show-more',
             itemMeta: '.js-item__meta',
             itemSaveLink: '.js-save-for-later-link',
             itemSaveLinkHeading: '.save-for-later-link__heading',
@@ -190,6 +191,12 @@ define([
         mediator.once('modules:related:loaded', function () {
             this.renderFaciaItemLinks(signedIn, this.classes.relatedContainer);
         }.bind(this));
+
+        mediator.on('modules:show-more:loaded', function() {
+            this.renderFaciaItemLinks(signedIn, this.classes.showMoreContainer);
+            $(this.classes.showMoreContainer).removeClass('js-show-more');
+
+        }.bind(this))
     };
 
     // Configure the save for later links on a front or in a container
