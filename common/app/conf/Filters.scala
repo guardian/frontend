@@ -59,6 +59,7 @@ object SurrogateKeyFilter extends Filter with ExecutionContexts {
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
     val surrogateKey = DigestUtils.md5Hex(request.path)
     nextFilter(request).map{ result =>
+      // Surrogate keys are space delimited, so string them together if there are already some
       val key = result.header.headers.get(SurrogateKey).map(key => s"$key $surrogateKey").getOrElse(surrogateKey)
       result.withHeaders(SurrogateKey -> key)
     }
