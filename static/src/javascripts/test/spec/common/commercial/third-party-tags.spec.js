@@ -1,11 +1,9 @@
 import Injector from 'helpers/injector';
+/*eslint-disable no-unused-vars*/
+import jasmineSinon from 'jasmine-sinon';
+/*eslint-enable no-unused-vars*/
 
 describe('Tags Container', function () {
-
-    function extractParam(img, paramName) {
-        var paramValue = new RegExp(paramName + '=([^&]*)').exec(img.src);
-        return paramValue && paramValue[1];
-    }
 
     var injector = new Injector(),
         tagsContainer, config;
@@ -18,9 +16,10 @@ describe('Tags Container', function () {
                 contentType: 'Article',
                 section: 'article',
                 edition: 'uk'
-            };    
+            };
+            config.switches = {};
             done();
-        });        
+        });
     });
 
     it('should exist', function () {

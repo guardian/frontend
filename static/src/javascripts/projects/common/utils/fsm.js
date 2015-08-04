@@ -42,7 +42,7 @@ define([], function () {
     }
 
     FiniteStateMachine.prototype.log = function () {
-        if (this.debug && window.console) {
+        if (this.debug && window.console && window.console.log) {
             window.console.log.apply(window.console, arguments);
         }
     };

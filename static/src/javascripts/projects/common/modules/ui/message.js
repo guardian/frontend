@@ -12,13 +12,13 @@ define([
     _
 ) {
 
-   /**
-    * Message provides a common means of flash messaging a user in the UI.
-    *
-    * @constructor
-    * @param {String} id Identifier of the message
-    * @param {Object=} options
-    */
+    /**
+     * Message provides a common means of flash messaging a user in the UI.
+     *
+     * @constructor
+     * @param {String} id Identifier of the message
+     * @param {Object=} options
+     */
     var Message = function (id, options) {
         var opts = options || {};
         this.id = id;

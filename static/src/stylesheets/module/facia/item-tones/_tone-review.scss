@@ -19,6 +19,10 @@
         }
     }
 
+    .inline-quote {
+        fill: colour(review-accent);
+    }
+
     .fc-item__container:before,
     .rich-link__container:before {
         background-color: colour(review-accent);
@@ -26,8 +30,13 @@
 
     .fc-item__kicker,
     .fc-item__byline,
-    .rich-link__read-more-text {
+    .rich-link__read-more-text,
+    .fc-save-for-later--is-saved {
         color: colour(review-accent);
+    }
+
+    .fc-save-for-later {
+        border-color: mix($c-headline, colour(review-background), 20%);
     }
 
     .fc-item__kicker--dreamsnap {
@@ -49,6 +58,10 @@
 
     .fc-item__meta {
         color: colour(neutral-4);
+    }
+
+    .fc-save-for-later--is-saved .inline-tone-fill {
+        fill: colour(review-accent);
     }
 }
 

@@ -1,13 +1,17 @@
 import Injector from 'helpers/injector';
-import sinonjs from 'sinonjs';
+import sinon from 'sinonjs';
+/*eslint-disable no-unused-vars*/
 import jasmineSinon from 'jasmine-sinon';
+/*eslint-enable no-unused-vars*/
 
 describe('Get user data', function () {
 
     var reqwestStub = {
-          __useDefault: true,
-          default: sinon.stub()
-        },
+        // jscs:disable disallowDanglingUnderscores
+        __useDefault: true,
+        // jscs:enable disallowDanglingUnderscores
+        default: sinon.stub()
+    },
         reqwestReturn = {
             then: sinon.stub()
         };
@@ -25,27 +29,27 @@ describe('Get user data', function () {
                        'common/utils/cookies',
                        'common/utils/storage'], function () {
 
-            Id = arguments[0];
-            config = arguments[1];
-            cookies = arguments[2];
-            storage = arguments[3];
+                           Id = arguments[0];
+                           config = arguments[1];
+                           cookies = arguments[2];
+                           storage = arguments[3];
 
-            config.page = {
+                           config.page = {
                 idApiUrl: 'https://idapi.theguardian.com',
                 idUrl:    'https://profile.theguardian.com'
             };
-            getCookieStub = sinon.stub();
-            getCookieStub.withArgs('GU_U').returns(
-                'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJqYW1lc2dvcnJpZSIsIjUzNCIsMTM4Mjk1MzAzMT' +
-                'U5MSwxXQ.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
-            );
-            cookies.get = getCookieStub;
-            getStorageStub = sinon.stub();
-            storage.local.get = getStorageStub;
-            reqwestStub.default.reset();
+                           getCookieStub = sinon.stub();
+                           getCookieStub.withArgs('GU_U').returns(
+                               'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJqYW1lc2dvcnJpZSIsIjUzNCIsMTM4Mjk1MzAzMT' +
+                               'U5MSwxXQ.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
+                           );
+                           cookies.get = getCookieStub;
+                           getStorageStub = sinon.stub();
+                           storage.local.get = getStorageStub;
+                           reqwestStub.default.reset();
 
-            done();
-        });
+                           done();
+                       });
     });
 
     afterEach(function () {
@@ -182,6 +186,18 @@ describe('Get user data', function () {
         getCookieStub.withArgs('GU_SO').returns(timeStampInSeconds.toString());
 
         expect(Id.shouldAutoSigninInUser()).toBe(false);
+    });
+
+    it('should return true for a user who has never refreshed cookies', function () {
+        expect(Id.shouldRefreshCookie(null)).toBe(true);
+    });
+
+    it('should return false for a user who has not refreshed within 30 days', function () {
+        expect(Id.shouldRefreshCookie(new Date().getTime() - 1000 * 86400 * 31, new Date().getTime())).toBe(true);
+    });
+
+    it('should return false for a user who has refreshed within 30 days', function () {
+        expect(Id.shouldRefreshCookie(new Date().getTime()  - 1000 * 86400 * 5, new Date().getTime())).toBe(false);
     });
 
 });

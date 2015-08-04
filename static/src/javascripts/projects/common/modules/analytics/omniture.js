@@ -6,6 +6,7 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/cookies',
+    'common/utils/date-formats',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/pad',
@@ -21,6 +22,7 @@ define([
     _,
     config,
     cookies,
+    dateFormats,
     detect,
     mediator,
     pad,
@@ -53,6 +55,12 @@ define([
                 beacon.fire('/count/pva.gif');
             }
         }.bind(this));
+
+        mediator.on('module:analytics:omniture:pageview:sent', function () {
+            if (config.switches.noBounceIndicator) {
+                storage.session.remove('gu-bounce-test');
+            }
+        });
     };
 
     Omniture.prototype.logView = function () {
@@ -78,7 +86,7 @@ define([
         var storeObj,
             delay;
 
-        if (!spec.tag) {
+        if (!spec.validTarget) {
             return;
         }
 
@@ -87,22 +95,22 @@ define([
             // so do session storage rather than an omniture track.
             storeObj = {
                 pageName: this.s.pageName,
-                tag: spec.tag,
+                tag: spec.tag || 'untracked',
                 time: new Date().getTime()
             };
-            try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {}
+            try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch (e) {/**/}
             storage.session.set(NG_STORAGE_KEY, storeObj);
         } else {
             // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
             delay = spec.samePage ? true : spec.target;
-            this.trackLink(delay, spec.tag);
+            this.trackLink(delay, spec.tag, { customEventProperties: spec.customEventProperties });
         }
     };
 
     Omniture.prototype.populateEventProperties = function (linkName) {
 
         this.s.linkTrackVars = 'channel,prop2,prop3,prop4,prop8,prop9,prop10,prop13,prop25,prop31,prop37,prop47,' +
-                               'prop51,prop61,prop64,prop65,eVar7,eVar37,eVar38,eVar39,eVar50,events';
+                               'prop51,prop61,prop64,prop65,prop74,eVar7,eVar37,eVar38,eVar39,eVar50,events';
         this.s.linkTrackEvents = 'event37';
         this.s.events = 'event37';
         this.s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + linkName : linkName;
@@ -125,9 +133,14 @@ define([
         this.trackLink(true, linkName);
     };
 
-    Omniture.prototype.trackLink = function (linkObject, linkName) {
+    Omniture.prototype.trackLink = function (linkObject, linkName, options) {
+        options = options || {};
         this.populateEventProperties(linkName);
+        _.assign(this.s, options.customEventProperties);
         this.s.tl(linkObject, 'o', linkName);
+        _.forEach(options.customEventProperties, function (value, key) {
+            delete this.s[key];
+        });
     };
 
     Omniture.prototype.populatePageProperties = function () {
@@ -140,7 +153,8 @@ define([
             mvt      = ab.makeOmnitureTag(document),
             // Tag the identity of this user, which is composed of
             // the omniture visitor id, the ophan browser id, and the frontend-only mvt id.
-            mvtId    = mvtCookie.getMvtFullId();
+            mvtId    = mvtCookie.getMvtFullId(),
+            webPublicationDate = config.page.webPublicationDate;
 
         // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
         this.s.cookieDomainPeriods = '2';
@@ -173,7 +187,7 @@ define([
         this.s.channel   = this.getChannel();
         this.s.prop4     = config.page.keywords || '';
         this.s.prop6     = config.page.author || '';
-        this.s.prop7     = config.page.webPublicationDate || '';
+        this.s.prop7     = webPublicationDate ? dateFormats.utcDateString(webPublicationDate) : '';
         this.s.prop8     = config.page.pageCode || '';
         this.s.prop9     = config.page.contentType || '';
         this.s.prop10    = config.page.tones || '';
@@ -197,15 +211,19 @@ define([
 
         this.s.prop60    = detect.isFireFoxOSApp() ? 'firefoxosapp' : null;
 
-        this.s.prop19     = platform;
+        this.s.prop19    = platform;
 
         this.s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
         this.s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
 
+        this.s.prop40    = detect.adblockInUse;
+
         this.s.prop47    = config.page.edition || '';
 
-        this.s.prop51  = mvt;
+        this.s.prop51  = config.page.allowUserGeneratedContent ? 'witness-contribution-cta-shown' : null;
+
         this.s.eVar51  = mvt;
+
         this.s.list1  = mvt; // allows us to 'unstack' the AB test names (allows longer names)
 
         // List of components on the page
@@ -214,7 +232,7 @@ define([
             .toString();
         this.s.list3 = _.map(history.getPopularFiltered(), function (tagTuple) { return tagTuple[1]; }).join(',');
 
-        if (this.s.prop51) {
+        if (this.s.eVar51) {
             this.s.events = this.s.apl(this.s.events, 'event58', ',');
         }
 
@@ -248,10 +266,14 @@ define([
         this.s.prop63    = detect.getPageSpeed();
 
         this.s.prop65    = config.page.headline || '';
+        this.s.eVar70    = config.page.headline || '';
+
+        // Set Page View Event
+        this.s.events    = this.s.apl(this.s.events, 'event4', ',', 2);
 
         this.s.prop67    = 'nextgen-served';
 
-        if (config.page.webPublicationDate) {
+        if (webPublicationDate) {
             this.s.prop30 = 'content';
         } else {
             this.s.prop30 = 'non-content';
@@ -290,11 +312,18 @@ define([
             storage.session.remove(NG_STORAGE_KEY);
         }
 
+        this.s.prop73 = detect.isFacebookApp() ? 'facebook app' : detect.isTwitterApp() ? 'twitter app' : null;
+
         this.s.prop75 = config.page.wordCount || 0;
         this.s.eVar75 = config.page.wordCount || 0;
 
         if (this.isEmbed) {
             this.s.eVar11 = this.s.prop11 = 'Embedded';
+
+            // Get iframe's parent url: http://www.nczonline.net/blog/2013/04/16/getting-the-url-of-an-iframes-parent
+            if (!!window.parent && window.parent !== window) {
+                this.s.referrer = document.referrer;
+            }
         }
     };
 

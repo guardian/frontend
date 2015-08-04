@@ -1,6 +1,6 @@
 package performance
 
-import common.{InternalContentCode, Logging, ExecutionContexts}
+import common.{InternalCode, Logging, ExecutionContexts}
 import implicits.Dates
 import shade.memcached.{Configuration => MemcachedConf, Codec, Memcached}
 import scala.concurrent.Future
@@ -20,9 +20,9 @@ object MemcacheTypeclass {
   object MemcacheKey {
     implicit object ContentMemcacheKey extends MemcacheKey[com.gu.contentapi.client.model.Content] {
       def key(c: com.gu.contentapi.client.model.Content): Option[String] =
-        c.fields.flatMap(_.get("internalContentCode"))
+        c.fields.flatMap(_.get("internalPageCode"))
           .filter(_.nonEmpty)
-          .map(InternalContentCode.toFormattedInternalContentCode)}}
+          .map(InternalCode.toFormattedInternalPageCode)}}
 }
 
 object MemcachedFallback extends ExecutionContexts with Dates with Logging {

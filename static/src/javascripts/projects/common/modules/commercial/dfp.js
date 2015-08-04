@@ -13,11 +13,13 @@ define([
     'common/utils/mediator',
     'common/utils/url',
     'common/utils/user-timing',
+    'common/utils/sha1',
     'common/modules/commercial/ads/sticky-mpu',
     'common/modules/commercial/build-page-targeting',
     'common/modules/onward/geo-most-popular',
     'common/modules/experiments/ab',
-    'common/modules/analytics/beacon'
+    'common/modules/analytics/beacon',
+    'common/modules/identity/api'
 ], function (
     bean,
     bonzo,
@@ -32,11 +34,13 @@ define([
     mediator,
     urlUtils,
     userTiming,
+    sha1,
     StickyMpu,
     buildPageTargeting,
     geoMostPopular,
     ab,
-    beacon
+    beacon,
+    id
 ) {
     /**
      * Right, so an explanation as to how this works...
@@ -78,9 +82,10 @@ define([
                 new StickyMpu($adSlot).create();
             },
             '300,250': function (event, $adSlot) {
-                if (isMainTest() && $adSlot.hasClass('ad-slot--right')) {
+                if (config.switches.viewability && $adSlot.hasClass('ad-slot--right')) {
                     if ($adSlot.attr('data-mobile').indexOf('300,251') > -1) {
-                        new StickyMpu($adSlot).create();
+                        // Hardcoded for sticky nav test. It will need some on time checking if this will go to PROD
+                        new StickyMpu($adSlot, {top: 58}).create();
                     }
                 }
             },
@@ -89,8 +94,9 @@ define([
                     $adSlot.addClass('u-h');
                     var $parent = $adSlot.parent();
                     // if in a slice, add the 'no mpu' class
-                    $parent.hasClass('js-fc-slice-mpu-candidate') &&
+                    if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
                         $parent.addClass('fc-slice__item--no-mpu');
+                    }
                 }
             },
             '300,1050': function () {
@@ -103,12 +109,6 @@ define([
             }
         },
 
-        isMainTest = function () {
-            var MtMainTest = ab.getParticipations().MtMain;
-
-            return ab.testCanBeRun('MtMain') && MtMainTest && MtMainTest.variant === 'A';
-        },
-
         recordFirstAdRendered = _.once(function () {
             beacon.beaconCounts('ad-render');
         }),
@@ -117,18 +117,70 @@ define([
          * Initial commands
          */
         setListeners = function () {
+            var start = detect.getTimeOfDomComplete();
+
+
             googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(function (event) {
+                require(['ophan/ng'], function (ophan) {
+                    var lineItemIdOrEmpty = function (event) {
+                        if (event.isEmpty) {
+                            return '__empty__';
+                        } else {
+                            return event.lineItemId;
+                        }
+                    };
+
+                    ophan.record({
+                        ads: [{
+                            slot: event.slot.getSlotId().getDomId(),
+                            campaignId: lineItemIdOrEmpty(event),
+                            creativeId: event.creativeId,
+                            timeToRenderEnded: new Date().getTime() - start,
+                            adServer: 'DFP'
+                        }]
+                    });
+                });
+
+
                 rendered = true;
                 recordFirstAdRendered();
                 mediator.emit('modules:commercial:dfp:rendered', event);
                 parseAd(event);
             }));
         },
+
         setPageTargeting = function () {
-            _.forOwn(buildPageTargeting(), function (value, key) {
+            if (config.switches.ophan && config.switches.ophanViewId) {
+                require(['ophan/ng'],
+                    function (ophan) {
+                        var viewId = (ophan || {}).viewId;
+                        setTarget({viewId: viewId});
+                    },
+                    function (err) {
+                        raven.captureException(new Error('Error retrieving ophan (' + err + ')'), {
+                            tags: {
+                                feature: 'DFP'
+                            }
+                        });
+
+                        setTarget();
+                    }
+                );
+            } else {
+                setTarget();
+            }
+        },
+
+        setTarget = function (opts) {
+            _.forOwn(buildPageTargeting(opts), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
         },
+
+        isMobileBannerTest = function () {
+            return config.switches.mobileTopBannerRemove && $('.top-banner-ad-container--ab-mobile').length > 0 && detect.getBreakpoint() === 'mobile';
+        },
+
         /**
          * Loop through each slot detected on the page and define it based on the data
          * attributes on the element.
@@ -140,7 +192,7 @@ define([
                 })
                 // filter out (and remove) hidden ads
                 .filter(function ($adSlot) {
-                    if ($css($adSlot, 'display') === 'none') {
+                    if ($css($adSlot, 'display') === 'none' || (isMobileBannerTest() && $adSlot.hasClass('ad-slot--top'))) {
                         fastdom.write(function () {
                             $adSlot.remove();
                         });
@@ -158,9 +210,17 @@ define([
                 .zipObject()
                 .valueOf();
         },
+        setPublisherProvidedId = function () {
+            var user = id.getUserFromCookie();
+            if (user) {
+                var hashedId = sha1.hash(user.id);
+                googletag.pubads().setPublisherProvidedId(hashedId);
+            }
+        },
         displayAds = function () {
             googletag.pubads().enableSingleRequest();
             googletag.pubads().collapseEmptyDivs();
+            setPublisherProvidedId();
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad
             // slot)
@@ -169,6 +229,7 @@ define([
         },
         displayLazyAds = function () {
             googletag.pubads().collapseEmptyDivs();
+            setPublisherProvidedId();
             googletag.enableServices();
             mediator.on('window:scroll', _.throttle(lazyLoad, 10));
             lazyLoad();
@@ -183,27 +244,10 @@ define([
             mediator.on('window:resize', windowResize);
         },
 
-        lzAdsTestVariants = {
-            'A': 1 / 4,
-            'B': 1 / 2,
-            'C': 3 / 4,
-            'D': 1
-        },
-
-        isLzAdsTest = function () {
-            var test = ab.getParticipations().MtLzAdsDepth;
-            return test && ab.testCanBeRun('MtLzAdsDepth') && _.contains(_.keys(lzAdsTestVariants), test.variant);
-        },
-
-        isLzAdsSwitchOn = function () {
-            return config.switches.lzAds;
-        },
-
         /**
          * Public functions
          */
         init = function (options) {
-
             var opts = _.defaults(options || {}, {
                 resizeTimeout: 2000
             });
@@ -214,7 +258,8 @@ define([
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
                 // load the library asynchronously
-                require(['js!googletag']);
+                // .js must be added: https://github.com/systemjs/systemjs/issues/528
+                require(['js!googletag.js']);
             }
 
             window.googletag.cmd.push = raven.wrap({ deep: true }, window.googletag.cmd.push);
@@ -223,8 +268,13 @@ define([
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
 
-            // We want to run lazy load if user is in the depth test, main test user group or if there is a switch on
-            (isLzAdsTest() || isMainTest() || isLzAdsSwitchOn()) ? window.googletag.cmd.push(displayLazyAds) : window.googletag.cmd.push(displayAds);
+            // We want to run lazy load if user is in the main test or if there is a switch on
+            // We do not want lazy loading on pageskins because it messes up the roadblock
+            if ((config.switches.viewability || config.switches.lzAds) && !(config.page.hasPageSkin)) {
+                window.googletag.cmd.push(displayLazyAds);
+            } else {
+                window.googletag.cmd.push(displayAds);
+            }
             // anything we want to happen after displaying ads
             window.googletag.cmd.push(postDisplay);
 
@@ -237,14 +287,14 @@ define([
                 fastdom.read(function () {
                     var scrollTop    = bonzo(document.body).scrollTop(),
                         scrollBottom = scrollTop + bonzo.viewport().height,
-
-                        // For depth test we want depth based on variant but for main test we want default depth
-                        // TODO: this will be removed after tests will finish
-                        depth        = (isLzAdsTest()) ? lzAdsTestVariants[ab.getParticipations().MtLzAdsDepth.variant] : 0.5;
+                        depth = 0.5;
 
                     _(slots).keys().forEach(function (slot) {
                         // if the position of the ad is above the viewport - offset (half screen size)
-                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth) {
+                        // Pageskin and Outbrain needs to be loaded at the page load - TODO: unit test
+                        if (scrollBottom > document.getElementById(slot).getBoundingClientRect().top + scrollTop - bonzo.viewport().height * depth
+                            || slot === 'dfp-ad--pageskin-inread'
+                            || slot === 'dfp-ad--merchandising-high') {
                             googletag.display(slot);
 
                             slots = _(slots).omit(slot).value();
@@ -355,7 +405,9 @@ define([
                 addLabel($slot);
                 size = event.size.join(',');
                 // is there a callback for this size
-                callbacks[size] && callbacks[size](event, $slot);
+                if (callbacks[size]) {
+                    callbacks[size](event, $slot);
+                }
 
                 if ($slot.hasClass('ad-slot--container-inline') && $slot.hasClass('ad-slot--not-mobile')) {
                     fastdom.write(function () {
@@ -382,6 +434,7 @@ define([
 
             if (_.every(slots, 'isRendered')) {
                 userTiming.mark('All ads are rendered');
+                mediator.emit('modules:commercial:dfp:alladsrendered');
             }
         },
         addLabel = function ($slot) {
@@ -400,7 +453,7 @@ define([
             return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
         },
         breakoutIFrame = function (iFrame, $slot) {
-            /* jshint evil: true */
+            /*eslint-disable no-eval*/
             var shouldRemoveIFrame = false,
                 $iFrame            = bonzo(iFrame),
                 iFrameBody         = iFrame.contentDocument.body,
@@ -468,9 +521,11 @@ define([
                         var updatedIFrame = e.srcElement;
 
                         if (
+                            /*eslint-disable valid-typeof*/
                             updatedIFrame &&
                                 typeof updatedIFrame.readyState !== 'unknown' &&
                                 updatedIFrame.readyState === 'complete'
+                            /*eslint-enable valid-typeof*/
                         ) {
                             breakoutIFrame(updatedIFrame, $slot);
                             bean.off(updatedIFrame, 'readystatechange');

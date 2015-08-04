@@ -3,12 +3,14 @@ define([
     'underscore',
     'utils/global-listeners',
     'utils/mediator'
-],function (
+], function (
     ko,
     _,
     globalListeners,
     mediator
 ) {
+    mediator = mediator.default;
+
     function isNarrow (column) {
         var percentage = parseInt(column.style.width(), 10),
             width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);

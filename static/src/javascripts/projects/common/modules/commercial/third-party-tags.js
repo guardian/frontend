@@ -4,11 +4,9 @@
 define([
     'Promise',
     'common/utils/config',
-    'common/modules/commercial/third-party-tags/amaa',
-    'common/modules/commercial/third-party-tags/audience-science',
+    'common/utils/mediator',
     'common/modules/commercial/third-party-tags/audience-science-gateway',
-    'common/modules/commercial/third-party-tags/criteo',
-    'common/modules/commercial/third-party-tags/effective-measure',
+    'common/modules/commercial/third-party-tags/audience-science-pql',
     'common/modules/commercial/third-party-tags/imr-worldwide',
     'common/modules/commercial/third-party-tags/remarketing',
     'common/modules/commercial/third-party-tags/krux',
@@ -16,11 +14,9 @@ define([
 ], function (
     Promise,
     config,
-    amaa,
-    audienceScience,
+    mediator,
     audienceScienceGateway,
-    criteo,
-    effectiveMeasure,
+    audienceSciencePql,
     imrWorldwide,
     remarketing,
     krux,
@@ -34,24 +30,33 @@ define([
         }
 
         switch (config.page.edition.toLowerCase()) {
-            case 'au':
-                effectiveMeasure.load();
-                amaa.load();
-                break;
-
             case 'uk':
+                audienceSciencePql.load();
                 audienceScienceGateway.load();
                 break;
         }
 
-        audienceScience.load();
-        criteo.load();
-        imrWorldwide.load();
-        remarketing.load();
-        outbrain.load();
-        krux.load();
+        if (config.switches.thirdPartiesLater) {
+            // Load third parties after first ad was rendered
+            mediator.once('modules:commercial:dfp:rendered', function () {
+                loadOther();
+            });
+        } else {
+            loadOther();
+        }
 
         return Promise.resolve(null);
+    }
+
+    function loadOther() {
+        imrWorldwide.load();
+        remarketing.load();
+        if (config.switches.newOutbrain) {
+            outbrain.init();
+        } else {
+            outbrain.load();
+        }
+        krux.load();
     }
 
     return {

@@ -52,3 +52,21 @@
     float: left;
     margin-right: $gs-gutter / 2;
 }
+
+.submeta__share {
+    @include mq(tablet) {
+        float: left;
+        margin-right: $gs-gutter / 2;
+    }
+}
+
+.submeta__save-for-later {
+    // Shown with test
+    display: none;
+    margin-top: $gs-baseline / 2;
+
+    @include mq(tablet) {
+        margin-top: 0;
+        float: left;
+    }
+}

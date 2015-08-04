@@ -1,0 +1,8 @@
+@(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties, description: String)(implicit request: RequestHeader)
+
+@import views.html.fragments.containers.facia_cards.standardHeaderMeta
+
+@standardHeaderMeta(containerDefinition, frontProperties)
+<div class="fc-container__header__description">
+    @Html(description)
+</div>

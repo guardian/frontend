@@ -61,6 +61,12 @@
         fill: colour(neutral-2);
     }
 
+    .inline-camera,
+    .inline-volume-high,
+    .inline-video-icon {
+        fill: colour(media-default);
+    }
+
     .inline-video-icon svg {
         width: 1.2em;
         height: .75em;
@@ -110,8 +116,4 @@
 
 @include mq(desktop) {
     @include guss-columns('.headline-column--desktop', $column-min-width: 300px, $columns-fallback-width: gs-span(8), $columns-fallback-columns: 2);
-
-    .headline-column__item {
-
-    }
 }

@@ -1,8 +1,8 @@
 package slices
 
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import com.gu.facia.api.models.CollectionConfig
 import common.Logging
-import conf.Switches.ElectionSnap
+import model.facia.PressedCollection
 
 object Container extends Logging {
   /** This is THE top level resolver for containers */
@@ -24,17 +24,18 @@ object Container extends Logging {
   })
 
   def fromConfig(collectionConfig: CollectionConfig) =
-    collectionConfig.collectionType.map(resolve).getOrElse(default)
+    resolve(collectionConfig.collectionType)
+
+  def fromPressedCollection(pressedCollection: PressedCollection): Container =
+    resolve(pressedCollection.collectionType)
 
   def showToggle(container: Container) = container match {
     case NavList | NavMediaList => false
     case _ => true
   }
 
-  private def hasElectionSnap:Option[String] = if(ElectionSnap.isSwitchedOn) Some("fc-container--has-election-snap") else None
-
   def customClasses(container: Container) = container match {
-    case Dynamic(DynamicPackage) => List(Some("fc-container--story-package"), hasElectionSnap).flatten.toSet
+    case Dynamic(DynamicPackage) => Set("fc-container--story-package")
     case Fixed(fixedContainer) => fixedContainer.customCssClasses
     case _ => Nil
   }

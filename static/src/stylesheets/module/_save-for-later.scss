@@ -1,0 +1,83 @@
+$sfl-button-height: 30px;
+
+@mixin sfl-button-style($foreground: colour(neutral-2), $background: #ffffff) {
+    .save-for-later__button {
+        color: $foreground;
+
+        .inline-icon {
+            border-color: $foreground;
+        }
+    }
+
+    .save-for-later__button--save,
+    .save-for-later__button--saved:hover {
+        .inline-icon {
+            fill: $foreground;
+            background-color: $background;
+        }
+    }
+
+    .save-for-later__button--saved,
+    .save-for-later__button--save:hover {
+        .inline-icon {
+            fill: $background;
+            background-color: $foreground;
+        }
+    }
+}
+
+@mixin sfl-button-toned($tone, $foreground: colour(news-main-1), $background: #ffffff) {
+    .tonal--tone-#{$tone} {
+        @include sfl-button-style($foreground, $background);
+    }
+}
+
+// size etc
+.save-for-later__button {
+    font-size: get-font-size(textSans, 1);
+    @include button-height($sfl-button-height);
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+
+    .inline-icon {
+        text-align: center;
+        margin: 0;
+        margin-right: .5em;
+        width: $sfl-button-height;
+        height: $sfl-button-height;
+        border-width: 1px;
+        border-style: solid;
+
+        svg {
+            width: 8px;
+        }
+    }
+}
+
+// colours per state
+@include sfl-button-style();
+@include sfl-button-toned(analysis, colour(analysis-accent));
+@include sfl-button-toned(comment, colour(comment-default));
+@include sfl-button-toned(dead, colour(live-default), colour(neutral-7));
+@include sfl-button-toned(editorial, colour(editorial-default));
+@include sfl-button-toned(feature, colour(feature-default));
+@include sfl-button-toned(letters, colour(comment-default));
+@include sfl-button-toned(live, colour(live-default), colour(neutral-8));
+@include sfl-button-toned(media, colour(media-default), colour(media-background));
+@include sfl-button-toned(news);
+@include sfl-button-toned(review, colour(review-background));
+@include sfl-button-toned(special-reports);
+
+// button labels per state
+.save-for-later__label {
+    display: none;
+}
+
+@each $state in (save, saved, remove) {
+    .save-for-later__button--#{$state} {
+        .save-for-later__label--#{$state} {
+            display: inline;
+        }
+    }
+}

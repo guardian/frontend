@@ -1,30 +1,25 @@
-define([
-    'EventEmitter',
-    'underscore'
-], function(
-    EventEmitter,
-    _
-) {
-    var bus = new EventEmitter();
+import EventEmitter from 'EventEmitter';
+import _ from 'underscore';
 
-    bus.scope = function () {
-        return new Scope();
-    };
+var bus = new EventEmitter();
 
-    function Scope () {
-        this.listeners = [];
-    }
+function Scope () {
+    this.listeners = [];
+}
 
-    Scope.prototype.on = function(event, callback) {
-        this.listeners.push([event, callback]);
-        return bus.on(event, callback);
-    };
+Scope.prototype.on = function(event, callback) {
+    this.listeners.push([event, callback]);
+    return bus.on(event, callback);
+};
 
-    Scope.prototype.dispose = function () {
-        _.each(this.listeners, function (pair) {
-            bus.off(pair[0], pair[1]);
-        });
-    };
+Scope.prototype.dispose = function () {
+    _.each(this.listeners, function (pair) {
+        bus.off(pair[0], pair[1]);
+    });
+};
 
-    return bus;
-});
+bus.scope = function () {
+    return new Scope();
+};
+
+export default bus;

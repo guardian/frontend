@@ -1,7 +1,7 @@
-@(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity])
+@(env: String, priority: String, identity: Option[com.gu.pandomainauth.model.User])
 @import views.helpers.environment.urlBase
 
-@admin_main("config", env, Some(priority), isAuthed = true, identity=identity) {
+@admin_main("config", env, Some(priority), identity=identity, model=Option("config")) {
 
 <div style="display: none;" data-bind="
     visible: true,
@@ -105,6 +105,10 @@
                 <input type="text" data-bind="
                     value: meta.href"/>
 
+                <label>Description</label>
+                <input type="text" data-bind="
+                    value: meta.description"/>
+
                 <label>ContentApi <span class="linky" data-bind="
                     click: checkApiQueryStatus,
                     visible: meta.apiQuery()">check</span></label>
@@ -144,6 +148,9 @@
 
                 <label for="showLatestUpdate">Show latest update in header</label>
                 <input id="showLatestUpdate" type="checkbox" data-bind="checked: meta.showLatestUpdate" />
+
+                <label for="showTimestamps">Show timestamps</label>
+                <input id="showTimestamps" type="checkbox" data-bind="checked: meta.showTimestamps" />
 
                 <label for="excludeFromRss">Exclude from RSS</label>
                 <input id="excludeFromRss" type="checkbox" data-bind="checked: meta.excludeFromRss" />
@@ -260,7 +267,9 @@
                             valueAllowUnset: true"></select>
 
                         <div class="tools action-buttons">
-                            <span class="tool" data-bind="click: saveProps">Save metadata</span>
+                            <button class="tool" data-bind="
+                                enable: state.isValidMetadata() !== false,
+                                click: saveProps">Save metadata</button>
                         </div>
                     </div>
                 <!-- /ko -->
@@ -298,10 +307,4 @@
     </script>
 
 </div>
-
-<script>
-    System.import('facia-tool/main').then(function (main) {
-        main.load('config');
-    });
-</script>
 }

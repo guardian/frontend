@@ -1,5 +1,6 @@
 @(content: model.Content)(implicit request: RequestHeader)
 @import views.support.ContentLayout.ContentLayout
+@import conf.Switches.SaveForLaterSwitch
 
 @toneLink = {
     @if(content.isArticle && !content.isLiveBlog) {
@@ -19,18 +20,28 @@
             @fragments.keywordList(content.keywords, tone = content.tagTone)
         </div>
     }
-    <div>
-        @if(content.showBottomSocialButtons) {
-            <hr/>
-            <div class="submeta__share" data-component="share">
+    @if(content.showBottomSocialButtons) {
+        <hr/>
+        @if(SaveForLaterSwitch.isSwitchedOn) {
+            <div class="u-cf">
+                <div data-component="share" class="submeta__share">
+                    @fragments.social(content)
+                </div>
+                <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
+            </div>
+        } else {
+            <div data-component="share" class="submeta__share">
                 @fragments.social(content)
             </div>
         }
-        @if(content.isSyndicatable) {
-            <div class="submeta__syndication">
-                @fragments.syndication(content)
-            </div>
+    } else {
+        @if(SaveForLaterSwitch.isSwitchedOn) {
+            <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
         }
-    </div>
-
+    }
+    @if(content.isSyndicatable) {
+        <div class="submeta__syndication">
+            @fragments.syndication(content)
+        </div>
+    }
 </div>

@@ -40,6 +40,10 @@ $control-size: 36px;
     }
 }
 
+.control__info--supporting {
+    margin-left: $gs-gutter/4;
+}
+
 
 /* Control icon
    ========================================================================== */
@@ -64,17 +68,20 @@ $control-size: 36px;
     }
 }
 
-/**
- *  Slim modification
- *
- *  Used for slim header ^l_header
- */
-.is-slim {
-    .control__info {
+.control__icon-wrapper--text {
+    line-height: $control-size;
+    border-color: transparent;
+    @include circular;
+
+    @include mq(mobile) {
         display: none;
     }
 
-    .control__icon-wrapper {
-        display: block;
+    @include mq(tablet) {
+        display: inline-block;
+    }
+
+    &:hover {
+        color: #ffffff;
     }
 }

@@ -61,7 +61,7 @@ function s_doPlugins(s) {
     /* Users with a Daily Habit Diary */
     var dtmNow=new Date();
     now=Math.floor(dtmNow.getTime()/86400000);
-    var cutoff=now-13;
+    var cutoff=now-6;
     var diary=s.c_r("s_daily_habit")+"";
     diary=diary.split(",");
     newDiary=[];
@@ -69,13 +69,13 @@ function s_doPlugins(s) {
     for (var i=0,j=diary.length;i<j;++i)
     {
         var pV=diary[i];
-        var tmp=(pV>=cutoff) && (pV!=now) && (vC+=1) && newDiary.push(pV);
+        var tmp=(pV>=cutoff) && (pV<now) && (vC+=1) && newDiary.push(pV);
     }
     newDiary.push(now);
     newDiary=newDiary.join(",");
     dtmNow.setFullYear(dtmNow.getFullYear()+5);
     s.c_w("s_daily_habit",newDiary,dtmNow);
-    s.eVar64=vC+"/14";
+    s.eVar64=vC;
 
     /* Campaign stacking */
 //    s.eVar40=s.crossVisitParticipation(s.campaign,'s_ev40','30','5','>','',1);

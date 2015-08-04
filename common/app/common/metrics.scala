@@ -87,6 +87,19 @@ object SystemMetrics extends implicits.Numbers {
     }
   )
 
+  object OpenFileDescriptorsMetric extends GaugeMetric("open-file-descriptors", "Open file descriptors",
+    () => ManagementFactory.getOperatingSystemMXBean match {
+      case b: com.sun.management.UnixOperatingSystemMXBean => b.getOpenFileDescriptorCount
+      case _ => -1
+    }
+  )
+
+  object MaxFileDescriptorsMetric extends GaugeMetric("max-file-descriptors", "Max file descriptors",
+    () => ManagementFactory.getOperatingSystemMXBean match {
+      case b: com.sun.management.UnixOperatingSystemMXBean => b.getMaxFileDescriptorCount
+      case _ => -1
+    }
+  )
 
   private lazy val buildNumber = ManifestData.build match {
     case string if string.isInt => string.toInt
@@ -363,10 +376,11 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
   def applicationName: String
   def applicationMetrics: List[FrontendMetric] = List(FilterCacheHit, FilterCacheMiss)
 
-  def systemMetrics: List[FrontendMetric] = List(SystemMetrics.MaxHeapMemoryMetric, SystemMetrics.UsedHeapMemoryMetric,
-    SystemMetrics.TotalPhysicalMemoryMetric, SystemMetrics.FreePhysicalMemoryMetric, SystemMetrics.AvailableProcessorsMetric,
-    SystemMetrics.BuildNumberMetric, SystemMetrics.FreeDiskSpaceMetric, SystemMetrics.TotalDiskSpaceMetric) ++
-    SystemMetrics.garbageCollectors.flatMap{ gc => List(
+  def systemMetrics: List[FrontendMetric] = List(SystemMetrics.MaxHeapMemoryMetric,
+    SystemMetrics.UsedHeapMemoryMetric, SystemMetrics.TotalPhysicalMemoryMetric, SystemMetrics.FreePhysicalMemoryMetric,
+    SystemMetrics.AvailableProcessorsMetric, SystemMetrics.BuildNumberMetric, SystemMetrics.FreeDiskSpaceMetric,
+    SystemMetrics.TotalDiskSpaceMetric, SystemMetrics.MaxFileDescriptorsMetric,
+    SystemMetrics.OpenFileDescriptorsMetric) ++ SystemMetrics.garbageCollectors.flatMap{ gc => List(
       GaugeMetric(s"${gc.name}-gc-count-per-min" , "Used heap memory (MB)",
         () => gc.gcCount.toLong,
         StandardUnit.Count

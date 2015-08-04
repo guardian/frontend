@@ -24,6 +24,10 @@
         fill: colour(media-default);
     }
 
+    .inline-quote {
+        fill: colour(neutral-3);
+    }
+
     .fc-item__container:before,
     .rich-link__container:before {
         background-color: colour(media-default);
@@ -32,8 +36,13 @@
     .fc-item__kicker,
     .rich-link__kicker,
     .fc-item__byline,
-    .rich-link__read-more-text {
+    .rich-link__read-more-text,
+    .fc-save-for-later--is-saved {
         color: colour(media-default);
+    }
+
+    .fc-save-for-later {
+        border-color: mix($c-headline, colour(media-background), 20%);
     }
 
     .fc-item__kicker:after,
@@ -50,6 +59,10 @@
     .rich-link__standfirst,
     .fc-item__meta {
         color: colour(neutral-3);
+    }
+
+    .fc-save-for-later--is-saved .inline-tone-fill {
+        fill: colour(media-default);
     }
 }
 

@@ -5,13 +5,22 @@
 <head>
     <meta charset="utf-8" />
     <title>@Html(metaData.webTitle)</title>
-    @fragments.stylesheetsLoad(projectName)
 
-    @fragments.javaScriptFirstSteps(metaData)
+    @* get the stylesheets downloading ASAP *@
+    @fragments.stylesheetLinks(projectName)
 
-    @fragments.stylesheetsUse()
+    @* polyfill, feature detect etc before we try and use the stylesheets *@
+    @fragments.javaScriptPreFlight(metaData)
 
-    @fragments.javaScriptLaterSteps(metaData)
+    @* try and load fonts before we use the stylesheets *@
+    @fragments.fonts()
+
+    @* start trying to use the stylesheets *@
+    @fragments.stylesheetLinksEnable(projectName)
+
+    @* load the app *@
+    @fragments.javaScriptBootstraps(metaData)
+
 </head>
 <body id="top">
 

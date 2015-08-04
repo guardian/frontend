@@ -30,6 +30,8 @@ object Au extends Edition(
     classicalMusic
   )
 
+  val economyLocalNav: Seq[SectionLink] = Seq(markets, money)
+
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
@@ -42,12 +44,12 @@ object Au extends Edition(
       NavItem(culture, cultureLocalNav),
       NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
       NavItem(fashion),
-      NavItem(economy, Seq(markets, companies, money)),
+      NavItem(economy, economyLocalNav),
       NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
       NavItem(media),
       NavItem(environment, Seq(cities, globalDevelopment)),
       NavItem(science),
-      NavItem(crosswords),
+      NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)
     )
   }
@@ -63,7 +65,7 @@ object Au extends Edition(
     NavItem(culture, cultureLocalNav),
     NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
     NavItem(fashion),
-    NavItem(economy, Seq(markets, companies, money)),
+    NavItem(economy, economyLocalNav),
     NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
     NavItem(media),
     NavItem(environment, Seq(cities, globalDevelopment))

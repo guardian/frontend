@@ -1,6 +1,8 @@
 /* Identity and registration
    ========================================================================== */
 
+@import '../../components/pasteup-buttons/src/_mixins.scss';
+
 .l-header--identity {
     height: 45px;
 
@@ -383,74 +385,158 @@
 /* Saved-content
    ========================================================================== */
 .saved-contents {
-    margin-top: $gs-baseline*2;
-}
-.saved-content {
-    border-top: 1px solid colour(neutral-5);
-    margin-bottom: $gs-baseline*2;
-    padding-top: $gs-baseline/3;
+    .fc-item__meta {
+        @include mq($until: desktop) {
+            position: relative;
+        }
+
+        @include mq(desktop) {
+            top: 0;
+        }
+    }
+
+    .has-flex-wrap & .fc-item--has-cutout .fc-item__content {
+        @include mq(tablet) {
+            max-width: none;
+            flex-basis: 100%;
+        }
+    }
+
+    .fc-item--has-cutout {
+        .fc-item__header,
+        .fc-item__standfirst {
+            @include mq(tablet) {
+                padding-right: 40%;
+            }
+        }
+    }
+
+    .fc-item__content,
+    .fc-item--has-metadata .fc-item__content {
+        @include mq($until: desktop) {
+            padding-bottom: $gs-baseline * 3;
+        }
+    }
+
+    .saved-content__button {
+        @include mq($until: desktop) {
+            right: $gs-gutter / 2;
+        }
+
+        @include mq(desktop) {
+            right: 0;
+            top: ($gs-baseline / 3) * 2;
+        }
+    }
 }
 
-.saved-content__name {
+.saved-content {
+    margin-bottom: $gs-baseline*2;
+    display: block;
+
+    .saved-content-item__img {
+        width: $gs-column-width*2;
+        height: $gs-baseline*6;
+        padding-top: 3px;
+        margin-right: $gs-gutter/2;
+
+        img {
+            width: 100%;
+        }
+    }
+}
+
+.saved-content_header__title {
+    float: none !important;
+}
+
+.saved-content__header__description {
+    @include fs-headline(1);
+    padding-bottom: $gs-baseline / 2;
+    color: colour(neutral-2);
+
+    @include mq(tablet) {
+        padding-bottom: $gs-baseline;
+    }
+
+    @include mq(leftCol) {
+        width: $left-column;
+        clear: left;
+        float: left;
+        margin-top: 0;
+        text-align: left;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
+}
+
+.saved-content__title {
     @include fs-headline(3);
     margin-bottom: $gs-baseline;
-
     @include mq(desktop) {
-        @include box-sizing(border-box);
-        @include fs-headline(2, true);
-        float: left;
-        padding-right: $gs-gutter;
-        width: gs-span(8);
+        width: gs-span(6);
     }
 }
 
-.saved-content__read {
+.saved-content__standfirst {
     @include fs-bodyCopy(1);
+}
 
-    float: right;
-    margin-bottom: $gs-baseline/1.5;
-    margin-top: $gs-baseline/1.5;
-
-    .i {
-        margin-right: $gs-gutter/4;
-        vertical-align: text-top;
-    }
-
-    @include mq(desktop) {
-        float: none;
-        margin-top: $gs-baseline;
-        padding-left: gs-span(4);
-    }
+.saved-content__meta {
+    padding-top: $gs-baseline;
+    text-align: right;
 }
 
 .saved-content__button {
-    @include fs-textSans(2);
+    position: absolute;
+}
 
-    background: colour(guardian-brand);
-    border: 0;
-    color: #ffffff;
-    cursor: pointer;
-    float: left;
-    padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
-
-    @include mq(desktop) {
-        float: right;
-    }
-
-    .saved-content--subscribed & {
-        background: colour(neutral-2-contrasted);
+.save-for-later__delete-all-container {
+    @include mq($from: mobileLandscape, $until: leftCol) {
+        position: absolute;
+        right: 0;
+        top: 0;
     }
 }
 
-.saved-content__saved-at {
-    @include fs-textSans(1);
-    margin-bottom: $gs-baseline;
+// these !importants are a horrible hack while we see what happens in the test.
+// due to *.head css appearing in the source BEFORE the global, which overides these as it loads
+.saved-content__button,
+.save-for-later__button--delete-all {
+    background-color: colour(neutral-5) !important;
+    color: colour(neutral-2) !important;
+    border: 0 !important;
+    cursor: pointer;
+    margin-right: 0 !important;
 
-    @include mq(desktop) {
-        @include box-sizing(border-box);
-        @include fs-headline(3, true);
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: colour(neutral-3) !important;
+    }
+
+    .inline-icon {
         float: left;
-        padding-right: $gs-gutter;
-        width: gs-span(4);
+        padding-right: .5em;
+        fill: colour(neutral-2) !important;
+
+        svg {
+            width: 18px;
+        }
+    }
+}
+
+.save-for-later__button--delete-all--delete .save-for-later__label--delete-all,
+.save-for-later__button--delete-all--confirm .save-for-later__label--delete-all--confirm {
+    display: inline;
+}
+
+.save-for-later__button--delete-all--confirm {
+    color: colour(error) !important;
+
+    .inline-icon {
+        fill: colour(error);
     }
 }

@@ -2,10 +2,10 @@ package frontpress
 
 import com.gu.facia.client.models.Trail
 import conf.Configuration
-import contentapi.{ContentApiClient, ElasticSearchLiveContentApiClient}
+import contentapi.{ContentApiClient, LiveContentApiClient}
 import services.ParseCollection
 
-object DraftContentApi extends ElasticSearchLiveContentApiClient {
+object DraftContentApi extends LiveContentApiClient {
   override val targetUrl = Configuration.contentApi.contentApiDraftHost
 }
 

@@ -6,7 +6,8 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/component'
+    'common/modules/component',
+    'bootstraps/trail'
 ], function (
     bean,
     bonzo,
@@ -15,11 +16,10 @@ define([
     $,
     config,
     mediator,
-    Component
+    Component,
+    trail
 ) {
-
     var verticallyResponsiveImages = function () {
-
             var setHeight = function () {
                 if (!bonzo(document.body).hasClass('has-overlay')) {
                     var $imgs = $('.js-gallery-img'),
@@ -48,17 +48,20 @@ define([
             mostViewed.manipulationType = 'html';
             mostViewed.endpoint = '/gallery/most-viewed.json';
             mostViewed.ready = function () {
-                mediator.emit('module:gallery-most-popular:loaded', container);
+                mediator.emit('page:new-content', container);
             };
             mostViewed.fetch(container, 'html');
         },
         ready = function () {
+            trail();
             verticallyResponsiveImages();
 
             mediator.emit('ui:images:upgradePictures');
 
             mediator.emit('page:gallery:ready');
-            transcludeMostPopular();
+            if (config.page.showRelatedContent) {
+                transcludeMostPopular();
+            }
         };
 
     return {

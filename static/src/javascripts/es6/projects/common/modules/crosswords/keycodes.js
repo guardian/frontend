@@ -4,8 +4,6 @@ export default {
     left: 37,
     up: 38,
     right: 39,
-    down: 40,
-    a: 65,
-    z: 90
+    down: 40
 };
 

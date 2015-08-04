@@ -1,4 +1,4 @@
-/* jshint newcap: false */
+/*eslint-disable new-cap*/
 define([
     'common/utils/_',
     'react',

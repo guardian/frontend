@@ -2,7 +2,6 @@ define([
     'bean',
     'qwery',
     'fastdom',
-    'common/modules/experiments/ab',
     'common/utils/mediator',
     'common/utils/detect',
     'common/utils/$'
@@ -10,17 +9,10 @@ define([
     bean,
     qwery,
     fastdom,
-    ab,
     mediator,
     detect,
     $
 ) {
-    function isMtStickyBurger() {
-        var MtStickyBurgerTest = ab.getParticipations().MtStickyBurger;
-
-        return ab.testCanBeRun('MtStickyBurger') && MtStickyBurgerTest && MtStickyBurgerTest.variant === 'A';
-    }
-
     var Navigation = {
         init: function () {
             this.copyMegaNavMenu();
@@ -57,9 +49,6 @@ define([
                 e.preventDefault();
                 fastdom.write(function () {
                     target.toggleClass('navigation-container--expanded navigation-container--collapsed');
-                    if (isMtStickyBurger()) {
-                        $('.js-navigation-header .navigation').show();
-                    }
                     mediator.emit(target.hasClass('navigation-container--expanded') ? 'modules:nav:open' : 'modules:nav:close');
                 });
             });

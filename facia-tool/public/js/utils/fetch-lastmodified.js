@@ -1,42 +1,31 @@
-define([
-    'jquery',
-    'modules/authed-ajax',
-    'modules/vars',
-    'utils/human-time'
-], function (
-    $,
-    authedAjax,
-    vars,
-    humanTime
-) {
-    function getFrontAgeAlertMs(front) {
-        return vars.CONST.frontAgeAlertMs[
-            vars.CONST.highFrequencyPaths.indexOf(front) > -1 ? 'front' : vars.priority || 'editorial'
-        ] || 600000;
+import {request} from 'modules/authed-ajax';
+import {priority, CONST} from 'modules/vars';
+import humanTime from 'utils/human-time';
+
+function getFrontAgeAlertMs(front) {
+    return CONST.frontAgeAlertMs[
+        CONST.highFrequencyPaths.indexOf(front) > -1 ? 'front' : priority || CONST.defaultPriority
+    ] || 600000;
+}
+
+export default function(front) {
+    // The server does not respond with JSON
+    function parseResponse (resp) {
+        if (resp.status === 200 && resp.responseText) {
+            var date = new Date(resp.responseText);
+
+            return {
+                date: date,
+                human: humanTime(date),
+                stale: new Date() - date > getFrontAgeAlertMs(front)
+            };
+        } else {
+            return {};
+        }
     }
 
-    function fetch(front) {
-        var deferred = new $.Deferred();
-
-        authedAjax.request({
-            url: '/front/lastmodified/' + front
-        })
-        .always(function(resp) {
-            if (resp.status === 200 && resp.responseText) {
-                var date = new Date(resp.responseText);
-
-                deferred.resolve({
-                    date: date,
-                    human: humanTime(date),
-                    stale: new Date() - date > getFrontAgeAlertMs(front)
-                });
-            } else {
-                deferred.resolve({});
-            }
-        });
-
-        return deferred.promise();
-    }
-
-    return fetch;
-});
+    return request({
+        url: '/front/lastmodified/' + front
+    })
+    .then(parseResponse, parseResponse);
+}

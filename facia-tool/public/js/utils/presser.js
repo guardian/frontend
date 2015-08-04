@@ -1,38 +1,12 @@
-define([
-    'underscore',
-    'modules/authed-ajax',
-    'modules/vars',
-    'utils/mediator'
-], function (
-    _,
-    authedAjax,
-    vars,
-    mediator
-) {
-    var detectPressFailureCount = 0;
+import _ from 'underscore';
+import {request} from 'modules/authed-ajax';
+import {CONST} from 'modules/vars';
+import mediator from 'utils/mediator';
 
-    function press (env, front) {
-        authedAjax.request({
-            url: '/press/' + env + '/' + front,
-            method: 'post'
-        }).always(function () {
-            if (env === 'live') {
-                detectFailures(front);
-            }
-        });
-    }
-
-    mediator.on('presser:detectfailures', function (front) {
-        detectFailures(front);
-    });
-
-    var detectFailures = _.debounce(function (front) {
-        var count = ++detectPressFailureCount;
-
-        authedAjax.request({
-            url: '/front/lastmodified/' + front
-        })
-        .always(function(resp) {
+var detectPressFailureCount = 0;
+var detectFailures = _.debounce(function (front) {
+    var count = ++detectPressFailureCount,
+        parseResponse = function(resp) {
             var lastPressed;
 
             if (detectPressFailureCount === count && resp.status === 200) {
@@ -42,11 +16,28 @@ define([
                     mediator.emit('presser:lastupdate', front, lastPressed);
                 }
             }
-        });
-    }, vars.CONST.detectPressFailureMs || 10000);
+        };
 
-    return {
-        pressDraft: press.bind(null, 'draft'),
-        pressLive: press.bind(null, 'live')
-    };
+    request({
+        url: '/front/lastmodified/' + front
+    })
+    .then(parseResponse, parseResponse);
+
+}, CONST.detectPressFailureMs || 10000);
+
+mediator.on('presser:detectfailures', function (front) {
+    detectFailures(front);
 });
+
+export default function(env, front) {
+    return request({
+        url: '/press/' + env + '/' + front,
+        method: 'post'
+    })
+    .then(function () {
+        if (env === 'live') {
+            detectFailures(front);
+        }
+    })
+    .catch(function () {});
+}

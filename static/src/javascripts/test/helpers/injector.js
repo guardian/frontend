@@ -1,20 +1,23 @@
-"format es6";
-
 export default class Injector {
    constructor() {
-        this.loader = System.clone();
-
-        this.loader.paths = System.paths;
-        this.loader.map = System.map;
+        this.loader = new System.constructor();
+        this.loader.config({
+            baseURL: System.baseURL,
+            defaultJSExtensions: true,
+            transpiler: System.transpiler,
+            paths: System.paths,
+            map: System.map,
+            // Map is transformed to packages
+            packages: System.packages
+        });
         this.loader.normalize = System.normalize;
-        this.loader.transpiler = System.transpiler;
     }
 
     mock(mocks) {
 
         // Support alternative syntax
         if (typeof mocks === 'string') {
-            mocks = { [mocks]: arguments[1] }
+            mocks = { [mocks]: arguments[1] };
         }
         Object.keys(mocks).forEach(moduleId => {
             var mock = mocks[moduleId];
@@ -30,6 +33,6 @@ export default class Injector {
             dependencies = [dependencies];
         }
         return Promise.all(dependencies.map(dep => this.loader.import(dep)))
-            .then(args => callback(...args))
+            .then(args => callback(...args));
     }
 }

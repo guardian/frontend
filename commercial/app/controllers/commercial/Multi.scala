@@ -4,7 +4,7 @@ import common.ExecutionContexts
 import model.commercial.books.BestsellersAgent
 import model.commercial.jobs.JobsAgent
 import model.commercial.masterclasses.MasterClassAgent
-import model.commercial.soulmates.{SoulmatesMenAgent, SoulmatesWomenAgent}
+import model.commercial.soulmates.SoulmatesAgent
 import model.commercial.travel.TravelOffersAgent
 import model.{Cached, NoCache}
 import performance.MemcachedAction
@@ -47,8 +47,8 @@ object Multi
           }
         case "soulmates" =>
           for {
-            woman <- SoulmatesWomenAgent.sample(1).headOption
-            man <- SoulmatesMenAgent.sample(1).headOption
+            woman <- SoulmatesAgent.womenAgent.sample().headOption
+            man <- SoulmatesAgent.menAgent.sample().headOption
           } yield {
             views.html.soulmates.soulmateFragment(Random.shuffle(Seq(woman, man)), clickMacro)
           }

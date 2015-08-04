@@ -21,6 +21,11 @@
         }
     }
 
+    .inline-quote,
+    .fc-item__meta .inline-icon {
+        fill: colour(feature-mute);
+    }
+
     .fc-item__container:before,
     .rich-link__container:before {
         background-color: colour(feature-mute);
@@ -29,8 +34,13 @@
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__meta,
-    .rich-link__read-more-text {
+    .rich-link__read-more-text,
+    .fc-save-for-later--is-saved {
         color: colour(feature-mute);
+    }
+
+    .fc-save-for-later {
+        border-color: mix($c-headline, colour(feature-default), 20%);
     }
 
     .fc-item__kicker--dreamsnap {
@@ -63,6 +73,10 @@
 
     .fc-sublink__title:before {
         border-color: mix($c-headline, colour(feature-default), 40%);
+    }
+
+    .fc-save-for-later--is-saved .inline-tone-fill {
+        fill: colour(feature-mute);
     }
 }
 

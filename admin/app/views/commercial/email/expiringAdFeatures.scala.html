@@ -1,5 +1,6 @@
-@(expired: Seq[dfp.GuLineItem], expiring: Seq[dfp.GuLineItem])
-@import dfp.{GuLineItem,printLondonTime}
+@import common.dfp.GuLineItem
+@(expired: Seq[GuLineItem], expiring: Seq[GuLineItem])
+@import _root_.dfp.printLondonTime
 
 @showLineItem(lineItem: GuLineItem) = {
     <li><div>@{lineItem.id}: @{lineItem.name}</div>

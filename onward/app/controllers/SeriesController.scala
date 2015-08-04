@@ -1,20 +1,25 @@
 package controllers
 
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig}
+import com.gu.facia.api.models.CollectionConfig
 import play.api.mvc.{Controller, Action, RequestHeader}
 import common._
 import model._
-import services.CollectionConfigWithId
+import services.{FaciaContentConvert, CollectionConfigWithId}
 import scala.concurrent.Future
 import implicits.Requests
 import conf.LiveContentApi
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.{Content => ApiContent}
-import layout.{CollectionEssentials, FaciaContainer}
+import layout.{DescriptionMetaHeader, MetaDataHeader, CollectionEssentials, FaciaContainer}
 import slices.{Fixed, FixedContainers}
 import LiveContentApi.getResponse
 
-case class Series(id: String, tag: Tag, trails: Seq[Content])
+case class Series(id: String, tag: Tag, trails: Seq[Content]) {
+  lazy val displayName = tag.id match {
+    case "commentisfree/commentisfree" => "opinion"
+    case _ => tag.webTitle
+ }
+}
 
 object SeriesController extends Controller with Logging with Paging with ExecutionContexts with Requests {
   def renderSeriesStories(seriesId: String) = Action.async { implicit request =>
@@ -49,21 +54,24 @@ object SeriesController extends Controller with Logging with Paging with Executi
   private def renderSeriesTrails(series: Series)(implicit request: RequestHeader) = {
     val dataId = "series"
     val componentId = Some("series")
-    val displayName = Some(series.tag.webTitle)
+    val displayName = Some(series.displayName)
     val properties = FrontProperties(series.tag.description, None, None, None, false, None)
+    val header = series.tag.description map { description => DescriptionMetaHeader(description) }
 
-    val config = CollectionConfig.withDefaults(
+
+    val config = CollectionConfig.empty.copy(
       apiQuery = Some(series.id), displayName = displayName, href = Some(series.id)
     )
 
     val response = () => views.html.fragments.containers.facia_cards.container(
       FaciaContainer(
         1,
-        Fixed(FixedContainers.fixedMediumSlowVII),
+        Fixed(visuallyPleasingContainerForStories(series.trails.length)),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(series.trails take 7, Nil, displayName, None, None, None),
+        CollectionEssentials(series.trails map FaciaContentConvert.frontentContentToFaciaContent take 7, Nil, displayName, None, None, None),
         componentId
-      ).withTimeStamps,
+      ).withTimeStamps
+       .copy(customHeader = header),
       properties
     )(request)
 

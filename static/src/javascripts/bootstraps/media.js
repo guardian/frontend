@@ -129,8 +129,8 @@ define([
                         placeholder.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
                         player.removeClass('media__container--hidden').addClass('media__container--active');
                         $el.removeClass('media__placeholder--active').addClass('media__placeholder--hidden');
+                        enhanceVideo($('video', player).get(0), true);
                     });
-                    enhanceVideo($('video', player).get(0), true);
                 });
                 fastdom.write(function () {
                     $el.removeClass('media__placeholder--hidden').addClass('media__placeholder--active');
@@ -238,18 +238,17 @@ define([
                             { tags: { feature: 'media' } },
                             function () {
                                 events.bindPrerollEvents(player);
-                                player.adSkipCountdown(15);
+                                player.adSkipCountdown(10);
 
-                                require(['js!//imasdk.googleapis.com/js/sdkloader/ima3'])
-                                    .then(function () {
-                                        player.ima({
-                                            id: mediaId,
-                                            adTagUrl: getAdUrl()
-                                        });
-                                        // Video analytics event.
-                                        player.trigger(events.constructEventName('preroll:request', player));
-                                        player.ima.requestAds();
+                                require(['js!http://imasdk.googleapis.com/js/sdkloader/ima3.js'], function () {
+                                    player.ima({
+                                        id: mediaId,
+                                        adTagUrl: getAdUrl()
                                     });
+                                    // Video analytics event.
+                                    player.trigger(events.constructEventName('preroll:request', player));
+                                    player.ima.requestAds();
+                                });
                             }
                         )();
                     } else {
@@ -322,6 +321,7 @@ define([
 
         section.fetch(attachTo).then(function () {
             mediator.emit('page:media:moreinloaded', attachTo);
+            mediator.emit('page:new-content', attachTo);
         });
     }
 
@@ -339,7 +339,7 @@ define([
         mostViewed.endpoint = endpoint;
 
         mostViewed.fetch(attachTo, 'html').then(function () {
-            mediator.emit('page:media:most-viewed-loaded');
+            mediator.emit('page:new-content');
         });
     }
 

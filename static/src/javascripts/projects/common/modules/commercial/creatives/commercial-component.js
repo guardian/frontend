@@ -75,6 +75,7 @@ define([
                 jobs:           buildComponentUrl('jobs', _.merge({}, this.params, { t: this.params.jobIds ? this.params.jobIds.split(',') : [] }, getKeywords())),
                 masterclasses:  buildComponentUrl('masterclasses', _.merge({}, this.params, { t: this.params.ids ? this.params.ids.split(',') : [] }, getKeywords())),
                 soulmates:      buildComponentUrl('soulmates/mixed', this.params),
+                soulmatesTest:  buildComponentUrl('soulmates-test/mixed', this.params),
                 soulmatesGroup: buildComponentUrl('soulmates/' + this.params.soulmatesFeedName, this.params),
                 travel:         buildComponentUrl('travel/offers', _.merge({}, this.params, getKeywords())),
                 multi:          buildComponentUrl('multi', _.merge({}, this.params, getKeywords())),
@@ -99,9 +100,14 @@ define([
                 return html ? html.replace(/%OASToken%/g, this.params.clickMacro).replace(/%OmnitureToken%/g, '') : html;
             }.bind(this),
             success: function () {
-                this.postLoadEvents[this.type] && this.postLoadEvents[this.type](this.$adSlot);
+                if (this.postLoadEvents[this.type]) {
+                    this.postLoadEvents[this.type](this.$adSlot);
+                }
 
                 mediator.emit('modules:commercial:creatives:commercial-component:loaded');
+            }.bind(this),
+            error: function () {
+                this.$adSlot.hide();
             }.bind(this)
         }).load();
 

@@ -17,12 +17,11 @@ define([
     template,
     shareCountTemplate
 ) {
-
-    var shareCount    = 0,
+    var shareCount = 0,
         $shareCountEls = $('.js-sharecount'),
         $fullValueEls,
         $shortValueEls,
-        tooltip = 'Facebook: {{facebook}} \nTwitter: {{twitter}}',
+        tooltip = 'Facebook: <%=facebook%> \nTwitter: <%=twitter%>',
         counts = {
             facebook: 'n/a',
             twitter: 'n/a'
@@ -44,7 +43,6 @@ define([
     }
 
     function addToShareCount(val) {
-
         $shareCountEls
             .removeClass('u-h')
             .html(shareCountTemplate)
@@ -56,7 +54,7 @@ define([
         if (detect.isBreakpoint({min: 'tablet'})) {
             var duration = 250,
                 updateStep = 25,
-                slices     = duration / updateStep,
+                slices = duration / updateStep,
                 amountPerStep = val / slices,
                 currentSlice = 0,
                 interval = window.setInterval(function () {
@@ -68,11 +66,13 @@ define([
         } else {
             incrementShareCount(val);
         }
-
     }
 
-    function init() {
-        if ($shareCountEls.length) {
+    return function () {
+        // asking for social counts in preview "leaks" upcoming URLs to social sites.
+        // when they then crawl them they get 404s which affects later sharing.
+        // don't call counts in preview
+        if ($shareCountEls.length && !config.page.isPreview) {
             var url = 'http://www.theguardian.com/' + config.page.pageId;
             try {
                 ajax({
@@ -104,12 +104,6 @@ define([
                     }
                 });
             }
-
         }
-
-    }
-
-    return {
-        init: init
     };
 });

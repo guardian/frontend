@@ -1,8 +1,8 @@
-import ScrollableMpu from 'common/modules/commercial/creatives/scrollable-mpu'
+import ScrollableMpu from 'common/modules/commercial/creatives/scrollable-mpu';
 
-describe('Scrollable MPU', function() {
+describe('Scrollable MPU', function () {
 
-    it('should exist', function() {
+    it('should exist', function () {
         expect(ScrollableMpu).toBeDefined();
     });
 

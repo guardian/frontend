@@ -1,75 +1,85 @@
-define([
-    'underscore',
-    'sinon',
-    'mock/lastmodified',
-    'modules/vars',
-    'utils/mediator',
-    'utils/presser',
-], function (
-    _,
-    sinon,
-    mockLastModified,
-    vars,
-    mediator,
-    presser
-) {
-    describe('Presser', function () {
-        var ajax, mockPress, events;
+import _ from 'underscore';
+import Promise from 'Promise';
+import sinon from 'sinon';
+import mockjax from 'test/utils/mockjax';
+import MockLastModified from 'mock/lastmodified';
+import {CONST} from 'modules/vars';
+import mediator from 'utils/mediator';
+import presser from 'utils/presser';
 
-        beforeEach(function () {
-            jasmine.clock().install();
-            ajax = sinon.spy();
-            events = sinon.spy();
-
-            mockPress = $.mockjax({
-                url: /\/press\/([a-z]+)\/(.+)/,
-                urlParams: ['env', 'front'],
-                response: function (request) {
-                    ajax(request.urlParams.env, request.urlParams.front);
-                    this.responseText = {};
-                }
+describe('Presser', function () {
+    var ajax, mockPress, events,
+        originalSetTimeout = setTimeout,
+        tick = function (ms) {
+            jasmine.clock().tick(ms);
+            return new Promise(function (resolve) {
+                originalSetTimeout(function () {
+                    resolve();
+                }, 10);
             });
+        };
 
-            mediator.on('presser:lastupdate', events);
+    beforeEach(function () {
+        jasmine.clock().install();
+        ajax = sinon.spy();
+        events = sinon.spy();
+
+        mockPress = mockjax({
+            url: /\/press\/([a-z]+)\/(.+)/,
+            urlParams: ['env', 'front'],
+            response: function (request) {
+                ajax(request.urlParams.env, request.urlParams.front);
+                this.responseText = {};
+            }
         });
+        this.mockLastModified = new MockLastModified();
 
-        afterEach(function () {
-            ajax = null;
-            $.mockjax.clear(mockPress);
-            jasmine.clock().uninstall();
-            mediator.off('presser:lastupdate', events);
-            events = null;
-        });
+        mediator.on('presser:lastupdate', events);
+    });
 
-        it('presses draft', function () {
-            presser.pressDraft('front/name');
-            jasmine.clock().tick(100);
-            expect(ajax.getCall(0).args).toEqual(['draft', 'front/name']);
+    afterEach(function () {
+        ajax = null;
+        mockjax.clear(mockPress);
+        jasmine.clock().uninstall();
+        mediator.off('presser:lastupdate', events);
+        this.mockLastModified.dispose();
+        events = null;
+    });
 
-            jasmine.clock().tick(vars.CONST.detectPressFailureMs + 10);
-            expect(events.called).toBe(false);
-        });
+    it('presses draft', function () {
+        presser('draft', 'front/name');
+        jasmine.clock().tick(100);
+        expect(ajax.getCall(0).args).toEqual(['draft', 'front/name']);
 
-        it('presses live successfully', function () {
-            // debounce uses the actual now() method, mock that one too
-            var originalNow = _.now,
-                currentTime = originalNow();
+        jasmine.clock().tick(CONST.detectPressFailureMs + 10);
+        expect(events.called).toBe(false);
+    });
 
-            _.now = function () {
-                return currentTime;
-            };
-            presser.pressLive('cool/front');
-            jasmine.clock().tick(100);
+    it('presses live successfully', function (done) {
+        // debounce uses the actual now() method, mock that one too
+        var originalNow = _.now,
+            currentTime = originalNow();
+
+        _.now = function () {
+            return currentTime;
+        };
+        presser('live', 'cool/front').
+        then(() => {
             expect(ajax.getCall(0).args).toEqual(['live', 'cool/front']);
 
             var now = new Date();
-            mockLastModified.set({
+            this.mockLastModified.set({
                 'cool/front': now.toISOString()
             });
-            currentTime += vars.CONST.detectPressFailureMs + 10;
-            jasmine.clock().tick(vars.CONST.detectPressFailureMs + 10);
-            _.now = originalNow;
-            expect(events.getCall(0).args).toEqual(['cool/front', now]);
+            currentTime += CONST.detectPressFailureMs + 10;
+            tick(CONST.detectPressFailureMs)
+            .then(() => tick(100))
+            .then(() => {
+                _.now = originalNow;
+                expect(events.getCall(0).args).toEqual(['cool/front', now]);
+                done();
+            });
         });
+        jasmine.clock().tick(100);
     });
 });

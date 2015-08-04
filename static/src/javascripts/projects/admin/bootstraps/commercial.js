@@ -1,3 +1,4 @@
+/*global google*/
 define([
     'qwery',
     'bean',
@@ -19,7 +20,7 @@ define([
     function getHours() {
         var hours =  /[?&]hours=([^&]*)/.exec(window.location.search);
         return hours ? hours[1] : 24;
-    };
+    }
 
     function init() {
 
@@ -42,8 +43,8 @@ define([
                         var r2Bucket = _.where(r2Buckets, {time: bucket.time});
                         return [
                             new Date(bucket.time),
-                            Math.max(bucket.avgTimeToRenderEnded/1000, 0),
-                            r2Bucket.length ? Math.max(r2Bucket.shift().avgTimeToRenderEnded/1000, 0) : 0
+                            Math.max(bucket.avgTimeToRenderEnded / 1000, 0),
+                            r2Bucket.length ? Math.max(r2Bucket.shift().avgTimeToRenderEnded / 1000, 0) : 0
                         ];
                     }));
 
@@ -60,7 +61,7 @@ define([
                 $adsRenderTime.removeClass('ajax-loading');
             }).fail(function() {
                 $adsRenderTime.addClass('ajax-failed');
-            })
+            });
         }).fail(function() {
             $adsRenderTime
                 .removeClass('ajax-loading')
@@ -83,7 +84,7 @@ define([
                 var graphData = [['Time', 'Next-Gen']].concat(data.buckets.map(function(bucket) {
                     return [
                         new Date(bucket.time),
-                        Math.max(bucket.avgTimeToRenderEnded/1000, 0)
+                        Math.max(bucket.avgTimeToRenderEnded / 1000, 0)
                     ];
                 }));
 
@@ -100,8 +101,8 @@ define([
                 $adRenderTime.removeClass('ajax-loading');
             }).fail(function() {
                 $adRenderTime.addClass('ajax-failed');
-            })
-        };
+            });
+        }
 
         // Update filter
         qwery('.ad-render-filter__time .dropdown-menu a').forEach(function(opt) {
@@ -149,7 +150,7 @@ define([
 
         drawAdRenderTime($select.val());
 
-    };
+    }
 
     return {
         init: init

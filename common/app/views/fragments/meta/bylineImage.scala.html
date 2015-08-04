@@ -1,6 +1,6 @@
-@(tags: Tags)(implicit request: RequestHeader)
+@(tags: model.Tags)(implicit request: RequestHeader)
 
-@import views.support.Profile
+@import views.support.{ImgSrc, Item300}
 
 @tags.contributors.headOption.map { profile =>
     @profile.contributorLargeImagePath.map{ src =>

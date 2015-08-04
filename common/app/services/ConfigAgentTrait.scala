@@ -1,7 +1,8 @@
 package services
 
 import akka.util.Timeout
-import com.gu.facia.client.models.{CollectionConfigJson => CollectionConfig, ConfigJson => Config, FrontJson => Front}
+import com.gu.facia.api.models.CollectionConfig
+import com.gu.facia.client.models.{ConfigJson => Config, FrontJson => Front}
 import common._
 import conf.Configuration
 import fronts.FrontsApi
@@ -56,16 +57,24 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     }).toSeq
   }
 
+  def getCanonicalIdForFront(frontId: String): Option[String] = {
+    val config = configAgent.get()
+    val canonicalCollectionMap = config.map (_.fronts.mapValues(front => front.canonical.orElse(front.collections.headOption))).getOrElse(Map.empty)
+
+    canonicalCollectionMap.get(frontId).flatten
+  }
+
   def getConfigForId(id: String): Option[List[CollectionConfigWithId]] = {
     val config = configAgent.get()
     config.flatMap(_.fronts.get(id).map(_.collections))
       .map(_.flatMap(collectionId => getConfig(collectionId).map(collectionConfig => CollectionConfigWithId(collectionId, collectionConfig))))
   }
 
-  def getConfig(id: String): Option[CollectionConfig] = configAgent.get().flatMap(_.collections.get(id))
+  def getConfig(id: String): Option[CollectionConfig] = configAgent.get().flatMap(_.collections.get(id).map(CollectionConfig.fromCollectionJson))
 
   def getConfigAfterUpdates(id: String): Future[Option[CollectionConfig]] =
-    configAgent.future().map(_.flatMap(_.collections.get(id)))
+    configAgent.future()
+      .map(_.flatMap(_.collections.get(id)).map(CollectionConfig.fromCollectionJson))
 
     def getAllCollectionIds: List[String] = {
     val config = configAgent.get()

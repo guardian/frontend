@@ -1,16 +1,21 @@
 package model
 
-import common.{NavItem, Edition, ManifestData, Pagination}
+import common.dfp.{AdSize, AdSlot, DfpAgent}
+import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
-import dfp.DfpAgent
-import play.api.libs.json.{JsBoolean, JsValue, JsString}
+import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
+import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
+/**
+ * MetaData represents a page on the site, whether facia or content
+ */
 trait MetaData extends Tags {
   def id: String
   def section: String
   def webTitle: String
   def analyticsName: String
   def url: String  = s"/$id"
+  def webUrl: String = s"${Configuration.site.host}$url"
   def linkText: String = webTitle
   def pagination: Option[Pagination] = None
   def description: Option[String] = None
@@ -41,6 +46,9 @@ trait MetaData extends Tags {
   def adUnitSuffix = section
 
   def hasPageSkin(edition: Edition) = false
+  def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = Nil
+  def hasAdInBelowTopNavSlot(edition: Edition) = false
+  def omitMPUsFromContainers(edition: Edition) = false
   lazy val isInappropriateForSponsorship: Boolean = false
 
   lazy val membershipAccess: Option[String] = None
@@ -67,7 +75,10 @@ trait MetaData extends Tags {
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId,
     "og:type"      -> "website",
-    "og:url"       -> s"${Configuration.site.host}$url"
+    "og:url"       -> webUrl,
+    "al:ios:url" -> s"gnmguardian://${iosId("applinks")}",
+    "al:ios:app_store_id" -> "409128287",
+    "al:ios:app_name" -> "The Guardian"
   )
 
   def openGraphImages: Seq[String] = Seq()
@@ -76,9 +87,23 @@ trait MetaData extends Tags {
     "twitter:site" -> "@guardian",
     "twitter:app:name:iphone" -> "The Guardian",
     "twitter:app:id:iphone" -> "409128287",
+    "twitter:app:url:iphone" -> s"gnmguardian://${iosId("twitter")}",
+    "twitter:app:name:ipad" -> "The Guardian",
+    "twitter:app:id:ipad" -> "409128287",
+    "twitter:app:url:ipad" -> s"gnmguardian://${iosId("twitter")}",
     "twitter:app:name:googleplay" -> "The Guardian",
     "twitter:app:id:googleplay" -> "com.guardian"
   )
+
+  def linkedData: List[LinkedData] = List(
+    Guardian(),
+    WebPage(webUrl, PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
+  )
+
+  def iosId(referrer: String): String = s"$id?contenttype=$iosType&source=$referrer"
+
+  // this could be article/front/list, it's a hint to the ios app to start the right engine
+  def iosType: String = "article"
 
   def cacheSeconds = 60
 
@@ -91,7 +116,13 @@ trait MetaData extends Tags {
   lazy val isExpiredAdvertisementFeature: Boolean =
     DfpAgent.isExpiredAdvertisementFeature(id, tags, Some(section))
   lazy val sponsorshipTag: Option[Tag] = DfpAgent.sponsorshipTag(tags, Some(section))
+
+  def isPreferencesPage = metaData.get("isPreferencesPage").collect{ case prefs: JsBoolean => prefs.value } getOrElse false
 }
+
+
+
+
 
 class Page(
   val id: String,
@@ -247,6 +278,9 @@ trait Elements {
   }
 }
 
+/**
+ * Tags lets you extract meaning from tags on a page.
+ */
 trait Tags {
   def tags: Seq[Tag] = Nil
   def contributorAvatar: Option[String] = tags.flatMap(_.contributorImagePath).headOption
@@ -284,19 +318,7 @@ trait Tags {
   }
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
-  /**
-   * NOTE:
-   *
-   * This is used only for OLD-STYLE containers. It only includes the visual tones those containers care about. For
-   * the new container equivalent, see `views.support.CardStyle`.
-   *
-   * TODO: Once we've deleted all of the old-style containers, remove this.
-   */
-  lazy val visualTone: String =
-    if (isLiveBlog) Tags.VisualTone.Live
-    else if (isComment) Tags.VisualTone.Comment
-    else if (isFeature) Tags.VisualTone.Feature
-    else Tags.VisualTone.News
+  def isNews = !(isLiveBlog || isComment || isFeature)
 
   lazy val isLiveBlog: Boolean = tones.exists(t => Tags.liveMappings.contains(t.id))
   lazy val isComment = tones.exists(t => Tags.commentMappings.contains(t.id))
@@ -343,13 +365,6 @@ object Tags {
   val Poll = "type/poll"
   val Interactive = "type/interactive"
   val Sudoku = "type/sudoku"
-
-  object VisualTone {
-    val Live = "live"
-    val Comment = "comment"
-    val Feature = "feature"
-    val News = "news"
-  }
 
   val liveMappings = Seq(
     "tone/minutebyminute"

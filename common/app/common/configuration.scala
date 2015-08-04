@@ -26,10 +26,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       .getOrElse(throw new BadConfigurationException(s"$property not configured"))
   }
 
-  object crosswords {
-    lazy val apiKey = configuration.getStringProperty("crosswords_api.key")
-  }
-
   object business {
     lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
   }
@@ -62,13 +58,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isProd = stage == "prod"
-    lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
+    lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
 
     lazy val isPreview = projectName == "preview"
   }
 
   object switches {
-    lazy val configurationUrl = configuration.getMandatoryStringProperty("switchboard.config.url")
+    lazy val key = configuration.getMandatoryStringProperty("switches.key")
   }
 
   object healthcheck {
@@ -91,9 +87,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   case class Auth(user: String, password: String)
 
   object contentApi {
-    val defaultContentApi: String = "http://content.guardianapis.com"
-    lazy val contentApiLiveHost: String = configuration.getStringProperty("content.api.elastic.host").getOrElse(defaultContentApi)
-    lazy val contentApiPreviewHost: String = configuration.getStringProperty("content.api.preview.elastic.host").getOrElse(defaultContentApi)
+    val contentApiLiveHost: String = configuration.getMandatoryStringProperty("content.api.host")
 
     def contentApiDraftHost: String =
         configuration.getStringProperty("content.api.draft.host")
@@ -113,12 +107,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       user <- configuration.getStringProperty("content.api.preview.user")
       password <- configuration.getStringProperty("content.api.preview.password")
     } yield Auth(user, password)
-
-    object write {
-      lazy val username: Option[String] = configuration.getStringProperty("contentapi.write.username")
-      lazy val password: Option[String] = configuration.getStringProperty("contentapi.write.password")
-      lazy val endpoint: Option[String] = configuration.getStringProperty("contentapi.write.endpoint")
-    }
   }
 
   object ophanApi {
@@ -180,9 +168,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object ajax {
-    lazy val url =
-      if (environment.secure) configuration.getStringProperty("ajax.secureUrl").getOrElse("")
-      else configuration.getStringProperty("ajax.url").getOrElse("")
+    lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val nonSecureUrl =
       configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigins: Seq[String] = configuration.getStringProperty("ajax.cors.origin").map(_.split(",")
@@ -208,13 +194,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
+    object backends {
+      lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
+      lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
+    }
   }
 
   object assets {
-    lazy val path =
-      if (environment.secure) configuration.getMandatoryStringProperty("assets.securePath")
-      else configuration.getMandatoryStringProperty("assets.path")
-    lazy val securePath = configuration.getMandatoryStringProperty("assets.securePath")
+    lazy val path = configuration.getMandatoryStringProperty("assets.path")
   }
 
   object staticSport {
@@ -262,13 +249,20 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val traveloffers_url = configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
     lazy val guMerchandisingAdvertiserId = configuration.getMandatoryStringProperty("dfp.guMerchandising.advertiserId")
 
-    private lazy val dfpRoot = s"${environment.stage.toUpperCase}/commercial/dfp"
-    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v2.json"
+    private lazy val commercialRoot = s"${environment.stage.toUpperCase}/commercial"
+
+    private lazy val dfpRoot = s"$commercialRoot/dfp"
+    lazy val dfpPaidForTagsDataKey = s"$dfpRoot/paid-for-tags-v3.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v1.json"
-    lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v1.json"
+    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v3.json"
+    lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v3.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
+    lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers.json"
+    lazy val topBelowNavSlotTakeoversKey = s"$dfpRoot/top-below-nav-slot-takeovers.json"
+    lazy val topSlotTakeoversKey = s"$dfpRoot/top-slot-takeovers.json"
+
+    lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
 
@@ -331,8 +325,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object facia {
-    lazy val spreadsheetKey = configuration.getStringProperty("ab_headlines.spreadsheet_key")
-
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
     lazy val collectionCap: Int = 35
   }
@@ -349,6 +341,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       assert(size <= 100, "Best to keep this less then 50 because of pageSize on search queries")
       size
     }
+
+    lazy val pandomainHost = configuration.getStringProperty("faciatool.pandomain.host")
+    lazy val pandomainDomain = configuration.getStringProperty("faciatool.pandomain.domain")
+    lazy val pandomainSecret = configuration.getStringProperty("pandomain.aws.secret")
+    lazy val pandomainKey = configuration.getStringProperty("pandomain.aws.key")
+
     lazy val configBeforePressTimeout: Int = 1000
 
     val oauthCredentials: Option[OAuthCredentials] =
@@ -358,7 +356,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         oauthCallback <- configuration.getStringProperty("faciatool.oauth.callback")
       } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
 
-    val showTestContainers = configuration.getStringProperty("faciatool.show_test_containers").exists(_ == "true")
+    val showTestContainers =
+      configuration.getStringProperty("faciatool.show_test_containers").contains("true")
 
     lazy val adminPressJobStandardPushRateInMinutes: Int =
       Try(configuration.getStringProperty("admin.pressjob.standard.push.rate.inminutes").get.toInt)
@@ -373,6 +372,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         .getOrElse(60)
 
     lazy val faciaToolUpdatesStream: Option[String] = configuration.getStringProperty("faciatool.updates.stream")
+
+    lazy val sentryPublicDSN = configuration.getStringProperty("faciatool.sentryPublicDSN")
   }
 
   object pa {
@@ -456,10 +457,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     val cacheTimeInSeconds = configuration.getIntegerProperty("png_resizer.image_cache_time").getOrElse(86400)
     val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
   }
+
+  object pushNotifications {
+    val host = configuration.getStringProperty("push_notifications.host").getOrElse("//")
+  }
 }
 
 object ManifestData {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
   lazy val revision = ManifestFile.asKeyValuePairs.getOrElse("Revision", "DEV").dequote.trim
 }
-

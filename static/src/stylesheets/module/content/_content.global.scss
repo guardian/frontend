@@ -42,7 +42,7 @@
     height: $gs-baseline * 3;
     padding: $gs-baseline / 2 0;
 
-    @include mq(mobileLandscape, leftCol) {
+    @include mq(tablet, leftCol) {
         position: absolute;
         right: 0;
         top: 0;
@@ -117,8 +117,68 @@
     @include mq(leftCol, wide) {
         padding-right: 6px;
     }
+
+    .meta__extras--crossword & {
+        @include mq(tablet) {
+            float: right;
+        }
+    }
     &:last-child {
         padding-right: 0;
+    }
+}
+
+.meta__save-for-later {
+    // Shown with test
+    display: none;
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline / 2;
+    margin-bottom: 0;
+    border-top: 1px dotted colour(neutral-5);
+    position: relative;
+
+    $social-width: 39px;
+
+    @include mq(mobileLandscape) {
+        border-top: 0;
+    }
+
+    @include mq(mobileLandscape, leftCol) {
+        position: absolute;
+        top: 1px;
+    }
+
+    @include mq(mobileLandscape, tablet) {
+        left: $social-width * 7;
+    }
+
+    @include mq(tablet, leftCol) {
+        left: $social-width * 6;
+    }
+
+    .content--interactive & {
+        @include mq(leftCol) {
+            $social-width: 35px;
+
+            position: absolute;
+            top: 1px;
+            left: $social-width * 6;
+        }
+    }
+
+    .content--liveblog & {
+        @include mq(desktop) {
+            position: relative;
+            left: 0;
+            top: 0;
+            border-top: 1px dotted colour(neutral-5);
+        }
+    }
+
+    .meta__extras--crossword & {
+        @include mq(tablet) {
+            float: left;
+        }
     }
 }
 

@@ -82,6 +82,7 @@ define([
         (function () {
             pf.srcsetSupported = 'srcset' in image;
             pf.sizesSupported = 'sizes' in image;
+            pf.curSrcSupported = 'currentSrc' in image;
         })();
 
         // just a string trim workaround
@@ -165,7 +166,9 @@ define([
                 media = parsedSize.media;
 
                 if (!length) {
+                    // jscs:disable disallowKeywords
                     continue;
+                    // jscs:enable disallowKeywords
                 }
                 // if there is no media query or it matches, choose this as our winning length
                 if ((!media || pf.matchesMedia(media)) &&
@@ -360,7 +363,9 @@ define([
                         picImg.src = bestCandidate.url;
                         // currentSrc attribute and property to match
                         // http://picture.responsiveimages.org/#the-img-element
-                        picImg.currentSrc = picImg.src;
+                        if (!pf.curSrcSupported) {
+                            picImg.currentSrc = picImg.src;
+                        }
                     });
                 }
             }
@@ -415,7 +420,9 @@ define([
 
                     // immediately skip non-`img` nodes
                     if (element.nodeName.toUpperCase() !== 'IMG') {
+                        // jscs:disable disallowKeywords
                         continue;
+                        // jscs:enable disallowKeywords
                     }
 
                     // expando for caching data on the img
@@ -427,7 +434,9 @@ define([
                     // `options.reevaluate` is set to true (this, for example,
                     // is set to true when running `picturefill` on `resize`).
                     if (!options.reevaluate && element[ pf.ns ].evaluated) {
+                        // jscs:disable disallowKeywords
                         continue;
+                        // jscs:enable disallowKeywords
                     }
 
                     if (!pf.sizesSupported && (element.srcset && regWDesc.test(element.srcset))) {

@@ -1,9 +1,8 @@
 import business.StocksDataLifecycle
-import common.{ContentApiMetrics, CloudWatchApplicationMetrics}
-import conf.Filters
+import common.{CloudWatchApplicationMetrics, ContentApiMetrics, WeatherMetrics}
+import conf.{CorsErrorHandler, Filters, SwitchboardLifecycle}
 import dev.DevParametersLifecycle
-import dfp.DfpAgentLifecycle
-import feed.{MostReadLifecycle, OnwardJourneyLifecycle}
+import feed.{MostPopularFacebookAutoRefreshLifecycle, MostReadLifecycle, OnwardJourneyLifecycle}
 import metrics.FrontendMetric
 import play.api.mvc.WithFilters
 
@@ -11,9 +10,10 @@ object Global extends WithFilters(Filters.common: _*)
   with OnwardJourneyLifecycle
   with DevParametersLifecycle
   with CloudWatchApplicationMetrics
-  with DfpAgentLifecycle
   with MostReadLifecycle
   with StocksDataLifecycle
+  with MostPopularFacebookAutoRefreshLifecycle
+  with SwitchboardLifecycle
   with CorsErrorHandler {
   override lazy val applicationName = "frontend-onward"
 
@@ -21,6 +21,9 @@ object Global extends WithFilters(Filters.common: _*)
     ContentApiMetrics.ContentApiCircuitBreakerOnOpen,
     ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric,
     ContentApiMetrics.ElasticHttpTimeoutCountMetric,
-    ContentApiMetrics.ContentApiErrorMetric
+    ContentApiMetrics.ContentApiErrorMetric,
+    WeatherMetrics.whatIsMyCityRequests
   )
 }
+
+

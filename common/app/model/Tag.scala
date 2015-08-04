@@ -16,7 +16,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   // some tags e.g. tone do not have an explicit section
   lazy val section: String = delegate.sectionId.getOrElse("global")
 
-  lazy val webUrl: String = delegate.webUrl
+  override lazy val webUrl: String = delegate.webUrl
   lazy val webTitle: String = delegate.webTitle
   lazy val sectionName: String = delegate.sectionName.getOrElse("global")
   override lazy val description = delegate.description
@@ -94,4 +94,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   private def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
     o.map(value => Map(key -> value)).getOrElse(Map())
+
+  override def iosType = "list"
+
 }

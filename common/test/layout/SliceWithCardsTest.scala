@@ -1,42 +1,61 @@
 package layout
 
-import com.gu.facia.client.models.CollectionConfigJson
-import model.{Content, FaciaImageElement, Trail}
+import com.gu.facia.api.models.CollectionConfig
+import model.{ApiContentWithMeta, Content, FaciaImageElement, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{Matchers, FlatSpec}
+import services.FaciaContentConvert
 import slices.DesktopBehaviour
+import com.gu.contentapi.client.model.{ Content => ApiContent }
 
 class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
   val NumberOfFixtures = 40
 
-  val cardFixtures = (1 to NumberOfFixtures) map { n => IndexedTrail(new Trail {
-      override def webPublicationDate: Imports.DateTime = DateTime.now
+  def nthApiContent(n: Int): ApiContent = ApiContent(
+    id = "id",
+    sectionId = None,
+    sectionName = None,
+    webPublicationDateOption = Option(DateTime.now()),
+    webTitle = "",
+    webUrl = s"$n",
+    apiUrl = s"$n",
+    fields = None,
+    tags = Nil,
+    elements = None,
+    references = Nil,
+    isExpired = None)
 
-      override def url: String = s"$n"
+  val cardFixtures = (1 to NumberOfFixtures) map { n =>
+    IndexedTrail(FaciaContentConvert.frontentContentToFaciaContent(
+      new Content(
+        ApiContentWithMeta(nthApiContent(n), Nil, None)) {
+          override lazy val webPublicationDate: Imports.DateTime = DateTime.now
 
-      override def isLive: Boolean = false
+          override lazy val url: String = s"$n"
 
-      override def section: String = ""
+          override lazy val isLive: Boolean = false
 
-      override def trailText: Option[String] = None
+          override lazy val section: String = ""
 
-      //sectionId
-      override def sectionName: String = ""
+          override lazy val trailText: Option[String] = None
 
-      override def linkText: String = ""
+          //sectionId
+          override lazy val sectionName: String = ""
 
-      override def headline: String = ""
+          override lazy val linkText: String = ""
 
-      override def webUrl: String = s"$n"
+          override lazy val headline: String = ""
 
-      override def customImageCutout: Option[FaciaImageElement] = None
+          override lazy val webUrl: String = s"$n"
 
-    override def snapType: Option[String] = None
+          override lazy val customImageCutout: Option[FaciaImageElement] = None
 
-    override def snapUri: Option[String] = None
-  }, n)
+          override lazy val snapType: Option[String] = None
+
+          override lazy val snapUri: Option[String] = None
+      }), n)
   }
 
   "a slice" should "consume as many items as the columns it aggregates consume" in {
@@ -45,7 +64,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         cardFixtures,
         layout,
         ContainerLayoutContext.empty,
-        CollectionConfigJson.emptyConfig,
+        CollectionConfig.empty,
         DesktopBehaviour,
         showSeriesAndBlogKickers = false
       )._2.length shouldEqual
@@ -59,7 +78,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         cardFixtures,
         layout,
         ContainerLayoutContext.empty,
-        CollectionConfigJson.emptyConfig,
+        CollectionConfig.empty,
         DesktopBehaviour,
         showSeriesAndBlogKickers = false
       )
@@ -79,7 +98,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         cardFixtures,
         layout,
         ContainerLayoutContext.empty,
-        CollectionConfigJson.emptyConfig,
+        CollectionConfig.empty,
         DesktopBehaviour,
         showSeriesAndBlogKickers = false
       )._1

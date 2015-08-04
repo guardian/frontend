@@ -1,44 +1,43 @@
 package controllers.commercial
 
-import model.commercial.soulmates.SoulmatesAggregatingAgent.sampleMembers
+import model.commercial.soulmates.SoulmatesAgent.{menAgent, newMenAgent, newWomenAgent, womenAgent}
 import model.commercial.soulmates._
 import model.{Cached, NoCache}
 import play.api.mvc._
+import play.twirl.api.HtmlFormat
 
 object SoulmatesController extends Controller with implicits.Requests {
 
-  private def renderSoulmates(members: Seq[Member]) = Action { implicit request =>
-    members match {
-        case Nil => NoCache(jsonFormat.nilResult)
-        case soulmates => Cached(componentMaxAge) {
-          val clickMacro = request.getParameter("clickMacro")
-          val omnitureId = request.getParameter("omnitureId")
-          jsonFormat.result(views.html.soulmates.soulmates(soulmates, omnitureId, clickMacro))
+  private def result(groupName: String,
+                     view: (Seq[Member], Option[String], Option[String]) => HtmlFormat.Appendable)
+                    (implicit request: Request[AnyContent]): Result = {
+
+    val sample = {
+      def take3(agent: SoulmatesAgent) = agent.sample().take(3)
+      if (groupName == "mixed") {
+        val members = take3(womenAgent) ++ take3(menAgent)
+        Sample.default(members)
+      } else if (groupName == "mixednew") {
+        val members = take3(newWomenAgent) ++ take3(newMenAgent)
+        Sample.default(members)
+      } else SoulmatesAgent.sample(groupName)
+    }
+
+    sample match {
+      case Nil => NoCache(jsonFormat.nilResult)
+      case soulmates => Cached(componentMaxAge) {
+        val clickMacro = request.getParameter("clickMacro")
+        val omnitureId = request.getParameter("omnitureId")
+        jsonFormat.result(view(soulmates, omnitureId, clickMacro))
       }
     }
   }
 
-  private def renderShuffledSoulmates(members: Seq[Member]) = {
-    renderSoulmates(sampleMembers(members))
+  def renderSoulmates(groupName: String): Action[AnyContent] = Action { implicit request =>
+    result(groupName, views.html.soulmates.soulmates(_, _, _))
   }
 
-  private def renderMixedSoulmates() = {
-    val women = SoulmatesWomenAgent.sample(3)
-    val men = SoulmatesMenAgent.sample(3)
-    renderShuffledSoulmates(women ++ men)
-  }
-
-  def renderSoulmates(subgroup: String): Action[AnyContent] = {
-    subgroup match {
-      case "mixed" => renderMixedSoulmates()
-      case "brighton" => renderShuffledSoulmates(SoulmatesBrightonAgent.members)
-      case "northwest" => renderShuffledSoulmates(SoulmatesNorthwestAgent.members)
-      case "scotland" => renderShuffledSoulmates(SoulmatesScotlandAgent.members)
-      case "young" => renderShuffledSoulmates(SoulmatesYoungAgent.members)
-      case "mature" => renderShuffledSoulmates(SoulmatesMatureAgent.members)
-      case "men" => renderSoulmates(SoulmatesMenAgent.sample(6))
-      case "women" => renderSoulmates(SoulmatesWomenAgent.sample(6))
-      case _ => renderSoulmates(Nil)
-    }
+  def renderSoulmatesTest(groupName: String): Action[AnyContent] = Action { implicit request =>
+    result(groupName, views.html.soulmates.soulmatesTest(_, _, _))
   }
 }
