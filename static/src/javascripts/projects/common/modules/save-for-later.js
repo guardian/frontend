@@ -195,7 +195,7 @@ define([
         mediator.on('modules:show-more:loaded', function () {
             this.renderFaciaItemLinks(signedIn, this.classes.showMoreContainer);
             $(this.classes.showMoreContainer).removeClass('js-show-more');
-        }.bind(this))
+        }.bind(this));
     };
 
     // Configure the save for later links on a front or in a container
