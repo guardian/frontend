@@ -90,12 +90,15 @@
             var tests = guardian.config.tests;
             var inTest = tests.jspmTest || tests.jspmControl;
             var localStorageKey = 'gu.jspm-test.visited';
-            var visited = !!window.localStorage.getItem(localStorageKey)
-            if (!visited && inTest) {
-                var beaconName = tests.jspmTest ? 'jspm-test' : 'jspm-control';
-                (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + beaconName + '.gif';
-                window.localStorage.setItem(localStorageKey, true);
-            }
+            // Protect browsers with localStorage but permissions disabled
+            try {
+                var visited = !!window.localStorage.getItem(localStorageKey)
+                if (!visited && inTest) {
+                    var beaconName = tests.jspmTest ? 'jspm-test' : 'jspm-control';
+                    (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + beaconName + '.gif';
+                    window.localStorage.setItem(localStorageKey, true);
+                }
+            } catch (e) {}
         }
     })(window, navigator);
 }
