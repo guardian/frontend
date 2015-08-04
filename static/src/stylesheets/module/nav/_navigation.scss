@@ -158,7 +158,6 @@ $c-navigation-expandable-background: colour(neutral-1);
     }
 }
 .top-navigation {
-    position: relative;
     background: $c-top-header-background;
 }
 .navigation__container--first {
@@ -187,7 +186,6 @@ $c-navigation-expandable-background: colour(neutral-1);
    ========================================================================== */
 
 .signposting {
-    position: relative;
     background: $c-signposting-background;
     border-right: 1px solid $c-global-navigation-border;
     box-sizing: border-box;
@@ -226,8 +224,6 @@ $c-navigation-expandable-background: colour(neutral-1);
 .signposting__item {
     white-space: nowrap;
     display: table-cell;
-    position: relative;
-    padding-left: $navigation-h-space-between-items/2;
 }
 .signposting__action {
     color: $c-signposting-action;
@@ -244,12 +240,18 @@ $c-navigation-expandable-background: colour(neutral-1);
     color: $c-signposting-action;
     font-size: 27px;
     line-height: $navigation-height;
-    padding-right: $navigation-h-space-between-items/2;
 }
 
 
 /* Actions and items
    ========================================================================== */
+@mixin navigation-items-shrink-spacing {
+    padding-right: $gs-gutter/4;
+    padding-left: $gs-gutter/4;
+    &:first-child {
+        padding-left: $navigation-h-space-between-items/2;
+    }
+}
 
 .local-navigation {
     background: $c-local-navigation-background;
@@ -259,15 +261,17 @@ $c-navigation-expandable-background: colour(neutral-1);
 .local-navigation__action,
 .top-navigation__action,
 .global-navigation__action {
-    position: relative;
+    padding-left: $gs-gutter/2;
+    padding-right: $gs-gutter/2;
+    height: 100%;
 
-    &:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: -$gs-gutter/4;
-        left: -$gs-gutter/4;
+    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
+        @include navigation-items-shrink-spacing;
+    }
+    @include mq(wide) {
+        .has-page-skin & {
+            @include navigation-items-shrink-spacing;
+        }
     }
 }
 .local-navigation__action,
@@ -292,29 +296,9 @@ $c-navigation-expandable-background: colour(neutral-1);
 .top-navigation__item--current {
     margin-right: $gs-gutter/2;
 }
-
-@mixin navigation-items-shrink-spacing {
-    padding-right: $navigation-h-space-between-items/2 - 3;
-    padding-left: $navigation-h-space-between-items/2 - 3;
-    &:first-child {
-        padding-left: $navigation-h-space-between-items/2;
-    }
-}
 .local-navigation__item,
 .top-navigation__item {
     display: table-cell;
-    position: relative;
-    padding-right: $navigation-h-space-between-items/2;
-    padding-left: $navigation-h-space-between-items/2;
-
-    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
-        @include navigation-items-shrink-spacing;
-    }
-    @include mq(wide) {
-        .has-page-skin & {
-            @include navigation-items-shrink-spacing;
-        }
-    }
 }
 .navigation-container--collapsed .navigation--has-signposting {
     .local-navigation,
@@ -345,11 +329,6 @@ $c-navigation-expandable-background: colour(neutral-1);
         display: table-cell;
     }
 }
-.top-navigation__icon-wrapper {
-    position: relative;
-    display: inline-block;
-    top: 3px;
-}
 .top-navigation__icon {
     display: inline-block;
     background-repeat: no-repeat;
@@ -359,6 +338,7 @@ $c-navigation-expandable-background: colour(neutral-1);
     width: 15px;
     height: 18px;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAASCAQAAAAul0yEAAAAO0lEQVQoz9XPsQ0AIAwDwYzuzZ8iQjIQUiLh9r5xhA0BinqInDqsggX34EAPSpzBFTOg3Su2o3+wGtYAGI94niPCbrMAAAAASUVORK5CYII=');
+    margin-bottom: -3px;
 
     @media (-webkit-min-device-pixel-ratio: 1.3),
            (min-resolution: 124.8dpi),
@@ -519,6 +499,7 @@ $c-navigation-expandable-background: colour(neutral-1);
         @include mq($until: navigationBreakOnTwoLevels) {
             overflow-x: scroll;
             white-space: nowrap;
+            backface-visibility: hidden;
         }
 
         &::-webkit-scrollbar {
@@ -836,7 +817,7 @@ $c-navigation-expandable-background: colour(neutral-1);
 
     .burger-icon {
         margin-top: $gs-baseline * 1.5;
-        
+
         @include mq($until: mobileLandscape) {
             margin: $gs-baseline * 1.5 0 0;
         }
