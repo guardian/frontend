@@ -1,8 +1,8 @@
 package crosswords
 
 import com.gu.contentapi.client.model.{CrosswordEntry, CrosswordPosition, CrosswordCreator, CrosswordDimensions, Crossword}
-import org.joda.time.{DateTimeZone, LocalDate}
-import org.joda.time.format.DateTimeFormat
+import org.joda.time.{DateTimeZone, DateTime}
+import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.json._
 
 object Entry {
@@ -32,7 +32,7 @@ case class Entry(
 
 object CrosswordData {
 
-  private val dateFormatUTC = DateTimeFormat.forPattern("yyyy-MMM-dd").withZone(DateTimeZone.UTC)
+  private val dateFormatUTC = ISODateTimeFormat.dateParser().withZone(DateTimeZone.UTC)
 
   implicit val creatorWrites = Json.writes[CrosswordCreator]
 
@@ -45,7 +45,7 @@ object CrosswordData {
     crossword.number,
     crossword.name,
     crossword.creator,
-    dateFormatUTC.parseDateTime(crossword.date).toLocalDate,
+    dateFormatUTC.parseDateTime(crossword.date),
     crossword.entries.map(Entry.fromCrosswordEntry),
     crossword.dimensions,
     crossword.`type`
@@ -57,7 +57,7 @@ case class CrosswordData(
   number: Int,
   name: String,
   creator: Option[CrosswordCreator],
-  date: LocalDate,
+  date: DateTime,
   entries: Seq[Entry],
   dimensions: CrosswordDimensions,
   crosswordType: String

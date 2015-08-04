@@ -3,10 +3,12 @@ package model.facia
 
 import com.gu.facia.api.models.{CuratedContent, _}
 import com.gu.facia.api.utils._
+import implicits.CollectionsOps._
 import org.joda.time.DateTime
 import play.api.libs.json._
 import services.CollectionConfigWithId
 import com.gu.contentapi.client.model._
+import implicits.FaciaContentImplicits._
 
 object FapiJsonFormats {
   /* Content API Formats */
@@ -71,7 +73,7 @@ object FapiJsonFormats {
         case JsSuccess(JsString("AnalysisKicker"), _) => JsSuccess(AnalysisKicker)
         case JsSuccess(JsString("ReviewKicker"), _) => JsSuccess(ReviewKicker)
         case JsSuccess(JsString("CartoonKicker"), _) => JsSuccess(CartoonKicker)
-        case JsSuccess(JsString("PodcastKicker"), _) =>  (json \ "item").validate[PodcastKicker](podcastKickerFormat)
+        case JsSuccess(JsString("PodcastKicker"), _) =>  (json \ "series").validate[PodcastKicker](podcastKickerFormat)
         case JsSuccess(JsString("TagKicker"), _) => (json \ "item").validate[TagKicker](tagKickerFormat)
         case JsSuccess(JsString("SectionKicker"), _) => (json \ "item").validate[SectionKicker](sectionKickerFormat)
         case JsSuccess(JsString("FreeHtmlKicker"), _) => (json \ "item").validate[FreeHtmlKicker](freeHtmlKickerFormat)
@@ -220,7 +222,7 @@ case class PressedCollection(
 
   lazy val collectionConfigWithId = CollectionConfigWithId(id, config)
 
-  lazy val all = curated ++ backfill
+  lazy val curatedPlusBackfillDeduplicated = (curated ++ backfill).distinctBy(c => c.maybeContentId.getOrElse(c.id))
 }
 
 object PressedCollection {

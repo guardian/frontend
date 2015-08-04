@@ -5,10 +5,10 @@
  * HUNT YOU DOWN.
  */
 define([
-    'common/utils/robusts',
+    'common/utils/robust',
     'common/modules/identity/api'
 ], function (
-    robusts,
+    robust,
     Id
 ) {
     function setCssClass(config) {
@@ -21,8 +21,6 @@ define([
     }
 
     return function () {
-        robusts([
-            ['i-css-class', setCssClass]
-        ]);
+        robust.catchErrorsAndLog('i-css-class', setCssClass);
     };
 });

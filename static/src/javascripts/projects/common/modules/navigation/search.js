@@ -52,7 +52,7 @@ define([
                     fastdom.write(function () {
                         $autoCompleteObject.css({
                             'top': parseInt(searchFromTop, 10) + windowOffset,
-                            'z-index': '1000'
+                            'z-index': '1030'
                         });
                     });
                 });

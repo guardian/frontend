@@ -1,5 +1,6 @@
 package dfp
 
+import common.dfp._
 import common.{ExecutionContexts, Logging}
 import conf.Switches.DfpCachingSwitch
 import org.joda.time.DateTime
@@ -48,6 +49,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
   }
 
   private def write(data: DfpDataExtractor): Unit = {
+
     if (data.isValid) {
       val now = printLondonTime(DateTime.now())
 
@@ -64,7 +66,12 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
         pageSkinSponsorships))))
 
       Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems))))
+
+      Store.putTopAboveNavSlotTakeovers(stringify(toJson(LineItemReport(now,
+        data.topAboveNavSlotTakeovers))))
+      Store.putTopBelowNavSlotTakeovers(stringify(toJson(LineItemReport(now,
+        data.topBelowNavSlotTakeovers))))
+      Store.putTopSlotTakeovers(stringify(toJson(LineItemReport(now, data.topSlotTakeovers))))
     }
   }
-
 }

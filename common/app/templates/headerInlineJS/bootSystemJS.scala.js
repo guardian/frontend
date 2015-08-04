@@ -34,14 +34,26 @@ System['import']('core').then(function () {
                     },
                     shouldSendCallback: function(data) {
                         @if(play.Play.isDev()) {
-                            console.error(data);
+                            // Some environments don't support or don't always expose the console object
+                            if (window.console && window.console.warn) {
+                                console.warn('Raven captured error.', data);
+                            }
                         }
                         return @conf.Switches.DiagnosticsLogging.isSwitchedOn &&
                             Math.random() < 0.2 &&
                             @{!play.Play.isDev()}; @* don't actually notify sentry in dev mode*@
                     }
                 }
-            ).install();
+            );
+
+            // Report uncaught exceptions
+            raven.install();
+
+            // Report unhandled promise rejections
+            // https://github.com/cujojs/when/blob/master/docs/debug-api.md#browser-window-events
+            window.addEventListener('unhandledRejection', function (event) {
+                raven.captureException(event.detail.reason);
+            });
 
             // Safe to depend on Lodash because it's part of core
             System['import']('common/utils/_').then(function (_) {
@@ -88,9 +100,6 @@ System['import']('core').then(function () {
                     @if(item.section == "crosswords") {
                         System['import']('es6/bootstraps/crosswords').then(function (crosswords) {
                             crosswords.default.init();
-                        });
-                        System['import']('es6/projects/common/modules/crosswords/thumbnails').then(function (crosswordThumbnails) {
-                            crosswordThumbnails.default.init();
                         });
                     }
                 });

@@ -1,6 +1,6 @@
 @(page: model.PressedPage)(implicit request: RequestHeader)
 
-@main(page, projectName = Option("facia"), Map("bootstraps/facia" -> "javascripts/bootstraps/facia.js")){
+@main(page, projectName = Option("facia")){
     @fragments.frontHead(page)
 }{
     @fragments.frontBody(page)

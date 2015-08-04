@@ -50,6 +50,7 @@ trait Prototypes {
       </dependencies>,
 
     resolvers ++= Seq(
+      Resolver.typesafeRepo("releases"),
       Resolver.sonatypeRepo("releases"),
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       "Spy" at "https://files.couchbase.com/maven2/"
@@ -64,8 +65,6 @@ trait Prototypes {
   )
 
   val frontendClientSideSettings = Seq(
-    sourceDirectory in Assets := (sourceDirectory in Compile).value / "assets.none",
-    sourceDirectory in TestAssets := (sourceDirectory in Test).value / "assets.none",
 
     TwirlKeys.templateImports ++= Seq(
       "common._",

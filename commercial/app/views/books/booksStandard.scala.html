@@ -6,21 +6,19 @@
     <div class="commercial commercial--books commercial--tone-books commercial--standard" role="complementary" data-link-name="merchandising | books standard | @omnitureId">
         <div class="commercial__inner">
             <div class="commercial__header">
-                <div class="commercial__header__inner">
-                    <h3 class="commercial__title">
-                        <a href="@{clickMacro}http://www.guardianbookshop.co.uk/" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-visit-shop">
-                            @fragments.inlineSvg("marque-54", "icon")
-                            @fragments.inlineSvg("logo-guardian", "logo")
-                            @fragments.inlineSvg("logo-bookshop", "commercial", List("inline-commercial-brand"))
-                            <span class="u-h">The Guardian</span> <span class="u-h">Bookshop</span>
-                        </a>
-                    </h3>
-                    @searchForm(version, date)
-                    <a class="commercial__cta button button--tertiary button--large" href="@clickMacro@Configuration.commercial.books_url" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-visit-shop">
-                        @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
-                        <span class="commercial__cta__label">Visit <span class="hide-on-mobile-inline">book</span>shop</span>
+                <h3 class="commercial__title">
+                    <a href="@{clickMacro}http://www.guardianbookshop.co.uk/" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-visit-shop">
+                        @fragments.inlineSvg("marque-54", "icon")
+                        @fragments.inlineSvg("logo-guardian", "logo")
+                        @fragments.inlineSvg("logo-bookshop", "commercial", List("inline-commercial-brand"))
+                        <span class="u-h">The Guardian</span> <span class="u-h">Bookshop</span>
                     </a>
-                </div>
+                </h3>
+                @searchForm(version, date)
+                <a class="commercial__cta button button--tertiary button--large" href="@clickMacro@Configuration.commercial.books_url" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-visit-shop">
+                    @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+                    <span class="commercial__cta__label">Visit <span class="hide-on-mobile-inline">book</span>shop</span>
+                </a>
             </div>
             <div class="commercial__body">
                 <h4 class="commercial--books__title hide-on-mobile">This week’s bestsellers</h4>

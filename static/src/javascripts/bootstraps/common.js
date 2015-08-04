@@ -6,13 +6,14 @@ define([
     'fastclick',
     'qwery',
     'common/utils/$',
+    'common/utils/background',
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/url',
-    'common/utils/robusts',
+    'common/utils/robust',
     'common/utils/storage',
     'common/modules/analytics/foresee-survey',
     'common/modules/analytics/livestats',
@@ -23,6 +24,7 @@ define([
     'common/modules/analytics/css-logging',
     'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
+    'common/modules/commercial/donot-use-adblock',
     'common/modules/discussion/comment-count',
     'common/modules/experiments/ab',
     'common/modules/identity/autosignin',
@@ -46,9 +48,9 @@ define([
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
     'common/modules/social/pinterest',
+    'common/modules/save-for-later',
     'text!common/views/international-message.html',
     'text!common/views/international-control-message.html',
-    'text!common/views/donot-use-adblock.html',
     'bootstraps/identity-common'
 ], function (
     bean,
@@ -56,13 +58,14 @@ define([
     FastClick,
     qwery,
     $,
+    background,
     config,
     cookies,
     detect,
     mediator,
     template,
     url,
-    robusts,
+    robust,
     storage,
     Foresee,
     liveStats,
@@ -73,6 +76,7 @@ define([
     logCss,
     simpleMetrics,
     userAdTargeting,
+    donotUseAdblock,
     CommentCount,
     ab,
     AutoSignin,
@@ -96,9 +100,9 @@ define([
     userPrefs,
     breakingNews,
     pinterest,
+    SaveForLater,
     internationalMessage,
     internationalControlMessage,
-    doNotUseAdblockTemplate,
     identity
 ) {
     var modules = {
@@ -131,7 +135,7 @@ define([
             },
 
             initialiseStickyHeader: function () {
-                if (config.switches.viewability && (config.page.isDev || (!config.page.isDev && config.page.contentType !== 'Interactive'))) {
+                if (config.switches.viewability && !(config.page.isProd && config.page.contentType === 'Interactive') && config.page.contentType !== 'Crossword') {
                     sticky.init();
                 }
             },
@@ -165,25 +169,7 @@ define([
             },
 
             showAdblockMessage: function () {
-                var alreadyVisted = storage.local.get('alreadyVisited') || 0,
-                    adblockLink = 'https://membership.theguardian.com/about/supporter?INTCMP=adb-mv';
-
-                if (detect.getBreakpoint() !== 'mobile' && detect.adblockInUse && config.switches.adblock && alreadyVisted) {
-                    new Message('adblock', {
-                        pinOnHide: false,
-                        siteMessageLinkName: 'adblock message variant',
-                        siteMessageCloseBtn: 'hide'
-                    }).show(template(
-                            doNotUseAdblockTemplate,
-                            {
-                                adblockLink: adblockLink,
-                                messageText: 'We notice you\'ve got an ad-blocker switched on. Perhaps you\'d like to support the Guardian another way?',
-                                linkText: 'Become a supporter today'
-                            }
-                        ));
-                }
-
-                storage.local.set('alreadyVisited', alreadyVisted + 1);
+                donotUseAdblock.init();
             },
 
             logLiveStats: function () {
@@ -347,12 +333,20 @@ define([
                 if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
                     pinterest();
                 }
+            },
+
+
+            saveForLater: function () {
+                if (config.switches.saveForLater) {
+                    var saveForLater = new SaveForLater();
+                    saveForLater.init(false);
+                }
             }
         };
 
     return {
         init: function () {
-            robusts([
+            background(robust.makeBlocks([
 
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
@@ -393,8 +387,10 @@ define([
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-international-signposting', modules.internationalSignposting],
-                ['c-pinterest', modules.initPinterest]
-            ]);
+                ['c-pinterest', modules.initPinterest],
+                ['c-save-for-later', modules.saveForLater]
+            ]));
+
             if (window.console && window.console.log && !config.page.isDev) {
                 window.console.log('##::::: ##: ########::::::: ###:::: ########:: ########:::: ##:::: ##: ####: ########:: ####: ##::: ##:: ######::\n##: ##: ##: ##.....::::::: ## ##::: ##.... ##: ##.....::::: ##:::: ##:. ##:: ##.... ##:. ##:: ###:: ##: ##... ##:\n##: ##: ##: ##::::::::::: ##:. ##:: ##:::: ##: ##:::::::::: ##:::: ##:: ##:: ##:::: ##:: ##:: ####: ##: ##:::..::\n##: ##: ##: ######:::::: ##:::. ##: ########:: ######:::::: #########:: ##:: ########::: ##:: ## ## ##: ##:: ####\n##: ##: ##: ##...::::::: #########: ##.. ##::: ##...::::::: ##.... ##:: ##:: ##.. ##:::: ##:: ##. ####: ##::: ##:\n##: ##: ##: ##:::::::::: ##.... ##: ##::. ##:: ##:::::::::: ##:::: ##:: ##:: ##::. ##::: ##:: ##:. ###: ##::: ##:\n ###. ###:: ########:::: ##:::: ##: ##:::. ##: ########:::: ##:::: ##: ####: ##:::. ##: ####: ##::. ##:. ######::\n\nEver thought about joining us?\nhttp://developers.theguardian.com/join-the-team.html');
             }

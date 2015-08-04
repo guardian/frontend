@@ -6,13 +6,19 @@
     (function (window, navigator) {
         function logDevice(model, device) {
             var identifier = device + '-' + model;
+            @*
+                remove the RAF metrics in
+                diagnostics/app/model/diagnostics/analytics/Metric.scala
+                when removing this too
+            *@
+            var cssLoader = window.useRAFforCSS ? '-raf' : '';
 
             // send immediate beacon
-            (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + identifier + '-start.gif';
+            (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + identifier + '-start' + cssLoader + '.gif';
 
             // send second after 5 seconds, if we're still around
             window.setTimeout(function () {
-                (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + identifier + '-after-5.gif';
+                (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + identifier + '-after-5' + cssLoader + '.gif';
             }, 5000);
         }
 
@@ -76,6 +82,23 @@
             if (isSGS3) {
                 logDevice('sgs3', 'android');
             }
+        }
+
+        // Send beacon for unique visitors in JspmTest and JspmControl server-side test variants
+        // Requires localStorage, so modern browsers only
+        if (window.guardian.isModernBrowser && guardian.config.switches.jspmTestUniqueVisitorsBeacon) {
+            var tests = guardian.config.tests;
+            var inTest = tests.jspmTest || tests.jspmControl;
+            var localStorageKey = 'gu.jspm-test.visited';
+            // Protect browsers with localStorage but permissions disabled
+            try {
+                var visited = !!window.localStorage.getItem(localStorageKey)
+                if (!visited && inTest) {
+                    var beaconName = tests.jspmTest ? 'jspm-test' : 'jspm-control';
+                    (new Image()).src = window.guardian.config.page.beaconUrl + '/count/' + beaconName + '.gif';
+                    window.localStorage.setItem(localStorageKey, true);
+                }
+            } catch (e) {}
         }
     })(window, navigator);
 }

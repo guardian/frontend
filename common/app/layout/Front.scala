@@ -1,14 +1,16 @@
 package layout
 
-import com.gu.facia.api.models.{CollectionConfig, CuratedContent, FaciaContent}
-import conf.{Configuration, Switches}
-import dfp.{DfpAgent, SponsorshipTag}
+import com.gu.facia.api.models.{CollectionConfig, FaciaContent}
+import common.LinkTo
+import common.dfp.{DfpAgent, SponsorshipTag}
+import conf.Switches
 import implicits.FaciaContentFrontendHelpers._
 import implicits.FaciaContentImplicits._
 import model.PressedPage
 import model.facia.PressedCollection
-import model.meta.{ListItem, ItemList}
+import model.meta.{ItemList, ListItem}
 import org.joda.time.DateTime
+import play.api.mvc.RequestHeader
 import services.{CollectionConfigWithId, FaciaContentConvert}
 import slices.{MostPopular, _}
 import views.support.CutOut
@@ -76,7 +78,7 @@ object CollectionEssentials {
   )
 
   def fromPressedCollection(collection: PressedCollection) = CollectionEssentials(
-    collection.all,
+    collection.curatedPlusBackfillDeduplicated,
     collection.treats,
     Option(collection.displayName),
     collection.href,
@@ -394,11 +396,11 @@ object Front extends implicits.Collections {
     import scalaz.syntax.traverse._
 
     Front(
-      pressedPage.collections.filterNot(_.all.isEmpty).zipWithIndex.mapAccumL(
+      pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.mapAccumL(
         (Set.empty[TrailUrl], initialContext)
       ) { case ((seenTrails, context), (pressedCollection, index)) =>
         val container = Container.fromPressedCollection(pressedCollection)
-        val (newSeen, newItems) = deduplicate(seenTrails, container, pressedCollection.all)
+        val (newSeen, newItems) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
         val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
         val containerDisplayConfig = ContainerDisplayConfig.withDefaults(pressedCollection.collectionConfigWithId)
 
@@ -426,17 +428,17 @@ object Front extends implicits.Collections {
 
   }
 
-  def makeLinkedData(url: String, collections: Seq[FaciaContainer]): ItemList = {
+  def makeLinkedData(url: String, collections: Seq[FaciaContainer])(implicit request: RequestHeader): ItemList = {
     ItemList(
-      Configuration.site.host + url,
+      LinkTo(url),
       collections.zipWithIndex.map {
         case (collection, index) =>
           ListItem(position = index, item = Some(
             ItemList(
-              Configuration.site.host + url, // don't have a uri for each container
+              LinkTo(url), // don't have a uri for each container
               collection.items.zipWithIndex.map {
                 case (item, index) =>
-                  ListItem(position = index, url = Some(Configuration.site.host + item.url))
+                  ListItem(position = index, url = Some(LinkTo(item.url)))
               }
             )
           ))

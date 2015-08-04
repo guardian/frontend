@@ -19,8 +19,8 @@ object Dependencies {
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.51"
-  val faciaScalaClient = "com.gu" %% "facia-json" % "0.51"
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % "0.54"
+  val faciaScalaClient = "com.gu" %% "facia-json" % "0.54"
   val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.4"
   val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.6"
   val googleSheetsApi = "com.google.gdata" % "core" % "1.47.1"
@@ -40,8 +40,8 @@ object Dependencies {
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"
   val openCsv = "net.sf.opencsv" % "opencsv" % "2.3"
   val paClient = "com.gu" %% "pa-client" % "5.0.1-NG"
-  val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.1.11"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play" % "0.2.6"
+  val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.3.0"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_2-4-0" % "0.2.6"
   val playJsonVariants = "org.julienrf" %% "play-json-variants" % "0.2"
   val postgres = "postgresql" % "postgresql" % "8.4-703.jdbc4" from "https://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.1"
@@ -59,4 +59,11 @@ object Dependencies {
   val uaDetectorResources = "net.sf.uadetector" % "uadetector-resources" % "2013.04"
   val scalaTestPlus = "org.scalatestplus" %% "play" % "1.4.0-M3" % "test"
   val anormModule = "com.typesafe.play" %% "anorm" % "2.4.0"
+
+  // Web jars
+  val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"
+  val jquery = "org.webjars" % "jquery" % "2.1.4"
+  val jqueryui = "org.webjars" % "jquery-ui" % "1.11.4"
+  val lodash = "org.webjars" % "lodash" % "3.9.0"
+  val react = "org.webjars" % "react" % "0.13.3"
 }

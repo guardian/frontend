@@ -73,6 +73,18 @@ object Uk extends Edition(
     pollution
   )
 
+  val crosswordsLocalNav = Seq(
+    crosswordBlog,
+    crosswordEditorUpdate,
+    quick,
+    cryptic,
+    prize,
+    quiptic,
+    genius,
+    speedy,
+    everyman,
+    azed
+  )
 
   override val navigation: Seq[NavItem] = {
     Seq(
@@ -96,7 +108,7 @@ object Uk extends Edition(
       NavItem(observer),
       NavItem(todaysPaper, Seq(editorialsandletters, obituaries, g2, weekend, theGuide, saturdayreview)),
       NavItem(membership),
-      NavItem(crosswords),
+      NavItem(crosswords, crosswordsLocalNav),
       NavItem(video)
     )
   }

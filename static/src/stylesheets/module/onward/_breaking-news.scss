@@ -2,7 +2,7 @@ $breaking-news-icon-width: 36px;
 $breaking-news-close-icon-width: 32px;
 
 .breaking-news {
-    z-index: 16777271;
+    z-index: $zindex-popover;
     position: fixed;
     left: 0;
     right: 0;

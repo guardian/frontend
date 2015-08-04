@@ -58,9 +58,19 @@ object MaleSoulmatesFeed extends SoulmatesFeed {
   protected lazy val path = "popular/men"
 }
 
+object NewMenSoulmatesFeed extends SoulmatesFeed {
+  protected val adTypeName = "New Variant Male Soulmates"
+  protected lazy val path = "popular/men?is_new=1"
+}
+
 object FemaleSoulmatesFeed extends SoulmatesFeed {
   protected val adTypeName = "Female Soulmates"
   protected lazy val path = "popular/women"
+}
+
+object NewWomenSoulmatesFeed extends SoulmatesFeed {
+  protected val adTypeName = "New Variant Female Soulmates"
+  protected lazy val path = "popular/women?is_new=1"
 }
 
 object BrightonSoulmatesFeed extends SoulmatesFeed {
@@ -71,6 +81,11 @@ object BrightonSoulmatesFeed extends SoulmatesFeed {
 object NorthwestSoulmatesFeed extends SoulmatesFeed {
   protected val adTypeName = "Northwest Soulmates"
   protected lazy val path = "popular/northwest"
+}
+
+object NewNorthwestSoulmatesFeed extends SoulmatesFeed {
+  protected val adTypeName = "New Variant Northwest Soulmates"
+  protected lazy val path = "popular/northwest?is_new=1"
 }
 
 object ScotlandSoulmatesFeed extends SoulmatesFeed {

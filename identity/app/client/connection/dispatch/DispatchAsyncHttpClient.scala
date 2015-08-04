@@ -26,6 +26,7 @@ trait DispatchAsyncHttpClient extends Http {
       .setConnectTimeout(connectionTimeoutInMs)
       .setMaxConnectionsPerHost(maxConnectionsPerHost)
       .setMaxConnections(maxConnections)
+      .setAcceptAnyCertificate(true) // This needs an SSL context with a trust manager. It has always needed one, and now the api is explicit about it.
     proxy.foreach(p => builder.setProxyServer(new ProxyServer(p.host, p.port)))
     builder.build
   }

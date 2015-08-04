@@ -1,8 +1,7 @@
-import common.{ContentApiMetrics, CloudWatchApplicationMetrics}
-import conf.{SwitchboardLifecycle, Filters}
+import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
+import conf.{Filters, SwitchboardLifecycle}
 import contentapi.SectionsLookUpLifecycle
 import dev.DevParametersLifecycle
-import dfp.DfpAgentLifecycle
 import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
@@ -12,7 +11,6 @@ object Global extends WithFilters(Filters.common: _*)
   with ConfigAgentLifecycle
   with DevParametersLifecycle
   with CloudWatchApplicationMetrics
-  with DfpAgentLifecycle
   with SurgingContentAgentLifecycle
   with SectionsLookUpLifecycle
   with SwitchboardLifecycle {

@@ -6,14 +6,12 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/article-truncation',
-    'common/modules/experiments/tests/facebook-most-viewed',
-    'common/modules/experiments/tests/twitter-most-viewed',
+    'common/modules/experiments/tests/truncation-with-facebook',
+    'common/modules/experiments/tests/truncation-with-relevant',
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/save-for-later',
+    'common/modules/experiments/tests/signed-out-save-for-later',
     'common/modules/experiments/tests/cookie-refresh',
-    'common/modules/experiments/headlines',
     'common/modules/experiments/tests/membership-message'
 ], function (
     raven,
@@ -23,29 +21,23 @@ define([
     mediator,
     store,
     mvtCookie,
-    ArticleTruncation,
-    FacebookMostViewed,
-    TwitterMostViewed,
+    TruncationWithFacebook,
+    TruncationWithRelevant,
     LiveblogNotifications,
     HighCommercialComponent,
-    SaveForLater,
+    SignedOutSaveForLater,
     CookieRefresh,
-    Headline,
     MembershipMessage
 ) {
 
     var TESTS = _.flatten([
-        new ArticleTruncation(),
-        new FacebookMostViewed(),
-        new TwitterMostViewed(),
+        new TruncationWithFacebook(),
+        new TruncationWithRelevant(),
         new LiveblogNotifications(),
         new HighCommercialComponent(),
-        new SaveForLater(),
+        new SignedOutSaveForLater(),
         new CookieRefresh(),
-        new MembershipMessage(),
-        _.map(_.range(1, 10), function (n) {
-            return new Headline(n);
-        })
+        new MembershipMessage()
     ]);
 
     var participationsKey = 'gu.ab.participations';
