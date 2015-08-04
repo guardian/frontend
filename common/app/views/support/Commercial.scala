@@ -1,8 +1,8 @@
 package views.support
 
 import common.Edition
-import common.dfp.AdSize
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
+import common.dfp.{AdSize, AdSlot, TopAboveNavSlot, TopSlot}
 import conf.Switches._
 import model.MetaData
 
@@ -14,22 +14,17 @@ object Commercial {
     case _ => true
   }
 
+  private def hasAdOfSize(slot: AdSlot,
+                          size: AdSize,
+                          metaData: MetaData,
+                          edition: Edition): Boolean = {
+    metaData.sizeOfTakeoverAdsInSlot(slot, edition) contains size
+  }
+
   object topAboveNavSlot {
 
     private def isNetworkFront(metaData: MetaData) = {
       metaData.id == "uk" || metaData.id == "us" || metaData.id == "au"
-    }
-
-    private def hasAdOfSize(size: AdSize, metaData: MetaData, edition: Edition): Boolean = {
-      metaData.sizeOfTakeoverAdsInTopAboveNavSlot(edition) contains size
-    }
-
-    private def hasSmallAd(metaData: MetaData, edition: Edition): Boolean = {
-      hasAdOfSize(leaderboardSize, metaData, edition)
-    }
-
-    private def hasResponsiveAd(metaData: MetaData, edition: Edition): Boolean = {
-      hasAdOfSize(responsiveSize, metaData, edition)
     }
 
     def adSizes(metaData: MetaData, edition: Edition): Map[String, Seq[String]] = {
@@ -47,9 +42,9 @@ object Commercial {
 
       val sizeSpecificClass = {
         if (FixedTopAboveNavAdSlotSwitch.isSwitchedOn && isNetworkFront(metaData)) {
-          if (hasSmallAd(metaData, edition)) {
+          if (hasAdOfSize(TopAboveNavSlot, leaderboardSize, metaData, edition)) {
             "top-banner-ad-container--small"
-          } else if (hasResponsiveAd(metaData, edition)) {
+          } else if (hasAdOfSize(TopAboveNavSlot, responsiveSize, metaData, edition)) {
             "top-banner-ad-container--responsive"
           } else {
             "top-banner-ad-container--large"
@@ -67,6 +62,13 @@ object Commercial {
 
     def hasAd(metaData: MetaData, edition: Edition): Boolean = {
       metaData.hasAdInBelowTopNavSlot(edition)
+    }
+  }
+
+  object topSlot {
+
+    def hasResponsiveAd(metaData: MetaData, edition: Edition): Boolean = {
+      hasAdOfSize(TopSlot, responsiveSize, metaData, edition)
     }
   }
 }

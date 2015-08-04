@@ -258,6 +258,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v3.json"
     lazy val dfpAdFeatureReportKey = s"$dfpRoot/all-ad-features-v3.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
+    lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers.json"
+    lazy val topBelowNavSlotTakeoversKey = s"$dfpRoot/top-below-nav-slot-takeovers.json"
+    lazy val topSlotTakeoversKey = s"$dfpRoot/top-slot-takeovers.json"
 
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
 

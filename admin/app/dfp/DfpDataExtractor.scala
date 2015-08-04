@@ -1,6 +1,7 @@
 package dfp
 
 import common.Edition
+import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import common.dfp.{GeoTarget, GuLineItem, InlineMerchandisingTagSet, PageSkinSponsorship}
 
 case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
@@ -30,6 +31,30 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
       )
     }
   }
+
+  val topAboveNavSlotTakeovers: Seq[GuLineItem] = lineItems filter { lineItem =>
+    lineItem.costType == "CPD" &&
+      lineItem.targeting.adUnits.exists { adUnit =>
+        val prefix = adUnit.path.mkString("/").stripSuffix("/ng").stripSuffix("/front")
+        prefix.endsWith("/uk") || prefix.endsWith("/us") || prefix.endsWith("/au")
+      } &&
+      lineItem.targeting.geoTargetsIncluded.exists { geoTarget =>
+        geoTarget.locationType == "COUNTRY" && (
+          geoTarget.name == "United Kingdom" ||
+            geoTarget.name == "United States" ||
+            geoTarget.name == "Australia"
+          )
+      } &&
+      lineItem.creativeSizes.exists { size =>
+        size == leaderboardSize || size == responsiveSize
+      }
+  }
+
+  val topBelowNavSlotTakeovers: Seq[GuLineItem] = lineItems filter {
+    _.targeting.customTargetSets.exists(_.targets.exists(_.isSlot("top-below-nav")))
+  }
+
+  val topSlotTakeovers = topAboveNavSlotTakeovers
 
   def editionsTargeted(lineItem: GuLineItem): Seq[Edition] = {
     for {

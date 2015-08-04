@@ -72,12 +72,19 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
     private val memoizedCss: ConcurrentMap[java.net.URL, String] = TrieMap()
 
     def projectCss(projectOverride: Option[String]) = project(projectOverride.getOrElse(Configuration.environment.projectName))
-    def head(projectOverride: Option[String]) = css(projectOverride.getOrElse(Configuration.environment.projectName))
+    def head(projectOverride: Option[String]) = cssHead(projectOverride.getOrElse(Configuration.environment.projectName))
     def headOldIE(projectOverride: Option[String]) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
     def headIE9(projectOverride: Option[String]) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
 
+    def inline(module: String): Option[String] = {
+       val knownInlines : PartialFunction[String,String] =
+       {
+         case "story-package" => "story-package.css"
+       }
+       knownInlines.lift(module).map { cssModule => loadCssResource(s"assets/inline-stylesheets/$cssModule") }
+    }
 
-    private def css(project: String): String = {
+    private def cssHead(project: String): String = {
 
       val suffix = project match {
         case "footballSnaps" => "footballSnaps.css"
@@ -85,13 +92,19 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
         case "identity" => "identity.css"
         case "football" => "football.css"
         case "index" => "index.css"
-        case "story-package" => "story-package.css"
         case "rich-links" => "rich-links.css"
+        case "crosswords" => "crosswords.css"
         case _ => "content.css"
       }
-      val url = AssetFinder(s"assets/head.$suffix")
 
-      // Reload head css on every access in DEV
+      loadCssResource(s"assets/inline-stylesheets/head.$suffix")
+    }
+
+    private def loadCssResource(resourceName: String): String = {
+
+      val url = AssetFinder(resourceName)
+
+      // Reload css on every access in DEV
       if (Play.current.mode == Mode.Dev) {
         memoizedCss.remove(url)
       }

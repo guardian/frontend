@@ -91,7 +91,8 @@ object DisplaySettings {
     faciaContent.isBoosted,
     faciaContent.showBoostedHeadline,
     faciaContent.showQuotedHeadline,
-    faciaContent.imageHide
+    faciaContent.imageHide,
+    faciaContent.showLivePlayable
   )
 }
 
@@ -100,7 +101,8 @@ case class DisplaySettings(
   isBoosted: Boolean,
   showBoostedHeadline: Boolean,
   showQuotedHeadline: Boolean,
-  imageHide: Boolean
+  imageHide: Boolean,
+  showLivePlayable: Boolean
 )
 
 sealed trait SnapType

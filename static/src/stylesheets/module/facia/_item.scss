@@ -423,10 +423,17 @@ $fc-item-gutter: $gs-gutter / 4;
 $block-height: 71px;
 
 .fc-item__liveblog-blocks {
-    box-sizing: content-box !important;
-    height: $block-height;
-    overflow: hidden;
-    border-bottom: $gs-gutter/4 solid transparent;
+    display: none;
+}
+
+@include mq(desktop) {
+    .fc-item__liveblog-blocks {
+        display: block;
+        box-sizing: content-box !important;
+        height: $block-height;
+        overflow: hidden;
+        border-bottom: $gs-gutter/4 solid transparent;
+    }
 }
 
 .fc-item__liveblog-blocks__inner {

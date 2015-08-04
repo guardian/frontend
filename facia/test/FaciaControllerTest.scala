@@ -153,4 +153,10 @@ import services.ConfigAgent
     val redirectToInternational = FaciaController.editionRedirect("commentisfree")(international)
     header("Location", redirectToInternational).head should endWith ("/uk/commentisfree")
   }
+
+  it should "list the alterative options for a path by section and edition" in {
+    FaciaController.alternativeEndpoints("uk/lifeandstyle") should be (List("lifeandstyle", "uk"))
+    FaciaController.alternativeEndpoints("uk") should be (List("uk"))
+    FaciaController.alternativeEndpoints("uk/business/stock-markets") should be (List("business", "uk"))
+  }
 }

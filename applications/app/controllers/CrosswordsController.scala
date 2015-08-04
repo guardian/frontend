@@ -1,15 +1,13 @@
 package controllers
 
 import com.gu.contentapi.client.model.{Content => ApiContent, Crossword}
-import conf.LiveContentApi
 import common.{Edition, ExecutionContexts}
-import conf.Static
-import model.{ApiContentWithMeta, Cached}
-import play.api.mvc.{Result, Action, Controller, RequestHeader}
+import conf.{Configuration, LiveContentApi, Static}
 import crosswords._
-
-import scala.concurrent.Future
+import model.{ApiContentWithMeta, Cached, Cors}
+import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
 import scala.concurrent.duration._
+import scala.concurrent.Future
 
 object CrosswordsController extends Controller with ExecutionContexts {
   protected def withCrossword(crosswordType: String, id: Int)(f: (Crossword, ApiContent) => Result)(implicit request: RequestHeader): Future[Result] = {
@@ -37,7 +35,32 @@ object CrosswordsController extends Controller with ExecutionContexts {
 
       val globalStylesheet = Static("stylesheets/content.css")
 
-      Cached(60)(Ok(s"""<?xml-stylesheet type="text/css" href="$globalStylesheet" ?>$xml""").as("image/svg+xml"))
+      Cached(60) {
+        Cors {
+          Ok( s"""<?xml-stylesheet type="text/css" href="$globalStylesheet" ?>$xml""").as("image/svg+xml")
+        }
+      }
     }
+  }
+
+  private val CrosswordOptIn = "crossword_opt_in"
+  private val CrosswordOptInPath= "/crosswords"
+  private val CrosswordOptInMaxAge = 14.days.toSeconds.toInt
+
+  def crosswordsOptIn = Action { implicit request =>
+    Cached(60)(SeeOther("/crosswords").withCookies(
+      Cookie(
+        CrosswordOptIn, "true",
+        path = CrosswordOptInPath,
+        maxAge = Some(CrosswordOptInMaxAge),
+        domain = Some(Configuration.id.domain))))
+  }
+
+  def crosswordsOptOut = Action { implicit request =>
+    Cached(60)(SeeOther("/crosswords").discardingCookies(
+      DiscardingCookie(
+        CrosswordOptIn,
+        path = CrosswordOptInPath,
+        domain = Some(Configuration.id.domain))))
   }
 }
