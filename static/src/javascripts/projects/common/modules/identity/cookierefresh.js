@@ -1,6 +1,6 @@
 define([
     'common/modules/identity/api',
-    'common/utils/storage',
+    'common/utils/storage'
 ],
 function (
     Id,
@@ -17,7 +17,7 @@ function (
                     storage.local.set(Id.lastRefreshKey, currentTime);
                 }
             }
-        }
+        };
 
         CookieRefresh.prototype.shouldRefreshCookie = function (lastRefresh, currentTime) {
             return (!lastRefresh) || (currentTime > (parseInt(lastRefresh, 10) + (1000 * 86400 * 30)));

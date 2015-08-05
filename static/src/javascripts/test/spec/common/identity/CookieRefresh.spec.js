@@ -1,31 +1,6 @@
-import Injector from 'helpers/injector';
-import sinon from 'sinonjs';
-/*eslint-disable no-unused-vars*/
-import jasmineSinon from 'jasmine-sinon';
-/*eslint-enable no-unused-vars*/
+import CookieRefresh from 'common/modules/identity/cookierefresh';
 
 describe('Cookie refresh', function () {
-
-    var injector = new Injector(),
-        getStorageStub,
-        Id, storage;
-
-    beforeEach(function (done) {
-
-        injector.mock('reqwest', reqwestStub);
-        injector.test(['common/modules/identity/api',
-                       'common/utils/storage'], function () {
-
-                           Id = arguments[0];
-                           storage = arguments[1];
-
-                           getStorageStub = sinon.stub();
-                           storage.local.get = getStorageStub;
-
-                           done();
-                       });
-    });
-
     it('should return true for a user who has never refreshed cookies', function () {
         var cookieRefresh = new CookieRefresh().init();
         expect(cookieRefresh.shouldRefreshCookie(null)).toBe(true);
