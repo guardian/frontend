@@ -11,7 +11,6 @@ define([
     'common/modules/experiments/tests/liveblog-notifications',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/signed-out-save-for-later',
-    'common/modules/experiments/tests/cookie-refresh',
     'common/modules/experiments/tests/membership-message'
 ], function (
     raven,
