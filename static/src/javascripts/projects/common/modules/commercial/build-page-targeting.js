@@ -82,7 +82,7 @@ define([
             var alreadyVisited = storage.local.get('alreadyVisited') || 0,
                 visitedValue;
 
-            if (alreadyVisited > 5) {
+            if (alreadyVisited > 4) {
                 visitedValue = '5+';
             } else {
                 visitedValue = alreadyVisited.toString();
