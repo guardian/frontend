@@ -140,7 +140,10 @@ function reduceRequest (memo, front, articles, options) {
 
         return memo;
     })
-    .catch(function () {});
+    .catch(function () {
+        // Ignore errors from Ophan
+        return {};
+    });
 }
 
 function getHistogram (front, articles, options) {

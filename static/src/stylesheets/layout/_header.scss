@@ -135,7 +135,7 @@ $c-guardian-services-action: #ffffff;
 
 .l-header-pre {
     min-width: gs-span(2);
-    z-index: 100;
+    z-index: $zindex-sticky;
     position: relative;
 
     @include mq(tablet) {
