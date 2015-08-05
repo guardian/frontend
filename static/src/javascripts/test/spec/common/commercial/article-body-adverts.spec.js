@@ -94,7 +94,6 @@ describe('Article Body Adverts', function () {
     });
 
     it('should call "getParaWithSpace" with correct arguments multiple times - in test', function (done) {
-        config.switches.commercialExtraAds = true;
         config.switches.viewability = true;
 
         articleBodyAdverts.init()

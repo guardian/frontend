@@ -26,6 +26,7 @@ frontend-applications.properties
 
 log
 logs
+ivy-sbt
 
 tmp
 old
