@@ -3,6 +3,7 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
+    'common/utils/storage',
     'common/modules/commercial/third-party-tags/audience-science-pql',
     'common/modules/commercial/third-party-tags/krux',
     'common/modules/commercial/user-ad-targeting',
@@ -12,6 +13,7 @@ define([
     config,
     cookies,
     detect,
+    storage,
     audienceScienceGateway,
     krux,
     userAdTargeting,
@@ -75,6 +77,18 @@ define([
                 }
                 return cookieAdtest;
             }
+        },
+        getVisitedValue = function () {
+            var alreadyVisited = storage.local.get('alreadyVisited') || 0,
+                visitedValue;
+
+            if (alreadyVisited > 5) {
+                visitedValue = '5+';
+            } else {
+                visitedValue = alreadyVisited.toString();
+            }
+
+            return visitedValue;
         };
 
     return function (opts) {
@@ -98,6 +112,7 @@ define([
                 co:      parseIds(page.authorIds),
                 bl:      parseIds(page.blogIds),
                 ms:      formatTarget(page.source),
+                fr:      getVisitedValue(),
                 tn:      _.uniq(_.compact([page.sponsorshipType].concat(parseIds(page.tones)))),
                 // round video duration up to nearest 30 multiple
                 vl:      page.contentType === 'Video' ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined

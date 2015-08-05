@@ -73,6 +73,8 @@ object Metric extends Logging {
     ("android-sgs3-start-raf", CountMetric(s"android-sgs3-start-raf")),
     ("android-sgs3-after-5-raf", CountMetric(s"android-sgs3-after-5-raf")),
 
+    ("jspm-test", CountMetric(s"jspm-test")),
+    ("jspm-control", CountMetric(s"jspm-control")),
 
     ("tech-feedback", CountMetric("tech-feedback")),
 
