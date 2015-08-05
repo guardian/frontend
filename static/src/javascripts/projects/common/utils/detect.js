@@ -109,6 +109,15 @@ define([
         return totalTime;
     }
 
+    function getTimeOfDomComplete(performance) {
+        var perf = performance || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+        if (perf && perf.timing) {
+            return perf.timing.domComplete;
+        } else {
+            return new Date().getTime();
+        }
+    }
+
     function isReload() {
         var perf = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
         if (!!perf && !!perf.navigation) {
@@ -481,6 +490,7 @@ define([
         pageVisible: pageVisible,
         hasWebSocket: hasWebSocket,
         getPageSpeed: getPageSpeed,
+        getTimeOfDomComplete: getTimeOfDomComplete,
         breakpoints: breakpoints,
         fontHinting: fontHinting(),
         isModernBrowser: isModernBrowser,

@@ -273,5 +273,58 @@ describe('Autocomplete', function () {
             .then(done)
             .catch(done.fail);
         });
+
+        it('clears the search on empty filter', function (done) {
+            var counter = 0, widget;
+            this.scope({
+                url: CONST.apiSearchBase + '/sections?q=*',
+                response: function () {
+                    counter += 1;
+                    this.responseText = {
+                        response: {
+                            results: [{ id: 'one' }, {id: 'two' }]
+                        }
+                    };
+                }
+            });
+            this.ko.apply({}, true)
+            .then((autocompleteWidget) => {
+                widget = autocompleteWidget;
+                $('.search--filter').val('bill').change();
+            })
+            .then(() => wait.event('update', widget))
+            .then(() => {
+                expect(counter).toBe(1);
+                expect($('ul.suggestions li').length).toBe(2);
+
+                setTimeout(() => $('ul.suggestions li:nth(0)').click(), 10);
+            })
+            .then(() => wait.event('change', widget))
+            .then(evtArgument => {
+                expect(evtArgument).toEqual({
+                    query: 'one',
+                    path: 'sections',
+                    param: 'section'
+                });
+                expect(counter).toBe(1);
+                expect($('.search--filter').val()).toBe('one');
+            })
+            .then(() => {
+                // clear the text input (it triggers a sync event)
+                setTimeout(() => $('.search--filter').val('').change());
+
+                return wait.event('change', widget);
+            })
+            .then(evtArgument => {
+                expect(counter).toBe(1);
+                expect(evtArgument).toEqual({
+                    query: '',
+                    path: 'sections',
+                    param: 'section'
+                });
+            })
+            .then(done)
+            .catch(done.fail);
+        });
     });
 });

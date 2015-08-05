@@ -630,10 +630,8 @@ import collection.JavaConversions._
         browser =>
           import browser._
           Then("Then the Outbrain placeholder should be rendered")
-          var outbrainPlaceholder = $(".OUTBRAIN")
+          var outbrainPlaceholder = $(".js-outbrain")
           outbrainPlaceholder.length should be(1)
-          outbrainPlaceholder.getAttribute("data-src") should be("DROP_PERMALINK_HERE")
-          outbrainPlaceholder.getAttribute("data-ob-template") should be("guardian")
       }
 
       Given("I am on a live blog")
@@ -641,7 +639,7 @@ import collection.JavaConversions._
         browser =>
           import browser._
           Then("Then the Outbrain placeholder should not be rendered")
-          $(".OUTBRAIN").isEmpty should be(true)
+          $(".js-outbrain").isEmpty should be(true)
 
       }
 

@@ -177,6 +177,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val JspmTestUniqueVisitorsBeacon = Switch(
+    "Performance",
+    "jspm-test-unique-visitors-beacon",
+    "Send beacon for unique visitors in JspmTest and JspmControl server-side test variants",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 18),
+    exposeClientSide = true
+  )
+
   val RelatedContentSwitch = Switch(
     "Performance",
     "related-content",
@@ -305,12 +314,22 @@ object Switches {
     exposeClientSide = false
   )
 
+  val BackgroundJSSwitch = Switch(
+    "Performance",
+    "background-js",
+    "It this switch is turned on, bootstrap javascript will run in small chunks on timeouts",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 24),
+    exposeClientSide = true
+  )
+
   // Commercial
-  val OphanViewIdSwitch = Switch("Commercial",
-    "ophan-view-id",
-    "Depending on ophan to pass view ID to the gpt targeting",
+  val NewOutbrainSwitch = Switch(
+    "Commercial",
+    "new-outbrain",
+    "Allowing to show new outbrain logic for facelift",
     safeState = On,
-    sellByDate = new LocalDate(2015, 8, 5),
+    sellByDate = new LocalDate(2015, 8, 30),
     exposeClientSide = true
   )
 
@@ -329,15 +348,6 @@ object Switches {
     "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val CommercialExtraAdsSwitch = Switch(
-    "Commercial",
-    "commercial-extra-ads",
-    "If this switch is ON, extra ads are served on article pages",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 8, 5),
     exposeClientSide = true
   )
 
@@ -530,15 +540,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val LazyLoadAds = Switch(
-    "Commercial",
-    "lz-ads",
-    "If switched on then all ads are lazy loaded",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val AdBlockMessage = Switch(
     "Commercial",
     "adblock",
@@ -555,15 +556,6 @@ object Switches {
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 12),
     exposeClientSide = false
-  )
-
-  val DfpUserIdSwitch = Switch(
-    "Commercial",
-    "dfp-user-id",
-    "Include user ID in ad call.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 5),
-    exposeClientSide = true
   )
 
 
@@ -793,7 +785,7 @@ object Switches {
     "id-use-avatar-api",
     "If switched on, avatars will be uploaded using the new Avatar API",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
+    sellByDate = new LocalDate(2015, 9, 1),
     exposeClientSide = true
   )
 
@@ -878,42 +870,6 @@ object Switches {
     exposeClientSide = false
   )
 
-  val LiveblogFrontUpdatesUk = Switch(
-    "Feature",
-    "liveblog-front-updates-uk",
-    "Switch for the latest liveblog updates on the UK network front",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val LiveblogFrontUpdatesUs = Switch(
-    "Feature",
-    "liveblog-front-updates-us",
-    "Switch for the latest liveblog updates on the US network front",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val LiveblogFrontUpdatesAu = Switch(
-    "Feature",
-    "liveblog-front-updates-au",
-    "Switch for the latest liveblog updates on the AU network front",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val LiveblogFrontUpdatesOther = Switch(
-    "Feature",
-    "liveblog-front-updates-other",
-    "Switch for the latest liveblog updates on non-network fronts",
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val IPadNothrasherSwitch = Switch(
     "Feature",
     "ipad-no-thrashers",
@@ -934,39 +890,21 @@ object Switches {
 
   // A/B Tests
 
-  val ArticleTruncation = Switch(
+  val TruncationWithFacebook = Switch(
     "A/B Tests",
-    "ab-article-truncation",
-    "Article truncation",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 30),
-    exposeClientSide = true
-  )
-
-  val FacebookMostViewed = Switch(
-    "A/B Tests",
-    "ab-facebook-most-viewed",
-    "Facebook most viewed",
+    "ab-truncation-with-facebook",
+    "Truncation, with facebook most-viewed container",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 17),
     exposeClientSide = true
   )
 
-  val TwitterMostViewed = Switch(
+  val TruncationWithRelevant = Switch(
     "A/B Tests",
-    "ab-twitter-most-viewed",
-    "Twitter most viewed",
+    "ab-truncation-with-relevant",
+    "Truncation, with relevant section-front container",
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 17),
-    exposeClientSide = true
-  )
-
-  val ABFilmContainers = Switch(
-    "A/B Tests",
-    "ab-film-containers",
-    "Film Containers on Film content",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 30),
     exposeClientSide = true
   )
 
@@ -975,7 +913,7 @@ object Switches {
     "ab-liveblog-notifications",
     "Liveblog notifications",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
+    sellByDate = new LocalDate(2015, 10, 1),
     exposeClientSide = true
   )
 
@@ -1006,9 +944,9 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ABSignedOutSaveForLaterSwitch = Switch(
+  val ABSignedOutSaveForLaterAug = Switch(
     "A/B Tests",
-    "ab-signed-out-save-for-later",
+    "ab-signed-out-save-for-later-aug",
     "Switch off the signed out save for later test",
     safeState = Off,
     sellByDate = never,
@@ -1185,7 +1123,7 @@ object Switches {
     "facia-tool-put-private",
     "If this is switched on, facia tool will put collections to S3 as private",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 7, 30),
+    sellByDate = new LocalDate(2015, 9, 30),
     exposeClientSide = false
   )
 

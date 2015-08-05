@@ -65,8 +65,6 @@ trait Prototypes {
   )
 
   val frontendClientSideSettings = Seq(
-    sourceDirectory in Assets := (sourceDirectory in Compile).value / "assets.none",
-    sourceDirectory in TestAssets := (sourceDirectory in Test).value / "assets.none",
 
     TwirlKeys.templateImports ++= Seq(
       "common._",

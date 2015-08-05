@@ -1,14 +1,24 @@
-@(metaData: model.MetaData)(implicit request: RequestHeader)
+@(metaData: model.MetaData, edition: common.Edition)(implicit request: RequestHeader)
+@import views.support.Commercial.topSlot
 
 @if(mvt.MobileTopBannerRemoveTest.isParticipating) {
-<div class="top-banner-ad-container top-banner-ad-container--mobile top-banner-ad-container--ab-mobile">
+    @if(topSlot.hasResponsiveAd(metaData, edition)) {
+        <div class="top-banner-ad-container top-banner-ad-container--mobile top-banner-ad-container--ab-mobile">
+        @fragments.commercial.standardAd(
+            "top",
+            Seq("top-banner-ad"),
+            Map("mobile" -> Seq("1,1", "300,50", "320,50", "88,70")),
+            showLabel = false
+        )
+        </div>
+    }
 } else {
-<div class="top-banner-ad-container top-banner-ad-container--mobile">
-}
+    <div class="top-banner-ad-container top-banner-ad-container--mobile">
     @fragments.commercial.standardAd(
         "top",
         Seq("top-banner-ad"),
         Map("mobile" -> Seq("1,1", "300,50", "320,50", "88,70")),
-        showLabel=false
+        showLabel = false
     )
-</div>
+    </div>
+}

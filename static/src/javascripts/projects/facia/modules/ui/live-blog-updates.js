@@ -29,8 +29,7 @@ define([
         refreshDecay = 1,
         refreshMaxTimes = 5,
 
-        selector = '.js-snappable .js-liveblog-blocks',
-        blocksClassName = 'fc-item__liveblog-blocks',
+        selector = '.js-liveblog-blocks',
         articleIdAttribute = 'data-article-id',
         sessionStorageKey = 'gu.liveblog.block-dates',
 
@@ -91,7 +90,7 @@ define([
                 $element = bonzo(element);
 
             fastdomPromise.write(function () {
-                $element.addClass(blocksClassName).append(el);
+                $element.append(el);
             })
             .then(function () {
                 if (hasNewBlock) {

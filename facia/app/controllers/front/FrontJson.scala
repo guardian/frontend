@@ -68,7 +68,7 @@ trait FapiFrontJsonLite extends ExecutionContexts{
       "displayName" -> pressedCollection.displayName,
       "href" -> pressedCollection.href,
       "id" -> pressedCollection.id,
-      "content" -> pressedCollection.all.filterNot(isLinkSnap).map(getContent))
+      "content" -> pressedCollection.curatedPlusBackfillDeduplicated.filterNot(isLinkSnap).map(getContent))
 
   private def isLinkSnap(faciaContent: FaciaContent) = faciaContent match {
     case _: LinkSnap => true

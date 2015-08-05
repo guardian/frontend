@@ -50,6 +50,17 @@ module.exports = function(grunt, options) {
                     return dest + src.replace('scss', 'css');
                 }
             }]
+        },
+        inline: {
+            files: [{
+                expand: true,
+                cwd: sassDir,
+                src: ['inline/*.scss'],
+                dest: options.staticTargetDir + 'stylesheets/',
+                rename: function(dest, src) {
+                    return dest + src.replace('scss', 'css');
+                }
+            }]
         }
     };
 };
