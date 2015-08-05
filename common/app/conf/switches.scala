@@ -359,15 +359,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val CommercialExtraAdsSwitch = Switch(
-    "Commercial",
-    "commercial-extra-ads",
-    "If this switch is ON, extra ads are served on article pages",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 8, 5),
-    exposeClientSide = true
-  )
-
   val StandardAdvertsSwitch = Switch(
     "Commercial",
     "standard-adverts",
