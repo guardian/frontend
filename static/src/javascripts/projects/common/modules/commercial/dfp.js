@@ -246,9 +246,8 @@ define([
             window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
 
-            // We want to run lazy load if user is in the main test or if there is a switch on
             // We do not want lazy loading on pageskins because it messes up the roadblock
-            if ((config.switches.viewability || config.switches.lzAds) && !(config.page.hasPageSkin)) {
+            if (config.switches.viewability && !config.page.hasPageSkin) {
                 window.googletag.cmd.push(displayLazyAds);
             } else {
                 window.googletag.cmd.push(displayAds);
