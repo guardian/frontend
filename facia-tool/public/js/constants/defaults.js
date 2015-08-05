@@ -64,7 +64,8 @@ export default {
     apiBase:               '',
     apiSearchBase:         '/api/proxy',
     apiSearchParams:       [
-        'show-elements=video',
+        'show-elements=video,main',
+        'show-blocks=main',
         'show-tags=all',
         'show-fields=' + [
             'internalContentCode',

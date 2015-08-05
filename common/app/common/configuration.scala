@@ -374,6 +374,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val faciaToolUpdatesStream: Option[String] = configuration.getStringProperty("faciatool.updates.stream")
 
     lazy val sentryPublicDSN = configuration.getStringProperty("faciatool.sentryPublicDSN")
+    lazy val mediaBaseUrl = configuration.getStringProperty("faciatool.mediaBaseUrl")
   }
 
   object pa {

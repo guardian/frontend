@@ -27,7 +27,8 @@ case class Defaults(
   standardFrequency: Int,
   sentryPublicDSN: Option[String],
   fixedContainers: Seq[ContainerJsonConfig],
-  dynamicContainers: Seq[ContainerJsonConfig]
+  dynamicContainers: Seq[ContainerJsonConfig],
+  mediaBaseUrl: Option[String]
 )
 
 object FrontendDependentController extends Controller with PanDomainAuthActions {
@@ -63,7 +64,8 @@ object FrontendDependentController extends Controller with PanDomainAuthActions 
           } else {
             ContainerJsonConfig(id, Some(DynamicGroups))
           }
-        )
+        ),
+        Configuration.faciatool.mediaBaseUrl
       )))
     }
   }
