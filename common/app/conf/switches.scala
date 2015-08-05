@@ -177,6 +177,15 @@ object Switches {
     exposeClientSide = false
   )
 
+  val JspmTestUniqueVisitorsBeacon = Switch(
+    "Performance",
+    "jspm-test-unique-visitors-beacon",
+    "Send beacon for unique visitors in JspmTest and JspmControl server-side test variants",
+    safeState = Off,
+    sellByDate = new LocalDate(2015, 8, 18),
+    exposeClientSide = true
+  )
+
   val RelatedContentSwitch = Switch(
     "Performance",
     "related-content",
@@ -324,14 +333,6 @@ object Switches {
     exposeClientSide = true
   )
 
-  val OphanViewIdSwitch = Switch("Commercial",
-    "ophan-view-id",
-    "Depending on ophan to pass view ID to the gpt targeting",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 8, 5),
-    exposeClientSide = true
-  )
-
   val DfpCachingSwitch = Switch(
     "Commercial",
     "dfp-caching",
@@ -347,15 +348,6 @@ object Switches {
     "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val CommercialExtraAdsSwitch = Switch(
-    "Commercial",
-    "commercial-extra-ads",
-    "If this switch is ON, extra ads are served on article pages",
-    safeState = On,
-    sellByDate = new LocalDate(2015, 8, 5),
     exposeClientSide = true
   )
 
@@ -573,15 +565,6 @@ object Switches {
     safeState = Off,
     sellByDate = new LocalDate(2015, 8, 12),
     exposeClientSide = false
-  )
-
-  val DfpUserIdSwitch = Switch(
-    "Commercial",
-    "dfp-user-id",
-    "Include user ID in ad call.",
-    safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 5),
-    exposeClientSide = true
   )
 
 
@@ -811,7 +794,7 @@ object Switches {
     "id-use-avatar-api",
     "If switched on, avatars will be uploaded using the new Avatar API",
     safeState = Off,
-    sellByDate = new LocalDate(2015, 8, 1),
+    sellByDate = new LocalDate(2015, 9, 1),
     exposeClientSide = true
   )
 
@@ -970,9 +953,9 @@ object Switches {
     exposeClientSide = true
   )
 
-  val ABSignedOutSaveForLaterSwitch = Switch(
+  val ABSignedOutSaveForLaterAug = Switch(
     "A/B Tests",
-    "ab-signed-out-save-for-later",
+    "ab-signed-out-save-for-later-aug",
     "Switch off the signed out save for later test",
     safeState = Off,
     sellByDate = never,

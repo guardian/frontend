@@ -46,7 +46,9 @@ module.exports = function (grunt) {
     }
 
     // Default task
-    grunt.registerTask('default', ['install', 'clean', 'validate', 'compile', 'test', 'analyse']);
+    grunt.registerTask('default', function () {
+        grunt.task.run(['install', 'clean', 'validate', 'compile', 'test', 'analyse']);
+    });
 
     /**
      * Validate tasks
@@ -74,9 +76,11 @@ module.exports = function (grunt) {
 
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
+        } else {
+            grunt.task.run(['shell:updateCanIUse']);
         }
 
-        grunt.task.run(['px_to_rem', 'shell:updateCanIUse', 'autoprefixer']);
+        grunt.task.run(['px_to_rem', 'autoprefixer']);
 
         if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
@@ -118,7 +122,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('install', ['install:npm', 'install:jspm']);
-    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool']);
+    grunt.registerTask('install:jspm', ['shell:jspmInstallStatic', 'shell:jspmInstallFaciaTool', 'uglify:conf']);
     grunt.registerTask('install:npm', ['shell:npmInstall', 'shell:npmInstallFaciaTool']);
 
     grunt.registerTask('prepare', function() {

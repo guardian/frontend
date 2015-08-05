@@ -33,7 +33,7 @@ define([
             ANDROID: {
                 LOGO: 'http://assets.guim.co.uk/images/apps/android-logo-2x.png',
                 SCREENSHOTS: 'http://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
-                LINK: 'http://ad-x.co.uk/API/click/guardian789057jo/web3537df5992e76b',
+                LINK: 'https://app.adjust.com/642i3r?deep_link=x-gu://www.theguardian.com/?source=adjust',
                 STORE: 'in Google Play'
             }
         },
