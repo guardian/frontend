@@ -19,7 +19,7 @@ function (
             }
         }
 
-        CookieRefresh.prototype.shouldRefreshCookie = function(lastRefresh, currentTime) {
+        CookieRefresh.prototype.shouldRefreshCookie = function (lastRefresh, currentTime) {
             return (!lastRefresh) || (currentTime > (parseInt(lastRefresh, 10) + (1000 * 86400 * 30)));
         };
     }
